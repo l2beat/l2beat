@@ -61,7 +61,7 @@ export const immutablex: ScalingProject = {
     name: 'Immutable X',
     slug: 'immutablex',
     description:
-      'Immutable X is a NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
+      'Immutable X is an NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
     purposes: ['NFT', 'Exchange'],
     stacks: ['StarkEx'],
     links: {

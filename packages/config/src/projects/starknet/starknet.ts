@@ -36,6 +36,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('starknet')
+const chainStart = UnixTime(1637069048) // block 0
 
 const starknetDelaySeconds = discovery.getContractValue<number>(
   'Starknet',
@@ -355,7 +356,7 @@ export const starknet: ScalingProject = {
     name: 'starknet',
     chainId: undefined,
     gasTokens: ['ETH', 'STRK'],
-    sinceTimestamp: UnixTime(1637069048), // block 0
+    sinceTimestamp: chainStart,
     apis: [
       {
         type: 'starknet',
@@ -364,6 +365,7 @@ export const starknet: ScalingProject = {
       },
     ],
   },
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
@@ -632,7 +634,7 @@ export const starknet: ScalingProject = {
       },
       tokenGovernance: {
         'Governance token':
-          '\`STRK\` — ~10.15B total supply, not permanently capped. Users can vote with L1 STRK, natively staked STRK or L2 vSTRK tokens, each gives 1 vote. In 2025 the Starknet Foundation [delegated ~1.7B STRK](https://www.starknet.io/blog/starknet-foundation-delegation-program/) to ~180 ecosystem delegates.',
+          '`STRK` — ~10.15B total supply, not permanently capped. Users can vote with L1 STRK, natively staked STRK or L2 vSTRK tokens, each gives 1 vote. In 2025 the Starknet Foundation [delegated ~1.7B STRK](https://www.starknet.io/blog/starknet-foundation-delegation-program/) to ~180 ecosystem delegates.',
         'Voting venue':
           '[Starknet Governance Hub](https://governance.starknet.io/) using Snapshot X — proposals, space configuration and results are recorded and verified on Starknet, with relayed gasless signed votes.',
         'Proposal threshold':

@@ -77,6 +77,7 @@ export const lighter: ScalingProject = {
     chainId: undefined,
     apis: [],
   },
+  ossificationHistory: discovery.getOssificationHistory(),
   config: {
     associatedTokens: ['LIT'],
     escrows: [
@@ -276,7 +277,15 @@ export const lighter: ScalingProject = {
       references: [],
     },
     exitMechanisms: [
-      EXITS.REGULAR_WITHDRAWAL('zk'),
+      {
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
+        risks: [
+          {
+            category: 'Funds can be frozen if',
+            text: 'the Pause Guardian or the Emergency Guardian pause the system. A pause halts batch processing and withdrawals for up to 24h or 72h respectively, but does not block desert mode.',
+          },
+        ],
+      },
       {
         name: 'Escape hatch through ZK proofs',
         description:
@@ -331,7 +340,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE#code#F1#L54',
+            url: 'https://etherscan.io/address/0xc4c2067ece6e33e50a30087ec14096715e56aE11#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
@@ -343,7 +352,7 @@ export const lighter: ScalingProject = {
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   upgradesAndGovernance: {
-    content: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satisfy the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
+    content: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satisfy the Stage 1 requirements. The network governor also retains the ability to add or remove validators, as well as set Pause and Emergency Guardians that temporarily halt batch processing and withdrawals.`,
   },
   contracts: {
     addresses: {

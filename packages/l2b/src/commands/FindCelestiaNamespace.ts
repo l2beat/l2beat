@@ -13,7 +13,7 @@ export const FindCelestiaNamespace = command({
     }),
     commitment: positional({ type: string, displayName: 'commitment' }),
   },
-  handler: ({ apiUrl, commitment }) => {
-    findCelestiaNamespace(apiUrl, commitment)
+  handler: async ({ apiUrl, commitment }) => {
+    await findCelestiaNamespace(apiUrl, commitment)
   },
 })

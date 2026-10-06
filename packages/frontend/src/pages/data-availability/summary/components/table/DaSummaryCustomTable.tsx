@@ -6,7 +6,7 @@ import type { DaSummaryEntry } from '~/server/features/data-availability/summary
 import { customColumns } from './columns'
 
 export function DaSummaryCustomTable({ items }: { items: DaSummaryEntry[] }) {
-  const table = useTable({
+  const table = useTable('DaSummaryCustomTable', {
     columns: customColumns,
     data: items,
     getCoreRowModel: getCoreRowModel(),

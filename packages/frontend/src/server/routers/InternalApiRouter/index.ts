@@ -3,10 +3,8 @@ import { v } from '@l2beat/validate'
 import express from 'express'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { validateRoute } from '~/utils/validateRoute'
-import { getDiscolupeProjects } from './getDiscolupeProjects'
 import { getInternalTokenBreakdown } from './getInternalTokenBreakdown'
 import { getLivenessTxs } from './getLivenessTxs'
-import { getLogoGeneratorProjects } from './getLogoGeneratorProjects'
 
 export function createInternalApiRouter() {
   const router = express.Router()
@@ -20,19 +18,6 @@ export function createInternalApiRouter() {
     })
     res.setHeaders(headers)
     next()
-  })
-
-  router.get('/api/discolupe', async (_, res) => {
-    const discolupeProjects = await getDiscolupeProjects()
-    res.json({
-      success: true,
-      data: discolupeProjects,
-    })
-  })
-
-  router.get('/api/logo-generator', async (_, res) => {
-    const logoGeneratorProjects = await getLogoGeneratorProjects()
-    res.json(logoGeneratorProjects)
   })
 
   router.get(

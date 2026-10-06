@@ -3,5 +3,11 @@
   "name": "stack",
   "archived": true,
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["base:0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"]
+  "initialAddresses": ["base:0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"],
+  "overrides": {
+    "base:0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  }
 }

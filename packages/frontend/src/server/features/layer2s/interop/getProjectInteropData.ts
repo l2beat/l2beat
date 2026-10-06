@@ -25,6 +25,8 @@ export interface ProjectInteropData {
     protocols: {
       items: {
         id: string
+        /** Of the protocol page; undefined only if the protocol is not among the tracked ones. */
+        slug: string | undefined
         name: string
         iconUrl: string
         volume: number
@@ -73,6 +75,9 @@ export async function getProjectInteropData(
     iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
   }))
   const protocolIds = protocols.map((protocol) => protocol.id)
+  const protocolSlugs = new Map<string, string>(
+    protocols.map((p) => [p.id, p.slug]),
+  )
   const summaryInteropFlows = await getInteropFlows({
     chains: allSelectedChains,
     protocolIds,
@@ -102,6 +107,7 @@ export async function getProjectInteropData(
       protocols: {
         items: (currentChainData?.topProtocols ?? []).map((protocol) => ({
           id: protocol.id,
+          slug: protocolSlugs.get(protocol.id),
           name: protocol.name,
           iconUrl: protocol.iconUrl,
           volume: protocol.volume,

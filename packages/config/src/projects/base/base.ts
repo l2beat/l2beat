@@ -18,6 +18,9 @@ import {
 
 const discovery = new ProjectDiscovery('base')
 const genesisTimestamp = UnixTime(1686074603)
+// ~ Timestamp of block number 0 on Base
+// https://basescan.org/block/0
+const chainStart = UnixTime.fromDate(new Date('2023-06-15T12:35:47Z'))
 const chainId = 8453
 const l2BlockTimeSeconds = HARDCODED.BASE.L2_BLOCK_TIME_SECONDS
 const flashblockIntervalMilliseconds =
@@ -253,9 +256,7 @@ export const base: ScalingProject = opStackL2({
     name: 'base',
     chainId,
     explorerUrl: 'https://basescan.org',
-    // ~ Timestamp of block number 0 on Base
-    // https://basescan.org/block/0
-    sinceTimestamp: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
+    sinceTimestamp: chainStart,
     gasTokens: ['ETH'],
     multicallContracts: [
       {
@@ -276,6 +277,7 @@ export const base: ScalingProject = opStackL2({
       { type: 'blockscoutV2', url: 'https://base.blockscout.com/api/v2' },
     ],
   },
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   stateDerivation: DERIVATION.OPSTACK('BASE'),
   centralizedSequencing: {
     hardcoded: HARDCODED.BASE,

@@ -1,3 +1,7 @@
+import { assert } from '@l2beat/shared-pure'
+
+const ADDRESS_PATH = '/address'
+
 export const EXPLORER_URLS: Record<string, string> = {
   eth: 'https://etherscan.io/address',
   arb1: 'https://arbiscan.io/address',
@@ -31,7 +35,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   zama: 'https://explorer.mainnet.zama.org/address',
   ethereal: 'https://explorer.ethereal.trade/address',
   jovay: 'https://explorer.jovay.io/l2/address',
-  katana: 'https://katanascan.com',
+  katana: 'https://katanascan.com/address',
   robinhood: 'https://robinhoodchain.blockscout.com/address',
 }
 
@@ -40,8 +44,6 @@ export function getExplorerTxUrl(chain: string): string | undefined {
   if (!base) {
     return undefined
   }
-  if (/\/address$/.test(base)) {
-    return base.replace(/\/address$/, '/tx')
-  }
-  return `${base.replace(/\/$/, '')}/tx`
+  assert(base.endsWith(ADDRESS_PATH), `${chain} explorer must end in /address`)
+  return `${base.slice(0, -ADDRESS_PATH.length)}/tx`
 }

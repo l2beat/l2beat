@@ -62,7 +62,6 @@ export function IntentTopTokensWidget({
       tabs={tabs}
       isLoading={isLoading}
       transfer={transfer}
-      tabsListClassName="h-auto w-full flex-wrap justify-start"
       tabLabelClassName="@max-[420px]:hidden"
       getTabData={(activeTab) => {
         const activeBridge = intentBridges.find((b) => b.id === activeTab)

@@ -1,34 +1,755 @@
 {
   "name": "privacy-boost",
-  "timestamp": 1789464689,
-  "configHash": "0x60336af145f53acb240c8cf8e9345a7fc84b53db5c2909b9cfe81635da0c7c11",
+  "timestamp": 1790852159,
+  "configHash": "0x80c127acf5e73a58fefd348ef6f14d2909c9243c0ccbb49b98654dbe1c2d3726",
   "entries": [
     {
-      "address": "oeth:0x0000000000000000000000000000000000000000",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "AuthPoseidon",
-      "address": "oeth:0x09257a2B24C27586c2Db2C18c4b53bE459c7e870",
+      "name": "ExternalCallGateway",
+      "address": "base:0x02Eb6E5779f5780A5ABB354341962d9312b7ABe6",
       "type": "Contract",
-      "template": "privacy-boost/AuthPoseidon",
+      "template": "privacy-boost/ExternalCallGateway",
       "sourceHashes": [
-        "0xbd43912c815aa195f95588fa302e24471421f1246d2cbf986b2668249d9bbf1f"
+        "0x6ca52f3dc9fa66a455c3ff9e302855d7dca4176fae2d1b25ab9379049a1b2a08"
       ],
       "proxyType": "immutable",
-      "description": "Poseidon2 hashing helper used by AuthRegistry to compute account IDs, authorization leaves, spend approval commitments and Merkle tree nodes.",
-      "deployerAddress": "oeth:0x57db8479301CcD51A7E7fA08fBA594934E8CB80c",
-      "sinceTimestamp": 1788397931,
-      "sinceBlock": 156399577,
-      "values": { "$immutable": true },
+      "description": "Gateway executing pool-authorized external calls against an allowlist of target addresses and function selectors, with optional input/output token constraints. Enforces proof-bound settlement receipts and redeposits returned funds into the pool.",
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377833,
+      "sinceBlock": 50794243,
+      "values": {
+        "$immutable": true,
+        "guardian": "base:0x420A8a682892bae85cba7fb0e5Cd806807C5Bf95",
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "paused": false,
+        "pendingOwner": "base:0x0000000000000000000000000000000000000000",
+        "policyEntryAt": [
+          {
+            "target": "base:0xbeef0e0834849aCC03f0089F01f4F1Eeb06873C9",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 21
+            }
+          },
+          {
+            "target": "base:0xbeef0e0834849aCC03f0089F01f4F1Eeb06873C9",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 21,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0x050cE30b927Da55177A4914EC73480238BAD56f0",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 22
+            }
+          },
+          {
+            "target": "base:0x050cE30b927Da55177A4914EC73480238BAD56f0",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 22,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xbeeff7aE5E00Aae3Db302e4B0d8C883810a58100",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 23
+            }
+          },
+          {
+            "target": "base:0xbeeff7aE5E00Aae3Db302e4B0d8C883810a58100",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 23,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xBeEfF0be997Cca5B1c13A7433c2004637975739e",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 24
+            }
+          },
+          {
+            "target": "base:0xBeEfF0be997Cca5B1c13A7433c2004637975739e",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 24,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0x1deEfABEe758AAbdC29a542B24ca3b75aFD56765",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 25
+            }
+          },
+          {
+            "target": "base:0x1deEfABEe758AAbdC29a542B24ca3b75aFD56765",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 25,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xbeef00f0A818894a2Cf111644A5098421611100E",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 1,
+              "outputTokenId": 26
+            }
+          },
+          {
+            "target": "base:0xbeef00f0A818894a2Cf111644A5098421611100E",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 26,
+              "outputTokenId": 1
+            }
+          },
+          {
+            "target": "base:0x1e9e47583f15D45a10Df48c0b1846E0492c795D7",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 27
+            }
+          },
+          {
+            "target": "base:0x1e9e47583f15D45a10Df48c0b1846E0492c795D7",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 27,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xFeFeC33668E22677c4762d0853d56245a800ff08",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 1,
+              "outputTokenId": 28
+            }
+          },
+          {
+            "target": "base:0xFeFeC33668E22677c4762d0853d56245a800ff08",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 28,
+              "outputTokenId": 1
+            }
+          },
+          {
+            "target": "base:0x8effa741061aaA2d8A5012a9B09A2d31d8B628d7",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 29
+            }
+          },
+          {
+            "target": "base:0x8effa741061aaA2d8A5012a9B09A2d31d8B628d7",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 29,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0x4D72Fed1b6cE42F8Dea811F7b6685EbE4Ec04E01",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 1,
+              "outputTokenId": 30
+            }
+          },
+          {
+            "target": "base:0x4D72Fed1b6cE42F8Dea811F7b6685EbE4Ec04E01",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 30,
+              "outputTokenId": 1
+            }
+          },
+          {
+            "target": "base:0x618495ccC4e751178C4914b1E939C0fe0FB07b9b",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 31
+            }
+          },
+          {
+            "target": "base:0x618495ccC4e751178C4914b1E939C0fe0FB07b9b",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 31,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xAE4181CFB5aaA08bbE77d269c6B595672b9F9Edc",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 32
+            }
+          },
+          {
+            "target": "base:0xAE4181CFB5aaA08bbE77d269c6B595672b9F9Edc",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 32,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xE34D43CA9152D198B60654868C8cD197196a492f",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 33
+            }
+          },
+          {
+            "target": "base:0xE34D43CA9152D198B60654868C8cD197196a492f",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 33,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xBeEF00fc6e87dE086A0e29169A2f6e25cF5C11a9",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 34
+            }
+          },
+          {
+            "target": "base:0xBeEF00fc6e87dE086A0e29169A2f6e25cF5C11a9",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 34,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xe7D0DBE3493830e2Ab62619211A2BfF0Fc60dB42",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 35
+            }
+          },
+          {
+            "target": "base:0xe7D0DBE3493830e2Ab62619211A2BfF0Fc60dB42",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 35,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0x116e1A65717A534B73EcB7d4F6543c65DBCd0E46",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 36
+            }
+          },
+          {
+            "target": "base:0x116e1A65717A534B73EcB7d4F6543c65DBCd0E46",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 36,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 37
+            }
+          },
+          {
+            "target": "base:0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 37,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0x7BfA7C4f149E7415b73bdeDfe609237e29CBF34A",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 38
+            }
+          },
+          {
+            "target": "base:0x7BfA7C4f149E7415b73bdeDfe609237e29CBF34A",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 38,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xbeeF010f9cb27031ad51e3333f9aF9C6B1228183",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 39
+            }
+          },
+          {
+            "target": "base:0xbeeF010f9cb27031ad51e3333f9aF9C6B1228183",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 39,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 40
+            }
+          },
+          {
+            "target": "base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 40,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0x1401d1271C47648AC70cBcdfA3776D4A87CE006B",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 41
+            }
+          },
+          {
+            "target": "base:0x1401d1271C47648AC70cBcdfA3776D4A87CE006B",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 41,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xBEEFA7B88064FeEF0cEe02AAeBBd95D30df3878F",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 42
+            }
+          },
+          {
+            "target": "base:0xBEEFA7B88064FeEF0cEe02AAeBBd95D30df3878F",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 42,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xef417a2512C5a41f69AE4e021648b69a7CdE5D03",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 43
+            }
+          },
+          {
+            "target": "base:0xef417a2512C5a41f69AE4e021648b69a7CdE5D03",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 43,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xc0c5689e6f4D256E861F65465b691aeEcC0dEb12",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 44
+            }
+          },
+          {
+            "target": "base:0xc0c5689e6f4D256E861F65465b691aeEcC0dEb12",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 44,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 45
+            }
+          },
+          {
+            "target": "base:0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 45,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0x5435BC53f2C61298167cdB11Cdf0Db2BFa259ca0",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 46
+            }
+          },
+          {
+            "target": "base:0x5435BC53f2C61298167cdB11Cdf0Db2BFa259ca0",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 46,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0xE74c499fA461AF1844fCa84204490877787cED56",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 47
+            }
+          },
+          {
+            "target": "base:0xE74c499fA461AF1844fCa84204490877787cED56",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 47,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0x6b13c060F13Af1fdB319F52315BbbF3fb1D88844",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 1,
+              "outputTokenId": 48
+            }
+          },
+          {
+            "target": "base:0x6b13c060F13Af1fdB319F52315BbbF3fb1D88844",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 48,
+              "outputTokenId": 1
+            }
+          },
+          {
+            "target": "base:0x236919F11ff9eA9550A4287696C2FC9e18E6e890",
+            "selector": "0x6e553f65",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 2,
+              "outputTokenId": 49
+            }
+          },
+          {
+            "target": "base:0x236919F11ff9eA9550A4287696C2FC9e18E6e890",
+            "selector": "0xba087652",
+            "policy": {
+              "allowed": true,
+              "inputTokenId": 49,
+              "outputTokenId": 2
+            }
+          },
+          {
+            "target": "base:0x111111125421cA6dc452d289314280a0f8842A65",
+            "selector": "0x07ed2379",
+            "policy": { "allowed": true, "inputTokenId": 0, "outputTokenId": 0 }
+          }
+        ],
+        "policyKeyCount": 59,
+        "pool": "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40"
+      },
+      "fieldMeta": {
+        "paused": {
+          "description": "Whether new external gateway execution is paused."
+        },
+        "pool": {
+          "severity": "HIGH",
+          "description": "PrivacyBoost pool authorized to execute gateway settlements."
+        },
+        "policyEntryAt": {
+          "severity": "HIGH",
+          "description": "Installed external call policies: target, function selector, and allowed input/output token IDs (zero permits any token). Targets are external DeFi dependencies and are not recursively discovered."
+        }
+      },
       "implementationNames": {
-        "oeth:0x09257a2B24C27586c2Db2C18c4b53bE459c7e870": "AuthPoseidon"
+        "base:0x02Eb6E5779f5780A5ABB354341962d9312b7ABe6": "ExternalCallGateway"
+      }
+    },
+    {
+      "name": "TreasuryMultisig",
+      "address": "base:0x04484B6065A43fa286e05E9C28a6c4Db77d917f8",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
+      "sinceTimestamp": 1788363345,
+      "sinceBlock": 50786999,
+      "values": {
+        "$immutable": false,
+        "$implementation": "base:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "base:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
+          "base:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
+          "base:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x140c99bedb3e9ce785e85d451aaf5c4f86b35b4ea3430147d19a500519a06a7f",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "base:0x04484B6065A43fa286e05E9C28a6c4Db77d917f8": "SafeProxy",
+        "base:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "Groth16PortalDepositVerifier",
+      "address": "base:0x0c8bb018a3d8DF4c5fC86518ca57F8E1445BCF63",
+      "type": "Contract",
+      "template": "privacy-boost/Groth16PortalDepositVerifier",
+      "sourceHashes": [
+        "0x3830a1bd0e15af692c53348192b327a44c10cd19a215f5401e83eb8eb836a109"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for PrivacyBoost portal deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.",
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377069,
+      "sinceBlock": 50793861,
+      "values": {
+        "$immutable": true,
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "p1_constants": "base:0x04dd3F597295b922472ccC317b3d14cE0cFe67e8",
+        "p1_icLength": 32,
+        "p1_icX": [
+          "base:0x4E7d98a8a3bd4290730A369b9d70b1F1b7f131Ce",
+          "base:0xa90f8d7a01C09D9477a8D3ddEA2f857fE30550aF",
+          "base:0x52F97a12E3384D8B216bea6333d382b980D8eA79",
+          "base:0xA4C27F49C8859270da62C2BB8Ca7C8766605002e",
+          "base:0xaaB0Db2e9a98451c92fC8914d33205586f452101",
+          "base:0xfd8Ba9Bd363C7bED3c1243A74e90c383A3917827",
+          "base:0xab8566137578C124ef43e83d24B74F708536201E",
+          "base:0x7BF39bccd4Fa5c56cfEABA25A912D5ECa361Cb30"
+        ],
+        "p1_icY": [
+          "base:0x1cF25D0152119b68bb82F7Fb060cA39dD1cfDe11",
+          "base:0xF88D9347b329618A97066820465649F69cc193cF",
+          "base:0xa5604f8861aC8085F509b5b73F631f8Da682F7ff",
+          "base:0x6e02Aa074A5504Cb4541F7267E0A006139e64da6",
+          "base:0x2f2AB2Acf28373ba71f783CCE10c283851017027",
+          "base:0xa62219D754b0ABD171125C48C3432df782D46b92",
+          "base:0x73cd28372709C62C29d75a7C2614AB0424A034ab",
+          "base:0xE896c815A59772795f2966AD6A1A6250f5093E5D"
+        ],
+        "p6_constants": "base:0x9F07212C729da01894180cF7C00f1d0861382a27",
+        "p6_icLength": 62,
+        "p6_icX": [
+          "base:0x57892e676e327AE05eDEd0120df2ce690C864F79",
+          "base:0x457EB5ee0B16c3E4bAD4A977F562fFdAF6c89A43",
+          "base:0x64034d48e9ab125A73b78489BcCe905790f70987",
+          "base:0xF0d3A63c8bFCBBFF290B9136E3a67C2762047ebE",
+          "base:0x5F6f5a9A9804f5184BC19CA22D017586Ac3C4963",
+          "base:0xc1CDE54E461B809A8003760f1B0f038925d47818",
+          "base:0xE8Db5B73673F6c052C684CB9C582feFE337B00Af",
+          "base:0x3b8382f7a32C6F3f5F33986a5EA19F978C517E2B"
+        ],
+        "p6_icY": [
+          "base:0xAC305f7a78d7aAa41aD25e5ca7728AF10a589410",
+          "base:0x17330d881dFbA777B281680f3F513f81352D4dD2",
+          "base:0x86a73cc77b6Cb9cec88a1Ff24FE1d8eBB455DEAe",
+          "base:0xd18Ec4EC883ccF2f3a5e823e0cfCdABbF020BEB4",
+          "base:0x45355A381Fce854873B7DCb5c22e42fF4b4E0588",
+          "base:0xf5Fd7c9dc66aa038e9bFB9aaffD536CcCdEd1B8c",
+          "base:0x84fcEf40D7b0ae5b0C7cD543Fc883517BBd0a43E",
+          "base:0xdce88CE16efAEdA667816B9F79Df8754E3fe2Ec4"
+        ],
+        "pendingOwner": "base:0x0000000000000000000000000000000000000000",
+        "supportedParams": [1, 6],
+        "vkInfo": [
+          {
+            "icLen": 32,
+            "vkConstants": "base:0x04dd3F597295b922472ccC317b3d14cE0cFe67e8"
+          },
+          {
+            "icLen": 62,
+            "vkConstants": "base:0x9F07212C729da01894180cF7C00f1d0861382a27"
+          }
+        ]
+      },
+      "fieldMeta": {
+        "supportedParams": {
+          "severity": "HIGH",
+          "description": "Registered circuit parameters (input count for forced withdrawals; batch size otherwise)."
+        },
+        "vkInfo": {
+          "severity": "HIGH",
+          "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported batch size."
+        },
+        "p1_icX": {
+          "severity": "HIGH",
+          "description": "p1 (1): SSTORE2 verification key icX pointers."
+        },
+        "p1_icY": {
+          "severity": "HIGH",
+          "description": "p1 (1): SSTORE2 verification key icY pointers."
+        },
+        "p1_constants": {
+          "severity": "HIGH",
+          "description": "p1 (1): SSTORE2 verification key constants pointer."
+        },
+        "p1_icLength": {
+          "severity": "HIGH",
+          "description": "p1 (1): verification key IC length."
+        },
+        "p6_icX": {
+          "severity": "HIGH",
+          "description": "p6 (6): SSTORE2 verification key icX pointers."
+        },
+        "p6_icY": {
+          "severity": "HIGH",
+          "description": "p6 (6): SSTORE2 verification key icY pointers."
+        },
+        "p6_constants": {
+          "severity": "HIGH",
+          "description": "p6 (6): SSTORE2 verification key constants pointer."
+        },
+        "p6_icLength": {
+          "severity": "HIGH",
+          "description": "p6 (6): verification key IC length."
+        }
+      },
+      "implementationNames": {
+        "base:0x0c8bb018a3d8DF4c5fC86518ca57F8E1445BCF63": "Groth16PortalDepositVerifier"
+      }
+    },
+    {
+      "name": "AuthRegistryProxyAdmin",
+      "address": "base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin contract of the AuthRegistry proxy.",
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377061,
+      "sinceBlock": 50793857,
+      "values": {
+        "$immutable": true,
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc": "ProxyAdmin"
       }
     },
     {
       "name": "TokenRegistryProxyAdmin",
-      "address": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd",
+      "address": "base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -36,21 +757,868 @@
       ],
       "proxyType": "immutable",
       "description": "Admin contract of the TokenRegistry proxy.",
-      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
-      "sinceTimestamp": 1776186485,
-      "sinceBlock": 150293854,
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377057,
+      "sinceBlock": 50793855,
       "values": {
         "$immutable": true,
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": "ProxyAdmin"
+        "base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f": "ProxyAdmin"
       }
     },
     {
+      "name": "TokenRegistry",
+      "address": "base:0x3A0bea3a715881793cFD698dDEBcF03784f0bE03",
+      "type": "Contract",
+      "template": "privacy-boost/TokenRegistry",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0xd2a7367ae9af91937028b55397ea119f00b4d2169467d0b199f085e6998c7187"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry mapping compact token IDs to the ERC-20 tokens accepted by the PrivacyBoost pool.",
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377057,
+      "sinceBlock": 50793855,
+      "values": {
+        "$admin": "base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f",
+        "$implementation": "base:0x2D90FB53C5194E2Dd9a3dc4D4Cf71253799e555E",
+        "$pastUpgrades": [
+          [
+            "2026-09-02T19:24:17.000Z",
+            "0x9a59d1b1a8f3dadc2f78b3741ac3b477bc00f039fd22c45a1da9ce0e1488b2a1",
+            ["base:0x2D90FB53C5194E2Dd9a3dc4D4Cf71253799e555E"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "nextId": 49,
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "pendingOwner": "base:0x0000000000000000000000000000000000000000",
+        "tokens": [
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x4200000000000000000000000000000000000006",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xb20000000000000000000078ee7ce2fE4908108C",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xB2000000000000000000004c27f6523082f41D01",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xb2000000000000000000002D0BA3164cc74f58B7",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xb200000000000000000000C2e324d24d7eEcd1fb",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xb2000000000000000000008bC8786B856E61707C",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xcb585250f852C6c6bf90434AB21A00f02833a4af",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xBAa5CC21fd487B8Fcc2F632f3F4E8D37262a0842",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xcbADA732173e39521CDBE8bf59a6Dc85A9fc7b8c",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x532f27101965dd16442E59d40670FaF5eBB142E4",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xbeef0e0834849aCC03f0089F01f4F1Eeb06873C9",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x050cE30b927Da55177A4914EC73480238BAD56f0",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xbeeff7aE5E00Aae3Db302e4B0d8C883810a58100",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xBeEfF0be997Cca5B1c13A7433c2004637975739e",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x1deEfABEe758AAbdC29a542B24ca3b75aFD56765",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xbeef00f0A818894a2Cf111644A5098421611100E",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x1e9e47583f15D45a10Df48c0b1846E0492c795D7",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xFeFeC33668E22677c4762d0853d56245a800ff08",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x8effa741061aaA2d8A5012a9B09A2d31d8B628d7",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x4D72Fed1b6cE42F8Dea811F7b6685EbE4Ec04E01",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x618495ccC4e751178C4914b1E939C0fe0FB07b9b",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xAE4181CFB5aaA08bbE77d269c6B595672b9F9Edc",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xE34D43CA9152D198B60654868C8cD197196a492f",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xBeEF00fc6e87dE086A0e29169A2f6e25cF5C11a9",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xe7D0DBE3493830e2Ab62619211A2BfF0Fc60dB42",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x116e1A65717A534B73EcB7d4F6543c65DBCd0E46",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x7BfA7C4f149E7415b73bdeDfe609237e29CBF34A",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xbeeF010f9cb27031ad51e3333f9aF9C6B1228183",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x1401d1271C47648AC70cBcdfA3776D4A87CE006B",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xBEEFA7B88064FeEF0cEe02AAeBBd95D30df3878F",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xef417a2512C5a41f69AE4e021648b69a7CdE5D03",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xc0c5689e6f4D256E861F65465b691aeEcC0dEb12",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x5435BC53f2C61298167cdB11Cdf0Db2BFa259ca0",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0xE74c499fA461AF1844fCa84204490877787cED56",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x6b13c060F13Af1fdB319F52315BbbF3fb1D88844",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "base:0x236919F11ff9eA9550A4287696C2FC9e18E6e890",
+            "tokenSubId": 0
+          }
+        ]
+      },
+      "fieldMeta": {
+        "nextId": {
+          "description": "Latest token ID assigned; tokens are registered with IDs 1..nextId."
+        },
+        "tokens": {
+          "description": "Registered tokens (token type, token address, sub-id) by token ID."
+        }
+      },
+      "implementationNames": {
+        "base:0x3A0bea3a715881793cFD698dDEBcF03784f0bE03": "TransparentUpgradeableProxy",
+        "base:0x2D90FB53C5194E2Dd9a3dc4D4Cf71253799e555E": "TokenRegistry"
+      }
+    },
+    {
+      "name": "Groth16ForcedVerifier",
+      "address": "base:0x40e93d3357A5A3d249437717Da936f6141ba85cE",
+      "type": "Contract",
+      "template": "privacy-boost/Groth16ForcedVerifier_v2",
+      "sourceHashes": [
+        "0x2f5dba82c5b56962c7b7de9147571469ef0b518f3daf119db2b008167d474f53"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for PrivacyBoost forced withdrawal proofs. Verification keys are stored in SSTORE2 data contracts.",
+      "deployerAddress": "base:0x1Dc2f144BAe8a493F736a0c678A64D887943Cb3d",
+      "sinceTimestamp": 1790176489,
+      "sinceBlock": 51693571,
+      "values": {
+        "$immutable": true,
+        "f13_constants": "base:0x2fEAB93a056010648c3F0a8363be2cCAaCF65FA9",
+        "f13_icLength": 53,
+        "f13_icX": [
+          "base:0x8981d06e2aDefAAc0255EF088a6ce2E81Cd376D2",
+          "base:0xCDE4415fcF711E89e742fa6D814e86632af0b751",
+          "base:0x7369B8ae01006344CbEC786BC3b8CC5807e4bAdF",
+          "base:0x67dA55311639A7e8a6656eC3507184761e5F5310",
+          "base:0x363C559241e58D9eb3BF9117bC70704e04a748aD",
+          "base:0x8022572459c734476E2940d297f9BF0bb46dDa01",
+          "base:0xE1c0D548bd62618c7fb1332e67ff6E4ec2d34Ad1",
+          "base:0xD81C77C6eA630e7e6A35e7662BBE6AA94F0Bc4Ee"
+        ],
+        "f13_icY": [
+          "base:0x2C3E3e41ff9200544F9f2019EB470413635D278a",
+          "base:0xbeA6c22951a20ea353522403BD060FeF3034C6D9",
+          "base:0x6f7E27B3E49E93fBbcEffC2B29CA4547AA6bDC89",
+          "base:0x45D3D9403816b6e6aBeEC256914D0164c9fcf6fA",
+          "base:0x4252585a8c198DBAA7116A6F4D41AA0699df9157",
+          "base:0xf045A39fF3050cEFfB4812ada99FdcF3676A6C20",
+          "base:0x9f754D963C81BFe4E47A8fE688A4734D5686A07a",
+          "base:0xF7D9E5038BCCc92bEd56A656DE9Eba926feebE23"
+        ],
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "pendingOwner": "base:0x0000000000000000000000000000000000000000",
+        "supportedParams": [13],
+        "vkInfo": [
+          {
+            "icLen": 53,
+            "vkConstants": "base:0x2fEAB93a056010648c3F0a8363be2cCAaCF65FA9"
+          }
+        ]
+      },
+      "fieldMeta": {
+        "supportedParams": {
+          "severity": "HIGH",
+          "description": "Registered circuit parameters (input count for forced withdrawals; batch size otherwise)."
+        },
+        "vkInfo": {
+          "severity": "HIGH",
+          "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported input count."
+        },
+        "f13_icX": {
+          "severity": "HIGH",
+          "description": "f13 (13): SSTORE2 verification key icX pointers."
+        },
+        "f13_icY": {
+          "severity": "HIGH",
+          "description": "f13 (13): SSTORE2 verification key icY pointers."
+        },
+        "f13_constants": {
+          "severity": "HIGH",
+          "description": "f13 (13): SSTORE2 verification key constants pointer."
+        },
+        "f13_icLength": {
+          "severity": "HIGH",
+          "description": "f13 (13): verification key IC length."
+        }
+      },
+      "implementationNames": {
+        "base:0x40e93d3357A5A3d249437717Da936f6141ba85cE": "Groth16ForcedVerifier"
+      }
+    },
+    {
+      "name": "OperatorMultisig",
+      "address": "base:0x420A8a682892bae85cba7fb0e5Cd806807C5Bf95",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
+      "sinceTimestamp": 1788363289,
+      "sinceBlock": 50786971,
+      "values": {
+        "$immutable": false,
+        "$implementation": "base:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "base:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
+          "base:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
+          "base:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xd5345ddce45d780c9ea6b81efb5306562e9868a24868ee6ae35c088c3c159b5c",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "base:0x420A8a682892bae85cba7fb0e5Cd806807C5Bf95": "SafeProxy",
+        "base:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "AuthRegistry",
+      "address": "base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3",
+      "type": "Contract",
+      "template": "privacy-boost/AuthRegistry_v2",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0x53a840fbb8f7f80637b9be2a5f960b7901c110d9a8e08d65befb06d6532b110a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry of PrivacyBoost account authorization keys and onchain spend approvals. Supports BabyJubJub keys authorized by account-owner signatures, approval-only accounts and revocable batches of spend approvals. Tracks current and recently superseded auth roots; forced withdrawals validate live auth records directly.",
+      "ignoreInWatchMode": [
+        "registryRoot",
+        "getAllAuthTreeRoots",
+        "currentAuthTreeNumber"
+      ],
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377061,
+      "sinceBlock": 50793857,
+      "values": {
+        "$admin": "base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc",
+        "$implementation": "base:0xECBB712DC58156228187587783286B0662Bc06da",
+        "$pastUpgrades": [
+          [
+            "2026-09-02T19:24:21.000Z",
+            "0xbc1b2d84d7c1c8379f51ad1b4dfb79891b544ab497bae54485badd192dd7b7a7",
+            ["base:0xECBB712DC58156228187587783286B0662Bc06da"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "allowedRelays": ["base:0x6Bd37032571F47e50f312542ae05D548B69DC9B0"],
+        "authPoseidon": "base:0x8b72188D4A15661E0a3D232ACecCA7A26757C42D",
+        "authTreeDepth": 20,
+        "currentAuthTreeNumber": 0,
+        "getAllAuthTreeRoots": [
+          "3043740918776573842770297497911271409080339210263847604450596966622946009677"
+        ],
+        "MAX_APPROVAL_LIFETIME": 2592000,
+        "MAX_AUTH_TREE_NUMBER": 32767,
+        "operator": "base:0x420A8a682892bae85cba7fb0e5Cd806807C5Bf95",
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "pendingOwner": "base:0x0000000000000000000000000000000000000000",
+        "registryRoot": "3043740918776573842770297497911271409080339210263847604450596966622946009677"
+      },
+      "fieldMeta": {
+        "allowedRelays": {
+          "description": "Relays allowed to submit account key registrations, rotations and revocations signed by account owners."
+        },
+        "authTreeDepth": { "description": "Depth of the auth Merkle trees." },
+        "authPoseidon": {
+          "severity": "HIGH",
+          "description": "External Poseidon2 helper for account IDs, authorization leaves and auth Merkle tree hashing."
+        },
+        "MAX_APPROVAL_LIFETIME": {
+          "severity": "HIGH",
+          "description": "Maximum lifetime of an onchain spend approval, in seconds."
+        }
+      },
+      "implementationNames": {
+        "base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3": "TransparentUpgradeableProxy",
+        "base:0xECBB712DC58156228187587783286B0662Bc06da": "AuthRegistry"
+      }
+    },
+    {
+      "address": "base:0x6Bd37032571F47e50f312542ae05D548B69DC9B0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PrivacyBoost",
+      "address": "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+      "type": "Contract",
+      "template": "privacy-boost/PrivacyBoost_v2",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0xa93601acbe9c964bab9c061132f2a8b35338b4dfbacee9bf924163d745e04405"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Main contract of the PrivacyBoost pool. Escrows ERC-20 tokens and verifies relay-submitted private transfer, withdrawal, deposit, portal deposit and gift settlement proofs. Supports approved external gateway calls and permissionless exits through delayed forced withdrawals or public gift exits.",
+      "ignoreInWatchMode": ["currentTreeNumber"],
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377831,
+      "sinceBlock": 50794242,
+      "values": {
+        "$admin": "base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e",
+        "$implementation": "base:0x508798455053B0b8BF892454a2A73d88891d9fFd",
+        "$pastUpgrades": [
+          [
+            "2026-09-02T19:37:11.000Z",
+            "0xb57d5d9d8b938eb5567222a01bbddfba9b327ffe0b5219fdb7a410f1f4c006fd",
+            ["base:0x2944dB0B9500c3F82Af6b231ff83cf4c5B8f5037"]
+          ],
+          [
+            "2026-09-23T22:24:53.000Z",
+            "0x016cebde28f09c82a06bdf92d6bbb4631e39767d8ec96c337f1e1eb478324af6",
+            ["base:0x508798455053B0b8BF892454a2A73d88891d9fFd"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "allowedRelays": ["base:0x6Bd37032571F47e50f312542ae05D548B69DC9B0"],
+        "authRegistry": "base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3",
+        "cancelDelay": 10800,
+        "currentTreeNumber": 0,
+        "depositVerifier": "base:0xac60252EF8dbC139e0da63cE7F2a13D25a5B627d",
+        "epochVerifier": "base:0xB144eb785E2CCe17681395Cd475093C01AEeb11e",
+        "forcedVerifier": "base:0x40e93d3357A5A3d249437717Da936f6141ba85cE",
+        "forcedWithdrawalDelay": 129600,
+        "gatewayRouteManager": "base:0x420A8a682892bae85cba7fb0e5Cd806807C5Bf95",
+        "gateways": ["base:0x02Eb6E5779f5780A5ABB354341962d9312b7ABe6"],
+        "giftClaimVerifier": "base:0x8f394a08A7544daf39aF38FEA5B2E348180bDC05",
+        "maxBatchSize": 100,
+        "maxEpochAuthStalenessBlocks": 300,
+        "maxFeeTokens": 4,
+        "maxForcedInputs": 13,
+        "maxForcedWithdrawalAuthStalenessBlocks": 500,
+        "maxInputsPerTransfer": 15,
+        "maxOutputsPerTransfer": 201,
+        "merkleDepth": 24,
+        "operator": "base:0x420A8a682892bae85cba7fb0e5Cd806807C5Bf95",
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "pendingOwner": "base:0x0000000000000000000000000000000000000000",
+        "portalDepositVerifier": "base:0x0c8bb018a3d8DF4c5fC86518ca57F8E1445BCF63",
+        "portalMinimumSweeps": {
+          "1": 200000000000000,
+          "2": 500000,
+          "3": 650,
+          "4": 400000,
+          "5": 5000000,
+          "6": 500000,
+          "7": 250000,
+          "8": "1000000000000000000",
+          "9": "750000000000000000",
+          "10": "20000000000000000000",
+          "11": 170000000000000,
+          "12": 150000,
+          "13": 150000,
+          "14": 90000,
+          "15": 400000,
+          "16": 180000000000000,
+          "17": "200000000000000000",
+          "18": 2500000
+        },
+        "portalSweepFeeBps": 0,
+        "tokenRegistry": "base:0x3A0bea3a715881793cFD698dDEBcF03784f0bE03",
+        "treasury": "base:0x04484B6065A43fa286e05E9C28a6c4Db77d917f8",
+        "withdrawFeeBps": 40
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "allowedRelays": {
+          "description": "Relays allowed to submit epochs to the pool."
+        },
+        "epochVerifier": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier used for private transfer / withdrawal epoch proofs."
+        },
+        "depositVerifier": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier used for deposit epoch proofs."
+        },
+        "forcedVerifier": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier used for forced withdrawal proofs."
+        },
+        "tokenRegistry": {
+          "severity": "HIGH",
+          "description": "Registry of ERC-20 tokens accepted by the pool."
+        },
+        "authRegistry": {
+          "severity": "HIGH",
+          "description": "Registry of account authorization keys and spend approvals used to validate spend authorization."
+        },
+        "treasury": { "description": "Address receiving withdrawal fees." },
+        "withdrawFeeBps": {
+          "description": "Withdrawal fee in basis points, charged on withdrawals and forced withdrawals."
+        },
+        "cancelDelay": {
+          "severity": "HIGH",
+          "description": "Number of blocks after which an unprocessed deposit request can be cancelled and refunded by the depositor."
+        },
+        "forcedWithdrawalDelay": {
+          "severity": "HIGH",
+          "description": "Number of blocks between requesting and executing a forced withdrawal."
+        },
+        "gateways": {
+          "severity": "HIGH",
+          "description": "Approved synchronous gateway routes for proof-authorized external calls."
+        },
+        "portalMinimumSweeps": {
+          "description": "Minimum gross amount per token ID required for a portal sweep, in token base units; defaults to zero."
+        },
+        "portalDepositVerifier": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier for portal deposit proofs."
+        },
+        "giftClaimVerifier": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier for private gift settlement and public gift exit proofs."
+        },
+        "maxEpochAuthStalenessBlocks": {
+          "severity": "HIGH",
+          "description": "Maximum age in blocks of a superseded auth root accepted for epoch and private gift settlement proofs."
+        },
+        "maxForcedWithdrawalAuthStalenessBlocks": {
+          "severity": "HIGH",
+          "description": "Maximum age in blocks of a superseded auth root accepted for public gift exits. Despite its legacy name, this does not govern forced withdrawals, which check the live auth record at request time."
+        },
+        "portalSweepFeeBps": {
+          "description": "Portal sweep fee in basis points, paid to the sweeper and snapshotted when the deposit is requested."
+        }
+      },
+      "implementationNames": {
+        "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40": "TransparentUpgradeableProxy",
+        "base:0x508798455053B0b8BF892454a2A73d88891d9fFd": "PrivacyBoost"
+      }
+    },
+    {
+      "address": "base:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AdminMultisig",
+      "address": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
+      "sinceTimestamp": 1788363241,
+      "sinceBlock": 50786947,
+      "values": {
+        "$immutable": false,
+        "$implementation": "base:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "base:0xcf01AB4fa0C5796811Ad939daB8dEd833cf90683",
+          "base:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
+          "base:0xB30347E816B525453468cC95C17231Ab04a0C0A9",
+          "base:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x87251a629a537c54c34295c965f0a866c42af92b68087205dfccabc516e2cb0f",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 5,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7": "SafeProxy",
+        "base:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "AuditGateway",
+      "address": "base:0x7Bb891f7D7c78A8d6770cb273aBC603A148824b6",
+      "type": "Contract",
+      "template": "privacy-boost/AuditGateway",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0xdf1ae73b1ff7ef4ef2f92ce7dbf73f0c1d2e37495ea44414dfb3334fa5cafb23"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Manages the list of auditors authorized to query private user data through the Audit API of the TEE, and stores an onchain log of every audit access so that users can publicly verify whether and when their private data was disclosed.",
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377839,
+      "sinceBlock": 50794246,
+      "values": {
+        "$admin": "base:0xB32ef2884794999e1E260a3f68368A24CEF25b35",
+        "$implementation": "base:0x27776Ed100A4D1C6e1479319BE6eB2e262F7CEc4",
+        "$pastUpgrades": [
+          [
+            "2026-09-02T19:37:19.000Z",
+            "0xcd03e41021bbf07f85cf52f45650313df42320ba0e64e9b439d8ba5a7b5b514a",
+            ["base:0x27776Ed100A4D1C6e1479319BE6eB2e262F7CEc4"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "auditLogCount": 0,
+        "auditLogger": "base:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB",
+        "getAllAuditors": [],
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "pendingOwner": "base:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "auditLogger": {
+          "description": "Address (TEE server wallet) that records every Audit API access on-chain by calling the AuditGateway."
+        },
+        "getAllAuditors": {
+          "description": "Auditors authorized to fetch the balance and transaction history of any address through the Audit API of the TEE. Every such access is logged onchain."
+        },
+        "auditLogCount": {
+          "description": "Total number of audit accesses logged onchain."
+        }
+      },
+      "implementationNames": {
+        "base:0x7Bb891f7D7c78A8d6770cb273aBC603A148824b6": "TransparentUpgradeableProxy",
+        "base:0x27776Ed100A4D1C6e1479319BE6eB2e262F7CEc4": "AuditGateway"
+      }
+    },
+    {
+      "name": "AuthPoseidon",
+      "address": "base:0x8b72188D4A15661E0a3D232ACecCA7A26757C42D",
+      "type": "Contract",
+      "template": "privacy-boost/AuthPoseidon",
+      "sourceHashes": [
+        "0xbd43912c815aa195f95588fa302e24471421f1246d2cbf986b2668249d9bbf1f"
+      ],
+      "proxyType": "immutable",
+      "description": "Poseidon2 hashing helper used by AuthRegistry to compute account IDs, authorization leaves, spend approval commitments and Merkle tree nodes.",
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377059,
+      "sinceBlock": 50793856,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "base:0x8b72188D4A15661E0a3D232ACecCA7A26757C42D": "AuthPoseidon"
+      }
+    },
+    {
+      "name": "Groth16GiftClaimVerifier",
+      "address": "base:0x8f394a08A7544daf39aF38FEA5B2E348180bDC05",
+      "type": "Contract",
+      "template": "privacy-boost/Groth16GiftClaimVerifier",
+      "sourceHashes": [
+        "0xce2c8d07f23af56a21872cb5009c49e812219e39b0f9ce1a29b2feb80c9a3ba4"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for PrivacyBoost gift settlement and public gift exit proofs. Verification keys are stored in SSTORE2 data contracts.",
+      "deployerAddress": "base:0x1Dc2f144BAe8a493F736a0c678A64D887943Cb3d",
+      "sinceTimestamp": 1790176491,
+      "sinceBlock": 51693572,
+      "values": {
+        "$immutable": true,
+        "g1_constants": "base:0x7B3903f4AABea18d82029669F26b86EF567Acf56",
+        "g1_icLength": 51,
+        "g1_icX": [
+          "base:0x05Fdc4782a4af1026D132C9A48fE212A84bc3473",
+          "base:0x5D35E47EC2dA58ed33Fb6C8deE11553E7562bFC4",
+          "base:0x4F842a2E7C2b1425bB984e9852aBAd84f6B45AAf",
+          "base:0xfC10AB6156fFB727F157dE3B2D44F064fC8e0e9b",
+          "base:0x040CC5b68D567222f327052EB93050d71AaB90b1",
+          "base:0x5F6d03213158679154877f685108022f6611519c",
+          "base:0xe33aDd031f121245279CC3309FDa9093C64b67C7",
+          "base:0xe64eab0965bcF18D80a1A5A3fedcA4Fe3a261c14"
+        ],
+        "g1_icY": [
+          "base:0xf6eB2fbcdE594f35A874Dc5d781a2296bA73678D",
+          "base:0xB9F38f3E59aAC5789D9182fd659f54693B65C20D",
+          "base:0xC5d7680eBbAaAa9263d0c4519E1e8068BFdCF11e",
+          "base:0x0a322a0d84DFDaE4B97577F698dc154AFc4C40E7",
+          "base:0xf0f14aebDBBdB2D5d06BB73B3c96F9155278e3E2",
+          "base:0x1A8FeadE28c351f4e1fA277416d86F512b5209Ca",
+          "base:0xAe5989E62430c646423409095d38720CAe0A860f",
+          "base:0xf331b9e6444D308AaF0225D4F12A4F0201128071"
+        ],
+        "g3_constants": "base:0x8A1248a8532a91a0Ce251e03DDc4C6A39e9d501F",
+        "g3_icLength": 65,
+        "g3_icX": [
+          "base:0x24DA2cb679A77d140b6a2036B3c3D6280f46b593",
+          "base:0xF342e2fD48b29cad99d2ad2D6CC5c77F31D56b66",
+          "base:0x811510f2F529915BAA2e88F46205755e7A5A1869",
+          "base:0x99EA9f5D34a368BE0898bB965a27135F0af974C9",
+          "base:0x4d0116C6B82A9F78cFEFb067f9813e81F0fDea1d",
+          "base:0x8E68BB0a3704295ac9ef180dAE7096Ed228ACD90",
+          "base:0xec1Eb0B179D58Cc6972eDD2B902dbc3C44814Ab2",
+          "base:0x187f33cD9a576f32A74F63cFb447e26919b0A4cE"
+        ],
+        "g3_icY": [
+          "base:0x4003FFE979a323570626CADB6D4f5F39e2777d84",
+          "base:0x32Fac079D77d1fe8eF953e147Ef1A981C9dBA25b",
+          "base:0x42eC2d190c56964805Dd173b18ADBdf7bf3515eD",
+          "base:0xB3858733E0fe2D4Dd42150F70D0c9E8c1f4508e0",
+          "base:0x8d387354052bf817954C05A2f6aAEFd677FB96DB",
+          "base:0xd7FF96443bE92a143bfFEa1CFef0AA928E8a1072",
+          "base:0x5e0F91d72BbBc2eC9B7532278271CB2493349F56",
+          "base:0xA75Be9ecB6d15d0Abe0AeBDB81C2F51db197A478"
+        ],
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "pendingOwner": "base:0x0000000000000000000000000000000000000000",
+        "supportedParams": [1, 3],
+        "vkInfo": [
+          {
+            "icLen": 51,
+            "vkConstants": "base:0x7B3903f4AABea18d82029669F26b86EF567Acf56"
+          },
+          {
+            "icLen": 65,
+            "vkConstants": "base:0x8A1248a8532a91a0Ce251e03DDc4C6A39e9d501F"
+          }
+        ]
+      },
+      "fieldMeta": {
+        "supportedParams": {
+          "severity": "HIGH",
+          "description": "Registered circuit parameters (input count for forced withdrawals; batch size otherwise)."
+        },
+        "vkInfo": {
+          "severity": "HIGH",
+          "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported batch size."
+        },
+        "g1_icX": {
+          "severity": "HIGH",
+          "description": "g1 (1): SSTORE2 verification key icX pointers."
+        },
+        "g1_icY": {
+          "severity": "HIGH",
+          "description": "g1 (1): SSTORE2 verification key icY pointers."
+        },
+        "g1_constants": {
+          "severity": "HIGH",
+          "description": "g1 (1): SSTORE2 verification key constants pointer."
+        },
+        "g1_icLength": {
+          "severity": "HIGH",
+          "description": "g1 (1): verification key IC length."
+        },
+        "g3_icX": {
+          "severity": "HIGH",
+          "description": "g3 (3): SSTORE2 verification key icX pointers."
+        },
+        "g3_icY": {
+          "severity": "HIGH",
+          "description": "g3 (3): SSTORE2 verification key icY pointers."
+        },
+        "g3_constants": {
+          "severity": "HIGH",
+          "description": "g3 (3): SSTORE2 verification key constants pointer."
+        },
+        "g3_icLength": {
+          "severity": "HIGH",
+          "description": "g3 (3): verification key IC length."
+        }
+      },
+      "implementationNames": {
+        "base:0x8f394a08A7544daf39aF38FEA5B2E348180bDC05": "Groth16GiftClaimVerifier"
+      }
+    },
+    {
+      "address": "base:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Groth16DepositVerifier",
-      "address": "oeth:0x16e1dE876dEB1C3251A1E923A206605D084F25C5",
+      "address": "base:0xac60252EF8dbC139e0da63cE7F2a13D25a5B627d",
       "type": "Contract",
       "template": "privacy-boost/Groth16DepositVerifier_v2",
       "sourceHashes": [
@@ -58,92 +1626,92 @@
       ],
       "proxyType": "immutable",
       "description": "Groth16 verifier for PrivacyBoost deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.",
-      "deployerAddress": "oeth:0x57db8479301CcD51A7E7fA08fBA594934E8CB80c",
-      "sinceTimestamp": 1788394725,
-      "sinceBlock": 156397974,
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377065,
+      "sinceBlock": 50793859,
       "values": {
         "$immutable": true,
-        "d1_constants": "oeth:0xb88C776E5D15C04BEE877329e490C0f045F7A89b",
+        "d1_constants": "base:0xe7E6c4967915a2a76476c19C764d8ed12FEf5840",
         "d1_icLength": 31,
         "d1_icX": [
-          "oeth:0xcB97f983c92cCE369CE709ea5CEFF6aF86ED628c",
-          "oeth:0xAf75B170A4CFa0C86Aae950e0Cb431B08B843e39",
-          "oeth:0xAa46e3FF5021877114836b5f17A328E4297C6A27",
-          "oeth:0x6394a8E807c7E63a329975ae34fC2a7F92a8f5bE",
-          "oeth:0xf966885B91215d47D496dea7B2043fbb3228a4AC",
-          "oeth:0x9E67Da0524fCb9d0F05646927855A4B0711e707F",
-          "oeth:0x480411F5EDeB91BA20dB9a489EAFe9F4881caa25",
-          "oeth:0x624Cd5abb9Bf64DB75E1C24f09032798fde780BF"
+          "base:0x45daB0338124e5F6DC860F62b8018efFCA72094C",
+          "base:0x18ECdF2D71e6541A8fb1D1b543383f8C3BBd7D89",
+          "base:0x140886AccEB34f65654BE401d3c3Bd39Edb9efAc",
+          "base:0x88251fEc2708bE7A863A859b6B257B15D58097C1",
+          "base:0x718ab2d46dA6B438eea30528B24D146080F65a26",
+          "base:0x6C8d9399099F31B5e36EEa1ED1A1900933E3A5De",
+          "base:0x6178F594A3c1dd3f3262D739FaAD3870129BA7f4",
+          "base:0x38D77F165fE7d7Bdc942C5d25aaa91389E41bA62"
         ],
         "d1_icY": [
-          "oeth:0x634A6d2E89A2dCA237f556E5eA45c8Ccb65Aa306",
-          "oeth:0x39575Ed2958007DCFe827B677347c4624E5069C6",
-          "oeth:0x5076DD64ee046cf3390604eB0AF496aED4DeB6b4",
-          "oeth:0x83432485C31754D5a3E4C9fb1eaA7fda35797843",
-          "oeth:0x9c9FDCe8794EeC6a4834a940Ec30FD569B4FB9b3",
-          "oeth:0xd24B7c771aa6E93DDae84F2AF363BD1CB4a31E69",
-          "oeth:0xda236460eC5a1221798f72e47430B77B1E99bca9",
-          "oeth:0xEe62413dD48D7723EF4990B15Ac982d6cCBe0622"
+          "base:0xAde07a1F7D240398120ddBCb14fb4D7d5306966b",
+          "base:0x2e6320F6a61A091a9D6aedc3594db203Cb4aa22c",
+          "base:0x8d5Eb1c119AEce19EA9722EEd1a49c7Ea67d36F5",
+          "base:0x5a61d9Bf0704cF8E6A7E69C5429fe57168BCE51A",
+          "base:0xD939420fDF8B93f630eA052f34CE57a4977b79E7",
+          "base:0x3B4Ce33739A13CB984184a5f4B24f2F58Ef1Ce22",
+          "base:0xd140804b36E1bDf9989fF2AdD4CAF864342e26Cb",
+          "base:0x2acAC411B4428c97975E3cD8C96aef095f6CeDfC"
         ],
-        "d14_constants": "oeth:0x1e981e66c024F07200DBE636Ce9a1513E79fFFEa",
+        "d14_constants": "base:0x52130d714C25c10404E9E9793Cf31Fe3D1fb5404",
         "d14_icLength": 83,
         "d14_icX": [
-          "oeth:0xD8085D637537BEB32C5Cf0DDCD5cCA2378a17232",
-          "oeth:0xF2194b52B176D0931bfddD91ec9C38d6433830e4",
-          "oeth:0xEAF7EAA818718ad8c069416f2De13b00a22518c8",
-          "oeth:0xf1dB20Eb180b194A870427723Dc93886D4dCCa9f",
-          "oeth:0x2D193517650845390606868eB93820327cE279C1",
-          "oeth:0x4fbD5840bBaf1FB47ac73Baf5034a4fC0a3AC739",
-          "oeth:0xE70B5C3857c694001d366A642f8E333de469603b",
-          "oeth:0xeF5De5a206d038D51825a3328aeC504B3ad53f4b"
+          "base:0x6C6e66E689b7140761613dDac64567690247183e",
+          "base:0x7176BF09D1760D076a4c39442b9a34aD0dbb8964",
+          "base:0x13E2952310fBa075b0E3F5ef5fc3FA6c4e5e2F21",
+          "base:0xF0dB06e797902Eb59419eCf315de675F611132f1",
+          "base:0x1955c12DA09983bE3E11426F2F1B17eB63a1D4D1",
+          "base:0x75A936BAf8A88637857FF476b1e0d50358Ab71DC",
+          "base:0x360c6F57Ab43591A48ed1071b4a830ea6f19fE79",
+          "base:0xfAcc3e82A9e6a83D5CCD5e7Fa5c099D429333b0F"
         ],
         "d14_icY": [
-          "oeth:0x029e45dEC13Ca6a8581086fafAb63F1139c639DE",
-          "oeth:0x1813B48875D643B5Fc6498dF0285Be306620f6A9",
-          "oeth:0xB24f92AcD2D7dFAD699e38E71EAe15bf12B05Be8",
-          "oeth:0xf049d394eAF63970f3Fc2b0a691eCBCc44164786",
-          "oeth:0xe04e4232AEED8928984F40303788294cFDFF4633",
-          "oeth:0x8060a4339a053Ed994e32ffCd3c9108035Dc35e7",
-          "oeth:0x66D27486F3F572740FC10CDa2526b262B8e3A7E2",
-          "oeth:0x909eb5087B05a1eE795C5162015290846bc6a873"
+          "base:0x16D0D37b63Bb6d38B1B6C07aa28492c7fCeE71bf",
+          "base:0x46A51651f1D12042918463f84f3F6Fa9D1F3CF69",
+          "base:0x62Ff3a25EBC8B02679337E94a09FC59341179d58",
+          "base:0x0d96A88adC4fEE8c9f8603Be0A09873E805D6949",
+          "base:0x5c06550360126cE04d85B8CDb78560e679bD1313",
+          "base:0x6c3AC0feD8a4A0f65E6c3B25dC56Cc5Acce330e9",
+          "base:0x4fDB6fE4f1337330F470C67A7afFcD77d489412b",
+          "base:0x9427336670b3c88fd2771DD348fD0762F3CAA416"
         ],
-        "d4_constants": "oeth:0x7Ab445969AaD4cD18B67FFc99bC4793c3008D833",
+        "d4_constants": "base:0x5A70a1D71a25CdDbAdbAA240B59B26AD317849f1",
         "d4_icLength": 43,
         "d4_icX": [
-          "oeth:0x6624ef588C002D44c4B69B92c5Bbefd033AC323B",
-          "oeth:0x6c2e628EDefF7c0f6d3b3257C29D219D7da364b5",
-          "oeth:0x62c1AEa3863DfFe78ef74B561dFcb1E51d259B63",
-          "oeth:0x9354854B802653BCb47f55Fe20BC13614189f123",
-          "oeth:0x0F2F0bA62a140EB49a49E48291a6A2957A92D7a0",
-          "oeth:0x5b955E93558D1278FE85deB8147302bE0004C21C",
-          "oeth:0x605A42B84b8EFd4814a76724226ff17707e0D2E3",
-          "oeth:0x17db858b8e2D905b07Be6694b0Bd776A8CE0b767"
+          "base:0x8bD620C30CA7DcAB7d829311AE6A1eA042F3796d",
+          "base:0x0cEA8883fabbEB36342E48966dC827DCBEBC4533",
+          "base:0xce22D4F7709E818e877A85129F6cd4Bc6f765cE4",
+          "base:0x2b85F299Ce178e8ACB6DB8cC434ae46E796f7546",
+          "base:0x2b34398e190bF3A674ca12c507ABed966A77841c",
+          "base:0x5234703EEcfAfBd7C875197A9B571C516aC7B2e7",
+          "base:0x6F138027FBe4109c5F55A47952724A912611D332",
+          "base:0x12e8649274c91af7EC326785569C5319C1e281D4"
         ],
         "d4_icY": [
-          "oeth:0xeF887DE3Be161Fe6784384c87DE0c53dc443Af67",
-          "oeth:0xCA8fACb4657CF27a6e9206D3b058FFd08585804f",
-          "oeth:0xB382b842eCA63e62879902bC40A5e63B68511df3",
-          "oeth:0x09CaF27aD7B89BeBB5397B2093701C4dc70f3252",
-          "oeth:0xf7f62c96480906DA44064Bed43656576C6Faa046",
-          "oeth:0xdc6616F71EA2645d687c52f463AcE2fab1F9a17F",
-          "oeth:0x2842640685b988983a578CfDc09C36F4A7492079",
-          "oeth:0x211c864F59f49A9B7a9B11B065f4aBdeA78CDB79"
+          "base:0x0a426dF9E7779FF54F43A38612152dD5a1050cE7",
+          "base:0x246c719f0cD847cff7561ed79658f4d6923Ae0DF",
+          "base:0xDb5cfA250aF8C42B8b2333F8D83E2B1703f11f0E",
+          "base:0x97350ED2cbeADE8BFe5d61Af7CF127fefb176d8D",
+          "base:0xAb61B000109116cA2145b7250409a8b59AC2B3F4",
+          "base:0x32892d4fdd39339D05314B58A845a67613A93F4F",
+          "base:0x7060EEf6B35AB7f495bC0c2C09906d2651BAd89f",
+          "base:0x51EE55625d2e6caf9211f56D913204dDd6A5392f"
         ],
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "pendingOwner": "base:0x0000000000000000000000000000000000000000",
         "supportedParams": [1, 4, 14],
         "vkInfo": [
           {
             "icLen": 31,
-            "vkConstants": "oeth:0xb88C776E5D15C04BEE877329e490C0f045F7A89b"
+            "vkConstants": "base:0xe7E6c4967915a2a76476c19C764d8ed12FEf5840"
           },
           {
             "icLen": 43,
-            "vkConstants": "oeth:0x7Ab445969AaD4cD18B67FFc99bC4793c3008D833"
+            "vkConstants": "base:0x5A70a1D71a25CdDbAdbAA240B59B26AD317849f1"
           },
           {
             "icLen": 83,
-            "vkConstants": "oeth:0x1e981e66c024F07200DBE636Ce9a1513E79fFFEa"
+            "vkConstants": "base:0x52130d714C25c10404E9E9793Cf31Fe3D1fb5404"
           }
         ]
       },
@@ -206,716 +1774,12 @@
         }
       },
       "implementationNames": {
-        "oeth:0x16e1dE876dEB1C3251A1E923A206605D084F25C5": "Groth16DepositVerifier"
-      }
-    },
-    {
-      "name": "Groth16GiftClaimVerifier",
-      "address": "oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4",
-      "type": "Contract",
-      "template": "privacy-boost/Groth16GiftClaimVerifier",
-      "sourceHashes": [
-        "0xce2c8d07f23af56a21872cb5009c49e812219e39b0f9ce1a29b2feb80c9a3ba4"
-      ],
-      "proxyType": "immutable",
-      "description": "Groth16 verifier for PrivacyBoost gift settlement and public gift exit proofs. Verification keys are stored in SSTORE2 data contracts.",
-      "deployerAddress": "oeth:0x57db8479301CcD51A7E7fA08fBA594934E8CB80c",
-      "sinceTimestamp": 1788394733,
-      "sinceBlock": 156397978,
-      "values": {
-        "$immutable": true,
-        "g1_constants": "oeth:0x90645660220f9E84ED9a99fd0142801C65374D56",
-        "g1_icLength": 51,
-        "g1_icX": [
-          "oeth:0x1ED0aF7848880207e24B5B151badfF029538CDF2",
-          "oeth:0x44125d51E10603FD312ba71C55B55953947Df2B2",
-          "oeth:0x7cF1879192Bd1Df7dE0F2E4Df9329f31dac18E8D",
-          "oeth:0xb9F506228Ea829aD924347C7DA8A5660dD0619F6",
-          "oeth:0xaa068b415e9FD6B47bb4ed27EdaBaF1875D60528",
-          "oeth:0xC61E915f524f72A072110E68f1dBB1d2D346185B",
-          "oeth:0xE7c8C7705Fc4979BbB72076249e4745792779B35",
-          "oeth:0x21C81280DdA5d25B3A9bF8A10CBC0291d3f763Db"
-        ],
-        "g1_icY": [
-          "oeth:0xb05D88D8C66425E7ED6be58FaC29B37907f29F2A",
-          "oeth:0x4d1855005528af8e0056749Bb8518560004Ee470",
-          "oeth:0xDFb63dA932C4784503FeA7A6F732f65d49F4317a",
-          "oeth:0xD75404b3bf6e3BD807F56D3B51601A63CdC3AE99",
-          "oeth:0x7972Df1c8aa6c1dA8494e8a0003C6F0dE3d0E975",
-          "oeth:0xd0D453AabCAFab5bEecA110EB9deBda418409118",
-          "oeth:0xC00E718882482B6715533C9Fe77Cd19FF8bdA797",
-          "oeth:0x4e52f052413fdB22Ba49aa7D1697154f324692B1"
-        ],
-        "g3_constants": "oeth:0x46DF1d714BcB253b5882Baa187341c3Af62e1A7B",
-        "g3_icLength": 65,
-        "g3_icX": [
-          "oeth:0xBddC88571352871C5c8a34e897912Ec45251Bb82",
-          "oeth:0x7bf195ee85231eeF8a97B7393ece8bd1BEA5Fd9c",
-          "oeth:0x539eF533b7655d2cA6d8Cc999781F2B9992fFF5B",
-          "oeth:0xe370BBfaB05973f9B8369cFBca0c69d5B03252bB",
-          "oeth:0x9e7AAF3a769dCde56e736cD90cE3e9717628211F",
-          "oeth:0x83a7A6ddDE2A97595a5f427c1e05Db730101b971",
-          "oeth:0xF0Bd2a9ccc3Bf2b41c4B6A7E6354BEc334FE1acE",
-          "oeth:0xBfA3696747FdEb9fd29b35B705Db4e9c3C66E980"
-        ],
-        "g3_icY": [
-          "oeth:0x2599C64245A75dC5C7865c7d69c5D168901696b7",
-          "oeth:0xFd62fC66A6D94e73d2A217818f5a835d70415Cac",
-          "oeth:0x6444830F8E88d6D9AdE3Cf45692982B8328540D3",
-          "oeth:0xcdB532f4B05E9805361Ef8574490e7cFB5E5C6F6",
-          "oeth:0x38869624a5Ad4C9183E6b573fe8bC0c847063E5c",
-          "oeth:0xfEbE83c970303e6Df14EB3024E735c011e05eD5B",
-          "oeth:0x45AF1eCe2Be10AcA532e9dA181541F71135Ba25f",
-          "oeth:0xd85B122834d04F6B120eA192bD924EcbEA109C4E"
-        ],
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
-        "supportedParams": [1, 3],
-        "vkInfo": [
-          {
-            "icLen": 51,
-            "vkConstants": "oeth:0x90645660220f9E84ED9a99fd0142801C65374D56"
-          },
-          {
-            "icLen": 65,
-            "vkConstants": "oeth:0x46DF1d714BcB253b5882Baa187341c3Af62e1A7B"
-          }
-        ]
-      },
-      "fieldMeta": {
-        "supportedParams": {
-          "severity": "HIGH",
-          "description": "Registered circuit parameters (input count for forced withdrawals; batch size otherwise)."
-        },
-        "vkInfo": {
-          "severity": "HIGH",
-          "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported batch size."
-        },
-        "g1_icX": {
-          "severity": "HIGH",
-          "description": "g1 (1): SSTORE2 verification key icX pointers."
-        },
-        "g1_icY": {
-          "severity": "HIGH",
-          "description": "g1 (1): SSTORE2 verification key icY pointers."
-        },
-        "g1_constants": {
-          "severity": "HIGH",
-          "description": "g1 (1): SSTORE2 verification key constants pointer."
-        },
-        "g1_icLength": {
-          "severity": "HIGH",
-          "description": "g1 (1): verification key IC length."
-        },
-        "g3_icX": {
-          "severity": "HIGH",
-          "description": "g3 (3): SSTORE2 verification key icX pointers."
-        },
-        "g3_icY": {
-          "severity": "HIGH",
-          "description": "g3 (3): SSTORE2 verification key icY pointers."
-        },
-        "g3_constants": {
-          "severity": "HIGH",
-          "description": "g3 (3): SSTORE2 verification key constants pointer."
-        },
-        "g3_icLength": {
-          "severity": "HIGH",
-          "description": "g3 (3): verification key IC length."
-        }
-      },
-      "implementationNames": {
-        "oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4": "Groth16GiftClaimVerifier"
-      }
-    },
-    {
-      "name": "ExternalCallGateway",
-      "address": "oeth:0x54B576782d3CE325CAc9861E17bB5d7926e41955",
-      "type": "Contract",
-      "template": "privacy-boost/ExternalCallGateway",
-      "sourceHashes": [
-        "0x6ca52f3dc9fa66a455c3ff9e302855d7dca4176fae2d1b25ab9379049a1b2a08"
-      ],
-      "proxyType": "immutable",
-      "description": "Gateway executing pool-authorized external calls against an allowlist of target addresses and function selectors, with optional input/output token constraints. Enforces proof-bound settlement receipts and redeposits returned funds into the pool.",
-      "deployerAddress": "oeth:0x57db8479301CcD51A7E7fA08fBA594934E8CB80c",
-      "sinceTimestamp": 1788395965,
-      "sinceBlock": 156398594,
-      "values": {
-        "$immutable": true,
-        "guardian": "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B",
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "paused": false,
-        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
-        "policyEntryAt": [
-          {
-            "target": "oeth:0xC30ce6A5758786e0F640cC5f881Dd96e9a1C5C59",
-            "selector": "0x6e553f65",
-            "policy": {
-              "allowed": true,
-              "inputTokenId": 4,
-              "outputTokenId": 10
-            }
-          },
-          {
-            "target": "oeth:0xC30ce6A5758786e0F640cC5f881Dd96e9a1C5C59",
-            "selector": "0xba087652",
-            "policy": {
-              "allowed": true,
-              "inputTokenId": 10,
-              "outputTokenId": 4
-            }
-          },
-          {
-            "target": "oeth:0x3d63934715b6D4c4DFbBC1a00Fe2A2145079DD76",
-            "selector": "0x6e553f65",
-            "policy": {
-              "allowed": true,
-              "inputTokenId": 1,
-              "outputTokenId": 11
-            }
-          },
-          {
-            "target": "oeth:0x3d63934715b6D4c4DFbBC1a00Fe2A2145079DD76",
-            "selector": "0xba087652",
-            "policy": {
-              "allowed": true,
-              "inputTokenId": 11,
-              "outputTokenId": 1
-            }
-          },
-          {
-            "target": "oeth:0x111111125421cA6dc452d289314280a0f8842A65",
-            "selector": "0x07ed2379",
-            "policy": { "allowed": true, "inputTokenId": 0, "outputTokenId": 0 }
-          }
-        ],
-        "policyKeyCount": 5,
-        "pool": "oeth:0xca689828854a422CF1f778be03CA80549408F620"
-      },
-      "fieldMeta": {
-        "paused": {
-          "description": "Whether new external gateway execution is paused."
-        },
-        "pool": {
-          "severity": "HIGH",
-          "description": "PrivacyBoost pool authorized to execute gateway settlements."
-        },
-        "policyEntryAt": {
-          "severity": "HIGH",
-          "description": "Installed external call policies: target, function selector, and allowed input/output token IDs (zero permits any token). Targets are external DeFi dependencies and are not recursively discovered."
-        }
-      },
-      "implementationNames": {
-        "oeth:0x54B576782d3CE325CAc9861E17bB5d7926e41955": "ExternalCallGateway"
-      }
-    },
-    {
-      "name": "AuthRegistry",
-      "address": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
-      "type": "Contract",
-      "template": "privacy-boost/AuthRegistry_v2",
-      "sourceHashes": [
-        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
-        "0x53a840fbb8f7f80637b9be2a5f960b7901c110d9a8e08d65befb06d6532b110a"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Registry of PrivacyBoost account authorization keys and onchain spend approvals. Supports BabyJubJub keys authorized by account-owner signatures, approval-only accounts and revocable batches of spend approvals. Tracks current and recently superseded auth roots; forced withdrawals validate live auth records directly.",
-      "ignoreInWatchMode": [
-        "registryRoot",
-        "getAllAuthTreeRoots",
-        "currentAuthTreeNumber"
-      ],
-      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
-      "sinceTimestamp": 1776186491,
-      "sinceBlock": 150293857,
-      "values": {
-        "$admin": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C",
-        "$implementation": "oeth:0xA2072F7B4b261F997035f9522648c7c5bAF9370a",
-        "$pastUpgrades": [
-          [
-            "2026-04-14T17:08:11.000Z",
-            "0x641f9c6a837b145e5a8a9f7d6cb35e080bd128eaaec7827c1665c090a22535d5",
-            ["oeth:0x2b32CD80464bE013007Ff35bBEEA29478194eA56"]
-          ],
-          [
-            "2026-05-26T17:25:39.000Z",
-            "0xb9fbb085beef52c1c553f428b94180fc54ebdf3a50a3616b0efbae4756b572c3",
-            ["oeth:0xcCdF755866c708A4a8D0002DC3f1a574226DF38b"]
-          ],
-          [
-            "2026-09-03T02:33:25.000Z",
-            "0xdb489f72d2b3e0cdab34535d416d81f14c6ca3d74d30c68e7f02cb2017fc035c",
-            ["oeth:0xA2072F7B4b261F997035f9522648c7c5bAF9370a"]
-          ]
-        ],
-        "$upgradeCount": 3,
-        "allowedRelays": ["oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0"],
-        "authPoseidon": "oeth:0x09257a2B24C27586c2Db2C18c4b53bE459c7e870",
-        "authTreeDepth": 20,
-        "currentAuthTreeNumber": 0,
-        "getAllAuthTreeRoots": [
-          "19227483129716734431020243988009392092993349987835363574744078110368631313771"
-        ],
-        "MAX_APPROVAL_LIFETIME": 2592000,
-        "MAX_AUTH_TREE_NUMBER": 32767,
-        "operator": "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B",
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
-        "registryRoot": "19227483129716734431020243988009392092993349987835363574744078110368631313771"
-      },
-      "fieldMeta": {
-        "allowedRelays": {
-          "description": "Relays allowed to submit account key registrations, rotations and revocations signed by account owners."
-        },
-        "authTreeDepth": { "description": "Depth of the auth Merkle trees." },
-        "authPoseidon": {
-          "severity": "HIGH",
-          "description": "External Poseidon2 helper for account IDs, authorization leaves and auth Merkle tree hashing."
-        },
-        "MAX_APPROVAL_LIFETIME": {
-          "severity": "HIGH",
-          "description": "Maximum lifetime of an onchain spend approval, in seconds."
-        }
-      },
-      "implementationNames": {
-        "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f": "TransparentUpgradeableProxy",
-        "oeth:0xA2072F7B4b261F997035f9522648c7c5bAF9370a": "AuthRegistry"
-      }
-    },
-    {
-      "name": "AdminMultisig",
-      "address": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "oeth:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
-      "sinceTimestamp": 1776185181,
-      "sinceBlock": 150293202,
-      "values": {
-        "$immutable": false,
-        "$implementation": "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "oeth:0xcf01AB4fa0C5796811Ad939daB8dEd833cf90683",
-          "oeth:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
-          "oeth:0xB30347E816B525453468cC95C17231Ab04a0C0A9",
-          "oeth:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x107dd9a24adb165f1f8fc36d91b8bf46f210130c3dda2ac1189433726c7decb9",
-        "getChainId": 10,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 13,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC": "SafeProxy",
-        "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "name": "Groth16PortalDepositVerifier",
-      "address": "oeth:0x6806eA551C3c8350Ab156eC5001D28705dCda2B6",
-      "type": "Contract",
-      "template": "privacy-boost/Groth16PortalDepositVerifier",
-      "sourceHashes": [
-        "0x3830a1bd0e15af692c53348192b327a44c10cd19a215f5401e83eb8eb836a109"
-      ],
-      "proxyType": "immutable",
-      "description": "Groth16 verifier for PrivacyBoost portal deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.",
-      "deployerAddress": "oeth:0x57db8479301CcD51A7E7fA08fBA594934E8CB80c",
-      "sinceTimestamp": 1788394731,
-      "sinceBlock": 156397977,
-      "values": {
-        "$immutable": true,
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "p1_constants": "oeth:0xaeA63701e7E9680C4B48a42d40189baf4F4F083d",
-        "p1_icLength": 32,
-        "p1_icX": [
-          "oeth:0x0134272dA6b5B0c082c9105cB49BfC9767a8e4fb",
-          "oeth:0x68F9409f1050AA251049613E1A488FB880762462",
-          "oeth:0xFd6C207B032500e558087f9428e63540c1130b3e",
-          "oeth:0x3aAf191CE28Fc9887DbDCa071Fb0f50cB76127d8",
-          "oeth:0xf97eb070671cfbc4973c4a10211ef8d6B546DEbB",
-          "oeth:0x70003AD141dd53725d4a32e50Dd89cEBba0fB2b5",
-          "oeth:0xA63e6a255CE3CE435d2684833C3169124B7818F2",
-          "oeth:0xB3b793ab4Ef229093B928F9841C7e965AF7A2D33"
-        ],
-        "p1_icY": [
-          "oeth:0x2bd780764Cd3db35471bCD2Bb4F20F7423814031",
-          "oeth:0x0Ee3d3f6f230A627964cB2279390D3043b66ba02",
-          "oeth:0x77eCfE93cf4f69A0d1caDa9088bB23513d01cA56",
-          "oeth:0xe3ae5134aa5e35214E177EFd8f981949E80812eC",
-          "oeth:0x3Ff919E2D124Ac3Cc46d2cB6042acb39f4A97663",
-          "oeth:0x744409a8d38de5f04c00fa15BcAA091692E036E7",
-          "oeth:0x748032A101C57ECec4E6057E05f391852993E522",
-          "oeth:0x6dfBcB569ACb0f2cFAF1656526C2B89e09535Eab"
-        ],
-        "p6_constants": "oeth:0xCA8E30dA3f08b05b44e23Ae35CA2D9277985E9cC",
-        "p6_icLength": 62,
-        "p6_icX": [
-          "oeth:0x1f979Dd7aA7eD151992ee93A43f3de8De3bD6c5D",
-          "oeth:0xEa25aD5afDccc2672755d1ce0bD2FA3e75C53365",
-          "oeth:0x9703035F75e29D69fA402cB74c7fEF8fF23d6E4D",
-          "oeth:0xEAb9D9D0683fa6E8F0Cd23665DB18C69809219eA",
-          "oeth:0x3A59008dC2f57Ce7237F0872Edce20575F932DC0",
-          "oeth:0xD3c87A68C103b476f81c7eDA1164499349F5f3Db",
-          "oeth:0x52B8A6B032453AB4F0B524c5F18923ff6A8D94b0",
-          "oeth:0x8590fA6eD0Ef26FcC6d9CB88f01e4Aca46CF2767"
-        ],
-        "p6_icY": [
-          "oeth:0x1286c5D72146d5e75544653d8F8e38220abAc28A",
-          "oeth:0x57FFE90f07c8c86055280D406617dfFc19fa10f8",
-          "oeth:0xDd4dd4b07cE2B66321e5e4248AFCc63876eda335",
-          "oeth:0xA823F1e4D3BC92453A98520BEEeDEFe09A325700",
-          "oeth:0xFD380279c3a8be093D043d5fA59f8febB7dF3e5d",
-          "oeth:0xd86C1915f30BE10aDf60B23470251282d9179b56",
-          "oeth:0x608aD015b4580f926E064755361Ba143D3243074",
-          "oeth:0x020B74cb38827984583e3cE83aEB87E59Fd075E2"
-        ],
-        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
-        "supportedParams": [1, 6],
-        "vkInfo": [
-          {
-            "icLen": 32,
-            "vkConstants": "oeth:0xaeA63701e7E9680C4B48a42d40189baf4F4F083d"
-          },
-          {
-            "icLen": 62,
-            "vkConstants": "oeth:0xCA8E30dA3f08b05b44e23Ae35CA2D9277985E9cC"
-          }
-        ]
-      },
-      "fieldMeta": {
-        "supportedParams": {
-          "severity": "HIGH",
-          "description": "Registered circuit parameters (input count for forced withdrawals; batch size otherwise)."
-        },
-        "vkInfo": {
-          "severity": "HIGH",
-          "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported batch size."
-        },
-        "p1_icX": {
-          "severity": "HIGH",
-          "description": "p1 (1): SSTORE2 verification key icX pointers."
-        },
-        "p1_icY": {
-          "severity": "HIGH",
-          "description": "p1 (1): SSTORE2 verification key icY pointers."
-        },
-        "p1_constants": {
-          "severity": "HIGH",
-          "description": "p1 (1): SSTORE2 verification key constants pointer."
-        },
-        "p1_icLength": {
-          "severity": "HIGH",
-          "description": "p1 (1): verification key IC length."
-        },
-        "p6_icX": {
-          "severity": "HIGH",
-          "description": "p6 (6): SSTORE2 verification key icX pointers."
-        },
-        "p6_icY": {
-          "severity": "HIGH",
-          "description": "p6 (6): SSTORE2 verification key icY pointers."
-        },
-        "p6_constants": {
-          "severity": "HIGH",
-          "description": "p6 (6): SSTORE2 verification key constants pointer."
-        },
-        "p6_icLength": {
-          "severity": "HIGH",
-          "description": "p6 (6): verification key IC length."
-        }
-      },
-      "implementationNames": {
-        "oeth:0x6806eA551C3c8350Ab156eC5001D28705dCda2B6": "Groth16PortalDepositVerifier"
-      }
-    },
-    {
-      "address": "oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "oeth:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "OperatorMultisig",
-      "address": "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "oeth:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
-      "sinceTimestamp": 1776185193,
-      "sinceBlock": 150293208,
-      "values": {
-        "$immutable": false,
-        "$implementation": "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "oeth:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
-          "oeth:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
-          "oeth:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xbc5f6644f498e3cb518a53fc08b48385af44f807ade5f9c7cc49c5db3e762e13",
-        "getChainId": 10,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 1,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B": "SafeProxy",
-        "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "name": "Groth16ForcedVerifier",
-      "address": "oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641",
-      "type": "Contract",
-      "template": "privacy-boost/Groth16ForcedVerifier_v2",
-      "sourceHashes": [
-        "0x2f5dba82c5b56962c7b7de9147571469ef0b518f3daf119db2b008167d474f53"
-      ],
-      "proxyType": "immutable",
-      "description": "Groth16 verifier for PrivacyBoost forced withdrawal proofs. Verification keys are stored in SSTORE2 data contracts.",
-      "deployerAddress": "oeth:0x57db8479301CcD51A7E7fA08fBA594934E8CB80c",
-      "sinceTimestamp": 1788394729,
-      "sinceBlock": 156397976,
-      "values": {
-        "$immutable": true,
-        "f13_constants": "oeth:0xA0E2C870c0ccA1a53ec9a47d17514C1C9330C16b",
-        "f13_icLength": 53,
-        "f13_icX": [
-          "oeth:0x39ce5C57780ecA498eabbDc1aDA52A561b387F74",
-          "oeth:0x0cD7723Ddc3bDd2FE9dDE6f831738A8D68a329fD",
-          "oeth:0xd8fDb9E95D3E398c6496f79bbd6B23B3031c9CBF",
-          "oeth:0xd779e6f7EAB3bAFdec699c862717bB69E7cD1DF3",
-          "oeth:0x740C5685a212Ba1C8578FFAa06A75f3c313B9211",
-          "oeth:0x860CA47767DE44Ef0cf60a325EE95C2173F754EA",
-          "oeth:0x5623082F3ae8A0fb3AB82b4040F1beb94B711CBB",
-          "oeth:0x9e9331f49EB4A7410C94212a73E225274AB4C615"
-        ],
-        "f13_icY": [
-          "oeth:0x50E46573bdAbd15aC2083c8Cb8f6391DA849eB8E",
-          "oeth:0xb15E5CA80E43AAb817d51a16D81FE60805D859f7",
-          "oeth:0x3E8f9e39d85C90A9680CC22B3AE79818eD7Ff327",
-          "oeth:0x4aCbe8E53b111Db6c24B162AB9376df99b85b376",
-          "oeth:0x1F41fd97CA8426d8107D1a381BeAD5C152254786",
-          "oeth:0x65D0Afcb3Aa3B07F59C178dd96f24D6e950Fc68E",
-          "oeth:0x32DB89ef8758780C768AD9CDcbcc9940730236B6",
-          "oeth:0x1d47DA91885A1279f9c01f372e04AA405e392e53"
-        ],
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
-        "supportedParams": [13],
-        "vkInfo": [
-          {
-            "icLen": 53,
-            "vkConstants": "oeth:0xA0E2C870c0ccA1a53ec9a47d17514C1C9330C16b"
-          }
-        ]
-      },
-      "fieldMeta": {
-        "supportedParams": {
-          "severity": "HIGH",
-          "description": "Registered circuit parameters (input count for forced withdrawals; batch size otherwise)."
-        },
-        "vkInfo": {
-          "severity": "HIGH",
-          "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported input count."
-        },
-        "f13_icX": {
-          "severity": "HIGH",
-          "description": "f13 (13): SSTORE2 verification key icX pointers."
-        },
-        "f13_icY": {
-          "severity": "HIGH",
-          "description": "f13 (13): SSTORE2 verification key icY pointers."
-        },
-        "f13_constants": {
-          "severity": "HIGH",
-          "description": "f13 (13): SSTORE2 verification key constants pointer."
-        },
-        "f13_icLength": {
-          "severity": "HIGH",
-          "description": "f13 (13): verification key IC length."
-        }
-      },
-      "implementationNames": {
-        "oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641": "Groth16ForcedVerifier"
-      }
-    },
-    {
-      "name": "TokenRegistry",
-      "address": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
-      "type": "Contract",
-      "template": "privacy-boost/TokenRegistry",
-      "sourceHashes": [
-        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
-        "0xd2a7367ae9af91937028b55397ea119f00b4d2169467d0b199f085e6998c7187"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Registry mapping compact token IDs to the ERC-20 tokens accepted by the PrivacyBoost pool.",
-      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
-      "sinceTimestamp": 1776186485,
-      "sinceBlock": 150293854,
-      "values": {
-        "$admin": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd",
-        "$implementation": "oeth:0x86A891632594Ae26834275925Eb4Fde37F1eBb19",
-        "$pastUpgrades": [
-          [
-            "2026-04-14T17:08:05.000Z",
-            "0x969857c177e78cddd77fb7d52805242d5af5b357e33e3ba282e67aa416457f9e",
-            ["oeth:0x238e6ec4968c9b00b16293139951c23815Ca1134"]
-          ],
-          [
-            "2026-09-03T02:33:25.000Z",
-            "0xdb489f72d2b3e0cdab34535d416d81f14c6ca3d74d30c68e7f02cb2017fc035c",
-            ["oeth:0x86A891632594Ae26834275925Eb4Fde37F1eBb19"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "nextId": 11,
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
-        "tokens": [
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0x4200000000000000000000000000000000000006",
-            "tokenSubId": 0
-          },
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0x4200000000000000000000000000000000000042",
-            "tokenSubId": 0
-          },
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-            "tokenSubId": 0
-          },
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
-            "tokenSubId": 0
-          },
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0x68f180fcCe6836688e9084f035309E29Bf0A2095",
-            "tokenSubId": 0
-          },
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
-            "tokenSubId": 0
-          },
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
-            "tokenSubId": 0
-          },
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0xDCB612005417Dc906fF72c87DF732e5a90D49e11",
-            "tokenSubId": 0
-          },
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
-            "tokenSubId": 0
-          },
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0xC30ce6A5758786e0F640cC5f881Dd96e9a1C5C59",
-            "tokenSubId": 0
-          },
-          {
-            "tokenType": 0,
-            "tokenAddress": "oeth:0x3d63934715b6D4c4DFbBC1a00Fe2A2145079DD76",
-            "tokenSubId": 0
-          }
-        ]
-      },
-      "fieldMeta": {
-        "nextId": {
-          "description": "Latest token ID assigned; tokens are registered with IDs 1..nextId."
-        },
-        "tokens": {
-          "description": "Registered tokens (token type, token address, sub-id) by token ID."
-        }
-      },
-      "implementationNames": {
-        "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6": "TransparentUpgradeableProxy",
-        "oeth:0x86A891632594Ae26834275925Eb4Fde37F1eBb19": "TokenRegistry"
-      }
-    },
-    {
-      "address": "oeth:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "AuditGatewayProxyAdmin",
-      "address": "oeth:0x96f3E5551E1330f31974597217019812667544c8",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
-      ],
-      "proxyType": "immutable",
-      "description": "Admin contract of the AuditGateway proxy.",
-      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
-      "sinceTimestamp": 1776188259,
-      "sinceBlock": 150294741,
-      "values": {
-        "$immutable": true,
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "implementationNames": {
-        "oeth:0x96f3E5551E1330f31974597217019812667544c8": "ProxyAdmin"
-      }
-    },
-    {
-      "name": "PrivacyBoostProxyAdmin",
-      "address": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
-      ],
-      "proxyType": "immutable",
-      "description": "Admin contract of the PrivacyBoost proxy.",
-      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
-      "sinceTimestamp": 1776188243,
-      "sinceBlock": 150294733,
-      "values": {
-        "$immutable": true,
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "implementationNames": {
-        "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": "ProxyAdmin"
+        "base:0xac60252EF8dbC139e0da63cE7F2a13D25a5B627d": "Groth16DepositVerifier"
       }
     },
     {
       "name": "Groth16EpochVerifier",
-      "address": "oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6",
+      "address": "base:0xB144eb785E2CCe17681395Cd475093C01AEeb11e",
       "type": "Contract",
       "template": "privacy-boost/Groth16EpochVerifier_v2",
       "sourceHashes": [
@@ -923,299 +1787,227 @@
       ],
       "proxyType": "immutable",
       "description": "Groth16 verifier for PrivacyBoost private transfer and withdrawal epochs. Keys are indexed by (max transfers, inputs per transfer, outputs per transfer). The nested key registry is not enumerable and emits no registration events; discovery monitors the reviewed production circuit configurations.",
-      "deployerAddress": "oeth:0x57db8479301CcD51A7E7fA08fBA594934E8CB80c",
-      "sinceTimestamp": 1788394723,
-      "sinceBlock": 156397973,
+      "deployerAddress": "base:0x1Dc2f144BAe8a493F736a0c678A64D887943Cb3d",
+      "sinceTimestamp": 1790176487,
+      "sinceBlock": 51693570,
       "values": {
         "$immutable": true,
-        "l1_constants": "oeth:0x235816C90450D9ac3b934E2D7104C932De3a1eCB",
+        "l1_constants": "base:0x8A07c1e933184420456fD2a46819CD5B0ff58D37",
         "l1_icLength": 67,
         "l1_icX": [
-          "oeth:0x00700eE87C8a237eAd7a52f7284F9a027A4F0c24",
-          "oeth:0x3D408660D5c09a92BF7e673B104132cAE47D1E93",
-          "oeth:0x8c61aF46a7147921793E2Dca1191630b47229Ab3",
-          "oeth:0xf05137b69bB1A7De95971Da89dC37310258e2D58",
-          "oeth:0xF829140c1224F0E1a4De8EcB3468d7c14697fe24",
-          "oeth:0x6d979b16a2e6F03B3778aB3467b4F9bc692Fe2Aa",
-          "oeth:0x9ffFBB63D143eEb1e88F5187fCA3755995D27aD8",
-          "oeth:0x41498f1Da5a0CB32f1486F382e9662B6DdD23a8d"
+          "base:0xc4697e3B7e3d696F31967858d7BC171b5B6889BC",
+          "base:0xAd12492Eb15388C4E9DDCdFb657839b6CBd6f097",
+          "base:0x22fB7fec2c6699A137762325E8A83b49610008af",
+          "base:0x4EeafD76394cfb23972d772A2a64F0159023a593",
+          "base:0xF71eB5D17034E09c03AeAf904E0faDD13dBdDdAD",
+          "base:0xe49E289442A38aE852C5Ec0dd3F96CcC4DF4D4Da",
+          "base:0x1d558b79FE68Fb6aF597E4063D9f34a003b6eE5c",
+          "base:0xdfE48A0cb87dED4b29C5168CbB9A54675f4f6Cce"
         ],
         "l1_icY": [
-          "oeth:0xF36e8a8513E160Cce8374A48d4ffe911D28fBC78",
-          "oeth:0x940Ab294637fb9846d4c29a5Dc188713D33d17FD",
-          "oeth:0x922f084d12009f69db972C79E0cF1F75965fb634",
-          "oeth:0xa738C6F9a4bfEAc2c368606b2ad95432654CC5dC",
-          "oeth:0xeaD8c5060f232639e6D455061723B9677E3A18c3",
-          "oeth:0x4f7D67F605b1BbfB02D68745C83cE1a0CA42095A",
-          "oeth:0x91f860B9812F31Fac22e9CbF5FEc23e117904241",
-          "oeth:0xD112A0B1a8919774Ebb5f86930a35B5d1b001aAd"
+          "base:0x8CdE6a3fCDB6ed6f27d47118C135E42FC359CD0a",
+          "base:0x9E0B9861e22BBF2e9CdEFfC91999FF90623C9c13",
+          "base:0xBE25743fd41460BDD1594438E5941C9706734260",
+          "base:0xeAeFB174C4a05Fd6fbb9407E9D0b8001d91B858F",
+          "base:0xc682a346A337c34d8ED87915A20Ee097F4d78cdD",
+          "base:0x454a5Ae9f52913BFd3e940B376D5119c60cAba4a",
+          "base:0x268614848716EED890F1a695743707200294230d",
+          "base:0x4132ddff2def2B7704c3FE94d26bdb71543b8a20"
         ],
-        "l3_constants": "oeth:0x88167A49aa8F1094157b1D15A891DD9CEd324074",
+        "l3_constants": "base:0x88F160099a6Ed2E5C294cb3e5B665ABB66B77b13",
         "l3_icLength": 105,
         "l3_icX": [
-          "oeth:0x6F152727D225f1fAFB2b96755A15932b9a8E588c",
-          "oeth:0xB2D527B1016e17D584712E832FB5a2d82fBe35fA",
-          "oeth:0xFe77d638dc05C7492ebcC3B05F6763C132161bf9",
-          "oeth:0xe0AaA2a7905Dd2dcfa5DAeE1e12542dDF68bf6c6",
-          "oeth:0x3652F8E1DbC452Aec39d0927B896c4d76Dc25d32",
-          "oeth:0x4A99FAdA1D0389e0c7a9E4906df58Ee51B0BCB33",
-          "oeth:0x22340529A38327e62632344D241aDbE6f9F13D88",
-          "oeth:0x4D79c0aE2E3F9DC0Df5dC5A4c22d4a270726900e"
+          "base:0x0c7748728647dd479A4fE611878bC44067971FcE",
+          "base:0xB5652B94F2d4db11C166870FE90b2CF4D81421aA",
+          "base:0xa16fDc22E000907397D354c8978c3128080B7765",
+          "base:0x8E522c9BF2CCd4F9018797515691b0132b388d64",
+          "base:0x12f4c5e2E94DBa18edc165bc121f4dc7B4152F20",
+          "base:0x4D2444b48921F66479Bd11FC1745ee06d3Ec4F61",
+          "base:0x67285FCAE8d59Ca330E1f7bD7B073b2Fc4e46152",
+          "base:0xe32C89474850eAd6006ccf8a551708cE1A612954"
         ],
         "l3_icY": [
-          "oeth:0x5e4Acc023b2747329dd7c49f6AEae4D51d030513",
-          "oeth:0xcB0CB9A73D5a7105b3dE8F93fC64AcEE9a68508C",
-          "oeth:0xD95a8A23434D45F8A68037c76385523976aFABa7",
-          "oeth:0xc14c0B2ea8f153A6f12CB169bEd6274F8bB9f236",
-          "oeth:0x0a060D095dB527be626BD4C74eBeF6176ed2F672",
-          "oeth:0x20ab5eA091f060B1A1BF531545aEA00D45CDad24",
-          "oeth:0x62c044f9dfbB28e42e36cF42C5Dbc9cD52A9D2F0",
-          "oeth:0x181151Af7848cD33BB88b9AB9069Cd07e048b9f0"
+          "base:0x1ecA11E0eA9642993F628602DF4FFA76e907A54C",
+          "base:0xdc584BE05711B30Be2648E3edd2D59C46768253e",
+          "base:0x983dBc4cE857a831fF6b6ce9f760610ff0fF847b",
+          "base:0x039C58D5EDfAdE8A4D3cBfB980b04fa4A4b35120",
+          "base:0xA6AcBe90f915Ef25508D091f1350eCD215B14Ae8",
+          "base:0xb59A22221574042fbf198C732f8aA31DD0d21EF6",
+          "base:0xE4207f79c625C951606128d5BF1Cd0B2DB48E70f",
+          "base:0xEEC5B21a63101B65fd60703A6e04BEb9fc05d36A"
         ],
-        "l6_constants": "oeth:0x50FC6d8534d4737886d2d2047B003327bDE4ee00",
-        "l6_icLength": 162,
-        "l6_icX": [
-          "oeth:0x515E2809086e009c5e4C11A3e38c042a173cB6d3",
-          "oeth:0xC3561a7D82A8428a4203528fd36CAbE874dA3e15",
-          "oeth:0x29F58F18bFc0E1e6e7E1AF108017b73b30e7FE5c",
-          "oeth:0x0d973413a9909d5FF4E73b5411f30c228C9b43dF",
-          "oeth:0x8cFcDDC689Fe64C7769E68880beB6bA6ff647e18",
-          "oeth:0xf19CFEf47BE9cFaD03675611a5aBFa1297C2077c",
-          "oeth:0x797C462e894E8ef852d45d6cB0d46c7055FD0440",
-          "oeth:0x5188926E32b297F0C53fA058059B09472b4Ec88a"
-        ],
-        "l6_icY": [
-          "oeth:0xb9A6030C804986E8DBb4C62f367d9A10750aEFe3",
-          "oeth:0x86EF45710Ef1a3eAC842A4635cc3BAec6De23E6e",
-          "oeth:0x5A0f4D70a0853ee611fe8494c189832C72798016",
-          "oeth:0x0262BC4e654455c95be30B94dD7ff06d211F188b",
-          "oeth:0x40B07BE9Fb11790175a6BEcAAC84bC71A20aDDbE",
-          "oeth:0xdC8A5D352abb15d61eff6bd72Eb5aa15f70A67a1",
-          "oeth:0xaE930793241ca1B9D9477705DD17B992F5Fc147d",
-          "oeth:0xd0fafC7e4510a15346cE4F99B494A9786Ab295d3"
-        ],
-        "m1_constants": "oeth:0xf55b0edaf7225e600977DdAC0D016a6E87E71082",
+        "l6_constants": "base:0x0000000000000000000000000000000000000000",
+        "l6_icLength": 0,
+        "l6_icX": [],
+        "l6_icY": [],
+        "m1_constants": "base:0xAebAA658AF4657c4F1d511FAac80dF55dF343A75",
         "m1_icLength": 56,
         "m1_icX": [
-          "oeth:0x8234e460b89A7133c4F59EFF9189789DA3A88919",
-          "oeth:0x5DBE362108cD2b8b431B68dCf5D6a854Eeb9c8bb",
-          "oeth:0x9A2B6dD9313f7F95E12Ac7fEe6b2D4019B7DB4ff",
-          "oeth:0x3aC07d4386F92D0262a9630029dcf99CF2D494B3",
-          "oeth:0x2d278853F909e140151676F55c5049Ffdd4d7e57",
-          "oeth:0x8DD6d62d716149F9F91e7D356d2164EF271eeF76",
-          "oeth:0x09B1Ae7792B3624fE75c0402F54091Cb7E58AbF7",
-          "oeth:0xed3428C2cF33150f02e463dae00b1e3E90B58966"
+          "base:0x7787a0De6357A18d39DbbEf10c0F25F1242f8c54",
+          "base:0xB470c6A90a3D056a59b6E96F816bF26B0055E647",
+          "base:0xF796EDD030C5047713C5e2fE812eC6513c956D49",
+          "base:0x290b59016f40836C94eDB350Ed28030845C90609",
+          "base:0x711CB9E8bAb245F58c5398f52b22dAaB712746b2",
+          "base:0xEB084746103b1AcFBe808a8f15b3a04Df26161AD",
+          "base:0x17cadE2dea12b2026e5d6f4680f48Fa030F8256a",
+          "base:0xD9526FF0e3E482d67186A15F94C2e8Ef54431a6D"
         ],
         "m1_icY": [
-          "oeth:0xC32e3E445b2B9b8A439b9FE6F421FA21bf6Be067",
-          "oeth:0x9844D650874E35d124f7288529726e5D0AcF0680",
-          "oeth:0x4a1789d1CF207D5738aB9391bA3296eC0a370Fd9",
-          "oeth:0xAA2804ACb0CcC69Fab9e12AF9b54462dcE31669d",
-          "oeth:0x31D6ba57F96b71f51D36A3D190b3E86F30A309ff",
-          "oeth:0x31C47Fb8D03227c1e8274AC6e56a14b5965753EC",
-          "oeth:0xfcc40d1d0a115a72d025A9a24c3BFa8AcB0f3424",
-          "oeth:0x8C75Ce9295320642C659385e6b24e4BEe6D841DF"
+          "base:0xe8FBfEB0E7a91775f06DbE25B00dAfebB4F7fA17",
+          "base:0x61fC5Dd914f75Da2b4E183bef01B823dC3486C18",
+          "base:0x324E8E01795eE51C6328aFee56949D81C5b56D7a",
+          "base:0x5496aab14187eB4a4116e737783c0C363edB72cB",
+          "base:0xC638E81b66216EF7FdF42BAe97f536dF77af615b",
+          "base:0x13cC3A32135d0708c5AF97765f450A1d14B12A82",
+          "base:0x827F94aBcED49105582dAb100c311C90A2E7191A",
+          "base:0x3faE1c66d2DD3900662b69424F78B8E9dD8Fc729"
         ],
-        "m4_constants": "oeth:0xcBe67013f84E9EFf921c63d9F765F0678e8A7fF2",
+        "m4_constants": "base:0xFFa019085E0EE229B1f3E452EDEa86DFa1AC125a",
         "m4_icLength": 80,
         "m4_icX": [
-          "oeth:0xb0E8333f867f082014f7f9B60C76A864fe871140",
-          "oeth:0x4c6044A5F7F0b7dE293019b79D284422F75Da6aA",
-          "oeth:0x13b3C7C5257Db32a051C26db26ebAE456522A56F",
-          "oeth:0x004289Fbf43e751e913b84B12e81fa13eaA7F014",
-          "oeth:0x99873eEEa0e7bA7d883Dc36DB4d987Cb5a09393A",
-          "oeth:0x2d27737F73DaC029cc115e28b4E4A4D9aEca6D97",
-          "oeth:0x62198c715D987b7BA408142EB24dDB9852f3b686",
-          "oeth:0xa05dB39bFe585aCcE2FF3C746FF8b9364d7D83F6"
+          "base:0x2e5dF6CB74f3355517ACf0b973260bD112C20833",
+          "base:0x1622EA62D2720387E86D745Fad315b3006060F4a",
+          "base:0x57baa138Ae7dD03F17905706a6a671D447eFfa1F",
+          "base:0x16EB7389E35665237f92f8bb13272e4db8Ead9CF",
+          "base:0x59B78d120dca0C3d0f49d9c400C01472C2812fa0",
+          "base:0x0bb9103d736A9866A5A7A7D4abaa005ba6c744af",
+          "base:0x91FDbCD47932e517242E98b0C956c909a0A7488e",
+          "base:0x3d32392BaA90a7A628e6E17eE979Bd346FbA709f"
         ],
         "m4_icY": [
-          "oeth:0xEb2d7D5Dca08Bb43677112be8A534746829B11D1",
-          "oeth:0x3cC9C813AB1BDE19C280ADb819814b0818E33384",
-          "oeth:0x59a7Ac728f10342cB937398DC20715D16A97A6f1",
-          "oeth:0x7786c22482927954bD36a1acD6B6253327Df84Dc",
-          "oeth:0x4BA65Dd488D1144b8E8846564e50E70b8510261f",
-          "oeth:0xF4aeD79FC4de59bbC2485dCa22C0223f6Dc8B630",
-          "oeth:0x1F8393BB1F519B537d30d0d5254c12bE5A91E725",
-          "oeth:0xD4cF6451e89E8879B3c7a4497AD7CbBBE3ca847a"
+          "base:0xDABD424b013De4d5d0D431A3a1ba8b406268B9CE",
+          "base:0x39b24c2eBf43498fa77A86D289e9Af4080b1408b",
+          "base:0xBF01Df745B1C2f188412dbdc01870cfe3aA75d0b",
+          "base:0x028660AdC4AEA6AEc29013fD8ee618949C7925f8",
+          "base:0x9D3638B01f2c14c84A831617b406695Ca7Be0669",
+          "base:0xb80E617a365e16D5Fa52c5F7016A33EF4A79cF7D",
+          "base:0x73a5aB84951E25b2609A94D0EB9Cb0d264aE99D4",
+          "base:0xac7D08598a22fC1ACAf1b1020025540f3eEf4882"
         ],
-        "m8_constants": "oeth:0xbc8C7699F1Dd56Bb053f9acb3957495F1074B82c",
-        "m8_icLength": 112,
-        "m8_icX": [
-          "oeth:0xEA593A845Ef41da22d6220f6FC560b556C3c9Ecc",
-          "oeth:0x23f62f48FA88b6640e031E52a48303Ee4F1ea582",
-          "oeth:0xd3624395D0006f05c69Cb087DA38BA0AF15b0A20",
-          "oeth:0xFF7046883e2e856d5EEb45861223558a901c9812",
-          "oeth:0x075308Cb87C95E2947c914e75A5Fe7Ae780a9c9e",
-          "oeth:0x4e9498482e81B9f7bF8FC3164135e695E15C3d73",
-          "oeth:0x0FA349Fee263c315DBE38B128A4139D150582dE5",
-          "oeth:0xF1FCFaCb8E190Ad2c3044B023B766D0F9B6E8bbE"
-        ],
-        "m8_icY": [
-          "oeth:0x06d7041cAfd1ef8f11974076AB75Ec2A4052D173",
-          "oeth:0xd035A39632c30C7d0eBA6914024AF1fB4459d672",
-          "oeth:0xA8A27B6c9ae7De6C3F96e22f47f5e8AE87e1Eed6",
-          "oeth:0xDd95756f3Ac128B2556f68E1157C57d60604ff09",
-          "oeth:0xDcD36B62Fb1f657608c44fC8aD824296e3bBF2a5",
-          "oeth:0x64CA4afbAB40ed0d7476978E1940A9A3A4659185",
-          "oeth:0x63F9A4C1b4023bb6456c1e2B4486C1382D4A53ff",
-          "oeth:0xEbb65e86E4C2ac6062160679f45984Dc49Cad26C"
-        ],
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
-        "s1_constants": "oeth:0xf12F11D769b6Ec93fa4Ac0bE3AB9CFd28461Cfee",
+        "m8_constants": "base:0x0000000000000000000000000000000000000000",
+        "m8_icLength": 0,
+        "m8_icX": [],
+        "m8_icY": [],
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "pendingOwner": "base:0x0000000000000000000000000000000000000000",
+        "s1_constants": "base:0x0e294D38a6cf5C450bdE6e4e0a229D8528ddc1c4",
         "s1_icLength": 54,
         "s1_icX": [
-          "oeth:0x6317d04d5cf47b1aC1384a8028e8C79443410741",
-          "oeth:0xB83E9DC35C3cEC92D9294b584b48127e932c0728",
-          "oeth:0x94a64a072102E86b33Bc317bCeb0Be99A3B107f0",
-          "oeth:0x2d289D783879C2058d7DEC770D1949e9A07b5dc1",
-          "oeth:0x01240f3961b124484837788c084e74D77DdD68a5",
-          "oeth:0x09Df9a3f4b5cA3aD37570B8b8A3E8fCfdA7B531e",
-          "oeth:0x481B752a41199108c25d55170D5aC71E7BCF10D7",
-          "oeth:0x8d37C789E5e7B27876Df97360533211d5F1FecC4"
+          "base:0x4E75c306b90792afd3c16c058099b9A795192d4F",
+          "base:0x7B275CD913039e4090f518131C7ABa5af8BEBd22",
+          "base:0x1FEfbA6dC5958d6930245a4a2A3206EEFB60d6f9",
+          "base:0xfdFd6802708D8bf3b07Ec863ddC00CAA0E4307B2",
+          "base:0xe4E58df7De8d45F4e625fA4b576D172C98866bFB",
+          "base:0xF15F4650BC664b9f4c9355C7c71A9C0ed5926156",
+          "base:0x84289e05c2b0e87059925a48a160CFCC80501938",
+          "base:0x85724c07575BEAB7c5755A8747a6cE2F7f9bC490"
         ],
         "s1_icY": [
-          "oeth:0xbc228cf70431D879C66c2cf3A9910f11A89e01A7",
-          "oeth:0x847A38B2584293C7789c76B12b4b51Efc2990156",
-          "oeth:0xE89B9DB15fbD4da1c6F22d290199BfD1bEA01886",
-          "oeth:0x91E5831d28f0f33Af676f936927E38a9CBb670b1",
-          "oeth:0x9AB1E039962127fe095A5A64f9EF293ECE0d9DbF",
-          "oeth:0xdc2cba4Cc6d1Dc15c574665Ea499E84Debb25B3c",
-          "oeth:0x032A68e67381c002497cC75822cb1f69f4076E90",
-          "oeth:0xf84B314233fC5828C9a0b6a3ae0A6603fdE80234"
+          "base:0x7eD66c1664613D5698C4b1a2c7dD6254a4917bE7",
+          "base:0x27e2e3A05123D24b90747ABcC525fbfAC2c32706",
+          "base:0x53E43F4731cd6dD181Dd6bf1678f65c9782D87E8",
+          "base:0xE2AbA3a6e151c9f763949a3709f041f8DD4eDa8b",
+          "base:0x26270D8c253481dd9F7dA9390F60d52217C94bc6",
+          "base:0x31E25dcD38cf0E56CF435A4c285f04CfA8E1AE25",
+          "base:0xfc183cC244F08a8B3717634f0341a3b487684058",
+          "base:0xb974aC130A048b14D9E818c5E69B07a5ef57CFe9"
         ],
-        "s12_constants": "oeth:0x2D583624f2b4f808068d9a8B22D332a1312ECe37",
-        "s12_icLength": 120,
-        "s12_icX": [
-          "oeth:0x3972768c3D2635E94391943B80f7810676f65a59",
-          "oeth:0xa322AE09A5e5350C00300816afdAa1095096307b",
-          "oeth:0xCcDE578a7A0A1Aab7d576E995AfC20D323Fb5338",
-          "oeth:0x649EEDAADD829CFd73B49635c790C39b587dbe48",
-          "oeth:0x16E87da32dc8ce91cb4C681BCfE5BA99A3eF69f1",
-          "oeth:0x68585d1C2d6Cf64045C5649eA153059276cAaC89",
-          "oeth:0x5d9CEc54a65B3CFa28aEBA68A84181c4f41D89c3",
-          "oeth:0x832230312e762169bfE4D2760fDe955222bb07f3"
-        ],
-        "s12_icY": [
-          "oeth:0x710afCc91c4A997A0d106Bb911eEbb985da89d13",
-          "oeth:0xf61ddcB25AbF950cd6DfCA0900CA3beADd93D6F2",
-          "oeth:0xF066ED35D1230EAf05ad4fb8f9960e3544489989",
-          "oeth:0xE06F321514fc4c4be4F694A63f17A28d38682080",
-          "oeth:0xb6Bc8ED820f97072F8213D767df20Ea8b6851A4E",
-          "oeth:0x976a1c7edDf693C5a4B5191DEdd61DE5C1a2A020",
-          "oeth:0x1708ce33C369E1e38ab7e2c895c40F3dD8998f9f",
-          "oeth:0x9956ccd4A0a1a4050712e5378429722977fE3aad"
-        ],
-        "s25_constants": "oeth:0x15f122ce552a1D5Cca1241B333450b333b9b4bc2",
-        "s25_icLength": 198,
-        "s25_icX": [
-          "oeth:0x07a6aadb59119A96fEC1fB4d1Ab7Ade3aF2C4c27",
-          "oeth:0x5a3cFb0Ca063848b3dB3f1dFD1770a0a3959A203",
-          "oeth:0xCdf9755B23A32861A9591eB1F27587948A033eB9",
-          "oeth:0xFb8B7e046550E55C7ed6d552c124B9C14A18fB12",
-          "oeth:0xE3bb674ED3f12928232d6ebE02Dc8fd7A542B98f",
-          "oeth:0xf9e81F7da2BDD9B2bD3fd548bE4F22a863d1EBAf",
-          "oeth:0xA9a22C3F9b8116Aab06e165431AAD6dcae712d47",
-          "oeth:0x2Dd7c3E7806e90Ba8a976028e6D1DA1C26df0b06"
-        ],
-        "s25_icY": [
-          "oeth:0x004d6a65F71be9bC07248b24c9BB3Fc076ED18a8",
-          "oeth:0xF0DbcB7c2dde771836E311bDF9e740BED8Fb91C9",
-          "oeth:0x457BFb04989CE765D5d9E159e1b67aAA9921cB11",
-          "oeth:0x592BA01770786aA9919042477Fb22e1b3578777c",
-          "oeth:0x83Ed4D688f32a6EEb256696098EA20103dd8bb2E",
-          "oeth:0x4717d5EE8F75592dB0A18227cB02fADDe90f0664",
-          "oeth:0x20B846818E2073F2759dc0d8282ED94C3d1913E4",
-          "oeth:0x5186A7DD00fBCeD1fD59e5Fa5cE24aEF53E4097A"
-        ],
-        "s5_constants": "oeth:0x249367Cc364D2675b7C8A80520d3a3D53956B9f1",
+        "s12_constants": "base:0x0000000000000000000000000000000000000000",
+        "s12_icLength": 0,
+        "s12_icX": [],
+        "s12_icY": [],
+        "s25_constants": "base:0x0000000000000000000000000000000000000000",
+        "s25_icLength": 0,
+        "s25_icX": [],
+        "s25_icY": [],
+        "s5_constants": "base:0x34CFE56e886a5aFeE67e2b42aC2742f7Fd6f8f77",
         "s5_icLength": 78,
         "s5_icX": [
-          "oeth:0x325Bac21B717Ef41A3144889267b968fCF3fa3c6",
-          "oeth:0xD02431fA3DC663Db6cd5d2d943cF590e72F5EB49",
-          "oeth:0xbeD16Dd631b1198280A77e234d530Af64785D4B8",
-          "oeth:0xC7A4C651c9AFAe4d4bFdD5500C8cb36fAF56c993",
-          "oeth:0xF9446348fB78730d7410dC1F18e1a2332409230d",
-          "oeth:0xb00ea83A6B0eA1778DAf94Edf713A0c17e124B0b",
-          "oeth:0x4A4c3bF3D7e22Fa9fE60BABfEBA87551202d574C",
-          "oeth:0x53EeD23561d358020AD958558E79d61EE6cB67c5"
+          "base:0x16f71992cD816ce749da53641712e2d727FddDEd",
+          "base:0x4cfCeB240756c1d62FCC93c73e57133C0E5f0E30",
+          "base:0x6f7A6493b8c82e81D130E5Cf369B806Df881191A",
+          "base:0xA4c10A9E8356F743dC45aE2AF608139fEAe249Bb",
+          "base:0x8c1B92858eE72a13c578085cbB870A540058d931",
+          "base:0x9eD66f70ebfA4335538e4de55daCF49835c701BD",
+          "base:0x4AD442C5170cd6a7653940a4D0d8A77ec775Ad83",
+          "base:0x1216eeEC4c7b6F3B6a0aA0b7557aEd409aD5Ad60"
         ],
         "s5_icY": [
-          "oeth:0x86E474A4Ad0430e6F3AF35918C2F00E1DaCC68F0",
-          "oeth:0x3f9f926d1e4eB3C3b430fE227f73bdbbC1560288",
-          "oeth:0x9d989595eEC3df1CEC9088cFC3aAaa536E62E5a0",
-          "oeth:0x6058E3741A1B95C1eC1971D779886827afaCa735",
-          "oeth:0xf3d4a47784E1105ece639e586baBD1fAD3Da1f31",
-          "oeth:0x0d57E11Bf0DDD622effeaEC2Bc2ADE92f6A7C667",
-          "oeth:0x234dEdf61E27B877e2F5c217176A9811c8963885",
-          "oeth:0xD72C26aB7743418cFbd3d251D820BF31dFE5C93E"
+          "base:0x8213616e42617cE3c9c4F808E8ef33Be07Cfc23B",
+          "base:0x46B5F225ba5941Fa5A21c3F4eb80dc3F02C10549",
+          "base:0xc7e7414f2fcCb6C217D838f34bb6D494f16ea77D",
+          "base:0x5c40c4F13Dbee7023cF56A45d02B14dfd3350989",
+          "base:0x29d91d9872f2C6627de152B53bb01cA7932e7bcb",
+          "base:0xFaC51e25AB134796544bA3275c68d282f22c7aEa",
+          "base:0x52B8b1A13199b1e138029B511be6Eb33Dd6c283E",
+          "base:0x57053A36f70d5b80D848a2F054e86FC4CE8d8e55"
         ],
-        "sp1_constants": "oeth:0x17BA910483008B8d476065d9c618452aA1428221",
+        "sp1_constants": "base:0x866BB54F40f19F6617cDeF166a9fc14e4912D610",
         "sp1_icLength": 65,
         "sp1_icX": [
-          "oeth:0xbf76c553795c4cF5289b0f2Fe6437a7Dc74ebe47",
-          "oeth:0x9f483dd388DcDB5074734c7dF6e9f4341a10f86B",
-          "oeth:0xC128a134152a610C2f279458613E1da1fa22335d",
-          "oeth:0x7883B6308c5cbCc671c1e763aC20A5E1fa972640",
-          "oeth:0xa23446EbbDc2f27F43e27E66DDA459Ba478Cc011",
-          "oeth:0xc04e10e16991ca5D10a08493e475592D40e3444e",
-          "oeth:0x75C665f1359eC5292F1C2A0d4EAc330898bDd4D7",
-          "oeth:0x3f2fD6561Ca6aeC72B2F041BE620F831B9585FF8"
+          "base:0x2bFE3aB52424D77D71FB9CefAe92aEB62D9Ad422",
+          "base:0x0597977a1512315dF4601FA3Ff33dece3517924d",
+          "base:0xD6a8B038256e0F243AAb44eab50024b852E032C6",
+          "base:0x33b28d0220FCD0d7a684D23a51cb83D34E405CAB",
+          "base:0xC6E5559888AA6d98D18Fab25d563bA9ee6aC5970",
+          "base:0x165224C6EC38A91e3ad8fd2ffDB392c89f9925C8",
+          "base:0x254503b15189306724B3916E018445870D932b8d",
+          "base:0x35f95a79b0D1342445D9823aFf4061107b5cb738"
         ],
         "sp1_icY": [
-          "oeth:0x40c9993616d82E69E7c7eCa8331a30F3b9725209",
-          "oeth:0xb4635ef39A5c2240264191F26B583789AB813Cc7",
-          "oeth:0x8215BA923B654b3c570E2Fb552Ad770606f4C21F",
-          "oeth:0xffc3067B671B0EC599f3C5A7cA8dAb9b5c286EA7",
-          "oeth:0x83c828c6999E8250Ea2C0a4E36C299054F52A49f",
-          "oeth:0x46e0e3A44131EEbb064F957a3Be1b0f829F8d829",
-          "oeth:0x5B7d683224Bc00565f5A61BB96208e19f4722e17",
-          "oeth:0x3C947260106d95A19043AF3030F70E9A51178013"
+          "base:0x0E56eE68cAc42F54058c34f16B69de2760913782",
+          "base:0xe62985bF953a0A7a255357Ccd5f545037ab9f73d",
+          "base:0xD3a1d361c9C9D829E03482ae7181dC33D944ce55",
+          "base:0xb2E6481CD2f7F65fd22217ed948436b482700f7b",
+          "base:0xb797297b401261BBADC8F702019703e56E5b5989",
+          "base:0x462bceB65cdC3A7C3b35fdaC560dBde32b59ebcc",
+          "base:0xaaFD80Ce16C3c9045Cf544D72cab93CbFF74c178",
+          "base:0x59d79cdC0328Ac5E4a61deC2B58BAffF30888195"
         ],
         "supportedParams": [],
-        "w201_constants": "oeth:0x0a00CCc7f0F30a7237d19FdE45F6AEF4EDDC253f",
+        "w201_constants": "base:0xf2Ee929D03904Be2c2F3933ff7581A35523afFD8",
         "w201_icLength": 266,
         "w201_icX": [
-          "oeth:0x1f77A0946DA3Fa507daeA89627a51EEE29452c90",
-          "oeth:0xA8a1Eae3E2DBdb1A10Df6Cf172e70104C8860B6C",
-          "oeth:0x91c747d1fcec151BDF70d6E089C0E44e238CB72F",
-          "oeth:0xE6463Efe73Fb12D59D9D955B2489E0d415143386",
-          "oeth:0x0b1e8e78bE167f4509e511e4185B266b83Ad328c",
-          "oeth:0x4aC44e26e0dDBB6907a902f360B346FbCb29Bdaf",
-          "oeth:0xd70D9685D7916B7b6652AEa2AC33017F94922fb3",
-          "oeth:0x956586Af75Ca53c155DF2D34628B7C9f596835d2"
+          "base:0x853efBE47e7715619dF78BB2A01958427154F1bF",
+          "base:0x3f07662bD33d48A17B2ea33C32492401F9252e97",
+          "base:0x622C4cE133dA61De98D2047c6480480BC97947c7",
+          "base:0x25c7Aa9D37416D7990C314DceD3394c0069e1441",
+          "base:0x72Bd9707dce20d971D06D9fF71cCddF59c23F29f",
+          "base:0xaEe3Eb9d4514fD0D7F675a25FfD36c8017d565e2",
+          "base:0x4Ca9D2887a6141dD02FD9964b61B752EB6eEDb6D",
+          "base:0x76c77b531b4AC62e37d0bD3dFA7cD903fC86B792"
         ],
         "w201_icY": [
-          "oeth:0x6dFE07885508DC3c8FD8C84FCd4B755349B1aB98",
-          "oeth:0xBC794603FE352BB90FaCA8435F07B3fC40a99051",
-          "oeth:0xE0F9CC2957465c80d2B2A088E772622330153E38",
-          "oeth:0x07df29045e1C3F1587f46b9F60c0205de34418a6",
-          "oeth:0x78093a3e8e527206Fc0635a318d824adc2018B64",
-          "oeth:0x9F8Bf909c90B31cb158c9EA8b4458b60bc0D697F",
-          "oeth:0x48d27100E0A076b8C890fa0524868a06087ef465",
-          "oeth:0xA2c4c3dA47b12432385ca38272a03A971Fe9A682"
+          "base:0x886158D659AB9349c14f86EEfd9ffE824F462343",
+          "base:0x25C61841ca475dDdE02D6A01f4A8bb15D3353d3F",
+          "base:0x2D95B48FD3EE4dadD664725134cf071fdF1dB48e",
+          "base:0xE3F1b08E5eB2C7C47ADdECF6120f9Bf17B4e1F94",
+          "base:0x7fB785F553e48468f8A70D08ecEEAE021bbC2340",
+          "base:0x7D5FcCD9a771661058F733d0Ed1569D92b8D2466",
+          "base:0x6a50f6b05F90066583AE0820374154AD8a6cb523",
+          "base:0x44c23657B0A3347AC5CB7A6A9e3A6D16D2d849d0"
         ],
-        "w51_constants": "oeth:0x3a45e0682ff3E28d070bAA77F648fd7938012a81",
+        "w51_constants": "base:0x97233c25Ca374ff0a68077E91460aA789e1fCeB1",
         "w51_icLength": 116,
         "w51_icX": [
-          "oeth:0x3133Db90d53c00B614a4C65EC673F04C8800FC50",
-          "oeth:0xf8f0e2DcE065A8EAA8eAC40D34876D5DbEbAdeBd",
-          "oeth:0xD3fD911146B132E1c9Bef58d1b891532765458c4",
-          "oeth:0x334687Ff940c3e6dd3DED9308376544813c73507",
-          "oeth:0x1a65B46f4aC5A59969bD2E3b726BE0967C3E6d49",
-          "oeth:0x1edfDbb0A83Fa9a86aDA517d47B8DC5c999c566f",
-          "oeth:0xdD3Fb9b4082575ED3ebBB888D8D7ec87F2555023",
-          "oeth:0x8AB80FaADf363851A3eab4A33AC1B832175AA6d1"
+          "base:0xc8EA3861892feF419825470d8e48777A76dc466d",
+          "base:0x43b08FBdc56d1fe9961BA244e80A347DEb02c352",
+          "base:0xd71561c51C6a145cBA861F70AaD9F2A3bfB7D384",
+          "base:0x097eA66BCC3c7333cb6b06BdF92aF3EedBa02499",
+          "base:0x461BF56De985b93c5FA3a9CfD4ab09Df9ccb1FF3",
+          "base:0xd7653E0A1687BCC4f957077D3B3a98A9eD2760ff",
+          "base:0xAc31434F3A4365533f5a29f5EaF281C7C841894a",
+          "base:0xb91c42Dc0BB010Ad2693b8500D3988D7F77C0545"
         ],
         "w51_icY": [
-          "oeth:0x913C9f14cDe30736854514Ae1249386bEA99c0d6",
-          "oeth:0x00Fb4b03025F954Bb3fFbbc211c0D4b55DEAc215",
-          "oeth:0x755EF7bfa9f6bEaA3818EE81f4734AfAAc5FeE91",
-          "oeth:0xe656FA2E665fF2c98A77f9027Cf389De90860E94",
-          "oeth:0xbf2b7eF4CE6bA1275A3c306d8FbB8962C515AE2D",
-          "oeth:0x7bF40cFEba50d79535604620329423Dc8eE604fF",
-          "oeth:0xD3679bDC7f3C780577FD6544CBaBE75a22cA6AF0",
-          "oeth:0xa8499DB4aB03129D0420E1A4Ba097a4c4BDee496"
+          "base:0x648869F04eb50b4c627a588a2aF380C5b923A935",
+          "base:0x3adf1bDa842Cd8955053c99C162Af4CCE32E031b",
+          "base:0xb59aCe03Dbb0aD12a44442c8F103F6A5223dE175",
+          "base:0xf682dc6eB472C16bc214d540e6A08408A15E909C",
+          "base:0x115236CDc4aE8Eb5bEC98B69121C5f3cE25cb393",
+          "base:0xBF05e79BC1a630cBca8305cc336Ba51b0c21f13C",
+          "base:0xc2fb7F6ea8073dD12d2E589e55cbe4Ed90554129",
+          "base:0x6f24017E745b8aC35AA3aD696f4D932cA8a77C33"
         ]
       },
       "fieldMeta": {
@@ -1429,299 +2221,125 @@
         }
       },
       "implementationNames": {
-        "oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6": "Groth16EpochVerifier"
+        "base:0xB144eb785E2CCe17681395Cd475093C01AEeb11e": "Groth16EpochVerifier"
       }
     },
     {
-      "address": "oeth:0xB30347E816B525453468cC95C17231Ab04a0C0A9",
+      "address": "base:0xB30347E816B525453468cC95C17231Ab04a0C0A9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "AuditGateway",
-      "address": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
-      "type": "Contract",
-      "template": "privacy-boost/AuditGateway",
-      "sourceHashes": [
-        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
-        "0xdf1ae73b1ff7ef4ef2f92ce7dbf73f0c1d2e37495ea44414dfb3334fa5cafb23"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Manages the list of auditors authorized to query private user data through the Audit API of the TEE, and stores an onchain log of every audit access so that users can publicly verify whether and when their private data was disclosed.",
-      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
-      "sinceTimestamp": 1776188259,
-      "sinceBlock": 150294741,
-      "values": {
-        "$admin": "oeth:0x96f3E5551E1330f31974597217019812667544c8",
-        "$implementation": "oeth:0x384D1460107D88b1a21CA202825583c19cb6A808",
-        "$pastUpgrades": [
-          [
-            "2026-04-14T17:37:39.000Z",
-            "0x28dd62c9d8f9ca9dfc48db609c540d5269aaa33a4b4067a401ddec3ea65f2909",
-            ["oeth:0xfEfb6bD314680BDbc1B00FE2eA5A038655Bb4478"]
-          ],
-          [
-            "2026-09-03T02:33:25.000Z",
-            "0xdb489f72d2b3e0cdab34535d416d81f14c6ca3d74d30c68e7f02cb2017fc035c",
-            ["oeth:0x384D1460107D88b1a21CA202825583c19cb6A808"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "auditLogCount": 0,
-        "auditLogger": "oeth:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB",
-        "getAllAuditors": [],
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000"
-      },
-      "fieldMeta": {
-        "auditLogger": {
-          "description": "Address (TEE server wallet) that records every Audit API access on-chain by calling the AuditGateway."
-        },
-        "getAllAuditors": {
-          "description": "Auditors authorized to fetch the balance and transaction history of any address through the Audit API of the TEE. Every such access is logged onchain."
-        },
-        "auditLogCount": {
-          "description": "Total number of audit accesses logged onchain."
-        }
-      },
-      "implementationNames": {
-        "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118": "TransparentUpgradeableProxy",
-        "oeth:0x384D1460107D88b1a21CA202825583c19cb6A808": "AuditGateway"
-      }
-    },
-    {
-      "name": "TreasuryMultisig",
-      "address": "oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "oeth:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
-      "sinceTimestamp": 1776185205,
-      "sinceBlock": 150293214,
-      "values": {
-        "$immutable": false,
-        "$implementation": "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "oeth:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
-          "oeth:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
-          "oeth:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xc09f95394a435ef45082065b1512af944fd6bc028e974f195028abbb80008d4e",
-        "getChainId": 10,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 1,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e": "SafeProxy",
-        "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "name": "PrivacyBoost",
-      "address": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-      "type": "Contract",
-      "template": "privacy-boost/PrivacyBoost_v2",
-      "sourceHashes": [
-        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
-        "0xa93601acbe9c964bab9c061132f2a8b35338b4dfbacee9bf924163d745e04405"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Main contract of the PrivacyBoost pool. Escrows ERC-20 tokens and verifies relay-submitted private transfer, withdrawal, deposit, portal deposit and gift settlement proofs. Supports approved external gateway calls and permissionless exits through delayed forced withdrawals or public gift exits.",
-      "ignoreInWatchMode": ["currentTreeNumber"],
-      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
-      "sinceTimestamp": 1776188243,
-      "sinceBlock": 150294733,
-      "values": {
-        "$admin": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2",
-        "$implementation": "oeth:0x9CB144D35748932EC44950d0837248fcF8747828",
-        "$pastUpgrades": [
-          [
-            "2026-04-14T17:37:23.000Z",
-            "0xdcf02ee332e61ef9468f869e0f309ec445008906b5419c660a5fab69e2424b8d",
-            ["oeth:0x0b9B98d3B95D74487C481e7830ab440896aE62E5"]
-          ],
-          [
-            "2026-09-03T02:33:25.000Z",
-            "0xdb489f72d2b3e0cdab34535d416d81f14c6ca3d74d30c68e7f02cb2017fc035c",
-            ["oeth:0x9CB144D35748932EC44950d0837248fcF8747828"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "allowedRelays": ["oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0"],
-        "authRegistry": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
-        "cancelDelay": 10800,
-        "currentTreeNumber": 0,
-        "depositVerifier": "oeth:0x16e1dE876dEB1C3251A1E923A206605D084F25C5",
-        "epochVerifier": "oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6",
-        "forcedVerifier": "oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641",
-        "forcedWithdrawalDelay": 129600,
-        "gatewayRouteManager": "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B",
-        "gateways": ["oeth:0x54B576782d3CE325CAc9861E17bB5d7926e41955"],
-        "giftClaimVerifier": "oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4",
-        "maxBatchSize": 100,
-        "maxEpochAuthStalenessBlocks": 300,
-        "maxFeeTokens": 4,
-        "maxForcedInputs": 13,
-        "maxForcedWithdrawalAuthStalenessBlocks": 500,
-        "maxInputsPerTransfer": 15,
-        "maxOutputsPerTransfer": 201,
-        "merkleDepth": 24,
-        "operator": "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B",
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
-        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
-        "portalDepositVerifier": "oeth:0x6806eA551C3c8350Ab156eC5001D28705dCda2B6",
-        "portalMinimumSweeps": {
-          "1": 200000000000000,
-          "2": "5000000000000000000",
-          "3": 500000,
-          "4": 500000,
-          "5": 650,
-          "6": 170000000000000,
-          "7": "25000000000000000000",
-          "8": 400000,
-          "9": "500000000000000000"
-        },
-        "portalSweepFeeBps": 0,
-        "tokenRegistry": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
-        "treasury": "oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e",
-        "withdrawFeeBps": 40
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "allowedRelays": {
-          "description": "Relays allowed to submit epochs to the pool."
-        },
-        "epochVerifier": {
-          "severity": "HIGH",
-          "description": "Groth16 verifier used for private transfer / withdrawal epoch proofs."
-        },
-        "depositVerifier": {
-          "severity": "HIGH",
-          "description": "Groth16 verifier used for deposit epoch proofs."
-        },
-        "forcedVerifier": {
-          "severity": "HIGH",
-          "description": "Groth16 verifier used for forced withdrawal proofs."
-        },
-        "tokenRegistry": {
-          "severity": "HIGH",
-          "description": "Registry of ERC-20 tokens accepted by the pool."
-        },
-        "authRegistry": {
-          "severity": "HIGH",
-          "description": "Registry of account authorization keys and spend approvals used to validate spend authorization."
-        },
-        "treasury": { "description": "Address receiving withdrawal fees." },
-        "withdrawFeeBps": {
-          "description": "Withdrawal fee in basis points, charged on withdrawals and forced withdrawals."
-        },
-        "cancelDelay": {
-          "severity": "HIGH",
-          "description": "Number of blocks after which an unprocessed deposit request can be cancelled and refunded by the depositor."
-        },
-        "forcedWithdrawalDelay": {
-          "severity": "HIGH",
-          "description": "Number of blocks between requesting and executing a forced withdrawal."
-        },
-        "gateways": {
-          "severity": "HIGH",
-          "description": "Approved synchronous gateway routes for proof-authorized external calls."
-        },
-        "portalMinimumSweeps": {
-          "description": "Minimum gross amount per token ID required for a portal sweep, in token base units; defaults to zero."
-        },
-        "portalDepositVerifier": {
-          "severity": "HIGH",
-          "description": "Groth16 verifier for portal deposit proofs."
-        },
-        "giftClaimVerifier": {
-          "severity": "HIGH",
-          "description": "Groth16 verifier for private gift settlement and public gift exit proofs."
-        },
-        "maxEpochAuthStalenessBlocks": {
-          "severity": "HIGH",
-          "description": "Maximum age in blocks of a superseded auth root accepted for epoch and private gift settlement proofs."
-        },
-        "maxForcedWithdrawalAuthStalenessBlocks": {
-          "severity": "HIGH",
-          "description": "Maximum age in blocks of a superseded auth root accepted for public gift exits. Despite its legacy name, this does not govern forced withdrawals, which check the live auth record at request time."
-        },
-        "portalSweepFeeBps": {
-          "description": "Portal sweep fee in basis points, paid to the sweeper and snapshotted when the deposit is requested."
-        }
-      },
-      "implementationNames": {
-        "oeth:0xca689828854a422CF1f778be03CA80549408F620": "TransparentUpgradeableProxy",
-        "oeth:0x9CB144D35748932EC44950d0837248fcF8747828": "PrivacyBoost"
-      }
-    },
-    {
-      "address": "oeth:0xcf01AB4fa0C5796811Ad939daB8dEd833cf90683",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "oeth:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "AuthRegistryProxyAdmin",
-      "address": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C",
+      "name": "AuditGatewayProxyAdmin",
+      "address": "base:0xB32ef2884794999e1E260a3f68368A24CEF25b35",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "description": "Admin contract of the AuthRegistry proxy.",
-      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
-      "sinceTimestamp": 1776186491,
-      "sinceBlock": 150293857,
+      "description": "Admin contract of the AuditGateway proxy.",
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377839,
+      "sinceBlock": 50794246,
       "values": {
         "$immutable": true,
-        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C": "ProxyAdmin"
+        "base:0xB32ef2884794999e1E260a3f68368A24CEF25b35": "ProxyAdmin"
       }
     },
     {
-      "address": "oeth:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237",
+      "address": "base:0xcf01AB4fa0C5796811Ad939daB8dEd833cf90683",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PrivacyBoostProxyAdmin",
+      "address": "base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin contract of the PrivacyBoost proxy.",
+      "deployerAddress": "base:0x03EeD9Ab1a536FcE520501733C5845175E8d4744",
+      "sinceTimestamp": 1788377831,
+      "sinceBlock": 50794242,
+      "values": {
+        "$immutable": true,
+        "owner": "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "base:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "oeth:0x09257a2B24C27586c2Db2C18c4b53bE459c7e870": [
-      "error InvalidAuthPathLength()",
-      "error InvalidBatchWidth()",
-      "error InvalidHashLength()",
-      "function hash(uint256 len, uint256 a0, uint256 a1, uint256 a2, uint256 a3, uint256 a4) pure returns (uint256)",
-      "function hashAuthPath(uint256 leaf, uint256 index, uint256 depth, uint256[20] siblings) pure returns (uint256[20] parents)",
-      "function hashSpendApprovalBatch(uint256[] commitments) pure returns (uint256)"
-    ],
-    "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": [
-      "constructor(address initialOwner)",
+    "base:0x02Eb6E5779f5780A5ABB354341962d9312b7ABe6": [
+      "constructor(address pool_, address initialOwner)",
+      "error CallNotAllowed()",
+      "error InputConsumedNotExact()",
+      "error InvalidCallPolicy()",
+      "error InvalidPool()",
+      "error NotGuardianOrOwner()",
+      "error NotPaused()",
+      "error NotPool()",
+      "error OutputBelowMin()",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
+      "error Paused()",
+      "error PolicyBatchLengthMismatch()",
+      "error PolicyIndexOutOfBounds()",
+      "error PolicyTokenMismatch()",
+      "error RouteMismatch()",
+      "error SafeERC20FailedOperation(address token)",
+      "error TargetCallFailed()",
+      "error ZeroInputAmount()",
+      "event CallPolicyUpdated(address indexed target, bytes4 indexed selector, bool allowed, uint16 inputTokenId, uint16 outputTokenId)",
+      "event GuardianUpdated(address indexed guardian)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "event PausedUpdated(bool paused)",
+      "function acceptOwnership()",
+      "function executeGatewayCall(uint16 inputTokenId, address inputTokenAddress, address outputTokenAddress, uint256 inputAmount, tuple(uint16 withdrawalIndex, uint8 action, uint64 expiryBlock, address target, bytes callData, tuple(uint16 outputTokenId, uint96 minOutputAmount, uint256 npk, bytes32 rescueCommitment, tuple(bytes32 viewingKey, bytes32 teeWrapKey, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes16 ct2) ciphertext) receipt, tuple(uint16 outputTokenId, uint96 minOutputAmount, uint256 npk, bytes32 rescueCommitment, tuple(bytes32 viewingKey, bytes32 teeWrapKey, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes16 ct2) ciphertext) fallbackReceipt) slot)",
+      "function getCallPolicy(address target, bytes4 selector) view returns (tuple(bool allowed, uint16 inputTokenId, uint16 outputTokenId))",
+      "function guardian() view returns (address)",
       "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function policyEntries(uint256 start, uint256 count) view returns (tuple(address target, bytes4 selector, tuple(bool allowed, uint16 inputTokenId, uint16 outputTokenId) policy)[] entries)",
+      "function policyEntryAt(uint256 i) view returns (tuple(address target, bytes4 selector, tuple(bool allowed, uint16 inputTokenId, uint16 outputTokenId) policy))",
+      "function policyKeyCount() view returns (uint256)",
+      "function pool() view returns (address)",
+      "function removeCallPolicy(address target, bytes4 selector)",
       "function renounceOwnership()",
+      "function setCallPolicies(address[] targets, bytes4[] selectors, tuple(bool allowed, uint16 inputTokenId, uint16 outputTokenId)[] policies)",
+      "function setCallPolicy(address target, bytes4 selector, tuple(bool allowed, uint16 inputTokenId, uint16 outputTokenId) policy)",
+      "function setGuardian(address newGuardian)",
+      "function sweepToPool(address token)",
       "function transferOwnership(address newOwner)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+      "function unpause()"
     ],
-    "oeth:0x16e1dE876dEB1C3251A1E923A206605D084F25C5": [
+    "base:0x04484B6065A43fa286e05E9C28a6c4Db77d917f8": [
+      "constructor(address _singleton)"
+    ],
+    "base:0x0c8bb018a3d8DF4c5fC86518ca57F8E1445BCF63": [
       "constructor(address initialOwner)",
       "error EmptyICSources()",
       "error ICSourceMismatch()",
@@ -1747,38 +2365,9 @@
       "function renounceOwnership()",
       "function supportedParams(uint256) view returns (uint32)",
       "function transferOwnership(address newOwner)",
-      "function verifyDeposit(uint32 batchSize, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
+      "function verifyPortalDeposit(uint32 batchSize, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
     ],
-    "oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4": [
-      "constructor(address initialOwner)",
-      "error EmptyICSources()",
-      "error ICSourceMismatch()",
-      "error InvalidICLength()",
-      "error InvalidICSource()",
-      "error InvalidParam()",
-      "error InvalidPublicInputLength()",
-      "error InvalidVKConstants()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error PrecompileCallFailed()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error VerifyingKeyNotFound()",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function acceptOwnership()",
-      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
-      "function hasVerifyingKey(uint32 batchSize) view returns (bool)",
-      "function isSupported(uint32 circuitParam) view returns (bool supported)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
-      "function renounceOwnership()",
-      "function supportedParams(uint256) view returns (uint32)",
-      "function transferOwnership(address newOwner)",
-      "function verifyGiftClaim(uint32 batchSize, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
-    ],
-    "oeth:0x384D1460107D88b1a21CA202825583c19cb6A808": [
+    "base:0x27776Ed100A4D1C6e1479319BE6eB2e262F7CEc4": [
       "constructor()",
       "error AlreadyAuditor()",
       "error InvalidInitialization()",
@@ -1810,7 +2399,94 @@
       "function setAuditLogger(address logger)",
       "function transferOwnership(address newOwner)"
     ],
-    "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "base:0x2D90FB53C5194E2Dd9a3dc4D4Cf71253799e555E": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotAContract()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error TokenAlreadyRegistered()",
+      "error TokenIdOverflow()",
+      "error TokenTypeNotSupported(uint8 tokenType)",
+      "error ZeroAddress()",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TokenRegistered(uint16 indexed tokenId, uint8 tokenType, address tokenAddress, uint256 tokenSubId)",
+      "function acceptOwnership()",
+      "function idOf(bytes32 key) view returns (uint16 tokenId)",
+      "function initialize(address initialOwner)",
+      "function nextId() view returns (uint16)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function register(uint8 tokenType, address tokenAddress, uint256 tokenSubId) returns (uint16 tokenId)",
+      "function renounceOwnership()",
+      "function tokenOf(uint16 tokenId) view returns (uint8 tokenType, address tokenAddress, uint256 tokenSubId)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "base:0x3A0bea3a715881793cFD698dDEBcF03784f0bE03": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "base:0x40e93d3357A5A3d249437717Da936f6141ba85cE": [
+      "constructor(address initialOwner)",
+      "error EmptyICSources()",
+      "error ICSourceMismatch()",
+      "error InvalidICLength()",
+      "error InvalidICSource()",
+      "error InvalidParam()",
+      "error InvalidPublicInputLength()",
+      "error InvalidVKConstants()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PrecompileCallFailed()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error VerifyingKeyNotFound()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
+      "function isSupported(uint32 circuitParam) view returns (bool supported)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
+      "function renounceOwnership()",
+      "function supportedParams(uint256) view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function verifyForcedWithdraw(uint32 maxInputs, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
+    ],
+    "base:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1858,53 +2534,10 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "oeth:0x54B576782d3CE325CAc9861E17bB5d7926e41955": [
-      "constructor(address pool_, address initialOwner)",
-      "error CallNotAllowed()",
-      "error InputConsumedNotExact()",
-      "error InvalidCallPolicy()",
-      "error InvalidPool()",
-      "error NotGuardianOrOwner()",
-      "error NotPaused()",
-      "error NotPool()",
-      "error OutputBelowMin()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error Paused()",
-      "error PolicyBatchLengthMismatch()",
-      "error PolicyIndexOutOfBounds()",
-      "error PolicyTokenMismatch()",
-      "error RouteMismatch()",
-      "error SafeERC20FailedOperation(address token)",
-      "error TargetCallFailed()",
-      "error ZeroInputAmount()",
-      "event CallPolicyUpdated(address indexed target, bytes4 indexed selector, bool allowed, uint16 inputTokenId, uint16 outputTokenId)",
-      "event GuardianUpdated(address indexed guardian)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PausedUpdated(bool paused)",
-      "function acceptOwnership()",
-      "function executeGatewayCall(uint16 inputTokenId, address inputTokenAddress, address outputTokenAddress, uint256 inputAmount, tuple(uint16 withdrawalIndex, uint8 action, uint64 expiryBlock, address target, bytes callData, tuple(uint16 outputTokenId, uint96 minOutputAmount, uint256 npk, bytes32 rescueCommitment, tuple(bytes32 viewingKey, bytes32 teeWrapKey, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes16 ct2) ciphertext) receipt, tuple(uint16 outputTokenId, uint96 minOutputAmount, uint256 npk, bytes32 rescueCommitment, tuple(bytes32 viewingKey, bytes32 teeWrapKey, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes16 ct2) ciphertext) fallbackReceipt) slot)",
-      "function getCallPolicy(address target, bytes4 selector) view returns (tuple(bool allowed, uint16 inputTokenId, uint16 outputTokenId))",
-      "function guardian() view returns (address)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function policyEntries(uint256 start, uint256 count) view returns (tuple(address target, bytes4 selector, tuple(bool allowed, uint16 inputTokenId, uint16 outputTokenId) policy)[] entries)",
-      "function policyEntryAt(uint256 i) view returns (tuple(address target, bytes4 selector, tuple(bool allowed, uint16 inputTokenId, uint16 outputTokenId) policy))",
-      "function policyKeyCount() view returns (uint256)",
-      "function pool() view returns (address)",
-      "function removeCallPolicy(address target, bytes4 selector)",
-      "function renounceOwnership()",
-      "function setCallPolicies(address[] targets, bytes4[] selectors, tuple(bool allowed, uint16 inputTokenId, uint16 outputTokenId)[] policies)",
-      "function setCallPolicy(address target, bytes4 selector, tuple(bool allowed, uint16 inputTokenId, uint16 outputTokenId) policy)",
-      "function setGuardian(address newGuardian)",
-      "function sweepToPool(address token)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()"
+    "base:0x420A8a682892bae85cba7fb0e5Cd806807C5Bf95": [
+      "constructor(address _singleton)"
     ],
-    "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f": [
+    "base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -1915,117 +2548,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC": [
-      "constructor(address _singleton)"
-    ],
-    "oeth:0x6806eA551C3c8350Ab156eC5001D28705dCda2B6": [
-      "constructor(address initialOwner)",
-      "error EmptyICSources()",
-      "error ICSourceMismatch()",
-      "error InvalidICLength()",
-      "error InvalidICSource()",
-      "error InvalidParam()",
-      "error InvalidPublicInputLength()",
-      "error InvalidVKConstants()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error PrecompileCallFailed()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error VerifyingKeyNotFound()",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function acceptOwnership()",
-      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
-      "function isSupported(uint32 circuitParam) view returns (bool supported)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
-      "function renounceOwnership()",
-      "function supportedParams(uint256) view returns (uint32)",
-      "function transferOwnership(address newOwner)",
-      "function verifyPortalDeposit(uint32 batchSize, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
-    ],
-    "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B": [
-      "constructor(address _singleton)"
-    ],
-    "oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641": [
-      "constructor(address initialOwner)",
-      "error EmptyICSources()",
-      "error ICSourceMismatch()",
-      "error InvalidICLength()",
-      "error InvalidICSource()",
-      "error InvalidParam()",
-      "error InvalidPublicInputLength()",
-      "error InvalidVKConstants()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error PrecompileCallFailed()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error VerifyingKeyNotFound()",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function acceptOwnership()",
-      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
-      "function isSupported(uint32 circuitParam) view returns (bool supported)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
-      "function renounceOwnership()",
-      "function supportedParams(uint256) view returns (uint32)",
-      "function transferOwnership(address newOwner)",
-      "function verifyForcedWithdraw(uint32 maxInputs, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
-    ],
-    "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6": [
-      "constructor(address _logic, address initialOwner, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "error ProxyDeniedAdminAccess()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "oeth:0x86A891632594Ae26834275925Eb4Fde37F1eBb19": [
-      "constructor()",
-      "error InvalidInitialization()",
-      "error NotAContract()",
-      "error NotInitializing()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error TokenAlreadyRegistered()",
-      "error TokenIdOverflow()",
-      "error TokenTypeNotSupported(uint8 tokenType)",
-      "error ZeroAddress()",
-      "event Initialized(uint64 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event TokenRegistered(uint16 indexed tokenId, uint8 tokenType, address tokenAddress, uint256 tokenSubId)",
-      "function acceptOwnership()",
-      "function idOf(bytes32 key) view returns (uint16 tokenId)",
-      "function initialize(address initialOwner)",
-      "function nextId() view returns (uint16)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function register(uint8 tokenType, address tokenAddress, uint256 tokenSubId) returns (uint16 tokenId)",
-      "function renounceOwnership()",
-      "function tokenOf(uint16 tokenId) view returns (uint8 tokenType, address tokenAddress, uint256 tokenSubId)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "oeth:0x96f3E5551E1330f31974597217019812667544c8": [
-      "constructor(address initialOwner)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "oeth:0x9CB144D35748932EC44950d0837248fcF8747828": [
+    "base:0x508798455053B0b8BF892454a2A73d88891d9fFd": [
       "constructor(address tokenRegistry_, address authRegistry_, uint32 maxBatchSize_, uint32 maxInputsPerTransfer_, uint32 maxOutputsPerTransfer_, uint32 maxFeeTokens_, uint256 cancelDelay_, uint256 forcedWithdrawalDelay_, uint32 maxForcedInputs_, uint64 maxEpochAuthStalenessBlocks_, uint64 maxForcedWithdrawalAuthStalenessBlocks_, uint8 merkleDepth_)",
       "error AuthLeafNotActive()",
       "error CancelTooEarly()",
@@ -2229,7 +2752,127 @@
       "function treeRootHistoryCursor(uint256 treeNum) view returns (uint256 cursor)",
       "function withdrawFeeBps() view returns (uint16)"
     ],
-    "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": [
+    "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7": [
+      "constructor(address _singleton)"
+    ],
+    "base:0x7Bb891f7D7c78A8d6770cb273aBC603A148824b6": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "base:0x8b72188D4A15661E0a3D232ACecCA7A26757C42D": [
+      "error InvalidAuthPathLength()",
+      "error InvalidBatchWidth()",
+      "error InvalidHashLength()",
+      "function hash(uint256 len, uint256 a0, uint256 a1, uint256 a2, uint256 a3, uint256 a4) pure returns (uint256)",
+      "function hashAuthPath(uint256 leaf, uint256 index, uint256 depth, uint256[20] siblings) pure returns (uint256[20] parents)",
+      "function hashSpendApprovalBatch(uint256[] commitments) pure returns (uint256)"
+    ],
+    "base:0x8f394a08A7544daf39aF38FEA5B2E348180bDC05": [
+      "constructor(address initialOwner)",
+      "error EmptyICSources()",
+      "error ICSourceMismatch()",
+      "error InvalidICLength()",
+      "error InvalidICSource()",
+      "error InvalidParam()",
+      "error InvalidPublicInputLength()",
+      "error InvalidVKConstants()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PrecompileCallFailed()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error VerifyingKeyNotFound()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
+      "function hasVerifyingKey(uint32 batchSize) view returns (bool)",
+      "function isSupported(uint32 circuitParam) view returns (bool supported)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
+      "function renounceOwnership()",
+      "function supportedParams(uint256) view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function verifyGiftClaim(uint32 batchSize, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
+    ],
+    "base:0xac60252EF8dbC139e0da63cE7F2a13D25a5B627d": [
+      "constructor(address initialOwner)",
+      "error EmptyICSources()",
+      "error ICSourceMismatch()",
+      "error InvalidICLength()",
+      "error InvalidICSource()",
+      "error InvalidParam()",
+      "error InvalidPublicInputLength()",
+      "error InvalidVKConstants()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PrecompileCallFailed()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error VerifyingKeyNotFound()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
+      "function isSupported(uint32 circuitParam) view returns (bool supported)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
+      "function renounceOwnership()",
+      "function supportedParams(uint256) view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function verifyDeposit(uint32 batchSize, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
+    ],
+    "base:0xB144eb785E2CCe17681395Cd475093C01AEeb11e": [
+      "constructor(address initialOwner)",
+      "error EmptyICSources()",
+      "error ICSourceMismatch()",
+      "error InvalidICLength()",
+      "error InvalidICSource()",
+      "error InvalidParam()",
+      "error InvalidPublicInputLength()",
+      "error InvalidVKConstants()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PrecompileCallFailed()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error VerifyingKeyNotFound()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function getEpochVKInfo(uint32 maxTransfers, uint32 maxInputsPerTransfer, uint32 maxOutputsPerTransfer) view returns (uint256 icLen, address vkConstants)",
+      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
+      "function isSupported(uint32 circuitParam) view returns (bool supported)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerEpochVK(uint32 maxTransfers, uint32 maxInputsPerTransfer, uint32 maxOutputsPerTransfer, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
+      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
+      "function renounceOwnership()",
+      "function supportedParams(uint256) view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function verifyEpoch(uint32 maxTransfers, uint32 maxInputsPerTransfer, uint32 maxOutputsPerTransfer, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
+    ],
+    "base:0xB32ef2884794999e1E260a3f68368A24CEF25b35": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -2240,7 +2883,18 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "oeth:0xA2072F7B4b261F997035f9522648c7c5bAF9370a": [
+    "base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "base:0xECBB712DC58156228187587783286B0662Bc06da": [
       "constructor(uint8 authTreeDepth_)",
       "error AccountAlreadyExists()",
       "error AlreadyRegistered()",
@@ -2345,72 +2999,6 @@
       "function setAllowedRelays(address[] relays, bool allowed)",
       "function setOperator(address operator_)",
       "function transferOwnership(address newOwner)"
-    ],
-    "oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6": [
-      "constructor(address initialOwner)",
-      "error EmptyICSources()",
-      "error ICSourceMismatch()",
-      "error InvalidICLength()",
-      "error InvalidICSource()",
-      "error InvalidParam()",
-      "error InvalidPublicInputLength()",
-      "error InvalidVKConstants()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error PrecompileCallFailed()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error VerifyingKeyNotFound()",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function acceptOwnership()",
-      "function getEpochVKInfo(uint32 maxTransfers, uint32 maxInputsPerTransfer, uint32 maxOutputsPerTransfer) view returns (uint256 icLen, address vkConstants)",
-      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
-      "function isSupported(uint32 circuitParam) view returns (bool supported)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function registerEpochVK(uint32 maxTransfers, uint32 maxInputsPerTransfer, uint32 maxOutputsPerTransfer, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
-      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
-      "function renounceOwnership()",
-      "function supportedParams(uint256) view returns (uint32)",
-      "function transferOwnership(address newOwner)",
-      "function verifyEpoch(uint32 maxTransfers, uint32 maxInputsPerTransfer, uint32 maxOutputsPerTransfer, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
-    ],
-    "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118": [
-      "constructor(address _logic, address initialOwner, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "error ProxyDeniedAdminAccess()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e": [
-      "constructor(address _singleton)"
-    ],
-    "oeth:0xca689828854a422CF1f778be03CA80549408F620": [
-      "constructor(address _logic, address initialOwner, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "error ProxyDeniedAdminAccess()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C": [
-      "constructor(address initialOwner)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ]
   },
   "usedTemplates": {
@@ -2428,213 +3016,213 @@
     "privacy-boost/PrivacyBoost_v2": "0xfa919fb7deac56c5265566b40b691108381cf867ebde39c52ba2780bdf80dfbc",
     "privacy-boost/TokenRegistry": "0x5862dbcfbe28cca245e3f2a7d1bca8c58fc6b6b8e2d77666a7042529cac6a5e4"
   },
-  "usedBlockNumbers": { "optimism": 156932956 },
-  "permissionsConfigHash": "0x743cfea9813a537f83e2f6a6c3985a81d691d801ea4e987ecae1590895d034d6",
+  "usedBlockNumbers": { "base": 52031406 },
+  "permissionsConfigHash": "0x3b93d53f79aabf8ef4ffe4c49d657c059d1d5fb2e157be3c5f3f6abbdfe63a8e",
   "permissions": {
-    "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": {
+    "base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc": {
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+          "from": "base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3",
           "role": "admin"
         }
       ]
     },
-    "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC": {
+    "base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "base:0x3A0bea3a715881793cFD698dDEBcF03784f0bE03",
+          "role": "admin"
+        }
+      ]
+    },
+    "base:0x420A8a682892bae85cba7fb0e5Cd806807C5Bf95": {
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0x16e1dE876dEB1C3251A1E923A206605D084F25C5",
-          "description": "register and replace the Groth16 verification keys used to validate deposit epoch proofs.",
-          "role": ".owner"
+          "from": "base:0x02Eb6E5779f5780A5ABB354341962d9312b7ABe6",
+          "description": "pause the gateway and remove external call policies.",
+          "role": ".guardian"
         },
         {
           "permission": "interact",
-          "from": "oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4",
-          "description": "register and replace the Groth16 verification keys used to validate gift settlement and public gift exit proofs.",
-          "role": ".owner"
+          "from": "base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3",
+          "description": "manage the allowlist of relays that can submit key operations to the AuthRegistry on behalf of users.",
+          "role": ".operator"
         },
         {
           "permission": "interact",
-          "from": "oeth:0x54B576782d3CE325CAc9861E17bB5d7926e41955",
+          "from": "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+          "description": "approve or revoke external gateway routes used by proof-authorized withdrawals.",
+          "role": ".gatewayRouteManager"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+          "description": "manage the allowlist of relays that submit epochs to the pool.",
+          "role": ".operator"
+        }
+      ]
+    },
+    "base:0x6Bd37032571F47e50f312542ae05D548B69DC9B0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3",
+          "description": "submit account key registrations, rotations and revocations with valid owner signatures.",
+          "role": ".allowedRelays"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+          "description": "submit private transfer, withdrawal, deposit, portal deposit and gift settlement epochs with validity proofs, and simulate gateway withdrawals.",
+          "role": ".allowedRelays"
+        }
+      ]
+    },
+    "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x02Eb6E5779f5780A5ABB354341962d9312b7ABe6",
           "description": "set the guardian, install or remove external call policies, pause or unpause the gateway, and sweep stranded tokens back to the pool while paused.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
-          "description": "set the operator address of the AuthRegistry.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0x6806eA551C3c8350Ab156eC5001D28705dCda2B6",
+          "from": "base:0x0c8bb018a3d8DF4c5fC86518ca57F8E1445BCF63",
           "description": "register and replace the Groth16 verification keys used to validate portal deposit epoch proofs.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641",
-          "description": "register and replace the Groth16 verification keys used to validate forced withdrawal proofs.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+          "from": "base:0x3A0bea3a715881793cFD698dDEBcF03784f0bE03",
           "description": "register new ERC-20 tokens to be accepted by the PrivacyBoost pool.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6",
-          "description": "register and replace the Groth16 verification keys used to validate epoch proofs.",
+          "from": "base:0x40e93d3357A5A3d249437717Da936f6141ba85cE",
+          "description": "register and replace the Groth16 verification keys used to validate forced withdrawal proofs.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "from": "base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3",
+          "description": "set the operator address of the AuthRegistry.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+          "description": "replace all five proof verifiers, set withdrawal and portal sweep fees (each up to 10%), set token-specific portal minimum sweeps, and change the treasury, operator and gateway route manager.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0x7Bb891f7D7c78A8d6770cb273aBC603A148824b6",
           "description": "manage the list of registered auditors and set the auditLogger address of the AuditGateway.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-          "description": "replace all five proof verifiers, set withdrawal and portal sweep fees (each up to 10%), set token-specific portal minimum sweeps, and change the treasury, operator and gateway route manager.",
+          "from": "base:0x8f394a08A7544daf39aF38FEA5B2E348180bDC05",
+          "description": "register and replace the Groth16 verification keys used to validate gift settlement and public gift exit proofs.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xac60252EF8dbC139e0da63cE7F2a13D25a5B627d",
+          "description": "register and replace the Groth16 verification keys used to validate deposit epoch proofs.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xB144eb785E2CCe17681395Cd475093C01AEeb11e",
+          "description": "register and replace the Groth16 verification keys used to validate epoch proofs.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "from": "base:0x3A0bea3a715881793cFD698dDEBcF03784f0bE03",
           "role": "admin",
           "via": [
-            { "address": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C" }
+            { "address": "base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+          "from": "base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3",
           "role": "admin",
           "via": [
-            { "address": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd" }
+            { "address": "base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "from": "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
           "role": "admin",
           "via": [
-            { "address": "oeth:0x96f3E5551E1330f31974597217019812667544c8" }
+            { "address": "base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "from": "base:0x7Bb891f7D7c78A8d6770cb273aBC603A148824b6",
           "role": "admin",
           "via": [
-            { "address": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2" }
+            { "address": "base:0xB32ef2884794999e1E260a3f68368A24CEF25b35" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd",
+          "from": "base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "oeth:0x96f3E5551E1330f31974597217019812667544c8",
+          "from": "base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2",
+          "from": "base:0xB32ef2884794999e1E260a3f68368A24CEF25b35",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C",
+          "from": "base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e",
           "role": ".owner"
         }
       ]
     },
-    "oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
-          "description": "submit account key registrations, rotations and revocations with valid owner signatures.",
-          "role": ".allowedRelays"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-          "description": "submit private transfer, withdrawal, deposit, portal deposit and gift settlement epochs with validity proofs, and simulate gateway withdrawals.",
-          "role": ".allowedRelays"
-        }
-      ]
-    },
-    "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "oeth:0x54B576782d3CE325CAc9861E17bB5d7926e41955",
-          "description": "pause the gateway and remove external call policies.",
-          "role": ".guardian"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
-          "description": "manage the allowlist of relays that can submit key operations to the AuthRegistry on behalf of users.",
-          "role": ".operator"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-          "description": "approve or revoke external gateway routes used by proof-authorized withdrawals.",
-          "role": ".gatewayRouteManager"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-          "description": "manage the allowlist of relays that submit epochs to the pool.",
-          "role": ".operator"
-        }
-      ]
-    },
-    "oeth:0x96f3E5551E1330f31974597217019812667544c8": {
+    "base:0xB32ef2884794999e1E260a3f68368A24CEF25b35": {
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "from": "base:0x7Bb891f7D7c78A8d6770cb273aBC603A148824b6",
           "role": "admin"
         }
       ]
     },
-    "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": {
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-          "role": "admin"
-        }
-      ]
-    },
-    "oeth:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB": {
+    "base:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB": {
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "from": "base:0x7Bb891f7D7c78A8d6770cb273aBC603A148824b6",
           "description": "log audit queries performed by registered auditors on the AuditGateway.",
           "role": ".auditLogger"
         }
       ]
     },
-    "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C": {
+    "base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e": {
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "from": "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
           "role": "admin"
         }
       ]

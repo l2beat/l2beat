@@ -19,6 +19,7 @@ import { getRecentChangesOverview } from '~/server/features/projects/recent-chan
 import { getZkCatalogEntries } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getOrganizationStructuredData } from '~/ssr/head/structured-data/getOrganizationStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -35,6 +36,7 @@ import type { HomeL2CategoryCounts } from './components/HomeL2Card'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
 import { HOME_CHART_RANGE } from './homeChartRanges'
+import { toHomeTopZkProver } from './toHomeTopZkProver'
 
 const TOP_CHAINS_COUNT = 5
 const TOP_PRIVACY_PROTOCOLS_COUNT = 5
@@ -69,6 +71,7 @@ export async function getHomeData(
         openGraph: {
           image: '/meta-images/home/opengraph-image.png',
         },
+        structuredData: () => [getOrganizationStructuredData()],
       }),
     },
     ssr: {
@@ -187,7 +190,9 @@ async function getCachedData(manifest: Manifest) {
     topChains,
     topChainsTvsData,
     topPrivacyProtocols: privacyEntries.slice(0, TOP_PRIVACY_PROTOCOLS_COUNT),
-    topZkProvers: zkCatalogEntries.slice(0, TOP_ZK_PROVERS_COUNT),
+    topZkProvers: zkCatalogEntries
+      .slice(0, TOP_ZK_PROVERS_COUNT)
+      .map(toHomeTopZkProver),
     l2Charts,
     ethereumCharts,
     ethereumEconomicSecurity,

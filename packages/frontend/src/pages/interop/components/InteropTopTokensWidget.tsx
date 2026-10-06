@@ -26,7 +26,6 @@ export function InteropTopTokensWidget({
   getTabData,
   transfer,
   className,
-  tabsListClassName,
   tabLabelClassName,
 }: {
   tabsName: string
@@ -38,7 +37,6 @@ export function InteropTopTokensWidget({
   }
   transfer: InteropTransferDefaults
   className?: string
-  tabsListClassName?: string
   tabLabelClassName?: string
 }) {
   const [activeTab, setActiveTab] = useState<string>('all')
@@ -62,10 +60,10 @@ export function InteropTopTokensWidget({
         className="mt-4 gap-1"
         variant="highlighted"
       >
-        <TabsList className={cn('gap-1 bg-transparent p-0', tabsListClassName)}>
+        <TabsList className="-mr-1 -mb-1 block h-auto text-balance rounded-none bg-transparent p-0 leading-none">
           <TabsTrigger
             value="all"
-            className="rounded-full bg-surface-secondary px-2.5 py-[3px] font-bold text-sm leading-[1.15]"
+            className="mr-1 mb-1 size-auto gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] align-top font-bold text-sm leading-[1.15]"
           >
             All
           </TabsTrigger>
@@ -73,7 +71,7 @@ export function InteropTopTokensWidget({
             <TabsTrigger
               key={tab.id}
               value={tab.id}
-              className="flex items-center gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] font-bold text-sm leading-[1.15]"
+              className="mr-1 mb-1 size-auto gap-1 rounded-full bg-surface-secondary px-2.5 py-[3px] align-top font-bold text-sm leading-[1.15]"
             >
               <img
                 src={tab.iconUrl}

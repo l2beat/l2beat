@@ -30,7 +30,7 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
                     key={column.key}
                     column={column}
                     evaluation={entry.crops[column.key]}
-                    delay={columnIndex * 0.09 + rowIndex * 0.05}
+                    delay={entranceDelay(rowIndex, columnIndex)}
                   />
                 ))}
               </div>
@@ -43,6 +43,12 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
       </TableBody>
     </Table>
   )
+}
+
+/** Rows ripple down the table, capped so a long table's last row is not left waiting. */
+function entranceDelay(rowIndex: number, columnIndex: number) {
+  const MAX_ROW_DELAY = 0.3
+  return columnIndex * 0.05 + Math.min(rowIndex * 0.04, MAX_ROW_DELAY)
 }
 
 function EvaluatedCrop({

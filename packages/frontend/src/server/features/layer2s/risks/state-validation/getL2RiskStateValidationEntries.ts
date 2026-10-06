@@ -27,7 +27,10 @@ import {
   type ContractUtils,
   getContractUtils,
 } from '~/utils/project/contracts-and-permissions/getContractUtils'
-import type { ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
+import {
+  PROJECT_PAGE_METADATA_FIELDS,
+  type ProjectWithPageMetadata,
+} from '~/utils/project/getProjectUrl'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
 import { getUsedZkCatalogProjects } from '~/utils/project/getUsedZkCatalogProjects'
 import { type CommonL2Entry, getCommonL2Entry } from '../../getCommonL2Entry'
@@ -52,14 +55,7 @@ export async function getL2RiskStateValidationEntries() {
       select: ['zkCatalogInfo'],
     }),
     ps.getProjects({
-      optional: [
-        'display',
-        'daBridge',
-        'scalingInfo',
-        'daLayer',
-        'privacyInfo',
-        'defiInfo',
-      ],
+      optional: ['display', ...PROJECT_PAGE_METADATA_FIELDS],
     }),
     getContractUtils(),
     get7dTvsBreakdown({ type: 'all' }),
@@ -123,7 +119,10 @@ export interface L2RiskStateValidationValidityEntry extends CommonL2Entry {
   tvsOrder: number
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
-  trustedSetups: TrustedSetupsByProofSystem[string][]
+  trustedSetups: Pick<
+    TrustedSetupsByProofSystem[string],
+    'trustedSetups' | 'verifiers'
+  >[]
   executionDelay: number | undefined
   executionDelayMode: 'always' | 'if-challenged' | undefined
   permissioned: boolean | undefined
@@ -167,7 +166,7 @@ function getL2RiskStateValidationValidityEntry(
         allProjects,
         { id: project.id, contracts: project.contracts },
       ),
-    ),
+    ).map(({ trustedSetups, verifiers }) => ({ trustedSetups, verifiers })),
   )
 
   const projectTvs = tvs.projects[project.id.toString()]

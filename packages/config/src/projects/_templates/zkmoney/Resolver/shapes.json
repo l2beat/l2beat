@@ -1,0 +1,14 @@
+{
+  "Resolver.sol": {
+    "hash": "0xcad7c996f6ed594b4afe5b9ef6004f96d4ab51ce1f68e3afe501e1ed776d0d2f",
+    "address": "eth:0x933000D02883639E92a81cB0091Ff6626466Fa70",
+    "chain": "ethereum",
+    "blockNumber": 26081203
+  },
+  "Resolver_multichain.sol": {
+    "hash": "0x64efddde5fe10de67c4cf6ad16df862043e3ddfc4ffd8e5d9885ad2db0e6b145",
+    "address": "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F",
+    "chain": "ethereum",
+    "blockNumber": 26085099
+  }
+}

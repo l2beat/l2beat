@@ -1,5 +1,11 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UpgradeExecRouteBuilder",
-  "ignoreMethods": ["upExecLocationExists", "upExecLocations"]
+  "critical": true,
+  "ignoreMethods": ["upExecLocationExists", "upExecLocations"],
+  "fields": {
+    // Immutables of a non-upgradeable contract: they cannot change.
+    "l1TimelockMinDelay": {},
+    "l1TimelockAddr": {}
+  }
 }

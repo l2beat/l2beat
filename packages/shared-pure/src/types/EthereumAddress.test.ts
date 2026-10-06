@@ -62,11 +62,85 @@ describe(EthereumAddress.name, () => {
     )
   })
 
-  it('Properly converts a short string to ethereum address using .from', () => {
-    const address = EthereumAddress.from('0x1234567890abc')
-    expect(address.toString()).toEqual(
-      '0x0000000000000000000000000001234567890AbC',
-    )
+  describe(EthereumAddress.from.name, () => {
+    it('pads a short string to a full address', () => {
+      expect(EthereumAddress.from('0x1234567890abc').toString()).toEqual(
+        '0x0000000000000000000000000001234567890AbC',
+      )
+    })
+
+    it('rejects every non-hex ascii character', () => {
+      const hexDigits = '0123456789abcdefABCDEF'
+      for (let code = 0x20; code < 0x80; code++) {
+        const char = String.fromCharCode(code)
+        if (hexDigits.includes(char)) {
+          continue
+        }
+        expect(() => EthereumAddress.from(`0x${char.repeat(40)}`)).toThrow(
+          TypeError,
+          'Invalid EthereumAddress',
+        )
+      }
+    })
+
+    it('rejects a non-hex character in any position', () => {
+      const valid = `0x${'1'.repeat(40)}`
+      for (let position = 2; position < valid.length; position++) {
+        const withZ = `${valid.slice(0, position)}z${valid.slice(position + 1)}`
+        expect(() => EthereumAddress.from(withZ)).toThrow(
+          TypeError,
+          'Invalid EthereumAddress',
+        )
+      }
+    })
+
+    it('rejects non-ascii characters', () => {
+      for (const char of ['é', '一', '\uD800', '\u{1F600}']) {
+        expect(() => EthereumAddress.from(`0x${char.repeat(40)}`)).toThrow(
+          TypeError,
+          'Invalid EthereumAddress',
+        )
+      }
+    })
+
+    it('rejects a string longer than an address', () => {
+      expect(() => EthereumAddress.from(`0x${'1'.repeat(41)}`)).toThrow(
+        TypeError,
+        'Invalid EthereumAddress',
+      )
+    })
+  })
+
+  describe(EthereumAddress.tryParse.name, () => {
+    it('returns the checksummed value', () => {
+      expect(
+        EthereumAddress.tryParse('0xabcdabcd12345678abcdabcd12345678abcdabcd'),
+      ).toEqual(
+        '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as EthereumAddress,
+      )
+    })
+
+    it('returns undefined instead of throwing', () => {
+      const invalid = [
+        'foo',
+        '',
+        'OptimismPortal',
+        '0x123',
+        '0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
+        'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+      ]
+      for (const value of invalid) {
+        expect(EthereumAddress.tryParse(value)).toEqual(undefined)
+        expect(() => EthereumAddress(value)).toThrow(TypeError)
+      }
+    })
+
+    it('agrees with the constructor on valid values', () => {
+      for (let i = 0; i < 64; i++) {
+        const value = EthereumAddress.random()
+        expect(EthereumAddress.tryParse(value)).toEqual(EthereumAddress(value))
+      }
+    })
   })
 
   it('properly checks ignoring case', () => {

@@ -13,6 +13,7 @@ const OPTIONAL = [
   'discoveryUpdates',
   'crops',
   'zkCatalogInfo',
+  'ossificationHistory',
 ] as const
 
 export async function getPrivacyProjects(): Promise<PrivacyProject[]> {

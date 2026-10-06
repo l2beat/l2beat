@@ -1,3 +1,1774 @@
+Generated with discovered.json: 0x9d694a7f2f2709ab435ba76759d6c4d5658386b2
+
+# Diff at Sun, 04 Oct 2026 05:55:36 GMT:
+
+- id: 5ddfc4c1
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790944906
+- current timestamp: 1790944906
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790944906 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      critical:
+-        true
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1771964639,"untilTimestamp":1779285407}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"OVM_L1CrossDomainMessenger":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury] {
+    +++ description: Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
+      fieldMeta.vanguard.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
+      critical:
+-        {"sinceTimestamp":1779285407}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x732b069b11d145b99d58b3aa9178ea68b8ed242d
+
+# Diff at Fri, 02 Oct 2026 12:42:51 GMT:
+
+- id: b817e3a5
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@083c8d4892c0f44227f033385b4317b5f0a92b74 block: 1789077777
+- current timestamp: 1790944906
+
+## Description
+
+Upgrade 19b "Karst" (op-contracts/v7.0.0), executed on 2026-09-21 by RoninConduitOwner via a Conduit-deployed OPContractsManagerV2 (v7.1.17). Absolute prestate unchanged (op-program v1.3.1).
+
+Version changes and implementation diffs:
+
+- OptimismPortal2 5.2.0 -> 5.6.1: https://disco.l2beat.com/diff/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B/eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2
+- SystemConfig 3.13.1 -> 3.14.2: https://disco.l2beat.com/diff/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2/eth:0x42Ad0173051225Ac784100e9acD43349707F4db9
+- DisputeGameFactory 1.4.0 -> 1.6.1: https://disco.l2beat.com/diff/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c/eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b
+- AnchorStateRegistry 3.7.0 -> 3.9.0: https://disco.l2beat.com/diff/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5/eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281
+- L1StandardBridge 2.8.0 -> 2.8.2: https://disco.l2beat.com/diff/eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A/eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891
+- L1CrossDomainMessenger 2.11.0 -> 2.11.1: https://disco.l2beat.com/diff/eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0/eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0
+- L1ERC721Bridge 2.9.0 -> 2.9.1: https://disco.l2beat.com/diff/eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9/eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e
+- OptimismMintableERC20Factory 1.10.2 -> 1.11.0: https://disco.l2beat.com/diff/eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB/eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12
+- SuperchainConfig 2.4.0 -> 2.4.2: https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550
+- PermissionedDisputeGame 2.2.0 -> 2.4.0: https://disco.l2beat.com/diff/eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A/eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e
+- MIPS 1.9.0 -> 1.10.1: https://disco.l2beat.com/diff/eth:0x6463dEE3828677F6270d83d45408044fc5eDB908/eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA
+- PreimageOracle 1.1.4 -> 1.1.5: https://disco.l2beat.com/diff/eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3/eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0
+- DelayedWETH 1.5.0 -> 1.5.1: https://disco.l2beat.com/diff/eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998/eth:0xE440CC08A71694C8229323803F59024E3144630e
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      template:
+-        "opstack/AnchorStateRegistry_post13"
++        "opstack/AnchorStateRegistry_post20"
+      sourceHashes.1:
+-        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
++        "0x10f64124093daab87c84d97148854054f9622bf86e09e98d496f123be3368122"
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation."
+      values.$implementation:
+-        "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"
++        "eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281"
+      values.$pastUpgrades.1:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.2:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.absolutePrestateFromGame:
+-        "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c"
+      values.challengePeriodFromOracle:
+-        86400
+      values.oracleFromVm:
+-        "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3"
+      values.version:
+-        "3.7.0"
++        "3.9.0"
+      values.vmFromGame:
+-        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
+      values.wethFromGame:
+-        "eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434"
++++ severity: HIGH
+      values.blacklistedGames:
++        []
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.blacklistedGames:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281:
++        "AnchorStateRegistry"
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2"
++        "0xc5ed62b03fb7c1340609ace7ebb0c5bf8d43b1814b1ab4f10863bfa21d13b90b"
+      values.$implementation:
+-        "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"
++        "eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e"
+      values.$pastUpgrades.1:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.2:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "2.9.0"
++        "2.9.1"
+      implementationNames.eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      template:
+-        "opstack/DisputeGameFactory"
++        "opstack/DisputeGameFactory_v2"
+      sourceHashes.1:
+-        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
++        "0x8912e655e26f51d4384fc950df847ae65bccf1f5ec5458642402f385c3dadf78"
+      description:
+-        "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them."
++        "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation."
+      values.$implementation:
+-        "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"
++        "eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b"
+      values.$pastUpgrades.1:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.2:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.game2000:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.gameImpls:
+-        ["eth:0x0000000000000000000000000000000000000000","eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"]
+      values.initBonds:
+-        [0,0,0,0,0]
+      values.permissionedGameArgs:
+-        "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c6463dee3828677f6270d83d45408044fc5edb9080b95ff1d1b113bac3e29ac0bbf2089126c9ae81a69fcd2e75af364295eaf48dc058338f80cffb43400000000000000000000000000000000000000000000000000000000000007e4d379de941e78ab394d4d4917fcce1cc45b6cd6204a4962275df8c60a80d3a25faec5aa7de116a746"
++        "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54cacc005dcd857b401e4732e6f7837135a22825cfa0b95ff1d1b113bac3e29ac0bbf2089126c9ae81a2562ae2fb030274e3ceb63fcd32c232ab0fcec6d00000000000000000000000000000000000000000000000000000000000007e4d379de941e78ab394d4d4917fcce1cc45b6cd6204a4962275df8c60a80d3a25faec5aa7de116a746"
+      values.version:
+-        "1.4.0"
++        "1.6.1"
++++ severity: HIGH
+      values.wethFromDGF:
+-        "eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434"
++        "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d"
++++ severity: HIGH
+      values.absolutePrestateFromDGF:
++        "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c"
++++ severity: HIGH
+      values.anchorStateRegistryFromDGF:
++        "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A"
++++ severity: HIGH
+      values.chainIdFromDGF:
++        2020
++++ severity: HIGH
+      values.game0:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game1:
++        "eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e"
++++ severity: HIGH
+      values.game5:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game5AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game5Args:
++        "0x"
++++ severity: HIGH
+      values.game5Proposer:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game621:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game8:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game8AbsolutePrestate:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game8Args:
++        "0x"
++++ severity: HIGH
+      values.game8ChainId:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8Vm:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8Weth:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game9AbsolutePrestate:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game9Args:
++        "0x"
++++ severity: HIGH
+      values.game9Vm:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9Weth:
++        "UNRESOLVED"
+      values.initBondGame0:
++        0
+      values.initBondGame1:
++        0
+      values.initBondGame5:
++        0
+      values.initBondGame621:
++        0
+      values.initBondGame8:
++        0
+      values.initBondGame9:
++        0
++++ severity: HIGH
+      values.vmFromDGF:
++        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.gameImpls:
+-        {"severity":"HIGH"}
+      fieldMeta.game2000:
+-        {"severity":"HIGH"}
+      fieldMeta.game621:
++        {"severity":"HIGH"}
+      fieldMeta.game0:
++        {"severity":"HIGH"}
+      fieldMeta.game1:
++        {"severity":"HIGH"}
+      fieldMeta.game8:
++        {"severity":"HIGH"}
+      fieldMeta.game9:
++        {"severity":"HIGH"}
+      fieldMeta.game5:
++        {"severity":"HIGH"}
+      fieldMeta.absolutePrestateFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.vmFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.game8AbsolutePrestate:
++        {"severity":"HIGH"}
+      fieldMeta.game8Vm:
++        {"severity":"HIGH"}
+      fieldMeta.game8AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game8Weth:
++        {"severity":"HIGH"}
+      fieldMeta.game8ChainId:
++        {"severity":"HIGH"}
+      fieldMeta.game9AbsolutePrestate:
++        {"severity":"HIGH"}
+      fieldMeta.game9Vm:
++        {"severity":"HIGH"}
+      fieldMeta.game9AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game9Weth:
++        {"severity":"HIGH"}
+      fieldMeta.game5AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game5Proposer:
++        {"severity":"HIGH"}
+      fieldMeta.anchorStateRegistryFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.chainIdFromDGF:
++        {"severity":"HIGH"}
+      implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b:
++        "DisputeGameFactory"
+      usedTypes.0:
++        {"typeCaster":"SliceBytes32","arg":{"offset":0}}
+      usedTypes.1:
++        {"typeCaster":"SliceAddress","arg":{"offset":32}}
+      usedTypes.2:
++        {"typeCaster":"SliceAddress","arg":{"offset":32}}
+      usedTypes.3:
++        {"typeCaster":"SliceAddress","arg":{"offset":52}}
+      usedTypes.4:
++        {"typeCaster":"SliceAddress","arg":{"offset":72}}
+      usedTypes.5:
++        {"typeCaster":"SliceUint256","arg":{"offset":92}}
+      usedTypes.6:
++        {"typeCaster":"SliceAddress","arg":{"offset":0}}
+      usedTypes.7:
++        {"typeCaster":"SliceAddress","arg":{"offset":20}}
+      usedTypes.2:
+-        {"typeCaster":"SliceAddress","arg":{"offset":72}}
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x51639D151456d0384285C6974e441A5D2B784B7D) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e"
++        "0x11b0ed6f15cabf613492a8d54c55304a17cf60f4fd94a655d7e720d4556906d0"
+      values.$implementation:
+-        "eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"
++        "eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12"
+      values.$pastUpgrades.1:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.2:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "1.10.2"
++        "1.11.0"
+      values.proxyAdmin:
++        "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC"
+      values.proxyAdminOwner:
++        "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
+      implementationNames.eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB:
+-        "OptimismMintableERC20Factory"
+      implementationNames.eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
++        "0xe1df4caf26d9a0735bd53eeb020546840bd2f2fd4d0d9e2519f873306b5e19b1"
+      values.$implementation:
+-        "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"
++        "eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2"
+      values.$pastUpgrades.1:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.2:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "5.2.0"
++        "5.6.1"
+      implementationNames.eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B:
+-        "OptimismPortal2"
+      implementationNames.eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract AddressManager (eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
++++ severity: HIGH
+      values.OVM_L1CrossDomainMessenger:
+-        "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"
++        "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d","role":"admin"}
+      directlyReceivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434","role":"admin"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0xcacd38e7b52353ad3463da40b7e7a29b028f95500a82590d2b8f8ffd26b83f6d"
++        "0x6469155800e1489607c8fa062550a362dfa8978885df4714ca4653e5f3d25b0c"
+      values.$implementation:
+-        "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A"
++        "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891"
+      values.version:
+-        "2.8.0"
++        "2.8.2"
+      implementationNames.eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A:
+-        "L1StandardBridge"
+      implementationNames.eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x703fe68eeb3d5454a8ef012933846f1ff1433fc2df39c0c94f2a550d8325f085"
++        "0x3d8e7cdbbdbf274bba0a11a060b01d5a50e3a478683af9ec079874d1758576d6"
+      values.$implementation:
+-        "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"
++        "eth:0x42Ad0173051225Ac784100e9acD43349707F4db9"
+      values.$pastUpgrades.1:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.2:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x42Ad0173051225Ac784100e9acD43349707F4db9"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.delayedWETH:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d"
+      values.getAddresses.delayedWETH:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d"
+      values.getAddresses.opcm:
++        "eth:0x0D5058007D566E60b5473c63A4d43e87F31f348c"
+      values.version:
+-        "3.13.1"
++        "3.14.2"
+      values.lastUsedOPCM:
++        "eth:0x0D5058007D566E60b5473c63A4d43e87F31f348c"
+      values.lastUsedOPCMVersion:
++        "7.1.17"
+      values.OPCM_SLOT:
++        "0x99f45962df4bc30de8d4c3c6d1ffc0f100edce16e80c7a5768b6d55ca463ff42"
+      implementationNames.eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2:
+-        "SystemConfig"
+      implementationNames.eth:0x42Ad0173051225Ac784100e9acD43349707F4db9:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d","role":"admin","via":[{"address":"eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434","role":"admin","via":[{"address":"eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC"}]}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      sourceHashes.1:
+-        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
++        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
+      values.$implementation:
+-        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
++        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
+      values.$pastUpgrades.3:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.4:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"]]
+      values.$upgradeCount:
+-        3
++        5
+      values.version:
+-        "2.4.0"
++        "2.4.2"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
+-        "SuperchainConfig"
+      implementationNames.eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550:
++        "SuperchainConfig"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6"
++        "0x694050f95b40e6d92ee91ca0f60acb9c4a74d1b0325c33fd4bd7445fde90e806"
+      values.$implementation:
+-        "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"
++        "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0"
+      values.$pastUpgrades.1:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.2:
++        ["2026-09-21T06:51:59.000Z","0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",["eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "2.11.0"
++        "2.11.1"
+      implementationNames.eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (eth:0x2562ae2FB030274E3cEB63fCd32C232ab0FceC6d) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    | 1141 +-------------
+ .../DelayedWETH/DelayedWETH.sol                    |   54 +-
+ .../DisputeGameFactory/DisputeGameFactory.sol      |   56 +-
+ .../L1CrossDomainMessenger.sol                     | 1619 ++++++--------------
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  208 ++-
+ .../L1StandardBridge/L1StandardBridge.sol          |  212 ++-
+ .../{.flat@1789077777 => .flat}/MIPS.sol           |   43 +-
+ .../OptimismMintableERC20Factory.sol               |  341 ++++-
+ .../OptimismPortal2/OptimismPortal2.sol            | 1375 +++++------------
+ .../PermissionedDisputeGame.sol                    |  605 ++++----
+ .../{.flat@1789077777 => .flat}/PreimageOracle.sol |   20 +-
+ .../SuperchainConfig/SuperchainConfig.sol          |   34 +-
+ .../SystemConfig/SystemConfig.sol                  | 1580 +++++--------------
+ 13 files changed, 2377 insertions(+), 4911 deletions(-)
+```
+
+Generated with discovered.json: 0x55a999a3c1741ec654c5ff91fcea7ce21b385c8b
+
+# Diff at Wed, 30 Sep 2026 22:47:38 GMT:
+
+- id: 9ffe080d
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1789077777
+- current timestamp: 1789077777
+
+## Description
+
+Config-only rerun on the same block number. The OP Stack templates now label the Upgrade 20 super dispute game types, 9 and 5, in the respected game type mapping. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789077777 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x8155a67ce3d6643faad9dce9171039f456e002c8
+
+# Diff at Wed, 30 Sep 2026 07:45:38 GMT:
+
+- id: a37891d5
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789077777
+- current timestamp: 1789077777
+
+## Description
+
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789077777 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+    }
+```
+
+```diff
+    contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
+Generated with discovered.json: 0x558b94d0ef092e132d9397b010e0cb52fa10d7b5
+
+# Diff at Wed, 23 Sep 2026 05:58:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789077777
+- current timestamp: 1789077777
+
+## Description
+
+Keep ossification discovery scoped to the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789077777 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.Proposer:
+-        {"severity":"HIGH"}
+      fieldMeta.Canceller:
+-        {"severity":"HIGH"}
+      fieldMeta.Executor:
+-        {"severity":"HIGH"}
+      fieldMeta.callsExecuted.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH","description":"Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      critical:
+-        true
++        {"untilTimestamp":1789973519}
+    }
+```
+
+```diff
+    contract KailuaGame (eth:0x296e7aD6D441b0627768bC0650179a4206479444) [risc0/KailuaGame] {
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.permissionedGameArgs:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      critical:
++        {"sinceTimestamp":1771964639,"untilTimestamp":1779285407}
+      fieldMeta:
++        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+      fieldMeta:
+-        {"imageInfo":{"severity":"HIGH"},"VERIFIER":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      critical:
+-        true
++        {"untilTimestamp":1789973519}
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      critical:
+-        true
++        {"untilTimestamp":1789973519}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.proofMaturityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.respectedGameType:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
+-        true
++        {"untilTimestamp":1789973519}
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract KailuaVerifier (eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C) [N/A] {
+    +++ description: Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID.
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+      fieldMeta:
+-        {"PERMIT_DURATION":{"severity":"HIGH"},"PERMIT_DELAY":{"severity":"HIGH"},"ROLLUP_CONFIG_HASH":{"severity":"HIGH"},"RISC_ZERO_VERIFIER":{"severity":"HIGH"},"FPVM_IMAGE_ID":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
++++ severity: HIGH
+      values.OVM_L1CrossDomainMessenger:
++        "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.OVM_L1CrossDomainMessenger:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+      directlyReceivedPermissions.7.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.7.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
+-        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury] {
+    +++ description: Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
+      critical:
+-        true
++        {"sinceTimestamp":1782901175,"untilTimestamp":1788777107}
+      fieldMeta.anchorStateRegistry:
+-        {"severity":"HIGH"}
+      fieldMeta.DISPUTE_GAME_FACTORY:
+-        {"severity":"HIGH"}
+      fieldMeta.OPTIMISM_PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.KAILUA_VERIFIER:
+-        {"severity":"HIGH"}
+      fieldMeta.participationBondFmt:
++        {"severity":"HIGH"}
+      fieldMeta.vanguardAdvantageFmt:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
+-        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
+-        {"severity":"HIGH"}
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
+      receivedPermissions.10.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.10.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      critical:
++        {"sinceTimestamp":1779285407}
+      fieldMeta:
++        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.pauseExpiry:
+-        {"severity":"HIGH"}
+      fieldMeta.pauseExpiryFmt:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x6b638ac66e93b6f1c44b4b8bb8c64eaa99d00f22
+
+# Diff at Mon, 21 Sep 2026 11:24:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789077777
+- current timestamp: 1789077777
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789077777 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.Proposer:
++        {"severity":"HIGH"}
+      fieldMeta.Canceller:
++        {"severity":"HIGH"}
+      fieldMeta.Executor:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.retirementTimestamp:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.permissionedGameArgs:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      fieldMeta:
++        {"imageInfo":{"severity":"HIGH"},"VERIFIER":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.anchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.ethLockbox:
++        {"severity":"HIGH"}
+      fieldMeta.proofMaturityDelaySeconds:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      fieldMeta.delay:
++        {"severity":"HIGH"}
+      fieldMeta.config:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract KailuaVerifier (eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C) [N/A] {
+    +++ description: Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID.
+      fieldMeta:
++        {"PERMIT_DURATION":{"severity":"HIGH"},"PERMIT_DELAY":{"severity":"HIGH"},"ROLLUP_CONFIG_HASH":{"severity":"HIGH"},"RISC_ZERO_VERIFIER":{"severity":"HIGH"},"FPVM_IMAGE_ID":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
++        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
++        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
++        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
++        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
++        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury] {
+    +++ description: Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
+      fieldMeta:
++        {"anchorStateRegistry":{"severity":"HIGH"},"DISPUTE_GAME_FACTORY":{"severity":"HIGH"},"OPTIMISM_PORTAL":{"severity":"HIGH"},"KAILUA_VERIFIER":{"severity":"HIGH"},"vanguardAdvantage":{"severity":"HIGH"},"participationBond":{"severity":"HIGH"},"vanguard":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.guardian.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.pauseExpiry:
++        {"severity":"HIGH"}
+      fieldMeta.pauseExpiryFmt:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.portal:
++        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
++        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0xbadc9cbcda6c64ce5a7bc2a104e97cfeaebbd249
+
+# Diff at Fri, 18 Sep 2026 10:24:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1789077777
+- current timestamp: 1789077777
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789077777 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted:
++        [{"id":"0x7a84c572dc62f88115a1ee5163b983a332e1214113fb2d000d9d1bcaef2e9c10","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30310fe5980000000000000000000000000000000000000000000000000000000000000000000000000000000044c220f0598345195ce99ad6a57adffcb9ea33e7"},{"id":"0xadb3b737a6a6bdcb4c8dccde80cd44ac4e4d3db3a89374a7b4acdd4b64f72dda","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x64d623530000000000000000000000000000000000000000000000000000000000093a80"},{"id":"0x3f19aefd1b1ceef8c24d069d4199d2fa93837840c710fe02fa8caa57257b29f1","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3050bd17690000000000000000000000000000000000000000000000000000000000000000000000000000000008aed6c108e500540a9544bef7a8b8a05e056e87"},{"id":"0x8c69e0a7787b08054748643b2f24e534391080bd0c61e3a0267ce6b152664d0d","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30c101b42b0000000000000000000000000000000000000000000000000000000000000000000000000000000003b66cedab014ca7e970bfb83c1951d10dd2a805"},{"id":"0x960674420bb13639f49c3e4680c859d460652b079912a2e19d48070e1839717e","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af309f39696c0000000000000000000000000000000000000000000000000000000000000000000000000000000068dc2cb4e61774873971c499d9b239ec5ac540e3"},{"id":"0x3d85619c066effeda2dfdaa6533cf4ab13dc517fa095d3ff1ed03ba753e04d43","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30f536085a00000000000000000000000000000000000000000000000000000000000000000000000000000000da8f3de6fbbdb261ac771b813a578a7abda6b2b1"},{"id":"0xd0791ae7ead2e43dd04e036894376e9f800038dcd77ca25aee9c25b10c2152c7","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x64d62353000000000000000000000000000000000000000000000000000000000003f480"},{"id":"0xfb7623c10d952a912314a537418c1ea4f95ceeee7628d8564f7e1c814d09da5b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30bb001d44000000000000000000000000000000000000000000000000000000000000000000000000000000001efdd13f831ceeea14940806705a53d3211cd698"},{"id":"0x8f9bc667a318296f0c9a7a2773fd371cfedc904128c7ff5af6c246d383cb46db","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3073c457ba000000000000000000000000000000000000000000000000000000000000000000000000000000009f9994eb4cb5200198fefb470f8b50301662e696"},{"id":"0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782"},{"id":"0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f650bd176900000000000000000000000000000000000000000000000000000000"},{"id":"0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000"},{"id":"0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"},{"id":"0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"},{"id":"0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"},{"id":"0x89a458a6781bd045d785361e429a3df71167dff9e14996fa5f98ca7c5eb9d4c3","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741fb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"},{"id":"0x4acc61e26f03e0270258c3fe8aec76d8ce5c80e8e100972e3091fc77c8882819","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741fd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"},{"id":"0xf239631e46b22677b2b8b3b35d3780a1de298d9234c6906ce98aa3168d52cc97","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741ffd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"}]
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled:
++        [{"id":"0x7a84c572dc62f88115a1ee5163b983a332e1214113fb2d000d9d1bcaef2e9c10","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30310fe5980000000000000000000000000000000000000000000000000000000000000000000000000000000044c220f0598345195ce99ad6a57adffcb9ea33e7","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":1},{"id":"0xadb3b737a6a6bdcb4c8dccde80cd44ac4e4d3db3a89374a7b4acdd4b64f72dda","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x64d623530000000000000000000000000000000000000000000000000000000000093a80","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":1},{"id":"0xca7c32c7743c15b77a35c4f9067ba7b6a70ba735d9223900eda94ce2c9b30b84","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af304c630d8700000000000000000000000000000000000000000000000000000000000000000000000000000000b839ea7bba8e6bb2893ca5252f3f3c13323d74f7","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0x3f19aefd1b1ceef8c24d069d4199d2fa93837840c710fe02fa8caa57257b29f1","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3050bd17690000000000000000000000000000000000000000000000000000000000000000000000000000000008aed6c108e500540a9544bef7a8b8a05e056e87","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0x8c69e0a7787b08054748643b2f24e534391080bd0c61e3a0267ce6b152664d0d","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30c101b42b0000000000000000000000000000000000000000000000000000000000000000000000000000000003b66cedab014ca7e970bfb83c1951d10dd2a805","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0x7bd40c500f2b3900d572471750afc6fb8ff842feac61ce3b28457400df977bdd","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30922fe23d000000000000000000000000000000000000000000000000000000000000000000000000000000001e785018a65d9a9c8ee52955da0dd9644353a22f","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0xffe2b1acdec15653f2ec46c307b748d6ada029fe63e7308d24b980d503ab7ea3","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3014da014b00000000000000000000000000000000000000000000000000000000000000000000000000000000268436d69f9434018657b278d838546e7dbc2d7f","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0x960674420bb13639f49c3e4680c859d460652b079912a2e19d48070e1839717e","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af309f39696c0000000000000000000000000000000000000000000000000000000000000000000000000000000068dc2cb4e61774873971c499d9b239ec5ac540e3","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0x3d85619c066effeda2dfdaa6533cf4ab13dc517fa095d3ff1ed03ba753e04d43","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30f536085a00000000000000000000000000000000000000000000000000000000000000000000000000000000da8f3de6fbbdb261ac771b813a578a7abda6b2b1","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0xd0791ae7ead2e43dd04e036894376e9f800038dcd77ca25aee9c25b10c2152c7","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x64d62353000000000000000000000000000000000000000000000000000000000003f480","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":604800},{"id":"0xfb7623c10d952a912314a537418c1ea4f95ceeee7628d8564f7e1c814d09da5b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30bb001d44000000000000000000000000000000000000000000000000000000000000000000000000000000001efdd13f831ceeea14940806705a53d3211cd698","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x8f9bc667a318296f0c9a7a2773fd371cfedc904128c7ff5af6c246d383cb46db","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af3073c457ba000000000000000000000000000000000000000000000000000000000000000000000000000000009f9994eb4cb5200198fefb470f8b50301662e696","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f650bd176900000000000000000000000000000000000000000000000000000000","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x89a458a6781bd045d785361e429a3df71167dff9e14996fa5f98ca7c5eb9d4c3","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741fb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0x4acc61e26f03e0270258c3fe8aec76d8ce5c80e8e100972e3091fc77c8882819","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741fd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200},{"id":"0xf239631e46b22677b2b8b3b35d3780a1de298d9234c6906ce98aa3168d52cc97","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0xd547741ffd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}]
+      critical:
++        true
+      fieldMeta:
++        {"getMinDelayFormatted":{"severity":"HIGH"},"accessControl":{"severity":"HIGH"},"callsScheduled":{"description":"since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address."},"callsExecuted":{"severity":"HIGH","description":"since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address."}}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.disputeGameFinalityDelaySeconds:
++        {"severity":"HIGH","description":"Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract KailuaGame (eth:0x296e7aD6D441b0627768bC0650179a4206479444) [risc0/KailuaGame] {
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MainchainBridgeManager (eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) [N/A] {
+    +++ description: Governance and proxy-admin contract for the legacy MainchainGateway bridge. Holds the operator/governor set, tallies stake-weighted votes for bridge proposals (operator rotations, threshold changes, withdrawals).
+      fieldMeta:
++        {"$admin":{"severity":"MEDIUM"},"getThreshold":{"severity":"MEDIUM"},"getBridgeOperators":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.wethFromDGF:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MainchainGateway (eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) [N/A] {
+    +++ description: Legacy multi-sig-secured Ronin bridge contract holding the L1 side of deposits made before the April 2025 Chainlink CCIP migration. Still custodies residual user balances (ETH backing legacy WETH on Ronin, the deprecated WBTC contract, and dust). Withdrawals authorised by the Ronin BridgeOperator stake-weighted threshold via MainchainBridgeManager.
+      fieldMeta:
++        {"$admin":{"severity":"MEDIUM"},"paused":{"severity":"MEDIUM"},"getThreshold":{"severity":"MEDIUM"},"getHighTierVoteWeightThreshold":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract KailuaVerifier (eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C) [N/A] {
+    +++ description: Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury] {
+    +++ description: Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.guardian:
++        {"severity":"HIGH","description":"Address that can pause Ronin withdrawals and blacklist dispute games."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xb05903944bd0caf7083fe816a2c78259ec3812a3
 
 # Diff at Fri, 11 Sep 2026 16:12:17 GMT:

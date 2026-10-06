@@ -14,6 +14,10 @@ import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('optimism')
 const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
+// ~ Timestamp of block number 138 on Optimism
+// The first full hour timestamp that will return the block number
+// https://optimistic.etherscan.io/block/138
+const chainStart = UnixTime.fromDate(new Date('2021-11-11T22:00:00Z'))
 const l2BlockTimeSeconds = HARDCODED.OPTIMISM.L2_BLOCK_TIME_SECONDS
 const flashblockIntervalMilliseconds =
   HARDCODED.OPTIMISM.FLASHBLOCK_INTERVAL_MILLISECONDS
@@ -197,7 +201,7 @@ export const optimism: ScalingProject = opStackL2({
       },
       {
         title: 'OptimismPortal2 - source code',
-        url: 'https://etherscan.io/address/0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2#code',
+        url: 'https://etherscan.io/address/0x1005217ad392DC64CEf501FA1777A27D42166748#code',
       },
       {
         title: 'OP Stack specification - fault dispute game resolution',
@@ -320,10 +324,7 @@ export const optimism: ScalingProject = opStackL2({
     name: 'optimism',
     chainId,
     explorerUrl: 'https://optimistic.etherscan.io',
-    // ~ Timestamp of block number 138 on Optimism
-    // The first full hour timestamp that will return the block number
-    // https://optimistic.etherscan.io/block/138
-    sinceTimestamp: UnixTime.fromDate(new Date('2021-11-11T22:00:00Z')),
+    sinceTimestamp: chainStart,
     gasTokens: ['ETH'],
     multicallContracts: [
       {
@@ -350,6 +351,7 @@ export const optimism: ScalingProject = opStackL2({
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
     ],
   },
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   scopeOfAssessment: {
     inScope: [
       SOA.l1Contracts,

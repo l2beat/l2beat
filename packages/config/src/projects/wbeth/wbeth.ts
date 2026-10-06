@@ -59,7 +59,7 @@ export const wbeth: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `${value('wBETH', 'symbol')} is Binance's liquid staking token for ETH. Users can mint by depositing ETH onchain, while Binance also mints it against BETH balances held on its exchange. Binance controls the exchange rate and custody, must fund queued redemptions (currently delayed by ${duration('UnwrapTokenV1ETH', 'lockTimeSeconds')}), and can mint, pause, blacklist or upgrade without delay.`,
+    description: `Binance Wrapped Beacon ETH (${value('wBETH', 'symbol')}) is a liquid staking token for ETH issued by Binance. Users can mint by depositing ETH onchain, while Binance also mints it against BETH balances held on its exchange. Binance controls the exchange rate and custody, must fund queued redemptions (currently delayed by ${duration('UnwrapTokenV1ETH', 'lockTimeSeconds')}), and can mint, pause, blacklist or upgrade without delay.`,
     detailedDescription: readProjectMarkdown('wbeth', 'detailedDescription', {
       symbol: value('wBETH', 'symbol'),
       rateCapPercent,

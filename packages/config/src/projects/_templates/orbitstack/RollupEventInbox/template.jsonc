@@ -1,5 +1,17 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "RollupEventInbox",
-  "description": "Helper contract sending configuration data over the bridge during the systems initialization."
+  "critical": true,
+  "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+  "fields": {
+    "rollup": {
+      "severity": "HIGH"
+    },
+    "bridge": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    }
+  }
 }

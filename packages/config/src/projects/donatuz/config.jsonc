@@ -3,5 +3,11 @@
   "name": "donatuz",
   "import": ["../globalConfig.jsonc"],
   "archived": true,
-  "initialAddresses": ["base:0xBbea8Cc549702F67cc082d2cAA9842Ba3767536B"]
+  "initialAddresses": ["base:0xBbea8Cc549702F67cc082d2cAA9842Ba3767536B"],
+  "overrides": {
+    "base:0x5416B7421c42B9218B29f688C47a46020c23cF0d": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  }
 }

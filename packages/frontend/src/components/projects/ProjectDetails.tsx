@@ -6,6 +6,7 @@ import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
+import { DefiTvlSection } from './sections/defi/DefiTvlSection'
 import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
 import { GardenCropsSection } from './sections/GardenCropsSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
@@ -23,6 +24,8 @@ import { LivenessSection } from './sections/liveness/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
+import { PrivacyAdversariesSection } from './sections/privacy/PrivacyAdversariesSection'
+import { PrivacyAnonymitySetSection } from './sections/privacy/PrivacyAnonymitySetSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
 import { ProgramHashesSection } from './sections/program-hashes/ProgramHashesSection'
@@ -385,9 +388,33 @@ function renderSection(
           {...item.props}
         />
       )
+    case 'DefiTvlSection':
+      return (
+        <DefiTvlSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
     case 'PrivacyFlowsSection':
       return (
         <PrivacyFlowsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'PrivacyAnonymitySetSection':
+      return (
+        <PrivacyAnonymitySetSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'PrivacyAdversariesSection':
+      return (
+        <PrivacyAdversariesSection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}

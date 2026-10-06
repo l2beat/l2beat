@@ -1,4 +1,5 @@
 import type {
+  OssificationHistory,
   RetryHandlerVariant,
   TrackedTxConfigEntryWithoutId,
 } from '@l2beat/shared'
@@ -280,6 +281,9 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
   /** Public entries of diffHistory.md, newest first. */
   discoveryUpdates?: ProjectDiscoveryUpdate[]
+  /** Ossification perimeter and history, for projects with a critical
+   *  contract in their discovery config. */
+  ossificationHistory?: OssificationHistory
 
   // tags
   archivedAt?: UnixTime
@@ -473,6 +477,7 @@ export interface EtherscanApi {
 export interface SourcifyApi {
   type: 'sourcify'
   chainId: number
+  url?: string
 }
 
 // #endregion
@@ -1036,8 +1041,32 @@ export type ProjectDefiCategory =
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
   category: ProjectDefiCategory
+  tvl?: ProjectDefiTvlConfig
   /** Risk comparison shown on the DeFi summary "Liquid staking risks" tab. */
   liquidStaking?: ProjectDefiLiquidStakingRisks
+}
+
+export type ProjectDefiTvlConfig =
+  | {
+      /** Uses L2BEAT TVS data and requires the project to define tvsConfig. */
+      source: 'l2beat'
+    }
+  | {
+      /** Uses external DeFiLlama data and must not be combined with tvsConfig. */
+      source: 'defillama'
+      /** DeFiLlama protocol slug used by /protocol/{slug}. */
+      protocolSlug: string
+      /** First timestamp included in the historical import. */
+      sinceTimestamp: UnixTime
+      /** Explicit allowlist of researched chains. */
+      chains: ProjectDefiTvlChain[]
+    }
+
+export interface ProjectDefiTvlChain {
+  /** L2BEAT chain name persisted in the database. */
+  chain: string
+  /** Exact key used by DeFiLlama in chainTvls/currentChainTvls. */
+  providerChain: string
 }
 
 export interface DefiLiquidStakingRiskValue extends TableReadyValue {
@@ -1084,6 +1113,12 @@ export type ProjectExternalDependency =
 // #region privacy data
 
 export interface ProjectPrivacyInfo {
+  /**
+   * Chains on which L2BEAT tracks this protocol's deployment, mostly through
+   * project discovery. Each chain needs a project with a matching chainConfig
+   * for its icon.
+   */
+  trackedOn: string[]
   tokens: ProjectPrivacyToken[]
   /**
    * A project tracks relayers either through onchain events or through
@@ -1091,11 +1126,20 @@ export interface ProjectPrivacyInfo {
    * mixing kinds within one project is not representable.
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
-  summaryTrackedItemName?: string
-  anonymitySet?: {
-    type: 'not-applicable'
-    description: string
-  }
+  /** The deployed mechanism. Decides the promised field, not the grade. */
+  category: PrivacyCategory
+  anonymitySet?:
+    | {
+        type: 'not-applicable'
+        description: string
+      }
+    /**
+     * Depositors are traced through intermediate deposit addresses. Deposits
+     * that cannot be traced are left out, so the frontend reports coverage.
+     */
+    | { type: 'partially-attributed' }
+    /** Too few users to matter, so exact tracking is not set up. */
+    | { type: 'too-small' }
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
@@ -1103,9 +1147,9 @@ export interface ProjectPrivacyInfo {
   detailedDescription?: string
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
-  privacy: PrivacySummaryValue
-  noteDiscovery?: PrivacyNoteDiscovery
   attributes?: PrivacyAttribute[]
+  /** Per-adversary privacy assessment. Author with definePrivacyAdversaries. */
+  adversaries: ProjectPrivacyAdversaries
   /**
    * Privacy-specific quantum-resistance flag. Distinct in meaning from
    * ProjectZkCatalogInfo.quantumResistant
@@ -1117,11 +1161,6 @@ export interface ProjectPrivacyInfo {
   zkCatalogId?: ProjectId
 }
 
-export interface PrivacyNoteDiscovery {
-  description: string
-  risks?: string[]
-}
-
 export type ProjectPrivacyRelayerTracking =
   | {
       type: 'onchainEvents'
@@ -1129,11 +1168,47 @@ export type ProjectPrivacyRelayerTracking =
     }
   | ProjectPrivacyRailgunWakuRelayerSource
 
-/** Relayers identified by extracting their addresses from onchain withdrawal events. */
+/** Relayer addresses identified from onchain withdrawals. */
 export type ProjectPrivacyOnchainRelayerSource = {
   address: ChainSpecificAddress
   sinceTimestamp: UnixTime
-  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
+} & PrivacyRelayerExtractorConfig
+
+export type PrivacyRelayerExtractorConfig =
+  | { extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal' }
+  | {
+      extractor: 'zkMoneyWithdrawalRelayer'
+      params: ZkMoneyWithdrawalRelayerParams
+    }
+
+/** Locates a portal deposit's funding transfer and authenticates its sender with the SIPA factory. */
+export type ZkMoneyDepositParams = {
+  tokenAddress: EthereumAddress
+  /** Fee sponsorship the portal keeps: the funding transfer is the credited amount plus this. */
+  fundingCut: string
+  factoryAddress: EthereumAddress
+  depositImplementation: EthereumAddress
+  registrationImplementation: EthereumAddress
+}
+
+/** Traces who funded each deposit address (SIPA) from its token history. */
+export type ZkMoneyFundingParams = ZkMoneyDepositParams & {
+  /** Tokens a SIPA accepts; those other than `tokenAddress` reach it through `exchangeAddress`. */
+  fundingTokens: EthereumAddress[]
+  exchangeAddress: EthereumAddress
+  /**
+   * SIPA factory deployment. Funding scans never start earlier; balances held
+   * before a scan starts count as untraceable until the SIPA is emptied.
+   */
+  historyFromBlock: number
+}
+
+/** Identifies withdrawal finalizers and excludes observable self-finalizations. */
+export type ZkMoneyWithdrawalRelayerParams = {
+  tokenAddress: EthereumAddress
+  executorAddress: EthereumAddress
+  /** Helper that forwards fees to its caller, so the payout is followed through it. */
+  operationExecutor: EthereumAddress
 }
 
 /** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
@@ -1162,6 +1237,193 @@ export interface PrivacyAttribute {
   description: string
 }
 
+export type PrivacyCategoryId =
+  | 'pool'
+  | 'shieldedLedger'
+  | 'stealthAddress'
+  | 'confidentialAmounts'
+
+export interface PrivacyCategory {
+  id: PrivacyCategoryId
+  label: string
+  description: string
+}
+
+// #region privacy adversaries
+
+/**
+ * Adversaries are defined by capability, never by identity. Real-world actors
+ * (governments, data brokers, chain analytics firms) are unions of these
+ * capabilities and are described as personas on top of the assessments.
+ */
+export type PrivacyAdversaryId =
+  | 'publicObserver'
+  | 'chainAnalyst'
+  | 'networkObserver'
+  | 'privilegedInsider'
+  | 'futureAdversary'
+
+export interface PrivacyAdversary {
+  id: PrivacyAdversaryId
+  label: string
+  /** What this adversary can observe or do. */
+  description: string
+  /** Real-world actors that hold (at least) this capability. */
+  examples: string
+}
+
+/**
+ * What can be learned about a single user action. Web2 identifiers (IP,
+ * session, account, API key) are a route by which a field is exposed, named
+ * in that field's note, never a field.
+ */
+export type PrivacyField =
+  | 'sender'
+  | 'recipient'
+  | 'amount'
+  | 'asset'
+  | 'linkage'
+
+export interface PrivacyFieldInfo {
+  id: PrivacyField
+  label: string
+  /** Noun used in derived cell values, e.g. "Link" in "Link at risk". */
+  subject: string
+  /**
+   * Caption under the dots that grade this field, e.g. "Link privacy". A noun
+   * phrase, not a claim: the dots say how well the promise holds.
+   */
+  promiseLabel: string
+  description: string
+}
+
+/**
+ * private: private by construction.
+ * atRisk: private only under a condition named in `note`, e.g. the user avoids
+ *   a footgun or a counterparty never shared a key. No note where the verdict
+ *   is inherited from the public observer or the previous spine adversary.
+ * exposed: visible to this adversary by design.
+ * unverifiable: cannot be derived from onchain state or published source.
+ */
+export type PrivacyExposure = 'private' | 'atRisk' | 'exposed' | 'unverifiable'
+
+export type PrivacyFieldExposure =
+  | PrivacyExposure
+  | { verdict: PrivacyExposure; note: string }
+
+/** Complete: every field has a verdict. */
+export type PrivacyExposureMap = Record<PrivacyField, PrivacyFieldExposure>
+
+export type PrivacyAdversarySentiment = 'good' | 'warning' | 'bad'
+
+export interface PrivacyAdversaryAssessment {
+  /**
+   * The one judgment per cell. Answers "can a careful user defeat this
+   * adversary using only the protocol and the supported options of its
+   * reference client?": good = yes, warning = only outside supported options
+   * or by accepting a leak to another adversary, bad = no. It judges the
+   * promised field only; other leaks are a derived marker. User
+   * hygiene never lowers the sentiment (it goes into `advice` and `atRisk`
+   * notes); facts about the deployment do, such as an anonymity set too small
+   * for care to matter or a structural leak the adversary exploits. Network
+   * observer baseline: Tor, and an own node where the client has an RPC
+   * setting. Tor hides only the IP; identifiers the client sends stay
+   * attributed, and one server still sees a session's requests together.
+   * Services the operator runs are judged as the privileged insider. The cell
+   * value is derived from it and from the project's `protects` field.
+   */
+  sentiment: PrivacyAdversarySentiment
+  /**
+   * What this adversary learns beyond the public observer and what stays
+   * hidden, in one or two plain sentences; the first sentence carries the
+   * reason for the sentiment. Never refers to other cells or quotes live
+   * numbers; the tracked anonymity set stands in for them.
+   */
+  exposure: string
+  /**
+   * How a user keeps it private, when that is conditional (the cell is at
+   * risk, or a field is). Omit when nothing the user does changes the result.
+   * Positive instructions only (say what to do), and only what this adversary
+   * adds over the public observer: advice is not repeated across cells.
+   */
+  advice?: string
+  /**
+   * Actions taken while shielded (private transfers, in-pool DeFi). Present
+   * for all adversaries of a project or for none. Entry and exit are public
+   * Ethereum transactions; whether the promised field survives them is the
+   * cell's sentiment.
+   */
+  interior?: PrivacyExposureMap
+  /** Pointers to the onchain state or source code backing the verdicts. */
+  sources?: PrivacySource[]
+}
+
+/**
+ * Where a claim can be checked. A url for code and papers; a contract name
+ * (as in discovery) links to that entry in the Contracts section; a section
+ * id links to another section of the project page. Contract names are
+ * validated against the project's contracts in tests.
+ */
+export type PrivacySource =
+  | { title: string; url: string }
+  | { contract: string; title?: string }
+  | {
+      section:
+        | 'permissions'
+        | 'verifiers'
+        | 'trusted-setups'
+        | 'upgrades-and-governance'
+      title?: string
+    }
+
+/** What a project author writes. definePrivacyAdversaries derives the rest. */
+export interface PrivacyPromise {
+  /** The field the protocol promises to protect. Cell values are derived from it. */
+  protects: PrivacyField
+  /**
+   * The same promise in one plain sentence, e.g. "Hides which deposit funds
+   * which withdrawal. Everything else is public." Shown on hover / in intros.
+   */
+  text: string
+}
+
+export interface PrivacyAdversariesConfig {
+  promise: PrivacyPromise
+  cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
+}
+
+/** A field this adversary learns more about than the public observer. */
+export interface PrivacyAlsoExposed {
+  field: PrivacyField
+  /** This adversary's interior verdict for the field. */
+  exposure: PrivacyExposure
+}
+
+export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
+  id: PrivacyAdversaryId
+  /** Derived: "<promised subject> <state>", e.g. "Link private". */
+  value: string
+  /**
+   * Derived: fields other than the promised one whose interior verdict is
+   * worse than the public observer's. Empty for the public observer itself,
+   * whose leaks the promise text already describes.
+   */
+  alsoExposed: PrivacyAlsoExposed[]
+}
+
+/**
+ * Shipped to the frontend, which has no access to config code, so the
+ * adversary and field registries travel with the data (as attributes do).
+ */
+export interface ProjectPrivacyAdversaries {
+  promise: PrivacyPromise
+  adversaries: PrivacyAdversary[]
+  fields: PrivacyFieldInfo[]
+  cells: Record<PrivacyAdversaryId, PrivacyAdversaryCell>
+}
+
+// #endregion
+
 export interface ProjectPrivacyToken {
   token: {
     address: string
@@ -1188,7 +1450,11 @@ export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
   (
     | {
         anonymitySet: {
-          /** Minimum deposit amounts in token base units. */
+          /**
+           * Public deposit-amount thresholds in token base units. Each value
+           * defines a cohort of depositors whose deposit was at least that
+           * amount. These are analytical thresholds, not protocol minimums.
+           */
           minimumAmounts: string[]
         }
         address: ChainSpecificAddress
@@ -1217,7 +1483,13 @@ export type PrivacyAnonymitySetDepositSource = {
   event: string
 } & Extract<
   PrivacyFlowExtractorConfig,
-  { extractor: 'fixedAmount' | 'privacyPoolsValue' | 'railgunShield' }
+  {
+    extractor:
+      | 'fixedAmount'
+      | 'privacyPoolsValue'
+      | 'railgunShield'
+      | 'zkMoneyDeposit'
+  }
 >
 
 export type PrivacyFlowExtractorConfig =
@@ -1283,6 +1555,16 @@ export type PrivacyFlowExtractorConfig =
       params: {
         tokenAddress: string
       }
+    }
+  | {
+      /** Credited DAI amount, after the portal's fee sponsorship cut. */
+      extractor: 'zkMoneyDeposit'
+      params: ZkMoneyFundingParams
+    }
+  | {
+      /** Withdrawal and refund payouts, after prover tips and sponsorship cuts. */
+      extractor: 'zkMoneyWithdrawal'
+      params: Record<string, never>
     }
 
 export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
@@ -1694,8 +1976,8 @@ export interface ProjectDiscoveryInfo {
 }
 
 export interface ProjectDiscoveryUpdate {
-  /** Fingerprint of the whole entry, the same one the update card's copy
-   *  link has always used. */
+  /** The diffHistory.md entry id (DiffHistoryEntry.id), shared with
+   *  ossification.json anchors and ossification criticalUpdates. */
   id: string
   date: string
   /** Run timestamp; header date for legacy block-numbered entries; null when

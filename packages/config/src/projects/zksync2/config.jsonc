@@ -26,21 +26,59 @@
         }
       }
     },
+    "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB": {
+      // ProxyAdmin (owned by Matter Labs Multisig), can upgrade the EraMultisigValidator proxy
+      "critical": true
+    },
     "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
       // validatorTimelock
       "fields": {
         "validatorVTL": {
           // giving the permission to the entire AC, because in practice the actor(s) have all roles
+          // except the UPGRADER_ROLE, which is tracked separately in upgraderVTL
           "handler": {
             "type": "crossChainAccessControl",
             "pickChainAddress": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
           },
+          "edit": ["delete", "UPGRADER_ROLE"],
           "permissions": [
             {
               "type": "interact",
               "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
             }
           ]
+        },
+        "upgraderVTL": {
+          // `pick` instead of `get` / `pickRoleMembers` so that the field does not fail while the role has no members
+          "handler": {
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
+          },
+          "edit": ["pick", "UPGRADER_ROLE"],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Permissioned to call `upgradeChainFromVersion()` through the ValidatorTimelock, executing the protocol upgrade (diamond cut) of the main Diamond contract that is pre-approved for its current protocol version in the ChainTypeManager."
+            }
+          ]
+        },
+        "executionDelayEra": {
+          // effective delay for ZKsync Era: max(executionDelay, chainExecutionDelay(Era diamond))
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutionDelay",
+            "args": ["0x32400084C286CF3E17e7B677ea9583e60a000324"]
+          }
+        },
+        "executionDelayEra_fmt": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutionDelay",
+            "args": ["0x32400084C286CF3E17e7B677ea9583e60a000324"]
+          },
+          "edit": ["format", "FormatSeconds"]
         }
       }
     },
@@ -57,12 +95,13 @@
     },
     "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": {
       // L1ERC20Bridge
+      "critical": true, // legacy deposit/withdrawal entrypoint trusted by L1Nullifier for legacy withdrawal finalization
       "category": "bridge-canonical",
       "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.",
       "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"]
     },
     "eth:0x41527B2d03844dB6b0945f25702cB958b6d55989": {
-      // L1ERC20Bridge_wstETH
+      // L1ERC20Bridge_wstETH: escrows wstETH counted in TVS, but Lido-governed (proxy admin is the Lido DAO Agent) — an external escrow outside the ossification perimeter.
       "category": "bridge-external",
       "description": "Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.",
       "ignoreRelatives": [

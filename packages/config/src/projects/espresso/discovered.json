@@ -195,6 +195,13 @@
         ],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
       "implementationNames": {
         "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": "OpsTimelock"
       }
@@ -562,11 +569,11 @@
     ]
   },
   "usedTemplates": {
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25631964 },
-  "permissionsConfigHash": "0xd420b255f32db1ed07cd6971c62c6ba64efd6172e70ed179484b38ed9893765b",
+  "permissionsConfigHash": "0x5098047cdb8b8ad6a33eb277435ba527d143f43dbc658e94b53fe9ebf732d592",
   "permissions": {
     "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982": {
       "receivedPermissions": [

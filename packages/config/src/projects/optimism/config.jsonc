@@ -34,6 +34,9 @@
     "eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "FeesCollector",
     "eth:0x323dFC63c9B83CB83f40325AaB74b245937cbdF0": "DelayedWETH_PermissionlessGames",
     "eth:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": "DelayedWETH_PermissionedGames",
+    "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
+    "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "Optimism Guardian Multisig",
+    "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "OpFoundationUpgradeSafe",
 
     "oeth:0x4200000000000000000000000000000000000042": "OPToken",
     "oeth:0x28B1eE885034ccD2d5Fa228a9A3157390D27177C": "InternalProxyAdminOwnerMultisig1",
@@ -44,14 +47,12 @@
     "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner - L2 Alias"
   },
   "overrides": {
-    "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
-      "description": "Stores DAI deposited from the attached L1DAITokenBridge."
-    },
-    // OPContractsManagerV2: Karst upgrade tooling. Ignored so discovery doesn't
-    // follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
-    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
-      "ignoreDiscovery": true
-    },
+    // Safes (SuperchainProxyAdminOwner, OpFoundationUpgradeSafe, Security
+    // Council, Guardian, MintManagerOwner, SafeL2) are actor containers and not
+    // critical. Their mechanism changes (threshold policy, nesting, modules that
+    // can act on upgrades or validation) are reviewed events in ossification.json
+    // on the critical contract they control: SuperchainProxyAdmin (upgrade path),
+    // SuperchainConfig (guardian role) and MintManager (OP minting).
     "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
       "references": [
         {
@@ -69,6 +70,23 @@
         }
       }
     },
+    "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
+      "description": "Stores DAI deposited from the attached L1DAITokenBridge."
+    },
+    // SuperchainProxyAdmin: can upgrade every core superchain contract (portal, bridges, DGF, SystemConfig, SuperchainConfig).
+    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
+      "critical": true
+    },
+    // OPContractsManagerV2: Karst upgrade tooling. Ignored so discovery doesn't
+    // follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
+    },
+    // OPContractsManager 8.0.1: Ignored so discovery doesn't follow it into
+    // bare implementations; authority is the SuperchainProxyAdminOwner.
+    "eth:0x1951828Ce913DC4383a8A1695695D537a11D896a": {
+      "ignoreDiscovery": true
+    },
     "eth:0x24424336F04440b1c28685a38303aC33C9D14a25": {
       "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
       "ignoreInWatchMode": ["timeSinceLastL2beatInteraction"],
@@ -84,13 +102,17 @@
       }
     },
     "eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f": {
-      "description": "Custom escrow for SNX bridged via canonical messaging.",
+      "description": "Synthetix-governed custom escrow for SNX bridged via canonical messaging. Its additional trust assumptions put it outside the ossification perimeter.",
       "ignoreRelatives": ["owner"]
     },
     "eth:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": {
+      // retired DelayedWETH of the permissioned dispute games: critical until it left discovery
+      "critical": { "untilTimestamp": 1753427192 },
       "ignoreInWatchMode": ["totalSupply"]
     },
     "eth:0x323dFC63c9B83CB83f40325AaB74b245937cbdF0": {
+      // retired DelayedWETH of the permissionless dispute games: critical until it left discovery (same bound as the permissioned one)
+      "critical": { "untilTimestamp": 1753427192 },
       "ignoreInWatchMode": ["totalSupply"]
     },
     "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": {
@@ -106,7 +128,13 @@
         "otherBridge": { "edit": ["format", "OptimismAddress"] }
       }
     },
+    // AddressManager: its owner (SuperchainProxyAdmin) can repoint the
+    // ResolvedDelegateProxy of the L1CrossDomainMessenger, which resolves the
+    // "OVM_L1CrossDomainMessenger" entry; that resolution is already tracked as the
+    // messenger's implementation. The Proxy__OVM_* entries below are static legacy
+    // records of the proxy addresses that nothing reads, so they are not HIGH.
     "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {
+      "critical": true,
       "fields": {
         "Proxy__OVM_L1CrossDomainMessenger": {
           "handler": {
@@ -129,6 +157,7 @@
     },
     "eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": {
       "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
+      // holds the approval to pull DAI from the L1DAIEscrow. Maker/Sky-governed external escrow, outside the ossification perimeter.
       "ignoreRelatives": [
         "l1Token",
         "l2DAITokenBridge",
@@ -165,7 +194,7 @@
       "fields": {
         "paused": {
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
-          "severity": "HIGH"
+          "severity": "MEDIUM"
         },
         "minimumGasLimitZeroBytes": {
           "handler": {
@@ -194,6 +223,7 @@
     "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": {
       "fields": {
         "batcherHash": {
+          "severity": "LOW",
           "handler": {
             "type": "call",
             "method": "function batcherHash() view returns (address)",
@@ -265,17 +295,26 @@
         }
       }
     },
+    // SaferSafes (L2 instance, untemplated): Safe module installed on the SafeL2,
+    // the sole owner of the MintManagerOwner Safe since 2026-04-07, so it is on the OP minting path.
+    "oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
+      "critical": true
+    },
     "oeth:0x4200000000000000000000000000000000000002": {
       "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
     },
     "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": {
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
+      // sole minter of OP, which is counted (natively minted) in the TVS. Its owner
+      // can also hand the OP token to a new minter via upgrade(), so changes to the
+      // owner Safe structure are reviewed events on this contract.
+      "critical": { "sinceTimestamp": 1665503636 },
       "fields": {
         "owner": {
           "permissions": [
             {
               "type": "interact",
-              "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
+              "description": "can mint OP up to the hardcoded inflation cap."
             }
           ]
         }
@@ -283,8 +322,22 @@
     },
     "oeth:0x4200000000000000000000000000000000000042": {
       "description": "The OP token contract. The minting policy is controlled by the {{ owner }}.",
+      // OP is natively minted and counted in the TVS, and the project governs its
+      // supply through the MintManager (decision: tokens stay critical only in this
+      // case). The token itself is an immutable predeploy, so it only adds its age.
+      "critical": true,
       "ignoreMethods": ["getPastTotalSupply"],
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreInWatchMode": ["totalSupply"],
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "can mint OP tokens."
+            }
+          ]
+        }
+      }
     }
   }
 }

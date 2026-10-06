@@ -47,9 +47,7 @@ export type TrustedSetupsByProofSystem = Record<
         notVerified?: TrustedSetupVerifierData
       }
     }[]
-    trustedSetups: (TrustedSetup & {
-      proofSystem: ZkCatalogTag
-    })[]
+    trustedSetups: TrustedSetupSummary[]
     verifiers: {
       successful?: TrustedSetupVerifierData
       unsuccessful?: TrustedSetupVerifierData
@@ -63,6 +61,12 @@ export type TrustedSetupsByProofSystem = Record<
     }
   }
 >
+
+// Only the zk-catalog project page renders the long description, and it reads
+// it from config directly, so every page embedding this would ship it unused.
+export type TrustedSetupSummary = Omit<TrustedSetup, 'longDescription'> & {
+  proofSystem: ZkCatalogTag
+}
 
 interface TargetProject {
   id: ProjectId
@@ -116,7 +120,9 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
                   targetProject.contracts,
                 )
               : undefined,
-            trustedSetups,
+            trustedSetups: trustedSetups.map(
+              ({ longDescription: _, ...trustedSetup }) => trustedSetup,
+            ),
             verifiers: getVerifierStatuses(verifiersByStatus),
             projectsUsedIn:
               uniqAndSortProjectsUsedIn(

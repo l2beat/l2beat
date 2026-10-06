@@ -1,13 +1,14 @@
 import type {
   PrivacyAttribute,
+  PrivacyCategory,
   PrivacyExitWindow,
-  PrivacyNoteDiscovery,
   PrivacySummaryValue,
   ProjectContracts,
   ProjectCrops,
   ProjectDiscoveryUpdate,
   ProjectDisplay,
   ProjectPermissions,
+  ProjectPrivacyAdversaries,
   ProjectStatuses,
   ProjectUpgradesAndGovernance,
   ProjectZkCatalogInfo,
@@ -19,10 +20,18 @@ import type {
 } from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import {
+  getProjectOssification,
+  type ProjectOssificationView,
+} from '~/server/features/projects/ossification/getProjectOssification'
+import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { hasPrivacyAnonymitySet } from './anonymity-set/getPrivacyAnonymitySetSeries'
 import { getPrivacyProject } from './getPrivacyProjects'
 import type {
   PrivacyAsset,
@@ -30,6 +39,7 @@ import type {
   PrivacyProject,
   PrivacyRelayerStat,
 } from './types'
+import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -46,19 +56,22 @@ export interface PrivacyProjectDetails {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   discoveryUpdates?: ProjectDiscoveryUpdate[]
+  ossification?: ProjectOssificationView
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
   crops?: ProjectCrops
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
+  category: PrivacyCategory
   exitWindow: PrivacyExitWindow
-  privacy: PrivacySummaryValue
+  adversaries: ProjectPrivacyAdversaries
   reproducibility: PrivacySummaryValue
+  hasAnonymitySet: boolean
   hasTvl: boolean
   detailedDescription?: string
-  noteDiscovery?: PrivacyNoteDiscovery
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
+  trackedOn: ProjectIconListItem[]
   assets: PrivacyAsset[]
   summary: {
     bucketCount: number
@@ -92,9 +105,16 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 7 * UnixTime.DAY
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
-  const [{ totals, daily30d, tokenValues }, relayerStat] = await Promise.all([
+  const [
+    { totals, daily30d, tokenValues },
+    relayerStat,
+    trackedOn,
+    ossification,
+  ] = await Promise.all([
     getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
     getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
+    getTrackedOn(project),
+    getProjectOssification(project),
   ])
 
   const tvlBySymbol = new Map<string, number>()
@@ -257,21 +277,24 @@ export async function getPrivacyProjectDetails(
     contracts: project.contracts,
     permissions: project.permissions,
     discoveryUpdates: project.discoveryUpdates,
+    ossification,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
     crops: project.crops,
     trustedSetups: project.trustedSetups,
+    category: project.privacyInfo.category,
     exitWindow: project.privacyInfo.exitWindow,
-    privacy: project.privacyInfo.privacy,
+    adversaries: project.privacyInfo.adversaries,
     reproducibility: project.privacyInfo.reproducibility,
+    hasAnonymitySet: hasPrivacyAnonymitySet(project),
     hasTvl: project.tvsConfig !== undefined,
     detailedDescription:
       project.privacyInfo.detailedDescription ??
       project.display.detailedDescription,
-    noteDiscovery: project.privacyInfo.noteDiscovery,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],
+    trackedOn,
     assets: orderedAssets,
     summary: {
       bucketCount: summaryBucketCount,
@@ -298,6 +321,23 @@ export async function getPrivacyProjectDetails(
       relayerStat,
     },
   }
+}
+
+async function getTrackedOn(
+  project: PrivacyProject,
+): Promise<ProjectIconListItem[]> {
+  const [chainProjects, daLayers] = await Promise.all([
+    ps.getProjects({
+      select: ['chainConfig'],
+      optional: [...PROJECT_PAGE_METADATA_FIELDS],
+    }),
+    ps.getProjects({ where: ['daLayer'] }),
+  ])
+  return getPrivacyTrackedChains(
+    project.privacyInfo.trackedOn,
+    chainProjects,
+    daLayers,
+  )
 }
 
 const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7

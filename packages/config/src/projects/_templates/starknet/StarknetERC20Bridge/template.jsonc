@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // critical is set per address in config.jsonc: escrows with additional trust assumptions share this shape
   "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to {{withdrawLimitPct}}% of the locked funds per 24 hours.", // The withdrawal limit is {{withdrawalLimitStatus}}.
   "category": "bridge-external",
   "ignoreRelatives": ["l2TokenContract", "bridgedToken"],
@@ -21,9 +22,11 @@
     }
   },
   "fields": {
+    "isFrozen": {
+      "severity": "MEDIUM"
+    },
     "$admin": {
       "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.",
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "upgrade",
@@ -33,7 +36,6 @@
     },
     "withdrawalLimitStatus": {
       "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.",
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function getRemainingIntradayAllowance(address token) view returns (uint256)",
@@ -41,7 +43,19 @@
       },
       "edit": ["format", "UintMaxMeansInactive"]
     },
+    "withdrawalLimitEnabled": {
+      "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": "token",
+        "add": { "event": "WithdrawalLimitEnabled" },
+        "remove": { "event": "WithdrawalLimitDisabled" }
+      }
+    },
+    // a deposit cap: it cannot freeze or move locked funds
     "maxTotalBalance": {
+      "severity": "MEDIUM",
       "description": "The maximum total balance that can be locked in the bridge.",
       "handler": {
         "type": "call",
@@ -51,7 +65,6 @@
     },
     "depositStatus": {
       "description": "Token status managed by the Manager. Only affects deposits.",
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function getStatus(address token) view returns (uint8)",
@@ -110,7 +123,6 @@
     },
     "accessControl": {
       "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active.",
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -142,6 +154,7 @@
       ]
     },
     "secAdminAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -157,6 +170,7 @@
       ]
     },
     "secAgentAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {

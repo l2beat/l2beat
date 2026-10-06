@@ -1,5 +1,4 @@
 import {
-  assert,
   assertUnreachable,
   ChainSpecificAddress,
   notUndefined,
@@ -12,9 +11,8 @@ import uniq from 'lodash/uniq'
 import { describe } from 'mocha'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ProjectScalingTechnology } from '../internalTypes'
-import { checkRisk } from '../test/helpers'
+import { isRiskCorrectlyFormatted } from '../test/helpers'
 import { getTokenList } from '../tokens/tokens'
-import type { ProjectTechnologyChoice } from '../types'
 import { chains } from './chains'
 import { ecosystems } from './ecosystems'
 import { layer2s, milestonesLayer2s } from './layer2s'
@@ -49,466 +47,371 @@ describe('layer2s', () => {
   })
 
   describe('links', () => {
-    describe('all links do not contain spaces', () => {
-      for (const layer2 of layer2s) {
-        it(layer2.display.name, () => {
-          const links = Object.values(layer2.display.links).flat()
-          for (const link of links) {
-            expect(link).not.toInclude(' ')
-          }
-        })
-      }
+    const links = layer2s.flatMap((l) => Object.values(l.display.links).flat())
+
+    it('all links do not contain spaces', () => {
+      expect(links.filter((link) => link.includes(' '))).toEqual([])
     })
-    describe('do not include www part', () => {
-      for (const layer2 of layer2s) {
-        it(layer2.display.name, () => {
-          const links = Object.values(layer2.display.links).flat()
-          for (const link of links) {
-            expect(link).not.toInclude('www')
-          }
-        })
-      }
+
+    it('do not include www part', () => {
+      expect(links.filter((link) => link.includes('www'))).toEqual([])
     })
   })
 
   describe('escrows', () => {
-    describe('every escrow in new format resolves to discovery entry', () => {
+    it('every escrow in new format resolves to discovery entry', () => {
+      const missing: string[] = []
       for (const layer2 of layer2s) {
         // NOTE(radomski): PolygonCDK projects have a shared escrow
         if (layer2.display.stacks?.includes('Agglayer CDK')) continue
 
-        try {
-          const discovery = new ProjectDiscovery(layer2.id.toString())
+        const escrows = layer2.config.escrows.filter(
+          (e) => e.contract && !e.isHistorical,
+        )
+        if (escrows.length === 0) continue
 
-          for (const escrow of layer2.config.escrows.filter(
-            (e) => e.contract && !e.isHistorical,
-          )) {
-            it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
-              // try to resolve escrow by address
-              // if it does not exist the assert will throw
-              discovery.getContractByAddress(
-                ChainSpecificAddress.from('eth', escrow.address),
-              )
-            })
+        const discovery = new ProjectDiscovery(layer2.id.toString())
+        for (const escrow of escrows) {
+          const address = ChainSpecificAddress.from('eth', escrow.address)
+          if (discovery.getContractByAddress(address) === undefined) {
+            missing.push(`${layer2.id} ${address}`)
           }
-        } catch {
-          continue
         }
       }
+      expect(missing).toEqual([])
     })
 
-    describe('every escrow sinceTimestamp is greater or equal to chains sinceTimestamp', () => {
+    it('every escrow sinceTimestamp is greater or equal to chains sinceTimestamp', () => {
+      const problems: string[] = []
       for (const layer2 of layer2s) {
         for (const escrow of layer2.config.escrows) {
+          const label = `${layer2.id} ${escrow.address}`
           const chain = chains.find((c) => c.name === escrow.chain)
-
-          it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
-            assert(
-              chain,
-              `Chain not found for escrow ${escrow.address.toString()}`,
-            )
-            assert(
-              chain.sinceTimestamp,
-              `Escrow ${escrow.address.toString()} added for chain without sinceTimestamp ${
-                chain.name
-              }`,
-            )
-
-            expect(escrow.sinceTimestamp).toBeGreaterThanOrEqual(
-              chain.sinceTimestamp,
-            )
-          })
+          if (!chain) {
+            problems.push(`${label}: chain ${escrow.chain} not found`)
+            continue
+          }
+          if (!chain.sinceTimestamp) {
+            problems.push(`${label}: chain ${chain.name} has no sinceTimestamp`)
+            continue
+          }
+          if (escrow.sinceTimestamp < chain.sinceTimestamp) {
+            problems.push(`${label}: before chain ${chain.name} sinceTimestamp`)
+          }
         }
       }
+      expect(problems).toEqual([])
     })
 
-    describe('every escrow can resolve all of its tokens', () => {
+    it('every escrow can resolve all of its tokens', () => {
       const chainsMap = new Map<string, number | undefined>(
         chains.map((c) => [c.name, c.chainId]),
       )
+      const missing: string[] = []
       for (const layer2 of layer2s) {
         for (const escrow of layer2.config.escrows) {
           const chainId = chainsMap.get(escrow.chain)
           if (!chainId) continue
-          const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
-
           if (escrow.tokens === '*') continue
+          const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
           for (const token of escrow.tokens) {
-            it(`${layer2.id.toString()}:${escrow.address.toString()}:${token}`, () => {
-              const foundToken = tokensOnChain.find((t) => t.symbol === token)
-
-              assert(
-                foundToken,
-                `Please add token with symbol ${token} on ${escrow.chain} chain`,
-              )
-              expect(foundToken).not.toBeNullish()
-            })
+            if (!tokensOnChain.some((t) => t.symbol === token)) {
+              missing.push(`${layer2.id} ${escrow.address}: ${token}`)
+            }
           }
         }
       }
+      // Add the missing tokens on the escrow's chain
+      expect(missing).toEqual([])
     })
   })
 
-  describe('chain name equals project id', () => {
-    for (const layer2 of layer2s) {
-      const name = layer2.chainConfig?.name
-      const exceptions = ['polygon-pos', 'apex-pro']
-      if (name !== undefined && !exceptions.includes(layer2.id)) {
-        it(layer2.id.toString(), () => {
-          expect(name).toEqual(layer2.id.toString())
-        })
-      }
-    }
+  it('chain name equals project id', () => {
+    const exceptions = ['polygon-pos', 'apex-pro']
+    const invalid = layer2s
+      .filter((l) => l.chainConfig !== undefined)
+      .filter((l) => !exceptions.includes(l.id))
+      .filter((l) => l.chainConfig?.name !== l.id.toString())
+      .map((l) => l.id)
+    expect(invalid).toEqual([])
   })
 
   describe('tracked transactions', () => {
-    describe('every tracked transaction which is function call has valid signatures', () => {
+    it('every tracked transaction which is function call has valid signatures', () => {
+      const invalid: string[] = []
       for (const project of layer2s) {
-        it(`${project.id.toString()} : has valid signatures`, () => {
-          if (project.config.trackedTxs?.length !== 0) {
-            const functionCalls = project.config.trackedTxs
-              ?.map((t) => t.query)
-              .filter((x) => x.formula === 'functionCall') as {
-              selector: string
-              functionSignature: string
-            }[]
-
-            functionCalls?.forEach((c) => {
-              const i = new utils.Interface([c.functionSignature])
-              const fragment = i.fragments[0]
-              const calculatedSignature = i.getSighash(fragment)
-              expect(calculatedSignature).toEqual(c.selector)
-            })
+        for (const { query } of project.config.trackedTxs ?? []) {
+          if (query.formula !== 'functionCall') continue
+          const i = new utils.Interface([query.functionSignature])
+          const fragment = i.fragments[0]
+          if (i.getSighash(fragment) !== query.selector) {
+            invalid.push(`${project.id}: ${query.functionSignature}`)
           }
-        })
-      }
-    })
-
-    describe('every cost multiplier is in 0 to 1 range', () => {
-      for (const project of layer2s) {
-        if (project.config.trackedTxs) {
-          it(`${project.id.toString()} : has valid cost multipliers`, () => {
-            const costMultipliers = project.config.trackedTxs
-              ?.map((t) => t._hackCostMultiplier)
-              .filter(notUndefined)
-            expect(costMultipliers?.every((m) => m > 0 && m <= 1)).toEqual(true)
-          })
         }
       }
+      expect(invalid).toEqual([])
+    })
+
+    it('every cost multiplier is in 0 to 1 range', () => {
+      const invalid = layer2s
+        .filter((p) =>
+          (p.config.trackedTxs ?? [])
+            .map((t) => t._hackCostMultiplier)
+            .filter(notUndefined)
+            .some((m) => m <= 0 || m > 1),
+        )
+        .map((p) => p.id)
+      expect(invalid).toEqual([])
     })
 
     it('every current address is present in discovery', () => {
+      const missing: string[] = []
       for (const project of layer2s) {
-        it(`${project.id.toString()} : has valid addresses`, () => {
-          if (project.config.trackedTxs) {
-            const queries = project.config.trackedTxs.map((t) => t.query)
-
-            const addresses = queries
-              // .filter((x) => x.untilTimestamp === undefined)
-              .flatMap((x) => {
-                switch (x.formula) {
-                  case 'functionCall':
-                    return [x.address]
-                  case 'transfer':
-                    return []
-                  case 'sharpSubmission':
-                    return []
-                  case 'sharedBridge':
-                    return []
-                  default:
-                    assertUnreachable(x)
-                }
-              })
-
-            const discovery = new ProjectDiscovery(project.id.toString())
-            addresses.forEach((a) => {
-              discovery.getContractByAddress(
-                ChainSpecificAddress.from('eth', a),
-              )
-            })
-          }
-        })
-      }
-    })
-  })
-
-  describe('activity', () => {
-    describe('all arbitrum and op stack chains have the assessCount defined', () => {
-      const opAndArbL2sWithActivity = layer2s
-        .filter((layer2) => {
-          const { stacks: stack } = layer2.display
-          return stack?.includes('Arbitrum') || stack?.includes('OP Stack')
-        })
-        .flatMap((layer2) => {
-          const { activityConfig } = layer2.config
-
-          if (activityConfig && activityConfig.type === 'block') {
-            return {
-              id: layer2.id,
-              assessCount: activityConfig.adjustCount,
+        const addresses = (project.config.trackedTxs ?? [])
+          .filter(({ query }) => query.untilTimestamp === undefined)
+          .flatMap(({ query }) => {
+            switch (query.formula) {
+              case 'functionCall':
+                return [query.address]
+              case 'transfer':
+                return []
+              case 'sharpSubmission':
+                return []
+              case 'sharedBridge':
+                return []
+              default:
+                assertUnreachable(query)
             }
+          })
+        if (addresses.length === 0) continue
+
+        const discovery = new ProjectDiscovery(project.id.toString())
+        for (const a of addresses) {
+          const address = ChainSpecificAddress.from('eth', a)
+          if (discovery.getContractByAddress(address) === undefined) {
+            missing.push(`${project.id} ${address}`)
           }
-
-          return []
-        })
-
-      for (const { id, assessCount } of opAndArbL2sWithActivity) {
-        if (id === 'zircuit') {
-          // we skip zircuit, it is an anomaly. the research team decided to not
-          // do any adjustment and overcount by 1/6.
-          continue
         }
-        it(`${id.toString()}`, () => {
-          expect(assessCount).not.toBeNullish()
-        })
       }
+      expect(missing).toEqual([])
     })
   })
 
-  describe('references', () => {
-    for (const layer2 of layer2s) {
-      it(`${layer2.id.toString()}`, () => {
-        const discoveryAddresses = new Set(
-          new ProjectDiscovery(layer2.id)
-            .getTopLevelAddresses()
-            .map((address) =>
-              ChainSpecificAddress.address(address).toString().toLowerCase(),
-            ),
-        )
-
-        const referencedAddresses = new Set(
-          JSON.stringify(layer2)
-            .match(/address\/(0x[a-fA-F0-9]{40})/g)
-            ?.map((match) => match.slice(8).toLowerCase()) || [],
-        )
-
-        for (const address of referencedAddresses) {
-          assert(
-            discoveryAddresses.has(address),
-            `${layer2.id} references ${address} but it's not found in discovery`,
-          )
-        }
+  it('all arbitrum and op stack chains have the assessCount defined', () => {
+    const missing = layer2s
+      .filter((layer2) => {
+        const { stacks: stack } = layer2.display
+        return stack?.includes('Arbitrum') || stack?.includes('OP Stack')
       })
+      // we skip zircuit, it is an anomaly. the research team decided to not
+      // do any adjustment and overcount by 1/6.
+      .filter((layer2) => layer2.id !== 'zircuit')
+      .filter((layer2) => {
+        const { activityConfig } = layer2.config
+        return (
+          activityConfig?.type === 'block' &&
+          activityConfig.adjustCount === undefined
+        )
+      })
+      .map((layer2) => layer2.id)
+    expect(missing).toEqual([])
+  })
+
+  it('every referenced address is found in discovery', () => {
+    const missing: string[] = []
+    for (const layer2 of layer2s) {
+      const referencedAddresses = new Set(
+        JSON.stringify(layer2)
+          .match(/address\/(0x[a-fA-F0-9]{40})/g)
+          ?.map((match) => match.slice(8).toLowerCase()) || [],
+      )
+      if (referencedAddresses.size === 0) continue
+
+      const discoveryAddresses = new Set(
+        new ProjectDiscovery(layer2.id)
+          .getTopLevelAddresses()
+          .map((address) =>
+            ChainSpecificAddress.address(address).toString().toLowerCase(),
+          ),
+      )
+      for (const address of referencedAddresses) {
+        if (!discoveryAddresses.has(address)) {
+          missing.push(`${layer2.id} ${address}`)
+        }
+      }
     }
+    expect(missing).toEqual([])
   })
 
   describe('display', () => {
-    describe('every description ends with a dot', () => {
-      for (const layer2 of layer2s) {
-        it(layer2.display.name, () => {
-          expect(layer2.display.description.endsWith('.')).toEqual(true)
-        })
-      }
+    it('every description ends with a dot', () => {
+      const invalid = layer2s
+        .filter((l) => !l.display.description.endsWith('.'))
+        .map((l) => l.id)
+      expect(invalid).toEqual([])
     })
 
-    describe('technology', () => {
-      for (const layer2 of layer2s) {
-        describe(layer2.display.name, () => {
-          type Key = Exclude<
-            keyof ProjectScalingTechnology,
-            'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
-          >
+    it('every technology choice is correctly formatted', () => {
+      const keys = [
+        'dataAvailability',
+        'operator',
+        'forceTransactions',
+        'exitMechanisms',
+        'massExit',
+        'otherConsiderations',
+      ] as const satisfies (keyof ProjectScalingTechnology)[]
 
-          function check(key: Key) {
-            const item = layer2.technology?.[key]
-            if (Array.isArray(item)) {
-              for (const [i, x] of item.entries()) {
-                checkChoice(x, `${key}[${i}]`)
+      const problems: string[] = []
+      for (const layer2 of layer2s) {
+        for (const key of keys) {
+          const item = layer2.technology?.[key]
+          const choices = item === undefined ? [] : [item].flat()
+          for (const [i, choice] of choices.entries()) {
+            const label = `${layer2.id} ${key}[${i}]`
+            if (choice.name.endsWith('.')) {
+              problems.push(`${label}.name ends with a dot`)
+            }
+            if (!choice.description.endsWith('.')) {
+              problems.push(`${label}.description does not end with a dot`)
+            }
+            for (const risk of choice.risks) {
+              if (!isRiskCorrectlyFormatted(risk)) {
+                problems.push(`${label}.risks: ${risk.text}`)
               }
-            } else if (item) {
-              checkChoice(item, key)
             }
           }
-
-          function checkChoice(choice: ProjectTechnologyChoice, name: string) {
-            it(`${name}.name doesn't end with a dot`, () => {
-              expect(choice.name.endsWith('.')).toEqual(false)
-            })
-
-            it(`${name}.description ends with a dot`, () => {
-              expect(choice.description.endsWith('.')).toEqual(true)
-            })
-
-            describe('risks', () => {
-              for (const [i, risk] of choice.risks.entries()) {
-                checkRisk(risk, `${name}.risks[${i}]`)
-              }
-            })
-          }
-
-          check('dataAvailability')
-          check('operator')
-          check('forceTransactions')
-          check('exitMechanisms')
-          check('massExit')
-          check('otherConsiderations')
-        })
+        }
       }
+      expect(problems).toEqual([])
     })
   })
 
   describe('others', () => {
-    for (const layer2 of layer2s) {
-      it(`${layer2.id} does not have duplicated reasons for being other`, () => {
-        const labels = layer2.reasonsForBeingOther?.map(
-          (reason) => reason.label,
-        )
-        expect(labels?.length).toEqual(labels ? uniq(labels).length : undefined)
-      })
-    }
-
-    describe('live projects without proof system have reasons for being other', () => {
-      const liveProjectsWithoutProofSystem = layer2s.filter(
-        (layer2) => !layer2.archivedAt && !layer2.proofSystem,
-      )
-
-      for (const layer2 of liveProjectsWithoutProofSystem) {
-        it(`${layer2.id} should have reasons for being other`, () => {
-          expect(layer2.reasonsForBeingOther?.length ?? 0).toBeGreaterThan(0)
+    it('no project has duplicated reasons for being other', () => {
+      const invalid = layer2s
+        .filter((l) => {
+          const labels = (l.reasonsForBeingOther ?? []).map((r) => r.label)
+          return labels.length !== uniq(labels).length
         })
-      }
+        .map((l) => l.id)
+      expect(invalid).toEqual([])
+    })
+
+    it('live projects without proof system have reasons for being other', () => {
+      const invalid = layer2s
+        .filter((l) => !l.archivedAt && !l.proofSystem)
+        .filter((l) => (l.reasonsForBeingOther?.length ?? 0) === 0)
+        .map((l) => l.id)
+      expect(invalid).toEqual([])
     })
   })
 
   describe('milestones', () => {
-    describe('name', () => {
-      describe('no longer than 50 characters', () => {
-        for (const project of layer2s) {
-          if (project.milestones === undefined) {
-            continue
-          }
-          for (const milestone of project.milestones) {
-            it(`Milestone: ${milestone.title} (${project.display.name}) name is no longer than 50 characters`, () => {
-              expect(milestone.title.length).toBeLessThanOrEqual(50)
-            })
-          }
-        }
-        for (const milestone of milestonesLayer2s) {
-          it(`Milestone: ${milestone.title} (main page) name is no longer than 50 characters`, () => {
-            expect(milestone.title.length).toBeLessThanOrEqual(50)
-          })
-        }
-      })
+    const allMilestones = [
+      ...milestonesLayer2s.map((milestone) => ({
+        label: `${milestone.title} (main page)`,
+        milestone,
+      })),
+      ...layer2s.flatMap((l) =>
+        (l.milestones ?? []).map((milestone) => ({
+          label: `${milestone.title} (${l.display.name})`,
+          milestone,
+        })),
+      ),
+    ]
+
+    it('name is no longer than 50 characters', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => milestone.title.length > 50)
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
     })
 
-    describe('description', () => {
-      describe('ends with dot', () => {
-        for (const project of layer2s) {
-          if (project.milestones === undefined) {
-            continue
-          }
-          for (const milestone of project.milestones) {
-            if (milestone.description === undefined) {
-              continue
-            }
-            it(`Milestone: ${milestone.title} (${project.display.name}) description ends with a dot`, () => {
-              expect(milestone.description?.endsWith('.')).toEqual(true)
-            })
-          }
-        }
-        for (const milestone of milestonesLayer2s) {
-          if (milestone.description === undefined) {
-            continue
-          }
-          it(`Milestone: ${milestone.title} (main page) description ends with a dot`, () => {
-            expect(milestone.description?.endsWith('.')).toEqual(true)
-          })
-        }
-      })
-      describe('no longer than 100 characters', () => {
-        for (const project of layer2s) {
-          if (project.milestones === undefined) {
-            continue
-          }
-          for (const milestone of project.milestones) {
-            if (milestone.description === undefined) {
-              continue
-            }
-            it(`Milestone: ${milestone.title} (${project.display.name}) description is no longer than 100 characters`, () => {
-              expect(milestone.description?.length ?? 0).toBeLessThanOrEqual(
-                100,
-              )
-            })
-          }
-        }
-        for (const milestone of milestonesLayer2s) {
-          if (milestone.description === undefined) {
-            continue
-          }
-          it(`Milestone: ${milestone.title} (main page) description is no longer than 100 characters`, () => {
-            expect(milestone.description?.length ?? 0).toBeLessThanOrEqual(100)
-          })
-        }
-      })
+    it('description ends with a dot', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => milestone.description !== undefined)
+        .filter(({ milestone }) => !milestone.description?.endsWith('.'))
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
     })
 
-    describe('date', () => {
-      const allMilestones = [
-        ...milestonesLayer2s,
-        ...layer2s.flatMap((l) => l.milestones ?? []),
-      ]
-      it('is full day', () => {
-        for (const milestone of allMilestones ?? []) {
-          expect(
-            UnixTime.isFull(UnixTime.fromDate(new Date(milestone.date)), 'day'),
-          ).toEqual(true)
-        }
-      })
+    it('description is no longer than 100 characters', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) => (milestone.description?.length ?? 0) > 100)
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
 
-      it('is correct', () => {
-        for (const milestone of allMilestones ?? []) {
-          expect(new Date(milestone.date).getTime()).not.toEqual(Number.NaN)
-        }
-      })
+    it('date is full day', () => {
+      const invalid = allMilestones
+        .filter(
+          ({ milestone }) =>
+            !UnixTime.isFull(
+              UnixTime.fromDate(new Date(milestone.date)),
+              'day',
+            ),
+        )
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
+    })
+
+    it('date is correct', () => {
+      const invalid = allMilestones
+        .filter(({ milestone }) =>
+          Number.isNaN(new Date(milestone.date).getTime()),
+        )
+        .map(({ label }) => label)
+      expect(invalid).toEqual([])
     })
   })
 
-  describe('stages', () => {
-    describe('every description ends with a dot', () => {
-      for (const layer2 of layer2s) {
-        if (
-          layer2.stage.stage === 'UnderReview' ||
-          layer2.stage.stage === 'NotApplicable'
-        ) {
-          continue
-        }
-        for (const item of layer2.stage.summary) {
-          for (const req of item.requirements) {
-            if (req.description.includes('[View code]')) {
-              continue
-            }
-            it(req.description, () => {
-              expect(req.description.endsWith('.')).toEqual(true)
-            })
-          }
-        }
-      }
-    })
-  })
-
-  describe('state validation', () => {
-    describe('every description ends with a dot', () => {
-      for (const layer2 of layer2s) {
-        if (!layer2.stateValidation) continue
-
-        if (layer2.stateValidation.description) {
-          expect(layer2.stateValidation.description.endsWith('.')).toEqual(true)
-        }
-        layer2.stateValidation?.categories.forEach((category) => {
-          expect(category.description.endsWith('.')).toEqual(true)
-        })
-      }
-    })
-  })
-
-  describe('badges', () => {
+  it('every stage requirement description ends with a dot', () => {
+    const invalid: string[] = []
     for (const layer2 of layer2s) {
-      if (layer2.badges === undefined) {
+      if (
+        layer2.stage.stage === 'UnderReview' ||
+        layer2.stage.stage === 'NotApplicable'
+      ) {
         continue
       }
-      it(`${layer2.display.name} does not have duplicated badges`, () => {
-        expect(layer2.badges?.length).toEqual(uniq(layer2.badges).length)
-      })
+      for (const item of layer2.stage.summary) {
+        for (const req of item.requirements) {
+          if (req.description.includes('[View code]')) continue
+          if (!req.description.endsWith('.')) {
+            invalid.push(`${layer2.id}: ${req.description}`)
+          }
+        }
+      }
     }
+    expect(invalid).toEqual([])
+  })
+
+  it('every state validation description ends with a dot', () => {
+    const invalid: string[] = []
+    for (const layer2 of layer2s) {
+      const stateValidation = layer2.stateValidation
+      if (!stateValidation) continue
+
+      if (
+        stateValidation.description &&
+        !stateValidation.description.endsWith('.')
+      ) {
+        invalid.push(`${layer2.id}: description`)
+      }
+      for (const category of stateValidation.categories) {
+        if (!category.description.endsWith('.')) {
+          invalid.push(`${layer2.id}: ${category.title}`)
+        }
+      }
+    }
+    expect(invalid).toEqual([])
+  })
+
+  it('no project has duplicated badges', () => {
+    const invalid = layer2s
+      .filter((l) => l.badges !== undefined)
+      .filter((l) => l.badges?.length !== uniq(l.badges).length)
+      .map((l) => l.id)
+    expect(invalid).toEqual([])
   })
 })

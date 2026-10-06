@@ -143,10 +143,11 @@ const roninTemplate = opStackL2({
       },
       {
         type: 'blockscout',
-        url: 'https://explorer.roninchain.com/api',
+        url: 'https://ronin.blockscout.com/api',
       },
     ],
   },
+  ossificationHistory: discovery.getOssificationHistory(genesisTimestamp),
   milestones: [
     {
       title: 'Ronin migrates to an Ethereum L2',

@@ -8,6 +8,10 @@
     "eth:0x9196464e3F828A50233C20732fa6898F4317002c": "Rise ProxyAdminOwner Multisig"
   },
   "overrides": {
+    "eth:0xdE3a0F0122f702e018e04C6D0824B724E8Be8e16": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     }

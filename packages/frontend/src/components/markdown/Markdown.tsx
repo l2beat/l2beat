@@ -1,13 +1,19 @@
-import MarkdownIt from 'markdown-it'
 import { useId } from 'react'
 import { cn } from '~/utils/cn'
+import { createMarkdown } from '~/utils/markdown/createMarkdown'
 import {
+  type GlossaryRenderEnv,
   glossaryPlugin,
   linkGlossaryTerms,
 } from '~/utils/markdown/glossaryPlugin'
+import {
+  type HeadingLevelEnv,
+  headingLevelPlugin,
+} from '~/utils/markdown/headingLevelPlugin'
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 import { useGlossaryContext } from './GlossaryContext'
 import { GlossaryTooltipWrapper } from './GlossaryTooltipWrapper'
+import { useParentHeadingLevel } from './ParentHeadingLevelContext'
 
 interface MarkdownProps {
   children: string
@@ -16,18 +22,25 @@ interface MarkdownProps {
   ignoreGlossary?: boolean
 }
 
-const markdown = MarkdownIt({
-  html: true,
-  typographer: true,
-})
+const markdown = createMarkdown()
   .use(outLinksPlugin)
   .use(glossaryPlugin)
+  .use(headingLevelPlugin)
 
 export function Markdown(props: MarkdownProps) {
   const terms = useGlossaryContext()
+  const parentHeadingLevel = useParentHeadingLevel()
+  const glossaryDescriptionIdPrefix = useId()
   const Comp = props.inline ? 'span' : 'div'
-  const render = (text: string) =>
-    props.inline ? markdown.renderInline(text) : markdown.render(text)
+  const render = (text: string) => {
+    const env: GlossaryRenderEnv & HeadingLevelEnv = {
+      glossaryDescriptionIdPrefix,
+      parentHeadingLevel,
+    }
+    return props.inline
+      ? markdown.renderInline(text, env)
+      : markdown.render(text, env)
+  }
 
   // Markdown-it does not support pre-render hooks and token rerendering so
   // we have to the do linking of glossary terms here explicitly.
@@ -58,6 +71,6 @@ function processCollapsibleText(markdown: string): string {
 
   return markdown.replace(collapsiblePattern, (_match, label, content) => {
     const uniqueId = useId()
-    return `<button class="inline text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-600" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
+    return `<button class="inline text-gray-600 dark:text-secondary bg-gray-100 dark:bg-surface-secondary rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-surface-tertiary focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-600" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
   })
 }

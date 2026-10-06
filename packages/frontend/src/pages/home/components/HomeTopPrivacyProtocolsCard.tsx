@@ -8,6 +8,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { ProjectRiskTooltipContent } from '~/components/projects/ProjectRiskTooltipContent'
 import { BasicTable } from '~/components/table/BasicTable'
 import {
@@ -18,9 +19,10 @@ import { getCommonProjectColumns } from '~/components/table/common-project-colum
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
+import { PrivacyAdversaryMergedDot } from '~/pages/privacy/adversaries/PrivacyAdversaryMergedDot'
 import { PrivacyWalkawayTestTooltipContent } from '~/pages/privacy/PrivacyWalkawayTestIcon'
-import { PRIVACY_ASSESSMENT } from '~/pages/privacy/privacyAssessment'
 import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
+import { toPrivacyProjectCellProject } from '~/pages/privacy/toPrivacyProjectCellProject'
 import {
   type TrustedSetupRisk,
   TrustedSetupRiskDot,
@@ -35,7 +37,7 @@ interface Props {
 }
 
 export function HomeTopPrivacyProtocolsCard({ entries }: Props) {
-  const table = useTable({
+  const table = useTable('HomeTopPrivacyProtocolsCard', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -70,20 +72,7 @@ const columns = [
     header: 'Name',
     enableHiding: false,
     cell: (ctx) => {
-      const project = {
-        name: ctx.row.original.name,
-        shortName: ctx.row.original.shortName,
-        slug: ctx.row.original.slug,
-        icon: ctx.row.original.icon,
-        backgroundColor: undefined,
-        description: ctx.row.original.description,
-        quantumResistance: ctx.row.original.quantumResistant
-          ? 'privacy'
-          : undefined,
-        statuses: {
-          underReview: ctx.row.original.isUnderReview ? 'config' : undefined,
-        },
-      } as const
+      const project = toPrivacyProjectCellProject(ctx.row.original)
 
       return (
         <div className="flex h-full items-center">
@@ -107,7 +96,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        'Key properties of the protocol: trusted setup, exit window, privacy, and reproducibility. Hover over each dot for details.',
+        'Key properties of the protocol: trusted setup, exit window, reproducibility and privacy. The privacy dot folds all adversaries into one colour. Hover over each dot for details.',
     },
   }),
   columnHelper.accessor('totalValueLockedUsd', {
@@ -151,12 +140,6 @@ function PropertiesCell({ entry }: { entry: PrivacySummaryEntry }) {
         />
       </PropertyDot>
       <PropertyDot
-        label={PRIVACY_ASSESSMENT.title}
-        risk={sentimentToRiskDot(entry.privacy.sentiment)}
-      >
-        <ProjectRiskTooltipContent risk={entry.privacy} variant="table" />
-      </PropertyDot>
-      <PropertyDot
         label="Reproducibility"
         risk={sentimentToRiskDot(entry.reproducibility.sentiment)}
       >
@@ -165,6 +148,8 @@ function PropertiesCell({ entry }: { entry: PrivacySummaryEntry }) {
           variant="table"
         />
       </PropertyDot>
+      <VerticalSeparator className="mx-1 h-4" />
+      <PrivacyAdversaryMergedDot adversaries={entry.adversaries} />
     </div>
   )
 }

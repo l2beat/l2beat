@@ -1,5 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { DEFI_SUMMARY_DESCRIPTION } from '~/consts/summaryPageDescriptions'
 import { getDefiSummaryEntries } from '~/server/features/defi/getDefiSummaryEntries'
 import { getDefiLiquidStakingCharts } from '~/server/features/defi/liquidStakingCharts/getDefiLiquidStakingCharts'
 import { ps } from '~/server/projects'
@@ -25,8 +26,8 @@ export async function getDefiSummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'DeFi - L2BEAT',
-        description: 'Overview of DeFi protocols tracked by L2BEAT.',
+        name: 'DeFi',
+        description: DEFI_SUMMARY_DESCRIPTION,
         url,
         openGraph: {
           image: '/meta-images/defi/summary/opengraph-image.png',

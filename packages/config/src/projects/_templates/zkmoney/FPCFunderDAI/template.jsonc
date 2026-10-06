@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FPCFunderDAI",
+  "category": "non-critical",
+  "description": "Collects the portal's funding cut. Anyone can swap it to AZTEC and bridge it as Fee Juice to the zk.money fee-paying contract on Aztec (L2_BENEFICIARY), which pays L2 fees for users.",
+  "ignoreInWatchMode": ["quoteBalanceAndBounty"],
+  "ignoreRelatives": [
+    "ETH_USD_FEED",
+    "FEE_ASSET",
+    "FEE_JUICE_PORTAL",
+    "inputToken"
+  ]
+}

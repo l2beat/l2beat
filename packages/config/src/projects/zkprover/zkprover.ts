@@ -21,7 +21,7 @@ export const zkprover: BaseProject = {
   },
   display: {
     description:
-      'zkProver prover originally built by Polygon Zero team to prove state transition of Polygon zkEVM chain.',
+      'zkProver is a prover originally built by the Polygon Zero team at Polygon Labs to prove state transitions of the Polygon zkEVM chain.',
     links: {
       documentation: [
         'https://docs.polygon.technology/tools/zkevm/architecture/#zkprover',
@@ -65,6 +65,7 @@ export const zkprover: BaseProject = {
       {
         projectId: ProjectId('silicon'),
         sinceTimestamp: UnixTime(1724796000),
+        untilTimestamp: UnixTime(1790114400),
       },
       {
         projectId: ProjectId('ternoa'),
@@ -73,6 +74,7 @@ export const zkprover: BaseProject = {
       {
         projectId: ProjectId('penchain'),
         sinceTimestamp: UnixTime(1749938400),
+        untilTimestamp: UnixTime(1777586400),
       },
       {
         projectId: ProjectId('wirex'),

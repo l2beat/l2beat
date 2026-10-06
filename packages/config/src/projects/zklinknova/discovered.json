@@ -1719,6 +1719,7 @@
             ]
           }
         ],
+        "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
         "getFirstUnprocessedPriorityTx": 269079,
         "getGateway": "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
         "getGovernor": "linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
@@ -1752,9 +1753,9 @@
       },
       "implementationNames": {
         "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05": "DiamondProxy",
-        "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05": "",
+        "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05": "AdminFacet",
         "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92": "GettersFacet",
-        "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e": "",
+        "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e": "MailboxFacet",
         "linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488": ""
       }
     },
@@ -4476,6 +4477,35 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05": [
+      "event ExecuteUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut)",
+      "event Freeze()",
+      "event InitGateway(address gateway)",
+      "event IsPorterAvailableStatusUpdate(bool isPorterAvailable)",
+      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
+      "event NewFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) oldFeeParams, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) newFeeParams)",
+      "event NewGovernor(address indexed oldGovernor, address indexed newGovernor)",
+      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
+      "event NewPendingGovernor(address indexed oldPendingGovernor, address indexed newPendingGovernor)",
+      "event NewPriorityTxMaxGasLimit(uint256 oldPriorityTxMaxGasLimit, uint256 newPriorityTxMaxGasLimit)",
+      "event SecondaryChainStatusUpdate(address indexed gateway, bool isActive)",
+      "event Unfreeze()",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "function acceptAdmin()",
+      "function acceptGovernor()",
+      "function changeFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) _newFeeParams)",
+      "function executeUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
+      "function freezeDiamond()",
+      "function getName() view returns (string)",
+      "function setGateway(address _gateway)",
+      "function setPendingAdmin(address _newPendingAdmin)",
+      "function setPendingGovernor(address _newPendingGovernor)",
+      "function setPorterAvailability(bool _zkPorterIsAvailable)",
+      "function setPriorityTxMaxGasLimit(uint256 _newPriorityTxMaxGasLimit)",
+      "function setSecondaryChainGateway(address _gateway, bool _active)",
+      "function setValidator(address _validator, bool _active)",
+      "function unfreezeDiamond()"
+    ],
     "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -4487,6 +4517,27 @@
     "linea:0x902C3806A84f4e855a8746e92d7F1C9a51400458": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[], uint256[]) view returns (bool)"
+    ],
+    "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e": [
+      "event EthWithdrawalFinalized(address indexed to, uint256 amount)",
+      "event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)",
+      "event SyncBatchRoot(address indexed secondaryChainGateway, uint256 batchNumber, uint256 forwardEthAmount)",
+      "event SyncL2Requests(address secondaryChainGateway, uint256 totalSyncedPriorityTxs, bytes32 syncHash, uint256 forwardEthAmount)",
+      "event SyncL2TxHash(bytes32 l2TxHash)",
+      "event SyncRangeBatchRoot(address indexed secondaryChainGateway, uint256 fromBatchNumber, uint256 toBatchNumber, bytes32 rangeBatchRootHash, uint256 forwardEthAmount)",
+      "function FORWARD_REQUEST_TYPE_HASH() view returns (bytes32)",
+      "function finalizeEthWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function forwardRequestL2Transaction(tuple(address gateway, bool isContractCall, address sender, uint256 txId, address contractAddressL2, uint256 l2Value, bytes l2CallData, uint256 l2GasLimit, uint256 l2GasPricePerPubdata, bytes[] factoryDeps, address refundRecipient) _request) payable returns (bytes32 canonicalTxHash)",
+      "function getName() view returns (string)",
+      "function l2TransactionBaseCost(uint256 _gasPrice, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit) view returns (uint256)",
+      "function proveL1ToL2TransactionStatus(bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof, uint8 _status) view returns (bool)",
+      "function proveL2LogInclusion(uint256 _batchNumber, uint256 _index, tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBatch, address sender, bytes32 key, bytes32 value) _log, bytes32[] _proof) view returns (bool)",
+      "function proveL2MessageInclusion(uint256 _batchNumber, uint256 _index, tuple(uint16 txNumberInBatch, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
+      "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
+      "function syncBatchRoot(address _secondaryChainGateway, uint256 _batchNumber, uint256 _forwardEthAmount) payable",
+      "function syncL2Requests(address _secondaryChainGateway, uint256 _newTotalSyncedPriorityTxs, bytes32 _syncHash, uint256 _forwardEthAmount) payable",
+      "function syncL2TxHash(bytes32 _l2TxHash) payable",
+      "function syncRangeBatchRoot(address[] _secondaryChainGateways, uint256 _fromBatchNumber, uint256 _toBatchNumber) payable"
     ],
     "linea:0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A": [
       "constructor(address _zkSync)",
@@ -5632,7 +5683,7 @@
     "scroll": 17695863,
     "zksync2": 63447251
   },
-  "permissionsConfigHash": "0x0a4ef58244f3c68871e188e2774810b9bd4533d94088c66cbf8a17fcb01a93ab",
+  "permissionsConfigHash": "0x3b856252e5cfda1e3fc8df3d7c5285c53ee34d07f179bcb84071a72bd8658c38",
   "permissions": {
     "arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917": {
       "directlyReceivedPermissions": [

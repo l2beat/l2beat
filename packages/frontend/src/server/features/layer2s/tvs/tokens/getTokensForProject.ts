@@ -52,11 +52,17 @@ export async function getTokensForProject(
   return projectTokens
 }
 
-function getMockTokensForProject(project: Project<never, 'tvsConfig'>) {
+function getMockTokensForProject(
+  project: Project<never, 'tvsConfig'>,
+): ProjectToken[] | undefined {
   if (!project.tvsConfig) return undefined
   return project.tvsConfig.map((t) => ({
-    ...t,
-    iconUrl: t.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
+    id: t.id,
+    name: t.name,
+    symbol: t.symbol,
+    source: t.source,
+    category: t.category,
     value: 1000,
+    iconUrl: t.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
   }))
 }

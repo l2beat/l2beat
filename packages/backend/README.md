@@ -16,17 +16,20 @@ pnpm build
 
 ### Database
 
-After the nodejs dependencies have been installed you should also install a Postgres database (v17).
+After the nodejs dependencies have been installed you should also install a Postgres database (v18).
 The recommended way is through docker using the commands below.
 
 ```
-docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:17
+docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:18
 docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_local'
 docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_test'
 ```
 
 If you restart your system running `docker start l2beat_postgres` will bring the database back
 online.
+
+PostgreSQL major versions cannot reuse each other's data directories. If you already have the v17
+container, dump or otherwise migrate any data you need before replacing it with v18.
 
 Alternatively you can simply run `./scripts/start_db.sh` which will always do what's needed.
 
@@ -130,6 +133,9 @@ FEATURES=*,!interop.relay
 
 - `COINGECKO_API_KEY` - Optional. Speeds up price collection. See
   https://www.coingecko.com/en/api/pricing
+- `COINGECKO_API_URL` - Optional. Replaces the CoinGecko API root (default
+  `https://pro-api.coingecko.com/api/v3` with a key), e.g. with a
+  CoinGecko-compatible proxy.
 
 - `ETHERSCAN_API_URL` - Etherscan API url
 - `ETHERSCAN_API_KEY` - Etherscan API key Blockscout doesn't need it.
@@ -145,6 +151,17 @@ to use a different endpoint. For example:
 ```
 ETHEREUM_RPC_URL=https://example.provider/ethereum
 ```
+
+### `interop.relay` feature
+
+- `INTEROP_RELAY_API_KEY` - One API key or a comma-separated list of keys.
+- `INTEROP_RELAY_CALLS_PER_MINUTE_PER_KEY` - Request budget per key, including retries.
+  Defaults to 190.
+- `INTEROP_RELAY_CONCURRENCY_PER_KEY` - Concurrent fetch workers contributed by each key.
+  Defaults to 3.
+
+Capacity scales automatically with the number of distinct, non-empty keys. With the defaults,
+one key allows 190 calls/minute and 3 workers; two keys allow 380 calls/minute and 6 workers.
 
 ### `tvs` feature
 

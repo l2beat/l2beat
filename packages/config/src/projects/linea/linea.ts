@@ -55,6 +55,7 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
 )} time window.`
 
 const chainId = 59144
+const chainStart = UnixTime.fromDate(new Date('2023-07-19T14:00:00Z'))
 
 const v8_0UpgradeTS = UnixTime(1784201579)
 
@@ -379,7 +380,7 @@ export const linea: ScalingProject = {
     name: 'linea',
     chainId,
     explorerUrl: 'https://lineascan.build',
-    sinceTimestamp: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
+    sinceTimestamp: chainStart,
     gasTokens: ['ETH'],
     multicallContracts: [
       {
@@ -396,6 +397,7 @@ export const linea: ScalingProject = {
       { type: 'blockscoutV2', url: 'https://api-explorer.linea.build/api/v2' },
     ],
   },
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,

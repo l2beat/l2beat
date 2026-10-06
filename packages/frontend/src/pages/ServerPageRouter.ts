@@ -1,5 +1,4 @@
 import express from 'express'
-import { env } from '~/env'
 import {
   ClearPageCacheMiddleware,
   PageCacheMiddleware,
@@ -26,10 +25,12 @@ import { createL2Router } from './layer2s/L2Router'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
 import { NotFoundHandler } from './not-found/NotFoundHandler'
+import { createOssificationRouter } from './ossification/OssificationRouter'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
+import { createTokensRouter } from './tokens/TokensRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 
 const cache = new FrontendInMemoryCache('createServerPageRouter')
@@ -53,21 +54,11 @@ export function createServerPageRouter(
   // Routes that must not be cached override it later in the chain.
   router.use('/', PageCacheMiddleware())
 
-  if (!env.CLIENT_SIDE_HOME_PAGE) {
-    // Temporary redirect so browsers drop the previously cached 301 before
-    // "/" starts serving the home page. no-cache (not no-store) so the
-    // response is stored and replaces the old 301 entry, but is revalidated
-    // (refetched, since 307 has no validators) on every use.
-    router.get('/', (_req, res) => {
-      res.set('Cache-Control', 'no-cache')
-      res.redirect(307, '/layer2s/summary')
-    })
-  }
-
   const routers = [
-    ...(env.CLIENT_SIDE_HOME_PAGE ? [createHomeRouter] : []),
+    createHomeRouter,
     createL2Router,
     createInteropRouter,
+    createTokensRouter,
     createDataAvailabilityRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,
@@ -84,6 +75,7 @@ export function createServerPageRouter(
     createMultisigReportRouter,
     createPrivacyRouter,
     createDefiRouter,
+    createOssificationRouter,
     createTermsOfServiceRouter,
     createStagesRouter,
     createPublicationsRouter,

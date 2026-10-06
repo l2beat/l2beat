@@ -1,14 +1,57 @@
 import Router from '@koa/router'
+import type { Logger } from '@l2beat/backend-tools'
+import { FLAT_SOURCES_ZSTD_WINDOW_LOG } from '@l2beat/shared-pure'
+import { pipeline, Readable } from 'stream'
+import { constants, createZstdCompress } from 'zlib'
 
 import type { FlatSourcesController } from './FlatSourcesController'
 
-export function createFlatSourcesRouter(controller: FlatSourcesController) {
-  const router = new Router()
+const STREAM_DEADLINE_MS = 5 * 60 * 1000
 
-  router.get('/api/flat-sources', async (ctx) => {
-    const response = await controller.getFlatSources()
-    ctx.body = response
-    ctx.response.length = response.length
+export function createFlatSourcesRouter(
+  controller: FlatSourcesController,
+  logger: Logger,
+  streamDeadlineMs = STREAM_DEADLINE_MS,
+) {
+  const router = new Router()
+  let streaming = false
+
+  router.get('/api/flat-sources', (ctx) => {
+    if (streaming) {
+      ctx.status = 503
+      ctx.set('Retry-After', '10')
+      ctx.body = 'Flat sources are already being streamed, retry later'
+      return
+    }
+    streaming = true
+    const deadline = setTimeout(() => {
+      logger.warn('Flat sources stream deadline reached, closing', {
+        bytesWritten: ctx.res.socket?.bytesWritten,
+      })
+      ctx.res.destroy()
+    }, streamDeadlineMs)
+    ctx.type = 'application/zstd'
+    ctx.compress = false
+    ctx.body = pipeline(
+      Readable.from(controller.streamFlatSources(), {
+        objectMode: true,
+        highWaterMark: 1,
+      }),
+      createZstdCompress({
+        params: {
+          [constants.ZSTD_c_compressionLevel]: 3,
+          [constants.ZSTD_c_windowLog]: FLAT_SOURCES_ZSTD_WINDOW_LOG,
+          [constants.ZSTD_c_enableLongDistanceMatching]: 1,
+        },
+      }),
+      (error) => {
+        clearTimeout(deadline)
+        streaming = false
+        if (error && !ctx.res.writableEnded) {
+          ctx.res.destroy(error)
+        }
+      },
+    )
   })
 
   return router

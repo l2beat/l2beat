@@ -1,3 +1,384 @@
+Generated with discovered.json: 0xf51a6a607093e266c0ca596fb51e21290724528a
+
+# Diff at Mon, 05 Oct 2026 08:44:06 GMT:
+
+- id: 5310a630
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@50466fc671947969db5d8bc59484f0d565783dfc block: 1790934395
+- current timestamp: 1790934395
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790934395 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getProtocolVersion.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPermanentRollupString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      fieldMeta.$threshold:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xfeee3b4e276d508c6adebc9e7e3fc948db80e70a
+
+# Diff at Fri, 02 Oct 2026 12:42:33 GMT:
+
+- id: eb0bad59
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@11a44108bd8b596f3d406b83540ae9f7826e9817 block: 1786966191
+- current timestamp: 1790934395
+
+## Description
+
+Executed this proposal: https://www.tally.xyz/gov/zksync/proposal/49883493212277767948924829453899549013679463473253620701602979414799679547598?govId=eip155%3A324%3A0x76705327e682F2d96943280D99464Ab61219e34f. Now each chain admin can increase the execution delay of its chain (`increaseChainExecutionDelay`), the owner can set it freely (`setChainExecutionDelay`). The effective delay for Era is tracked in `executionDelayEra` (still 3h).
+
+Also adds a new `UPGRADER_ROLE` that can call `upgradeChainFromVersion()` through the VTL (forwarded to the diamond). Currently nobody holds the role for zksync era yet (tracked in `upgraderVTL`).
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      template:
+-        "shared-zk-stack/ValidatorTimelock_post29"
++        "shared-zk-stack/ValidatorTimelock_v31"
+      sourceHashes.1:
+-        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
++        "0x51d6000b0e4437a2b99d13d332658fffb3da867cd56b05cbcb4bf4f954ff12ff"
+      description:
+-        "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h."
++        "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days."
+      values.$implementation:
+-        "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8"
++        "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35"
+      values.$pastUpgrades.1:
++        ["2026-10-01T12:28:47.000Z","0xdc4278c8b23d99f974a206dcaa1c1e20272c49095fa31eac842210ae97b435a8",["eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35"]]
+      values.$upgradeCount:
+-        1
++        2
++++ severity: HIGH
+      values.executionDelayEra:
++        10800
++++ severity: HIGH
+      values.executionDelayEra_fmt:
++        "3h"
+      values.MAX_EXECUTION_DELAY:
++        2592000
+      values.OPTIONAL_UPGRADER_ADMIN_ROLE:
++        "0xa1426e789273bde4307f3302768d8e4eb615f0f4dea304f29cccd58ff644d640"
+      values.UPGRADER_ROLE:
++        "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3"
+      errors:
+-        {"executionDelayEra":"Processing error occurred.","executionDelayEra_fmt":"Processing error occurred."}
+      fieldMeta.executionDelay.description:
++        "Ecosystem-wide minimum execution delay (in seconds), set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
+      fieldMeta.executionDelay_fmt.description:
++        "Ecosystem-wide minimum execution delay, set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
+      implementationNames.eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8:
+-        "ValidatorTimelock"
+      implementationNames.eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35:
++        "ValidatorTimelock"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ValidatorTimelock/ValidatorTimelock.sol        | 6126 ++++++++++----------
+ 1 file changed, 3210 insertions(+), 2916 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966191 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.upgraderVTL:
++        {}
+      fieldMeta.executionDelayEra:
++        {"severity":"HIGH"}
+      fieldMeta.executionDelayEra_fmt:
++        {"severity":"HIGH"}
+      errors:
++        {"executionDelayEra":"Processing error occurred.","executionDelayEra_fmt":"Processing error occurred."}
+    }
+```
+
+Generated with discovered.json: 0xe527cbb333e033f93f4a9460eeba2e030b8b946b
+
+# Diff at Wed, 23 Sep 2026 05:56:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1786966191
+- current timestamp: 1786966191
+
+## Description
+
+Review ossification configuration at the main-branch discovery block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966191 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getPendingAdmin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) [N/A] {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      fieldMeta:
+-        {"l2TokenProxyBytecodeHash":{"severity":"HIGH"},"l2TokenBeacon":{"severity":"HIGH"},"l2Bridge":{"severity":"HIGH"},"L1_NULLIFIER":{"severity":"HIGH"},"L1_NATIVE_TOKEN_VAULT":{"severity":"HIGH"},"L1_ASSET_ROUTER":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      fieldMeta.validatorTimelock:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.executor:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xb031323eb4f18a9b2c83f2f614c4cf7c01afb840
+
+# Diff at Mon, 21 Sep 2026 11:19:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1786966191
+- current timestamp: 1786966191
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966191 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      fieldMeta.executionDelay:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getL2EvmEmulatorBytecodeHash:
++        {"severity":"HIGH"}
+      fieldMeta.getL2DefaultAccountBytecodeHash:
++        {"severity":"HIGH"}
+      fieldMeta.getL2BootloaderBytecodeHash:
++        {"severity":"HIGH"}
+      fieldMeta.getPriorityTxMaxGasLimit:
++        {"severity":"HIGH"}
+      fieldMeta.getRollupDAManager:
++        {"severity":"HIGH"}
+      fieldMeta.getChainTypeManager:
++        {"severity":"HIGH"}
+      fieldMeta.getBridgehub:
++        {"severity":"HIGH"}
+      fieldMeta.getVerifier:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) [N/A] {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      fieldMeta:
++        {"l2TokenProxyBytecodeHash":{"severity":"HIGH"},"l2TokenBeacon":{"severity":"HIGH"},"l2Bridge":{"severity":"HIGH"},"L1_NULLIFIER":{"severity":"HIGH"},"L1_NATIVE_TOKEN_VAULT":{"severity":"HIGH"},"L1_ASSET_ROUTER":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract EraDualVerifier (eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081) [shared-zk-stack/DualVerifier] {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9 or eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF depending on the supplied proof type.
+      fieldMeta.verificationKeyHash.severity:
++        "HIGH"
+      fieldMeta.PLONK_VERIFIER:
++        {"severity":"HIGH"}
+      fieldMeta.FFLONK_VERIFIER:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      fieldMeta.validatorTimelock:
++        {"severity":"HIGH"}
+      fieldMeta.executionDelay:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.executor:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xf9d29f3334712be702f91b3acbc22a3b68754032
+
+# Diff at Fri, 18 Sep 2026 10:23:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1786966191
+- current timestamp: 1786966191
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966191 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract EraVerifierPlonk (eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF) [shared-zk-stack/L1VerifierPlonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      critical:
++        true
+      fieldMeta:
++        {"executionDelay_fmt":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getSettlementLayer:
++        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) [N/A] {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EraVerifierFflonk (eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9) [shared-zk-stack/L1VerifierFflonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EraDualVerifier (eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081) [shared-zk-stack/DualVerifier] {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9 or eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF depending on the supplied proof type.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      fieldMeta.multisigMembers:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.executionDelay_fmt:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x0cb07d39542388dea86e4fffdddd774a4cd8f3f6
 
 # Diff at Mon, 07 Sep 2026 08:38:06 GMT:

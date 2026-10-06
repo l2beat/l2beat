@@ -20,7 +20,7 @@ export function L2RiskDaTable({ entries, hideType }: Props) {
     [hideType],
   )
 
-  const table = useTable({
+  const table = useTable('L2RiskDaTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

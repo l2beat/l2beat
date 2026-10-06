@@ -1,3 +1,438 @@
+Generated with discovered.json: 0x7d8d86ff2a3d62825e8aa69ab3f48501b5c7614c
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: b4589e20
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790891941
+- current timestamp: 1790891941
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790891941 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (arb1:0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.isUsingFeeToken:
+-        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
+-        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x6a36e0aff8ebdf36de5b9f0757daa220d897f267
+
+# Diff at Thu, 01 Oct 2026 22:00:13 GMT:
+
+- id: 64fc0b79
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b5f330a01ef3aa93e43410554711e807e6a63b92 block: 1788816912
+- current timestamp: 1790891941
+
+## Description
+
+XaiSentryMultisig: 3 members removed, threshold `3 of 7` -> `3 of 4`. 2 of the removed members remain members of XaiSentryMultisig2 (`1 of 3`), which is still a member.
+
+NodeLicenseRegistry upgraded by XaiSentryMultisig; the reinitializer sets `mintingPaused` to `true`. `mintingPaused` has no setter.
+
+Version changes and implementation diffs:
+
+- NodeLicenseRegistry NodeLicense10 -> NodeLicense11: https://disco.l2beat.com/diff/arb1:0x249b8A8AF9152A08Ba3cF3E106962566E8343fB6/arb1:0xdD94b4Eb8620CD9a82dBF058De0589f271A30CCA
+
+## Watched changes
+
+```diff
+    contract XaiSentryMultisig (arb1:0x754286508D57Fae1256bC288461E075552175CBa) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "arb1:0x739bd9Ed651d200dc84d0b0dF444CA47CBFf520f"
+      values.$members.2:
+-        "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3"
+      values.$members.4:
+-        "arb1:0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 4 (75%)"
+    }
+```
+
+```diff
+    contract NodeLicenseRegistry (arb1:0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) [N/A] {
+    +++ description: This is the contract where Xai Sentry Keys for running a sentry node are minted.
+      sourceHashes.1:
+-        "0x51e845ee54612e798ba42f8f2817f1515ae31d02bc5f2a866db81850f345a0aa"
++        "0x1cfacb9a51bdab359fa5ad8114e490987cdbbd64285b04db4c8ce4fb8f9af18d"
+      values.$implementation:
+-        "arb1:0x249b8A8AF9152A08Ba3cF3E106962566E8343fB6"
++        "arb1:0xdD94b4Eb8620CD9a82dBF058De0589f271A30CCA"
+      values.$pastUpgrades.17:
++        ["2026-09-10T16:37:56.000Z","0xc4cf3a0ecce8ca29e2f6ca89b2251ae0ea279e66a7305ecd4c7696d0ba4e7bd0",["arb1:0xdD94b4Eb8620CD9a82dBF058De0589f271A30CCA"]]
+      values.$upgradeCount:
+-        17
++        18
+      values.mintingPaused:
+-        false
++        true
+      implementationNames.arb1:0x249b8A8AF9152A08Ba3cF3E106962566E8343fB6:
+-        "NodeLicense10"
+      implementationNames.arb1:0xdD94b4Eb8620CD9a82dBF058De0589f271A30CCA:
++        "NodeLicense11"
+    }
+```
+
+## Source code changes
+
+```diff
+.../NodeLicenseRegistry/NodeLicense11.sol}         | 34 ++++++++++++++--------
+ 1 file changed, 22 insertions(+), 12 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788816912 (main branch discovery), not current.
+
+```diff
+    contract XaiSentryMultisig2 (arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        "XaiSentryMultisig2"
+    }
+```
+
+```diff
+    contract XaiSentryMultisig (arb1:0x754286508D57Fae1256bC288461E075552175CBa) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        "XaiSentryMultisig"
+    }
+```
+
+Generated with discovered.json: 0xe30a385a973a71ce6128af6edbf5f58550424347
+
+# Diff at Wed, 23 Sep 2026 05:50:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1788816912
+- current timestamp: 1788816912
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788816912 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (arb1:0x041F85dD87c46B941dc9b15c6628B19ee5358485) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x4e13bc303d7be202949eb705b10014ae3101a487
+
+# Diff at Mon, 21 Sep 2026 11:24:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1788816912
+- current timestamp: 1788816912
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788816912 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (arb1:0x041F85dD87c46B941dc9b15c6628B19ee5358485) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta:
++        {"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      fieldMeta:
++        {"whitelist":{"severity":"HIGH"},"router":{"severity":"HIGH"},"inbox":{"severity":"HIGH"},"counterpartGateway":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta:
++        {"rollup":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.sequencerInbox:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.severity:
++        "HIGH"
+      fieldMeta.isUsingFeeToken:
++        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
++        {"severity":"HIGH"}
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+      fieldMeta.bridge:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Inbox (arb1:0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta:
++        {"paused":{"severity":"MEDIUM"},"allowListEnabled":{"severity":"HIGH"},"sequencerInbox":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0xD89d54007079071cBA859127318b9F34eeB78049) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      fieldMeta:
++        {"proverMem":{"severity":"HIGH"},"proverMath":{"severity":"HIGH"},"proverHostIo":{"severity":"HIGH"},"prover0":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xf276c79836f7c9717ded6640f77d37e965915a9b
+
+# Diff at Fri, 18 Sep 2026 10:24:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1788816912
+- current timestamp: 1788816912
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788816912 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (arb1:0x041F85dD87c46B941dc9b15c6628B19ee5358485) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      critical:
++        true
+      fieldMeta:
++        {"executors":{"severity":"LOW"}}
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x33c1514Bf90e202d242C299b37C60f908aa206D4) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0x3a3f62034a42a35eA1686B199bB73006aa525eE4) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x54E0923782b701044444De5d8c3A45aC890b0881) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.batchPosters:
++        {"severity":"LOW"}
+      fieldMeta.dacKeyset:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Inbox (arb1:0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ERC20Gateway (arb1:0xb591cE747CF19cF30e11d656EB94134F523A9e77) [orbitstack/ERC20Gateway] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.wasmModuleRoot.severity:
++        "HIGH"
+      fieldMeta.validators:
++        {"severity":"LOW"}
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0xD89d54007079071cBA859127318b9F34eeB78049) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xf40ad1bc693f957d92d46374ff35b62d02a697c1
 
 # Diff at Mon, 07 Sep 2026 21:36:18 GMT:

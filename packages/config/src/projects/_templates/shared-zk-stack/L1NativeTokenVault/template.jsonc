@@ -1,15 +1,19 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Canonical central asset escrow for all ZK stack chains.",
   "ignoreRelatives": ["WETH_TOKEN", "bridgedTokenBeacon"],
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
           "description": "pause / unpause the bridge."
         }
       ]
-    }
+    },
+    "paused": { "severity": "MEDIUM" },
+    "bridgedTokenBeacon": { "severity": "HIGH" }
   }
 }

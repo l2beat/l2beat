@@ -1,0 +1,44 @@
+{
+  "events": [
+    {
+      "timestamp": 1750689983,
+      "type": "code",
+      "contract": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "transaction": "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
+      "updateId": "566354c9",
+      "reason": "Upgraded the AgglayerBridge to implementation 0x75D28BfD, whose initializer introduced the proxiedTokensManager role and set it to the Timelock (Upgraded). Replaces the diffHistory state event of 566354c9, which the reshaped $pastUpgrades list dated at the 2023 deployment."
+    },
+    {
+      "timestamp": 1763678411,
+      "type": "state",
+      "contract": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "transaction": "0xa96a2e405f8bb65a571e61b4beddd76549d66b455455a58ab60c6fac0ad57992",
+      "updateId": "cf34a84f",
+      "reason": "Added the default aggchain vkey 0x6e38caa6 for FEP selector 0x00080001 (AddDefaultAggchainVKey). Every aggchain with useDefaultVkeys can prove state transitions with it."
+    },
+    {
+      "timestamp": 1772181119,
+      "type": "state",
+      "contract": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "transaction": "0x2d6d64bcdc0ca7c9b22721743f548bc4f0d0f2e364f5622c82bf00a5ca16d117",
+      "updateId": "5dab537d",
+      "reason": "Added the default aggchain vkey 0x7767a833 for FEP selector 0x000a0001 (AddDefaultAggchainVKey). Every aggchain with useDefaultVkeys can prove state transitions with it."
+    },
+    {
+      "timestamp": 1781016059,
+      "type": "state",
+      "contract": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "transaction": "0x0ff914b45f8c2de1e2d72a22d1c8da85a04b5aba97ca755be37236f84e69df8c",
+      "updateId": "ad8059d1",
+      "reason": "Added the default aggchain vkey 0x679bc137 for FEP selector 0x000b0001 (AddDefaultAggchainVKey). Every aggchain with useDefaultVkeys can prove state transitions with it."
+    },
+    {
+      "timestamp": 1781516999,
+      "type": "state",
+      "contract": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "transaction": "0xa164896f88299e6f17ed95dbaf48485e3d6c039c468ce7c5744dba6ad7671bcf",
+      "updateId": "8b099c72",
+      "reason": "Added the pessimistic-proof route 0x0000000e to SP1Verifier 0xc3c6dDDA with pessimistic vkey 0x00d14f97 (RouteAdded). The aggregator can verify any chain's pessimistic proof through any route that is not frozen."
+    }
+  ]
+}

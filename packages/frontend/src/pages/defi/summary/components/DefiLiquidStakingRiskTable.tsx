@@ -133,7 +133,7 @@ export function DefiLiquidStakingRiskTable({
 }) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
 
-  const table = useTable({
+  const table = useTable('DefiLiquidStakingRiskTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

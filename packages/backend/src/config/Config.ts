@@ -12,6 +12,7 @@ import type {
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
+import type { DefiTvlConfig } from '../modules/defi-tvl/types'
 import type { PrivacyConfig } from '../modules/privacy/types'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
@@ -33,9 +34,11 @@ export interface Config {
   readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
+  readonly coingeckoApiUrl: string | undefined
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
+  readonly defiTvl: DefiTvlConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
@@ -274,10 +277,11 @@ export interface InteropFeatureConfig {
   }
   relay:
     | {
-        apiKey: string
+        apiKeys: string[]
         batchSize: number
-        callsPerMinute: number
-        maxRequestsPerUpdate: number
+        callsPerMinutePerKey: number
+        concurrency: number
+        maxRequestsPerChunk: number
         safeTimeOffset: number
       }
     | false

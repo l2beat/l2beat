@@ -62,11 +62,58 @@ describe(BlockProvider.name, () => {
     })
   })
 
+  describe(BlockProvider.prototype.getTransactionReceipt.name, () => {
+    const receipt = { blockHash: '0xb', logs: [] }
+
+    it('returns the receipt', async () => {
+      const rpc = mockObject<RpcClient>({
+        getTransactionReceipt: async () => receipt,
+      })
+      const provider = new BlockProvider('chain', [rpc])
+
+      const result = await provider.getTransactionReceipt('0xt')
+
+      expect(rpc.getTransactionReceipt).toHaveBeenOnlyCalledWith('0xt')
+      expect(result).toEqual(receipt)
+    })
+
+    it('skips clients without the capability and errors', async () => {
+      const unsupported = mockObject<BlockClient>({
+        getTransactionReceipt: undefined,
+      })
+      const failing = mockObject<RpcClient>({
+        getTransactionReceipt: mockFn().rejectsWith(new Error()),
+      })
+      const working = mockObject<RpcClient>({
+        getTransactionReceipt: async () => receipt,
+      })
+      const provider = new BlockProvider('chain', [
+        unsupported,
+        failing,
+        working,
+      ])
+
+      const result = await provider.getTransactionReceipt('0xt')
+
+      expect(result).toEqual(receipt)
+    })
+
+    it('throws when ran out of fallbacks', async () => {
+      const rpc = mockObject<RpcClient>({
+        getTransactionReceipt: mockFn().rejectsWith(new Error('ERROR')),
+      })
+      const provider = new BlockProvider('chain', [rpc])
+
+      await expect(() =>
+        provider.getTransactionReceipt('0xt'),
+      ).toBeRejectedWith('ERROR')
+    })
+  })
+
   describe(BlockProvider.prototype.getBlockNumberAtOrBefore.name, () => {
     it('finds the closest block number to given timestamp', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockTimestamp: undefined,
         getBlockWithTransactions: async (n: number) => block(n),
       })
 
@@ -80,35 +127,14 @@ describe(BlockProvider.name, () => {
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
 
-    it('probes timestamps without transaction bodies when the client supports it', async () => {
-      const getBlockTimestamp = mockFn(async (n: number) => n * 100)
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 1000,
-        getBlockTimestamp,
-        getBlockWithTransactions: mockFn(),
-      })
-
-      const provider = new BlockProvider('chain', [client])
-
-      const blockNumber = await provider.getBlockNumberAtOrBefore(
-        UnixTime(800 * 100),
-      )
-
-      expect(blockNumber).toEqual(800)
-      expect(getBlockTimestamp).toHaveBeenCalled()
-      expect(client.getBlockWithTransactions).not.toHaveBeenCalled()
-    })
-
     it('calls other client when there are errors', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockTimestamp: undefined,
         getBlockWithTransactions: mockFn().rejectsWith(new Error('error')),
       })
 
       const client2 = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockTimestamp: undefined,
         getBlockWithTransactions: async (n: number) => block(n),
       })
 
@@ -126,7 +152,6 @@ describe(BlockProvider.name, () => {
     it('falls back to 0 when start is above client latest', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 500,
-        getBlockTimestamp: undefined,
         getBlockWithTransactions: async (n: number) => block(n),
       })
 

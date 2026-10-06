@@ -107,6 +107,10 @@
     "katana:0x420000000000000000000000000000000000001b"
   ],
   "overrides": {
+    "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     // OPContractsManagerV2 (v7.1.17): shared OP-stack upgrade tooling, referenced by
     // SystemConfig.lastUsedOPCM since the 2026-09-01 upgrade. Ignored so discovery doesn't
     // follow it into the OPCM container/utils/validator and bare implementations.
@@ -114,9 +118,39 @@
     "eth:0x6FD5B86B93A0405c1eF082ED6Ed3b28e94f022f4": {
       "ignoreDiscovery": true
     },
+    // ---- Ossification perimeter ----
+    // Custody and messaging run through the Agglayer shared bridge (AgglayerBridge in
+    // shared-polygon-cdk, AgglayerBridgeL2 + L2 GER manager here). State validity is the
+    // AggchainFEP (OP Succinct) proof wrapped in the pessimistic proof that the
+    // AgglayerManager verifies through the AgglayerGateway and its SP1 verifiers (module).
+    // The forked OptimismPortal2 rejects ETH deposits and direct L1StandardBridge /
+    // L1ERC721Bridge deposits. The L2ToL1MessagePasser predeploy reverted every
+    // withdrawal ("Withdrawals are disabled", L2 upgrade 0x8ff7fb4b, 2025-05-08 23:42)
+    // until the Karst L2 hardfork (2026-09-23 16:00:01 UTC) replaced it with the standard
+    // implementation: withdrawals can be initiated on L2 again, but the DisputeGameFactory
+    // has created no games, so none can be proven on L1. The portal, L1StandardBridge,
+    // L1CrossDomainMessenger and DelayedWETH hold 0 ETH, and no token was ever sent to
+    // the L1StandardBridge. The OP dispute-game / messenger / token
+    // bridge stack therefore protects no assets today, but it stays critical through the
+    // shared opstack templates: the critical flag has no per-address "false", ERC20
+    // deposits through L1StandardBridge -> L1CrossDomainMessenger are not blocked by the
+    // portal check, and OPCM upgrades swapped the portal fork for other versions before
+    // (all deposits were disabled from 2025-05-08 23:31 until the 2026-05-22 upgrade
+    // 0x46d8e0a3 re-enabled zero-value forced transactions). Conservative and without
+    // effect on the score: every L1 change to this stack so far shipped in the same OPCM
+    // transaction as a portal / SystemConfig upgrade, and the Karst replacement of its L2
+    // predeploys falls within 24 hours of an AggchainFEP config change.
+    // The vault-bridge tokens (vbETH, vbUSDC, vbUSDT, vbWBTC, vbUSDS) and their
+    // MigrationManager are not critical: L1 tokens bridged canonically through the shared
+    // AgglayerBridge (TVS: custom-canonical), not natively minted on Katana. Their config
+    // is watched at MEDIUM through the GenericVaultBridgeToken template.
+    // SuperchainConfig fork: its guardian can pause the portal and with it the
+    // forced-transaction path (the only censorship-resistance mechanism).
     "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": {
+      "critical": true,
       "fields": {
         "guardian": {
+          "severity": "MEDIUM",
           "permissions": [
             {
               "type": "interact",
@@ -125,6 +159,18 @@
           ]
         }
       }
+    },
+    // ProxyAdmin: can upgrade the portal, SystemConfig and the other OP-stack proxies.
+    "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832": {
+      "critical": true
+    },
+    // ProxyAdmin: can upgrade the SuperchainConfig fork.
+    "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52": {
+      "critical": true
+    },
+    // ProxyAdmin (L2): can upgrade the AgglayerBridgeL2 and the L2 GER manager.
+    "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
+      "critical": true
     },
     "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666": {
       "fields": {

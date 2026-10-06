@@ -10,5 +10,17 @@
     "address": "eth:0xFff476751949a7e1B784b5c88648833c1e8dD69c",
     "chain": "ethereum",
     "blockNumber": 25883001
+  },
+  "CiphernodeRegistryV3": {
+    "hash": "0xaaf0cc5a82e6d85f4cb4d4b1cdfe655456ddfd34d6a347cf23f5f5acb505fd7c",
+    "address": "eth:0xD9A3224D829a4ac8b55A75C539fD447AC4B05Bf2",
+    "chain": "ethereum",
+    "blockNumber": 25998886
+  },
+  "CiphernodeRegistryV4": {
+    "hash": "0x15fc7691fe2aef9e081c0a4c84c36701c7f1777903a9cd07d2598b200a683055",
+    "address": "eth:0x8354E51d14C118f6386C3F6F73E79190D71FFA3A",
+    "chain": "ethereum",
+    "blockNumber": 26096867
   }
 }

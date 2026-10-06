@@ -2,9 +2,8 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
-    "name": { "type": "string" },
     "import": { "type": "array", "items": { "type": "string" } },
-    "archived": { "type": "boolean" },
+    "name": { "type": "string" },
     "discoverLibraries": { "type": "boolean" },
     "initialAddresses": { "type": "array", "items": { "type": "string" } },
     "maxAddresses": { "type": "number" },
@@ -55,51 +54,6 @@
             "additionalProperties": {
               "type": "object",
               "properties": {
-                "permissions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "enum": ["member", "act", "interact", "upgrade"]
-                      },
-                      "delay": {
-                        "anyOf": [{ "type": "number" }, { "type": "string" }]
-                      },
-                      "description": { "type": "string" },
-                      "condition": { "type": "string" },
-                      "role": { "type": "string" }
-                    },
-                    "required": ["type"]
-                  }
-                },
-                "description": { "type": "string" },
-                "severity": { "enum": ["HIGH", "MEDIUM", "LOW"] },
-                "type": {
-                  "anyOf": [
-                    {
-                      "enum": [
-                        "CODE_CHANGE",
-                        "L2",
-                        "EXTERNAL",
-                        "RISK_PARAMETER",
-                        "PERMISSION"
-                      ]
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "enum": [
-                          "CODE_CHANGE",
-                          "L2",
-                          "EXTERNAL",
-                          "RISK_PARAMETER",
-                          "PERMISSION"
-                        ]
-                      }
-                    }
-                  ]
-                },
                 "handler": {
                   "anyOf": [
                     {
@@ -717,7 +671,52 @@
                 },
                 "template": { "type": "string" },
                 "copy": { "type": "string" },
-                "edit": {}
+                "edit": {},
+                "description": { "type": "string" },
+                "severity": { "enum": ["HIGH", "MEDIUM", "LOW"] },
+                "type": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "CODE_CHANGE",
+                        "L2",
+                        "EXTERNAL",
+                        "RISK_PARAMETER",
+                        "PERMISSION"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "enum": [
+                          "CODE_CHANGE",
+                          "L2",
+                          "EXTERNAL",
+                          "RISK_PARAMETER",
+                          "PERMISSION"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "permissions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "enum": ["member", "act", "interact", "upgrade"]
+                      },
+                      "delay": {
+                        "anyOf": [{ "type": "number" }, { "type": "string" }]
+                      },
+                      "description": { "type": "string" },
+                      "condition": { "type": "string" },
+                      "role": { "type": "string" }
+                    },
+                    "required": ["type"]
+                  }
+                }
               }
             }
           },
@@ -764,7 +763,33 @@
             }
           },
           "category": { "type": "string" },
-          "critical": { "type": "boolean" },
+          "critical": {
+            "anyOf": [
+              { "const": true },
+              {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "sinceTimestamp": { "type": "number" },
+                      "untilTimestamp": { "type": "number" }
+                    },
+                    "additionalProperties": false,
+                    "required": ["sinceTimestamp"]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "sinceTimestamp": { "type": "number" },
+                      "untilTimestamp": { "type": "number" }
+                    },
+                    "additionalProperties": false,
+                    "required": ["untilTimestamp"]
+                  }
+                ]
+              }
+            ]
+          },
           "description": { "type": "string" },
           "references": {
             "type": "array",
@@ -813,6 +838,7 @@
         "required": ["type", "project"]
       }
     },
+    "archived": { "type": "boolean" },
     "categories": {
       "type": "object",
       "propertyNames": { "type": "string" },

@@ -23,6 +23,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-AAPLc",
+      "priceId": "apple-coinbase-tokenized-stock",
+      "symbol": "AAPLc",
+      "name": "Apple Inc.",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175597/large/aapl_200x200.png?1787068801",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb200000000000000000000C2e324d24d7eEcd1fb",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1787011200
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-AAVE",
       "priceId": "aave",
       "symbol": "AAVE",
@@ -171,6 +189,24 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-AMZNc",
+      "priceId": "amazon-coinbase-tokenized-stock",
+      "symbol": "AMZNc",
+      "name": "Amazon.com Inc.",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178280/large/amzn-200.png?1789233782",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb200000000000000000000d9192b6B456483C2E8",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1789171200
+      },
+      "category": "rwaPublic",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -1629,6 +1665,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-GOOGLc",
+      "priceId": "alphabet-coinbase-tokenized-stock",
+      "symbol": "GOOGLc",
+      "name": "Alphabet Inc.",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175598/large/goog_200x200.png?1787068802",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb2000000000000000000002D0BA3164cc74f58B7",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1787011200
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-GPS",
       "priceId": "goplus-security",
       "symbol": "GPS",
@@ -1879,6 +1933,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-KNINE",
+      "priceId": "k9-finance-dao",
+      "symbol": "KNINE",
+      "name": "K9 Finance DAO",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35824/large/k9_200_X_200.png?1709886958",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1709856000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-LBTC-1",
       "priceId": "lombard-staked-btc",
       "symbol": "LBTC",
@@ -2082,6 +2155,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-METAc",
+      "priceId": "meta-coinbase-tokenized-stock",
+      "symbol": "METAc",
+      "name": "Meta Platforms Inc.",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175599/large/meta_200x200.png?1787068803",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb2000000000000000000008bC8786B856E61707C",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1787011200
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-mGLO",
       "priceId": "midas-fasanara-global-open",
       "symbol": "mGLO",
@@ -2195,6 +2286,42 @@
     },
     {
       "mode": "auto",
+      "id": "base-MSFTc",
+      "priceId": "microsoft-coinbase-tokenized-stock",
+      "symbol": "MSFTc",
+      "name": "Microsoft Corporation",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178281/large/msft-200.png?1789233933",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB200000000000000000000Ab99cFa739E253872B",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1789171200
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-MSTRc",
+      "priceId": "microstrategy-coinbase-tokenized-stock",
+      "symbol": "MSTRc",
+      "name": "Strategy Inc.",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178282/large/mstr-200.png?1789233935",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb2000000000000000000004884b426556b92883d",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1789171200
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-NPC",
       "priceId": "non-playable-coin",
       "symbol": "NPC",
@@ -2236,6 +2363,24 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-NVDAc",
+      "priceId": "nvidia-coinbase-tokenized-stock",
+      "symbol": "NVDAc",
+      "name": "NVIDIA Corporation",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175596/large/nvda_200x200.png?1787068801",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb20000000000000000000078ee7ce2fE4908108C",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1787011200
+      },
+      "category": "rwaPublic",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -3083,6 +3228,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-SNDKc",
+      "priceId": "sandisk-coinbase-tokenized-stock",
+      "symbol": "SNDKc",
+      "name": "Sandisk Corporation",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178283/large/sndk-200.png?1789234014",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb200000000000000000000397293Cb8cda9a10c5",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1789171200
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-SNT",
       "priceId": "status",
       "symbol": "SNT",
@@ -3121,7 +3284,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-SOL",
+      "id": "base-SOL-1",
       "priceId": "solana",
       "symbol": "SOL",
       "name": "Solana",
@@ -3144,6 +3307,24 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "base-SPCXc",
+      "priceId": "spacex-coinbase-tokenized-stock",
+      "symbol": "SPCXc",
+      "name": "Space Exploration Technologies Corp.",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178284/large/spcx-200.png?1789234077",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb2000000000000000000007b9fcbd005511aCBd5",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1789171200
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -3627,6 +3808,24 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-TSLAc",
+      "priceId": "tesla-coinbase-tokenized-stocks",
+      "symbol": "TSLAc",
+      "name": "Tesla Inc.",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178285/large/tsla-200.png?1789234081",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb2000000000000000000001e800a7f5189430cD0",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1789171200
+      },
+      "category": "rwaPublic",
+      "source": "native",
       "isAssociated": false
     },
     {

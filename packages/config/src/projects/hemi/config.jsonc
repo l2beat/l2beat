@@ -7,5 +7,11 @@
     "eth:0xF005dFb08377faD44588Af68d0884D272A6fb050", // L1CrossDomainMessenger
     "eth:0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e", // L1StandardBridge
     "eth:0x39a0005415256B9863aFE2d55Edcf75ECc3A4D7e" // OptimismPortal
-  ]
+  ],
+  "overrides": {
+    "eth:0xA5F37791378c55941a52B4dCb70Be4D8D09f5e43": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  }
 }

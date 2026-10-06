@@ -13,7 +13,7 @@ export async function getBrandKitData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Brand Kit - L2BEAT',
+        name: 'Brand Kit',
         description: 'L2BEAT brand guidelines, logos, and assets for download.',
         url,
         openGraph: {

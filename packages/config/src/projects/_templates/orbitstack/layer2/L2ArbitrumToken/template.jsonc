@@ -1,10 +1,25 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2ArbitrumToken",
+  "critical": true,
   "description": "The ARB token contract. Supply can be increased by the owner once per year by a maximum of {{ mintCapPerYer }}%.",
   "ignoreMethods": ["getPastTotalSupply", "getTotalDelegationAt"],
   "ignoreInWatchMode": ["getTotalDelegation"],
   "fields": {
+    "l1Address": {
+      "severity": "HIGH"
+    },
+    // Mint cap and interval are Solidity constants: they only change with an
+    // implementation upgrade, which is already a code change.
+    "MIN_MINT_INTERVAL": {},
+    "MINT_CAP_DENOMINATOR": {},
+    "MINT_CAP_NUMERATOR": {},
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "mintCapPerYer": {
       "handler": {
         "type": "call",

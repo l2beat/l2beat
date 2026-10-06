@@ -12,7 +12,10 @@ describe('resolveImports', () => {
       '/base/circular-b.jsonc': JSON.stringify({
         import: ['./circular-a.jsonc'],
       }),
-      '/base/nested.jsonc': JSON.stringify({ import: ['./child.jsonc'] }),
+      '/base/nested.jsonc': JSON.stringify({
+        import: ['./child.jsonc'],
+        maxDepth: 7,
+      }),
       '/base/child.jsonc': JSON.stringify({ maxAddresses: 456 }),
       '/base/invalid.jsonc': 'INVALID_JSON',
     })
@@ -20,48 +23,99 @@ describe('resolveImports', () => {
 
   afterEach(() => mockFs.restore())
 
-  it('should resolve basic imports', () => {
+  it('returns one parsed layer per imported file', () => {
     const reader = new ConfigReader('/base')
     const result = reader.resolveImports('/base', ['valid.jsonc'], new Set())
-    expect(result).toEqual({ maxDepth: 123 })
+    expect(result).toEqual([{ maxDepth: 123 }])
   })
 
-  it('should detect circular imports', () => {
+  it('detects circular imports', () => {
     const reader = new ConfigReader('/base')
     expect(() =>
       reader.resolveImports('/base', ['circular-a.jsonc'], new Set()),
     ).toThrow('Circular import detected')
   })
 
-  it('should throw on invalid config', () => {
+  it('throws on invalid config', () => {
     const reader = new ConfigReader('/base')
     expect(() =>
       reader.resolveImports('/base', ['invalid.jsonc'], new Set()),
     ).toThrow('Unexpected token')
   })
 
-  it('should resolve nested imports', () => {
+  it('orders nested imports below the file that imports them', () => {
     const reader = new ConfigReader('/base')
     const result = reader.resolveImports('/base', ['nested.jsonc'], new Set())
-    expect(result).toEqual({ import: ['./child.jsonc'], maxAddresses: 456 })
+    expect(result).toEqual([{ maxAddresses: 456 }, { maxDepth: 7 }])
+  })
+})
+
+describe('readConfig layering', () => {
+  const ADDRESS = 'eth:0x1234567890123456789012345678901234567890'
+
+  beforeEach(() => {
+    mockFs({
+      '/layered/global.jsonc': JSON.stringify({
+        names: { [ADDRESS]: 'Global' },
+        overrides: {
+          [ADDRESS]: {
+            ignoreMethods: ['a'],
+            ignoreDiscovery: true,
+            fields: {
+              f: { severity: 'LOW', handler: { type: 'storage', slot: 1 } },
+            },
+          },
+        },
+      }),
+      '/layered/proj/config.jsonc': JSON.stringify({
+        import: ['../global.jsonc'],
+        name: 'proj',
+        initialAddresses: [ADDRESS],
+        overrides: {
+          [ADDRESS]: {
+            ignoreMethods: ['b'],
+            fields: { f: { severity: 'HIGH' } },
+          },
+        },
+      }),
+    })
   })
 
-  it('should merge configs with correct precedence', () => {
-    const reader = new ConfigReader('/base')
-    mockFs({
-      '/base/parent.jsonc': JSON.stringify({
-        import: ['./child.jsonc'],
-        key: 'parent',
-      }),
-      '/base/child.jsonc': JSON.stringify({ maxDepth: 123 }),
-    })
+  afterEach(() => mockFs.restore())
 
-    const result = reader.resolveImports('/base', ['parent.jsonc'], new Set())
-    expect((result as any).maxDepth).toEqual(123)
+  it('merges an imported override through the same policy as templates', () => {
+    const config = new ConfigReader('/layered').readConfig('proj')
+    const structure = config.structure.overrides?.[ADDRESS]
+    const color = config.color.overrides?.[ADDRESS]
+
+    expect(structure?.ignoreMethods).toEqual(['a', 'b'])
+    expect(structure?.ignoreDiscovery).toEqual(true)
+    expect(structure?.fields.f?.handler).toEqual({ type: 'storage', slot: 1 })
+    expect(color?.fields.f?.severity).toEqual('HIGH')
+    expect(config.color.names?.[ADDRESS]).toEqual('Global')
+  })
+
+  it('does not apply schema defaults before layering so an imported flag survives', () => {
+    const config = new ConfigReader('/layered').readConfig('proj')
+    expect(config.structure.overrides?.[ADDRESS]?.ignoreDiscovery).toEqual(true)
+  })
+
+  it('makes every config value read-only, inherited or not', () => {
+    const reader = new ConfigReader('/layered')
+    const config = reader.readConfig('proj')
+    const names = config.color.names ?? {}
+    const ignoreMethods = config.structure.overrides?.[ADDRESS]?.ignoreMethods
+
+    expect(() => {
+      names[ADDRESS] = 'Changed'
+    }).toThrow(TypeError)
+    expect(() => ignoreMethods?.push('c')).toThrow(TypeError)
+    expect(reader.readConfig('proj').color.names?.[ADDRESS]).toEqual('Global')
   })
 })
 
 describe('config and discovery resolution', () => {
+  const ADDRESS = 'eth:0x1234567890123456789012345678901234567890'
   afterEach(() => mockFs.restore())
 
   describe('resolveProjectPath', () => {
@@ -172,6 +226,58 @@ describe('config and discovery resolution', () => {
 
       expect(config.structure.name).toEqual('usdc')
       expect(config.structure.maxAddresses).toEqual(10)
+    })
+
+    describe('rejects', () => {
+      const log = console.log
+      beforeEach(() => {
+        console.log = () => {}
+      })
+      afterEach(() => {
+        console.log = log
+      })
+
+      it('a field with both handler and copy, naming the file', () => {
+        mockFs({
+          '/base/usdc/config.jsonc': JSON.stringify({
+            name: 'usdc',
+            initialAddresses: [ADDRESS],
+            overrides: {
+              [ADDRESS]: {
+                fields: {
+                  f: { handler: { type: 'storage', slot: 1 }, copy: 'g' },
+                },
+              },
+            },
+          }),
+        })
+
+        expect(() => new ConfigReader('/base').readConfig('usdc')).toThrow(
+          'Cannot parse file usdc/config.jsonc',
+        )
+      })
+
+      it('a names key with an invalid checksum, naming the file', () => {
+        mockFs({
+          '/base/usdc/config.jsonc': JSON.stringify({
+            name: 'usdc',
+            initialAddresses: [ADDRESS],
+            names: { 'eth:0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2788': 'Bad' },
+          }),
+        })
+
+        expect(() => new ConfigReader('/base').readConfig('usdc')).toThrow(
+          'Cannot parse file usdc/config.jsonc',
+        )
+      })
+
+      it('a merged config without initialAddresses', () => {
+        mockFs({ '/base/usdc/config.jsonc': JSON.stringify({ name: 'usdc' }) })
+
+        expect(() => new ConfigReader('/base').readConfig('usdc')).toThrow(
+          'usdc has no initialAddresses',
+        )
+      })
     })
   })
 

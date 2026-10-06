@@ -17,6 +17,12 @@ import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getT
 import type { ChartRange } from '~/utils/range/range'
 import { TrackedTransactions } from '../costs/TrackedTransactions'
 import { ProjectSection } from '../ProjectSection'
+import { SubsectionHeading } from '../Subsection'
+import {
+  DA_BRIDGE_LIVENESS_DESCRIPTION,
+  LIVENESS_DESCRIPTION,
+  TRACKED_CONTRACTS_CHANGED_WARNING,
+} from '../sectionCopy'
 import type { ProjectSectionProps } from '../types'
 import { Last30DayAnomalies } from './Last30DayAnomalies'
 
@@ -55,9 +61,7 @@ export function LivenessSection({
   return (
     <ProjectSection {...sectionProps}>
       <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
-        {!isForDaBridge
-          ? 'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
-          : 'This section shows how frequently DA attestations are submitted. It also highlights anomalies - significant deviations from the typical schedule.'}
+        {isForDaBridge ? DA_BRIDGE_LIVENESS_DESCRIPTION : LIVENESS_DESCRIPTION}
       </p>
       {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (
         <TrackedTxsOutageNotice type="section" />
@@ -118,10 +122,10 @@ function OngoingAnomalies({
         <div className="rounded-lg bg-surface-secondary px-5 py-4">
           <div className="mb-3 flex items-center gap-2">
             <LiveIndicator size="md" />
-            <h3 className="font-medium text-base text-negative uppercase">
+            <SubsectionHeading className="font-medium text-base text-negative uppercase">
               Ongoing{' '}
               {pluralize(approvedAnomalies.length, 'anomaly', 'anomalies')}
-            </h3>
+            </SubsectionHeading>
           </div>
           {hasTrackedContractsChanged && <ImplementationChangeCallout />}
           {approvedAnomalies.map((anomaly) => (
@@ -136,10 +140,10 @@ function OngoingAnomalies({
         <div className="rounded-lg bg-surface-secondary px-5 py-4">
           <div className="mb-3 flex items-center gap-2">
             <RoundedWarningIcon className="size-4" sentiment="warning" />
-            <h3 className="font-medium text-base text-warning uppercase">
+            <SubsectionHeading className="font-medium text-base text-warning uppercase">
               Potential ongoing{' '}
               {pluralize(unapprovedAnomalies.length, 'anomaly', 'anomalies')}
-            </h3>
+            </SubsectionHeading>
           </div>
           {hasTrackedContractsChanged && <ImplementationChangeCallout />}
           {unapprovedAnomalies.map((anomaly) => (
@@ -161,7 +165,7 @@ function ImplementationChangeCallout() {
       color="yellow"
       small
       icon={<RoundedWarningIcon className="size-4" sentiment="warning" />}
-      body="There are implementation changes to tracked contracts, anomaly data might be inaccurate."
+      body={TRACKED_CONTRACTS_CHANGED_WARNING}
     />
   )
 }

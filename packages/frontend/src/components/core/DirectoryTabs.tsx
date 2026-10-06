@@ -3,6 +3,7 @@ import type * as React from 'react'
 import { useQueryParam } from '~/hooks/useQueryParam'
 import { useTracking } from '~/hooks/useTracking'
 import { cn } from '~/utils/cn'
+import { stickyTopBarRef } from '../table/stickyTopBar'
 import { OverflowWrapper } from './OverflowWrapper'
 
 /**
@@ -44,7 +45,10 @@ const DirectoryTabsList = ({
   className,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.List>) => (
-  <div className="sticky top-0 z-50 bg-background pt-2 max-md:mt-2 md:pt-4">
+  <div
+    ref={stickyTopBarRef}
+    className="sticky top-0 z-50 bg-background pt-2 max-md:mt-2 md:pt-4"
+  >
     <OverflowWrapper className="pr-4">
       <TabsPrimitive.List
         ref={ref}
@@ -68,7 +72,7 @@ const DirectoryTabsTrigger = ({
       'flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-t-md max-md:px-6 md:h-10 md:min-w-60 md:rounded-t-xl',
       'whitespace-nowrap font-bold text-xs md:text-sm',
       'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
-      'data-[state=inactive]:bg-surface-tertiary dark:data-[state=inactive]:bg-linear-to-t dark:data-[state=inactive]:from-[#2A2C33] dark:data-[state=inactive]:to-[#1F2025]',
+      'data-[state=inactive]:bg-surface-tertiary dark:data-[state=inactive]:bg-linear-to-t dark:data-[state=inactive]:bg-transparent dark:data-[state=inactive]:from-surface-secondary dark:data-[state=inactive]:to-surface-primary-hover',
       'data-[state=active]:bg-surface-primary',
       className,
     )}

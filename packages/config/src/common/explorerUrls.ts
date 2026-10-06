@@ -22,6 +22,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   nova: 'https://nova.arbiscan.io',
   optimism: 'https://optimistic.etherscan.io',
   base: 'https://basescan.org',
+  celo: 'https://celoscan.io',
   linea: 'https://lineascan.build',
   mantapacific: 'https://pacific-explorer.manta.network',
   mantle: 'https://explorer.mantle.xyz',

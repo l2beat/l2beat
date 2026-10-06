@@ -14,6 +14,8 @@ import type { StateValidationProgramHashData } from '../program-hashes/ProgramHa
 import { ProgramHashesTable } from '../program-hashes/table/ProgramHashesTable'
 import type { TechnologyRisk } from '../RiskList'
 import { RiskList } from '../RiskList'
+import { Subsection, SubsectionHeading } from '../Subsection'
+import { DEPLOYMENT_RISKS_INTRO } from '../sectionCopy'
 import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './ContractsUpdated'
 
@@ -82,22 +84,25 @@ export function ContractsSection(props: ContractsSectionProps) {
           ([chainName, [changedContracts, unchangedContracts]]) => {
             return (
               <div key={chainName} className="mt-8">
-                <ChainNameHeader>{chainName}</ChainNameHeader>
-                <div className="my-4">
-                  {unchangedContracts.map((contract) => (
-                    <ContractEntry
-                      key={technologyContractKey(contract)}
-                      contract={contract}
-                      className="my-4"
-                    />
-                  ))}
-                  {changedContracts.length > 0 && (
-                    <ContractsWithImpactfulChanges
-                      contracts={changedContracts}
-                      type="contracts"
-                    />
-                  )}
-                </div>
+                <Subsection
+                  title={<ChainNameHeader>{chainName}</ChainNameHeader>}
+                >
+                  <div className="my-4">
+                    {unchangedContracts.map((contract) => (
+                      <ContractEntry
+                        key={technologyContractKey(contract)}
+                        contract={contract}
+                        className="my-4"
+                      />
+                    ))}
+                    {changedContracts.length > 0 && (
+                      <ContractsWithImpactfulChanges
+                        contracts={changedContracts}
+                        type="contracts"
+                      />
+                    )}
+                  </div>
+                </Subsection>
               </div>
             )
           },
@@ -105,23 +110,30 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.risks.length > 0 && (
         <>
           <p className="text-paragraph-15 md:text-paragraph-16">
-            The current deployment carries some associated risks:
+            {DEPLOYMENT_RISKS_INTRO}
           </p>
           <RiskList risks={props.risks} />
         </>
       )}
       {props.programHashes && props.programHashes.length > 0 && (
         <div id="program-hashes" className="mt-4 space-y-2 md:mt-6">
-          <div className="flex items-baseline gap-3">
-            <h3 className="whitespace-pre text-heading-20">Program Hashes</h3>
-            <div className="w-full border-divider border-b-2" />
-          </div>
-          <ProgramHashesTable entries={props.programHashes} />
-          {props.programHashesDescription && (
-            <Markdown className="text-paragraph-15 md:text-paragraph-16">
-              {props.programHashesDescription}
-            </Markdown>
-          )}
+          <Subsection
+            title={
+              <div className="flex items-baseline gap-3">
+                <SubsectionHeading className="whitespace-pre text-heading-20">
+                  Program Hashes
+                </SubsectionHeading>
+                <div className="w-full border-divider border-b-2" />
+              </div>
+            }
+          >
+            <ProgramHashesTable entries={props.programHashes} />
+            {props.programHashesDescription && (
+              <Markdown className="text-paragraph-15 md:text-paragraph-16">
+                {props.programHashesDescription}
+              </Markdown>
+            )}
+          </Subsection>
         </div>
       )}
     </ProjectSection>
@@ -131,7 +143,9 @@ export function ContractsSection(props: ContractsSectionProps) {
 export function ChainNameHeader(props: { children: React.ReactNode }) {
   return (
     <div className="flex items-baseline gap-3">
-      <h3 className="whitespace-pre text-heading-20">{props.children}</h3>
+      <SubsectionHeading className="whitespace-pre text-heading-20">
+        {props.children}
+      </SubsectionHeading>
       <div className="w-full border-divider border-b-2" />
     </div>
   )

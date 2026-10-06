@@ -8,7 +8,7 @@ import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
-import { getUpdatesSectionProps } from '~/server/features/projects/discovery-updates/getUpdatesSectionProps'
+import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { ps } from '~/server/projects'
@@ -86,6 +86,9 @@ export async function getInteropProtocolEntry(
           entry: data.entry,
           interopChains: sortedChains,
           defaultSelectedChains,
+          topRoutes: data.flows
+            .filter((flow) => flow.volume > 0)
+            .slice(0, MAX_TOP_ROUTES),
         },
       })
     }
@@ -125,19 +128,13 @@ export async function getInteropProtocolEntry(
     })
   }
 
-  if (discoveryUpdates.length > 0) {
-    sections.push({
-      type: 'UpdatesSection',
-      props: {
-        id: 'updates',
-        title: 'Updates',
-        ...(await getUpdatesSectionProps(
-          helpers,
-          project.id,
-          discoveryUpdates,
-        )),
-      },
-    })
+  const updatesSection = await getUpdatesSection(
+    helpers,
+    project.id,
+    discoveryUpdates,
+  )
+  if (updatesSection) {
+    sections.push(updatesSection)
   }
 
   if (project.interopConfig.permissions || project.interopConfig.contracts) {
@@ -215,6 +212,9 @@ export async function getInteropProtocolEntry(
     sections,
   }
 }
+
+/** Capped because the routes travel to the browser with the section props. */
+const MAX_TOP_ROUTES = 10
 
 function sortChainsByFlowVolume(
   chains: InteropChainWithIcon[],

@@ -17,7 +17,7 @@ import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
-import { checkRisk } from '../test/helpers'
+import { isRiskCorrectlyFormatted } from '../test/helpers'
 import type { BaseProject } from '../types'
 import {
   areContractsDiscoveryDriven,
@@ -31,44 +31,51 @@ describe('getProjects', () => {
   const projects = getProjects()
   const projectsById = new Map(projects.map((p) => [p.id, p]))
 
-  describe('every project has a unique and valid id and slug', () => {
+  it('every project has a unique and valid id and slug', () => {
+    const problems: string[] = []
     const ids = new Set<ProjectId>()
     const slugs = new Set<string>()
     for (const project of projects) {
-      it(`${project.name} id: ${project.id}, slug: ${project.slug}`, () => {
-        expect(project.slug).toMatchRegex(/^[a-z\-\d]+$/)
-        expect(ids.has(project.id)).toEqual(false)
-        ids.add(project.id)
-        if (project.slug === 'near') {
-          // This project is an exception.
-          // It should most likely be merged with its duplicate
-          // Right now it only works because refactored projects are resolved
-          // first when querying by slug
-          return
-        }
-
-        expect(slugs.has(project.slug)).toEqual(false)
-        slugs.add(project.slug)
-
-        const dir = `./src/projects/${project.id}/${project.id}.ts`
-        expect(existsSync(dir)).toEqual(true)
-      })
-    }
-  })
-
-  describe('every project has statuses and display (except ecosystems and interop protocols)', () => {
-    for (const project of projects) {
-      if (
-        (project.ecosystemConfig || project.interopConfig) &&
-        (!project.statuses || !project.display)
-      ) {
+      if (!/^[a-z\-\d]+$/.test(project.slug)) {
+        problems.push(`${project.id}: invalid slug ${project.slug}`)
+      }
+      if (ids.has(project.id)) {
+        problems.push(`${project.id}: duplicate id`)
+      }
+      ids.add(project.id)
+      if (project.slug === 'near') {
+        // This project is an exception.
+        // It should most likely be merged with its duplicate
+        // Right now it only works because refactored projects are resolved
+        // first when querying by slug
         continue
       }
-      it(project.name, () => {
-        expect(project.statuses).not.toEqual(undefined)
-        expect(project.display).not.toEqual(undefined)
-      })
+
+      if (slugs.has(project.slug)) {
+        problems.push(`${project.id}: duplicate slug ${project.slug}`)
+      }
+      slugs.add(project.slug)
+
+      const dir = `./src/projects/${project.id}/${project.id}.ts`
+      if (!existsSync(dir)) {
+        problems.push(`${project.id}: missing ${dir}`)
+      }
     }
+    expect(problems).toEqual([])
+  })
+
+  it('every project has statuses and display (except ecosystems and interop protocols)', () => {
+    const missing = projects
+      .filter(
+        (p) =>
+          !(
+            (p.ecosystemConfig || p.interopConfig) &&
+            (!p.statuses || !p.display)
+          ),
+      )
+      .filter((p) => p.statuses === undefined || p.display === undefined)
+      .map((p) => p.id)
+    expect(missing).toEqual([])
   })
 
   it('every project can be serialized', () => {
@@ -122,14 +129,11 @@ describe('getProjects', () => {
     }
   })
 
-  describe('display.description ends with a dot', () => {
-    for (const project of projects) {
-      if (project.display) {
-        it(project.name, () => {
-          expect(project.display?.description.endsWith('.')).toEqual(true)
-        })
-      }
-    }
+  it('display.description ends with a dot', () => {
+    const invalid = projects
+      .filter((p) => p.display && !p.display.description.endsWith('.'))
+      .map((p) => p.id)
+    expect(invalid).toEqual([])
   })
 
   describe('synchronization with scaling projects - layer2s and layer3s', () => {
@@ -207,15 +211,13 @@ describe('getProjects', () => {
       'espresso',
     ]
 
-    for (const project of projects) {
-      if (project.daLayer?.economicSecurity) {
-        it(`${project.id} economicSecurity is supported in BE code`, () => {
-          expect(
-            SUPPORTED_ECONOMIC_SECURITY_PROJECTS.includes(project.id),
-          ).toEqual(true)
-        })
-      }
-    }
+    it('every economicSecurity is supported in BE code', () => {
+      const unsupported = projects
+        .filter((p) => p.daLayer?.economicSecurity)
+        .filter((p) => !SUPPORTED_ECONOMIC_SECURITY_PROJECTS.includes(p.id))
+        .map((p) => p.id)
+      expect(unsupported).toEqual([])
+    })
 
     const SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS = [
       'ethereum',
@@ -225,18 +227,16 @@ describe('getProjects', () => {
       'espresso',
     ]
 
-    for (const project of projects) {
-      if (project.daLayer?.validators?.type === 'dynamic') {
-        it(`${project.id} dynamic type validators is supported in BE code`, () => {
-          expect(
-            SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS.includes(project.id),
-          ).toEqual(true)
-        })
-      }
-    }
+    it('every dynamic type validators is supported in BE code', () => {
+      const unsupported = projects
+        .filter((p) => p.daLayer?.validators?.type === 'dynamic')
+        .filter((p) => !SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS.includes(p.id))
+        .map((p) => p.id)
+      expect(unsupported).toEqual([])
+    })
   })
 
-  describe('zk catalog', async () => {
+  describe('zk catalog', () => {
     const usageMap = getUsageMap(projects)
     const currentZkCatalogsByTvsProject = new Map<ProjectId, ProjectId[]>()
 
@@ -257,87 +257,81 @@ describe('getProjects', () => {
       }
     }
 
+    const unconfiguredUsages: string[] = []
+    const undetectedTvsProjects: string[] = []
     for (const project of projects) {
-      describe(project.id, () => {
-        if (!project.zkCatalogInfo) return
-        const liveTvsProjects = new Set(
-          project.zkCatalogInfo.projectsForTvs
-            ?.filter((p) => !p.untilTimestamp)
-            .map((p) => p.projectId),
-        )
+      if (!project.zkCatalogInfo) continue
+      const liveTvsProjects = new Set(
+        project.zkCatalogInfo.projectsForTvs
+          ?.filter((p) => !p.untilTimestamp)
+          .map((p) => p.projectId),
+      )
 
-        const usedInVerifiers = uniq(
-          project.zkCatalogInfo.verifierHashes.flatMap((v) =>
-            v.knownDeployments.flatMap(
-              (d) => d.overrideUsedIn ?? usageMap.get(`${d.address}`),
-            ),
+      const usedInVerifiers = uniq(
+        project.zkCatalogInfo.verifierHashes.flatMap((v) =>
+          v.knownDeployments.flatMap(
+            (d) => d.overrideUsedIn ?? usageMap.get(`${d.address}`),
           ),
-        ).filter((p): p is ProjectId => {
-          if (p === undefined) return false
+        ),
+      ).filter((p): p is ProjectId => {
+        if (p === undefined) return false
 
-          // Archived projects can keep historical verifier deployments, but
-          // they do not have to be listed as current TVS projects. Shared
-          // verifier deployments can also be attributed to another current
-          // zk catalog entry.
-          if (projectsById.get(p)?.archivedAt !== undefined) return false
+        // Archived projects can keep historical verifier deployments, but
+        // they do not have to be listed as current TVS projects. Shared
+        // verifier deployments can also be attributed to another current
+        // zk catalog entry.
+        if (projectsById.get(p)?.archivedAt !== undefined) return false
 
-          const currentZkCatalogs = currentZkCatalogsByTvsProject.get(p)
-          return (
-            currentZkCatalogs === undefined ||
-            currentZkCatalogs.includes(project.id)
-          )
-        })
-        const usedInVerifiersSet = new Set(usedInVerifiers)
-
-        for (const usedIn of usedInVerifiers) {
-          it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
-            expect(liveTvsProjects.has(usedIn)).toEqual(true)
-          })
-        }
-
-        const currentProjectsForTvsSection = new Set(
-          [...liveTvsProjects].flatMap((tvsProject) => {
-            const tvsProjectConfig = projectsById.get(tvsProject)
-            if (!tvsProjectConfig || tvsProjectConfig.archivedAt) {
-              return []
-            }
-
-            if (tvsProjectConfig.daBridge) return []
-
-            return [tvsProject]
-          }),
+        const currentZkCatalogs = currentZkCatalogsByTvsProject.get(p)
+        return (
+          currentZkCatalogs === undefined ||
+          currentZkCatalogs.includes(project.id)
         )
-
-        for (const tvsProject of currentProjectsForTvsSection) {
-          it(`TVS project ${tvsProject} is detected in verifier usage`, () => {
-            expect(usedInVerifiersSet.has(tvsProject)).toEqual(true)
-          })
-        }
       })
+      const usedInVerifiersSet = new Set(usedInVerifiers)
+
+      for (const usedIn of usedInVerifiers) {
+        if (!liveTvsProjects.has(usedIn)) {
+          unconfiguredUsages.push(`${usedIn} in ${project.id}`)
+        }
+      }
+
+      for (const tvsProject of liveTvsProjects) {
+        const tvsProjectConfig = projectsById.get(tvsProject)
+        if (!tvsProjectConfig || tvsProjectConfig.archivedAt) continue
+        if (tvsProjectConfig.daBridge) continue
+        if (!usedInVerifiersSet.has(tvsProject)) {
+          undetectedTvsProjects.push(`${tvsProject} in ${project.id}`)
+        }
+      }
     }
+
+    it('every verifier user is configured in TVS projects', () => {
+      expect(unconfiguredUsages).toEqual([])
+    })
+
+    it('every TVS project is detected in verifier usage', () => {
+      expect(undetectedTvsProjects).toEqual([])
+    })
   })
 
-  describe('every proofSystem zkCatalogIds entry references a zk catalog project', () => {
+  it('every proofSystem zkCatalogIds entry references a zk catalog project', () => {
+    const problems: string[] = []
     for (const project of projects) {
-      const zkCatalogIds = project.scalingInfo?.proofSystem?.zkCatalogIds
-      if (!zkCatalogIds || zkCatalogIds.length === 0) continue
-
-      it(project.id, () => {
-        assert(
-          new Set(zkCatalogIds).size === zkCatalogIds.length,
-          `${project.id} proofSystem.zkCatalogIds has duplicates`,
-        )
-        for (const zkCatalogId of zkCatalogIds) {
-          assert(
-            projectsById.get(zkCatalogId)?.zkCatalogInfo !== undefined,
-            `${project.id} proofSystem references unknown zk catalog project: ${zkCatalogId}`,
-          )
+      const zkCatalogIds = project.scalingInfo?.proofSystem?.zkCatalogIds ?? []
+      if (new Set(zkCatalogIds).size !== zkCatalogIds.length) {
+        problems.push(`${project.id}: duplicates`)
+      }
+      for (const zkCatalogId of zkCatalogIds) {
+        if (projectsById.get(zkCatalogId)?.zkCatalogInfo === undefined) {
+          problems.push(`${project.id}: unknown ${zkCatalogId}`)
         }
-      })
+      }
     }
+    expect(problems).toEqual([])
   })
 
-  describe('scaling project zkVerifiers are configured in zk catalog', () => {
+  it('scaling project zkVerifiers are configured in zk catalog', () => {
     const zkCatalogAddresses = new Set<ChainSpecificAddress>()
     for (const project of projects) {
       if (!project.zkCatalogInfo) continue
@@ -348,172 +342,278 @@ describe('getProjects', () => {
       }
     }
 
+    const missing: string[] = []
     for (const project of projects) {
       if (!project.scalingInfo || !project.contracts?.zkVerifiers) continue
       for (const verifier of project.contracts.zkVerifiers) {
-        it(`${project.id} verifier ${verifier} is in at least one zk catalog project`, () => {
-          expect(zkCatalogAddresses.has(verifier)).toEqual(true)
-        })
+        if (!zkCatalogAddresses.has(verifier)) {
+          missing.push(`${project.id} ${verifier}`)
+        }
       }
     }
+    expect(missing).toEqual([])
   })
 
-  describe('zk catalog projects are archived when all their projects are archived', () => {
-    for (const project of projects) {
-      if (!project.zkCatalogInfo) continue
-
-      const tvsProjects = project.zkCatalogInfo.projectsForTvs ?? []
-      if (tvsProjects.length === 0) continue
-
-      const allTvsProjectsArchived = tvsProjects.every((tvsProject) => {
-        const tvsProjectConfig = projectsById.get(tvsProject.projectId)
-        return tvsProjectConfig?.archivedAt !== undefined
+  it('zk catalog projects are archived when all their projects are archived', () => {
+    const notArchived = projects
+      .filter((p) => p.zkCatalogInfo && p.archivedAt === undefined)
+      .filter((p) => {
+        const tvsProjects = p.zkCatalogInfo?.projectsForTvs ?? []
+        return (
+          tvsProjects.length > 0 &&
+          tvsProjects.every(
+            (t) => projectsById.get(t.projectId)?.archivedAt !== undefined,
+          )
+        )
       })
-
-      if (!allTvsProjectsArchived) continue
-
-      it(`${project.id} should be archived because all projects using it are archived`, () => {
-        expect(project.archivedAt).not.toEqual(undefined)
-      })
-    }
+      .map((p) => p.id)
+    expect(notArchived).toEqual([])
   })
 
-  describe('externalDependencies', () => {
+  it('every tracked externalDependency exists', () => {
+    const missing = projects.flatMap((p) =>
+      (p.externalDependencies ?? [])
+        .filter((d) => d.type === 'tracked')
+        .filter((d) => !projectsById.has(d.projectId))
+        .map((d) => `${p.id} -> ${d.projectId}`),
+    )
+    expect(missing).toEqual([])
+  })
+
+  it('every DeFi TVL source is complete', () => {
+    const problems: string[] = []
     for (const project of projects) {
-      if (!project.externalDependencies) continue
+      const tvl = project.defiInfo?.tvl
+      if (!tvl) continue
 
-      for (const dependency of project.externalDependencies) {
-        if (dependency.type !== 'tracked') continue
-
-        it(`${project.id} tracked dependency ${dependency.projectId} exists`, () => {
-          expect(projectsById.has(dependency.projectId)).toEqual(true)
-        })
+      if (tvl.source === 'l2beat') {
+        if (project.tvsConfig === undefined) {
+          problems.push(`${project.id}: L2BEAT source without TVS config`)
+        }
+        continue
+      }
+      if (project.tvsConfig !== undefined) {
+        problems.push(`${project.id}: external source with TVS config`)
+      }
+      if (tvl.protocolSlug.length === 0) {
+        problems.push(`${project.id}: empty protocolSlug`)
+      }
+      if (tvl.sinceTimestamp <= 0) {
+        problems.push(`${project.id}: non-positive sinceTimestamp`)
+      }
+      if (tvl.chains.length === 0) {
+        problems.push(`${project.id}: no chains`)
+      }
+      if (new Set(tvl.chains.map((c) => c.chain)).size !== tvl.chains.length) {
+        problems.push(`${project.id}: duplicate chain`)
+      }
+      if (
+        new Set(tvl.chains.map((c) => c.providerChain)).size !==
+        tvl.chains.length
+      ) {
+        problems.push(`${project.id}: duplicate providerChain`)
       }
     }
+    expect(problems).toEqual([])
   })
 
   describe('privacy projects', () => {
-    for (const project of projects) {
-      if (!project.privacyInfo) continue
+    const chainNames = new Set(
+      projects.flatMap((p) => (p.chainConfig ? [p.chainConfig.name] : [])),
+    )
 
-      it(`${project.id} has at most one zk catalog trusted setup entry`, () => {
-        expect(
-          project.zkCatalogInfo?.trustedSetups.length ?? 0,
-        ).toBeLessThanOrEqual(1)
-      })
+    const privacyProjects = projects.flatMap((p) =>
+      p.privacyInfo ? [{ project: p, privacyInfo: p.privacyInfo }] : [],
+    )
 
-      it(`${project.id} has valid anonymity-set configuration`, () => {
-        const state = project.privacyInfo?.anonymitySet
+    it('every project has valid trackedOn chains', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const trackedOn = privacyInfo.trackedOn
+        if (trackedOn.length === 0) {
+          problems.push(`${project.id}: not tracked on any chain`)
+        }
+        if (new Set(trackedOn).size !== trackedOn.length) {
+          problems.push(`${project.id}: duplicate trackedOn chains`)
+        }
+        for (const chain of trackedOn) {
+          if (!chainNames.has(chain)) {
+            problems.push(`${project.id}: no chainConfig named ${chain}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    it('every project has at most one zk catalog trusted setup entry', () => {
+      const invalid = privacyProjects
+        .filter(({ project }) => {
+          const trustedSetups = project.zkCatalogInfo?.trustedSetups ?? []
+          return trustedSetups.length > 1
+        })
+        .map(({ project }) => project.id)
+      expect(invalid).toEqual([])
+    })
+
+    it('every project has valid anonymity-set configuration', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
         const trackedBucketIds = new Set<string>()
         const seriesIds = new Set<string>()
         let configuredBuckets = 0
 
-        for (const token of project.privacyInfo?.tokens ?? []) {
+        for (const token of privacyInfo.tokens ?? []) {
           for (const bucket of token.buckets) {
             const amounts = bucket.anonymitySet?.minimumAmounts
             if (amounts === undefined) continue
 
-            expect(amounts.length).toBeGreaterThan(0)
-            expect(trackedBucketIds.has(bucket.id)).toEqual(false)
+            if (amounts.length === 0) {
+              problems.push(`${project.id} ${bucket.id}: no minimumAmounts`)
+            }
+            if (trackedBucketIds.has(bucket.id)) {
+              problems.push(`${project.id} ${bucket.id}: duplicate bucket`)
+            }
             trackedBucketIds.add(bucket.id)
 
             configuredBuckets++
             for (const amount of amounts) {
-              expect(amount).toMatchRegex(/^[1-9]\d*$/)
+              if (!/^[1-9]\d*$/.test(amount)) {
+                problems.push(`${project.id} ${bucket.id}: invalid ${amount}`)
+              }
               const seriesId = `${bucket.id}:${amount}`
-              expect(seriesIds.has(seriesId)).toEqual(false)
+              if (seriesIds.has(seriesId)) {
+                problems.push(`${project.id}: duplicate series ${seriesId}`)
+              }
               seriesIds.add(seriesId)
             }
           }
         }
 
-        if (state?.type === 'not-applicable') {
-          expect(configuredBuckets).toEqual(0)
+        // Every state but partially-attributed means the set is not tracked.
+        const state = privacyInfo.anonymitySet?.type
+        if (state === 'partially-attributed') {
+          if (configuredBuckets === 0) {
+            problems.push(`${project.id}: ${state} without buckets`)
+          }
+        } else if (state !== undefined && configuredBuckets !== 0) {
+          problems.push(`${project.id}: ${state} with buckets`)
         }
-      })
-    }
+      }
+      expect(problems).toEqual([])
+    })
+
+    it('every adversary cell is consistent with the baseline and contracts', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const adversaries = privacyInfo.adversaries
+        if (!adversaries) continue
+        const baseline = adversaries.cells.publicObserver
+        const contractNames = new Set(
+          Object.values(project.contracts?.addresses ?? {})
+            .flat()
+            .map((c) => c.name),
+        )
+        for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
+          if (
+            (cell.interior !== undefined) !==
+            (baseline.interior !== undefined)
+          ) {
+            problems.push(
+              `${project.id} ${adversaryId}: interior map differs from baseline`,
+            )
+          }
+          for (const source of cell.sources ?? []) {
+            if (!('contract' in source)) continue
+            if (!contractNames.has(source.contract)) {
+              problems.push(
+                `${project.id} ${adversaryId}: unknown contract ${source.contract}`,
+              )
+            }
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
   })
 
   describe('contracts', () => {
-    for (const project of projects) {
-      describe(project.id, () => {
+    it('every contract name is not empty', () => {
+      const unnamed = projects.flatMap((p) =>
+        Object.values(p.contracts?.addresses ?? {})
+          .flat()
+          .filter((c) => c.name.trim().length === 0)
+          .map((c) => `${p.id} ${c.address}`),
+      )
+      // Most likely unverified, the name needs to be assigned manually
+      expect(unnamed).toEqual([])
+    })
+
+    it('every contracts.upgradableBy is valid', () => {
+      for (const project of projects) {
         const permissions = Object.values(project.permissions ?? {})
         const all = [
           ...permissions.flatMap((p) => p.roles ?? []),
           ...permissions.flatMap((p) => p.actors ?? []),
         ]
+        const actorIds = all.map((a) => a.id)
 
-        const contracts = project.contracts?.addresses ?? {}
-        for (const [chain, perChain] of Object.entries(contracts)) {
-          for (const contract of perChain) {
-            it(`contract [${chain}:${contract.address}] name isn't empty`, () => {
+        const contracts = Object.values(project.contracts?.addresses ?? {})
+        for (const contract of contracts.flat()) {
+          for (const actor of contract.upgradableBy ?? []) {
+            const expected = actor.id ?? actor.name
+
+            if (actorIds.includes(expected)) {
+              const reachableActorMarkedUnreachableMessage = [
+                '',
+                chalk.red('ERROR:'),
+                `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} has upgrader ${chalk.magenta(expected)} marked as unreachable.`,
+                'Reachable upgraders should not have unreachable: true.',
+                '',
+                `${chalk.green('POSSIBLE FIX')}: remove unreachable: true for reachable upgraders`,
+              ].join('\n')
               assert(
-                contract.name.trim().length > 0,
-                [
-                  `contract [${chain}:${contract.address}] name is empty`,
-                  `this is most likely because it's unverified and the name needs to be assigned manually`,
-                ].join('\n'),
+                actor.unreachable !== true,
+                reachableActorMarkedUnreachableMessage,
               )
-            })
-
-            const upgradableBy = contract.upgradableBy
-            const actorIds = all.map((a) => a.id)
-
-            if (upgradableBy) {
-              it('contracts.upgradableBy is valid', () => {
-                for (const actor of upgradableBy) {
-                  const expected = actor.id ?? actor.name
-
-                  if (actorIds.includes(expected)) {
-                    const reachableActorMarkedUnreachableMessage = [
-                      '',
-                      chalk.red('ERROR:'),
-                      `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} has upgrader ${chalk.magenta(expected)} marked as unreachable.`,
-                      'Reachable upgraders should not have unreachable: true.',
-                      '',
-                      `${chalk.green('POSSIBLE FIX')}: remove unreachable: true for reachable upgraders`,
-                    ].join('\n')
-                    assert(
-                      actor.unreachable !== true,
-                      reachableActorMarkedUnreachableMessage,
-                    )
-                    continue
-                  }
-
-                  const missingActorMessage = [
-                    '',
-                    chalk.red('ERROR:'),
-                    `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} is marked as upgradable by an actor named ${chalk.magenta(expected)}.`,
-                    `But the actor ${chalk.magenta(expected)} does not exist in the list of actors!`,
-                    '',
-                    `${chalk.cyan('Current actors')}: ${all.map((a) => a.name).join(', ')}`,
-                    '',
-                    `${chalk.green('POSSIBLE FIX')}: check if the actor should be marked with unreachable: true`,
-                  ].join('\n')
-
-                  assert(actor.unreachable === true, missingActorMessage)
-
-                  const unreachableActorWithIdMessage = [
-                    '',
-                    chalk.red('ERROR:'),
-                    `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} has unreachable upgrader ${chalk.magenta(actor.name)}.`,
-                    'Unreachable upgraders cannot be linked to a permission actor id.',
-                    '',
-                    `${chalk.green('POSSIBLE FIX')}: remove the id field for unreachable upgraders`,
-                  ].join('\n')
-
-                  assert(actor.id === undefined, unreachableActorWithIdMessage)
-                }
-              })
+              continue
             }
+
+            const missingActorMessage = [
+              '',
+              chalk.red('ERROR:'),
+              `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} is marked as upgradable by an actor named ${chalk.magenta(expected)}.`,
+              `But the actor ${chalk.magenta(expected)} does not exist in the list of actors!`,
+              '',
+              `${chalk.cyan('Current actors')}: ${all.map((a) => a.name).join(', ')}`,
+              '',
+              `${chalk.green('POSSIBLE FIX')}: check if the actor should be marked with unreachable: true`,
+            ].join('\n')
+
+            assert(actor.unreachable === true, missingActorMessage)
+
+            const unreachableActorWithIdMessage = [
+              '',
+              chalk.red('ERROR:'),
+              `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} has unreachable upgrader ${chalk.magenta(actor.name)}.`,
+              'Unreachable upgraders cannot be linked to a permission actor id.',
+              '',
+              `${chalk.green('POSSIBLE FIX')}: remove the id field for unreachable upgraders`,
+            ].join('\n')
+
+            assert(actor.id === undefined, unreachableActorWithIdMessage)
           }
         }
+      }
+    })
 
-        for (const [i, risk] of project.contracts?.risks.entries() ?? []) {
-          checkRisk(risk, `contracts.risks[${i}]`)
-        }
-      })
-    }
+    it('every contracts risk is correctly formatted', () => {
+      const invalid = projects.flatMap((p) =>
+        (p.contracts?.risks ?? [])
+          .filter((r) => !isRiskCorrectlyFormatted(r))
+          .map((r) => `${p.id}: ${r.text}`),
+      )
+      expect(invalid).toEqual([])
+    })
   })
 
   describe('chain config', () => {
@@ -574,19 +674,19 @@ describe('getProjects', () => {
     it('every api url uses https', () => {
       for (const chain of chains) {
         for (const api of chain.apis) {
-          if ('url' in api) {
+          if ('url' in api && api.url !== undefined) {
             expect(api.url).toMatchRegex(/^https:\/\//)
           }
         }
       }
     })
 
-    describe('every multicall3 contract has the same address', () => {
+    it('every multicall3 contract has the same address', () => {
       const address = EthereumAddress(
         '0xcA11bde05977b3631167028862bE2a173976CA11',
       )
 
-      const contracts = chains
+      const invalid = chains
         .filter(
           (c) =>
             c.name !== 'zksync2' &&
@@ -597,25 +697,21 @@ describe('getProjects', () => {
         .flatMap(
           (x) => x.multicallContracts?.map((y) => [x.name, y] as const) ?? [],
         )
-        .filter(([_, y]) => y.version === '3')
-
-      for (const [chain, contract] of contracts) {
-        it(`multicall3 on ${chain}`, () => {
-          expect(contract.address).toEqual(address)
-        })
-      }
+        .filter(([_, y]) => y.version === '3' && y.address !== address)
+        .map(([chain]) => chain)
+      expect(invalid).toEqual([])
     })
 
-    describe('multicall contracts are sorted by sinceBlock', () => {
-      for (const chain of chains) {
-        const contracts = chain.multicallContracts?.map((x) => x.sinceBlock)
-        if (!contracts || contracts.length === 0) {
-          continue
-        }
-        it(chain.name, () => {
-          expect(contracts).toEqual(contracts.slice().sort((a, b) => b - a))
+    it('multicall contracts are sorted by sinceBlock', () => {
+      const unsorted = chains
+        .filter((chain) => {
+          const blocks = (chain.multicallContracts ?? []).map(
+            (x) => x.sinceBlock,
+          )
+          return blocks.some((block, i) => block > (blocks[i - 1] ?? block))
         })
-      }
+        .map((chain) => chain.name)
+      expect(unsorted).toEqual([])
     })
   })
 
@@ -633,21 +729,15 @@ describe('getProjects', () => {
       }
     })
 
-    describe('every untilTimestamp (if present) is greater than sinceTimestamp', () => {
-      for (const project of projects) {
-        const trackedTxsConfig = project.trackedTxsConfig
-        if (!trackedTxsConfig) continue
-
-        it(project.id, () => {
-          for (const config of trackedTxsConfig) {
-            if (config.untilTimestamp) {
-              expect(config.untilTimestamp).toBeGreaterThan(
-                config.sinceTimestamp,
-              )
-            }
-          }
-        })
-      }
+    it('every untilTimestamp (if present) is greater than sinceTimestamp', () => {
+      const invalid = projects.flatMap((p) =>
+        (p.trackedTxsConfig ?? [])
+          .filter(
+            (c) => c.untilTimestamp && c.untilTimestamp <= c.sinceTimestamp,
+          )
+          .map((c) => `${p.id} ${createTrackedTxId(c)}`),
+      )
+      expect(invalid).toEqual([])
     })
 
     describe('transfers', () => {
@@ -701,64 +791,27 @@ describe('getProjects', () => {
   })
 
   describe('links', () => {
-    describe('every project has at least one website link', () => {
-      for (const project of projects) {
-        if (project.display?.links.websites) {
-          it(project.name, () => {
-            expect(
-              project.display?.links.websites?.length ?? 0,
-            ).toBeGreaterThan(0)
-          })
-        }
-      }
+    it('every websites list is not empty', () => {
+      const empty = projects
+        .filter((p) => p.display?.links.websites?.length === 0)
+        .map((p) => p.id)
+      expect(empty).toEqual([])
     })
 
-    describe('every link is https', () => {
-      const links = projects.flatMap((x) =>
-        (Object.values(x.display?.links ?? {}) as string[]).flat(),
-      )
-      for (const link of links) {
-        it(link, () => {
-          expect(link).toMatchRegex(/^https:\/\//)
-        })
-      }
+    it('every link is https', () => {
+      const invalid = projects
+        .flatMap((x) =>
+          (Object.values(x.display?.links ?? {}) as string[]).flat(),
+        )
+        .filter((link) => !link.startsWith('https://'))
+      expect(invalid).toEqual([])
     })
 
-    describe('social media links are properly formatted', () => {
-      const links = projects.flatMap((x) => x.display?.links.socialMedia ?? [])
-      for (const link of links) {
-        it(link, () => {
-          if (link.includes('discord')) {
-            expect(link).toMatchRegex(
-              /^https:\/\/discord\.(gg|com\/invite)\/[\w-]+$/,
-            )
-          } else if (link.includes('t.me')) {
-            expect(link).toMatchRegex(
-              /^https:\/\/t\.me\/(joinchat\/)?[\w\-+]+$/,
-            )
-          } else if (link.includes('medium')) {
-            expect(link).toMatchRegex(
-              /^https:\/\/([\w-]+\.)?medium\.com\/[@\w-]*$/,
-            )
-          } else if (link.includes('twitter')) {
-            expect(link).toMatchRegex(/^https:\/\/twitter\.com\/[\w-]+$/)
-          } else if (link.includes('reddit')) {
-            expect(link).toMatchRegex(/^https:\/\/reddit\.com\/r\/[\w-]+\/$/)
-          } else if (link.includes('youtube')) {
-            if (!link.includes('playlist')) {
-              expect(link).toMatchRegex(
-                /^https:\/\/youtube\.com\/((c|channel)\/|@)[\w-]+$/,
-              )
-            }
-          } else if (link.includes('twitch')) {
-            expect(link).toMatchRegex(/^https:\/\/twitch\.tv\/[\w-]+$/)
-          } else if (link.includes('gitter')) {
-            expect(link).toMatchRegex(/^https:\/\/gitter\.im\/[\w-/]+$/)
-          } else if (link.includes('instagram')) {
-            expect(link).toMatchRegex(/^https:\/\/instagram\.com\/[\w-./]+$/)
-          }
-        })
-      }
+    it('social media links are properly formatted', () => {
+      const invalid = projects
+        .flatMap((x) => x.display?.links.socialMedia ?? [])
+        .filter((link) => !isSocialMediaLinkFormatted(link))
+      expect(invalid).toEqual([])
     })
   })
 
@@ -800,113 +853,81 @@ describe('getProjects', () => {
       'stack',
     ])
 
+    const trackingConfigs = projects.flatMap((p) =>
+      (p.daTrackingConfig ?? []).map((config) => ({ projectId: p.id, config })),
+    )
+
     // All new projects should have non-zero sinceBlock/sinceTimestamp - it will make sync more efficient
-    describe('every project has non-zero sinceBlock/sinceTimestamp', () => {
-      for (const project of projects) {
-        if (project.daTrackingConfig) {
-          if (!excluded.has(project.id)) {
-            it(project.id, () => {
-              assert(project.daTrackingConfig) // type issue
-              for (const config of project.daTrackingConfig) {
-                if (
-                  config.type === 'ethereum' ||
-                  config.type === 'avail' ||
-                  config.type === 'celestia'
-                ) {
-                  expect(config.sinceBlock).toBeGreaterThan(0)
-                } else {
-                  expect(config.sinceTimestamp).toBeGreaterThan(0)
-                }
-              }
-            })
-          }
-        }
-      }
+    it('every project has non-zero sinceBlock/sinceTimestamp', () => {
+      const invalid = trackingConfigs
+        .filter(({ projectId }) => !excluded.has(projectId))
+        .filter(({ config }) =>
+          config.type === 'ethereum' ||
+          config.type === 'avail' ||
+          config.type === 'celestia'
+            ? config.sinceBlock <= 0
+            : config.sinceTimestamp <= 0,
+        )
+        .map(({ projectId }) => projectId)
+      expect(invalid).toEqual([])
     })
 
     // The backend compares these raw strings against tx to/from addresses,
     // so a chain-prefixed address (e.g. 'eth:0x...') silently matches nothing
-    describe('every ethereum inbox and sequencer is a plain unprefixed address', () => {
-      for (const project of projects) {
-        if (project.daTrackingConfig) {
-          it(project.id, () => {
-            assert(project.daTrackingConfig) // type issue
-            for (const config of project.daTrackingConfig) {
-              if (config.type === 'ethereum') {
-                expect(() => EthereumAddress(config.inbox)).not.toThrow()
-                for (const sequencer of config.sequencers ?? []) {
-                  expect(() => EthereumAddress(sequencer)).not.toThrow()
-                }
-              }
-            }
-          })
-        }
-      }
+    it('every ethereum inbox and sequencer is a plain unprefixed address', () => {
+      const invalid = trackingConfigs.flatMap(({ projectId, config }) =>
+        config.type === 'ethereum'
+          ? [config.inbox, ...(config.sequencers ?? [])]
+              .filter((a) => EthereumAddress.tryParse(a) === undefined)
+              .map((a) => `${projectId} ${a}`)
+          : [],
+      )
+      expect(invalid).toEqual([])
     })
 
-    describe('every appId is unique for Avail projects', () => {
+    it('every appId is unique for Avail projects', () => {
       const appIds = new Map<string, string>()
-      for (const project of projects) {
-        const trackingConfig = project.daTrackingConfig
-        if (trackingConfig) {
-          it(project.id, () => {
-            for (const config of trackingConfig) {
-              if (config.type === 'avail') {
-                for (const appId of config.appIds) {
-                  assert(
-                    !appIds.has(appId),
-                    `Duplicate appId (${appId}) detected [${project.id}, ${appIds.get(appId)}]`,
-                  )
-                  appIds.set(appId, project.id)
-                }
-              }
-            }
-          })
+      const duplicates: string[] = []
+      for (const { projectId, config } of trackingConfigs) {
+        if (config.type !== 'avail') continue
+        for (const appId of config.appIds) {
+          const owner = appIds.get(appId)
+          if (owner !== undefined) {
+            duplicates.push(`${appId} [${projectId}, ${owner}]`)
+          }
+          appIds.set(appId, projectId)
         }
       }
+      expect(duplicates).toEqual([])
     })
 
-    describe('every namespace is unique for Celestia projects', () => {
+    it('every namespace is unique for Celestia projects', () => {
       const namespaces = new Map<string, string>()
-      for (const project of projects) {
-        if (project.daTrackingConfig) {
-          it(project.id, () => {
-            assert(project.daTrackingConfig) // type issue
-            for (const config of project.daTrackingConfig) {
-              if (config.type === 'celestia') {
-                assert(
-                  !namespaces.has(config.namespace),
-                  `Duplicate namespace (${config.namespace}) detected [${project.id}, ${namespaces.get(config.namespace)}]`,
-                )
-                namespaces.set(config.namespace, project.id)
-              }
-            }
-          })
+      const duplicates: string[] = []
+      for (const { projectId, config } of trackingConfigs) {
+        if (config.type !== 'celestia') continue
+        const owner = namespaces.get(config.namespace)
+        if (owner !== undefined) {
+          duplicates.push(`${config.namespace} [${projectId}, ${owner}]`)
         }
+        namespaces.set(config.namespace, projectId)
       }
+      expect(duplicates).toEqual([])
     })
   })
 
-  describe('all new projects are discovery driven', () => {
-    const isNormalProject = (p: BaseProject) => {
-      return p.scalingInfo && p.archivedAt === undefined
-    }
-
-    const filteredProjects = projects.filter(
-      (p) =>
-        isNormalProject(p) &&
-        !NON_DISCOVERY_DRIVEN_PROJECTS.includes(p.id.toString()),
-    )
-
-    for (const p of filteredProjects) {
-      it(`${p.id.toString()} is discovery driven`, () => {
-        assert(
-          arePermissionsDiscoveryDriven(p.permissions) &&
-            areContractsDiscoveryDriven(p.contracts),
-          'New projects are expected to be discovery driven. Read the comment in constants.ts',
-        )
-      })
-    }
+  // New projects are expected to be discovery driven. Read the comment in constants.ts
+  it('all new projects are discovery driven', () => {
+    const notDiscoveryDriven = projects
+      .filter((p) => p.scalingInfo && p.archivedAt === undefined)
+      .filter((p) => !NON_DISCOVERY_DRIVEN_PROJECTS.includes(p.id.toString()))
+      .filter(
+        (p) =>
+          !arePermissionsDiscoveryDriven(p.permissions) ||
+          !areContractsDiscoveryDriven(p.contracts),
+      )
+      .map((p) => p.id)
+    expect(notDiscoveryDriven).toEqual([])
   })
 
   describe('badges', () => {
@@ -926,20 +947,49 @@ describe('getProjects', () => {
     }
   })
 
-  describe('associated tokens can only have category other', () => {
-    for (const project of projects) {
-      if (!project.tvsConfig) {
-        continue
-      }
-      const associated = project.tvsConfig?.filter((t) => t.isAssociated)
-      for (const a of associated) {
-        it(`${project.name}: ${a.id}`, () => {
-          expect(a.category).toEqual('other')
-        })
-      }
-    }
+  it('associated tokens can only have category other', () => {
+    const invalid = projects.flatMap((p) =>
+      (p.tvsConfig ?? [])
+        .filter((t) => t.isAssociated && t.category !== 'other')
+        .map((t) => `${p.id}: ${t.id}`),
+    )
+    expect(invalid).toEqual([])
   })
 })
+
+function isSocialMediaLinkFormatted(link: string): boolean {
+  if (link.includes('discord')) {
+    return /^https:\/\/discord\.(gg|com\/invite)\/[\w-]+$/.test(link)
+  }
+  if (link.includes('t.me')) {
+    return /^https:\/\/t\.me\/(joinchat\/)?[\w\-+]+$/.test(link)
+  }
+  if (link.includes('medium')) {
+    return /^https:\/\/([\w-]+\.)?medium\.com\/[@\w-]*$/.test(link)
+  }
+  if (link.includes('twitter')) {
+    return /^https:\/\/twitter\.com\/[\w-]+$/.test(link)
+  }
+  if (link.includes('reddit')) {
+    return /^https:\/\/reddit\.com\/r\/[\w-]+\/$/.test(link)
+  }
+  if (link.includes('youtube')) {
+    return (
+      link.includes('playlist') ||
+      /^https:\/\/youtube\.com\/((c|channel)\/|@)[\w-]+$/.test(link)
+    )
+  }
+  if (link.includes('twitch')) {
+    return /^https:\/\/twitch\.tv\/[\w-]+$/.test(link)
+  }
+  if (link.includes('gitter')) {
+    return /^https:\/\/gitter\.im\/[\w-/]+$/.test(link)
+  }
+  if (link.includes('instagram')) {
+    return /^https:\/\/instagram\.com\/[\w-./]+$/.test(link)
+  }
+  return true
+}
 
 // This is simpler version of getContractUtils that we have in FE. It's used only for testing.
 function getUsageMap(projects: BaseProject[]) {

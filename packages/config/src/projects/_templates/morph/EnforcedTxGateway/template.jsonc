@@ -1,6 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: {{ paused }}.",
+  // Censorship escape hatch: forced L1 -> L2 transactions enter the message queue here.
+  "critical": true,
   "fields": {
     "owner": {
       "permissions": [
@@ -9,6 +11,13 @@
           "description": "pause and unpause, update the fee vault."
         }
       ]
+    },
+    "feeVault": {
+      "description": "Recipient of fees charged for forced transactions."
+    },
+    "paused": {
+      "description": "Whether forced transactions are paused. Affects the sequencer failure risk.",
+      "severity": "MEDIUM"
     }
   }
 }

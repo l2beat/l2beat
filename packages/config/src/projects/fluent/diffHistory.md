@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x2d2894cc642b320eee2b15e6bb6f51cf502aba07
+
+# Diff at Mon, 28 Sep 2026 13:34:25 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fbb62178514657dac087ecb2d9e8937daa7f4e31 block: 1788432124
+- current timestamp: 1790592672
+
+## Description
+
+Upgraded TEE verification SP1 program to v1.0.7, program hash reproduced.
+
+## Watched changes
+
+```diff
+    contract NitroVerifier (eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F) [fluent/NitroVerifier] {
+    +++ description: Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.
+      values.getProgramVKey:
+-        "0x00022b9b7769bd21b7bc4171ba458ffc80b46cab6f5fbd5629fa2d873df676fc"
++        "0x00f291835495d0af627923c963f18395bb9a7e6783b694497460f757866ea34b"
+    }
+```
+
+Generated with discovered.json: 0x669305c8a92447cd9c1e43a9d547421b09da1b34
+
+# Diff at Fri, 25 Sep 2026 12:12:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c54798b83fbfc4919dbd395e330e0bc4be5f7f26 block: 1788432124
+- current timestamp: 1788432124
+
+## Description
+
+Replace naive config merge with explicit assignment
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788432124 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0xdD283a04cc711aB9c08d79e665835821BEef710B) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xa6df8c418c1f8967e6c9f9cdc805f0f77056dddf
+
+# Diff at Mon, 21 Sep 2026 07:13:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb454ea5283bcf30e392f86e07ac240d516636b4 block: 1788432124
+- current timestamp: 1788432124
+
+## Description
+
+ossification re-review: pause-role holders are identity, not mechanism (HIGH -> MEDIUM)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788432124 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0xdD283a04cc711aB9c08d79e665835821BEef710B) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x9532ac328224caa88c82c5f509e88231fea1c7ba
 
 # Diff at Mon, 07 Sep 2026 08:37:46 GMT:

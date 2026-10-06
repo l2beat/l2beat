@@ -4,12 +4,19 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0xFc1D560eB01443e31B0EB56620703E80e42A7E4e"],
   "overrides": {
-    "eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76": {
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    "eth:0xC24C700BC65a3b15De13e489e155c81F621B1856": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
     },
-    "eth:0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294": {
+    // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the ProxyAdminOwner.
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "fields": {
-        "proposer": {
+        "proposerFromDGF": {
           "permissions": [
             {
               "type": "interact",
@@ -17,7 +24,7 @@
             }
           ]
         },
-        "challenger": {
+        "challengerFromDGF": {
           "permissions": [
             {
               "type": "interact",

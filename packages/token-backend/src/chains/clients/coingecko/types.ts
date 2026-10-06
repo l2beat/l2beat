@@ -38,5 +38,7 @@ export interface CoinMarketChartRangeData {
 
 export interface CoingeckoClientConfig {
   apiKey?: string
+  /** Replaces the CoinGecko API root, e.g. with a CoinGecko-compatible proxy */
+  apiUrl?: string
   callsPerMinute: number
 }

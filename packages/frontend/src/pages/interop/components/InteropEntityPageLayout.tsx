@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import type { ProjectNavigationSection } from '~/components/projects/navigation/types'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 
 interface InteropEntityPageLayoutProps {
@@ -28,9 +28,10 @@ export function InteropEntityPageLayout({
   return (
     <SideNavLayout childrenWrapperClassName="md:pt-0">
       {!isNavigationEmpty && (
-        <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-40 lg:hidden">
-          <MobileSectionNavigation sections={navigationSections} />
-        </div>
+        <StickyMobileSectionNavigation
+          sections={navigationSections}
+          className="z-40"
+        />
       )}
       <div className="relative z-0 max-md:bg-surface-primary">
         <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">

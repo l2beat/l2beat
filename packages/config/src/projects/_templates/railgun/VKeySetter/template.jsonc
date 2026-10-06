@@ -1,13 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "VKeySetter",
+  "critical": true,
   "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.",
   "category": "gov",
   "canActIndependently": false,
   "fields": {
     "owner": {
       "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
-      "severity": "HIGH",
       "type": "PERMISSION",
       "permissions": [
         {
@@ -18,7 +18,6 @@
     },
     "delegator": {
       "description": "Railgun Delegator contract that can switch this helper into COMMITTING and is the contract used to forward verifier-key updates onward.",
-      "severity": "HIGH",
       "type": "PERMISSION",
       "permissions": [
         {
@@ -28,13 +27,15 @@
       ]
     },
     "verifier": {
-      "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator.",
-      "severity": "HIGH"
+      "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
     },
     "state": {
-      "description": "Current workflow phase: SETTING, WAITING, or COMMITTING. Only COMMITTING allows the owner to forward staged verification keys to the verifier.",
-      "severity": "HIGH",
-      "type": "RISK_PARAMETER"
+      "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING.",
+      // Ossification: COMMITTING is a live authority path for a single owner
+      // EOA to change or delete smart wallet verification keys. Both setters
+      // stayed in COMMITTING after their rollouts until 2026-09-09. A pure
+      // SETTING <-> WAITING toggle grants nothing and belongs in ignoredUpdates.
+      "severity": "HIGH"
     }
   }
 }

@@ -573,7 +573,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
       transferCount: 150,
     },
     {
-      src: { id: 'polygon', iconUrl: '/icons/polygon.png' },
+      src: { id: 'polygon', iconUrl: '/icons/polygon-pos.png' },
       dst: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
       volume: 4_300_000,
       transferCount: 80,

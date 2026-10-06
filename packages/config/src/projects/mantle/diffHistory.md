@@ -1,3 +1,603 @@
+Generated with discovered.json: 0x893fb7ea182b13dfed409f0c0cf6c31fc4a6deeb
+
+# Diff at Sun, 04 Oct 2026 05:55:33 GMT:
+
+- id: 04a6c755
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789917555
+- current timestamp: 1789917555
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917555 (main branch discovery), not current.
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1710490775}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      fieldMeta.CHALLENGER.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.submissionInterval.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.SUBMISSION_INTERVAL.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.challenger:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1687241795}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x40fc2ac205c18b3c157f5b9544a639cbabad1e77
+
+# Diff at Wed, 30 Sep 2026 07:45:39 GMT:
+
+- id: 2af279d2
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1789917555
+- current timestamp: 1789917555
+
+## Description
+
+Config: model proposers of open-executor timelocks in the shared TimelockController template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917555 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.Executor:
++        {"description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}
+    }
+```
+
+Generated with discovered.json: 0x520fbc119e4a846d4371c30226ba1d503bdbd0c0
+
+# Diff at Wed, 23 Sep 2026 05:55:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789917555
+- current timestamp: 1789917555
+
+## Description
+
+Review ossification configuration at the main-branch discovery block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917555 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) [GnosisSafe] {
+    +++ description: None
+      critical:
++        {"sinceTimestamp":1710490775}
+      fieldMeta:
++        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.challenger:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1MantleToken (eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354) [N/A] {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      fieldMeta.MIN_MINT_INTERVAL:
+-        {"severity":"HIGH"}
+      fieldMeta.MINT_CAP_MAX_NUMERATOR:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) [opstack/SystemConfig_v1_4_0_mantle] {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.13.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.13.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      critical:
++        {"sinceTimestamp":1687241795}
+      fieldMeta:
++        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.Proposer:
+-        {"severity":"HIGH"}
+      fieldMeta.Canceller:
+-        {"severity":"HIGH"}
+      fieldMeta.Executor:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x676A795fe6E43C17c668de16730c3F690FEB7120) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
+-        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta.L1_MNT_ADDRESS:
+-        {"severity":"HIGH"}
+      fieldMeta.SYSTEM_CONFIG:
+-        {"severity":"HIGH"}
+      fieldMeta.L2_ORACLE:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.guardian:
+-        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
+-        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xca35F8338054739D138884685e08b39EE2217794) [global/ProxyAdmin] {
+    +++ description: None
++++ description: AddressManager key that ProxyAdmin updates when upgrading L1CrossDomainMessenger.
++++ severity: HIGH
+      values.l1CrossDomainMessengerImplementationName:
++        "BVM_L1CrossDomainMessenger"
++++ description: Upgrade mechanism selected by ProxyAdmin for L1CrossDomainMessenger (2 is ResolvedDelegateProxy).
++++ severity: HIGH
+      values.l1CrossDomainMessengerProxyType:
++        2
++++ description: Upgrade mechanism selected by ProxyAdmin for L1StandardBridge (1 is L1ChugSplashProxy).
++++ severity: HIGH
+      values.l1StandardBridgeProxyType:
++        1
+      fieldMeta.addressManager.description:
++        "AddressManager whose mappings this ProxyAdmin can update, including the L1CrossDomainMessenger implementation."
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessengerProxyType:
++        {"severity":"HIGH","description":"Upgrade mechanism selected by ProxyAdmin for L1CrossDomainMessenger (2 is ResolvedDelegateProxy)."}
+      fieldMeta.l1CrossDomainMessengerImplementationName:
++        {"severity":"HIGH","description":"AddressManager key that ProxyAdmin updates when upgrading L1CrossDomainMessenger."}
+      fieldMeta.l1StandardBridgeProxyType:
++        {"severity":"HIGH","description":"Upgrade mechanism selected by ProxyAdmin for L1StandardBridge (1 is L1ChugSplashProxy)."}
+      directlyReceivedPermissions.4.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+Generated with discovered.json: 0x207ac916dea18e1a855520e28f8eac160e256c9e
+
+# Diff at Mon, 21 Sep 2026 11:19:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789917555
+- current timestamp: 1789917555
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917555 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      fieldMeta.CHALLENGER:
++        {"severity":"HIGH"}
+      fieldMeta.FINALIZATION_PERIOD_SECONDS:
++        {"severity":"HIGH"}
+      fieldMeta.submissionInterval:
++        {"severity":"HIGH"}
+      fieldMeta.SUBMISSION_INTERVAL:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1MantleToken (eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354) [N/A] {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      fieldMeta.MIN_MINT_INTERVAL:
++        {"severity":"HIGH"}
+      fieldMeta.MINT_CAP_MAX_NUMERATOR:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.Proposer:
++        {"severity":"HIGH"}
+      fieldMeta.Canceller:
++        {"severity":"HIGH"}
+      fieldMeta.Executor:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x676A795fe6E43C17c668de16730c3F690FEB7120) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.portal:
++        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
++        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta.L1_MNT_ADDRESS:
++        {"severity":"HIGH"}
+      fieldMeta.SYSTEM_CONFIG:
++        {"severity":"HIGH"}
+      fieldMeta.L2_ORACLE:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.guardian:
++        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xca35F8338054739D138884685e08b39EE2217794) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x5461c19b9bc49f04d1ffeea878a035ac7a0ba734
+
+# Diff at Sun, 20 Sep 2026 15:20:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad122e711014afb1a7c2455ebdcb95e39fccaa39 block: 1789656344
+- current timestamp: 1789917555
+
+## Description
+
+critical contracts and severities for the ossification perimeter (re-run after merging main)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789656344 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481","description":"can delete proposed state roots, enable/disable the optimistic (proof-less) mode and change the finalization period.","role":".challenger"}
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
++++ severity: MEDIUM
+      values.deletedOutputs:
++        []
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"challenger":{"severity":"HIGH"},"aggregationVkey":{"severity":"HIGH","description":"Verification key of the SP1 aggregation program: defines which validity proofs are accepted to finalize proposed state roots."},"rangeVkeyCommitment":{"severity":"HIGH","description":"Commitment to the verification key of the SP1 range program that proves the block-range state transitions aggregated into a proposal."},"rollupConfigHash":{"severity":"HIGH","description":"Hash of the rollup configuration that is a public input to every validity proof."},"verifier":{"severity":"HIGH","description":"The SP1 verifier (gateway) contract that validity proofs are routed to."},"optimisticMode":{"severity":"HIGH","description":"If enabled, approved proposers can submit state roots without validity proofs (trusted optimistic fallback); the ZK validity requirement only applies while this is false."},"finalizationPeriodSeconds":{"severity":"HIGH","description":"Delay until a proposed state root can be used to finalize withdrawals."},"deletedOutputs":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1MantleToken (eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354) [N/A] {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"mintCapNumerator":{"severity":"HIGH","description":"MNT inflation policy: yearly mint cap as a fraction of total supply (numerator over 10000, hard-capped at 200 = 2%)."}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) [opstack/SystemConfig_v1_4_0_mantle] {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.opStackDA:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481","description":"can toggle between the optimistic mode and not optimistic (ZK) mode, update the SP1 verification keys, the verifier address, the rollup config hash, the submission interval and manage the approved proposer set.","role":".owner"}
+      receivedPermissions.0.description:
+-        "can toggle between the optimistic mode and not optimistic (ZK) mode."
++        "can mint new MNT (up to 2% of supply per year as set by mintCapNumerator) and transfer token ownership."
+      receivedPermissions.0.from:
+-        "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
++        "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      critical:
++        true
+      fieldMeta:
++        {"getMinDelayFormatted":{"severity":"HIGH"},"accessControl":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x676A795fe6E43C17c668de16730c3F690FEB7120) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      critical:
++        true
+      fieldMeta:
++        {"paused":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xca35F8338054739D138884685e08b39EE2217794) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xe41c813cce964235b451196a049f24cd5b0e9b61
+
+# Diff at Thu, 17 Sep 2026 14:47:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1789044747
+- current timestamp: 1789656344
+
+## Description
+
+OPSuccinctL2OutputOracle: `aggregationVkey` and `rangeVkeyCommitment` updated to the [mantle-v1.6.1](https://github.com/mantle-xyz/op-succinct/releases/tag/mantle-v1.6.1) op-succinct release keys.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x005ec5d81cbc4a9a70334f16cb0078d55ae20da550819bd0dc9c5ed12913b407"
++        "0x00fa36417110bce994f3054a68baef78ca51dee1a38659c70e108da7eb3d6bbf"
+      values.rangeVkeyCommitment:
+-        "0x2a928ed475bd7d8b7a54fac7666c68eb62d36fa15fafa8006b885b3237a7bd21"
++        "0x1e2b863405480e5509bcae955f9e23e1170419ba26af2f271cd0199f1e228fdb"
+    }
+```
+
 Generated with discovered.json: 0x4b02df58462b0ceecd334fa1b6ba8f45ab1669fc
 
 # Diff at Thu, 10 Sep 2026 12:53:46 GMT:
@@ -7579,4 +8179,3 @@ Change in Owner2Multisig owner.
 +        "0xC37642355c18ec9c3b3268AAC67e33516aa115eb"
     }
 ```
-

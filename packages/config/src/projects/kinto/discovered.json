@@ -203,6 +203,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1729947707,
       "sinceBlock": 21049963,
       "values": { "$immutable": true },
@@ -237,6 +238,7 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+      "critical": true,
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -327,6 +329,8 @@
         "zombieLatestStakedNode": []
       },
       "fieldMeta": {
+        "validators": { "severity": "LOW" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
         },
@@ -334,6 +338,7 @@
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
+          "severity": "HIGH",
           "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
         },
         "arbOsFromWmRoot": {
@@ -396,6 +401,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "critical": true,
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
@@ -412,6 +418,11 @@
         "bridge": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
       },
+      "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F": "TransparentUpgradeableProxy",
         "eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494": "RollupEventInbox"
@@ -427,6 +438,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1729947743,
       "sinceBlock": 21049966,
       "values": { "$immutable": true },
@@ -451,6 +463,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "critical": true,
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
@@ -483,6 +496,10 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"]
       },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "executors": { "severity": "LOW" }
+      },
       "implementationNames": {
         "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": "TransparentUpgradeableProxy",
         "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b": "UpgradeExecutor"
@@ -506,6 +523,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "critical": true,
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
@@ -558,6 +576,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "critical": true,
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
@@ -580,6 +599,10 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
+      },
+      "fieldMeta": {
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x655761AD5FC251F414D6993A73184B0669F278c8": "TransparentUpgradeableProxy",
@@ -616,6 +639,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1729947719,
       "sinceBlock": 21049964,
       "values": { "$immutable": true },
@@ -634,6 +658,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "critical": true,
       "sinceTimestamp": 1702609595,
       "sinceBlock": 18788729,
       "values": {
@@ -671,6 +696,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "critical": true,
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -707,6 +733,8 @@
         "sequencerReportedSubMessageCount": 919356
       },
       "fieldMeta": {
+        "sequencerInbox": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "allowedOutboxList": {
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
@@ -772,6 +800,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1729947731,
       "sinceBlock": 21049965,
       "values": { "$immutable": true },
@@ -795,6 +824,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "critical": true,
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
@@ -829,6 +859,13 @@
         "maxDataSize": 117964,
         "paused": false,
         "sequencerInbox": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a"
+      },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "allowListEnabled": { "severity": "HIGH" },
+        "sequencerInbox": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474": "TransparentUpgradeableProxy",
@@ -868,6 +905,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "critical": true,
       "sinceTimestamp": 1702609595,
       "sinceBlock": 18788729,
       "values": {
@@ -887,6 +925,13 @@
         "owner": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
         "router": "eth:0x0000000000000000000000000000000000000000",
         "whitelist": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "whitelist": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "inbox": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60": "TransparentUpgradeableProxy",
@@ -962,6 +1007,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1729947755,
       "sinceBlock": 21049967,
       "values": {
@@ -970,6 +1016,12 @@
         "proverHostIo": "eth:0x551E2501074D80E22c5FfB69b5fd8ba2939593b7",
         "proverMath": "eth:0xacED35d61f71A804E7627b5622c267C8Ac31d38e",
         "proverMem": "eth:0x778ca912Bd8b35dDA84852B47BA8624e08f640A6"
+      },
+      "fieldMeta": {
+        "proverMem": { "severity": "HIGH" },
+        "proverMath": { "severity": "HIGH" },
+        "proverHostIo": { "severity": "HIGH" },
+        "prover0": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xEd696D87C351C2ef687c1c484c3e297B276a40d1": "OneStepProofEntry"
@@ -1020,6 +1072,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
+      "critical": true,
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -1082,9 +1135,16 @@
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "maxTimeVariation": {
+          "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
-        }
+        },
+        "batchPosterManager": { "severity": "MEDIUM" },
+        "batchPosters": { "severity": "LOW" },
+        "dacKeyset": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a": "TransparentUpgradeableProxy",
@@ -5707,7 +5767,7 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23282254, "kinto": 919415 },
-  "permissionsConfigHash": "0x21c91a469a52e3adb6f4d898149abd96cd029669912efee59e315601411605ec",
+  "permissionsConfigHash": "0xc68108a6302cb5728e36a2ee3b04f74d0506e5de3e6ba3bc6cef2a681d8ba0bf",
   "permissions": {
     "eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8": {
       "receivedPermissions": [

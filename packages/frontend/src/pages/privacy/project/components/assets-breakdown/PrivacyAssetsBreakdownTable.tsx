@@ -19,6 +19,10 @@ import type { PrivacyAsset } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
 import { privacyAssetsBreakdownColumns } from './columns'
 import { PrivacyDepositsMetric } from './components/PrivacyDepositsMetric'
+import {
+  formatBucketLabel,
+  getPrivacyAssetsTotals,
+} from './privacyAssetsBreakdown'
 
 export function PrivacyAssetsBreakdownTable({
   assets,
@@ -28,9 +32,9 @@ export function PrivacyAssetsBreakdownTable({
   showTvl: boolean
 }) {
   const showBucketsColumn = assets.some((asset) => asset.bucketCount > 1)
-  const totals = useMemo(() => getTotals(assets), [assets])
+  const totals = useMemo(() => getPrivacyAssetsTotals(assets), [assets])
 
-  const table = useTable({
+  const table = useTable('PrivacyAssetsBreakdownTable', {
     data: assets,
     columns: privacyAssetsBreakdownColumns,
     getRowId: (row) => row.symbol,
@@ -159,7 +163,7 @@ function TotalsRow({
   showBucketsColumn,
   showTvl,
 }: {
-  totals: ReturnType<typeof getTotals>
+  totals: ReturnType<typeof getPrivacyAssetsTotals>
   showBucketsColumn: boolean
   showTvl: boolean
 }) {
@@ -201,37 +205,4 @@ function TotalsRow({
       )}
     </TableRow>
   )
-}
-
-function formatBucketLabel(label: string) {
-  return label.toLowerCase().endsWith('bucket') ? label : `${label} bucket`
-}
-
-function getTotals(assets: PrivacyAsset[]) {
-  return {
-    totalValueUsd: assets.reduce<number | null>(
-      (sum, asset) =>
-        asset.totalValueUsd === null ? sum : (sum ?? 0) + asset.totalValueUsd,
-      null,
-    ),
-    deposits: {
-      total: assets.reduce((sum, asset) => sum + asset.deposits.total, 0),
-      last7d: assets.reduce((sum, asset) => sum + asset.deposits.last7d, 0),
-      last30d: assets.reduce((sum, asset) => sum + asset.deposits.last30d, 0),
-    },
-    depositedValueUsd: {
-      total: assets.reduce(
-        (sum, asset) => sum + asset.depositedValueUsd.total,
-        0,
-      ),
-      last7d: assets.reduce(
-        (sum, asset) => sum + asset.depositedValueUsd.last7d,
-        0,
-      ),
-      last30d: assets.reduce(
-        (sum, asset) => sum + asset.depositedValueUsd.last30d,
-        0,
-      ),
-    },
-  }
 }

@@ -1,12 +1,9 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "DisputeGameFactory",
+  "critical": true,
   "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
-  "ignoreInWatchMode": [
-    "gameCount",
-    "permissionedGameArgs",
-    "permissionedGamesTotal"
-  ],
+  "ignoreInWatchMode": ["gameCount", "permissionedGamesTotal"],
   "ignoreMethods": ["gameAtIndex"],
   "types": {
     "ProposerFromArgs": {
@@ -21,12 +18,45 @@
       "typeCaster": "SliceAddress",
       "arg": { "offset": 72 }
     },
+    "AnchorStateRegistryFromArgs": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 52 }
+    },
+    "AbsolutePrestateFromArgs": {
+      "typeCaster": "SliceBytes32",
+      "arg": { "offset": 0 }
+    },
+    "ChainIdFromArgs": {
+      "typeCaster": "SliceUint256",
+      "arg": { "offset": 92 }
+    },
     "VmFromGame8Args": {
       "typeCaster": "SliceAddress",
       "arg": { "offset": 32 }
+    },
+    "VmFromPermissionedArgs": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 32 }
+    },
+    // Type-5 args, 40 bytes: anchorStateRegistry(20) | proposer(20).
+    "AnchorStateRegistryFromGame5Args": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 0 }
+    },
+    "ProposerFromGame5Args": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 20 }
     }
   },
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the dispute game implementation and initial bond for any game type."
+        }
+      ]
+    },
     "game1337": {
       "severity": "HIGH",
       "handler": {
@@ -75,6 +105,22 @@
         "args": [8]
       }
     },
+    "game9": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [9]
+      }
+    },
+    "game5": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [5]
+      }
+    },
     "initBondGame42": {
       "handler": {
         "type": "call",
@@ -103,6 +149,20 @@
         "args": [8]
       }
     },
+    "initBondGame9": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [9]
+      }
+    },
+    "initBondGame5": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [5]
+      }
+    },
     "initBondGame621": {
       "handler": {
         "type": "call",
@@ -111,6 +171,9 @@
       }
     },
     "permissionedGameArgs": {
+      // CWIA clone args of the permissioned game: absolutePrestate, vm, anchor
+      // registry, weth, chain ID, proposer and challenger. Security-relevant
+      // values are exposed separately below so each change has one kind.
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
@@ -118,7 +181,29 @@
         "expectRevert": true
       }
     },
+    "absolutePrestateFromDGF": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "AbsolutePrestateFromArgs"]
+    },
+    "vmFromDGF": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "VmFromPermissionedArgs"]
+    },
     "game8Args": {
+      // CWIA clone args of the type-8 game. Security-relevant values are
+      // exposed separately below so each change has one kind.
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
@@ -126,9 +211,20 @@
         "expectRevert": true
       }
     },
+    "game8AbsolutePrestate": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      },
+      "edit": ["format", "AbsolutePrestateFromArgs"]
+    },
     // Type-8 game's VM (MIPS64): impl returns vm()=0, so read from game args
     // (prestate(32) | vm(20) -> offset 32).
     "game8Vm": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
@@ -136,6 +232,115 @@
         "expectRevert": true
       },
       "edit": ["format", "VmFromGame8Args"]
+    },
+    "game8AnchorStateRegistry": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      },
+      "edit": ["format", "AnchorStateRegistryFromArgs"]
+    },
+    "game8Weth": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      },
+      "edit": ["format", "WethFromArgs"]
+    },
+    "game8ChainId": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [8],
+        "expectRevert": true
+      },
+      "edit": ["format", "ChainIdFromArgs"]
+    },
+    // Type-9 args, 124 bytes: absolutePrestate(32) | vm(20) |
+    // anchorStateRegistry(20) | weth(20), then 32 bytes that are zero where the
+    // legacy games carry the L2 chain ID. Same offsets as type 8.
+    "game9Args": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [9],
+        "expectRevert": true
+      }
+    },
+    "game9AbsolutePrestate": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [9],
+        "expectRevert": true
+      },
+      "edit": ["format", "AbsolutePrestateFromArgs"]
+    },
+    "game9Vm": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [9],
+        "expectRevert": true
+      },
+      "edit": ["format", "VmFromGame8Args"]
+    },
+    "game9AnchorStateRegistry": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [9],
+        "expectRevert": true
+      },
+      "edit": ["format", "AnchorStateRegistryFromArgs"]
+    },
+    "game9Weth": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [9],
+        "expectRevert": true
+      },
+      "edit": ["format", "WethFromArgs"]
+    },
+    "game5Args": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [5],
+        "expectRevert": true
+      }
+    },
+    "game5AnchorStateRegistry": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [5],
+        "expectRevert": true
+      },
+      "edit": ["format", "AnchorStateRegistryFromGame5Args"]
+    },
+    // proposer identity, like proposerFromDGF
+    "game5Proposer": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [5],
+        "expectRevert": true
+      },
+      "edit": ["format", "ProposerFromGame5Args"]
     },
     "proposerFromDGF": {
       "handler": {
@@ -156,6 +361,7 @@
       "edit": ["format", "ChallengerFromArgs"]
     },
     "wethFromDGF": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
@@ -163,6 +369,26 @@
         "expectRevert": true
       },
       "edit": ["format", "WethFromArgs"]
+    },
+    "anchorStateRegistryFromDGF": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "AnchorStateRegistryFromArgs"]
+    },
+    "chainIdFromDGF": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "ChainIdFromArgs"]
     },
     "permissionedGamesTotal": {
       "handler": {

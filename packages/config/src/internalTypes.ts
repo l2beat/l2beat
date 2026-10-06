@@ -1,4 +1,7 @@
-import type { TrackedTxFunctionCallGrouping } from '@l2beat/shared'
+import type {
+  OssificationHistory,
+  TrackedTxFunctionCallGrouping,
+} from '@l2beat/shared'
 import type {
   EthereumAddress,
   ProjectId,
@@ -73,6 +76,7 @@ export interface ScalingProject {
   config: ProjectScalingConfig
   /** Technical chain configuration */
   chainConfig?: ChainConfig
+  ossificationHistory?: OssificationHistory
   /** Ecosystem information */
   ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */

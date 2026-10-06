@@ -26,6 +26,82 @@ describe(RpcClientCompat.name, () => {
     })
   })
 
+  describe(RpcClientCompat.prototype.getBlock.name, () => {
+    it('exposes settledHeight only when the header has it', async () => {
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({
+          getBlockByNumber: mockFn()
+            .resolvesToOnce({ ...block(100), settledHeight: 98n })
+            .resolvesToOnce(block(101)),
+        }),
+        'avalanche',
+      )
+
+      const settled = await client.getBlock(100, false)
+      const legacy = await client.getBlock(101, false)
+
+      expect(settled.settledHeight).toEqual(98)
+      expect(legacy.settledHeight).toEqual(undefined)
+    })
+  })
+
+  describe(RpcClientCompat.prototype.getTransactionReceipt.name, () => {
+    it('keeps the block hash, event emitter and log index', async () => {
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({
+          getTransactionReceipt: mockFn().resolvesTo({
+            blockHash: `0x${'ab'.repeat(32)}`,
+            logs: [
+              {
+                address: EthereumAddress.ZERO,
+                topics: ['0x1'],
+                data: '0x2',
+                logIndex: 7n,
+              },
+            ],
+          }),
+        }),
+        'avalanche',
+      )
+
+      const receipt = await client.getTransactionReceipt('0xtx')
+
+      expect(receipt).toEqual({
+        blockHash: `0x${'ab'.repeat(32)}`,
+        logs: [
+          {
+            address: EthereumAddress.ZERO.toString(),
+            topics: ['0x1'],
+            data: '0x2',
+            logIndex: 7,
+          },
+        ],
+      })
+    })
+
+    it('rejects a receipt with a pending log', async () => {
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({
+          getTransactionReceipt: mockFn().resolvesTo({
+            logs: [
+              {
+                address: EthereumAddress.ZERO,
+                topics: [],
+                data: '0x',
+                logIndex: null,
+              },
+            ],
+          }),
+        }),
+        'avalanche',
+      )
+
+      await expect(client.getTransactionReceipt('0xtx')).toBeRejectedWith(
+        'pending log',
+      )
+    })
+  })
+
   describe(RpcClientCompat.prototype.getLogs.name, () => {
     it('passes positional topic filters through unchanged', async () => {
       const getLogs = mockFn<EthRpcClient['getLogs']>().resolvesTo([])

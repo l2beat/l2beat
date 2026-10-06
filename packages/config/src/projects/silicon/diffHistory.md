@@ -1,3 +1,310 @@
+Generated with discovered.json: 0xc7473b40198ab975182b97527ce0db918bf6a881
+
+# Diff at Thu, 01 Oct 2026 12:51:16 GMT:
+
+- id: e53e6063
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1762264428
+- current timestamp: 1790850865
+
+## Description
+
+Silicon (rollupID 10) migrated from Validium to AggchainECDSAMultisig: https://disco.l2beat.com/diff/eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F/eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21. State transitions are no longer proven, only pessimistic (bridge accounting) proofs plus a 1/1 aggchainSigner (the former trusted sequencer). The DAC and its ProxyAdmin are dropped, no data is posted onchain.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) [polygon-cdk/PolygonDataCommittee]
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) [polygon-cdk/AggchainECDSAMultisig] {
+    +++ description: System contract defining the silicon-zk Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      name:
+-        "PolygonZkEVM"
++        "AggchainECDSAMultisig"
+      template:
+-        "polygon-cdk/PolygonZkEVM"
++        "polygon-cdk/AggchainECDSAMultisig"
+      sourceHashes.1:
+-        "0x5684ac32eb941b26475b5792fd1549caa9c2a7b9da3c5163c16ca5cd4eb4b4a5"
++        "0xa58b59f574674919f2c3fb755a6e3e369c0d5f734d8fcca6fe2664629ad8b25e"
+      description:
+-        "The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches."
++        "System contract defining the silicon-zk Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s)."
+      values.$implementation:
+-        "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
++        "eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"
+      values.$pastUpgrades.2:
++        ["2026-09-23T08:30:47.000Z","0xa5a1c5e3c627e972e6c3656017e900007567f9e8b7ecbd9cebd15d317c3c173d",["eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.calculatePolPerForceBatch:
+-        0
+      values.dataAvailabilityProtocol:
+-        "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A"
+      values.GLOBAL_EXIT_ROOT_MANAGER_L2:
+-        "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA"
+      values.INITIALIZE_TX_BRIDGE_LIST_LEN_LEN:
+-        249
+      values.INITIALIZE_TX_BRIDGE_PARAMS:
+-        "0x80808401c9c38094"
+      values.INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS:
+-        "0x80b9"
+      values.INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS_EMPTY_METADATA:
+-        "0x80b8"
+      values.INITIALIZE_TX_CONSTANT_BYTES:
+-        32
+      values.INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA:
+-        31
+      values.INITIALIZE_TX_DATA_LEN_EMPTY_METADATA:
+-        228
+      values.INITIALIZE_TX_EFFECTIVE_PERCENTAGE:
+-        "0xff"
+      values.isSequenceWithDataAvailabilityAllowed:
+-        false
+      values.SIGNATURE_INITIALIZE_TX_R:
+-        "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0"
+      values.SIGNATURE_INITIALIZE_TX_S:
+-        "0x000000000000000000000000000000000000000000000000000000005ca1ab1e"
+      values.SIGNATURE_INITIALIZE_TX_V:
+-        27
+      values.TIMESTAMP_RANGE:
+-        36
+      values._legacypendingVKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values._legacyvKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.AGGCHAIN_ECDSA_MULTISIG_VERSION:
++        "v1.0.0"
++++ description: 0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte
++++ severity: HIGH
+      values.AGGCHAIN_TYPE:
++        "0x0000"
+      values.aggchainManager:
++        "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7"
+      values.aggchainMetadataManager:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.aggchainMultisigHash:
++        "0xdeb4738af69bba13c53cafd89af8aa09f7068cbb6ad1a36f6105a7a6378a03d7"
+      values.aggchainSigners:
++        ["eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D"]
+      values.aggLayerGateway:
++        "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
++++ description: Read by the pessimistic program. 0 - legacy single ECDSA signature, 1 - aggchain hash consisting of the multisig hash (aggchainSigners and threshold), plus an optional aggchain proof vkey and params. This contract sets the vkey and params to zero, so the pessimistic program only verifies the aggchainSigners' ECDSA signatures (multisig-only).
++++ severity: HIGH
+      values.CONSENSUS_TYPE:
++        1
+      values.getAggchainMultisigHash:
++        "0xdeb4738af69bba13c53cafd89af8aa09f7068cbb6ad1a36f6105a7a6378a03d7"
+      values.getAggchainSignerInfos:
++        [{"addr":"eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D","url":"https://rpc.silicon.network"}]
+      values.getAggchainSigners:
++        ["eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D"]
+      values.getAggchainSignersCount:
++        1
+      values.getThreshold:
++        1
+      values.MAX_AGGCHAIN_SIGNERS:
++        255
+      values.pendingAggchainManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.threshold:
++        1
++++ severity: HIGH
+      values.useDefaultSigners:
++        false
++++ severity: HIGH
+      values.useDefaultVkeys:
++        false
+      values.version:
++        "v1.0.0"
+      fieldMeta.CONSENSUS_TYPE:
++        {"severity":"HIGH","description":"Read by the pessimistic program. 0 - legacy single ECDSA signature, 1 - aggchain hash consisting of the multisig hash (aggchainSigners and threshold), plus an optional aggchain proof vkey and params. This contract sets the vkey and params to zero, so the pessimistic program only verifies the aggchainSigners' ECDSA signatures (multisig-only)."}
+      fieldMeta.aggchainMultisigHash:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultSigners:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultVkeys:
++        {"severity":"HIGH"}
+      fieldMeta.AGGCHAIN_TYPE:
++        {"severity":"HIGH","description":"0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte"}
+      implementationNames.eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F:
+-        "PolygonValidiumEtrog"
+      implementationNames.eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21:
++        "AggchainECDSAMultisig"
+    }
+```
+
+```diff
+    EOA (eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".trustedSequencer"
++        ".aggchainSigners"
+      receivedPermissions.0.description:
+-        "Allowed to commit transactions from the current layer to the host chain."
++        "sign state transitions (replaces state validation for this aggchain)."
+    }
+```
+
+```diff
+    EOA (eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A","description":"manage the members of the data availability committee and the threshold for valid commitments.","role":".owner"}
+      receivedPermissions.1.role:
+-        ".admin"
++        ".aggchainManager"
+      receivedPermissions.1.description:
+-        "set core system parameters like the trusted sequencer and manage forced transactions/batches."
++        "replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role."
+      receivedPermissions.2.description:
++        "set the trusted sequencer address."
+      receivedPermissions.2.via:
+-        [{"address":"eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1"}]
+      receivedPermissions.2.role:
+-        "admin"
++        ".admin"
+      receivedPermissions.2.from:
+-        "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A"
++        "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1","role":".owner"}]
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
+```diff
++   Status: CREATED
+    external contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AggchainECDSAMultisig.sol}                     | 7179 +++++++++++---------
+ .../PolygonTransparentProxy.p.sol                  |    0
+ .../PolygonDataCommittee.sol => /dev/null          | 1344 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  831 ---
+ .../.flat@1762264428/ProxyAdmin.sol => /dev/null   |  213 -
+ 5 files changed, 4155 insertions(+), 5412 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264428 (main branch discovery), not current.
+
+```diff
+    contract PolygonZkEVM (eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) [polygon-cdk/PolygonZkEVM] {
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+      name:
+-        "Validium"
++        "PolygonZkEVM"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) [polygon-cdk/Verifier]
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+Generated with discovered.json: 0x26a899b2d53bb3cd05df8562c8e5d12531c5c619
+
+# Diff at Wed, 23 Sep 2026 05:49:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1762264428
+- current timestamp: 1762264428
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264428 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x8d4342ba604b13c43f84aeae519d9f3357a034d9
+
+# Diff at Sun, 20 Sep 2026 18:19:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb454ea5283bcf30e392f86e07ac240d516636b4 block: 1762264428
+- current timestamp: 1762264428
+
+## Description
+
+ossification re-review: record field severities on critical contracts in shared templates
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264428 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x2cde7a83107a85d781ae04677ecce9e18c6f01ac
+
+# Diff at Fri, 18 Sep 2026 09:34:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d903624f4bbcd7c3db85ae1858dfd3303fa28c5c block: 1762264428
+- current timestamp: 1762264428
+
+## Description
+
+scroll: critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264428 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xb8b2c651890a0dc140a1ea4759e9b01646f5ad8c
 
 # Diff at Mon, 07 Sep 2026 08:38:00 GMT:

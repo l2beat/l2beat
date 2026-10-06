@@ -92,7 +92,8 @@ export class UpdateMonitor {
         id: project,
         name: `Update project ${project}`,
       },
-      job: () => this.updateProject(this.runner, project, timestamp),
+      job: () =>
+        this.updateProject(this.runner, project, timestamp, updateStart),
     }))
 
     const results = await this.workerPool.runInPool(tasks)
@@ -162,11 +163,12 @@ export class UpdateMonitor {
     runner: DiscoveryRunner,
     project: string,
     timestamp: UnixTime,
+    discoveryTimestamp: UnixTime,
   ) {
     return await withCoreFeatureRpcMetricsContext(
       'updateMonitor.discovery',
       { project },
-      () => this._updateProject(runner, project, timestamp),
+      () => this._updateProject(runner, project, timestamp, discoveryTimestamp),
     )
   }
 
@@ -174,6 +176,7 @@ export class UpdateMonitor {
     runner: DiscoveryRunner,
     project: string,
     timestamp: UnixTime,
+    discoveryTimestamp: UnixTime,
   ) {
     const projectUpdateStart = UnixTime.now()
 
@@ -195,7 +198,7 @@ export class UpdateMonitor {
 
       const runResult = await runner.run(
         projectConfig,
-        UnixTime.now(),
+        discoveryTimestamp,
         this.logger,
       )
 

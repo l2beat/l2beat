@@ -1,6 +1,6 @@
 {
   "name": "butternetwork",
-  "timestamp": 1786352166,
+  "timestamp": 1790850942,
   "configHash": "0x36272a9cae498e5f00393fc315441effd3bb862d403819f7f7d7272a18893897",
   "entries": [
     {
@@ -144,16 +144,16 @@
         ],
         "$upgradeCount": 4,
         "epochSize": 50000,
-        "epochSummary": { "epoch": 511, "length": 24 },
+        "epochSummary": { "epoch": 529, "length": 24 },
         "getAdmin": "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545",
         "getImplementation": "base:0xF6366aD2361Df88E8815258948093C33d93d5374",
-        "headerHeight": 25500000,
+        "headerHeight": 26400000,
         "maxEpochs": 30,
         "nodeType": 1,
         "pendingAdmin": "base:0x0000000000000000000000000000000000000000",
         "quorum": 16,
         "startHeight": 10950000,
-        "verifiableHeaderRange": [24000000, 25550000],
+        "verifiableHeaderRange": [24900000, 26450000],
         "verifyTool": "base:0xc3393567DC2F1d071254E880c9f501641491471f"
       },
       "fieldMeta": {
@@ -212,7 +212,7 @@
       "unverified": true,
       "proxyType": "EIP7702 EOA",
       "values": {
-        "$implementation": "base:0xa845C74344Fc9405b1Fcf712f04668979573c1bf"
+        "$implementation": "base:0xe40ccB2D94975c51bff0C004eFDfd9B3a5796fA4"
       }
     },
     {
@@ -284,7 +284,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -743,8 +743,8 @@
     "butternetwork/VerifyTool": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "base": 49781409 },
-  "permissionsConfigHash": "0xf1318469eb4d105b41a7a065bcc296e680a4060ab4071b1df2ff26d3142fb57d",
+  "usedBlockNumbers": { "base": 52030797 },
+  "permissionsConfigHash": "0x43acd5eacc350a4d4008435b855380b96b5124d2eb534892f712d14c72b8b2f2",
   "permissions": {
     "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545": {
       "receivedPermissions": [

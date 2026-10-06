@@ -6,6 +6,7 @@ import type {
 import type { ContractValue, StructureEntry } from '../output/types'
 import { get$Admins, toAddressArray } from '../utils/extractors'
 import { interpolateString } from '../utils/interpolateString'
+import type { DescriptionTable } from './DescriptionTable'
 import { interpolateModelTemplate } from './interpolate'
 
 interface InlineTemplate {
@@ -18,60 +19,33 @@ interface InlineTemplate {
 }
 
 const addressTemplate: InlineTemplate = {
-  content: `
-address(
-  @self,
-  "&$.chain",
-  "&$.address:raw").`,
+  content: 'address(@self,"&$.chain","&$.address:raw").',
   when: () => true,
 }
 const addressTypeContractTemplate: InlineTemplate = {
-  content: `
-addressType(
-  @self,
-  contract).`,
+  content: 'addressType(@self,contract).',
   when: (c) => c.type === 'Contract' || c.targetType === 'Contract',
 }
 const addressTypeEOATemplate: InlineTemplate = {
-  content: `
-addressType(
-  @self,
-  eoa).`,
+  content: 'addressType(@self,eoa).',
   when: (c) => c.type === 'EOA' || c.targetType === 'EOA',
 }
 const canActIndependentlyTemplate: InlineTemplate = {
-  content: `
-canActIndependently(
-  @self).`,
+  content: 'canActIndependently(@self).',
   when: (_, cp) => cp.canActIndependently === true,
 }
 const preventActingIndependentlyTemplate: InlineTemplate = {
-  content: `
-preventActingIndependently(
-  @self).`,
+  content: 'preventActingIndependently(@self).',
   when: (_, cp) => cp.canActIndependently === false,
 }
 const permissionTemplate: InlineTemplate = {
-  content: `
-permission(
-  &permission.to,
-  "&permission.type",
-  &permission.from,
-  &permission.delay,
-  &permission.description|quote|orNil,
-  &permission.role|quote|orNil).`,
+  content:
+    'permission(&permission.to,"&permission.type",&permission.from,&permission.delay,&permission.description|orNil,&permission.role|quote|orNil).',
   when: () => true,
 }
 const permissionConditionTemplate: InlineTemplate = {
-  content: `
-permissionCondition(
-  &permission.to,
-  "&permission.type",
-  &permission.from,
-  &permission.delay,
-  &permission.description|quote|orNil,
-  &permission.role|quote|orNil,
-  "&permission.condition").`,
+  content:
+    'permissionCondition(&permission.to,"&permission.type",&permission.from,&permission.delay,&permission.description|orNil,&permission.role|quote|orNil,"&permission.condition").',
   when: (_c, _cp, p) => p?.condition !== undefined,
 }
 
@@ -92,6 +66,7 @@ export function buildPermissionsModel(
   contractPermission: ContractPermission,
   structureEntry: StructureEntry,
   addressToNameMap: Record<string, string>,
+  descriptions: DescriptionTable,
 ): string | undefined {
   if (structureEntry.type === 'Reference') {
     return
@@ -136,9 +111,9 @@ export function buildPermissionsModel(
         typeof permission.delay === 'string'
           ? interpolateString(permission.delay, structureEntry)
           : permission.delay,
-      'permission.description': interpolateString(
-        permission.description,
-        structureEntry,
+      'permission.description': internDescription(
+        descriptions,
+        interpolateString(permission.description, structureEntry),
       ),
       'permission.condition': interpolateString(
         permission.condition,
@@ -158,11 +133,20 @@ export function buildPermissionsModel(
           valuesWithPermission,
           addressToNameMap,
         )
-        relationsModel.push(interpolated)
+        if (!relationsModel.includes(interpolated)) {
+          relationsModel.push(interpolated)
+        }
       }
     }
   }
   return relationsModel.join('\n')
+}
+
+function internDescription(
+  descriptions: DescriptionTable,
+  text: string | undefined,
+): string | undefined {
+  return text === undefined ? undefined : descriptions.intern(text)
 }
 
 export function getPermissionsDefinedOnFields(

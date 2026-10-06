@@ -1,6 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
 import type { ParamType } from 'ethers/lib/utils'
-import { toFunctionFragment } from '../handlers/utils/toFunctionFragment'
 
 export type Type = BaseType | ArrayType | TupleType
 
@@ -21,16 +20,6 @@ export interface TupleType {
     name?: string
     type: Type
   }[]
-}
-
-export function parseReturnType(returnType: string): TupleType {
-  assert(
-    returnType.startsWith('(') && returnType.endsWith(')'),
-    'Return type must have parentheses around it',
-  )
-  const virtualMethod = `function f() returns ${returnType}`
-  const fragment = toFunctionFragment(virtualMethod)
-  return toInternalType(fragment.outputs)
 }
 
 export function toInternalType(args: ParamType[] | undefined): TupleType {

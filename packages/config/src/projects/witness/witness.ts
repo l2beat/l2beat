@@ -20,7 +20,7 @@ export const witness: ScalingProject = agglayer({
     name: 'Witness Chain',
     slug: 'witness',
     description:
-      'Witness Chain is a Validium built on the Polygon CDK stack and Eigenlayer validates services. The purpose of the project is to create a DePIN coordination Layer.',
+      'Witness Chain is a Validium built on the Polygon CDK stack and EigenLayer actively validated services. The purpose of the project is to create a DePIN coordination Layer.',
     links: {
       websites: ['https://witnesschain.com/'],
       bridges: ['https://witnesschain-bridge.eu-north-2.gateway.fm'],

@@ -1,12 +1,13 @@
 {
-  "extends": "@l2beat/typescript-config/nextjs",
+  "extends": "@l2beat/typescript-config/react",
   "compilerOptions": {
     "noUncheckedIndexedAccess": false,
+    "resolveJsonModule": true,
     "paths": {
       "@/*": ["./src/*"],
       "react": ["./node_modules/@types/react"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["**/*.ts", "**/*.tsx", "**/*.mts"],
+  "exclude": ["node_modules", "dist"]
 }

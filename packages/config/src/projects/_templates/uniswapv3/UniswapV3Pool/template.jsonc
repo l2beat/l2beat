@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UniswapV3Pool",
+  "critical": true,
   "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on tick ranges; swap fees accrue to in-range positions. The factory owner can divert up to 1/4 of the swap fee per side as protocol fee. Also a TWAP oracle whose observation buffer anyone can grow.",
   "ignoreMethods": ["observations", "ticks", "tickBitmap", "positions"],
   "ignoreRelatives": [
@@ -19,6 +20,16 @@
   "fields": {
     "slot0": {
       "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+    },
+    "feeProtocol": {
+      "description": "Current token0/token1 protocol-fee shares packed into two nibbles; changing them redirects a share of future LP swap fees.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+        "args": []
+      },
+      "edit": ["get", "feeProtocol"]
     },
     // Q128.128 accumulators; large uints in the 160-bit range get misread as
     // addresses by the relative detector.

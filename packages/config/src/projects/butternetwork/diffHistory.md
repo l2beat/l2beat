@@ -1,4 +1,28 @@
-Generated with discovered.json: 0x3f8c637d766ec6aee26015a735c8458937b1c228
+Generated with discovered.json: 0xb42e981bfa9ea03ee9955be0b048d01c75d6a971
+
+# Diff at Thu, 01 Oct 2026 11:10:27 GMT:
+
+- id: c540e3bd
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1786352166
+- current timestamp: 1790850942
+
+## Description
+
+7702 re-delegation of a multisig signer.
+
+## Watched changes
+
+```diff
+    EOA (base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A) {
+    +++ description: None
+      values.$implementation:
+-        "base:0xa845C74344Fc9405b1Fcf712f04668979573c1bf"
++        "base:0xe40ccB2D94975c51bff0C004eFDfd9B3a5796fA4"
+    }
+```
+
+Generated with discovered.json: 0xa53cbdad94c30a38aaf8d3d36d0df2d928451789
 
 # Diff at Mon, 10 Aug 2026 09:00:05 GMT:
 

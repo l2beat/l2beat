@@ -1,6 +1,6 @@
 {
   "name": "debridge",
-  "timestamp": 1788265000,
+  "timestamp": 1790850976,
   "configHash": "0x30959a30486a2b20ebfe121ac4252c57434c75215c91b6e43b764ae8ad6e40a6",
   "entries": [
     {
@@ -188,7 +188,7 @@
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "govMonitoringAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "lockedClaim": 1,
-        "nonce": 179446,
+        "nonce": 182593,
         "paused": false,
         "signatureVerifier": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -451,7 +451,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 74,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -672,7 +672,7 @@
           }
         },
         "confirmationThreshold": 3,
-        "currentBlock": 25882344,
+        "currentBlock": 26096772,
         "debridgeAddress": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
@@ -1186,7 +1186,9 @@
           "56": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
           "137": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
           "250": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "4217": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
           "4663": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "5042": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
           "8453": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
           "42161": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
           "43114": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
@@ -1331,7 +1333,9 @@
           "56": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
           "137": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
           "250": "0x",
+          "4217": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
           "4663": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "5042": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
           "8453": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
           "42161": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
           "43114": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
@@ -2548,8 +2552,8 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25882373 },
-  "permissionsConfigHash": "0x569ea6178ca89d57e6e3780fc25b4f56dcca4e48436b92c276ff3bf9b3a698ca",
+  "usedBlockNumbers": { "ethereum": 26096910 },
+  "permissionsConfigHash": "0x1f6411a0f16912d6327f6a637fe9d709ee1152d12c6f532558c2d824d0303562",
   "permissions": {
     "eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0": {
       "receivedPermissions": [

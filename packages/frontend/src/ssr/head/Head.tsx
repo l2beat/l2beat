@@ -1,4 +1,5 @@
 import { env } from '~/env'
+import { jsonForInlineScript } from '~/utils/jsonForInlineScript'
 import type { Manifest } from '~/utils/Manifest'
 import { FontStyles } from './FontStyles'
 import { fonts } from './fonts'
@@ -20,22 +21,18 @@ export function Head({ manifest, metadata }: HeadProps) {
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <FontStyles fonts={fonts} manifest={manifest} />
-      <link
-        rel="icon"
-        type="image/x-icon"
-        sizes="16x16 32x32 48x48"
-        href="/favicon.ico"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="/favicon-32x32.png"
-      />
+      {/*
+        icon.svg is the only declared favicon on purpose. Its "L2" lettering is dark,
+        so it has a prefers-color-scheme rule that flips it to white on a dark tab
+        strip - the raster icons cannot do that. Chrome picks any raster rel="icon"
+        over an SVG one regardless of order or sizes, so declaring favicon.ico or
+        favicon-32x32.png here brings back the invisible lettering. Browsers without
+        SVG favicon support fall back to /favicon.ico via the root convention, and
+        both raster files are still served from static/.
+      */}
       <link
         rel="icon"
         type="image/svg+xml"
-        sizes="any"
         href={manifest.getUrl('/icon.svg')}
       />
       <link
@@ -48,6 +45,13 @@ export function Head({ manifest, metadata }: HeadProps) {
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
       <link rel="canonical" href={metadata.canonicalUrl} />
+      {metadata.markdownAlternateUrl && (
+        <link
+          rel="alternate"
+          type="text/markdown"
+          href={metadata.markdownAlternateUrl}
+        />
+      )}
       {(metadata.excludeFromSearchEngines ||
         env.DEPLOYMENT_ENV !== 'production') && (
         <meta name="robots" content="noindex" />
@@ -55,6 +59,18 @@ export function Head({ manifest, metadata }: HeadProps) {
 
       <OpengraphMeta {...metadata} />
       <TwitterMeta {...metadata} />
+      {metadata.structuredData.map((data, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: jsonForInlineScript({
+              '@context': 'https://schema.org',
+              ...data,
+            }),
+          }}
+        />
+      ))}
       {env.CLIENT_SIDE_OPENPANEL_CLIENT_ID && (
         <>
           <script

@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.",
+  "critical": true,
   "category": "core",
   // L1MessageQueueV2
   "ignoreMethods": [

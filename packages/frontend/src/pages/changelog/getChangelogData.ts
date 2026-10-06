@@ -22,7 +22,7 @@ export async function getChangelogData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Changelog - L2BEAT',
+        name: 'Changelog',
         description:
           'Track product and content updates shipped on L2BEAT in one place.',
         url,

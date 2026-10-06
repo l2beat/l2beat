@@ -1,4 +1,9 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -21,6 +26,38 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('apex-omni')
 
+// The research below assumes that every sync service is a LayerZeroBridge
+// matching a known LZSyncHashBridgeV2 shape, whose governor is the network
+// governor of the zkLink contract on the same chain.
+for (const zkLink of [
+  'ZkLink Main',
+  'ZkLink Ethereum',
+  'ZkLink Base',
+  'ZkLink Mantle',
+  'ZkLink BNB',
+]) {
+  const networkGovernor = discovery.getContractValue<string>(
+    zkLink,
+    'networkGovernor',
+  )
+  const syncServices = discovery.getContractValue<Record<string, string>>(
+    zkLink,
+    'syncServices',
+  )
+  for (const syncService of Object.values(syncServices)) {
+    assert(
+      discovery.getContract(syncService).template ===
+        'apex-omni/LZSyncHashBridgeV2',
+      `${zkLink} sync service ${syncService} changed, update the research`,
+    )
+    assert(
+      discovery.getContractValue<string>(syncService, 'governor') ===
+        networkGovernor,
+      `${zkLink} sync service ${syncService} has a new governor, update the research`,
+    )
+  }
+}
+
 export const apexOmni: ScalingProject = {
   type: 'layer3',
   id: ProjectId('apex-omni'),
@@ -36,7 +73,7 @@ export const apexOmni: ScalingProject = {
     {
       ...REASON_FOR_BEING_OTHER.NO_PROOFS,
       explanation:
-        "ApeX's proof system does not authenticate deposits on external chains. Users must additionally trust the 2/2 validator set and LayerZero bridge not to forge non-existent deposits, which allows draining rollup escrows.",
+        "ApeX's proof system does not authenticate deposits on external chains. Users must additionally trust the validator and the LayerZero bridges (including their governors and the LayerZero message verifiers) not to collude in forging non-existent deposits, which allows draining rollup escrows.",
     },
   ],
   display: {
@@ -178,7 +215,7 @@ export const apexOmni: ScalingProject = {
       {
         title: 'Validity proofs',
         description:
-          'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Arbitrum One by a smart contract.\nDeposits on secondary chains are not verified with these validity proofs and rely on LayerZero bridges instead. Deposits could be stolen if bridges are compromized.',
+          'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Arbitrum One by a smart contract.\nDeposits on secondary chains are not covered by these validity proofs and rely on LayerZero bridge contracts instead. Escrowed funds can be stolen if the validator colludes with a compromised bridge.',
         risks: [],
         references: [
           {
@@ -225,11 +262,11 @@ export const apexOmni: ScalingProject = {
       {
         name: 'Multichain state synchronization',
         description:
-          'Deposits remain escrowed in the zkLink contract on their origin chain. Secondary deployments send synchronization hashes through LayerZero to the primary deployment on Arbitrum One. The primary deployment only synchronizes a block when the received hashes match the hashes committed as part of the primary block, and then sends block confirmations back to the secondary deployments.',
+          'Deposits remain escrowed in the zkLink contract on their origin chain. Secondary deployments send synchronization hashes through LayerZero to the primary deployment on Arbitrum One. The primary deployment only synchronizes a block when the received hashes match the hashes committed as part of the primary block, and then sends block confirmations back to the secondary deployments, which only execute (and pay out withdrawals for) confirmed blocks.\nThe messages are relayed by immutable LayerZeroBridge contracts on each chain, connected to the LayerZero v1 endpoints. They only accept messages from their trusted remote bridges. Their governor, the network governor multisig of the respective chain, can change these trusted remotes and the LayerZero messaging configuration that determines which verifiers attest to the messages.',
         risks: [
           {
             category: 'Funds can be lost if',
-            text: 'the 2/2 validator set or LayerZero bridge forges a non-existent deposit.',
+            text: 'the validator colludes with a compromised LayerZero bridge, bridge governor or LayerZero message verifiers to forge a non-existent deposit or block confirmation.',
           },
           {
             category: 'Funds can be frozen if',
@@ -242,7 +279,7 @@ export const apexOmni: ScalingProject = {
   },
   upgradesAndGovernance: {
     content:
-      'The zkLink and verifier deployments can be upgraded by their respective 4-of-6 network governor multisigs without a delay. The network governors can also manage validators, tokens, and synchronization services.',
+      'The zkLink and verifier deployments can be upgraded by their respective 4-of-6 network governor multisigs without a delay. The network governors can also manage validators, tokens, and synchronization services, and they are the governors of the immutable LayerZero bridges, which lets them change the trusted remote bridges and the LayerZero messaging configuration.',
   },
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),

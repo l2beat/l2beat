@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CommitmentVerifier",
+  "critical": true,
   "category": "shared",
   "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs."
 }

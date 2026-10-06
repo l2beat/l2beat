@@ -283,6 +283,20 @@ export const zkCatalogTags = [
     description:
       'Curve that forms a curve cycle together with BN254, which allows highly efficient recursive proof composition by switching between these two curves.',
   },
+  {
+    id: 'Pallas',
+    type: ZkCatalogTagType.curve,
+    name: 'Pallas',
+    description:
+      'Prime-order 255-bit curve designed by the Electric Coin Company that forms the Pasta curve cycle together with Vesta. It is not pairing-friendly, so it is used with transparent polynomial commitments such as IPA.',
+  },
+  {
+    id: 'Vesta',
+    type: ZkCatalogTagType.curve,
+    name: 'Vesta',
+    description:
+      'Prime-order 255-bit curve that forms the Pasta curve cycle together with Pallas. Its scalar field is the base field of Pallas, which allows efficient recursive proof composition by switching between the two curves.',
+  },
   // Field
   {
     id: 'Mersenne31',
@@ -321,6 +335,13 @@ export const zkCatalogTags = [
     name: 'KZG',
     description:
       'Polynomial commitment scheme that requires a universal trusted setup, introduced by Kate, Zaverucha and Goldberg.',
+  },
+  {
+    id: 'IPA',
+    type: ZkCatalogTagType.PCS,
+    name: 'IPA',
+    description:
+      'Inner product argument polynomial commitment scheme based on the discrete logarithm assumption. It requires no trusted setup, at the cost of verifier time linear in the circuit size.',
   },
   // Arithmetization
   {

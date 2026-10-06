@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OperationExecutor",
+  "category": "core",
+  "description": "Permissionless helper that executes a call and forwards the resulting token payout to the caller. Used by finalizers to collect fees and subsidies."
+}

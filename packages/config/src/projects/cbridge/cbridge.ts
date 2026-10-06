@@ -12,6 +12,8 @@ export const cbridge: BaseProject = {
   addedAt: UnixTime(1662628329),
   // TODO!: when added, remove it from filter in config.test.ts
   interopConfig: {
+    description:
+      'Liquidity bridge whose transfers are filled from a liquidity pool and must be authorized by the Celer SGN signer quorum.',
     intent: {
       color: '#00A86B',
       intentModel: {

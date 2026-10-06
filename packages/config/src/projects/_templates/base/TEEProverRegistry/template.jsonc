@@ -1,21 +1,26 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TEEProverRegistry",
+  "critical": true,
   "description": "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.",
   "fields": {
-    "NITRO_VERIFIER": {
+    // Not HIGH: read live from DISPUTE_GAME_FACTORY.gameImpls(gameType).TEE_IMAGE_HASH(),
+    // so it duplicates the HIGH game implementation field of the DisputeGameFactory.
+    "getExpectedImageHash": {
+      "description": "TEE image hash (PCR0) of the AggregateVerifier registered in the DisputeGameFactory for gameType. Derived, not stored in this contract."
+    },
+    // Operator role: registers signers that hold a valid Nitro attestation and
+    // can deregister them (liveness), it cannot change what is accepted.
+    "manager": {
+      "severity": "MEDIUM"
+    },
+    "owner": {
       "severity": "HIGH"
     },
-    "DISPUTE_GAME_FACTORY": {
+    "$admin": {
       "severity": "HIGH"
     },
     "gameType": {
-      "severity": "HIGH"
-    },
-    "getRegisteredSigners": {
-      "severity": "HIGH"
-    },
-    "getExpectedImageHash": {
       "severity": "HIGH"
     }
   }

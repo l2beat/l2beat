@@ -7,28 +7,33 @@ export type EthereumAddress = string & {
 }
 
 export function EthereumAddress(value: string): EthereumAddress {
+  const parsed = EthereumAddress.tryParse(value)
+  if (parsed === undefined) {
+    throw new TypeError('Invalid EthereumAddress')
+  }
+
+  return parsed
+}
+
+// For callers that ask "is this an address?" about values that are usually not
+// one. Throwing that answer makes the common path pay for a stack capture.
+EthereumAddress.tryParse = function tryParse(
+  value: string,
+): EthereumAddress | undefined {
   const result = validateAddress(value)
   if (!result.valid) {
-    throw new TypeError('Invalid EthereumAddress')
+    return undefined
   }
 
   return result.address as unknown as EthereumAddress
 }
 
 EthereumAddress.check = function check(value: string) {
-  try {
-    return EthereumAddress(value).toString() === value
-  } catch {
-    return false
-  }
+  return EthereumAddress.tryParse(value) === value
 }
 
 EthereumAddress.checkIgnoringCase = function checkIgnoringCase(value: string) {
-  try {
-    return EthereumAddress(value).toLowerCase() === value.toLowerCase()
-  } catch {
-    return false
-  }
+  return EthereumAddress.tryParse(value)?.toLowerCase() === value.toLowerCase()
 }
 
 EthereumAddress.isBefore = function isBefore(
@@ -56,15 +61,7 @@ EthereumAddress.unsafe = function unsafe(address: string) {
 }
 
 EthereumAddress.from = function from(value: string) {
-  const withoutPrefix = value.slice(2)
-
-  for (const char of withoutPrefix) {
-    if (!ALLOWED_CHARS.includes(char.toLowerCase())) {
-      throw new TypeError('Invalid EthereumAddress')
-    }
-  }
-
-  const padded = withoutPrefix.padStart(40, '0')
+  const padded = value.slice(2).padStart(40, '0')
   return EthereumAddress('0x' + padded)
 }
 

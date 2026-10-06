@@ -34,10 +34,15 @@ import { withRetries } from '../retries'
 const BLOCK_TIMESTAMP_BATCH_SIZE = 25
 
 export interface Receipt {
-  logs: {
-    topics: string[]
-    data: string
-  }[]
+  blockHash?: string
+  logs: ReceiptLog[]
+}
+
+export interface ReceiptLog {
+  address: string
+  topics: string[]
+  data: string
+  logIndex: number
 }
 
 interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
@@ -213,10 +218,17 @@ export class RpcClientCompat implements IRpcClient {
       throw new Error(`Transaction ${txHash} not found`)
     }
     return {
-      logs: receipt.logs.map((log) => ({
-        topics: log.topics,
-        data: log.data,
-      })),
+      blockHash: receipt.blockHash,
+      logs: receipt.logs.map((log) => {
+        // Only pending logs lack an index, and a receipt implies a mined transaction.
+        assert(log.logIndex !== null, `Receipt ${txHash} has a pending log`)
+        return {
+          address: log.address.toString(),
+          topics: log.topics,
+          data: log.data,
+          logIndex: Number(log.logIndex),
+        }
+      }),
     }
   }
 
@@ -372,6 +384,9 @@ export function toEVMBlock(
     timestamp: Number(block.timestamp),
     logsBloom: block.logsBloom,
     parentBeaconBlockRoot: block.parentBeaconBlockRoot,
+  }
+  if (block.settledHeight !== undefined) {
+    base.settledHeight = Number(block.settledHeight)
   }
   if (block.transactions) {
     return {

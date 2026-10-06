@@ -1,12 +1,15 @@
 {
+  // ossification: the DAO governance stack controls Taiko contracts only since the TaikoDAOController accepted
+  // ownership of the Taiko Token from the Taiko Multisig (tx 0xa4dfb666..., 2025-06-06); earlier set-up
+  // changes (e.g. the 2025-06-04 test signer removal) could not affect Taiko. Template used only by taiko.
+  "critical": { "sinceTimestamp": 1749196415 },
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).",
   "ignoreMethods": ["canExecute", "getProposal", "proxiableUUID"],
   "fields": {
     "multisigSettings": { "severity": "HIGH" },
     "proposalCount": {
-      "description": "total standard proposal count.",
-      "severity": "HIGH"
+      "description": "total standard proposal count."
     },
     "dao": {
       "permissions": [
@@ -17,6 +20,7 @@
       ]
     },
     "minApprovals": {
+      "severity": "HIGH",
       "copy": "multisigSettings",
       "edit": ["get", "minApprovals"]
     }

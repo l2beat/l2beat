@@ -9,6 +9,10 @@ import {
   type UsedInProjectWithIcon,
 } from '~/components/ProjectsUsedIn'
 import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
+import {
+  VERIFIER_ID_DEFAULT_DESCRIPTION,
+  VERIFIERS_SECTION_INTRO,
+} from '~/pages/zk-catalog/v2/components/zkCatalogUi'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { VerifiersTable } from './table/VerifiersTable'
@@ -29,6 +33,8 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
         projectsUsedIn: UsedInProjectWithIcon[]
         url?: string
         address: string
+        /** Display name; the address alone does not say which chain it is on. */
+        chain: string
       }[]
       projectsUsedIn: UsedInProjectWithIcon[]
       verificationSteps?: string
@@ -54,9 +60,7 @@ export function VerifiersSection({
     <ProjectSection {...sectionProps} as={as} className="space-y-6">
       {isZkCatalog && (
         <p className="text-paragraph-15 md:text-paragraph-16">
-          List of different onchain verifiers for this proving system. Unique ID
-          distinguishes differents deployments of the same verifier from
-          different verifiers (e.g. different versions).
+          {VERIFIERS_SECTION_INTRO}
         </p>
       )}
       {proofSystemVerifiers.map(({ proofSystem, verifierHashes }) => (
@@ -69,8 +73,7 @@ export function VerifiersSection({
                 displayType="typeAndName"
               />
               <p className="text-paragraph-14 text-secondary">
-                {proofSystem.description ??
-                  'Verifier ID as recorded by the verifier smart contract.'}
+                {proofSystem.description ?? VERIFIER_ID_DEFAULT_DESCRIPTION}
               </p>
             </>
           )}

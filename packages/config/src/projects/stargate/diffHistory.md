@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x6f909c4bb428a1d39ace77cf9fab688ceb192d40
+
+# Diff at Thu, 01 Oct 2026 11:11:01 GMT:
+
+- id: 64622989
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1786352916
+- current timestamp: 1790851350
+
+## Description
+
+The owner of CreditMessagingMintableBurnable manually minted credits without crosschain messages for the USDC pool (gnosis, aurora) and the ETH pool (gnosis, lightlink), stated reason: consolidating balance and credit as part of the deprecation of these remote pools on 2026-09-24.
+
+## Watched changes
+
+```diff
+    contract CreditMessagingMintableBurnable (eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173) [stargate/CreditMessagingMintableBurnable] {
+    +++ description: A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits across chains, the owner can increase/decrease them arbitrarily.
++++ description: Credits minted manually by the owner without crosschain messages.
+      values.creditsMinted.2:
++        {"batches":[[1,[[30145,5585911234],[30211,12487351781]]],[13,[[30145,46611],[30309,32980]]]],"reason":"Minting 5585.911234 USDC for gnosis (eid 30145), 12487.351781 USDC for aurora (eid 30211), 0.046611 ETH for gnosis (eid 30145), 0.032980 ETH for lightlink (eid 30309), to consolidate balance and credit as part of pool deprecation 2026-09-24"}
+    }
+```
+
+Generated with discovered.json: 0xaaa3cbddd06a44b302605d56fbabd892cf9cb292
+
+# Diff at Wed, 23 Sep 2026 05:49:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1786352916
+- current timestamp: 1786352916
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786352916 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x6843c88c67665e517079d9750ae481cab77ab561
+
+# Diff at Mon, 21 Sep 2026 11:24:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1786352916
+- current timestamp: 1786352916
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786352916 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x6cca8a5690399bd339b85050d3247af1afdd0921
+
+# Diff at Fri, 18 Sep 2026 10:24:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1786352916
+- current timestamp: 1786352916
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786352916 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x7ec635079f1b2449368ba81397346c4b50f44d93
 
 # Diff at Mon, 10 Aug 2026 09:10:06 GMT:

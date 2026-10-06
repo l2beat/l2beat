@@ -1,3 +1,740 @@
+Generated with discovered.json: 0xbc928c2a124ec060947669e00a7c3f314ba7ccaf
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 0a3fd9ed
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789554702
+- current timestamp: 1789554702
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789554702 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract AccessManager (eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.challengers.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.proposers.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x95b5683fb6a110c4f137dc221b7291f57f1b83b7
+
+# Diff at Fri, 02 Oct 2026 08:08:47 GMT:
+
+- id: 741e8e51
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f6e34290bf6b81eca442b61515c2bb91f5fe65e8 block: 1789554702
+- current timestamp: 1789554702
+
+## Description
+
+Config-only rerun on the same block number. The OP Stack templates now label the Upgrade 20 super dispute game types, 9 and 5, in the respected game type mapping. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789554702 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x879f683cfe4e97b3476385e13066ef9cc8c25b2d
+
+# Diff at Thu, 01 Oct 2026 12:51:55 GMT:
+
+- id: 9b0ec090
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1789554702
+- current timestamp: 1789554702
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes: the aggchainManager permission was added to the AggchainECDSAMultisig template and its CONSENSUS_TYPE field description was clarified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789554702 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0xa90B4C8B8807569980F6cC958c8905383136B5eA) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507","description":"replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role.","role":".aggchainManager"}
+    }
+```
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) [polygon-cdk/AggchainECDSAMultisig] {
+    +++ description: System contract defining the X Layer Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      fieldMeta.CONSENSUS_TYPE.description:
+-        "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
++        "Read by the pessimistic program. 0 - legacy single ECDSA signature, 1 - aggchain hash consisting of the multisig hash (aggchainSigners and threshold), plus an optional aggchain proof vkey and params. This contract sets the vkey and params to zero, so the pessimistic program only verifies the aggchainSigners' ECDSA signatures (multisig-only)."
+    }
+```
+
+Generated with discovered.json: 0x99969f6c26a9f1d41754c4428bb0dd52ad77a875
+
+# Diff at Wed, 30 Sep 2026 07:45:43 GMT:
+
+- id: 51a48b89
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1782911432
+- current timestamp: 1789554702
+
+## Description
+
+New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is proposer and canceller, anyone can execute.
+
+`DisputeGameFactory` owner changed from `OwnerContract` to the `TimelockController`, and its proxy admin moved to a new `ProxyAdmin` owned by the `TimelockController`. All other proxies stay under the old `ProxyAdmin`.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","role":"admin"}
+    }
+```
+
+```diff
+    EOA (eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091"}]}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.$admin:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"
++++ severity: HIGH
+      values.owner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+      values.proxyAdmin:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"
+      values.proxyAdminOwner:
+-        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+    }
+```
+
+```diff
+    contract Xlayer Multisig (eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"propose transactions.","role":".Proposer"}
+      receivedPermissions.7.via.0.address:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+      receivedPermissions.7.via.0.delay:
++        3600
+      receivedPermissions.7.via.0:
++        {"address":"eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600,"role":".Proposer"}
+    }
+```
+
+```diff
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [opstack/Transactor] {
+    +++ description: A minimal contract that lets its owner send arbitrary calls and delegatecalls.
+      directlyReceivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 1h.
+```
+
+## Source code changes
+
+```diff
+...:0xE8b516B3Bf9A6593696462953d98991202f890Ee.sol |  427 +++++++
+ .../projects/xlayer/.flat/TimelockController.sol   | 1264 ++++++++++++++++++++
+ 2 files changed, 1691 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782911432 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4","role":"admin","via":[{"address":"eth:0xC6901aBf8D39079d6b028dA550BB643f10840552"},{"address":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091","role":".owner"}]
+    }
+```
+
+```diff
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [opstack/Transactor] {
+    +++ description: A minimal contract that lets its owner send arbitrary calls and delegatecalls.
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4","role":"admin","via":[{"address":"eth:0xC6901aBf8D39079d6b028dA550BB643f10840552"}]}]
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+      template:
++        "opstack/Transactor"
+      description:
++        "A minimal contract that lets its owner send arbitrary calls and delegatecalls."
+    }
+```
+
+Generated with discovered.json: 0x57f86e0e20ba4f4b1dbfbb35e9ecdd5dea2fc667
+
+# Diff at Fri, 25 Sep 2026 12:13:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c54798b83fbfc4919dbd395e330e0bc4be5f7f26 block: 1782911432
+- current timestamp: 1782911432
+
+## Description
+
+Replace naive config merge with explicit assignment
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782911432 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.
+      usedTypes.0.arg.8:
+-        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0xc3ec7dd59991d30e15f978a7b80813e7d93f6232
+
+# Diff at Wed, 23 Sep 2026 05:50:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1782911432
+- current timestamp: 1782911432
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782911432 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds_fmt.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.proofMaturityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.respectedGameType:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AccessManager (eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      fieldMeta.DISPUTE_GAME_FACTORY:
+-        {"severity":"HIGH"}
+      fieldMeta.isProposalPermissionlessMode:
+-        {"severity":"HIGH"}
+      fieldMeta.FALLBACK_TIMEOUT:
+-        {"severity":"HIGH"}
+      fieldMeta.FALLBACK_TIMEOUT_fmt.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.permissionedGameArgs:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC6901aBf8D39079d6b028dA550BB643f10840552) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x7aad529f0c6c58267989768c1437ccb74a85facc
+
+# Diff at Sun, 20 Sep 2026 18:22:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb454ea5283bcf30e392f86e07ac240d516636b4 block: 1782911432
+- current timestamp: 1782911432
+
+## Description
+
+ossification re-review: record field severities on critical contracts in shared templates
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782911432 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      fieldMeta.disputeGameFinalityDelaySeconds_fmt.severity:
++        "HIGH"
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.retirementTimestamp:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      fieldMeta.delay:
++        {"severity":"HIGH"}
+      fieldMeta.config:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
++        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
++        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
++        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
++        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
++        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.
+      fieldMeta.anchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.ethLockbox:
++        {"severity":"HIGH"}
+      fieldMeta.proofMaturityDelaySeconds:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AccessManager (eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      fieldMeta.FALLBACK_TIMEOUT_fmt.severity:
++        "HIGH"
+      fieldMeta.DISPUTE_GAME_FACTORY:
++        {"severity":"HIGH"}
+      fieldMeta.isProposalPermissionlessMode:
++        {"severity":"HIGH"}
+      fieldMeta.FALLBACK_TIMEOUT:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.permissionedGameArgs:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC6901aBf8D39079d6b028dA550BB643f10840552) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.portal:
++        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
++        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0x19f4578090c1d3bd340ba68a39f6d6a74b5c97dd
+
+# Diff at Fri, 18 Sep 2026 10:22:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1782911432
+- current timestamp: 1782911432
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782911432 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MIPS (eth:0x305D1C0EED9a0291686f3BfDf1F5E54aaeeF80e4) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.wethFromDGF:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC6901aBf8D39079d6b028dA550BB643f10840552) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      values.owner:
++        "eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA"
+      implementationNames.eth:0xe58C365Da30c746204022e61482bBE828cAA9091:
+-        ""
++        "Transactor"
+      sourceHashes:
++        ["0x30cc972c943afe1d0ae168d0ff682153ea14360e08c012a3af63352e541fed04"]
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xac53ef861ad2799306a527c382b10ff422947a62
 
 # Diff at Mon, 07 Sep 2026 08:38:04 GMT:

@@ -2,7 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getL2ArchivedEntries } from '~/server/features/layer2s/archived/getL2ArchivedEntries'
-import { getMetadata } from '~/ssr/head/getMetadata'
+import { getMetadata, SITE_TITLE } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
@@ -31,6 +31,8 @@ export async function getL2ArchivedData(
         openGraph: {
           image: '/meta-images/layer2s/archived/opengraph-image.png',
         },
+        name: 'Archived',
+        title: SITE_TITLE,
       }),
     },
     ssr: {

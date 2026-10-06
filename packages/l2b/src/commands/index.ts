@@ -37,6 +37,7 @@ import { MatchFlat } from './MatchFlat'
 import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
+import { Ossification } from './Ossification'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
 import { RegenerateShapeHashes } from './RegenerateShapeHashes'
@@ -92,6 +93,7 @@ export function getSubcommands() {
     MatchFlat,
     Minters,
     ModelPermissions,
+    Ossification,
     OPConfigs,
     RefreshDiscovery,
     RegenerateShapeHashes,

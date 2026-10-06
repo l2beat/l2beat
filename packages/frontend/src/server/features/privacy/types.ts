@@ -1,4 +1,11 @@
-import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
+import type {
+  PrivacyAdversaryId,
+  PrivacyAdversarySentiment,
+  PrivacyAlsoExposed,
+  PrivacyPromise,
+  Project,
+  ProjectZkCatalogInfo,
+} from '@l2beat/config'
 
 export type PrivacyProject = Project<
   'display' | 'privacyInfo' | 'statuses',
@@ -9,6 +16,7 @@ export type PrivacyProject = Project<
   | 'discoveryUpdates'
   | 'crops'
   | 'zkCatalogInfo'
+  | 'ossificationHistory'
 > & {
   /** Own zkCatalogInfo trusted setups, or those of privacyInfo.zkCatalogId. */
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
@@ -60,4 +68,24 @@ export interface PrivacyAsset {
   }
   depositedValueUsd: PrivacyDepositedValueUsd
   buckets: PrivacyBucket[]
+}
+
+/** One adversary cell, reduced to what tooltips and dots need. */
+export interface PrivacyAdversarySummaryCell {
+  id: PrivacyAdversaryId
+  label: string
+  description: string
+  value: string
+  sentiment: PrivacyAdversarySentiment
+  exposure: string
+  /** Other fields leaking beyond the public observer, with their labels. */
+  alsoExposed: (PrivacyAlsoExposed & { label: string })[]
+}
+
+export interface PrivacyAdversariesSummary {
+  promise: PrivacyPromise
+  /** Caption under the dots, e.g. "Link privacy". */
+  promiseLabel: string
+  /** In spine order: public observer, chain analyst, network observer, insider, future. */
+  cells: PrivacyAdversarySummaryCell[]
 }

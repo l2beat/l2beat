@@ -1,3 +1,240 @@
+Generated with discovered.json: 0x0988b9994d2b2f1144a1380094c0f3b8e53a055e
+
+# Diff at Thu, 01 Oct 2026 11:10:29 GMT:
+
+- id: 1f72cf8d
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1788265000
+- current timestamp: 1790850976
+
+## Description
+
+DLN on Ethereum enabled two new chains (Tempo, chain ID 4217 and Arc, chain ID 5042) in `DlnSource.dlnDestinationAddressesMap` and `DlnDestination.dlnSourceAddressesMap`. The counterparts are configured at the same addresses as on Ethereum.
+
+## Watched changes
+
+```diff
+    contract DlnDestination (eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f) [debridge/DlnDestination] {
+    +++ description: Destination side of the deBridge Liquidity Network (DLN) intent protocol: takers fulfill orders here permissionlessly by paying the 'take' amount, which is forwarded to the order recipient in the same transaction (this contract holds no user funds). The taker then sends an unlock message back to the source chain's DlnSource through the deBridge messaging protocol to claim the escrowed maker funds.
++++ description: The admin-configured DlnSource address per source chain ID, used as the receiver of outbound unlock/cancel messages.
+      values.dlnSourceAddressesMap.4217:
++        "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66"
++++ description: The admin-configured DlnSource address per source chain ID, used as the receiver of outbound unlock/cancel messages.
+      values.dlnSourceAddressesMap.5042:
++        "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66"
+    }
+```
+
+```diff
+    contract DlnSource (eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66) [debridge/DlnSource] {
+    +++ description: Source-side escrow of the deBridge Liquidity Network (DLN) intent protocol: users lock the 'give' funds of a cross-chain order directly in this contract. Funds are released to the taker (claimUnlock) or refunded to the maker (claimCancel) only on a message from the DlnDestination configured for the order's destination chain, authenticated via the CallProxy of the deBridge messaging protocol (i.e. ultimately by deBridge validator signatures).
++++ description: The admin-configured DlnDestination address per destination chain ID. Messages authenticated as coming from these addresses can unlock or refund all escrowed order funds.
+      values.dlnDestinationAddressesMap.4217:
++        "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f"
++++ description: The admin-configured DlnDestination address per destination chain ID. Messages authenticated as coming from these addresses can unlock or refund all escrowed order funds.
+      values.dlnDestinationAddressesMap.5042:
++        "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f"
+    }
+```
+
+Generated with discovered.json: 0x2dc555d803cf6b8129ea2152508b615d4863c000
+
+# Diff at Wed, 23 Sep 2026 05:45:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1788265000
+- current timestamp: 1788265000
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788265000 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xA7b88A746FA457578D5abd6234471f07D895F46b) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb54CD1e74f232C6de444464C81f81D13E6978816) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xff89572b0f3111ca253ad4fb6284078648c12dbe
+
+# Diff at Mon, 21 Sep 2026 11:23:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1788265000
+- current timestamp: 1788265000
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788265000 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xA7b88A746FA457578D5abd6234471f07D895F46b) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb54CD1e74f232C6de444464C81f81D13E6978816) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x3ebb62c508a85c3e303689b810d82afdc6cf258f
+
+# Diff at Fri, 18 Sep 2026 10:24:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1788265000
+- current timestamp: 1788265000
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788265000 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xA7b88A746FA457578D5abd6234471f07D895F46b) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb54CD1e74f232C6de444464C81f81D13E6978816) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xcdad374b569704b4178e82afe71c2068254015b0
 
 # Diff at Tue, 01 Sep 2026 13:08:53 GMT:

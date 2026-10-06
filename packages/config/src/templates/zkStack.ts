@@ -1,4 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
+import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -96,6 +97,7 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
+  ossificationHistory?: OssificationHistory
   chainId: number
   isUnderReview?: boolean
   stage?: ProjectScalingStage
@@ -364,6 +366,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
+    ossificationHistory: templateVars.ossificationHistory,
     ecosystemInfo: templateVars.ecosystemInfo,
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
@@ -373,7 +376,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     interopConfig: templateVars.interopConfig
       ? {
           description:
-            'The canonical or trust-minimized bridge: ZK stack uses canonical bridges to and from Ethereum, based on the security of validity proofs. Native interop within the stack is not enabled',
+            'The canonical or trust-minimized bridge: ZK stack uses canonical bridges to and from Ethereum, based on the security of validity proofs. Native interop within the stack is not enabled.',
           ...templateVars.interopConfig,
         }
       : undefined,

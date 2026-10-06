@@ -1,4 +1,8 @@
 {
+  // ossification: the DAO governance stack controls Taiko contracts only since the TaikoDAOController accepted
+  // ownership of the Taiko Token from the Taiko Multisig (tx 0xa4dfb666..., 2025-06-06); earlier set-up
+  // changes (e.g. the 2025-06-04 test signer removal) could not affect Taiko. Template used only by taiko.
+  "critical": { "sinceTimestamp": 1749196415 },
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "TaikoDAO",
   "description": "The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.",
@@ -7,6 +11,7 @@
   "ignoreRelatives": ["permsGranted", "permsRevoked"],
   "fields": {
     "permsGranted": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "groupBy": "who",
@@ -17,6 +22,7 @@
       "description": "Granted permissions in the DAO. Need to be manually compared to the revoked ones and hardcoded permissions need to be adjusted on change. Use AI with L1 contract context."
     },
     "permsRevoked": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "groupBy": "who",

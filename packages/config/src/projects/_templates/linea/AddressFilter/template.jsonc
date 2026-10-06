@@ -1,6 +1,31 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Blocklist consulted by the LineaRollup forced-transaction path: an address on this list cannot force-include transactions from L1, so the contract gates the escape hatch.",
+  "critical": true,
   "fields": {
+    "filteredAddresses": {
+      // The blocklist entries: adding an address bars that address from forcing
+      // transactions from L1. Individual (OFAC-style) entries apply the rule
+      // without changing it, like blacklisting a single game, so MEDIUM: they
+      // reach the update monitor without resetting the clock. The rule itself
+      // (which filter LineaRollup consults) is the HIGH LineaRollup.addressFilter.
+      "severity": "MEDIUM",
+      "description": "Addresses barred from sending forced transactions from L1 through the LineaRollup.",
+      "handler": {
+        "type": "event",
+        "select": "filteredAddresses",
+        "flatten": true,
+        "ignoreRelative": true,
+        "add": {
+          "event": "FilteredStatusesSet",
+          "where": ["=", "#isFiltered", true]
+        },
+        "remove": {
+          "event": "FilteredStatusesSet",
+          "where": ["!=", "#isFiltered", true]
+        }
+      }
+    },
     "accessControl": {
       "handler": {
         "type": "accessControl"

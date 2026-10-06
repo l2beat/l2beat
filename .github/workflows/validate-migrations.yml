@@ -20,7 +20,7 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
     services:
       postgres:
-        image: postgres:17
+        image: postgres:18
         env:
           POSTGRES_PASSWORD: postgres
         options: >-
@@ -39,7 +39,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: 'pnpm'
 
       - name: Install dependencies

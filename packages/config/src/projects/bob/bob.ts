@@ -1,29 +1,12 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DERIVATION } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
-import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('bob')
-
-const respectedGameType = discovery.getContractValue<number>(
-  'OptimismPortal2',
-  'respectedGameType',
-)
-const activeKailuaGame = discovery.getContractValue<ChainSpecificAddress>(
-  'DisputeGameFactory',
-  `game${respectedGameType}`,
-)
-const activeKailuaTreasury = discovery.getContractValue<ChainSpecificAddress>(
-  activeKailuaGame,
-  'KAILUA_TREASURY',
-)
-const activeKailuaVerifier = discovery.getContractValue<ChainSpecificAddress>(
-  activeKailuaTreasury,
-  'KAILUA_VERIFIER',
-)
+const chainStart = UnixTime(1712861989)
 
 export const bob: ScalingProject = opStackL2({
   ecosystemInfo: {
@@ -33,11 +16,14 @@ export const bob: ScalingProject = opStackL2({
   addedAt: UnixTime(1714521600), // 2024-05-01T00:00:00Z
   discovery,
   daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19634330 })],
-  additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPKailua],
+  additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
   isPartOfSuperchain: true,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'BOB',
+    warning:
+      'The fault proof system is deployed but is not functional. The dispute game commits to an op-program release that predates the Jovian hardfork active on the chain, so it cannot derive current blocks and no dispute can be resolved correctly by execution. Security relies entirely on the permissioned proposer and challengers.',
     aliases: ['Build on Bitcoin'],
     slug: 'bob',
     description:
@@ -67,9 +53,18 @@ export const bob: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1712861989),
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
   isNodeAvailable: true,
-  nodeSourceLink: 'https://boundless-xyz.github.io/kailua/operate.html', // also the standard op stack op-node and op-geth but that is mentioned in the link
+  nodeSourceLink:
+    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
   stateDerivation: DERIVATION.OPSTACK('BOB'),
   milestones: [
+    {
+      title: 'Withdrawals fall back to the permissioned game',
+      url: 'https://etherscan.io/tx/0x6f54452af0caf09baf9e3c24b167cc850901088082dff2a244a5c39b1dee3bc7',
+      date: '2026-09-16T00:00:00.00Z',
+      description:
+        'Guardian moves the respected game type back to the PermissionedDisputeGame; Kailua proposals stop.',
+      type: 'general',
+    },
     {
       title: 'Kona derivation bug',
       url: 'https://github.com/op-rs/kona/issues/3108',
@@ -102,29 +97,17 @@ export const bob: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-  nonTemplateProofSystem: {
-    type: 'Optimistic',
-    name: 'Kailua',
-    zkCatalogIds: [ProjectId('risc0')],
-    challengeProtocol: 'Single-step',
-  },
-
   associatedTokens: ['BOB'],
   chainConfig: {
     name: 'bob',
     chainId: 60808,
     coingeckoPlatform: 'bob-network',
     explorerUrl: 'https://explorer.gobob.xyz',
-    sinceTimestamp: UnixTime(1712861989),
+    sinceTimestamp: chainStart,
     apis: [
       { type: 'rpc', url: 'https://rpc.gobob.xyz/', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },
-  nonTemplateZkVerifiers: [activeKailuaVerifier],
-  nonTemplateProgramHashes: [
-    PROGRAM_HASHES(
-      discovery.getContractValue<string>(activeKailuaVerifier, 'FPVM_IMAGE_ID'),
-    ),
-  ],
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
 })

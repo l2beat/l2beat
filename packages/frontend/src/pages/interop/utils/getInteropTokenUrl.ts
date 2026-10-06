@@ -22,6 +22,15 @@ export function getInteropTokenUrl(token: {
   return ['/interop/tokens', token.id, ...suffix].join('/')
 }
 
+/** Tokens without a readable URL are still reachable by id alone. */
+export function getInteropTokenPagePath(token: {
+  id: string
+  symbol: string
+  issuer: string | null
+}): string {
+  return getInteropTokenUrl(token) ?? `/interop/tokens/${token.id}`
+}
+
 function slugify(value: string): string {
   return (
     value
