@@ -311,10 +311,10 @@ interface TemplatizeContext {
 
 /**
  * `--ai`: the templatizer runs between the levels of discovery, over every
- * contract found so far, one at a time. It writes through the
- * `TemplateService` the analyzer reads, so the engine analyzes again each
+ * contract found so far, one at a time. The engine then analyzes again each
  * contract a written template now applies to, and follows the relatives of
- * that analysis, not of the one made without the template.
+ * that analysis, not of the one made without the template. It shares the
+ * analyzer's `TemplateService`, which then needs no second load.
  */
 function templatizeBetweenLevels(context: TemplatizeContext): BetweenLevels {
   const templatizer = new Templatizer(

@@ -218,6 +218,11 @@ export class AddressAnalyzer {
     return analysis
   }
 
+  /** Reads again the template files that changed since they were read. */
+  reloadTemplates(): void {
+    this.templateService.reload()
+  }
+
   /**
    * Whether `analyze` would now extend another template than it did for
    * `analysis`, or the same template changed since. Templates change during

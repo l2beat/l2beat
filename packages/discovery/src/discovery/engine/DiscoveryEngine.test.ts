@@ -14,6 +14,7 @@ import {
 import type { AllProviders } from '../provider/AllProviders'
 import type { IProvider } from '../provider/IProvider'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
+import { SimpleDiscoveryCounter } from './DiscoveryCounter'
 import { type BetweenLevels, DiscoveryEngine } from './DiscoveryEngine'
 
 const base = {
@@ -167,6 +168,33 @@ describe(DiscoveryEngine.name, () => {
 
       expect(chain.summary(analyses)).toEqual(['A:T@2', 'B', 'D'])
       expect(chain.analyzed).toEqual(['A', 'B', 'A', 'D'])
+    })
+
+    it('follows only what a contract of an earlier level newly points to once analyzed again, so what it skipped is not skipped and counted again', async () => {
+      const chain = new FakeChain(
+        {
+          A: {
+            shape: 'T',
+            relatives: (t) =>
+              t?.version === 2 ? { B: [], X: [], D: [] } : { B: [], X: [] },
+          },
+          B: { relatives: () => ({}) },
+          D: { relatives: () => ({}) },
+        },
+        { T: 1 },
+      )
+      const counter = new SimpleDiscoveryCounter()
+
+      const analyses = await chain.discover(
+        ['A'],
+        chain.writeOnFirstSight({ B: 'T' }),
+        { overrides: { [chain.address('X')]: { ignoreDiscovery: true } } },
+        counter,
+      )
+
+      expect(chain.summary(analyses)).toEqual(['A:T@2', 'B', 'D'])
+      // A, B, the skip of X, and D: X counted once.
+      expect(counter.getCount()).toEqual(4)
     })
 
     it('analyzes a contract again with the template its referrer suggested, not the one its code matches', async () => {
@@ -362,6 +390,7 @@ class FakeChain {
     initial: string[],
     hook?: BetweenLevels,
     extra: object = {},
+    counter = new SimpleDiscoveryCounter(),
   ): Promise<Analysis[]> {
     const config = new ConfigRegistry({
       name: 'test',
@@ -378,7 +407,7 @@ class FakeChain {
       }),
       config.structure,
       UnixTime(1234),
-      undefined,
+      counter,
       hook,
     )
     return analyses
@@ -422,6 +451,7 @@ class FakeChain {
           ),
         } satisfies AnalyzedContract
       },
+      reloadTemplates: () => {},
       templateChanged: (analysis) => {
         if ((analysis as Analysis).type === 'Reference') {
           throw new Error('asked about a reference')
