@@ -211,7 +211,11 @@ export function definePrivacyAdversaries(
   return {
     promise: config.promise,
     adversaries: PRIVACY_ADVERSARY_ORDER.map((id) => PRIVACY_ADVERSARIES[id]),
-    fields: PRIVACY_FIELD_ORDER.map((id) => PRIVACY_FIELDS[id]),
+    fields: PRIVACY_FIELD_ORDER.map((id) => ({
+      ...PRIVACY_FIELDS[id],
+      description:
+        config.fieldDescriptions?.[id] ?? PRIVACY_FIELDS[id].description,
+    })),
     cells,
   }
 }

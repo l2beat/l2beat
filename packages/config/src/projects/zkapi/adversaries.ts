@@ -5,12 +5,16 @@ const SRC =
 const COMPANION =
   'https://github.com/ethereum/zkapi/blob/20aa542ae98e767c0507133fd34b12a56f5ccd3d/crates/zkapi-clientd/src/'
 
-// The protected operation is an offchain API authorization. The chain's
-// deposit-to-withdrawal link is deliberately marked exposed in every cell.
+// Linkage here means deposit-to-authorization. The public deposit-to-withdrawal
+// link is documented separately in the promise and exposure text.
 export const zkApiAdversaries = definePrivacyAdversaries({
   promise: {
-    protects: 'sender',
-    text: 'Hides which Ethereum deposit authorizes an API request. Each deposit and its eventual withdrawal are publicly linked by note id. The credential issuer and inference provider receive the API credential, and the provider receives prompts and responses.',
+    protects: 'linkage',
+    text: 'Hides which Ethereum deposit funds an API request. Deposits and withdrawals remain publicly linked by note id. The credential issuer and inference provider receive the API credential, and the provider receives prompts and responses.',
+  },
+  fieldDescriptions: {
+    linkage:
+      'Whether an API authorization can be tied to the deposit funding it.',
   },
   cells: {
     publicObserver: {
@@ -20,7 +24,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       advice:
         'Treat funding, payouts and total consumption as public. Use a funding wallet and payout address that you accept being linked. An escape dispute reveals additional authorization metadata.',
       interior: {
-        sender: 'private',
+        sender: 'exposed',
         recipient: {
           verdict: 'exposed',
           note: 'Payments are for the configured service operator.',
@@ -31,8 +35,8 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         },
         asset: 'exposed',
         linkage: {
-          verdict: 'exposed',
-          note: 'Every closure identifies the original deposit by note id.',
+          verdict: 'private',
+          note: 'Request proofs hide the funding note. Publishing a challenge reveals its deposit-to-authorization link.',
         },
       },
       sources: [
@@ -51,14 +55,14 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       advice:
         'Check that other active notes can cover your request budget. Avoid authorizing immediately after funding. Choosing a fresh payout address does not remove the published note-id link.',
       interior: {
-        sender: {
-          verdict: 'atRisk',
-          note: 'The eligible set may contain only one plausible note.',
-        },
+        sender: 'exposed',
         recipient: 'exposed',
         amount: 'atRisk',
         asset: 'exposed',
-        linkage: 'exposed',
+        linkage: {
+          verdict: 'atRisk',
+          note: 'The eligible set may contain only one plausible note.',
+        },
       },
       sources: [
         { contract: 'ZkApiVault' },
@@ -76,17 +80,17 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       advice:
         'Use an inspected browser SDK build with a reviewed production profile, route all traffic and wallet broadcasts through Tor, and read Ethereum through your own node. Changing the pinned RPC requires a reviewed profile and matching manifest. For the desktop client, disable credential reuse and route the whole application, including its Rust companion. The relay setting alone does not cover companion requests.',
       interior: {
-        sender: {
-          verdict: 'atRisk',
-          note: 'Direct traffic or desktop note-path queries can identify the funding account. A browser using common snapshots and separately isolated network identities avoids this direct link.',
-        },
+        sender: 'exposed',
         recipient: 'exposed',
         amount: {
           verdict: 'atRisk',
           note: 'Request budgets, settlement responses and provider usage reach their respective services over TLS.',
         },
         asset: 'exposed',
-        linkage: 'exposed',
+        linkage: {
+          verdict: 'atRisk',
+          note: 'Direct traffic or desktop note-path queries can link authorizations to deposits. A browser using common snapshots and separately isolated network identities avoids this direct link.',
+        },
       },
       sources: [
         {
@@ -118,17 +122,17 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       advice:
         'Run inspected local code, use the browser snapshot path, isolate funding and API network identities, and send no identifying content. Disable desktop key reuse with --key-reuse-window-seconds 0. The issuer and provider still learn the credential and content needed to deliver the service.',
       interior: {
-        sender: {
-          verdict: 'atRisk',
-          note: 'Operator-held metadata and the desktop indexer path can identify the funding wallet. The proof alone does not reveal it.',
-        },
+        sender: 'exposed',
         recipient: 'exposed',
         amount: {
           verdict: 'exposed',
           note: 'The operator and provider know individual billed usage even though the remaining note balance is hidden.',
         },
         asset: 'exposed',
-        linkage: 'exposed',
+        linkage: {
+          verdict: 'atRisk',
+          note: 'Operator-held metadata and desktop indexer queries can link authorizations to deposits. The proof alone does not reveal the link.',
+        },
       },
       sources: [
         {
@@ -163,17 +167,17 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       advice:
         'Treat chain data and information given to providers as permanently available. Preserve local secrets carefully and avoid identifiable prompts. The protocol has no post-quantum proof or signature protection.',
       interior: {
-        sender: {
-          verdict: 'atRisk',
-          note: 'Retained indexer and service logs can connect authorizations to public deposits.',
-        },
+        sender: 'exposed',
         recipient: 'exposed',
         amount: {
           verdict: 'atRisk',
           note: 'Per-request charges require retained offchain records. Note-level totals are already public.',
         },
         asset: 'exposed',
-        linkage: 'exposed',
+        linkage: {
+          verdict: 'atRisk',
+          note: 'Retained indexer and service logs can connect authorizations to public deposits.',
+        },
       },
       sources: [
         { contract: 'ZkApiVault' },

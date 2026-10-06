@@ -1215,7 +1215,7 @@ export interface PrivacyAttribute {
 }
 
 export type PrivacyCategoryId =
-  | 'anonymousAuthorization'
+  | 'anonymousAccess'
   | 'pool'
   | 'shieldedLedger'
   | 'stealthAddress'
@@ -1367,6 +1367,8 @@ export interface PrivacyPromise {
 
 export interface PrivacyAdversariesConfig {
   promise: PrivacyPromise
+  /** Project-specific definitions, keeping the default transfer meanings elsewhere. */
+  fieldDescriptions?: Partial<Record<PrivacyField, string>>
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
 }
 

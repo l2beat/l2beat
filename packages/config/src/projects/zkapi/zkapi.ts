@@ -173,7 +173,7 @@ export const zkapi: BaseProject = {
     ],
   },
   privacyInfo: {
-    category: PRIVACY_CATEGORIES.anonymousAuthorization,
+    category: PRIVACY_CATEGORIES.anonymousAccess,
     trackedOn: ['ethereum'],
     tokens: [
       {
