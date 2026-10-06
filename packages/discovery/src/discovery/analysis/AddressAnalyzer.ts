@@ -217,4 +217,27 @@ export class AddressAnalyzer {
 
     return analysis
   }
+
+  /**
+   * Whether `analyze` would now extend another template than it did for
+   * `analysis`, or the same template changed since. Templates change during
+   * discovery only when something writes them between levels. A template a
+   * referrer suggested stays the referrer's choice; the referrer suggests
+   * another only when it is analyzed again.
+   */
+  templateChanged(analysis: AnalyzedContract | AnalyzedEOA): boolean {
+    const used = analysis.extendedTemplate
+    const now =
+      used !== undefined && used.reason !== 'byShapeMatch'
+        ? used.template
+        : this.templateService.findMatchingTemplates(
+            { sources: analysis.sourceBundles },
+            analysis.address,
+          )[0]
+    return (
+      now !== used?.template ||
+      (now !== undefined &&
+        this.templateService.getTemplateHash(now) !== used?.templateHash)
+    )
+  }
 }

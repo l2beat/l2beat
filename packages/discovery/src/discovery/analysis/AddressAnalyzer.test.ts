@@ -429,4 +429,126 @@ describe(AddressAnalyzer.name, () => {
       })
     })
   })
+
+  describe(AddressAnalyzer.prototype.templateChanged.name, () => {
+    const address = ChainSpecificAddress.random()
+    const [h1, h2] = [Hash256.random(), Hash256.random()]
+
+    // `templates` is what the analyzer reads of the template files; a test
+    // changes it between an analysis and the check, as a write between the
+    // levels of discovery does.
+    function setup() {
+      const templates = {
+        matching: [] as string[],
+        hashes: {} as Record<string, Hash256>,
+      }
+      const analyzer = new AddressAnalyzer(
+        mockObject<ProxyDetector>({
+          detectProxy: async () => ({
+            type: 'immutable',
+            values: {},
+            deployment: undefined,
+            addresses: [address],
+          }),
+        }),
+        mockObject<SourceCodeService>({
+          getSources: async () => ({
+            name: 'Test',
+            isVerified: true,
+            abi: [],
+            abis: {},
+            sources: [],
+          }),
+        }),
+        mockObject<HandlerExecutor>({
+          execute: async () => ({
+            results: [],
+            values: {},
+            usedTypes: [],
+            errors: {},
+          }),
+        }),
+        mockObject<TemplateService>({
+          findMatchingTemplates: () => templates.matching,
+          getTemplateHash: (template: string) => {
+            const hash = templates.hashes[template]
+            if (hash === undefined) {
+              throw new Error(`no template ${template}`)
+            }
+            return hash
+          },
+          loadContractTemplate: () => StructureContract.parse({}),
+        }),
+      )
+      const analyze = async (suggested?: Set<string>) => {
+        const analysis = await analyzer.analyze(
+          mockObject<IProvider>({
+            getBytecode: async () => Bytes.fromHex('0x1234'),
+            chain: 'ethereum',
+          }),
+          address,
+          makeEntryStructureConfig({ overrides: {} }, address),
+          suggested,
+        )
+        if (analysis.type !== 'Contract') {
+          throw new Error('expected a contract')
+        }
+        return analysis
+      }
+      return { templates, analyzer, analyze }
+    }
+
+    it('is false right after the analysis, with or without a template', async () => {
+      const { templates, analyzer, analyze } = setup()
+      expect(analyzer.templateChanged(await analyze())).toEqual(false)
+
+      templates.matching = ['T']
+      templates.hashes = { T: h1, R: h2 }
+      expect(analyzer.templateChanged(await analyze())).toEqual(false)
+      expect(analyzer.templateChanged(await analyze(new Set(['R'])))).toEqual(
+        false,
+      )
+    })
+
+    it('is true once a template matches a contract analyzed without one', async () => {
+      const { templates, analyzer, analyze } = setup()
+      const analysis = await analyze()
+
+      templates.matching = ['T']
+      templates.hashes = { T: h1 }
+      expect(analyzer.templateChanged(analysis)).toEqual(true)
+    })
+
+    it('is true once the template it was analyzed with changes', async () => {
+      const { templates, analyzer, analyze } = setup()
+      templates.matching = ['T']
+      templates.hashes = { T: h1 }
+      const analysis = await analyze()
+
+      templates.hashes = { T: h2 }
+      expect(analyzer.templateChanged(analysis)).toEqual(true)
+    })
+
+    it('is true once its code matches another template', async () => {
+      const { templates, analyzer, analyze } = setup()
+      templates.matching = ['T']
+      templates.hashes = { T: h1, U: h2 }
+      const analysis = await analyze()
+
+      templates.matching = ['U']
+      expect(analyzer.templateChanged(analysis)).toEqual(true)
+    })
+
+    it('keeps the template a referrer suggested whatever the shapes match, until that template changes', async () => {
+      const { templates, analyzer, analyze } = setup()
+      templates.hashes = { R: h1, T: h1 }
+      const analysis = await analyze(new Set(['R']))
+
+      templates.matching = ['T']
+      expect(analyzer.templateChanged(analysis)).toEqual(false)
+
+      templates.hashes = { R: h2, T: h1 }
+      expect(analyzer.templateChanged(analysis)).toEqual(true)
+    })
+  })
 })
