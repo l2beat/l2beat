@@ -272,6 +272,12 @@ describe(CodexClient.name, () => {
         readModelFromRollout(path.join(directory, 'sessions'), THREAD),
       ).toEqual('gpt-x')
     })
+
+    it('returns undefined when the sessions directory cannot be read', () => {
+      const notADirectory = path.join(directory, 'sessions-file')
+      fs.writeFileSync(notADirectory, '')
+      expect(readModelFromRollout(notADirectory, THREAD)).toEqual(undefined)
+    })
   })
 })
 

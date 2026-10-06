@@ -392,9 +392,10 @@ The one exception is `apply_patch` for a model whose catalogue entry asks for
 it (gpt-5.5 when this was written), which no setting removes and the
 read-only sandbox refuses. opencode merges the turn's config into the user's
 global config and into any `opencode.json` in a directory above the turn's,
-and a `"permission": {"bash": "allow"}` in either brings `bash` back, so the
-global config directory is pointed at an empty one and the search upwards is
-switched off; the login lives in the data directory and stays. The reason is not distrust of
+and applies `OPENCODE_PERMISSION` on top; a `"permission": {"bash": "allow"}`
+in any of them brings `bash` back, so the global config directory is pointed
+at an empty one, the search upwards is switched off and the variable is
+dropped; the login lives in the data directory and stays. The reason is not distrust of
 the model but of what a read tool can reach: `packages/backend/.env` holds RPC
 keys, and neither client can restrict reads to a directory. Instead the prompt
 carries everything the model needs, including the README sections for

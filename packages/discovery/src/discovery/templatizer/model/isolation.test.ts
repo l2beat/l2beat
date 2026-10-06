@@ -20,9 +20,9 @@ import { OpenCodeClient } from './OpenCodeClient'
  * Codex runs with the user's login, because with a ChatGPT login it adds
  * the ChatGPT apps to the request, and with a model it has no catalogue
  * entry for, so that no model-specific tool hides or adds anything.
- * opencode runs with a global config and a config in a directory above the
- * scratch one that both allow `bash`, which opencode would merge into the
- * turn's own config.
+ * opencode runs with a global config, a config in a directory above the
+ * scratch one and an `OPENCODE_PERMISSION` that all allow `bash`, which
+ * opencode would merge into the turn's own config.
  */
 describe('model isolation against the installed CLIs', function () {
   this.timeout(90_000)
@@ -58,7 +58,7 @@ describe('model isolation against the installed CLIs', function () {
     expectNoTools(server.requests)
   })
 
-  it('opencode sends a request with no tools, whatever the global and parent configs allow', async function () {
+  it('opencode sends a request with no tools, whatever the global and parent configs and the environment allow', async function () {
     const opencode = findBinary('opencode')
     if (opencode === undefined) {
       this.skip()
@@ -95,14 +95,17 @@ describe('model isolation against the installed CLIs', function () {
     const previous = {
       XDG_CONFIG_HOME: process.env.XDG_CONFIG_HOME,
       TMPDIR: process.env.TMPDIR,
+      OPENCODE_PERMISSION: process.env.OPENCODE_PERMISSION,
     }
     process.env.XDG_CONFIG_HOME = globalConfig
     process.env.TMPDIR = parent
+    process.env.OPENCODE_PERMISSION = JSON.stringify({ bash: 'allow' })
     try {
       await expect(client.start({ prompt: 'hi', schema: {} })).toBeRejected()
     } finally {
       restoreEnv('XDG_CONFIG_HOME', previous.XDG_CONFIG_HOME)
       restoreEnv('TMPDIR', previous.TMPDIR)
+      restoreEnv('OPENCODE_PERMISSION', previous.OPENCODE_PERMISSION)
     }
 
     // The turn's own request only: with the title given, opencode does not
