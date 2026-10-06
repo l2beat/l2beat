@@ -30,7 +30,10 @@ const CONCURRENCY = 4
 const POLL_INTERVAL = 1
 /** Blocks reach the node about a second into their slot at the earliest */
 const FIRST_POLL_INTO_SLOT = 1
-/** How long a page's ask is held open when there is nothing new; within the server's 25 s request timeout */
+/**
+ * How long a page's ask takes at most when there is nothing new, the wait for
+ * the first answer included; within the server's 25 s request timeout
+ */
 const LONG_POLL = 20
 const MAX_RETRY_DELAY = 30
 /**
@@ -178,18 +181,21 @@ export class LiveBlobsFeed {
    * server has it, rather than at its next ask
    */
   async latestAfter({ after }: LiveBlobsParams) {
+    const askedAt = this.now()
     const blobs = await this.latest()
     if (after === undefined || !blobs || blobs.head > after) return blobs
+    const left = Math.max(0, LONG_POLL - (this.now() - askedAt))
     await new Promise<void>((resolve) => {
       const done = () => {
         clearTimeout(timer)
         this.waiting.delete(done)
         resolve()
       }
-      const timer = setTimeout(done, LONG_POLL * 1000)
+      const timer = setTimeout(done, left * 1000)
       this.waiting.add(done)
     })
-    return this.latest()
+    // not `latest`, which would wait for a first answer all over again
+    return this.snapshot()
   }
 
   /** Resolves once the backfill running now, if any, is done */
@@ -203,18 +209,25 @@ export class LiveBlobsFeed {
   }
 
   private async poll() {
+    const wasLive = this.failures === 0
+    let changed = false
     try {
       const head = await this.source.headSlot()
       const moved = head !== this.head
+      const missing = slotsMissing(this.blocks, head, head - RECENT_SLOTS)
       const fetched = await this.fetchAll([
-        ...slotsMissing(this.blocks, head, head - RECENT_SLOTS),
+        ...missing,
         ...(moved ? slotsUnsettled(this.blocks, head) : []),
       ])
+      // a block that failed to come with its head, and came on this try
+      const filled =
+        slotsMissing(this.blocks, head, head - RECENT_SLOTS).length <
+        missing.length
       this.head = head
       forgetOld(this.blocks, head)
       this.failures = fetched ? 0 : this.failures + 1
       this.backfill(head)
-      if (moved) for (const done of [...this.waiting]) done()
+      changed = moved || filled
     } catch (error) {
       // logged once per outage, not on every retry
       if (this.failures === 0) {
@@ -222,7 +235,13 @@ export class LiveBlobsFeed {
       }
       this.failures++
     }
+    // the page also shows whether the node is reached, so it hears of that too
+    if (changed || wasLive !== (this.failures === 0)) this.answerWaiting()
     this.scheduleNext()
+  }
+
+  private answerWaiting() {
+    for (const done of [...this.waiting]) done()
   }
 
   /** Fills in the rest of the window. A gap left by a failure is retried on the next poll */
