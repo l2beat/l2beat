@@ -2,13 +2,13 @@ import type { Env } from '@l2beat/backend-tools'
 import type {
   ChainConfig,
   PrivacyAnonymitySetDepositSource,
-  PrivacyBucketAddress,
   ProjectPrivacyBucket,
   ProjectPrivacyOnchainRelayerSource,
   ProjectPrivacyRailgunWakuRelayerSource,
   ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
+import { getPrivacyBucketAddress } from '@l2beat/shared'
 import {
   assert,
   assertUnreachable,
@@ -345,17 +345,4 @@ function getErc20TransferTopics(params: {
 function addressTopic(address: EthereumAddress | undefined): string | null {
   if (address === undefined) return null
   return utils.hexZeroPad(address, 32).toLowerCase()
-}
-
-function getPrivacyBucketAddress(address: PrivacyBucketAddress): {
-  chain: string
-  address: string
-} {
-  if (typeof address !== 'string') {
-    return address
-  }
-  return {
-    chain: ChainSpecificAddress.longChain(address),
-    address: ChainSpecificAddress.address(address).toString(),
-  }
 }
