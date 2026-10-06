@@ -6,7 +6,8 @@ const GAP = 14
 /**
  * A tooltip that follows the pointer over a drawing, where there is no
  * element per mark to hang the site's own tooltip on. It sits beside the
- * pointer, on whichever side has room.
+ * pointer, on whichever side has room. It fades in when it shows up, then
+ * follows the pointer and changes at once: easing there would only lag.
  */
 export function PointerTooltip({
   x,
@@ -24,7 +25,7 @@ export function PointerTooltip({
   return (
     <div
       className={cn(
-        'pointer-events-none absolute z-10 w-max max-w-[260px] rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary shadow-popover dark:bg-header-secondary',
+        'pointer-events-none absolute z-10 w-max max-w-[260px] rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary starting:opacity-0 shadow-popover transition-opacity duration-150 ease-out dark:bg-header-secondary',
       )}
       style={{
         left: flip ? undefined : x + GAP,

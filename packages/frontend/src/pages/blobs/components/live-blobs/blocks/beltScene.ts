@@ -29,6 +29,13 @@ export interface Playback {
   arrivals: Map<number, number>
   /** For reduced motion: blocks step in and batches appear where they rest */
   still: boolean
+  /**
+   * How much each poster's tiles stand out, by poster index: 1, or less while
+   * another poster is highlighted. Eased toward the scene's highlight
+   */
+  emphasis: number[]
+  /** Second the first blocks came in, to fade them in rather than pop up */
+  revealedAt: number | undefined
 }
 
 /** Filled in while drawing, for the pointer to find batches by */

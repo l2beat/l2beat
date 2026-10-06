@@ -26,6 +26,7 @@ import {
   fallDuration,
   moveTile,
   restingMotion,
+  revealed,
   type TileMotion,
 } from './motion'
 
@@ -45,14 +46,17 @@ export function drawBelt(
   const { layout } = scene
   ctx.clearRect(0, 0, layout.width, layout.height)
   const belt = beltAt(playback, layout, ctx.getTransform().a)
+  const reveal = revealed(playback.revealedAt, now)
 
   // Pass 1: the rules every block keeps to, under the belt
   drawRules(ctx, layout, scene.layers)
 
-  // Pass 2: what rides the belt, each block fading out towards the ends
-  drawRacks(ctx, scene, belt, landingPulse(scene, playback, belt, now))
-  drawTiles(ctx, scene, playback, belt, now, frame)
-  drawBlockNumbers(ctx, scene, belt, frame)
+  // Pass 2: the belt, each block fading out towards the ends, and the bay's
+  // light between the racks and the tiles in them
+  drawRacks(ctx, scene, belt)
+  drawBay(ctx, scene, belt, landingPulse(scene, playback, belt, now))
+  drawTiles(ctx, scene, playback, belt, now, frame, reveal)
+  drawBlockNumbers(ctx, scene, belt, frame, reveal)
 
   // Pass 3: what stays put, on top
   drawHoverRing(ctx, scene, frame, hovered)
@@ -62,8 +66,6 @@ export function drawBelt(
   drawLastBatchNote(ctx, scene, belt, frame)
 }
 
-/** Opacity of other posters' tiles while one poster is highlighted */
-const DIMMED = 0.15
 /** Seconds over which the bay's glow settles after a landing */
 const PULSE_DECAY = 0.18
 
@@ -95,14 +97,11 @@ function drawRacks(
   ctx: CanvasRenderingContext2D,
   scene: BeltScene,
   belt: BeltPosition,
-  pulse: number,
 ) {
   const { layout, layers } = scene
   const { rackTop, rackWidth, rackHeight } = layout
 
-  // The two at the bay are drawn on their own, as they change look
-  const sealedEnd = belt.current - 1
-  for (let slot = belt.first; slot < sealedEnd; slot++) {
+  for (let slot = belt.first; slot < belt.current; slot++) {
     const left = rackLeft(belt, layout, slot)
     ctx.globalAlpha = presenceAtEnds(layout, left, left + rackWidth)
     ctx.drawImage(layers.sealedRack, left, rackTop, rackWidth, rackHeight)
@@ -112,24 +111,42 @@ function drawRacks(
     ctx.globalAlpha = presenceAtEnds(layout, left, left + rackWidth)
     ctx.drawImage(layers.futureRack, left, rackTop, rackWidth, rackHeight)
   }
-  ctx.globalAlpha = 1
 
-  drawBayRack(
-    ctx,
-    scene,
-    rackLeft(belt, layout, belt.current - 1),
-    1 - belt.handover,
-    'sealed',
-    0,
-  )
-  drawBayRack(
-    ctx,
-    scene,
-    rackLeft(belt, layout, belt.current),
-    belt.handover,
-    'future',
-    pulse,
-  )
+  // The rack rolling into the bay shows the room it has as it comes, so it
+  // does not change look in a single frame
+  const left = rackLeft(belt, layout, belt.current)
+  ctx.globalAlpha = 1 - belt.handover
+  ctx.drawImage(layers.futureRack, left, rackTop, rackWidth, rackHeight)
+  ctx.globalAlpha = belt.handover
+  ctx.drawImage(layers.sealedRack, left, rackTop, rackWidth, rackHeight)
+  ctx.globalAlpha = 1
+}
+
+/**
+ * The loading bay: its light, its tint and its lit outline. The bay is a
+ * place, so it stays under the caption as the belt slides one rack out of it
+ * and the next in, and there is only ever one of it on screen.
+ */
+function drawBay(
+  ctx: CanvasRenderingContext2D,
+  scene: BeltScene,
+  belt: BeltPosition,
+  pulse: number,
+) {
+  const { layout, palette, layers } = scene
+  const left = belt.bayLeft
+  drawChute(ctx, scene, left)
+  ctx.beginPath()
+  traceRackBody(ctx, layout, left)
+  ctx.fillStyle = palette.bayFill
+  ctx.fill()
+  drawLitOutline(ctx, layout, layers, left)
+  if (pulse > 0.02) {
+    // a second pass doubles the glow at its peak
+    ctx.globalAlpha = pulse
+    drawLitOutline(ctx, layout, layers, left)
+    ctx.globalAlpha = 1
+  }
 }
 
 /**
@@ -153,46 +170,6 @@ function drawChute(
     layout.tileSize,
     layout.rackTop - top,
   )
-}
-
-/**
- * The rack in the bay, lit by `light` (0–1). At handover the block leaving
- * dims into a sealed rack and the one arriving lights up out of a future
- * one, so no rack changes look in a single frame.
- */
-function drawBayRack(
-  ctx: CanvasRenderingContext2D,
-  scene: BeltScene,
-  left: number,
-  light: number,
-  unlit: 'sealed' | 'future',
-  pulse: number,
-) {
-  const { layout, palette, layers } = scene
-  const { rackTop, rackWidth, rackHeight } = layout
-  ctx.save()
-  ctx.globalAlpha = unlit === 'sealed' ? 1 : 1 - light
-  const unlitRack = unlit === 'sealed' ? layers.sealedRack : layers.futureRack
-  ctx.drawImage(unlitRack, left, rackTop, rackWidth, rackHeight)
-  if (light > 0) {
-    ctx.globalAlpha = light
-    drawChute(ctx, scene, left)
-    // the room it has fades in as it takes the bay
-    if (unlit === 'future') {
-      ctx.drawImage(layers.sealedRack, left, rackTop, rackWidth, rackHeight)
-    }
-    ctx.beginPath()
-    traceRackBody(ctx, layout, left)
-    ctx.fillStyle = palette.bayFill
-    ctx.fill()
-    drawLitOutline(ctx, layout, layers, left)
-    if (pulse > 0.02) {
-      // a second pass doubles the glow at its peak
-      ctx.globalAlpha = light * pulse
-      drawLitOutline(ctx, layout, layers, left)
-    }
-  }
-  ctx.restore()
 }
 
 function drawLitOutline(
@@ -221,6 +198,7 @@ function drawTiles(
   belt: BeltPosition,
   now: number,
   frame: BeltFrame,
+  reveal: number,
 ) {
   const { layout, palette, blocks, highlighted } = scene
   frame.hits.length = 0
@@ -242,10 +220,14 @@ function drawTiles(
       const key = batchKey(slot, index)
       const arrivedAt = playback.arrivals.get(key)
       const below = batch.blobsBelow
-      const isHighlighted = highlighted === batch.posterIndex
-      if (isHighlighted && inView) frame.highlightedInView += batch.blobs
+      if (highlighted === batch.posterIndex && inView) {
+        frame.highlightedInView += batch.blobs
+      }
       ctx.globalAlpha =
-        presence * (highlighted === undefined || isHighlighted ? 1 : DIMMED)
+        presence *
+        (playback.emphasis[batch.posterIndex] ?? 1) *
+        // a batch dropping in has a fade of its own
+        (arrivedAt === undefined ? reveal : 1)
 
       for (let i = 0; i < batch.blobs; i++) {
         const bounds = tileBounds(layout, below + i, i, batch.blobs)

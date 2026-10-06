@@ -167,7 +167,8 @@ export function LiveBlocks({
           ref={canvasRef}
           role="img"
           aria-label={describeForScreenReaders(limits, average)}
-          className="absolute inset-0 size-full"
+          // fades in where the skeleton was, rather than swapping for it
+          className="absolute inset-0 size-full starting:opacity-0 transition-opacity duration-300 ease-out"
         />
         {belt.hover && hovered && hoveredPoster && (
           <BatchTooltip

@@ -117,12 +117,13 @@ const PulseBar = memo(function PulseBar({
   grow: boolean
 }) {
   const ref = useRef<SVGRectElement>(null)
+  // straight to its height: past it, it would show more blobs than it had
   // biome-ignore lint/correctness/useExhaustiveDependencies: on mount only
   useLayoutEffect(() => {
     if (!grow || !ref.current) return
     ref.current.animate(
       [{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }],
-      { duration: 700, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)' },
+      { duration: 500, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' },
     )
   }, [])
   return (

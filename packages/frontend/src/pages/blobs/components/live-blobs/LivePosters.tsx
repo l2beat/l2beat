@@ -23,7 +23,7 @@ import {
   formatWhole,
 } from './blocks/format'
 import { toRgba } from './color'
-import { type Landing, useHeldUntilLanded } from './landings'
+import { type Landing, useLandedTotal } from './landings'
 import { Pop, RollingNumber, useFlash, useNow, useReorder } from './liveMotion'
 import { type LivePoster, UNKNOWN_ID } from './model'
 import { useLiveBlobs } from './useLiveBlobs'
@@ -174,12 +174,12 @@ function PosterRow({
     (landing: Landing) => landing.posterId === posterId,
     [posterId],
   )
-  const { held, arrival } = useHeldUntilLanded(
+  const { value: blobs, arrival } = useLandedTotal(
     head,
+    row.blobs,
     row.lastSlot === head ? row.lastBlobs : 0,
     isPosters,
   )
-  const blobs = row.blobs - held
   useFlash(ref, arrival, toRgba(row.poster.color, 0.22))
 
   return (
