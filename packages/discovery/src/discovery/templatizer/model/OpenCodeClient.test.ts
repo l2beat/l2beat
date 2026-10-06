@@ -116,6 +116,7 @@ describe(OpenCodeClient.name, () => {
     expect(args[args.indexOf('--agent') + 1]).toEqual(OPENCODE_AGENT)
     expect(args[args.indexOf('--variant') + 1]).toEqual('high')
     expect(args).not.toInclude('--session')
+    expect(args[args.indexOf('--title') + 1]).toEqual('templatizer')
     expect(stdin).toEqual('hello model')
 
     expect(turn.threadId).toEqual('ses_1')
@@ -147,6 +148,7 @@ describe(OpenCodeClient.name, () => {
     expect(args[args.indexOf('--agent') + 1]).toEqual(OPENCODE_AGENT)
     expect(pwd).toEqual(cwd)
     expect(args).not.toInclude('--variant')
+    expect(args).not.toInclude('--title')
     expect(stdin).toEqual('fix it')
   })
 
