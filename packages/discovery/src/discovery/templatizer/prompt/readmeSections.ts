@@ -157,14 +157,21 @@ function undocumentedHandler(type: string): string {
   return `\`${type}\` handler: the README does not document it; its definition keys are: ${keys}.`
 }
 
-/** Every operator a blip program applies: the first element of each nested array. */
+/**
+ * Every operator a blip program applies: the first element of each nested
+ * program. Not every array is one: `set` takes a path first and `shape`
+ * takes `[key, program]` pairs, as `validateBlip` reads them.
+ */
 export function editOperatorsOf(edit: unknown): string[] {
-  if (!Array.isArray(edit)) {
+  if (!Array.isArray(edit) || typeof edit[0] !== 'string') {
     return []
   }
-  const [operator, ...args] = edit as unknown[]
-  return [
-    ...(typeof operator === 'string' ? [operator] : []),
-    ...args.flatMap(editOperatorsOf),
-  ]
+  const [operator, ...args] = edit as [string, ...unknown[]]
+  const programs =
+    operator === 'set'
+      ? args.slice(1)
+      : operator === 'shape'
+        ? args.map((arg) => (Array.isArray(arg) ? arg[1] : undefined))
+        : args
+  return [operator, ...programs.flatMap(editOperatorsOf)]
 }
