@@ -181,10 +181,10 @@ none of the next level has started. Nothing is in flight then, so the
 templatizer works one contract at a time. It is given every analysis made so
 far and passes over the contracts it was asked about at an earlier level.
 
-The templatizer writes through the same `TemplateService` the analyzer reads.
-After each call, the engine asks the analyzer, for every analysis it holds,
-whether `analyze` would now extend another template, or the same template
-changed since (`AddressAnalyzer.templateChanged`). Those addresses are
+After each call, the analyzer reads again the template files that changed,
+and the engine asks it, for every analysis it holds, whether `analyze` would
+now extend another template, or the same template changed since
+(`AddressAnalyzer.templateChanged`). Those addresses are
 analysed again. That is the contract the model wrote a template for, every
 contract of the same shape, and, once a template was added to, every contract
 it applies to, at whatever level it was found. A template that a referrer's

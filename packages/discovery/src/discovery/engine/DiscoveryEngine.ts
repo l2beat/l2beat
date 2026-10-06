@@ -29,10 +29,11 @@ export interface AddressStats {
 /**
  * Runs between two levels of discovery: every analysis of a level has
  * finished and none of the next level has started. It gets every analysis
- * so far and may write templates. The engine then analyzes again each
- * address whose template changed under it and calls it again, until it
- * changes nothing; only then does it follow the level's relatives, as the
- * templates now make them. `l2b discover --ai` templatizes here.
+ * so far and may write template files. The engine then reads the templates
+ * again, analyzes again each address whose template changed under it and
+ * calls it again, until it changes nothing; only then does it follow the
+ * level's relatives, as the templates now make them. `l2b discover --ai`
+ * templatizes here.
  */
 export type BetweenLevels = (analyses: readonly Analysis[]) => Promise<void>
 
@@ -141,8 +142,12 @@ export class DiscoveryEngine {
         }),
       )
 
+      // The relatives an address of an earlier level, analyzed again, had
+      // already followed: following them again would only skip again what
+      // was skipped, and count it again.
+      const followed: Record<string, AddressesWithTemplates> = {}
       if (betweenLevels !== undefined) {
-        const again = await this.settleTemplates(
+        const replaced = await this.settleTemplates(
           betweenLevels,
           resolved,
           (address) =>
@@ -155,7 +160,14 @@ export class DiscoveryEngine {
             ),
           `↓${depth} again`,
         )
-        analyzed.push(...again)
+        for (const [address, before] of Object.entries(replaced)) {
+          if (!analyzed.includes(before.address)) {
+            analyzed.push(before.address)
+            if (before.type === 'Contract') {
+              followed[address] = before.relatives
+            }
+          }
+        }
       }
 
       for (const address of analyzed) {
@@ -163,9 +175,13 @@ export class DiscoveryEngine {
         if (analysis?.type !== 'Contract') {
           continue
         }
+        const before = followed[address.toString()] ?? {}
         for (const [address, suggestedTemplates] of Object.entries(
           analysis.relatives,
         )) {
+          if (sameTemplates(before[address], suggestedTemplates)) {
+            continue
+          }
           toAnalyze[address] = new Set([
             ...(toAnalyze[address] ?? []),
             ...suggestedTemplates,
@@ -215,24 +231,29 @@ export class DiscoveryEngine {
    * Calls `betweenLevels` and analyzes again every address whose template
    * changed under it, until a call changes none. An address keeps its place
    * in `resolved`, and it counts against neither `maxAddresses` nor
-   * `maxDepth` again. Returns the addresses analyzed again.
+   * `maxDepth` again. Returns, for each address analyzed again, the
+   * analysis it had before this level's calls.
    */
   private async settleTemplates(
     betweenLevels: BetweenLevels,
     resolved: Record<string, Analysis>,
     analyze: (address: ChainSpecificAddress) => Promise<Analysis>,
     info: string,
-  ): Promise<ChainSpecificAddress[]> {
-    const again: ChainSpecificAddress[] = []
+  ): Promise<Record<string, Analysis>> {
+    const replaced: Record<string, Analysis> = {}
     for (;;) {
       await betweenLevels(Object.values(resolved))
+      this.addressAnalyzer.reloadTemplates()
       const changed = Object.values(resolved).filter(
         (analysis) =>
           analysis.type !== 'Reference' &&
           this.addressAnalyzer.templateChanged(analysis),
       )
       if (changed.length === 0) {
-        return again
+        return replaced
+      }
+      for (const analysis of changed) {
+        replaced[analysis.address.toString()] ??= analysis
       }
       await Promise.all(
         changed.map(async ({ address }) => {
@@ -248,7 +269,6 @@ export class DiscoveryEngine {
           this.logObject(analysis, info)
         }),
       )
-      again.push(...changed.map(({ address }) => address))
     }
   }
 
@@ -345,4 +365,15 @@ function pruneUnreachable(
     }
   }
   return reachable
+}
+
+function sameTemplates(
+  before: Set<string> | undefined,
+  now: Set<string>,
+): boolean {
+  return (
+    before !== undefined &&
+    before.size === now.size &&
+    [...now].every((template) => before.has(template))
+  )
 }
