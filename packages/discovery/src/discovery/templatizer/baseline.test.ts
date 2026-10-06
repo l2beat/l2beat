@@ -75,6 +75,27 @@ describe(buildBaseline.name, () => {
     expect(baseline.fields.ownerCopy).toEqual({ kind: 'override', value: 'x' })
   })
 
+  it('keeps a field of the override that has no value at this block, because its name is taken', () => {
+    const baseline = buildBaseline(
+      { owner: 'eth:0x1111111111111111111111111111111111111111' },
+      {},
+      handlersFor({
+        fields: {
+          sequencer: {
+            handler: {
+              type: 'event',
+              select: 'sequencer',
+              set: { event: 'SequencerSet(address sequencer)' },
+            },
+          },
+        },
+      }),
+    )
+
+    expect(baseline.fields.sequencer).toEqual({ kind: 'override' })
+    expect(Object.keys(baseline.fields)).toEqual(['owner', 'sequencer'])
+  })
+
   it('marks a probe the override shadows as the override’s', () => {
     const baseline = buildBaseline(
       { validatorAt: ['eth:0x2222222222222222222222222222222222222222'] },

@@ -226,6 +226,7 @@ describe(buildPrompt.name, () => {
       error: 'Too many values. Update configuration to explore fully',
     }
     input.facts.baseline.fields.fromConfig = { kind: 'override', value: 7 }
+    input.facts.baseline.fields.noLogsYet = { kind: 'override' }
     const facts = section(buildPrompt(input).prompt, 'facts')
     expect(facts).toInclude('- `lastFinalizedBatchIndex` = 519245')
     expect(facts).toInclude('- `miscData` = {"lastCommittedBatchIndex":519245,')
@@ -235,6 +236,9 @@ describe(buildPrompt.name, () => {
     expect(facts).toInclude('- `fromConfig` (from the project config) = 7')
     expect(facts).toInclude('- `brokenGetter` = error: Execution reverted')
     expect(facts).toInclude(
+      '- `noLogsYet` (from the project config) = no value at this block',
+    )
+    expect(facts).toInclude(
       '- `validators` (probed at indices 0–4) = ["0x01","0x02","0x03","0x04","0x05"] (error: Too many values. Update configuration to explore fully)',
     )
     expect(facts).toInclude('[52 more characters elided]')
@@ -243,7 +247,7 @@ describe(buildPrompt.name, () => {
       /- Proxy value `\$pastUpgrades` \(not referenceable\): .*… \[\d+ more characters elided\]/,
     )
     expect(facts).toInclude(
-      'Reference these as `{{ name }}`, except one shown as an error alone, which has no value; never fetch them again',
+      'Reference these as `{{ name }}`, except one shown as an error alone or as no value, which has none; never fetch them again',
     )
   })
 
