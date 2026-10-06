@@ -44,6 +44,11 @@ interface Props {
   syncedUntil: UnixTime | undefined
   resolution: ChartResolution
   dataGap: [number, number] | undefined
+  /**
+   * Leaves out the project's logo in the corner, for when the page already
+   * says whose data it is
+   */
+  hideProjectLogo?: boolean
 }
 
 const hiddenDataKeys = ['projectMax'] as const
@@ -56,6 +61,7 @@ export function ProjectDaAbsoluteThroughputChart({
   syncedUntil,
   resolution,
   dataGap,
+  hideProjectLogo,
 }: Props) {
   const projectChartMeta = useMemo(
     () => getProjectChartMeta(project.id),
@@ -94,7 +100,7 @@ export function ProjectDaAbsoluteThroughputChart({
     <ChartContainer
       meta={projectChartMeta}
       data={chartData}
-      project={project}
+      project={hideProjectLogo ? undefined : project}
       isLoading={isLoading}
       interactiveLegend={{
         dataKeys,

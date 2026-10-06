@@ -3,6 +3,10 @@ import {
   getDaThroughputChart,
 } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import {
+  DaPastDayUsageParams,
+  getDaPastDayUsage,
+} from '~/server/features/data-availability/throughput/getDaPastDayUsage'
+import {
   DataPostedChartWithProjectsRangesDataParams,
   getDetailedDataPostedChartWithProjectsRanges,
 } from '~/server/features/data-availability/throughput/getDetailedDataPostedChartWithProjectsRanges'
@@ -37,4 +41,8 @@ export const daRouter = router({
   l2ProjectChart: procedure
     .input(L2ProjectDaThroughputChartParams)
     .query(async ({ input }) => getL2ProjectDaThroughputChart(input)),
+
+  pastDayUsage: procedure
+    .input(DaPastDayUsageParams)
+    .query(async ({ input }) => getDaPastDayUsage(input)),
 })
