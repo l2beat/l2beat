@@ -143,7 +143,7 @@ let feed: LiveBlobsFeed | undefined
 export function getLiveBlobsFeed(): LiveBlobsFeed {
   if (!feed) {
     const logger = getLogger()
-    if (env.MOCK) {
+    if (env.MOCK_BEACON) {
       const posterIds = getBlobPosters().then((posters) =>
         posters.map((p) => p.id),
       )

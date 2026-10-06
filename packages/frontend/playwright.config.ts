@@ -21,6 +21,8 @@ export default defineConfig({
       LOG_LEVEL: 'ERROR',
       INTEROP_CHAINS: 'ethereum,arbitrum,base,optimism',
       CLIENT_SIDE_DEFI_ENABLED: 'true',
+      // the blobs benchmark needs the same blocks every run
+      MOCK_BEACON: 'true',
     },
     command: 'pnpm start:mock',
     url: 'http://localhost:7357',

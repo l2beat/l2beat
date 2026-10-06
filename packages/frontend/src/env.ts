@@ -54,6 +54,9 @@ const SERVER_CONFIG = {
   DATABASE_STATEMENT_TIMEOUT_MS: positiveInteger.default(20_000),
   DISABLE_CACHE: coerceBoolean.default(false),
   MOCK: coerceBoolean.default(false),
+  // Fakes the live Blobs feed's chain and mempool, so benchmarks see the same
+  // blocks every run. Apart from MOCK, which keeps the live view real
+  MOCK_BEACON: coerceBoolean.default(false),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
   COOLIFY_URL: z.string().optional(),
@@ -127,6 +130,7 @@ function getRawEnv(): Record<
     DATABASE_STATEMENT_TIMEOUT_MS: process.env.DATABASE_STATEMENT_TIMEOUT_MS,
     DISABLE_CACHE: process.env.DISABLE_CACHE,
     MOCK: process.env.MOCK,
+    MOCK_BEACON: process.env.MOCK_BEACON,
     NODE_ENV: process.env.NODE_ENV,
     COOLIFY_URL: process.env.COOLIFY_URL,
     COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,

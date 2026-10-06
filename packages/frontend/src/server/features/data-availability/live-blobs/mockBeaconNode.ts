@@ -20,7 +20,7 @@ const MEMPOOL_TICK_MS = 250
 const NONCES_PER_SLOT = 64
 
 /**
- * A beacon node for mock mode: blocks come on the real 12-second clock, but
+ * A beacon node for MOCK_BEACON: blocks come on the real 12-second clock, but
  * what each holds follows from its slot alone. Every run, and every
  * performance benchmark, then sees the same blocks without the network.
  */
@@ -40,7 +40,7 @@ export function createMockBeaconNode(
 }
 
 /**
- * A mempool for mock mode, in step with the mock beacon node: each batch of
+ * A mempool for MOCK_BEACON, in step with the mock beacon node: each batch of
  * the next block is broadcast a few seconds before its slot, but for the
  * odd one sent privately. When each goes out follows from its slot too.
  */
