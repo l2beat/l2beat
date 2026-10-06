@@ -7,8 +7,8 @@ import type { EffectiveConfig } from './types'
  * produces, with one field per origin, so every attribution branch is hit
  * once and the rule for each is visible next to its input: `$` or a detector
  * name is proxy, no config is a getter, a field the override defines is the
- * override's, `copy` and `pickRoleMembers` and a formatted `call` are
- * projections, any other handler is a handler, unreachable when its type is
+ * override's, `copy` and `pickRoleMembers` and a formatted `call` of a
+ * 0-argument function are projections, any other handler is a handler, unreachable when its type is
  * not one the model is offered or the suite marks it.
  */
 describe(attributeV1Field.name, () => {
@@ -32,6 +32,24 @@ describe(attributeV1Field.name, () => {
       },
       getMinDelayFormatted: {
         handler: { type: 'call', method: 'getMinDelay', args: [] },
+        edit: ['format', 'FormatSeconds'],
+      },
+      spokePool: {
+        handler: {
+          type: 'call',
+          method:
+            'function crossChainContracts(uint256) view returns (address adapter, address spokePool)',
+          args: ['1'],
+        },
+        edit: ['get', 'spokePool'],
+      },
+      upgradeDelay: {
+        handler: {
+          type: 'call',
+          method: 'function getUpgradeDelay() view returns (uint256)',
+          args: [],
+          address: '{{ settings }}',
+        },
         edit: ['format', 'FormatSeconds'],
       },
       registryOwner: {
@@ -113,6 +131,16 @@ describe(attributeV1Field.name, () => {
       kind: 'template-projection',
       via: 'edit',
       handlerType: 'call',
+    })
+    // An edited call with arguments, or on another contract, reads state no getter shows.
+    expect(attributeV1Field('spokePool', config)).toEqual({
+      kind: 'handler',
+      handlerType: 'call',
+    })
+    expect(attributeV1Field('upgradeDelay', config)).toEqual({
+      kind: 'handler',
+      handlerType: 'call',
+      unreachable: 'reads another contract',
     })
     expect(attributeV1Field('scNoDelay', config)).toEqual({
       kind: 'template-projection',

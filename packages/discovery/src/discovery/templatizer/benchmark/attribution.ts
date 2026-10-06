@@ -10,8 +10,10 @@
  * a researcher configured, and *projections* of
  * other fields that exist for presentation: `pickRoleMembers` lifts one
  * role's members out of an `accessControl` result, `copy` + `edit` derives a
- * field from another, and a `call` handler with an `edit` re-reads a getter
- * only to format it (`getMinDelayFormatted`). The templatizer authors the
+ * field from another, and a `call` handler with an `edit` re-reads a
+ * 0-argument function of this contract only to format it
+ * (`getMinDelayFormatted`). A `call` with arguments or on another contract
+ * reads state no getter shows, edit or not. The templatizer authors the
  * first three kinds and not the fourth, so a v1-only projection is expected
  * and a v1-only handler field is a miss. Telling them apart is what this
  * module is for.
@@ -68,7 +70,12 @@ export function attributeV1Field(
       handlerType: handler.type,
     }
   }
-  if (handler.type === 'call' && field.edit !== undefined) {
+  if (
+    handler.type === 'call' &&
+    field.edit !== undefined &&
+    handler.address === undefined &&
+    !hasArgs(handler)
+  ) {
     return { kind: 'template-projection', via: 'edit', handlerType: 'call' }
   }
   if (rereadsGetter(name, handler)) {
@@ -101,6 +108,10 @@ function rereadsGetter(
   const method = typeof handler.method === 'string' ? handler.method : name
   const called = /^function\s+(\w+)\s*\(\s*\)/.exec(method)?.[1] ?? method
   return called === name
+}
+
+function hasArgs(handler: { args?: unknown }): boolean {
+  return Array.isArray(handler.args) && handler.args.length > 0
 }
 
 function unreachableReason(

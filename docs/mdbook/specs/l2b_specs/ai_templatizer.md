@@ -597,11 +597,15 @@ changes. So is the denominator: five of the 82 were `call` handlers of
 GovernorBravoDelegate that re-read a 0-argument getter under its own name
 (`votingDelay`, `votingPeriod`, `proposalThreshold`, `quorumVotes`,
 `proposalCount`), which discovery reads anyway once the template is hidden.
-Every model "found" them; they count as getters now, and the quick suite has
-77 reachable fields. The Codex token counts predate a fix too: a repair round
-resumes the thread, Codex reports a resumed thread's usage as its total so
-far, and that total was counted as the round's own, so every repair counted
-the turns before it again. The more repair rounds a row has, the more its
+Every model "found" them; they count as getters now. Two fields of HubPool
+were left out the other way: `spokePool` and `optimismSpokePool` call
+`crossChainContracts(uint256)` with a chain id and `get` the address, which
+a model can write, but were taken for a getter re-read only to be
+formatted. They count now, and the quick suite has 79 reachable fields.
+The Codex token counts predate a fix too: a repair round resumes the
+thread, Codex reports a resumed thread's usage as its total so far, and
+that total was counted as the round's own, so every repair counted the
+turns before it again. The more repair rounds a row has, the more its
 tokens are overstated; Sol's, with one, the least.
 GPT-6 Terra, GPT-6.1 Luna and GPT-6.1 Terra are not available to a ChatGPT
 account in Codex and were not run.

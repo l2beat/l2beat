@@ -5,7 +5,27 @@
       "project": "zora",
       "chain": "ethereum",
       "address": "eth:0xB0F15106fa1e473Ddb39790f197275BC979Aa37e",
-      "template": "opstack/DisputeGameFactory_v2"
+      "template": "opstack/DisputeGameFactory_v2",
+      "unreachable": {
+        "absolutePrestateFromDGF": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "vmFromDGF": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game8AbsolutePrestate": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game8Vm": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game8AnchorStateRegistry": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game8Weth": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game8ChainId": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game9AbsolutePrestate": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game9Vm": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game9AnchorStateRegistry": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game9Weth": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game5AnchorStateRegistry": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "game5Proposer": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "proposerFromDGF": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "challengerFromDGF": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "wethFromDGF": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "anchorStateRegistryFromDGF": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer",
+        "chainIdFromDGF": "decodes gameArgs bytes with an OP Stack format type (AbsolutePrestateFromArgs, …) the prompt does not offer"
+      }
     },
     {
       "project": "linea",
