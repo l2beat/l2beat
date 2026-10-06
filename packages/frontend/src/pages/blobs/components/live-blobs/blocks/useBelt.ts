@@ -86,6 +86,7 @@ export function useBelt({
         scene: toDraw,
         hovered,
         slot: Math.floor(playback.current.progress),
+        moving: isMoving(playback.current, now),
       }
     },
     [canvasRef, progressNow],
@@ -187,6 +188,12 @@ interface PaintedFrame {
   scene: BeltScene
   hovered: number | undefined
   slot: number
+  /**
+   * Caught mid-motion, so it is not how things come to rest. The last frame
+   * of a motion is one, and so is the frame painted before frames stopped,
+   * as when the belt went off screen or the tab was hidden mid-drop
+   */
+  moving: boolean
 }
 
 /** The belt slides at the start of a slot, and batches drop as they come */
@@ -206,7 +213,8 @@ function isPainted(
   playback: Playback,
 ) {
   return (
-    painted?.scene === scene &&
+    painted?.moving === false &&
+    painted.scene === scene &&
     painted.hovered === hovered &&
     painted.slot === Math.floor(playback.progress)
   )
