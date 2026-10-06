@@ -212,7 +212,7 @@ const RULES: Rule[] = [
 const EXISTING_RULE: Rule = {
   title: 'Existing template.',
   lines: [
-    'Section 4 shows the template this contract already has, verbatim. It stays exactly as it is and your fields are added to it: do not repeat its fields or reuse their names. You may reference them as `{{ name }}`. Read what they do not: worklist items no existing field reads, and more state of an item they read only in part. When the template already reads everything worth reading, reply with `{ "fields": {} }`.',
+    'Section 4 shows the template this contract already has, verbatim. It stays exactly as it is and your fields are added to it: do not repeat its fields or reuse their names. You may reference those that have a `handler` as `{{ name }}`; a field with only `copy` gets its value after every handler has run. Read what they do not: worklist items no existing field reads, and more state of an item they read only in part. When the template already reads everything worth reading, reply with `{ "fields": {} }`.',
   ],
 }
 
@@ -377,7 +377,7 @@ function renderBaseline(fields: Record<string, BaselineField>): string[] {
   return [
     `### Baseline: values discovery already read (${entries.length})`,
     '',
-    `Every 0-argument getter, and every view function with a single \`uint256\` argument probed at indices ${PROBE_RANGE}. Reference these as \`{{ name }}\`; never fetch them again, and never name a field like one of them, except an \`array\` field named like the probed getter it enumerates.`,
+    `Every 0-argument getter, and every view function with a single \`uint256\` argument probed at indices ${PROBE_RANGE}. Reference these as \`{{ name }}\`, except one shown as an error alone, which has no value; never fetch them again, and never name a field like one of them, except an \`array\` field named like the probed getter it enumerates.`,
     '',
     ...(entries.length === 0
       ? ['(none)']
@@ -433,7 +433,7 @@ function renderExisting(
   return [
     `### The template this contract already has (\`${existing.templateId}\`)`,
     '',
-    'Kept exactly as it is; your fields are added to it. Reference its fields as `{{ name }}` if useful.',
+    'Kept exactly as it is; your fields are added to it. Reference its fields that have a `handler` as `{{ name }}` if useful.',
     '',
     '```jsonc',
     existing.text.trimEnd(),

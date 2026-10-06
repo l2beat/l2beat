@@ -243,7 +243,7 @@ describe(buildPrompt.name, () => {
       /- Proxy value `\$pastUpgrades` \(not referenceable\): .*… \[\d+ more characters elided\]/,
     )
     expect(facts).toInclude(
-      'Reference these as `{{ name }}`; never fetch them again',
+      'Reference these as `{{ name }}`, except one shown as an error alone, which has no value; never fetch them again',
     )
   })
 
