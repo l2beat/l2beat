@@ -33,12 +33,17 @@ const HARMLESS_ITEM_TYPES: ReadonlySet<string> = new Set([
   'todo_list',
 ])
 
+/** How codex-cli 0.160.1 words a reroute: `model rerouted: <from> -> <to> (<reason>)`. */
+const REROUTED = /^model rerouted: \S+ -> (\S+)/
+
 export interface ParsedCodexEvents {
   events: CodexEvent[]
   threadId?: string
   usage?: ModelUsage
   /** Text of the last `agent_message` item. */
   lastMessage?: string
+  /** The model Codex rerouted the turn to, from its `model rerouted` error item. */
+  reroutedTo?: string
   /** Whether the stream reached `turn.completed`. */
   completed: boolean
   /** The message of `turn.failed`. */
@@ -117,6 +122,11 @@ function readItem(item: unknown, parsed: ParsedCodexEvents): void {
   }
   if (item.type === 'error') {
     parsed.errors.push(describeError(item.message))
+    const rerouted =
+      typeof item.message === 'string' ? REROUTED.exec(item.message) : undefined
+    if (rerouted) {
+      parsed.reroutedTo = rerouted[1]
+    }
     return
   }
   if (!HARMLESS_ITEM_TYPES.has(item.type)) {

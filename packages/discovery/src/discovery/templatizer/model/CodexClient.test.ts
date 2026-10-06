@@ -126,6 +126,50 @@ describe(CodexClient.name, () => {
     expect(stdin).toEqual('fix it')
   })
 
+  it("reports a resumed turn's own usage, which codex gives as the thread's total so far", async () => {
+    fs.writeFileSync(eventsFile, cleanTurn)
+    const client = new CodexClient({ binary, codexHome: directory })
+    await client.start({ prompt: 'p', schema: {} })
+    fs.writeFileSync(
+      eventsFile,
+      cleanTurn.replace(
+        '"usage":{"input_tokens":12,"output_tokens":3}',
+        '"usage":{"input_tokens":30,"cached_input_tokens":10,"output_tokens":8}',
+      ),
+    )
+    const turn = await client.resume({
+      threadId: THREAD,
+      prompt: 'fix it',
+      schema: {},
+    })
+    expect(turn.usage).toEqual({
+      inputTokens: 18,
+      cachedInputTokens: 10,
+      outputTokens: 5,
+      reasoningOutputTokens: undefined,
+    })
+  })
+
+  it('records the model codex rerouted the turn to', async () => {
+    fs.writeFileSync(
+      eventsFile,
+      [
+        `{"type":"thread.started","thread_id":"${THREAD}"}`,
+        '{"type":"turn.started"}',
+        '{"type":"item.completed","item":{"id":"item_0","type":"error","message":"model rerouted: gpt-test -> gpt-other (HighRiskCyberActivity)"}}',
+        '{"type":"item.completed","item":{"id":"item_1","type":"agent_message","text":"from events"}}',
+        '{"type":"turn.completed","usage":{"input_tokens":12,"output_tokens":3}}',
+      ].join('\n'),
+    )
+    const client = new CodexClient({
+      binary,
+      codexHome: directory,
+      model: 'gpt-test',
+    })
+    const turn = await client.start({ prompt: 'p', schema: {} })
+    expect(turn.model).toEqual('gpt-other')
+  })
+
   it('writes the schema to a file and passes --output-schema only when asked to', async () => {
     fs.writeFileSync(eventsFile, cleanTurn)
     const client = new CodexClient({
@@ -149,6 +193,24 @@ describe(CodexClient.name, () => {
     const turn = await client.start({ prompt: 'p', schema: {} })
     expect(turn.text).toEqual('from events')
     expect(turn.model).toEqual('gpt-5.6-sol')
+  })
+
+  it('refuses a turn whose final message is blank as one without an answer', async () => {
+    fs.writeFileSync(
+      eventsFile,
+      cleanTurn.replace('"text":"from events"', '"text":" \\n"'),
+    )
+    behave({ noLastMessage: true })
+    const client = new CodexClient({ binary, codexHome: directory })
+    const refused: unknown = await client
+      .start({ prompt: 'p', schema: {} })
+      .then(
+        () => undefined,
+        (error: unknown) => error,
+      )
+    expect(refused).toBeA(CodexTurnError)
+    expect((refused as CodexTurnError).message).toMatchRegex(/no final message/)
+    expect((refused as CodexTurnError).retryable).toEqual(true)
   })
 
   it('refuses a turn whose events show a tool ran, even when codex exits cleanly, and keeps what it cost', async () => {
