@@ -412,15 +412,19 @@ use it: opencode runs the turn as a configured agent whose `prompt` stands in
 for the default (`--agent`), with the user's `CLAUDE.md` kept out by
 `OPENCODE_DISABLE_CLAUDE_CODE_PROMPT`; Codex takes the same text through
 `model_instructions_file`, with `project_doc_max_bytes=0` so that no
-`AGENTS.md` is read, `agents.enabled=false` so that no sub-agent tools or
-the message introducing them are sent, and `include_environment_context=false`.
+project `AGENTS.md` is read, `agents.enabled=false` so that no sub-agent
+tools or the message introducing them are sent, and
+`include_environment_context=false`.
 The text says what the session is: a non-interactive tool inside a program,
 one message with a single task, a reply read as data, no tools, nothing to
 ask. What remains of each harness is small and verified by asking the model
 to repeat its instructions: opencode adds an environment block naming the
 model, the empty scratch directory, the platform and the date; Codex adds a
-catalogue of the skills installed on the machine, which no documented setting
-removes and which the model has no tool to open. Claude Code, not a client
+catalogue of the skills installed on the machine, which the model has no tool
+to open, and the user's global `$CODEX_HOME/AGENTS.md`, if there is one. No
+documented setting removes either; another `CODEX_HOME` would keep the global
+file out, but it would need a copy of the login, and a copy that refreshes its
+token leaves the user's own login with a refresh token already used. Claude Code, not a client
 today, offers the same (`--system-prompt`, `--bare`, `--tools ""`), so the
 approach does not tie the templatizer to these two.
 
