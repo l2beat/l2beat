@@ -6,8 +6,10 @@ import {
   useRef,
   useState,
 } from 'react'
+import { SLOT_SECONDS } from '~/utils/beaconSlots'
 import { prepareCanvas, useAnimationFrame } from '../hooks'
 import type { ChainBlock } from './beaconChain'
+import { SLIDE_TIME } from './beltPosition'
 import {
   type BatchHit,
   type BeltFrame,
@@ -16,7 +18,7 @@ import {
   type Playback,
 } from './beltScene'
 import { drawBelt } from './drawBelt'
-import { BATCH_STAGGER, SETTLE_TIME } from './motion'
+import { BATCH_MOTION_TIME, BATCH_STAGGER, SETTLE_TIME } from './motion'
 
 export interface BeltHover {
   key: number
@@ -42,6 +44,8 @@ interface Options {
  * as it comes, paints each frame and finds the batch under the pointer.
  *
  * Nothing here sets state per frame; only a change of hovered batch renders.
+ * Nor does it paint a frame that would look like the last one: for most of
+ * a slot nothing on the belt moves, and each paint redraws the whole canvas.
  */
 export function useBelt({
   canvasRef,
@@ -67,6 +71,7 @@ export function useBelt({
   const pointer = useRef<{ x: number; y: number } | undefined>(undefined)
   const hoveredKey = useRef<number | undefined>(undefined)
   const [hover, setHover] = useState<BeltHover>()
+  const painted = useRef<PaintedFrame>(undefined)
 
   const paint = useCallback(
     (toDraw: BeltScene, now: number, hovered: number | undefined) => {
@@ -77,6 +82,12 @@ export function useBelt({
       if (!ctx) return
       playback.current.progress = progressNow()
       drawBelt(ctx, toDraw, playback.current, now, frame.current, hovered)
+      painted.current = {
+        scene: toDraw,
+        hovered,
+        slot: Math.floor(playback.current.progress),
+        moving: isMoving(playback.current, now),
+      }
     },
     [canvasRef, progressNow],
   )
@@ -99,7 +110,13 @@ export function useBelt({
     const current = sceneRef.current
     if (!current) return
     forgetSettled(playback.current, now)
-    paint(current, now, hoveredKey.current)
+    playback.current.progress = progressNow()
+    if (
+      isMoving(playback.current, now) ||
+      !isPainted(painted.current, current, hoveredKey.current, playback.current)
+    ) {
+      paint(current, now, hoveredKey.current)
+    }
     // the belt moves under a pointer that does not
     findHover()
   }, running)
@@ -164,6 +181,43 @@ export function useBelt({
       onClick,
     },
   }
+}
+
+/** What the canvas shows now, to tell whether a frame would look the same */
+interface PaintedFrame {
+  scene: BeltScene
+  hovered: number | undefined
+  slot: number
+  /**
+   * Caught mid-motion, so it is not how things come to rest. The last frame
+   * of a motion is one, and so is the frame painted before frames stopped,
+   * as when the belt went off screen or the tab was hidden mid-drop
+   */
+  moving: boolean
+}
+
+/** The belt slides at the start of a slot, and batches drop as they come */
+function isMoving(playback: Playback, now: number) {
+  const intoSlot = (playback.progress % 1) * SLOT_SECONDS
+  if (intoSlot < SLIDE_TIME) return true
+  for (const arrivedAt of playback.arrivals.values()) {
+    if (now - arrivedAt < BATCH_MOTION_TIME) return true
+  }
+  return false
+}
+
+function isPainted(
+  painted: PaintedFrame | undefined,
+  scene: BeltScene,
+  hovered: number | undefined,
+  playback: Playback,
+) {
+  return (
+    painted?.moving === false &&
+    painted.scene === scene &&
+    painted.hovered === hovered &&
+    painted.slot === Math.floor(playback.progress)
+  )
 }
 
 function forgetSettled(playback: Playback, now: number) {

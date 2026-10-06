@@ -8,7 +8,7 @@ import { easeInOutCubic, smoothstep } from './motion'
  * stands still the rest of the slot: moving a rack's width in 12 seconds,
  * it would crawl a pixel at a time
  */
-const SLIDE_TIME = 0.7
+export const SLIDE_TIME = 0.7
 
 /** Where the belt stands at a moment: which block is in the bay, and where every rack goes */
 export interface BeltPosition {
