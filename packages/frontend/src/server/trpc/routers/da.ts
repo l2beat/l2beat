@@ -1,4 +1,8 @@
 import {
+  getLiveBlobsFeed,
+  LiveBlobsParams,
+} from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
+import {
   DaPastDayUsageParams,
   getDaPastDayUsage,
 } from '~/server/features/data-availability/throughput/getDaPastDayUsage'
@@ -38,4 +42,12 @@ export const daRouter = router({
   pastDayUsage: procedure
     .input(DaPastDayUsageParams)
     .query(async ({ input }) => getDaPastDayUsage(input)),
+
+  // null rather than undefined, which React Query takes for a missing answer
+  liveBlobs: procedure
+    .input(LiveBlobsParams)
+    .query(
+      async ({ input }) =>
+        (await getLiveBlobsFeed().latestAfter(input)) ?? null,
+    ),
 })

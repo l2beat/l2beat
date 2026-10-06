@@ -1,0 +1,132 @@
+import { useLayoutEffect, useRef } from 'react'
+import { Skeleton } from '~/components/core/Skeleton'
+import { formatWhole } from './blocks/format'
+import { usePrefersReducedMotion } from './hooks'
+import type { BlockLimits } from './model'
+import { useLiveBlobs } from './useLiveBlobs'
+
+/** The hour behind the belt, under it */
+export function LivePulse({ limits }: { limits: BlockLimits }) {
+  const { data } = useLiveBlobs()
+  if (!data) return <Skeleton className="h-14 w-full" />
+  return (
+    <BlobPulse
+      blobsPerSlot={data.window.blobsPerSlot}
+      head={data.head}
+      limits={limits}
+    />
+  )
+}
+
+const PULSE_HEIGHT = 48
+const BAR_STEP = 4
+const BAR_WIDTH = 3
+const SLOTS_SHOWN = 300
+
+/**
+ * Every block of the hour as a bar of its blobs, newest on the right. Each
+ * new block slides the hour along by one and grows in at the end, so the
+ * hour reads as passing, block by block.
+ */
+function BlobPulse({
+  blobsPerSlot,
+  head,
+  limits,
+}: {
+  blobsPerSlot: (number | null)[]
+  head: number
+  limits: BlockLimits
+}) {
+  const barsRef = useRef<SVGGElement>(null)
+  const reducedMotion = usePrefersReducedMotion()
+  const width = SLOTS_SHOWN * BAR_STEP
+  const scale = PULSE_HEIGHT / limits.maxBlobsPerBlock
+  const targetY = PULSE_HEIGHT - limits.targetBlobsPerBlock * scale
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a new head is what slides it
+  useLayoutEffect(() => {
+    if (reducedMotion || !barsRef.current) return
+    barsRef.current.animate(
+      [{ transform: `translateX(${BAR_STEP}px)` }, { transform: 'none' }],
+      { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+    )
+  }, [head, reducedMotion])
+
+  return (
+    <div>
+      <svg
+        viewBox={`0 0 ${width} ${PULSE_HEIGHT}`}
+        preserveAspectRatio="none"
+        className="block h-10 w-full"
+        role="img"
+        aria-label={`Blobs in each of the last ${formatWhole(blobsPerSlot.length)} slots`}
+      >
+        <g ref={barsRef}>
+          {blobsPerSlot.map((blobs, i) =>
+            blobs === null || blobs === 0 ? null : (
+              <PulseBar
+                key={head - i}
+                x={width - (i + 1) * BAR_STEP}
+                height={blobs * scale}
+                aboveTarget={blobs > limits.targetBlobsPerBlock}
+                fresh={i === 0}
+              />
+            ),
+          )}
+        </g>
+        <line
+          x1={0}
+          x2={width}
+          y1={targetY}
+          y2={targetY}
+          className="stroke-secondary"
+          strokeDasharray="4 4"
+          strokeWidth={1}
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
+      <div className="mt-1 flex justify-between gap-4 font-medium text-label-value-12 text-secondary">
+        <span>1 hour ago</span>
+        <span className="max-md:hidden">
+          The last hour, a bar per block, against the target (dashed)
+        </span>
+        <span>Now</span>
+      </div>
+    </div>
+  )
+}
+
+function PulseBar({
+  x,
+  height,
+  aboveTarget,
+  fresh,
+}: {
+  x: number
+  height: number
+  aboveTarget: boolean
+  fresh: boolean
+}) {
+  const ref = useRef<SVGRectElement>(null)
+  const reducedMotion = usePrefersReducedMotion()
+  // only the bar a new block brings grows in; the others were there already
+  // biome-ignore lint/correctness/useExhaustiveDependencies: on mount only
+  useLayoutEffect(() => {
+    if (!fresh || reducedMotion || !ref.current) return
+    ref.current.animate(
+      [{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }],
+      { duration: 700, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)' },
+    )
+  }, [])
+  return (
+    <rect
+      ref={ref}
+      x={x}
+      y={PULSE_HEIGHT - height}
+      width={BAR_WIDTH}
+      height={height}
+      className={aboveTarget ? 'fill-brand' : 'fill-brand/45'}
+      style={{ transformBox: 'fill-box', transformOrigin: 'bottom' }}
+    />
+  )
+}

@@ -823,6 +823,9 @@ importers:
       vaul:
         specifier: ^0.9.1
         version: 0.9.9(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      viem:
+        specifier: ^2.31.6
+        version: 2.31.6(typescript@7.0.2)(zod@3.24.1)
       ws:
         specifier: ^8.18.2
         version: 8.21.0
