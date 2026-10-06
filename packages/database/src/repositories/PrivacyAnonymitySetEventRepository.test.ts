@@ -61,7 +61,6 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
       event('aaaaaaaaaaaa', 1, START - 1, 'alice', 10n),
       event('aaaaaaaaaaaa', 2, START, 'alice', 10n),
       event('aaaaaaaaaaaa', 3, START + UnixTime.HOUR, 'alice', 10n),
-      event('aaaaaaaaaaaa', 7, START + UnixTime.HOUR, 'alice', 0n),
       event('aaaaaaaaaaaa', 4, START + UnixTime.DAY, 'alice', 10n),
       event('bbbbbbbbbbbb', 5, START, 'bob', 10n, 'project-b'),
       { ...event('cccccccccccc', 6, START, 'carol', 10n), bucketId: 'other' },

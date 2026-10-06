@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
@@ -28,17 +28,8 @@ export interface PrivacyAnonymitySetSenderDayRecord {
 function toRecord(
   row: Selectable<PrivacyAnonymitySetEvent>,
 ): PrivacyAnonymitySetEventRecord {
-  // Keep legacy records unchanged before and after the schema migration.
-  const {
-    noteId: _noteId,
-    active: _active,
-    expiresAt: _expiresAt,
-    ...event
-  } = row
-  assert(event.sender !== null, 'Depositor event is missing its sender')
   return {
-    ...event,
-    sender: event.sender,
+    ...row,
     timestamp: UnixTime.fromDate(row.timestamp),
     amount: BigInt(row.amount),
   }
@@ -102,21 +93,17 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
       .where('projectId', 'in', projectIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
-      .where('sender', 'is not', null)
       .groupBy(['projectId', 'bucketId', 'sender', day])
       .orderBy('timestamp', 'asc')
       .execute()
 
-    return rows.map((row) => {
-      assert(row.sender !== null, 'Depositor event is missing its sender')
-      return {
-        projectId: row.projectId,
-        bucketId: row.bucketId,
-        timestamp: UnixTime.fromDate(row.timestamp),
-        sender: row.sender,
-        maximumAmount: BigInt(row.maximumAmount),
-      }
-    })
+    return rows.map((row) => ({
+      projectId: row.projectId,
+      bucketId: row.bucketId,
+      timestamp: UnixTime.fromDate(row.timestamp),
+      sender: row.sender,
+      maximumAmount: BigInt(row.maximumAmount),
+    }))
   }
 
   async getDepositCount(
@@ -130,7 +117,6 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
     const row = await this.db
       .selectFrom('PrivacyAnonymitySetEvent')
       .select((eb) => eb.fn.countAll().as('depositCount'))
-      .where('amount', '>', '0')
       .where('projectId', '=', projectId)
       .where('bucketId', 'in', bucketIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
