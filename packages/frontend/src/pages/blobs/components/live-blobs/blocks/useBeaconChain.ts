@@ -4,6 +4,7 @@ import { useTRPC, useTRPCClient } from '~/trpc/React'
 import { useChainClock } from '../chainClock'
 import {
   type ChainBlock,
+  isSameBlock,
   type PendingBlobBatch,
   type PosterIndexOf,
   toChainBlock,
@@ -41,9 +42,9 @@ interface Options {
 
 /**
  * Follows Ethereum as it makes blocks, through our server: the recent ones
- * once, then every new one the moment the server has it, and the batches
- * waiting for one. Paused, as in a hidden tab, it catches up on return, as
- * far back as the server keeps.
+ * once, then every new one the moment the server has it, any the chain has
+ * since dropped or swapped, and the batches waiting for a block. Paused, as
+ * in a hidden tab, it catches up on return, as far back as the server keeps.
  */
 export function useBeaconChain({
   posterIndexOf,
@@ -86,11 +87,15 @@ export function useBeaconChain({
     inHand.current = live.version
     const current = Math.floor(chain.progressNow())
     // blocks first, so a batch leaving the mempool for one is still where it waited
-    const fresh = live.blocks.filter((b) => !chain.blocks.has(b.slot))
-    for (const block of fresh) {
+    const changed = live.blocks.filter(
+      (b) => !isSameBlock(chain.blocks.get(b.slot), b),
+    )
+    for (const block of changed) {
+      // one that replaces a dropped block is a correction, not an arrival
+      const isArrival = !chain.blocks.has(block.slot)
       const kept = toChainBlock(block, posterIndexOf)
       chain.blocks.set(block.slot, kept)
-      if (block.slot >= current - 1) onFresh.current.block(kept)
+      if (isArrival && block.slot >= current - 1) onFresh.current.block(kept)
     }
     forgetOld(chain.blocks, live.head)
 
@@ -103,7 +108,7 @@ export function useBeaconChain({
     for (const batch of pending) chain.pending.set(batch.key, batch)
     for (const batch of freshPending) onFresh.current.pending(batch)
 
-    if (fresh.length > 0) setVersion((v) => v + 1)
+    if (changed.length > 0) setVersion((v) => v + 1)
   }, [live, chain, clock, posterIndexOf])
 
   return { chain, version }

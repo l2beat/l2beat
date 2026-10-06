@@ -37,6 +37,22 @@ export type ChainBlock =
 /** The poster index of a project, or of the stand-in for unknown senders */
 export type PosterIndexOf = (projectId: string | undefined) => number
 
+/**
+ * Whether the block held for a slot is still the one the server has there.
+ * The chain can drop a block shortly after it came, and its slot then holds
+ * none, or another one
+ */
+export function isSameBlock(
+  held: ChainBlock | undefined,
+  block: LiveBlock,
+): boolean {
+  if (!held || held.status !== block.status) return false
+  return (
+    held.status === 'missed' ||
+    (block.status === 'proposed' && held.blockNumber === block.blockNumber)
+  )
+}
+
 export function toChainBlock(
   block: LiveBlock,
   posterIndexOf: PosterIndexOf,

@@ -129,6 +129,46 @@ describe(LiveBlobsFeed.name, () => {
     }
   })
 
+  it('lets go of a block the chain dropped once the head moves on', async () => {
+    // five seconds into the head's slot, so the next poll is due in eight
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const node = fakeNode()
+      feed = new LiveBlobsFeed(node.source, Logger.SILENT)
+      const before = await feed.latest()
+      expect(before?.blocks[0]).toEqual({
+        slot: HEAD,
+        status: 'proposed',
+        blockNumber: HEAD + 1000,
+        batches: [
+          { projectId: 'base', blobs: 2, to: '0x', from: BASE, nonce: HEAD },
+        ],
+      })
+
+      // the next block is built on the one before the head
+      node.dropped = HEAD
+      node.head = HEAD + 1
+      await clock.tickAsync(8000)
+      const after = await feed.latest()
+
+      expect(after?.blocks.slice(0, 2)).toEqual([
+        {
+          slot: HEAD + 1,
+          status: 'proposed',
+          blockNumber: HEAD + 1001,
+          batches: [],
+        },
+        { slot: HEAD, status: 'missed' },
+      ])
+      expect(after?.window.posted[0]?.lastSlot).toEqual(HEAD - 10)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
   it('answers a page that is behind at once', async () => {
     feed = new LiveBlobsFeed(fakeNode().source, Logger.SILENT)
     const first = await feed.latest()
@@ -235,12 +275,20 @@ describe(LiveBlobsFeed.name, () => {
   })
 
   function fakeNode() {
-    const node = { head: HEAD, blocksAsked: 0, source: {} as BeaconSource }
+    const node = {
+      head: HEAD,
+      /** A slot whose block the chain dropped after it was first served */
+      dropped: undefined as number | undefined,
+      blocksAsked: 0,
+      source: {} as BeaconSource,
+    }
     node.source = {
       headSlot: async () => node.head,
       block: async (slot): Promise<LiveBlock> => {
         node.blocksAsked++
-        if (slot === MISSED) return { slot, status: 'missed' }
+        if (slot === MISSED || slot === node.dropped) {
+          return { slot, status: 'missed' }
+        }
         return {
           slot,
           status: 'proposed',
