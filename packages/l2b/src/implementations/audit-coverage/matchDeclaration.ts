@@ -12,7 +12,12 @@ import {
   renamedCandidates,
   sameNameCandidates,
 } from './AuditedCode'
-import { renameDeclaration, setContractKind } from './matchingRules'
+import {
+  canonicalByteType,
+  hexLiteralsWithoutUnderscores,
+  renameDeclaration,
+  setContractKind,
+} from './matchingRules'
 import type { DeclarationKind } from './splitSource'
 
 export interface DeployedDeclaration {
@@ -107,7 +112,7 @@ function rulesFor(
   candidate: AuditedDeclaration,
   deployed: DeployedDeclaration,
 ): Rule[] {
-  const rules = [...ALL_RULES]
+  const rules = [...ALL_RULES, canonicalByteType, hexLiteralsWithoutUnderscores]
   for (const [alias, name] of candidate.aliases) {
     rules.push(renameDeclaration(alias, name))
   }

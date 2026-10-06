@@ -29,3 +29,20 @@ export function setContractKind(name: string, kind: string): Rule {
     }
   }
 }
+
+export const canonicalByteType: Rule = (node) => {
+  if (node.type === 'ElementaryTypeName' && node.name === 'byte') {
+    node.name = 'bytes1'
+  }
+}
+
+export const hexLiteralsWithoutUnderscores: Rule = (node) => {
+  if (node.type === 'HexLiteral') {
+    node.value = withoutUnderscores(node.value)
+    node.parts = node.parts.map(withoutUnderscores)
+  }
+}
+
+function withoutUnderscores(value: string): string {
+  return value.split('_').join('')
+}
