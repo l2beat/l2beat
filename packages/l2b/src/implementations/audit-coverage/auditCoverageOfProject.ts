@@ -21,7 +21,6 @@ export interface AuditCoverageInputs {
   index: AuditIndex
   code: AuditedCode
   datasetCommit: string
-  generatedAt: number
 }
 
 export async function auditCoverageOfProject(
@@ -69,7 +68,6 @@ export async function auditCoverageOfProject(
     project,
     datasetCommit: inputs.datasetCommit,
     discoveredAt: discovered.timestamp,
-    generatedAt: inputs.generatedAt,
     reports: usedReports(units, inputs.index),
     auditedFiles: Object.fromEntries(
       [...auditedFiles].sort(([a], [b]) => (a < b ? -1 : 1)),

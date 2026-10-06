@@ -49,7 +49,6 @@ type AuditCoverage = {
   project: string
   datasetCommit: string
   discoveredAt: number // discovery timestamp of the deployed sources
-  generatedAt: number
   reports: Record<ReportId, { collections: string[]; title: string; auditor: string; date?: string }>
   auditedFiles: Record<ObjectId, { repository: string; commit: string; path: string }>
   units: Record<UnitId, Unit> // UnitId: first 12 hex characters of sha256 of the deployed body

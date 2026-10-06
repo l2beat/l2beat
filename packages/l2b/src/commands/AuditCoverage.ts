@@ -1,10 +1,5 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
-import {
-  asciiProgressBar,
-  assert,
-  formatJson,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { asciiProgressBar, assert, formatJson } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
 import { writeFileSync } from 'fs'
@@ -79,7 +74,6 @@ export const AuditCoverage = command({
         index,
         code,
         datasetCommit: dataset.commit,
-        generatedAt: UnixTime.now(),
       },
       deployedSourceFromCache(),
       (address, covered, count) =>

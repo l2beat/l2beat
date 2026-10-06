@@ -2347,7 +2347,6 @@ export const ProjectAuditCoverageSchema = v.object({
   project: v.string(),
   datasetCommit: v.string(),
   discoveredAt: v.number(),
-  generatedAt: v.number(),
   reports: v.record(
     v.string(),
     v.object({
