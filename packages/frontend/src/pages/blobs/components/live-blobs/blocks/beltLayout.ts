@@ -35,6 +35,13 @@ export interface BeltLayout {
   bayCaptionY: number
   /** Tiles appear here and fall into the rack */
   dropFromY: number
+  /**
+   * The waiting lane: a row of tiles above the racks right of the bay, where
+   * batches wait in the mempool for a block. Its tiles fall from `laneTop`
+   */
+  laneTop: number
+  laneLeft: number
+  laneRight: number
 
   targetY: number
   maxY: number
@@ -48,6 +55,10 @@ export interface BeltLayout {
 }
 
 const COMPACT_BELOW = 560
+/** The lane clears the racks under it by this much */
+const LANE_LIFT = 3
+/** And the bay's chute, so it reads as feeding it rather than being it */
+const LANE_GAP = 10
 const ICONS_FROM_TILE = 14
 /**
  * The belt moves a block a second, so this is also its speed: 30 px/s is one
@@ -136,6 +147,9 @@ export function layoutBelt(
     bayX,
     bayCaptionY,
     dropFromY: bayCaptionY + 8,
+    laneTop: rackTop - LANE_LIFT - tileSize,
+    laneLeft: bayX + rackWidth / 2 + LANE_GAP,
+    laneRight: width - 2,
     targetY: fillLine(targetBlobs),
     maxY: fillLine(maxBlobs),
     countY: rackTop + rackHeight + (compact ? 14 : 16),

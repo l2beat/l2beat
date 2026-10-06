@@ -129,6 +129,7 @@ function drawArrivalLabel(
   x: number,
   y: number,
   alpha: number,
+  fontSize?: number,
 ) {
   const { layout, palette } = scene
   const amount = `+${blobs}`
@@ -137,7 +138,7 @@ function drawArrivalLabel(
   ctx.textAlign = 'left'
   ctx.textBaseline = 'middle'
 
-  const size = layout.compact ? 11 : 12
+  const size = fontSize ?? (layout.compact ? 11 : 12)
   ctx.font = `700 ${size}px ${FONT}`
   const amountWidth = ctx.measureText(amount).width
   fillTextOnSurface(ctx, palette, amount, x, y, palette.text)
@@ -150,6 +151,85 @@ function drawArrivalLabel(
 }
 
 /**
+ * "+6 Base" over a batch as it joins the waiting lane, rising as it fades,
+ * like the bay's labels but quieter: it is only on its way. Kept right of
+ * the bay's caption, which it would run into nearest the bay; a newer label
+ * in the way takes over from an older one.
+ */
+export function drawLaneLabels(
+  ctx: CanvasRenderingContext2D,
+  scene: BeltScene,
+  playback: Playback,
+  belt: BeltPosition,
+  now: number,
+) {
+  const { layout, posters } = scene
+  const caption = measureBayCaption(ctx, scene, belt)
+  const clearOfCaption = caption.x + caption.width + 10
+  const placed: { left: number; right: number; alpha: number; line: number }[] =
+    []
+  const newestFirst = [...playback.lane.values()].sort(
+    (a, b) => b.shownAt - a.shownAt,
+  )
+  for (const spot of newestFirst) {
+    const { batch } = spot
+    const poster = posters[batch.posterIndex]
+    if (!poster || Number.isNaN(spot.x)) continue
+    if (spot.boardsAt !== undefined || spot.goneAt !== undefined) continue
+    const emphasis = labelEmphasis(playback.emphasis[batch.posterIndex] ?? 1)
+    const { alpha, rise } = labelPresence(now - spot.shownAt)
+    if (alpha <= 0 || emphasis <= 0) continue
+
+    ctx.font = `500 11px ${FONT}`
+    const width = ctx.measureText(`+${batch.blobs} ${poster.name}`).width
+    const left = Math.min(
+      Math.max(spot.x, clearOfCaption),
+      layout.laneRight - width,
+    )
+    const right = left + width
+    // on a phone there may be no room beside the caption, only above it
+    const line = left < clearOfCaption ? 1 : 0
+    let shown = alpha * 0.85 * emphasis
+    for (const newer of placed) {
+      const sameLine = newer.line === line
+      if (sameLine && left < newer.right + 6 && right > newer.left - 6) {
+        shown *= 1 - newer.alpha
+      }
+    }
+    placed.push({ left, right, alpha: alpha * emphasis, line })
+    if (shown > 0.02) {
+      const y = layout.bayCaptionY - 4 - line * LANE_LABEL_LINE - rise
+      drawArrivalLabel(ctx, scene, batch.blobs, poster.name, left, y, shown, 11)
+    }
+  }
+}
+
+const LANE_LABEL_LINE = 14
+
+/** Where "Building slot 15,354,012" goes, centered over the bay */
+function measureBayCaption(
+  ctx: CanvasRenderingContext2D,
+  scene: BeltScene,
+  belt: BeltPosition,
+) {
+  ctx.font = BAY_WORD_FONT
+  const wordWidth = ctx.measureText(BAY_WORD).width
+  ctx.font = BAY_NUMBER_FONT
+  const numberWidth = ctx.measureText(formatWhole(belt.current)).width
+  const width = wordWidth + numberWidth
+  return {
+    x: Math.round(scene.layout.bayX - width / 2),
+    width,
+    wordWidth,
+    numberWidth,
+  }
+}
+
+const BAY_WORD = 'Building slot '
+const BAY_WORD_FONT = `500 12px ${FONT}`
+const BAY_NUMBER_FONT = `600 12px ${FONT}`
+
+/**
  * "Building slot 15,354,012" above the bay. Changed digits roll up like an
  * odometer, in step with the belt bringing that slot's rack in
  */
@@ -159,26 +239,19 @@ export function drawBayCaption(
   belt: BeltPosition,
 ) {
   const { layout, palette } = scene
-  const word = 'Building slot '
   const number = formatWhole(belt.current)
   const previous = formatWhole(belt.current - 1)
-  const wordFont = `500 12px ${FONT}`
-  const numberFont = `600 12px ${FONT}`
 
   ctx.textAlign = 'left'
   ctx.textBaseline = 'alphabetic'
-  ctx.font = wordFont
-  const wordWidth = ctx.measureText(word).width
-  ctx.font = numberFont
-  const numberWidth = ctx.measureText(number).width
-  const x = Math.round(layout.bayX - (wordWidth + numberWidth) / 2)
+  const { x, wordWidth, numberWidth } = measureBayCaption(ctx, scene, belt)
   const y = layout.bayCaptionY
 
-  ctx.font = wordFont
+  ctx.font = BAY_WORD_FONT
   ctx.fillStyle = palette.textSecondary
-  ctx.fillText(word, x, y)
+  ctx.fillText(BAY_WORD, x, y)
 
-  ctx.font = numberFont
+  ctx.font = BAY_NUMBER_FONT
   ctx.fillStyle = palette.text
   const roll = belt.handover
   if (roll >= 1 || number.length !== previous.length) {

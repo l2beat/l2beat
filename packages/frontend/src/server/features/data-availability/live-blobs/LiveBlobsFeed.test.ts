@@ -11,13 +11,17 @@ import {
   RECENT_SLOTS,
   WINDOW_SLOTS,
 } from './LiveBlobsFeed'
+import type { MempoolSource } from './mempool'
+import type { PendingTx } from './pendingBlobs'
 
 // Methodology: a fake node whose head is slot 1000, where slot 998 was missed
-// and Base posts 2 blobs every 10th slot. The feed is asked the way the route
-// asks it, and the fake counts what the node would have been asked for.
+// and Base posts 2 blobs every 10th slot, its nonce the slot. The feed is
+// asked the way the route asks it, and the fake counts what the node would
+// have been asked for. A fake mempool broadcasts Base's next batch on cue.
 describe(LiveBlobsFeed.name, () => {
   const HEAD = 1000
   const MISSED = 998
+  const BASE = '0xbase'
   let feed: LiveBlobsFeed | undefined
 
   afterEach(() => feed?.stop())
@@ -108,10 +112,10 @@ describe(LiveBlobsFeed.name, () => {
     try {
       const node = fakeNode()
       feed = new LiveBlobsFeed(node.source, Logger.SILENT)
-      await feed.latest()
+      const first = await feed.latest()
 
       let answer: LiveBlobs | undefined
-      void feed.latestAfter({ after: HEAD }).then((blobs) => {
+      void feed.latestAfter({ after: first?.version }).then((blobs) => {
         answer = blobs
       })
       await clock.tickAsync(1000)
@@ -127,10 +131,98 @@ describe(LiveBlobsFeed.name, () => {
 
   it('answers a page that is behind at once', async () => {
     feed = new LiveBlobsFeed(fakeNode().source, Logger.SILENT)
+    const first = await feed.latest()
 
-    const blobs = await feed.latestAfter({ after: HEAD - 3 })
+    const blobs = await feed.latestAfter({ after: (first?.version ?? 0) - 1 })
 
     expect(blobs?.head).toEqual(HEAD)
+  })
+
+  it('wakes a page that is up to date when a batch is broadcast', async () => {
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const mempool = fakeMempool()
+      feed = new LiveBlobsFeed(fakeNode().source, Logger.SILENT, mempool.source)
+      const first = await feed.latest()
+
+      let answer: LiveBlobs | undefined
+      void feed.latestAfter({ after: first?.version }).then((blobs) => {
+        answer = blobs
+      })
+      await clock.tickAsync(1000)
+      expect(answer).toEqual(undefined)
+
+      mempool.broadcast(baseBatch(HEAD + 10))
+      await clock.tickAsync(0)
+      expect(answer?.head).toEqual(HEAD)
+      expect(answer?.pending).toEqual([
+        { ...baseBatch(HEAD + 10), firstSeenAt: slotStart(HEAD) + 6 },
+      ])
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  it('lets a batch stop waiting in the answer that brings its block', async () => {
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const node = fakeNode()
+      const mempool = fakeMempool()
+      feed = new LiveBlobsFeed(node.source, Logger.SILENT, mempool.source)
+      await feed.latest()
+      mempool.broadcast(baseBatch(HEAD + 10))
+      const waiting = await feed.latest()
+
+      let answer: LiveBlobs | undefined
+      void feed.latestAfter({ after: waiting?.version }).then((blobs) => {
+        answer = blobs
+      })
+      node.head = HEAD + 10
+      await clock.tickAsync(8000)
+
+      expect(answer?.head).toEqual(HEAD + 10)
+      expect(answer?.pending).toEqual([])
+      const block = answer?.blocks[0]
+      expect(block?.status === 'proposed' && block.batches[0]).toEqual({
+        projectId: 'base',
+        blobs: 2,
+        to: '0x',
+        from: BASE,
+        nonce: HEAD + 10,
+        pendingSince: slotStart(HEAD) + 5,
+      })
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  it('stops listening to the mempool soon after nobody asks', async () => {
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const mempool = fakeMempool()
+      feed = new LiveBlobsFeed(fakeNode().source, Logger.SILENT, mempool.source)
+      await feed.latest()
+      mempool.broadcast(baseBatch(HEAD + 10))
+      expect(mempool.listening()).toEqual(true)
+
+      // blocks are still followed, and polled at least every slot
+      await clock.tickAsync(80_000)
+      expect(mempool.listening()).toEqual(false)
+
+      expect((await feed.latest())?.pending).toEqual([])
+      expect(mempool.listening()).toEqual(true)
+    } finally {
+      clock.uninstall()
+    }
   })
 
   it('has no answer while the node has never been reached', async () => {
@@ -154,10 +246,49 @@ describe(LiveBlobsFeed.name, () => {
           status: 'proposed',
           blockNumber: slot + 1000,
           batches:
-            slot % 10 === 0 ? [{ projectId: 'base', blobs: 2, to: '0x' }] : [],
+            slot % 10 === 0
+              ? [
+                  {
+                    projectId: 'base',
+                    blobs: 2,
+                    to: '0x',
+                    from: BASE,
+                    nonce: slot,
+                  },
+                ]
+              : [],
         }
       },
     }
     return node
+  }
+
+  function fakeMempool() {
+    let listener: ((tx: PendingTx) => void) | undefined
+    const source: MempoolSource = {
+      watch: (onBlobTx) => {
+        listener = onBlobTx
+      },
+      stop: () => {
+        listener = undefined
+      },
+    }
+    return {
+      source,
+      broadcast: (tx: PendingTx) => listener?.(tx),
+      listening: () => listener !== undefined,
+    }
+  }
+
+  /** Base's batch for `slot`, as broadcast before the block */
+  function baseBatch(slot: number): PendingTx {
+    return {
+      projectId: 'base',
+      blobs: 2,
+      to: '0x',
+      from: BASE,
+      nonce: slot,
+      hash: `0x${slot}`,
+    }
   }
 })

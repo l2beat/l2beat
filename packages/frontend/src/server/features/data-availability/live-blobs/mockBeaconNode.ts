@@ -1,5 +1,6 @@
-import { SLOT_SECONDS, slotProgressAt } from '~/utils/beaconSlots'
+import { SLOT_SECONDS, slotProgressAt, slotStart } from '~/utils/beaconSlots'
 import type { BeaconSource, LiveBatch, LiveBlock } from './LiveBlobsFeed'
+import type { MempoolSource } from './mempool'
 
 /** About when a real block reaches the node, into its slot */
 const SEEN_INTO_SLOT = 2
@@ -10,6 +11,13 @@ const MISSED_ONE_IN = 40
 const UNATTRIBUTED_ONE_IN = 10
 /** Each poster posts this much less than the one before, so a few post most, as on mainnet */
 const POSTER_FALLOFF = 0.75
+/** Batches sent privately to a builder, never seen pending */
+const PRIVATE_ONE_IN = 8
+/** How far ahead of its slot a batch may be broadcast; most wait about a slot on mainnet */
+const MAX_LEAD = SLOT_SECONDS
+const MEMPOOL_TICK_MS = 250
+/** Room for every batch of a slot in its senders' nonces */
+const NONCES_PER_SLOT = 64
 
 /**
  * A beacon node for mock mode: blocks come on the real 12-second clock, but
@@ -31,6 +39,44 @@ export function createMockBeaconNode(
   }
 }
 
+/**
+ * A mempool for mock mode, in step with the mock beacon node: each batch of
+ * the next block is broadcast a few seconds before its slot, but for the
+ * odd one sent privately. When each goes out follows from its slot too.
+ */
+export function createMockMempool(posterIds: Promise<string[]>): MempoolSource {
+  const pickPoster = posterIds.then(createPosterPicker)
+  let timer: ReturnType<typeof setInterval> | undefined
+  const sent = new Set<string>()
+  return {
+    watch(onBlobTx) {
+      if (timer) return
+      timer = setInterval(async () => {
+        const now = Date.now() / 1000
+        const next = Math.floor(slotProgressAt(now)) + 1
+        const block = mockBlock(next, await pickPoster)
+        if (block.status !== 'proposed') return
+        for (const [i, batch] of block.batches.entries()) {
+          const random = seededRandom(next * NONCES_PER_SLOT + i)
+          if (Math.floor(random() * PRIVATE_ONE_IN) === 0) continue
+          const broadcastAt = slotStart(next) - random() * MAX_LEAD
+          const hash = `0x${batch.nonce.toString(16)}`
+          if (now < broadcastAt || sent.has(hash)) continue
+          sent.add(hash)
+          onBlobTx({ ...batch, hash })
+        }
+        // only the next slot's batches are ever due, so older ones can go
+        if (sent.size > 4 * NONCES_PER_SLOT) sent.clear()
+      }, MEMPOOL_TICK_MS)
+      timer.unref()
+    },
+    stop() {
+      clearInterval(timer)
+      timer = undefined
+    },
+  }
+}
+
 function mockBlock(
   slot: number,
   pickPoster: (roll: number) => string | undefined,
@@ -48,10 +94,13 @@ function mockBlock(
       1 + Math.floor(random() * MAX_BATCH_BLOBS),
     )
     const unattributed = Math.floor(random() * UNATTRIBUTED_ONE_IN) === 0
+    const projectId = unattributed ? undefined : pickPoster(random())
     batches.push({
-      projectId: unattributed ? undefined : pickPoster(random()),
+      projectId,
       blobs: size,
       to: `0x${(slot * 7919 + i).toString(16).padStart(40, '0')}`,
+      from: `mock:${projectId ?? 'unknown'}`,
+      nonce: slot * NONCES_PER_SLOT + i,
     })
     blobs += size
   }

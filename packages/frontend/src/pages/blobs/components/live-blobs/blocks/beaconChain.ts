@@ -1,4 +1,5 @@
 import type { LiveBlock } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
+import type { PendingBatch } from '~/server/features/data-availability/live-blobs/pendingBlobs'
 
 /** One blob transaction: a project's batch in a block */
 export interface BlobBatch {
@@ -8,6 +9,19 @@ export interface BlobBatch {
   blobsBelow: number
   /** Where it was sent, lowercase. Says the most about a batch from an unknown sender */
   to: string
+  /** Sender and nonce: the same for the batch while it waited and once in its block */
+  key: string
+  /** Unix seconds it was first seen pending, if it was */
+  pendingSince: number | undefined
+}
+
+/** A batch broadcast and waiting for a block */
+export interface PendingBlobBatch {
+  key: string
+  posterIndex: number
+  blobs: number
+  to: string
+  firstSeenAt: number
 }
 
 export type ChainBlock =
@@ -37,9 +51,28 @@ export function toChainBlock(
         blobs: batch.blobs,
         blobsBelow,
         to: batch.to,
+        key: batchIdentity(batch.from, batch.nonce),
+        pendingSince: batch.pendingSince,
       }
       blobsBelow += batch.blobs
       return placed
     }),
   }
+}
+
+export function toPendingBlobBatch(
+  batch: PendingBatch,
+  posterIndexOf: PosterIndexOf,
+): PendingBlobBatch {
+  return {
+    key: batchIdentity(batch.from, batch.nonce),
+    posterIndex: posterIndexOf(batch.projectId),
+    blobs: batch.blobs,
+    to: batch.to,
+    firstSeenAt: batch.firstSeenAt,
+  }
+}
+
+function batchIdentity(from: string, nonce: number) {
+  return `${from}:${nonce}`
 }

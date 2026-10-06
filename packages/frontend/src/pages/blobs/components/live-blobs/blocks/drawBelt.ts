@@ -1,3 +1,4 @@
+import type { BlobBatch } from './beaconChain'
 import { type BeltLayers, GLOW_REACH, traceRackBody } from './beltLayers'
 import { type BeltLayout, tileBounds } from './beltLayout'
 import type { PosterInk } from './beltPalette'
@@ -11,6 +12,7 @@ import {
   type BeltFrame,
   type BeltScene,
   batchKey,
+  type Flight,
   findBatch,
   type Playback,
 } from './beltScene'
@@ -18,11 +20,15 @@ import {
   drawArrivalLabels,
   drawBayCaption,
   drawBlockNumbers,
+  drawLaneLabels,
   drawLastBatchNote,
   drawLimitLabels,
 } from './drawBeltLabels'
+import { LEAVE_TIME } from './lane'
 import {
   DROP_STAGGER,
+  easeInOutCubic,
+  easeOutCubic,
   fallDuration,
   moveTile,
   restingMotion,
@@ -59,13 +65,43 @@ export function drawBelt(
   drawBlockNumbers(ctx, scene, belt, frame, reveal)
 
   // Pass 3: what stays put, on top
+  drawLane(ctx, scene, playback, now)
   drawHoverRing(ctx, scene, frame, hovered)
   drawArrivalLabels(ctx, scene, playback, belt, now)
   drawBayCaption(ctx, scene, belt)
+  drawLaneLabels(ctx, scene, playback, belt, now)
   drawLimitLabels(ctx, scene)
   drawLastBatchNote(ctx, scene, belt, frame)
 }
 
+/** A batch waiting for a block is not on the chain yet, and shows it */
+const WAITING_ALPHA = 0.55
+/** A batch joining the lane drops into it from this far above */
+const LANE_DROP = 14
+const LANE_ENTER_TIME = 0.3
+/** Seconds a tile takes along the lane to the chute, besides its distance */
+const GLIDE_BASE = 0.16
+/** px/s along the lane */
+const GLIDE_SPEED = 1400
+
+/**
+ * Seconds from when a batch starts to drop until its first tile lands: from
+ * the chute top, or, if it waited in the lane, along the lane and down
+ */
+export function batchLandsAfter(
+  layout: BeltLayout,
+  batch: BlobBatch,
+  flight: Flight | undefined,
+  rackX: number,
+) {
+  const { top } = tileBounds(layout, batch.blobsBelow, 0, 1)
+  if (!flight) return fallDuration(top - layout.dropFromY)
+  return glideTime(flight.x - rackX) + fallDuration(top - layout.laneTop)
+}
+
+function glideTime(distance: number) {
+  return GLIDE_BASE + Math.abs(distance) / GLIDE_SPEED
+}
 /** Seconds over which the bay's glow settles after a landing */
 const PULSE_DECAY = 0.18
 
@@ -81,11 +117,13 @@ function landingPulse(
 ) {
   const { layout, blocks } = scene
   let pulse = 0
+  const rackX = rackLeft(belt, layout, belt.current) + layout.rackPadding
   for (const [key, arrivedAt] of playback.arrivals) {
     const found = findBatch(blocks, key)
     if (found?.slot !== belt.current) continue
-    const { top } = tileBounds(layout, found.batch.blobsBelow, 0, 1)
-    const sinceLanding = now - arrivedAt - fallDuration(top - layout.dropFromY)
+    const flight = playback.flights.get(key)
+    const sinceLanding =
+      now - arrivedAt - batchLandsAfter(layout, found.batch, flight, rackX)
     if (sinceLanding >= 0) {
       pulse = Math.max(pulse, Math.exp(-sinceLanding / PULSE_DECAY))
     }
@@ -219,6 +257,7 @@ function drawTiles(
       if (!ink) continue
       const key = batchKey(slot, index)
       const arrivedAt = playback.arrivals.get(key)
+      const flight = playback.flights.get(key)
       const below = batch.blobsBelow
       if (highlighted === batch.posterIndex && inView) {
         frame.highlightedInView += batch.blobs
@@ -231,15 +270,17 @@ function drawTiles(
 
       for (let i = 0; i < batch.blobs; i++) {
         const bounds = tileBounds(layout, below + i, i, batch.blobs)
+        let x = left
         if (arrivedAt === undefined) Object.assign(motion, AT_REST)
         else {
           const age = now - arrivedAt - i * DROP_STAGGER
-          moveTile(motion, age, bounds.top - layout.dropFromY)
+          if (flight) x = flyTile(motion, layout, flight, i, left, bounds, age)
+          else moveTile(motion, age, bounds.top - layout.dropFromY)
         }
         if (!motion.visible) continue
         if (motion.landed) landed++
-        drawTile(ctx, layout, ink, left, bounds, i, batch.blobs)
-        if (i === 0) drawTileIcon(ctx, scene, batch.posterIndex, left, bounds)
+        drawTile(ctx, layout, ink, x, bounds, i, batch.blobs)
+        if (i === 0) drawTileIcon(ctx, scene, batch.posterIndex, x, bounds)
       }
 
       const top = tileBounds(layout, below + batch.blobs - 1, 0, 1).top
@@ -255,6 +296,85 @@ function drawTiles(
     frame.landed.push(landed)
   }
   ctx.globalAlpha = 1
+}
+
+/**
+ * Fills `motion` for tile `i` of a batch that waited in the lane, `age`
+ * seconds after it was let go: it slides along the lane to the chute, firming
+ * up as it goes, and falls into its place. Says where it is across.
+ */
+function flyTile(
+  motion: TileMotion,
+  layout: BeltLayout,
+  flight: Flight,
+  i: number,
+  rackX: number,
+  bounds: { top: number; bottom: number },
+  age: number,
+): number {
+  const from = flight.x + i * flight.pitch
+  const glide = glideTime(from - rackX)
+  if (age >= glide) {
+    moveTile(motion, age - glide, bounds.top - layout.laneTop)
+    return rackX
+  }
+  const t = easeInOutCubic(Math.max(0, age) / glide)
+  motion.visible = true
+  motion.landed = false
+  motion.offsetY = layout.laneTop - bounds.top
+  motion.scaleX = 1
+  motion.scaleY = 1
+  motion.alpha = WAITING_ALPHA + (1 - WAITING_ALPHA) * t
+  return from + (rackX - from) * t
+}
+
+/**
+ * Batches waiting in the mempool, in a row above the racks right of the bay,
+ * the oldest nearest it. Each drops in as it is broadcast and fades out if
+ * it leaves without a block; one whose block came is drawn by `drawTiles`.
+ */
+function drawLane(
+  ctx: CanvasRenderingContext2D,
+  scene: BeltScene,
+  playback: Playback,
+  now: number,
+) {
+  const { layout, palette } = scene
+  const bounds = {
+    top: layout.laneTop,
+    bottom: layout.laneTop + layout.tileSize,
+  }
+  for (const spot of playback.lane.values()) {
+    const { batch } = spot
+    const ink = palette.posters[batch.posterIndex]
+    if (!ink || spot.boardsAt !== undefined || Number.isNaN(spot.x)) continue
+    const leaving =
+      spot.goneAt === undefined ? 0 : (now - spot.goneAt) / LEAVE_TIME
+    ctx.globalAlpha =
+      WAITING_ALPHA *
+      (playback.emphasis[batch.posterIndex] ?? 1) *
+      Math.max(0, 1 - leaving)
+    // last first, so where the lane is crowded the first tile, with the
+    // icon, is on top
+    for (let i = batch.blobs - 1; i >= 0; i--) {
+      enterLane(motion, now - spot.shownAt - i * DROP_STAGGER)
+      if (!motion.visible) continue
+      const x = spot.x + i * spot.pitch
+      drawTile(ctx, layout, ink, x, bounds, 0, 1)
+      if (i === 0) drawTileIcon(ctx, scene, batch.posterIndex, x, bounds)
+    }
+  }
+  ctx.globalAlpha = 1
+}
+
+function enterLane(motion: TileMotion, age: number) {
+  const t = Math.min(1, Math.max(0, age) / LANE_ENTER_TIME)
+  motion.visible = age >= 0
+  motion.landed = true
+  motion.offsetY = -LANE_DROP * (1 - easeOutCubic(t))
+  motion.scaleX = 1
+  motion.scaleY = 1
+  motion.alpha = Math.min(1, t * 2.5)
 }
 
 function drawTile(
