@@ -104,6 +104,8 @@ export function LiveBlocks({
     return index >= 0 ? index : undefined
   }, [posters, highlighted])
 
+  // a new scene for every block that comes, as blocks change in place
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `version` counts the blocks
   const scene = useMemo<BeltScene | undefined>(
     () =>
       layout &&
@@ -128,6 +130,7 @@ export function LiveBlocks({
       highlightedIndex,
       targetBlobsPerBlock,
       maxBlobsPerBlock,
+      version,
     ],
   )
 
