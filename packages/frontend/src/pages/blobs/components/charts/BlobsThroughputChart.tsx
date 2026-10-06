@@ -119,17 +119,19 @@ function Header({
       </div>
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right font-bold text-xl">
-          {isLoading || used === undefined ? (
+          {isLoading ? (
             <Skeleton className="my-[5px] h-5 w-32" />
+          ) : used === undefined ? (
+            'No data'
           ) : (
             formatBytes(used)
           )}
         </div>
-        {isLoading || used === undefined ? (
+        {isLoading ? (
           <Skeleton className="my-0.5 h-4 w-40" />
         ) : (
           <p className="whitespace-nowrap text-right text-secondary text-xs">
-            {capacity === undefined
+            {used === undefined || capacity === undefined
               ? 'past day'
               : `${((used / capacity) * 100).toFixed(1)}% of target / past day`}
           </p>
