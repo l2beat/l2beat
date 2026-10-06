@@ -88,6 +88,7 @@ export function validateDraft(
   }
   const draft = takeReasons(value, findings)
   const added = addedEntries(draft, ctx.templateText)
+  refuseObjectMemberNames(added, findings)
   requireReasons(added, draft.reasons, findings)
   for (const problem of schemaProblems(
     ContractConfigSchema,
@@ -168,10 +169,29 @@ function addedEntries(
     return []
   }
   return Object.entries(fields).flatMap(([name, entry]) =>
-    isPlainObject(entry) && existing?.[name] === undefined
+    isPlainObject(entry) && !Object.hasOwn(existing ?? {}, name)
       ? [[name, entry] as [string, Record<string, unknown>]]
       : [],
   )
+}
+
+/**
+ * A name every JavaScript object has (`constructor`, `toString`, …) is
+ * found by any lookup by name, so the checks, the merge and discovery
+ * would each take the field for one that is already there.
+ */
+function refuseObjectMemberNames(
+  added: [string, Record<string, unknown>][],
+  findings: Findings,
+): void {
+  for (const [name] of added) {
+    if (name in Object.prototype) {
+      findings.error(
+        fieldPath(name),
+        `"${name}" is a property every JavaScript object has, so lookups by name misread it; pick another name`,
+      )
+    }
+  }
 }
 
 function requireReasons(
