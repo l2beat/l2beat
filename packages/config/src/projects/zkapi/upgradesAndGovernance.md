@@ -1,6 +1,6 @@
 The vault code, verifier, signing keys and exit parameters are immutable.
 
-The discovered owner can change the treasury, pause deposits and new withdrawals, and transfer or renounce ownership without a notice period. Pending escape finalizations, challenges and expiry sweeps continue while paused. Pausing until expiry lets the owner redirect entire active deposits to its treasury. [Verified vault source](https://etherscan.io/address/0x4386FDbdA35D995beB3BF8625118Ec5982ec81fe#code).
+The owner can change the treasury, pause deposits and new withdrawals, and transfer or renounce ownership without a notice period. Pending escape finalizations, challenges and expiry sweeps continue while paused. Pausing until expiry lets the owner redirect entire active deposits to its treasury. [Verified vault source](https://etherscan.io/address/0x4386FDbdA35D995beB3BF8625118Ec5982ec81fe#code).
 
 The offchain operator controls credential issuance, settlement signatures and cooperative withdrawal clearance. Its fixed signing keys have no publicly established mapping to the owner's Ethereum account. Missing keys or settlement evidence cannot be replaced in this vault.
 

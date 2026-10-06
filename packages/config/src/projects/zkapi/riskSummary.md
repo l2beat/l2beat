@@ -1,6 +1,6 @@
 ## Funds can be stolen if
 
-1. the owner blocks withdrawals until expiry and redirects the full expired deposits to its treasury.
+1. the owner blocks withdrawals before expiry and redirects the full expired deposits to its treasury.
 2. retained setup secrets or a circuit/verifier flaw allow forged withdrawal proofs.
 3. malicious wallet code steals note secrets or redirects payments.
 
