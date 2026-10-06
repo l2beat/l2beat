@@ -230,6 +230,33 @@ describe(mergeTemplate.name, () => {
     )
   })
 
+  it('leaves a comment on the last member’s line with that member, and keeps comments that fill an empty object', () => {
+    expect(
+      merged({
+        text: '{\n  "fields": {\n    "admin": { "severity": "LOW" } // not a full act\n  }\n}\n',
+        additions: { fields: { b: { severity: 'LOW' } } },
+      }),
+    ).toEqual(
+      '{\n  "fields": {\n    "admin": { "severity": "LOW" }, // not a full act\n    "b": {\n      "severity": "LOW"\n    }\n  }\n}\n',
+    )
+    expect(
+      merged({
+        text: '{\n  "fields": {\n    "a": {}, /* kept */\n  }\n}\n',
+        additions: { fields: { b: { severity: 'LOW' } } },
+      }),
+    ).toEqual(
+      '{\n  "fields": {\n    "a": {}, /* kept */\n    "b": {\n      "severity": "LOW"\n    },\n  }\n}\n',
+    )
+    expect(
+      merged({
+        text: '{\n  "fields": {\n    // "old": {}\n  }\n}\n',
+        additions: { fields: { b: { severity: 'LOW' } } },
+      }),
+    ).toEqual(
+      '{\n  "fields": {\n    "b": {\n      "severity": "LOW"\n    }\n    // "old": {}\n  }\n}\n',
+    )
+  })
+
   it('spreads an object written on one line before adding to it, changing only whitespace', () => {
     // What `ensureTemplateExists` really writes, through `formatJson`.
     const v1 = '{ "$schema": "../../schema.json" }\n'
