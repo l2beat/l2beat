@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 import {
   createPrivacyAnonymitySetConfigurationId,
+  createPrivacyNoteConfigurationId,
   stringifyPrivacyConfigurationParams,
 } from './createPrivacyConfigurationId'
 
@@ -23,5 +24,21 @@ describe(createPrivacyAnonymitySetConfigurationId.name, () => {
     expect(stringifyPrivacyConfigurationParams({ z: 1, a: 'two' })).toEqual(
       'a=two,z=1',
     )
+  })
+})
+
+describe(createPrivacyNoteConfigurationId.name, () => {
+  // Pinned because a changed id would orphan already indexed notes.
+  it('keeps the id stable', () => {
+    expect(
+      createPrivacyNoteConfigurationId({
+        projectId: 'zkapi',
+        bucketId: 'zkapi-ETH',
+        chain: 'ethereum',
+        address: '0x1111111111111111111111111111111111111111',
+        extractor: 'zkApiNote',
+        params: { weiPerUnit: '1000000000' },
+      }),
+    ).toEqual('863476145883')
   })
 })

@@ -195,7 +195,9 @@ export const zkapi: BaseProject = {
             address: vault.address,
             sinceTimestamp,
             anonymitySet: {
+              unit: 'note',
               minimumAmounts: [requestChargeCap.toString()],
+              notes: { extractor: 'zkApiNote', params },
             },
             deposit: {
               event: utils.id(

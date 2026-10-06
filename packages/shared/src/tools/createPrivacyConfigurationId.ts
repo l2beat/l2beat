@@ -25,6 +25,29 @@ export function createPrivacyAnonymitySetConfigurationId(
   ])
 }
 
+export interface PrivacyNoteConfigurationIdentity {
+  projectId: string
+  bucketId: string
+  chain: string
+  address: string
+  extractor: string
+  params: Record<string, unknown>
+}
+
+export function createPrivacyNoteConfigurationId(
+  config: PrivacyNoteConfigurationIdentity,
+): string {
+  return createPrivacyConfigurationId([
+    'privacy-note',
+    config.projectId,
+    config.bucketId,
+    config.chain,
+    config.address,
+    config.extractor,
+    stringifyPrivacyConfigurationParams(config.params),
+  ])
+}
+
 export function createPrivacyConfigurationId(input: string[]): string {
   return createHash('sha1').update(input.join('')).digest('hex').slice(0, 12)
 }

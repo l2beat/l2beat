@@ -1431,22 +1431,51 @@ interface ProjectPrivacyBucketBase {
 export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
   (
     | {
-        anonymitySet: {
-          /**
-           * Public deposit-amount thresholds in token base units. Each value
-           * defines a cohort of deposits of at least that amount. Usually
-           * analytical thresholds, or the request bound for active notes.
-           */
-          minimumAmounts: string[]
-        }
+        anonymitySet: PrivacyDepositorAnonymitySet
         address: ChainSpecificAddress
         deposit: PrivacyAnonymitySetDepositSource
+      }
+    | {
+        anonymitySet: PrivacyNoteAnonymitySet
+        address: ChainSpecificAddress
+        deposit: PrivacyFlowSource
       }
     | {
         anonymitySet?: undefined
         deposit: PrivacyFlowSource
       }
   )
+
+/** Counts distinct funding addresses that deposited at least the threshold. */
+export interface PrivacyDepositorAnonymitySet {
+  /** Optional because depositors are the default unit. */
+  unit?: 'depositor'
+  /**
+   * Analytical deposit-amount thresholds in token base units. Each value
+   * defines a cohort of depositors with a deposit of at least that amount.
+   */
+  minimumAmounts: string[]
+}
+
+/**
+ * Counts notes that can still authorize a request. Each note counts on its
+ * own, even when one user holds several.
+ */
+export interface PrivacyNoteAnonymitySet {
+  unit: 'note'
+  /**
+   * Request budgets in token base units. A note counts toward a budget when
+   * its original deposit covers it, because remaining balances are private.
+   */
+  minimumAmounts: string[]
+  notes: PrivacyNoteSource
+}
+
+/** One extractor covers a note's whole lifecycle, so it names no single event. */
+export type PrivacyNoteSource = {
+  extractor: 'zkApiNote'
+  params: { weiPerUnit: string }
+}
 
 /**
  * Privacy pools can live on non-EVM chains. Keep EVM addresses in their
@@ -1471,7 +1500,6 @@ export type PrivacyAnonymitySetDepositSource = {
       | 'privacyPoolsValue'
       | 'railgunShield'
       | 'zkMoneyDeposit'
-      | 'zkApiDeposit'
   }
 >
 
