@@ -15,13 +15,17 @@
  * writing); the read-only sandbox refuses the write.
  *
  * Codex's own coding-agent instructions are replaced by the templatizer's
- * system prompt (`model_instructions_file`), no `AGENTS.md` is looked for
- * (`project_doc_max_bytes=0`; the turn runs in a fresh temporary directory
- * outside any repository anyway), and the environment message naming the
- * cwd and shell is not sent (`include_environment_context=false`). What
- * Codex still adds, and no documented setting removes, is its catalogue of
- * the skills installed on the machine (names and descriptions of local
- * SKILL.md files, which the model has no tool to read). The event stream is
+ * system prompt (`model_instructions_file`), no project `AGENTS.md` is
+ * looked for (`project_doc_max_bytes=0`; the turn runs in a fresh temporary
+ * directory outside any repository anyway), and the environment message
+ * naming the cwd and shell is not sent (`include_environment_context=false`).
+ * What Codex still adds, and no documented setting removes, is the user's
+ * global `$CODEX_HOME/AGENTS.md` (or `AGENTS.override.md`), and its
+ * catalogue of the skills installed on the machine (names and descriptions
+ * of local SKILL.md files, which the model has no tool to read). Another
+ * `CODEX_HOME` would keep the global file out, but the login lives there,
+ * and a copy of it that refreshes its token leaves the user's own login
+ * with a refresh token already used. The event stream is
  * then checked for any tool item, and a turn that shows one is refused, so
  * "no tool ran" is verified, not assumed. The first turn is not
  * `--ephemeral` because repair rounds resume the thread by id, and an
