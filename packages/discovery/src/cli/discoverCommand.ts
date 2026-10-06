@@ -136,6 +136,10 @@ export async function discover(
   chainConfigs: DiscoveryChainConfig[] = getChainConfigs(),
   logger: Logger = configureLogger(Logger.DEBUG),
 ): Promise<void> {
+  if (config.dryRun && (config.ai || config.aiRevisit)) {
+    // The dry run never reaches the templatizer, so the flags would be ignored.
+    throw new Error('--ai and --ai-revisit do not work with --dry-run')
+  }
   const http = new HttpClient()
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)

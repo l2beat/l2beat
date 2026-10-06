@@ -543,6 +543,25 @@ describe(Templatizer.name, () => {
       expect(templateText('proj/Registry')).toEqual(FITTING_TEMPLATE)
     })
 
+    it('gives the contract a template of its own when the old one has no shapes, because only a referrer applies it', async () => {
+      const directory = join(root, '_templates', 'proj', 'Registry')
+      mkdirSync(directory, { recursive: true })
+      writeFileSync(join(directory, 'template.jsonc'), FITTING_TEMPLATE)
+      const model = new FakeModelClient([JSON.stringify(DRAFT)])
+      const req = request([bundle('Registry', ADDRESS, BODY)])
+
+      const templateId = await templatizer(model, {
+        [ADDRESS]: 'proj/Registry',
+      }).templateFor(req)
+
+      expect(templateId?.startsWith('proj/Registry-')).toEqual(true)
+      expect(templateText(templateId ?? '')).toInclude(
+        'which no longer fits: it has no shapes, so only a referrer applies it.',
+      )
+      expect(templateText('proj/Registry')).toEqual(FITTING_TEMPLATE)
+      expect(templateService.readShapeFile('proj/Registry')).toEqual(undefined)
+    })
+
     it('gives the contract a template of its own when the old one holds its shape but its criteria.json does not list it', async () => {
       const directory = join(root, '_templates', 'proj', 'Registry')
       mkdirSync(directory, { recursive: true })
