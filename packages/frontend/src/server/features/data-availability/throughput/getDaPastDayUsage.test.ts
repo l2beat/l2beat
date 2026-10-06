@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getCapacity, sumUsed } from './getDaPastDayUsage'
+import { getCapacity, getSyncedDay, sumUsed } from './getDaPastDayUsage'
 
 const RANGE: [number, number] = [1000, 2000]
 
@@ -23,6 +23,66 @@ describe(sumUsed.name, () => {
 
   it('returns zero when the layer has no record', () => {
     expect(sumUsed([record('base', 1500, 7n)], 'ethereum', RANGE)).toEqual(0)
+  })
+})
+
+// Each case places the layer's last hourly record somewhere in the two days
+// fetched before midnight and checks which 24 hours get summed.
+describe(getSyncedDay.name, () => {
+  const MIDNIGHT = 10 * UnixTime.DAY
+  const fetched: [number, number] = [MIDNIGHT - 2 * UnixTime.DAY, MIDNIGHT]
+
+  it('takes the day up to midnight when its last hour is written', () => {
+    const day = getSyncedDay(
+      [record('ethereum', MIDNIGHT - UnixTime.HOUR, 1n)],
+      'ethereum',
+      fetched,
+    )
+
+    expect(day).toEqual([MIDNIGHT - UnixTime.DAY, MIDNIGHT])
+  })
+
+  it('takes the 24 hours up to the last hour written when the indexer lags', () => {
+    const day = getSyncedDay(
+      [
+        record('ethereum', MIDNIGHT - 5 * UnixTime.HOUR, 1n),
+        record('ethereum', MIDNIGHT - 4 * UnixTime.HOUR, 1n),
+      ],
+      'ethereum',
+      fetched,
+    )
+
+    expect(day).toEqual([
+      MIDNIGHT - UnixTime.DAY - 3 * UnixTime.HOUR,
+      MIDNIGHT - 3 * UnixTime.HOUR,
+    ])
+  })
+
+  it("goes by the layer's own records, not by a project's", () => {
+    const day = getSyncedDay(
+      [
+        record('ethereum', MIDNIGHT - 3 * UnixTime.HOUR, 1n),
+        record('base', MIDNIGHT - UnixTime.HOUR, 1n),
+      ],
+      'ethereum',
+      fetched,
+    )
+
+    expect(day?.[1]).toEqual(MIDNIGHT - 2 * UnixTime.HOUR)
+  })
+
+  it('returns nothing when the indexer is more than a day behind', () => {
+    const day = getSyncedDay(
+      [record('ethereum', MIDNIGHT - UnixTime.DAY - 2 * UnixTime.HOUR, 1n)],
+      'ethereum',
+      fetched,
+    )
+
+    expect(day).toEqual(undefined)
+  })
+
+  it('returns nothing when the layer has no record', () => {
+    expect(getSyncedDay([], 'ethereum', fetched)).toEqual(undefined)
   })
 })
 
