@@ -1,17 +1,29 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
-import { asciiProgressBar, formatJson, UnixTime } from '@l2beat/shared-pure'
+import {
+  asciiProgressBar,
+  assert,
+  formatJson,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
-import { readFileSync, writeFileSync } from 'fs'
+import { writeFileSync } from 'fs'
 import path from 'path'
 import type { AuditCoverage as Coverage } from '../implementations/audit-coverage/AuditCoverage'
 import { buildAuditedCode } from '../implementations/audit-coverage/AuditedCode'
 import { AuditIndex } from '../implementations/audit-coverage/AuditIndex'
 import { parseAuditObjects } from '../implementations/audit-coverage/AuditObjects'
 import { auditCoverageOfProject } from '../implementations/audit-coverage/auditCoverageOfProject'
+import {
+  type AuditDatasetFiles,
+  fetchAuditDataset,
+  readAuditDataset,
+} from '../implementations/audit-coverage/auditDataset'
 import { deployedSourceFromCache } from '../implementations/audit-coverage/deployedSource'
 import { createCliLogger } from '../implementations/common/CliLogger'
-import { File } from './types'
+import { File, HttpUrl } from './types'
+
+const DEFAULT_DATASET = 'https://github.com/sergeyshemyakov/audit-dataset'
 
 export const AuditCoverage = command({
   name: 'audit-coverage',
@@ -19,20 +31,25 @@ export const AuditCoverage = command({
     'Matches the deployed contracts of a project against audited code and writes the coverage as JSON.',
   args: {
     project: positional({ type: string, displayName: 'project' }),
+    github: option({
+      type: optional(HttpUrl),
+      long: 'github',
+      description: `audit dataset repository to read main from, defaults to ${DEFAULT_DATASET}`,
+    }),
     index: option({
-      type: File,
+      type: optional(File),
       long: 'index',
-      description: 'audit-index.json',
+      description: 'local audit-index.json, instead of --github',
     }),
     objects: option({
-      type: File,
+      type: optional(File),
       long: 'objects',
-      description: 'audit-objects.json.zst',
+      description: 'local audit-objects.json.zst, instead of --github',
     }),
     datasetCommit: option({
-      type: string,
+      type: optional(string),
       long: 'dataset-commit',
-      description: 'audit dataset commit both files come from',
+      description: 'audit dataset commit the local files come from',
     }),
     output: option({
       type: optional(string),
@@ -45,8 +62,9 @@ export const AuditCoverage = command({
     const cli = createCliLogger({ output: process.stdout, quiet: false })
     const loading = cli.status()
     loading.update('Reading audit index and objects')
-    const index = AuditIndex.parse(JSON.parse(readFileSync(args.index, 'utf8')))
-    const objects = parseAuditObjects(readFileSync(args.objects), index)
+    const dataset = await loadDataset(args)
+    const index = AuditIndex.parse(JSON.parse(dataset.index))
+    const objects = parseAuditObjects(dataset.objects, index)
     const code = buildAuditedCode(index, objects, (split, count) =>
       loading.update(progress(split, count, 'Splitting audited files')),
     )
@@ -60,7 +78,7 @@ export const AuditCoverage = command({
       {
         index,
         code,
-        datasetCommit: args.datasetCommit,
+        datasetCommit: dataset.commit,
         generatedAt: UnixTime.now(),
       },
       deployedSourceFromCache(),
@@ -79,6 +97,28 @@ export const AuditCoverage = command({
     cli.log(`Wrote ${output}`)
   },
 })
+
+function loadDataset(args: {
+  github: string | undefined
+  index: string | undefined
+  objects: string | undefined
+  datasetCommit: string | undefined
+}): Promise<AuditDatasetFiles> {
+  const local = [args.index, args.objects, args.datasetCommit]
+  if (local.every((arg) => arg === undefined)) {
+    return fetchAuditDataset(args.github ?? DEFAULT_DATASET)
+  }
+  assert(args.github === undefined, '--github excludes local dataset files')
+  assert(
+    args.index !== undefined &&
+      args.objects !== undefined &&
+      args.datasetCommit !== undefined,
+    'Local dataset files need --index, --objects and --dataset-commit',
+  )
+  return Promise.resolve(
+    readAuditDataset(args.index, args.objects, args.datasetCommit),
+  )
+}
 
 function progress(done: number, count: number, status: string): string {
   const bar = chalk.cyan(asciiProgressBar(done, count))

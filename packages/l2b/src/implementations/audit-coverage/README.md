@@ -3,12 +3,16 @@
 `l2b audit-coverage <project>` tells, for every top-level declaration deployed by a project, whether audited code exists for it, how far the deployed code is from it, and which reports audited it.
 
 ```
+l2b audit-coverage tornado-cash
+l2b audit-coverage tornado-cash --github https://github.com/<owner>/audit-dataset
 l2b audit-coverage tornado-cash \
   --index audit-index.json --objects audit-objects.json.zst \
   --dataset-commit <commit> -o audit-coverage.json
 ```
 
-Run it anywhere in the repository after discovery: deployed sources are read from the discovery cache, so nothing is fetched.
+By default both files are read from `main` of `github.com/sergeyshemyakov/audit-dataset`, or of the repository passed with `--github`, at the commit `main` points to, which is recorded as `datasetCommit`. Local files need all of `--index`, `--objects` and `--dataset-commit`. The output goes to `audit-coverage.json` in the project directory unless `-o` is given.
+
+Run it anywhere in the repository after discovery: deployed sources are read from the discovery cache, so no contract source is fetched.
 
 ## Inputs
 
