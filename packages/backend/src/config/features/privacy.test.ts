@@ -19,7 +19,7 @@ const ps = new ProjectService()
 const env = new Env({})
 
 describe(getPrivacyConfig.name, () => {
-  it('tracks zkapi active notes and both payout routes without duplicating deposits', async () => {
+  it('tracks zkapi notes in their own config and both payout routes without duplicating deposits', async () => {
     const project = await ps.getProject({
       slug: 'zkapi',
       select: ['privacyInfo'],
@@ -35,9 +35,8 @@ describe(getPrivacyConfig.name, () => {
       [{ name: 'ethereum', chainId: 1, apis: [] } as ChainConfig],
     )
     if (!config) throw new Error('Privacy config not created')
-    expect(config.anonymitySetConfigs.map((c) => c.extractor)).toEqual([
-      'zkApiDeposit',
-    ])
+    expect(config.noteConfigs.map((c) => c.extractor)).toEqual(['zkApiNote'])
+    expect(config.anonymitySetConfigs).toEqual([])
     expect(
       config.flowConfigs.filter((c) => c.direction === 'deposit'),
     ).toHaveLength(1)

@@ -3,6 +3,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import type { PrivacyFlowIndexerConfig, PrivacyRpcLog } from '../types'
+import { zkApiInterface } from '../zkapi/abi'
 import { FUNDING_PARAMS } from '../zkmoney/test/fixtures'
 import { erc20Interface } from './erc20'
 import { extractPrivacyAnonymitySetDeposit } from './extractPrivacyAnonymitySetDeposit'
@@ -72,17 +73,11 @@ function encodeLog(
 
 describe(extractPrivacyFlow.name, () => {
   describe('zkapi native ETH events', () => {
-    const iface = new utils.Interface([
-      'event NoteDeposited(uint32 indexed noteId, bytes32 indexed commitment, uint128 amount, uint64 expiryTs, uint256 newRoot)',
-      'event MutualClose(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination)',
-      'event EscapeWithdrawalFinalized(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination)',
-      'event EscapeWithdrawalInitiated(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination, uint64 challengeDeadline, uint256 newRoot)',
-    ])
     const params = { weiPerUnit: '1000000000' }
 
     it('converts deposits from gwei to wei without losing integer precision', () => {
       const amount = 9_007_199_254_740_991n
-      const log = encodeLog(iface, 'NoteDeposited', [
+      const log = encodeLog(zkApiInterface, 'NoteDeposited', [
         30,
         utils.hexZeroPad('0x01', 32),
         amount,
@@ -99,7 +94,12 @@ describe(extractPrivacyFlow.name, () => {
 
     for (const event of ['MutualClose', 'EscapeWithdrawalFinalized']) {
       it(`counts only the user payout in ${event}`, () => {
-        const log = encodeLog(iface, event, [7, 123, 23_456_789n, ADDRESS])
+        const log = encodeLog(zkApiInterface, event, [
+          7,
+          123,
+          23_456_789n,
+          ADDRESS,
+        ])
         expect(
           extractPrivacyFlow(
             { event: log.topics[0]!, extractor: 'zkApiWithdrawal', params },
@@ -110,7 +110,7 @@ describe(extractPrivacyFlow.name, () => {
     }
 
     it('counts a zero-balance closure without inventing a payout', () => {
-      const log = encodeLog(iface, 'MutualClose', [7, 123, 0, ADDRESS])
+      const log = encodeLog(zkApiInterface, 'MutualClose', [7, 123, 0, ADDRESS])
       expect(
         extractPrivacyFlow(
           { event: log.topics[0]!, extractor: 'zkApiWithdrawal', params },
@@ -120,7 +120,7 @@ describe(extractPrivacyFlow.name, () => {
     })
 
     it('rejects escape initiation because no payout has happened', () => {
-      const log = encodeLog(iface, 'EscapeWithdrawalInitiated', [
+      const log = encodeLog(zkApiInterface, 'EscapeWithdrawalInitiated', [
         7,
         123,
         23_456_789n,
@@ -133,7 +133,19 @@ describe(extractPrivacyFlow.name, () => {
           { event: log.topics[0]!, extractor: 'zkApiWithdrawal', params },
           log,
         ),
-      ).toThrow()
+      ).toThrow(
+        'zkApiWithdrawal does not extract a flow from EscapeWithdrawalInitiated',
+      )
+    })
+
+    it('rejects a payout event configured as a deposit', () => {
+      const log = encodeLog(zkApiInterface, 'MutualClose', [7, 123, 0, ADDRESS])
+      expect(() =>
+        extractPrivacyFlow(
+          { event: log.topics[0]!, extractor: 'zkApiDeposit', params },
+          log,
+        ),
+      ).toThrow('zkApiDeposit does not extract a flow from MutualClose')
     })
   })
 

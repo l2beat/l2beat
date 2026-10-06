@@ -6,6 +6,7 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { PrivacyAnonymitySetIndexer } from './indexers/PrivacyAnonymitySetIndexer'
 import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
+import { PrivacyNoteIndexer } from './indexers/PrivacyNoteIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from './indexers/PrivacyRelayerActivityIndexer'
 import { StarknetPrivacyFlowIndexer } from './indexers/StarknetPrivacyFlowIndexer'
@@ -14,6 +15,7 @@ import { RailgunBroadcasterProvider } from './railgun/RailgunBroadcasterProvider
 import type {
   PrivacyAnonymitySetIndexerConfig,
   PrivacyFlowIndexerConfig,
+  PrivacyNoteIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
   StarknetPrivacyFlowIndexerConfig,
 } from './types'
@@ -95,6 +97,14 @@ export function createPrivacyModule({
     ])
   }
 
+  const noteConfigsByChain = new Map<string, PrivacyNoteIndexerConfig[]>()
+  for (const noteConfig of config.privacy.noteConfigs) {
+    noteConfigsByChain.set(noteConfig.chain, [
+      ...(noteConfigsByChain.get(noteConfig.chain) ?? []),
+      noteConfig,
+    ])
+  }
+
   for (const blockTimestampConfig of config.privacy.blockTimestampConfigs) {
     const sinceTimestamp = UnixTime.toStartOf(
       blockTimestampConfig.sinceTimestamp,
@@ -107,6 +117,7 @@ export function createPrivacyModule({
       starknetFlowConfigsByChain.get(blockTimestampConfig.chain) ?? []
     const relayerConfigs =
       relayerConfigsByChain.get(blockTimestampConfig.chain) ?? []
+    const noteConfigs = noteConfigsByChain.get(blockTimestampConfig.chain) ?? []
     const blockProvider = providers.block.getBlockProvider(
       blockTimestampConfig.chain,
     )
@@ -239,6 +250,30 @@ export function createPrivacyModule({
         ),
       )
     }
+
+    if (noteConfigs.length > 0) {
+      indexers.push(
+        new PrivacyNoteIndexer(
+          {
+            chain: blockTimestampConfig.chain,
+            parents: [blockTimestampIndexer],
+            indexerService,
+            blockProvider,
+            logsProvider: providers.logs.getLogsProvider(
+              blockTimestampConfig.chain,
+            ),
+            configurations: noteConfigs.map((noteConfig) => ({
+              id: noteConfig.id,
+              minHeight: noteConfig.sinceTimestamp,
+              maxHeight: null,
+              properties: noteConfig,
+            })),
+            db,
+          },
+          logger,
+        ),
+      )
+    }
   }
 
   const sampler =
@@ -258,6 +293,7 @@ export function createPrivacyModule({
     projects: config.privacy.projects.length,
     flowConfigs: config.privacy.flowConfigs.length,
     anonymitySetConfigs: config.privacy.anonymitySetConfigs.length,
+    noteConfigs: config.privacy.noteConfigs.length,
     starknetFlowConfigs: config.privacy.starknetFlowConfigs.length,
     relayerConfigs: config.privacy.relayerConfigs.length,
     relayerSampleConfigs: config.privacy.relayerSampleConfigs.length,

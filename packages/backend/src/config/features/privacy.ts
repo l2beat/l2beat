@@ -4,6 +4,8 @@ import type {
   PrivacyAnonymitySetDepositSource,
   PrivacyBucketAddress,
   PrivacyFlowSource,
+  PrivacyNoteAnonymitySet,
+  PrivacyNoteSource,
   ProjectPrivacyBucket,
   ProjectPrivacyOnchainRelayerSource,
   ProjectPrivacyRailgunWakuRelayerSource,
@@ -21,6 +23,7 @@ import { utils } from 'ethers'
 import { PrivacyAnonymitySetIndexer } from '../../modules/privacy/indexers/PrivacyAnonymitySetIndexer'
 import { PrivacyBlockTimestampIndexer } from '../../modules/privacy/indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIndexer'
+import { PrivacyNoteIndexer } from '../../modules/privacy/indexers/PrivacyNoteIndexer'
 import { PrivacyPriceIndexer } from '../../modules/privacy/indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from '../../modules/privacy/indexers/PrivacyRelayerActivityIndexer'
 import { StarknetPrivacyFlowIndexer } from '../../modules/privacy/indexers/StarknetPrivacyFlowIndexer'
@@ -32,6 +35,8 @@ import type {
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
   PrivacyLogTopicFilter,
+  PrivacyNoteIndexerConfig,
+  PrivacyNoteIndexerConfigProperties,
   PrivacyPriceIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
   PrivacyRelayerSampleConfig,
@@ -76,13 +81,23 @@ export async function getPrivacyConfig(
 
   const flowConfigs: PrivacyFlowIndexerConfig[] = []
   const anonymitySetConfigs: PrivacyAnonymitySetIndexerConfig[] = []
+  const noteConfigs: PrivacyNoteIndexerConfig[] = []
   const starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[] = []
   const relayerConfigs: PrivacyRelayerActivityIndexerConfig[] = []
   const relayerSampleConfigs: PrivacyRelayerSampleConfig[] = []
   for (const project of projects) {
     for (const token of project.privacyInfo.tokens) {
       for (const bucket of token.buckets) {
-        if (bucket.anonymitySet !== undefined) {
+        if (isNoteBucket(bucket)) {
+          noteConfigs.push(
+            toNoteConfig(
+              project.projectId,
+              bucket,
+              bucket.anonymitySet.notes,
+              minTimestamp,
+            ),
+          )
+        } else if (bucket.anonymitySet !== undefined) {
           anonymitySetConfigs.push(
             toAnonymitySetConfig(
               project.projectId,
@@ -98,6 +113,7 @@ export async function getPrivacyConfig(
             project.projectId,
             bucket,
             'deposit',
+            bucket.deposit,
             token.token,
             minTimestamp,
           ),
@@ -105,6 +121,7 @@ export async function getPrivacyConfig(
             project.projectId,
             bucket,
             'withdrawal',
+            bucket.withdrawal,
             token.token,
             minTimestamp,
           ),
@@ -113,9 +130,9 @@ export async function getPrivacyConfig(
               project.projectId,
               bucket,
               'withdrawal',
+              source,
               token.token,
               minTimestamp,
-              source,
             ),
           ),
         ]
@@ -185,6 +202,7 @@ export async function getPrivacyConfig(
     ...flowConfigs,
     ...starknetFlowConfigs,
     ...relayerConfigs,
+    ...noteConfigs,
   ]
   const chains = Array.from(
     new Set(onchainConfigs.map((config) => config.chain)),
@@ -208,6 +226,7 @@ export async function getPrivacyConfig(
   return {
     projects,
     anonymitySetConfigs,
+    noteConfigs,
     flowConfigs,
     starknetFlowConfigs,
     relayerConfigs,
@@ -282,13 +301,46 @@ function toAnonymitySetConfig(
   }
 }
 
+type ProjectPrivacyNoteBucket = Extract<
+  ProjectPrivacyBucket,
+  { anonymitySet: PrivacyNoteAnonymitySet }
+>
+
+function isNoteBucket(
+  bucket: ProjectPrivacyBucket,
+): bucket is ProjectPrivacyNoteBucket {
+  return bucket.anonymitySet?.unit === 'note'
+}
+
+function toNoteConfig(
+  projectId: string,
+  bucket: ProjectPrivacyNoteBucket,
+  source: PrivacyNoteSource,
+  minTimestamp: UnixTime,
+): PrivacyNoteIndexerConfig {
+  const privacyAddress = getPrivacyBucketAddress(bucket.address)
+  const config: PrivacyNoteIndexerConfigProperties = {
+    projectId,
+    bucketId: bucket.id,
+    chain: privacyAddress.chain,
+    address: EthereumAddress(privacyAddress.address),
+    sinceTimestamp: Math.max(bucket.sinceTimestamp, minTimestamp),
+    ...source,
+  }
+
+  return {
+    id: PrivacyNoteIndexer.idToConfigurationId(config),
+    ...config,
+  }
+}
+
 function toFlowConfig(
   projectId: string,
   bucket: ProjectPrivacyBucket,
   direction: 'deposit' | 'withdrawal',
+  source: PrivacyFlowSource,
   token: ProjectPrivacyToken['token'],
   minTimestamp: UnixTime,
-  source: PrivacyFlowSource = bucket[direction],
 ): PrivacyFlowIndexerConfig | StarknetPrivacyFlowIndexerConfig {
   const privacyAddress = getPrivacyBucketAddress(bucket.address)
   const base = {

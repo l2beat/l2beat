@@ -5,17 +5,12 @@ import type {
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { PrivacyFlowExtractResult, PrivacyRpcLog } from '../types'
+import { zkApiInterface } from '../zkapi/abi'
 import { zkMoneyInterface } from '../zkmoney/abi'
 import { erc20Interface } from './erc20'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
 
 const ERC20_TOKEN_TYPE = 0
-
-const zkApiInterface = new utils.Interface([
-  'event NoteDeposited(uint32 indexed noteId, bytes32 indexed commitment, uint128 amount, uint64 expiryTs, uint256 newRoot)',
-  'event MutualClose(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination)',
-  'event EscapeWithdrawalFinalized(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination)',
-])
 
 const railgunInterface = new utils.Interface([
   'event Shield(uint256 treeNumber, uint256 startPosition, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value)[] commitments, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey)[] shieldCiphertext, uint256[] fees)',
@@ -42,17 +37,8 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
 ): PrivacyFlowExtractResult | undefined {
   switch (source.extractor) {
     case 'zkApiDeposit':
-    case 'zkApiWithdrawal': {
-      const parsed = zkApiInterface.parseLog(log)
-      const value =
-        source.extractor === 'zkApiDeposit'
-          ? parsed.args.amount
-          : parsed.args.finalBalance
-      return {
-        count: 1,
-        amount: BigInt(value.toString()) * BigInt(source.params.weiPerUnit),
-      }
-    }
+    case 'zkApiWithdrawal':
+      return extractZkApiFlow(source, log)
     case 'fixedAmount':
       return {
         count: 1,
@@ -89,6 +75,42 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
       }
     default:
       return undefined
+  }
+}
+
+// EscapeWithdrawalInitiated is absent: it can still be challenged, so no
+// payout has happened yet.
+const ZK_API_FLOW_AMOUNT_ARGS: Record<
+  'zkApiDeposit' | 'zkApiWithdrawal',
+  Partial<Record<string, string>>
+> = {
+  zkApiDeposit: { NoteDeposited: 'amount' },
+  zkApiWithdrawal: {
+    MutualClose: 'finalBalance',
+    EscapeWithdrawalFinalized: 'finalBalance',
+  },
+}
+
+function extractZkApiFlow(
+  source: Extract<
+    PrivacyFlowExtractorConfig,
+    { extractor: 'zkApiDeposit' | 'zkApiWithdrawal' }
+  >,
+  log: PrivacyRpcLog,
+): PrivacyFlowExtractResult {
+  const parsedLog = zkApiInterface.parseLog(log)
+  const amountArg = ZK_API_FLOW_AMOUNT_ARGS[source.extractor][parsedLog.name]
+  if (amountArg === undefined) {
+    throw new Error(
+      `${source.extractor} does not extract a flow from ${parsedLog.name}`,
+    )
+  }
+
+  return {
+    count: 1,
+    amount:
+      BigInt(parsedLog.args[amountArg].toString()) *
+      BigInt(source.params.weiPerUnit),
   }
 }
 

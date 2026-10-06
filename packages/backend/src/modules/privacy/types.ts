@@ -1,6 +1,7 @@
 import type {
   PrivacyAnonymitySetDepositSource,
   PrivacyFlowExtractorConfig,
+  PrivacyNoteSource,
   PrivacyRelayerExtractorConfig,
   ProjectPrivacyInfo,
 } from '@l2beat/config'
@@ -18,6 +19,7 @@ export interface PrivacyConfig {
   anonymitySetConfigs: PrivacyAnonymitySetIndexerConfig[]
   flowConfigs: PrivacyFlowIndexerConfig[]
   starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[]
+  noteConfigs: PrivacyNoteIndexerConfig[]
   relayerConfigs: PrivacyRelayerActivityIndexerConfig[]
   relayerSampleConfigs: PrivacyRelayerSampleConfig[]
   priceConfigs: PrivacyPriceIndexerConfig[]
@@ -37,6 +39,18 @@ export type PrivacyAnonymitySetIndexerConfigProperties = {
 export type PrivacyAnonymitySetIndexerConfig = {
   id: string
 } & PrivacyAnonymitySetIndexerConfigProperties
+
+export type PrivacyNoteIndexerConfigProperties = {
+  projectId: string
+  bucketId: string
+  chain: string
+  address: EthereumAddress
+  sinceTimestamp: UnixTime
+} & PrivacyNoteSource
+
+export type PrivacyNoteIndexerConfig = {
+  id: string
+} & PrivacyNoteIndexerConfigProperties
 
 /**
  * Filters on the indexed event args starting at topic1, null matching
@@ -129,6 +143,10 @@ export interface PrivacyFlowExtractResult {
   count: number
   amount: bigint
 }
+
+export type PrivacyNoteEvent =
+  | { type: 'deposit'; noteId: number; amount: bigint; expiresAt: UnixTime }
+  | { type: 'statusChange'; noteId: number; active: boolean }
 
 export interface PrivacyRelayerActivityExtractResult {
   relayerAddress: EthereumAddress
