@@ -186,7 +186,7 @@ const RULES: Rule[] = [
   {
     title: 'References.',
     lines: [
-      '`{{ name }}` refers only to a baseline field, a field you add, a field of the existing template, or `{{ $.address }}`; never to proxy values (`$admin`, `$implementation`, …), and never in a cycle. Section 3 lists the keys that accept references.',
+      '`{{ name }}` refers only to a baseline field, a field you add, a field of the existing template that has a `handler`, or `{{ $.address }}`; never to proxy values (`$admin`, `$implementation`, …), and never in a cycle. Section 3 lists the keys that accept references.',
     ],
   },
   {
