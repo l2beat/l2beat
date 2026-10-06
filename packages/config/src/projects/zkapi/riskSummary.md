@@ -16,7 +16,7 @@
 
 ## Privacy can be lost if
 
-1. note-id queries, IPs, timing or budgets identify a deposit. Proxy fallback can expose IPs.
+1. note-id queries, shared Tor circuits, rpc fallback, timing or budgets identify the paying deposit.
 2. providers identify users from prompts or link requests sharing credentials. Verifier approval does not prove absence of provider logging.
 3. challenges publish authorizations, linking their nullifiers to deposits.
 4. hosted code or another process reads local secrets and chats.

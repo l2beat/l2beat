@@ -10,7 +10,7 @@ const COMPANION =
 export const zkApiAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'linkage',
-    text: 'Hides which Ethereum deposit funds an API request. Deposits and withdrawals remain publicly linked by note id. The credential issuer and inference provider receive the API credential, and the provider receives prompts and responses.',
+    text: 'Inference request proofs hide the paying Ethereum deposit. Deposits and withdrawals remain publicly linked by note id. The issuer knows the API credential, and the inference provider receives it along with prompts and responses.',
   },
   fieldDescriptions: {
     linkage:
@@ -20,9 +20,9 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       exposure:
-        'API authorizations stay offchain. Their proofs hide the deposit note and exact remaining balance. Ethereum publishes deposit sender, commitment, amount and expiry, then the same note id, payout address and remaining balance on closure. The difference reveals total consumption for that note. Publishing a challenge exposes a request proof and its nullifier alongside the note being withdrawn.',
+        'Ordinary API authorizations stay offchain and hide the paying note. Deposits publish the funder, amount and note id; withdrawals publish the same note id, payout address and remaining balance, revealing total consumption. An escape challenge publishes a request proof linked to its funding note.',
       advice:
-        'Treat funding, payouts and total consumption as public. Use a funding wallet and payout address that you accept being linked. An escape dispute reveals additional metadata.',
+        'Treat funding, payouts and total consumption as public. Use addresses you accept being linked. An escape dispute also reveals an authorization.',
       interior: {
         sender: 'exposed',
         recipient: {
@@ -51,9 +51,9 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'warning',
       exposure:
-        'The anonymity set is limited to zkapi users. Ordinary authorizations and their spending bounds stay offchain. If an analyst obtains a request proof, its time and spending bound narrow the eligible notes. A published withdrawal challenge directly identifies the note behind its request proof. There is no pool anonymity between deposit and withdrawal.',
+        'The anonymity set is small, limited to zkapi users. Only eligible zkAPI notes can fund an authorization. If an analyst obtains its proof, timing and spending bounds can narrow the candidates to one deposit. An escape challenge directly identifies the funding note. Deposits and withdrawals are publicly linked.',
       advice:
-        'Check that other active notes can cover your request budget. Avoid authorizing immediately after funding. Choosing a fresh payout address does not remove the published note-id link.',
+        'Check that other active notes could cover your request budget. Wait before using a new deposit. A fresh payout address still remains linked to the deposit.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -76,9 +76,9 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposure:
-        'Direct connections reveal IPs and timing to the protocol service, indexer, credential verifier and inference provider. RPCs see funding accounts and withdrawal transactions. The browser fetches a common tree snapshot and derives note paths locally. The desktop companion instead requests paths containing its note id, identifying the deposit to the indexer. Its Go Tor/Wisp transport is separate from the Rust companion HTTP client.',
+        'Tor hides the source IP, but shared circuits and timing can still link deposits to API authorizations. The browser app derives note paths from a common snapshot. The local daemon (zkapi-clientd) queries by public note id before authorization; indexing and authorization share a hostname. Its Tor setting covers the Rust wallet companion, but neither client isolates unrelated operations onto separate Tor circuits or obscures request timing.',
       advice:
-        'Use an inspected browser SDK build with a reviewed production profile, route all traffic and wallet broadcasts through Tor, and read Ethereum through your own node. Changing the pinned RPC requires a reviewed profile and matching manifest. For the desktop client, disable credential reuse and route the whole application, including its Rust companion. The relay setting alone does not cover companion requests.',
+        'Prefer the browser app, route the app and wallet broadcasts through Tor, and wait before using a new deposit. For zkapi-clientd, configure a local Tor SOCKS proxy and disable key reuse. These settings do not provide circuit isolation or prevent timing correlation. Using your own Ethereum node requires a reviewed deployment profile and matching manifest.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -89,7 +89,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Direct traffic or desktop note-path queries can link authorizations to deposits. A browser using common snapshots and separately isolated network identities avoids this direct link.',
+          note: 'Note-id queries, shared Tor circuits and timing can link authorizations to deposits. Browser snapshots avoid disclosing the queried note id, but do not remove timing correlation.',
         },
       },
       sources: [
@@ -98,29 +98,37 @@ export const zkApiAdversaries = definePrivacyAdversaries({
           url: `${SRC}sdk/services/browserWalletRuntime.js#L829-L845`,
         },
         {
-          title: 'Desktop companion queries the indexer by note id',
-          url: `${COMPANION}indexer.rs#L69-L104`,
+          title: 'Local daemon queries the indexer by public note id',
+          url: `${COMPANION}indexer.rs#L71-L80`,
         },
         {
-          title: 'Companion patch preserves a separate HTTP client',
-          url: `${SRC}zkapi-clientd/internal/zkapi/companion.patch#L271-L321`,
+          title: 'Indexer and authorization service share a hostname',
+          url: `${SRC}zkapi-clientd/internal/zkapi/deployments/mainnet.json#L20-L22`,
         },
         {
-          title: 'Protocol requests construct their own Rust HTTP client',
-          url: `${SRC}zkapi-clientd/internal/zkapi/protocol-transport.patch#L23-L80`,
+          title: 'SOCKS transport supplies no Tor isolation credentials',
+          url: `${SRC}zkapi-clientd/internal/relay/socks5.go#L53-L59`,
         },
         {
-          title: 'Tor route and credential-reuse settings',
-          url: `${SRC}zkapi-clientd/cmd/zkapi-clientd/configure.go#L26-L39`,
+          title: 'Companion inherits the configured local CONNECT proxy',
+          url: `${SRC}zkapi-clientd/internal/zkapi/companion.go#L109-L127`,
+        },
+        {
+          title: 'CONNECT bridge uses the same SOCKS or Wisp route as Go',
+          url: `${SRC}zkapi-clientd/internal/relay/connect.go#L18-L44`,
+        },
+        {
+          title: 'Browser fetches its snapshot and quote before proving',
+          url: `${SRC}sdk/services/browserWalletRuntime.js#L1624-L1659`,
         },
       ],
     },
     privilegedInsider: {
       sentiment: 'bad',
       exposure:
-        'The challenge mechanism for escapes can be used to deanonymize users. The protocol operator receives the proof, spending bound, timing, lease metadata and billed cost. Randomized commitments hide the exact balance and note, but an operator sharing indexer logs can correlate desktop note-path queries with authorization requests. The credential issuer knows the provider key it issues, and the inference provider sees that key and all content sent with it. The desktop reuses keys across compatible requests by default. Hosted wallet code can read local secrets or substitute future payment instructions. A challenge explicitly associates a submitted authorization with a public note.',
+        "During an escape withdrawal, the operator can publish a request proof linked to its funding note. It also receives authorization timing, budgets and billed usage, and can correlate the local daemon's note-id queries with requests. The issuer knows the API credential; the provider sees prompts and responses and can link requests sharing it. Hosted wallet code can read secrets or redirect payments.",
       advice:
-        'Run inspected local code, use the browser snapshot path, isolate funding and API network identities, and send no identifying content. Disable desktop key reuse with --key-reuse-window-seconds 0. The issuer and provider still learn the credential and content needed to deliver the service.',
+        "Run inspected local code and avoid identifying prompts. Prefer the browser's common snapshots. For zkapi-clientd, set --key-reuse-window-seconds 0. These steps do not prevent the operator from linking an authorization to its note through an escape challenge.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -130,8 +138,8 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         },
         asset: 'exposed',
         linkage: {
-          verdict: 'atRisk',
-          note: 'Operator-held metadata and desktop indexer queries can link authorizations to deposits. The proof alone does not reveal the link.',
+          verdict: 'exposed',
+          note: 'An operator can publish an escape challenge linking its request proof to the public funding note.',
         },
       },
       sources: [
@@ -141,8 +149,8 @@ export const zkApiAdversaries = definePrivacyAdversaries({
           url: `${SRC}crates/zkapi-serverd/src/processor_v2.rs#L1267-L1381`,
         },
         {
-          title: 'Desktop request authorizations fetch the active note path',
-          url: `${COMPANION}service.rs#L1668-L1685`,
+          title: 'Local daemon fetches the note path before authorization',
+          url: `${COMPANION}service.rs#L1648-L1685`,
         },
         {
           title: 'Provider access reuse and plaintext boundaries',
@@ -163,9 +171,9 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'warning',
       exposure:
-        'Deposit and payout links, note totals and published challenges are permanent. Retained service logs can preserve note-path queries, credentials, prompts, timestamps and usage for later correlation. A quantum computer breaks the elliptic-curve signatures and proof soundness used by this protocol. This does not by itself uniquely open uniformly blinded balance commitments or reveal every historical note secret, which is hashed with Poseidon.',
+        'Deposit and payout links, note totals and published challenges are permanent. Retained service logs can connect note-id queries, credentials, prompts and timing. Quantum attacks threaten signatures and proof soundness, but do not by themselves reveal hashed note secrets or uniquely open blinded balances.',
       advice:
-        'Treat chain data and information given to providers as permanently available. Preserve local secrets carefully and avoid identifiable prompts. The protocol has no post-quantum proof or signature protection.',
+        'Treat public chain data as permanent and assume providers may retain what you send. Protect local secrets and avoid identifying prompts.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
