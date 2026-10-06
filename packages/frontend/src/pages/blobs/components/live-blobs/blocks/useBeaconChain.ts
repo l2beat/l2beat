@@ -4,6 +4,7 @@ import { useTRPC, useTRPCClient } from '~/trpc/React'
 import { useChainClock } from '../chainClock'
 import {
   type ChainBlock,
+  isSameBlock,
   type PosterIndexOf,
   toChainBlock,
 } from './beaconChain'
@@ -35,7 +36,8 @@ interface Options {
 
 /**
  * Follows Ethereum as it makes blocks, through our server: the recent ones
- * once, then every new one the moment the server has it. Paused, as in a
+ * once, then every new one the moment the server has it, and any the chain
+ * has since dropped or swapped. Paused, as in a
  * hidden tab, it catches up on return, as far back as the server keeps.
  */
 export function useBeaconChain({
@@ -75,14 +77,18 @@ export function useBeaconChain({
     clock.correct(live.head)
     head.current = live.head
     const current = Math.floor(chain.progressNow())
-    const fresh = live.blocks.filter((b) => !chain.blocks.has(b.slot))
-    for (const block of fresh) {
+    const changed = live.blocks.filter(
+      (b) => !isSameBlock(chain.blocks.get(b.slot), b),
+    )
+    for (const block of changed) {
+      // one that replaces a dropped block is a correction, not an arrival
+      const isNew = !chain.blocks.has(block.slot)
       const kept = toChainBlock(block, posterIndexOf)
       chain.blocks.set(block.slot, kept)
-      if (block.slot >= current - 1) onFresh.current(kept)
+      if (isNew && block.slot >= current - 1) onFresh.current(kept)
     }
     forgetOld(chain.blocks, live.head)
-    if (fresh.length > 0) setVersion((v) => v + 1)
+    if (changed.length > 0) setVersion((v) => v + 1)
   }, [live, chain, clock, posterIndexOf])
 
   return { chain, version }

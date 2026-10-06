@@ -1,5 +1,7 @@
 import type { DaLayerThroughput } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
+import { getThroughputInForce } from '~/server/features/data-availability/throughput/utils/getThroughputInForce'
 
 const BLOB_BYTES = 128 * 1024
 
@@ -39,11 +41,10 @@ export interface BlockLimits {
 
 /** The limits in force now, in blobs per block */
 export function getBlockLimits(throughputs: DaLayerThroughput[]): BlockLimits {
-  const latest = throughputs
-    .toSorted((a, b) => a.sinceTimestamp - b.sinceTimestamp)
-    .at(-1)
-  const max = latest && latest.size !== 'NO_CAP' ? latest.size / BLOB_BYTES : 21
-  const target = latest?.target ? latest.target / BLOB_BYTES : (max * 2) / 3
+  const inForce = getThroughputInForce(throughputs, UnixTime.now())
+  const max =
+    inForce && inForce.size !== 'NO_CAP' ? inForce.size / BLOB_BYTES : 21
+  const target = inForce?.target ? inForce.target / BLOB_BYTES : (max * 2) / 3
   return {
     targetBlobsPerBlock: Math.round(target),
     maxBlobsPerBlock: Math.round(max),

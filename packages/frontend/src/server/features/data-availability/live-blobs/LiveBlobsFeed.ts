@@ -14,6 +14,12 @@ export const RECENT_SLOTS = 32
 export const WINDOW_SLOTS = 300
 /** The hour in five-minute steps, for how each project's posting went */
 export const BUCKET_SLOTS = 25
+/**
+ * Slots behind the head fetched again as the head moves on. The chain can
+ * still drop its newest blocks for ones built beside them (a reorg): a slot
+ * that had a block then has none, and one that was missed may get one
+ */
+const UNSETTLED_SLOTS = 2
 /** Blocks fetched at once, by the poll and by the backfill each. Each is a few hundred kilobytes */
 const CONCURRENCY = 4
 /**
@@ -199,10 +205,11 @@ export class LiveBlobsFeed {
   private async poll() {
     try {
       const head = await this.source.headSlot()
-      const fetched = await this.fetchAll(
-        slotsMissing(this.blocks, head, head - RECENT_SLOTS),
-      )
       const moved = head !== this.head
+      const fetched = await this.fetchAll([
+        ...slotsMissing(this.blocks, head, head - RECENT_SLOTS),
+        ...(moved ? slotsUnsettled(this.blocks, head) : []),
+      ])
       this.head = head
       forgetOld(this.blocks, head)
       this.failures = fetched ? 0 : this.failures + 1
@@ -325,6 +332,15 @@ function slotsMissing(
     if (!blocks.has(slot)) missing.push(slot)
   }
   return missing
+}
+
+/** The slots just behind the head whose block the chain may have dropped since, newest first */
+function slotsUnsettled(blocks: Map<number, LiveBlock>, head: number) {
+  const unsettled: number[] = []
+  for (let slot = head - 1; slot >= head - UNSETTLED_SLOTS; slot--) {
+    if (blocks.has(slot)) unsettled.push(slot)
+  }
+  return unsettled
 }
 
 function forgetOld(blocks: Map<number, LiveBlock>, head: number) {
