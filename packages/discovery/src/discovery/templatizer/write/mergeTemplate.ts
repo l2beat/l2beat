@@ -203,7 +203,11 @@ interface Piece {
   text: string
 }
 
-/** After the container's last member, past a comma when there is one, or inside its braces. */
+/**
+ * After the container's last member, past a comma when there is one and
+ * past comments on the member's own line, which are about that member; or
+ * right inside the braces.
+ */
 function insertionOffset(text: string, container: Node): number {
   const last = container.children?.at(-1)
   if (last === undefined) {
@@ -211,13 +215,18 @@ function insertionOffset(text: string, container: Node): number {
   }
   const end = last.offset + last.length
   const comma = commaAfter(text, end)
-  return comma === undefined ? end : comma + 1
+  const after = comma === undefined ? end : comma + 1
+  const sameLine = /^(?:[ \t]*(?:\/\/[^\n]*|\/\*[^\n]*?\*\/))*/.exec(
+    text.slice(after),
+  )
+  return after + (sameLine?.[0].length ?? 0)
 }
 
 /**
- * The members rendered at the end of the container, behind a comma unless
- * the last member already has one, the header above the first of them. A
- * container written on one line is spread one member per line around them.
+ * The members rendered at the end of the container, the header above the
+ * first of them, and a comma right behind the last member unless it has
+ * one. A container written on one line is spread one member per line around
+ * them; so is an empty one, unless comments fill it, which stay above.
  */
 function piecesOf(
   text: string,
@@ -252,24 +261,27 @@ function piecesOf(
     )
   })
   const at = insertionOffset(text, container)
-  const afterComma =
-    last !== undefined &&
-    commaAfter(text, last.offset + last.length) !== undefined
+  const end = last === undefined ? undefined : last.offset + last.length
+  const afterComma = end !== undefined && commaAfter(text, end) !== undefined
   const body =
     rendered.length === 0
       ? context.header.map((line) => `\n${indent}${lineComment(line)}`).join('')
-      : last === undefined
-        ? rendered.join(',')
-        : afterComma
-          ? `${rendered.join(',')},`
-          : `,${rendered.join(',')}`
+      : afterComma
+        ? `${rendered.join(',')},`
+        : rendered.join(',')
   const pieces: Piece[] = []
   if (oneLine) {
     for (const child of children) {
       pieces.push(whitespaceBefore(text, child.offset, `\n${indent}`))
     }
   }
-  const closing = last === undefined || oneLine ? `\n${outer}` : ''
+  if (end !== undefined && !afterComma && rendered.length > 0) {
+    pieces.push({ at: end, length: 0, text: ',' })
+  }
+  const closing =
+    (last === undefined || oneLine) && text.slice(at, close).trim() === ''
+      ? `\n${outer}`
+      : ''
   pieces.push({
     at,
     length: closing === '' ? 0 : close - at,
