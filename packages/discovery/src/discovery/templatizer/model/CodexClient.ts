@@ -84,7 +84,7 @@ export const REASONING_EFFORTS = [
 export type ReasoningEffort = (typeof REASONING_EFFORTS)[number]
 
 export interface CodexClientOptions {
-  /** Executable name or path; default `codex` on PATH. */
+  /** Executable name on PATH or absolute path (the turn runs in a scratch directory); default `codex`. */
   binary?: string
   model?: string
   reasoningEffort?: ReasoningEffort
@@ -283,7 +283,8 @@ export class CodexClient implements ModelClient {
  * Why a turn is refused, most fundamental first: a killed process has no
  * meaningful events, a tool item taints the answer whatever else happened,
  * an error matters only when the turn did not complete (see `codexEvents`),
- * and only a clean turn is required to carry a thread id and a message.
+ * a turn that did not complete has no answer even without one, and only a
+ * clean turn is required to carry a thread id and a message.
  */
 function describeProblem(
   run: ProcessRun,
@@ -308,6 +309,9 @@ function describeProblem(
   }
   if (run.exitCode !== 0) {
     return notAnswering(`codex exited with code ${run.exitCode}`)
+  }
+  if (!parsed.completed) {
+    return notAnswering('codex ended without turn.completed')
   }
   if (parsed.threadId === undefined) {
     return notAnswering('codex emitted no thread.started')
