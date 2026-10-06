@@ -322,17 +322,28 @@ function stderrTail(stderr: string): string {
   return `\nstderr: ${relevant.slice(-10).join('\n')}`
 }
 
-/** The `model` of the thread's last `turn_context`, or undefined when the rollout cannot be found. */
+/**
+ * The `model` of the thread's last `turn_context`, or undefined when the
+ * rollout cannot be found or read. The sessions directory is shared with
+ * every other Codex session on the machine, and an entry that goes while
+ * it is scanned must not cost a finished turn its answer.
+ */
 export function readModelFromRollout(
   sessionsDir: string,
   threadId: string,
 ): string | undefined {
-  const file = findRolloutFile(sessionsDir, `-${threadId}.jsonl`)
-  if (file === undefined) {
+  let text: string
+  try {
+    const file = findRolloutFile(sessionsDir, `-${threadId}.jsonl`)
+    if (file === undefined) {
+      return undefined
+    }
+    text = fs.readFileSync(file, 'utf8')
+  } catch {
     return undefined
   }
   let model: string | undefined
-  for (const line of fs.readFileSync(file, 'utf8').split('\n')) {
+  for (const line of text.split('\n')) {
     const event = tryParse(line)
     if (event?.type === 'turn_context') {
       const payload = event.payload

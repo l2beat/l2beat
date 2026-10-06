@@ -22,7 +22,7 @@ import { TOOL_SYSTEM_PROMPT } from './toolSystemPrompt'
  * disables every tool and defines the agent whose prompt replaces
  * opencode's own, and an empty directory that stands in for the user's
  * global config, which opencode would otherwise merge in; the variables
- * that name other config sources are dropped. The turn runs as that agent,
+ * that name or hold other config are dropped. The turn runs as that agent,
  * and the user's CLAUDE.md is kept out by the flag opencode reads for it. The
  * output token budget is raised above opencode's default, which a reasoning
  * model exhausts before it answers.
@@ -75,11 +75,18 @@ describe(OpenCodeClient.name, () => {
       model: 'opencode-go/test-model',
       variant: 'high',
     })
-    const previous = process.env.OPENCODE_CONFIG_CONTENT
+    const previous = {
+      content: process.env.OPENCODE_CONFIG_CONTENT,
+      permission: process.env.OPENCODE_PERMISSION,
+    }
     process.env.OPENCODE_CONFIG_CONTENT = '{"permission":{"bash":"allow"}}'
+    process.env.OPENCODE_PERMISSION = '{"bash":"allow"}'
     const turn = await client
       .start({ prompt: 'hello model', schema: {} })
-      .finally(() => restoreEnv('OPENCODE_CONFIG_CONTENT', previous))
+      .finally(() => {
+        restoreEnv('OPENCODE_CONFIG_CONTENT', previous.content)
+        restoreEnv('OPENCODE_PERMISSION', previous.permission)
+      })
 
     const {
       args,
@@ -92,6 +99,7 @@ describe(OpenCodeClient.name, () => {
       configHome,
       configHomeFiles,
       configContent,
+      permission,
       disableProjectConfig,
       outputTokenMax,
       disableClaudeCodePrompt,
@@ -109,6 +117,7 @@ describe(OpenCodeClient.name, () => {
     expect(configHome).toEqual(path.join(cwd, 'config'))
     expect(configHomeFiles).toEqual([])
     expect(configContent).toEqual(undefined)
+    expect(permission).toEqual(undefined)
     expect(disableProjectConfig).toEqual('1')
     expect(outputTokenMax).toEqual(String(OPENCODE_OUTPUT_TOKEN_MAX))
     expect(disableClaudeCodePrompt).toEqual('1')
@@ -224,6 +233,7 @@ interface Record {
   configHome: string | undefined
   configHomeFiles: string[]
   configContent: string | undefined
+  permission: string | undefined
   disableProjectConfig: string | undefined
   outputTokenMax: string | undefined
   disableClaudeCodePrompt: string | undefined
@@ -265,6 +275,7 @@ fs.writeFileSync(${JSON.stringify(recordFile)}, JSON.stringify({
   configHome: process.env.XDG_CONFIG_HOME,
   configHomeFiles: fs.readdirSync(process.env.XDG_CONFIG_HOME),
   configContent: process.env.OPENCODE_CONFIG_CONTENT,
+  permission: process.env.OPENCODE_PERMISSION,
   disableProjectConfig: process.env.OPENCODE_DISABLE_PROJECT_CONFIG,
   outputTokenMax: process.env.OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX,
   disableClaudeCodePrompt: process.env.OPENCODE_DISABLE_CLAUDE_CODE_PROMPT,
