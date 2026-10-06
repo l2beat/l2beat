@@ -200,7 +200,10 @@ export class OpenCodeClient implements ModelClient {
       ...(this.options.variant === undefined
         ? []
         : ['--variant', this.options.variant]),
-      ...sessionArgs,
+      // A new session without a title has opencode ask the model for one,
+      // in a second request that carries the whole prompt and whose tokens
+      // no event reports. A resumed session keeps the title it got.
+      ...(sessionArgs.length > 0 ? sessionArgs : ['--title', 'templatizer']),
     ]
     const started = Date.now()
     const run = await runProcess(
