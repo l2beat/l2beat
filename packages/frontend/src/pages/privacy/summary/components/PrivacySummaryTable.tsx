@@ -194,7 +194,7 @@ const columns = [
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        tooltip: `Largest configured anonymity set over the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days. Usually counts unique deposit senders. For anonymous access, counts eligible active notes. See each project's tooltip for details.`,
+        tooltip: `Largest configured anonymity set: unique deposit senders during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
       },
     },
   ),
