@@ -131,9 +131,9 @@ export const strk20Adversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       exposureShort:
-        "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay. That key decrypts everything the protocol hides.",
+        "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay.",
       exposureContinued:
-        'The default proving service receives your address, viewing key and actions in the clear, the note-discovery service receives the viewing key on every sync, and deposits need a fresh attestation from a screening provider that sees and can block every depositor.',
+        'That key decrypts everything the protocol hides. The default proving service receives your address, viewing key and actions in the clear, the note-discovery service receives the viewing key on every sync, and deposits need a fresh attestation from a screening provider that sees and can block every depositor.',
       advice:
         'Run the prover and note discovery yourself, or read the pool directly from chain. Nothing you do removes the auditor key.',
       interior: {
