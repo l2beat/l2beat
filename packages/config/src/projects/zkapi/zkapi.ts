@@ -237,7 +237,7 @@ export const zkapi: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'Circuits, setup artifacts, browser SDK, local client and protocol services are public. The single-party setup has no public ceremony, and the deployed hosted app, credential issuer and production services have not been independently reproduced.',
+        'The browser frontend and local API daemon have public source and local run instructions. Production frontend, client, credential issuer and TEE builds have not been independently reproduced. Circuit source is public, but rerunning the single-party setup produces different keys. Published proof artifacts match the deployed verifier.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: zkApiAdversaries,
