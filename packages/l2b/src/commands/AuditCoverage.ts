@@ -51,7 +51,7 @@ export const AuditCoverage = command({
       loading.update(progress(split, count, 'Splitting audited files')),
     )
     loading.done(
-      `Indexed ${code.declarations.length} audited units from ${objects.size} files`,
+      `Indexed ${code.declarations.length} audited units from ${objects.size} files, ${code.unparsed.length} do not parse`,
     )
 
     const covering = cli.status()

@@ -5,6 +5,7 @@ import type { AuditObjects } from './AuditObjects'
 import {
   type Declaration,
   type DeclarationKind,
+  type SplitSource,
   splitSource,
 } from './splitSource'
 
@@ -14,6 +15,7 @@ export interface AuditedCode {
   occurrences: Map<string, Occurrence[]>
   byName: Map<string, number[]>
   lines: LineIndex
+  unparsed: string[]
 }
 
 export interface AuditedDeclaration {
@@ -49,7 +51,7 @@ export function buildAuditedCode(
   objects: AuditObjects,
   onProgress: (split: number, count: number) => void,
 ): AuditedCode {
-  const { declarations, declarationsByObject } = collectDeclarations(
+  const { declarations, declarationsByObject, unparsed } = collectDeclarations(
     objects,
     onProgress,
   )
@@ -59,6 +61,7 @@ export function buildAuditedCode(
     occurrences: collectOccurrences(index),
     byName: groupByName(declarations),
     lines: buildLineIndex(declarations),
+    unparsed,
   }
 }
 
@@ -130,10 +133,15 @@ function collectDeclarations(
   const declarations: AuditedDeclaration[] = []
   const declarationsByObject = new Map<string, Map<string, Declaration>>()
   const byKey = new Map<string, AuditedDeclaration>()
+  const unparsed: string[] = []
   const sorted = [...objects].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
   for (const [i, [object, source]] of sorted.entries()) {
     onProgress(i, sorted.length)
-    const split = splitSource(source)
+    const split = trySplitSource(source)
+    if (split === undefined) {
+      unparsed.push(object)
+      continue
+    }
     declarationsByObject.set(object, split.declarations)
     for (const [name, { kind, body }] of split.declarations) {
       const aliases = aliasesUsedBy(body, split.aliases)
@@ -148,7 +156,15 @@ function collectDeclarations(
       declarations.push(declaration)
     }
   }
-  return { declarations, declarationsByObject }
+  return { declarations, declarationsByObject, unparsed }
+}
+
+function trySplitSource(source: string): SplitSource | undefined {
+  try {
+    return splitSource(source)
+  } catch {
+    return undefined
+  }
 }
 
 function aliasesUsedBy(
