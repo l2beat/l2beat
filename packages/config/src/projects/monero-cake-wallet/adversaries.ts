@@ -15,9 +15,9 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'Nothing public ties the deposit into a swap service to the later payout from a service hot wallet, because the Monero transactions in between hide sender, recipient and amount.',
-      longDescription: S.entryExitPublic('Both Ethereum transfers'),
+      exposureContinued: S.entryExitPublic('Both Ethereum transfers'),
       advice:
         'Exit to a new in-app Ethereum wallet created from a fresh seed, never the wallet that deposited.',
       interior: {
@@ -57,7 +57,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'Only amount and timing can pair the two Ethereum legs: a deposit into a swap service and a payout from a hot wallet that serves every asset the service trades.',
       advice: `${S.commonAmounts} ${S.freshExit}`,
       interior: {
@@ -73,7 +73,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'bad',
-      shortDescription:
+      exposureShort:
         "Cake's Tor config does not support isolation, so Moralis, which cannot be switched off, and Blink and Etherscan, if left on, can see both Ethereum wallets on one IP.",
       advice:
         'Turn on Tor, switch off Blink and Etherscan, set your own Monero node and Ethereum RPC, then restart the app, since the Ethereum client keeps its first connection. Wait and restart it again between the legs.',
@@ -115,9 +115,9 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      shortDescription:
+      exposureShort:
         'The swap-in service that pays your XMR knows that Monero output, and the service you exit with sees the rings of your Monero transaction.',
-      longDescription:
+      exposureContinued:
         "One party holding both finds its known output in the rings behind the exit. Each service also holds the addresses, amounts, IP and Cake's API key of its leg, screens them and can hold the funds until KYC.",
       advice:
         'Force different services for entry and exit. Self-transfer the XMR several times, hours to days apart, and never pay the exit service the whole amount.',
@@ -166,9 +166,9 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      shortDescription:
+      exposureShort:
         'A quantum computer recovers the key of every ring member from public chain data, recomputes its key image and can link every transaction.',
-      longDescription:
+      exposureContinued:
         "The services' records of payout and deposit then join the Ethereum legs.",
       interior: {
         sender: 'exposed',

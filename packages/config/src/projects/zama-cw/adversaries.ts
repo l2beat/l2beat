@@ -19,8 +19,8 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'warning',
-      shortDescription: 'Only the amount of a confidential transfer is hidden.',
-      longDescription:
+      exposureShort: 'Only the amount of a confidential transfer is hidden.',
+      exposureContinued:
         'Sender, recipient, every wrap and unwrap amount and the ciphertext handles are public, and either party can later disclose a transfer amount onchain.',
       advice:
         'Keep funds wrapped and transfer often, even zero amounts. Unwrap only after a while, and never an amount that matches a recent wrap or a known payment.',
@@ -49,9 +49,9 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      shortDescription:
+      exposureShort:
         "All wraps and unwraps are public, so an account's balance is bounded by what went in and out, and exact for any account that never made a confidential transfer.",
-      longDescription:
+      exposureContinued:
         'Transfer partners and timing are public, so a wrap, a transfer and an unwrap in a row pair up by amount.',
       advice:
         'Keep funds wrapped and transfer often, even zero amounts. Unwrap only after a while, and never an amount that matches a recent wrap or a known payment.',
@@ -79,9 +79,9 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'Amounts are encrypted on your device and never leave it in clear.',
-      longDescription:
+      exposureContinued:
         'The default hosted relayer receives your address and the token contract with every encrypted input and balance view, so it learns who transacts and when, plus your IP.',
       advice: 'Route relayer requests through Tor, or self-host the relayer.',
       interior: {
@@ -113,9 +113,9 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      shortDescription:
+      exposureShort:
         'KMS operators share one FHE key under a threshold and can collude to decrypt every balance and transfer ever made.',
-      longDescription:
+      exposureContinued:
         'The token owner can appoint an observer with a never-expiring view of all balances and amounts, and can upgrade the token and the ACL, all with no delay.',
       advice:
         'Watch for ObserverAdded events and upgrades on your token; there is no delay to react. Nothing you do prevents KMS collusion.',
@@ -161,9 +161,9 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
-      shortDescription:
+      exposureShort:
         'The encryption is lattice-based and survives quantum computers, but every ciphertext is publicly downloadable and one long-lived key protects them all.',
-      longDescription:
+      exposureContinued:
         'If enough key shares ever leak, the entire history is exposed.',
       interior: {
         sender: 'exposed',

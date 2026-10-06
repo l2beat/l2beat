@@ -18,9 +18,9 @@ export const strk20Adversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'warning',
-      shortDescription:
+      exposureShort:
         'Transfers inside are encrypted, but transactions to new contacts reveil the recipient.',
-      longDescription: `The token and amount of the fee you pay, and the target and calldata of any DeFi action are public. ${S.entryExitPublic()} Submitting from your own wallet names you. A paymaster hides the submitter but shows the fee token and amount.`,
+      exposureContinued: `The token and amount of the fee you pay, and the target and calldata of any DeFi action are public. ${S.entryExitPublic()} Submitting from your own wallet names you. A paymaster hides the submitter but shows the fee token and amount.`,
       advice:
         'Submit every pool action through a paymaster and pay its fee in the most common token. Treat the first payment to a new contact, and any DeFi action, as public.',
       interior: {
@@ -67,9 +67,9 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      shortDescription:
+      exposureShort:
         'The set of registered users is small and split further by token and by fee token.',
-      longDescription: `A channel opened in the same transaction as a deposit ties the two together, and most withdrawal addresses have also deposited. ${S.walletFingerprint('paymaster')}`,
+      exposureContinued: `A channel opened in the same transaction as a deposit ties the two together, and most withdrawal addresses have also deposited. ${S.walletFingerprint('paymaster')}`,
       advice: `Open channels in a transaction without a deposit, pay fees in the most common token, and withdraw uneven amounts that match no deposit. ${S.freshExit}`,
       interior: {
         sender: {
@@ -99,9 +99,9 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'warning',
-      shortDescription:
+      exposureShort:
         'The paymaster and the sequencer receive the client proof with every action.',
-      longDescription:
+      exposureContinued:
         'Stwo proofs are not zero-knowledge by default, and how much of the private execution they reveal is not established. Traffic to the proving and note-discovery services is encrypted, and both support an oblivious relay that hides your address, but it is off unless the client turns it on.',
       advice:
         'Turn on the oblivious relay for the proving and discovery services, or run both yourself.',
@@ -130,9 +130,9 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      shortDescription:
+      exposureShort:
         "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay. That key decrypts everything the protocol hides.",
-      longDescription:
+      exposureContinued:
         'The default proving service receives your address, viewing key and actions in the clear, the note-discovery service receives the viewing key on every sync, and deposits need a fresh attestation from a screening provider that sees and can block every depositor.',
       advice:
         'Run the prover and note discovery yourself, or read the pool directly from chain. Nothing you do removes the auditor key.',
@@ -179,8 +179,8 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      shortDescription: 'The proofs are post-quantum, the encryption is not.',
-      longDescription:
+      exposureShort: 'The proofs are post-quantum, the encryption is not.',
+      exposureContinued:
         'Channel keys, note contents and the auditor escrow use elliptic-curve key exchange, and the auditor public key sits onchain. A quantum computer recovers that one key and with it every escrowed viewing key, and so the whole history.',
       interior: {
         sender: 'exposed',

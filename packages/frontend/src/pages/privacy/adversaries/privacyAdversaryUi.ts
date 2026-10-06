@@ -48,9 +48,9 @@ export function getPrivacyAdversaryTitle(label: string): string {
 
 /** The full cell description of the project page; the tooltip shows only the short one. */
 export function getPrivacyAdversaryDescription(
-  cell: Pick<PrivacyAdversaryCell, 'shortDescription' | 'longDescription'>,
+  cell: Pick<PrivacyAdversaryCell, 'exposureShort' | 'exposureContinued'>,
 ): string {
-  return [cell.shortDescription, cell.longDescription].filter(Boolean).join(' ')
+  return [cell.exposureShort, cell.exposureContinued].filter(Boolean).join(' ')
 }
 
 /**

@@ -538,7 +538,7 @@ describe('getProjects', () => {
       for (const { project, privacyInfo } of privacyProjects) {
         const cells = Object.entries(privacyInfo.adversaries?.cells ?? {})
         for (const [adversaryId, cell] of cells) {
-          if (/[.!?]\s/.test(cell.shortDescription)) {
+          if (/[.!?]\s/.test(cell.exposureShort)) {
             problems.push(`${project.id} ${adversaryId}`)
           }
         }

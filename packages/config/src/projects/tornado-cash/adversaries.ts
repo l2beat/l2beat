@@ -11,7 +11,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'Each pool has one fixed amount and no in-pool transfers, so every withdrawal spends exactly one deposit.',
       advice: S.exitViaRelayer('relayer'),
       sources: [
@@ -24,9 +24,9 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'The candidates for a withdrawal are the unspent deposits of the same pool, the anonymity set, which differs sharply between pools.',
-      longDescription: `Timing, address reuse and relayer choice narrow it further. ${S.walletFingerprint('relayer')}`,
+      exposureContinued: `Timing, address reuse and relayer choice narrow it further. ${S.walletFingerprint('relayer')}`,
       advice: `${S.largeAnonymitySet} Deposit a large sum as one note. ${S.freshExit}`,
       sources: [
         {
@@ -41,9 +41,9 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'The app downloads all deposits and matches locally, so a node learns only which pool you looked at.',
-      longDescription: 'The relayer receives only the finished withdrawal.',
+      exposureContinued: 'The relayer receives only the finished withdrawal.',
       advice: S.ownNodeAndTor('relayer'),
       sources: [
         {
@@ -58,9 +58,9 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'The pools cannot be paused, upgraded or made to reveal anything.',
-      longDescription:
+      exposureContinued:
         'Governance controls only the website, the router and the relayer list.',
       advice: `${S.localBuild} Otherwise load it from its ENS name or IPFS hash.`,
       sources: [
@@ -71,8 +71,8 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
-      shortDescription: 'Commitments use a Pedersen hash on an elliptic curve.',
-      longDescription:
+      exposureShort: 'Commitments use a Pedersen hash on an elliptic curve.',
+      exposureContinued:
         'A quantum computer could test whether a given deposit can fund a withdrawal, shrinking the candidate set without singling out one deposit. Notes backed up onchain are encrypted with elliptic-curve keys and become readable.',
       advice: `${S.largeAnonymitySet} Keep the note on your device and skip the onchain backup.`,
       sources: [

@@ -1268,17 +1268,17 @@ export interface PrivacyAdversaryAssessment {
   sentiment: PrivacyAdversarySentiment
   /**
    * The reason for the sentiment, in one plain sentence. Shown alone in the
-   * rosette tooltip, and followed by `longDescription` on the project page.
+   * rosette tooltip, and followed by `exposureContinued` on the project page.
    * Never refers to other cells or quotes live numbers; the tracked anonymity
    * set stands in for them.
    */
-  shortDescription: string
+  exposureShort: string
   /**
    * The rest of what this adversary learns beyond the public observer and
-   * what stays hidden, under the same rules. Omit when the short description
+   * what stays hidden, under the same rules. Omit when `exposureShort`
    * says it all.
    */
-  longDescription?: string
+  exposureContinued?: string
   /**
    * How a user keeps it private, when that is conditional (the cell is at
    * risk, or a field is). Omit when nothing the user does changes the result.

@@ -34,7 +34,7 @@ export function toPrivacyAdversariesSummary(
         label: adversary.label,
         value: cell.value,
         sentiment: cell.sentiment,
-        reason: cell.shortDescription,
+        reason: cell.exposureShort,
       }
     }),
   }

@@ -15,9 +15,9 @@ export const umbraAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'Announcements mark each stealth payment but not the recipient whose keys were used.',
-      longDescription:
+      exposureContinued:
         'The registry publishes the candidate recipients and their key history.',
       advice:
         'Withdraw to a fresh address with no ENS name or prior activity, through the token relayer so your known wallet never funds the stealth address for gas. Keep funds from different stealth addresses apart.',
@@ -40,9 +40,9 @@ export const umbraAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      shortDescription:
+      exposureShort:
         'Protocol use is public once a payment is announced, which narrows the anonymity set to registered recipients.',
-      longDescription:
+      exposureContinued:
         'Withdrawals to registered addresses, round trips back to the sender and a shared collecting address reveal or cluster recipients; membership alone does not identify them. The client withdraws one stealth address at a time and never merges them.',
       advice:
         'Keep withdrawal destinations separate across payments and chains, and check that timing, amounts or recurring counterparties do not reconnect them to an identified account.',
@@ -67,9 +67,9 @@ export const umbraAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'warning',
-      shortDescription:
+      exposureShort:
         "On the payer's side the wallet RPC resolves the recipient, reads their registry entry and broadcasts the stealth payment seconds apart, so that provider can pair the payment with the recipient.",
-      longDescription:
+      exposureContinued:
         'On your side the wallet RPC receives the matched stealth-address balance batch, while a build-configured mainnet RPC looks up your connected wallet and the senders of matched payments, and withdrawal destinations are checked against ENS, POAP and Gitcoin APIs.',
       advice:
         'Run an inspected local build with every RPC pointed at your own node and the external name and safety lookups disabled. Send broadcasts and relay requests over Tor.',
@@ -114,9 +114,9 @@ export const umbraAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'The contracts are immutable and give no administrator a viewing key or a way to replace registered keys without the registrant.',
-      longDescription:
+      exposureContinued:
         'The client matches announcements locally, so no indexer or relayer has a protocol-wide view.',
       advice: S.localBuild,
       sources: [
@@ -142,9 +142,9 @@ export const umbraAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      shortDescription:
+      exposureShort:
         'Each announcement stores the ephemeral public key and the encrypted scalar.',
-      longDescription:
+      exposureContinued:
         'A quantum computer that breaks secp256k1 decrypts the scalar against every registered viewing key and checks which spending key yields the stealth address, identifying the recipient of every past payment.',
       sources: [
         {

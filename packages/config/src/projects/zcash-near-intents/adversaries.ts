@@ -18,9 +18,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'Nothing ties the ZEC that enters the shielded pool to the ZEC that leaves it.',
-      longDescription:
+      exposureContinued:
         'Everything up to the pool edge is public: the Ethereum deposit, the NEAR ledger entries that credit, swap and withdraw it, and the Zcash address and amount of every payout, which the bridge encrypts so that anyone can decrypt them.',
       advice:
         'Receive the ZEC straight into a fresh shielded address, as Zodl does per swap, and pay the return leg from the pool. The web app pays transparent addresses only, which adds a public shielding step.',
@@ -65,9 +65,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'The amount paid into the pool and the amount later sent to a bridge deposit address are both public with their timing, so a round trip of similar size within hours pairs them.',
-      longDescription:
+      exposureContinued:
         'Deposit addresses are fresh per quote but spent together with the bridge change address, so every exit is attributable to NEAR Intents.',
       advice:
         'Hold the ZEC in the pool for days, split or merge it with other shielded funds, and swap back amounts that match no payout.',
@@ -99,9 +99,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'warning', // good if Tor was default
-      shortDescription:
+      exposureShort:
         'Zodl syncs through public lightwalletd servers, which see which transactions the wallet fetches and broadcasts, and so the payout and the later exit of the same wallet.',
-      longDescription:
+      exposureContinued:
         'Tor covers these calls and the swap requests including session isolation but is opt-in and does not cover block sync.',
       advice: 'Turn on Tor in Zodl before the first swap.',
       interior: {
@@ -139,9 +139,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      shortDescription:
+      exposureShort:
         'The Operator runs the 1Click bridge API, the Ethereum custody and the screening, so both legs sit in its logs with the IP address and wallet identifiers of each request, plus the fresh Zcash refund address Zodl attaches to every swap out of ZEC.',
-      longDescription:
+      exposureContinued:
         'It has no key into the shielded pool, so joining the legs still needs IP or timing. It screens every address with KYT vendors, can lock any account and can hold bridged funds.',
       advice:
         'Always use the Zodl Tor feature, wait some time in the shielded pool and use amounts that do not match.',
@@ -183,9 +183,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      shortDescription:
+      exposureShort:
         "All of an account's rotated addresses share one incoming viewing key on the Pallas curve, and every payout address is public on NEAR.",
-      longDescription:
+      exposureContinued:
         "A quantum computer recovers that key from any one address and decrypts every note the account ever received, including the change notes of its exits, which joins both legs of every round trip. Ironwood's quantum-recoverable notes protect funds, not privacy.",
       advice:
         'Use a separate Zodl account per round trip, so one recovered key exposes only that trip.',

@@ -84,8 +84,8 @@ describe(getPrivacyAdversaryDescription.name, () => {
   it('follows the short description with the long one', () => {
     expect(
       getPrivacyAdversaryDescription({
-        shortDescription: 'The relayer sees your IP.',
-        longDescription: 'Tor hides it.',
+        exposureShort: 'The relayer sees your IP.',
+        exposureContinued: 'Tor hides it.',
       }),
     ).toEqual('The relayer sees your IP. Tor hides it.')
   })
@@ -93,7 +93,7 @@ describe(getPrivacyAdversaryDescription.name, () => {
   it('is the short description alone when there is no long one', () => {
     expect(
       getPrivacyAdversaryDescription({
-        shortDescription: 'The relayer sees your IP.',
+        exposureShort: 'The relayer sees your IP.',
       }),
     ).toEqual('The relayer sees your IP.')
   })

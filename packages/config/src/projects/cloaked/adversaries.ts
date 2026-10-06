@@ -20,9 +20,9 @@ export const cloakedAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      shortDescription:
+      exposureShort:
         'A fresh receiving address has no public derivation linking it to the recipient account, but its funds can be followed through later sends and change outputs.',
-      longDescription:
+      exposureContinued:
         'Combining addresses exposes their joint use, and EIP-7702 delegation reveals the account implementation without proving who owns the address.',
       advice: S.freshReceive(
         'spend address-held balances separately with Advanced Control',
@@ -45,9 +45,9 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      shortDescription:
+      exposureShort:
         'Spending through shared execution infrastructure makes service use recognizable, which narrows the anonymity set to Cloaked users.',
-      longDescription:
+      exposureContinued:
         'Timing, distinctive amounts, recurring counterparties and consolidation can identify or cluster recipients. A send draws from several addresses by default and leaves a change output that links them.',
       advice:
         'Space out related payments and check whether amounts or recurring patterns identify you. Follow your own change outputs to see what a counterparty can trace.',
@@ -69,9 +69,9 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'bad',
-      shortDescription:
+      exposureShort:
         'Every spend from the hosted client goes to a third-party relay, with the stealth address, destination and amount.',
-      longDescription:
+      exposureContinued:
         'The client is closed source, so what else reaches the RPC, hosting and analytics providers named in the privacy policy cannot be verified.',
       advice:
         'Derive your address keys with the recovery tool, which makes no network calls, and spend them from a wallet on your own node over Tor. Fund gas for token transfers from a fresh wallet, since sponsored execution is only available through the hosted client.',
@@ -104,8 +104,8 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      shortDescription: S.operatorViewingKey('Cloaked'),
-      longDescription:
+      exposureShort: S.operatorViewingKey('Cloaked'),
+      exposureContinued:
         'Its Incognito relay states that it retains deposit-to-withdrawal associations, and the hosted wallet code handles your spending secrets.',
       advice: S.localClientSpendingKeys('Cloaked'),
       sources: [
@@ -137,8 +137,8 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
-      shortDescription: S.noAnnouncementQuantum,
-      longDescription: `${S.operatorViewingKeyRegardless('Cloaked')} ${S.walletSignatureAccounts('plus a four-digit PIN')} Passkey PRF secrets do not follow from breaking the passkey.`,
+      exposureShort: S.noAnnouncementQuantum,
+      exposureContinued: `${S.operatorViewingKeyRegardless('Cloaked')} ${S.walletSignatureAccounts('plus a four-digit PIN')} Passkey PRF secrets do not follow from breaking the passkey.`,
       advice: `${S.notWalletSignature('with the passkey PRF setup')} ${S.permanentlyDisclosed('the address history shared with Cloaked')}`,
       sources: [
         {
