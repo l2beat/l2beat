@@ -18,7 +18,14 @@ import {
   type Playback,
 } from './beltScene'
 import { drawBelt } from './drawBelt'
-import { BATCH_MOTION_TIME, BATCH_STAGGER, SETTLE_TIME } from './motion'
+import {
+  BATCH_MOTION_TIME,
+  BATCH_STAGGER,
+  easeEmphasis,
+  isEmphasisSettled,
+  revealed,
+  SETTLE_TIME,
+} from './motion'
 
 export interface BeltHover {
   key: number
@@ -59,6 +66,8 @@ export function useBelt({
     progress: progressNow(),
     arrivals: new Map(),
     still,
+    emphasis: [],
+    revealedAt: undefined,
   })
   playback.current.still = still
   const frame = useRef<BeltFrame>({
@@ -86,7 +95,7 @@ export function useBelt({
         scene: toDraw,
         hovered,
         slot: Math.floor(playback.current.progress),
-        moving: isMoving(playback.current, now),
+        moving: isMoving(playback.current, toDraw, now),
       }
     },
     [canvasRef, progressNow],
@@ -106,14 +115,19 @@ export function useBelt({
   }, [canvasRef])
 
   const running = onScreen && scene !== undefined
-  useAnimationFrame((_, now) => {
+  useAnimationFrame((dt, now) => {
     const current = sceneRef.current
     if (!current) return
-    forgetSettled(playback.current, now)
-    playback.current.progress = progressNow()
+    const play = playback.current
+    forgetSettled(play, now)
+    easeEmphasis(play.emphasis, current.posters.length, current.highlighted, dt)
+    if (play.revealedAt === undefined && current.blocks.size > 0) {
+      play.revealedAt = now
+    }
+    play.progress = progressNow()
     if (
-      isMoving(playback.current, now) ||
-      !isPainted(painted.current, current, hoveredKey.current, playback.current)
+      isMoving(play, current, now) ||
+      !isPainted(painted.current, current, hoveredKey.current, play)
     ) {
       paint(current, now, hoveredKey.current)
     }
@@ -121,12 +135,21 @@ export function useBelt({
     findHover()
   }, running)
 
-  // Off screen, no frames come: paint whenever what is drawn changes, and
-  // again once the site's font is in, as canvas text cannot swap fonts by itself
+  // Off screen, no frames come: paint whenever what is drawn changes, with no
+  // fades on the way, and again once the site's font is in, as canvas text
+  // cannot swap fonts by itself
   const hoveredNow = hover?.key
   useEffect(() => {
     if (running || !scene) return
     let cancelled = false
+    const play = playback.current
+    easeEmphasis(
+      play.emphasis,
+      scene.posters.length,
+      scene.highlighted,
+      Number.POSITIVE_INFINITY,
+    )
+    if (scene.blocks.size > 0) play.revealedAt ??= Number.NEGATIVE_INFINITY
     paint(scene, performance.now() / 1000, hoveredNow)
     void document.fonts?.ready.then(() => {
       if (!cancelled) paint(scene, performance.now() / 1000, hoveredNow)
@@ -196,10 +219,15 @@ interface PaintedFrame {
   moving: boolean
 }
 
-/** The belt slides at the start of a slot, and batches drop as they come */
-function isMoving(playback: Playback, now: number) {
+/**
+ * The belt slides at the start of a slot and batches drop as they come; tiles
+ * fade in when the first blocks come and fade as a poster is picked
+ */
+function isMoving(playback: Playback, scene: BeltScene, now: number) {
   const intoSlot = (playback.progress % 1) * SLOT_SECONDS
   if (intoSlot < SLIDE_TIME) return true
+  if (revealed(playback.revealedAt, now) < 1) return true
+  if (!isEmphasisSettled(playback.emphasis, scene.highlighted)) return true
   for (const arrivedAt of playback.arrivals.values()) {
     if (now - arrivedAt < BATCH_MOTION_TIME) return true
   }
