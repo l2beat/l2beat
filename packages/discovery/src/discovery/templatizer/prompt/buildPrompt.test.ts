@@ -276,6 +276,9 @@ describe(buildPrompt.name, () => {
     expect(facts).toInclude(
       `- \`broken\` fails at block ${input.facts.blockNumber}: Execution reverted`,
     )
+    expect(facts).toInclude(
+      'Reference its fields that have a `handler` as `{{ name }}` if useful, except one listed below as failing, which has no value.',
+    )
     expect(section(prompt, 'rules')).toInclude('**Existing template.**')
     expect(section(prompt, 'rules')).toMatchRegex(/\n14\. \*\*Output\.\*\*/)
 

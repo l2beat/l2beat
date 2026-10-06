@@ -186,7 +186,7 @@ const RULES: Rule[] = [
   {
     title: 'References.',
     lines: [
-      '`{{ name }}` refers only to a baseline field, a field you add, a field of the existing template that has a `handler`, or `{{ $.address }}`; never to proxy values (`$admin`, `$implementation`, …), and never in a cycle. Section 3 lists the keys that accept references.',
+      '`{{ name }}` refers only to a baseline field, a field you add, a field of the existing template that has a `handler` and does not fail, or `{{ $.address }}`; never to proxy values (`$admin`, `$implementation`, …), and never in a cycle. Section 3 lists the keys that accept references.',
     ],
   },
   {
@@ -435,7 +435,7 @@ function renderExisting(
   return [
     `### The template this contract already has (\`${existing.templateId}\`)`,
     '',
-    'Kept exactly as it is; your fields are added to it. Reference its fields that have a `handler` as `{{ name }}` if useful.',
+    'Kept exactly as it is; your fields are added to it. Reference its fields that have a `handler` as `{{ name }}` if useful, except one listed below as failing, which has no value.',
     '',
     '```jsonc',
     existing.text.trimEnd(),
