@@ -1,9 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { v } from '@l2beat/validate'
+import { env } from '~/env'
 import { getLogger } from '~/server/utils/logger'
 import { SLOT_SECONDS, slotProgressAt } from '~/utils/beaconSlots'
 import { createAttribute, getBlobSenders } from './attribute'
 import { createBeaconNode } from './beaconNode'
+import { getBlobPosters } from './getBlobPosters'
+import { createMockBeaconNode } from './mockBeaconNode'
 
 /** Slots served back from the head: enough to fill the belt left of the bay */
 export const RECENT_SLOTS = 32
@@ -115,7 +118,11 @@ let feed: LiveBlobsFeed | undefined
 /** The one feed of this server, shared by every visitor */
 export function getLiveBlobsFeed(): LiveBlobsFeed {
   feed ??= new LiveBlobsFeed(
-    createBeaconNode(getBlobSenders().then(createAttribute)),
+    env.MOCK
+      ? createMockBeaconNode(
+          getBlobPosters().then((posters) => posters.map((p) => p.id)),
+        )
+      : createBeaconNode(getBlobSenders().then(createAttribute)),
     getLogger(),
   )
   return feed

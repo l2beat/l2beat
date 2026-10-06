@@ -65,7 +65,9 @@ function SidebarProvider({
           'group/sidebar-wrapper flex min-h-svh w-full flex-col bg-background',
           // A page that brings a `PageBackdrop` gets a stacking context, so the
           // scenery stays above this background and the nav paints none of its own.
-          'has-data-backdrop:relative has-data-backdrop:isolate',
+          // An attribute, not `:has()`: under `:has()`, a node inserted
+          // anywhere on the page restyles all of it.
+          'data-with-backdrop:relative data-with-backdrop:isolate',
           className,
         )}
         {...props}
@@ -123,7 +125,7 @@ function Sidebar({
         )}
         {...props}
       >
-        <div className="flex size-full flex-col gap-6 bg-background group-has-data-backdrop/sidebar-wrapper:bg-transparent">
+        <div className="flex size-full flex-col gap-6 bg-background group-data-with-backdrop/sidebar-wrapper:bg-transparent">
           {children}
         </div>
       </div>

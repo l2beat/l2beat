@@ -40,7 +40,7 @@ export function RollingNumber({
     const from = shown.current
     if (from === value || reducedMotion) {
       shown.current = value
-      element.textContent = format(value)
+      writeText(element, format(value))
       return
     }
     if (value > from) {
@@ -53,13 +53,27 @@ export function RollingNumber({
     let frame = requestAnimationFrame(function step(now) {
       const t = Math.min(1, (now - start) / ROLL_MS)
       shown.current = from + (value - from) * (1 - (1 - t) ** 3)
-      element.textContent = format(shown.current)
+      writeText(element, format(shown.current))
       if (t < 1) frame = requestAnimationFrame(step)
     })
     return () => cancelAnimationFrame(frame)
   }, [value, format, reducedMotion])
 
   return <span ref={ref} className={cn('tabular-nums', className)} />
+}
+
+/**
+ * Puts `text` in the element's own text node, and only when it changes.
+ * `textContent` swaps in a new node, and an inserted node makes the page
+ * check its `:has()` rules and lay out again, on every frame of a count.
+ */
+export function writeText(element: HTMLElement, text: string) {
+  const node = element.firstChild
+  if (node instanceof Text && node === element.lastChild) {
+    if (node.data !== text) node.data = text
+    return
+  }
+  element.textContent = text
 }
 
 /**

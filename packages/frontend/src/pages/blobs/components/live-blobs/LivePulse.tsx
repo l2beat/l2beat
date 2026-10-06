@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { memo, useLayoutEffect, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { formatWhole } from './blocks/format'
 import { usePrefersReducedMotion } from './hooks'
@@ -39,6 +39,9 @@ function BlobPulse({
 }) {
   const barsRef = useRef<SVGGElement>(null)
   const reducedMotion = usePrefersReducedMotion()
+  // Bars keep their place by slot and the group moves, so a new block
+  // moves one element rather than all 300
+  const firstHead = useRef(head)
   const width = SLOTS_SHOWN * BAR_STEP
   const scale = PULSE_HEIGHT / limits.maxBlobsPerBlock
   const targetY = PULSE_HEIGHT - limits.targetBlobsPerBlock * scale
@@ -62,17 +65,21 @@ function BlobPulse({
         aria-label={`Blobs in each of the last ${formatWhole(blobsPerSlot.length)} slots`}
       >
         <g ref={barsRef}>
-          {blobsPerSlot.map((blobs, i) =>
-            blobs === null || blobs === 0 ? null : (
-              <PulseBar
-                key={head - i}
-                x={width - (i + 1) * BAR_STEP}
-                height={blobs * scale}
-                aboveTarget={blobs > limits.targetBlobsPerBlock}
-                fresh={i === 0}
-              />
-            ),
-          )}
+          <g
+            transform={`translate(${width - (head - firstHead.current + 1) * BAR_STEP} 0)`}
+          >
+            {blobsPerSlot.map((blobs, i) =>
+              blobs === null || blobs === 0 ? null : (
+                <PulseBar
+                  key={head - i}
+                  x={(head - i - firstHead.current) * BAR_STEP}
+                  height={blobs * scale}
+                  aboveTarget={blobs > limits.targetBlobsPerBlock}
+                  grow={i === 0 && !reducedMotion}
+                />
+              ),
+            )}
+          </g>
         </g>
         <line
           x1={0}
@@ -96,23 +103,23 @@ function BlobPulse({
   )
 }
 
-function PulseBar({
+/** Memoized, so a new block renders the one bar it brings, not all 300 */
+const PulseBar = memo(function PulseBar({
   x,
   height,
   aboveTarget,
-  fresh,
+  grow,
 }: {
   x: number
   height: number
   aboveTarget: boolean
-  fresh: boolean
+  /** Only the bar a new block brings grows in; the others were there already */
+  grow: boolean
 }) {
   const ref = useRef<SVGRectElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
-  // only the bar a new block brings grows in; the others were there already
   // biome-ignore lint/correctness/useExhaustiveDependencies: on mount only
   useLayoutEffect(() => {
-    if (!fresh || reducedMotion || !ref.current) return
+    if (!grow || !ref.current) return
     ref.current.animate(
       [{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }],
       { duration: 700, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)' },
@@ -129,4 +136,4 @@ function PulseBar({
       style={{ transformBox: 'fill-box', transformOrigin: 'bottom' }}
     />
   )
-}
+})

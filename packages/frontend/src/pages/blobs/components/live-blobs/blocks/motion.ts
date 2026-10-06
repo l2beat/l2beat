@@ -19,6 +19,12 @@ const LABEL_IN = 0.16
 const LABEL_OUT = 0.5
 const LABEL_RISE = 10
 
+/**
+ * How long a batch moves from when it starts to drop: its tiles land and the
+ * bay's glow settles well within the life of its label
+ */
+export const BATCH_MOTION_TIME = LABEL_LIFE
+
 /** Long enough for any batch to drop, land and have its label fade */
 export const SETTLE_TIME = 8
 

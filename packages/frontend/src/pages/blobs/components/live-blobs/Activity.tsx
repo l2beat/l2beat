@@ -66,13 +66,15 @@ export function Activity({
         {shown.map(({ step, blobs }) => (
           <div
             key={step}
+            // grown by scaling, not by height: a height change lays out the
+            // whole table again on every frame of the transition
             className={cn(
-              'shrink-0 rounded-[1px]',
-              !sliding && 'transition-[height] duration-700 ease-out',
+              'h-full shrink-0 origin-bottom rounded-[1px]',
+              !sliding && 'transition-transform duration-700 ease-out',
             )}
             style={{
               width: BAR_WIDTH,
-              height: `${blobs === 0 ? 8 : 20 + (80 * blobs) / scale}%`,
+              transform: `scaleY(${blobs === 0 ? 0.08 : 0.2 + (0.8 * blobs) / scale})`,
               backgroundColor: blobs === 0 ? 'var(--divider)' : color,
               // the step under way stands out from the finished ones
               opacity: blobs === 0 || step === current ? 1 : 0.6,
