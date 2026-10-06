@@ -32,10 +32,10 @@ import { PercentChange } from '~/components/PercentChange'
 import { ViewDetailsLink } from '~/components/ViewDetailsLink'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { useTRPC } from '~/trpc/React'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
-import { mergeTvsSeries, type TvsSeriesPoint } from './mergeTvsSeries'
+import { getTvsSeriesStats } from './getTvsSeriesStats'
+import { mergeTvsSeries } from './mergeTvsSeries'
 
 const chartMeta = {
   fullData: {
@@ -86,7 +86,7 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
         : undefined,
     [fullData.data, settlementOnly.data],
   )
-  const stats = getStats(chartData, dataKeys)
+  const stats = getTvsSeriesStats(chartData, dataKeys)
 
   return (
     <div className="flex flex-col gap-4 lg:contents">
@@ -250,24 +250,4 @@ function Header({
       </div>
     </div>
   )
-}
-
-function getStats(
-  data: TvsSeriesPoint[] | undefined,
-  dataKeys: (keyof typeof chartMeta)[],
-) {
-  const withData = data?.filter(
-    (p) => p.fullData !== null || p.settlementOnly !== null,
-  )
-  const oldest = withData?.at(0)
-  const newest = withData?.at(-1)
-  if (!oldest || !newest) return undefined
-
-  const sum = (point: TvsSeriesPoint) =>
-    dataKeys.reduce((acc, key) => acc + (point[key] ?? 0), 0)
-
-  return {
-    total: sum(newest),
-    change: calculatePercentageChange(sum(newest), sum(oldest)),
-  }
 }
