@@ -43,6 +43,14 @@
  * The model name is not in the JSONL events; it is read from the thread's
  * rollout file under `$CODEX_HOME/sessions`, best effort, because the
  * provenance header of a written template should say which model drafted it.
+ * When Codex reroutes the turn to another model, it says so in an error item,
+ * and that model is the one recorded.
+ *
+ * The usage of a resumed turn is the thread's total so far: Codex restores
+ * the total from the rollout and adds the turn to it. The client keeps the
+ * last total of every thread it ran and reports a turn's difference from it;
+ * a thread first seen on a resume, started by another process, reports its
+ * total.
  */
 import fs from 'fs'
 import os from 'os'
@@ -142,6 +150,9 @@ export class CodexTurnError extends Error {
 }
 
 export class CodexClient implements ModelClient {
+  /** The usage each thread last reported, which is its total so far. */
+  private readonly threadTotals = new Map<string, ModelUsage>()
+
   constructor(private readonly options: CodexClientOptions = {}) {}
 
   start(input: ModelTurnInput): Promise<ModelTurn> {
@@ -224,6 +235,7 @@ export class CodexClient implements ModelClient {
   ): ModelTurn {
     const parsed = parseCodexEvents(run.stdout)
     const text = readLastMessage(lastMessageFile) ?? parsed.lastMessage
+    const usage = this.turnUsage(parsed)
     const problem = describeProblem(run, parsed, text)
     if (problem !== undefined) {
       throw new CodexTurnError(
@@ -231,7 +243,7 @@ export class CodexClient implements ModelClient {
         parsed.events,
         run.stderr,
         problem.retryable,
-        parsed.usage,
+        usage,
       )
     }
     const threadId = parsed.threadId as string
@@ -239,12 +251,23 @@ export class CodexClient implements ModelClient {
       threadId,
       text: text as string,
       model:
+        parsed.reroutedTo ??
         this.options.model ??
         readModelFromRollout(this.sessionsDir(), threadId),
-      usage: parsed.usage,
+      usage,
       events: parsed.events,
       durationMs,
     }
+  }
+
+  private turnUsage(parsed: ParsedCodexEvents): ModelUsage | undefined {
+    const total = parsed.usage
+    if (total === undefined || parsed.threadId === undefined) {
+      return total
+    }
+    const before = this.threadTotals.get(parsed.threadId)
+    this.threadTotals.set(parsed.threadId, total)
+    return before === undefined ? total : subtractUsage(total, before)
   }
 
   private sessionsDir(): string {
@@ -289,7 +312,7 @@ function describeProblem(
   if (parsed.threadId === undefined) {
     return notAnswering('codex emitted no thread.started')
   }
-  if (text === undefined) {
+  if (text === undefined || text.trim() === '') {
     return unusableAnswer('codex produced no final message')
   }
   return undefined
@@ -307,6 +330,20 @@ function readLastMessage(file: string): string | undefined {
   }
   const text = fs.readFileSync(file, 'utf8')
   return text.trim() === '' ? undefined : text
+}
+
+function subtractUsage(total: ModelUsage, before: ModelUsage): ModelUsage {
+  const minus = (a?: number, b?: number) =>
+    a === undefined || b === undefined ? a : a - b
+  return {
+    inputTokens: minus(total.inputTokens, before.inputTokens),
+    cachedInputTokens: minus(total.cachedInputTokens, before.cachedInputTokens),
+    outputTokens: minus(total.outputTokens, before.outputTokens),
+    reasoningOutputTokens: minus(
+      total.reasoningOutputTokens,
+      before.reasoningOutputTokens,
+    ),
+  }
 }
 
 function stderrTail(stderr: string): string {
