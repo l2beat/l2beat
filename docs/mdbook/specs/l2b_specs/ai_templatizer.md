@@ -245,7 +245,10 @@ below as an existing template and gets the new shape at the end. One that does
 not is left as it is, and the contract goes through the steps as a new
 contract. So is a template whose `criteria.json` does not list the contract,
 whether or not it already holds the contract's shape: discovery matches such
-a template for the listed addresses alone, so nothing is added to it.
+a template for the listed addresses alone, so nothing is added to it. And so
+is a template with no shapes: only a referrer's field applies it
+(`discovered.json` does not record how a template was applied), and its first
+shape would make every contract of that code match it.
 
 Contracts go through these steps one at a time, in address order, so each
 one's check and prompt see what the previous ones wrote. A contract that a

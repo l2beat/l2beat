@@ -260,6 +260,12 @@ export class Templatizer {
     previous: PreviousTemplate,
   ): Promise<string | undefined> {
     const { templateId } = previous
+    if (this.templateService.readShapeFile(templateId) === undefined) {
+      // A template with no shape is applied only by a referrer's field
+      // (`discovered.json` does not say how it was applied); its first
+      // shape would make every contract of this code match it.
+      return 'it has no shapes, so only a referrer applies it'
+    }
     if (!this.templateService.admitsAddress(templateId, request.address)) {
       // V1 matches a template that lists addresses for those alone. The
       // new shape would not change that, and `addShape` would throw after
