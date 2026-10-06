@@ -5,6 +5,7 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { getThroughputInForce } from './utils/getThroughputInForce'
 
 export const DaPastDayUsageParams = v.object({
   daLayerId: v.string(),
@@ -76,10 +77,7 @@ export function getCapacity(
   throughput: DaLayerThroughput[],
   [from, to]: [number, number],
 ): number | undefined {
-  const inForce = throughput
-    .filter((t) => t.sinceTimestamp <= from)
-    .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
-    .at(-1)
+  const inForce = getThroughputInForce(throughput, from)
   if (!inForce) return undefined
 
   const size = daLayerId === ProjectId.ETHEREUM ? inForce.target : inForce.size

@@ -1,8 +1,9 @@
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getBlobPosters } from '~/server/features/data-availability/live-blobs/getBlobPosters'
 import { getDaProjectValidators } from '~/server/features/data-availability/project/utils/getDaProjectValidators'
 import { getDaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
+import { getThroughputInForce } from '~/server/features/data-availability/throughput/utils/getThroughputInForce'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -18,6 +19,7 @@ export async function getBlobsPageData(
     appLayoutProps,
     daLayers,
     daBridges,
+    customDaProjects,
     ethereum,
     projectsWithColors,
     blobPosters,
@@ -25,6 +27,7 @@ export async function getBlobsPageData(
     getAppLayoutProps(),
     ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
     ps.getProjects({ select: ['daBridge'] }),
+    ps.getProjects({ select: ['customDa'], whereNot: ['archivedAt'] }),
     ps.getProject({
       id: ProjectId.ETHEREUM,
       select: ['daLayer'],
@@ -35,9 +38,10 @@ export async function getBlobsPageData(
   ])
   assert(ethereum, 'Ethereum DA layer not found')
 
-  const latestThroughput = ethereum.daLayer.throughput
-    ?.toSorted((a, b) => a.sinceTimestamp - b.sinceTimestamp)
-    .at(-1)
+  const currentThroughput = getThroughputInForce(
+    ethereum.daLayer.throughput ?? [],
+    UnixTime.now(),
+  )
   const ethereumSummary: EthereumSummary = {
     name: ethereum.name,
     iconUrl: manifest.getUrl(`/icons/${ethereum.slug}.png`),
@@ -47,8 +51,8 @@ export async function getBlobsPageData(
     ),
     durationStorage: ethereum.daLayer.pruningWindow,
     maxThroughputPerSecond:
-      latestThroughput && latestThroughput.size !== 'NO_CAP'
-        ? latestThroughput.size / latestThroughput.frequency
+      currentThroughput && currentThroughput.size !== 'NO_CAP'
+        ? currentThroughput.size / currentThroughput.frequency
         : undefined,
   }
 
@@ -70,7 +74,11 @@ export async function getBlobsPageData(
       props: {
         ...appLayoutProps,
         ethereumSummary,
-        tvsProjectIds: getDaTvsProjectIds(daLayers, daBridges),
+        tvsProjectIds: getDaTvsProjectIds(
+          daLayers,
+          daBridges,
+          customDaProjects,
+        ),
         blobPosters,
         throughput: {
           project: toChartProject(ethereum),
