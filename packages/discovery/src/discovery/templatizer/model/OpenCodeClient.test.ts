@@ -134,7 +134,7 @@ describe(OpenCodeClient.name, () => {
     expect(turn.usage).toEqual({
       inputTokens: 110,
       cachedInputTokens: 100,
-      outputTokens: 3,
+      outputTokens: 4,
       reasoningOutputTokens: 1,
     })
     expect(fs.existsSync(cwd)).toEqual(true)
@@ -208,7 +208,7 @@ describe(OpenCodeClient.name, () => {
     expect(turn.usage).toEqual({
       inputTokens: 165,
       cachedInputTokens: 150,
-      outputTokens: 10,
+      outputTokens: 13,
       reasoningOutputTokens: 3,
     })
   })

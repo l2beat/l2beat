@@ -25,7 +25,9 @@ export interface ModelUsage {
   inputTokens?: number
   /** The part of `inputTokens` served from the provider's prompt cache. */
   cachedInputTokens?: number
+  /** Everything the model generated, reasoning included. */
   outputTokens?: number
+  /** The part of `outputTokens` spent reasoning. */
   reasoningOutputTokens?: number
 }
 

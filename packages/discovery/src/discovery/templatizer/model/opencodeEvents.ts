@@ -125,15 +125,22 @@ function readUsage(tokens: unknown): ModelUsage | undefined {
   }
   const cache = isRecord(tokens.cache) ? tokens.cache : {}
   const cached = numberOr(cache.read)
-  const uncached = numberOr(tokens.input)
-  // opencode's `input` is the uncached part alone; Codex's `input_tokens`
-  // is the whole prompt. ModelUsage follows Codex, so the two add up here.
+  const reasoning = numberOr(tokens.reasoning)
+  // opencode reports in parts what Codex reports whole: its `input` leaves
+  // out the tokens read from and written to the prompt cache, and its
+  // `output` leaves out the reasoning (its `total` is the sum of all five).
+  // ModelUsage follows Codex, so the parts add up here.
   return {
-    inputTokens: uncached === undefined ? cached : uncached + (cached ?? 0),
+    inputTokens: sumOf(numberOr(tokens.input), cached, numberOr(cache.write)),
     cachedInputTokens: cached,
-    outputTokens: numberOr(tokens.output),
-    reasoningOutputTokens: numberOr(tokens.reasoning),
+    outputTokens: sumOf(numberOr(tokens.output), reasoning),
+    reasoningOutputTokens: reasoning,
   }
+}
+
+function sumOf(...values: (number | undefined)[]): number | undefined {
+  const known = values.filter((value) => value !== undefined)
+  return known.length === 0 ? undefined : known.reduce((a, b) => a + b, 0)
 }
 
 function describePart(part: Record<string, unknown>): string {
