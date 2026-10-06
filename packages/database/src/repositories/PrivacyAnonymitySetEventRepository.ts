@@ -13,10 +13,8 @@ export interface PrivacyAnonymitySetEventRecord {
   blockNumber: number
   txHash: string
   logIndex: number
-  sender: string | null
+  sender: string
   amount: bigint
-  /** Note lifecycle events carry no depositor. Only the deposit carries expiry. */
-  note?: { id: number; active: boolean; expiresAt: UnixTime | null }
 }
 
 export interface PrivacyAnonymitySetSenderDayRecord {
@@ -30,35 +28,29 @@ export interface PrivacyAnonymitySetSenderDayRecord {
 function toRecord(
   row: Selectable<PrivacyAnonymitySetEvent>,
 ): PrivacyAnonymitySetEventRecord {
-  const { noteId, active, expiresAt, ...event } = row
-  let note: PrivacyAnonymitySetEventRecord['note']
-  if (noteId !== null) {
-    assert(active !== null, 'Note event is missing its active status')
-    note = {
-      id: Number(noteId),
-      active,
-      expiresAt: expiresAt === null ? null : UnixTime.fromDate(expiresAt),
-    }
-  }
+  // Keep legacy records unchanged before and after the schema migration.
+  const {
+    noteId: _noteId,
+    active: _active,
+    expiresAt: _expiresAt,
+    ...event
+  } = row
+  assert(event.sender !== null, 'Depositor event is missing its sender')
   return {
     ...event,
+    sender: event.sender,
     timestamp: UnixTime.fromDate(row.timestamp),
     amount: BigInt(row.amount),
-    ...(note && { note }),
   }
 }
 
 function toRow(
   record: PrivacyAnonymitySetEventRecord,
 ): Insertable<PrivacyAnonymitySetEvent> {
-  const { note, ...event } = record
   return {
-    ...event,
+    ...record,
     timestamp: UnixTime.toDate(record.timestamp),
     amount: record.amount.toString(),
-    noteId: note?.id.toString() ?? null,
-    active: note?.active ?? null,
-    expiresAt: note?.expiresAt == null ? null : UnixTime.toDate(note.expiresAt),
   }
 }
 
@@ -82,9 +74,6 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
               blockNumber: eb.ref('excluded.blockNumber'),
               sender: eb.ref('excluded.sender'),
               amount: eb.ref('excluded.amount'),
-              noteId: eb.ref('excluded.noteId'),
-              active: eb.ref('excluded.active'),
-              expiresAt: eb.ref('excluded.expiresAt'),
             })),
         )
         .execute()
@@ -113,7 +102,7 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
       .where('projectId', 'in', projectIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
-      .where('noteId', 'is', null)
+      .where('sender', 'is not', null)
       .groupBy(['projectId', 'bucketId', 'sender', day])
       .orderBy('timestamp', 'asc')
       .execute()
@@ -128,25 +117,6 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
         maximumAmount: BigInt(row.maximumAmount),
       }
     })
-  }
-
-  async getNoteEventsByProjectIds(
-    projectIds: string[],
-    fromInclusive: UnixTime,
-    toExclusive: UnixTime,
-  ): Promise<PrivacyAnonymitySetEventRecord[]> {
-    if (projectIds.length === 0) return []
-    const rows = await this.db
-      .selectFrom('PrivacyAnonymitySetEvent')
-      .selectAll()
-      .where('projectId', 'in', projectIds)
-      .where('noteId', 'is not', null)
-      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
-      .where('timestamp', '<', UnixTime.toDate(toExclusive))
-      .orderBy('blockNumber', 'asc')
-      .orderBy('logIndex', 'asc')
-      .execute()
-    return rows.map(toRecord)
   }
 
   async getDepositCount(
