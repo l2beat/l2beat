@@ -117,6 +117,22 @@ describe(validateDraft.name, () => {
     ])
   })
 
+  it('refuses a field named like a property every object has, also next to existing fields', () => {
+    const ctx: ValidationContext = {
+      ...newTemplate('ScrollChain'),
+      templateText: '{ "fields": {} }',
+      isNew: false,
+    }
+    expect(
+      paths(
+        {
+          fields: { constructor: { handler: { type: 'hardcoded', value: 1 } } },
+        },
+        ctx,
+      ),
+    ).toEqual(['fields.constructor'])
+  })
+
   it('reports every mistake of shape at once against V1’s own schema, by the handler’s type', () => {
     const result = validateDraft(
       {
@@ -284,6 +300,30 @@ describe(validateDraft.name, () => {
         message:
           "the ABI declares committedBatches(uint256) as `function committedBatches(uint256) view returns (bytes32)`, returning (bytes32), and this fragment returns (address): write `method` as the ABI's fragment",
       },
+    ])
+  })
+
+  it('finds the function of a signature an error of the merged ABI shares', () => {
+    const ctx = newTemplate('ScrollChain')
+    const result = validateDraft(
+      {
+        fields: withReasons({
+          verifierKey: {
+            handler: {
+              type: 'call',
+              method: 'function verifier() view returns (bytes32)',
+              args: [],
+            },
+          },
+        }),
+      },
+      {
+        ...ctx,
+        facts: { ...ctx.facts, abi: ['error verifier()', ...ctx.facts.abi] },
+      },
+    )
+    expect(result.findings.map((finding) => finding.path)).toEqual([
+      'fields.verifierKey.handler.method',
     ])
   })
 })

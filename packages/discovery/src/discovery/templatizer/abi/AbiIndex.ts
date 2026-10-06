@@ -71,9 +71,13 @@ export class AbiIndex {
  * Deduplication key. A merged ABI can hold the proxy's constructor and an
  * implementation's; V1 decodes with the first, so every later one is dropped
  * like a repeat (ethers would keep the first too, with a warning per repeat).
+ * An error, an event and a function may share a signature, so the kind is
+ * part of the key.
  */
 function identity(fragment: utils.Fragment): string {
-  return fragment.type === 'constructor' ? 'constructor' : sighash(fragment)
+  return fragment.type === 'constructor'
+    ? 'constructor'
+    : `${fragment.type} ${sighash(fragment)}`
 }
 
 export function sighash(fragment: utils.Fragment): string {
