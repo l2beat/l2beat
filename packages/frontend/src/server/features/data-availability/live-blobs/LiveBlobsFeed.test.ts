@@ -163,6 +163,67 @@ describe(LiveBlobsFeed.name, () => {
     }
   })
 
+  it('answers a waiting page when a block that failed to come is fetched after all', async () => {
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const node = fakeNode()
+      feed = new LiveBlobsFeed(node.source, Logger.SILENT)
+      await feed.latest()
+
+      // the head moves on, but its block cannot be fetched yet
+      node.failing = HEAD + 1
+      node.head = HEAD + 1
+      await clock.tickAsync(8000)
+      const without = await feed.latest()
+      expect(without?.head).toEqual(HEAD + 1)
+      expect(without?.live).toEqual(false)
+      expect(without?.blocks[0]?.slot).toEqual(HEAD)
+
+      let answer: LiveBlobs | undefined
+      void feed.latestAfter({ after: HEAD + 1 }).then((blobs) => {
+        answer = blobs
+      })
+      node.failing = undefined
+      // the retry after one failure is due in two seconds
+      await clock.tickAsync(2000)
+
+      expect(answer?.live).toEqual(true)
+      expect(answer?.blocks[0]?.slot).toEqual(HEAD + 1)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  it('counts the wait for the first answer into how long a page is held', async () => {
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const node = fakeNode()
+      feed = new LiveBlobsFeed(node.source, Logger.SILENT)
+      await feed.latest()
+      // the feed starts anew, as after a quiet spell, and the node hangs
+      feed.stop()
+      node.source.headSlot = () => new Promise(() => {})
+
+      let answer: LiveBlobs | undefined
+      void feed.latestAfter({ after: HEAD }).then((blobs) => {
+        answer = blobs
+      })
+      await clock.tickAsync(19_000)
+      expect(answer).toEqual(undefined)
+
+      await clock.tickAsync(1500)
+      expect(answer?.head).toEqual(HEAD)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
   it('answers a page that is behind at once', async () => {
     feed = new LiveBlobsFeed(fakeNode().source, Logger.SILENT)
 
@@ -185,6 +246,8 @@ describe(LiveBlobsFeed.name, () => {
       head: HEAD,
       /** A slot whose block the chain dropped after it was first served */
       dropped: undefined as number | undefined,
+      /** A slot whose block the node fails to answer for */
+      failing: undefined as number | undefined,
       blocksAsked: 0,
       source: {} as BeaconSource,
     }
@@ -192,6 +255,7 @@ describe(LiveBlobsFeed.name, () => {
       headSlot: async () => node.head,
       block: async (slot): Promise<LiveBlock> => {
         node.blocksAsked++
+        if (slot === node.failing) throw new Error()
         if (slot === MISSED || slot === node.dropped) {
           return { slot, status: 'missed' }
         }
