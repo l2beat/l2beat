@@ -126,7 +126,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       exposure:
-        "During an escape withdrawal, the operator can publish a request proof linked to its funding note. It also receives authorization timing, budgets and billed usage, and can correlate the local daemon's note-id queries with requests. The issuer knows the API credential; the provider sees prompts and responses and can link requests sharing it. Hosted wallet code can read secrets or redirect payments.",
+        "During an escape withdrawal, the zkAPI operator can publish a request proof linked to it. It also receives authorization timing, budgets and billed usage, and can time-correlate the local daemon's note-id queries with requests. The issuer knows the API credential. The provider sees prompts and responses and can link requests sharing it. Hosted wallet code can read secrets or redirect payments.",
       advice:
         "Run inspected local code and avoid identifying prompts. Prefer the browser's common snapshots. For zkapi-clientd, set --key-reuse-window-seconds 0. These steps do not prevent the operator from linking an authorization to its note through an escape challenge.",
       interior: {
