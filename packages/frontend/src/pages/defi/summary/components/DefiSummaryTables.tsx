@@ -5,24 +5,36 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { DefiSummaryEntry } from '~/server/features/defi/getDefiSummaryEntries'
-import type { DefiLiquidStakingCharts as DefiLiquidStakingChartsData } from '~/server/features/defi/liquidStakingCharts/getDefiLiquidStakingCharts'
-import { DefiLiquidStakingCharts } from './charts/DefiLiquidStakingCharts'
-import {
-  type DefiLiquidStakingRiskEntry,
-  DefiLiquidStakingRiskTable,
-} from './DefiLiquidStakingRiskTable'
+import type { DefiLiquidStakingCharts } from '~/server/features/defi/liquidStakingCharts/getDefiLiquidStakingCharts'
+import { DefiLiquidStaking } from './DefiLiquidStaking'
+import type { DefiLiquidStakingRiskEntry } from './DefiLiquidStakingRiskTable'
 import { DefiSummaryTable } from './DefiSummaryTable'
-import { LiquidStakingChartsInfo, LiquidStakingRisksInfo } from './DefiTabsInfo'
 
 export function DefiSummaryTables({
   entries,
   liquidStakingCharts,
+  showAllProtocols,
 }: {
   entries: DefiSummaryEntry[]
-  liquidStakingCharts?: DefiLiquidStakingChartsData
+  liquidStakingCharts?: DefiLiquidStakingCharts
+  /**
+   * False while the summary is limited to liquid staking, see
+   * DEFI_SUMMARY_CATEGORIES. The page is then the liquid staking view alone.
+   */
+  showAllProtocols: boolean
 }) {
-  const liquidStakingEntries = entries.filter(isLiquidStakingRiskEntry)
+  const liquidStaking = (
+    <DefiLiquidStaking
+      entries={entries.filter(isLiquidStakingRiskEntry)}
+      charts={liquidStakingCharts}
+    />
+  )
+
+  if (!showAllProtocols) {
+    return <PrimaryCard className="md:mt-4">{liquidStaking}</PrimaryCard>
+  }
 
   return (
     <DirectoryTabs defaultValue="protocols">
@@ -31,33 +43,15 @@ export function DefiSummaryTables({
           Protocols <CountBadge>{entries.length}</CountBadge>
         </DirectoryTabsTrigger>
         <DirectoryTabsTrigger value="liquidStaking">
-          Liquid staking risks{' '}
-          <CountBadge>{liquidStakingEntries.length}</CountBadge>
+          Liquid staking
         </DirectoryTabsTrigger>
-        {liquidStakingCharts && (
-          <DirectoryTabsTrigger value="liquidStakingCharts">
-            Liquid staking charts{' '}
-            <CountBadge>{liquidStakingCharts.projects.length}</CountBadge>
-          </DirectoryTabsTrigger>
-        )}
       </DirectoryTabsList>
       <DirectoryTabsContent value="protocols">
         <DefiSummaryTable entries={entries} />
       </DirectoryTabsContent>
       <DirectoryTabsContent value="liquidStaking">
-        <LiquidStakingRisksInfo />
-        <DefiLiquidStakingRiskTable entries={liquidStakingEntries} />
+        {liquidStaking}
       </DirectoryTabsContent>
-      {liquidStakingCharts && (
-        <DirectoryTabsContent value="liquidStakingCharts">
-          <LiquidStakingChartsInfo
-            fromDate={liquidStakingCharts.fromDate}
-            asOf={liquidStakingCharts.asOf}
-            headBlock={liquidStakingCharts.headBlock}
-          />
-          <DefiLiquidStakingCharts charts={liquidStakingCharts} />
-        </DirectoryTabsContent>
-      )}
     </DirectoryTabs>
   )
 }

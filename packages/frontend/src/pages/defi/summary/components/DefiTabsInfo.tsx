@@ -15,20 +15,3 @@ export function LiquidStakingRisksInfo() {
     />
   )
 }
-
-export function LiquidStakingChartsInfo({
-  fromDate,
-  asOf,
-  headBlock,
-}: {
-  fromDate: string
-  asOf: string
-  headBlock: number
-}) {
-  return (
-    <TabInfoWithDrawer
-      title="Where these charts come from"
-      content={`Daily snapshot from ${fromDate} to ${asOf} (block ${headBlock.toLocaleString('en-US')}): the protocol contracts, Uniswap v3 and Curve pools read from an archive node, DeFiLlama prices for wBETH, and deposit and redemption event scans. This is static data, not a live feed. Click a legend entry to toggle a protocol.`}
-    />
-  )
-}

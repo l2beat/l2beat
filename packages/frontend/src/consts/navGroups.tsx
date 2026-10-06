@@ -12,6 +12,7 @@ import { OssificationIcon } from '~/icons/pages/Ossification'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
+import { DEFI_SUMMARY_TITLE } from '~/server/features/defi/defiSummaryVisibility'
 import { createOrderedSort } from '~/utils/sort'
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
@@ -147,7 +148,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
   },
   env.CLIENT_SIDE_DEFI_ENABLED && {
     type: 'single',
-    title: 'DeFi',
+    title: DEFI_SUMMARY_TITLE,
     match: 'defi',
     href: '/defi',
     icon: (

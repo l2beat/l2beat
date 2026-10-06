@@ -1042,7 +1042,7 @@ export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
   category: ProjectDefiCategory
   tvl?: ProjectDefiTvlConfig
-  /** Risk comparison shown on the DeFi summary "Liquid staking risks" tab. */
+  /** Risk comparison shown in the liquid staking view of the DeFi summary. */
   liquidStaking?: ProjectDefiLiquidStakingRisks
 }
 

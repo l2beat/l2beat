@@ -1,6 +1,5 @@
-import type { ReactNode } from 'react'
 import { useMemo } from 'react'
-import { Bar, BarChart, Line, LineChart, type YAxisProps } from 'recharts'
+import { Line, LineChart, type YAxisProps } from 'recharts'
 import type {
   ChartMeta,
   CustomChartTooltipProps,
@@ -29,19 +28,8 @@ interface Props {
   colors: Record<string, string>
   data: LiquidStakingChartPoint[]
   formatYAxisLabel: (value: number) => string
-  /** Receives the plotted value, the whole point and the project id. */
-  formatTooltipValue: (
-    value: number,
-    point: LiquidStakingChartPoint,
-    projectId: string,
-  ) => string
-  /** Legend label override per project id, e.g. to mark a series as a floor. */
-  labels?: Record<string, ReactNode>
+  formatTooltipValue: (value: number) => string
   yAxis?: Pick<YAxisProps, 'scale' | 'domain' | 'allowDataOverflow' | 'ticks'>
-  /** Lines over the daily grid (default) or one bar per bucket and project. */
-  chartType?: 'line' | 'bar'
-  /** Tooltip heading for a point; defaults to the full date. */
-  formatLabel?: (timestamp: number) => string
 }
 
 /**
@@ -54,11 +42,7 @@ export function LiquidStakingLineChart({
   data,
   formatYAxisLabel,
   formatTooltipValue,
-  labels,
   yAxis,
-  chartType = 'line',
-  formatLabel = (timestamp) =>
-    formatTimestamp(timestamp, { mode: 'date', longMonthName: true }),
 }: Props) {
   const chartMeta = useMemo<ChartMeta>(
     () =>
@@ -73,15 +57,15 @@ export function LiquidStakingLineChart({
                 height={14}
                 className="size-3.5 rounded-full"
               />
-              {labels?.[project.id] ?? project.name}
+              {project.name}
             </span>
           ),
           color: colors[project.id] ?? 'var(--secondary)',
-          indicatorType: { shape: chartType === 'bar' ? 'square' : 'line' },
+          indicatorType: { shape: 'line' },
         }
         return acc
       }, {}),
-    [projects, colors, labels, chartType],
+    [projects, colors],
   )
 
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
@@ -99,84 +83,35 @@ export function LiquidStakingLineChart({
       }}
     >
       {/* Without right:1 the chart last point is not hoverable for some reason */}
-      {chartType === 'bar' ? (
-        <BarChart
-          responsive
+      <LineChart responsive data={data} margin={{ top: 20, right: 1 }}>
+        <ChartLegendToggleAll
+          showAllSelected={showAllSelected}
+          onToggleAll={toggleAllDataKeys}
+        />
+        {projects.map((project) => (
+          <Line
+            key={project.id}
+            dataKey={project.id}
+            hide={!dataKeys.includes(project.id)}
+            stroke={chartMeta[project.id]?.color}
+            dot={false}
+            isAnimationActive={false}
+          />
+        ))}
+        <ChartCommonComponents
           data={data}
-          margin={{ top: 20, right: 1 }}
-          maxBarSize={12}
-          barGap={1}
-          barCategoryGap="25%"
-        >
-          <ChartLegendToggleAll
-            showAllSelected={showAllSelected}
-            onToggleAll={toggleAllDataKeys}
-          />
-          {projects.map((project) => (
-            <Bar
-              key={project.id}
-              dataKey={project.id}
-              hide={!dataKeys.includes(project.id)}
-              fill={chartMeta[project.id]?.color}
-              isAnimationActive={false}
-            />
-          ))}
-          <ChartCommonComponents
-            data={data}
-            isLoading={false}
-            chartType="bar"
-            yAxis={{
-              tickCount: 4,
-              tickFormatter: (value) => formatYAxisLabel(Number(value)),
-              ...yAxis,
-            }}
-            syncedUntil={undefined}
-          />
-          <ChartTooltip
-            content={
-              <CustomTooltip
-                formatValue={formatTooltipValue}
-                formatLabel={formatLabel}
-              />
-            }
-          />
-        </BarChart>
-      ) : (
-        <LineChart responsive data={data} margin={{ top: 20, right: 1 }}>
-          <ChartLegendToggleAll
-            showAllSelected={showAllSelected}
-            onToggleAll={toggleAllDataKeys}
-          />
-          {projects.map((project) => (
-            <Line
-              key={project.id}
-              dataKey={project.id}
-              hide={!dataKeys.includes(project.id)}
-              stroke={chartMeta[project.id]?.color}
-              dot={false}
-              isAnimationActive={false}
-            />
-          ))}
-          <ChartCommonComponents
-            data={data}
-            isLoading={false}
-            yAxis={{
-              tickCount: 4,
-              tickFormatter: (value) => formatYAxisLabel(Number(value)),
-              ...yAxis,
-            }}
-            syncedUntil={undefined}
-          />
-          <ChartTooltip
-            content={
-              <CustomTooltip
-                formatValue={formatTooltipValue}
-                formatLabel={formatLabel}
-              />
-            }
-          />
-        </LineChart>
-      )}
+          isLoading={false}
+          yAxis={{
+            tickCount: 4,
+            tickFormatter: (value) => formatYAxisLabel(Number(value)),
+            ...yAxis,
+          }}
+          syncedUntil={undefined}
+        />
+        <ChartTooltip
+          content={<CustomTooltip formatValue={formatTooltipValue} />}
+        />
+      </LineChart>
     </ChartContainer>
   )
 }
@@ -185,14 +120,8 @@ function CustomTooltip({
   payload,
   label,
   formatValue,
-  formatLabel,
 }: CustomChartTooltipProps & {
-  formatValue: (
-    value: number,
-    point: LiquidStakingChartPoint,
-    projectId: string,
-  ) => string
-  formatLabel: (timestamp: number) => string
+  formatValue: (value: number) => string
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -210,7 +139,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatLabel(label)}
+          {formatTimestamp(label, { mode: 'date', longMonthName: true })}
         </div>
         <div className="mt-2 flex flex-col gap-2">
           {[...visible]
@@ -233,14 +162,8 @@ function CustomTooltip({
                     </span>
                   </div>
                   <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
-                    {entry.value !== null &&
-                    entry.value !== undefined &&
-                    entry.name
-                      ? formatValue(
-                          entry.value,
-                          entry.payload as LiquidStakingChartPoint,
-                          String(entry.name),
-                        )
+                    {entry.value !== null && entry.value !== undefined
+                      ? formatValue(entry.value)
                       : 'No data'}
                   </span>
                 </div>

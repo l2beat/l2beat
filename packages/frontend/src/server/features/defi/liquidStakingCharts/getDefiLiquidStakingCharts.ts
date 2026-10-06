@@ -4,9 +4,6 @@ import snapshot from './lstChartsSnapshot.json'
 export const LIQUID_STAKING_CHART_SERIES = [
   'apr30',
   'premium',
-  'liquidShare',
-  'liquidEth',
-  'netFlow',
   'exitDays',
 ] as const
 
@@ -22,10 +19,6 @@ export interface DefiLiquidStakingChartProject {
 export interface DefiLiquidStakingCharts {
   /** Last sampled day of the snapshot (UTC date). */
   asOf: string
-  /** First sampled day of the snapshot (UTC date). */
-  fromDate: string
-  /** Block the last sample was read at. */
-  headBlock: number
   projects: DefiLiquidStakingChartProject[]
   /** One entry per sampled day, shared by every series. */
   timestamps: number[]
@@ -38,8 +31,10 @@ const SNAPSHOT_PROJECT_IDS = ['lido', 'rocketpool', 'etherfi', 'wbeth']
 
 /**
  * A static snapshot of the liquid staking chart series: daily archive-node
- * reads of the protocol contracts and DEX pools plus event scans, from
- * 2024-01-01 to the snapshot date. It is not a live feed. Names and icons come
+ * reads of the protocol contracts and DEX pools plus DeFiLlama prices for
+ * wBETH, from 2024-01-01 to the snapshot date. It is not a live feed. In
+ * `exitDays` Rocket Pool is 0 on a day its burn buffer holds at least 1 ETH
+ * and null on a day it does not. Names and icons come
  * from the summary entries so the charts follow the config, and a project
  * missing from the config is dropped from every series.
  */
@@ -77,8 +72,6 @@ export function getDefiLiquidStakingCharts(
 
   return {
     asOf: snapshot.asOf,
-    fromDate: snapshot.fromDate,
-    headBlock: snapshot.headBlock,
     projects,
     timestamps: snapshot.timestamps,
     series,

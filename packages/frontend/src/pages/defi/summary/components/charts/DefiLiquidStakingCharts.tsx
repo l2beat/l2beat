@@ -1,8 +1,13 @@
-import { formatInteger } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
+import { InfoIcon } from '~/icons/Info'
 import type {
   DefiLiquidStakingChartProject,
   DefiLiquidStakingCharts as DefiLiquidStakingChartsData,
@@ -13,6 +18,9 @@ import {
   type LiquidStakingChartPoint,
   LiquidStakingLineChart,
 } from './LiquidStakingLineChart'
+
+/** The one protocol whose exit is a burn against a buffer, not a queue. */
+const BURN_BUFFER_PROJECT = 'rocketpool'
 
 export function DefiLiquidStakingCharts({
   charts,
@@ -50,19 +58,25 @@ export function DefiLiquidStakingCharts({
 
   const apr = series('apr30')
   const premium = series('premium')
-  const liquidShare = withEthAmounts(
-    monthlyMedian(series('liquidShare'), (value) => value),
-    monthlyMedian(series('liquidEth'), (value) => value),
-  )
-  const netFlow = series('netFlow')
   const exitDays = series('exitDays')
   const timeRange = getChartTimeRangeFromData(apr.data)
+  const exitCost = getExitCost(exitDays, premium, apr)
+
+  // In `exitDays` the burn buffer project has no value on a day its buffer
+  // held under 1 ETH.
+  const bufferCharted = exitDays.projects.some(
+    (project) => project.id === BURN_BUFFER_PROJECT,
+  )
+  const bufferEmptyDays = exitDays.data.filter(
+    (point) => point[BURN_BUFFER_PROJECT] === null,
+  ).length
+  const snapshot = `Static snapshot up to ${charts.asOf}.`
 
   return (
     <div className="grid gap-x-6 gap-y-8 lg:grid-cols-2">
       <ChartBlock
         title="Rate-implied yield, 30-day trailing"
-        description="Annualised drift of each token's own oracle rate over the previous 30 days, the yield a holder received net of protocol fees."
+        info={`Annualised drift of each token's own oracle rate over the previous 30 days: the yield a holder received, net of protocol fees. ${snapshot}`}
         timeRange={timeRange}
       >
         <LiquidStakingLineChart
@@ -74,65 +88,24 @@ export function DefiLiquidStakingCharts({
         />
       </ChartBlock>
       <ChartBlock
-        title="Market price vs oracle rate"
-        description="Market ETH per token divided by the oracle rate, minus one, in basis points."
+        title="Cost of exit, in days of yield"
+        info={[
+          'Days of staking yield a holder gives up to exit, by the cheaper route: waiting for a protocol withdrawal, which earns nothing while queued, or selling at the market discount.',
+          'The discount is a 7-day median of quoted prices, before swap fees and price impact. For wBETH the wait is the operator-set lock time.',
+          bufferCharted &&
+            `Rocket Pool has no queue: burning is free while its burn buffer holds ETH, which it did not on ${bufferEmptyDays} of ${exitDays.data.length} days.`,
+          snapshot,
+        ]
+          .filter(Boolean)
+          .join(' ')}
         timeRange={timeRange}
       >
         <LiquidStakingLineChart
-          projects={premium.projects}
+          projects={exitCost.projects}
           colors={colors}
-          data={premium.data}
-          formatYAxisLabel={(value) => `${Math.round(value * 1e4)} bp`}
-          formatTooltipValue={(value) => `${(value * 1e4).toFixed(1)} bp`}
-        />
-      </ChartBlock>
-      <ChartBlock
-        className="lg:col-span-2"
-        title="ETH on hand for redemptions, as a share of backing"
-        description="ETH held where it can pay redemptions without exiting a validator, as a monthly median."
-        timeRange={timeRange}
-      >
-        <LiquidStakingLineChart
-          chartType="bar"
-          projects={liquidShare.projects}
-          colors={colors}
-          data={liquidShare.data}
-          formatLabel={formatMonth}
-          formatYAxisLabel={(share) => formatPercent(share, 1)}
-          formatTooltipValue={(share, point, projectId) => {
-            const eth = point[ethKey(projectId)]
-            const text = formatPercent(share, 3)
-            return eth === null || eth === undefined
-              ? text
-              : `${text} · ${formatInteger(Math.round(eth))} ETH`
-          }}
-        />
-      </ChartBlock>
-      <ChartBlock
-        title="Cumulative net flow"
-        description="Deposits minus redemption requests, cumulated from the start of the snapshot."
-        timeRange={timeRange}
-      >
-        <LiquidStakingLineChart
-          projects={netFlow.projects}
-          colors={colors}
-          data={netFlow.data}
-          formatYAxisLabel={(value) => formatEth(value, 1)}
-          formatTooltipValue={(value) => formatEth(value, 2)}
-        />
-      </ChartBlock>
-      <ChartBlock
-        title="Time to exit"
-        description="Days from the last withdrawal request made each day to its finalization."
-        timeRange={timeRange}
-      >
-        <LiquidStakingLineChart
-          projects={exitDays.projects}
-          colors={colors}
-          data={exitDays.data}
-          labels={{ wbeth: 'wBETH (lock floor)' }}
+          data={exitCost.data}
           formatYAxisLabel={(value) => `${value.toFixed(0)}d`}
-          formatTooltipValue={(value) => `${value.toFixed(1)} days`}
+          formatTooltipValue={(value) => `${value.toFixed(1)} days of yield`}
         />
       </ChartBlock>
     </div>
@@ -140,117 +113,100 @@ export function DefiLiquidStakingCharts({
 }
 
 function ChartBlock({
-  className,
   title,
-  description,
+  info,
   timeRange,
   children,
 }: {
-  className?: string
   title: string
-  description: string
+  /** What the chart measures and where the data comes from. */
+  info: string
   timeRange: [number, number] | undefined
   children: ReactNode
 }) {
+  // Heading and chart sit on rows shared with the neighbouring block, so the
+  // two charts of a row line up whatever the length of their headings.
   return (
-    <div className={className}>
+    <div className="row-span-2 grid grid-cols-1 grid-rows-subgrid gap-y-0">
       <div className="mb-3">
-        <h2 className="font-bold text-lg md:text-xl">{title}</h2>
-        <p className="mt-1 text-secondary text-xs md:text-sm">{description}</p>
+        <div className="flex items-center gap-2">
+          <h2 className="font-bold text-lg md:text-xl">{title}</h2>
+          <Tooltip>
+            <TooltipTrigger>
+              <InfoIcon className="size-3.5 fill-blue-700" />
+            </TooltipTrigger>
+            <TooltipContent>{info}</TooltipContent>
+          </Tooltip>
+        </div>
         <ChartTimeRange timeRange={timeRange} />
       </div>
-      {children}
+      <div>{children}</div>
     </div>
   )
 }
 
+interface ChartSeries {
+  projects: DefiLiquidStakingChartProject[]
+  data: LiquidStakingChartPoint[]
+}
+
+const DISCOUNT_WINDOW = 7
+
 /**
- * One point per UTC month holding the median of each project's daily values,
- * with null days ignored and `transform` applied to the median.
+ * Days of staking yield a holder gives up to exit on each day, by the cheaper
+ * of two routes. Withdrawing with the protocol costs the days of the wait,
+ * because a queued withdrawal earns nothing. Selling on the market costs the
+ * discount to the oracle rate, expressed in days of the token's own yield.
+ * Rocket Pool has no queue: its burn is free while the burn buffer holds ETH
+ * and impossible while it is empty, which leaves the market.
  */
-function monthlyMedian(
-  {
-    projects,
-    data,
-  }: {
-    projects: DefiLiquidStakingChartProject[]
-    data: LiquidStakingChartPoint[]
-  },
-  transform: (value: number) => number,
-) {
-  const buckets = new Map<number, LiquidStakingChartPoint[]>()
-  for (const point of data) {
-    const date = new Date(point.timestamp * 1000)
-    const month = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1) / 1000
-    const bucket = buckets.get(month)
-    if (bucket) {
-      bucket.push(point)
-    } else {
-      buckets.set(month, [point])
+function getExitCost(
+  wait: ChartSeries,
+  premium: ChartSeries,
+  apr: ChartSeries,
+): ChartSeries {
+  const data = wait.data.map((point, index) => {
+    const cost: LiquidStakingChartPoint = { timestamp: point.timestamp }
+    for (const project of wait.projects) {
+      const noQueue = project.id === BURN_BUFFER_PROJECT
+      const waitDays =
+        point[project.id] ?? (noQueue ? Number.POSITIVE_INFINITY : null)
+      const discount = trailingMedian(premium.data, project.id, index)
+      const yearlyYield = apr.data[index]?.[project.id]
+      const marketDays =
+        discount !== null && yearlyYield !== null && yearlyYield !== undefined
+          ? yearlyYield > 0
+            ? (Math.max(0, -discount) * 365) / yearlyYield
+            : null
+          : null
+      const cheapest =
+        waitDays === null
+          ? null
+          : Math.min(waitDays, marketDays ?? Number.POSITIVE_INFINITY)
+      cost[project.id] =
+        cheapest === null || !Number.isFinite(cheapest) ? null : cheapest
     }
-  }
-  const monthly = [...buckets.entries()].map(([timestamp, points]) => {
-    const point: LiquidStakingChartPoint = { timestamp }
-    for (const project of projects) {
-      const values = points
-        .map((p) => p[project.id])
-        .filter((v): v is number => v !== null && v !== undefined)
-        .sort((a, b) => a - b)
-      const median = values[Math.floor(values.length / 2)]
-      point[project.id] = median === undefined ? null : transform(median)
-    }
-    return point
+    return cost
   })
-  return { projects, data: monthly }
+  return { projects: wait.projects, data }
 }
 
-const ethKey = (projectId: string) => `${projectId}:eth`
-
-/** Copies each project's value from `amounts` onto `shares` under `<id>:eth`. */
-function withEthAmounts(
-  shares: {
-    projects: DefiLiquidStakingChartProject[]
-    data: LiquidStakingChartPoint[]
-  },
-  amounts: {
-    projects: DefiLiquidStakingChartProject[]
-    data: LiquidStakingChartPoint[]
-  },
+/** Median of the last `DISCOUNT_WINDOW` values up to `index`, nulls skipped. */
+function trailingMedian(
+  data: LiquidStakingChartPoint[],
+  projectId: string,
+  index: number,
 ) {
-  const amountByTimestamp = new Map(
-    amounts.data.map((point) => [point.timestamp, point]),
-  )
-  return {
-    projects: shares.projects,
-    data: shares.data.map((point) => {
-      const amount = amountByTimestamp.get(point.timestamp)
-      const merged: LiquidStakingChartPoint = { ...point }
-      for (const project of shares.projects) {
-        merged[ethKey(project.id)] = amount?.[project.id] ?? null
-      }
-      return merged
-    }),
-  }
-}
-
-function formatMonth(timestamp: number) {
-  return new Date(timestamp * 1000).toLocaleDateString('en-US', {
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'UTC',
-  })
+  const values = data
+    .slice(Math.max(0, index - DISCOUNT_WINDOW + 1), index + 1)
+    .map((point) => point[projectId])
+    .filter((value): value is number => value !== null && value !== undefined)
+    .sort((a, b) => a - b)
+  return values[Math.floor(values.length / 2)] ?? null
 }
 
 function formatPercent(value: number, decimals: number) {
   return `${(value * 100).toFixed(decimals)}%`
-}
-
-function formatEth(value: number, decimals: number) {
-  const abs = Math.abs(value)
-  const sign = value < 0 ? '-' : ''
-  if (abs >= 1e6) return `${sign}${(abs / 1e6).toFixed(decimals)}M ETH`
-  if (abs >= 1e3) return `${sign}${(abs / 1e3).toFixed(0)}k ETH`
-  return `${sign}${abs.toFixed(0)} ETH`
 }
 
 export type { DefiLiquidStakingChartProject }

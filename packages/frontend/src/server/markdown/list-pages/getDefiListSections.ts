@@ -1,3 +1,7 @@
+import {
+  DEFI_SUMMARY_CATEGORIES,
+  filterDefiSummaryProjects,
+} from '~/server/features/defi/defiSummaryVisibility'
 import { ps } from '~/server/projects'
 import {
   firstSentence,
@@ -6,10 +10,13 @@ import {
 } from '../listPageMarkdown'
 
 export async function getDefiListSections(): Promise<LinkListSection[]> {
-  const projects = await ps.getProjects({
-    select: ['defiInfo'],
-    optional: ['display'],
-  })
+  const projects = filterDefiSummaryProjects(
+    await ps.getProjects({
+      select: ['defiInfo'],
+      optional: ['display'],
+    }),
+    DEFI_SUMMARY_CATEGORIES,
+  )
   return [
     {
       heading: 'DeFi protocols (/defi/projects/{slug})',
