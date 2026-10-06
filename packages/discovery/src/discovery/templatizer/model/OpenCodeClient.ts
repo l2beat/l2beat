@@ -11,12 +11,12 @@
  * stands in for opencode's own coding-agent system prompt. opencode merges
  * that file into every other config it finds rather than using it instead,
  * and a `"permission": {"bash": "allow"}` in the user's global config, or
- * in an `opencode.json` in any directory above the scratch one, brings
- * `bash` back into the request. So the global config directory is pointed
- * at an empty one (opencode installs its plugin package there, once per
- * run), the search for project configs is switched off, and the variables
- * that name other config sources are dropped; the login is kept, because
- * it lives in the data directory. `--pure` keeps user plugins
+ * in an `opencode.json` in any directory above the scratch one, or in
+ * `OPENCODE_PERMISSION`, brings `bash` back into the request. So the
+ * global config directory is pointed at an empty one (opencode installs
+ * its plugin package there, once per run), the search for project configs
+ * is switched off, and the variables that name or hold other config are
+ * dropped; the login is kept, because it lives in the data directory. `--pure` keeps user plugins
  * out and an environment flag keeps the user's `CLAUDE.md` out. A test runs
  * the installed opencode against a local endpoint and checks that the tool
  * list of the request is empty, and the event stream is checked for tool
@@ -270,6 +270,7 @@ function openCodeEnvironment(workDir: string): NodeJS.ProcessEnv {
   const {
     OPENCODE_CONFIG_CONTENT: _content,
     OPENCODE_CONFIG_DIR: _directory,
+    OPENCODE_PERMISSION: _permission,
     ...env
   } = process.env
   return {
