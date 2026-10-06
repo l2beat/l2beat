@@ -73,5 +73,6 @@ function makeSummary({
     chain: 'ethereum',
     formattedAmount: '0.1',
     token: 'ETH',
+    unit: 'depositor',
   }
 }

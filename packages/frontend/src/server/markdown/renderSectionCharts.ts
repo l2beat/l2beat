@@ -27,6 +27,7 @@ import type { ProjectSectionId } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
+import type { PrivacyAnonymitySetUnit } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSeries'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import type {
   TrackedTransaction,
@@ -157,30 +158,35 @@ export function renderThroughputSection(
   ])
 }
 
-/** The explanations around the two charts; the charts load in the browser. */
+/** The explanations around the charts; the charts load in the browser. */
 export function renderPrivacyAnonymitySetSection(
-  props: { id: ProjectSectionId; unit?: 'note' },
+  props: { id: ProjectSectionId; unit: PrivacyAnonymitySetUnit },
   level: number,
 ) {
   const days = ANONYMITY_SET_WINDOW_DAYS
+  const historicTitle = `${days} day historic anonymity set`
+
+  if (props.unit === 'note') {
+    return joinBlocks([
+      subsection(level, historicTitle, activeNoteAnonymitySetDescription(days)),
+      htmlPagePointer('The interactive charts are shown', props.id),
+    ])
+  }
+
   return joinBlocks([
     subsection(
       level,
-      `${days} day historic anonymity set`,
+      historicTitle,
       joinBlocks([
-        props.unit === 'note'
-          ? activeNoteAnonymitySetDescription(days)
-          : anonymitySetHistoricDescription(days),
-        props.unit === 'note' ? '' : ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
+        anonymitySetHistoricDescription(days),
+        ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
       ]),
     ),
-    props.unit === 'note'
-      ? ''
-      : subsection(
-          level,
-          'Estimated anonymity set by holding duration',
-          anonymitySetByHoldingDurationDescription(days),
-        ),
+    subsection(
+      level,
+      'Estimated anonymity set by holding duration',
+      anonymitySetByHoldingDurationDescription(days),
+    ),
     htmlPagePointer('The interactive charts are shown', props.id),
   ])
 }

@@ -1,21 +1,18 @@
-import type {
-  Database,
-  IndexerConfigurationRecord,
-  PrivacyAnonymitySetEventRecord,
-  PrivacyAnonymitySetSenderDayRecord,
-} from '@l2beat/database'
-import { UnixTime, unique } from '@l2beat/shared-pure'
+import type { Database, IndexerConfigurationRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import type { PrivacyProject } from '../types'
 import {
   ANONYMITY_SET_WINDOW_DAYS,
   calculateAnonymitySetHistory,
+  type PrivacyAnonymitySetRecords,
 } from './calculateAnonymitySets'
 import {
   getPrivacyAnonymitySetCoverage,
   type PrivacyAnonymitySetCoverage,
 } from './getPrivacyAnonymitySetCoverage'
+import { getPrivacyAnonymitySetRecords } from './getPrivacyAnonymitySetRecords'
 import {
   getPrivacyAnonymitySetSeries,
   type PrivacyAnonymitySetProject,
@@ -34,10 +31,9 @@ export type PrivacyAnonymitySetSummary =
       /** Labels of configured series excluded from the value while their history is indexed. */
       syncingLabels: string[]
       coverage?: PrivacyAnonymitySetCoverage
-      unit?: 'note'
     } & Pick<
       PrivacyAnonymitySetSeries,
-      'bucketType' | 'chain' | 'formattedAmount' | 'token'
+      'bucketType' | 'chain' | 'formattedAmount' | 'token' | 'unit'
     >)
   | {
       status: 'not-applicable'
@@ -61,29 +57,13 @@ export async function getPrivacyAnonymitySetSummaries(
 
   const db = getDb()
   const allSeries = [...seriesByProject.values()].flat()
-  const trackedProjectIds = unique(allSeries.map((item) => item.projectId))
   const cutoff = currentDay - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
 
-  const noteProjectIds = unique(
-    allSeries
-      .filter((item) => item.unit === 'note')
-      .map((item) => item.projectId),
-  )
-  const [configurations, rows, coverageByProject, noteEvents] =
-    await Promise.all([
-      getPrivacyAnonymitySetConfigurations(db, allSeries),
-      db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
-        trackedProjectIds,
-        cutoff,
-        currentDay,
-      ),
-      getCoverageByProject(db, projects, currentDay),
-      db.privacyAnonymitySetEvent.getNoteEventsByProjectIds(
-        noteProjectIds,
-        cutoff,
-        currentDay,
-      ),
-    ])
+  const [configurations, records, coverageByProject] = await Promise.all([
+    getPrivacyAnonymitySetConfigurations(db, allSeries),
+    getPrivacyAnonymitySetRecords(db, allSeries, cutoff, currentDay),
+    getCoverageByProject(db, projects, currentDay),
+  ])
 
   return new Map(
     projects.map((project) => [
@@ -92,10 +72,9 @@ export async function getPrivacyAnonymitySetSummaries(
         project,
         seriesByProject.get(project.id) ?? [],
         configurations,
-        rows,
+        records,
         currentDay,
         coverageByProject.get(project.id),
-        noteEvents,
       ),
     ]),
   )
@@ -105,10 +84,9 @@ export function getPrivacyAnonymitySetSummary(
   project: PrivacyAnonymitySetProject,
   series: PrivacyAnonymitySetSeries[],
   configurations: IndexerConfigurationRecord[],
-  rows: PrivacyAnonymitySetSenderDayRecord[],
+  records: PrivacyAnonymitySetRecords,
   currentDay: UnixTime,
   coverage?: PrivacyAnonymitySetCoverage,
-  noteEvents: PrivacyAnonymitySetEventRecord[] = [],
 ): PrivacyAnonymitySetSummary {
   const state = project.privacyInfo.anonymitySet
   if (state?.type === 'not-applicable') {
@@ -126,12 +104,9 @@ export function getPrivacyAnonymitySetSummary(
     configurations,
     currentDay,
   )
-  const [point] = calculateAnonymitySetHistory(
-    rows,
-    syncedSeries,
-    [currentDay],
-    noteEvents,
-  )
+  const [point] = calculateAnonymitySetHistory(records, syncedSeries, [
+    currentDay,
+  ])
   const largest = pickLargestSeries(syncedSeries, point?.slice(1) ?? [])
   if (largest === undefined) {
     return { status: 'syncing' }
@@ -147,7 +122,7 @@ export function getPrivacyAnonymitySetSummary(
     chain: largest.series.chain,
     formattedAmount: largest.series.formattedAmount,
     token: largest.series.token,
-    ...(largest.series.unit && { unit: largest.series.unit }),
+    unit: largest.series.unit,
   }
 }
 
@@ -218,7 +193,7 @@ function getMockSummaries(
             chain: series.chain,
             formattedAmount: series.formattedAmount,
             token: series.token,
-            ...(series.unit && { unit: series.unit }),
+            unit: series.unit,
           },
         ]
       }

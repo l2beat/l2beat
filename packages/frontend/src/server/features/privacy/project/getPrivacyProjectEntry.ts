@@ -179,7 +179,7 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (details.hasAnonymitySet) {
+  if (details.anonymitySetUnit !== undefined) {
     sections.push({
       type: 'PrivacyAnonymitySetSection',
       props: {

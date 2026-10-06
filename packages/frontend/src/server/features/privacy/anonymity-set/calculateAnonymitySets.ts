@@ -1,11 +1,12 @@
 import type {
-  PrivacyAnonymitySetEventRecord,
   PrivacyAnonymitySetSenderDayRecord,
+  PrivacyNoteRecord,
+  PrivacyNoteStatusChangeRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { PrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
 
-/** Length of the rolling distinct-depositor window, in UTC days. */
+/** Length of the rolling window, in UTC days. */
 export const ANONYMITY_SET_WINDOW_DAYS = 30
 
 export type PrivacyAnonymitySetHistoryPoint = [
@@ -18,16 +19,22 @@ export type PrivacyAnonymitySetHoldingDurationPoint = [
   ...values: number[],
 ]
 
+/** Everything the calculation reads; each unit uses only its own tables. */
+export interface PrivacyAnonymitySetRecords {
+  senderDays: PrivacyAnonymitySetSenderDayRecord[]
+  notes: PrivacyNoteRecord[]
+  noteStatusChanges: PrivacyNoteStatusChangeRecord[]
+}
+
 export function calculateAnonymitySetHistory(
-  rows: PrivacyAnonymitySetSenderDayRecord[],
+  records: PrivacyAnonymitySetRecords,
   series: PrivacyAnonymitySetSeries[],
   endpoints: number[],
-  noteEvents: PrivacyAnonymitySetEventRecord[] = [],
 ): PrivacyAnonymitySetHistoryPoint[] {
   const valuesBySeries = series.map((item) =>
     item.unit === 'note'
-      ? calculateActiveNoteHistory(noteEvents, item, endpoints)
-      : calculateSeriesHistory(rows, item, endpoints),
+      ? calculateActiveNoteHistory(records, item, endpoints)
+      : calculateSeriesHistory(records.senderDays, item, endpoints),
   )
 
   return endpoints.map((timestamp, index) => [
@@ -137,62 +144,78 @@ function calculateSeriesHistory(
   return result
 }
 
-/** Replays lifecycle events at each daily endpoint, without using future state. */
+interface WindowNote {
+  note: PrivacyNoteRecord
+  active: boolean
+}
+
+/**
+ * Replays deposits and status changes up to each endpoint, so a point never
+ * sees state from after its own day. A status change for a note that is not
+ * in the window cannot affect any later point, so it is ignored.
+ */
 function calculateActiveNoteHistory(
-  events: PrivacyAnonymitySetEventRecord[],
+  records: PrivacyAnonymitySetRecords,
   series: PrivacyAnonymitySetSeries,
   endpoints: number[],
 ): number[] {
-  const ordered = events
-    .filter((event) => event.configurationId === series.configurationId)
+  const threshold = BigInt(series.minimumAmount)
+  const deposits = records.notes
+    .filter((note) => note.configurationId === series.configurationId)
+    .toSorted((a, b) => a.timestamp - b.timestamp)
+  const statusChanges = records.noteStatusChanges
+    .filter((change) => change.configurationId === series.configurationId)
     .toSorted(
       (a, b) => a.blockNumber - b.blockNumber || a.logIndex - b.logIndex,
     )
-  const notes = new Map<
-    number,
-    {
-      depositedAt: number
-      amount: bigint
-      expiresAt: number
-      active: boolean
-    }
-  >()
-  const threshold = BigInt(series.minimumAmount)
-  let index = 0
 
-  return endpoints.map((endpoint) => {
-    while (index < ordered.length) {
-      const event = ordered[index]
-      if (event === undefined || event.timestamp >= endpoint) break
-      index++
-      const note = event.note
-      if (!note) continue
-      if (note.expiresAt !== null) {
-        notes.set(note.id, {
-          depositedAt: event.timestamp,
-          amount: event.amount,
-          expiresAt: note.expiresAt,
-          active: note.active,
-        })
-      } else {
-        const existing = notes.get(note.id)
-        if (existing) existing.active = note.active
-      }
+  const windowNotes = new Map<number, WindowNote>()
+  const result: number[] = []
+  let addIndex = 0
+  let statusIndex = 0
+  let removeIndex = 0
+
+  for (const endpoint of endpoints) {
+    while (addIndex < deposits.length) {
+      const note = deposits[addIndex]
+      if (note === undefined || note.timestamp >= endpoint) break
+
+      windowNotes.set(note.noteId, { note, active: true })
+      addIndex++
+    }
+
+    while (statusIndex < statusChanges.length) {
+      const change = statusChanges[statusIndex]
+      if (change === undefined || change.timestamp >= endpoint) break
+
+      const windowNote = windowNotes.get(change.noteId)
+      if (windowNote !== undefined) windowNote.active = change.active
+      statusIndex++
     }
 
     const windowStart = endpoint - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
-    let count = 0
-    for (const [id, note] of notes) {
-      if (note.depositedAt < windowStart) {
-        notes.delete(id)
-      } else if (
-        note.active &&
-        note.expiresAt >= endpoint &&
-        note.amount >= threshold
-      ) {
-        count++
-      }
+    while (removeIndex < addIndex) {
+      const note = deposits[removeIndex]
+      if (note === undefined || note.timestamp >= windowStart) break
+
+      windowNotes.delete(note.noteId)
+      removeIndex++
     }
-    return count
-  })
+
+    let count = 0
+    for (const windowNote of windowNotes.values()) {
+      if (isAnonymitySetNote(windowNote, threshold, endpoint)) count++
+    }
+    result.push(count)
+  }
+
+  return result
+}
+
+function isAnonymitySetNote(
+  { note, active }: WindowNote,
+  threshold: bigint,
+  endpoint: number,
+): boolean {
+  return active && note.amount >= threshold && note.expiresAt >= endpoint
 }

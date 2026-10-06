@@ -1,7 +1,3 @@
-import type {
-  PrivacyAnonymitySetEventRecord,
-  PrivacyAnonymitySetSenderDayRecord,
-} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import {
@@ -10,17 +6,21 @@ import {
   calculateAnonymitySetHoldingDuration,
   type PrivacyAnonymitySetHistoryPoint,
   type PrivacyAnonymitySetHoldingDurationPoint,
+  type PrivacyAnonymitySetRecords,
 } from './calculateAnonymitySets'
-import type { PrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
+import {
+  getPrivacyAnonymitySetUnit,
+  type PrivacyAnonymitySetSeries,
+} from './getPrivacyAnonymitySetSeries'
 
 export const MIN_HOLDING_DAYS = 7
 export const MAX_HOLDING_DAYS = 365
 export const HOLDING_DURATIONS = range(MIN_HOLDING_DAYS, MAX_HOLDING_DAYS + 1)
 
-export type FetchSenderDays = (
+export type FetchAnonymitySetRecords = (
   fromInclusive: UnixTime,
   toExclusive: UnixTime,
-) => Promise<PrivacyAnonymitySetSenderDayRecord[]>
+) => Promise<PrivacyAnonymitySetRecords>
 
 export interface AnonymitySetCharts {
   history: PrivacyAnonymitySetHistoryPoint[]
@@ -28,22 +28,19 @@ export interface AnonymitySetCharts {
 }
 
 /**
- * Loads sender days in pages of MAX_HOLDING_DAYS aligned to the last endpoint,
+ * Loads records in pages of MAX_HOLDING_DAYS aligned to the last endpoint,
  * so a project's full history is never held in memory at once. Every history
  * point depends only on the ANONYMITY_SET_WINDOW_DAYS before it, so each page
  * is fetched with that much overlap, and the last page is exactly the input
- * the holding-duration chart needs.
+ * the holding-duration chart needs. Notes have no holding duration: their
+ * withdrawals identify the original deposits.
  *
  * `endpoints` must be ascending daily timestamps.
  */
 export async function loadAnonymitySetCharts(
   series: PrivacyAnonymitySetSeries[],
   endpoints: UnixTime[],
-  fetchSenderDays: FetchSenderDays,
-  fetchNoteEvents?: (
-    from: UnixTime,
-    to: UnixTime,
-  ) => Promise<PrivacyAnonymitySetEventRecord[]>,
+  fetchRecords: FetchAnonymitySetRecords,
 ): Promise<AnonymitySetCharts> {
   const firstEndpoint = endpoints[0]
   const lastEndpoint = endpoints.at(-1)
@@ -51,15 +48,13 @@ export async function loadAnonymitySetCharts(
     return { history: [], holdingDuration: [] }
   }
 
+  const hasHoldingDuration = getPrivacyAnonymitySetUnit(series) !== 'note'
   const history: PrivacyAnonymitySetHistoryPoint[] = []
   let holdingDuration: PrivacyAnonymitySetHoldingDurationPoint[] = []
 
   for (const page of getPages(firstEndpoint, lastEndpoint)) {
     const from = UnixTime(page.start - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY)
-    const [rows, noteEvents] = await Promise.all([
-      fetchSenderDays(from, page.end),
-      fetchNoteEvents?.(from, page.end) ?? [],
-    ])
+    const records = await fetchRecords(from, page.end)
     const pageEndpoints = endpoints.filter(
       (endpoint) =>
         (endpoint > page.start ||
@@ -67,15 +62,12 @@ export async function loadAnonymitySetCharts(
         endpoint <= page.end,
     )
     history.push(
-      ...calculateAnonymitySetHistory(rows, series, pageEndpoints, noteEvents),
+      ...calculateAnonymitySetHistory(records, series, pageEndpoints),
     )
 
-    if (
-      page.end === lastEndpoint &&
-      !series.some((item) => item.unit === 'note')
-    ) {
+    if (page.end === lastEndpoint && hasHoldingDuration) {
       holdingDuration = calculateAnonymitySetHoldingDuration(
-        rows,
+        records.senderDays,
         series,
         lastEndpoint,
         HOLDING_DURATIONS,

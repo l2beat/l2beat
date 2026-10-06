@@ -33,7 +33,8 @@ import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import {
   getPrivacyAnonymitySetSeries,
-  hasPrivacyAnonymitySet,
+  getPrivacyAnonymitySetUnit,
+  type PrivacyAnonymitySetUnit,
 } from './anonymity-set/getPrivacyAnonymitySetSeries'
 import { getPrivacyProject } from './getPrivacyProjects'
 import type {
@@ -68,8 +69,8 @@ export interface PrivacyProjectDetails {
   exitWindow: PrivacyExitWindow
   adversaries: ProjectPrivacyAdversaries
   reproducibility: PrivacySummaryValue
-  hasAnonymitySet: boolean
-  anonymitySetUnit?: 'note'
+  /** Undefined when the project has no anonymity set. */
+  anonymitySetUnit: PrivacyAnonymitySetUnit | undefined
   hasTvl: boolean
   detailedDescription?: string
   riskSummary?: string
@@ -290,10 +291,9 @@ export async function getPrivacyProjectDetails(
     exitWindow: project.privacyInfo.exitWindow,
     adversaries: project.privacyInfo.adversaries,
     reproducibility: project.privacyInfo.reproducibility,
-    hasAnonymitySet: hasPrivacyAnonymitySet(project),
-    ...(getPrivacyAnonymitySetSeries(project).some(
-      (item) => item.unit === 'note',
-    ) && { anonymitySetUnit: 'note' as const }),
+    anonymitySetUnit: getPrivacyAnonymitySetUnit(
+      getPrivacyAnonymitySetSeries(project),
+    ),
     hasTvl: project.tvsConfig !== undefined,
     detailedDescription:
       project.privacyInfo.detailedDescription ??

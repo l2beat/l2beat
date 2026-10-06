@@ -8,6 +8,7 @@ import {
 import { expect, mockObject } from 'earl'
 import {
   getPrivacyAnonymitySetSeries,
+  getPrivacyAnonymitySetUnit,
   type PrivacyAnonymitySetProject,
 } from './getPrivacyAnonymitySetSeries'
 
@@ -36,6 +37,28 @@ describe(getPrivacyAnonymitySetSeries.name, () => {
     expect(series?.bucketType).toEqual('denomination')
     expect(series?.chain).toEqual('ethereum')
     expect(series?.token).toEqual('TOKEN')
+  })
+
+  it('counts depositors unless the config says otherwise', () => {
+    const [series] = getPrivacyAnonymitySetSeries(
+      makeProject({ decimals: 0, minimumAmount: '1' }),
+    )
+
+    expect(series?.unit).toEqual('depositor')
+  })
+})
+
+describe(getPrivacyAnonymitySetUnit.name, () => {
+  it('rejects series of mixed units, because the page copy describes one metric', () => {
+    // Derives a note series from a depositor one, since only the unit matters.
+    const [depositor] = getPrivacyAnonymitySetSeries(
+      makeProject({ decimals: 0, minimumAmount: '1' }),
+    )
+    const note = { ...depositor!, unit: 'note' as const }
+
+    expect(getPrivacyAnonymitySetUnit([])).toEqual(undefined)
+    expect(getPrivacyAnonymitySetUnit([note, note])).toEqual('note')
+    expect(() => getPrivacyAnonymitySetUnit([depositor!, note])).toThrow()
   })
 })
 

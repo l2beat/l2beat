@@ -1,8 +1,8 @@
 import type { ProjectPrivacyInfo, ProjectPrivacyToken } from '@l2beat/config'
 import type {
   IndexerConfigurationRecord,
-  PrivacyAnonymitySetEventRecord,
   PrivacyAnonymitySetSenderDayRecord,
+  PrivacyNoteRecord,
 } from '@l2beat/database'
 import {
   ChainSpecificAddress,
@@ -11,6 +11,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import type { PrivacyAnonymitySetRecords } from './calculateAnonymitySets'
 import {
   getPrivacyAnonymitySetSeries,
   type PrivacyAnonymitySetProject,
@@ -21,37 +22,35 @@ const CURRENT_DAY = UnixTime.fromDate(new Date('2026-09-01T00:00:00Z'))
 const YESTERDAY = UnixTime(CURRENT_DAY - UnixTime.DAY)
 
 describe(getPrivacyAnonymitySetSummary.name, () => {
-  it('marks zkapi series as note counts and reports eligible notes after sync', () => {
-    const token = makeToken('eth', 'ETH', `0x${'11'.repeat(20)}`, ['10'])
-    const bucket = token.buckets[0]!
-    bucket.deposit = {
-      event: bucket.deposit.event,
-      extractor: 'zkApiDeposit',
-      params: { weiPerUnit: '1000000000' },
-    }
-    const project = makeProject({ tokens: [token] })
+  it('marks note series as note counts and reports eligible notes after sync', () => {
+    const project = makeProject({
+      tokens: [
+        withNoteAnonymitySet(
+          makeToken('eth', 'ETH', `0x${'11'.repeat(20)}`, ['10']),
+        ),
+      ],
+    })
     const series = getPrivacyAnonymitySetSeries(project)
     expect(series[0]?.unit).toEqual('note')
     const id = series[0]!.configurationId
-    const events = [0, 1].map((noteId) =>
-      mockObject<PrivacyAnonymitySetEventRecord>({
+    const notes = [0, 1].map((noteId) =>
+      mockObject<PrivacyNoteRecord>({
         configurationId: id,
+        noteId,
         timestamp: YESTERDAY,
-        blockNumber: 1,
-        logIndex: noteId,
         amount: 10n,
-        note: { id: noteId, active: true, expiresAt: CURRENT_DAY },
+        expiresAt: CURRENT_DAY,
       }),
     )
+
     const result = getPrivacyAnonymitySetSummary(
       project,
       series,
       [configuration(id, CURRENT_DAY)],
-      [],
+      records({ notes }),
       CURRENT_DAY,
-      undefined,
-      events,
     )
+
     expect(result).toEqual({
       status: 'available',
       value: 2,
@@ -73,7 +72,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       project,
       getPrivacyAnonymitySetSeries(project),
       [],
-      [],
+      records(),
       CURRENT_DAY,
     )
 
@@ -90,7 +89,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       project,
       getPrivacyAnonymitySetSeries(project),
       [],
-      [],
+      records(),
       CURRENT_DAY,
     )
 
@@ -104,7 +103,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       project,
       [],
       [],
-      [],
+      records(),
       CURRENT_DAY,
     )
 
@@ -122,7 +121,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       project,
       series,
       configurations,
-      [senderDay('eth', 'a', 10n)],
+      records({ senderDays: [senderDay('eth', 'a', 10n)] }),
       CURRENT_DAY,
     )
 
@@ -147,7 +146,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       project,
       series,
       [configuration(ethConfigurationId, CURRENT_DAY)],
-      rows,
+      records({ senderDays: rows }),
       CURRENT_DAY,
     )
 
@@ -160,6 +159,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       chain: 'ethereum',
       formattedAmount: '1',
       token: 'ETH',
+      unit: 'depositor',
     })
   })
 
@@ -174,7 +174,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       project,
       series,
       configurations,
-      [senderDay('eth', 'a', 10n)],
+      records({ senderDays: [senderDay('eth', 'a', 10n)] }),
       CURRENT_DAY,
       { attributed: 8, total: 10 },
     )
@@ -189,6 +189,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       chain: 'ethereum',
       formattedAmount: '1',
       token: 'ETH',
+      unit: 'depositor',
     })
   })
 
@@ -203,7 +204,9 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       project,
       series,
       configurations,
-      [senderDay('eth', 'a', 10n), senderDay('eth', 'b', 10n)],
+      records({
+        senderDays: [senderDay('eth', 'a', 10n), senderDay('eth', 'b', 10n)],
+      }),
       CURRENT_DAY,
     )
 
@@ -216,6 +219,7 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
       chain: 'ethereum',
       formattedAmount: '1',
       token: 'ETH',
+      unit: 'depositor',
     })
   })
 })
@@ -275,6 +279,34 @@ function makeToken(
       },
     ],
   }
+}
+
+function withNoteAnonymitySet(token: ProjectPrivacyToken): ProjectPrivacyToken {
+  return {
+    ...token,
+    buckets: token.buckets.map((bucket) =>
+      bucket.anonymitySet === undefined
+        ? bucket
+        : {
+            ...bucket,
+            anonymitySet: {
+              unit: 'note',
+              minimumAmounts: bucket.anonymitySet.minimumAmounts,
+              notes: {
+                extractor: 'zkApiNote',
+                params: { weiPerUnit: '1000000000' },
+              },
+            },
+            deposit: bucket.deposit,
+          },
+    ),
+  }
+}
+
+function records(
+  overrides?: Partial<PrivacyAnonymitySetRecords>,
+): PrivacyAnonymitySetRecords {
+  return { senderDays: [], notes: [], noteStatusChanges: [], ...overrides }
 }
 
 function senderDay(

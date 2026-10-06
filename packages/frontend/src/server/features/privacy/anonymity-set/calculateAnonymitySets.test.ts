@@ -1,12 +1,14 @@
 import type {
-  PrivacyAnonymitySetEventRecord,
   PrivacyAnonymitySetSenderDayRecord,
+  PrivacyNoteRecord,
+  PrivacyNoteStatusChangeRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
   calculateAnonymitySetHistory,
   calculateAnonymitySetHoldingDuration,
+  type PrivacyAnonymitySetRecords,
 } from './calculateAnonymitySets'
 import type { PrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
 
@@ -14,56 +16,46 @@ const ENDPOINT = UnixTime.fromDate(new Date('2026-08-21T00:00:00Z'))
 
 describe(calculateAnonymitySetHistory.name, () => {
   it('counts active notes individually and applies deposit, amount and expiry boundaries', () => {
-    const events = [
-      noteEvent(0, ENDPOINT - 30 * UnixTime.DAY, true, ENDPOINT, 10n),
-      noteEvent(1, ENDPOINT - UnixTime.DAY, true, ENDPOINT + UnixTime.DAY, 10n),
-      noteEvent(2, ENDPOINT - UnixTime.DAY, true, ENDPOINT + UnixTime.DAY, 9n),
-      noteEvent(3, ENDPOINT - UnixTime.DAY, true, ENDPOINT - 1, 10n),
-      noteEvent(
-        4,
-        ENDPOINT - 30 * UnixTime.DAY - 1,
-        true,
-        ENDPOINT + UnixTime.DAY,
-        10n,
-      ),
-      noteEvent(5, ENDPOINT, true, ENDPOINT + UnixTime.DAY, 10n),
+    // Each note sits on one side of a boundary: window start (0 in, 4 out),
+    // threshold (1 in, 2 out), expiry (0 in, 3 out), endpoint (5 out), and
+    // another configuration (6 out).
+    const notes = [
+      note(0, ENDPOINT - 30 * UnixTime.DAY, 10n, ENDPOINT),
+      note(1, ENDPOINT - UnixTime.DAY, 10n, ENDPOINT + UnixTime.DAY),
+      note(2, ENDPOINT - UnixTime.DAY, 9n, ENDPOINT + UnixTime.DAY),
+      note(3, ENDPOINT - UnixTime.DAY, 10n, ENDPOINT - 1),
+      note(4, ENDPOINT - 30 * UnixTime.DAY - 1, 10n, ENDPOINT + UnixTime.DAY),
+      note(5, ENDPOINT, 10n, ENDPOINT + UnixTime.DAY),
       {
-        ...noteEvent(
-          6,
-          ENDPOINT - UnixTime.DAY,
-          true,
-          ENDPOINT + UnixTime.DAY,
-          10n,
-        ),
+        ...note(6, ENDPOINT - UnixTime.DAY, 10n, ENDPOINT + UnixTime.DAY),
         configurationId: 'other',
       },
     ]
+
     expect(
       calculateAnonymitySetHistory(
-        [],
+        records({ notes }),
         [series({ unit: 'note' })],
         [ENDPOINT],
-        events,
       ),
     ).toEqual([[ENDPOINT, 2]])
   })
 
   it('removes an escape immediately, restores a challenged note, and keeps past counts intact', () => {
-    const events = [
-      noteEvent(
-        0,
-        ENDPOINT - 3 * UnixTime.DAY,
-        true,
-        ENDPOINT + UnixTime.DAY,
-        10n,
-      ),
-      noteEvent(0, ENDPOINT - 2 * UnixTime.DAY, false),
-      noteEvent(0, ENDPOINT - UnixTime.DAY, true),
-      noteEvent(0, ENDPOINT, false),
+    // One note is escaped, challenged and closed on consecutive days; each
+    // endpoint must see only the changes made before it.
+    const notes = [
+      note(0, ENDPOINT - 3 * UnixTime.DAY, 10n, ENDPOINT + UnixTime.DAY),
     ]
+    const noteStatusChanges = [
+      statusChange(0, ENDPOINT - 2 * UnixTime.DAY, false),
+      statusChange(0, ENDPOINT - UnixTime.DAY, true),
+      statusChange(0, ENDPOINT, false),
+    ]
+
     expect(
       calculateAnonymitySetHistory(
-        [],
+        records({ notes, noteStatusChanges }),
         [series({ unit: 'note' })],
         [
           ENDPOINT - 2 * UnixTime.DAY,
@@ -71,7 +63,6 @@ describe(calculateAnonymitySetHistory.name, () => {
           ENDPOINT,
           ENDPOINT + 1,
         ],
-        events,
       ),
     ).toEqual([
       [ENDPOINT - 2 * UnixTime.DAY, 1],
@@ -81,35 +72,47 @@ describe(calculateAnonymitySetHistory.name, () => {
     ])
   })
 
-  it('orders state changes in the same block by log index and rolls them back by omission', () => {
-    const deposit = noteEvent(
-      0,
-      ENDPOINT - UnixTime.DAY,
-      true,
-      ENDPOINT + UnixTime.DAY,
-      10n,
-    )
-    const escapeEvent = {
-      ...noteEvent(0, ENDPOINT - UnixTime.DAY, false),
-      logIndex: 1,
-    }
-    const challenge = {
-      ...noteEvent(0, ENDPOINT - UnixTime.DAY, true),
-      logIndex: 2,
-    }
-    const calculate = (events: PrivacyAnonymitySetEventRecord[]) =>
+  it('orders status changes in the same block by log index and rolls them back by omission', () => {
+    // The changes are passed in reverse order; dropping the later ones
+    // emulates a reorg removing them.
+    const notes = [
+      note(0, ENDPOINT - UnixTime.DAY, 10n, ENDPOINT + UnixTime.DAY),
+    ]
+    const escapeStart = statusChange(0, ENDPOINT - UnixTime.DAY, false, 1)
+    const challenge = statusChange(0, ENDPOINT - UnixTime.DAY, true, 2)
+    const calculate = (noteStatusChanges: PrivacyNoteStatusChangeRecord[]) =>
       calculateAnonymitySetHistory(
-        [],
+        records({ notes, noteStatusChanges }),
         [series({ unit: 'note' })],
         [ENDPOINT],
-        events,
       )
-    expect(calculate([challenge, escapeEvent, deposit])).toEqual([
-      [ENDPOINT, 1],
-    ])
-    expect(calculate([escapeEvent, deposit])).toEqual([[ENDPOINT, 0]])
-    expect(calculate([deposit])).toEqual([[ENDPOINT, 1]])
+
+    expect(calculate([challenge, escapeStart])).toEqual([[ENDPOINT, 1]])
+    expect(calculate([escapeStart])).toEqual([[ENDPOINT, 0]])
+    expect(calculate([])).toEqual([[ENDPOINT, 1]])
   })
+
+  it('ignores status changes of unknown notes', () => {
+    const notes = [
+      note(0, ENDPOINT - UnixTime.DAY, 10n, ENDPOINT + UnixTime.DAY),
+    ]
+    const noteStatusChanges = [
+      statusChange(1, ENDPOINT - UnixTime.DAY, true),
+      {
+        ...statusChange(0, ENDPOINT - UnixTime.DAY, false),
+        configurationId: 'other',
+      },
+    ]
+
+    expect(
+      calculateAnonymitySetHistory(
+        records({ notes, noteStatusChanges }),
+        [series({ unit: 'note' })],
+        [ENDPOINT],
+      ),
+    ).toEqual([[ENDPOINT, 1]])
+  })
+
   it('uses inclusive threshold, distinct senders, and exact window boundaries', () => {
     const rows = [
       senderDay('alice', ENDPOINT - 30 * UnixTime.DAY, 10n),
@@ -119,7 +122,7 @@ describe(calculateAnonymitySetHistory.name, () => {
     ]
 
     const result = calculateAnonymitySetHistory(
-      rows,
+      records({ senderDays: rows }),
       [series({ minimumAmount: '10' })],
       [ENDPOINT],
     )
@@ -134,7 +137,7 @@ describe(calculateAnonymitySetHistory.name, () => {
     ]
 
     const result = calculateAnonymitySetHistory(
-      rows,
+      records({ senderDays: rows }),
       [series({ bucketId: 'bucket-a' }), series({ bucketId: 'bucket-b' })],
       [ENDPOINT],
     )
@@ -149,7 +152,7 @@ describe(calculateAnonymitySetHistory.name, () => {
     ]
 
     const result = calculateAnonymitySetHistory(
-      rows,
+      records({ senderDays: rows }),
       [series()],
       [ENDPOINT - UnixTime.DAY, ENDPOINT],
     )
@@ -195,6 +198,7 @@ function series(
     formattedAmount: '10',
     minimumAmount: '10',
     sinceTimestamp: ENDPOINT - 100 * UnixTime.DAY,
+    unit: 'depositor',
     ...overrides,
   }
 }
@@ -214,28 +218,43 @@ function senderDay(
   }
 }
 
-function noteEvent(
-  id: number,
+function records(
+  overrides?: Partial<PrivacyAnonymitySetRecords>,
+): PrivacyAnonymitySetRecords {
+  return { senderDays: [], notes: [], noteStatusChanges: [], ...overrides }
+}
+
+function note(
+  noteId: number,
   timestamp: number,
-  active: boolean,
-  expiresAt: number | null = null,
-  amount = 0n,
-): PrivacyAnonymitySetEventRecord {
+  amount: bigint,
+  expiresAt: number,
+): PrivacyNoteRecord {
   return {
     configurationId: 'configuration',
     projectId: 'project',
-    bucketId: 'bucket',
-    chain: 'ethereum',
+    noteId,
+    timestamp: UnixTime(timestamp),
+    txHash: '0x1234',
+    amount,
+    expiresAt: UnixTime(expiresAt),
+  }
+}
+
+function statusChange(
+  noteId: number,
+  timestamp: number,
+  active: boolean,
+  logIndex = 0,
+): PrivacyNoteStatusChangeRecord {
+  return {
+    configurationId: 'configuration',
+    projectId: 'project',
+    noteId,
     timestamp: UnixTime(timestamp),
     blockNumber: timestamp,
     txHash: '0x1234',
-    logIndex: 0,
-    sender: null,
-    amount,
-    note: {
-      id,
-      active,
-      expiresAt: expiresAt === null ? null : UnixTime(expiresAt),
-    },
+    logIndex,
+    active,
   }
 }

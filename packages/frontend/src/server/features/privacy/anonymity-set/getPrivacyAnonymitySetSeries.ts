@@ -1,11 +1,17 @@
-import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import {
+  createPrivacyAnonymitySetConfigurationId,
+  createPrivacyNoteConfigurationId,
+} from '@l2beat/shared'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { PrivacyProject } from '../types'
 
 export type PrivacyAnonymitySetProject = Pick<
   PrivacyProject,
   'id' | 'privacyInfo'
 >
+
+/** What one member of the anonymity set is: a funding address or an active note. */
+export type PrivacyAnonymitySetUnit = 'depositor' | 'note'
 
 export interface PrivacyAnonymitySetSeries {
   id: string
@@ -19,8 +25,7 @@ export interface PrivacyAnonymitySetSeries {
   formattedAmount: string
   minimumAmount: string
   sinceTimestamp: number
-  /** Counts active notes instead of distinct funding addresses. */
-  unit?: 'note'
+  unit: PrivacyAnonymitySetUnit
 }
 
 export function getPrivacyAnonymitySetSeries(
@@ -31,17 +36,28 @@ export function getPrivacyAnonymitySetSeries(
       if (bucket.anonymitySet === undefined) return []
 
       const minimumAmounts = bucket.anonymitySet.minimumAmounts
+      const unit = bucket.anonymitySet.unit ?? 'depositor'
       const chain = ChainSpecificAddress.longChain(bucket.address)
       const address = ChainSpecificAddress.address(bucket.address).toString()
-      const configurationId = createPrivacyAnonymitySetConfigurationId({
-        projectId: project.id,
-        bucketId: bucket.id,
-        chain,
-        address,
-        event: bucket.deposit.event,
-        extractor: bucket.deposit.extractor,
-        params: bucket.deposit.params,
-      })
+      const configurationId =
+        bucket.anonymitySet.unit === 'note'
+          ? createPrivacyNoteConfigurationId({
+              projectId: project.id,
+              bucketId: bucket.id,
+              chain,
+              address,
+              extractor: bucket.anonymitySet.notes.extractor,
+              params: bucket.anonymitySet.notes.params,
+            })
+          : createPrivacyAnonymitySetConfigurationId({
+              projectId: project.id,
+              bucketId: bucket.id,
+              chain,
+              address,
+              event: bucket.deposit.event,
+              extractor: bucket.deposit.extractor,
+              params: bucket.deposit.params,
+            })
 
       return minimumAmounts.map((minimumAmount) => {
         const formattedAmount = formatTokenAmount(
@@ -64,19 +80,26 @@ export function getPrivacyAnonymitySetSeries(
           formattedAmount,
           minimumAmount,
           sinceTimestamp: bucket.sinceTimestamp,
-          ...(bucket.deposit.extractor === 'zkApiDeposit' && {
-            unit: 'note' as const,
-          }),
+          unit,
         }
       })
     }),
   )
 }
 
-export function hasPrivacyAnonymitySet(
-  project: PrivacyAnonymitySetProject,
-): boolean {
-  return getPrivacyAnonymitySetSeries(project).length > 0
+/**
+ * The page copy and charts describe a single metric per project, so a project
+ * whose series count different things would be explained wrongly.
+ */
+export function getPrivacyAnonymitySetUnit(
+  series: PrivacyAnonymitySetSeries[],
+): PrivacyAnonymitySetUnit | undefined {
+  const unit = series[0]?.unit
+  assert(
+    series.every((item) => item.unit === unit),
+    'Anonymity set series of one project must share a unit',
+  )
+  return unit
 }
 
 function formatTokenAmount(amount: string, decimals: number): string {

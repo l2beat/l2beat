@@ -1,5 +1,6 @@
 import { formatNumberWithCommas } from '@l2beat/shared-pure'
 import type { PrivacyAnonymitySetCoverage } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetCoverage'
+import type { PrivacyAnonymitySetUnit } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSeries'
 
 /*
  * Text the project page sections show and their markdown versions repeat,
@@ -128,6 +129,15 @@ export function anonymitySetHistoricDescription(windowDays: number) {
 
 export const ANONYMITY_SET_LOOKS_BACKWARDS_NOTE =
   'The metric looks backwards: it counts deposits that already happened, including from addresses that have since withdrawn. Your real anonymity also depends on deposits made after yours, which cannot be known in advance.'
+
+export function historicAnonymitySetDescription(
+  unit: PrivacyAnonymitySetUnit,
+  windowDays: number,
+) {
+  return unit === 'note'
+    ? activeNoteAnonymitySetDescription(windowDays)
+    : anonymitySetHistoricDescription(windowDays)
+}
 
 export function activeNoteAnonymitySetDescription(windowDays: number) {
   return `Number of eligible active notes deposited during the previous ${windowDays} complete UTC days, measured at each day's boundary. Closed notes and pending escape withdrawals are excluded. A successful challenge restores a note. Notes must cover the displayed request budget with their original deposit and have an expiry at least as late as the boundary. This is an upper bound for API authorization anonymity: remaining balances are private, larger request budgets and traffic correlation can narrow the set, and multiple notes can belong to one user. Withdrawals identify their original deposits.`

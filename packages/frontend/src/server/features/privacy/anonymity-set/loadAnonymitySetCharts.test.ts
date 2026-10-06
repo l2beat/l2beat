@@ -1,6 +1,7 @@
 import type {
-  PrivacyAnonymitySetEventRecord,
   PrivacyAnonymitySetSenderDayRecord,
+  PrivacyNoteRecord,
+  PrivacyNoteStatusChangeRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
@@ -9,6 +10,7 @@ import {
   ANONYMITY_SET_WINDOW_DAYS,
   calculateAnonymitySetHistory,
   calculateAnonymitySetHoldingDuration,
+  type PrivacyAnonymitySetRecords,
 } from './calculateAnonymitySets'
 import type { PrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
 import {
@@ -26,47 +28,54 @@ const ENDPOINTS = range(SPAN_DAYS + 1).map((day) =>
 
 describe(loadAnonymitySetCharts.name, () => {
   it('replays note lifecycles across chart pages and omits the holding-duration estimate', async () => {
+    // One note per day, each closed ten days later, so every page boundary
+    // splits some deposit from its close.
     const series = [{ ...makeSeries('1'), unit: 'note' as const }]
-    const events = range(SPAN_DAYS).flatMap((day) => {
+    const notes = range(SPAN_DAYS).map((day) => {
       const timestamp = UnixTime(FIRST_DAY + day * UnixTime.DAY)
-      const deposit = mockObject<PrivacyAnonymitySetEventRecord>({
+      return mockObject<PrivacyNoteRecord>({
         configurationId: 'configuration',
+        noteId: day,
         timestamp,
-        blockNumber: day * 2,
-        logIndex: 0,
         amount: 1n,
-        note: {
-          id: day,
-          active: true,
-          expiresAt: UnixTime(timestamp + 31 * UnixTime.DAY),
-        },
+        expiresAt: UnixTime(timestamp + 31 * UnixTime.DAY),
       })
-      return [
-        deposit,
-        {
-          ...deposit,
-          timestamp: UnixTime(timestamp + 10 * UnixTime.DAY),
-          blockNumber: (day + 10) * 2 + 1,
-          amount: 0n,
-          note: { id: day, active: false, expiresAt: null },
-        },
-      ]
     })
+    const noteStatusChanges = range(SPAN_DAYS).map((day) =>
+      mockObject<PrivacyNoteStatusChangeRecord>({
+        configurationId: 'configuration',
+        noteId: day,
+        timestamp: UnixTime(FIRST_DAY + (day + 10) * UnixTime.DAY),
+        blockNumber: (day + 10) * 2 + 1,
+        logIndex: 0,
+        active: false,
+      }),
+    )
+    const isInRange =
+      (from: UnixTime, to: UnixTime) => (record: { timestamp: UnixTime }) =>
+        record.timestamp >= from && record.timestamp < to
+
     const result = await loadAnonymitySetCharts(
       series,
       ENDPOINTS,
-      async () => [],
       async (from, to) =>
-        events.filter(
-          (event) => event.timestamp >= from && event.timestamp < to,
-        ),
+        records({
+          notes: notes.filter(isInRange(from, to)),
+          noteStatusChanges: noteStatusChanges.filter(isInRange(from, to)),
+        }),
     )
+
     expect(result.history).toEqual(
-      calculateAnonymitySetHistory([], series, ENDPOINTS, events),
+      calculateAnonymitySetHistory(
+        records({ notes, noteStatusChanges }),
+        series,
+        ENDPOINTS,
+      ),
     )
     expect(result.history.at(-1)).toEqual([LAST_DAY, 10])
     expect(result.holdingDuration).toEqual([])
   })
+
   it('matches the unpaged calculation while bounding every fetch', async () => {
     const series = [makeSeries('1'), makeSeries('5')]
     const rows = makeRows()
@@ -77,12 +86,20 @@ describe(loadAnonymitySetCharts.name, () => {
       ENDPOINTS,
       async (from, to) => {
         fetches.push([from, to])
-        return rows.filter((row) => row.timestamp >= from && row.timestamp < to)
+        return records({
+          senderDays: rows.filter(
+            (row) => row.timestamp >= from && row.timestamp < to,
+          ),
+        })
       },
     )
 
     expect(result.history).toEqual(
-      calculateAnonymitySetHistory(rows, series, ENDPOINTS),
+      calculateAnonymitySetHistory(
+        records({ senderDays: rows }),
+        series,
+        ENDPOINTS,
+      ),
     )
     expect(result.holdingDuration).toEqual(
       calculateAnonymitySetHoldingDuration(
@@ -128,7 +145,14 @@ function makeSeries(minimumAmount: string): PrivacyAnonymitySetSeries {
     formattedAmount: minimumAmount,
     minimumAmount,
     sinceTimestamp: FIRST_DAY,
+    unit: 'depositor',
   }
+}
+
+function records(
+  overrides?: Partial<PrivacyAnonymitySetRecords>,
+): PrivacyAnonymitySetRecords {
+  return { senderDays: [], notes: [], noteStatusChanges: [], ...overrides }
 }
 
 /**

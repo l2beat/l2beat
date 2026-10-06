@@ -14,8 +14,10 @@ import {
   getPrivacyAnonymitySetCoverage,
   type PrivacyAnonymitySetCoverage,
 } from './anonymity-set/getPrivacyAnonymitySetCoverage'
+import { getPrivacyAnonymitySetRecords } from './anonymity-set/getPrivacyAnonymitySetRecords'
 import {
   getPrivacyAnonymitySetSeries,
+  getPrivacyAnonymitySetUnit,
   type PrivacyAnonymitySetProject,
   type PrivacyAnonymitySetSeries,
 } from './anonymity-set/getPrivacyAnonymitySetSeries'
@@ -124,23 +126,8 @@ async function getPrivacyAnonymitySetSnapshot(
     'day',
   )
   const [{ history, holdingDuration }, coverage] = await Promise.all([
-    loadAnonymitySetCharts(
-      syncedSeries,
-      historyEndpoints,
-      (from, to) =>
-        db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
-          [project.id],
-          from,
-          to,
-        ),
-      syncedSeries.some((item) => item.unit === 'note')
-        ? (from, to) =>
-            db.privacyAnonymitySetEvent.getNoteEventsByProjectIds(
-              [project.id],
-              from,
-              to,
-            )
-        : undefined,
+    loadAnonymitySetCharts(syncedSeries, historyEndpoints, (from, to) =>
+      getPrivacyAnonymitySetRecords(db, syncedSeries, from, to),
     ),
     getPrivacyAnonymitySetCoverage(db, project, currentDay),
   ])
@@ -242,18 +229,25 @@ function getMockResponse(
         Math.round((seriesIndex + 1) * 20 + index * 0.5),
       ),
     ]),
-    holdingDuration: HOLDING_DURATIONS.map((days) => {
-      return [
-        days,
-        ...series.map((_, seriesIndex) =>
-          Math.round((seriesIndex + 1) * days * 0.8),
-        ),
-      ]
-    }),
+    holdingDuration: getMockHoldingDuration(series),
     syncingLabels: [],
     ...(project.privacyInfo.anonymitySet?.type === 'partially-attributed' && {
       coverage: { attributed: 90, total: 100 },
     }),
     syncedUntil: endpoint,
   }
+}
+
+/** Like real mode, note projects have no holding-duration chart. */
+function getMockHoldingDuration(
+  series: PrivacyAnonymitySetSeries[],
+): PrivacyAnonymitySetHoldingDurationPoint[] {
+  if (getPrivacyAnonymitySetUnit(series) === 'note') return []
+
+  return HOLDING_DURATIONS.map((days) => [
+    days,
+    ...series.map((_, seriesIndex) =>
+      Math.round((seriesIndex + 1) * days * 0.8),
+    ),
+  ])
 }
