@@ -17,7 +17,7 @@ Both files come from the audit dataset, pinned to one dataset commit.
 - `audit-index.json`: where audited code lives and who audited it.
   - `reports[id]`: `collections`, `title`, `auditor`, `date`.
   - `repositories[repository][commit]`: one audited snapshot. `timestamp` is the commit time in unix seconds, `files` maps a path to an object id, `audits[report][path]` lists the paths a report scoped (a file or a directory). A file is audited by every report whose scoped path is the file or a directory above it.
-- `audit-objects.json.zst`: zstd-compressed JSON from object id to file contents. An object id is the first 12 hex characters of the file's git blob id, so contents are checked against their id when loaded.
+- `audit-objects.json.zst`: zstd-compressed JSON from object id to file contents. The dataset stores audited files formatted with `forge fmt`; an object id is the first 12 hex characters of the git blob id of those stored contents, so contents are checked against their id when loaded. Files that do not parse as Solidity (zkSync's templated `Constants.sol`) are skipped.
 
 ## Coverage units
 
@@ -27,7 +27,7 @@ Not covered yet: file-level structs, enums, user-defined value types, constants,
 
 ## Matching
 
-Audited units are deduplicated by body and the import aliases it uses. Import aliases are compared as the deployed source writes them. Flattening turns `import { GnosisSafe as Safe }` into `GnosisSafe`, so an audited unit's aliases are first resolved to the names they import, then those names are renamed to the aliases of the verified file declaring the deployed unit. For a deployed unit:
+Audited units are deduplicated by body and the import aliases it uses. Since audited code is formatted and deployed code is not, the diff also ignores what `forge fmt` rewrites: `byte` for `bytes1` and underscores in hex literals. Import aliases are compared as the deployed source writes them. Flattening turns `import { GnosisSafe as Safe }` into `GnosisSafe`, so an audited unit's aliases are first resolved to the names they import, then those names are renamed to the aliases of the verified file declaring the deployed unit. For a deployed unit:
 
 1. Same name first. Every audited unit with the deployed name is diffed with the Solidity diff, which ignores formatting, comments, revert reasons and similar noise. `abstract` and plain contracts are paired as if they had the same kind. A candidate needs at least 0.5 similarity over all lines.
 2. Only if nothing matched by name and the unit has at least 10 lines: the 5 audited units with another name that share the most normalized lines, weighted by rarity, are diffed after renaming them to the deployed name. They must be audited in the project's own collection or a shared library (`_libs/...`): across projects, similar code under another name is usually a different program with the same structure, like two zk verifiers. A candidate needs at least 0.65 similarity over code lines; comments make unrelated interfaces look alike.
@@ -63,4 +63,4 @@ type Unit = {
 }
 ```
 
-No source text is stored. The deployed source is the flat source of the address, checked against its sha256; the audited source is `https://raw.githubusercontent.com/<repository>/<commit>/<path>` (for a gist `gist/<owner>/<id>`: `https://gist.githubusercontent.com/<owner>/<id>/raw/<commit>/<path>`). A diff is drawn by walking the unit's deployed lines in order, marking those inside `added`, and placing each `removed` group of audited lines before its deployed line.
+No source text is stored. The deployed source is the flat source of the address, checked against its sha256; the audited source is the object's contents in the bundle of the dataset commit. Audited line numbers point into those formatted contents, not into the upstream file at `<repository>/<commit>/<path>`. A diff is drawn by walking the unit's deployed lines in order, marking those inside `added`, and placing each `removed` group of audited lines before its deployed line.
