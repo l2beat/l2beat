@@ -28,6 +28,11 @@ export async function auditCoverageOfProject(
   project: string,
   inputs: AuditCoverageInputs,
   getDeployedSource: GetDeployedSource,
+  onProgress: (
+    address: ChainSpecificAddress,
+    index: number,
+    count: number,
+  ) => void,
 ): Promise<AuditCoverage> {
   const discovery = new ConfigReader(getDiscoveryPaths().discovery)
   const discovered = discovery.readDiscovery(project)
@@ -35,7 +40,9 @@ export async function auditCoverageOfProject(
   const flats: Record<string, [string, number][]> = {}
   const contracts: Record<string, string> = {}
   const auditedFiles = new Map<string, AuditedFile>()
-  for (const address of codeAddresses(discovered)) {
+  const addresses = codeAddresses(discovered)
+  for (const [i, address] of addresses.entries()) {
+    onProgress(address, i, addresses.length)
     const source = await getDeployedSource(address)
     if (source.kind !== 'flat') {
       contracts[address] = source.kind

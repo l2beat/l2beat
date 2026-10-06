@@ -1,4 +1,5 @@
-import { formatJson, UnixTime } from '@l2beat/shared-pure'
+import { asciiProgressBar, formatJson, UnixTime } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { command, option, positional, string } from 'cmd-ts'
 import { readFileSync, writeFileSync } from 'fs'
 import type { AuditCoverage as Coverage } from '../implementations/audit-coverage/AuditCoverage'
@@ -7,6 +8,7 @@ import { AuditIndex } from '../implementations/audit-coverage/AuditIndex'
 import { parseAuditObjects } from '../implementations/audit-coverage/AuditObjects'
 import { auditCoverageOfProject } from '../implementations/audit-coverage/auditCoverageOfProject'
 import { deployedSourceFromCache } from '../implementations/audit-coverage/deployedSource'
+import { createCliLogger } from '../implementations/common/CliLogger'
 import { File } from './types'
 
 export const AuditCoverage = command({
@@ -33,22 +35,42 @@ export const AuditCoverage = command({
     output: option({ type: string, long: 'output', short: 'o' }),
   },
   handler: async (args) => {
+    const cli = createCliLogger({ output: process.stdout, quiet: false })
+    const loading = cli.status()
+    loading.update('Reading audit index and objects')
     const index = AuditIndex.parse(JSON.parse(readFileSync(args.index, 'utf8')))
     const objects = parseAuditObjects(readFileSync(args.objects), index)
+    const code = buildAuditedCode(index, objects, (split, count) =>
+      loading.update(progress(split, count, 'Splitting audited files')),
+    )
+    loading.done(
+      `Indexed ${code.declarations.length} audited units from ${objects.size} files`,
+    )
+
+    const covering = cli.status()
     const coverage = await auditCoverageOfProject(
       args.project,
       {
         index,
-        code: buildAuditedCode(index, objects),
+        code,
         datasetCommit: args.datasetCommit,
         generatedAt: UnixTime.now(),
       },
       deployedSourceFromCache(),
+      (address, covered, count) =>
+        covering.update(progress(covered, count, `Covering ${address}`)),
     )
+    covering.done(summary(coverage))
     writeFileSync(args.output, formatJson(coverage))
-    console.log(summary(coverage))
+    cli.log(`Wrote ${args.output}`)
   },
 })
+
+function progress(done: number, count: number, status: string): string {
+  const bar = chalk.cyan(asciiProgressBar(done, count))
+  const counter = `[${(done + 1).toString().padStart(count.toString().length)}/${count}]`
+  return `${bar} ${counter} ${status}`
+}
 
 function summary(coverage: Coverage): string {
   let lines = 0

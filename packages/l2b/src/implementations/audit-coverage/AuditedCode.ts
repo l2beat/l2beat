@@ -47,8 +47,12 @@ const SHARED_COLLECTION_PREFIX = '_libs/'
 export function buildAuditedCode(
   index: AuditIndex,
   objects: AuditObjects,
+  onProgress: (split: number, count: number) => void,
 ): AuditedCode {
-  const { declarations, declarationsByObject } = collectDeclarations(objects)
+  const { declarations, declarationsByObject } = collectDeclarations(
+    objects,
+    onProgress,
+  )
   return {
     declarations,
     declarationsByObject,
@@ -119,12 +123,16 @@ function isAuditedFor(
   )
 }
 
-function collectDeclarations(objects: AuditObjects) {
+function collectDeclarations(
+  objects: AuditObjects,
+  onProgress: (split: number, count: number) => void,
+) {
   const declarations: AuditedDeclaration[] = []
   const declarationsByObject = new Map<string, Map<string, Declaration>>()
   const byKey = new Map<string, AuditedDeclaration>()
   const sorted = [...objects].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
-  for (const [object, source] of sorted) {
+  for (const [i, [object, source]] of sorted.entries()) {
+    onProgress(i, sorted.length)
     const split = splitSource(source)
     declarationsByObject.set(object, split.declarations)
     for (const [name, { kind, body }] of split.declarations) {
