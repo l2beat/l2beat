@@ -112,7 +112,7 @@
       "news": [
         {
           "title": "EigenDA Captures 98% of L2 Blobspace Usage",
-          "content": "Gajesh [posted](https://x.com/gajesh/status/2015945766741880885) that EigenDA currently accounts for roughly 98% of L2 blobspace usage, overtaking Ethereum-native blobs as the dominant source of data availability for rollups. This reflects how quickly EigenLayer’s EigenDA has become a core infrastructure layer for scaling ecosystems, optimizing blob costs, and throughput.\n\nThis trend is also observable through public analytics dashboards such as [L2BEAT](https://l2beat.com), where blobspace usage across data availability providers can be monitored directly."
+          "content": "Gajesh [posted](https://x.com/gajesh/status/2015945766741880885) that EigenDA currently accounts for roughly 98% of L2 blobspace usage, overtaking Ethereum-native blobs as the dominant source of data availability for rollups. This reflects how quickly EigenLayer’s EigenDA has become a core infrastructure layer for scaling ecosystems, optimizing blob costs, and throughput.\n\nThis trend is also observable through public analytics dashboards such as [L2BEAT](https://l2beat.com/layer2s/risk/data-availability), where the data each L2 posts to its data availability layer can be monitored directly."
         },
         {
           "title": "How EigenAI Makes AI Inference Deterministic and Verifiable",

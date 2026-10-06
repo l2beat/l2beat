@@ -84,7 +84,7 @@ This is the first stage, where a block containing blob data is irreversibly comm
 
 ### 2. Finality on the Settlement Layer (Blobstream)
 
-For a L2 on Ethereum to use the blob data, it needs proof on Ethereum that the data was published to Celestia. This is the role of the [Blobstream bridge](https://l2beat.com/data-availability/projects/celestia/blobstream). The original version of Blobstream relied on Celestia validators re-signing data roots for the L1. The new generation of the bridge, such as [`sp1-blobstream`](https://github.com/succinctlabs/sp1-blobstream), uses ZK proofs to create a more efficient and trust-minimized on-chain light client. You can read more in the [SP1 Blobstream documentation](https://succinctlabs.github.io/sp1-blobstream/).
+For a L2 on Ethereum to use the blob data, it needs proof on Ethereum that the data was published to Celestia. This is the role of the [Blobstream bridge](https://docs.celestia.org/learn/blobstream). The original version of Blobstream relied on Celestia validators re-signing data roots for the L1. The new generation of the bridge, such as [`sp1-blobstream`](https://github.com/succinctlabs/sp1-blobstream), uses ZK proofs to create a more efficient and trust-minimized on-chain light client. You can read more in the [SP1 Blobstream documentation](https://succinctlabs.github.io/sp1-blobstream/).
 
 The process for the ZK-powered Blobstream is as follows:
 
