@@ -106,7 +106,7 @@ describe(readmeReferenceFor.name, () => {
 })
 
 describe(editOperatorsOf.name, () => {
-  it('lists the operator of every nested program', () => {
+  it('lists the operator of every nested program, not the path of a set or the key of a shape', () => {
     expect(
       editOperatorsOf([
         'pipe',
@@ -115,6 +115,16 @@ describe(editOperatorsOf.name, () => {
       ]),
     ).toEqual(['pipe', 'map', 'shape', 'format'])
     expect(editOperatorsOf(['get', 'owner'])).toEqual(['get'])
+    expect(
+      editOperatorsOf([
+        'set',
+        ['remoteChainConfig', 'remoteChainSelector'],
+        ['get', 'selector'],
+      ]),
+    ).toEqual(['set', 'get'])
+    expect(
+      editOperatorsOf(['shape', 'a', ['name', ['format', 'FormatSeconds']]]),
+    ).toEqual(['shape', 'format'])
     expect(editOperatorsOf(undefined)).toEqual([])
     expect(editOperatorsOf('x')).toEqual([])
   })
