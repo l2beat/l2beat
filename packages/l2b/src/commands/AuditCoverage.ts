@@ -1,7 +1,9 @@
+import { getDiscoveryPaths } from '@l2beat/discovery'
 import { asciiProgressBar, formatJson, UnixTime } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { command, option, positional, string } from 'cmd-ts'
+import { command, option, optional, positional, string } from 'cmd-ts'
 import { readFileSync, writeFileSync } from 'fs'
+import path from 'path'
 import type { AuditCoverage as Coverage } from '../implementations/audit-coverage/AuditCoverage'
 import { buildAuditedCode } from '../implementations/audit-coverage/AuditedCode'
 import { AuditIndex } from '../implementations/audit-coverage/AuditIndex'
@@ -32,7 +34,12 @@ export const AuditCoverage = command({
       long: 'dataset-commit',
       description: 'audit dataset commit both files come from',
     }),
-    output: option({ type: string, long: 'output', short: 'o' }),
+    output: option({
+      type: optional(string),
+      long: 'output',
+      short: 'o',
+      description: 'defaults to audit-coverage.json in the project directory',
+    }),
   },
   handler: async (args) => {
     const cli = createCliLogger({ output: process.stdout, quiet: false })
@@ -61,8 +68,15 @@ export const AuditCoverage = command({
         covering.update(progress(covered, count, `Covering ${address}`)),
     )
     covering.done(summary(coverage))
-    writeFileSync(args.output, formatJson(coverage))
-    cli.log(`Wrote ${args.output}`)
+    const output =
+      args.output ??
+      path.join(
+        getDiscoveryPaths().discovery,
+        args.project,
+        'audit-coverage.json',
+      )
+    writeFileSync(output, formatJson(coverage))
+    cli.log(`Wrote ${output}`)
   },
 })
 
