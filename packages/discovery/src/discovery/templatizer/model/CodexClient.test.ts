@@ -281,6 +281,15 @@ describe(CodexClient.name, () => {
     )
   })
 
+  it('refuses a turn whose stream ends without turn.completed, even with a message and a clean exit', async () => {
+    fs.writeFileSync(eventsFile, cleanTurn.split('\n').slice(0, 3).join('\n'))
+    const client = new CodexClient({ binary, codexHome: directory })
+    await expect(client.start({ prompt: 'p', schema: {} })).toBeRejectedWith(
+      CodexTurnError,
+      /codex ended without turn\.completed/,
+    )
+  })
+
   it('takes the answer of a turn that reported an error and then completed, as after a reconnect', async () => {
     fs.writeFileSync(
       eventsFile,
