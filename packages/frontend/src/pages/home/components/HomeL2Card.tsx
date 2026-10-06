@@ -7,8 +7,8 @@ import { useMemo } from 'react'
 import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
 import type { HomeTopL2Project } from '../getHomeData'
 import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
-import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
-import { HomeSparkline } from './charts/HomeSparkline'
+import type { HomeKpiChartDataPoint } from './charts/HomeKpiChart'
+import { HomeKpiChart } from './charts/HomeKpiChart'
 import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
 import {
@@ -34,7 +34,7 @@ export function HomeL2Card({
   projectCount,
   className,
 }: Props) {
-  const tvsChartData = useMemo<HomeSparklineDataPoint[]>(
+  const tvsChartData = useMemo<HomeKpiChartDataPoint[]>(
     () =>
       charts.tvs.chart.map(([timestamp, rollups, validiumsAndOptimiums]) => {
         const hasAny = rollups !== null || validiumsAndOptimiums !== null
@@ -47,7 +47,7 @@ export function HomeL2Card({
     [charts.tvs.chart],
   )
 
-  const activityChartData = useMemo<HomeSparklineDataPoint[]>(
+  const activityChartData = useMemo<HomeKpiChartDataPoint[]>(
     () =>
       charts.activity.chart.map(([timestamp, rollupsUops, vAndOUops]) => {
         const hasAny = rollupsUops !== null || vAndOUops !== null
@@ -82,7 +82,7 @@ export function HomeL2Card({
           }
           change={charts.tvs.change}
           chart={
-            <HomeSparkline
+            <HomeKpiChart
               className={HOME_CHART_HEIGHT_CLASS}
               data={tvsChartData}
               tooltipLabel="Value secured"
@@ -97,7 +97,7 @@ export function HomeL2Card({
           }
           change={charts.activity.change}
           chart={
-            <HomeSparkline
+            <HomeKpiChart
               className={HOME_CHART_HEIGHT_CLASS}
               data={activityChartData}
               tooltipLabel="UOPS"

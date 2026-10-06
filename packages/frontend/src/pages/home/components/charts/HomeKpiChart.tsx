@@ -1,13 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useId, useMemo } from 'react'
-import {
-  Area,
-  AreaChart,
-  ReferenceDot,
-  ReferenceLine,
-  XAxis,
-  YAxis,
-} from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type {
   ChartMeta,
   CustomChartTooltipProps,
@@ -18,12 +11,15 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { PinkFillGradientDef } from '~/components/core/chart/defs/PinkGradientDef'
+import { getXAxisProps } from '~/components/core/chart/utils/getXAxisProps'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { cn } from '~/utils/cn'
 import { formatRange, formatTimestamp } from '~/utils/dates'
 
-export interface HomeSparklineDataPoint {
+export interface HomeKpiChartDataPoint {
   timestamp: number
   value: number | null
   tvsBreakdown?: {
@@ -33,7 +29,7 @@ export interface HomeSparklineDataPoint {
 }
 
 interface Props {
-  data: HomeSparklineDataPoint[]
+  data: HomeKpiChartDataPoint[]
   tooltipLabel: string
   formatValue: (value: number) => string
   /**
@@ -44,29 +40,32 @@ interface Props {
   className?: string
 }
 
-/** Every home sparkline shares one colour, so the cards read as a set. */
+/** Every home chart shares one colour, so the cards read as a set. */
 const STROKE = 'var(--chart-pink)'
 
 /**
  * ChartContainer has fixed heights (114px at its smallest), both on its
  * settled-size box and on the recharts wrapper. Filling an absolutely
- * positioned box instead lets the sparkline take its wrapper's height, and
- * keeps the svg from ever pushing that wrapper taller. The container also
- * pins series strokes to 1.75px; a sparkline wants a finer one.
+ * positioned box instead lets the chart take its wrapper's height, and keeps
+ * the svg from ever pushing that wrapper taller.
  */
 const FILL_HEIGHT_CLASS = cn(
   'absolute inset-0 [&>div]:h-full',
   '[&>div>div:first-child]:h-full! [&>div>div:first-child]:min-h-0!',
   '[&_.recharts-wrapper]:aspect-auto! [&_.recharts-wrapper]:h-full! [&_.recharts-wrapper]:min-h-0!',
-  '[&_.recharts-area-curve]:stroke-[1.5px]!',
+)
+
+/** Axis labels at the size the small charts elsewhere on the site use. */
+const TICK_SIZE_CLASS = cn(
+  '[&_.recharts-cartesian-axis-tick-label_text]:text-2xs!',
+  '[&_.recharts-cartesian-axis-tick-label_text]:font-medium!',
 )
 
 /**
- * A chart reduced to its line and a soft fill: no axes, a hairline at the
- * period's high and low with their values, a dashed line where it started
- * and a dot on the latest value.
+ * A KPI's last year, drawn like every other chart on the site (gridlines,
+ * values on the y-axis, months on the x-axis) at card size.
  */
-export function HomeSparkline({
+export function HomeKpiChart({
   data: dailyData,
   tooltipLabel,
   formatValue,
@@ -78,10 +77,18 @@ export function HomeSparkline({
     () => (weeklyAverage ? toWeeklyAverages(dailyData) : dailyData),
     [dailyData, weeklyAverage],
   )
-  const domain = useMemo(() => getDomain(data), [data])
-  const first = useMemo(() => data.find((d) => d.value !== null), [data])
-  const last = useMemo(() => data.findLast((d) => d.value !== null), [data])
-  const range = useMemo(() => getRange(data), [data])
+  // Month ticks come from the daily dates: weekly buckets rarely start on the
+  // 1st, so a categorical axis over them would have no ticks at all.
+  const xAxis = useMemo(
+    () => ({
+      ...getXAxisProps(dailyData),
+      type: 'number' as const,
+      domain: ['dataMin', 'dataMax'],
+      height: 18,
+      tickMargin: 3,
+    }),
+    [dailyData],
+  )
   const meta = useMemo<ChartMeta>(
     () => ({
       value: {
@@ -94,8 +101,8 @@ export function HomeSparkline({
   )
 
   return (
-    <div className={cn('relative h-24', className)}>
-      <div className={FILL_HEIGHT_CLASS}>
+    <div className={cn('relative h-40', className)}>
+      <div className={cn(FILL_HEIGHT_CLASS, TICK_SIZE_CLASS)}>
         <ChartContainer
           meta={meta}
           data={data}
@@ -106,51 +113,11 @@ export function HomeSparkline({
           <AreaChart
             responsive
             data={data}
-            // Room for the end dot, which sits on the last point at the edge,
-            // and under the plot for the low label.
-            margin={{ top: 6, right: 6, bottom: LOW_LABEL_HEIGHT, left: 0 }}
+            margin={{ top: 14, right: 1, bottom: 0, left: 1 }}
           >
             <defs>
-              <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={STROKE} stopOpacity={0.12} />
-                <stop offset="100%" stopColor={STROKE} stopOpacity={0} />
-              </linearGradient>
+              <PinkFillGradientDef id={fillId} />
             </defs>
-            <XAxis dataKey="timestamp" hide />
-            <YAxis hide domain={domain} />
-            {/* Where the period started, so the change beside the number
-                shows in the line's shape. */}
-            {first && first.value !== null && (
-              <ReferenceLine
-                y={first.value}
-                stroke="var(--divider)"
-                strokeOpacity={0.7}
-                strokeDasharray="2 3"
-                ifOverflow="extendDomain"
-                zIndex={BEHIND_SERIES}
-              />
-            )}
-            {range &&
-              (['max', 'min'] as const).map((key) => (
-                <ReferenceLine
-                  key={key}
-                  y={range[key].value}
-                  stroke="var(--divider)"
-                  // Softer than the page's hairlines: a reference, not a frame.
-                  strokeOpacity={0.5}
-                  zIndex={BEHIND_SERIES}
-                  // On the side away from the extreme itself, clear of the line.
-                  label={{
-                    value: formatValue(range[key].value),
-                    position: range[key].early
-                      ? 'insideTopRight'
-                      : 'insideTopLeft',
-                    fontSize: 10,
-                    fill: 'var(--secondary)',
-                    fillOpacity: 0.7,
-                  }}
-                />
-              ))}
             <Area
               dataKey="value"
               // A weekly series has few enough points to show its corners.
@@ -158,24 +125,21 @@ export function HomeSparkline({
               stroke={STROKE}
               fill={`url(#${fillId})`}
               fillOpacity={1}
-              baseValue="dataMin"
               dot={false}
               isAnimationActive={false}
               connectNulls={false}
-              activeDot={{ r: 3.5, stroke: 'none', fill: STROKE }}
+              activeDot={{ r: 3, stroke: '#fff', strokeWidth: 1, fill: STROKE }}
             />
-            {last && last.value !== null && (
-              <ReferenceDot
-                x={last.timestamp}
-                y={last.value}
-                r={3}
-                fill={STROKE}
-                stroke="none"
-              />
-            )}
+            <ChartCommonComponents
+              data={data}
+              isLoading={false}
+              xAxis={xAxis}
+              yAxis={{ tickFormatter: formatValue, dy: -8 }}
+              syncedUntil={undefined}
+            />
             <ChartTooltip
               content={
-                <SparklineTooltip
+                <KpiChartTooltip
                   formatValue={formatValue}
                   weeklyAverage={weeklyAverage}
                 />
@@ -189,21 +153,15 @@ export function HomeSparkline({
   )
 }
 
-/** Recharts' grid layer: guide lines go under the series, not across it. */
-const BEHIND_SERIES = -100
-
-/** The low label hangs under the plot, in a margin this tall. */
-const LOW_LABEL_HEIGHT = 16
-
 /**
  * Seven-day buckets counted back from the latest day, so the last point is
  * the latest full week. Each is stamped with its first day and holds the mean
  * of the days that have data.
  */
 function toWeeklyAverages(
-  data: HomeSparklineDataPoint[],
-): HomeSparklineDataPoint[] {
-  const weeks: HomeSparklineDataPoint[] = []
+  data: HomeKpiChartDataPoint[],
+): HomeKpiChartDataPoint[] {
+  const weeks: HomeKpiChartDataPoint[] = []
   for (let end = data.length; end > 0; end -= 7) {
     const days = data.slice(Math.max(0, end - 7), end)
     const [firstDay] = days
@@ -220,44 +178,7 @@ function toWeeklyAverages(
   return weeks.reverse()
 }
 
-/** The extremes, and whether each falls in the first half of the period. */
-function getRange(data: HomeSparklineDataPoint[]) {
-  let min: { value: number; early: boolean } | undefined
-  let max: { value: number; early: boolean } | undefined
-  data.forEach((d, index) => {
-    if (d.value === null) return
-    const early = index < data.length / 2
-    if (!min || d.value < min.value) min = { value: d.value, early }
-    if (!max || d.value > max.value) max = { value: d.value, early }
-  })
-  return min && max && min.value !== max.value ? { min, max } : undefined
-}
-
-/**
- * The series' own range: a sparkline shows the shape, not the size. The low
- * line sits at the bottom of the plot (its label hangs below it); a flat
- * series draws near the top, where a real series would peak.
- */
-function getDomain(data: HomeSparklineDataPoint[]): [number, number] {
-  let min = Number.POSITIVE_INFINITY
-  let max = Number.NEGATIVE_INFINITY
-  for (const { value } of data) {
-    if (value === null) continue
-    min = Math.min(min, value)
-    max = Math.max(max, value)
-  }
-  if (min > max) {
-    return [0, 1]
-  }
-  if (min === max) {
-    const padding = Math.abs(min) || 1
-    return [min - padding, max + padding * 0.1]
-  }
-  const range = max - min
-  return [min, max + range * 0.05]
-}
-
-function SparklineTooltip({
+function KpiChartTooltip({
   payload,
   label,
   formatValue,
@@ -271,7 +192,7 @@ function SparklineTooltip({
   const entry = payload[0]
   const config = entry?.name !== undefined ? meta[entry.name] : undefined
   if (!entry || !config) return null
-  const breakdown = (entry.payload as HomeSparklineDataPoint | undefined)
+  const breakdown = (entry.payload as HomeKpiChartDataPoint | undefined)
     ?.tvsBreakdown
   const rows = [
     {

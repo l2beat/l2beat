@@ -2,8 +2,8 @@ import { formatCurrency } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { HomePrivacyData } from '~/server/features/home/getHomePrivacyData'
 import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
-import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
-import { HomeSparkline } from './charts/HomeSparkline'
+import type { HomeKpiChartDataPoint } from './charts/HomeKpiChart'
+import { HomeKpiChart } from './charts/HomeKpiChart'
 import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
 import { HomePrivacyDot } from './HomePrivacyDot'
@@ -24,12 +24,12 @@ export function HomePrivacyCard({
   projectCount: number
   className?: string
 }) {
-  const tvlChartData = useMemo<HomeSparklineDataPoint[]>(
+  const tvlChartData = useMemo<HomeKpiChartDataPoint[]>(
     () => data.tvl.chart.map(([timestamp, value]) => ({ timestamp, value })),
     [data.tvl.chart],
   )
 
-  const depositsChartData = useMemo<HomeSparklineDataPoint[]>(
+  const depositsChartData = useMemo<HomeKpiChartDataPoint[]>(
     () =>
       data.deposits.chart.map(([timestamp, , valueUsd]) => ({
         timestamp,
@@ -59,7 +59,7 @@ export function HomePrivacyCard({
           }
           change={data.tvl.change}
           chart={
-            <HomeSparkline
+            <HomeKpiChart
               className={HOME_CHART_HEIGHT_CLASS}
               data={tvlChartData}
               tooltipLabel="Value locked"
@@ -76,7 +76,7 @@ export function HomePrivacyCard({
           }
           change={data.deposits.change}
           chart={
-            <HomeSparkline
+            <HomeKpiChart
               className={HOME_CHART_HEIGHT_CLASS}
               data={depositsChartData}
               tooltipLabel="Deposited"

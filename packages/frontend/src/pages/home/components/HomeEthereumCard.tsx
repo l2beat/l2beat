@@ -4,8 +4,8 @@ import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumC
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
-import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
-import { HomeSparkline } from './charts/HomeSparkline'
+import type { HomeKpiChartDataPoint } from './charts/HomeKpiChart'
+import { HomeKpiChart } from './charts/HomeKpiChart'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 import { HomeKpiRow } from './HomeDomainCard'
@@ -21,7 +21,7 @@ export function HomeEthereumCard({
   charts: HomeEthereumCharts
   className?: string
 }) {
-  const activityChartData = useMemo<HomeSparklineDataPoint[]>(
+  const activityChartData = useMemo<HomeKpiChartDataPoint[]>(
     () =>
       charts.activity.chart.map(([timestamp, uopsCount]) => ({
         timestamp,
@@ -30,7 +30,7 @@ export function HomeEthereumCard({
     [charts.activity.chart],
   )
 
-  const dataPostedChartData = useMemo<HomeSparklineDataPoint[]>(
+  const dataPostedChartData = useMemo<HomeKpiChartDataPoint[]>(
     () => charts.da.chart.map(([timestamp, value]) => ({ timestamp, value })),
     [charts.da.chart],
   )
@@ -62,7 +62,7 @@ export function HomeEthereumCard({
           )}
           change={charts.da.change}
           chart={
-            <HomeSparkline
+            <HomeKpiChart
               data={dataPostedChartData}
               tooltipLabel="Data posted"
               formatValue={(value) => formatBytes(value)}
@@ -80,7 +80,7 @@ export function HomeEthereumCard({
           }
           change={charts.activity.change}
           chart={
-            <HomeSparkline
+            <HomeKpiChart
               data={activityChartData}
               tooltipLabel="UOPS"
               formatValue={(value) => `${formatActivityCount(value)} UOPS`}

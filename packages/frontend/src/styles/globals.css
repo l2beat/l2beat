@@ -55,8 +55,8 @@
   --warning: #ab8000;
   --negative: #d70000;
   --brand: #9621bf;
-  --background: #f4f5f7;
-  --surface-primary: #ffffff;
+  --background: #e6e7ec;
+  --surface-primary: #fafafa;
   --surface-primary-hover: #e6ecef;
   --surface-secondary: #e6e7ec;
   --surface-tertiary: #ccd0da;
@@ -68,8 +68,6 @@
   --icon-secondary: #5f6470;
   --overlay: #181b2d99;
   --divider: #ccd0da;
-  /* The home page's hairlines: nearer the nav's grey, still clear on white. */
-  --home-divider: #e2e4ea;
   --link-stroke: #badaff;
   --link: #2a5bd8;
   --scrollbar: #8a909d;
@@ -128,7 +126,7 @@
   --warning: #ffc107;
   --negative: #ff3d3d;
   --brand: #db8bf7;
-  --background: #111114;
+  --background: #07080c;
   --surface-primary: #1b1e2a;
   --surface-primary-hover: #272b3a;
   --surface-secondary: #33384b;
@@ -141,7 +139,6 @@
   --icon-secondary: #80869a;
   --overlay: #04050acc;
   --divider: #3d4358;
-  --home-divider: #262833;
   --link-stroke: #24406b;
   --link: #66b2ff;
   --scrollbar: #565d76;
