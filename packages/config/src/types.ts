@@ -284,6 +284,7 @@ export interface BaseProject {
   /** Ossification perimeter and history, for projects with a critical
    *  contract in their discovery config. */
   ossificationHistory?: OssificationHistory
+  auditCoverage?: ProjectAuditCoverage
 
   // tags
   archivedAt?: UnixTime
@@ -2320,6 +2321,50 @@ export const TvsTokenSchema = v.object({
     })
     .optional(),
 })
+
+const LineSpan = v.tuple([v.number(), v.number()])
+
+const AuditCoverageUnit = v.object({
+  name: v.string(),
+  kind: v.enum(['contract', 'abstract', 'library', 'interface', 'function']),
+  lines: v.number(),
+  status: v.enum(['identical', 'differs', 'none']),
+  audited: v
+    .object({
+      object: v.string(),
+      lines: LineSpan,
+      name: v.string().optional(),
+    })
+    .optional(),
+  reports: v.array(v.string()).optional(),
+  added: v.array(LineSpan).optional(),
+  removed: v.array(v.tuple([v.number(), v.number(), v.number()])).optional(),
+})
+
+export const ProjectAuditCoverageSchema = v.object({
+  schema_version: v.literal('1.0.0'),
+  project: v.string(),
+  datasetCommit: v.string(),
+  discoveredAt: v.number(),
+  generatedAt: v.number(),
+  reports: v.record(
+    v.string(),
+    v.object({
+      collections: v.array(v.string()),
+      title: v.string(),
+      auditor: v.string(),
+      date: v.string().optional(),
+    }),
+  ),
+  auditedFiles: v.record(
+    v.string(),
+    v.object({ repository: v.string(), commit: v.string(), path: v.string() }),
+  ),
+  units: v.record(v.string(), AuditCoverageUnit),
+  flats: v.record(v.string(), v.array(v.tuple([v.string(), v.number()]))),
+  contracts: v.record(v.string(), v.string()),
+})
+export type ProjectAuditCoverage = v.infer<typeof ProjectAuditCoverageSchema>
 
 export const ProjectTvsConfigSchema = v.object({
   projectId: v.string(),

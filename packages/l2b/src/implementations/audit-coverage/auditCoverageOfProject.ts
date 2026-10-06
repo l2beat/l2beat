@@ -134,6 +134,9 @@ function usedReports(
       const report = index.reports[id]
       assert(report !== undefined, `Unknown report ${id}`)
       const { collections, title, auditor, date } = report
+      if (date === null) {
+        return [id, { collections, title, auditor }]
+      }
       return [id, { collections, title, auditor, date }]
     }),
   )

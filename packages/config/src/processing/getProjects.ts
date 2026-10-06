@@ -16,6 +16,7 @@ import {
   formatChallengePeriod,
   formatExecutionDelay,
 } from '../common/formatDelays'
+import { loadAuditCoverage } from '../discovery/loadAuditCoverage'
 import { loadDiscoveryUpdates } from '../discovery/loadDiscoveryUpdates'
 import type {
   Bridge,
@@ -72,11 +73,17 @@ function buildProjects(): BaseProject[] {
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
     .map(withDiscoveryUpdates)
+    .map(withAuditCoverage)
 }
 
 function withDiscoveryUpdates(project: BaseProject): BaseProject {
   const discoveryUpdates = loadDiscoveryUpdates(project.id)
   return discoveryUpdates ? { ...project, discoveryUpdates } : project
+}
+
+function withAuditCoverage(project: BaseProject): BaseProject {
+  const auditCoverage = loadAuditCoverage(project.id)
+  return auditCoverage ? { ...project, auditCoverage } : project
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {
