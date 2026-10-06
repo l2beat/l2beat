@@ -1,0 +1,137 @@
+{
+  "description": "Two suites. `quick` is the default: fourteen contracts chosen for dense use of the handlers the model is offered, one per template, on Ethereum for fast RPC; it runs in about half an hour and is what a change to the prompt, the checks or the loop is measured with. `unreachable` names handler fields the model could not have written, with the reason, so a miss there is expected rather than counted. `projects` is the full suite, ported from the discovery-v2 research benchmark so its numbers stay comparable: add a project there and every later full run includes it; leave addresses out to run every verified contract of the project that has a committed template.",
+  "quick": [
+    {
+      "project": "zora",
+      "chain": "ethereum",
+      "address": "eth:0xB0F15106fa1e473Ddb39790f197275BC979Aa37e",
+      "template": "opstack/DisputeGameFactory_v2"
+    },
+    {
+      "project": "linea",
+      "chain": "ethereum",
+      "address": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "template": "linea/LineaRollup_ForcedTrx_v8_0"
+    },
+    {
+      "project": "interfold",
+      "chain": "ethereum",
+      "address": "eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4",
+      "template": "interfold/SlashingManager"
+    },
+    {
+      "project": "rocketpool",
+      "chain": "ethereum",
+      "address": "eth:0x334B9B1a6F9d7531efb13746482ff40f1c2a0c4e",
+      "template": "rocketpool/RocketDAOSecurityProposals"
+    },
+    {
+      "project": "rocketpool",
+      "chain": "ethereum",
+      "address": "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10",
+      "template": "rocketpool/RocketDAONodeTrustedUpgrade"
+    },
+    {
+      "project": "uniswapv3",
+      "chain": "ethereum",
+      "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+      "template": "uniswapv3/GovernorBravoDelegate"
+    },
+    {
+      "project": "liquityv2",
+      "chain": "ethereum",
+      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+      "template": "liquityv2/TroveManager"
+    },
+    {
+      "project": "liquityv2",
+      "chain": "ethereum",
+      "address": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
+      "template": "liquityv2/BorrowerOperations"
+    },
+    {
+      "project": "lighter",
+      "chain": "ethereum",
+      "address": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+      "template": "lighter/ZkLighterWithSpot"
+    },
+    {
+      "project": "fluent",
+      "chain": "ethereum",
+      "address": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
+      "template": "fluent/FluentRollup"
+    },
+    {
+      "project": "across",
+      "chain": "ethereum",
+      "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+      "template": "acrossv3/HubPool"
+    },
+    {
+      "project": "shared-polygon-cdk",
+      "chain": "ethereum",
+      "address": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "template": "polygon-cdk/AgglayerGateway"
+    },
+    {
+      "project": "scroll",
+      "chain": "ethereum",
+      "address": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+      "template": "scroll/ScrollChain"
+    },
+    {
+      "project": "mantle",
+      "chain": "ethereum",
+      "address": "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+      "template": "global/TimelockController"
+    }
+  ],
+  "projects": [
+    {
+      "name": "scroll",
+      "chain": "ethereum"
+    },
+    {
+      "name": "base",
+      "chain": "ethereum",
+      "addresses": [
+        "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
+        "eth:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84",
+        "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+        "eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
+        "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA",
+        "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
+        "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
+        "eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228",
+        "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+        "eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
+        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
+        "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53",
+        "eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D",
+        "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
+        "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
+        "eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+        "eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb",
+        "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+        "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+        "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72",
+        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
+        "eth:0xdc32E228636273285Befa5F001dBB5142517C106",
+        "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2"
+      ]
+    },
+    {
+      "name": "plumenetwork",
+      "chain": "ethereum",
+      "addresses": [
+        "eth:0x35381f63091926750F43b2A7401B083263aDEF83",
+        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8",
+        "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71",
+        "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59",
+        "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
+        "eth:0xd688dabDBb14D673898689135a23a174560c8C04"
+      ]
+    }
+  ]
+}

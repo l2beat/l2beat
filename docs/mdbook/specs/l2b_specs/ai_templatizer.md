@@ -8,7 +8,8 @@ files researchers write, and the researcher reviews them as a git diff before
 committing. This document introduces discovery as far as needed, then
 describes what the templatizer does, the rules it follows, where it plugs
 into discovery, how one contract moves through it, what it checks and
-deliberately leaves alone, and how the model is driven.
+deliberately leaves alone, how the model is driven, how it is benchmarked,
+and which model is the default and why.
 
 ## Discovery, in short
 
@@ -320,7 +321,7 @@ Deliberately not checked:
 
 | Not checked | Reason |
 | --- | --- |
-| Whether every function and event was considered | Nothing blocks on it; the worklist is in the prompt, and what the model finds is measured by the templatizer benchmark. |
+| Whether every function and event was considered | Nothing blocks on it; the worklist is in the prompt, and the benchmark measures what the model finds. |
 | Whether a method or event name exists, or resolves to what the model meant | The dry run errors on a missing one. Which function a bare name resolved to is written as a note. |
 | Whether `{{ references }}` resolve | The dry run fails on an unresolved one. |
 | Which `edit` or `where` forms are used | Any program discovery parses is allowed. A throwing one fails the dry run; a wrong one is reviewed. |
@@ -443,6 +444,64 @@ cache, and is not committed. A rerun for the same address empties that
 directory first, so a shorter run does not leave the earlier run's later rounds
 beside its own.
 
+## Benchmark
+
+The benchmark, `templatizer-benchmark` in the discovery package's own CLI
+(from `packages/discovery`: `node --env-file=../backend/.env --import tsx
+src/cli.ts templatizer-benchmark …`), measures the templatizer against
+committed work. For each contract in the suite it hides the committed
+template, lets the
+templatizer author one from scratch, analyses the contract with it at the
+committed block, and compares the values with the committed `discovered.json`,
+field by field. Values are compared, not template text: a field is credited
+when its values are there, under the same name, a different name, or a
+different shape, because researchers and models shape the same state
+differently (one field per key against one object). Two limits keep that
+honest. Where both sides keep the same keys, in an object or in every row of
+a list, each key must hold the same values, so values swapped between `admin`
+and `guardian` are a difference, not a reshape. And only fields a template
+handler produced are matched under
+another name or shape: a proxy value, a getter or an override field must
+come back under its own name with its own value, so a copy of it elsewhere
+cannot hide its loss. The benchmark is a command, not part of the test suite;
+the tests drive it with fakes.
+
+Two numbers matter:
+
+- **Recall on reachable fields.** Of the committed handler fields the model
+  could have written, how many came back with the same values. Unreachable,
+  and so left out of the denominator but listed in the report with the
+  reason: fields using `hardcoded` (a researcher's knowledge, not the
+  chain's), `eventCount` or a project-specific handler, a `call` on another
+  contract (which other contract holds related state is protocol knowledge),
+  and fields the suite marks `unreachable` with a reason, such as a storage
+  slot nobody could derive. The target is 100%; every miss should have a
+  story.
+- **Regressions.** Committed values that were not the template's work and
+  that the generated template lost or changed: proxy values, getters, fields
+  the address override in `config.jsonc` defines. The target is zero.
+
+Alongside: rounds, tokens, wall time and failures.
+
+The **quick suite** is fourteen contracts chosen for dense use of generic
+handlers, one per template, all on Ethereum for fast RPC, with fields the
+model cannot reach marked. It is the default suite. It runs in about a
+quarter of an hour on the Codex default model and half an hour on DeepSeek
+V4.1 Flash at high effort, and a repeat run differs from the first by a few
+fields on the same four contracts. The **full suite** is the research suite
+(scroll, 24 base contracts, 6 plumenetwork) and exists for comparability with
+the research numbers.
+
+Run the benchmark before and after any change to the prompt, the checks or the
+loop, and when comparing models or efforts. Contracts whose template has no
+handler field are not in the quick suite: the model cannot do better than the
+baseline there, and about 38% of all templates are like that.
+
+What the benchmark does not yet do: exercise the revisit and changed-code
+paths (it only measures authoring from scratch), and run against synthetic
+contracts with known complete answers. Both are worth adding; neither is
+needed to use the numbers above.
+
 ## Decisions
 
 The choices that shape the code, with the reason each was taken, so they are
@@ -494,3 +553,65 @@ not reopened without new evidence.
 - This document is the description of record. A change in behaviour under
   `packages/discovery/src/discovery/templatizer/` is not complete until this
   document says the same.
+
+## Model comparison (2026-10-05)
+
+The quick suite, run once per model at `high` effort on the same code, to
+pick the default. Every committed template of the fourteen contracts is
+hidden, the model writes one, and the values it discovers are compared with
+the committed ones. "Found" counts the 82 handler fields a model could have
+written; a failed contract is one where no draft passed three rounds, which
+in `discover --ai` stops the run.
+
+| Model | Found | Regressions | Contracts failed | Repair rounds | Tokens in / out | Wall |
+| --- | --- | --- | --- | --- | --- | --- |
+| GPT-6.1 Sol (Codex default) | **58/82** | 0 | 0 | 1 of 14 | 0.95M / 29k | 15 min |
+| GPT-5.6 Terra (Codex) | 53/82 | 0 | 0 | 2 of 14 | 1.09M / 52k | 13 min |
+| GPT-5.6 Luna (Codex) | 51/82 | 0 | 1 | 5 of 14 | 1.66M / 137k | 30 min |
+| DeepSeek V4.1 Flash (opencode) | 50/82 | 0 | 0 | 1 of 14 | 0.80M / 303k | 32 min |
+| GPT-6 Luna (Codex) | 49/82 | 0 | 1 | 5 of 14 | 2.04M / 81k | 22 min |
+
+Repeat runs of one model land within a few fields of each other, so the four
+lower rows are indistinguishable from one another. Sol's lead is real and
+concentrated: it alone read Lighter's five `storage` slots off the source's
+layout (8/10 against 4/10 for every other model) and HubPool's four fields.
+Both Lunas failed the same contract (FluentRollup) on one stray closing brace
+in a single-line reply, and did not fix it when told the character position.
+The reply parser has since been changed to take the object that closes when a
+stray `}` follows it, and to say by how many braces an unclosed object is
+open; two of the three failing replies parse under it, so the Lunas would
+probably fail nothing on a rerun. The comparison has also become stricter
+since: values swapped between the same keys no longer count as found, and a
+getter, proxy value or override field that comes back only under another name
+or shape counts as a regression. The first can only lower a "Found" above,
+the second can only add a regression. The rows above are from before these
+changes.
+GPT-6 Terra, GPT-6.1 Luna and GPT-6.1 Terra are not available to a ChatGPT
+account in Codex and were not run.
+
+Decision: the default stays the Codex default model, GPT-6.1 Sol. It finds
+the most, fails nothing, reasons least and needs only `codex`, which the
+researchers already have. GPT-5.6 Terra is the fallback if Sol's limits
+bind; the Lunas are not recommended. opencode remains supported for cheap
+models but is not required.
+
+## After the reply became part of the template (2026-10-05)
+
+The acceptance run for the change that replaced the draft (fields with
+`covers`, and `skips`) with the part of `template.jsonc` the model adds, and
+removed the coverage check: the quick suite on DeepSeek V4.1 Flash at `high`
+effort, with the stricter comparison described above.
+
+| Model | Found | Regressions | Contracts failed | Repair rounds | Tokens in / out | Wall |
+| --- | --- | --- | --- | --- | --- | --- |
+| DeepSeek V4.1 Flash (opencode) | 51/82 | 0 | 0 | 0 of 14 | 0.80M / 237k | 34 min |
+
+The same model found between 47 and 54 in five runs before the change, so
+the result is within the noise, under a comparison that can only lower it.
+No contract needed a repair round, and the replies were half as long (9k
+output tokens against 16k), since nothing had to be listed that no field
+reads. Per contract it found what the Codex default model found in the table
+above on eleven of the fourteen; the seven fields between them are Lighter's
+storage slots, which only Sol reads, and three on HubPool and
+AgglayerGateway. The Codex default model was not rerun: its workspace had no
+credits left.
