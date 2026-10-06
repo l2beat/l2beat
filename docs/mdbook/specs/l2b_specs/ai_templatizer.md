@@ -593,7 +593,12 @@ since: values swapped between the same keys no longer count as found, and a
 getter, proxy value or override field that comes back only under another name
 or shape counts as a regression. The first can only lower a "Found" above,
 the second can only add a regression. The rows above are from before these
-changes.
+changes. So is the denominator: five of the 82 were `call` handlers of
+GovernorBravoDelegate that re-read a 0-argument getter under its own name
+(`votingDelay`, `votingPeriod`, `proposalThreshold`, `quorumVotes`,
+`proposalCount`), which discovery reads anyway once the template is hidden.
+Every model "found" them; they count as getters now, and the quick suite has
+77 reachable fields.
 GPT-6 Terra, GPT-6.1 Luna and GPT-6.1 Terra are not available to a ChatGPT
 account in Codex and were not run.
 

@@ -47,6 +47,15 @@ describe(attributeV1Field.name, () => {
         edit: ['get', 'roles', 'X', 'members'],
       },
       counterpart: { edit: ['format', 'ScrollAddress'] },
+      votingDelay: {
+        handler: {
+          type: 'call',
+          method: 'function votingDelay() view returns (uint256)',
+          args: [],
+        },
+      },
+      quorumVotes: { handler: { type: 'call', args: [] } },
+      owners: { handler: { type: 'call', method: 'owner', args: [] } },
       latestVerifier: {
         handler: { type: 'array', indices: '{{ verifierVersions }}' },
         edit: ['map', ['shape', 'a', 'b']],
@@ -69,6 +78,13 @@ describe(attributeV1Field.name, () => {
     })
     expect(attributeV1Field('fromConfig', config)).toEqual({
       kind: 'override',
+    })
+    // A template's `call` of a 0-argument function under its own name reads what the getter does.
+    expect(attributeV1Field('votingDelay', config)).toEqual({ kind: 'getter' })
+    expect(attributeV1Field('quorumVotes', config)).toEqual({ kind: 'getter' })
+    expect(attributeV1Field('owners', config)).toEqual({
+      kind: 'handler',
+      handlerType: 'call',
     })
     expect(attributeV1Field('sequencers', config)).toEqual({
       kind: 'handler',

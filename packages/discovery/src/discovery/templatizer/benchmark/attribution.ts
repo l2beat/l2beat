@@ -5,7 +5,9 @@
  * V1 writes four kinds of fields into `values`: proxy facts from the
  * `ProxyDetector` (`$implementation`, `$admin`, but also the Gnosis Safe
  * detector's `GnosisSafe_modules`), 0-arg getters read by the system
- * handlers, handler fields a researcher configured, and *projections* of
+ * handlers (also when a template re-reads one with a `call` under its own
+ * name, which V1 reads anyway once the template is hidden), handler fields
+ * a researcher configured, and *projections* of
  * other fields that exist for presentation: `pickRoleMembers` lifts one
  * role's members out of an `accessControl` result, `copy` + `edit` derives a
  * field from another, and a `call` handler with an `edit` re-reads a getter
@@ -69,10 +71,36 @@ export function attributeV1Field(
   if (handler.type === 'call' && field.edit !== undefined) {
     return { kind: 'template-projection', via: 'edit', handlerType: 'call' }
   }
+  if (rereadsGetter(name, handler)) {
+    return { kind: 'getter' }
+  }
   const reason = unreachableReason(name, handler, unreachable)
   return reason === undefined
     ? { kind: 'handler', handlerType: handler.type }
     : { kind: 'handler', handlerType: handler.type, unreachable: reason }
+}
+
+/** A `call` of this contract's 0-argument function of the field's own name, by bare name or full fragment. */
+function rereadsGetter(
+  name: string,
+  handler: {
+    type: string
+    address?: unknown
+    method?: unknown
+    args?: unknown
+  },
+): boolean {
+  if (
+    handler.type !== 'call' ||
+    handler.address !== undefined ||
+    !Array.isArray(handler.args) ||
+    handler.args.length > 0
+  ) {
+    return false
+  }
+  const method = typeof handler.method === 'string' ? handler.method : name
+  const called = /^function\s+(\w+)\s*\(\s*\)/.exec(method)?.[1] ?? method
+  return called === name
 }
 
 function unreachableReason(
