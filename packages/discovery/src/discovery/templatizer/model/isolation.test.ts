@@ -105,6 +105,9 @@ describe('model isolation against the installed CLIs', function () {
       restoreEnv('TMPDIR', previous.TMPDIR)
     }
 
+    // The turn's own request only: with the title given, opencode does not
+    // ask the model for one.
+    expect(server.requests.length).toEqual(1)
     expectNoTools(server.requests)
   })
 })
@@ -139,7 +142,6 @@ async function startCaptureServer(): Promise<CaptureServer> {
   }
 }
 
-/** opencode sends a second request for the session title; neither may offer a tool. */
 function expectNoTools(requests: Record<string, unknown>[]): void {
   expect(requests.length).toBeGreaterThan(0)
   const tools = requests.flatMap((request) =>
