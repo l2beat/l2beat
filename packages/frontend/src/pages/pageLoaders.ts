@@ -7,13 +7,6 @@ export const pageLoaders = {
     }
     throw new Error('IconPreviewPage is available only in development')
   },
-  ActivityPlaygroundPage: async () => {
-    if (process.env.NODE_ENV === 'development') {
-      return (await import('./dev/activity/ActivityPlaygroundPage'))
-        .ActivityPlaygroundPage
-    }
-    throw new Error('ActivityPlaygroundPage is available only in development')
-  },
   HomePage: async () => (await import('./home/HomePage')).HomePage,
   L2SummaryPage: async () =>
     (await import('./layer2s/summary/L2SummaryPage')).L2SummaryPage,
