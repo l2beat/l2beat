@@ -80,6 +80,10 @@ function toUnit(
     unit.audited.name = candidate.name
   }
   unit.reports = reportsOf(candidate.objects, code)
+  const findings = findingsOf(candidate.objects, code)
+  if (findings !== undefined) {
+    unit.findings = findings
+  }
   if (!match.identical) {
     Object.assign(unit, changesOf(match.diff, unit.lines))
   }
@@ -97,12 +101,38 @@ function reportsOf(objects: string[], code: AuditedCode): string[] {
   const reports = new Set<string>()
   for (const object of objects) {
     for (const occurrence of code.occurrences.get(object) ?? []) {
-      for (const report of occurrence.reports) {
+      for (const report of Object.keys(occurrence.findings)) {
         reports.add(report)
       }
     }
   }
   return [...reports].sort()
+}
+
+// A report locates findings in files, not in units: a finding the report saw
+// fixed in a copy of the same unit was fixed elsewhere in the file.
+function findingsOf(
+  objects: string[],
+  code: AuditedCode,
+): Record<string, string[]> | undefined {
+  const open = new Map<string, string[]>()
+  for (const object of objects) {
+    for (const occurrence of code.occurrences.get(object) ?? []) {
+      for (const [report, ids] of Object.entries(occurrence.findings)) {
+        const previous = open.get(report)
+        open.set(
+          report,
+          previous === undefined
+            ? ids
+            : previous.filter((id) => ids.includes(id)),
+        )
+      }
+    }
+  }
+  const entries = [...open]
+    .filter(([, ids]) => ids.length > 0)
+    .sort(([a], [b]) => (a < b ? -1 : 1))
+  return entries.length === 0 ? undefined : Object.fromEntries(entries)
 }
 
 // The diff renders every deployed line in order, unchanged or added, with

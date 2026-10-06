@@ -35,6 +35,8 @@ Audited units are deduplicated by body and the import aliases it uses. Since aud
 
 The audited file shown is the newest commit containing the winning body. Every report that audited any file containing that body counts as evidence.
 
+The dataset locates major findings in files, not units, so a unit gets a report's findings that are open in every file containing its body that the report scoped by file path. A finding the report saw fixed in another copy of the same body was fixed elsewhere in the file. Findings scoped to a directory are not attributed, since they cannot be placed in a file, and a finding located in a file is attributed to every unit of that file.
+
 ## Output
 
 ```ts
@@ -58,6 +60,7 @@ type Unit = {
   status: 'identical' | 'differs' | 'none'
   audited?: { object: ObjectId; lines: [number, number]; name?: string } // name when audited under another
   reports?: ReportId[]
+  findings?: Record<ReportId, FindingId[]> // major findings open in the audited code
   added?: [number, number][] // deployed lines, relative to the unit's first line
   removed?: [number, number, number][] // [before deployed line, audited first, audited last], relative
 }

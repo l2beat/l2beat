@@ -31,7 +31,7 @@ export interface Occurrence {
   commit: string
   timestamp: number
   path: string
-  reports: string[]
+  findings: Record<string, string[]>
   collections: string[]
 }
 
@@ -181,15 +181,15 @@ function collectOccurrences(index: AuditIndex): Map<string, Occurrence[]> {
   for (const [repository, byCommit] of Object.entries(index.repositories)) {
     for (const [commit, snapshot] of Object.entries(byCommit)) {
       for (const [path, object] of Object.entries(snapshot.files)) {
-        const reports = reportsCovering(snapshot.audits, path)
+        const findings = findingsCovering(snapshot.audits, path)
         const list = occurrences.get(object) ?? []
         list.push({
           repository,
           commit,
           timestamp: snapshot.timestamp,
           path,
-          reports,
-          collections: collectionsOf(reports, index),
+          findings,
+          collections: collectionsOf(Object.keys(findings), index),
         })
         occurrences.set(object, list)
       }
@@ -198,15 +198,18 @@ function collectOccurrences(index: AuditIndex): Map<string, Occurrence[]> {
   return occurrences
 }
 
-function reportsCovering(
+function findingsCovering(
   audits: AuditIndexSnapshot['audits'],
   path: string,
-): string[] {
-  const reports = Object.entries(audits)
-    .filter(([, paths]) => Object.keys(paths).some((p) => covers(p, path)))
-    .map(([report]) => report)
-  assert(reports.length > 0, `No audit covers ${path}`)
-  return reports
+): Record<string, string[]> {
+  const findings: Record<string, string[]> = {}
+  for (const [report, paths] of Object.entries(audits)) {
+    if (Object.keys(paths).some((p) => covers(p, path))) {
+      findings[report] = paths[path] ?? []
+    }
+  }
+  assert(Object.keys(findings).length > 0, `No audit covers ${path}`)
+  return findings
 }
 
 function collectionsOf(reports: string[], index: AuditIndex): string[] {

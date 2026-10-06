@@ -2337,6 +2337,7 @@ const AuditCoverageUnit = v.object({
     })
     .optional(),
   reports: v.array(v.string()).optional(),
+  findings: v.record(v.string(), v.array(v.string())).optional(),
   added: v.array(LineSpan).optional(),
   removed: v.array(v.tuple([v.number(), v.number(), v.number()])).optional(),
 })
