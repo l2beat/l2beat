@@ -22,6 +22,8 @@ export interface BeltPosition {
   last: number
   /** Left edge of the rack in the bay, on a whole device pixel */
   bayRackLeft: number
+  /** Left edge of the bay itself, which stays put as racks slide through it */
+  bayLeft: number
 }
 
 export function beltAt(
@@ -34,11 +36,12 @@ export function beltAt(
   const handover = playback.still
     ? 1
     : easeInOutCubic(Math.min(1, intoSlot / SLIDE_TIME))
+  const bayLeft = layout.bayX - layout.rackWidth / 2
   // the new block comes from one place to the right, where it waited
-  const exactLeft =
-    layout.bayX - layout.rackWidth / 2 + (1 - handover) * layout.blockPitch
+  const exactLeft = bayLeft + (1 - handover) * layout.blockPitch
   // Snapped, so outlines stay crisp. All racks share the offset and move as one
-  const bayRackLeft = Math.round(exactLeft * density) / density
+  const snap = (x: number) => Math.round(x * density) / density
+  const bayRackLeft = snap(exactLeft)
   return {
     current,
     intoSlot,
@@ -47,6 +50,7 @@ export function beltAt(
       current - Math.ceil((bayRackLeft + layout.rackWidth) / layout.blockPitch),
     last: current + Math.ceil((layout.width - bayRackLeft) / layout.blockPitch),
     bayRackLeft,
+    bayLeft: snap(bayLeft),
   }
 }
 

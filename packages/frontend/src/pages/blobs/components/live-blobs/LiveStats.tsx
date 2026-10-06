@@ -11,8 +11,8 @@ import {
   formatWhole,
 } from './blocks/format'
 import { useChainClock } from './chainClock'
-import { useAnimationFrame } from './hooks'
-import { type Landing, useHeldUntilLanded } from './landings'
+import { useAnimationFrame, useIsOnScreen } from './hooks'
+import { type Landing, useLandedTotal } from './landings'
 import { type Arrival, Pop, RollingNumber, writeText } from './liveMotion'
 import type { BlockLimits } from './model'
 import { type LiveStatus, useLiveBlobs } from './useLiveBlobs'
@@ -32,13 +32,12 @@ export function LiveStats({ limits }: { limits: BlockLimits }) {
   const hour = data?.window
   const seconds = (hour?.slots ?? 0) * SLOT_SECONDS
   // the newest block's blobs are counted in as the belt lands them
-  const { held, arrival } = useHeldUntilLanded(
+  const { value: blobs, arrival } = useLandedTotal(
     data?.head,
+    hour?.posted.reduce((sum, posted) => sum + posted.blobs, 0) ?? 0,
     hour?.blobsPerSlot[0] ?? 0,
     anyLanding,
   )
-  const blobs =
-    hour && hour.posted.reduce((sum, posted) => sum + posted.blobs, 0) - held
 
   return (
     <div>
@@ -57,7 +56,7 @@ export function LiveStats({ limits }: { limits: BlockLimits }) {
           </div>
         </div>
       </div>
-      {data && hour && blobs !== undefined && seconds > 0 ? (
+      {data && hour && seconds > 0 ? (
         <dl className="mt-1 grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-3 lg:grid-cols-6">
           <Stat
             label="Blobs per block"
@@ -111,10 +110,12 @@ const RING_LENGTH = 2 * Math.PI * RING_RADIUS
 /**
  * How long until the next slot, as a ring that fills over the 12 seconds:
  * the wait between blocks, made visible. Drawn straight to the elements on
- * every frame, so it renders no React
+ * every frame it is on screen, so it renders no React
  */
 function NextSlot({ head }: { head: number | undefined }) {
   const clock = useChainClock()
+  const rootRef = useRef<HTMLDivElement>(null)
+  const onScreen = useIsOnScreen(rootRef)
   const ringRef = useRef<SVGCircleElement>(null)
   const textRef = useRef<HTMLSpanElement>(null)
   useEffect(() => {
@@ -132,10 +133,13 @@ function NextSlot({ head }: { head: number | undefined }) {
       const left = Math.max(1, Math.ceil((1 - into) * SLOT_SECONDS))
       writeText(textRef.current, `Next slot in ${left}s`)
     }
-  }, true)
+  }, onScreen)
 
   return (
-    <div className="flex items-center gap-1.5 font-medium text-label-value-14 text-secondary tabular-nums">
+    <div
+      ref={rootRef}
+      className="flex items-center gap-1.5 font-medium text-label-value-14 text-secondary tabular-nums"
+    >
       <svg viewBox="0 0 16 16" className="-rotate-90 size-4" aria-hidden>
         <circle
           cx={8}
@@ -178,16 +182,19 @@ function Stat({
 }) {
   return (
     <div className="min-w-0">
-      {/* the pop rises off the label line, where nothing else is in its way */}
-      <dt className="relative font-medium text-label-value-14 text-secondary">
-        {label}
-        {arrival && (
-          <Pop
-            arrival={arrival}
-            format={formatArrival}
-            className="absolute top-0 right-0 whitespace-nowrap"
-          />
-        )}
+      {/* The pop rises off the label line, where nothing else is in its way,
+          right after the label, so it reads as what this number just got */}
+      <dt className="font-medium text-label-value-14 text-secondary">
+        <span className="relative">
+          {label}
+          {arrival && (
+            <Pop
+              arrival={arrival}
+              format={formatArrival}
+              className="absolute top-0 left-full ml-1.5 whitespace-nowrap"
+            />
+          )}
+        </span>
       </dt>
       <dd className="flex items-baseline gap-2">
         <span className="font-bold text-heading-28">{children}</span>

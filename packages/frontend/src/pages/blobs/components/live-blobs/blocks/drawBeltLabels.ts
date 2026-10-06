@@ -15,10 +15,9 @@ import {
   type Playback,
 } from './beltScene'
 import { formatBlocksAway, formatWhole } from './format'
-import { easeOutCubic, labelPresence, smoothstep } from './motion'
+import { labelEmphasis, labelPresence, smoothstep } from './motion'
 
 const FONT = 'Roboto, Arial, sans-serif'
-const ROLL_TIME = 0.26
 /** Labels fade out over the end of their block's slot, from this far into it */
 const LABELS_LEAVE = 0.9
 
@@ -26,12 +25,14 @@ const LABELS_LEAVE = 0.9
  * Blob counts under the blocks, a dash under missed slots, and every fifth
  * slot's number. Each fades whole near the belt's ends, by its outer edge: a
  * number with its last digits faded out would read as a different number.
+ * Counts fade in with the first blocks, by `reveal`.
  */
 export function drawBlockNumbers(
   ctx: CanvasRenderingContext2D,
   scene: BeltScene,
   belt: BeltPosition,
   frame: BeltFrame,
+  reveal: number,
 ) {
   const { layout, palette, blocks } = scene
   ctx.save()
@@ -46,7 +47,7 @@ export function drawBlockNumbers(
     if (status !== undefined) {
       const count = frame.landed[slot - belt.first] ?? 0
       const light = bayLight(belt, slot)
-      ctx.globalAlpha = presenceAtEnds(layout, middle, middle)
+      ctx.globalAlpha = presenceAtEnds(layout, middle, middle) * reveal
       ctx.fillStyle =
         light > 0
           ? mixColors(palette.textSecondary, palette.text, light)
@@ -76,7 +77,8 @@ export function drawBlockNumbers(
  * before the block leaves the bay: left behind, it would seem to name what
  * the next block got, and riding on it would cover the next rack. A batch
  * coming too late in its slot to be read goes unnamed. A newer label at the
- * same height takes over from an older one.
+ * same height takes over from an older one. While a poster is highlighted,
+ * only its labels show.
  */
 export function drawArrivalLabels(
   ctx: CanvasRenderingContext2D,
@@ -85,7 +87,7 @@ export function drawArrivalLabels(
   belt: BeltPosition,
   now: number,
 ) {
-  const { layout, blocks, posters, highlighted } = scene
+  const { layout, blocks, posters } = scene
   const placed: { y: number; alpha: number }[] = []
   // newest first, so the older ones know what to step aside for
   const arrivals = [...playback.arrivals].reverse()
@@ -95,7 +97,8 @@ export function drawArrivalLabels(
     const { slot, batch } = found
     const poster = posters[batch.posterIndex]
     if (!poster) continue
-    if (highlighted !== undefined && highlighted !== batch.posterIndex) continue
+    const emphasis = labelEmphasis(playback.emphasis[batch.posterIndex] ?? 1)
+    if (emphasis <= 0) continue
 
     const below = batch.blobsBelow
     const lowest = tileBounds(layout, below, 0, 1)
@@ -106,11 +109,11 @@ export function drawArrivalLabels(
     const y = (highest.top + lowest.bottom) / 2 - rise
     const phase = belt.intoSlot / SLOT_SECONDS
     const leaving = smoothstep((phase - LABELS_LEAVE) / (1 - LABELS_LEAVE))
-    let shown = alpha * (1 - leaving)
+    let shown = alpha * (1 - leaving) * emphasis
     for (const newer of placed) {
       if (Math.abs(newer.y - y) < 15) shown *= 1 - newer.alpha
     }
-    placed.push({ y, alpha })
+    placed.push({ y, alpha: alpha * emphasis })
     if (shown > 0.02) {
       const x = rackLeft(belt, layout, slot) + layout.rackWidth + 6
       drawArrivalLabel(ctx, scene, batch.blobs, poster.name, x, y, shown)
@@ -146,7 +149,10 @@ function drawArrivalLabel(
   ctx.restore()
 }
 
-/** "Building slot 15,354,012" above the bay; changed digits roll up like an odometer */
+/**
+ * "Building slot 15,354,012" above the bay. Changed digits roll up like an
+ * odometer, in step with the belt bringing that slot's rack in
+ */
 export function drawBayCaption(
   ctx: CanvasRenderingContext2D,
   scene: BeltScene,
@@ -174,7 +180,7 @@ export function drawBayCaption(
 
   ctx.font = numberFont
   ctx.fillStyle = palette.text
-  const roll = easeOutCubic(Math.min(1, belt.intoSlot / ROLL_TIME))
+  const roll = belt.handover
   if (roll >= 1 || number.length !== previous.length) {
     ctx.fillText(number, x + wordWidth, y)
     return
