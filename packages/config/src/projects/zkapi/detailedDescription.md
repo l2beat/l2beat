@@ -1,26 +1,57 @@
-zkAPI uses ETH deposits on Ethereum and request proofs that hide the paying deposit. Open Anonymity's integration sends prompts to OpenRouter and its model providers, which can read them.
+zkAPI lets users prepay for AI inference with ETH and then use it without revealing which deposit pays for which request. A user deposits ETH into a vault on Ethereum once and then makes API requests. Each request carries a zero-knowledge proof that some funded deposit can pay, without saying which one. It is built by Open Anonymity with the Ethereum Foundation and powers the Ethereum wallet option of the 'OA Chat' website.
 
-### What stays private
+zkAPI hides the link between a user's onchain money and their AI usage. It does not hide deposits, withdrawals or prompts.
 
-The wallet generates secrets and proofs locally. A request proof hides the note id and exact balance. Deposits publicly reveal the funder, amount and note id. Withdrawals reveal the same note id, destination and remaining balance, exposing total consumption.
+### Typical user flow
 
-The operator knows authorization timing, budgets and billed usage. It signs balance updates; correct billing and service delivery depend on it. The service's request cap is {{requestChargeCap}} ETH.
+1. **Deposit:** the app creates a secret locally and deposits ETH from the user's wallet. This creates a public, numbered note showing the funding address and amount. The note expires after {{noteTtl}}, rounded up in {{expiryBucket}} steps.
+2. **Get access:** the app proves locally that it controls a funded, unspent note and sends the proof to the zkAPI operator. The operator checks it and hands out a short-lived OpenRouter API key with a budget of at most {{requestChargeCap}} ETH.
+3. **Chat:** the app sends prompts with that key to OpenRouter, which forwards them to the model provider.
+4. **Settle:** the operator charges the measured usage and returns a new signed balance. The app stores it locally for the next request.
+5. **Withdraw:** with the operator's approval, the app closes the note, sends the remaining ETH to an address of the user's choice and the used part to the operator's treasury. Without approval, an escape withdrawal takes {{challengePeriod}}. Users must withdraw before expiry: anyone can send the **entire deposit of an expired note, including unused funds**, to the treasury.
 
-### Clients and network
+### Architecture
 
-- **Browser app:** OA Chat uses the browser SDK to store notes and generate proofs locally. It downloads a common tree snapshot, avoiding queries that identify a user's note. Its Wisp proxy hides IPs from inference providers, while the relay sees connection metadata. Direct fallback is enabled by default, and protocol/indexer requests use a same-origin route outside that proxy. Use Tor covering the app and wallet broadcasts, and prefer inspected local code.
-- **Local daemon:** `zkapi-clientd` runs on your computer and supplies an OpenAI-compatible API for apps such as Open WebUI. Its Rust wallet companion queries the indexer by public note id before authorization. Direct HTTPS is the default. Configure `--relay-url socks5://127.0.0.1:9050` with Tor running locally; this also routes the companion. Set `--key-reuse-window-seconds 0` to disable the default 60-second credential reuse across compatible requests. [Client privacy boundaries](https://github.com/ethereum/zkapi/blob/045b444ea1b52538d1b40273c7cb6ed09468a052/zkapi-clientd/docs/PRIVACY.md).
+- **ZkApiVault** on Ethereum holds the ETH and a Merkle tree of active notes. It verifies withdrawal proofs and handles escapes and expiry. It is not upgradeable.
+- **Clients** keep note secrets and the latest signed balance on the user's device and generate proofs there. OA Chat uses the browser SDK. `zkapi-clientd` is a local daemon offering an OpenAI-compatible API for apps like Open WebUI.
+- **The operator** (Open Anonymity) verifies request proofs, issues API keys, signs new balances and approves withdrawals. It also runs the indexer serving Merkle paths and a challenger that disputes escape withdrawals using outdated balances.
+- **Open Anonymity's key stations and verifier** hold the OpenRouter accounts behind the issued keys and check provider privacy settings. OpenRouter and the model providers run the inference.
+- **Chainlink's ETH/USD feed** converts USD inference costs into ETH.
 
-Neither client isolates unrelated operations onto separate Tor circuits or obscures request timing. The daemon's SOCKS handshake supplies no isolation credentials, and indexing and authorization share a hostname. Shared circuits and timing can link authorizations to deposits even over Tor. Prefer browser snapshots and wait before using a new deposit. Using your own Ethereum node requires a reviewed deployment profile and matching manifest.
+Balances live offchain. The vault only knows each note's original deposit. The current balance is a hidden commitment signed by the operator and held by the user. Each request spends that state exactly once, enforced by a nullifier, and the operator signs a successor.
 
-### Provider
+The proofs are Groth16 over BN254, with Poseidon hashes, Baby-JubJub balance commitments and Schnorr signatures. The proving keys come from a single-party trusted setup.
 
-Avoid identifying prompts. Providers can read content and link requests sharing credentials. The verifier receives API keys and checks provider privacy settings and credential ownership; approval does not establish absence of logging. Browser attestation checks are offchain, and the vault does not bind operator keys to an attested enclave.
+### Privacy considerations
 
-### Recovering funds
+**Private:** which note pays for a request. Request proofs hide the note, its exact balance and its signed state. Individual charges stay offchain.
 
-A cooperative withdrawal requires operator clearance. An escape waits {{challengePeriod}}. The operator can challenge it with a valid request proof, publicly linking that authorization to the note without proving service delivery. Recovery then requires a signed successor state.
+**Public:** deposits show the funding address, amount and note id. Withdrawals show the same note id, the payout address and the remaining balance. Deposit and withdrawal of a note are always linked, and its total spending is public.
 
-Notes expire after {{noteTtl}}, rounded up to a {{expiryBucket}} boundary. Anyone can sweep an expired active note's **entire deposit, including unused funds**, to the treasury. Pending escapes are protected. The owner can block new withdrawals until expiry and redirect the treasury.
+**Seen by services:**
 
-Proofs rely on a single-party trusted setup. Retained setup secrets allow forgery. Lost note secrets, settlement state or fixed operator signing keys can prevent recovery.
+- The operator sees request timing, budgets and billed usage. During an escape withdrawal it can publish a request proof onchain, linking that request to the note.
+- OpenRouter and the model provider read prompts and responses and can link all requests using the same key. The verifier's approval does not prove that providers keep no logs. Avoid identifying prompts.
+- Services see the user's IP unless a proxy or Tor is used. OA Chat sends inference through a Wisp proxy, but falls back to direct connections by default and sends protocol requests outside the proxy. `zkapi-clientd` connects directly unless configured with Tor and reuses a key for 60 seconds by default. Neither client isolates Tor circuits or hides request timing.
+- The hosted app can read local secrets and chats after an update. Inspected local builds avoid this.
+
+Users are advised to research [OPSEC best practice](/publications/privacy-best-practices).
+
+### Risks and trust assumptions
+
+- **Owner:** an EOA can pause deposits, cooperative withdrawals and new escapes at any time, and change the treasury. Expiry sweeps keep working while paused, so a pause until expiry lets the owner redirect all active deposits to its treasury.
+- **Operator:** controls billing, key issuance and withdrawal approval. Its signing keys are fixed in the vault. If it receives a request but never returns the signed new balance, it can challenge the user's escape with that request and the note eventually expires into the treasury.
+- **Trusted setup:** whoever ran the single-party setup can forge withdrawal proofs if they kept its secrets.
+- **Local data:** losing the note secret or latest signed balance means losing the funds.
+
+### Fees
+
+The public server code adds no fee on top of the usage reported by Open Anonymity's key service. Usage is priced in USD, converted to ETH via Chainlink and paid to the treasury at withdrawal or expiry. Users pay Ethereum gas for deposits and withdrawals.
+
+### Compliance
+
+There is no onchain screening or allowlist. The operator can refuse to issue keys or approve withdrawals.
+
+### Anonymity set
+
+To the operator, a request can come from any active, unexpired note whose deposit covers the request budget. This set only contains zkAPI users and is small. Using a fresh deposit right away, unusual budgets or distinctive timing can narrow it to a single note. Waiting after a deposit helps.
