@@ -117,6 +117,8 @@ export type {
   PrivacyFlowDirection,
   PrivacyFlowEventRecord,
 } from './repositories/PrivacyFlowEventRepository'
+export type { PrivacyNoteRecord } from './repositories/PrivacyNoteRepository'
+export type { PrivacyNoteStatusChangeRecord } from './repositories/PrivacyNoteStatusChangeRepository'
 export type { PrivacyPriceRecord } from './repositories/PrivacyPriceRepository'
 export type { PrivacyRelayerActivityRecord } from './repositories/PrivacyRelayerActivityRepository'
 export type { PrivacyRelayerSampleRecord } from './repositories/PrivacyRelayerSampleRepository'

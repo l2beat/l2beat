@@ -333,24 +333,50 @@ model PrivacyFlowEvent {
 }
 
 model PrivacyAnonymitySetEvent {
-  configurationId String    @db.Char(12)
-  projectId       String    @db.VarChar(255)
-  bucketId        String    @db.VarChar(255)
-  chain           String    @db.VarChar(32)
-  timestamp       DateTime  @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  bucketId        String   @db.VarChar(255)
+  chain           String   @db.VarChar(32)
+  timestamp       DateTime @db.Timestamp(6)
   blockNumber     Int
-  txHash          String    @db.VarChar(66)
+  txHash          String   @db.VarChar(66)
   logIndex        Int
-  sender          String?   @db.VarChar(42)
-  amount          Decimal   @db.Decimal(80, 0)
-  noteId          BigInt?
-  active          Boolean?
-  expiresAt       DateTime? @db.Timestamp(6)
+  sender          String   @db.VarChar(42)
+  amount          Decimal  @db.Decimal(80, 0)
 
   @@id([configurationId, txHash, logIndex])
   @@index([projectId, timestamp])
   @@index([projectId, bucketId, timestamp])
   @@index([configurationId, blockNumber])
+  @@index([configurationId, timestamp])
+}
+
+model PrivacyNote {
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  noteId          BigInt
+  timestamp       DateTime @db.Timestamp(6)
+  txHash          String   @db.VarChar(66)
+  amount          Decimal  @db.Decimal(80, 0)
+  expiresAt       DateTime @db.Timestamp(6)
+
+  @@id([configurationId, noteId])
+  @@index([projectId, timestamp])
+  @@index([configurationId, timestamp])
+}
+
+model PrivacyNoteStatusChange {
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  noteId          BigInt
+  timestamp       DateTime @db.Timestamp(6)
+  blockNumber     Int
+  txHash          String   @db.VarChar(66)
+  logIndex        Int
+  active          Boolean
+
+  @@id([configurationId, txHash, logIndex])
+  @@index([projectId, timestamp])
   @@index([configurationId, timestamp])
 }
 

@@ -36,6 +36,8 @@ import { NotificationsRepository } from './repositories/NotificationsRepository'
 import { PrivacyAnonymitySetEventRepository } from './repositories/PrivacyAnonymitySetEventRepository'
 import { PrivacyBlockTimestampRepository } from './repositories/PrivacyBlockTimestampRepository'
 import { PrivacyFlowEventRepository } from './repositories/PrivacyFlowEventRepository'
+import { PrivacyNoteRepository } from './repositories/PrivacyNoteRepository'
+import { PrivacyNoteStatusChangeRepository } from './repositories/PrivacyNoteStatusChangeRepository'
 import { PrivacyPriceRepository } from './repositories/PrivacyPriceRepository'
 import { PrivacyRelayerActivityRepository } from './repositories/PrivacyRelayerActivityRepository'
 import { PrivacyRelayerSampleRepository } from './repositories/PrivacyRelayerSampleRepository'
@@ -133,6 +135,8 @@ export function createDatabase(
     privacyAnonymitySetEvent: new PrivacyAnonymitySetEventRepository(db),
     privacyBlockTimestamp: new PrivacyBlockTimestampRepository(db),
     privacyFlowEvent: new PrivacyFlowEventRepository(db),
+    privacyNote: new PrivacyNoteRepository(db),
+    privacyNoteStatusChange: new PrivacyNoteStatusChangeRepository(db),
     privacyPrice: new PrivacyPriceRepository(db),
     privacyRelayerActivity: new PrivacyRelayerActivityRepository(db),
     privacyRelayerSample: new PrivacyRelayerSampleRepository(db),
