@@ -47,7 +47,7 @@ import { notAnswering, type TurnProblem, unusableAnswer } from './turnProblem'
 export interface OpenCodeClientOptions {
   /** `provider/model`, as `opencode models` lists them; required. */
   model: string
-  /** Executable name or path; default `opencode` on PATH. */
+  /** Executable name on PATH or absolute path (the turn runs in a scratch directory); default `opencode`. */
   binary?: string
   /** Provider-specific reasoning effort, passed as `--variant`. */
   variant?: string
