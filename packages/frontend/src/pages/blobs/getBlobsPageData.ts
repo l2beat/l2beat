@@ -1,5 +1,6 @@
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getBlobPosters } from '~/server/features/data-availability/live-blobs/getBlobPosters'
 import { getDaProjectValidators } from '~/server/features/data-availability/project/utils/getDaProjectValidators'
 import { getDaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { ps } from '~/server/projects'
@@ -13,18 +14,25 @@ export async function getBlobsPageData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const [appLayoutProps, daLayers, daBridges, ethereum, projectsWithColors] =
-    await Promise.all([
-      getAppLayoutProps(),
-      ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
-      ps.getProjects({ select: ['daBridge'] }),
-      ps.getProject({
-        id: ProjectId.ETHEREUM,
-        select: ['daLayer'],
-        optional: ['milestones'],
-      }),
-      ps.getProjects({ select: ['colors'] }),
-    ])
+  const [
+    appLayoutProps,
+    daLayers,
+    daBridges,
+    ethereum,
+    projectsWithColors,
+    blobPosters,
+  ] = await Promise.all([
+    getAppLayoutProps(),
+    ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
+    ps.getProjects({ select: ['daBridge'] }),
+    ps.getProject({
+      id: ProjectId.ETHEREUM,
+      select: ['daLayer'],
+      optional: ['milestones'],
+    }),
+    ps.getProjects({ select: ['colors'] }),
+    getBlobPosters(),
+  ])
   assert(ethereum, 'Ethereum DA layer not found')
 
   const latestThroughput = ethereum.daLayer.throughput
@@ -63,6 +71,7 @@ export async function getBlobsPageData(
         ...appLayoutProps,
         ethereumSummary,
         tvsProjectIds: getDaTvsProjectIds(daLayers, daBridges),
+        blobPosters,
         throughput: {
           project: toChartProject(ethereum),
           configuredThroughputs: ethereum.daLayer.throughput ?? [],
