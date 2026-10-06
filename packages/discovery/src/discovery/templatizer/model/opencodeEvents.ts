@@ -11,9 +11,10 @@
  *
  * DeepSeek models sometimes write their tool-call markup into the text
  * itself when no tool is offered (`<｜｜DSML｜｜ calls>` … `<｜｜DSML｜｜ invoke
- * name="bash">`); such a text is a tool call that never ran, not an answer,
- * and is recorded as a tool part so the turn is refused and sampled again
- * instead of being sent back as a JSON error the model would repeat.
+ * name="bash">`, or with single bars, `<｜DSML｜function_calls>`); such a
+ * text is a tool call that never ran, not an answer, and is recorded as a
+ * tool part so the turn is refused and sampled again instead of being sent
+ * back as a JSON error the model would repeat.
  *
  * Verified against opencode 1.18.32; fields are read defensively so an
  * unknown part is kept in the artifact rather than failing the turn.
@@ -37,8 +38,8 @@ const HARMLESS_PART_TYPES: ReadonlySet<string> = new Set([
   'reasoning',
 ])
 
-/** DeepSeek's tool-call markup, with fullwidth bars (U+FF5C). */
-const TOOL_CALL_MARKUP = /<｜｜DSML｜｜\s*(calls|invoke)\b/
+/** DeepSeek's tool-call markup, with fullwidth bars (U+FF5C), one or two of them. */
+const TOOL_CALL_MARKUP = /<｜{1,2}DSML｜{1,2}\s*(function_calls|calls|invoke)\b/
 
 export interface ParsedOpenCodeEvents {
   events: OpenCodeEvent[]

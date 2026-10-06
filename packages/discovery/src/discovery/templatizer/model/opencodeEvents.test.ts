@@ -40,6 +40,20 @@ describe(parseOpenCodeEvents.name, () => {
     expect(parsed.toolParts).toEqual(['text holding tool-call markup (DSML)'])
     expect(parsed.text).toEqual(markup)
 
+    const singleBars = parseOpenCodeEvents(
+      JSON.stringify({
+        type: 'text',
+        sessionID: 'ses_1',
+        part: {
+          type: 'text',
+          text: '<｜DSML｜function_calls>\n<｜DSML｜invoke name="bash">\n</｜DSML｜invoke>\n</｜DSML｜function_calls>',
+        },
+      }),
+    )
+    expect(singleBars.toolParts).toEqual([
+      'text holding tool-call markup (DSML)',
+    ])
+
     const plain = parseOpenCodeEvents(
       JSON.stringify({
         type: 'text',

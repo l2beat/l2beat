@@ -4,10 +4,11 @@
  * opencode names models `provider/model`, and its own gateways, `opencode/…`
  * for a Zen account and `opencode-go/…` for a Go subscription, are
  * unambiguous signs the model is not one of Codex's; the whole string then
- * goes to opencode unchanged. Other `provider/model` names stay with Codex,
- * which takes them too when configured for OpenRouter. Everything else, no
- * model at all included, goes to Codex, whose default model is the
- * templatizer's default.
+ * goes to opencode unchanged. Everything else, no model at all included,
+ * goes to Codex, whose default model is the templatizer's default. Codex
+ * runs with `--ignore-user-config`, so a provider configured there
+ * (OpenRouter's `provider/model` names) is not used, and such a name fails
+ * on the first turn.
  *
  * The effort is checked here, before any contract is analysed, because
  * neither backend says so early: opencode silently runs a level the model
