@@ -68,8 +68,6 @@
   --icon-secondary: #5f6470;
   --overlay: #181b2d99;
   --divider: #ccd0da;
-  /* The home page's hairlines: nearer the nav's grey, still clear on white. */
-  --home-divider: #e2e4ea;
   --link-stroke: #badaff;
   --link: #2a5bd8;
   --scrollbar: #8a909d;
@@ -141,7 +139,6 @@
   --icon-secondary: #80869a;
   --overlay: #04050acc;
   --divider: #3d4358;
-  --home-divider: #262833;
   --link-stroke: #24406b;
   --link: #66b2ff;
   --scrollbar: #565d76;
