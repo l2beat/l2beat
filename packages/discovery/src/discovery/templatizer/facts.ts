@@ -58,6 +58,7 @@ export interface Baseline {
   fields: Record<string, BaselineField>
 }
 
+/** Neither `value` nor `error` when the handler found nothing at this block. */
 export interface BaselineField {
   kind: 'getter' | 'probe' | 'override'
   value?: ContractValue
