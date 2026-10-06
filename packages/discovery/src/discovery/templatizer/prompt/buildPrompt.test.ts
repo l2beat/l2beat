@@ -212,6 +212,11 @@ describe(buildPrompt.name, () => {
       kind: 'getter',
       error: 'Execution reverted',
     }
+    input.facts.baseline.fields.validators = {
+      kind: 'probe',
+      value: ['0x01', '0x02', '0x03', '0x04', '0x05'],
+      error: 'Too many values. Update configuration to explore fully',
+    }
     input.facts.baseline.fields.fromConfig = { kind: 'override', value: 7 }
     const facts = section(buildPrompt(input).prompt, 'facts')
     expect(facts).toInclude('- `lastFinalizedBatchIndex` = 519245')
@@ -221,6 +226,9 @@ describe(buildPrompt.name, () => {
     )
     expect(facts).toInclude('- `fromConfig` (from the project config) = 7')
     expect(facts).toInclude('- `brokenGetter` = error: Execution reverted')
+    expect(facts).toInclude(
+      '- `validators` (probed at indices 0–4) = ["0x01","0x02","0x03","0x04","0x05"] (error: Too many values. Update configuration to explore fully)',
+    )
     expect(facts).toInclude('[52 more characters elided]')
     expect(facts).not.toInclude(long)
     expect(facts).toMatchRegex(

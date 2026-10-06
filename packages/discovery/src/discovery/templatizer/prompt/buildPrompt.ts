@@ -396,11 +396,18 @@ function renderBaselineField(name: string, field: BaselineField): string {
   return `- \`${name}\`${origin} = ${renderBaselineValue(field)}`
 }
 
+/**
+ * A value and an error together come from a probe whose every index
+ * answered: V1 keeps the values and says there may be more.
+ */
 function renderBaselineValue(field: BaselineField): string {
-  if (field.error !== undefined) {
+  if (field.error === undefined) {
+    return renderValue(field.value as ContractValue)
+  }
+  if (field.value === undefined) {
     return `error: ${field.error}`
   }
-  return renderValue(field.value as ContractValue)
+  return `${renderValue(field.value)} (error: ${field.error})`
 }
 
 function renderValue(value: ContractValue): string {
