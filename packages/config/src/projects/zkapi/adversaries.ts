@@ -22,7 +22,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       exposure:
         'API authorizations stay offchain. Their proofs hide the deposit note and exact remaining balance. Ethereum publishes deposit sender, commitment, amount and expiry, then the same note id, payout address and remaining balance on closure. The difference reveals total consumption for that note. Publishing a challenge exposes a request proof and its nullifier alongside the note being withdrawn.',
       advice:
-        'Treat funding, payouts and total consumption as public. Use a funding wallet and payout address that you accept being linked. An escape dispute reveals additional authorization metadata.',
+        'Treat funding, payouts and total consumption as public. Use a funding wallet and payout address that you accept being linked. An escape dispute reveals additional metadata.',
       interior: {
         sender: 'exposed',
         recipient: {
@@ -51,7 +51,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'warning',
       exposure:
-        'Ordinary authorizations and their spending bounds stay offchain. If an analyst obtains a request proof, its time and spending bound narrow the eligible notes using public deposit amounts and rounded expiries. A unique eligible note can identify the funding account. A published withdrawal challenge directly identifies the note behind its request proof. There is no pool anonymity between deposit and withdrawal.',
+        'The anonymity set is limited to zkapi users. Ordinary authorizations and their spending bounds stay offchain. If an analyst obtains a request proof, its time and spending bound narrow the eligible notes. A published withdrawal challenge directly identifies the note behind its request proof. There is no pool anonymity between deposit and withdrawal.',
       advice:
         'Check that other active notes can cover your request budget. Avoid authorizing immediately after funding. Choosing a fresh payout address does not remove the published note-id link.',
       interior: {
@@ -74,9 +74,9 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'good',
+      sentiment: 'warning',
       exposure:
-        'Direct connections reveal IPs and timing to the protocol service, indexer, credential verifier and inference provider. RPCs see funding accounts and withdrawal transactions. The browser fetches a common tree snapshot and derives note paths locally. The desktop companion instead requests paths containing its note id, identifying the deposit to the indexer. Its Go Tor/Wisp transport is separate from the Rust companion HTTP client. Prompts can identify the user independently of funding.',
+        'Direct connections reveal IPs and timing to the protocol service, indexer, credential verifier and inference provider. RPCs see funding accounts and withdrawal transactions. The browser fetches a common tree snapshot and derives note paths locally. The desktop companion instead requests paths containing its note id, identifying the deposit to the indexer. Its Go Tor/Wisp transport is separate from the Rust companion HTTP client.',
       advice:
         'Use an inspected browser SDK build with a reviewed production profile, route all traffic and wallet broadcasts through Tor, and read Ethereum through your own node. Changing the pinned RPC requires a reviewed profile and matching manifest. For the desktop client, disable credential reuse and route the whole application, including its Rust companion. The relay setting alone does not cover companion requests.',
       interior: {
@@ -116,9 +116,9 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       ],
     },
     privilegedInsider: {
-      sentiment: 'warning',
+      sentiment: 'bad',
       exposure:
-        'The protocol operator receives the proof, spending bound, timing, lease metadata and billed cost. Randomized commitments hide the exact balance and note, but an operator sharing indexer logs can correlate desktop note-path queries with authorization requests. The credential issuer knows the provider key it issues, and the inference provider sees that key and all content sent with it. The desktop reuses keys across compatible requests by default. Hosted wallet code can read local secrets or substitute future payment instructions. A challenge explicitly associates a submitted authorization with a public note.',
+        'The challenge mechanism for escapes can be used to deanonymize users. The protocol operator receives the proof, spending bound, timing, lease metadata and billed cost. Randomized commitments hide the exact balance and note, but an operator sharing indexer logs can correlate desktop note-path queries with authorization requests. The credential issuer knows the provider key it issues, and the inference provider sees that key and all content sent with it. The desktop reuses keys across compatible requests by default. Hosted wallet code can read local secrets or substitute future payment instructions. A challenge explicitly associates a submitted authorization with a public note.',
       advice:
         'Run inspected local code, use the browser snapshot path, isolate funding and API network identities, and send no identifying content. Disable desktop key reuse with --key-reuse-window-seconds 0. The issuer and provider still learn the credential and content needed to deliver the service.',
       interior: {
