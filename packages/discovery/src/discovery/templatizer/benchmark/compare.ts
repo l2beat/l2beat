@@ -71,8 +71,10 @@ export function compareValues(
 ): FieldVerdict[] {
   const v1Names = Object.keys(v1).sort()
   const generatedNames = Object.keys(generated).sort()
-  const unclaimed = new Set(generatedNames.filter((name) => !(name in v1)))
-  const nameless = v1Names.filter((name) => !(name in generated))
+  const unclaimed = new Set(
+    generatedNames.filter((name) => !Object.hasOwn(v1, name)),
+  )
+  const nameless = v1Names.filter((name) => !Object.hasOwn(generated, name))
   const renamed = matchRenamed(v1, generated, nameless, unclaimed, ctx)
   const unrenamed = nameless.filter((name) => !renamed.has(name))
   // Renamed matches are taken before leaf matching, so the generated fields
@@ -95,7 +97,7 @@ function compareNamesakes(
 ): FieldVerdict[] {
   return Object.keys(v1)
     .sort()
-    .filter((name) => name in generated)
+    .filter((name) => Object.hasOwn(generated, name))
     .map((name): FieldVerdict => {
       const attribution = ctx.attribute(name)
       if (valuesEqual(v1[name], generated[name])) {
@@ -417,10 +419,11 @@ function summariseObjects(
   b: Record<string, unknown>,
 ): string {
   const keysA = Object.keys(a)
-  const onlyA = keysA.filter((key) => !(key in b))
-  const onlyB = Object.keys(b).filter((key) => !(key in a))
+  const onlyA = keysA.filter((key) => !Object.hasOwn(b, key))
+  const onlyB = Object.keys(b).filter((key) => !Object.hasOwn(a, key))
   const differing = keysA.filter(
-    (key) => key in b && canonicalJson(a[key]) !== canonicalJson(b[key]),
+    (key) =>
+      Object.hasOwn(b, key) && canonicalJson(a[key]) !== canonicalJson(b[key]),
   )
   const parts = ['objects']
   if (onlyA.length > 0) parts.push(`keys only in V1: ${examples(onlyA)}`)

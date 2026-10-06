@@ -107,6 +107,14 @@ describe(compareValues.name, () => {
     )
   })
 
+  it('pairs fields by own name, so a name every object has is not taken as present', () => {
+    const verdicts = compareValues({ toString: A }, { constructor: B }, ctx)
+    expect(verdicts.map((verdict) => [verdict.name, verdict.verdict])).toEqual([
+      ['toString', 'v1-only'],
+      ['constructor', 'v2-only'],
+    ])
+  })
+
   it('reports a same-name mismatch as different with a readable diff', () => {
     const verdicts = compareValues(
       { sequencers: [A, B], owner: A, config: { a: 1, b: 2 } },
