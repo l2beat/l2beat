@@ -109,7 +109,7 @@ describe(chooseModel.name, () => {
     )
   })
 
-  it('sends any other model to codex, at high effort by default, OpenRouter-style names included', async () => {
+  it('sends any other model to codex, at high effort by default, a provider/model name of no opencode gateway included', async () => {
     const noOpenCode = listing({})
 
     expect(
