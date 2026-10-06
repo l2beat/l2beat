@@ -23,9 +23,9 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       shortDescription:
-        'A payment reaches a predicted Safe before it is deployed, with no onchain announcement linking it to the recipient account.',
+        'A payment reaches a predicted Safe before it is deployed, with no onchain data linking it to the recipient account.',
       longDescription:
-        'Deployment later exposes the individual stealth owner and enabled modules, not the parent account.',
+        'Deployment later exposes the individual stealth signer (private signer controlling the safe) and enabled modules, not the parent account.',
       advice: S.freshReceive('keep unrelated funds separate with labels'),
       sources: [
         {

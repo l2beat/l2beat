@@ -74,9 +74,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'bad',
       shortDescription:
-        "Cake's Tor has one SOCKS port without isolation, so Moralis, which cannot be switched off, and Blink and Etherscan, if left on, can see both Ethereum wallets on one circuit.",
-      longDescription:
-        'With Tor and own nodes, the two legs stay apart unless they run in the same app/tor session.',
+        "Cake's Tor config does not support isolation, so Moralis, which cannot be switched off, and Blink and Etherscan, if left on, can see both Ethereum wallets on one IP.",
       advice:
         'Turn on Tor, switch off Blink and Etherscan, set your own Monero node and Ethereum RPC, then restart the app, since the Ethereum client keeps its first connection. Wait and restart it again between the legs.',
       interior: {
@@ -118,9 +116,9 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       shortDescription:
-        'The swap-in service that pays your XMR knows that output, and the service you exit with sees the rings of your Monero transaction.',
+        'The swap-in service that pays your XMR knows that Monero output, and the service you exit with sees the rings of your Monero transaction.',
       longDescription:
-        "One party holding both finds its output in the rings behind the exit. Each service also holds the addresses, amounts, IP and Cake's API key of its leg, screens them and can hold the funds until KYC.",
+        "One party holding both finds its known output in the rings behind the exit. Each service also holds the addresses, amounts, IP and Cake's API key of its leg, screens them and can hold the funds until KYC.",
       advice:
         'Force different services for entry and exit. Self-transfer the XMR several times, hours to days apart, and never pay the exit service the whole amount.',
       interior: {
@@ -169,7 +167,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       shortDescription:
-        "A quantum computer recovers the key of every ring member from the chain alone, recomputes its key image and so finds the real spend of every ring, which turns the XMR's path from payout to exit into a public trail.",
+        'A quantum computer recovers the key of every ring member from public chain data, recomputes its key image and can link every transaction.',
       longDescription:
         "The services' records of payout and deposit then join the Ethereum legs.",
       interior: {

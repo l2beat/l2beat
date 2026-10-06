@@ -18,10 +18,12 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
   },
   cells: {
     publicObserver: {
-      sentiment: 'good',
+      sentiment: 'warning',
       shortDescription: 'Only the amount of a confidential transfer is hidden.',
       longDescription:
         'Sender, recipient, every wrap and unwrap amount and the ciphertext handles are public, and either party can later disclose a transfer amount onchain.',
+      advice:
+        'Keep funds wrapped and transfer often, even zero amounts. Unwrap only after a while, and never an amount that matches a recent wrap or a known payment.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -80,7 +82,7 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       shortDescription:
         'Amounts are encrypted on your device and never leave it in clear.',
       longDescription:
-        'The default hosted relayer, which needs an operator API key, receives your address and the token contract with every encrypted input and balance view, so it learns who transacts and when, plus your IP.',
+        'The default hosted relayer receives your address and the token contract with every encrypted input and balance view, so it learns who transacts and when, plus your IP.',
       advice: 'Route relayer requests through Tor, or self-host the relayer.',
       interior: {
         sender: 'exposed',

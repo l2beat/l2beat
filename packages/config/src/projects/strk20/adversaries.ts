@@ -19,8 +19,8 @@ export const strk20Adversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'warning',
       shortDescription:
-        'Transfers inside are encrypted, but the public part of every transaction lists the recipient address when you open a channel to a new contact, the token and amount of the fee you pay, and the target and calldata of any DeFi action.',
-      longDescription: `${S.entryExitPublic()} Submitting from your own wallet names you; a paymaster hides the submitter but shows the fee token and amount.`,
+        'Transfers inside are encrypted, but transactions to new contacts reveil the recipient.',
+      longDescription: `The token and amount of the fee you pay, and the target and calldata of any DeFi action are public. ${S.entryExitPublic()} Submitting from your own wallet names you. A paymaster hides the submitter but shows the fee token and amount.`,
       advice:
         'Submit every pool action through a paymaster and pay its fee in the most common token. Treat the first payment to a new contact, and any DeFi action, as public.',
       interior: {
@@ -131,7 +131,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       shortDescription:
-        "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay; that key decrypts everything the protocol hides.",
+        "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay. That key decrypts everything the protocol hides.",
       longDescription:
         'The default proving service receives your address, viewing key and actions in the clear, the note-discovery service receives the viewing key on every sync, and deposits need a fresh attestation from a screening provider that sees and can block every depositor.',
       advice:

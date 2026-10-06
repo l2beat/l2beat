@@ -18,7 +18,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       shortDescription: 'Transfers inside publish only encrypted notes.',
       longDescription: `${S.entryExitPublic()} Each epoch's calldata pairs every exit with the nullifiers and the input/output shape of the transfer that funded it.`,
       advice:
-        "Exit through the operator's relay; a forced exit reveals your account and the notes you spend. A public gift exit names the destination.",
+        "Exit through the operator's relay. A forced exit reveals your account and the notes you spend. A public gift exit names the destination.",
       interior: {
         sender: 'private',
         recipient: 'private',

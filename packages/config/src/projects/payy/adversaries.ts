@@ -146,7 +146,7 @@ export const payyAdversaries = definePrivacyAdversaries({
       shortDescription:
         'One company runs the only validator and prover, the node, the note registry, the deposit relayer and the KYC checks.',
       longDescription:
-        "Its backend ties each session to a wallet address and keeps, per wallet, the deposit address, KYC record, country, IP country and the commitment and owner of every note the app reports; its diagnostics table has a field for the recovery phrase. For payment links and fiat ramps it holds the notes' private keys and can read and spend them. It can drop your withdrawals, and its owner can rewrite the state root with no delay.",
+        "Its backend ties each session to a wallet address and keeps, per wallet, the deposit address, KYC record, country, IP country and the commitment and owner of every note the app reports. For payment links and fiat ramps it holds the notes' private keys and can read and spend them. It can drop your withdrawals, and its owner can rewrite the state root with no delay.",
       advice:
         'Use only ordinary transfers for anything you want to keep private. Links, ramps and the card hand the operator the note keys.',
       interior: {
@@ -198,9 +198,7 @@ export const payyAdversaries = definePrivacyAdversaries({
       shortDescription:
         'Every per-transaction proof is public forever and not zero-knowledge, so whatever it leaks stays available to future compute, and a discrete-log break opens the commitments inside it.',
       longDescription:
-        'Registry ciphertexts use elliptic-curve key exchange; if the operator retains them, a quantum computer opens every note delivered through it.',
-      advice:
-        'Receive notes in person rather than through the registry where the app allows it.',
+        'Registry ciphertexts use elliptic-curve key exchange. If the operator retains them, a quantum computer opens every note delivered through it.',
       interior: {
         sender: {
           verdict: 'atRisk',

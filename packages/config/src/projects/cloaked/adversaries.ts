@@ -48,7 +48,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       shortDescription:
         'Spending through shared execution infrastructure makes service use recognizable, which narrows the anonymity set to Cloaked users.',
       longDescription:
-        'No registry or announcement maps accounts to addresses, but timing, distinctive amounts, recurring counterparties and consolidation can identify or cluster recipients. A send draws from several addresses by default and leaves a change output that links them.',
+        'Timing, distinctive amounts, recurring counterparties and consolidation can identify or cluster recipients. A send draws from several addresses by default and leaves a change output that links them.',
       advice:
         'Space out related payments and check whether amounts or recurring patterns identify you. Follow your own change outputs to see what a counterparty can trace.',
       sources: [
@@ -68,11 +68,11 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning',
+      sentiment: 'bad',
       shortDescription:
-        'Every spend from the hosted client goes to a third-party relay, Porto, with the stealth address, destination and amount, which clusters your addresses per session even over Tor.',
+        'Every spend from the hosted client goes to a third-party relay, with the stealth address, destination and amount.',
       longDescription:
-        'The client is closed source, so what else reaches the RPC, hosting and analytics providers named in the privacy policy cannot be verified. Only the recovery tool runs without any server.',
+        'The client is closed source, so what else reaches the RPC, hosting and analytics providers named in the privacy policy cannot be verified.',
       advice:
         'Derive your address keys with the recovery tool, which makes no network calls, and spend them from a wallet on your own node over Tor. Fund gas for token transfers from a fresh wallet, since sponsored execution is only available through the hosted client.',
       sources: [
