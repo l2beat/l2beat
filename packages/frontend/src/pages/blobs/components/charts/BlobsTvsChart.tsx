@@ -87,6 +87,11 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
     [fullData.data, settlementOnly.data],
   )
   const stats = getTvsSeriesStats(chartData, dataKeys)
+  // the series sync apart, and the chart is only synced as far as both are
+  const syncedUntil =
+    fullData.data && settlementOnly.data
+      ? Math.min(fullData.data.syncedUntil, settlementOnly.data.syncedUntil)
+      : undefined
 
   return (
     <div className="flex flex-col gap-4 lg:contents">
@@ -137,7 +142,7 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
               domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
               tickFormatter: (value: number) => formatCurrency(value, 'usd'),
             }}
-            syncedUntil={fullData.data?.syncedUntil}
+            syncedUntil={syncedUntil}
           />
           <ChartTooltip content={<CustomTooltip />} filterNull={false} />
         </AreaChart>
