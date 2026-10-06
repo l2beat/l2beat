@@ -9,10 +9,7 @@ export interface DaTvsProjectIds {
 }
 
 type Layer = Pick<Project, 'id'> & {
-  daLayer: Pick<
-    Project<'daLayer'>['daLayer'],
-    'systemCategory' | 'usedWithoutBridgeIn'
-  >
+  daLayer: Pick<Project<'daLayer'>['daLayer'], 'usedWithoutBridgeIn'>
 }
 type Bridge = {
   daBridge: Pick<Project<'daBridge'>['daBridge'], 'daLayer' | 'usedIn'>
@@ -21,11 +18,13 @@ type Bridge = {
 /**
  * Splits the projects by where their data goes. A project that uses Ethereum
  * next to another DA layer counts as full data, so nobody is counted twice.
- * Custom DA systems (DACs and the like) are left out.
+ * A project with its own DA system (a DAC and the like) keeps its data off
+ * Ethereum just the same, so it counts as settlement only.
  */
 export function getDaTvsProjectIds(
   layers: Layer[],
   bridges: Bridge[],
+  customDaProjects: Pick<Project, 'id'>[],
 ): DaTvsProjectIds {
   const usedIn = (selected: Layer[]) => {
     const ids = new Set(selected.map((l) => l.id))
@@ -41,18 +40,15 @@ export function getDaTvsProjectIds(
     ]
   }
 
-  const publicLayers = layers.filter(
-    (l) => l.daLayer.systemCategory === 'public',
-  )
-  const fullData = usedIn(
-    publicLayers.filter((l) => l.id === ProjectId.ETHEREUM),
-  )
+  const fullData = usedIn(layers.filter((l) => l.id === ProjectId.ETHEREUM))
   const onEthereum = new Set(fullData)
+  const offEthereum = new Set([
+    ...usedIn(layers.filter((l) => l.id !== ProjectId.ETHEREUM)),
+    ...customDaProjects.map((p) => p.id),
+  ])
 
   return {
     fullData,
-    settlementOnly: usedIn(
-      publicLayers.filter((l) => l.id !== ProjectId.ETHEREUM),
-    ).filter((id) => !onEthereum.has(id)),
+    settlementOnly: [...offEthereum].filter((id) => !onEthereum.has(id)),
   }
 }
