@@ -13,7 +13,6 @@ import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import {
   ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
-  activeNoteAnonymitySetDescription,
   anonymitySetByHoldingDurationDescription,
   anonymitySetCoverageNote,
   anonymitySetHistoricDescription,
@@ -23,13 +22,11 @@ import type { ProjectSectionProps } from '../types'
 export interface PrivacyAnonymitySetSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
-  unit?: 'note'
 }
 
 export function PrivacyAnonymitySetSection({
   defaultRange,
   project,
-  unit,
   ...projectSectionProps
 }: PrivacyAnonymitySetSectionProps) {
   const trpc = useTRPC()
@@ -67,9 +64,7 @@ export function PrivacyAnonymitySetSection({
             {ANONYMITY_SET_WINDOW_DAYS} day historic anonymity set
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
-            {unit === 'note'
-              ? activeNoteAnonymitySetDescription(ANONYMITY_SET_WINDOW_DAYS)
-              : anonymitySetHistoricDescription(ANONYMITY_SET_WINDOW_DAYS)}
+            {anonymitySetHistoricDescription(ANONYMITY_SET_WINDOW_DAYS)}
             {coverageNote !== undefined && <> {coverageNote}</>}
           </p>
           {data !== undefined && data.syncingLabels.length > 0 && (
@@ -97,37 +92,32 @@ export function PrivacyAnonymitySetSection({
             project={project}
             type="history"
           />
-          {unit !== 'note' && (
-            <>
-              <p className="mt-4 text-paragraph-14 text-secondary">
-                {ANONYMITY_SET_LOOKS_BACKWARDS_NOTE}
-              </p>
+          <p className="mt-4 text-paragraph-14 text-secondary">
+            {ANONYMITY_SET_LOOKS_BACKWARDS_NOTE}
+          </p>
 
-              <h3 className="mt-4 mb-2 font-bold text-heading-20">
-                Estimated anonymity set by holding duration
-              </h3>
-              <p className="mb-4 text-paragraph-15 text-secondary">
-                {anonymitySetByHoldingDurationDescription(
-                  ANONYMITY_SET_WINDOW_DAYS,
-                )}
-                {data?.syncedUntil !== undefined && (
-                  <>
-                    {' '}
-                    Counted over deposits up to{' '}
-                    {formatTimestamp(data.syncedUntil, { longMonthName: true })}
-                    .
-                  </>
-                )}
-              </p>
-              <PrivacyAnonymitySetChart
-                data={data?.holdingDuration}
-                series={data?.series}
-                isLoading={isLoading}
-                project={project}
-                type="holding-duration"
-              />
-            </>
-          )}
+          <h3 className="mt-4 mb-2 font-bold text-heading-20">
+            Estimated anonymity set by holding duration
+          </h3>
+          <p className="mb-4 text-paragraph-15 text-secondary">
+            {anonymitySetByHoldingDurationDescription(
+              ANONYMITY_SET_WINDOW_DAYS,
+            )}
+            {data?.syncedUntil !== undefined && (
+              <>
+                {' '}
+                Counted over deposits up to{' '}
+                {formatTimestamp(data.syncedUntil, { longMonthName: true })}.
+              </>
+            )}
+          </p>
+          <PrivacyAnonymitySetChart
+            data={data?.holdingDuration}
+            series={data?.series}
+            isLoading={isLoading}
+            project={project}
+            type="holding-duration"
+          />
         </>
       )}
     </ProjectSection>

@@ -7,18 +7,6 @@ import {
 } from './anonymitySetTooltip'
 
 describe(getAnonymitySetSteps.name, () => {
-  it('explains note counts as authorization candidates rather than unique depositors', () => {
-    const description = getAnonymitySetDescription({
-      ...makeSummary({ bucketType: 'pool' }),
-      unit: 'note',
-    })
-    expect(description).toInclude(
-      'Active notes deposited during the last 30 complete UTC days',
-    )
-    expect(description).toInclude('upper bound')
-    expect(description).toInclude('remaining balances are private')
-    expect(description).toInclude('multiple notes can belong to one user')
-  })
   it('describes a fixed-denomination pool', () => {
     const summary = makeSummary({ bucketType: 'denomination' })
 

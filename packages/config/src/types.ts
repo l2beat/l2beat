@@ -1434,8 +1434,8 @@ export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
         anonymitySet: {
           /**
            * Public deposit-amount thresholds in token base units. Each value
-           * defines a cohort of deposits of at least that amount. Usually
-           * analytical thresholds, or the request bound for active notes.
+           * defines a cohort of depositors whose deposit was at least that
+           * amount. These are analytical thresholds, not protocol minimums.
            */
           minimumAmounts: string[]
         }
@@ -1471,7 +1471,6 @@ export type PrivacyAnonymitySetDepositSource = {
       | 'privacyPoolsValue'
       | 'railgunShield'
       | 'zkMoneyDeposit'
-      | 'zkApiDeposit'
   }
 >
 

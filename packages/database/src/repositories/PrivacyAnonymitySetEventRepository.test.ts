@@ -23,58 +23,6 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
     expect(await repository.getAll()).toEqual([updated])
   })
 
-  it('stores note events in chain order, excludes them from depositor counts and trims lifecycle changes', async () => {
-    const deposit = {
-      ...event('aaaaaaaaaaaa', 1, START, 'alice', 10n),
-      sender: null,
-      note: {
-        id: 4_294_967_295,
-        active: true,
-        expiresAt: UnixTime(START + 30 * UnixTime.DAY),
-      },
-    }
-    const escapeEvent = {
-      ...event('aaaaaaaaaaaa', 2, START + UnixTime.HOUR, 'alice', 0n),
-      sender: null,
-      note: { id: deposit.note.id, active: false, expiresAt: null },
-    }
-    await repository.upsertMany([escapeEvent, deposit])
-    expect(
-      await repository.getNoteEventsByProjectIds(
-        ['project-a'],
-        START,
-        START + UnixTime.DAY,
-      ),
-    ).toEqual([deposit, escapeEvent])
-    expect(
-      await repository.getSenderDaysByProjectIds(
-        ['project-a'],
-        START,
-        START + UnixTime.DAY,
-      ),
-    ).toEqual([])
-    expect(
-      await repository.getDepositCount(
-        'project-a',
-        ['bucket-a'],
-        START,
-        START + UnixTime.DAY,
-      ),
-    ).toEqual(1)
-    await repository.deleteByConfigInTimeRange(
-      'aaaaaaaaaaaa',
-      UnixTime(START + UnixTime.HOUR),
-      UnixTime(START + UnixTime.DAY),
-    )
-    expect(
-      await repository.getNoteEventsByProjectIds(
-        ['project-a'],
-        START,
-        START + UnixTime.DAY,
-      ),
-    ).toEqual([deposit])
-  })
-
   it('groups to the maximum individual amount per sender and UTC day', async () => {
     await repository.upsertMany([
       event('aaaaaaaaaaaa', 1, START, 'alice', 6n),

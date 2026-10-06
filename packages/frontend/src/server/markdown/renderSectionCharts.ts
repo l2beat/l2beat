@@ -8,7 +8,6 @@ import { anomalySubtypeToLabel } from '~/components/projects/sections/liveness/a
 import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
 import {
   ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
-  activeNoteAnonymitySetDescription,
   anonymitySetByHoldingDurationDescription,
   anonymitySetHistoricDescription,
   COSTS_DESCRIPTION,
@@ -159,7 +158,7 @@ export function renderThroughputSection(
 
 /** The explanations around the two charts; the charts load in the browser. */
 export function renderPrivacyAnonymitySetSection(
-  props: { id: ProjectSectionId; unit?: 'note' },
+  props: { id: ProjectSectionId },
   level: number,
 ) {
   const days = ANONYMITY_SET_WINDOW_DAYS
@@ -168,19 +167,15 @@ export function renderPrivacyAnonymitySetSection(
       level,
       `${days} day historic anonymity set`,
       joinBlocks([
-        props.unit === 'note'
-          ? activeNoteAnonymitySetDescription(days)
-          : anonymitySetHistoricDescription(days),
-        props.unit === 'note' ? '' : ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
+        anonymitySetHistoricDescription(days),
+        ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
       ]),
     ),
-    props.unit === 'note'
-      ? ''
-      : subsection(
-          level,
-          'Estimated anonymity set by holding duration',
-          anonymitySetByHoldingDurationDescription(days),
-        ),
+    subsection(
+      level,
+      'Estimated anonymity set by holding duration',
+      anonymitySetByHoldingDurationDescription(days),
+    ),
     htmlPagePointer('The interactive charts are shown', props.id),
   ])
 }

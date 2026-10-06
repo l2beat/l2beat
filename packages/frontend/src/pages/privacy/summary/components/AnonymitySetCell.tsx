@@ -83,7 +83,6 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
         >
           <span className="font-medium text-xs leading-[15px] md:text-sm md:leading-[1.2]">
             {displayValue}
-            {anonymitySet.unit === 'note' && ' notes'}
           </span>
           <span className="whitespace-pre-line text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
             {anonymitySet.label}
@@ -101,34 +100,32 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
         {coverageNote !== undefined && (
           <p className="mt-2 text-secondary">{coverageNote}</p>
         )}
-        {anonymitySet.unit !== 'note' && (
-          <Callout
-            className="mt-2 px-3 py-2"
-            color="purple"
-            icon={<UserIcon className="fill-purple-450" />}
-            body={
-              <div className="flex flex-col gap-2 text-primary">
-                <div className="flex flex-col gap-1">
-                  <span className="font-medium">
-                    How to mix with {displayValue} users:
-                  </span>
-                  <ol className="ml-4 list-decimal space-y-1">
-                    {steps.map((step) => (
-                      <li key={step}>{step}</li>
-                    ))}
-                  </ol>
-                </div>
-                <p className="border-purple-450/30 border-t pt-2">
-                  Practical privacy also depends on the timing of deposits and
-                  withdrawals, the underlying network and browser used to
-                  interact with the frontend (if used), and the RPC providers
-                  used to send transactions and query public blockchain state.
-                  Users are advised to research OPSEC best practices.
-                </p>
+        <Callout
+          className="mt-2 px-3 py-2"
+          color="purple"
+          icon={<UserIcon className="fill-purple-450" />}
+          body={
+            <div className="flex flex-col gap-2 text-primary">
+              <div className="flex flex-col gap-1">
+                <span className="font-medium">
+                  How to mix with {displayValue} users:
+                </span>
+                <ol className="ml-4 list-decimal space-y-1">
+                  {steps.map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
+                </ol>
               </div>
-            }
-          />
-        )}
+              <p className="border-purple-450/30 border-t pt-2">
+                Practical privacy also depends on the timing of deposits and
+                withdrawals, the underlying network and browser used to interact
+                with the frontend (if used), and the RPC providers used to send
+                transactions and query public blockchain state. Users are
+                advised to research OPSEC best practices.
+              </p>
+            </div>
+          }
+        />
       </TooltipContent>
     </Tooltip>
   )

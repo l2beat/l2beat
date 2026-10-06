@@ -194,9 +194,6 @@ export const zkapi: BaseProject = {
             label: 'ETH API balances',
             address: vault.address,
             sinceTimestamp,
-            anonymitySet: {
-              minimumAmounts: [requestChargeCap.toString()],
-            },
             deposit: {
               event: utils.id(
                 'NoteDeposited(uint32,bytes32,uint128,uint64,uint256)',

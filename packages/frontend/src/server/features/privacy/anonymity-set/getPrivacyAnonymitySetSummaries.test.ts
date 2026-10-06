@@ -1,7 +1,6 @@
 import type { ProjectPrivacyInfo, ProjectPrivacyToken } from '@l2beat/config'
 import type {
   IndexerConfigurationRecord,
-  PrivacyAnonymitySetEventRecord,
   PrivacyAnonymitySetSenderDayRecord,
 } from '@l2beat/database'
 import {
@@ -21,49 +20,6 @@ const CURRENT_DAY = UnixTime.fromDate(new Date('2026-09-01T00:00:00Z'))
 const YESTERDAY = UnixTime(CURRENT_DAY - UnixTime.DAY)
 
 describe(getPrivacyAnonymitySetSummary.name, () => {
-  it('marks zkapi series as note counts and reports eligible notes after sync', () => {
-    const token = makeToken('eth', 'ETH', `0x${'11'.repeat(20)}`, ['10'])
-    const bucket = token.buckets[0]!
-    bucket.deposit = {
-      event: bucket.deposit.event,
-      extractor: 'zkApiDeposit',
-      params: { weiPerUnit: '1000000000' },
-    }
-    const project = makeProject({ tokens: [token] })
-    const series = getPrivacyAnonymitySetSeries(project)
-    expect(series[0]?.unit).toEqual('note')
-    const id = series[0]!.configurationId
-    const events = [0, 1].map((noteId) =>
-      mockObject<PrivacyAnonymitySetEventRecord>({
-        configurationId: id,
-        timestamp: YESTERDAY,
-        blockNumber: 1,
-        logIndex: noteId,
-        amount: 10n,
-        note: { id: noteId, active: true, expiresAt: CURRENT_DAY },
-      }),
-    )
-    const result = getPrivacyAnonymitySetSummary(
-      project,
-      series,
-      [configuration(id, CURRENT_DAY)],
-      [],
-      CURRENT_DAY,
-      undefined,
-      events,
-    )
-    expect(result).toEqual({
-      status: 'available',
-      value: 2,
-      label: '≥10 ETH',
-      syncingLabels: [],
-      bucketType: 'pool',
-      chain: 'ethereum',
-      formattedAmount: '10',
-      token: 'ETH',
-      unit: 'note',
-    })
-  })
   it('reports not-applicable projects with their description', () => {
     const project = makeProject({
       anonymitySet: { type: 'not-applicable', description: 'No pools.' },

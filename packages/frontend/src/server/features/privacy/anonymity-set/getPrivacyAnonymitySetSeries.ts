@@ -19,8 +19,6 @@ export interface PrivacyAnonymitySetSeries {
   formattedAmount: string
   minimumAmount: string
   sinceTimestamp: number
-  /** Counts active notes instead of distinct funding addresses. */
-  unit?: 'note'
 }
 
 export function getPrivacyAnonymitySetSeries(
@@ -64,9 +62,6 @@ export function getPrivacyAnonymitySetSeries(
           formattedAmount,
           minimumAmount,
           sinceTimestamp: bucket.sinceTimestamp,
-          ...(bucket.deposit.extractor === 'zkApiDeposit' && {
-            unit: 'note' as const,
-          }),
         }
       })
     }),

@@ -17,10 +17,6 @@ Neither client isolates unrelated operations onto separate Tor circuits or obscu
 
 Avoid identifying prompts. Providers can read content and link requests sharing credentials. The verifier receives API keys and checks provider privacy settings and credential ownership; approval does not establish absence of logging. Browser attestation checks are offchain, and the vault does not bind operator keys to an attested enclave.
 
-### Anonymity set
-
-The chart counts eligible active notes deposited in the previous 30 days. It is an **upper bound**: spending can exhaust balances, several notes may belong to one user, and budgets and timing can narrow the candidates.
-
 ### Recovering funds
 
 A cooperative withdrawal requires operator clearance. An escape waits {{challengePeriod}}. The operator can challenge it with a valid request proof, publicly linking that authorization to the note without proving service delivery. Recovery then requires a signed successor state.
