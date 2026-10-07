@@ -7,12 +7,12 @@ const CAPABILITIES = [
   {
     title: 'Program-agnostic',
     description:
-      "A transaction can depend on a proof of any program, under that program's verification key, making the primitive useful to custom-VM rollups and other ZK applications too.",
+      "A frame transaction can depend on a proof of any program, under that program's verification key, making the primitive useful to custom-VM rollups and other ZK applications too.",
   },
   {
     title: 'Aggregated, not verified one by one',
     description:
-      "Proofs never enter the block. Mempool nodes and the builder fold them into one recursive proof, which Ethereum's block proof covers.",
+      'Proofs never enter the block. Mempool nodes and the builder fold them into one recursive proof per block, which validators verify.',
   },
   {
     title: 'Protocol-managed verification',
@@ -26,7 +26,7 @@ export function NativeProofVerificationSection() {
     <section id="native-proof-verification" className="mt-8 md:mt-12">
       <SectionHeading
         title="Native rollups are a special case of generalized proof verification"
-        description="EIP-8288 lets any transaction depend on proofs that Ethereum verifies. Native rollups are the minimal case: they use Ethereum's own EVM program."
+        description="EIP-8288 lets any EIP-8141 frame transaction depend on proofs that Ethereum verifies. Native rollups are the minimal case: they use Ethereum's own EVM program."
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
         <div className="grid lg:grid-cols-[1fr_1.4fr]">

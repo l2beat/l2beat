@@ -10,7 +10,7 @@ const FEATURES = [
   {
     title: 'No bespoke onchain verifier stack',
     description:
-      'Operators still generate proofs, but Ethereum aggregates them and covers them with its own block proof. Rollups no longer need to independently deploy and govern verifier contracts, adapters, proof routers, and circuit upgrades for EVM execution.',
+      'Operators still generate proofs, but Ethereum aggregates and verifies them with each block. Rollups no longer need to independently deploy and govern verifier contracts, adapters, proof routers, and circuit upgrades for EVM execution.',
   },
 ]
 

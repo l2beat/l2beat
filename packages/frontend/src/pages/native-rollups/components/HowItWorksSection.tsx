@@ -15,7 +15,7 @@ const STEPS = [
   {
     title: 'Ethereum covers the proof',
     description:
-      "Proofs travel through the mempool and never enter the block. Mempool nodes and the builder aggregate them recursively, and Ethereum's mandatory block proof covers the aggregate.",
+      'Proofs travel through the mempool and never enter the block. Mempool nodes and the builder aggregate them recursively into one proof per block, which validators verify.',
   },
   {
     title: 'The rollup advances its state',

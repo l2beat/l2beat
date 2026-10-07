@@ -15,7 +15,7 @@ const NEEDS = [
   {
     title: 'Proof dependencies (EIP-8288)',
     description:
-      'Proofs declared by transactions and aggregated recursively in the mempool and by the builder. A Draft, with open questions on mempool proving costs and on how the aggregate enters the block proof.',
+      'Proofs declared by frame transactions and aggregated recursively in the mempool and by the builder. A Draft, with open questions on mempool proving costs and on how the aggregate enters the block proof.',
   },
   {
     title: 'EVM verification key registry (EIP-8357)',
