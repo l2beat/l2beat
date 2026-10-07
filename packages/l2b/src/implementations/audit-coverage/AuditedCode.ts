@@ -15,6 +15,7 @@ export interface AuditedCode {
   occurrences: Map<string, Occurrence[]>
   byName: Map<string, number[]>
   lines: LineIndex
+  libraries: Set<string>
   unparsed: string[]
 }
 
@@ -44,7 +45,6 @@ interface LineIndex {
 const LINE_LENGTH_MIN = 4
 const LINE_FREQUENCY_MAX = 500
 const RENAMED_CANDIDATES_MAX = 5
-const SHARED_COLLECTION_PREFIX = '_libs/'
 
 export function buildAuditedCode(
   index: AuditIndex,
@@ -61,6 +61,11 @@ export function buildAuditedCode(
     occurrences: collectOccurrences(index),
     byName: groupByName(declarations),
     lines: buildLineIndex(declarations),
+    libraries: new Set(
+      Object.entries(index.collections)
+        .filter(([, collection]) => collection.kind === 'library')
+        .map(([id]) => id),
+    ),
     unparsed,
   }
 }
@@ -119,8 +124,7 @@ function isAuditedFor(
     (code.occurrences.get(object) ?? []).some((occurrence) =>
       occurrence.collections.some(
         (collection) =>
-          collection === project ||
-          collection.startsWith(SHARED_COLLECTION_PREFIX),
+          collection === project || code.libraries.has(collection),
       ),
     ),
   )
@@ -218,6 +222,7 @@ function collectionsOf(reports: string[], index: AuditIndex): string[] {
     const metadata = index.reports[report]
     assert(metadata !== undefined, `Unknown report ${report}`)
     for (const collection of metadata.collections) {
+      assert(index.collections[collection], `Unknown collection ${collection}`)
       collections.add(collection)
     }
   }

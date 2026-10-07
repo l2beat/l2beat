@@ -14,11 +14,17 @@ const UnixSeconds = v
   .number()
   .check((value) => Number.isInteger(value) && value > 0, 'Expected seconds')
 
+const AuditIndexCollection = v.object({
+  name: v.string(),
+  kind: v.enum(['project', 'library']),
+})
+
 const AuditIndexReport = v.object({
   collections: v.array(v.string()),
   title: v.string(),
   auditor: v.string(),
   date: v.union([v.string(), v.null()]),
+  document: v.string(),
 })
 export type AuditIndexReport = v.infer<typeof AuditIndexReport>
 
@@ -30,7 +36,8 @@ const AuditIndexSnapshot = v.object({
 export type AuditIndexSnapshot = v.infer<typeof AuditIndexSnapshot>
 
 export const AuditIndex = v.object({
-  schema_version: v.literal('1.0.0'),
+  schema_version: v.literal('1.1.0'),
+  collections: v.record(v.string(), AuditIndexCollection),
   reports: v.record(v.string(), AuditIndexReport),
   repositories: v.record(v.string(), v.record(Commit, AuditIndexSnapshot)),
 })
