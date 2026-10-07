@@ -484,9 +484,14 @@ function slotsUnsettled(blocks: Map<number, LiveBlock>, head: number) {
   return unsettled
 }
 
+/**
+ * Lets go of what fell out of the window, and of anything above the head:
+ * the chain can move its head back, dropping its newest block for none, and
+ * that slot is then fetched afresh when a block fills it
+ */
 function forgetOld(bySlot: Map<number, unknown>, head: number) {
   for (const slot of bySlot.keys()) {
-    if (slot <= head - WINDOW_SLOTS) bySlot.delete(slot)
+    if (slot <= head - WINDOW_SLOTS || slot > head) bySlot.delete(slot)
   }
 }
 

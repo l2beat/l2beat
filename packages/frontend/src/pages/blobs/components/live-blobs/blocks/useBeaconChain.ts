@@ -104,7 +104,7 @@ export function useBeaconChain({
         onFresh.current.block(kept)
       }
     }
-    forgetOld(chain.blocks, live.head)
+    const rolledBack = forgetOld(chain.blocks, live.head)
 
     const pending = live.pending.map((b) =>
       toPendingBlobBatch(b, posterIndexOf),
@@ -115,16 +115,26 @@ export function useBeaconChain({
     for (const batch of pending) chain.pending.set(batch.key, batch)
     for (const batch of freshPending) onFresh.current.pending(batch)
 
-    if (changed.length > 0) setVersion((v) => v + 1)
+    if (changed.length > 0 || rolledBack) setVersion((v) => v + 1)
   }, [live, chain, clock, posterIndexOf])
 
   return { chain, version }
 }
 
+/**
+ * Lets go of blocks too old to show, and of any above the head, which the
+ * chain dropped as it moved its head back. Says whether it had any such
+ */
 function forgetOld(blocks: Map<number, ChainBlock>, head: number) {
+  let rolledBack = false
   for (const slot of blocks.keys()) {
     if (slot <= head - 2 * RECENT_BLOCKS) blocks.delete(slot)
+    if (slot > head) {
+      blocks.delete(slot)
+      rolledBack = true
+    }
   }
+  return rolledBack
 }
 
 /** Seconds until the server is asked again */
