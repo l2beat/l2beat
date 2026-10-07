@@ -32,10 +32,12 @@ export function LiveStats({ limits }: { limits: BlockLimits }) {
   const hour = data?.window
   const seconds = (hour?.slots ?? 0) * SLOT_SECONDS
   // the newest block's blobs are counted in as the belt lands them
+  const newest = hour?.blobsPerSlot[0] ?? 0
   const { value: blobs, arrival } = useLandedTotal(
     data?.head,
     hour?.posted.reduce((sum, posted) => sum + posted.blobs, 0) ?? 0,
-    hour?.blobsPerSlot[0] ?? 0,
+    newest,
+    newest,
     anyLanding,
   )
 
