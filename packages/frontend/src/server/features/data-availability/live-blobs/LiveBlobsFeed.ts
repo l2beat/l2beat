@@ -297,6 +297,7 @@ export class LiveBlobsFeed {
       // a block that failed to come with its head, and came on this try
       const filled = missing.some((slot) => this.blocks.has(slot))
       this.head = head
+      this.letGoAbove(head)
       forgetOld(this.blocks, head)
       forgetOld(this.tries, head)
       forgetOld(this.recheck, head)
@@ -349,10 +350,16 @@ export class LiveBlobsFeed {
         throw error
       }
       came.set(slot, { block, held: this.blocks.get(slot) })
-      this.takeFromPending(block, this.blocks.get(slot))
       this.blocks.set(slot, block)
       this.recheck.delete(slot)
     })
+    // oldest first, however they came: a newer block's nonce puts the
+    // sender's lower nonces out of the pending ones, and with them since when
+    // an older block's batch waited
+    for (const slot of [...came.keys()].sort((a, b) => a - b)) {
+      const { block, held } = came.get(slot) ?? {}
+      if (block) this.takeFromPending(block, held)
+    }
     return all
   }
 

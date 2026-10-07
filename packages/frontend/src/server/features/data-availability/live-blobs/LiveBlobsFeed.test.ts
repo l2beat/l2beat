@@ -474,6 +474,56 @@ describe(LiveBlobsFeed.name, () => {
     }
   })
 
+  it('keeps since when each batch waited as blocks of one sender come in at once', async () => {
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const node = fakeNode()
+      const mempool = fakeMempool()
+      feed = new LiveBlobsFeed(node.source, Logger.SILENT, mempool.source)
+      await feed.latest()
+      mempool.broadcast(baseBatch(HEAD + 10))
+      mempool.broadcast(baseBatch(HEAD + 20))
+
+      // the head comes back twenty slots on: both blocks are fetched together
+      node.head = HEAD + 20
+      await clock.tickAsync(8000)
+      const blobs = await feed.latest()
+
+      const since = blobs?.blocks
+        .filter((b) => b.slot === HEAD + 10 || b.slot === HEAD + 20)
+        .map((b) => b.status === 'proposed' && b.batches[0]?.pendingSince)
+      expect(since).toEqual([slotStart(HEAD) + 5, slotStart(HEAD) + 5])
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  it('lets a batch wait again when the chain moved its head back off its block', async () => {
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const node = fakeNode()
+      const mempool = fakeMempool()
+      feed = new LiveBlobsFeed(node.source, Logger.SILENT, mempool.source)
+      await feed.latest()
+
+      node.head = HEAD - 1
+      await clock.tickAsync(8000)
+      mempool.broadcast(baseBatch(HEAD))
+      const blobs = await feed.latest()
+
+      expect(blobs?.head).toEqual(HEAD - 1)
+      expect(blobs?.pending.map((b) => b.nonce)).toEqual([HEAD])
+    } finally {
+      clock.uninstall()
+    }
+  })
+
   it('stops listening to the mempool while the node cannot be reached', async () => {
     const clock = install({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],

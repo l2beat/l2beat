@@ -61,8 +61,13 @@ export function updateLane(
       if (now > departed) lane.delete(key)
       moving = true
     } else if (!pending.has(key)) {
-      spot.goneAt ??= now
-      if (now - spot.goneAt > LEAVE_TIME) lane.delete(key)
+      // with nothing in motion, a batch in its block would otherwise show
+      // both waiting and landed while its spot fades
+      if (still) lane.delete(key)
+      else spot.goneAt ??= now
+      if (spot.goneAt !== undefined && now - spot.goneAt > LEAVE_TIME) {
+        lane.delete(key)
+      }
       moving = true
     } else if (now - spot.shownAt < BATCH_MOTION_TIME) {
       // dropping in, with its label up
