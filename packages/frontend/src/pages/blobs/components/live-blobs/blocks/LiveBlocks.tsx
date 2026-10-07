@@ -33,10 +33,8 @@ interface Props {
   /** Every project that may post, with the stand-in for unknown senders last */
   posters: LivePoster[]
   limits: BlockLimits
-  /** Poster picked in the list or on the belt. The others step back */
+  /** Poster picked in the list. The others step back */
   highlighted: string | undefined
-  /** Picks a poster, or lets it go when it was picked already */
-  onSelect: (posterId: string) => void
   /** Drawn between the belt and its legend, as the hour behind the belt */
   history?: ReactNode
 }
@@ -47,13 +45,7 @@ interface Props {
  * rollup that sent them, and every block shows the room it left against the
  * target and the maximum.
  */
-export function LiveBlocks({
-  posters,
-  limits,
-  highlighted,
-  onSelect,
-  history,
-}: Props) {
+export function LiveBlocks({ posters, limits, highlighted, history }: Props) {
   const beltRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const size = useElementSize(beltRef)
@@ -142,8 +134,7 @@ export function LiveBlocks({
     onScreen,
     onClickBatch: (key) => {
       const found = findBatch(chain.blocks, key)
-      const poster = found && posters[found.batch.posterIndex]
-      if (poster) onSelect(poster.id)
+      if (found) openOnEtherscan(found.batch.txHash)
     },
   })
   dropBlock.current = belt.dropBlock
@@ -334,8 +325,16 @@ function BatchTooltipContent({
           <span className="tabular-nums">{value}</span>
         </div>
       ))}
+      <div className="text-label-value-12 text-secondary">
+        Click to open on Etherscan
+      </div>
     </div>
   )
+}
+
+/** In a new tab, so the belt keeps running where it was left */
+function openOnEtherscan(txHash: string) {
+  window.open(`https://etherscan.io/tx/${txHash}`, '_blank', 'noopener')
 }
 
 function shortAddress(address: string) {

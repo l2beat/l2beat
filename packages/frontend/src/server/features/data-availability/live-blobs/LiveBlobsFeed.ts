@@ -84,6 +84,8 @@ export interface LiveBatch {
   blobs: number
   /** Where it was sent, lowercase. Says the most about an unattributed batch */
   to: string
+  /** For the page to link the transaction to an explorer */
+  txHash: string
 }
 
 /**
