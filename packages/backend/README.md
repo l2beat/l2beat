@@ -202,7 +202,7 @@ to projects, for the live blobs view. Needs the Ethereum layer of `da` (`ETHEREU
 - `ETHEREUM_LIVE_BLOBS_BATCH_SIZE` - Optional. Blocks fetched at once while catching up with the
   head. Defaults to 50
 - `ETHEREUM_LIVE_BLOBS_RPC_URL` - Optional. An RPC that keeps up with the head, used only by these
-  indexers. Defaults to `ETHEREUM_RPC_URL`
+  indexers. Defaults to `ETHEREUM_RPC_URL`, then to the public RPC of Ethereum's chain config
 - `ETHEREUM_LIVE_BLOBS_RPC_CALLS_PER_MINUTE` - Optional. Defaults to 600: the head is asked for every
   quarter second until a slot's block comes
 

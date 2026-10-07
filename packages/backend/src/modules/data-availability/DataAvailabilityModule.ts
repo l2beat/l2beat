@@ -347,7 +347,6 @@ function createLiveBlobsIndexers(
     {
       db: database,
       daProvider: providers.liveBlobsDa,
-      rpc,
       configurations: configurations.filter(isEthereumConfig),
       batchSize: config.batchSize,
       indexerService,

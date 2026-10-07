@@ -1,11 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { Database, LiveBlockRecord } from '@l2beat/database'
-import type {
-  EthereumBlobBatch,
-  EthereumDaProvider,
-  IRpcClient,
-} from '@l2beat/shared'
+import type { EthereumBlobBatch, EthereumDaProvider } from '@l2beat/shared'
 import { ProjectId, slotStart, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
@@ -121,6 +117,19 @@ describe(LiveBlobsIndexer.name, () => {
       })
     })
 
+    it('drops what was stored at the fetched heights before storing', async () => {
+      // A replay after a crash, or after a config change, may fetch a chain
+      // or an attribution other than the stored one
+      const { indexer, db } = setup({ batchSize: 4 })
+
+      await indexer.update(HEAD - 9, HEAD)
+
+      expect(db.liveBlock.deleteAfterBlock).toHaveBeenOnlyCalledWith(HEAD - 10)
+      expect(db.liveBlobBatch.deleteAfterBlock).toHaveBeenOnlyCalledWith(
+        HEAD - 10,
+      )
+    })
+
     it('prunes the blocks that fell out of the window', async () => {
       const { indexer, db } = setup({ batchSize: 50 })
 
@@ -184,49 +193,18 @@ describe(LiveBlobsIndexer.name, () => {
   })
 
   describe(LiveBlobsIndexer.prototype.initialize.name, () => {
-    it('wipes a state older than the window and starts at its start', async () => {
-      const { indexer, db } = setup({ safeHeight: WINDOW_START - 2 })
-
-      expect(await indexer.initialize()).toEqual({
-        safeHeight: WINDOW_START - 1,
-        configHash: liveBlobsConfigHash([]),
-      })
-      expect(db.liveBlock.deleteAll).toHaveBeenCalledTimes(1)
-      expect(db.liveBlobBatch.deleteAll).toHaveBeenCalledTimes(1)
-    })
-
-    it('wipes the window when the configurations changed', async () => {
-      // Stored batches were attributed by the old configs, so they all go
-      const { indexer, db } = setup({
+    it('starts over when the configurations changed', async () => {
+      // Stored batches were attributed by the old configs: the first update
+      // drops them all, starting at the window
+      const { indexer } = setup({
         safeHeight: WINDOW_START,
         storedConfigHash: 'stale',
       })
 
       expect(await indexer.initialize()).toEqual({
-        safeHeight: WINDOW_START - 1,
+        safeHeight: -1,
         configHash: liveBlobsConfigHash([]),
       })
-      expect(db.liveBlock.deleteAll).toHaveBeenCalledTimes(1)
-      expect(db.liveBlobBatch.deleteAll).toHaveBeenCalledTimes(1)
-    })
-
-    it('starts at the start of the window the first time', async () => {
-      const { indexer } = setup({ safeHeight: undefined })
-
-      expect(await indexer.initialize()).toEqual({
-        safeHeight: WINDOW_START - 1,
-        configHash: liveBlobsConfigHash([]),
-      })
-    })
-
-    it('carries on from a state within the window', async () => {
-      const { indexer, db } = setup({ safeHeight: WINDOW_START })
-
-      expect(await indexer.initialize()).toEqual({
-        safeHeight: WINDOW_START,
-        configHash: liveBlobsConfigHash([]),
-      })
-      expect(db.liveBlock.deleteAll).not.toHaveBeenCalled()
     })
   })
 
@@ -282,13 +260,11 @@ describe(LiveBlobsIndexer.name, () => {
       upsertMany: mockFn().resolvesTo(0),
       deleteBeforeBlock: mockFn().resolvesTo(0),
       deleteAfterBlock: mockFn().resolvesTo(0),
-      deleteAll: mockFn().resolvesTo(0),
     })
     const liveBlobBatch = mockObject<Database['liveBlobBatch']>({
       upsertMany: mockFn().resolvesTo(0),
       deleteBeforeBlock: mockFn().resolvesTo(0),
       deleteAfterBlock: mockFn().resolvesTo(0),
-      deleteAll: mockFn().resolvesTo(0),
     })
     const db = mockObject<Database>({
       transaction: async <T>(fn: () => Promise<T>) => await fn(),
@@ -325,9 +301,6 @@ describe(LiveBlobsIndexer.name, () => {
       {
         db,
         daProvider,
-        rpc: mockObject<IRpcClient>({
-          getLatestBlockNumber: mockFn().resolvesTo(HEAD),
-        }),
         configurations: options.configurations ?? [],
         batchSize: options.batchSize ?? 50,
         indexerService,

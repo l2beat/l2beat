@@ -5,11 +5,7 @@ import type {
   LiveBlobBatchRecord,
   LiveBlockRecord,
 } from '@l2beat/database'
-import type {
-  EthereumBlobBlock,
-  EthereumDaProvider,
-  IRpcClient,
-} from '@l2beat/shared'
+import type { EthereumBlobBlock, EthereumDaProvider } from '@l2beat/shared'
 import { assert, type ProjectId, slotAt, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
@@ -34,7 +30,6 @@ export interface LiveBlobsIndexerDependencies
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   daProvider: EthereumDaProvider
-  rpc: IRpcClient
   /** Every Ethereum config, past ones included: each block is told by the ones in force at it */
   configurations: LiveBlobsConfig[]
   batchSize: number
@@ -45,7 +40,9 @@ export interface LiveBlobsIndexerDependencies
 /**
  * Keeps the Ethereum blocks of the last day or so and their blob batches,
  * attributed to projects, for the live blobs view. Writes blocks without
- * gaps, so a slot with no block between the oldest and the newest was missed
+ * gaps, so a slot with no block between the oldest and the newest was missed.
+ * Initializes without the network: an initialization that fails is never
+ * retried, so the window is cut and the stale blocks dropped in `update`
  */
 export class LiveBlobsIndexer extends ManagedChildIndexer {
   constructor(
@@ -66,24 +63,9 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
 
   /**
    * Blocks older than the window are of no use, and fetching them on the way
-   * to the head would leave the view showing a day-old chain meanwhile
+   * to the head would leave the view showing a day-old chain meanwhile: the
+   * batch starts at the window when `from` is older
    */
-  override async initialize() {
-    const state = await super.initialize()
-    const windowStart = liveWindowStart(await this.$.rpc.getLatestBlockNumber())
-    if (state.safeHeight >= windowStart - 1) return state
-
-    await this.$.db.transaction(async () => {
-      await this.$.db.liveBlock.deleteAll()
-      await this.$.db.liveBlobBatch.deleteAll()
-    })
-    this.logger.info('Stored blocks older than the window, starting over', {
-      safeHeight: state.safeHeight,
-      windowStart,
-    })
-    return { ...state, safeHeight: windowStart - 1 }
-  }
-
   override async update(from: number, to: number): Promise<number> {
     return await withCoreFeatureRpcMetricsContext(
       LIVE_METRICS_CONTEXT,
@@ -102,6 +84,11 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
         const liveBatches = blocks.flatMap((b) => this.toLiveBatches(b))
 
         await this.$.db.transaction(async () => {
+          // Rows above the safe height may be from a chain since reorganized,
+          // or attributed by configs since changed: upserting by slot would
+          // leave the ones no fetched block lands on
+          await this.$.db.liveBlock.deleteAfterBlock(start - 1)
+          await this.$.db.liveBlobBatch.deleteAfterBlock(start - 1)
           await this.$.db.liveBlock.upsertMany(liveBlocks)
           await this.$.db.liveBlobBatch.upsertMany(liveBatches)
           await this.$.db.liveBlock.deleteBeforeBlock(windowStart)
@@ -182,8 +169,8 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
 
 /**
  * A batch is attributed as it is stored, so a changed config would leave the
- * window attributed by the old one: the hash change makes `initialize` wipe
- * it and fetch it again
+ * window attributed by the old one: the hash change starts the child over,
+ * and its first update drops the window and fetches it again
  */
 export function liveBlobsConfigHash(configurations: LiveBlobsConfig[]) {
   const keys = configurations

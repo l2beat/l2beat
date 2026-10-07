@@ -1,7 +1,7 @@
 import type { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
 import { createDaTrackingId } from '@l2beat/shared'
-import { notUndefined, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, notUndefined, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import type {
   BlockDaIndexedConfig,
@@ -73,7 +73,10 @@ export async function getDaTrackingConfig(
       liveBlobs = {
         batchSize: env.integer('ETHEREUM_LIVE_BLOBS_BATCH_SIZE', 50),
         rpc: {
-          url: env.string(['ETHEREUM_LIVE_BLOBS_RPC_URL', 'ETHEREUM_RPC_URL']),
+          url: env.string(
+            ['ETHEREUM_LIVE_BLOBS_RPC_URL', 'ETHEREUM_RPC_URL'],
+            await ethereumPublicRpcUrl(ps),
+          ),
           // The head is asked for every quarter second until a slot's block comes
           callsPerMinute: env.integer(
             'ETHEREUM_LIVE_BLOBS_RPC_CALLS_PER_MINUTE',
@@ -359,6 +362,17 @@ async function getTimestampDaTrackingSovereignProjects(
   }
 
   return indexedConfigs
+}
+
+/** What the chain config falls back to without `ETHEREUM_RPC_URL`, so `da` alone keeps starting */
+async function ethereumPublicRpcUrl(ps: ProjectService): Promise<string> {
+  const ethereum = await ps.getProject({
+    id: ProjectId('ethereum'),
+    select: ['chainConfig'],
+  })
+  const rpc = ethereum?.chainConfig.apis.find((api) => api.type === 'rpc')
+  assert(rpc, 'Ethereum has no RPC in its chain config')
+  return rpc.url
 }
 
 function createDaLayerConfigId(daLayerName: string): string {
