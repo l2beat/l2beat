@@ -1,3 +1,7 @@
+import type {
+  ProjectDaTrackingConfig,
+  SovereignProjectDaTrackingConfig,
+} from '@l2beat/config'
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 
@@ -59,28 +63,60 @@ export interface BlobSender {
   untilBlock?: number
 }
 
-/** The blob senders of every project posting to Ethereum, past ones included */
+/**
+ * The blob senders of every project posting to Ethereum, past ones included:
+ * the rollups, and the sovereign chains Ethereum's own config tracks
+ */
 export async function getBlobSenders(): Promise<BlobSender[]> {
-  const projects = await ps.getProjects({
-    select: ['daTrackingConfig'],
-    whereNot: ['archivedAt'],
-  })
-  return projects.flatMap((p) =>
-    p.daTrackingConfig.flatMap((c) =>
-      // Projects tracked by event alone have no inbox to tell them by
-      c.type === 'ethereum' &&
-      c.daLayer === ProjectId.ETHEREUM &&
-      c.inbox !== EthereumAddress.ZERO
-        ? [
-            {
-              projectId: p.id,
-              inbox: c.inbox.toLowerCase(),
-              sequencers: (c.sequencers ?? []).map((s) => s.toLowerCase()),
-              sinceBlock: c.sinceBlock,
-              untilBlock: c.untilBlock,
-            },
-          ]
-        : [],
-    ),
+  const [projects, sovereign] = await Promise.all([
+    ps.getProjects({
+      select: ['daTrackingConfig'],
+      whereNot: ['archivedAt'],
+    }),
+    getSovereignProjects(),
+  ])
+  return [...projects, ...sovereign].flatMap((p) =>
+    toBlobSenders(p.id, p.daTrackingConfig),
   )
 }
+
+/** Chains posting to Ethereum that are not projects of their own, as the backend's DA indexer tracks them */
+export async function getSovereignProjects() {
+  const ethereum = await ps.getProject({
+    id: ProjectId.ETHEREUM,
+    select: ['daLayer'],
+  })
+  return (ethereum?.daLayer.sovereignProjectsTrackingConfig ?? []).map((p) => ({
+    id: p.projectId,
+    name: p.name,
+    daTrackingConfig: p.daTrackingConfig,
+  }))
+}
+
+/** The senders of a project's Ethereum blob transactions; an inbox and its sequencers for every span of blocks */
+export function toBlobSenders(
+  projectId: string,
+  configs: SenderConfig[],
+): BlobSender[] {
+  return configs.flatMap((c) =>
+    // Projects tracked by event alone have no inbox to tell them by
+    c.type === 'ethereum' &&
+    (!('daLayer' in c) || c.daLayer === ProjectId.ETHEREUM) &&
+    c.inbox !== EthereumAddress.ZERO
+      ? [
+          {
+            projectId,
+            inbox: c.inbox.toLowerCase(),
+            sequencers: (c.sequencers ?? []).map((s) => s.toLowerCase()),
+            sinceBlock: c.sinceBlock,
+            untilBlock: c.untilBlock,
+          },
+        ]
+      : [],
+  )
+}
+
+/** A project's DA tracking config; a sovereign chain's names no `daLayer`, Ethereum's being implied */
+type SenderConfig =
+  | ProjectDaTrackingConfig
+  | SovereignProjectDaTrackingConfig['daTrackingConfig'][number]

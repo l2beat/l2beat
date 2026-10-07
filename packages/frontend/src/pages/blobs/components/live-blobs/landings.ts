@@ -1,7 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { slotProgressAt, slotStart } from '~/utils/beaconSlots'
+import { arrivesNow } from './blocks/beaconChain'
 import { SLIDE_TIME } from './blocks/beltPosition'
 import { BATCH_STAGGER, LAND_AFTER } from './blocks/motion'
+import { useChainClock } from './chainClock'
 import type { Arrival } from './liveMotion'
 
 /** A batch coming to rest on the belt */
@@ -65,19 +67,24 @@ export function useLandedTotal(
   matches: (landing: Landing) => boolean,
 ) {
   const landings = useContext(LandingsContext)
-  const [held, setHeld] = useState<Held>({
-    stamp,
-    total,
-    blockBlobs: 0,
-    arriving: 0,
-    departed: 0,
-  })
+  const clock = useChainClock()
+  const [held, setHeld] = useState<Held>(() =>
+    firstHeld(
+      stamp,
+      total,
+      landings ? fresh : 0,
+      blockBlobs,
+      Math.floor(clock.progressNow()),
+    ),
+  )
   const [arrival, setArrival] = useState<Arrival>()
 
   // Caught in the render it comes in, so not one frame shows the new total
   if (stamp !== held.stamp || total !== held.total) {
     setHeld(holdBack(held, stamp, total, landings ? fresh : 0, blockBlobs))
   }
+  const stampInHand = useRef(held.stamp)
+  stampInHand.current = held.stamp
 
   const waiting = held.arriving > 0
   // biome-ignore lint/correctness/useExhaustiveDependencies: a new block waits anew
@@ -108,7 +115,10 @@ export function useLandedTotal(
   useEffect(
     () =>
       landings?.subscribe((landing) => {
-        if (!matches(landing)) return
+        // a landing from above the stamp is of a block the chain took back
+        if (!matches(landing) || isAbove(landing.slot, stampInHand.current)) {
+          return
+        }
         setHeld((current) => ({
           ...current,
           arriving: Math.max(0, current.arriving - landing.blobs),
@@ -128,7 +138,7 @@ export function useLandedTotal(
 }
 
 /** A total over the hour, with what is held back from it for now */
-interface Held {
+export interface Held {
   stamp: number | undefined
   total: number
   /** All the newest block brought, for how long its landings take */
@@ -139,17 +149,44 @@ interface Held {
   departed: number
 }
 
+/**
+ * What to hold back as a number starts. The belt drops the newest block if it
+ * is of this slot or the last (as `arrivesNow` has it) whether the page just
+ * loaded or the number just came on it, so what that block brought waits for
+ * its landing either way
+ */
+export function firstHeld(
+  stamp: number | undefined,
+  total: number,
+  fresh: number,
+  blockBlobs: number,
+  currentSlot: number,
+): Held {
+  const landing =
+    stamp !== undefined && arrivesNow(stamp, stamp, true, currentSlot)
+  return {
+    stamp,
+    total,
+    blockBlobs: landing ? blockBlobs : 0,
+    arriving: landing ? fresh : 0,
+    departed: 0,
+  }
+}
+
 /** What to hold back once the total is `total` at `stamp` */
-function holdBack(
+export function holdBack(
   held: Held,
   stamp: number | undefined,
   total: number,
   fresh: number,
   blockBlobs: number,
 ): Held {
-  const isNew =
-    stamp !== undefined && held.stamp !== undefined && stamp > held.stamp
-  if (!isNew) return { ...held, stamp, total }
+  // the chain took its newest block back: nothing of it is arriving any more,
+  // and what left the hour as it came is back in
+  if (isAbove(held.stamp, stamp)) {
+    return { stamp, total, blockBlobs: 0, arriving: 0, departed: 0 }
+  }
+  if (!isAbove(stamp, held.stamp)) return { ...held, stamp, total }
   // what left the hour: the old total and the new blobs, less the new total
   const departed = Math.max(0, held.total + fresh - total)
   return {
@@ -159,4 +196,8 @@ function holdBack(
     arriving: fresh,
     departed: held.departed + departed,
   }
+}
+
+function isAbove(slot: number | undefined, than: number | undefined) {
+  return slot !== undefined && than !== undefined && slot > than
 }
