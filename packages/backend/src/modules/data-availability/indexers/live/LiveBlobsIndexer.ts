@@ -10,7 +10,7 @@ import type {
   EthereumDaProvider,
   IRpcClient,
 } from '@l2beat/shared'
-import { assert, type ProjectId, slotAt } from '@l2beat/shared-pure'
+import { assert, type ProjectId, slotAt, UnixTime } from '@l2beat/shared-pure'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../../tools/uif/indexerIdentity'
 import {
@@ -22,6 +22,7 @@ import {
   getLiveRetryStrategy,
   LIVE_METRICS_CONTEXT,
   liveWindowStart,
+  secondsSince,
 } from './liveBlobs'
 
 export type LiveBlobsConfig = EthereumDaTrackingConfig & {
@@ -36,6 +37,8 @@ export interface LiveBlobsIndexerDependencies
   /** Every Ethereum config, past ones included: each block is told by the ones in force at it */
   configurations: LiveBlobsConfig[]
   batchSize: number
+  /** Unix seconds */
+  now?: () => number
 }
 
 /**
@@ -102,6 +105,7 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
           await this.$.db.liveBlock.deleteBeforeBlock(windowStart)
           await this.$.db.liveBlobBatch.deleteBeforeBlock(windowStart)
         })
+        this.logStored(start, end, blocks.at(-1)?.timestamp)
 
         return end
       },
@@ -140,12 +144,25 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
     }
   }
 
+  /** The view can show a block no sooner than it is stored */
+  private logStored(from: number, to: number, newest: UnixTime | undefined) {
+    const now = (this.$.now ?? UnixTime.now)()
+    this.logger.info('Stored live blocks', {
+      from,
+      to,
+      delaySeconds: newest && secondsSince(newest, now),
+    })
+  }
+
   private toLiveBatches(block: EthereumBlobBlock): LiveBlobBatchRecord[] {
     return block.batches.map((batch) => {
-      const [config] = matchEthereumConfigs(
-        this.$.configurations,
-        block.number,
-        { inbox: batch.to, sequencer: batch.from, topics: batch.topics },
+      const config = closestMatch(
+        matchEthereumConfigs(this.$.configurations, block.number, {
+          inbox: batch.to,
+          sequencer: batch.from,
+          topics: batch.topics,
+        }),
+        batch.from,
       )
       return {
         slot: slotAt(block.timestamp),
@@ -159,6 +176,18 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
       }
     })
   }
+}
+
+/**
+ * A config naming the sender is a closer match than an inbox open to anyone,
+ * whichever comes first: on a shared inbox both claim the batch
+ */
+function closestMatch(configs: LiveBlobsConfig[], sender: string) {
+  return (
+    configs.find((c) =>
+      c.sequencers?.some((s) => s.toLowerCase() === sender.toLowerCase()),
+    ) ?? configs[0]
+  )
 }
 
 function toLiveBlock(block: EthereumBlobBlock): LiveBlockRecord {

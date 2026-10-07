@@ -335,8 +335,9 @@ function createLiveBlobsIndexers(
   providers: Providers,
   indexerService: IndexerService,
 ) {
-  assert(providers.ethereumDa, 'Ethereum DA provider is required')
-  const rpc = providers.clients.getRpcClient('ethereum')
+  const rpc = providers.clients.liveBlobsRpc
+  assert(rpc, 'Live blobs RPC client is required')
+  assert(providers.liveBlobsDa, 'Live blobs DA provider is required')
 
   const targetIndexer = new LiveBlobsTargetIndexer(
     { rpc, db: database },
@@ -345,7 +346,7 @@ function createLiveBlobsIndexers(
   const indexer = new LiveBlobsIndexer(
     {
       db: database,
-      daProvider: providers.ethereumDa,
+      daProvider: providers.liveBlobsDa,
       rpc,
       configurations: configurations.filter(isEthereumConfig),
       batchSize: config.batchSize,

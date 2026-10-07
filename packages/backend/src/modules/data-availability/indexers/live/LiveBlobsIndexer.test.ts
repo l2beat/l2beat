@@ -73,6 +73,54 @@ describe(LiveBlobsIndexer.name, () => {
       ])
     })
 
+    it('attributes a batch on a shared inbox to the project naming its sender', async () => {
+      // One project posts to the inbox from a named sequencer, another takes
+      // anything sent there: the named sender is the closer match, whichever
+      // config comes first
+      const { indexer, db } = setup({
+        configurations: [
+          ethereumConfig('open', { inbox: INBOX }),
+          ethereumConfig('named', {
+            inbox: INBOX,
+            sequencers: ['0xSEQUENCER'],
+          }),
+        ],
+        batches: {
+          [HEAD - 9]: [
+            batch({ blockNumber: HEAD - 9, txIndex: 0, to: INBOX, blobs: 1 }),
+          ],
+        },
+      })
+
+      await indexer.update(HEAD - 9, HEAD - 9)
+
+      expect(db.liveBlobBatch.upsertMany).toHaveBeenOnlyCalledWith([
+        liveBatch(HEAD - 9, 0, INBOX, 1, ProjectId('named')),
+      ])
+    })
+
+    it('logs how long after its slot started the newest block was stored', async () => {
+      // The view can show a block no sooner than this
+      const info = mockFn().returns(undefined)
+      const logger: Logger = mockObject<Logger>({
+        info,
+        tag: () => logger,
+        for: () => logger,
+      })
+      const { indexer } = setup({
+        now: Number(timestampOf(HEAD - 6)) + 2.5,
+        logger,
+      })
+
+      await indexer.update(HEAD - 9, HEAD - 6)
+
+      expect(info).toHaveBeenOnlyCalledWith('Stored live blocks', {
+        from: HEAD - 9,
+        to: HEAD - 6,
+        delaySeconds: 2.5,
+      })
+    })
+
     it('prunes the blocks that fell out of the window', async () => {
       const { indexer, db } = setup({ batchSize: 50 })
 
@@ -174,6 +222,8 @@ describe(LiveBlobsIndexer.name, () => {
     safeHeight?: number
     stored?: LiveBlockRecord[]
     brokenLinkAt?: number
+    now?: number
+    logger?: Logger
   }) {
     const stored = options.stored ?? []
     const liveBlock = mockObject<Database['liveBlock']>({
@@ -228,8 +278,9 @@ describe(LiveBlobsIndexer.name, () => {
         indexerService,
         parents: [],
         minHeight: 0,
+        now: () => options.now ?? Number(timestampOf(HEAD)),
       },
-      Logger.SILENT,
+      options.logger ?? Logger.SILENT,
     )
     return { indexer, db: { liveBlock, liveBlobBatch }, daProvider }
   }

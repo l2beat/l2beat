@@ -4,12 +4,20 @@ import type { EVMBlock, IRpcClient } from '@l2beat/shared'
 import { slotAt, slotStart, UnixTime } from '@l2beat/shared-pure'
 import { RootIndexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
-import { getLiveRetryStrategy, LIVE_METRICS_CONTEXT } from './liveBlobs'
+import {
+  getLiveRetryStrategy,
+  LIVE_METRICS_CONTEXT,
+  secondsSince,
+} from './liveBlobs'
 
 /** Blocks reach the RPC about a second into their slot */
 const FIRST_TICK_INTO_SLOT = 1
-/** How soon the head is asked for again while the slot's block has not come */
-const RETRY_SECONDS = 1
+/**
+ * How soon the head is asked for again while the slot's block has not come.
+ * Every quarter second sooner is that much sooner on every screen, and the
+ * call costs a few hundred bytes
+ */
+const RETRY_SECONDS = 0.25
 /** Stored blocks compared with the chain, back from the newest, in search of a fork */
 const MAX_REORG_DEPTH = 32
 /**
@@ -42,6 +50,8 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
   private head: Head | undefined
   /** The stored head stands in for the one followed before a restart */
   private headLoaded = false
+  /** What the last log said, so that one goes out only when it changes */
+  private lastLogged: { head: number; slot: number } | undefined
   private timer: ReturnType<typeof setTimeout> | undefined
   private readonly now: () => number
   private readonly scheduleTick: (seconds: number) => void
@@ -70,12 +80,7 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
         const latest = await this.$.rpc.getBlock('latest', false)
         const height = await this.follow(latest)
 
-        const head = this.head ?? toHead(latest)
-        this.logger.info('Live head', {
-          head: head.slot,
-          blockNumber: head.blockNumber,
-          lagSlots: slotAt(this.now()) - head.slot,
-        })
+        this.logHead(this.head ?? toHead(latest))
 
         // After a fork the head is followed again once the child has dropped
         // the blocks above it, without waiting for the next slot
@@ -109,6 +114,26 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
 
     this.head = toHead(latest)
     return latest.number
+  }
+
+  /**
+   * Once per new head or new slot: asked four times a second, the head
+   * would otherwise be logged as often. A head that stalls still shows, by
+   * its lag growing slot by slot
+   */
+  private logHead(head: Head) {
+    const now = this.now()
+    const slot = slotAt(now)
+    if (this.lastLogged?.head === head.slot && this.lastLogged.slot === slot) {
+      return
+    }
+    this.lastLogged = { head: head.slot, slot }
+    this.logger.info('Live head', {
+      head: head.slot,
+      blockNumber: head.blockNumber,
+      lagSlots: slot - head.slot,
+      delaySeconds: secondsSince(slotStart(head.slot), now),
+    })
   }
 
   private async loadStoredHead(): Promise<Head | undefined> {

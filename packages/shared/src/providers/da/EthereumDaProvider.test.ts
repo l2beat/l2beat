@@ -144,6 +144,39 @@ describe(EthereumDaProvider.name, () => {
       ])
       expect(mockRpcClient.getLogs).toHaveBeenOnlyCalledWith(1, 2)
     })
+
+    it('asks for the blocks without waiting for the logs', async () => {
+      // The live view waits on this for the newest block: fetched one after
+      // the other, the two calls add up
+      let logsAnswered = false
+      let blockAskedEarly = false
+      const mockRpcClient = mockObject<RpcClient>({
+        getBlock: mockFn(async () => {
+          blockAskedEarly = !logsAnswered
+          return {
+            number: 1,
+            hash: '0xhash1',
+            parentHash: '0xhash0',
+            timestamp: 100,
+            transactions: [],
+          }
+        }) as unknown as RpcClient['getBlock'],
+        getLogs: mockFn(async () => {
+          await new Promise((resolve) => setTimeout(resolve, 0))
+          logsAnswered = true
+          return []
+        }),
+      })
+      const provider = new EthereumDaProvider(
+        mockObject<BeaconChainClient>(),
+        mockRpcClient,
+        'ethereum',
+      )
+
+      await provider.getBlocksWithBlobBatches(1, 1)
+
+      expect(blockAskedEarly).toEqual(true)
+    })
   })
 
   describe(

@@ -1,6 +1,11 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { BeaconChainBlob, BeaconChainClient, EVMLog } from '../../clients'
+import type {
+  BeaconChainBlob,
+  BeaconChainClient,
+  EVMBlockWithTransactions,
+  EVMLog,
+} from '../../clients'
 import type { IRpcClient } from '../../clients2'
 import type { DaBlobProvider } from './DaProvider'
 import type {
@@ -42,15 +47,16 @@ export class EthereumDaProvider implements DaBlobProvider {
     from: number,
     to: number,
   ): Promise<EthereumBlobBlock[]> {
-    // to be able to track internal call we need to get logs
-    const logs = await this.rpcClient.getLogs(from, to)
-    const blocks = []
-
-    for (let blockNumber = from; blockNumber <= to; blockNumber++) {
-      blocks.push(this.getBlockWithBlobBatches(blockNumber, logs))
-    }
-
-    return await Promise.all(blocks)
+    const blockNumbers = Array.from(
+      { length: to - from + 1 },
+      (_, i) => from + i,
+    )
+    const [blocks, logs] = await Promise.all([
+      Promise.all(blockNumbers.map((n) => this.rpcClient.getBlock(n, true))),
+      // to be able to track internal call we need to get logs
+      this.rpcClient.getLogs(from, to),
+    ])
+    return blocks.map((block) => toBlobBlock(block, logs))
   }
 
   async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
@@ -89,43 +95,41 @@ export class EthereumDaProvider implements DaBlobProvider {
     return filterOutIrrelevant(blockSidecar, tx.blobVersionedHashes)
   }
 
-  private async getBlockWithBlobBatches(
-    blockNumber: number,
-    logs: EVMLog[],
-  ): Promise<EthereumBlobBlock> {
-    const block = await this.rpcClient.getBlock(blockNumber, true)
-
-    const batches: EthereumBlobBatch[] = []
-    block.transactions.forEach((tx, txIndex) => {
-      // Skip blob processing for type 2 transactions
-      if (Number(tx.type) === 2 || !tx.blobVersionedHashes) {
-        return
-      }
-
-      const txLogs = logs.filter((l) => l.transactionHash === tx.hash)
-      batches.push({
-        txIndex,
-        txHash: tx.hash,
-        from: tx.from,
-        to: tx.to ?? '',
-        topics: txLogs.flatMap((log) => log.topics),
-        blobs: tx.blobVersionedHashes.length,
-      })
-    })
-
-    return {
-      number: block.number,
-      hash: block.hash,
-      parentHash: block.parentHash,
-      timestamp: block.timestamp,
-      batches,
-    }
-  }
-
   // this is very hacky, but it's the only way i know to get the beacon block id
   // if you know a better way, please fix it
   private async getBeaconBlockId(blockNumber: number): Promise<string> {
     return await this.rpcClient.getBlockParentBeaconRoot(blockNumber + 1)
+  }
+}
+
+function toBlobBlock(
+  block: EVMBlockWithTransactions,
+  logs: EVMLog[],
+): EthereumBlobBlock {
+  const batches: EthereumBlobBatch[] = []
+  block.transactions.forEach((tx, txIndex) => {
+    // Skip blob processing for type 2 transactions
+    if (Number(tx.type) === 2 || !tx.blobVersionedHashes) {
+      return
+    }
+
+    const txLogs = logs.filter((l) => l.transactionHash === tx.hash)
+    batches.push({
+      txIndex,
+      txHash: tx.hash,
+      from: tx.from,
+      to: tx.to ?? '',
+      topics: txLogs.flatMap((log) => log.topics),
+      blobs: tx.blobVersionedHashes.length,
+    })
+  })
+
+  return {
+    number: block.number,
+    hash: block.hash,
+    parentHash: block.parentHash,
+    timestamp: block.timestamp,
+    batches,
   }
 }
 

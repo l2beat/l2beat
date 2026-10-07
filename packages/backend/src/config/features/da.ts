@@ -72,6 +72,14 @@ export async function getDaTrackingConfig(
     if (flags.isEnabled('da', 'liveBlobs')) {
       liveBlobs = {
         batchSize: env.integer('ETHEREUM_LIVE_BLOBS_BATCH_SIZE', 50),
+        rpc: {
+          url: env.string(['ETHEREUM_LIVE_BLOBS_RPC_URL', 'ETHEREUM_RPC_URL']),
+          // The head is asked for every quarter second until a slot's block comes
+          callsPerMinute: env.integer(
+            'ETHEREUM_LIVE_BLOBS_RPC_CALLS_PER_MINUTE',
+            600,
+          ),
+        },
       }
     }
   }

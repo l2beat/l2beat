@@ -25,3 +25,8 @@ export function getLiveRetryStrategy() {
 }
 
 export const LIVE_METRICS_CONTEXT = 'dataAvailability.live'
+
+/** Seconds from `timestamp` to `now`, to the hundredth, for the logs */
+export function secondsSince(timestamp: number, now: number) {
+  return Math.round((now - timestamp) * 100) / 100
+}

@@ -58,14 +58,14 @@ describe(LiveBlobsTargetIndexer.name, () => {
       const { indexer, scheduleTick } = setup({
         chain,
         stored: [],
-        now: slotStart(slotOf(HEAD)) + 1,
+        now: () => slotStart(slotOf(HEAD)) + 1,
       })
       await indexer.tick()
 
       chain.head = HEAD - 2
       expect(await indexer.tick()).toEqual(HEAD)
       // A stale answer says nothing of the slot under way: ask again soon
-      expect(scheduleTick).toHaveBeenLastCalledWith(1)
+      expect(scheduleTick).toHaveBeenLastCalledWith(0.25)
     })
 
     it('ignores a head lower than the newest stored block after a restart', async () => {
@@ -89,7 +89,7 @@ describe(LiveBlobsTargetIndexer.name, () => {
       // The child drops the blocks above the fork, then the head is followed
       // again without waiting for the next slot. Not at once: until the child
       // is done, every tick would find the same fork
-      expect(scheduleTick).toHaveBeenOnlyCalledWith(1)
+      expect(scheduleTick).toHaveBeenOnlyCalledWith(0.25)
     })
 
     it('follows the head again after reporting a fork', async () => {
@@ -113,28 +113,52 @@ describe(LiveBlobsTargetIndexer.name, () => {
       expect(await indexer.tick()).toEqual(0)
     })
 
-    it('keeps asking every second while the slot has no block yet', async () => {
+    it('keeps asking every quarter second while the slot has no block yet', async () => {
+      const { indexer, scheduleTick } = setup({
+        head: HEAD,
+        stored: [],
+        // Two seconds into the slot after the head's
+        now: () => slotStart(slotOf(HEAD) + 1) + 2,
+      })
+
+      await indexer.tick()
+
+      expect(scheduleTick).toHaveBeenOnlyCalledWith(0.25)
+    })
+
+    it('logs the head once per new head or new slot', async () => {
       const info = mockFn().returns(undefined)
       const logger: Logger = mockObject<Logger>({
         info,
         tag: () => logger,
         for: () => logger,
       })
-      const { indexer, scheduleTick } = setup({
+      const clock = { now: slotStart(slotOf(HEAD)) + 1.5 }
+      const { indexer } = setup({
         head: HEAD,
         stored: [],
-        // Two seconds into the slot after the head's
-        now: slotStart(slotOf(HEAD) + 1) + 2,
+        now: () => clock.now,
         logger,
       })
 
       await indexer.tick()
+      clock.now += 0.25
+      await indexer.tick()
+      clock.now += 12
+      await indexer.tick()
 
-      expect(scheduleTick).toHaveBeenOnlyCalledWith(1)
-      expect(info).toHaveBeenOnlyCalledWith('Live head', {
+      expect(info).toHaveBeenCalledTimes(2)
+      expect(info).toHaveBeenNthCalledWith(1, 'Live head', {
+        head: slotOf(HEAD),
+        blockNumber: HEAD,
+        lagSlots: 0,
+        delaySeconds: 1.5,
+      })
+      expect(info).toHaveBeenNthCalledWith(2, 'Live head', {
         head: slotOf(HEAD),
         blockNumber: HEAD,
         lagSlots: 1,
+        delaySeconds: 13.75,
       })
     })
   })
@@ -180,7 +204,7 @@ function setup(options: {
   forkedAfter?: number
   chain?: { head: number; forkedAfter: number | undefined }
   stored: LiveBlockRecord[]
-  now?: number
+  now?: () => number
   logger?: Logger
 }) {
   const chain = options.chain ?? {
@@ -209,7 +233,7 @@ function setup(options: {
       rpc,
       db,
       // A second into the head's slot, when its block has just landed
-      now: () => options.now ?? slotStart(slotOf(chain.head)) + 1,
+      now: options.now ?? (() => slotStart(slotOf(chain.head)) + 1),
       scheduleTick,
     },
     options.logger ?? Logger.SILENT,
