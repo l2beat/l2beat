@@ -52,11 +52,14 @@ async function fetchBlock(
   if (!body) return { slot, status: 'missed' }
 
   const payload = body.data.message.body.execution_payload
+  const blockNumber = Number(payload.block_number)
   return {
     slot,
     status: 'proposed',
-    blockNumber: Number(payload.block_number),
-    batches: await readBlobBatches(payload.transactions, attribute),
+    blockNumber,
+    batches: await readBlobBatches(payload.transactions, (to, from) =>
+      attribute(to, from, blockNumber),
+    ),
   }
 }
 
