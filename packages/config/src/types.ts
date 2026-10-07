@@ -1367,7 +1367,7 @@ export interface PrivacyPromise {
 
 export interface PrivacyAdversariesConfig {
   promise: PrivacyPromise
-  /** Project-specific definitions, keeping the default transfer meanings elsewhere. */
+  /** Overrides the default field description for this project, e.g. when linkage means something other than a transfer link. */
   fieldDescriptions?: Partial<Record<PrivacyField, string>>
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
 }
@@ -1424,7 +1424,7 @@ interface ProjectPrivacyBucketBase {
   sinceTimestamp: UnixTime
   denomination?: string
   withdrawal: PrivacyFlowSource
-  /** Additional payout routes for the same bucket, indexed without repeating deposits. */
+  /** Other payout events of this bucket, tracked without a second bucket that would double-count deposits. */
   additionalWithdrawals?: PrivacyFlowSource[]
 }
 
@@ -1476,11 +1476,12 @@ export type PrivacyAnonymitySetDepositSource = {
 
 export type PrivacyFlowExtractorConfig =
   | {
-      /** Native vault events use integer gwei. Withdrawals count user payouts. */
+      /** Deposited note amount, in whole `weiPerUnit` units (e.g. gwei). */
       extractor: 'zkApiDeposit'
       params: { weiPerUnit: string }
     }
   | {
+      /** User payout (final balance) of a cooperative close or finalized escape, in whole `weiPerUnit` units (e.g. gwei). */
       extractor: 'zkApiWithdrawal'
       params: { weiPerUnit: string }
     }
