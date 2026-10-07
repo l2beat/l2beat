@@ -6,7 +6,9 @@ import { SLOT_SECONDS, slotProgressAt } from '~/utils/beaconSlots'
 import { createAttribute, getBlobSenders } from './attribute'
 import { createBeaconNode } from './beaconNode'
 import { getBlobPosters } from './getBlobPosters'
-import { createMockBeaconNode } from './mockBeaconNode'
+import { createMempool, type MempoolSource } from './mempool'
+import { createMockBeaconNode, createMockMempool } from './mockBeaconNode'
+import { type PendingBatch, PendingBlobs, type PendingTx } from './pendingBlobs'
 
 /** Slots served back from the head: enough to fill the belt left of the bay */
 export const RECENT_SLOTS = 32
@@ -49,15 +51,27 @@ const MAX_RETRY_DELAY = 30
 const IDLE_AFTER = WINDOW_SLOTS * SLOT_SECONDS
 /** How long the first answer after a quiet spell waits for the belt's blocks */
 const FIRST_ANSWER_TIMEOUT = 10
+/**
+ * Nobody asked for this long: the mempool is let go. Far shorter than for
+ * blocks, as it streams every pending transaction, and what waited before a
+ * quiet spell is old news after it
+ */
+const MEMPOOL_IDLE_AFTER = 60
 
 export const LiveBlobsParams = v.object({
-  /** The newest slot the page has: the answer waits for the head to move off it */
+  /** The `version` the page has: the answer waits for a newer one */
   after: v.number().optional(),
 })
 export type LiveBlobsParams = v.infer<typeof LiveBlobsParams>
 
 /** The recent blocks, as served to the page */
 export interface LiveBlobs {
+  /**
+   * Moves on with every new head and every change to what is pending. In
+   * milliseconds of when it changed, so a restarted server does not count
+   * from zero again
+   */
+  version: number
   /** The newest slot the node had at the last poll */
   head: number
   /** Whether the last poll reached the node. If not, the blocks may lag */
@@ -65,6 +79,11 @@ export interface LiveBlobs {
   /** Known blocks of the last `RECENT_SLOTS` slots up to the head, newest first */
   blocks: LiveBlock[]
   window: PostedWindow
+  /**
+   * Blob transactions in one node's mempool, oldest first. Batches sent
+   * privately to builders never show here, only in their block
+   */
+  pending: PendingBatch[]
 }
 
 export type LiveBlock =
@@ -84,6 +103,11 @@ export interface LiveBatch {
   blobs: number
   /** Where it was sent, lowercase. Says the most about an unattributed batch */
   to: string
+  /** Lowercase. With the nonce, matches the batch to the one seen pending */
+  from: string
+  nonce: number
+  /** Unix seconds it was first seen pending, if it was */
+  pendingSince?: number
   /** For the page to link the transaction to an explorer */
   txHash: string
 }
@@ -134,14 +158,26 @@ let feed: LiveBlobsFeed | undefined
 
 /** The one feed of this server, shared by every visitor */
 export function getLiveBlobsFeed(): LiveBlobsFeed {
-  feed ??= new LiveBlobsFeed(
-    env.MOCK
-      ? createMockBeaconNode(
-          getBlobPosters().then((posters) => posters.map((p) => p.id)),
-        )
-      : createBeaconNode(getBlobSenders().then(createAttribute)),
-    getLogger(),
-  )
+  if (!feed) {
+    const logger = getLogger()
+    if (env.MOCK_BEACON) {
+      const posterIds = getBlobPosters().then((posters) =>
+        posters.map((p) => p.id),
+      )
+      feed = new LiveBlobsFeed(
+        createMockBeaconNode(posterIds),
+        logger,
+        createMockMempool(posterIds),
+      )
+    } else {
+      const attribute = getBlobSenders().then(createAttribute)
+      feed = new LiveBlobsFeed(
+        createBeaconNode(attribute),
+        logger,
+        createMempool(attribute, logger),
+      )
+    }
+  }
   return feed
 }
 
@@ -152,9 +188,13 @@ export function getLiveBlobsFeed(): LiveBlobsFeed {
  *
  * The belt's blocks come first; the rest of the hour is backfilled behind
  * them, so the belt does not wait for it.
+ *
+ * Alongside, it listens to the mempool for blob transactions not yet in a
+ * block, and lets each go as the block that includes it comes.
  */
 export class LiveBlobsFeed {
   private readonly blocks = new Map<number, LiveBlock>()
+  private readonly pending = new PendingBlobs()
   /** Failed tries at each block not fetched yet */
   private readonly tries = new Map<number, number>()
   /**
@@ -164,11 +204,14 @@ export class LiveBlobsFeed {
    */
   private readonly recheck = new Set<number>()
   private head: number | undefined
+  private version = 0
+  /** The pending set's version when `version` last moved */
+  private pendingVersion = 0
   private failures = 0
   private lastAskedAt = 0
   /** The first poll of the current run; unset while nobody asks */
   private warmup: Promise<void> | undefined
-  /** Pages waiting for a new head */
+  /** Pages waiting for a new version */
   private readonly waiting = new Set<() => void>()
   /** The backfill running now, if any */
   private backfillRun: Promise<void> | undefined
@@ -178,6 +221,7 @@ export class LiveBlobsFeed {
   constructor(
     private readonly source: BeaconSource,
     logger: Logger,
+    private readonly mempool: MempoolSource = NO_MEMPOOL,
     private readonly now = () => Date.now() / 1000,
   ) {
     this.logger = logger.for(this)
@@ -186,15 +230,16 @@ export class LiveBlobsFeed {
   /** The recent blocks, or undefined while the node has never been reached */
   async latest(): Promise<LiveBlobs | undefined> {
     this.lastAskedAt = this.now()
+    this.mempool.watch(this.onPendingTx)
     this.warmup ??= this.poll()
     await withTimeout(this.warmup, FIRST_ANSWER_TIMEOUT)
     return this.snapshot()
   }
 
   /**
-   * The recent blocks once the head is not `after` any more, or as they are
-   * after `LONG_POLL` seconds. Held open, a page hears of a block the moment
-   * the server has it, rather than at its next ask
+   * The recent blocks once the version has passed `after`, or as they are
+   * after `LONG_POLL` seconds. Held open, a page hears of a block or a
+   * pending batch the moment the server has it, rather than at its next ask
    */
   async latestAfter({ after }: LiveBlobsParams) {
     const askedAt = this.now()
@@ -209,10 +254,9 @@ export class LiveBlobsFeed {
       }
       const timer = setTimeout(done, left * 1000)
       this.waiting.add(done)
-      // looked at only once waiting, or a head that moved between the look
-      // and the wait would be missed: pages are answered as they wait. Any
-      // other head, as one moved back has blocks to take off the page
-      if (this.head === undefined || this.head !== after) done()
+      // looked at only once waiting, or a version that moved between the
+      // look and the wait would be missed: pages are answered as they wait
+      if (this.head === undefined || this.version > after) done()
     })
     // not `latest`, which would wait for a first answer all over again
     return this.snapshot()
@@ -226,6 +270,12 @@ export class LiveBlobsFeed {
   stop() {
     clearTimeout(this.timer)
     this.warmup = undefined
+    this.mempool.stop()
+  }
+
+  private readonly onPendingTx = (tx: PendingTx) => {
+    this.pending.seen(tx, this.now())
+    this.publish(false)
   }
 
   private async poll() {
@@ -247,6 +297,7 @@ export class LiveBlobsFeed {
       // a block that failed to come with its head, and came on this try
       const filled = missing.some((slot) => this.blocks.has(slot))
       this.head = head
+      this.letGoAbove(head)
       forgetOld(this.blocks, head)
       forgetOld(this.tries, head)
       forgetOld(this.recheck, head)
@@ -260,13 +311,11 @@ export class LiveBlobsFeed {
       }
       this.failures++
     }
+    // not only when the node answers: with it down, the mempool still has to be let go of
+    this.tendMempool()
     // the page also shows whether the node is reached, so it hears of that too
-    if (changed || wasLive !== (this.failures === 0)) this.answerWaiting()
+    this.publish(changed || wasLive !== (this.failures === 0))
     this.scheduleNext()
-  }
-
-  private answerWaiting() {
-    for (const done of [...this.waiting]) done()
   }
 
   /** Fills in the rest of the window. A gap left by a failure is retried on the next poll */
@@ -290,16 +339,80 @@ export class LiveBlobsFeed {
     )
   }
 
-  private fetchAll(slots: number[]) {
-    return forEachLimited(slots, CONCURRENCY, async (slot) => {
+  /**
+   * The blocks are kept back until all have come, then taken in oldest
+   * first: told to the pending batches in the order they came, a newer
+   * block's nonce would put the sender's lower nonces out of the pending
+   * ones, and with them since when an older block's batch waited; and served
+   * before it is told, a block would show a batch both in it and waiting
+   */
+  private async fetchAll(slots: number[]) {
+    const came = new Map<number, LiveBlock>()
+    const all = await forEachLimited(slots, CONCURRENCY, async (slot) => {
       try {
-        this.blocks.set(slot, await this.source.block(slot))
-        this.recheck.delete(slot)
+        came.set(slot, await this.source.block(slot))
       } catch (error) {
         this.tries.set(slot, (this.tries.get(slot) ?? 0) + 1)
         throw error
       }
     })
+    for (const slot of [...came.keys()].sort((a, b) => a - b)) {
+      const block = came.get(slot)
+      if (!block) continue
+      this.takeFromPending(block, this.blocks.get(slot))
+      this.blocks.set(slot, block)
+      this.recheck.delete(slot)
+    }
+    return all
+  }
+
+  /**
+   * The chain moved its head back: the blocks above it are gone, and their
+   * batches may wait again
+   */
+  private letGoAbove(head: number) {
+    for (const [slot, block] of this.blocks) {
+      if (slot > head) this.takeFromPending({ slot, status: 'missed' }, block)
+    }
+  }
+
+  /**
+   * The block's batches wait no more; each notes since when it waited.
+   * `held` is what the slot had before, when it is fetched again: a batch
+   * still there keeps what it noted, as it left the pending ones the first
+   * time, and one the chain dropped with its block may wait again
+   */
+  private takeFromPending(block: LiveBlock, held: LiveBlock | undefined) {
+    const now = this.now()
+    const batches = block.status === 'proposed' ? block.batches : []
+    const heldBatches = held?.status === 'proposed' ? held.batches : []
+    for (const batch of batches) {
+      const since =
+        this.pending.included(batch.from, batch.nonce, block.slot, now) ??
+        heldBatches.find((b) => isSameBatch(b, batch))?.pendingSince
+      if (since !== undefined) batch.pendingSince = since
+    }
+    for (const batch of heldBatches) {
+      if (batches.some((b) => isSameBatch(b, batch))) continue
+      this.pending.dropped(batch.from, batch.nonce, block.slot)
+    }
+  }
+
+  private tendMempool() {
+    if (this.now() - this.lastAskedAt > MEMPOOL_IDLE_AFTER) {
+      this.mempool.stop()
+      this.pending.clear()
+    } else {
+      this.pending.expire(this.now())
+    }
+  }
+
+  /** A new version, if the blocks or what is pending changed, for the pages waiting */
+  private publish(blocksChanged: boolean) {
+    if (!blocksChanged && this.pending.version === this.pendingVersion) return
+    this.pendingVersion = this.pending.version
+    this.version = Math.max(this.version + 1, Math.round(this.now() * 1000))
+    for (const done of [...this.waiting]) done()
   }
 
   private scheduleNext() {
@@ -323,12 +436,21 @@ export class LiveBlobsFeed {
       if (block) blocks.push(block)
     }
     return {
+      version: this.version,
       head: this.head,
       live: this.failures === 0,
       blocks,
       window: postedWindow(this.blocks, this.head),
+      pending: this.pending.list(),
     }
   }
+}
+
+const NO_MEMPOOL: MempoolSource = { watch: () => {}, stop: () => {} }
+
+/** A sender's nonce names a batch, as in the mempool */
+function isSameBatch(a: LiveBatch, b: LiveBatch) {
+  return a.from === b.from && a.nonce === b.nonce
 }
 
 /** Sums up the blocks back from the head until the first one not known yet */

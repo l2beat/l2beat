@@ -14,7 +14,7 @@ import {
  * of a slot gets a ceiling that only moves down.
  *
  * A watch is one whole slot, from just after it starts, so it holds exactly
- * one block landing whatever the clock. Mock mode's beacon node makes each
+ * one block landing whatever the clock. The mock beacon node (MOCK_BEACON) makes each
  * slot's block from its number, so the data is fixed too; what still varies
  * is which slot, and with it how many batches land, which is why the best of
  * a few watches counts and the margins are wide.
@@ -32,7 +32,7 @@ import {
 const CEILINGS_FILE = join(__dirname, 'ceilings.json')
 const SLOT_MS = 12_000
 const GENESIS_MS = 1606824023_000
-/** Before the slot's block comes in, which mock mode has two seconds in */
+/** Before the slot's block comes in, which the mock beacon node has two seconds in */
 const START_INTO_SLOT_MS = 500
 const WATCHES = 3
 

@@ -1,4 +1,5 @@
 import type { LiveBlock } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
+import type { PendingBatch } from '~/server/features/data-availability/live-blobs/pendingBlobs'
 
 /** One blob transaction: a project's batch in a block */
 export interface BlobBatch {
@@ -8,7 +9,20 @@ export interface BlobBatch {
   blobsBelow: number
   /** Where it was sent, lowercase. Says the most about a batch from an unknown sender */
   to: string
+  /** Sender and nonce: the same for the batch while it waited and once in its block */
+  key: string
+  /** Unix seconds it was first seen pending, if it was */
+  pendingSince: number | undefined
   txHash: string
+}
+
+/** A batch broadcast and waiting for a block */
+export interface PendingBlobBatch {
+  key: string
+  posterIndex: number
+  blobs: number
+  to: string
+  firstSeenAt: number
 }
 
 export type ChainBlock =
@@ -48,6 +62,17 @@ export function isSameBlock(
  * before, as a block reaches the page a second or two into its slot and the
  * clock may run a little ahead
  */
+/**
+ * Whether a batch the page has not had was broadcast just now, for the belt
+ * to show joining the lane, rather than one heard of while the belt was not
+ * followed (a hidden tab, or scrolled away) to put in place quietly
+ */
+export function broadcastNow(firstSeenAt: number, now: number): boolean {
+  return now - firstSeenAt < BROADCAST_FRESH_FOR
+}
+/** Seconds after it was heard of that a batch still counts as broadcast now */
+const BROADCAST_FRESH_FOR = 3
+
 export function arrivesNow(
   slot: number,
   head: number,
@@ -71,10 +96,29 @@ export function toChainBlock(
         blobs: batch.blobs,
         blobsBelow,
         to: batch.to,
+        key: batchIdentity(batch.from, batch.nonce),
+        pendingSince: batch.pendingSince,
         txHash: batch.txHash,
       }
       blobsBelow += batch.blobs
       return placed
     }),
   }
+}
+
+export function toPendingBlobBatch(
+  batch: PendingBatch,
+  posterIndexOf: PosterIndexOf,
+): PendingBlobBatch {
+  return {
+    key: batchIdentity(batch.from, batch.nonce),
+    posterIndex: posterIndexOf(batch.projectId),
+    blobs: batch.blobs,
+    to: batch.to,
+    firstSeenAt: batch.firstSeenAt,
+  }
+}
+
+function batchIdentity(from: string, nonce: number) {
+  return `${from}:${nonce}`
 }

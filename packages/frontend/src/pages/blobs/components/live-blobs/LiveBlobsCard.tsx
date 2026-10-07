@@ -101,6 +101,11 @@ const noop = () => {}
  * read what it brings. Without a belt, this asks in its stead
  */
 function FollowChainWithoutBelt() {
-  useBeaconChain({ posterIndexOf: noPoster, enabled: true, onFreshBlock: noop })
+  useBeaconChain({
+    posterIndexOf: noPoster,
+    enabled: true,
+    onFreshBlock: noop,
+    onFreshPending: noop,
+  })
   return null
 }

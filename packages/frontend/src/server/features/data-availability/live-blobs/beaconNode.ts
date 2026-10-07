@@ -76,17 +76,20 @@ async function readBlobBatches(
   for (const transaction of transactions) {
     if (!transaction.startsWith(BLOB_TRANSACTION)) continue
     const serialized = transaction as TransactionSerializedEIP4844
-    const { to, blobVersionedHashes } = parseTransaction(serialized)
+    const { to, nonce, blobVersionedHashes } = parseTransaction(serialized)
     const blobs = blobVersionedHashes?.length ?? 0
     if (!to || blobs === 0) continue
     const from = await recoverTransactionAddress({
       serializedTransaction: serialized,
     })
     const inbox = to.toLowerCase()
+    const sender = from.toLowerCase()
     batches.push({
-      projectId: attribute(inbox, from.toLowerCase()),
+      projectId: attribute(inbox, sender),
       blobs,
       to: inbox,
+      from: sender,
+      nonce: nonce ?? 0,
       txHash: keccak256(serialized),
     })
   }
