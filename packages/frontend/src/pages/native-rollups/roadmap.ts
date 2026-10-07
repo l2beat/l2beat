@@ -1,27 +1,31 @@
 import {
+  EIP_8142_URL,
+  EIP_8288_URL,
+  EIP_8357_URL,
   ETHREX_POC_URL,
   FOUNDING_POST_URL,
   L2_FOCIL_RESEARCH_URL,
   NATIVE_PROOF_VERIFICATION_URL,
   NATIVE_ROLLUPS_BOOK_URL,
+  NATIVE_ROLLUPS_DEMO_URL,
   NATIVE_ROLLUPS_EIP_URL,
 } from './links'
 
 export interface RoadmapItem {
   status: 'done' | 'inProgress' | 'planned'
-  date: string
+  /** Omitted for what comes next, which depends on L1. */
+  date?: string
   title: string
   description: string
   url?: string
 }
 
-interface RoadmapYear {
-  year: number
+interface RoadmapGroup {
+  year: number | 'Next'
   items: RoadmapItem[]
 }
 
-/** Future dates are research targets, not Ethereum fork commitments. */
-export const ROADMAP_YEARS: RoadmapYear[] = [
+export const ROADMAP_YEARS: RoadmapGroup[] = [
   {
     year: 2025,
     items: [
@@ -56,18 +60,10 @@ export const ROADMAP_YEARS: RoadmapYear[] = [
     items: [
       {
         status: 'done',
-        date: 'March 2026',
-        title: 'ethrex proof-of-concept',
-        description:
-          'The ethrex / LambdaClass team demonstrates EIP-8079 via L1 re-execution. It validates the contract and messaging model, but is a prototype rather than the target ZK architecture.',
-        url: ETHREX_POC_URL,
-      },
-      {
-        status: 'done',
         date: 'May 2026',
         title: 'Native proof verification',
         description:
-          'A program-agnostic design replaces EXECUTE in the ZK path with proof-carrying transactions and consensus-layer verification reusable by any ZK application.',
+          'Proof-carrying transactions: a program-agnostic design that replaces EXECUTE in the ZK path with a new transaction type and consensus-layer proof verification. It is now the main alternative to EIP-8288.',
         url: NATIVE_PROOF_VERIFICATION_URL,
       },
       {
@@ -79,37 +75,95 @@ export const ROADMAP_YEARS: RoadmapYear[] = [
         url: L2_FOCIL_RESEARCH_URL,
       },
       {
-        status: 'inProgress',
-        date: 'Target: September 2026',
-        title: 'Rebase on Hegotá',
+        status: 'done',
+        date: 'July 2026',
+        title: 'EIP-8357: EVM verification key registry',
         description:
-          'Align the specification and a client implementation with the latest execution and consensus work, including ePBS, block-level access lists, FOCIL, and stateless validation.',
+          'Proposed: an L1 contract that records the verification key of Ethereum’s EVM program at each fork, so native rollups follow L1 upgrades without their own governance.',
+        url: EIP_8357_URL,
       },
       {
-        status: 'planned',
-        date: 'Target: December 2026',
-        title: 'Native proof verification',
+        status: 'done',
+        date: 'August 2026',
+        title: 'ethrex proof-of-concept',
         description:
-          'Turn the research proposal into an EIP and run a CL+EL devnet with proof-carrying transactions and the ZK version of the native-rollup specification.',
+          'The ethrex / LambdaClass team merges a proof of concept of EIP-8079 via L1 re-execution. It validates the contract and messaging model, but is a prototype rather than the target ZK architecture.',
+        url: ETHREX_POC_URL,
+      },
+      {
+        status: 'done',
+        date: 'September 2026',
+        title: 'EIP-8288 (zkzkframes)',
+        description:
+          'Proofs that EIP-8141 frame transactions declare as dependencies, aggregated recursively in the mempool and by the builder, are merged as a Draft EIP. The book adopts them as the proof path for native rollups.',
+        url: EIP_8288_URL,
+      },
+      {
+        status: 'done',
+        date: 'September 2026',
+        title: 'Specification rebased on Glamsterdam and Hegotá',
+        description:
+          "The specification follows Glamsterdam's block-level access lists and stateless validation program, and posts blocks with Hegotá's EIP-8141 frame transactions.",
+        url: NATIVE_ROLLUPS_BOOK_URL,
+      },
+      {
+        status: 'done',
+        date: 'October 2026',
+        title: 'Native rollup contract on a live devnet',
+        description:
+          'The specification’s rollup contract runs end to end on a local EIP-8141 devnet, with mock proofs signed by a trusted key, and a public explorer that rebuilds every L2 block from L1.',
+        url: NATIVE_ROLLUPS_DEMO_URL,
+      },
+      {
+        status: 'inProgress',
+        date: 'Ongoing',
+        title: 'Removing the devnet’s mocks',
+        description:
+          'Each L1 feature the devnet stands in for replaces its mock as it lands upstream. The EIP-8357 registry is already in its genesis; real proofs, EIP-8288, and Block-in-Blobs come next.',
       },
     ],
   },
   {
-    year: 2027,
+    year: 'Next',
     items: [
       {
         status: 'planned',
-        date: 'Target: March 2027',
-        title: 'Blocks-in-Blobs study',
+        title: 'LeanSTARK dependencies in EIP-8288',
         description:
-          'Specify how proof-carrying transactions bind L2 transactions and block access lists to data made available through EIP-8142.',
+          'EIP-8288 defines its block digest only for signature dependencies, and leanVM aggregates proofs of one fixed program. Native rollups need to declare proofs of any program as LeanSTARK dependencies, more than one per mempool wrapper.',
+        url: EIP_8288_URL,
       },
       {
         status: 'planned',
-        date: 'Target: June 2027',
-        title: 'Proof aggregation',
+        title: 'EIP-8357 in clients and a fork',
         description:
-          'Define recursive aggregation, proof propagation, pricing, and resource limits so L1 can efficiently cover many proof-carrying transactions.',
+          'Finish the registry’s review, tests, and system contract, and propose it together with EIP-8288, so the fork that brings proof dependencies also brings the EVM program’s keys.',
+        url: EIP_8357_URL,
+      },
+      {
+        status: 'planned',
+        title: 'The block proof covers EIP-8288',
+        description:
+          'Specify how Ethereum’s mandatory block proof binds and absorbs the EIP-8288 aggregate, so validators verify a single proof without downloading full payloads.',
+      },
+      {
+        status: 'planned',
+        title: 'Block data without Block-in-Blobs in Hegotá',
+        description:
+          'The specification binds L2 data to blobs through EIP-8142, which was declined for Hegotá. Native rollups need a path: EIP-8142 in a later fork, or another way to bind the data.',
+        url: EIP_8142_URL,
+      },
+      {
+        status: 'planned',
+        title: 'Real proofs on the devnet',
+        description:
+          'Replace the signed mock proofs with zkVM proofs of the same program, once the execution and consensus specifications agree on what the proof commits to.',
+      },
+      {
+        status: 'planned',
+        title: 'Native rollups with extensions',
+        description:
+          'Research an extensible native program, which Arbitrum and Optimism have shown interest in: a rollup that follows Ethereum’s EVM through the EIP-8357 registry and maintains only its own precompiles, opcodes, or transaction types.',
       },
     ],
   },

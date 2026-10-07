@@ -7,17 +7,17 @@ const CAPABILITIES = [
   {
     title: 'Program-agnostic',
     description:
-      'The proof engine can verify arbitrary guest programs, making the primitive useful to custom-VM rollups and other ZK applications too.',
+      "A frame transaction can depend on a proof of any program, under that program's verification key, making the primitive useful to custom-VM rollups and other ZK applications too.",
   },
   {
-    title: 'Protocol-level multi-proof',
+    title: 'Aggregated, not verified one by one',
     description:
-      'A transaction can require distinct zkVM backends to prove the same statement, without a rollup deploying its own proof router.',
+      'Proofs never enter the block. Mempool nodes and the builder fold them into one recursive proof per block, which validators verify.',
   },
   {
-    title: 'Client-managed verification',
+    title: 'Protocol-managed verification',
     description:
-      'zkVM verification fixes can ship in Ethereum client releases instead of every project separately upgrading onchain verifier contracts.',
+      'Verifier fixes ship with Ethereum upgrades instead of every project separately upgrading onchain verifier contracts.',
   },
 ]
 
@@ -25,8 +25,8 @@ export function NativeProofVerificationSection() {
   return (
     <section id="native-proof-verification" className="mt-8 md:mt-12">
       <SectionHeading
-        title="Native proof verification is the more general primitive"
-        description="Native rollups are one use of a broader proposal: let any smart contract consume proofs already verified by Ethereum's consensus infrastructure."
+        title="Native rollups are a special case of generalized proof verification"
+        description="EIP-8288 lets any EIP-8141 frame transaction depend on proofs that Ethereum verifies. Native rollups are the minimal case: they use Ethereum's own EVM program."
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
         <div className="grid lg:grid-cols-[1fr_1.4fr]">
@@ -60,8 +60,9 @@ export function NativeProofVerificationSection() {
                 Native EVM program
               </dt>
               <dd className="mt-1 text-paragraph-15 text-secondary">
-                Always refers to the EVM program recognized by Ethereum, so the
-                rollup automatically follows L1 execution upgrades.
+                Refers to the EVM program that Ethereum records in the EIP-8357
+                registry, following the current entry to inherit L1 execution
+                upgrades, or pinning an earlier one.
               </dd>
             </div>
             <div className="rounded-lg bg-surface-secondary p-4">
@@ -69,8 +70,8 @@ export function NativeProofVerificationSection() {
                 Custom guest program
               </dt>
               <dd className="mt-1 text-paragraph-15 text-secondary">
-                Uses project-chosen program hashes and can implement another VM
-                or application, but does not automatically inherit
+                Uses project-chosen verification keys and can implement another
+                VM or application, but does not automatically inherit
                 Ethereum&apos;s execution semantics.
               </dd>
             </div>
