@@ -181,7 +181,6 @@ export function LiveBlocks({ posters, limits, history }: Props) {
           <>
             1 column = <LegendValue>1 block</LegendValue>
           </>,
-          'Live from the Ethereum beacon chain',
         ]}
       />
     </div>
