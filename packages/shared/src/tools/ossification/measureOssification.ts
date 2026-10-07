@@ -20,6 +20,7 @@ export function measureOssification(
   assert(history.contracts.length > 0, 'a measured perimeter has a contract')
   const changes = sortedChanges(history)
   const timestamps = changes.map((change) => change.timestamp)
+  const criticalChanges = clusterStarts(timestamps)
   const genesis = getGenesis(history)
   const clockStart = Math.max(genesis, ...timestamps)
 
@@ -29,18 +30,15 @@ export function measureOssification(
     : 0
 
   const from = Math.max(now - RATE_WINDOW, genesis)
-  const clusteredEventCount = clusterStarts(
-    timestamps.filter((timestamp) => timestamp >= from),
-  ).length
+  const recent = criticalChanges.filter((change) => change >= from).length
   const years = Math.max(now - from, RATE_WINDOW_MIN) / YEAR
 
   return {
     score,
     clockStart,
     genesis,
-    criticalChangesPerYear: clusteredEventCount / years,
-    clusteredEventCount,
-    criticalChanges: clusterStarts(timestamps),
+    criticalChangesPerYear: recent / years,
+    criticalChanges,
     contracts: history.contracts
       .map((contract) => ({
         ...contract,
@@ -122,6 +120,6 @@ export function exploitAgePercentile(ageSeconds: number): number {
   return p(i - 1 + (ageSeconds - a) / (b - a))
 }
 
-export function toDisplayScore(maturity: number): number {
-  return maturity === 0 ? 0 : clamp(Math.round(maturity * 100), 1, 99)
+export function toDisplayScore(percentile: number): number {
+  return percentile === 0 ? 0 : clamp(Math.round(percentile * 100), 1, 99)
 }

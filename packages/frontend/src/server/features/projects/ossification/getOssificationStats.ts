@@ -20,7 +20,6 @@ export interface OssificationStats {
   score: number
   isUnverified: boolean
   criticalChangesPerYear: number
-  clusteredEventCount: number
   contractCount: number
   /** USD·years; null without a value series or with unverified contracts */
   exposure: number | null
@@ -71,7 +70,6 @@ export async function getOssificationStats(
     score: ossification.score,
     isUnverified,
     criticalChangesPerYear: ossification.criticalChangesPerYear,
-    clusteredEventCount: ossification.clusteredEventCount,
     contractCount: ossification.contracts.length,
     // Unaudited code has withstood nothing we can vouch for.
     exposure:

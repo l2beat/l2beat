@@ -27,7 +27,6 @@ export interface OssificationResult {
   /** 24h-clustered critical changes per year, over the last 3 years or since
    *  the genesis */
   criticalChangesPerYear: number
-  clusteredEventCount: number
   /** 24h-clustered critical changes, ascending */
   criticalChanges: number[]
   /** Youngest first */
@@ -39,8 +38,9 @@ export interface OssificationContract {
   name: string
   address: ChainSpecificAddress
   isVerified: boolean
-  /** Age of the contract: since its last critical change, deployment or
-   *  join, and never before the genesis. Shown per contract, not scored. */
+  /** Age of the contract: since its last critical change, its deployment or
+   *  the moment it became critical, and never before the genesis. Shown per
+   *  contract, not scored. */
   ossifyingSince: number
   codeChangeCount: number
   stateChangeCount: number

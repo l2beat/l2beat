@@ -76,7 +76,7 @@ describe(measureOssification.name, () => {
     expect(result?.score).toEqual(scoreAt(3 * YEAR))
     expect(result?.clockStart).toEqual(NOW - 3 * YEAR)
     expect(result?.genesis).toEqual(NOW - 3 * YEAR)
-    expect(result?.clusteredEventCount).toEqual(0)
+    expect(result?.criticalChangesPerYear).toEqual(0)
     expect(result?.criticalChanges).toEqual([])
   })
 
@@ -117,7 +117,6 @@ describe(measureOssification.name, () => {
       }),
       NOW,
     )
-    expect(result?.clusteredEventCount).toEqual(1)
     expect(result?.criticalChangesPerYear).toEqual(1 / 3)
   })
 
@@ -132,27 +131,30 @@ describe(measureOssification.name, () => {
       }),
       NOW,
     )
-    expect(result?.clusteredEventCount).toEqual(2)
+    expect(result?.criticalChanges).toEqual([NOW - YEAR, NOW - YEAR + 2 * DAY])
   })
 
-  it('counts changes since the launch when it is more recent', () => {
+  it('counts changes since the genesis when it is more recent', () => {
     const result = measureOssification(
       history({ observedSince: NOW - YEAR, changes: [change(NOW - DAY)] }),
       NOW,
     )
-    expect(result?.clusteredEventCount).toEqual(1)
     expect(result?.criticalChangesPerYear).toEqual(1)
   })
 
-  it('counts a change just inside the window even when one just outside precedes it', () => {
+  it('counts a cluster when it starts inside the window', () => {
     const result = measureOssification(
       history({
         observedSince: NOW - 5 * YEAR,
-        changes: [change(NOW - 3 * YEAR - HOUR), change(NOW - 3 * YEAR + HOUR)],
+        changes: [
+          change(NOW - 3 * YEAR - HOUR),
+          change(NOW - 3 * YEAR + HOUR),
+          change(NOW - DAY),
+        ],
       }),
       NOW,
     )
-    expect(result?.clusteredEventCount).toEqual(1)
+    expect(result?.criticalChangesPerYear).toEqual(1 / 3)
   })
 
   it('never divides by less than thirty days', () => {
@@ -254,7 +256,6 @@ describe(measureOssification.name, () => {
       NOW,
     )
     expect(result?.criticalChanges).toEqual([NOW - YEAR, NOW - DAY])
-    expect(result?.clusteredEventCount).toEqual(2)
   })
 })
 

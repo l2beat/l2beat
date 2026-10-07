@@ -61,7 +61,7 @@ export function OssificationDetails({
             isUnverified={ossification.isUnverified}
           />
           <SecondLine>
-            unchanged since {formatTimestamp(ossification.timeline.clockStart)}
+            since {formatTimestamp(ossification.timeline.clockStart)}
           </SecondLine>
         </ChartStatsItem>
         <ChartStatsItem
