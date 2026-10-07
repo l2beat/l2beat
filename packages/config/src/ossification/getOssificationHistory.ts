@@ -103,8 +103,8 @@ function isCounted(
   )
 }
 
-// A contract is as old as its deployment, the moment it became critical or the
-// project start, whichever is latest, unless a counted change came after.
+// Before the project start or the moment it became critical, a contract's
+// history is not the project's own.
 function toRow(
   member: Member,
   projectStart: number | undefined,
