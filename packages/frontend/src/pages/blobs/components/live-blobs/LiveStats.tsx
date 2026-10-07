@@ -8,7 +8,6 @@ import {
   describeWindow,
   formatAverage,
   formatKib,
-  formatRate,
   formatWhole,
 } from './blocks/format'
 import { useChainClock } from './chainClock'
@@ -46,7 +45,6 @@ export function LiveStats({
 }) {
   const { data, status } = useLiveBlobs()
   const hour = data?.window
-  const seconds = (hour?.slots ?? 0) * SLOT_SECONDS
   // the newest block's blobs are counted in as the belt lands them
   const newest = hour?.blobsPerSlot[0] ?? 0
   const { value: blobs, arrival } = useLandedTotal(
@@ -57,7 +55,7 @@ export function LiveStats({
     anyLanding,
   )
   const shares = useShares(hour?.posted ?? [], posters)
-  const ready = hour !== undefined && seconds > 0
+  const ready = hour !== undefined && hour.slots > 0
   const projects = hour?.posted.filter((p) => p.projectId).length ?? 0
 
   return (
@@ -100,17 +98,11 @@ export function LiveStats({
       {ready ? (
         <>
           <ShareStrip shares={shares} blobs={blobs} projects={projects} />
-          <div className="mt-2 flex flex-wrap items-center justify-between gap-x-6 gap-y-1">
-            <ShareLegend
-              shares={shares}
-              projects={projects}
-              title={`${describeWindow(hour.slots)}, by project`}
-            />
-            <div className="flex gap-4 font-medium text-label-value-13 text-secondary tabular-nums">
-              <Rate value={blobs / seconds} unit="blobs/s" />
-              <Rate value={(blobs * BLOB_KIB) / seconds} unit="KiB/s" />
-            </div>
-          </div>
+          <ShareLegend
+            shares={shares}
+            projects={projects}
+            title={`${describeWindow(hour.slots)}, by project`}
+          />
         </>
       ) : (
         <Skeleton className="mt-4 h-12 w-full" />
@@ -159,17 +151,6 @@ function Stat({
         )}
       </dd>
     </div>
-  )
-}
-
-function Rate({ value, unit }: { value: number; unit: string }) {
-  return (
-    <span>
-      <span className="font-bold text-primary">
-        <RollingNumber value={value} format={formatRate} />
-      </span>{' '}
-      {unit}
-    </span>
   )
 }
 
@@ -282,15 +263,6 @@ function useShares(
   })
 }
 
-// The belt's ink, as CSS, at the alphas `paletteFor` gives the canvas, so
-// the strip sits in a rack like the belt's own
-const rackInk = (percent: number) =>
-  `color-mix(in srgb, var(--primary) ${percent}%, transparent)`
-const RACK: CSSProperties = {
-  backgroundColor: rackInk(3),
-  boxShadow: `inset 0 0 0 1px ${rackInk(15)}`,
-}
-
 /** A tile like the belt's: its color, lit along the top edge like a gel */
 function gel(color: string): CSSProperties {
   return {
@@ -311,8 +283,7 @@ function ShareStrip({
 }) {
   return (
     <div
-      className="mt-4 flex h-6 gap-[2px] overflow-hidden rounded-md p-[4px] md:h-7"
-      style={RACK}
+      className="mt-4 flex h-4 gap-[2px] overflow-hidden rounded-[3px] md:h-5"
       role="img"
       aria-label={`${formatWhole(blobs)} blobs from ${projects} projects`}
     >
@@ -342,7 +313,7 @@ function ShareLegend({
     .filter((share) => share.id !== UNKNOWN_ID)
     .slice(0, NAMED_POSTERS)
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-medium text-label-value-12 text-secondary">
+    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 font-medium text-label-value-12 text-secondary">
       <span className="font-bold text-primary">{title}</span>
       {named.map((share) => (
         <span key={share.id} className="flex items-center gap-1.5">
