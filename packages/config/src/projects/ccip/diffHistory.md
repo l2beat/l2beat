@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc5963371c6607d8f99b50c305e8459a8f88be532
+Generated with discovered.json: 0x38e39eb355d781bda3e3bc3b604347a311cf8427
 
-# Diff at Wed, 07 Oct 2026 13:26:38 GMT:
+# Diff at Wed, 07 Oct 2026 13:28:50 GMT:
 
 - id: 7cd3d4d2
 - author: Luca Donno (<donnoh99@gmail.com>)
@@ -11,7 +11,7 @@ Generated with discovered.json: 0xc5963371c6607d8f99b50c305e8459a8f88be532
 
 - 6 more Ethereum lanes moved to CCIP 2.0: the MainRouter now selects EthereumOnRamp_v2_0 for Lens, Taiko, Kaia, TAC, Mova and Gravity (69 destinations in total), and EthereumOffRamp_v2_0 routes their inbound messages through the MainRouter.
 - Kaia, Mova and Gravity were configured on the v2.0 Executor, verifier resolver and CommitteeVerifier (9-of-16 signers).
-- BOB's L1UsdcBridge, an authorized caller of BobUSDCERC20LockBox, became source-verified, which made discovery follow its messenger into BOB's OP Stack contracts. Its bridge, messenger and token fields are now ignored as relatives; its owner (Bob Multisig 2) is still tracked. CCTPVerifier_v2_0, CCTPMessageTransmitterProxy_v2_0 and Circle's SeizureRegistry USDC minter also became verified.
+- BOB's L1UsdcBridge, an authorized caller of BobUSDCERC20LockBox, became source-verified, which made discovery follow it into BOB's OP Stack contracts. BOB's contracts are out of scope for CCIP, so the lockbox's authorized callers are no longer followed: L1UsdcBridge, Bob Multisig 2 and their signers are removed from this discovery, and the bridge remains listed only as a lockbox value. CCTPVerifier_v2_0, CCTPMessageTransmitterProxy_v2_0 and Circle's SeizureRegistry USDC minter also became verified.
 - No allowed finality config changed.
 
 ## Watched changes
@@ -259,41 +259,9 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1790867273 (main branch discovery), not current.
 
 ```diff
-    contract L1UsdcBridge (eth:0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb) [N/A] {
+-   Status: DELETED
+    contract  (eth:0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb) [N/A]
     +++ description: None
-      name:
--        ""
-+        "L1UsdcBridge"
-      unverified:
--        true
-      values.burner:
-+        "eth:0x0000000000000000000000000000000000000000"
-      values.l1Usdc:
-+        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      values.l2TokenBridge:
-+        "eth:0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90"
-      values.l2Usdc:
-+        "eth:0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0"
-      values.messenger:
-+        "eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA"
-      values.MESSENGER:
-+        "eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA"
-      values.OTHER_BRIDGE:
-+        "eth:0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90"
-      values.otherBridge:
-+        "eth:0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90"
-      values.owner:
-+        "eth:0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194"
-      values.paused:
-+        true
-      values.version:
-+        "2.1.0"
-      implementationNames.eth:0x8815623E1a3829Ce0994d183ab1aF99E9308538D:
--        ""
-+        "L1UsdcBridge"
-      sourceHashes:
-+        ["0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31","0x13efe1e10ca365d5e0c623c52e6d838c7dc2881227f808cf237c58812890b9cf"]
-    }
 ```
 
 ```diff
@@ -307,6 +275,12 @@ discovery. Values are for block 1790867273 (main branch discovery), not current.
       sourceHashes:
 +        ["0x457f2d4685becb8d5607a70f182c299b687f6fca895a5f5e63a7f84238606902"]
     }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff) [GnosisSafe]
+    +++ description: None
 ```
 
 ```diff
@@ -352,6 +326,12 @@ discovery. Values are for block 1790867273 (main branch discovery), not current.
       sourceHashes:
 +        ["0xf66f390c3291bc5b8725bf8fa36d64494b91e8cfb2b717b52e85adcc68dcdd50","0x69d58c583f7c1689f33f52112c458212177cc01844f86873c742231206d49e50"]
     }
+```
+
+```diff
+-   Status: DELETED
+    contract Bob Multisig 2 (eth:0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194) [GnosisSafe]
+    +++ description: None
 ```
 
 Generated with discovered.json: 0xb72e38702619162aee619a933e50581cfaeed979

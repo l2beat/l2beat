@@ -204,17 +204,9 @@
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["totalSecondaryMarketBurnedAmount"]
     },
-    // BOB's USDC bridge is tracked only as an authorized caller of BobUSDCERC20LockBox; do not crawl into BOB's OP Stack contracts.
-    "eth:0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb": {
-      "ignoreRelatives": [
-        "messenger",
-        "MESSENGER",
-        "otherBridge",
-        "OTHER_BRIDGE",
-        "l2TokenBridge",
-        "l1Usdc",
-        "l2Usdc"
-      ]
+    // BOB's L1UsdcBridge is an authorized caller of this lockbox; BOB's own contracts are out of scope for CCIP.
+    "eth:0x966A3BE75103C680b6A4248689630c788659d2A5": {
+      "ignoreRelatives": ["getAllAuthorizedCallers"]
     },
     // These two contracts are not source-verified. Only fields read through their deployed runtime interface are included.
     "eth:0xa22606F055146f0eac2FBEd49253E779b781355D": {
