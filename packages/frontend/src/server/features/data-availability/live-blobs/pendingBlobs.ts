@@ -114,12 +114,16 @@ export class PendingBlobs {
    */
   dropped(from: string, nonce: number, slot: number) {
     this.keepUsed(from, (u) => !isUsedBy(u, nonce, slot))
+    let restored = false
     for (const [key, tx] of this.refused) {
       if (tx.from !== from || this.isUsed(from, tx.nonce)) continue
       this.refused.delete(key)
       this.byKey.set(key, tx)
-      this.version++
+      restored = true
     }
+    if (!restored) return
+    dropOldestOver(this.byKey, MAX_PENDING)
+    this.version++
   }
 
   /** Lets go of batches not heard of for `PENDING_LIFETIME` */
@@ -162,11 +166,12 @@ export class PendingBlobs {
 }
 
 function dropOldestOver(tracked: Map<string, Tracked>, limit: number) {
-  if (tracked.size <= limit) return
-  const oldest = [...tracked.entries()].sort(
+  const over = tracked.size - limit
+  if (over <= 0) return
+  const oldestFirst = [...tracked.entries()].sort(
     ([, a], [, b]) => a.firstSeenAt - b.firstSeenAt,
-  )[0]
-  if (oldest) tracked.delete(oldest[0])
+  )
+  for (const [key] of oldestFirst.slice(0, over)) tracked.delete(key)
 }
 
 /** A nonce a block took */

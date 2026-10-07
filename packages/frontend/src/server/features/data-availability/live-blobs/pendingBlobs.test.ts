@@ -101,6 +101,23 @@ describe(PendingBlobs.name, () => {
     expect(pending.list()).toEqual([{ ...tx({ nonce: 7 }), firstSeenAt: 115 }])
   })
 
+  it('keeps at most MAX_PENDING when batches heard of earlier wait again', () => {
+    // Base's batch was refused while its block stood; strangers filled the
+    // lane meanwhile. As it comes back, the oldest goes, as when one is seen
+    const pending = new PendingBlobs()
+    pending.included(BASE, 7, SLOT, 112)
+    pending.seen(tx({ nonce: 7 }), 115)
+    for (let i = 0; i < MAX_PENDING; i++) {
+      pending.seen(tx({ from: `0xother${i}`, nonce: 1 }), 120 + i)
+    }
+
+    pending.dropped(BASE, 7, SLOT)
+
+    const list = pending.list()
+    expect(list.length).toEqual(MAX_PENDING)
+    expect(list.map((b) => b.from)).not.toInclude(BASE)
+  })
+
   it('keeps what older blocks took when the newest block is dropped', () => {
     // nonce 7 is in a block the chain kept; only nonce 8's block was dropped
     const pending = new PendingBlobs()
