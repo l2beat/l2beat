@@ -8,10 +8,10 @@ import {
   loadProject,
   missingFromSuite,
   quickSuiteProjects,
-  quickUnreachable,
   readSuite,
   selectContracts,
   selectSuiteProjects,
+  unreachableByTemplate,
 } from './loadProject'
 
 const A = 'eth:0x1111111111111111111111111111111111111111'
@@ -152,8 +152,8 @@ describe(quickSuiteProjects.name, () => {
     )
   })
 
-  it('collects the unreachable fields by lowercased address', () => {
-    const marked = quickUnreachable({
+  it('collects the unreachable fields by template, for every contract of it in either suite', () => {
+    const marked = unreachableByTemplate({
       quick: [
         {
           project: 'p',
@@ -166,7 +166,7 @@ describe(quickSuiteProjects.name, () => {
       ],
       projects: [],
     })
-    expect(marked).toEqual({ [A.toLowerCase()]: { slot: 'not derivable' } })
+    expect(marked).toEqual({ 'p/T': { slot: 'not derivable' } })
   })
 })
 

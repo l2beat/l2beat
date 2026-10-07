@@ -18,10 +18,10 @@ import { analyzeWithHiddenTemplate } from '../discovery/templatizer/benchmark/an
 import {
   loadProject,
   quickSuiteProjects,
-  quickUnreachable,
   readSuite,
   type SuiteName,
   selectSuiteProjects,
+  unreachableByTemplate,
 } from '../discovery/templatizer/benchmark/loadProject'
 import {
   REPORT_MARKDOWN,
@@ -155,7 +155,7 @@ export async function templatizerBenchmark(
       onlyAddresses:
         args.addresses === undefined ? undefined : splitList([args.addresses]),
       limit: args.limit,
-      unreachable: suiteName === 'quick' ? quickUnreachable(suite) : undefined,
+      unreachable: unreachableByTemplate(suite),
     },
   )
   logger.info('Benchmark written', {

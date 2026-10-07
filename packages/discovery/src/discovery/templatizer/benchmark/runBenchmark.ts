@@ -69,7 +69,7 @@ export interface BenchmarkOptions {
   onlyAddresses?: string[]
   /** First n contracts per project, for smoke runs. */
   limit?: number
-  /** Per lowercased address, the handler fields the model could not have written, with the reason. */
+  /** Per template, the handler fields the model could not have written, with the reason. */
   unreachable?: Record<string, Record<string, string>>
 }
 
@@ -190,7 +190,7 @@ class BenchmarkRun {
         entry,
         result,
         elapsed,
-        this.options.unreachable?.[entry.address.toLowerCase()] ?? {},
+        this.options.unreachable?.[entry.template] ?? {},
       )
       this.quota = quotaFailure(contract)
       this.logContract(contract)

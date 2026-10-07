@@ -38,7 +38,11 @@ export const QuickContract = v.object({
   address: v.string(),
   /** The committed template, for the reader; the run hides whatever the entry names. */
   template: v.string(),
-  /** Handler fields the model could not have written, with the reason, so a miss there is expected. */
+  /**
+   * Handler fields of the template the model could not have written, with
+   * the reason, so a miss there is expected. They hold for every contract of
+   * the template, in either suite.
+   */
   unreachable: v.record(v.string(), v.string()).optional(),
 })
 
@@ -92,18 +96,24 @@ export function quickSuiteProjects(
   })
 }
 
-/** The quick suite's unreachable fields by lowercased address, for the comparison. */
-export function quickUnreachable(
+/**
+ * The unreachable fields the quick suite marks, by template: the template
+ * is what makes a field unreachable (the same code, the same handlers), so
+ * a full-suite contract of that template gets the same marks.
+ */
+export function unreachableByTemplate(
   suite: BenchmarkSuite,
 ): Record<string, Record<string, string>> {
-  return Object.fromEntries(
-    suite.quick
-      .filter((contract) => contract.unreachable !== undefined)
-      .map((contract) => [
-        contract.address.toLowerCase(),
-        contract.unreachable as Record<string, string>,
-      ]),
-  )
+  const marked: Record<string, Record<string, string>> = {}
+  for (const contract of suite.quick) {
+    if (contract.unreachable !== undefined) {
+      marked[contract.template] = {
+        ...marked[contract.template],
+        ...contract.unreachable,
+      }
+    }
+  }
+  return marked
 }
 
 /** The suite's projects by name, in the order asked; every project when none is asked for. */

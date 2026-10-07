@@ -223,7 +223,7 @@ describe(runBenchmark.name, () => {
       ...options,
       outDir,
       unreachable: {
-        [AUTHORED.toLowerCase()]: { batchers: 'the length getter reverts' },
+        'fixture/Foo': { batchers: 'the length getter reverts' },
       },
     })
 
