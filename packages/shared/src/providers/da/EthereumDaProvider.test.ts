@@ -73,6 +73,78 @@ describe(EthereumDaProvider.name, () => {
     })
   })
 
+  describe(EthereumDaProvider.prototype.getBlocksWithBlobBatches.name, () => {
+    it('returns every block with its blob transactions as batches', async () => {
+      const mockRpcClient = mockObject<RpcClient>({
+        getBlock: mockFn()
+          .given(1, true as unknown as false)
+          .resolvesToOnce({
+            number: 1,
+            hash: '0xhash1',
+            parentHash: '0xhash0',
+            timestamp: 100,
+            transactions: [
+              { hash: '0xplain', type: '2', from: '0xa', to: '0xb' },
+              {
+                hash: '0xblobs',
+                type: '3',
+                blobVersionedHashes: ['0x01', '0x02', '0x03'],
+                from: '0xsequencer',
+                to: '0xinbox',
+              },
+            ],
+          })
+          .given(2, true as unknown as false)
+          .resolvesToOnce({
+            number: 2,
+            hash: '0xhash2',
+            parentHash: '0xhash1',
+            timestamp: 112,
+            transactions: [],
+          }),
+        getLogs: mockFn().resolvesTo([
+          { transactionHash: '0xblobs', topics: ['0xtopic1', '0xtopic2'] },
+          { transactionHash: '0xplain', topics: ['0xother'] },
+        ]),
+      })
+      const provider = new EthereumDaProvider(
+        mockObject<BeaconChainClient>(),
+        mockRpcClient,
+        'ethereum',
+      )
+
+      const result = await provider.getBlocksWithBlobBatches(1, 2)
+
+      // Blocks without blobs still come back: the live view shows them as
+      // proposed, and their hashes chain the next block to the stored one
+      expect(result).toEqual([
+        {
+          number: 1,
+          hash: '0xhash1',
+          parentHash: '0xhash0',
+          timestamp: UnixTime(100),
+          batches: [
+            {
+              txIndex: 1,
+              from: '0xsequencer',
+              to: '0xinbox',
+              topics: ['0xtopic1', '0xtopic2'],
+              blobs: 3,
+            },
+          ],
+        },
+        {
+          number: 2,
+          hash: '0xhash2',
+          parentHash: '0xhash1',
+          timestamp: UnixTime(112),
+          batches: [],
+        },
+      ])
+      expect(mockRpcClient.getLogs).toHaveBeenOnlyCalledWith(1, 2)
+    })
+  })
+
   describe(
     EthereumDaProvider.prototype.getBlobsByVersionedHashesAndBlockNumber.name,
     () => {

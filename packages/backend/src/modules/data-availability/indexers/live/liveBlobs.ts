@@ -1,0 +1,27 @@
+import { SLOT_SECONDS } from '@l2beat/shared-pure'
+import { Retries } from '@l2beat/uif'
+
+/**
+ * Blocks kept back from the head: about 25 hours, so that a whole day back
+ * from any moment of the day is there to sum
+ */
+export const LIVE_WINDOW_BLOCKS = 7500
+
+/** The oldest block kept while `head` is the newest */
+export function liveWindowStart(head: number) {
+  return head - LIVE_WINDOW_BLOCKS
+}
+
+/**
+ * Retries without end, as the hourly indexers do, but never waiting longer
+ * than a slot: the view is only worth anything while it keeps up
+ */
+export function getLiveRetryStrategy() {
+  return Retries.exponentialBackOff({
+    initialTimeoutMs: 1000,
+    maxAttempts: Number.POSITIVE_INFINITY,
+    maxTimeoutMs: SLOT_SECONDS * 1000,
+  })
+}
+
+export const LIVE_METRICS_CONTEXT = 'dataAvailability.live'

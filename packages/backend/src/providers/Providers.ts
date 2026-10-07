@@ -39,6 +39,7 @@ export class Providers {
   day: DayProviders
   circulatingSupply: CirculatingSupplyProvider
   da: DaProvider
+  ethereumDa: EthereumDaProvider | undefined
   clients: Clients
   blockTimestamp: BlockTimestampProvider
   totalSupply: TotalSupplyProvider
@@ -91,9 +92,12 @@ export class Providers {
     const blobProviders: DaBlobProvider[] = []
     if (this.clients.beacon) {
       const ethereumRpc = this.clients.getRpcClient('ethereum')
-      blobProviders.push(
-        new EthereumDaProvider(this.clients.beacon, ethereumRpc, 'ethereum'),
+      this.ethereumDa = new EthereumDaProvider(
+        this.clients.beacon,
+        ethereumRpc,
+        'ethereum',
       )
+      blobProviders.push(this.ethereumDa)
     }
     if (this.clients.celestia) {
       blobProviders.push(

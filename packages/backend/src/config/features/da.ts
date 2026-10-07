@@ -7,9 +7,11 @@ import type {
   BlockDaIndexedConfig,
   BlockLayerDaTrackingConfig,
   DataAvailabilityTrackingConfig,
+  LiveBlobsTrackingConfig,
   TimestampDaIndexedConfig,
   TimestampLayerDaTrackingConfig,
 } from '../Config'
+import type { FeatureFlags } from '../FeatureFlags'
 
 const ETHEREUM_START_BLOCK = 19426618
 const CELESTIA_START_BLOCK = 983042
@@ -21,6 +23,7 @@ const EIGEN_START_TIMESTAMP = UnixTime.fromDate(
 export async function getDaTrackingConfig(
   ps: ProjectService,
   env: Env,
+  flags: FeatureFlags,
 ): Promise<DataAvailabilityTrackingConfig> {
   // TODO: automate it
   const ethereumEnabled = !!env.optionalString('ETHEREUM_BEACON_API_URL')
@@ -37,6 +40,7 @@ export async function getDaTrackingConfig(
   const timestampProjectsForLayers: TimestampDaIndexedConfig[] = []
   const sovereignBlockProjects: BlockDaIndexedConfig[] = []
   const sovereignTimestampProjects: TimestampDaIndexedConfig[] = []
+  let liveBlobs: LiveBlobsTrackingConfig | false = false
 
   if (ethereumEnabled) {
     blockLayers.push({
@@ -64,6 +68,12 @@ export async function getDaTrackingConfig(
         ETHEREUM_START_BLOCK,
       )
     sovereignBlockProjects.push(...sovereignProjectsOnEthereum)
+
+    if (flags.isEnabled('da', 'liveBlobs')) {
+      liveBlobs = {
+        batchSize: env.integer('ETHEREUM_LIVE_BLOBS_BATCH_SIZE', 50),
+      }
+    }
   }
 
   if (celestiaEnabled) {
@@ -175,6 +185,7 @@ export async function getDaTrackingConfig(
     timestampLayers,
     blockProjects: allBlockProjects,
     timestampProjects: allTimestampProjects,
+    liveBlobs,
   }
 }
 

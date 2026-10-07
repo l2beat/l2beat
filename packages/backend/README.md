@@ -194,6 +194,18 @@ The activity feature is configured via the following environment variables:
 
 - `activity` - enables activity feature
 
+### `da.liveBlobs` feature
+
+Follows the Ethereum head slot by slot and keeps the last ~25 h of blocks and blob batches, attributed
+to projects, for the live blobs view. Needs the Ethereum layer of `da` (`ETHEREUM_BEACON_API_URL`).
+
+- `ETHEREUM_LIVE_BLOBS_BATCH_SIZE` - Optional. Blocks fetched at once while catching up with the
+  head. Defaults to 50
+
+**Feature flags:**
+
+- `da.liveBlobs` - enables the live blobs indexers. On whenever `da` is, unless `!da.liveBlobs` is set
+
 ### `status` feature
 
 The status feature doesn't require any configuration.
