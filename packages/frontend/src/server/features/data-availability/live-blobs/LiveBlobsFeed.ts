@@ -190,8 +190,8 @@ export class LiveBlobsFeed {
    */
   async latestAfter({ after }: LiveBlobsParams) {
     const askedAt = this.now()
-    const blobs = await this.latest()
-    if (after === undefined || !blobs || blobs.head > after) return blobs
+    await this.latest()
+    if (after === undefined) return this.snapshot()
     const left = Math.max(0, LONG_POLL - (this.now() - askedAt))
     await new Promise<void>((resolve) => {
       const done = () => {
@@ -201,6 +201,9 @@ export class LiveBlobsFeed {
       }
       const timer = setTimeout(done, left * 1000)
       this.waiting.add(done)
+      // looked at only once waiting, or a head that moved between the look
+      // and the wait would be missed: pages are answered as they wait
+      if (this.head === undefined || this.head > after) done()
     })
     // not `latest`, which would wait for a first answer all over again
     return this.snapshot()
