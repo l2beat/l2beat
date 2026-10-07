@@ -2345,8 +2345,12 @@ const AuditCoverageUnit = v.object({
 export const ProjectAuditCoverageSchema = v.object({
   schema_version: v.literal('1.0.0'),
   project: v.string(),
-  datasetCommit: v.string(),
+  dataset: v.object({ repository: v.string(), commit: v.string() }),
   discoveredAt: v.number(),
+  collections: v.record(
+    v.string(),
+    v.object({ name: v.string(), kind: v.enum(['project', 'library']) }),
+  ),
   reports: v.record(
     v.string(),
     v.object({
@@ -2354,6 +2358,7 @@ export const ProjectAuditCoverageSchema = v.object({
       title: v.string(),
       auditor: v.string(),
       date: v.string().optional(),
+      document: v.string(),
     }),
   ),
   auditedFiles: v.record(

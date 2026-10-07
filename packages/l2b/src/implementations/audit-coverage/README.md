@@ -10,7 +10,7 @@ l2b audit-coverage tornado-cash \
   --dataset-commit <commit> -o audit-coverage.json
 ```
 
-By default both files are read from `main` of `github.com/sergeyshemyakov/audit-dataset`, or of the repository passed with `--github`, at the commit `main` points to, which is recorded as `datasetCommit`. Local files need all of `--index`, `--objects` and `--dataset-commit`. The output goes to `audit-coverage.json` in the project directory unless `-o` is given.
+By default both files are read from `main` of `github.com/sergeyshemyakov/audit-dataset`, or of the repository passed with `--github`, at the commit `main` points to. Local files need all of `--index`, `--objects` and `--dataset-commit`, and are attributed to the same repository. The repository and commit are recorded as `dataset`, so report documents can be linked as `https://github.com/<repository>/blob/<commit>/<document>`. The output goes to `audit-coverage.json` in the project directory unless `-o` is given.
 
 Run it anywhere in the repository after discovery: deployed sources are read from the discovery cache, so no contract source is fetched.
 
@@ -48,9 +48,10 @@ The dataset locates major findings in files, not units, so a unit gets a report'
 type AuditCoverage = {
   schema_version: '1.0.0'
   project: string
-  datasetCommit: string
+  dataset: { repository: string; commit: string }
   discoveredAt: number // discovery timestamp of the deployed sources
-  reports: Record<ReportId, { collections: string[]; title: string; auditor: string; date?: string }>
+  collections: Record<CollectionId, { name: string; kind: 'project' | 'library' }>
+  reports: Record<ReportId, { collections: CollectionId[]; title: string; auditor: string; date?: string; document: string }>
   auditedFiles: Record<ObjectId, { repository: string; commit: string; path: string }>
   units: Record<UnitId, Unit> // UnitId: first 12 hex characters of sha256 of the deployed body
   flats: Record<FlatSha256, [UnitId, number][]> // units of a flat source and their first line

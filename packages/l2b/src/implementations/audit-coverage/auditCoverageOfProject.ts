@@ -9,6 +9,7 @@ import { createHash } from 'crypto'
 import type {
   AuditCoverage,
   AuditedFile,
+  CoverageCollection,
   CoverageReport,
   Unit,
 } from './AuditCoverage'
@@ -20,7 +21,7 @@ import type { GetDeployedSource } from './deployedSource'
 export interface AuditCoverageInputs {
   index: AuditIndex
   code: AuditedCode
-  datasetCommit: string
+  dataset: { repository: string; commit: string }
 }
 
 export async function auditCoverageOfProject(
@@ -63,12 +64,14 @@ export async function auditCoverageOfProject(
       return [covered.id, covered.first]
     })
   }
+  const reports = usedReports(units, inputs.index)
   return {
     schema_version: '1.0.0',
     project,
-    datasetCommit: inputs.datasetCommit,
+    dataset: inputs.dataset,
     discoveredAt: discovered.timestamp,
-    reports: usedReports(units, inputs.index),
+    collections: collectionsOf(reports, inputs.index),
+    reports,
     auditedFiles: Object.fromEntries(
       [...auditedFiles].sort(([a], [b]) => (a < b ? -1 : 1)),
     ),
@@ -131,11 +134,25 @@ function usedReports(
     [...ids].sort().map((id) => {
       const report = index.reports[id]
       assert(report !== undefined, `Unknown report ${id}`)
-      const { collections, title, auditor, date } = report
+      const { collections, title, auditor, date, document } = report
       if (date === null) {
-        return [id, { collections, title, auditor }]
+        return [id, { collections, title, auditor, document }]
       }
-      return [id, { collections, title, auditor, date }]
+      return [id, { collections, title, auditor, date, document }]
+    }),
+  )
+}
+
+function collectionsOf(
+  reports: Record<string, CoverageReport>,
+  index: AuditIndex,
+): Record<string, CoverageCollection> {
+  const ids = new Set(Object.values(reports).flatMap((r) => r.collections))
+  return Object.fromEntries(
+    [...ids].sort().map((id) => {
+      const collection = index.collections[id]
+      assert(collection !== undefined, `Unknown collection ${id}`)
+      return [id, { name: collection.name, kind: collection.kind }]
     }),
   )
 }

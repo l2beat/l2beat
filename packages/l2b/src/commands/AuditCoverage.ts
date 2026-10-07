@@ -34,12 +34,12 @@ export const AuditCoverage = command({
     index: option({
       type: optional(File),
       long: 'index',
-      description: 'local audit-index.json, instead of --github',
+      description: 'local audit-index.json of the --github repository',
     }),
     objects: option({
       type: optional(File),
       long: 'objects',
-      description: 'local audit-objects.json.zst, instead of --github',
+      description: 'local audit-objects.json.zst of the --github repository',
     }),
     datasetCommit: option({
       type: optional(string),
@@ -73,7 +73,7 @@ export const AuditCoverage = command({
       {
         index,
         code,
-        datasetCommit: dataset.commit,
+        dataset: { repository: dataset.repository, commit: dataset.commit },
       },
       deployedSourceFromCache(),
       (address, covered, count) =>
@@ -98,11 +98,11 @@ function loadDataset(args: {
   objects: string | undefined
   datasetCommit: string | undefined
 }): Promise<AuditDatasetFiles> {
+  const github = args.github ?? DEFAULT_DATASET
   const local = [args.index, args.objects, args.datasetCommit]
   if (local.every((arg) => arg === undefined)) {
-    return fetchAuditDataset(args.github ?? DEFAULT_DATASET)
+    return fetchAuditDataset(github)
   }
-  assert(args.github === undefined, '--github excludes local dataset files')
   assert(
     args.index !== undefined &&
       args.objects !== undefined &&
@@ -110,7 +110,7 @@ function loadDataset(args: {
     'Local dataset files need --index, --objects and --dataset-commit',
   )
   return Promise.resolve(
-    readAuditDataset(args.index, args.objects, args.datasetCommit),
+    readAuditDataset(github, args.index, args.objects, args.datasetCommit),
   )
 }
 

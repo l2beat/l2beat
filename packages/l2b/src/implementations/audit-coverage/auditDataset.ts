@@ -4,6 +4,7 @@ import { readFileSync } from 'fs'
 export interface AuditDatasetFiles {
   index: string
   objects: Buffer
+  repository: string
   commit: string
 }
 
@@ -13,6 +14,7 @@ const BRANCH = 'main'
 const REQUEST_TIMEOUT_MS = 60_000
 
 export function readAuditDataset(
+  repositoryUrl: string,
   indexPath: string,
   objectsPath: string,
   commit: string,
@@ -20,6 +22,7 @@ export function readAuditDataset(
   return {
     index: readFileSync(indexPath, 'utf8'),
     objects: readFileSync(objectsPath),
+    repository: githubRepository(repositoryUrl),
     commit,
   }
 }
@@ -42,7 +45,7 @@ export async function fetchAuditDataset(
       response.arrayBuffer(),
     ),
   ])
-  return { index, objects: Buffer.from(objects), commit }
+  return { index, objects: Buffer.from(objects), repository, commit }
 }
 
 function githubRepository(url: string): string {
