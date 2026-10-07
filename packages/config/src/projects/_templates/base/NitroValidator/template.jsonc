@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NitroValidator",
+  "critical": true,
+  "description": "Onchain validator of AWS Nitro Enclave attestation documents."
+}
