@@ -11,6 +11,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useIsClient } from '~/hooks/useIsClient'
 import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
+import { useBeaconChain } from './blocks/useBeaconChain'
 import { LivePosters } from './LivePosters'
 import { LivePulse } from './LivePulse'
 import { LiveStats } from './LiveStats'
@@ -75,7 +76,10 @@ function LiveSkeleton() {
   return <Skeleton className="h-[30rem] w-full rounded-lg md:h-[40rem]" />
 }
 
-/** Keeps a belt that fails to draw from taking the page down with it */
+/**
+ * Keeps a belt that fails to draw, or to load after a deploy, from taking the
+ * page down with it: the stats and the table go on without it
+ */
 class LiveBoundary extends ReactComponent<
   { children: ReactNode },
   { error: Error | undefined }
@@ -90,6 +94,7 @@ class LiveBoundary extends ReactComponent<
     if (this.state.error === undefined) return this.props.children
     return (
       <div className="flex h-[30rem] w-full flex-col items-center justify-center gap-2 rounded-lg bg-surface-secondary p-6 text-center md:h-[40rem]">
+        <FollowChainWithoutBelt />
         <div className="font-bold text-heading-18">
           The blocks could not be drawn
         </div>
@@ -99,4 +104,16 @@ class LiveBoundary extends ReactComponent<
       </div>
     )
   }
+}
+
+const noPoster = () => 0
+const noop = () => {}
+
+/**
+ * The belt alone asks the server for blocks, and the stats and the table only
+ * read what it brings. Without a belt, this asks in its stead
+ */
+function FollowChainWithoutBelt() {
+  useBeaconChain({ posterIndexOf: noPoster, enabled: true, onFreshBlock: noop })
+  return null
 }

@@ -1,5 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import { useCallback, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
   Table,
@@ -11,7 +11,7 @@ import {
 } from '~/components/table/Table'
 import { stickyTableColumnRowProps } from '~/components/table/useStickyTableHeader'
 import type { PostedWindow } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
-import { SLOT_SECONDS, slotStart } from '~/utils/beaconSlots'
+import { SLOT_SECONDS } from '~/utils/beaconSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { Activity } from './Activity'
@@ -22,9 +22,10 @@ import {
   formatRate,
   formatWhole,
 } from './blocks/format'
+import { useChainClock } from './chainClock'
 import { toRgba } from './color'
 import { type Landing, useLandedTotal } from './landings'
-import { Pop, RollingNumber, useFlash, useNow, useReorder } from './liveMotion'
+import { Pop, RollingNumber, useFlash, useReorder, useTick } from './liveMotion'
 import { type LivePoster, UNKNOWN_ID } from './model'
 import { useLiveBlobs } from './useLiveBlobs'
 
@@ -84,8 +85,16 @@ export function LivePosters({ posters, highlighted, onSelect }: Props) {
   const { data } = useLiveBlobs()
   const hour = data?.window
   const rows = useMemo(() => hour && toRows(hour, posters), [hour, posters])
-  // "Last batch" counts up between blocks, not only when they come
-  const now = useNow(1000)
+  // "Last batch" is told on the chain's clock, as the belt is: a device clock
+  // a minute off would age every batch a minute, or make the newest "just now"
+  const clock = useChainClock()
+  const head = data?.head
+  useEffect(() => {
+    if (head !== undefined) clock.correct(head)
+  }, [clock, head])
+  // and counts up between blocks, not only when they come
+  useTick(1000)
+  const progress = clock.progressNow()
 
   const tableRef = useRef<HTMLDivElement>(null)
   useReorder(tableRef, rows?.map((row) => row.poster.id).join() ?? '')
@@ -132,9 +141,9 @@ export function LivePosters({ posters, highlighted, onSelect }: Props) {
                 rank={index + 1}
                 seconds={seconds}
                 totalBlobs={totalBlobs}
-                head={data?.head}
+                head={head}
                 firstBucket={hour.firstBucket}
-                now={now}
+                progress={progress}
                 highlighted={highlighted === row.poster.id}
                 onSelect={onSelect}
               />
@@ -153,7 +162,7 @@ function PosterRow({
   totalBlobs,
   head,
   firstBucket,
-  now,
+  progress,
   highlighted,
   onSelect,
 }: {
@@ -164,7 +173,8 @@ function PosterRow({
   /** The newest slot, whose batches are counted in as the belt lands them */
   head: number | undefined
   firstBucket: number
-  now: number
+  /** Slots since genesis now, with how far into the current one */
+  progress: number
   highlighted: boolean
   onSelect: (posterId: string) => void
 }) {
@@ -239,7 +249,7 @@ function PosterRow({
         {row.batches > 1 ? formatSeconds(seconds / row.batches) : '–'}
       </TableCell>
       <TableCell align="right" className="tabular-nums">
-        {describeAgo(now - slotStart(row.lastSlot))}
+        {describeAgo((progress - row.lastSlot) * SLOT_SECONDS)}
       </TableCell>
     </tr>
   )
