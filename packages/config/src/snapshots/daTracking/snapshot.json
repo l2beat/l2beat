@@ -138,6 +138,30 @@
       }
     }
   ],
+  "aligned": [
+    {
+      "id": "ac808fc139f1",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xd0696d3eeebffcab2d1b358805efaa005a9a8bc0",
+        "sequencers": ["0x57628fe929016c30463473349dcdd592ea27c8b3"],
+        "sinceBlock": 24242603
+      }
+    }
+  ],
+  "alphachain": [
+    {
+      "id": "20d2ac142ee4",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x00c2bdb995acf5a2b3db3b9340861b4d564c3c72",
+        "sequencers": ["0x03e78a186ebde2c14ad9220d2605fa0a22d7bbf5"],
+        "sinceBlock": 23945310
+      }
+    }
+  ],
   "altlayer": [
     {
       "id": "c7e0fd43ca7f",
@@ -339,6 +363,46 @@
   ],
   "bob": [
     {
+      "id": "0c046fc6dd30",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x0e4152204995877DF34BD26d6dab78baf9393Ae2",
+        "sinceBlock": 23277312,
+        "untilBlock": 23924561
+      }
+    },
+    {
+      "id": "28ebdc68dc9a",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895",
+        "sinceBlock": 24537231,
+        "untilBlock": 24576453
+      }
+    },
+    {
+      "id": "29a118ca9ea5",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x220C56BCB401001e5D218604c143D38DA107fC4a",
+        "sinceBlock": 23929991,
+        "untilBlock": 23940152
+      }
+    },
+    {
+      "id": "4648c400881a",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x0fbC22B052f4745Bc9F80760D2D47E4993F36746",
+        "sinceBlock": 22940885,
+        "untilBlock": 22987605
+      }
+    },
+    {
       "id": "67159dd176aa",
       "config": {
         "type": "ethereum",
@@ -346,6 +410,45 @@
         "inbox": "0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83",
         "sequencers": ["0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11"],
         "sinceBlock": 19634330
+      }
+    },
+    {
+      "id": "7b254cd79aeb",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x72284bbB177B13db6F7b703846EEDfB24914B764",
+        "sinceBlock": 22991167,
+        "untilBlock": 23266673
+      }
+    },
+    {
+      "id": "7b7e38b8e435",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x9937033Cc967eED9d753e31c77D2F146d002ae53",
+        "sinceBlock": 25029159
+      }
+    },
+    {
+      "id": "aebfe4fff17b",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x9B3E1661bccAF907893B71e4016c01513ae9263C",
+        "sinceBlock": 24585400,
+        "untilBlock": 25021343
+      }
+    },
+    {
+      "id": "ecd1f1b4629f",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x6F27A23Fc28C18EB2C268BFe1d575E051Ad94420",
+        "sinceBlock": 23943854,
+        "untilBlock": 24531025
       }
     }
   ],
@@ -513,6 +616,17 @@
         ],
         "sinceBlock": 23869474
       }
+    },
+    {
+      "id": "d73fd4cee2e5",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x18cc381705761aa2d2e8ea62888a4029a0fad3ab",
+        "sequencers": ["0xbb2de57b06752f86a0921eb4bf56c50865abbfca"],
+        "sinceBlock": 25481035,
+        "untilBlock": 25952904
+      }
     }
   ],
   "crestal": [
@@ -622,6 +736,29 @@
       }
     }
   ],
+  "eez": [
+    {
+      "id": "2f2dc650092a",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x4b2760f84b83d6b3829e30a7573b0172b6d6402c",
+        "sequencers": ["0x4261d69f840cc550945def48e5f477737118d546"],
+        "sinceBlock": 26125484,
+        "untilBlock": 26135244
+      }
+    },
+    {
+      "id": "47b27b1cce3d",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x07f9e14feb43a6262141bfb598c09b678fd00163",
+        "sequencers": ["0x4261d69f840cc550945def48e5f477737118d546"],
+        "sinceBlock": 26135813
+      }
+    }
+  ],
   "embr-fun": [
     {
       "id": "86f0b7d8e667",
@@ -645,6 +782,18 @@
       }
     }
   ],
+  "ethiq": [
+    {
+      "id": "67622b770abf",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x0065929a5da79a699cf4631480ad2739de13cad9",
+        "sequencers": ["0x7d80f5908cbe1c05925e8274195b59a246e82a03"],
+        "sinceBlock": 24060440
+      }
+    }
+  ],
   "flame": [
     {
       "id": "9090bf154b79",
@@ -653,6 +802,18 @@
         "type": "celestia",
         "sinceBlock": 3161819,
         "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAL2dxfeNrJ+tg6Y="
+      }
+    }
+  ],
+  "fluent": [
+    {
+      "id": "0509edb4f45e",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 24913710,
+        "inbox": "0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
+        "sequencers": ["0xFd58Bc438d910088C413b889Eaa0aded5C0d1c26"]
       }
     }
   ],
@@ -753,6 +914,30 @@
         "daLayer": "celestia",
         "sinceBlock": 5169794,
         "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAABH1QsY4w6WU="
+      }
+    }
+  ],
+  "gensyn": [
+    {
+      "id": "34dc57594f03",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x00b7cda0fa738014f2bf3b812ea08ec652452215",
+        "sequencers": ["0xc4f94828b1f1c43a35783975b1c0c8703c834b15"],
+        "sinceBlock": 23433987
+      }
+    }
+  ],
+  "giwa": [
+    {
+      "id": "aec88081895f",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x00b4148589a62ec7ca2c46722940e4dd79306c8d",
+        "sequencers": ["0x0f3498258819bece3f47661b3e331bd36c1cf857"],
+        "sinceBlock": 26063366
       }
     }
   ],
@@ -930,6 +1115,21 @@
         "type": "avail",
         "sinceBlock": 0,
         "appIds": ["15"]
+      }
+    }
+  ],
+  "jovay": [
+    {
+      "id": "9ea1663e15d1",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 23405139,
+        "inbox": "0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+        "sequencers": [
+          "0xA217ee134CB95B1ab56eF83a33956E5A979bf6e7",
+          "0xAe13Ce4Cd416cb4598865aa5aC8d13532bd3Cd99"
+        ]
       }
     }
   ],
@@ -1179,6 +1379,16 @@
         "sinceBlock": 0,
         "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw="
       }
+    },
+    {
+      "id": "98d4c99c5825",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50",
+        "sequencers": ["0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e"],
+        "sinceBlock": 25974565
+      }
     }
   ],
   "mantapacific": [
@@ -1237,6 +1447,25 @@
     }
   ],
   "megaeth": [
+    {
+      "id": "1bf3d046369b",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x01853F268B170D4A15D0c3AE905757b5Ec8375f3",
+        "sinceBlock": 25050829
+      }
+    },
+    {
+      "id": "4373e0d19c21",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xE4e456c64B9b0de5FE8a90d809180cA71534D623",
+        "sinceBlock": 23888698,
+        "untilBlock": 25050480
+      }
+    },
     {
       "id": "5e5ebd8a4160",
       "config": {
@@ -1392,6 +1621,21 @@
       }
     }
   ],
+  "nova": [
+    {
+      "id": "46a41bde9d8d",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
+        "sequencers": [
+          "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
+          "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
+        ],
+        "sinceBlock": 25448296
+      }
+    }
+  ],
   "ody-playground": [
     {
       "id": "217cd407d2a3",
@@ -1448,6 +1692,66 @@
       }
     }
   ],
+  "opstack-55531": [
+    {
+      "id": "ae44efb04bda",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x00bafeac59dd7fd22e6077ffbdcb49ce3a556e7a",
+        "sequencers": ["0x90ca054bb40f0f2c2c62694c55acc61bcd101357"],
+        "sinceBlock": 25897365
+      }
+    }
+  ],
+  "opstack-56778039791": [
+    {
+      "id": "1b3c13231aaa",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x0069e993d403330ea18e77f110243e231d8880cb",
+        "sequencers": ["0xc1987cdb1fcda40abd2a7fbace3adf36841d3332"],
+        "sinceBlock": 23051817
+      }
+    }
+  ],
+  "opstack-61111001": [
+    {
+      "id": "21f2dba418bc",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x00adab684e5a2732c1e2f1ca2cfb44f1b41b6e1d",
+        "sequencers": ["0x1df5bc985bc174f193880e11cc691e7f598c0dd2"],
+        "sinceBlock": 24454960
+      }
+    }
+  ],
+  "opstack-6921": [
+    {
+      "id": "39f771e1687e",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x0027b099f5cb5968e008c8f602900a1b62c71f9f",
+        "sequencers": ["0xa5c10e93172bff1dd28af7304b461d8a494fb8e8"],
+        "sinceBlock": 25731748
+      }
+    }
+  ],
+  "opstack-8686": [
+    {
+      "id": "631e1c7dbd59",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x004793cde50c3cff1f4bbe5c6ec2821ae9121df8",
+        "sequencers": ["0x23920c97f74b2e41edd58d3be9964ed75883d2d8"],
+        "sinceBlock": 26091305
+      }
+    }
+  ],
   "optimism": [
     {
       "id": "0c9493d06a93",
@@ -1469,6 +1773,18 @@
         "inbox": "0xfF00000000000000000000000000000000062050",
         "sequencers": ["0x3D0Bf26E60a689a7Da5EA3ddAD7371F27f7671a5"],
         "sinceBlock": 19838884
+      }
+    }
+  ],
+  "orbit-5816": [
+    {
+      "id": "2a286b951b37",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xd65a35d19910d9f4e4aeb3cb4a87c3153bfb0fc6",
+        "sequencers": ["0x77b25ace2eb0bdc7b4dbb064a79ced4d9b6ef62c"],
+        "sinceBlock": 26060523
       }
     }
   ],
@@ -1506,6 +1822,18 @@
       }
     }
   ],
+  "pegglecoin": [
+    {
+      "id": "a0f7be8d32e6",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xff00000000000000000000000000000000042069",
+        "sequencers": ["0x705623d3985cf88e5a69fc99ca7d089063449902"],
+        "sinceBlock": 21937906
+      }
+    }
+  ],
   "pepeunchained": [
     {
       "id": "465561f40619",
@@ -1514,6 +1842,28 @@
         "daLayer": "celestia",
         "sinceBlock": 21314461,
         "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADzZzvipmzP4="
+      }
+    }
+  ],
+  "pepeunchained2": [
+    {
+      "id": "2ca3d522aba4",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x93CA3db0dF3e78e798004bbE14e1ADE222B14dFa",
+        "sequencers": [
+          "0x17F187D978664C96ffD655996a45e085c403AD8b",
+          "0x2E8C0869C173cC07c58186E9DeEA74314635b1E2",
+          "0x4ed0f98FB4c331e672653E832c55E0f9F402C228",
+          "0x74a0d46BA4F69cAB77A459f8B12dc531c7DaBf3C",
+          "0x85e70D857F6Fad7AD4ffc3fC95FD0fd8C396A09D",
+          "0xA4f98Ac0E083C79BAB53A3895082e8a4fbf12CDe",
+          "0xCEEAEC6b7e010fE1Ac253Ebd6f93eEBF9249Cd7e",
+          "0xb9B2AeAe8D160a5bF9cb7FE7B2c8B58c0293FD5e",
+          "0xc7ef93FE91D4658bb422B11C5f8Ae17ae3B86D36"
+        ],
+        "sinceBlock": 26086300
       }
     }
   ],
@@ -1605,8 +1955,7 @@
         "daLayer": "ethereum",
         "inbox": "0xFF00000000000000000000000000000000193939",
         "sequencers": ["0xF263a0AA8aFEaA7d516B596d49d7BA6C0FeB102c"],
-        "sinceBlock": 20912148,
-        "untilBlock": 25994773
+        "sinceBlock": 20912148
       }
     }
   ],
@@ -2066,6 +2415,17 @@
       }
     },
     {
+      "id": "7f4dcb3774ba",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 25688844,
+        "untilBlock": 25787678,
+        "inbox": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0",
+        "sequencers": ["0xa008a7b0f7b7f40f11001c55acd3B9e9E0C053b7"]
+      }
+    },
+    {
       "id": "ae6db0223ff8",
       "config": {
         "type": "ethereum",
@@ -2073,6 +2433,18 @@
         "sinceBlock": 25247844,
         "inbox": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0",
         "sequencers": ["0x37804a4f63Ab1dCf96A48B1DCE8c03492f539fE9"]
+      }
+    }
+  ],
+  "symbiosis": [
+    {
+      "id": "60d0e9e6607a",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xa150ff19a31e1054f950098869834affe9bc6fdc",
+        "sequencers": ["0xbe7f4edb6257b4d2c77293c380f19ce96a4fa41e"],
+        "sinceBlock": 22824353
       }
     }
   ],
@@ -2115,6 +2487,30 @@
         "topics": [
           "0x7c4c4523e17533e451df15762a093e0693a2cd8b279fe54c6cd3777ed5771213"
         ]
+      }
+    }
+  ],
+  "tajir": [
+    {
+      "id": "c41fe69378f7",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x009afe3a07dc5eb0e3d6dcffbcec2c3c90ea20e3",
+        "sequencers": ["0xec7cd2030e0510763b2c2c87fc7e7ccc2f8c7463"],
+        "sinceBlock": 25780874
+      }
+    }
+  ],
+  "tea": [
+    {
+      "id": "c25334d148fe",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x00e8008e38598eb5b33e0b67f72be074122fafcd",
+        "sequencers": ["0xd24b47d373f97590a3c9b15f16f1b560ad5a617a"],
+        "sinceBlock": 25181715
       }
     }
   ],
@@ -2212,6 +2608,18 @@
         "type": "avail",
         "sinceBlock": 0,
         "appIds": ["33"]
+      }
+    }
+  ],
+  "wannachain": [
+    {
+      "id": "6c2c25edd7fb",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x00775ef4e086ced39cfd7d62543ea95fd78ad429",
+        "sequencers": ["0xbd45bdb70e45654b8a94a0f88bc00e3312a7c2cb"],
+        "sinceBlock": 26067519
       }
     }
   ],
@@ -2357,6 +2765,29 @@
       }
     }
   ],
+  "zkstack-1345": [
+    {
+      "id": "a87b59fbce95",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x2e5110cf18678ec99818bfaa849b8c881744b776",
+        "sequencers": ["0xf916d39fc2658665953428cb895353e69e27e8f8"],
+        "sinceBlock": 25464904
+      }
+    },
+    {
+      "id": "d13c8be4033f",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x8c0bfc04ada21fd496c55b8c50331f904306f564",
+        "sequencers": ["0xf916d39fc2658665953428cb895353e69e27e8f8"],
+        "sinceBlock": 24826121,
+        "untilBlock": 25462352
+      }
+    }
+  ],
   "zksync2": [
     {
       "id": "19c318b4d577",
@@ -2416,6 +2847,42 @@
           "0xc75cDcBEef3aE3365ABF0217815748586F9047F1",
           "0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
         ]
+      }
+    }
+  ],
+  "zksyncos-51703": [
+    {
+      "id": "e1a705118dd2",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xa7980e38722dbe6238f221da65e1143d22161a71",
+        "sequencers": ["0xbb2de57b06752f86a0921eb4bf56c50865abbfca"],
+        "sinceBlock": 25953681
+      }
+    }
+  ],
+  "zksyncos-5790": [
+    {
+      "id": "fcd558dc48a3",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xa7980e38722dbe6238f221da65e1143d22161a71",
+        "sequencers": ["0x16f3d92c45c2a663bc05e926322edd2281f9d7bf"],
+        "sinceBlock": 26054185
+      }
+    }
+  ],
+  "zksyncos-61703": [
+    {
+      "id": "429844043c1e",
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xa7980e38722dbe6238f221da65e1143d22161a71",
+        "sequencers": ["0xa5ee2f9e0cd1862f245d13fa9428a707fb942cf6"],
+        "sinceBlock": 25962259
       }
     }
   ],

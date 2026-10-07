@@ -3,6 +3,7 @@ import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
+  EthereumAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -562,6 +563,23 @@ export function getOpStackDaTracking(
     sequencers: [ChainSpecificAddress.address(sequencer)],
     ...range,
   }
+}
+
+// Kailua proposers publish their proposals (intermediate output roots) as
+// blobs to the KailuaTreasury of the current game type. Those blobs are the
+// chain's own blobspace consumption even though they are not batch data, so
+// they are tracked per treasury (a new treasury is deployed with each game
+// type upgrade).
+export function getKailuaTreasuryDaTracking(
+  treasuries: { address: string; sinceBlock: number; untilBlock?: number }[],
+): ProjectDaTrackingConfig[] {
+  return treasuries.map((t) => ({
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: EthereumAddress(t.address),
+    sinceBlock: t.sinceBlock,
+    ...(t.untilBlock !== undefined ? { untilBlock: t.untilBlock } : {}),
+  }))
 }
 
 export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {

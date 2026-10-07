@@ -64,6 +64,17 @@ export const swell = opStackL2({
         EthereumAddress('0x37804a4f63Ab1dCf96A48B1DCE8c03492f539fE9'),
       ],
     },
+    {
+      // Batcher rotated on the archive day; it kept posting until 2026-08-19.
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 25688844, // first batch of this sequencer
+      untilBlock: 25787678, // last batch of this sequencer
+      inbox: EthereumAddress('0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0'),
+      sequencers: [
+        EthereumAddress('0xa008a7b0f7b7f40f11001c55acd3B9e9E0C053b7'),
+      ],
+    },
   ],
   additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['Restaking'],

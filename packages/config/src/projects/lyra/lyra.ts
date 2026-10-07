@@ -3,7 +3,11 @@ import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { CELESTIA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
+import {
+  CELESTIA_DA_PROVIDER,
+  getOpStackDaTracking,
+  opStackL2,
+} from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('lyra')
 
@@ -55,6 +59,9 @@ export const lyra: ScalingProject = opStackL2({
       sinceBlock: 0, // Edge Case: config added @ DA Module start
       namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw=',
     },
+    // Ethereum fallback: when Celestia is unavailable the batcher posts the
+    // batches as blobs to the same inbox (first seen 2026-09-14).
+    getOpStackDaTracking(discovery, { sinceBlock: 25974565 }),
   ],
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',

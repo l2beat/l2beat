@@ -11,7 +11,11 @@ import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
+import {
+  EIGENDA_DA_PROVIDER,
+  getKailuaTreasuryDaTracking,
+  opStackL2,
+} from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('megaeth', undefined, {
   reachableEntries: {
@@ -183,6 +187,18 @@ export const megaeth: ScalingProject = opStackL2({
       sinceTimestamp: UnixTime(1762995600), // 2025-11-13T01:00:00Z
       customerId: '0x42b5ea5238752cc6f70d93fa4249feae480a0b39',
     },
+    // Kailua proposals posted as Ethereum blobs by the vanguard
+    ...getKailuaTreasuryDaTracking([
+      {
+        address: '0xe4e456c64b9b0de5fe8a90d809180ca71534d623',
+        sinceBlock: 23888698,
+        untilBlock: 25050480,
+      },
+      {
+        address: '0x01853f268b170d4a15d0c3ae905757b5ec8375f3',
+        sinceBlock: 25050829,
+      },
+    ]),
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
