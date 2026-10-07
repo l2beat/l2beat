@@ -30,15 +30,6 @@ export const BATCH_MOTION_TIME = LABEL_LIFE
 /** Long enough for any batch to drop, land and have its label fade */
 export const SETTLE_TIME = 8
 
-/** Opacity of other posters' tiles while one poster is highlighted */
-const DIMMED = 0.15
-/**
- * Seconds tiles take to dim or light up two thirds of the way as a poster is
- * picked. Eased frame by frame, so a pick midway carries on from where they are
- */
-const EMPHASIS_TIME = 0.06
-/** Close enough to rest on, so the belt can stop painting */
-const EMPHASIS_REST = 0.002
 /** Seconds the first blocks take to fade in, rather than pop up */
 const REVEAL_TIME = 0.4
 
@@ -107,43 +98,6 @@ export function labelPresence(age: number): { alpha: number; rise: number } {
     alpha: fadeIn * fadeOut,
     rise: LABEL_RISE * easeOutCubic(age / LABEL_LIFE),
   }
-}
-
-/**
- * Moves every poster's emphasis `dt` seconds toward what the highlight asks:
- * full for the highlighted poster, or for all when none is. An infinite `dt`
- * puts them there at once.
- */
-export function easeEmphasis(
-  emphasis: number[],
-  posterCount: number,
-  highlighted: number | undefined,
-  dt: number,
-) {
-  const step = 1 - Math.exp(-dt / EMPHASIS_TIME)
-  emphasis.length = posterCount
-  for (let i = 0; i < posterCount; i++) {
-    const target = emphasisFor(i, highlighted)
-    const next = (emphasis[i] ?? target) * (1 - step) + target * step
-    emphasis[i] = Math.abs(target - next) < EMPHASIS_REST ? target : next
-  }
-}
-
-/** Whether every poster's emphasis is where the highlight asks */
-export function isEmphasisSettled(
-  emphasis: number[],
-  highlighted: number | undefined,
-) {
-  return emphasis.every((value, i) => value === emphasisFor(i, highlighted))
-}
-
-function emphasisFor(posterIndex: number, highlighted: number | undefined) {
-  return highlighted === undefined || highlighted === posterIndex ? 1 : DIMMED
-}
-
-/** How far a poster's labels show, 0 once its tiles are dimmed */
-export function labelEmphasis(emphasis: number) {
-  return Math.max(0, (emphasis - DIMMED) / (1 - DIMMED))
 }
 
 /** How far the first blocks have faded in, at `now`; all the way before any come */

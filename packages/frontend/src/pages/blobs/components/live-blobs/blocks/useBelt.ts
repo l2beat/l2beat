@@ -21,8 +21,6 @@ import { drawBelt } from './drawBelt'
 import {
   BATCH_MOTION_TIME,
   BATCH_STAGGER,
-  easeEmphasis,
-  isEmphasisSettled,
   revealed,
   SETTLE_TIME,
 } from './motion'
@@ -66,14 +64,12 @@ export function useBelt({
     progress: progressNow(),
     arrivals: new Map(),
     still,
-    emphasis: [],
     revealedAt: undefined,
   })
   playback.current.still = still
   const frame = useRef<BeltFrame>({
     hits: [],
     landed: [],
-    highlightedInView: 0,
   })
   const sceneRef = useRef(scene)
   sceneRef.current = scene
@@ -96,7 +92,7 @@ export function useBelt({
         scene: toDraw,
         hovered,
         slot: Math.floor(playback.current.progress),
-        moving: isMoving(playback.current, toDraw, now),
+        moving: isMoving(playback.current, now),
       }
     },
     [canvasRef, progressNow],
@@ -116,18 +112,17 @@ export function useBelt({
   }, [canvasRef])
 
   const running = onScreen && scene !== undefined
-  useAnimationFrame((dt, now) => {
+  useAnimationFrame((_dt, now) => {
     const current = sceneRef.current
     if (!current) return
     const play = playback.current
     forgetSettled(play, now)
-    easeEmphasis(play.emphasis, current.posters.length, current.highlighted, dt)
     if (play.revealedAt === undefined && current.blocks.size > 0) {
       play.revealedAt = now
     }
     play.progress = progressNow()
     if (
-      isMoving(play, current, now) ||
+      isMoving(play, now) ||
       !isPainted(painted.current, current, hoveredKey.current, play)
     ) {
       paint(current, now, hoveredKey.current)
@@ -144,12 +139,6 @@ export function useBelt({
     if (running || !scene) return
     let cancelled = false
     const play = playback.current
-    easeEmphasis(
-      play.emphasis,
-      scene.posters.length,
-      scene.highlighted,
-      Number.POSITIVE_INFINITY,
-    )
     if (scene.blocks.size > 0) play.revealedAt ??= Number.NEGATIVE_INFINITY
     paint(scene, performance.now() / 1000, hoveredNow)
     void document.fonts?.ready.then(() => {
@@ -238,13 +227,12 @@ interface PaintedFrame {
 
 /**
  * The belt slides at the start of a slot and batches drop as they come; tiles
- * fade in when the first blocks come and fade as a poster is picked
+ * fade in when the first blocks come
  */
-function isMoving(playback: Playback, scene: BeltScene, now: number) {
+function isMoving(playback: Playback, now: number) {
   const intoSlot = (playback.progress % 1) * SLOT_SECONDS
   if (intoSlot < SLIDE_TIME) return true
   if (revealed(playback.revealedAt, now) < 1) return true
-  if (!isEmphasisSettled(playback.emphasis, scene.highlighted)) return true
   for (const arrivedAt of playback.arrivals.values()) {
     if (now - arrivedAt < BATCH_MOTION_TIME) return true
   }
