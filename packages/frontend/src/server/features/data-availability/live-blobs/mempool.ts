@@ -21,6 +21,15 @@ export interface MempoolSource {
   stop(): void
 }
 
+/** What is used of a WebSocket, so a test can stand one in */
+export interface Socket {
+  onopen: ((event: Event) => void) | null
+  onmessage: ((event: MessageEvent) => void) | null
+  onclose: ((event: CloseEvent) => void) | null
+  send(data: string): void
+  close(): void
+}
+
 /**
  * Listens to one node's mempool over a WebSocket, for the whole server, and
  * reconnects with backoff while it is wanted. Every pending transaction
@@ -30,15 +39,16 @@ export function createMempool(
   attribute: Promise<Attribute>,
   logger: Logger,
   url = MEMPOOL_WS,
+  open: (url: string) => Socket = (url) => new WebSocket(url),
 ): MempoolSource {
-  let socket: WebSocket | undefined
+  let socket: Socket | undefined
   let listener: ((tx: PendingTx) => void) | undefined
   let failures = 0
   let retry: ReturnType<typeof setTimeout> | undefined
   let watchdog: ReturnType<typeof setTimeout> | undefined
 
   function connect() {
-    const ws = new WebSocket(url)
+    const ws = open(url)
     socket = ws
     // a connection that hangs before it opens is dead too
     feedWatchdog(ws)
@@ -55,11 +65,22 @@ export function createMempool(
     }
     ws.onmessage = (event) => {
       feedWatchdog(ws)
+      const told = readPendingTx(String(event.data))
+      // a node that takes the subscription and then closes has not come back:
+      // only the stream flowing says so, and resets the backoff
+      if (!told) return
       failures = 0
-      const tx = readBlobTx(String(event.data))
-      if (tx) {
-        void attribute.then((attributeTo) =>
-          listener?.({ ...tx, projectId: attributeTo(tx.to, tx.from) }),
+      if (told.blobTx) {
+        const blobTx = told.blobTx
+        attribute.then(
+          (attributeTo) =>
+            listener?.({
+              ...blobTx,
+              projectId: attributeTo(blobTx.to, blobTx.from),
+            }),
+          // the block feed reports the senders failing to load; here it
+          // would only crash the process as an unhandled rejection
+          () => {},
         )
       }
     }
@@ -79,7 +100,7 @@ export function createMempool(
     }
   }
 
-  function feedWatchdog(ws: WebSocket) {
+  function feedWatchdog(ws: Socket) {
     clearTimeout(watchdog)
     watchdog = setTimeout(() => ws.close(), SILENT_FOR * 1000)
     watchdog.unref()
@@ -103,32 +124,46 @@ export function createMempool(
   }
 }
 
-/** The blob transaction in a subscription message, if that is what it carries */
-function readBlobTx(message: string): Omit<PendingTx, 'projectId'> | undefined {
-  // most messages are other transactions: skip them before parsing
-  if (!message.includes('"type":"0x3"')) return undefined
-  const tx = (
-    JSON.parse(message) as {
-      params?: {
-        result?: {
-          type?: string
-          hash: string
-          from: string
-          to: string | null
-          nonce: string
-          blobVersionedHashes?: string[]
-        }
+/** The subscription telling of a pending transaction, with it if it is a blob one */
+export interface PendingTold {
+  blobTx: Omit<PendingTx, 'projectId'> | undefined
+}
+
+/**
+ * What a message from the node tells: a pending transaction, or nothing of
+ * the kind (the subscription's acknowledgement, an error). Parsed whole, as
+ * JSON is free with whitespace and a search for `"type":"0x3"` is not
+ */
+export function readPendingTx(message: string): PendingTold | undefined {
+  let parsed: {
+    method?: string
+    params?: {
+      result?: {
+        type?: string
+        hash: string
+        from: string
+        to: string | null
+        nonce: string
+        blobVersionedHashes?: string[]
       }
     }
-  ).params?.result
-  if (tx?.type !== '0x3' || !tx.to) return undefined
-  const blobs = tx.blobVersionedHashes?.length ?? 0
-  if (blobs === 0) return undefined
+  }
+  try {
+    parsed = JSON.parse(message)
+  } catch {
+    return undefined
+  }
+  if (parsed.method !== 'eth_subscription') return undefined
+  const tx = parsed.params?.result
+  const blobs = tx?.blobVersionedHashes?.length ?? 0
+  if (tx?.type !== '0x3' || !tx.to || blobs === 0) return { blobTx: undefined }
   return {
-    hash: tx.hash,
-    from: tx.from.toLowerCase(),
-    nonce: Number(tx.nonce),
-    to: tx.to.toLowerCase(),
-    blobs,
+    blobTx: {
+      hash: tx.hash,
+      from: tx.from.toLowerCase(),
+      nonce: Number(tx.nonce),
+      to: tx.to.toLowerCase(),
+      blobs,
+    },
   }
 }

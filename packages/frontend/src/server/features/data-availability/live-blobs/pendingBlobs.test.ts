@@ -88,6 +88,19 @@ describe(PendingBlobs.name, () => {
     expect(pending.list()).toEqual([])
   })
 
+  it('waits for a batch heard of before its block was known to be dropped', () => {
+    // the node puts the batch back in its mempool and tells of it at once;
+    // this server hears of the drop only at its next poll
+    const pending = new PendingBlobs()
+    pending.included(BASE, 7, SLOT, 112)
+    pending.seen(tx({ nonce: 7 }), 115)
+    expect(pending.list()).toEqual([])
+
+    pending.dropped(BASE, 7, SLOT)
+
+    expect(pending.list()).toEqual([{ ...tx({ nonce: 7 }), firstSeenAt: 115 }])
+  })
+
   it('keeps what older blocks took when the newest block is dropped', () => {
     // nonce 7 is in a block the chain kept; only nonce 8's block was dropped
     const pending = new PendingBlobs()
