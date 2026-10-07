@@ -7,6 +7,7 @@ import type {
 } from '@l2beat/config'
 import compact from 'lodash/compact'
 import isEqual from 'lodash/isEqual'
+import { QUANTUM_RESISTANCE_TOOLTIPS } from '~/components/projects/quantumResistanceTooltips'
 import type { PrivacyAdversariesSectionProps } from '~/components/projects/sections/privacy/PrivacyAdversariesSection'
 import type { PrivacyAssetsBreakdownSectionProps } from '~/components/projects/sections/privacy/PrivacyAssetsBreakdownSection'
 import {
@@ -16,6 +17,7 @@ import {
   PRIVACY_ADVERSARIES_TOOLTIP,
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
+  PRIVACY_QUANTUM_RESISTANT_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   formatBucketLabel,
@@ -71,6 +73,9 @@ function renderAdversary(
     withSentiment(cell.value, cell.sentiment),
     `**Who:** ${adversary.description} Examples: ${adversary.examples}`,
     getPrivacyAdversaryDescription(cell),
+    cell.quantumResistant
+      ? `**${PRIVACY_QUANTUM_RESISTANT_LABEL}:** ${QUANTUM_RESISTANCE_TOOLTIPS.privacy}`
+      : '',
     cell.advice ? `**Advice:** ${cell.advice}` : '',
     cell.interior
       ? baseline?.interior

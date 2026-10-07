@@ -35,6 +35,7 @@ export function toPrivacyAdversariesSummary(
         value: cell.value,
         sentiment: cell.sentiment,
         reason: cell.exposureShort,
+        quantumResistant: cell.quantumResistant,
       }
     }),
   }

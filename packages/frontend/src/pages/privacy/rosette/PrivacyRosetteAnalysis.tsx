@@ -1,8 +1,9 @@
 import { TooltipVisualOnly } from '~/components/core/tooltip/Tooltip'
 import { PizzaRosetteWithLabels } from '~/components/rosette/pizza/PizzaRosetteWithLabels'
 import { RiskAnalysisUnderReview } from '~/components/rosette/RiskAnalysisUnderReview'
-import type { RosetteValue } from '~/components/rosette/types'
 import { SentimentText } from '~/components/SentimentText'
+import { PrivacyQuantumResistantBadge } from '../adversaries/PrivacyQuantumResistantBadge'
+import type { PrivacyRosetteValue } from '../adversaries/privacyAdversaryUi'
 
 const TITLE = 'Privacy risk analysis'
 
@@ -14,7 +15,7 @@ export function PrivacyRosetteAnalysis({
   values,
   isUnderReview,
 }: {
-  values: RosetteValue[]
+  values: PrivacyRosetteValue[]
   isUnderReview: boolean
 }) {
   if (isUnderReview) {
@@ -44,6 +45,9 @@ export function PrivacyRosetteAnalysis({
                   {value.value}
                 </SentimentText>
               </div>
+              {value.quantumResistant && (
+                <PrivacyQuantumResistantBadge className="mt-1.5 flex w-fit" />
+              )}
               <p className="mt-1 font-normal text-paragraph-13 text-secondary">
                 {value.description}
               </p>

@@ -77,6 +77,8 @@ export interface PrivacyAdversarySummaryCell {
   sentiment: PrivacyAdversarySentiment
   /** The cell's short description, which carries the reason for the sentiment. */
   reason: string
+  /** Set on the future adversary of a project with the quantum resistant badge. */
+  quantumResistant?: true
 }
 
 export interface PrivacyAdversariesSummary {

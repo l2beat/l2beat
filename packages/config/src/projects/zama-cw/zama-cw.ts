@@ -247,7 +247,6 @@ export const zamaCw: BaseProject = {
       },
     ],
     adversaries: zamaCwAdversaries,
-    quantumResistant: true,
     riskSummary: readProjectMarkdown('zama-cw', 'riskSummary', {
       kmsThreshold,
       kmsSignerCount,

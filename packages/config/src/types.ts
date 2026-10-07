@@ -1119,11 +1119,6 @@ export interface ProjectPrivacyInfo {
   attributes?: PrivacyAttribute[]
   /** Per-adversary privacy assessment. Author with definePrivacyAdversaries. */
   adversaries: ProjectPrivacyAdversaries
-  /**
-   * Privacy-specific quantum-resistance flag. Distinct in meaning from
-   * ProjectZkCatalogInfo.quantumResistant
-   */
-  quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
@@ -1297,6 +1292,20 @@ export interface PrivacyAdversaryAssessment {
   sources?: PrivacySource[]
 }
 
+/** The future adversary's cell, the only one that can carry the quantum resistant badge. */
+export interface PrivacyFutureAdversaryAssessment
+  extends PrivacyAdversaryAssessment {
+  /**
+   * Shows the quantum resistant badge. Set when a large quantum computer breaks
+   * neither the privacy nor the funds: nothing the protocol relies on reduces
+   * to elliptic curves or pairings, and the prover it uses, if any, is
+   * `quantumResistant` in the ZK catalog. Not derived from the sentiment,
+   * which also counts what needs no quantum computer, such as a leaked
+   * long-lived key or retained logs.
+   */
+  quantumResistant?: true
+}
+
 /**
  * Where a claim can be checked. A url for code and papers; a contract name
  * (as in discovery) links to that entry in the Contracts section; a section
@@ -1328,7 +1337,10 @@ export interface PrivacyPromise {
 
 export interface PrivacyAdversariesConfig {
   promise: PrivacyPromise
-  cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
+  cells: Record<
+    Exclude<PrivacyAdversaryId, 'futureAdversary'>,
+    PrivacyAdversaryAssessment
+  > & { futureAdversary: PrivacyFutureAdversaryAssessment }
 }
 
 /** A field this adversary learns more about than the public observer. */
@@ -1348,6 +1360,8 @@ export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
    * whose leaks the promise text already describes.
    */
   alsoExposed: PrivacyAlsoExposed[]
+  /** Carried over from the future adversary's assessment; unset on every other cell. */
+  quantumResistant?: true
 }
 
 /**

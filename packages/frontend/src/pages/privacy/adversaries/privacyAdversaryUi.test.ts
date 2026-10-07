@@ -7,6 +7,7 @@ import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
   getPrivacyAdversariesTableValue,
   getPrivacyAdversaryDescription,
+  getPrivacyAdversaryRosetteValues,
   getPrivacyAdversaryTitle,
 } from './privacyAdversaryUi'
 
@@ -69,6 +70,27 @@ describe(getPrivacyAdversariesTableValue.name, () => {
     expect(hint('good', 'warning', 'warning', 'good', 'good')).toBeGreaterThan(
       hint('good', 'bad', 'good', 'good', 'good'),
     )
+  })
+})
+
+describe(getPrivacyAdversaryRosetteValues.name, () => {
+  it('carries the quantum resistant badge on the slice of its cell only', () => {
+    const adversaries = summary('good', 'good', 'good', 'good', 'warning')
+    const values = getPrivacyAdversaryRosetteValues({
+      ...adversaries,
+      cells: adversaries.cells.map((cell) =>
+        cell.id === 'futureAdversary'
+          ? { ...cell, quantumResistant: true }
+          : cell,
+      ),
+    })
+    expect(values.map((value) => value.quantumResistant)).toEqual([
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      true,
+    ])
   })
 })
 

@@ -14,10 +14,12 @@ import {
   TooltipTrigger,
   TooltipVisualOnly,
 } from '~/components/core/tooltip/Tooltip'
-import type { RosetteValue } from '~/components/rosette/types'
 import { TableLink } from '~/components/table/TableLink'
 import { cn } from '~/utils/cn'
-import { getPrivacyAdversariesSectionHref } from '../adversaries/privacyAdversaryUi'
+import {
+  getPrivacyAdversariesSectionHref,
+  type PrivacyRosetteValue,
+} from '../adversaries/privacyAdversaryUi'
 import { PrivacyRosetteAnalysis } from './PrivacyRosetteAnalysis'
 import { useFollowLinkAfterClose } from './useFollowLinkAfterClose'
 
@@ -49,7 +51,7 @@ const PLACEMENTS = {
 } as const
 
 interface Props {
-  values: RosetteValue[]
+  values: PrivacyRosetteValue[]
   isUnderReview: boolean
   /** The project page. */
   href: string

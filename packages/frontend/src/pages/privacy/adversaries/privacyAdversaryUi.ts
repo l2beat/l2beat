@@ -28,6 +28,14 @@ export const PRIVACY_EXPOSURE_CHIP_CLASS_NAME: Record<PrivacyExposure, string> =
     unverifiable: 'text-[#3A3F4B] bg-[#E3E6EC] border-[#9AA1AE]',
   }
 
+/** Label of the badge on the future adversary of a quantum resistant project. */
+export const PRIVACY_QUANTUM_RESISTANT_LABEL = 'Quantum resistant'
+
+/** A rosette slice that can carry the quantum resistant badge. */
+export interface PrivacyRosetteValue extends RosetteValue {
+  quantumResistant?: true
+}
+
 /** Title of the interior field chips; entry and exit are public and have none. */
 export const PRIVACY_INTERIOR_LABEL = 'Inside'
 
@@ -91,10 +99,11 @@ export const PRIVACY_ADVERSARY_VERDICT: Record<
 /** One rosette slice per adversary, in spine order, explained by its reason. */
 export function getPrivacyAdversaryRosetteValues(
   adversaries: PrivacyAdversariesSummary,
-): RosetteValue[] {
-  return adversaries.cells.map((cell) =>
-    toPrivacyRosetteValue(cell.label, cell.sentiment, cell.reason),
-  )
+): PrivacyRosetteValue[] {
+  return adversaries.cells.map((cell) => ({
+    ...toPrivacyRosetteValue(cell.label, cell.sentiment, cell.reason),
+    quantumResistant: cell.quantumResistant,
+  }))
 }
 
 /** A slice of the project page rosette, explaining who the adversary is. */

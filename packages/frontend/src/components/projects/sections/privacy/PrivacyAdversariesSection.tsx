@@ -11,8 +11,10 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
+import { QUANTUM_RESISTANCE_TOOLTIPS } from '~/components/projects/quantumResistanceTooltips'
 import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
 import type { RosetteValue } from '~/components/rosette/types'
+import { PrivacyQuantumResistantBadge } from '~/pages/privacy/adversaries/PrivacyQuantumResistantBadge'
 import {
   getExposure,
   getExposureNote,
@@ -100,6 +102,12 @@ function AdversaryBlock({
         description={getPrivacyAdversaryDescription(cell)}
         size="large"
       />
+      {cell.quantumResistant && (
+        <p className="text-paragraph-15 md:text-paragraph-16">
+          <PrivacyQuantumResistantBadge className="mr-2 align-middle" />
+          {QUANTUM_RESISTANCE_TOOLTIPS.privacy}
+        </p>
+      )}
       {cell.advice && (
         <p className="text-paragraph-15 md:text-paragraph-16">
           <span className="font-medium">Advice: </span>

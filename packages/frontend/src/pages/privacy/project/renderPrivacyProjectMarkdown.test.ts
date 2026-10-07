@@ -225,6 +225,38 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     })
   })
 
+  it('marks the future adversary of a quantum resistant project', () => {
+    const markdown = renderPrivacyProjectMarkdown({
+      ...ENTRY,
+      sections: [
+        {
+          type: 'PrivacyAdversariesSection',
+          props: {
+            id: 'privacy-adversaries',
+            title: 'Privacy',
+            adversaries: {
+              ...ADVERSARIES,
+              cells: {
+                ...ADVERSARIES.cells,
+                futureAdversary: {
+                  ...ADVERSARIES.cells.futureAdversary,
+                  quantumResistant: true,
+                },
+              },
+            },
+          },
+        },
+      ],
+    })
+
+    expect(getSection(markdown, 'Summary')).toInclude(
+      'Future adversary: Link exposed (sentiment: bad), quantum resistant.',
+    )
+    expect(getSection(markdown, 'Privacy')).toInclude(
+      'A quantum computer could break the commitments.\n\n**Quantum resistant:** This privacy protocol is plausibly quantum resistant',
+    )
+  })
+
   it('tabulates assets with every bucket expanded and a total row', () => {
     const breakdown = getSection(
       renderPrivacyProjectMarkdown(ENTRY),

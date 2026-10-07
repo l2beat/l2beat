@@ -161,6 +161,7 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
+      quantumResistant: true,
       exposureShort:
         'The encryption is lattice-based and survives quantum computers, but every ciphertext is publicly downloadable and one long-lived key protects them all.',
       exposureContinued:

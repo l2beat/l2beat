@@ -12,7 +12,6 @@ export function toPrivacyProjectCellProject(entry: PrivacySummaryEntry) {
     detailsHref: entry.href,
     backgroundColor: entry.backgroundColor,
     description: entry.description,
-    quantumResistance: entry.quantumResistant ? 'privacy' : undefined,
     statuses: {
       underReview: entry.isUnderReview ? 'config' : undefined,
       redWarning: entry.redWarning,

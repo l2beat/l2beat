@@ -15,6 +15,7 @@ import {
   getProjectStatusWarnings,
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
+import { PRIVACY_QUANTUM_RESISTANT_LABEL } from '../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { PRIVACY_WALKAWAY_TEST_TOOLTIPS } from '../privacyWalkawayTest'
 import {
@@ -163,8 +164,15 @@ function explainedRisk(
  * sorts by one.
  */
 function privacyRisk(adversaries: PrivacyAdversariesSummary): RosetteValue {
-  const perAdversary = adversaries.cells.map(
-    (cell) => `${cell.label}: ${withSentiment(cell.value, cell.sentiment)}`,
+  const perAdversary = adversaries.cells.map((cell) =>
+    [
+      `${cell.label}: ${withSentiment(cell.value, cell.sentiment)}`,
+      cell.quantumResistant
+        ? PRIVACY_QUANTUM_RESISTANT_LABEL.toLowerCase()
+        : '',
+    ]
+      .filter((part) => part !== '')
+      .join(', '),
   )
   return {
     name: PRIVACY_ASSESSMENT.title,

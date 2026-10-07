@@ -49,7 +49,6 @@ export interface PrivacySummaryEntry {
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   adversaries: PrivacyAdversariesSummary
-  quantumResistant?: boolean
 }
 
 type PrivacySummaryTrackingMetrics = Pick<
@@ -171,7 +170,6 @@ function getPrivacySummaryBaseEntry(
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
     adversaries: toPrivacyAdversariesSummary(project.privacyInfo.adversaries),
-    quantumResistant: project.privacyInfo.quantumResistant,
   }
 }
 
