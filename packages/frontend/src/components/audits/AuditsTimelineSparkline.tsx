@@ -25,8 +25,8 @@ function snap(x: number) {
 
 /**
  * The project's life on one line: the launch as a circle and the project's
- * own audit reports as green ticks above the axis. The same model as
- * AuditsTimelineChart, without the upgrades, and a link to it.
+ * audit reports, own and stack, as green ticks above the axis. The same model
+ * as AuditsTimelineChart, without the upgrades, and a link to it.
  */
 export function AuditsTimelineSparkline({
   timeline,

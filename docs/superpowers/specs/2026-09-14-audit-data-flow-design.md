@@ -456,6 +456,8 @@ section 8 for the screened list.
 - The match panel shows origin, collection and relation, for example "upstream: optimism via
   fork of ethereum-optimism/optimism" or "stack: arbitrum via template orbitstack/Inbox".
 - Summary and project pages keep their shape; `libraryReportsCount` becomes counts by origin.
+- Which matched reports count as the project's audits on the timeline and in its statistics is
+  decided in `2026-10-07-audit-timeline-project-audits-design.md`.
 
 ### 7.6 Storage
 

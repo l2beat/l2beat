@@ -18,9 +18,9 @@ import { CustomLink } from '~/components/link/CustomLink'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { InfoIcon } from '~/icons/Info'
 import type {
-  AuditsOwnReport,
+  AuditsOtherReport,
+  AuditsProjectReport,
   AuditsProjectTimeline,
-  AuditsSharedReport,
 } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
@@ -37,23 +37,28 @@ const MARKER_RADIUS = 8
 const LAUNCH_RADIUS = 6
 const CRISP = { shapeRendering: 'crispEdges' } as const
 
-type TimelineAudit =
-  | { kind: 'own'; report: AuditsOwnReport }
-  | { kind: 'shared'; report: AuditsSharedReport }
+type AuditMarkerKind = 'own' | 'stack' | 'other'
+
+interface TimelineAudit {
+  kind: AuditMarkerKind
+  report: AuditsProjectReport | AuditsOtherReport
+}
 
 interface Props {
   timeline: AuditsProjectTimeline
 }
 
 /**
- * The project's life on one axis: its launch, its own audit reports above
- * the axis and the critical upgrades of its contracts below it. MAX reaches
- * back to the launch or the first audit, whichever came first.
+ * The project's life on one axis: its launch, its audit reports (own and
+ * stack) above the axis and the critical upgrades of its contracts below it.
+ * Other matched reports, of libraries and unrelated projects, are shown on
+ * demand. MAX reaches back to the launch or the first audit, whichever came
+ * first.
  */
 export function AuditsTimelineChart({ timeline }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const { width } = useResizeObserver({ ref })
-  const [withShared, setWithShared] = useState(false)
+  const [withOther, setWithOther] = useState(false)
   const [range, setRange] = useState<ChartRange>(() => optionToRange('1y'))
   const from = range[0] ?? timeline.from
   const to = range[1]
@@ -64,10 +69,13 @@ export function AuditsTimelineChart({ timeline }: Props) {
     [from, to, width],
   )
   const audits: TimelineAudit[] = [
-    ...timeline.audits.map((report) => ({ kind: 'own' as const, report })),
-    ...(withShared
-      ? timeline.sharedAudits.map((report) => ({
-          kind: 'shared' as const,
+    ...timeline.audits.map((report) => ({
+      kind: report.origin === 'own' ? ('own' as const) : ('stack' as const),
+      report,
+    })),
+    ...(withOther
+      ? timeline.otherAudits.map((report) => ({
+          kind: 'other' as const,
           report,
         }))
       : []),
@@ -215,22 +223,23 @@ export function AuditsTimelineChart({ timeline }: Props) {
         )}
       </div>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <Legend timeline={timeline} withShared={withShared} />
-        {timeline.sharedAudits.length > 0 && (
+        <Legend timeline={timeline} withOther={withOther} />
+        {timeline.otherAudits.length > 0 && (
           <label className="flex cursor-pointer items-center gap-2 font-medium text-xs">
             <Switch
-              name="audits-shared"
-              checked={withShared}
-              onCheckedChange={setWithShared}
+              name="audits-other"
+              checked={withOther}
+              onCheckedChange={setWithOther}
             />
-            Shared audits
+            Other matched audits
             <Tooltip>
               <TooltipTrigger>
                 <InfoIcon className="size-3.5" />
               </TooltipTrigger>
               <TooltipContent>
-                Also show the reports of upstream code, stacks and libraries
-                that matched the deployed contracts.
+                Also show the library audits and the reports of unrelated
+                projects that matched some of the deployed code. They do not
+                count as the project's audits.
               </TooltipContent>
             </Tooltip>
           </label>
@@ -299,14 +308,14 @@ function AuditMarker({
   kind,
   className,
 }: {
-  kind: TimelineAudit['kind']
+  kind: AuditMarkerKind
   className?: string
 }) {
   return (
     <div
       className={cn(
         'size-4 rounded-full border-2 border-positive',
-        kind === 'own' ? 'bg-positive' : 'bg-surface-primary',
+        kind === 'other' ? 'bg-surface-primary' : 'bg-positive',
         className,
       )}
     />
@@ -325,8 +334,8 @@ function AuditTooltip({
   kind,
   report,
 }: {
-  kind: TimelineAudit['kind']
-  report: AuditsOwnReport | AuditsSharedReport
+  kind: AuditMarkerKind
+  report: AuditsProjectReport | AuditsOtherReport
 }) {
   return (
     <div className="flex flex-col text-left">
@@ -334,9 +343,15 @@ function AuditTooltip({
         {formatTimestamp(report.timestamp)} · {report.auditor}
       </span>
       <span className="font-bold">{report.title}</span>
-      {kind === 'shared' && 'collectionName' in report && (
+      {kind === 'stack' && (
         <span className="text-secondary text-xs">
-          Shared audit of {report.collectionName}.
+          Audit of {report.collectionName}, the project's stack.
+        </span>
+      )}
+      {kind === 'other' && (
+        <span className="text-secondary text-xs">
+          Matched audit of {report.collectionName}, not counted as a project
+          audit.
         </span>
       )}
       {report.url && (
@@ -372,10 +387,10 @@ function ChangeTooltip({
 
 function Legend({
   timeline,
-  withShared,
+  withOther,
 }: {
   timeline: AuditsProjectTimeline
-  withShared: boolean
+  withOther: boolean
 }) {
   return (
     <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-secondary text-xs">
@@ -383,10 +398,10 @@ function Legend({
         <AuditMarker kind="own" className="size-3 border" />
         Project audit
       </span>
-      {withShared && (
+      {withOther && (
         <span className="flex items-center gap-1.5">
-          <AuditMarker kind="shared" className="size-3 border" />
-          Shared audit
+          <AuditMarker kind="other" className="size-3 border" />
+          Other matched audit
         </span>
       )}
       {timeline.hasOssification ? (

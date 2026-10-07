@@ -1,15 +1,36 @@
-import type { ProjectAuditCoverage } from '@l2beat/audit-diff'
+import type { CollectionRef, ProjectAuditCoverage } from '@l2beat/audit-diff'
 import { expect, mockObject } from 'earl'
 import type { AuditCoverageSource } from './AuditCoverageSource'
-import { getAuditsOwnReports, parseReportDate } from './getAuditsOwnReports'
+import {
+  getAuditsProjectReports,
+  parseReportDate,
+} from './getAuditsProjectReports'
 
-describe(getAuditsOwnReports.name, () => {
+describe(getAuditsProjectReports.name, () => {
   const report = {
-    reportIds: ['own/matched', 'lib/other'],
+    reportIds: [
+      'own/matched',
+      'optimism/matched',
+      'openzeppelin/matched',
+      'lib/other',
+      'kailua/matched',
+    ],
     context: {
       key: 'k',
       collections: [
         { id: 'own', rank: 0, origin: 'own', relation: { type: 'own' } },
+        {
+          id: 'optimism',
+          rank: 2,
+          origin: 'stack',
+          relation: { type: 'template', template: 'opstack/L1StandardBridge' },
+        },
+        {
+          id: 'openzeppelin',
+          rank: 2,
+          origin: 'stack',
+          relation: { type: 'template', template: 'global/ProxyAdmin' },
+        },
         {
           id: 'lib',
           rank: 3,
@@ -20,22 +41,37 @@ describe(getAuditsOwnReports.name, () => {
     },
   } as unknown as ProjectAuditCoverage
 
+  const collections: Record<string, CollectionRef> = {
+    own: { id: 'own', name: 'Own', kind: 'project' },
+    optimism: { id: 'optimism', name: 'Optimism', kind: 'project' },
+    openzeppelin: { id: 'openzeppelin', name: 'OpenZeppelin', kind: 'library' },
+    lib: { id: 'lib', name: 'Lib', kind: 'library' },
+    kailua: { id: 'kailua', name: 'Kailua', kind: 'project' },
+  }
+
   const source = mockObject<AuditCoverageSource>({
     listReports: () => [
       ref('own/matched', 'own', '2024-03-01'),
       ref('own/unmatched', 'own', '2022-01-15'),
       ref('own/undated', 'own', null),
+      ref('optimism/matched', 'optimism', '2023-06-01'),
+      ref('optimism/unmatched', 'optimism', '2023-09-01'),
+      ref('openzeppelin/matched', 'openzeppelin', '2023-10-03'),
       ref('lib/other', 'lib', '2023-06-01'),
+      ref('kailua/matched', 'kailua', '2025-02-18'),
     ],
+    getCollection: (id) => collections[id],
   })
 
-  it('returns the dated own reports ascending, flagging matches', () => {
-    const result = getAuditsOwnReports(report, source)
-    expect(result.map((r) => [r.id, r.matched])).toEqual([
-      ['own/unmatched', false],
-      ['own/matched', true],
+  it('returns the dated own reports and the matched stack project reports ascending', () => {
+    const result = getAuditsProjectReports(report, source)
+    expect(result.map((r) => [r.id, r.origin, r.matched])).toEqual([
+      ['own/unmatched', 'own', false],
+      ['optimism/matched', 'stack', true],
+      ['own/matched', 'own', true],
     ])
     expect(result[0]?.timestamp).toEqual(parseReportDate('2022-01-15'))
+    expect(result[1]?.collectionName).toEqual('Optimism')
   })
 })
 

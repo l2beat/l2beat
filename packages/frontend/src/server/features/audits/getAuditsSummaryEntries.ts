@@ -8,7 +8,7 @@ import {
   fullyCoveredShare,
   linesCoveredShare,
 } from './countFullyCoveredContracts'
-import { getAuditsOwnReports } from './getAuditsOwnReports'
+import { getAuditsProjectReports } from './getAuditsProjectReports'
 import {
   getAuditsLaunch,
   getAuditsProjectTimeline,
@@ -36,8 +36,8 @@ export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
     ).length
     const timeline = getAuditsProjectTimeline(
       {
-        audits: getAuditsOwnReports(report, auditCoverageSource),
-        sharedAudits: [],
+        audits: getAuditsProjectReports(report, auditCoverageSource),
+        otherAudits: [],
         ossification: {
           history: project?.ossificationHistory,
           href: undefined,

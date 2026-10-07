@@ -12,7 +12,10 @@ import {
   auditCoverageSource,
 } from './AuditCoverageSource'
 import { countFullyCoveredContracts } from './countFullyCoveredContracts'
-import { getAuditsOwnReports, parseReportDate } from './getAuditsOwnReports'
+import {
+  getAuditsProjectReports,
+  parseReportDate,
+} from './getAuditsProjectReports'
 import {
   getAuditsLaunch,
   getAuditsProjectTimeline,
@@ -20,9 +23,9 @@ import {
 import { toCoverageNumbers } from './getAuditsSummaryEntries'
 import type {
   AuditsContractEntry,
+  AuditsOtherReport,
   AuditsProjectDetails,
   AuditsReportEntry,
-  AuditsSharedReport,
   AuditsUnitEntry,
 } from './types'
 
@@ -86,10 +89,14 @@ export async function getAuditsProjectDetails(
   }
 
   const projectHref = project && getProjectHref(project)
+  const audits = getAuditsProjectReports(report, auditCoverageSource)
+  const projectAuditIds = new Set(audits.map((audit) => audit.id))
   const timeline = getAuditsProjectTimeline(
     {
-      audits: getAuditsOwnReports(report, auditCoverageSource),
-      sharedAudits: reports.flatMap(toSharedReport),
+      audits,
+      otherAudits: reports
+        .filter((r) => !projectAuditIds.has(r.id))
+        .flatMap(toOtherReport),
       ossification: {
         history: project?.ossificationHistory,
         href: projectHref && `${projectHref}#ossification`,
@@ -165,10 +172,10 @@ function getProjectHref(project: {
   }
 }
 
-/** Dated reports of other collections; undated ones have no place on a timeline. */
-function toSharedReport(report: AuditsReportEntry): AuditsSharedReport[] {
+/** Dated matched reports; undated ones have no place on a timeline. */
+function toOtherReport(report: AuditsReportEntry): AuditsOtherReport[] {
   const timestamp = parseReportDate(report.reportDate, report.id)
-  if (report.origin === 'own' || timestamp === undefined) return []
+  if (timestamp === undefined) return []
   return [
     {
       id: report.id,

@@ -6,13 +6,13 @@ import {
   getAuditsProjectTimeline,
   toAuditsSummaryTimeline,
 } from './getAuditsProjectTimeline'
-import type { AuditsOwnReport } from './types'
+import type { AuditsProjectReport } from './types'
 
 const DAY = UnixTime.DAY
 const NOW = UnixTime(1_800_000_000)
 
 describe(getAuditsProjectTimeline.name, () => {
-  const audits: AuditsOwnReport[] = [
+  const audits: AuditsProjectReport[] = [
     audit('a', NOW - 500 * DAY),
     audit('b', NOW - 100 * DAY),
   ]
@@ -41,7 +41,7 @@ describe(getAuditsProjectTimeline.name, () => {
 
   it('counts the critical changes after the latest audit', () => {
     const timeline = getAuditsProjectTimeline(
-      { audits, sharedAudits: [], ossification, launch: NOW - 700 * DAY },
+      { audits, otherAudits: [], ossification, launch: NOW - 700 * DAY },
       NOW,
     )
     expect(timeline.hasOssification).toEqual(true)
@@ -54,28 +54,54 @@ describe(getAuditsProjectTimeline.name, () => {
 
   it('averages the audits and upgrades over the life since the launch', () => {
     const timeline = getAuditsProjectTimeline(
-      { audits, sharedAudits: [], ossification, launch: NOW - 700 * DAY },
+      { audits, otherAudits: [], ossification, launch: NOW - 700 * DAY },
       NOW,
     )
-    expect(timeline.averageAuditInterval).toEqual(350 * DAY)
+    expect(timeline.auditInterval).toEqual({
+      start: NOW - 700 * DAY,
+      audits: 2,
+      average: 350 * DAY,
+    })
     expect(timeline.averageUpgradeInterval).toEqual((700 * DAY) / 3)
   })
 
   it('averages the audits since the first one when it predates the launch', () => {
     const timeline = getAuditsProjectTimeline(
-      { audits, sharedAudits: [], ossification, launch: NOW - 400 * DAY },
+      { audits, otherAudits: [], ossification, launch: NOW - 400 * DAY },
       NOW,
     )
-    expect(timeline.averageAuditInterval).toEqual(250 * DAY)
+    expect(timeline.auditInterval?.average).toEqual(250 * DAY)
     expect(timeline.from).toEqual(NOW - 600 * DAY)
+  })
+
+  it('starts the interval at the launch or the first own audit, not at a stack audit', () => {
+    const timeline = getAuditsProjectTimeline(
+      {
+        audits: [
+          { ...audit('stack-old', NOW - 900 * DAY), origin: 'stack' },
+          { ...audit('stack-new', NOW - 300 * DAY), origin: 'stack' },
+          ...audits,
+        ],
+        otherAudits: [],
+        ossification,
+        launch: NOW - 700 * DAY,
+      },
+      NOW,
+    )
+    expect(timeline.auditInterval).toEqual({
+      start: NOW - 700 * DAY,
+      audits: 3,
+      average: (700 * DAY) / 3,
+    })
+    expect(timeline.from).toEqual(NOW - 900 * DAY)
   })
 
   it('has no interval without audits', () => {
     const timeline = getAuditsProjectTimeline(
-      { audits: [], sharedAudits: [], ossification, launch: NOW - 700 * DAY },
+      { audits: [], otherAudits: [], ossification, launch: NOW - 700 * DAY },
       NOW,
     )
-    expect(timeline.averageAuditInterval).toEqual(null)
+    expect(timeline.auditInterval).toEqual(null)
     expect(timeline.latestAudit).toEqual(null)
     expect(timeline.criticalChangesSinceLatestAudit).toEqual(3)
   })
@@ -84,7 +110,7 @@ describe(getAuditsProjectTimeline.name, () => {
     const timeline = getAuditsProjectTimeline(
       {
         audits,
-        sharedAudits: [],
+        otherAudits: [],
         ossification: { history: undefined, href: '/p#ossification' },
         launch: null,
       },
@@ -102,7 +128,7 @@ describe(getAuditsProjectTimeline.name, () => {
     const timeline = getAuditsProjectTimeline(
       {
         audits: [audit('recent', NOW - 30 * DAY)],
-        sharedAudits: [],
+        otherAudits: [],
         ossification: { history: undefined, href: undefined },
         launch: NOW - 60 * DAY,
       },
@@ -111,25 +137,22 @@ describe(getAuditsProjectTimeline.name, () => {
     expect(timeline.from).toEqual(NOW - 365 * DAY)
   })
 
-  it('sorts the shared audits', () => {
+  it('sorts the other audits', () => {
     const timeline = getAuditsProjectTimeline(
       {
         audits,
-        sharedAudits: [
-          shared('late', NOW - DAY),
-          shared('early', NOW - 9 * DAY),
-        ],
+        otherAudits: [other('late', NOW - DAY), other('early', NOW - 9 * DAY)],
         ossification: { history: undefined, href: undefined },
         launch: null,
       },
       NOW,
     )
-    expect(timeline.sharedAudits.map((a) => a.id)).toEqual(['early', 'late'])
+    expect(timeline.otherAudits.map((a) => a.id)).toEqual(['early', 'late'])
   })
 
   it('reduces to the summary timeline', () => {
     const timeline = getAuditsProjectTimeline(
-      { audits, sharedAudits: [], ossification, launch: NOW - 700 * DAY },
+      { audits, otherAudits: [], ossification, launch: NOW - 700 * DAY },
       NOW,
     )
     expect(toAuditsSummaryTimeline(timeline)).toEqual({
@@ -166,17 +189,25 @@ describe(getAuditsLaunch.name, () => {
   })
 })
 
-function audit(id: string, timestamp: number): AuditsOwnReport {
-  return { id, title: id, auditor: 'A', timestamp, matched: true }
-}
-
-function shared(id: string, timestamp: number) {
+function audit(id: string, timestamp: number): AuditsProjectReport {
   return {
     id,
     title: id,
     auditor: 'A',
     timestamp,
-    origin: 'upstream' as const,
-    collectionName: 'Upstream',
+    origin: 'own',
+    collectionName: 'Own',
+    matched: true,
+  }
+}
+
+function other(id: string, timestamp: number) {
+  return {
+    id,
+    title: id,
+    auditor: 'A',
+    timestamp,
+    origin: 'library' as const,
+    collectionName: 'Lib',
   }
 }

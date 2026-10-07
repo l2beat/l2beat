@@ -60,7 +60,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        "The project's life from its launch (the circle) to today, with its own audit reports as green ticks. Click one to open the project's full timeline.",
+        "The project's life from its launch (the circle) to today, with its audit reports, own and of its stack, as green ticks. Click one to open the project's full timeline.",
     },
   }),
   columnHelper.accessor(
@@ -84,7 +84,7 @@ const columns = [
       meta: {
         align: 'center',
         tooltip:
-          "Critical changes to the project's critical contracts after its latest own audit report, as tracked by ossification.",
+          "Critical changes to the project's critical contracts after its latest audit report, own or of its stack, as tracked by ossification.",
       },
     },
   ),

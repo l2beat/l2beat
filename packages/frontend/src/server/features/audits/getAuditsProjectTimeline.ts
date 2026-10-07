@@ -2,19 +2,19 @@ import type { OssificationHistory } from '@l2beat/shared/frontend'
 import { measureOssification } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 import type {
-  AuditsOwnReport,
+  AuditsOtherReport,
+  AuditsProjectReport,
   AuditsProjectTimeline,
-  AuditsSharedReport,
   AuditsSummaryTimeline,
 } from './types'
 
 const MIN_WINDOW = 365 * UnixTime.DAY
 
 export interface AuditsTimelineSources {
-  /** Dated own reports, ascending. */
-  audits: AuditsOwnReport[]
-  /** Dated reports of other collections, any order. */
-  sharedAudits: AuditsSharedReport[]
+  /** The project's audits, own and stack, ascending. See getAuditsProjectReports. */
+  audits: AuditsProjectReport[]
+  /** Dated matched reports that are not project audits, any order. */
+  otherAudits: AuditsOtherReport[]
   ossification: {
     history: OssificationHistory | undefined
     href: string | undefined
@@ -24,9 +24,10 @@ export interface AuditsTimelineSources {
 }
 
 /**
- * The project's own audits next to the critical changes of its ossification
- * perimeter, from its launch to now. Projects outside that perimeter get the
- * audits alone.
+ * The project's audits, own and stack, next to the critical changes of its
+ * ossification perimeter, from its launch to now. Projects outside that
+ * perimeter get the audits alone. Other matched reports are carried along
+ * for the chart's toggle and take no part in the statistics.
  */
 export function getAuditsProjectTimeline(
   sources: AuditsTimelineSources,
@@ -38,14 +39,18 @@ export function getAuditsProjectTimeline(
     : undefined
   const criticalChanges = measured?.criticalChanges ?? []
   const latestAudit = audits.at(-1) ?? null
-  const start = Math.min(
+  const intervalStart = Math.min(
     launch ?? Number.POSITIVE_INFINITY,
-    audits[0]?.timestamp ?? Number.POSITIVE_INFINITY,
+    audits.find((audit) => audit.origin === 'own')?.timestamp ??
+      Number.POSITIVE_INFINITY,
   )
+  const auditsSinceStart = audits.filter(
+    (audit) => audit.timestamp >= intervalStart,
+  ).length
 
   return {
     audits,
-    sharedAudits: [...sources.sharedAudits].sort(
+    otherAudits: [...sources.otherAudits].sort(
       (a, b) => a.timestamp - b.timestamp,
     ),
     criticalChanges,
@@ -53,8 +58,14 @@ export function getAuditsProjectTimeline(
     ossificationHref: measured ? ossification.href : undefined,
     launch,
     latestAudit,
-    averageAuditInterval:
-      audits.length > 0 ? Math.max(0, now - start) / audits.length : null,
+    auditInterval:
+      auditsSinceStart > 0
+        ? {
+            start: intervalStart,
+            audits: auditsSinceStart,
+            average: Math.max(0, now - intervalStart) / auditsSinceStart,
+          }
+        : null,
     averageUpgradeInterval:
       measured && launch !== null && criticalChanges.length > 0
         ? Math.max(0, now - launch) / criticalChanges.length
@@ -66,7 +77,8 @@ export function getAuditsProjectTimeline(
       : null,
     from: Math.min(
       now - MIN_WINDOW,
-      start,
+      launch ?? Number.POSITIVE_INFINITY,
+      audits[0]?.timestamp ?? Number.POSITIVE_INFINITY,
       criticalChanges[0] ?? Number.POSITIVE_INFINITY,
     ),
     to: now,

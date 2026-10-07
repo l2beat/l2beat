@@ -27,19 +27,29 @@ export interface AuditCoverageNumbers {
   lines: { total: number; covered: number; uncovered: number }
 }
 
-/** One of the project's own audit reports, dated. */
-export interface AuditsOwnReport {
+/**
+ * A dated report that counts as one of the project's audits: a report of its
+ * own collections, or a matched report of an upstream or stack project
+ * collection. See
+ * docs/superpowers/specs/2026-10-07-audit-timeline-project-audits-design.md.
+ */
+export interface AuditsProjectReport {
   id: string
   title: string
   auditor: string
   timestamp: number
   url?: string
-  /** The report matched at least one deployed unit. */
+  origin: 'own' | 'upstream' | 'stack'
+  collectionName: string
+  /** The report matched at least one deployed unit; always true unless own. */
   matched: boolean
 }
 
-/** A dated report of another collection that matched deployed code. */
-export interface AuditsSharedReport {
+/**
+ * A dated matched report that is not a project audit: a library audit or a
+ * report of a project outside the ranked context.
+ */
+export interface AuditsOtherReport {
   id: string
   title: string
   auditor: string
@@ -59,7 +69,7 @@ export interface AuditsSummaryTimeline {
   to: number
   /** When the project launched; null when unknown. */
   launch: number | null
-  /** Own report dates, ascending. */
+  /** Project audit dates, own and stack, ascending. */
   audits: number[]
   latestAudit: number | null
   /** Critical changes after the latest audit; null without ossification. */
@@ -179,10 +189,10 @@ export interface AuditsContextEntry {
 
 /** Markers and stats of the audits and upgrades timeline section. */
 export interface AuditsProjectTimeline {
-  /** Dated own reports, ascending. */
-  audits: AuditsOwnReport[]
-  /** Dated reports of other collections that matched deployed code, ascending. */
-  sharedAudits: AuditsSharedReport[]
+  /** The project's audits, own and stack, ascending. */
+  audits: AuditsProjectReport[]
+  /** Dated matched reports that are not project audits, ascending. */
+  otherAudits: AuditsOtherReport[]
   /** 24h-clustered critical changes from the ossification history, ascending. */
   criticalChanges: number[]
   /** False for projects outside the ossification perimeter. */
@@ -191,12 +201,14 @@ export interface AuditsProjectTimeline {
   ossificationHref?: string
   /** When the project launched; null when unknown. */
   launch: number | null
-  latestAudit: AuditsOwnReport | null
+  latestAudit: AuditsProjectReport | null
   /**
-   * Seconds per own audit since the launch or the first audit, whichever
-   * came first; null without audits.
+   * The project's audit cadence: seconds per audit since the launch or the
+   * first own audit, whichever came first, over the audits since then. Stack
+   * audits before that start describe the stack's history, not the
+   * project's cadence. Null without audits since the start.
    */
-  averageAuditInterval: number | null
+  auditInterval: { start: number; audits: number; average: number } | null
   /**
    * Seconds per critical upgrade since the launch; null without ossification
    * or without upgrades.
