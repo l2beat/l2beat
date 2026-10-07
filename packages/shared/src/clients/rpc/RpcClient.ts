@@ -7,10 +7,8 @@ import {
 import { v } from '@l2beat/validate'
 import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
-import {
-  ClientCore,
-  type ClientCoreDependencies as ClientCoreDependencies,
-} from '../ClientCore'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import type { LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
 import {
@@ -46,7 +44,7 @@ type Param =
   | string
   | number
   | boolean
-  | Record<string, string | string[] | string[][]>
+  | Record<string, string | string[] | LogsTopicFilter>
   | number[]
 
 export class RpcClient extends ClientCore implements IRpcClient {
@@ -181,13 +179,13 @@ export class RpcClient extends ClientCore implements IRpcClient {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<EVMLog[]> {
     const method = 'eth_getLogs'
     const response = await this.query(method, [
       {
         address: addresses ?? [],
-        topics: topics ? [topics] : [],
+        topics: topics ?? [],
         fromBlock: Quantity.encode(BigInt(from)),
         toBlock: Quantity.encode(BigInt(to)),
       },

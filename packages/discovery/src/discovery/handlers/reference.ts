@@ -69,18 +69,3 @@ export function resolveReference<T>(
 
   return result
 }
-
-export function resolveReferenceFromValues(
-  value: string,
-  previousResults: Record<string, ContractValue | undefined>,
-): ContractValue {
-  const dependency = getReferencedPath(value)
-  if (dependency === undefined) {
-    return value
-  }
-  const result = previousResults[dependency]
-  if (result === undefined) {
-    throw new Error(`Missing dependency: ${dependency}`)
-  }
-  return result
-}

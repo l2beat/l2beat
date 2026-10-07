@@ -1,13 +1,12 @@
 import type { Project } from '@l2beat/config'
 import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
+import { getL2OnlyThroughputSyncedUntil } from '~/server/features/data-availability/throughput/utils/getL2OnlyThroughputSyncedUntil'
 import { ps } from '~/server/projects'
-import type { SsrHelpers } from '~/trpc/server'
+import { toChartProject } from '~/utils/project/toChartProject'
 import { optionToRange } from '~/utils/range/range'
-import { withProjectIcon } from '~/utils/withProjectIcon'
 
 export async function getDaThroughputSection(
-  helpers: SsrHelpers,
   project: Project<'daLayer' | 'statuses' | 'display', 'milestones'>,
 ) {
   const configuredThroughput = project.daLayer.throughput
@@ -18,25 +17,23 @@ export async function getDaThroughputSection(
   )
     return undefined
 
-  const [charts, projectsWithColors] = await Promise.all([
-    helpers.queryClient.fetchQuery(
-      helpers.trpc.da.projectCharts.queryOptions({
-        range: optionToRange('1y'),
-        projectId: project.id,
-        includeL2Only: true,
-      }),
-    ),
+  const [rangeStart] = optionToRange('1y')
+  const [syncedUntil, projectsWithColors] = await Promise.all([
+    getL2OnlyThroughputSyncedUntil(project),
     ps.getProjects({ select: ['colors'] }),
   ])
 
-  if (!charts || charts.totalChart.data.length === 0) return undefined
+  const hasDataInRange =
+    syncedUntil !== undefined &&
+    (rangeStart === null || syncedUntil >= rangeStart)
+  if (!hasDataInRange) return undefined
 
-  const syncWarning = getThroughputSyncWarning(charts.syncedUntil, {
+  const syncWarning = getThroughputSyncWarning(syncedUntil, {
     shorter: true,
   })
 
   return {
-    project: withProjectIcon(project),
+    project: toChartProject(project),
     throughput: project.daLayer.throughput ?? [],
     syncStatus: {
       warning: syncWarning,

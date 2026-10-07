@@ -32,7 +32,10 @@ export const robinhood: ScalingProject = orbitStackL2({
         'https://portal.arbitrum.io/bridge?destinationChain=robinhood-chain&sourceChain=ethereum',
       ],
       documentation: ['https://docs.robinhood.com/chain'],
-      explorers: ['https://robinhoodchain.blockscout.com'],
+      explorers: [
+        'https://robin.etherscan.io',
+        'https://robinhoodchain.blockscout.com',
+      ],
       socialMedia: ['https://x.com/RobinhoodApp'],
     },
   },
@@ -178,7 +181,7 @@ export const robinhood: ScalingProject = orbitStackL2({
   chainConfig: {
     name: 'robinhood',
     chainId: 4663,
-    explorerUrl: 'https://robinhoodchain.blockscout.com',
+    explorerUrl: 'https://robin.etherscan.io',
     // L2 genesis (block 1); tokens/escrows tracked from chain launch.
     sinceTimestamp: UnixTime(1777567931),
     apis: [
@@ -187,6 +190,8 @@ export const robinhood: ScalingProject = orbitStackL2({
         url: 'https://rpc.mainnet.chain.robinhood.com',
         callsPerMinute: 600,
       },
+      { type: 'etherscan', chainId: 4663 },
+      { type: 'sourcify', chainId: 4663 },
       { type: 'blockscout', url: 'https://robinhoodchain.blockscout.com/api' },
     ],
   },

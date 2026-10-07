@@ -150,6 +150,14 @@ export const TRUSTED_SETUPS = {
       'Circuit-specific trusted setup for the 21 Groth16 Privacy Boost circuits deployed in September 2026. It was built on top of 80 Perpetual Powers of Tau phase 1 contributions, with a publicly announced phase 2 that drew 26 participants and 23 to 25 contributions per circuit. The proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyBoostv2.md'),
   },
+  PrivacyBoostv3: {
+    id: 'PrivacyBoostv3',
+    name: 'Privacy Boost v3',
+    risk: 'red',
+    shortDescription:
+      'Circuit-specific trusted setup for the 12 Groth16 Privacy Boost epoch, forced withdrawal and gift claim circuits deployed in late September 2026. It was built on top of 80 Perpetual Powers of Tau phase 1 contributions, with a publicly announced phase 2 whose transcript and participant list have not yet been published. The proving system could be broken if either phase 1 or 2 is compromised.',
+    longDescription: readMarkdown('common/trustedSetups/PrivacyBoostv3.md'),
+  },
   Railgun: {
     id: 'Railgun',
     name: 'Railgun',

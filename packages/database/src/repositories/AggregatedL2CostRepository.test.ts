@@ -97,6 +97,28 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
     },
   )
 
+  describe(AggregatedL2CostRepository.prototype.checkIfExists.name, () => {
+    it('is true when the project has any record', async () => {
+      await repository.upsertMany([record({ projectId: ProjectId('a') })])
+      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(true)
+    })
+
+    it('is scoped to the project', async () => {
+      await repository.upsertMany([record({ projectId: ProjectId('a') })])
+      expect(await repository.checkIfExists(ProjectId('b'))).toEqual(false)
+    })
+
+    it('only counts records at or after fromInclusive', async () => {
+      await repository.upsertMany([
+        record({ projectId: ProjectId('a'), timestamp: NOW - UnixTime.DAY }),
+      ])
+      expect(await repository.checkIfExists(ProjectId('a'), NOW)).toEqual(false)
+      expect(
+        await repository.checkIfExists(ProjectId('a'), NOW - UnixTime.DAY),
+      ).toEqual(true)
+    })
+  })
+
   describe(
     AggregatedL2CostRepository.prototype.getFirstTimestampByProjects.name,
     () => {

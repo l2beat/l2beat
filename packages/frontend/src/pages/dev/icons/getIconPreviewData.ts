@@ -13,7 +13,7 @@ export async function getIconPreviewData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Icon Preview - L2BEAT',
+        name: 'Icon Preview',
         description:
           'Development-only gallery of frontend icon components used across L2BEAT.',
         url,

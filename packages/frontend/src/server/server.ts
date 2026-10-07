@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs'
+import type { Server } from 'node:http'
 import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
 import timeout from 'connect-timeout'
@@ -6,21 +7,28 @@ import type { NextFunction, Request, Response } from 'express'
 import express from 'express'
 import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
-import { CLIENT_ENV_KEYS, rawEnv } from '~/env'
+import { CLIENT_ENV_KEYS, env, rawEnv } from '~/env'
+import { isFrontendCacheEnabled } from '~/utils/FrontendInMemoryCache'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import {
   CLIENT_ASSETS_OUTPUT_DIR,
   CLIENT_ASSETS_PATH,
   CLIENT_TEMPLATE_PATH,
-} from '../paths'
+} from '../paths.mjs'
 import type { RenderData, ServerRenderFunction } from '../ssr/types'
+import { jsonForInlineScript } from '../utils/jsonForInlineScript'
 import { type Manifest, manifest } from '../utils/Manifest'
+import { getTokenGraphs } from './features/tokens/getTokenGraphs'
 import { ErrorHandler } from './middlewares/ErrorHandler'
+import { LlmsLinkHeaderMiddleware } from './middlewares/LlmsLinkHeaderMiddleware'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { RequestIdMiddleware } from './middlewares/RequestIdMiddleware'
 import { SafeSendHandler } from './middlewares/SafeSendHandler'
+import { loadPagePreloads } from './PagePreloads'
 import { createApiRouter } from './routers/ApiRouter'
 import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
+import { createLlmsTxtRouter } from './routers/LlmsTxtRouter'
+import { createMarkdownAlternatesRouter } from './routers/MarkdownAlternatesRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createRobotsRouter } from './routers/RobotsRouter'
 import { createSitemapRouter } from './routers/SitemapRouter'
@@ -47,15 +55,21 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   const productionTemplate = options.dev
     ? undefined
     : readFileSync(CLIENT_TEMPLATE_PATH, 'utf-8')
+  const pagePreloads = loadPagePreloads(!options.dev)
+
+  // Before every router so llms.txt, sitemaps and markdown lists are compressed too
+  if (!options.dev) {
+    app.use(compression())
+  }
 
   // These routers are explicitly added before the express.static to avoid being overwritten by the static files
-  app.use('/', createRobotsRouter())
+  app.use('/', createRobotsRouter(env.DEPLOYMENT_ENV))
   app.use('/', createSitemapRouter())
+  app.use(LlmsLinkHeaderMiddleware())
 
   if (options.dev) {
     app.use('/', express.static('./static'))
   } else {
-    app.use(compression())
     app.use(
       CLIENT_ASSETS_PATH,
       sirv(CLIENT_ASSETS_OUTPUT_DIR, { maxAge: 31536000, immutable: true }),
@@ -72,7 +86,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     const template = await getTemplate(options, url, productionTemplate)
 
     return template
-      .replace('<!--app-head-->', rendered.head)
+      .replace('<!--app-head-->', rendered.head + pagePreloads(data.ssr.page))
       .replace('<!--app-html-->', rendered.html)
       .replace(
         '<!--ssr-data-->',
@@ -89,6 +103,9 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   app.use(RequestIdMiddleware())
   app.use(MetricsMiddleware())
 
+  // After the metrics middleware, so requests for markdown are logged like page requests.
+  app.use('/', createLlmsTxtRouter())
+  app.use('/', createMarkdownAlternatesRouter())
   app.use('/', createMigratedProjectsRouter())
   app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())
@@ -124,6 +141,13 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     fetch(`http://localhost:${port}/`)
       .then(() => logger.info('Warmup request completed'))
       .catch((error) => logger.warn('Warmup request failed', { error }))
+
+    // Every token page waits on this build when it is cold; only worth it when cached.
+    if (isFrontendCacheEnabled()) {
+      getTokenGraphs()
+        .then(() => logger.info('Token graphs warmed'))
+        .catch((error) => logger.warn('Token graphs warmup failed', { error }))
+    }
   })
 
   server.on('error', (err: NodeJS.ErrnoException) => {
@@ -135,6 +159,22 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
     logger.error('Unhandled server error:', err)
     process.exit(1)
   })
+
+  stopOnShutdownSignal(server, logger)
+}
+
+// Node runs as PID 1 in the container, where the kernel ignores the default
+// SIGTERM action. Without an explicit handler `docker stop` waits the full
+// grace period (30s on Coolify) on every deploy before killing the process.
+function stopOnShutdownSignal(server: Server, logger: Logger) {
+  const forceExitAfterMs = 5_000
+  for (const signal of ['SIGTERM', 'SIGINT'] as const) {
+    process.once(signal, () => {
+      logger.info(`Received ${signal}, shutting down`)
+      server.close(() => process.exit(0))
+      setTimeout(() => process.exit(0), forceExitAfterMs).unref()
+    })
+  }
 }
 
 function createDevPageRouterMiddleware(
@@ -170,11 +210,6 @@ async function getTemplate(
   }
 
   return productionTemplate
-}
-
-/** Safe to embed in `<script>`: avoids `</script>` in JSON closing the tag early. */
-function jsonForInlineScript(value: unknown): string {
-  return JSON.stringify(value).replace(/</g, '\\u003c')
 }
 
 function getClientEnvData() {

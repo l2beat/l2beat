@@ -3,5 +3,11 @@
     "hash": "0xf2eeba703974bbc2cb02cd7d24845f71be941a764f033493e85fba52b3d6de28",
     "address": "arb1:0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64",
     "blockNumber": 322488866
+  },
+  "SecurityCouncilManager_scElections2026": {
+    "hash": "0x91ac856c76d1dece40ddd75f96a4c2f01abea4b57cea64f43b24149466105b4f",
+    "address": "arb1:0x01B370d9b1ed1591C64C9a4b0FAFF193AF5Fa928",
+    "chain": "arbitrum",
+    "blockNumber": 502808237
   }
 }

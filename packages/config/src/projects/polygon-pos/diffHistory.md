@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x855eb34c6e9145bd7dfc8c0869442a60654eadc1
+
+# Diff at Thu, 01 Oct 2026 11:10:42 GMT:
+
+- id: b4dad704
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1789472720
+- current timestamp: 1790851314
+
+## Description
+
+StakeManager `CHECKPOINT_REWARD` raised by the PolygonMultisig (via Governance) from ~25,213 to 64,500 POL per checkpoint (tx 0x2f5cad77ffd2601301287b7644cea34fe0d5b5424e620791c2aff83db484ae2c). The active validator set shrank from 105 to 104.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      values.CHECKPOINT_REWARD:
+-        "25212785388127853881278"
++        "64500000000000000000000"
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
+Generated with discovered.json: 0x5ab50aa739229e9593503b2156ab5680df322504
+
+# Diff at Tue, 15 Sep 2026 11:46:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a35dcf63dd3a2006e7759c0ac66a3c7d5e615ed9 block: 1785325317
+- current timestamp: 1789472720
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x1319279d6d54dB0883F7bAF822191c7184Db0c3d"
++        "eth:0x28260fD38F737e98F1599eCd385d4eB13C5A7A1f"
+    }
+```
+
 Generated with discovered.json: 0x90f6379a1418b3063004b1537d36a0f65566660f
 
 # Diff at Wed, 29 Jul 2026 11:43:14 GMT:

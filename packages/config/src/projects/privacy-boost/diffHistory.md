@@ -1,3 +1,522 @@
+Generated with discovered.json: 0xeda648711b466d011ecfd57ef7c1fd19ac9cc51c
+
+# Diff at Thu, 01 Oct 2026 10:59:52 GMT:
+
+- id: 4a45e933
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@439e959a60aefc09652830fedc7c4ed7dadc847a block: 1790604001
+- current timestamp: 1790852159
+
+## Description
+
+Switched privacy boost discovery to base from op mainnet.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790604001 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AuthPoseidon (oeth:0x09257a2B24C27586c2Db2C18c4b53bE459c7e870) [privacy-boost/AuthPoseidon]
+    +++ description: Poseidon2 hashing helper used by AuthRegistry to compute account IDs, authorization leaves, spend approval commitments and Merkle tree nodes.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenRegistryProxyAdmin (oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd) [global/ProxyAdmin]
+    +++ description: Admin contract of the TokenRegistry proxy.
+```
+
+```diff
+-   Status: DELETED
+    contract Groth16DepositVerifier (oeth:0x16e1dE876dEB1C3251A1E923A206605D084F25C5) [privacy-boost/Groth16DepositVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract Groth16GiftClaimVerifier (oeth:0x3C0028300aA32e5B0069fc4731D367E40BCF4670) [privacy-boost/Groth16GiftClaimVerifier]
+    +++ description: Groth16 verifier for PrivacyBoost gift settlement and public gift exit proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract ExternalCallGateway (oeth:0x54B576782d3CE325CAc9861E17bB5d7926e41955) [privacy-boost/ExternalCallGateway]
+    +++ description: Gateway executing pool-authorized external calls against an allowlist of target addresses and function selectors, with optional input/output token constraints. Enforces proof-bound settlement receipts and redeposits returned funds into the pool.
+```
+
+```diff
+-   Status: DELETED
+    contract AuthRegistry (oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f) [privacy-boost/AuthRegistry_v2]
+    +++ description: Registry of PrivacyBoost account authorization keys and onchain spend approvals. Supports BabyJubJub keys authorized by account-owner signatures, approval-only accounts and revocable batches of spend approvals. Tracks current and recently superseded auth roots; forced withdrawals validate live auth records directly.
+```
+
+```diff
+-   Status: DELETED
+    contract AdminMultisig (oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Groth16PortalDepositVerifier (oeth:0x6806eA551C3c8350Ab156eC5001D28705dCda2B6) [privacy-boost/Groth16PortalDepositVerifier]
+    +++ description: Groth16 verifier for PrivacyBoost portal deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract OperatorMultisig (oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenRegistry (oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6) [privacy-boost/TokenRegistry]
+    +++ description: Registry mapping compact token IDs to the ERC-20 tokens accepted by the PrivacyBoost pool.
+```
+
+```diff
+-   Status: DELETED
+    contract AuditGatewayProxyAdmin (oeth:0x96f3E5551E1330f31974597217019812667544c8) [global/ProxyAdmin]
+    +++ description: Admin contract of the AuditGateway proxy.
+```
+
+```diff
+-   Status: DELETED
+    contract PrivacyBoostProxyAdmin (oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2) [global/ProxyAdmin]
+    +++ description: Admin contract of the PrivacyBoost proxy.
+```
+
+```diff
+-   Status: DELETED
+    contract Groth16ForcedVerifier (oeth:0xA307E5d45Dee6F1EF1F7ef67619a0aFE8DcdacFE) [privacy-boost/Groth16ForcedVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost forced withdrawal proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract Groth16EpochVerifier (oeth:0xac23C35cBA4a6C60EccBef31bC59Eacc2868663B) [privacy-boost/Groth16EpochVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost private transfer and withdrawal epochs. Keys are indexed by (max transfers, inputs per transfer, outputs per transfer). The nested key registry is not enumerable and emits no registration events; discovery monitors the reviewed production circuit configurations.
+```
+
+```diff
+-   Status: DELETED
+    contract AuditGateway (oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118) [privacy-boost/AuditGateway]
+    +++ description: Manages the list of auditors authorized to query private user data through the Audit API of the TEE, and stores an onchain log of every audit access so that users can publicly verify whether and when their private data was disclosed.
+```
+
+```diff
+-   Status: DELETED
+    contract TreasuryMultisig (oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PrivacyBoost (oeth:0xca689828854a422CF1f778be03CA80549408F620) [privacy-boost/PrivacyBoost_v2]
+    +++ description: Main contract of the PrivacyBoost pool. Escrows ERC-20 tokens and verifies relay-submitted private transfer, withdrawal, deposit, portal deposit and gift settlement proofs. Supports approved external gateway calls and permissionless exits through delayed forced withdrawals or public gift exits.
+```
+
+```diff
+-   Status: DELETED
+    contract AuthRegistryProxyAdmin (oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C) [global/ProxyAdmin]
+    +++ description: Admin contract of the AuthRegistry proxy.
+```
+
+```diff
++   Status: CREATED
+    contract ExternalCallGateway (base:0x02Eb6E5779f5780A5ABB354341962d9312b7ABe6) [privacy-boost/ExternalCallGateway]
+    +++ description: Gateway executing pool-authorized external calls against an allowlist of target addresses and function selectors, with optional input/output token constraints. Enforces proof-bound settlement receipts and redeposits returned funds into the pool.
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryMultisig (base:0x04484B6065A43fa286e05E9C28a6c4Db77d917f8) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Groth16PortalDepositVerifier (base:0x0c8bb018a3d8DF4c5fC86518ca57F8E1445BCF63) [privacy-boost/Groth16PortalDepositVerifier]
+    +++ description: Groth16 verifier for PrivacyBoost portal deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract AuthRegistryProxyAdmin (base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc) [global/ProxyAdmin]
+    +++ description: Admin contract of the AuthRegistry proxy.
+```
+
+```diff
++   Status: CREATED
+    contract TokenRegistryProxyAdmin (base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f) [global/ProxyAdmin]
+    +++ description: Admin contract of the TokenRegistry proxy.
+```
+
+```diff
++   Status: CREATED
+    contract TokenRegistry (base:0x3A0bea3a715881793cFD698dDEBcF03784f0bE03) [privacy-boost/TokenRegistry]
+    +++ description: Registry mapping compact token IDs to the ERC-20 tokens accepted by the PrivacyBoost pool.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16ForcedVerifier (base:0x40e93d3357A5A3d249437717Da936f6141ba85cE) [privacy-boost/Groth16ForcedVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost forced withdrawal proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract OperatorMultisig (base:0x420A8a682892bae85cba7fb0e5Cd806807C5Bf95) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AuthRegistry (base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3) [privacy-boost/AuthRegistry_v2]
+    +++ description: Registry of PrivacyBoost account authorization keys and onchain spend approvals. Supports BabyJubJub keys authorized by account-owner signatures, approval-only accounts and revocable batches of spend approvals. Tracks current and recently superseded auth roots; forced withdrawals validate live auth records directly.
+```
+
+```diff
++   Status: CREATED
+    contract PrivacyBoost (base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40) [privacy-boost/PrivacyBoost_v2]
+    +++ description: Main contract of the PrivacyBoost pool. Escrows ERC-20 tokens and verifies relay-submitted private transfer, withdrawal, deposit, portal deposit and gift settlement proofs. Supports approved external gateway calls and permissionless exits through delayed forced withdrawals or public gift exits.
+```
+
+```diff
++   Status: CREATED
+    contract AdminMultisig (base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AuditGateway (base:0x7Bb891f7D7c78A8d6770cb273aBC603A148824b6) [privacy-boost/AuditGateway]
+    +++ description: Manages the list of auditors authorized to query private user data through the Audit API of the TEE, and stores an onchain log of every audit access so that users can publicly verify whether and when their private data was disclosed.
+```
+
+```diff
++   Status: CREATED
+    contract AuthPoseidon (base:0x8b72188D4A15661E0a3D232ACecCA7A26757C42D) [privacy-boost/AuthPoseidon]
+    +++ description: Poseidon2 hashing helper used by AuthRegistry to compute account IDs, authorization leaves, spend approval commitments and Merkle tree nodes.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16GiftClaimVerifier (base:0x8f394a08A7544daf39aF38FEA5B2E348180bDC05) [privacy-boost/Groth16GiftClaimVerifier]
+    +++ description: Groth16 verifier for PrivacyBoost gift settlement and public gift exit proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16DepositVerifier (base:0xac60252EF8dbC139e0da63cE7F2a13D25a5B627d) [privacy-boost/Groth16DepositVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16EpochVerifier (base:0xB144eb785E2CCe17681395Cd475093C01AEeb11e) [privacy-boost/Groth16EpochVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost private transfer and withdrawal epochs. Keys are indexed by (max transfers, inputs per transfer, outputs per transfer). The nested key registry is not enumerable and emits no registration events; discovery monitors the reviewed production circuit configurations.
+```
+
+```diff
++   Status: CREATED
+    contract AuditGatewayProxyAdmin (base:0xB32ef2884794999e1E260a3f68368A24CEF25b35) [global/ProxyAdmin]
+    +++ description: Admin contract of the AuditGateway proxy.
+```
+
+```diff
++   Status: CREATED
+    contract PrivacyBoostProxyAdmin (base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e) [global/ProxyAdmin]
+    +++ description: Admin contract of the PrivacyBoost proxy.
+```
+
+Generated with discovered.json: 0x463024279042887100045264ef97bfab9d92af87
+
+# Diff at Mon, 28 Sep 2026 14:01:06 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fbb62178514657dac087ecb2d9e8937daa7f4e31 block: 1789464689
+- current timestamp: 1790604001
+
+## Description
+
+Redeployed identical PrivacyBoost implementation (https://disco.l2beat.com/diff/oeth:0x9CB144D35748932EC44950d0837248fcF8747828/oeth:0x319785d27Bd9889248804FA803FAC3e58D9ca002) together with redeploying three verifiers (Groth16EpochVerifier, Groth16ForcedVerifier and Groth16GiftClaimVerifier).
+
+These three verifiers have different verification keys because forced withdrawal and gift claim circuits were recompiled with gnark v0.16.3 after the EdDSA signature check was rewritten to a double-base scalar multiplication ([PR #10](https://github.com/sunnyside-io/privacy-boost-protocol/pull/10)) and some circuit shapes are no longer supported. New circuits also introduce a new trusted setup.
+
+Trusted setup artifacts are not yet published so the verification keys could not be regenerated.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Groth16GiftClaimVerifier (oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4) [privacy-boost/Groth16GiftClaimVerifier]
+    +++ description: Groth16 verifier for PrivacyBoost gift settlement and public gift exit proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
+    contract AdminMultisig (oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1.from:
+-        "oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4"
++        "oeth:0x3C0028300aA32e5B0069fc4731D367E40BCF4670"
+      receivedPermissions.5:
+-        {"permission":"interact","from":"oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641","description":"register and replace the Groth16 verification keys used to validate forced withdrawal proofs.","role":".owner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"oeth:0xA307E5d45Dee6F1EF1F7ef67619a0aFE8DcdacFE","description":"register and replace the Groth16 verification keys used to validate forced withdrawal proofs.","role":".owner"}
+      receivedPermissions.7.from:
+-        "oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6"
++        "oeth:0xac23C35cBA4a6C60EccBef31bC59Eacc2868663B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Groth16ForcedVerifier (oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641) [privacy-boost/Groth16ForcedVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost forced withdrawal proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract Groth16EpochVerifier (oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6) [privacy-boost/Groth16EpochVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost private transfer and withdrawal epochs. Keys are indexed by (max transfers, inputs per transfer, outputs per transfer). The nested key registry is not enumerable and emits no registration events; discovery monitors the reviewed production circuit configurations.
+```
+
+```diff
+    contract PrivacyBoost (oeth:0xca689828854a422CF1f778be03CA80549408F620) [privacy-boost/PrivacyBoost_v2] {
+    +++ description: Main contract of the PrivacyBoost pool. Escrows ERC-20 tokens and verifies relay-submitted private transfer, withdrawal, deposit, portal deposit and gift settlement proofs. Supports approved external gateway calls and permissionless exits through delayed forced withdrawals or public gift exits.
+      values.$implementation:
+-        "oeth:0x9CB144D35748932EC44950d0837248fcF8747828"
++        "oeth:0x319785d27Bd9889248804FA803FAC3e58D9ca002"
+      values.$pastUpgrades.2:
++        ["2026-09-23T22:24:33.000Z","0x5bca65b825c2f2679d0fbe2d3e0285218e9c988e3f0d6484a6baaa879b52ac0f",["oeth:0x319785d27Bd9889248804FA803FAC3e58D9ca002"]]
+      values.$upgradeCount:
+-        2
++        3
++++ description: Groth16 verifier used for private transfer / withdrawal epoch proofs.
++++ severity: HIGH
+      values.epochVerifier:
+-        "oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6"
++        "oeth:0xac23C35cBA4a6C60EccBef31bC59Eacc2868663B"
++++ description: Groth16 verifier used for forced withdrawal proofs.
++++ severity: HIGH
+      values.forcedVerifier:
+-        "oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641"
++        "oeth:0xA307E5d45Dee6F1EF1F7ef67619a0aFE8DcdacFE"
++++ description: Groth16 verifier for private gift settlement and public gift exit proofs.
++++ severity: HIGH
+      values.giftClaimVerifier:
+-        "oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4"
++        "oeth:0x3C0028300aA32e5B0069fc4731D367E40BCF4670"
+      implementationNames.oeth:0x9CB144D35748932EC44950d0837248fcF8747828:
+-        "PrivacyBoost"
+      implementationNames.oeth:0x319785d27Bd9889248804FA803FAC3e58D9ca002:
++        "PrivacyBoost"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Groth16GiftClaimVerifier (oeth:0x3C0028300aA32e5B0069fc4731D367E40BCF4670) [privacy-boost/Groth16GiftClaimVerifier]
+    +++ description: Groth16 verifier for PrivacyBoost gift settlement and public gift exit proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16ForcedVerifier (oeth:0xA307E5d45Dee6F1EF1F7ef67619a0aFE8DcdacFE) [privacy-boost/Groth16ForcedVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost forced withdrawal proofs. Verification keys are stored in SSTORE2 data contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Groth16EpochVerifier (oeth:0xac23C35cBA4a6C60EccBef31bC59Eacc2868663B) [privacy-boost/Groth16EpochVerifier_v2]
+    +++ description: Groth16 verifier for PrivacyBoost private transfer and withdrawal epochs. Keys are indexed by (max transfers, inputs per transfer, outputs per transfer). The nested key registry is not enumerable and emits no registration events; discovery monitors the reviewed production circuit configurations.
+```
+
+Generated with discovered.json: 0xc6ebfe38b90e9e1a93a8c18723d631f47cbc7c66
+
+# Diff at Wed, 23 Sep 2026 05:48:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789464689
+- current timestamp: 1789464689
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789464689 (main branch discovery), not current.
+
+```diff
+    contract TokenRegistryProxyAdmin (oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd) [global/ProxyAdmin] {
+    +++ description: Admin contract of the TokenRegistry proxy.
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AuditGatewayProxyAdmin (oeth:0x96f3E5551E1330f31974597217019812667544c8) [global/ProxyAdmin] {
+    +++ description: Admin contract of the AuditGateway proxy.
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PrivacyBoostProxyAdmin (oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2) [global/ProxyAdmin] {
+    +++ description: Admin contract of the PrivacyBoost proxy.
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AuthRegistryProxyAdmin (oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C) [global/ProxyAdmin] {
+    +++ description: Admin contract of the AuthRegistry proxy.
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xe5042ac536bd15f08966b8dde38ce2896df12977
+
+# Diff at Mon, 21 Sep 2026 11:24:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789464689
+- current timestamp: 1789464689
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789464689 (main branch discovery), not current.
+
+```diff
+    contract TokenRegistryProxyAdmin (oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd) [global/ProxyAdmin] {
+    +++ description: Admin contract of the TokenRegistry proxy.
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AuditGatewayProxyAdmin (oeth:0x96f3E5551E1330f31974597217019812667544c8) [global/ProxyAdmin] {
+    +++ description: Admin contract of the AuditGateway proxy.
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract PrivacyBoostProxyAdmin (oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2) [global/ProxyAdmin] {
+    +++ description: Admin contract of the PrivacyBoost proxy.
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AuthRegistryProxyAdmin (oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C) [global/ProxyAdmin] {
+    +++ description: Admin contract of the AuthRegistry proxy.
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x9ac603c57ad91863c85292df4556b25601017d1b
+
+# Diff at Fri, 18 Sep 2026 10:24:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1789464689
+- current timestamp: 1789464689
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789464689 (main branch discovery), not current.
+
+```diff
+    contract TokenRegistryProxyAdmin (oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd) [global/ProxyAdmin] {
+    +++ description: Admin contract of the TokenRegistry proxy.
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AuditGatewayProxyAdmin (oeth:0x96f3E5551E1330f31974597217019812667544c8) [global/ProxyAdmin] {
+    +++ description: Admin contract of the AuditGateway proxy.
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PrivacyBoostProxyAdmin (oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2) [global/ProxyAdmin] {
+    +++ description: Admin contract of the PrivacyBoost proxy.
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AuthRegistryProxyAdmin (oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C) [global/ProxyAdmin] {
+    +++ description: Admin contract of the AuthRegistry proxy.
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xb9af5c546d75b043689729ae7f53fcddf1770aee
+
+# Diff at Tue, 15 Sep 2026 09:32:35 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@24f869586e8e8385e009b6c9ee143df521270ecb block: 1788787273
+- current timestamp: 1789464689
+
+## Description
+
+Added a new member to the admin ms: 2/3 -> 3/4.
+
+## Watched changes
+
+```diff
+    contract AdminMultisig (oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "oeth:0xcf01AB4fa0C5796811Ad939daB8dEd833cf90683"
+      values.$members.1:
+-        "oeth:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244"
++        "oeth:0xB30347E816B525453468cC95C17231Ab04a0C0A9"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0xc76ccb0fee3a5b19ee4d7ec47ec000263a8103bb
 
 # Diff at Mon, 07 Sep 2026 13:24:41 GMT:

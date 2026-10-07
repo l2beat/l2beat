@@ -20,19 +20,24 @@ interface Props {
   collapsible?: boolean
 }
 export function VerifiersTable({ entries, collapsible = true }: Props) {
-  const table = useTable({
+  const table = useTable('VerifiersTable', {
     data: entries,
     columns: collapsible ? verifiersColumns : verifiersColumnsWithoutActions,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    getRowId: (row) => row.hash,
     getRowCanExpand: () => true,
-    initialState: collapsible ? undefined : { expanded: true },
+    // No '#' column, so opt out of useTable's default '#' sort.
+    initialState: collapsible
+      ? { sorting: [] }
+      : { sorting: [], expanded: true },
   })
   return (
     <BasicTable
       table={table}
+      // Always-expanded rows read as a list of details, where a moving header
+      // adds nothing.
+      stickyHeader={collapsible}
       renderSubComponent={({ row }) => (
         <VerifierRowDetails verifierHash={row.original} />
       )}

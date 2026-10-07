@@ -19,6 +19,8 @@ export const blast: ScalingProject = opStackL2({
     name: 'Blast',
     slug: 'blast',
     architectureImage: 'blast',
+    headerWarning:
+      'Blast is winding down. See the [announcement](https://x.com/blast/status/2106032805280891073) and withdraw your funds to Ethereum by October 26, 2026.',
     description:
       'Blast is an EVM-compatible Optimistic Rollup supporting native yield. It invests funds deposited into the L1 bridge into various DeFi protocols transferring yield back to the L2.',
     links: {

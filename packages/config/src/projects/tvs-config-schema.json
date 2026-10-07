@@ -98,6 +98,50 @@
           "type": "object",
           "properties": {
             "type": {
+              "const": "balanceOfEscrows"
+            },
+            "chain": {
+              "type": "string"
+            },
+            "sinceTimestamp": {
+              "type": "number"
+            },
+            "untilTimestamp": {
+              "type": "number"
+            },
+            "address": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "const": "native"
+                }
+              ]
+            },
+            "decimals": {
+              "type": "number"
+            },
+            "escrowAddresses": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "chain",
+            "sinceTimestamp",
+            "address",
+            "decimals",
+            "escrowAddresses"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
               "const": "totalSupply"
             },
             "chain": {
@@ -274,6 +318,50 @@
             "address",
             "decimals",
             "escrowAddress"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "balanceOfEscrows"
+            },
+            "chain": {
+              "type": "string"
+            },
+            "sinceTimestamp": {
+              "type": "number"
+            },
+            "untilTimestamp": {
+              "type": "number"
+            },
+            "address": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "const": "native"
+                }
+              ]
+            },
+            "decimals": {
+              "type": "number"
+            },
+            "escrowAddresses": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "chain",
+            "sinceTimestamp",
+            "address",
+            "decimals",
+            "escrowAddresses"
           ]
         },
         {
@@ -546,6 +634,50 @@
                       "address",
                       "decimals",
                       "escrowAddress"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "balanceOfEscrows"
+                      },
+                      "chain": {
+                        "type": "string"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "address": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "const": "native"
+                          }
+                        ]
+                      },
+                      "decimals": {
+                        "type": "number"
+                      },
+                      "escrowAddresses": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "chain",
+                      "sinceTimestamp",
+                      "address",
+                      "decimals",
+                      "escrowAddresses"
                     ]
                   },
                   {

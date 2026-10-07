@@ -1,4 +1,200 @@
-Generated with discovered.json: 0x702a077b24ff765ffb76358d6de3d9da67feea3c
+Generated with discovered.json: 0xa58c0b31225ac959737fb15038b308687ff66624
+
+# Diff at Thu, 01 Oct 2026 14:18:28 GMT:
+
+- id: 85dc61e6
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2656072394a0d215412884ecfaf57f4f0941ea0 block: 1784715866
+- current timestamp: 1790850905
+
+## Description
+
+All sync services (message bridges) were switched from the old LZSyncHashBridges to new immutable LayerZeroBridges.
+
+Reason: LayerZero retired the ULNv2 relayer on 2026-08-03 and its new executor rejects the empty `adapterParams` the old bridges sent. The new bridges send type-1 `adapterParams` with a governor-set per-destination `minDstGas` and have their own `governor`. Everything else is unchanged. Source was manually verified: zkLinkProtocol/zklink-contracts branch `fix/lz-adapterparams` (4228fe6), now verified on Etherscan and Sourcify. Code differs per chain only by chain constants.
+
+- https://disco.l2beat.com/diff/arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D/arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453
+- https://disco.l2beat.com/diff/eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E/eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453
+- https://disco.l2beat.com/diff/base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3/base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453
+- https://disco.l2beat.com/diff/bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e/bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453
+- https://disco.l2beat.com/diff/mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e/mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453
+
+## Watched changes
+
+```diff
+    contract ZkLink Main (arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a) [apex-omni/ZkLink_main] {
+    +++ description: The main rollup contract. It processes L3 blocks submitted by validators and settles L3 state, handles deposits and withdrawals, and synchronizes block data with other zkLink chains.
++++ description: Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID.
+      values.syncServices.3:
+-        "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D"
++        "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
++++ description: Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID.
+      values.syncServices.4:
+-        "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D"
++        "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
++++ description: Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID.
+      values.syncServices.11:
+-        "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D"
++        "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
++++ description: Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID.
+      values.syncServices.12:
+-        "arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D"
++        "arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453","description":"change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor.","role":".governor"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZeroBridge (arb1:0xfC5c2b3E615cF12e86E6dA8eF6C76fAbae5F2B7D) [apex-omni/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
+```
+
+```diff
+    contract GnosisSafeL2 (base:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453","description":"change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor.","role":".governor"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZeroBridge (base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3) [apex-omni/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
+```
+
+```diff
+    contract ZkLink Base (base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7) [apex-omni/ZkLink_LZEscrow] {
+    +++ description: A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.
++++ description: Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID.
+      values.syncServices.9:
+-        "base:0xeD5D1e1320720CAe8Bb40275550A7D307A082AC3"
++        "base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+    }
+```
+
+```diff
+    contract ZkLink BNB (bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9) [apex-omni/ZkLink_LZEscrow] {
+    +++ description: A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.
++++ description: Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID.
+      values.syncServices.9:
+-        "bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e"
++        "bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453","description":"change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor.","role":".governor"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZeroBridge (bnb:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e) [apex-omni/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
+```
+
+```diff
+    contract ZkLink Ethereum (eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82) [apex-omni/ZkLink_LZEscrow] {
+    +++ description: A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.
++++ description: Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID.
+      values.syncServices.9:
+-        "eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E"
++        "eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZeroBridge (eth:0x3D70dc86dC8099D8a4c86C18839C7e84a13a441E) [apex-omni/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
+```
+
+```diff
+    contract GnosisSafe (eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453","description":"change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor.","role":".governor"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZeroBridge (mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e) [apex-omni/LZSyncHashBridge]
+    +++ description: A LayerZero bridge that relays synchronization hashes and block confirmations between zkLink chains.
+```
+
+```diff
+    contract ZkLink Mantle (mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) [apex-omni/ZkLink_LZEscrow] {
+    +++ description: A secondary cross-chain ZkLink rollup contract. It only escrows user deposits, and synchronizes deposit data with the main zkLink chain.
++++ description: Cross-chain synchronization services relaying deposit info, indexed by zkLink chain ID.
+      values.syncServices.9:
+-        "mantle:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e"
++        "mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (mantle:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453","description":"change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor.","role":".governor"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroBridge (arb1:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453) [apex-omni/LZSyncHashBridgeV2]
+    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroBridge (base:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453) [apex-omni/LZSyncHashBridgeV2]
+    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroBridge (bnb:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453) [apex-omni/LZSyncHashBridgeV2]
+    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroBridge (eth:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453) [apex-omni/LZSyncHashBridgeV2]
+    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroBridge (mantle:0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453) [apex-omni/LZSyncHashBridgeV2]
+    +++ description: A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.
+```
+
+## Source code changes
+
+```diff
+...0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453.sol} | 80 ++++++++++++++++++++--
+ ...0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453.sol} | 76 ++++++++++++++++++--
+ ...0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453.sol} | 80 ++++++++++++++++++++--
+ ...0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453.sol} | 80 ++++++++++++++++++++--
+ ...0xf8A29C604eff6e4a3f7ad5f29ae11656bfD85453.sol} | 76 ++++++++++++++++++--
+ 5 files changed, 361 insertions(+), 31 deletions(-)
+```
+
+Generated with discovered.json: 0xc8ee66a8027688e5e07ed63d0eaad2a1d94112a3
 
 # Diff at Thu, 23 Jul 2026 12:39:24 GMT:
 

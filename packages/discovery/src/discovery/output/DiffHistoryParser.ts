@@ -1,3 +1,6 @@
+import { hashJson } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
+
 export type DiffHistorySectionKind =
   | 'watched-changes'
   | 'initial-discovery'
@@ -20,12 +23,14 @@ export type ChainPoint =
  * Just unify all legacy cases into single format is possible
  */
 export interface DiffHistoryEntry {
+  id: string
   date: string
   current: ChainPoint | null
   /** The run timestamp; falls back to the header date for legacy
    *  block-numbered entries, null when neither parses. */
   timestamp: number | null
   author: string | null
+  chain: string | null
   comparing: {
     ref: string
     commit: string
@@ -54,6 +59,8 @@ export class DiffHistoryParser {
   parse(content: string): DiffHistoryEntry[] {
     const lines = content.split('\n')
     const entries: DiffHistoryEntry[] = []
+    const seenIdentities = new Map<string, number>()
+    const seenIds = new Set<string>()
     let pendingHash: string | null = null
     let i = 0
     while (i < lines.length) {
@@ -74,7 +81,22 @@ export class DiffHistoryParser {
           }
           j++
         }
-        entries.push(this.parseEntry(date, pendingHash, lines.slice(i + 1, j)))
+        const entry = this.parseEntry(date, pendingHash, lines.slice(i + 1, j))
+        if (entry.id === '') {
+          const identity = hashJson([
+            entry.date,
+            entry.current?.kind ?? null,
+            entry.current?.value ?? null,
+          ])
+          const ordinal = seenIdentities.get(identity) ?? 0
+          seenIdentities.set(identity, ordinal + 1)
+          entry.id = (
+            ordinal === 0 ? identity : hashJson([identity, ordinal])
+          ).slice(2, 10)
+        }
+        assert(!seenIds.has(entry.id), `duplicate diffHistory id ${entry.id}`)
+        seenIds.add(entry.id)
+        entries.push(entry)
         pendingHash = null
         i = j
         continue
@@ -89,7 +111,9 @@ export class DiffHistoryParser {
     discoveryHash: string | null,
     bodyLines: string[],
   ): DiffHistoryEntry {
+    let id = ''
     let author: string | null = null
+    let chain: string | null = null
     let comparingRef: string | null = null
     let comparingCommit = ''
     let comparingValue: number | null = null
@@ -103,8 +127,13 @@ export class DiffHistoryParser {
     while (i < bodyLines.length) {
       const line = bodyLines[i] ?? ''
       if (line.startsWith('## ')) break
-      if (line.startsWith('- author:')) {
+      if (line.startsWith('- id:')) {
+        id = line.slice('- id:'.length).trim()
+        assert(id !== '', `empty id line in diffHistory entry ${date}`)
+      } else if (line.startsWith('- author:')) {
         author = line.slice('- author:'.length).trim()
+      } else if (line.startsWith('- chain:')) {
+        chain = line.slice('- chain:'.length).trim()
       } else if (line.startsWith('- comparing to:')) {
         const rest = line.slice('- comparing to:'.length).trim()
         const m = rest.match(COMPARING_RE)
@@ -178,10 +207,12 @@ export class DiffHistoryParser {
     }
 
     return {
+      id,
       date,
       current,
       timestamp: getEntryTimestamp(date, current),
       author,
+      chain,
       comparing,
       discoveryHash,
       description,

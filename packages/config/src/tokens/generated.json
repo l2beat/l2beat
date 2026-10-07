@@ -536,6 +536,20 @@
       "supply": "zero"
     },
     {
+      "name": "AUSD",
+      "coingeckoId": "agora-dollar",
+      "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "symbol": "AUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1720391339,
+      "coingeckoListingTimestamp": 1722729600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39284/large/AUSD_1024px.png?1764684132",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Automata",
       "coingeckoId": "automata",
       "address": "0xA2120b9e674d3fC3875f415A7DF52e382F141225",
@@ -853,6 +867,20 @@
       "coingeckoListingTimestamp": 1642723200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/22457/large/btt_logo.png?1696521780",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Bitwise Premium RWA AUSD",
+      "coingeckoId": "agora-dollar",
+      "address": "0xB344e331A3cDa61D329fb3Cca2Be5942da87c418",
+      "symbol": "PAPY",
+      "decimals": 18,
+      "deploymentTimestamp": 1787578259,
+      "coingeckoListingTimestamp": 1722729600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39284/large/AUSD_1024px.png?1764684132",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2294,6 +2322,34 @@
       "coingeckoListingTimestamp": 1704758400,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/34382/large/M_PNG_200x200_copy.png?1704779326",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Flowdesk AUSD RWA Strategy",
+      "coingeckoId": "agora-dollar",
+      "address": "0x32401B9fb79065Bc15949DE0BD43927492f02F0C",
+      "symbol": "fAUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1773680267,
+      "coingeckoListingTimestamp": 1722729600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39284/large/AUSD_1024px.png?1764684132",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Flowdesk Confidential High Yield USDT",
+      "coingeckoId": "tether",
+      "address": "0xb48C056C5608bA2Ee4cD94AF2bF4b1F25295Bd7e",
+      "symbol": "fcUSDT",
+      "decimals": 18,
+      "deploymentTimestamp": 1789043339,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4442,6 +4498,20 @@
       "supply": "zero"
     },
     {
+      "name": "Pendle Ecosystem USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0x55C1B6e461a6334B567bAF0FEb5D728715446f05",
+      "symbol": "pendleUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1785859775,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "PentagonChain",
       "coingeckoId": "pentagon-chain",
       "address": "0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272",
@@ -5128,6 +5198,34 @@
       "supply": "zero"
     },
     {
+      "name": "RockawayX Confidential RWA USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xc207d3f66537D7F66456808379A0E560cF20Da36",
+      "symbol": "roxcUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1788944423,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "RockawayX USDC Yield",
+      "coingeckoId": "usd-coin",
+      "address": "0xE0181090c22579B6A217f1522cbf8c9f1F0C1965",
+      "symbol": "roxUSDCy",
+      "decimals": 18,
+      "deploymentTimestamp": 1774296635,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Rocket Pool ETH",
       "coingeckoId": "rocket-pool-eth",
       "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
@@ -5753,6 +5851,48 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Steakhouse High Yield USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xbeeff2C5bF38f90e3482a8b19F12E5a6D2FCa757",
+      "symbol": "bbqUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1761601787,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Steakhouse High Yield USDT",
+      "coingeckoId": "tether",
+      "address": "0xbeeff07d991C04CD640DE9F15C08ba59c4FEDEb7",
+      "symbol": "bbqUSDT",
+      "decimals": 18,
+      "deploymentTimestamp": 1765609367,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Steakhouse Prime USDT",
+      "coingeckoId": "tether",
+      "address": "0xbeef003C68896c7D2c3c60d363e8d71a49Ab2bf9",
+      "symbol": "steakUSDT",
+      "decimals": 18,
+      "deploymentTimestamp": 1764406511,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -6664,6 +6804,76 @@
       "coingeckoListingTimestamp": 1686009600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/30644/large/wecoin-logo-200x200.png?1696529515",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Wintermute Confidential WBTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x3d5EcCb62974178236A768A7ef14D3ce468Fbe91",
+      "symbol": "armcWBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1788900515,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/WBTCLOGO.png?1764496367",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Wintermute USDC Prime",
+      "coingeckoId": "usd-coin",
+      "address": "0x5dc53a23AdC9f2Bed98de6F59F7F309a7c71FF2B",
+      "symbol": "armUSDCp",
+      "decimals": 18,
+      "deploymentTimestamp": 1776870635,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Wintermute USDC Select",
+      "coingeckoId": "usd-coin",
+      "address": "0xA2EAaD0D586cF9FD73bb2c09cF6A7E3e187D68cd",
+      "symbol": "armUSDCs",
+      "decimals": 18,
+      "deploymentTimestamp": 1776879155,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Wintermute USDT Prime",
+      "coingeckoId": "tether",
+      "address": "0xBf29043164660C60A2a72Cd15FFe2304e87B6838",
+      "symbol": "armUSDTp",
+      "decimals": 18,
+      "deploymentTimestamp": 1780582823,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Wintermute USDT Select",
+      "coingeckoId": "tether",
+      "address": "0x500aE64100D7DbDb640531085C2F5d40cDC8930D",
+      "symbol": "armUSDTs",
+      "decimals": 18,
+      "deploymentTimestamp": 1787601743,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -12703,6 +12913,48 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Alphabet Inc.",
+      "coingeckoId": "alphabet-coinbase-tokenized-stock",
+      "address": "0xb2000000000000000000002D0BA3164cc74f58B7",
+      "symbol": "GOOGLc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079783,
+      "coingeckoListingTimestamp": 1787011200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175598/large/goog_200x200.png?1787068802",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Amazon.com Inc.",
+      "coingeckoId": "amazon-coinbase-tokenized-stock",
+      "address": "0xb200000000000000000000d9192b6B456483C2E8",
+      "symbol": "AMZNc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785080019,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178280/large/amzn-200.png?1789233782",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Apple Inc.",
+      "coingeckoId": "apple-coinbase-tokenized-stock",
+      "address": "0xb200000000000000000000C2e324d24d7eEcd1fb",
+      "symbol": "AAPLc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079839,
+      "coingeckoListingTimestamp": 1787011200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175597/large/aapl_200x200.png?1787068801",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Auki Token",
       "coingeckoId": "auki-labs",
       "address": "0xF9569cFb8FD265e91aa478d86ae8c78b8AF55Df4",
@@ -12869,6 +13121,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Clearstar USDC Reactor",
+      "coingeckoId": "usd-coin",
+      "address": "0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657",
+      "symbol": "CSUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1741348301,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "zero"
     },
     {
       "name": "Coinbase Wrapped BTC",
@@ -13181,6 +13447,34 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Gauntlet USDC Frontier",
+      "coingeckoId": "usd-coin",
+      "address": "0x1deEfABEe758AAbdC29a542B24ca3b75aFD56765",
+      "symbol": "gtusdcf",
+      "decimals": 18,
+      "deploymentTimestamp": 1761148283,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "zero"
+    },
+    {
+      "name": "Gauntlet WETH Balanced",
+      "coingeckoId": "weth",
+      "address": "0xFeFeC33668E22677c4762d0853d56245a800ff08",
+      "symbol": "gtwethb",
+      "decimals": 18,
+      "deploymentTimestamp": 1761148427,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "zero"
+    },
+    {
       "name": "GoPlus Security",
       "coingeckoId": "goplus-security",
       "address": "0x0C1dC73159e30c4b06170F2593D3118968a0DCa5",
@@ -13375,6 +13669,34 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Meta Platforms Inc.",
+      "coingeckoId": "meta-coinbase-tokenized-stock",
+      "address": "0xb2000000000000000000008bC8786B856E61707C",
+      "symbol": "METAc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079709,
+      "coingeckoListingTimestamp": 1787011200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175599/large/meta_200x200.png?1787068803",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Microsoft Corporation",
+      "coingeckoId": "microsoft-coinbase-tokenized-stock",
+      "address": "0xB200000000000000000000Ab99cFa739E253872B",
+      "symbol": "MSFTc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079943,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178281/large/msft-200.png?1789233933",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Midas Fasanara Global Open",
       "coingeckoId": "midas-fasanara-global-open",
       "address": "0xFCc9Cc1209651Ed8867332d6F664CF82743A2584",
@@ -13465,6 +13787,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "NVIDIA Corporation",
+      "coingeckoId": "nvidia-coinbase-tokenized-stock",
+      "address": "0xb20000000000000000000078ee7ce2fE4908108C",
+      "symbol": "NVDAc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079969,
+      "coingeckoListingTimestamp": 1787011200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175596/large/nvda_200x200.png?1787068801",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "o1.exchange",
@@ -13712,6 +14048,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Sandisk Corporation",
+      "coingeckoId": "sandisk-coinbase-tokenized-stock",
+      "address": "0xb200000000000000000000397293Cb8cda9a10c5",
+      "symbol": "SNDKc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079731,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178283/large/sndk-200.png?1789234014",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Sapien",
       "coingeckoId": "sapien-2",
       "address": "0xC729777d0470F30612B1564Fd96E8Dd26f5814E3",
@@ -13848,6 +14198,20 @@
       }
     },
     {
+      "name": "Space Exploration Technologies Corp.",
+      "coingeckoId": "spacex-coinbase-tokenized-stock",
+      "address": "0xb2000000000000000000007b9fcbd005511aCBd5",
+      "symbol": "SPCXc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079901,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178284/large/spcx-200.png?1789234077",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "SPX6900",
       "coingeckoId": "spx6900",
       "address": "0x50dA645f148798F68EF2d7dB7C1CB22A6819bb2C",
@@ -13914,6 +14278,34 @@
       }
     },
     {
+      "name": "Steakhouse High Yield USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xbeeff7aE5E00Aae3Db302e4B0d8C883810a58100",
+      "symbol": "bbqUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1761597645,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "zero"
+    },
+    {
+      "name": "Strategy Inc.",
+      "coingeckoId": "microstrategy-coinbase-tokenized-stock",
+      "address": "0xb2000000000000000000004884b426556b92883d",
+      "symbol": "MSTRc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079757,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178282/large/mstr-200.png?1789233935",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Syrup USDC",
       "coingeckoId": "syrupusdc",
       "address": "0x660975730059246A68521a3e2FBD4740173100f5",
@@ -13934,6 +14326,34 @@
           }
         ]
       }
+    },
+    {
+      "name": "Tether USD",
+      "coingeckoId": "l2-standard-bridged-usdt-base",
+      "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1710879181,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39963/large/usdt.png?1724952731",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Tesla Inc.",
+      "coingeckoId": "tesla-coinbase-tokenized-stocks",
+      "address": "0xb2000000000000000000001e800a7f5189430cD0",
+      "symbol": "TSLAc",
+      "decimals": 8,
+      "deploymentTimestamp": 1785079921,
+      "coingeckoListingTimestamp": 1789171200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178285/large/tsla-200.png?1789234081",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "The Innovation Game",
@@ -13990,6 +14410,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "UltraYield USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0x5435BC53f2C61298167cdB11Cdf0Db2BFa259ca0",
+      "symbol": "edgeUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1762351795,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "zero"
     },
     {
       "name": "uniBTC",

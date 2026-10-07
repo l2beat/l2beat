@@ -3,6 +3,8 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import type { PrivacyFlowIndexerConfig, PrivacyRpcLog } from '../types'
+import { FUNDING_PARAMS } from '../zkmoney/test/fixtures'
+import { erc20Interface } from './erc20'
 import { extractPrivacyAnonymitySetDeposit } from './extractPrivacyAnonymitySetDeposit'
 import { extractPrivacyFlow } from './extractPrivacyFlow'
 
@@ -24,6 +26,11 @@ const umbraInterface = new utils.Interface([
 const zamaInterface = new utils.Interface([
   'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
   'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
+])
+
+const zkMoneyInterface = new utils.Interface([
+  'event Deposit(bytes32 indexed recipientCommitment, uint256 amount, bytes32 key, uint256 index)',
+  'event WithdrawalOrRefund(uint8 indexed flow, bytes32 indexed nullifier, address indexed executor, uint256 executionAmount)',
 ])
 
 const ADDRESS = EthereumAddress.random()
@@ -64,6 +71,118 @@ function encodeLog(
 }
 
 describe(extractPrivacyFlow.name, () => {
+  describe('zk.money portal events', () => {
+    it('counts the credited deposit amount', () => {
+      const log = encodeLog(zkMoneyInterface, 'Deposit', [
+        utils.hexZeroPad('0x01', 32),
+        1_234_567_890_123_456_789_012n,
+        utils.hexZeroPad('0x02', 32),
+        1,
+      ])
+
+      expect(
+        extractPrivacyFlow(
+          {
+            extractor: 'zkMoneyDeposit',
+            event: log.topics[0]!,
+            params: FUNDING_PARAMS,
+          },
+          log,
+        ),
+      ).toEqual({ count: 1, amount: 1_234_567_890_123_456_789_012n })
+    })
+
+    // Flow 0 is a withdrawal, flows 1–3 are the three refund routes.
+    for (const flow of [0, 1, 2, 3]) {
+      it(`counts flow ${flow} with any executor and no additional fee subtraction`, () => {
+        const log = encodeLog(zkMoneyInterface, 'WithdrawalOrRefund', [
+          flow,
+          utils.hexZeroPad('0x03', 32),
+          OTHER_TOKEN_ADDRESS,
+          1_234_567_890_123_456_789_012n,
+        ])
+
+        expect(log.topics[0]).toEqual(
+          '0x0ef2e2e9f18042ca214d1bee833209f28326ffa8f4a6b0dc92172caf71bc5433',
+        )
+        expect(
+          extractPrivacyFlow(
+            {
+              extractor: 'zkMoneyWithdrawal',
+              event: log.topics[0]!,
+              params: {},
+            },
+            log,
+          ),
+        ).toEqual({ count: 1, amount: 1_234_567_890_123_456_789_012n })
+      })
+    }
+  })
+
+  describe('erc20Transfer', () => {
+    const config: PrivacyFlowIndexerConfig = {
+      ...baseFlowConfig,
+      event: 'Transfer',
+      extractor: 'erc20Transfer',
+      params: { to: ADDRESS },
+    }
+
+    it('returns the transferred value with count=1', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        TOKEN_ADDRESS,
+        ADDRESS,
+        1500n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual({
+        count: 1,
+        amount: 1500n,
+      })
+    })
+
+    it('ignores zero-value transfers', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        TOKEN_ADDRESS,
+        ADDRESS,
+        0n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+    })
+
+    it('ignores self transfers', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        ADDRESS,
+        ADDRESS,
+        1500n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+    })
+
+    it('ignores transfers whose recipient is not the configured `to`', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        TOKEN_ADDRESS,
+        OTHER_TOKEN_ADDRESS,
+        1500n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+    })
+
+    it('ignores transfers whose sender is not the configured `from`', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        OTHER_TOKEN_ADDRESS,
+        TOKEN_ADDRESS,
+        1500n,
+      ])
+
+      expect(
+        extractPrivacyFlow({ ...config, params: { from: ADDRESS } }, log),
+      ).toEqual(undefined)
+    })
+  })
+
   describe('fixedAmount', () => {
     it('returns the configured fixed amount with count=1', () => {
       const config: PrivacyFlowIndexerConfig = {

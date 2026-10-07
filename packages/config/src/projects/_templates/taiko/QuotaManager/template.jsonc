@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.",
   "ignoreMethods": ["proxiableUUID"],
@@ -41,12 +42,15 @@
         }
       ]
     },
+    // ossification: quotas only throttle withdrawals (a rate-limit circuit breaker held by the operational Taiko
+    // Multisig, like the pauser role); they do not change who can withdraw or which proofs are valid, so MEDIUM
     "quotaPeriod": {
+      "severity": "MEDIUM",
       "description": "Time in seconds for consumed quota to fully refill."
     },
     "tokenQuotas": {
       "description": "Configured withdrawal quotas per refill period. Missing or zero quotas are treated as unlimited.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": "newQuota",

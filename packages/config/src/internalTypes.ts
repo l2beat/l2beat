@@ -1,4 +1,7 @@
-import type { TrackedTxFunctionCallGrouping } from '@l2beat/shared'
+import type {
+  OssificationHistory,
+  TrackedTxFunctionCallGrouping,
+} from '@l2beat/shared'
 import type {
   EthereumAddress,
   ProjectId,
@@ -15,6 +18,7 @@ import type {
   ProjectBridgeRisks,
   ProjectBridgeTechnology,
   ProjectContracts,
+  ProjectCrops,
   ProjectCustomColors,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
@@ -72,6 +76,7 @@ export interface ScalingProject {
   config: ProjectScalingConfig
   /** Technical chain configuration */
   chainConfig?: ChainConfig
+  ossificationHistory?: OssificationHistory
   /** Ecosystem information */
   ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */
@@ -108,6 +113,8 @@ export interface ScalingProject {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** Interop configuration */
   interopConfig?: InteropConfig
+  /** CROPS framework evaluation, shown in the garden */
+  crops?: ProjectCrops
   /** Privacy data - if defined, the project is also shown on the privacy dashboard */
   privacyInfo?: ProjectPrivacyInfo
 }

@@ -1,3 +1,345 @@
+Generated with discovered.json: 0xff28bdbb57921c11d4ad25333d8a0eb5df32c738
+
+# Diff at Wed, 23 Sep 2026 05:47:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1789570151
+- current timestamp: 1789570151
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789570151 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"},"addressManager":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x743c80d64c7bce802ca5d0a4ee22128208a7260f
+
+# Diff at Mon, 21 Sep 2026 11:24:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789570151
+- current timestamp: 1789570151
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789570151 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
++        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
++        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
++        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
++        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
++        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.portal:
++        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
++        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0xf8f38baa5f05479efb63ee89b726d73e22012b9e
+
+# Diff at Fri, 18 Sep 2026 10:24:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1789570151
+- current timestamp: 1789570151
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789570151 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x5736134efe463c56b6b1ef9524d76dc5a2465f3d
+
+# Diff at Wed, 16 Sep 2026 14:50:15 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1783591047
+- current timestamp: 1789570151
+
+## Description
+
+K2 core bridge contracts replaced with a Merkle-claim exit mechanism; batch posting stopped.
+
+OptimismPortal implementation `0x3fe449Ef47228F03f979F9D955196494243cdf7E` (v1.10.0) → `0xB1762246367681e5b335968950e8A17b0c56021D` (v2.3.0), upgraded and paused by the KarakMultisig on 2026-09-15 04:45 UTC (tx `0x59515cbe7245d0856751523549d7b4524beb5f31930b2bc7bc3016b8071e65fd`). `depositTransaction()`, `receive()`, `proveWithdrawalTransaction()` and `finalizeWithdrawalTransaction()` now revert. Escrowed ETH (1876 ETH) is claimable via `claimETH(amount, proof)` against `merkleRootETH` = `0x6822879a8b8b0acb7a826beaec075d292958ffcb64c980959c0d0aea5ea0f8f9`, set on 2026-09-16 04:03 UTC (tx `0x2080dbdfa4798b9003dfe3e8b5bf8ea1772143eaf44acac1217002904eef87ec`, which also unpaused the portal); leaf = `keccak256(bytes.concat(keccak256(abi.encode(claimer, amount))))`, claims are cumulative per address. The Guardian can pause/unpause claims and, while paused and after `RECOVERY_TIMESTAMP` = 1820707200 (2027-09-12), call `recoverETH(recipient)` for the full balance.
+https://disco.l2beat.com/diff/eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E/eth:0xB1762246367681e5b335968950e8A17b0c56021D
+
+L1StandardBridge implementation `0xC4De51792746960FC0ac78360b8e9c6E103F3B13` (v1.4.0) → `0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A` (v2.3.0) in the same tx. All deposit entrypoints and `finalizeBridgeETH()`/`finalizeBridgeERC20()` now revert. Escrowed ERC20s are claimable via `claimTokens(tokens[], amounts[], proof[])` against `merkleRoot` = `0x0747603ccf64fdae7c52f9e69c1bafbb8b171860812139d59972cd8d022e3840` (set 2026-09-16 04:03 UTC); leaf = `keccak256(bytes.concat(keccak256(abi.encode(claimer, tokens, amounts))))`, cumulative per claimer and token. The Guardian (read from the portal) can call `recoverTokens(recipient, tokens[])` under the same paused + `RECOVERY_TIMESTAMP` conditions, and `sweepETH()` while claims are paused to forward the bridge's ETH balance to the OptimismPortal.
+https://disco.l2beat.com/diff/eth:0xC4De51792746960FC0ac78360b8e9c6E103F3B13/eth:0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A
+
+Batcher `0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E` last posted to the inbox on 2026-09-15 01:22:59 UTC; L2 blocks since then are empty sequencer-window blocks. Proposer `0x4179f43f3b994e97090557363b09F403138a729e` keeps posting output roots for them every 7200 blocks (last 2026-09-16 13:49 UTC, L2 block 43063200). Last withdrawal initiated on L2 2026-09-13 18:51 UTC; withdrawals not finalized before the upgrade cannot be finalized. No claims executed yet; no public Merkle tree or announcement of the claim mechanism found.
+
+## Watched changes
+
+```diff
+    contract KarakMultisig (eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3","description":"set merkleRoot, sweep the bridge's ETH into the OptimismPortal while claims are paused, and after the recovery timestamp withdraw all tokens and ETH.","role":".guardian"}
+      receivedPermissions.3.description:
+-        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
++        "set merkleRootETH, pause and unpause claims, and after RECOVERY_TIMESTAMP (while paused) withdraw the whole ETH balance."
+      receivedPermissions.4.description:
+-        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
++        "set merkleRootETH, pause and unpause claims, and after RECOVERY_TIMESTAMP (while paused) withdraw the whole ETH balance."
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) [opstack/L1StandardBridge_K2_claim] {
+    +++ description: Modified L1StandardBridge: deposits and finalizing withdrawals are disabled. ERC20 tokens held by the contract can only be claimed with a Merkle proof against merkleRoot. After the recovery timestamp and while claims are paused (both read from OPTIMISM_PORTAL), the guardian can withdraw all tokens and ETH.
+      template:
+-        "opstack/L1StandardBridge"
++        "opstack/L1StandardBridge_K2_claim"
+      sourceHashes.1:
+-        "0x59c3a5c6d2b22ffe8a2e4bc09e8deb308fa757230ac6f0f854c7bd1244755f8d"
++        "0x32ea980305b615ec390e8c57663c0734c2ebf70465e6076b26eb8262e7400dba"
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
++        "Modified L1StandardBridge: deposits and finalizing withdrawals are disabled. ERC20 tokens held by the contract can only be claimed with a Merkle proof against merkleRoot. After the recovery timestamp and while claims are paused (both read from OPTIMISM_PORTAL), the guardian can withdraw all tokens and ETH."
+      values.$implementation:
+-        "eth:0xC4De51792746960FC0ac78360b8e9c6E103F3B13"
++        "eth:0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A"
+      values.version:
+-        "1.4.0"
++        "2.3.0"
+      values.guardian:
++        "eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
++++ description: Root of the Merkle tree of (address, tokens, cumulative amounts) ERC20 claims.
+      values.merkleRoot:
++        "0x0747603ccf64fdae7c52f9e69c1bafbb8b171860812139d59972cd8d022e3840"
+      values.OPTIMISM_PORTAL:
++        "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
+      implementationNames.eth:0xC4De51792746960FC0ac78360b8e9c6E103F3B13:
+-        "L1StandardBridge"
+      implementationNames.eth:0xF44B55E152e872FF5CbD3d9F3bd732F67d5B366A:
++        "L1StandardBridge"
+      fieldMeta:
++        {"merkleRoot":{"description":"Root of the Merkle tree of (address, tokens, cumulative amounts) ERC20 claims."}}
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) [opstack/OptimismPortal_K2_claim] {
+    +++ description: Modified OptimismPortal: deposits, proving and finalizing withdrawals are disabled. ETH held by the contract can only be claimed with a Merkle proof against merkleRootETH. After RECOVERY_TIMESTAMP and while claims are paused, the guardian can withdraw the whole ETH balance.
+      template:
+-        "opstack/OptimismPortal"
++        "opstack/OptimismPortal_K2_claim"
+      sourceHashes.1:
+-        "0x620d0104aa94a7390fc59343e3d3a822959da7dc77b3a42f65586020da2e4faf"
++        "0x094c023344df46deb39df74619a815bc1bfced43ad55bb1f9dbb4e9c8718ba65"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "Modified OptimismPortal: deposits, proving and finalizing withdrawals are disabled. ETH held by the contract can only be claimed with a Merkle proof against merkleRootETH. After RECOVERY_TIMESTAMP and while claims are paused, the guardian can withdraw the whole ETH balance."
+      values.$implementation:
+-        "eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E"
++        "eth:0xB1762246367681e5b335968950e8A17b0c56021D"
+      values.$pastUpgrades.1:
++        ["2026-09-15T04:45:35.000Z","0x59515cbe7245d0856751523549d7b4524beb5f31930b2bc7bc3016b8071e65fd",["eth:0xB1762246367681e5b335968950e8A17b0c56021D"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.10.0"
++        "2.3.0"
++++ description: Root of the Merkle tree of (address, cumulative amount) ETH claims.
+      values.merkleRootETH:
++        "0x6822879a8b8b0acb7a826beaec075d292958ffcb64c980959c0d0aea5ea0f8f9"
++++ description: Timestamp after which the guardian can withdraw the whole ETH balance.
+      values.RECOVERY_TIMESTAMP:
++        1820707200
+      implementationNames.eth:0x3fe449Ef47228F03f979F9D955196494243cdf7E:
+-        "OptimismPortal"
+      implementationNames.eth:0xB1762246367681e5b335968950e8A17b0c56021D:
++        "OptimismPortal"
+      fieldMeta:
++        {"merkleRootETH":{"description":"Root of the Merkle tree of (address, cumulative amount) ETH claims."},"RECOVERY_TIMESTAMP":{"description":"Timestamp after which the guardian can withdraw the whole ETH balance."}}
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1StandardBridge/L1StandardBridge.sol          | 1095 +++++----------
+ .../OptimismPortal/OptimismPortal.sol              | 1472 +++-----------------
+ 2 files changed, 573 insertions(+), 1994 deletions(-)
+```
+
 Generated with discovered.json: 0x44eb427d1ac53c6d231597e6441a476f3fae42e0
 
 # Diff at Thu, 09 Jul 2026 09:58:51 GMT:

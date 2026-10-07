@@ -1,4 +1,8 @@
 import {
+  InteropTransferClassifier,
+  type InteropTransferPluginMatcher,
+} from '@l2beat/shared'
+import {
   type Address32,
   assert,
   type InteropBridgeType,
@@ -32,6 +36,9 @@ const _interopBridgeTypesMustMatchDbContract: typeof EXPECTED_DB_INTEROP_BRIDGE_
 function isInteropBridgeType(value: string): value is InteropBridgeType {
   return (InteropBridgeTypeValues as readonly string[]).includes(value)
 }
+
+/** How long raw `InteropTransfer` rows are kept before the cleaner drops them. */
+export const INTEROP_TRANSFER_RETENTION = 7 * UnixTime.DAY
 
 export interface InteropTransferRecord {
   plugin: string
@@ -122,6 +129,27 @@ export function hasAnyInteropTransferFinancialsFilter(
 export interface InteropTransferTokenAddress {
   chain: string
   address: string
+}
+
+export interface InteropTransferDeployedTokenPairStats {
+  /** Absent when that side of the transfer is not the abstract token. */
+  src?: InteropTransferTokenAddress
+  dst?: InteropTransferTokenAddress
+  transferCount: number
+  transfersWithDurationCount: number
+  totalDurationSum: number
+  volume: number
+}
+
+export interface InteropTransferDeployedTokenPairStatsByToken
+  extends InteropTransferDeployedTokenPairStats {
+  abstractTokenId: string
+}
+
+interface DeployedTokenPairStatsSelection {
+  plugins: InteropTransferPluginMatcher[]
+  sourceChains: string[]
+  destinationChains: string[]
 }
 
 export interface InteropTransferTokenAddressBatch {
@@ -966,6 +994,137 @@ export class InteropTransferRepository extends BaseRepository {
         dstValueSum: Number(chain.dstValueSum),
       }
     })
+  }
+
+  /**
+   * Eligible crosschain transfers, counted once per deployed-token pair and
+   * abstract token even when several project configs match. Volume uses
+   * getInteropTransferValue's convention; only the token's own sides are kept.
+   */
+  async getAllDeployedTokenPairStats(
+    timeRange: InteropTransferTimeRange,
+    selection: DeployedTokenPairStatsSelection,
+  ): Promise<InteropTransferDeployedTokenPairStatsByToken[]> {
+    if (
+      selection.plugins.length === 0 ||
+      selection.sourceChains.length === 0 ||
+      selection.destinationChains.length === 0
+    ) {
+      return []
+    }
+
+    // Keep every classifier input in the grouping so matching a group is
+    // equivalent to matching each transfer. Event presence is enough for the
+    // one-sided exception; representative IDs avoid grouping per transfer.
+    const groupColumns = [
+      'plugin',
+      'bridgeType',
+      'srcChain',
+      'dstChain',
+      'srcTokenAddress',
+      'dstTokenAddress',
+      'srcAbstractTokenId',
+      'dstAbstractTokenId',
+      'srcWasBurned',
+      'dstWasMinted',
+    ] as const
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        ...groupColumns,
+        eb.fn.min('srcEventId').as('srcEventId'),
+        eb.fn.min('dstEventId').as('dstEventId'),
+        eb.fn.countAll().as('transferCount'),
+        eb.fn.count('duration').as('transfersWithDurationCount'),
+        eb.fn.sum('duration').as('totalDurationSum'),
+        sql<number>`COALESCE(SUM(GREATEST("srcValueUsd", "dstValueUsd")), 0)`.as(
+          'volume',
+        ),
+      ])
+      .where('timestamp', '>', UnixTime.toDate(timeRange.from))
+      .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+      .where('plugin', 'in', [
+        ...new Set(selection.plugins.map((p) => p.plugin)),
+      ])
+      .where('srcChain', 'in', selection.sourceChains)
+      .where('dstChain', 'in', selection.destinationChains)
+      .whereRef('srcChain', '!=', 'dstChain')
+      .where((eb) =>
+        eb.or([
+          eb('srcAbstractTokenId', 'is not', null),
+          eb('dstAbstractTokenId', 'is not', null),
+        ]),
+      )
+      .groupBy([
+        ...groupColumns,
+        sql`"srcEventId" IS NULL`,
+        sql`"dstEventId" IS NULL`,
+      ])
+      .execute()
+
+    const matches = new InteropTransferClassifier().createMatcher(
+      selection.plugins,
+    )
+    const pairs = new Map<
+      string,
+      InteropTransferDeployedTokenPairStatsByToken
+    >()
+    for (const row of rows) {
+      assert(
+        row.bridgeType === null || isInteropBridgeType(row.bridgeType),
+        'Invalid interop transfer bridge type',
+      )
+      if (
+        !matches({
+          plugin: row.plugin,
+          bridgeType: (row.bridgeType ?? undefined) as
+            | KnownInteropBridgeType
+            | undefined,
+          srcChain: row.srcChain,
+          dstChain: row.dstChain,
+          srcAbstractTokenId: row.srcAbstractTokenId ?? undefined,
+          dstAbstractTokenId: row.dstAbstractTokenId ?? undefined,
+          srcWasBurned: row.srcWasBurned ?? undefined,
+          dstWasMinted: row.dstWasMinted ?? undefined,
+          srcEventId: row.srcEventId ?? undefined,
+          dstEventId: row.dstEventId ?? undefined,
+        })
+      )
+        continue
+
+      for (const abstractTokenId of new Set([
+        row.srcAbstractTokenId,
+        row.dstAbstractTokenId,
+      ])) {
+        if (!abstractTokenId) continue
+        const src =
+          row.srcAbstractTokenId === abstractTokenId && row.srcTokenAddress
+            ? { chain: row.srcChain, address: row.srcTokenAddress }
+            : undefined
+        const dst =
+          row.dstAbstractTokenId === abstractTokenId && row.dstTokenAddress
+            ? { chain: row.dstChain, address: row.dstTokenAddress }
+            : undefined
+        const key = JSON.stringify([abstractTokenId, src, dst])
+        const pair = pairs.get(key) ?? {
+          abstractTokenId,
+          ...(src ? { src } : {}),
+          ...(dst ? { dst } : {}),
+          transferCount: 0,
+          transfersWithDurationCount: 0,
+          totalDurationSum: 0,
+          volume: 0,
+        }
+        pair.transferCount += Number(row.transferCount)
+        pair.transfersWithDurationCount += Number(
+          row.transfersWithDurationCount,
+        )
+        pair.totalDurationSum += Number(row.totalDurationSum ?? 0)
+        pair.volume += Number(row.volume)
+        pairs.set(key, pair)
+      }
+    }
+    return [...pairs.values()]
   }
 
   async getExistingItems(

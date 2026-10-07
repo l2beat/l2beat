@@ -28,7 +28,7 @@ export const unichain: ScalingProject = opStackL2({
     slug: 'unichain',
     stateValidationImage: 'opfp',
     description:
-      'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
+      'Unichain is a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://unichain.org/'],
@@ -128,6 +128,7 @@ export const unichain: ScalingProject = opStackL2({
       { type: 'etherscan', chainId },
     ],
   },
+  ossificationHistory: discovery.getOssificationHistory(genesisTimestamp),
   milestones: [
     {
       title: 'UNIfication proposal executed',

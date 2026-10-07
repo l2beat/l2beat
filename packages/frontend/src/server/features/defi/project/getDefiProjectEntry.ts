@@ -1,8 +1,11 @@
-import type { ProjectRedWarning } from '@l2beat/config'
+import type { ProjectDefiCategory, ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { env } from '~/env'
+import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
+import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -14,6 +17,7 @@ import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { optionToRange } from '~/utils/range/range'
 import { EMPTY_TVS_BREAKDOWN } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getDefiTvlDataSource } from '../getDefiTvlDataSource'
 import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
@@ -26,6 +30,7 @@ export interface ProjectDefiEntry {
   shortName?: string
   icon: string
   description: string
+  category?: ProjectDefiCategory
   badges: BadgeWithParams[]
   projectLinks: ProjectLink[]
   discoveryHref?: string
@@ -51,9 +56,15 @@ export async function getDefiProjectEntry(
 ): Promise<ProjectDefiEntry | undefined> {
   const project = await ps.getProject({
     slug,
-    where: ['defiInfo'],
-    select: ['display', 'statuses'],
-    optional: ['contracts', 'permissions', 'tvsConfig', 'externalDependencies'],
+    select: ['display', 'statuses', 'defiInfo'],
+    optional: [
+      'contracts',
+      'permissions',
+      'tvsConfig',
+      'externalDependencies',
+      'discoveryUpdates',
+      'ossificationHistory',
+    ],
   })
 
   if (!project) {
@@ -62,20 +73,21 @@ export async function getDefiProjectEntry(
 
   const defaultChartRange = optionToRange('1y')
   const icon = manifest.getUrl(`/icons/${project.slug}.png`)
-  const [contractUtils, projectsChangeReport, dependencyProjectsById] =
-    await Promise.all([
-      getContractUtils(),
-      getProjectsChangeReport(),
-      getDefiDependencyProjectsById(project.externalDependencies),
-      project.tvsConfig !== undefined
-        ? helpers.queryClient.prefetchQuery(
-            helpers.trpc.tvs.chartByProjects.queryOptions({
-              projectIds: [project.id],
-              range: defaultChartRange,
-            }),
-          )
-        : undefined,
-    ])
+  const [
+    contractUtils,
+    projectsChangeReport,
+    dependencyProjectsById,
+    ossification,
+  ] = await Promise.all([
+    getContractUtils(),
+    getProjectsChangeReport(),
+    getDefiDependencyProjectsById(project.externalDependencies),
+    getProjectOssification(project),
+  ])
+  // DeFi pages get the Updates section together with ossification.
+  const discoveryUpdates = env.CLIENT_SIDE_OSSIFICATION_ENABLED
+    ? (project.discoveryUpdates ?? [])
+    : []
 
   const isUnderReview = !!project.statuses.reviewStatus
   const permissionsSection = getPermissionsSection(
@@ -130,20 +142,20 @@ export async function getDefiProjectEntry(
     })
   }
 
-  if (project.tvsConfig !== undefined) {
+  if (project.defiInfo.tvl !== undefined) {
     sections.push({
-      type: 'TvsValueSection',
+      type: 'DefiTvlSection',
       props: {
         id: 'tvs',
         title: 'Value Locked',
         defaultRange: defaultChartRange,
-        rangeControls: 'tvs',
         project: {
           id: project.id,
           name: project.name,
           shortName: project.shortName,
           iconUrl: icon,
         },
+        dataSource: getDefiTvlDataSource(project.defiInfo.tvl),
       },
     })
   }
@@ -160,6 +172,16 @@ export async function getDefiProjectEntry(
         ),
       },
     })
+  }
+
+  const updatesSection = await getUpdatesSection(
+    helpers,
+    project.id,
+    discoveryUpdates,
+    ossification,
+  )
+  if (updatesSection) {
+    sections.push(updatesSection)
   }
 
   if (permissionsSection) {
@@ -193,6 +215,7 @@ export async function getDefiProjectEntry(
     shortName: project.shortName,
     icon,
     description: project.display.description,
+    category: project.defiInfo.category,
     badges: project.display.badges.flatMap((badge) => {
       const badgeWithParams = getBadgeWithParams(badge)
       return badgeWithParams ? [badgeWithParams] : []

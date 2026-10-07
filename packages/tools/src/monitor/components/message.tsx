@@ -1,4 +1,3 @@
-'use client'
 import React, { type MouseEventHandler, useState } from 'react'
 
 interface MessageProps {

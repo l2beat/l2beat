@@ -11,13 +11,12 @@
     "arb1:0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b": "EduFastConfirmerMultisig"
   },
   "overrides": {
-    "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914": {
+    "arb1:0xC92793985e0026583Dc70aBDFBa167b1932b834D": {
       "ignoreInWatchMode": [
         "stakerCount",
         "firstUnresolvedNode",
         "latestConfirmed",
-        "latestNodeCreated",
-        "lastStakeBlock"
+        "latestNodeCreated"
       ]
     }
   }

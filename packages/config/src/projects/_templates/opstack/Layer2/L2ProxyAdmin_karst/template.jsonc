@@ -1,9 +1,16 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2ProxyAdmin",
+  "critical": true,
   "description": "Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.",
   "ignoreRelatives": ["addressManager"],
   "fields": {
+    "addressManager": {
+      // Not HIGH: every L2 predeploy is an ERC-1967 proxy that never reads an
+      // AddressManager, so this pointer (zero on all chains using this template)
+      // only changes what the admin writes for RESOLVED-type proxies, of which
+      // there are none. Predeploy upgrades are covered by their $pastUpgrades.
+    },
     "owner": {
       "permissions": [{ "type": "act" }]
     }

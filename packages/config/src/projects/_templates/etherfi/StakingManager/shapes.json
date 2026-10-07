@@ -1,0 +1,14 @@
+{
+  "StakingManager.sol": {
+    "hash": "0xf36cf379595a1d17bc1065160d3a3eaa2d035f0b27b4b68d02d98f38ce47b663",
+    "address": "eth:0x66e1C53e846eF3E9f3722591868AfcFfB7f39800",
+    "chain": "ethereum",
+    "blockNumber": 25800000
+  },
+  "StakingManager_v2.sol": {
+    "hash": "0x81978cd715155eb02a9c441bf197fe27a8ae61eb6589c8255f400431c01b398a",
+    "address": "eth:0x6515B41BDcf83BE5543B88591BC0bC34d844c9c2",
+    "chain": "ethereum",
+    "blockNumber": 26096911
+  }
+}

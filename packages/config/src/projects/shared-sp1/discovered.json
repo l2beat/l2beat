@@ -1,7 +1,7 @@
 {
   "name": "shared-sp1",
   "timestamp": 1783679422,
-  "configHash": "0x33a477941ca8b8ef66e8470300a4cd45399a91c4a8ad1c7230fd63835588920c",
+  "configHash": "0x7bdc06925bfa89c99dd14831f0e17b99087336662f46f76acd23f11ffee1cdbf",
   "entries": [
     {
       "name": "SP1Verifier",
@@ -108,6 +108,7 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
@@ -319,6 +320,7 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
@@ -435,6 +437,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
@@ -502,6 +505,7 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
@@ -522,6 +526,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "critical": true,
       "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1720099223,
       "sinceBlock": 20233410,
@@ -595,6 +600,7 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
+          "severity": "HIGH",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
@@ -642,6 +648,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1771084331,
       "sinceBlock": 24456046,
@@ -721,6 +728,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.1.0).",
+      "critical": true,
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172415,
       "sinceBlock": 24878258,
@@ -1158,7 +1166,7 @@
     "base": 48445037,
     "ethereum": 25501601
   },
-  "permissionsConfigHash": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540",
+  "permissionsConfigHash": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66",
   "permissions": {
     "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
       "receivedPermissions": [

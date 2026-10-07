@@ -1,11 +1,11 @@
 import type { json } from '@l2beat/shared-pure'
 import type { v } from '@l2beat/validate'
+import { Readable } from 'stream'
 import { chain } from 'stream-chain'
 import { parser } from 'stream-json'
 import { pick } from 'stream-json/filters/Pick'
 import { streamValues } from 'stream-json/streamers/StreamValues'
-import type { Hex } from 'viem'
-import { createGzip } from 'zlib'
+
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
   BeaconChainError,
@@ -50,25 +50,26 @@ export class BeaconChainClient extends ClientCore {
     stateId,
     status,
   }: {
-    stateId: 'head' | 'genesis' | 'finalized' | 'justified' | 'slot' | Hex
+    stateId:
+      | 'head'
+      | 'genesis'
+      | 'finalized'
+      | 'justified'
+      | 'slot'
+      | `0x${string}`
     status?: string[]
   }) {
     const endpoint = `eth/v1/beacon/states/${stateId}/validators?${new URLSearchParams(
-      {
-        ...(status ? { status: status.join(',') } : {}),
-      },
+      status ? { status: status.join(',') } : {},
     ).toString()}`
 
     const response = await this.$.http.fetchRaw(
       `${this.$.beaconApiUrl}${endpoint}`,
-      {
-        headers: {
-          'Content-Type': 'gzip',
-        },
-      },
+      { timeout: this.$.timeout },
     )
 
     if (!response.ok) {
+      await response.body?.cancel()
       this.$.logger.warn('Invalid response', {
         endpoint,
         response: JSON.stringify(response),
@@ -78,10 +79,13 @@ export class BeaconChainClient extends ClientCore {
       )
     }
 
+    if (!response.body) {
+      throw new Error('BeaconChain getValidators response has no body')
+    }
+
+    // Native fetch returns a Web stream; stream-chain only accepts Node streams
     const pipeline = chain([
-      createGzip(),
-      // biome-ignore lint/suspicious/noExplicitAny: the types don't match, but it should be fine
-      response.body as any,
+      Readable.fromWeb(response.body),
       parser(),
       pick({ filter: /^data\.\d+\.balance/ }),
       streamValues(),

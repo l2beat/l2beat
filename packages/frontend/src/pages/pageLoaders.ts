@@ -1,6 +1,12 @@
 export const pageLoaders = {
-  IconPreviewPage: async () =>
-    (await import('./dev/icons/IconPreviewPage')).IconPreviewPage,
+  IconPreviewPage: async () => {
+    // The static condition lets both bundlers drop the page from production
+    // builds; it relies on import.meta.glob, which exists only under Vite.
+    if (process.env.NODE_ENV === 'development') {
+      return (await import('./dev/icons/IconPreviewPage')).IconPreviewPage
+    }
+    throw new Error('IconPreviewPage is available only in development')
+  },
   HomePage: async () => (await import('./home/HomePage')).HomePage,
   L2SummaryPage: async () =>
     (await import('./layer2s/summary/L2SummaryPage')).L2SummaryPage,
@@ -84,10 +90,13 @@ export const pageLoaders = {
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
   PrivacyProjectPage: async () =>
     (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
+  TokensPage: async () => (await import('./tokens/TokensPage')).TokensPage,
   DefiSummaryPage: async () =>
     (await import('./defi/summary/DefiSummaryPage')).DefiSummaryPage,
   DefiProjectPage: async () =>
     (await import('./defi/project/DefiProjectPage')).DefiProjectPage,
+  OssificationPage: async () =>
+    (await import('./ossification/OssificationPage')).OssificationPage,
   ZkCatalogPage: async () =>
     (await import('./zk-catalog/v2/ZkCatalogPage')).ZkCatalogPage,
   ZkCatalogProjectPage: async () =>
@@ -106,6 +115,11 @@ export const pageLoaders = {
   PublicationPage: async () =>
     (await import('./publications/PublicationPage')).PublicationPage,
   FaqPage: async () => (await import('./faq/FaqPage')).FaqPage,
+  GardenPage: async () => (await import('./garden/GardenPage')).GardenPage,
+  SubmitProtocolPage: async () =>
+    (await import('./garden/submit/SubmitProtocolPage')).SubmitProtocolPage,
+  IntegrateCropsPage: async () =>
+    (await import('./garden/integrate/IntegrateCropsPage')).IntegrateCropsPage,
   GlossaryPage: async () =>
     (await import('./glossary/GlossaryPage')).GlossaryPage,
   AboutUsPage: async () => (await import('./about/AboutUsPage')).AboutUsPage,

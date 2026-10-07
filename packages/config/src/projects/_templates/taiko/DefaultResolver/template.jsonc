@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.",
   "ignoreMethods": ["proxiableUUID"],
@@ -22,6 +23,15 @@
     }
   },
   "fields": {
+    "pendingOwner": {
+      "severity": "MEDIUM"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "resolver": {
+      "severity": "HIGH"
+    },
     "owner": {
       "permissions": [
         {
@@ -31,6 +41,7 @@
       ]
     },
     "namedAddresses": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "newAddress",

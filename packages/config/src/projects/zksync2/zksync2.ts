@@ -143,6 +143,7 @@ const tppWallClockD = Math.round(
 )
 
 const chainId = 324
+const chainStart = UnixTime(1676384520)
 // https://etherscan.io/tx/0x2829993f6183647fc954ec75b67441ab0e597f445a3f5d6f976733775ca06f26#eventlog
 const l1migrationTs = UnixTime(1769897051) // 2023-11-03T00:32:11Z
 
@@ -199,7 +200,7 @@ export const zksync2: ScalingProject = zkStackL2({
     name: 'zksync2',
     chainId,
     explorerUrl: 'https://explorer.zksync.io',
-    sinceTimestamp: UnixTime(1676384520),
+    sinceTimestamp: chainStart,
     multicallContracts: [
       {
         version: '3',
@@ -222,6 +223,10 @@ export const zksync2: ScalingProject = zkStackL2({
       },
     ],
   },
+  ossificationHistory: discovery.getOssificationHistory(chainStart, {
+    // v24 upgrade set the Era Diamond's BridgeHub (tx 0x71a3b924)
+    'shared-zk-stack': UnixTime(1717674923),
+  }),
   associatedTokens: ['ZK'],
   governanceInfo: {
     securityCouncil: {

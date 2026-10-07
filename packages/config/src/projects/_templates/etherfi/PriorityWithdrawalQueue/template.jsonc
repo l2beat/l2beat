@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PriorityWithdrawalQueue",
+  "category": "core",
+  "description": "Priority lane of the withdrawal system for privileged/large redemptions.",
+  "ignoreInWatchMode": [
+    "ethAmountLockedForPriorityWithdrawal",
+    "getFinalizedRequestIds",
+    "getRequestIds",
+    "nonce",
+    "totalActiveRequests"
+  ],
+  "ignoreMethods": ["proxiableUUID"]
+}

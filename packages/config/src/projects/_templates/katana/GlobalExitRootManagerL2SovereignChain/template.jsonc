@@ -1,9 +1,23 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
+  "critical": true,
   "description": "Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.",
   "fields": {
+    "pendingGlobalExitRootUpdater": {
+      "severity": "MEDIUM"
+    },
+    "pendingGlobalExitRootRemover": {
+      "severity": "MEDIUM"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
+    // Role holders (remover: Katana Foundation Engineering Safe, updater: aggoracle
+    // operator EOA): identity changes need review, mechanism changes are recorded in
+    // katana/ossification.json.
     "globalExitRootRemover": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -17,6 +31,7 @@
       ]
     },
     "globalExitRootUpdater": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

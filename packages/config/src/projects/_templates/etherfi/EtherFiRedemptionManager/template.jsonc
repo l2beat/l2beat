@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiRedemptionManager",
+  "category": "core",
+  "description": "Instant-redemption buffer: swaps eETH/weETH for ETH from a liquidity buffer at a fee, bypassing the withdrawal queue up to available liquidity.",
+  "ignoreMethods": ["proxiableUUID"]
+}

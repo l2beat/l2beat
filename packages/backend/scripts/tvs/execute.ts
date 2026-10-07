@@ -54,6 +54,11 @@ const args = {
     short: 'l',
     description: 'Run in latest mode',
   }),
+  token: option({
+    type: optional(string),
+    long: 'token',
+    description: 'Only execute this token id (requires projectId)',
+  }),
 }
 
 const cmd = command({
@@ -178,12 +183,19 @@ const cmd = command({
         timestampForTvs,
         false,
       )
+      const tokens = args.token
+        ? effectiveConfig.filter((t) => t.id === args.token)
+        : effectiveConfig
+      assert(
+        tokens.length > 0,
+        `Token '${args.token}' not found in project '${args.project}'`,
+      )
 
       const tvs = await localExecutor.getTvs(
         [
           {
             projectId: project.id,
-            tokens: effectiveConfig,
+            tokens,
           },
         ],
         args.latestMode ? UnixTime.now() : timestampForTvs,

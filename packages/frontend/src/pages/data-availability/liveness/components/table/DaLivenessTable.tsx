@@ -16,7 +16,7 @@ export function DaLivenessTable({ items }: { items: DaLivenessEntry[] }) {
     [items, timeRange],
   )
 
-  const table = useTable({
+  const table = useTable('DaLivenessTable', {
     columns: publicColumns(),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),

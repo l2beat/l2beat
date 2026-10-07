@@ -1,6 +1,6 @@
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import type { Analysis } from '../analysis/AddressAnalyzer'
-import type { ContractValueType } from '../config/ColorConfig'
+import type { ContractValueType, CriticalFlag } from '../config/ColorConfig'
 import type { Permission } from '../config/PermissionConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
 
@@ -99,7 +99,7 @@ export type StructureEntry = {
 export type ColorEntry = {
   name?: string
   description?: string
-  critical?: boolean
+  critical?: CriticalFlag
   fieldMeta?: Record<string, FieldMeta>
   references?: ExternalReference[]
   category?: ContractCategory

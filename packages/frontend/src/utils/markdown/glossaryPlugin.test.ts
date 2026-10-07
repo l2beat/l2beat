@@ -42,6 +42,28 @@ describe(linkGlossaryTerms.name, () => {
     )
   })
 
+  it('lets a longer term win over a shorter one that starts earlier', () => {
+    const overlapping = linkGlossaryTerms([
+      { id: 'ab', matches: ['alpha beta'], description: 'AB' },
+      { id: 'bcd', matches: ['beta gamma delta'], description: 'BCD' },
+    ])
+    const output = overlapping('alpha beta gamma delta')
+    expect(output).toEqual(
+      `alpha [beta gamma delta](/glossary#bcd?description=${encodeURIComponent('BCD')})`,
+    )
+  })
+
+  it('does not link a term inside a link it just created', () => {
+    const nested = linkGlossaryTerms([
+      { id: 'glossary', matches: ['glossary'], description: 'G' },
+      { id: 'desc', matches: ['description'], description: 'D' },
+    ])
+    const output = nested('See the glossary.')
+    expect(output).toEqual(
+      `See the [glossary](/glossary#glossary?description=${encodeURIComponent('G')}).`,
+    )
+  })
+
   it('should not replace terms within existing markdown links', () => {
     const input = 'Check out more here: [Blob](https://example.com).'
     const output = linkTerms(input)
@@ -81,9 +103,34 @@ describe(glossaryPlugin.name, () => {
     expect(output).toInclude('data-link-role="glossary"')
   })
 
+  it('renders the description as a hidden description of the link', () => {
+    const input =
+      '[Blob](/glossary#blob?description=Blob%20%3Cb%3E%20description)'
+    const output = md.render(input, { glossaryDescriptionIdPrefix: 'md1' })
+    expect(output).toInclude('aria-describedby="md1-glossary-blob"')
+    expect(output).toInclude(
+      '</a><span id="md1-glossary-blob" class="sr-only">Blob &lt;b&gt; description</span>',
+    )
+  })
+
+  it('describes repeated terms with a single hidden description', () => {
+    const link = '[Blob](/glossary#blob?description=Blob%20description)'
+    const output = md.render(`${link} and ${link}`, {
+      glossaryDescriptionIdPrefix: 'md1',
+    })
+    expect(
+      countOccurrences(output, 'aria-describedby="md1-glossary-blob"'),
+    ).toEqual(2)
+    expect(countOccurrences(output, ' id="md1-glossary-blob"')).toEqual(1)
+  })
+
   it('should not add data-link-role to non-glossary links', () => {
     const input = '[Blob](https://example.com)'
     const output = md.render(input)
     expect(output).not.toInclude('data-link-role="glossary"')
   })
 })
+
+function countOccurrences(text: string, part: string) {
+  return text.split(part).length - 1
+}

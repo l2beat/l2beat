@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xdec48db95ea105c4ffaf62ee195ff8e2f27c1ba1
+Generated with discovered.json: 0xcc9d7ecfbf8fa0e843d78fdf099ad59d5213c478
 
 # Diff at Mon, 07 Sep 2026 08:37:52 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xdec48db95ea105c4ffaf62ee195ff8e2f27c1ba1
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Cross module permission modelling
 
 ## Config/verification related changes
 

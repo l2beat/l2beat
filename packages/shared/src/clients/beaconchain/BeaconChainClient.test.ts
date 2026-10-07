@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockObject } from 'earl'
-import type { HttpClient } from '../http/HttpClient'
+import { withServer } from '../../test/withServer'
+import { HttpClient } from '../http/HttpClient'
 import { BeaconChainClient } from './BeaconChainClient'
 
 describe(BeaconChainClient.name, () => {
@@ -36,6 +37,43 @@ describe(BeaconChainClient.name, () => {
           data: blob,
         },
       ])
+    })
+  })
+
+  describe(BeaconChainClient.prototype.getValidatorsInfo.name, () => {
+    it('streams a raw native fetch response and sums balances', async () => {
+      const body = JSON.stringify({
+        execution_optimistic: false,
+        data: [
+          { index: '0', balance: '32000000000', status: 'active_ongoing' },
+          { index: '1', balance: '31000000000', status: 'active_ongoing' },
+        ],
+      })
+
+      const result = await withServer(
+        (req, res) => {
+          expect(req.url).toEqual(
+            '/eth/v1/beacon/states/head/validators?status=active',
+          )
+          res.setHeader('Content-Type', 'application/json')
+          res.end(body)
+        },
+        (url) => {
+          const client = mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          })
+          return client.getValidatorsInfo({
+            stateId: 'head',
+            status: ['active'],
+          })
+        },
+      )
+
+      expect(result).toEqual({
+        totalStake: 63_000_000_000_000_000_000n,
+        numberOfValidators: 2,
+      })
     })
   })
 

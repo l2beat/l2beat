@@ -1,10 +1,14 @@
 import type {
-  ProjectDiscoveryUpdate,
+  ProjectDiscoveryUpdateSection,
   ProjectDiscoveryUpdateSectionKind,
 } from '@l2beat/config'
+import type { OssificationChangeType } from '@l2beat/shared/frontend'
+import type { ProjectId } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { type MouseEvent, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { CopyButton } from '~/components/CopyButton'
+import { Skeleton } from '~/components/core/Skeleton'
 import { DiffBody } from '~/components/discovery/DiffBody'
 import { Markdown } from '~/components/markdown/Markdown'
 import {
@@ -18,14 +22,24 @@ import {
   PaginationPrevious,
 } from '~/components/Pagination'
 import { ChevronIcon } from '~/icons/Chevron'
+import type { ProjectOssificationView } from '~/server/features/projects/ossification/getProjectOssification'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
+import { OssificationDetails } from './ossification/OssificationDetails'
 import { ProjectSection } from './ProjectSection'
+import { SubsectionHeading } from './Subsection'
 import type { ProjectSectionProps } from './types'
+import {
+  type ProjectDiscoveryUpdateSummary,
+  UPDATES_PAGE_SIZE,
+} from './updatesPaging'
 
 export interface UpdatesSectionProps extends ProjectSectionProps {
-  updates: ProjectDiscoveryUpdate[]
+  projectId: ProjectId
+  updates: ProjectDiscoveryUpdateSummary[]
   selectedUpdateId?: string
+  ossification?: ProjectOssificationView
 }
 
 const SECTION_TITLES = {
@@ -34,11 +48,16 @@ const SECTION_TITLES = {
   'watched-changes': null,
 } satisfies Record<ProjectDiscoveryUpdateSectionKind, string | null>
 
-const PAGE_SIZE = 5
+const CRITICAL_CHANGE_LABELS = {
+  code: 'Critical code change',
+  state: 'Critical state change',
+} satisfies Record<OssificationChangeType, string>
 
 export function UpdatesSection({
+  projectId,
   updates,
   selectedUpdateId,
+  ossification,
   ...sectionProps
 }: UpdatesSectionProps) {
   const [page, setPage] = useState(() => {
@@ -47,35 +66,69 @@ export function UpdatesSection({
     )
     return selectedUpdateIndex === -1
       ? 0
-      : Math.floor(selectedUpdateIndex / PAGE_SIZE)
+      : Math.floor(selectedUpdateIndex / UPDATES_PAGE_SIZE)
   })
 
-  if (updates.length === 0) {
+  const pageCount = Math.ceil(updates.length / UPDATES_PAGE_SIZE)
+  const entries = updates.slice(
+    page * UPDATES_PAGE_SIZE,
+    (page + 1) * UPDATES_PAGE_SIZE,
+  )
+  const sections = usePageSections(projectId, entries)
+  const criticalChangeTypes = new Map(
+    ossification?.criticalUpdates.map((update) => [update.id, update.type]),
+  )
+
+  if (updates.length === 0 && !ossification) {
     return null
   }
 
-  const pageCount = Math.ceil(updates.length / PAGE_SIZE)
-  const entries = updates.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
-
   return (
     <ProjectSection {...sectionProps}>
-      <div className="flex flex-col gap-3">
-        {entries.map((update) => (
-          <UpdateCard
-            key={update.id}
-            update={update}
-            isSelected={update.id === selectedUpdateId}
-          />
-        ))}
-        {pageCount > 1 && (
-          <UpdatesPagination
-            page={page}
-            pageCount={pageCount}
-            onPageChange={setPage}
-          />
-        )}
-      </div>
+      {ossification && <OssificationDetails ossification={ossification} />}
+      {updates.length > 0 && (
+        <>
+          {ossification && (
+            <SubsectionHeading className="mt-8 mb-3 font-bold text-heading-20">
+              Discovery updates
+            </SubsectionHeading>
+          )}
+          <div className="flex flex-col gap-3">
+            {entries.map((update) => (
+              <UpdateCard
+                key={update.id}
+                update={update}
+                sections={sections.data?.[update.id]}
+                sectionsFailed={sections.isError}
+                isSelected={update.id === selectedUpdateId}
+                criticalChangeType={criticalChangeTypes.get(update.id)}
+              />
+            ))}
+            {pageCount > 1 && (
+              <UpdatesPagination
+                page={page}
+                pageCount={pageCount}
+                onPageChange={setPage}
+              />
+            )}
+          </div>
+        </>
+      )}
     </ProjectSection>
+  )
+}
+
+function usePageSections(
+  projectId: ProjectId,
+  entries: ProjectDiscoveryUpdateSummary[],
+) {
+  const trpc = useTRPC()
+  return useQuery(
+    trpc.projects.discoveryUpdateSections.queryOptions(
+      { projectId, updateIds: entries.map((update) => update.id) },
+      // The section can render with ossification alone.
+      { enabled: entries.length > 0 },
+    ),
   )
 }
 
@@ -138,12 +191,19 @@ function UpdatesPagination({
 
 export function UpdateCard({
   update,
+  sections,
+  sectionsFailed = false,
   isSelected,
   copyLinkPath,
+  criticalChangeType,
 }: {
-  update: ProjectDiscoveryUpdate
+  update: ProjectDiscoveryUpdateSummary
+  /** `undefined` while the diff bodies are still loading. */
+  sections: ProjectDiscoveryUpdateSection[] | undefined
+  sectionsFailed?: boolean
   isSelected: boolean
   copyLinkPath?: string
+  criticalChangeType?: OssificationChangeType
 }) {
   return (
     <details
@@ -177,14 +237,16 @@ export function UpdateCard({
                 iconClassName="size-3.5"
               />
             </div>
-            {update.isHighSeverity && (
+            {(criticalChangeType || update.isHighSeverity) && (
               <Badge
                 type="error"
                 size="extraSmall"
                 padding="small"
                 className="shrink-0 uppercase"
               >
-                High severity
+                {criticalChangeType
+                  ? CRITICAL_CHANGE_LABELS[criticalChangeType]
+                  : 'High severity'}
               </Badge>
             )}
           </div>
@@ -232,7 +294,12 @@ export function UpdateCard({
             </Markdown>
           </div>
         )}
-        {update.sections.map((section, index) => {
+        {sectionsFailed ? (
+          <p className="text-secondary text-xs">Failed to load changes.</p>
+        ) : (
+          sections === undefined && <SectionsSkeleton />
+        )}
+        {sections?.map((section, index) => {
           const title = SECTION_TITLES[section.kind]
           return (
             <div key={index} className="flex min-w-0 flex-col gap-2">
@@ -250,7 +317,17 @@ export function UpdateCard({
   )
 }
 
-function formatUpdateDate(update: ProjectDiscoveryUpdate): string {
+function SectionsSkeleton() {
+  return (
+    <div className="flex flex-col gap-2" aria-busy="true">
+      <Skeleton className="h-4 w-1/3" />
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-5/6" />
+    </div>
+  )
+}
+
+function formatUpdateDate(update: ProjectDiscoveryUpdateSummary): string {
   if (update.timestamp === null) {
     return update.date
   }

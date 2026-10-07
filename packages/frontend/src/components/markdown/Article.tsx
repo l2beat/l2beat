@@ -1,5 +1,5 @@
-import MarkdownIt from 'markdown-it'
 import { cn } from '~/utils/cn'
+import { createMarkdown } from '~/utils/markdown/createMarkdown'
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 
 interface ArticleProps {
@@ -7,10 +7,7 @@ interface ArticleProps {
   className?: string
 }
 
-const markdown = MarkdownIt({
-  html: true,
-  typographer: true,
-}).use(outLinksPlugin)
+const markdown = createMarkdown().use(outLinksPlugin)
 
 export function Article(props: ArticleProps) {
   return (

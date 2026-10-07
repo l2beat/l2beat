@@ -1,0 +1,55 @@
+{
+  "events": [
+    {
+      "timestamp": 1780066583,
+      "type": "state",
+      "contract": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+      "transaction": "0x1d1d7aef207d5a85e7477e3c38850782f2c655c1f27eb86b14d237a4fcb3fc66",
+      "updateId": "8d0ae0ed",
+      "reason": "Registered the Kailua KailuaTreasury as the type 1337 dispute game implementation (ImplementationSet); deployed but not yet the respected game type."
+    },
+    {
+      "timestamp": 1782901175,
+      "type": "state",
+      "contract": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+      "transaction": "0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
+      "updateId": "f6059a61",
+      "reason": "Repointed the type 1337 dispute game implementation to the KailuaGame as part of the Kailua cutover (ImplementationSet)."
+    },
+    {
+      "timestamp": 1782901175,
+      "type": "state",
+      "contract": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
+      "transaction": "0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
+      "updateId": "f6059a61",
+      "reason": "Moved the respected game type from the PermissionedDisputeGame (1) to the Kailua ZK fault-proof game (1337) in the AnchorStateRegistry (RespectedGameTypeSet); withdrawals now clear through RISC Zero-proven dispute games."
+    },
+    {
+      "timestamp": 1782901175,
+      "type": "state",
+      "contract": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
+      "transaction": "0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
+      "updateId": "f6059a61",
+      "reason": "Set the live Kailua proposer economics: a 0.5 ETH participation bond, a one-month vanguard advantage, and the vanguard proposer."
+    },
+    {
+      "timestamp": 1788777107,
+      "type": "state",
+      "contract": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
+      "transaction": "0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482",
+      "updateId": "8c7d17d4",
+      "reason": "Moved the respected game type back from the Kailua ZK game (1337) to the PermissionedDisputeGame (1) in the AnchorStateRegistry (RespectedGameTypeSet via the Ronin/Conduit Safe); withdrawals again clear through the permissioned game."
+    },
+    {
+      "timestamp": 1789973519,
+      "type": "code",
+      "contract": "eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
+      "transaction": "0x93c0f8357f9f3810aebe40cd46f78bdacb72da718f5c5b6e96c6f2fb5b0a0b34",
+      "updateId": "b817e3a5",
+      "reason": "Upgraded the L1StandardBridge implementation as part of the core protocol upgrade."
+    }
+  ],
+  "ignoredTransactions": [
+    "0x7e9202c4d6cb60aa8f0d86f9524f58cc3b5edb505495f61503d9374e3859cdb6"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiNodesManager",
+  "category": "core",
+  "description": "Manages the fleet of EtherFiNode contracts: resolves each node's withdrawal-credential target (its EigenPod, or the node itself if it has none), forwards whitelisted EigenLayer and external calls, submits EIP-7002 exit and EIP-7251 consolidation requests and sweeps node ETH to the LiquidityPool.",
+  "ignoreMethods": ["proxiableUUID", "etherfiNodeAddress"]
+}

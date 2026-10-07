@@ -25,6 +25,7 @@ import { eigenda } from '../projects/eigenda/eigenda'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { etherfi } from '../projects/etherfi/etherfi'
 import { fluidkey } from '../projects/fluidkey/fluidkey'
 import { frankencoin } from '../projects/frankencoin/frankencoin'
 import { freetunnel } from '../projects/freetunnel/freetunnel'
@@ -45,6 +46,7 @@ import { mayan } from '../projects/mayan/mayan'
 import { memo } from '../projects/memo/memo'
 import { meson } from '../projects/meson/meson'
 import { monad } from '../projects/monad/monad'
+import { moneroCakeWallet } from '../projects/monero-cake-wallet/monero-cake-wallet'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
 import { polymarket } from '../projects/polymarket/polymarket'
@@ -72,6 +74,9 @@ import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
 import { zama } from '../projects/zama/zama'
 import { zamaCw } from '../projects/zama-cw/zama-cw'
+import { zcash } from '../projects/zcash/zcash'
+import { zcashNearIntents } from '../projects/zcash-near-intents/zcash-near-intents'
+import { zkmoney } from '../projects/zkmoney/zkmoney'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -96,6 +101,7 @@ export const refactored: BaseProject[] = [
   lighterprover,
   stwo,
   barretenberg,
+  zcash,
   // da-beat
   ethereum,
   avail,
@@ -146,6 +152,7 @@ export const refactored: BaseProject[] = [
   chainlink,
   uniswapv3,
   lido,
+  etherfi,
   uniswapv4,
   wbeth,
   polymarket,
@@ -159,5 +166,8 @@ export const refactored: BaseProject[] = [
   tornadoCash,
   umbra,
   zamaCw,
+  moneroCakeWallet,
+  zcashNearIntents,
   privacyBoost,
+  zkmoney,
 ]

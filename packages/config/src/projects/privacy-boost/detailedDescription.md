@@ -1,4 +1,4 @@
-Privacy Boost is a shielded pool for registered ERC-20 tokens on OP Mainnet, aimed at institutional users. The operator's TEE setup has to be trusted for privacy and liveness, while ZKPs ensure validity and an exit path against a malicious or faulty operator.
+Privacy Boost is a shielded pool for registered ERC-20 tokens on Base, aimed at institutional users. The operator's TEE setup has to be trusted for privacy and liveness, while ZKPs ensure validity and an exit path against a malicious or faulty operator.
 
 ### Architecture
 
@@ -24,6 +24,10 @@ Practical privacy also depends on the timing and amounts of deposits and withdra
 ### Fees
 
 Standard deposits are free of protocol fees. Portal deposits can charge a separate sweeper fee, capped at 10% and currently set to {{portalSweepFee}}, and have token-specific minimum sweep amounts. Withdrawals, including forced withdrawals and public gift exits, pay a {{withdrawFee}} fee forwarded to the treasury; a forced withdrawal records the fee at request time.
+
+### Deposit and withdrawal statistics
+
+The pool's own events do not carry per-transfer amounts, so L2BEAT counts every ERC-20 transfer into the pool as a deposit and every transfer out of it as a withdrawal. Besides regular deposits, portal sweeps and withdrawals, this includes refunds of cancelled deposit requests, withdrawal fees forwarded to the treasury, and both legs of DeFi operations executed through approved gateways.
 
 ### Compliance
 

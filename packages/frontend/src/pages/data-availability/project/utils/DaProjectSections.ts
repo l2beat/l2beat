@@ -6,7 +6,6 @@ import { getLiveness } from '~/server/features/layer2s/liveness/getLiveness'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { ps } from '~/server/projects'
-import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -14,8 +13,8 @@ import { getPermissionsSection } from '~/utils/project/contracts-and-permissions
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
+import { toChartProject } from '~/utils/project/toChartProject'
 import { optionToRange } from '~/utils/range/range'
-import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getDaProjectRiskSummarySection } from './getDaProjectRiskSummarySection'
 import { getDaThroughputSection } from './getDaThroughputSection'
 
@@ -36,7 +35,6 @@ type RegularDetailsParams = {
   projectsChangeReport: ProjectsChangeReport
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
-  helpers: SsrHelpers
 }
 
 export async function getRegularDaProjectSections({
@@ -46,7 +44,6 @@ export async function getRegularDaProjectSections({
   projectsChangeReport,
   layerGrissiniValues,
   bridgeGrissiniValues,
-  helpers,
 }: RegularDetailsParams) {
   const [
     contractUtils,
@@ -57,7 +54,7 @@ export async function getRegularDaProjectSections({
     zkCatalogProjects,
   ] = await Promise.all([
     getContractUtils(),
-    getDaThroughputSection(helpers, layer),
+    getDaThroughputSection(layer),
     bridge ? getLiveness(bridge.id) : undefined,
     get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
@@ -135,7 +132,6 @@ export async function getRegularDaProjectSections({
 
   const livenessSection = bridge
     ? await getLivenessSection(
-        helpers,
         bridge,
         projectLiveness,
         projectsChangeReport.projects[bridge.id],
@@ -147,7 +143,7 @@ export async function getRegularDaProjectSections({
       type: 'LivenessSection',
       props: {
         milestones: [],
-        project: withProjectIcon(bridge),
+        project: toChartProject(bridge),
         ...livenessSection,
         id: 'da-bridge-liveness',
         title: 'Liveness',
@@ -297,7 +293,6 @@ type EthereumDetailsParams = {
   isVerified: boolean
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
-  helpers: SsrHelpers
   interopData: ProjectInteropData | undefined
 }
 
@@ -307,7 +302,6 @@ export async function getEthereumDaProjectSections({
   isVerified,
   layerGrissiniValues,
   bridgeGrissiniValues,
-  helpers,
   interopData,
 }: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
@@ -318,7 +312,7 @@ export async function getEthereumDaProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
-  const throughputSection = await getDaThroughputSection(helpers, layer)
+  const throughputSection = await getDaThroughputSection(layer)
 
   if (interopData) {
     items.push({
@@ -352,7 +346,7 @@ export async function getEthereumDaProjectSections({
       title: 'Activity',
       dataSource: undefined,
       defaultRange: optionToRange('1y'),
-      project: withProjectIcon(layer),
+      project: toChartProject(layer),
       milestones: layer.milestones ?? [],
     },
   })

@@ -1,4 +1,4 @@
-import type { languages } from 'monaco-editor'
+import type { languages } from 'monaco-editor/esm/vs/editor/editor.api'
 import * as configSchema from '../../../../../discovery/schemas/config.v2.schema.json'
 import * as contractSchema from '../../../../../discovery/schemas/contract.v2.schema.json'
 

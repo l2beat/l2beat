@@ -8,6 +8,8 @@ import { CompareFlatSources } from './CompareFlatSources'
 import { CompareOpStacks } from './CompareOpStacks'
 import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
+import { CropsAttest } from './CropsAttest'
+import { CropsVerify } from './CropsVerify'
 import { DecodeEigenDACommitment } from './DecodeEigenDACommitment'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
@@ -35,6 +37,7 @@ import { MatchFlat } from './MatchFlat'
 import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
+import { Ossification } from './Ossification'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
 import { RegenerateShapeHashes } from './RegenerateShapeHashes'
@@ -60,6 +63,8 @@ export function getSubcommands() {
     CompareOpStacks,
     CompareOrbitStacks,
     CountUserOperations,
+    CropsAttest,
+    CropsVerify,
     DecodeEigenDACommitment,
     DeploymentTimestamp,
     DetectProxy,
@@ -88,6 +93,7 @@ export function getSubcommands() {
     MatchFlat,
     Minters,
     ModelPermissions,
+    Ossification,
     OPConfigs,
     RefreshDiscovery,
     RegenerateShapeHashes,

@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "ignoreMethods": ["l1RollingHashes"],
   "ignoreInWatchMode": [
     "currentPeriodAmountInWei",
@@ -8,7 +9,61 @@
     "nextMessageNumber"
   ],
   "fields": {
-    "accessControl": { "handler": { "type": "accessControl" } },
+    "accessControl": {
+      "handler": { "type": "accessControl" }
+    },
+    // Which role may pause / unpause each pause type: pause routing, MEDIUM like
+    // pause state and pause-role holders (spec). It cannot move funds or change validation.
+    "pauseTypeToRole": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": { "event": ["PauseTypeRoleSet", "PauseTypeRoleUpdated"] },
+        "groupBy": "pauseType"
+      }
+    },
+    "unpauseTypeToRole": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": {
+          "event": ["UnPauseTypeRoleSet", "UnPauseTypeRoleUpdated"]
+        },
+        "groupBy": "unPauseType"
+      }
+    },
+    "allPausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ALL_ROLE", "members"]
+    },
+    "allUnpausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_ALL_ROLE", "members"]
+    },
+    "l1l2Pausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_L1_L2_ROLE", "members"]
+    },
+    "l1l2Unpausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_L1_L2_ROLE", "members"]
+    },
+    "l2l1Pausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_L2_L1_ROLE", "members"]
+    },
+    "l2l1Unpausers": {
+      "severity": "MEDIUM",
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_L2_L1_ROLE", "members"]
+    },
     "l1l2MessageSetter": {
       "copy": "accessControl",
       "edit": ["get", "L1_L2_MESSAGE_SETTER_ROLE", "members"],
@@ -19,11 +74,17 @@
         }
       ]
     },
+    "minimumFeeInWei": {
+      // fee parameter (L1->L2 anti-DoS fee; exits do not pay it): surfaces on
+      // the monitor without resetting the ossification clock.
+      "severity": "MEDIUM"
+    },
     "sender": {
       "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
     },
     "limitInWei": {
-      "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
+      "severity": "HIGH",
+      "description": "The cap on the total amount of ether (value plus postman fee) that can be sent from L2 to L1 via sendMessage per period given by periodInSeconds."
     },
     "periodInSeconds": {
       "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
@@ -45,7 +106,7 @@
     // 13 STATE_DATA_SUBMISSION
     // }
     "isPaused_GENERAL": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -53,7 +114,7 @@
       }
     },
     "isPaused_L1_L2": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -61,7 +122,7 @@
       }
     },
     "isPaused_L2_L1": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -85,7 +146,7 @@
     //     }
     //   },
     "isPaused_FINALIZATION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -93,7 +154,7 @@
       }
     },
     "isPaused_INITIATE_TOKEN_BRIDGING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -101,7 +162,7 @@
       }
     },
     "isPaused_COMPLETE_TOKEN_BRIDGING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -109,7 +170,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_STAKING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -117,7 +178,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_UNSTAKING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -125,7 +186,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -133,7 +194,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_REPORTING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -141,7 +202,7 @@
       }
     },
     "isPaused_STATE_DATA_SUBMISSION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -149,7 +210,7 @@
       }
     },
     "nonSecurityCouncilCooldownEnd": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "Timestamp until which non security council entities can't pause the rollup."
     }
   }

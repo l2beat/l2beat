@@ -1,6 +1,6 @@
 {
   "name": "fluidkey",
-  "timestamp": 1788853601,
+  "timestamp": 1790851084,
   "configHash": "0xf0d6956b629bc8d352b676a61e22cbf7f6036cb5f5fa28ecd4a0fcb6c4b21587",
   "entries": [
     {
@@ -71,7 +71,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -157,7 +157,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 12,
+        "nonce": 15,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -290,7 +290,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -337,7 +337,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 10,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -418,7 +418,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -504,7 +504,7 @@
         "getChainId": 137,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -590,7 +590,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1297,14 +1297,14 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": {
-    "arbitrum": 502954163,
-    "base": 51032127,
-    "ethereum": 25931246,
-    "gnosis": 48141225,
-    "optimism": 156627412,
-    "polygonpos": 93432378
+    "arbitrum": 510634199,
+    "base": 52030868,
+    "ethereum": 26096919,
+    "gnosis": 48531923,
+    "optimism": 157626153,
+    "polygonpos": 94763962
   },
-  "permissionsConfigHash": "0x48e0108fb9c12ce73f33c68f53e9c5c41ed3b918e006e7732657b0d9eeec2c01",
+  "permissionsConfigHash": "0xe0751756338785f0de449880933873c9cda6b52956eb2f2f14008bfa22031add",
   "permissions": {
     "arb1:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
       "receivedPermissions": [

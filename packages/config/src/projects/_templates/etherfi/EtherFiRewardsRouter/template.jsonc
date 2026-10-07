@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiRewardsRouter",
+  "category": "core",
+  "description": "Routes execution-layer/consensus rewards ETH back to the LiquidityPool and treasury.",
+  "ignoreMethods": ["proxiableUUID"]
+}

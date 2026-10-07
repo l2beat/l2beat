@@ -1,3 +1,118 @@
+Generated with discovered.json: 0xec03ab5174612a74b5e36333140d18ddcf2154d8
+
+# Diff at Mon, 05 Oct 2026 09:38:03 GMT:
+
+- id: da551634
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd994874bd99b18ba1f55be2a7905cd3e3005273 block: 1790759557
+- current timestamp: 1790759557
+
+## Description
+
+Ossification review of zk.money: ZkMoneyPortal field severities follow the ossification spec.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790759557 (main branch discovery), not current.
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta._$l2Portal.severity:
+-        "HIGH"
+      fieldMeta._$frozen.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x431f5551f1bf088434baddca14a45cc03c495777
+
+# Diff at Wed, 30 Sep 2026 09:13:57 GMT:
+
+- id: 32c985ef
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@df7975d6096e92768505eb20f806b1e0c1cad811 block: 1789471807
+- current timestamp: 1790759557
+
+## Description
+
+Config: Add the zk.money escrow (ZkMoneyPortal), which uses the Aztec canonical messaging bridge. The full discovery is in the zkmoney config and not shown here for clarity.
+
+## Watched changes
+
+```diff
+    contract ZkMoneyPortal (eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449) [zkmoney/ZkMoneyPortal] {
+    +++ description: Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      name:
++        "ZkMoneyPortal"
+      template:
++        "zkmoney/ZkMoneyPortal"
+      sourceHashes:
++        ["0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e"]
+      description:
++        "Escrow of zk.money on the Aztec Network. A withdrawal needs both a proven Aztec L2->L1 message from the zk.money L2 contract and a signature from a registered TEE signer. Anyone can register a TEE signer with a fresh AWS Nitro attestation of an approved enclave image. Once the Aztec Registry's canonical rollup is no longer ROLLUP, anyone can permanently freeze the portal, stopping deposits and fixing the refund snapshot at the last proven checkpoint. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds that need a zk proof and a TEE signature. L2 transfers are not disabled but do not change refundable ownership."
+      critical:
++        true
+      deployerAddress:
++        "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601"
+      sinceTimestamp:
++        1790298635
+      sinceBlock:
++        26051097
+      values:
++        {"_$cachedAvailable":"49994487527849187076802","_$freezeArchive":"0x0000000000000000000000000000000000000000000000000000000000000000","_$freezeCheckpointCount":0,"_$freezeCheckpointNumber":0,"_$freezeEpochNumber":0,"_$frozen":false,"_$initialized":true,"_$l2Portal":"0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d","_$lastUpdatedTime":1790759147,"$immutable":true,"approvedPcr0Hashes":["0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"],"FPC_FUNDER":"eth:0x37cD81C39Bf276ea7e1c6a416A254f688c70eAFb","FPC_FUNDING_CUT":"100000000000000000","FROZEN_DEPOSIT_REFUND_VERIFIER":"eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe","FROZEN_NOTES_REFUND_VERIFIER":"eth:0x0694fF404DDA586C73EfCe21f34fe084541BB877","getCurrentAvailable":"50000000000000000000000","GLOBAL_LIMIT":"50000000000000000000000","INBOX":"eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA","L2_PORTAL":"0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d","OUTBOX":"eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7","owner":"eth:0x0000000000000000000000000000000000000000","RATE":"578703703703703703","REGISTRY":"eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298","ROLLUP":"eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34","ROLLUP_VERSION":4248422647,"TEE_ATTESTATION_MAX_AGE":3600,"TEE_CERT_MANAGER":"eth:0xdfe52FD98aa0Cc8Ce7778a2b00ac7B7Dc9595875","TEE_NITRO_VALIDATOR":"eth:0x0119bC52a09Ac6e7998378BadC16D0e9A866Be56","teeSigners":["eth:0xdFd008642F54aCD44A2a03438A86A25f55c4D3Bc","eth:0xefc45B71e9432a6149a7d52f11a125A19E3A11DC"],"UNDERLYING":"eth:0x6B175474E89094C44Da98b954EedeAC495271d0F","UNPROCESSED_DEPOSIT_REFUND_VERIFIER":"eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5"}
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"approvedPcr0Hashes":{"severity":"HIGH","description":"Hashes of the AWS Nitro enclave images (PCR0) whose attestations can register TEE signers."},"teeSigners":{"description":"Registered TEE signers. Registrations are permanent."},"_$l2Portal":{"severity":"HIGH","description":"zk.money token contract on Aztec whose L2->L1 messages can release funds."},"_$frozen":{"severity":"HIGH","description":"Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership."},"REGISTRY":{"description":"Aztec Registry. If its canonical rollup is no longer ROLLUP, anyone can freeze this portal."},"FPC_FUNDER":{"description":"Receives FPC_FUNDING_CUT from every deposit and withdrawal to fund Aztec fees for zk.money users."},"GLOBAL_LIMIT":{"description":"Deposit capacity (wei), refilling at RATE per second. Withdrawals are only limited by a hardcoded per-transaction cap.","type":"RISK_PARAMETER"}}
+      implementationNames:
++        {"eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449":"OxidePortal"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+## Source code changes
+
+```diff
+.../projects/aztecnetwork/.flat/ZkMoneyPortal.sol  | 5265 ++++++++++++++++++++
+ 1 file changed, 5265 insertions(+)
+```
+
+Generated with discovered.json: 0xd2ed949956844550ab8ff6111a3371117b0817e3
+
+# Diff at Tue, 15 Sep 2026 11:31:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a35dcf63dd3a2006e7759c0ac66a3c7d5e615ed9 block: 1787151120
+- current timestamp: 1789471807
+
+## Description
+
+Revoker changed: This is used to revoke vesting token positions.
+
+## Watched changes
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: AZTEC token-position Registry referenced by the ProtocolTreasury for its activation cutoff and by other ecosystem vesting contracts.
++++ description: Address used by ATP positions as the revocation authority.
+      values.getRevoker:
+-        "eth:0xA70D1A21b251eE5F15C4aD77179114d70917F0Bf"
++        "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350"
+    }
+```
+
 Generated with discovered.json: 0x58d6fa812da486580c22090cddc233c63f35ac83
 
 # Diff at Wed, 19 Aug 2026 14:30:13 GMT:

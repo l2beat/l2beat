@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CumulativeMerkleRewardsDistributor",
+  "category": "core",
+  "description": "Cumulative Merkle distributor for protocol rewards.",
+  "ignoreMethods": ["proxiableUUID"]
+}

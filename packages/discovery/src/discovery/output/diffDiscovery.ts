@@ -83,7 +83,7 @@ function entriesForDiff(
     copy.entries.push({
       type: 'Reference',
       address,
-      ...(permissions?.[address] ?? {}),
+      ...permissions?.[address],
     })
   }
 

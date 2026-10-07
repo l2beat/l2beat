@@ -42,7 +42,7 @@ export const Colorize = command({
 
         await saveDiscoveredJson(colorized, projectDiscoveryFolder)
 
-        updateDiffHistory(config.name, args.message)
+        await updateDiffHistory(config.name, args.message)
       }
     }
   },

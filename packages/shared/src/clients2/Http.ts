@@ -1,5 +1,8 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import fetch, { Headers, type RequestInit } from 'node-fetch'
+import {
+  type FetchInit,
+  fetchWithTimeout,
+} from '../clients/http/fetchWithTimeout'
 import { getRpcMetricsLabel } from '../clients/rpc/RpcMetricsContext'
 
 export interface HttpOptions {
@@ -58,12 +61,12 @@ export class Http {
     }
   }
 
-  async fetch(url: string, init: RequestInit): Promise<HttpResponse> {
+  async fetch(url: string, init: FetchInit): Promise<HttpResponse> {
     // Resolved here, synchronously in the caller's async context. The rate
     // limiter dispatches later from a timer or another call's completion, so
     // the context is not reliable inside `_fetch`.
     const label = getRpcMetricsLabel()
-    const request: RequestInit = { timeout: this.timeoutMs, ...init }
+    const request: FetchInit = { timeout: this.timeoutMs, ...init }
     if (this.rateLimiter) {
       return await this.rateLimiter.call(
         () => this._fetch(url, request, label),
@@ -75,15 +78,15 @@ export class Http {
 
   protected async _fetch(
     url: string,
-    init: RequestInit,
+    init: FetchInit,
     label: string,
   ): Promise<HttpResponse> {
     const start = Date.now()
-    const res = await fetch(url, init)
+    const res = await fetchWithTimeout(url, init)
     // We need to await text because we don't know if someone wants json or not
     // and we need to actually consume the response body not just the headers
     const body = await res.text()
-    this._trackMetrics(label, Date.now() - start, res.size)
+    this._trackMetrics(label, Date.now() - start, Buffer.byteLength(body))
     return {
       body,
       ok: res.ok,
@@ -150,7 +153,7 @@ export class Http {
 export function makeHttpResponse(
   status: number,
   body: string,
-  headers = new Headers(),
+  headers: Headers = new Headers(),
 ): HttpResponse {
   const ok = status >= 200 && status < 300
   return { body, ok, status, headers }
@@ -158,9 +161,13 @@ export function makeHttpResponse(
 
 export class MockHttp extends Http {
   private queue: (HttpResponse | 'NETWORK_ERROR')[] = []
-  lastFetch?: { url: string; init: RequestInit }
+  lastFetch?: { url: string; init: FetchInit }
 
-  queueResponse(status: number, body: string, headers = new Headers()) {
+  queueResponse(
+    status: number,
+    body: string,
+    headers: Headers = new Headers(),
+  ) {
     this.queue.push(makeHttpResponse(status, body, headers))
     return this
   }
@@ -169,7 +176,7 @@ export class MockHttp extends Http {
     this.queue.push('NETWORK_ERROR')
   }
 
-  override fetch(url: string, init: RequestInit) {
+  override fetch(url: string, init: FetchInit) {
     this.lastFetch = { url, init }
     const res = this.queue.shift()
     if (res === 'NETWORK_ERROR') {

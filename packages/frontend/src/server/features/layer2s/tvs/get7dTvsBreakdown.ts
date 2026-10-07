@@ -3,7 +3,6 @@ import type { SyncMetadataRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
-import partition from 'lodash/partition'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import {
@@ -93,16 +92,10 @@ export async function get7dTvsBreakdown(
 
   assert(from !== null, 'from is null')
 
-  const sevenDaysAgoFrom = from - 7 * UnixTime.DAY
-  const sevenDaysAgoTo = to - 7 * UnixTime.DAY
-
   const [values, syncMetadataRecords] = await Promise.all([
-    db.tvsTokenValue.getSummedByProjectForRanges(
+    db.tvsTokenValue.getSummedByProjectAtLatestAndSevenDaysBefore(
       tvsProjects.map((p) => p.projectId),
-      [
-        [from, to],
-        [sevenDaysAgoFrom, sevenDaysAgoTo],
-      ],
+      [from, to],
       {
         excludeAssociatedTokens: params.excludeAssociatedTokens ?? false,
         excludeRwaRestrictedTokens: params.excludeRwaRestrictedTokens ?? true,
@@ -111,26 +104,23 @@ export async function get7dTvsBreakdown(
     db.syncMetadata.getByFeature('tvs'),
   ])
 
-  const [recentValues, sevenDaysAgoValues] = partition(
-    values,
-    (r) => r.timestamp >= from,
-  )
-
-  const recentGrouped = groupBy(recentValues, (v) => v.project)
-  const sevenDaysAgoGrouped = groupBy(sevenDaysAgoValues, (v) => v.project)
+  // The query returns at most two rows per project, sorted by timestamp:
+  // the one seven days before (optional) followed by the latest.
+  const rowsByProject = groupBy(values, (v) => v.project)
 
   let total = 0
   const projects: Record<string, ProjectSevenDayTvsBreakdown> = {}
-  for (const [projectId, values] of Object.entries(recentGrouped)) {
+  for (const [projectId, rows] of Object.entries(rowsByProject)) {
     const syncState = getTvsSyncState({ projectId, syncMetadataRecords, to })
     if (!syncState) {
       continue
     }
 
-    const lastValue = values.at(-1)
+    const lastValue = rows.at(-1)
     if (!lastValue) {
       continue
     }
+    const sevenDaysAgoValue = rows.length === 2 ? rows[0] : undefined
 
     total += lastValue.value
 
@@ -157,9 +147,6 @@ export async function get7dTvsBreakdown(
         external: latestExternal,
       })
 
-    const sevenDaysAgoValue = sevenDaysAgoGrouped[projectId]?.find(
-      (v) => v.timestamp === lastValue.timestamp - 7 * UnixTime.DAY,
-    )
     if (!sevenDaysAgoValue) {
       projects[projectId] = {
         breakdown: {

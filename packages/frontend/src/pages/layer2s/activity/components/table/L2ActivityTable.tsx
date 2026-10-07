@@ -27,7 +27,7 @@ export function L2ActivityTable({ entries }: Props) {
 
   const columns = useMemo(() => getL2ActivityColumns(metric), [metric])
 
-  const table = useTable({
+  const table = useTable('L2ActivityTable', {
     columns,
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),

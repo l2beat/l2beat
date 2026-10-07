@@ -3,6 +3,7 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
@@ -14,11 +15,12 @@ import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
@@ -36,6 +38,7 @@ export function PrivacyProjectPage({
 }: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
+  const adversaries = getPrivacyAdversariesSummary(entry.sections)
 
   return (
     <AppLayout {...props}>
@@ -46,9 +49,7 @@ export function PrivacyProjectPage({
             data-project-page
           >
             {!isNavigationEmpty && (
-              <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-100 lg:hidden">
-                <MobileSectionNavigation sections={navigationSections} />
-              </div>
+              <StickyMobileSectionNavigation sections={navigationSections} />
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
@@ -110,28 +111,48 @@ export function PrivacyProjectPage({
                         relayerStat={entry.summary.relayerStat}
                       />
 
+                      <HorizontalSeparator className="mt-4 max-md:hidden" />
                       <PrivacyProjectRiskProfile
                         trustedSetup={entry.trustedSetup}
                         exitWindow={entry.exitWindow}
-                        privacy={entry.privacy}
+                        adversaries={adversaries}
+                        href={entry.href}
                         reproducibility={entry.reproducibility}
                         className="mt-4"
                       />
 
-                      {entry.attributes.length > 0 && (
+                      <HorizontalSeparator className="mt-4 max-md:hidden" />
+                      <div className="mt-6 flex flex-col gap-4 md:mt-4 md:flex-row md:gap-8">
                         <ProjectSummaryStat
-                          className="mt-6 md:mt-4"
-                          title="Attributes"
-                          tooltip="Protocol attributes and capabilities."
-                          valueClassName="flex flex-wrap justify-start gap-1"
-                          value={entry.attributes.map((attribute) => (
-                            <PrivacyAttributeTag
-                              key={attribute.id}
-                              attribute={attribute}
+                          title="Tracked on"
+                          tooltip="Chains on which the protocol deployment is tracked by L2BEAT."
+                          value={
+                            <ProjectIconList
+                              projects={entry.trackedOn}
+                              dialog={{
+                                title: 'Tracked on',
+                                description: 'Search for chains',
+                                searchPlaceholder:
+                                  'Start typing to find chain...',
+                                emptyText: 'No chains found.',
+                              }}
                             />
-                          ))}
+                          }
                         />
-                      )}
+                        {entry.attributes.length > 0 && (
+                          <ProjectSummaryStat
+                            title="Attributes"
+                            tooltip="Protocol attributes and capabilities."
+                            valueClassName="flex flex-wrap justify-end gap-1 md:justify-start"
+                            value={entry.attributes.map((attribute) => (
+                              <PrivacyAttributeTag
+                                key={attribute.id}
+                                attribute={attribute}
+                              />
+                            ))}
+                          />
+                        )}
+                      </div>
 
                       <HorizontalSeparator className="my-4 max-md:hidden" />
                       <div className="max-md:hidden">

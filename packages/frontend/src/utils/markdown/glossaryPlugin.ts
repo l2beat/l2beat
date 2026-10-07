@@ -1,5 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import type MarkdownIt from 'markdown-it'
+import type { RenderRule } from 'markdown-it/lib/renderer.mjs'
+import type Token from 'markdown-it/lib/token.mjs'
 import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 
 export function linkGlossaryTerms(
@@ -25,74 +27,165 @@ export function linkGlossaryTerms(
   )
 
   return (sourceText: string) => {
-    let text = sourceText
+    const ignoredOffsets = getIgnoredAndLinkOffsets(sourceText)
+    const isWithinIgnoredOffset = (position: number) =>
+      ignoredOffsets.some(
+        (link) => position >= link.start && position <= link.end,
+      )
+    const isIgnored = (start: number, end: number) =>
+      sourceText.at(start - 1) === ignoreDelimiter &&
+      sourceText.at(end) === ignoreDelimiter
+
+    // Longer terms claim their text first; a shorter term never links inside
+    // a longer one, and nothing links inside an existing link or code span.
+    // Working on offsets into the untouched source keeps this a single scan
+    // per term instead of rebuilding the text once per term.
+    const links: { start: number; end: number; markdown: string }[] = []
+    const overlapsLink = (start: number, end: number) =>
+      links.some((link) => start < link.end && end > link.start)
 
     for (const term of glossaryTerms) {
       const pattern = new RegExp(`(?<!\\w)(${escapeRegExp(term)})(?!\\w)`, 'gi')
-
-      const ignoredOffsets = getIgnoredAndLinkOffsets(text)
-
-      const isWithinIgnoredOffset = (position: number) => {
-        return ignoredOffsets.some(
-          (link) => position >= link.start && position <= link.end,
-        )
-      }
-
-      const isIgnored = (position: number) => {
-        return (
-          text.at(position - 1) === ignoreDelimiter &&
-          text.at(position + term.length) === ignoreDelimiter
-        )
-      }
-
-      // Replace glossary terms with links, avoiding existing markdown links
-      text = text.replace(pattern, (matchedTerm, ...maybeOffset) => {
-        // Since we are using a regex with a single capture group, the last two arguments are the offset and the full string, rest of the arguments are the matched term where the amount of terms is unknown and potentially empty
-        const offset = maybeOffset.at(-2)
-
-        if (isWithinIgnoredOffset(offset) || isIgnored(offset)) {
-          return matchedTerm // Don't replace if within an existing link
+      for (const match of sourceText.matchAll(pattern)) {
+        const start = match.index
+        const end = start + match[0].length
+        if (
+          isWithinIgnoredOffset(start) ||
+          isIgnored(start, end) ||
+          overlapsLink(start, end)
+        ) {
+          continue
         }
-
-        const glossaryTermData = termToData.get(matchedTerm.toLowerCase())
-
-        return glossaryTermData
-          ? createGlossaryLink(
-              glossaryTermData.id,
-              matchedTerm,
-              glossaryTermData.description,
-            )
-          : matchedTerm
-      })
+        const glossaryTermData = termToData.get(match[0].toLowerCase())
+        if (!glossaryTermData) continue
+        links.push({
+          start,
+          end,
+          markdown: createGlossaryLink(
+            glossaryTermData.id,
+            match[0],
+            glossaryTermData.description,
+          ),
+        })
+      }
     }
 
-    // Get rid of the ignore delimiters
-    text = text.replace(ignorePattern, '$1')
+    links.sort((a, b) => a.start - b.start)
+    let text = ''
+    let cursor = 0
+    for (const link of links) {
+      text += sourceText.slice(cursor, link.start) + link.markdown
+      cursor = link.end
+    }
+    text += sourceText.slice(cursor)
 
-    return text
+    // Get rid of the ignore delimiters
+    return text.replace(ignorePattern, '$1')
   }
 }
 
-export function glossaryPlugin(md: MarkdownIt) {
-  const defaultRender =
-    md.renderer.rules.link_open ??
-    function (tokens, idx, options, _env, self) {
-      return self.renderToken(tokens, idx, options)
-    }
+/**
+ * Pass as the markdown-it render env to also render each glossary term's
+ * description as a hidden element the links point to via aria-describedby.
+ * The tooltip is mounted only on the client, so without it the explanation is
+ * missing from the server-rendered HTML. The prefix keeps ids unique when a
+ * page renders several markdown blocks.
+ */
+export interface GlossaryRenderEnv {
+  glossaryDescriptionIdPrefix?: string
+}
 
-  md.renderer.rules.link_open = (tokens, index, options, env, self) => {
+// Keyed by the env object, which markdown-it hands to every rule of one
+// render, so the state lives exactly as long as that render.
+const describedTermsByRender = new WeakMap<
+  GlossaryRenderEnv,
+  {
+    describedTermIds: Set<string>
+    pendingAfterLink: { id: string; description: string } | undefined
+  }
+>()
+
+export function glossaryPlugin(md: MarkdownIt) {
+  const renderToken: RenderRule = (tokens, idx, options, _env, self) =>
+    self.renderToken(tokens, idx, options)
+  const defaultOpenRender = md.renderer.rules.link_open ?? renderToken
+  const defaultCloseRender = md.renderer.rules.link_close ?? renderToken
+
+  md.renderer.rules.link_open = (
+    tokens,
+    index,
+    options,
+    env: GlossaryRenderEnv | undefined,
+    self,
+  ) => {
     const token = tokens[index]
     assert(token, 'Token is not defined')
-    const href = token.attrGet('href')
-    if (isGlossaryLink(href)) {
-      const [cleanHref, description] = href?.split('?description=') || []
-      assert(cleanHref && description, 'Href or description is not defined')
-
+    const link = parseGlossaryHref(token.attrGet('href'))
+    if (link) {
       token.attrSet('data-link-role', 'glossary')
-      token.attrSet('data-description', decodeURIComponent(description))
-      token.attrSet('href', cleanHref)
+      token.attrSet('data-description', link.description)
+      token.attrSet('href', link.href)
+      describeGlossaryLink(token, link, env)
     }
-    return defaultRender(tokens, index, options, env, self)
+    return defaultOpenRender(tokens, index, options, env, self)
+  }
+
+  md.renderer.rules.link_close = (
+    tokens,
+    index,
+    options,
+    env: GlossaryRenderEnv | undefined,
+    self,
+  ) => {
+    const rendered = defaultCloseRender(tokens, index, options, env, self)
+    const state = env && describedTermsByRender.get(env)
+    const pending = state?.pendingAfterLink
+    if (!state || !pending) return rendered
+
+    state.pendingAfterLink = undefined
+    return `${rendered}<span id="${md.utils.escapeHtml(pending.id)}" class="sr-only">${md.utils.escapeHtml(pending.description)}</span>`
+  }
+}
+
+// Every link to a term points at one hidden description, rendered after the
+// term's first link, so repeated terms do not repeat the explanation.
+function describeGlossaryLink(
+  token: Token,
+  link: GlossaryLink,
+  env: GlossaryRenderEnv | undefined,
+) {
+  if (!env?.glossaryDescriptionIdPrefix) return
+
+  const id = `${env.glossaryDescriptionIdPrefix}-glossary-${link.termId}`
+  token.attrSet('aria-describedby', id)
+
+  let state = describedTermsByRender.get(env)
+  if (!state) {
+    state = { describedTermIds: new Set(), pendingAfterLink: undefined }
+    describedTermsByRender.set(env, state)
+  }
+  if (state.describedTermIds.has(link.termId)) return
+  state.describedTermIds.add(link.termId)
+  state.pendingAfterLink = { id, description: link.description }
+}
+
+interface GlossaryLink {
+  href: string
+  termId: string
+  description: string
+}
+
+// Reads back the href that createGlossaryLink builds.
+function parseGlossaryHref(href: string | null): GlossaryLink | undefined {
+  if (!href?.includes('/glossary#')) return undefined
+  const [cleanHref, encodedDescription] = href.split('?description=')
+  assert(cleanHref && encodedDescription, 'Href or description is not defined')
+  const termId = cleanHref.split('#')[1]
+  assert(termId, 'Glossary term id is not defined')
+  return {
+    href: cleanHref,
+    termId,
+    description: decodeURIComponent(encodedDescription),
   }
 }
 
@@ -122,8 +215,4 @@ function getIgnoredAndLinkOffsets(text: string) {
   }))
 
   return linkOffsets.concat(backtickOffsets)
-}
-
-function isGlossaryLink(href: string | null) {
-  return href?.includes('/glossary#')
 }

@@ -20,7 +20,7 @@ export const SUPPORTED_CHAINS = [
   { name: 'Linea', chainId: 59144 },
   { name: 'Zora', chainId: 7777777 },
   { name: 'Blast', chainId: 81457 },
-  { name: 'Base', chainId: 845 },
+  { name: 'Base', chainId: 8453 },
 ].sort((a, b) => a.chainId - b.chainId)
 
 export interface State {

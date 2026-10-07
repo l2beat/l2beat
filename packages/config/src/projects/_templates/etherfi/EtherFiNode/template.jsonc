@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiNode",
+  "category": "core",
+  "description": "Per-node implementation (behind a beacon). A node either owns an EigenLayer EigenPod that is its validators' withdrawal address, or, if created without a pod, is the withdrawal address itself and calls the EIP-7002/EIP-7251 system contracts directly to request exits and consolidations. ETH it receives is swept to the LiquidityPool. EigenLayer contracts are external.",
+  // EigenLayer wiring and the EIP-7002/EIP-7251 system contracts are external
+  "ignoreRelatives": [
+    "delegationManager",
+    "eigenPodManager",
+    "getEigenPod",
+    "BEACON_ETH_STRATEGY_ADDRESS",
+    "WITHDRAWAL_REQUEST_PREDEPLOY",
+    "CONSOLIDATION_REQUEST_PREDEPLOY"
+  ],
+  // live EIP-7002/EIP-7251 request fees
+  "ignoreMethods": [
+    "proxiableUUID",
+    "getWithdrawalRequestFee",
+    "getConsolidationRequestFee"
+  ]
+}

@@ -26,7 +26,7 @@ export async function getNativeRollupsData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Native Rollups - L2BEAT',
+        name: 'Native Rollups',
         description:
           'Native rollups use proof-carrying transactions so Ethereum can verify L2 blocks with its own execution program and proof infrastructure.',
         url,

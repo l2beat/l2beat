@@ -40,6 +40,37 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
+  describe(ActivityRepository.prototype.checkIfExists.name, () => {
+    beforeEach(async () => {
+      await repository.deleteAll()
+    })
+
+    it('is true when the project has a non-zero count', async () => {
+      await repository.upsertMany([record('a', START, 5)])
+      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(true)
+    })
+
+    it('ignores rows with a zero count, which draw an empty chart', async () => {
+      await repository.upsertMany([record('a', START, 0)])
+      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(false)
+    })
+
+    it('is scoped to the project', async () => {
+      await repository.upsertMany([record('a', START, 5)])
+      expect(await repository.checkIfExists(ProjectId('b'))).toEqual(false)
+    })
+
+    it('only counts rows at or after fromInclusive', async () => {
+      await repository.upsertMany([record('a', START - UnixTime.DAY, 5)])
+      expect(await repository.checkIfExists(ProjectId('a'), START)).toEqual(
+        false,
+      )
+      expect(
+        await repository.checkIfExists(ProjectId('a'), START - UnixTime.DAY),
+      ).toEqual(true)
+    })
+  })
+
   describe(ActivityRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()

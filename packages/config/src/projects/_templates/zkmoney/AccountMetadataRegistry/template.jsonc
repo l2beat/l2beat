@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AccountMetadataRegistry",
+  "category": "core",
+  "description": "Stores user records (Aztec L2 address, keys, chosen resolver operator) and resolver operator entries. User records can be written by the user or by the RegistrationController. Anyone can register as a resolver operator.",
+  "fields": {
+    "resolverOperators": {
+      "description": "Registered resolver operators with their latest entry (public key, L2 address, gateway URL, portal).",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": "entry",
+        "groupBy": "resolverOperator",
+        "set": { "event": "ResolverOperatorUpdated" }
+      }
+    }
+  }
+}

@@ -1,6 +1,10 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SignerList (Security Council)",
+  // ossification: the DAO governance stack controls Taiko contracts only since the TaikoDAOController accepted
+  // ownership of the Taiko Token from the Taiko Multisig (tx 0xa4dfb666..., 2025-06-06); earlier set-up
+  // changes (e.g. the 2025-06-04 test signer removal) could not affect Taiko. Template used only by taiko.
+  "critical": { "sinceTimestamp": 1749196415 },
   "description": "A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.",
   "ignoreMethods": ["addresslistLengthAtBlock", "getEncryptionAgents"],
   "ignoreRelatives": ["settings"],
@@ -33,10 +37,10 @@
       }
     },
     "$threshold": {
-      "description": "hardcoded emergency multisg threshold, must be manually changed here if it changes in the EmergencyMultisig contract.",
+      "description": "Emergency multisig approval threshold, mirrored from the EmergencyMultisig contract.",
       "handler": {
         "type": "hardcoded",
-        "value": 7
+        "value": 4
       }
     },
     "settings": {

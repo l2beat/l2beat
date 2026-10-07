@@ -4,6 +4,7 @@ import { multiSendPlugin } from './multiSendPlugin'
 import { scheduleBatchPlugin } from './scheduleBatchPlugin'
 import { sendTxToL1Plugin } from './sendTxToL1Plugin'
 import { taikoDaoPlugin } from './taikoDaoPlugin'
+import { taikoDelegateControllerPlugin } from './taikoDelegateControllerPlugin'
 import type { NestedCall, Plugin } from './types'
 import { whitebitBatchPlugin } from './whitebitBatchPlugin'
 import { zkSyncUpgradePlugin } from './zkSyncUpgradePlugin'
@@ -12,6 +13,7 @@ export const plugins: Plugin[] = [
   erc20Plugin,
   multiSendPlugin,
   taikoDaoPlugin,
+  taikoDelegateControllerPlugin,
   whitebitBatchPlugin,
   zkSyncUpgradePlugin,
   scheduleBatchPlugin,

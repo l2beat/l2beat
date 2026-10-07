@@ -27,10 +27,105 @@
     "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833": "UnichainProxyAdminOwner",
     "unichain:0x4200000000000000000000000000000000000002": "DeployerWhitelist",
     "unichain:0x7E6c183F538abb8572F5cd17109C617b994d6944": "UnichainProxyAdminOwner_L2Alias",
+    "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias",
     "unichain:0x420000000000000000000000000000000000000F": "GasPriceOracle",
     "unichain:0x4200000000000000000000000000000000000015": "L1Block"
   },
   "overrides": {
+    // Shared Karst upgrade tooling. Ignored so discovery does not follow it
+    // into bare implementations; the upgrade authority is the ProxyAdmin owner.
+    "eth:0x54fAbb112956Ef963e4B6c7cf15D8229ac404ad8": {
+      // OPContractsManagerContainer
+      "ignoreDiscovery": true
+    },
+    "eth:0x8D92f589E2380Fd22fc48FE155a72143910f99e4": {
+      // OPContractsManagerMigrator
+      "ignoreDiscovery": true
+    },
+    "eth:0x9873d652BdF752a6751d2e6c0ce95188da516c2e": {
+      // OPContractsManagerUtils
+      "ignoreDiscovery": true
+    },
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      // OPContractsManagerV2
+      "ignoreDiscovery": true
+    },
+    "eth:0x1951828Ce913DC4383a8A1695695D537a11D896a": {
+      // OPContractsManager 8.0.1
+      "ignoreDiscovery": true
+    },
+    "eth:0xB61177c2d8D929A81604650B06abFCAeCAF4FEb9": {
+      // OPContractsManagerStandardValidator
+      "ignoreDiscovery": true
+    },
+    "eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2": {
+      // bare OptimismPortal2 implementation reached as a relative since the latest upgrade; every call on it reverts
+      "ignoreDiscovery": true
+    },
+    "eth:0x8098F676033A377b9Defe302e9fE6877cD63D575": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
+    // SuperchainProxyAdmin: can upgrade the shared SuperchainConfig that holds Unichain's pause authority.
+    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
+      "critical": true
+    },
+    // ProxyAdmin (L1): can upgrade every core Unichain contract (portal, bridges, DGF, SystemConfig).
+    "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4": {
+      "critical": true
+    },
+    // The air gap: how long a resolved dispute game must wait before its root
+    // can finalize withdrawals. Changing it alters the guardian's window to
+    // blacklist a faulty game, i.e. the conditions under which user
+    // withdrawals are validated. It is a constructor immutable, so it only
+    // changes together with an implementation upgrade.
+    "eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9": {
+      "fields": {
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
+      }
+    },
+    // LivenessGuard and LivenessModule of Unichain Multisig 1, a member of the
+    // 3-of-3 UnichainProxyAdminOwner (upgrade authority). The guard is an older
+    // version that does not match the shared gnosisSafeModules/LivenessGuard shape.
+    // Both left the upgrade path when the ProxyAdmin owner moved to the
+    // SuperchainProxyAdminOwner on 2026-09-14 (tx 0xfca98b14ae7163d444cd17285c7f97e1fb76db00cd971bae847a8af5f8ecb77f).
+    // (The LivenessModule eth:0x4B4F1aF8... is bounded by its deletion from
+    // discovery; an override here would change the structure hash.)
+    "eth:0x9343c452dec3251fe99D9Fd29b74c5b9CD1751a6": {
+      "critical": { "untilTimestamp": 1789396679 }
+    },
+    // Safes (SuperchainProxyAdminOwner, OpFoundationUpgradeSafe, Security
+    // Council, Guardian, Unichain Multisig 1 and 2) are actor containers and not
+    // critical. Their mechanism changes are reviewed events in ossification.json
+    // on the critical contract they control (ProxyAdmin, SuperchainProxyAdmin,
+    // SuperchainConfig). Unichain Multisig 2 only owns SystemConfig, whose owner
+    // sets batcher, signer and gas parameters (operator identity, not critical).
+    "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
+      // SaferSafes is enabled on the Upgrade Safe; its response window controls when the Security Council can take over.
+      "fields": {
+        "upgradeSafeLivenessResponsePeriod": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function livenessSafeConfiguration(address) view returns (uint256 livenessResponsePeriod, address fallbackOwner)",
+            "args": ["0x847B5c174615B1B7fDF770882256e2D3E95b9D92"]
+          },
+          "edit": ["get", "livenessResponsePeriod"]
+        },
+        "upgradeSafeFallbackOwner": {
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "function livenessSafeConfiguration(address) view returns (uint256 livenessResponsePeriod, address fallbackOwner)",
+            "args": ["0x847B5c174615B1B7fDF770882256e2D3E95b9D92"]
+          },
+          "edit": ["get", "fallbackOwner"]
+        }
+      }
+    },
     "unichain:0x4200000000000000000000000000000000000002": {
       "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
     },

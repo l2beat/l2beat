@@ -7,6 +7,11 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
@@ -56,10 +61,21 @@ const columns = [
         return <NoDataBadge />
       }
 
-      return (
+      const formatted = (
         <span className="font-medium text-sm">
           {formatCurrency(value, 'usd')}
         </span>
+      )
+      const dataSource = ctx.row.original.tvlDataSource
+      if (!dataSource) {
+        return formatted
+      }
+
+      return (
+        <Tooltip contentInHtml>
+          <TooltipTrigger>{formatted}</TooltipTrigger>
+          <TooltipContent>Data source: {dataSource}</TooltipContent>
+        </Tooltip>
       )
     },
     sortUndefined: 'last',
@@ -87,7 +103,7 @@ const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
 export function DefiSummaryTable({ entries }: { entries: DefiSummaryEntry[] }) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
 
-  const table = useTable({
+  const table = useTable('DefiSummaryTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

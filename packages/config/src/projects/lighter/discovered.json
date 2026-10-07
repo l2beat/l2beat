@@ -1,7 +1,7 @@
 {
   "name": "lighter",
-  "timestamp": 1789042027,
-  "configHash": "0x36b0856e7e96a22b55750bb85e9fb086c12d7ed3d08041b93b337ad509c38243",
+  "timestamp": 1790947397,
+  "configHash": "0x5efcc823cd489dbac97355d6777ada06a44ffa1b5683f304cfe34ad893a6b3a9",
   "entries": [
     {
       "address": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
@@ -54,10 +54,11 @@
       "template": "lighter/ZkLighterWithSpot",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0xb4dce2f15590894c57a91457428ad19b912efa03f6198f09e308f82518d33234"
+        "0x2342f78a8cb132fb471dd913415e6f66e931c65f6daf8455b37b341c722bf51f"
       ],
       "proxyType": "zkLighter proxy",
       "description": "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
+      "critical": true,
       "ignoreInWatchMode": [
         "committedBatchesCount",
         "committedPriorityRequestCount",
@@ -82,10 +83,10 @@
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "$implementation": [
-          "eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e",
-          "eth:0xaA5e1aaa81a39F828248ffFeaDC77CcEC8eC3906"
+          "eth:0xE16c893252616dD49913969f145e733b96a3E5A7",
+          "eth:0xE1A19e35320218E41526ad619cf55985cfF20810"
         ],
-        "additionalZkLighter": "eth:0xaA5e1aaa81a39F828248ffFeaDC77CcEC8eC3906",
+        "additionalZkLighter": "eth:0xE1A19e35320218E41526ad619cf55985cfF20810",
         "assetConfigETH": {
           "tokenAddress": "eth:0x0000000000000000000000000000000000000000",
           "withdrawalsEnabled": 1,
@@ -102,8 +103,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 231628,
-        "committedPriorityRequestCount": 1931310,
+        "committedBatchesCount": 242544,
+        "committedPriorityRequestCount": 1948378,
         "createdMarketsPostSpot": [
           "ETH/USDC",
           "STABLE",
@@ -230,7 +231,11 @@
           "STABLECOINX",
           "SHEIN",
           "PONS",
-          "AI"
+          "AI",
+          "RAY",
+          "STONK",
+          "OURA",
+          "PRL"
         ],
         "createdMarketsPreSpot": [
           "USELESS",
@@ -288,17 +293,17 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0x866418061d4C1168e1c8E8f6facE79675395E008",
-        "executedBatchesCount": 231624,
-        "executedOnChainBatchesCount": 141989,
-        "executedPriorityRequestCount": 1931308,
+        "executedBatchesCount": 242532,
+        "executedOnChainBatchesCount": 146512,
+        "executedPriorityRequestCount": 1948361,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e",
+        "getTarget": "eth:0xE16c893252616dD49913969f145e733b96a3E5A7",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
-        "lastAccountIndex": 745900,
-        "lastVerifiedEndBlockNumber": 329721988,
-        "lastVerifiedStateRoot": "0x8f80f8e8408d544f80ad2e6a3cbcc286d69271065b631e9cb9e849a637253835",
-        "lastVerifiedValidiumRoot": "0x02c85502b0dbe376c04437af61268a57ca180f61f0a664a36c52170196c00c75",
+        "lastAccountIndex": 751772,
+        "lastVerifiedEndBlockNumber": 347172334,
+        "lastVerifiedStateRoot": "0x3e228fb2a1450ffb735d34e02a621ac54d7505f96e5486c9eb21fc1539e474a8",
+        "lastVerifiedValidiumRoot": "0xa495fe7e781c39a0c806c4df821e9efdcee74df66cc22b81c7529720fdaf4876",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -310,6 +315,7 @@
         "MAX_ORDER_QUOTE_AMOUNT": 281474976710655,
         "MAX_PERPS_MARKET_INDEX": 254,
         "MAX_POOL_SHARES_TO_MINT_OR_BURN": "1152921504606846975",
+        "MAX_PUBLIC_MARKET_INDEX": 281474976710655,
         "MAX_SPOT_MARKET_INDEX": 4094,
         "MAX_STAKING_SHARES_TO_MINT_OR_BURN": "1152921504606846975",
         "MAX_TICK_SIZE": "340282366920938463463374607431768211455",
@@ -320,8 +326,9 @@
         "MIN_STAKING_SHARES_TO_MINT_OR_BURN": 1,
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
-        "openPriorityRequestCount": 3,
-        "pendingOnChainBatchesCount": 2,
+        "NIL_PUBLIC_MARKET_INDEX": 255,
+        "openPriorityRequestCount": 28,
+        "pendingOnChainBatchesCount": 3,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -373,24 +380,39 @@
             "tokenAddress": "eth:0x227fF9D1a9931db2585a45c41fC84e3b3f48B37b"
           }
         ],
-        "stateRoot": "0x293bcec50e6825200cbe4e187b3f226557ebc6044c9cd966d9b2b834323caf64",
+        "stateRoot": "0xa566cf3387fc7db0e8bd0771a784a7016fa79769a01fa66db5fb863fbd3e4490",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0xc448e0fc391619025960eefbce5bb2325a851467439553296273a3efbf1d6bd1",
-        "verifiedBatchesCount": 231625,
-        "verifiedPriorityRequestCount": 1931308,
+        "validiumRoot": "0x92686b87bf5233313867968ef0baf5b036f40c177853c9a2687e96960bda7d21",
+        "verifiedBatchesCount": 242533,
+        "verifiedPriorityRequestCount": 1948365,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
-        "verifier": { "severity": "HIGH" },
-        "desertVerifier": { "severity": "HIGH" },
-        "desertMode": { "severity": "HIGH" }
+        "stateRootUpgradeVerifier": {
+          "severity": "HIGH",
+          "description": "If set to a non-zero address, a governor can replace the current state root with any new one accompanied by a proof this verifier accepts (the pointer self-clears after one use)."
+        },
+        "treasury": {
+          "severity": "MEDIUM",
+          "description": "L1 address bound to the treasury account (accountIndex 0) that collects trading fees on L2."
+        },
+        "insuranceFundOperator": {
+          "severity": "MEDIUM",
+          "description": "L1 address bound to the insurance fund account that backstops trading losses on L2."
+        },
+        "desertMode": {
+          "severity": "MEDIUM",
+          "description": "One-way escape-hatch state: once activated (after an expired, uncensorable priority request), normal operation halts permanently and users exit via desert-mode proofs."
+        },
+        "assetConfigUSDC": { "severity": "MEDIUM" },
+        "assetConfigETH": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": "Proxy",
-        "eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e": "ZkLighter",
-        "eth:0xaA5e1aaa81a39F828248ffFeaDC77CcEC8eC3906": "AdditionalZkLighter"
+        "eth:0xE16c893252616dD49913969f145e733b96a3E5A7": "ZkLighter",
+        "eth:0xE1A19e35320218E41526ad619cf55985cfF20810": "AdditionalZkLighter"
       }
     },
     {
@@ -461,6 +483,8 @@
         "0xcedbddf6ef097d451ba200328780c0cc492b65383f8dc44e760ec70eee4f8850"
       ],
       "proxyType": "immutable",
+      "description": "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1784379467,
       "sinceBlock": 25559735,
@@ -510,7 +534,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 81,
+        "nonce": 86,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -527,7 +551,8 @@
         "0x897bcb49a87330dfd6cf64b3848b2ecf503f7720b70c8c08b942741f952d681d"
       ],
       "proxyType": "immutable",
-      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.",
+      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
@@ -546,13 +571,21 @@
         "securityCouncilAddress": "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045",
         "upgradeStartTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 69,
+        "versionId": 74,
         "zkLighterProxy": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
       },
       "fieldMeta": {
-        "getMaster": { "severity": "HIGH" },
+        "approvedUpgradeNoticePeriod": {
+          "severity": "MEDIUM",
+          "description": "Raw upgrade delay in seconds. It can be skipped by the security council."
+        },
         "approvedUpgradeNoticePeriodFmt": {
-          "description": "upgrade delay, can be skipped by the 'securityCouncil' role."
+          "severity": "MEDIUM",
+          "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
+        },
+        "managedContracts": {
+          "severity": "HIGH",
+          "description": "The proxies whose implementations this gatekeeper can upgrade."
         }
       },
       "implementationNames": {
@@ -588,7 +621,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 197,
+        "nonce": 219,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -642,49 +675,98 @@
       "name": "Governance",
       "address": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
       "type": "Contract",
-      "template": "lighter/Governance",
+      "template": "lighter/GovernancePausable",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0x0033a032557a6a464645acc1901ac15e72d841e4d56cc8b94c64a55cae92b122"
+        "0x87a6efe7d369db405cf65a6d33bb772aae12a632406fb4533c845a4b4a2e8869"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Manages the list of validators and the network governor.",
+      "description": "Manages the list of validators, the network governor and the emergency pause guardians.",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08",
+        "$implementation": "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
+        "EMERGENCY_GUARDIAN_COOLDOWN": 604800,
+        "EMERGENCY_GUARDIAN_MAX_DURATION": 259200,
+        "EMERGENCY_GUARDIAN_MIN_DURATION": 86400,
+        "emergencyGuardian": "eth:0x0000000000000000000000000000000000000000",
+        "emergencyGuardianPaused": false,
+        "emergencyGuardianState": {
+          "startedAt": 0,
+          "expiresAt": 0,
+          "cooldownEndsAt": 0
+        },
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08",
+        "getTarget": "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
-        "MAX_DEPOSIT_AMOUNT": 1000000000000000,
-        "MAX_EXCHANGE_USDC_AMOUNT": "1152921504606846975",
-        "MAX_MARKET_INDEX": 254,
+        "MAX_ASSET_INDEX": 62,
+        "MAX_BATCH_DEPOSIT_LENGTH": 1000,
+        "MAX_DEPOSIT_CAP_TICKS": "1152921504606846975",
         "MAX_MASTER_ACCOUNT_INDEX": 140737488355327,
         "MAX_ORDER_BASE_AMOUNT": 281474976710655,
         "MAX_ORDER_PRICE": 4294967295,
-        "MAX_POSITION_AMOUNT": "72057594037927935",
-        "MAX_POSITION_QUOTE_AMOUNT": "72057594037927935",
-        "MIN_ORDER_BASE_AMOUNT": 1,
+        "MAX_ORDER_QUOTE_AMOUNT": 281474976710655,
+        "MAX_PERPS_MARKET_INDEX": 254,
+        "MAX_POOL_SHARES_TO_MINT_OR_BURN": "1152921504606846975",
+        "MAX_PUBLIC_MARKET_INDEX": 281474976710655,
+        "MAX_SPOT_MARKET_INDEX": 4094,
+        "MAX_STAKING_SHARES_TO_MINT_OR_BURN": "1152921504606846975",
+        "MAX_TICK_SIZE": "340282366920938463463374607431768211455",
+        "MIN_ASSET_INDEX": 1,
         "MIN_ORDER_PRICE": 1,
+        "MIN_POOL_SHARES_TO_MINT_OR_BURN": 1,
+        "MIN_SPOT_MARKET_INDEX": 2048,
+        "MIN_STAKING_SHARES_TO_MINT_OR_BURN": 1,
+        "NATIVE_ASSET_INDEX": 1,
         "networkGovernor": "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2",
         "NIL_ACCOUNT_INDEX": 281474976710655,
-        "PRIORITY_EXPIRATION": 1555200,
+        "NIL_PUBLIC_MARKET_INDEX": 255,
+        "PAUSE_GUARDIAN_COOLDOWN": 86400,
+        "PAUSE_GUARDIAN_MAX_DURATION": 86400,
+        "PAUSE_GUARDIAN_MIN_DURATION": 7200,
+        "pauseGuardian": "eth:0x0000000000000000000000000000000000000000",
+        "pauseGuardianPaused": false,
+        "pauseGuardianState": {
+          "startedAt": 0,
+          "expiresAt": 0,
+          "cooldownEndsAt": 0
+        },
+        "PRIORITY_EXPIRATION": 1209600,
         "usdc": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "USDC_ASSET_INDEX": 3,
         "validators": [
           "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f",
           "eth:0x750bdb90AC72A78308d21eAC78999bBAE31cd63d",
           "eth:0xC0D2853e06F1E145177D5ef08Ab065a76e14354C"
         ]
       },
-      "fieldMeta": { "networkGovernor": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "pauseGuardian": {
+          "severity": "MEDIUM",
+          "description": "Can halt batch processing and withdrawals for up to 24h, with a 24h cooldown between pauses."
+        },
+        "emergencyGuardian": {
+          "severity": "MEDIUM",
+          "description": "Can halt batch processing and withdrawals for up to 72h, with a 7d cooldown between pauses."
+        },
+        "pauseGuardianPaused": {
+          "severity": "MEDIUM",
+          "description": "True while a Pause Guardian pause is active (batch processing and withdrawals halted)."
+        },
+        "emergencyGuardianPaused": {
+          "severity": "MEDIUM",
+          "description": "True while an Emergency Guardian pause is active (batch processing and withdrawals halted)."
+        }
+      },
       "implementationNames": {
         "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": "Proxy",
-        "eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08": "Governance"
+        "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43": "Governance"
       }
     },
     {
@@ -694,24 +776,25 @@
       "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0xd6bd16e71487e79b2b73fdcd4ac6274826c2eea864e60a68d0527898b6aa449e"
+        "0x4dc54ffb4008a4ca0179446fed46565fbd602cc3963270f555f70ed93eea7cbe"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A",
+        "$implementation": "eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A"
+        "getTarget": "eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11"
       },
       "implementationNames": {
         "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": "Proxy",
-        "eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A": "ZkLighterVerifier"
+        "eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11": "ZkLighterVerifier"
       }
     },
     {
@@ -821,45 +904,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08": [
-      "constructor()",
-      "error ZkLighter_Governance_GovernorCannotBeZero()",
-      "error ZkLighter_Governance_InvalidUSDCAddress()",
-      "error ZkLighter_Governance_InvalidValidator()",
-      "error ZkLighter_Governance_OnlyGovernor()",
-      "error ZkLighter_Governance_ValidatorCannotBeZero()",
-      "event Initialized(uint8 version)",
-      "event NewGovernor(address newGovernor)",
-      "event ValidatorStatusUpdate(address validatorAddress, bool isActive)",
-      "function MAX_ACCOUNT_INDEX() view returns (uint48)",
-      "function MAX_API_KEY_INDEX() view returns (uint8)",
-      "function MAX_DEPOSIT_AMOUNT() view returns (uint64)",
-      "function MAX_EXCHANGE_USDC_AMOUNT() view returns (uint64)",
-      "function MAX_MARKET_INDEX() view returns (uint8)",
-      "function MAX_MASTER_ACCOUNT_INDEX() view returns (uint48)",
-      "function MAX_ORDER_BASE_AMOUNT() view returns (uint48)",
-      "function MAX_ORDER_PRICE() view returns (uint32)",
-      "function MAX_POSITION_AMOUNT() view returns (uint64)",
-      "function MAX_POSITION_QUOTE_AMOUNT() view returns (uint64)",
-      "function MIN_ORDER_BASE_AMOUNT() view returns (uint48)",
-      "function MIN_ORDER_PRICE() view returns (uint32)",
-      "function NIL_ACCOUNT_INDEX() view returns (uint48)",
-      "function PRIORITY_EXPIRATION() view returns (uint256)",
-      "function changeGovernor(address _newGovernor)",
-      "function initialize(bytes initializationParameters)",
-      "function isActiveValidator(address _address) view",
-      "function networkGovernor() view returns (address)",
-      "function requireGovernor(address _address) view",
-      "function setValidator(address _validator, bool _active)",
-      "function upgrade(bytes upgradeParameters)",
-      "function usdc() view returns (address)",
-      "function validators(address) view returns (bool)"
-    ],
-    "eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
-    ],
     "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
       "constructor(address _delegationManager, address _entryPoint)",
       "error ECDSAInvalidSignature()",
@@ -917,7 +961,65 @@
       "function initialize(bytes)",
       "function upgrade(bytes upgradeParameters)"
     ],
-    "eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e": [
+    "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": [
+      "constructor(address _securityCouncilAddress, address _zkLighterProxy)",
+      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
+      "event NoticePeriodChange(uint256 newNoticePeriod)",
+      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
+      "event PreparationStart(uint256 indexed versionId)",
+      "event UpgradeCancel(uint256 indexed versionId)",
+      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
+      "function addUpgradeable(address addr)",
+      "function approvedUpgradeNoticePeriod() view returns (uint256)",
+      "function cancelUpgrade()",
+      "function cutUpgradeNoticePeriod(uint256 _upgradeStartTimestamp)",
+      "function finishUpgrade(bytes[] targetsUpgradeParameters)",
+      "function getMaster() view returns (address master)",
+      "function managedContracts(uint256) view returns (address)",
+      "function nextTargets(uint256) view returns (address)",
+      "function noticePeriodFinishTimestamp() view returns (uint256)",
+      "function securityCouncilAddress() view returns (address)",
+      "function startPreparation() returns (bool)",
+      "function startUpgrade(address[] newTargets)",
+      "function transferMastership(address _newMaster)",
+      "function upgradeStartTimestamp() view returns (uint256)",
+      "function upgradeStatus() view returns (uint8)",
+      "function versionId() view returns (uint256)",
+      "function zkLighterProxy() view returns (address)"
+    ],
+    "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
+    ],
+    "eth:0xE16c893252616dD49913969f145e733b96a3E5A7": [
       "constructor()",
       "error ZkLighter_BatchNotInOnChainQueue()",
       "error ZkLighter_CannotBeInitialisedByImpl()",
@@ -986,6 +1088,7 @@
       "function MAX_ORDER_QUOTE_AMOUNT() view returns (uint48)",
       "function MAX_PERPS_MARKET_INDEX() view returns (uint16)",
       "function MAX_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MAX_PUBLIC_MARKET_INDEX() view returns (uint64)",
       "function MAX_SPOT_MARKET_INDEX() view returns (uint16)",
       "function MAX_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
       "function MAX_TICK_SIZE() view returns (uint128)",
@@ -996,6 +1099,7 @@
       "function MIN_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
       "function NATIVE_ASSET_INDEX() view returns (uint16)",
       "function NIL_ACCOUNT_INDEX() view returns (uint48)",
+      "function NIL_PUBLIC_MARKET_INDEX() view returns (uint64)",
       "function PRIORITY_EXPIRATION() view returns (uint256)",
       "function USDC_ASSET_INDEX() view returns (uint16)",
       "function __DEPRECATED_stateRootUpdates(uint64) view returns (bytes32)",
@@ -1055,51 +1159,7 @@
       "function withdrawPendingBalance(address _owner, uint16 _assetIndex, uint128 _baseAmount)",
       "function withdrawPendingBalanceLegacy(address _owner, uint128 _baseAmount)"
     ],
-    "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": [
-      "constructor(address _securityCouncilAddress, address _zkLighterProxy)",
-      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
-      "event NoticePeriodChange(uint256 newNoticePeriod)",
-      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
-      "event PreparationStart(uint256 indexed versionId)",
-      "event UpgradeCancel(uint256 indexed versionId)",
-      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
-      "function addUpgradeable(address addr)",
-      "function approvedUpgradeNoticePeriod() view returns (uint256)",
-      "function cancelUpgrade()",
-      "function cutUpgradeNoticePeriod(uint256 _upgradeStartTimestamp)",
-      "function finishUpgrade(bytes[] targetsUpgradeParameters)",
-      "function getMaster() view returns (address master)",
-      "function managedContracts(uint256) view returns (address)",
-      "function nextTargets(uint256) view returns (address)",
-      "function noticePeriodFinishTimestamp() view returns (uint256)",
-      "function securityCouncilAddress() view returns (address)",
-      "function startPreparation() returns (bool)",
-      "function startUpgrade(address[] newTargets)",
-      "function transferMastership(address _newMaster)",
-      "function upgradeStartTimestamp() view returns (uint256)",
-      "function upgradeStatus() view returns (uint8)",
-      "function versionId() view returns (uint256)",
-      "function zkLighterProxy() view returns (address)"
-    ],
-    "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": [
-      "constructor(address target, bytes targetInitializationParameters)",
-      "function getMaster() view returns (address master)",
-      "function getTarget() view returns (address target)",
-      "function initialize(bytes) pure",
-      "function transferMastership(address _newMaster)",
-      "function upgrade(bytes) pure",
-      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
-    ],
-    "eth:0xaA5e1aaa81a39F828248ffFeaDC77CcEC8eC3906": [
+    "eth:0xE1A19e35320218E41526ad619cf55985cfF20810": [
       "error AdditionalZkLighter_AccountIsNotRegistered()",
       "error AdditionalZkLighter_Error()",
       "error AdditionalZkLighter_InvalidAccountIndex()",
@@ -1113,7 +1173,6 @@
       "error AdditionalZkLighter_InvalidMarketStatus()",
       "error AdditionalZkLighter_InvalidMarketType()",
       "error AdditionalZkLighter_InvalidMinAmounts()",
-      "error AdditionalZkLighter_InvalidPubKey()",
       "error ZkLighter_DesertModeActive()",
       "event BatchCommit(uint64 batchNumber, uint32 batchSize, uint64 endBlockNumber)",
       "event BatchVerification(uint64 batchNumber, uint32 batchSize, uint64 endBlockNumber)",
@@ -1142,6 +1201,7 @@
       "function MAX_ORDER_QUOTE_AMOUNT() view returns (uint48)",
       "function MAX_PERPS_MARKET_INDEX() view returns (uint16)",
       "function MAX_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MAX_PUBLIC_MARKET_INDEX() view returns (uint64)",
       "function MAX_SPOT_MARKET_INDEX() view returns (uint16)",
       "function MAX_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
       "function MAX_TICK_SIZE() view returns (uint128)",
@@ -1152,6 +1212,7 @@
       "function MIN_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
       "function NATIVE_ASSET_INDEX() view returns (uint16)",
       "function NIL_ACCOUNT_INDEX() view returns (uint48)",
+      "function NIL_PUBLIC_MARKET_INDEX() view returns (uint64)",
       "function PRIORITY_EXPIRATION() view returns (uint256)",
       "function USDC_ASSET_INDEX() view returns (uint16)",
       "function __DEPRECATED_stateRootUpdates(uint64) view returns (bytes32)",
@@ -1163,7 +1224,7 @@
       "function committedBatchesCount() view returns (uint64)",
       "function committedPriorityRequestCount() view returns (uint64)",
       "function createMarket(uint8 _size_decimals, uint8 _price_decimals, bytes32 _symbol, tuple(uint16 marketIndex, uint8 marketType, bytes marketData) _params)",
-      "function createOrder(uint48 _accountIndex, uint16 _marketIndex, uint48 _baseAmount, uint32 _price, uint8 _isAsk, uint8 _orderType)",
+      "function createOrder(uint48 _accountIndex, uint16 _publicMarketIndex, uint48 _baseAmount, uint32 _price, uint8 _isAsk, uint8 _orderType)",
       "function deposit(address _to, uint16 _assetIndex, uint8 _routeType, uint256 _amount) payable",
       "function depositBatch(uint64[] _amount, address[] _to, uint48[] _accountIndex)",
       "function desertMode() view returns (bool)",
@@ -1192,25 +1253,97 @@
       "function verifiedPriorityRequestCount() view returns (uint64)",
       "function withdraw(uint48 _accountIndex, uint16 _assetIndex, uint8 _routeType, uint64 _baseAmount)"
     ],
-    "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": [
-      "constructor(address target, bytes targetInitializationParameters)",
-      "function getMaster() view returns (address master)",
-      "function getTarget() view returns (address target)",
-      "function initialize(bytes) pure",
-      "function transferMastership(address _newMaster)",
-      "function upgrade(bytes) pure",
-      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43": [
+      "constructor()",
+      "error AlreadyPaused()",
+      "error InvalidPauseDuration()",
+      "error MinimumPauseDurationNotElapsed()",
+      "error NotEmergencyGuardian()",
+      "error NotPauseGuardian()",
+      "error NotPaused()",
+      "error PauseCooldownActive()",
+      "error Paused()",
+      "error ZkLighter_Governance_CannotBeInitialisedByImpl()",
+      "error ZkLighter_Governance_GovernorCannotBeZero()",
+      "error ZkLighter_Governance_InvalidUSDCAddress()",
+      "error ZkLighter_Governance_InvalidValidator()",
+      "error ZkLighter_Governance_OnlyGovernor()",
+      "error ZkLighter_Governance_OnlyProxyCanCallUpgrade()",
+      "error ZkLighter_Governance_ValidatorCannotBeZero()",
+      "event EmergencyGuardianChanged(address indexed oldGuardian, address indexed newGuardian)",
+      "event Initialized(uint8 version)",
+      "event NewGovernor(address newGovernor)",
+      "event PauseEnded(uint8 indexed tier, address indexed actor, uint64 cooldownEndsAt)",
+      "event PauseExtended(uint8 indexed tier, address indexed guardian, uint64 startedAt, uint64 expiresAt, uint64 cooldownEndsAt)",
+      "event PauseGuardianChanged(address indexed oldGuardian, address indexed newGuardian)",
+      "event PauseStarted(uint8 indexed tier, address indexed guardian, uint64 startedAt, uint64 expiresAt, uint64 cooldownEndsAt)",
+      "event ValidatorStatusUpdate(address validatorAddress, bool isActive)",
+      "function EMERGENCY_GUARDIAN_COOLDOWN() view returns (uint64)",
+      "function EMERGENCY_GUARDIAN_MAX_DURATION() view returns (uint64)",
+      "function EMERGENCY_GUARDIAN_MIN_DURATION() view returns (uint64)",
+      "function MAX_ACCOUNT_INDEX() view returns (uint48)",
+      "function MAX_API_KEY_INDEX() view returns (uint8)",
+      "function MAX_ASSET_INDEX() view returns (uint16)",
+      "function MAX_BATCH_DEPOSIT_LENGTH() view returns (uint64)",
+      "function MAX_DEPOSIT_CAP_TICKS() view returns (uint64)",
+      "function MAX_MASTER_ACCOUNT_INDEX() view returns (uint48)",
+      "function MAX_ORDER_BASE_AMOUNT() view returns (uint48)",
+      "function MAX_ORDER_PRICE() view returns (uint32)",
+      "function MAX_ORDER_QUOTE_AMOUNT() view returns (uint48)",
+      "function MAX_PERPS_MARKET_INDEX() view returns (uint16)",
+      "function MAX_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MAX_PUBLIC_MARKET_INDEX() view returns (uint64)",
+      "function MAX_SPOT_MARKET_INDEX() view returns (uint16)",
+      "function MAX_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MAX_TICK_SIZE() view returns (uint128)",
+      "function MIN_ASSET_INDEX() view returns (uint16)",
+      "function MIN_ORDER_PRICE() view returns (uint32)",
+      "function MIN_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MIN_SPOT_MARKET_INDEX() view returns (uint16)",
+      "function MIN_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function NATIVE_ASSET_INDEX() view returns (uint16)",
+      "function NIL_ACCOUNT_INDEX() view returns (uint48)",
+      "function NIL_PUBLIC_MARKET_INDEX() view returns (uint64)",
+      "function PAUSE_GUARDIAN_COOLDOWN() view returns (uint64)",
+      "function PAUSE_GUARDIAN_MAX_DURATION() view returns (uint64)",
+      "function PAUSE_GUARDIAN_MIN_DURATION() view returns (uint64)",
+      "function PRIORITY_EXPIRATION() view returns (uint256)",
+      "function USDC_ASSET_INDEX() view returns (uint16)",
+      "function changeGovernor(address _newGovernor)",
+      "function emergencyGuardian() view returns (address)",
+      "function emergencyGuardianPaused() view returns (bool)",
+      "function emergencyGuardianState() view returns (uint64 startedAt, uint64 expiresAt, uint64 cooldownEndsAt)",
+      "function emergencyPauseSystem(uint64 duration)",
+      "function emergencyUnpauseSystem()",
+      "function extendEmergencyPause(uint64 newExpiresAt)",
+      "function extendPauseGuardianPause(uint64 newExpiresAt)",
+      "function initialize(bytes initializationParameters)",
+      "function isActiveValidator(address _address) view",
+      "function networkGovernor() view returns (address)",
+      "function pauseGuardian() view returns (address)",
+      "function pauseGuardianPaused() view returns (bool)",
+      "function pauseGuardianState() view returns (uint64 startedAt, uint64 expiresAt, uint64 cooldownEndsAt)",
+      "function pauseSystem(uint64 duration)",
+      "function requireGovernor(address _address) view",
+      "function requireUnpaused() view",
+      "function setEmergencyGuardian(address newEmergencyGuardian)",
+      "function setPauseGuardian(address newPauseGuardian)",
+      "function setValidator(address _validator, bool _active)",
+      "function unpauseSystem()",
+      "function upgrade(bytes upgradeParameters)",
+      "function usdc() view returns (address)",
+      "function validators(address) view returns (bool)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "lighter/Governance": "0x4e9f04516598b2c63a839e9e92296b4c684dadcc7a872a6e7ba64e3413d7cdec",
-    "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59",
+    "lighter/GovernancePausable": "0xd138c37a3d800d97dc7b7173e52f60c34e0566d719abc06205fd9f9633bd783b",
+    "lighter/UpgradeGatekeeper": "0x510c4667b3a31f0719ea9fac40e598ae3d96880abc579c8f901e03d153b19bdb",
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "lighter/ZkLighterWithSpot": "0xf2193f542c5b2dc29610085ddafb70c168d82e65ee4e03f27faf3e9eaa11ece2"
+    "lighter/ZkLighterWithSpot": "0x557fce146526c6fd859e5d8ec58a0d624c2c2d1d2372e1d433f3d132136f6ba7"
   },
-  "usedBlockNumbers": { "ethereum": 25946882 },
-  "permissionsConfigHash": "0x325b42a02b378a6f0d10ff2e466b2acb07e8ffcefdb6f7417613621f941e8d6f",
+  "usedBlockNumbers": { "ethereum": 26104912 },
+  "permissionsConfigHash": "0xa3f6f14b2e6e9c3a968cc8f4f094f5face07c413b7a3efa12c56b1a05c5ec446",
   "permissions": {
     "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f": {
       "receivedPermissions": [
@@ -1266,7 +1399,7 @@
         {
           "permission": "interact",
           "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.",
+          "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets, appoint the Pause and Emergency Guardians and lift their pauses early.",
           "role": ".networkGovernor"
         },
         {

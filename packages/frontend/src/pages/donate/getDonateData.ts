@@ -22,7 +22,7 @@ export async function getDonateData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Donate - L2BEAT',
+        name: 'Donate',
         description:
           "Support L2BEAT's independent research & development with a donation.",
         url,

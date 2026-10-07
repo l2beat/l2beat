@@ -1,0 +1,156 @@
+{
+  "events": [
+    {
+      "timestamp": 1722934619,
+      "type": "state",
+      "contract": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "transaction": "0xc1e73b06359759201b76ab7654e0bd49011f33c0230dfc24423985fbf36ea817",
+      "updateId": "3347bf90",
+      "reason": "Changed the BridgeHub admin from the Governance contract 0x0b62…3F61 to the EraChainAdminProxy 0x2cf3…5063 (NewAdmin event in this transaction)."
+    },
+    {
+      "timestamp": 1722934619,
+      "type": "code",
+      "contract": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "transaction": "0xc1e73b06359759201b76ab7654e0bd49011f33c0230dfc24423985fbf36ea817",
+      "updateId": "3347bf90",
+      "reason": "Upgraded the ChainTypeManager and, in the same transaction, changed its admin from the Governance contract 0x0b62…3F61 to the EraChainAdminProxy 0x2cf3…5063 (NewAdmin event). Dates the admin change of diffHistory entry 3347bf90 at this upgrade."
+    },
+    {
+      "timestamp": 1726123295,
+      "type": "state",
+      "contract": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "transaction": "0x04252ef77e208a233dfe0e7a3c70a04c8c8e95364c6ec67e5dd4ca7299bad8cb",
+      "updateId": "88d8f58d",
+      "reason": "ZK token governance takes over: an emergency upgrade through the first EmergencyUpgradeBoard 0xdEFd…9b29 made the first ProtocolUpgradeHandler 0x8f7a…1897 accept ownership of the BridgeHub from the Governance contract 0x0b62…3F61 (OwnershipTransferred event)."
+    },
+    {
+      "timestamp": 1726123295,
+      "type": "state",
+      "contract": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "transaction": "0x04252ef77e208a233dfe0e7a3c70a04c8c8e95364c6ec67e5dd4ca7299bad8cb",
+      "updateId": "88d8f58d",
+      "reason": "ZK token governance takes over: the first ProtocolUpgradeHandler 0x8f7a…1897 accepted ownership of the ChainTypeManager from the Governance contract 0x0b62…3F61 (OwnershipTransferred event)."
+    },
+    {
+      "timestamp": 1726123295,
+      "type": "state",
+      "contract": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+      "transaction": "0x04252ef77e208a233dfe0e7a3c70a04c8c8e95364c6ec67e5dd4ca7299bad8cb",
+      "updateId": "88d8f58d",
+      "reason": "ZK token governance takes over: the first ProtocolUpgradeHandler 0x8f7a…1897 accepted ownership of the L1Nullifier (then L1SharedBridge) from the Governance contract 0x0b62…3F61 (OwnershipTransferred event)."
+    },
+    {
+      "timestamp": 1740673526,
+      "type": "state",
+      "contract": "zksync:0x76705327e682F2d96943280D99464Ab61219e34f",
+      "transaction": "0x32376198b67631921cf17940d104c57bbeaa6c38b2527cd3912219c173bec37b",
+      "updateId": "d7262d25",
+      "reason": "ZkProtocolGovernor proposal execution changed votingDelay and lateQuorumVoteExtension from 7d to 3d and moved the governor to the new ProtocolTimelockController 0x085b…c714 (VotingDelaySet, LateQuorumVoteExtensionSet and TimelockChange events on ZKsync Era)."
+    },
+    {
+      "timestamp": 1741379564,
+      "type": "state",
+      "contract": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+      "transaction": "0xb5382d0a1aef95071bb76568284d3f52a6db9f1cc31c6db3aa5bab898e306a80",
+      "updateId": "616c7305",
+      "reason": "Token governance replaced: L1 -> L2 transactions from the first ProtocolUpgradeHandler's alias moved the ZK token's MINTER_ADMIN_ROLE from the old TokenTimelockController 0x3E21…dDd6 (old ZkTokenGovernor 0x1056…6E89) to the new ZkTokenTimelockController 0xe5d2…8c3d (ZkTokenGovernor 0xb83F…5746) and DEFAULT_ADMIN_ROLE to the new ProtocolUpgradeHandler alias 0xF41E…6bc4 (RoleGranted/RoleRevoked events, all in ZKsync Era block 57258426)."
+    },
+    {
+      "timestamp": 1741630187,
+      "type": "state",
+      "contract": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "transaction": "0x94818a4b7e31e0b867c7490fd299dfc2c8a811a21a6ab528be82abf75e319a69",
+      "updateId": "0819e8b8",
+      "reason": "Governance v2: an emergency upgrade through EmergencyUpgradeBoard 0xECE8…e3f6 made the new ProtocolUpgradeHandler 0xE30D…5Ab3 accept ownership of the BridgeHub from the first ProtocolUpgradeHandler 0x8f7a…1897 (OwnershipTransferred event)."
+    },
+    {
+      "timestamp": 1741630187,
+      "type": "state",
+      "contract": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "transaction": "0x94818a4b7e31e0b867c7490fd299dfc2c8a811a21a6ab528be82abf75e319a69",
+      "updateId": "0819e8b8",
+      "reason": "Governance v2: the new ProtocolUpgradeHandler 0xE30D…5Ab3 accepted ownership of the ChainTypeManager from the first ProtocolUpgradeHandler 0x8f7a…1897 (OwnershipTransferred event)."
+    },
+    {
+      "timestamp": 1741630187,
+      "type": "state",
+      "contract": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+      "transaction": "0x94818a4b7e31e0b867c7490fd299dfc2c8a811a21a6ab528be82abf75e319a69",
+      "updateId": "0819e8b8",
+      "reason": "Governance v2: the new ProtocolUpgradeHandler 0xE30D…5Ab3 accepted ownership of the L1Nullifier from the first ProtocolUpgradeHandler 0x8f7a…1897 (OwnershipTransferred event)."
+    },
+    {
+      "timestamp": 1741766891,
+      "type": "state",
+      "contract": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+      "transaction": "0x93e4efe078b08019c40dc11046abaa531b75263f297ec014c2d7901c0e1ff243",
+      "updateId": "42eff026",
+      "reason": "ProtocolUpgradeHandler upgrade execution set the ChainTypeManager validatorTimelock 0x5D8b…d06E -> 0x8c0B…F564 (NewValidatorTimelock event)."
+    },
+    {
+      "timestamp": 1743408047,
+      "type": "code",
+      "contract": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "transaction": "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3",
+      "updateId": "ec59e2ee",
+      "reason": "v26 upgrade of the shared contracts. The same transaction pointed the BridgeHub sharedBridge from the L1Nullifier 0xD7f9…B2cB to the L1AssetRouter 0x8829…cE56 (sharedBridge bisected to block 22165566) and introduced assetRouter, messageRoot and l1CtmDeployer. Diff ec59e2ee lists a reindexed 2024 $pastUpgrades item as appended, which dated these state changes at the 2024-06-04 initialization."
+    },
+    {
+      "timestamp": 1743408047,
+      "type": "code",
+      "contract": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+      "transaction": "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3",
+      "updateId": "ec59e2ee",
+      "reason": "v26 upgrade of the shared contracts. The same transaction turned the L1SharedBridge into the L1Nullifier and set l1AssetRouter to 0x8829…cE56 (bisected to block 22165566). Diff ec59e2ee lists a reindexed 2024 $pastUpgrades item as appended, which dated this state change at 2024-08-26."
+    },
+    {
+      "timestamp": 1745843591,
+      "type": "state",
+      "contract": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
+      "transaction": "0x1fbaad1ac4bffb295da999881a37c1a52751ccad9b1533c0d2400fdca3631132",
+      "updateId": "73803b6d",
+      "reason": "v27 upgrade execution allowed the rollup DA pair (RollupL1DAValidator, L2 0x64E2…4281) in the RollupDAManager (DAPairUpdated event)."
+    },
+    {
+      "timestamp": 1749497291,
+      "type": "state",
+      "contract": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+      "transaction": "0x7d57b6ad9862589e501b2906169085125089bc07cd28c1571afe89519acb0df8",
+      "updateId": "e4053ebe",
+      "reason": "ProtocolUpgradeHandler upgrade execution whitelisted Gateway (chain 9075) as a settlement layer in the BridgeHub (SettlementLayerRegistered event), allowing chain admins to migrate their chains to it."
+    },
+    {
+      "timestamp": 1750343219,
+      "type": "state",
+      "contract": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
+      "transaction": "0x56b626590d1042673f7cf09f480533e8084d3e6141dc079fba657b1cc2ec17eb",
+      "updateId": "702e5f55",
+      "reason": "v28 upgrade execution allowed the rollup DA pair (RollupL1DAValidator, L2 0x4445…634c) in the RollupDAManager (DAPairUpdated event)."
+    },
+    {
+      "timestamp": 1760519351,
+      "type": "state",
+      "contract": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
+      "transaction": "0xa022a2ce09b145eb5d0c4342b3f3583e79b66ee7205ab986322be819f277ba83",
+      "updateId": "5531704d",
+      "reason": "v29 upgrade execution allowed the rollup DA pair (RollupL1DAValidator, L2 0x177a…326a) in the RollupDAManager (DAPairUpdated event)."
+    },
+    {
+      "timestamp": 1764607787,
+      "type": "state",
+      "contract": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
+      "transaction": "0xc673e81fe43f09029ee4c751c1dc2f18d9aa757d1402dae727cfed2d3e24625f",
+      "updateId": "7fc79d40",
+      "reason": "ZkTokenGovernor proposal execution changed votingDelay from 7d to 3d and lateQuorumVoteExtension from 7d to 2d (VotingDelaySet and LateQuorumVoteExtensionSet events on ZKsync Era)."
+    },
+    {
+      "timestamp": 1779262271,
+      "type": "state",
+      "contract": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+      "transaction": "0x65faba3f9c7fa39584ae60bcae75ae8c5b1fcff803ba058223edf5006636e728",
+      "updateId": "ee77660f",
+      "reason": "Rotated the SecurityCouncil (0x66E4…f410 -> 0x5919…9035) and EmergencyUpgradeBoard (0xECE8…e3f6 -> 0xF73a…a111) contracts trusted by the ProtocolUpgradeHandler to approve and execute protocol upgrades."
+    }
+  ]
+}

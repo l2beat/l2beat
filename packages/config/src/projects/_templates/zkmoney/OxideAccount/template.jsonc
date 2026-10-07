@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OxideAccount",
+  "category": "core",
+  "description": "Immutable implementation of users' L1 accounts. The bootstrap key authorizes the first passkey. Once a passkey is installed, only the user's passkeys can authorize operations and manage keys. The last passkey cannot be removed. Deposit recovery checks signatures against this account.",
+  "ignoreMethods": ["bootstrapOwner", "getAuthKey"],
+  "ignoreRelatives": ["entryPoint"]
+}

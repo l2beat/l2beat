@@ -3,6 +3,9 @@
   "displayName": "TimelockController",
   "description": "A timelock with access control. The current minimum delay is {{getMinDelayFormatted}}.",
   "fields": {
+    "getMinDelay": {
+      "severity": "HIGH"
+    },
     "defaultAdminAC": {
       "handler": {
         "type": "accessControl",
@@ -16,6 +19,7 @@
       ]
     },
     "getMinDelayFormatted": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "getMinDelay",
@@ -53,6 +57,7 @@
       ]
     },
     "Executor": {
+      "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"

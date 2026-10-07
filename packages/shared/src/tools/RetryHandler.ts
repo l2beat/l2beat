@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
-import type { RequestInit } from 'node-fetch'
+import type { FetchInit } from '../clients/http/fetchWithTimeout'
 
 interface Deps {
   maxRetries: number
@@ -26,7 +26,7 @@ export class RetryHandler {
 
   async retry<T>(
     fn: () => Promise<T>,
-    metadata?: { error?: unknown; url?: string; init?: RequestInit },
+    metadata?: { error?: unknown; url?: string; init?: FetchInit },
   ): Promise<T> {
     let attempt = 0
     let error = metadata?.error

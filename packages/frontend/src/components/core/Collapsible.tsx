@@ -31,7 +31,9 @@ const CollapsibleContent = ({
       {...props}
       className={cn(
         className,
-        'overflow-hidden',
+        // Clips like `hidden` without becoming a scroll container, which would
+        // hold a sticky table header inside instead of the page.
+        'overflow-clip',
         isClient &&
           'data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down',
       )}

@@ -37,6 +37,7 @@
 - [Finality page](./l2b_specs/finality.md)
 - [Stages edge cases](./l2b_specs/stages_edgecases.md)
 - [Diffovery](./l2b_specs/diffovery.md)
+- [Ossification](./l2b_specs/ossification.md)
 - [TokenDB](./l2b_specs/token_db/README.md)
     - [Automatic token ingestion](./l2b_specs/token_db/automatic_token_ingestion.md)
     - [Token relations](./l2b_specs/token_db/token_relations.md)

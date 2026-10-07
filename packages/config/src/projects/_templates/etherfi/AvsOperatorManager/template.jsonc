@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AvsOperatorManager",
+  "category": "core",
+  "description": "Deploys and controls per-AVS operator contracts (behind a beacon) for EigenLayer AVS registration. EigenLayer core is external.",
+  "ignoreMethods": ["avsOperators", "proxiableUUID"],
+  "canActIndependently": false
+}

@@ -1,0 +1,206 @@
+{
+  "events": [
+    {
+      "timestamp": 1747774642,
+      "type": "state",
+      "contract": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "transaction": "0xf0270f10b2f6f939c5a2b0d3bafcaa14eee86c095e4b2a0a59877ebe5f217c9f",
+      "reason": "Mechanism change: moved the bridge manager role (token mappings and custom token deployments) from the deployer EOA 0xa4000bdd to the Katana Foundation Engineering Safe katana:0x4e981bAe (SetBridgeManager)."
+    },
+    {
+      "timestamp": 1747840689,
+      "type": "state",
+      "contract": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+      "transaction": "0x56183a7ca89595ed8e2f30a66f0510b06ab2758f41e8887c2fba64919c0ae86d",
+      "reason": "Mechanism change: the Katana Foundation Engineering Safe katana:0x4e981bAe accepted the GlobalExitRootRemover role from the deployer EOA 0xa4000bdd (AcceptGlobalExitRootRemover)."
+    },
+    {
+      "timestamp": 1747840988,
+      "type": "state",
+      "contract": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+      "transaction": "0x8d805b6e68b6dde0e069991ace96090abbb93f44ba1ee06d2bfcbaaf8830e2a3",
+      "reason": "Mechanism change: revoked all L2Timelock roles (admin, proposer, executor, canceller) from the deployer EOA 0xa4000bdd, leaving the Katana Foundation Engineering Safe katana:0x4e981bAe as the only party that can schedule and execute L2 bridge upgrades (RoleRevoked)."
+    },
+    {
+      "timestamp": 1747842266,
+      "type": "code",
+      "contract": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "transaction": "0xb3c92e7a065f876cfe017a4bed5a966e28075d693b5ef221fa49b2ff0d727c7c",
+      "reason": "Upgraded AgglayerBridgeL2 from its genesis implementation 0x5ac4182a to 0xd4ac5935 through the L2Timelock. The reinitializer set the proxied-tokens manager and the emergency unpauser to the Katana Foundation Engineering Safe (Upgraded, AcceptProxiedTokensManagerRole). This first $pastUpgrades entry is a real upgrade, not the initialization."
+    },
+    {
+      "timestamp": 1750690439,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x3db4c1e8616cc300c46b7fea10aa3ef4d6e394642fce20ab2fd8ce15d16a7966",
+      "reason": "AgglayerManager moved Katana (rollupID 20) from rollup type 10 to 11: the pessimistic-proof verifier changed from SP1Verifier 0xE00a3cBF to 0x0459d576 and the program vkey from 0x00dc9aac to 0x00eff0b6 (UpdateRollup). The AggchainFEP implementation 0x18C45DD4 stayed the same, so this replaces the $pastUpgrades code event of the tx."
+    },
+    {
+      "timestamp": 1750858139,
+      "type": "code",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x69b66ecfc6cd449a80b58c1fcb937f436ca4afedc3cb9586fb7f9b3f35546c79",
+      "reason": "AgglayerManager moved Katana (rollupID 20) to rollup type 12: upgraded AggchainFEP to implementation 0xe7FE4557 and switched verification from the direct SP1 pessimistic verifier to the AgglayerGateway (verifier type ALGateway). The same tx set the aggchainManager to the Katana Foundation Engineering Safe; the FEP parameters followed in tx 0x22f34418 at 14:11 (UpdateRollup, Upgraded, AcceptAggchainManagerRole)."
+    },
+    {
+      "timestamp": 1753290299,
+      "type": "code",
+      "contract": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+      "transaction": "0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2",
+      "updateId": "627293ca",
+      "reason": "Upgraded the L1StandardBridge implementation through its EIP-1967 implementation slot."
+    },
+    {
+      "timestamp": 1755616379,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xeb5bdbb003b7bc66410f9e0d6ff0cfa4278fc7840f1fd0779eefdd4cc45a59c6",
+      "updateId": "c12d6309",
+      "reason": "Changed the live OP Succinct range vkey commitment from 0x2ebb1e0d to 0x490685ea (RangeVkeyCommitmentUpdated). It was part of the aggchain hash until the v3.0.0 upgrade of 2025-10-29 replaced it with named OP Succinct configs, which is why the field is LOW today."
+    },
+    {
+      "timestamp": 1761747071,
+      "type": "code",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",
+      "updateId": "f0f02b3e",
+      "reason": "AgglayerManager moved Katana to rollup type 13: upgraded AggchainFEP to v3.0.0 (implementation 0x9532A2F3) and initialized the named OP Succinct proof configuration, the signer set and threshold and the default-key flags (UpdateRollup, Upgraded, OpSuccinctConfigSelected, SignersAndThresholdUpdated)."
+    },
+    {
+      "timestamp": 1761751511,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x868db3dc4bdd073b0b00a4c1964e5049c6ba3514f70c64dc886e6f0c82b4a0a7",
+      "updateId": "f0f02b3e",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1764004379,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x04c622c6b42d93ca193892655f17e9d45c8f1532b831d39c96e8e93cbebcef3a",
+      "updateId": "64df4461",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1765376687,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x3f67303e036940c733adbc4a4e982afd9bbb51b59382a76e2020d180979429a8",
+      "updateId": "e17f828d",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1768411847,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x4676ae1b56fb19c3df5046ac5649bc0ea0fdf7158e39790caee2444a66c99ad9",
+      "updateId": "5ff094a2",
+      "reason": "Mechanism change: the AggchainFEP admin role moved from the deployer EOA 0xa4000bdd to Polygon Multisig 2 (3-of-5 Safe) (AcceptAdminRole). The admin sets the trustedSequencer, whose signature replaces the OP Succinct proof in optimistic mode."
+    },
+    {
+      "timestamp": 1771411343,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x9585ae7987c0c63bfce9ba0bdb81234e967251245b19d66c3650c22da1f0ab85",
+      "reason": "Enabled optimistic mode, temporarily allowing permissioned state finalization without an OP Succinct proof (EnableOptimisticMode)."
+    },
+    {
+      "timestamp": 1771428611,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x3241d31373f1edd41dbbc3df54c500cf7d61c092d7dc1f338b7ce4c09b792927",
+      "reason": "Disabled optimistic mode and restored proof-based state finalization (DisableOptimisticMode)."
+    },
+    {
+      "timestamp": 1772552963,
+      "type": "code",
+      "contract": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+      "transaction": "0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961",
+      "updateId": "a0780ac7",
+      "reason": "Upgraded the L1StandardBridge implementation through its EIP-1967 implementation slot."
+    },
+    {
+      "timestamp": 1772715731,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xbb5469f947653f58d73ab44c2297a61b887fd70da62577ff3d5a133352943193",
+      "updateId": "d3280720",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1773388166,
+      "type": "state",
+      "contract": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+      "transaction": "0xf72b6bd866c642f2348a276110bb6e94a2cac098037b4f7ee48dd53fde9227e1",
+      "reason": "Increased the L2 upgrade timelock delay from 60 seconds to 12 hours (MinDelayChange)."
+    },
+    {
+      "timestamp": 1773662783,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x728d1edb516de9c0bfc2c5a349d39f609e448fe54f81e97eec2c208a03185567",
+      "updateId": "5acfd848",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1776963143,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xea55bab66a0efbd6b2d8e6c514cab744711643dfc964db48e6532aa68bd4ceaf",
+      "updateId": "08710e37",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1781619767,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xdfe173a66988f60f6b750641c22a28698fda17b43a9be0919f3625ab3ba41a15",
+      "updateId": "870b374c",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1784022011,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x2d5fb482b4b6da30e64f6ad141601dcc3dbb03086868a0fffe4ce996ad5c3b4a",
+      "updateId": "c93bf0f0",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1787568047,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xf4c091d8416a41f4a6507527ccc5d394e00edde8b9f39c6c05af0ede17fb1dfb",
+      "updateId": "d922a712",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1788245483,
+      "type": "code",
+      "contract": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+      "transaction": "0xdc33ac095940c214c81adf08eda36e0a14d97f397597f4d8e5d2fbbc4cd20033",
+      "updateId": "60da3e8b",
+      "reason": "Upgraded the implementation of L1StandardBridge (EIP-1967 slot, impl 61525eaacddb97d9184afc205827e6a4fd0bf62a -> b37a11aadf167b2f0b8dd85372de4bc66cd4a891)."
+    },
+    {
+      "timestamp": 1790192243,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xf1dea2aacb7b085300d536c14b59bc0634eea1a25f475c140523b513a5595036",
+      "updateId": "45c9bef9",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1790789243,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x73591482b487de3657af697203d4d66a2d61418920e0d0db1c0ee36a3909eb2a",
+      "updateId": "45c9bef9",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    }
+  ],
+  "ignoredTransactions": [
+    "0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558"
+  ]
+}

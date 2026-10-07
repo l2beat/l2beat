@@ -139,7 +139,7 @@
         "chain": "superposition",
         "decimals": 6,
         "sinceTimestamp": 1733444058,
-        "untilTimestamp": 1788868800
+        "untilTimestamp": 1788865200
       },
       "category": "stablecoin",
       "source": "external",

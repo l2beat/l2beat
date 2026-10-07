@@ -315,23 +315,51 @@ export class DataFormulaExecutor {
                 )
                 break
               }
-              case 'balanceOfEscrow': {
-                assert(configs.every((c) => c.type === 'balanceOfEscrow'))
+              case 'balanceOfEscrow':
+              case 'balanceOfEscrows': {
+                assert(
+                  configs.every(
+                    (c) =>
+                      c.type === 'balanceOfEscrow' ||
+                      c.type === 'balanceOfEscrows',
+                  ),
+                )
+                const balanceConfigs = configs as Extract<
+                  OnchainAmountConfig,
+                  { type: 'balanceOfEscrow' | 'balanceOfEscrows' }
+                >[]
+                const queries = balanceConfigs.flatMap((config) => {
+                  const holders =
+                    config.type === 'balanceOfEscrow'
+                      ? [config.escrowAddress]
+                      : config.escrowAddresses
+
+                  return holders.map((holder) => ({
+                    token: config.address,
+                    holder,
+                  }))
+                })
                 const values = await this.balanceProvider.getBalances(
-                  configs.map((c) => ({
-                    token: c.address,
-                    holder: c.escrowAddress,
-                  })),
+                  queries,
                   block,
                   chain,
                 )
 
+                let offset = 0
                 await this.localStorage.writeAmounts(
                   timestamp,
-                  Array.from(values.values()).map((value, i) => ({
-                    id: configs[i].id,
-                    amount: value,
-                  })),
+                  balanceConfigs.map((config) => {
+                    const count =
+                      config.type === 'balanceOfEscrow'
+                        ? 1
+                        : config.escrowAddresses.length
+                    const amount = values
+                      .slice(offset, offset + count)
+                      .reduce((sum, balance) => sum + balance, 0n)
+                    offset += count
+
+                    return { id: config.id, amount }
+                  }),
                 )
                 break
               }

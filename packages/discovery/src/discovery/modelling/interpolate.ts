@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { ContractValue, EntryParameters } from '../output/types'
+import type { ContractValue } from '../output/types'
 
 export function interpolateModelTemplate(
   content: string,
@@ -90,18 +90,4 @@ export function normalizeId(s: string) {
     /[^a-zA-Z0-9]/g,
     '_',
   )
-}
-
-export function contractValuesForInterpolation(
-  chain: string,
-  entry: EntryParameters,
-): Record<string, ContractValue | undefined> {
-  const values = entry.values
-  return {
-    '$.chain': chain,
-    '$.address': entry.address.toLowerCase(),
-    '$.name': entry.name ?? '',
-    '$.description': entry.description,
-    ...values,
-  }
 }

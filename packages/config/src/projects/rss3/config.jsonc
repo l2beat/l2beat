@@ -13,6 +13,10 @@
     "eth:0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d": "WithdrawalOverwriterMultisig"
   },
   "overrides": {
+    "eth:0x75D340E5BF2eAbC39A04AF4229Ce7875B4A73B03": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438": {
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay.",
       "fields": {

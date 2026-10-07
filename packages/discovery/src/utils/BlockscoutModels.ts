@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  Hash256,
-  type json,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256, type json } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 export type BlockscoutSuccessResponse = v.infer<
@@ -36,59 +31,6 @@ export function parseBlockscoutResponse(response: json): BlockscoutResponse {
 
 export const BlockscoutGetBlockNoByTime = v.object({
   blockNumber: v.unknown().transform((v) => Number(v)),
-})
-
-export type BlockscoutNextPageParams = v.infer<typeof BlockscoutNextPageParams>
-
-export const BlockscoutNextPageParams = v.object({
-  block_number: v.number(),
-  index: v.number(),
-  items_count: v.number(),
-  transaction_index: v.number(),
-})
-
-export type BlockscoutAddressParam = v.infer<typeof BlockscoutAddressParam>
-
-export const BlockscoutAddressParam = v.object({
-  ens_domain_name: v.union([v.string(), v.null()]),
-  hash: v.string(),
-  implementation_name: v.union([v.string(), v.null()]),
-  is_contract: v.boolean(),
-  is_verified: v.boolean(),
-  metadata: v.union([v.unknown(), v.null()]),
-  name: v.union([v.string(), v.null()]),
-  private_tags: v.array(v.unknown()),
-  public_tags: v.array(v.unknown()),
-  watchlist_names: v.array(v.unknown()),
-})
-
-export type BlockscoutInternalTransaction = v.infer<
-  typeof BlockscoutInternalTransaction
->
-
-export const BlockscoutInternalTransaction = v.object({
-  block: v.number(),
-  block_index: v.number(),
-  created_contract: v.union([v.unknown(), v.null()]),
-  error: v.union([v.unknown(), v.null()]),
-  from: BlockscoutAddressParam,
-  gas_limit: v.string(),
-  index: v.number(),
-  success: v.boolean(),
-  timestamp: v.string().transform((t) => UnixTime.fromDate(new Date(t))),
-  to: v.union([BlockscoutAddressParam, v.null()]),
-  transaction_hash: v.string(),
-  type: v.string(),
-  value: v.string(),
-})
-
-export type BlockscoutGetInternalTransactionsResponse = v.infer<
-  typeof BlockscoutGetInternalTransactionsResponse
->
-
-export const BlockscoutGetInternalTransactionsResponse = v.object({
-  items: v.array(BlockscoutInternalTransaction),
-  next_page_params: v.union([BlockscoutNextPageParams, v.null()]),
 })
 
 export type ContractSource = v.infer<typeof ContractSource>

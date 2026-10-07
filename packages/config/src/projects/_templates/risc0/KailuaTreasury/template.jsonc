@@ -10,7 +10,14 @@
   ],
   "ignoreInWatchMode": ["lastResolved"],
   "fields": {
+    "vanguardAdvantage": {
+      "severity": "HIGH"
+    },
+    "participationBond": {
+      "severity": "HIGH"
+    },
     "participationBondFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function participationBond() view returns (uint256)",
@@ -19,6 +26,7 @@
       "edit": ["format", "Undecimal18"]
     },
     "vanguardAdvantageFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function vanguardAdvantage() view returns (uint256)",
@@ -26,7 +34,11 @@
       },
       "edit": ["format", "FormatSeconds"]
     },
+    // Identity of the privileged proposer: review, but the clock resets only on
+    // vanguardAdvantage/participationBond changes. Enabling or disabling the
+    // vanguard mechanism also moves vanguardAdvantage.
     "vanguard": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

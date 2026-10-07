@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type {
   BalanceOfEscrowAmountFormula,
+  BalanceOfEscrowsAmountFormula,
   StarknetBalanceOfAmountFormula,
   StarknetTotalSupplyAmountFormula,
   TotalSupplyAmountFormula,
@@ -26,6 +27,7 @@ import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 export type OnchainAmountConfig =
   | BalanceOfEscrowAmountFormula
+  | BalanceOfEscrowsAmountFormula
   | TotalSupplyAmountFormula
   | StarknetTotalSupplyAmountFormula
   | StarknetBalanceOfAmountFormula
@@ -149,34 +151,59 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
     blockNumber: number,
   ) {
     const escrows = configurations.filter(
-      (c) => c.properties.type === 'balanceOfEscrow',
-    ) as Configuration<BalanceOfEscrowAmountFormula>[]
+      (c) =>
+        c.properties.type === 'balanceOfEscrow' ||
+        c.properties.type === 'balanceOfEscrows',
+    ) as Configuration<
+      BalanceOfEscrowAmountFormula | BalanceOfEscrowsAmountFormula
+    >[]
 
     if (escrows.length === 0) {
       return []
     }
 
+    const queries = escrows.flatMap((escrow) => {
+      const holders =
+        escrow.properties.type === 'balanceOfEscrow'
+          ? [escrow.properties.escrowAddress]
+          : escrow.properties.escrowAddresses
+
+      return holders.map((holder) => ({
+        token: escrow.properties.address,
+        holder,
+      }))
+    })
+
     this.logger.info('Fetching escrow balances', {
       blockNumber,
-      balances: escrows.length,
+      balances: queries.length,
     })
 
     const balances = await this.$.balanceProvider.getBalances(
-      escrows.map((escrow) => ({
-        token: escrow.properties.address,
-        holder: escrow.properties.escrowAddress,
-      })),
+      queries,
       blockNumber,
       this.$.chain,
     )
 
     this.logger.info('Fetched escrow balances')
 
-    return balances.map((supply, i) => ({
-      configurationId: escrows[i].id,
-      amount: supply,
-      timestamp,
-    }))
+    let offset = 0
+    return escrows.map((escrow) => {
+      const count =
+        escrow.properties.type === 'balanceOfEscrow'
+          ? 1
+          : escrow.properties.escrowAddresses.length
+      const amount = balances
+        .slice(offset, offset + count)
+        .reduce((sum, balance) => sum + balance, 0n)
+      offset += count
+
+      return {
+        configurationId: escrow.id,
+        amount,
+        timestamp,
+      }
+    })
   }
 
   private async fetchRpcTotalSupplies(

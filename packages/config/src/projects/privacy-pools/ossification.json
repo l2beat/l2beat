@@ -1,0 +1,11 @@
+{
+  "events": [
+    {
+      "timestamp": 1743452291,
+      "type": "state",
+      "contract": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "transaction": "0x37e45f2c52867fccbf45fab0529f86eacb3101fc9a2663f10cd7d0dafcba9220",
+      "reason": "Entrypoint authority moved from a single EOA to a multisig: the initial OWNER_ROLE holder EOA 0x1f4Fe25C granted OWNER_ROLE to the 2-of-4 Privacy Pools Multisig (tx 0xe92dccfe) and the multisig then revoked the EOA's OWNER_ROLE in this transaction."
+    }
+  ]
+}

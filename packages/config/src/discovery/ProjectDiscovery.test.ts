@@ -3,7 +3,7 @@ import {
   ConfigRegistry,
   type DiscoveryConfig,
 } from '@l2beat/discovery'
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
@@ -55,6 +55,23 @@ describe(ProjectDiscovery.name, () => {
       expect(() => discovery.getContract(name)).toThrow(
         `Assertion Error: Found more than one contracts of ${name} name (${projectName})`,
       )
+    })
+  })
+
+  describe(ProjectDiscovery.prototype.getOssificationHistory.name, () => {
+    it('rejects an adoption time for a module the project does not reference', () => {
+      expect(() =>
+        discovery.getOssificationHistory(undefined, {
+          'shared-unknown': UnixTime(1),
+        }),
+      ).toThrow('does not reference the module shared-unknown')
+    })
+  })
+
+  describe(ProjectDiscovery.prototype.hasContract.name, () => {
+    it('answers false for names inherited from Object.prototype', () => {
+      expect(discovery.hasContract('constructor')).toEqual(false)
+      expect(discovery.hasContract('__proto__')).toEqual(false)
     })
   })
 

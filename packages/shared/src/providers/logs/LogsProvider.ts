@@ -1,5 +1,5 @@
 import { assert, type Log } from '@l2beat/shared-pure'
-import type { LogsClient } from '../../clients'
+import type { LogsClient, LogsTopicFilter } from '../../clients'
 
 export class LogsProvider {
   constructor(
@@ -13,7 +13,7 @@ export class LogsProvider {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<Log[]> {
     for (const [index, client] of this.clients.entries()) {
       try {

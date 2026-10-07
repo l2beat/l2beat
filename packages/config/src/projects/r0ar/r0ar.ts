@@ -7,10 +7,12 @@ import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('r0ar')
 const genesisTimestamp = UnixTime(1728285623)
+const archivedAt = UnixTime(1789621200) // 2026-09-17T05:00:00Z
 
 export const r0ar: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1739282637), // 2025-02-11T14:03:57Z
+  archivedAt,
   additionalBadges: [BADGES.RaaS.Zeeve],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -40,6 +42,7 @@ export const r0ar: ScalingProject = opStackL2({
   chainConfig: {
     name: 'r0ar',
     chainId: 193939,
+    untilTimestamp: archivedAt,
     apis: [{ type: 'rpc', url: 'https://rpc-r0ar.io/', callsPerMinute: 2500 }],
   },
   activityConfig: {
@@ -48,7 +51,12 @@ export const r0ar: ScalingProject = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   discovery,
-  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20912148 })],
+  daTracking: [
+    getOpStackDaTracking(discovery, {
+      sinceBlock: 20912148,
+      untilBlock: 25994773, // Last blob batch before the archive cutoff.
+    }),
+  ],
   genesisTimestamp,
   isNodeAvailable: 'UnderReview',
 })

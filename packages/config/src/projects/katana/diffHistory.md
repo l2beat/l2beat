@@ -1,3 +1,1919 @@
+Generated with discovered.json: 0x67743923cef504405123c9da07249775fe3c935d
+
+# Diff at Mon, 05 Oct 2026 16:18:28 GMT:
+
+- id: 45c9bef9
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fd1ddb46d7e6cc7af90a258f28b6624761350a24 block: 1788793515
+- current timestamp: 1791217041
+
+## Description
+
+Karst hardfork L2 activation on 2026-09-23 16:00:01 UTC: L2 predeploys upgraded to the standard OP Stack implementations.
+
+L2ToL1MessagePasser: the previous Katana-specific implementation reverted `initiateWithdrawal` with "Withdrawals are disabled"; the standard 1.2.0 has no such check, so withdrawals through the OP Stack path can be initiated on L2 again. The L1 OptimismPortal2 holds no ETH and the DisputeGameFactory has created no games.
+
+L2ProxyAdmin (1.0.0) adds `upgradePredeploys(address)`. FeeVault `recipient`, `minWithdrawalAmount` and `withdrawalNetwork` moved from immutables to storage, settable by the ProxyAdmin owner. L1Block adds `setFeature(bytes32)`, callable by the depositor account, the ProxyAdmin or its owner.
+
+Version changes and implementation diffs:
+
+- L2CrossDomainMessenger 2.1.1-beta.1 -> 2.2.1: https://disco.l2beat.com/diff/katana:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007/katana:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96
+- L2StandardBridge 1.11.1-beta.1 -> 1.13.2: https://disco.l2beat.com/diff/katana:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010/katana:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1
+- SequencerFeeVault 1.5.0-beta.5 -> 1.6.1: https://disco.l2beat.com/diff/katana:0x8A52Ca0E8459460C6861C117285E6973Ecf7EE3f/katana:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA
+- OptimismMintableERC20Factory 1.10.1-beta.2 -> 1.11.0: https://disco.l2beat.com/diff/katana:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012/katana:0xAF87f2Fd347aCb94656f9F715B4f2409B98e75b9
+- L2ERC721Bridge 1.7.1-beta.2 -> 1.10.1: https://disco.l2beat.com/diff/katana:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014/katana:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833
+- L1Block 1.7.0 -> 1.9.0: https://disco.l2beat.com/diff/katana:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C/katana:0x6a97C5D55A21265326150Efe12FC30Fb21cbff56
+- L2ToL1MessagePasser 1.1.1-beta.1 -> 1.2.0: https://disco.l2beat.com/diff/katana:0xFBF44D0341C03098A1D9C0336e3d5C34E8BFdf1A/katana:0x27E51B2254433A3284D9ba73Ea551C397DB2a124
+- OptimismMintableERC721Factory 1.4.1-beta.1 -> 1.5.1: https://disco.l2beat.com/diff/katana:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017/katana:0xf43862B9d814BB4504158CecCB0b74b31265e4eE
+- ProxyAdmin -> L2ProxyAdmin 1.0.0: https://disco.l2beat.com/diff/katana:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018/katana:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F
+- BaseFeeVault 1.5.0-beta.6 -> 1.6.1: https://disco.l2beat.com/diff/katana:0x7e27d992B349B96ea8D32378B7c53b3D58139a2E/katana:0xf7bed7215EEF1003fac426682Cf2edeb958569f7
+- L1FeeVault 1.5.0-beta.5 -> 1.6.1: https://disco.l2beat.com/diff/katana:0x0ebC896698De72A444d00Dc3d046B432c555EB09/katana:0xf7bed7215EEF1003fac426682Cf2edeb958569f7
+- OperatorFeeVault 1.0.0 -> 1.1.1: https://disco.l2beat.com/diff/katana:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537/katana:0xEddf416c7159387cc6DF3015700F79Cfb8911373
+- SchemaRegistry 1.3.1-beta.1 -> 1.3.1-beta.2: https://disco.l2beat.com/diff/katana:0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020/katana:0x70DE55BC0bfBC52C5D0CCA1DA5816c2428886A34
+- EAS 1.4.1-beta.1 -> 1.4.1-beta.3: https://disco.l2beat.com/diff/katana:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021/katana:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6
+- GasPriceOracle 1.6.0 (source unchanged): https://disco.l2beat.com/diff/katana:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1/katana:0x547d0fba434877D7237d511cF87FABe2ee26b152
+
+AggchainFEP: new selected OP Succinct config (op-succinct v3.14.1).
+
+Polygon Multisig 2: member added; threshold 3/5 → 3/6.
+
+Safe: member added; threshold 2/11 → 2/12.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x00d68eb096f4c731512562f7a06e6bba104dbcb959261edd3eb3ec542c200c89"
++        "0x00070992a03760456403e800b0bd1a0e907a85a5c2cffca292b5994b56b5363b"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x1f089f9d1cd3f727775788003d3e496037d3625e2e9de6e5005f1e9707ba3b8f"
++        "0x5ae13fed447a94f57d6ee8fc44cce8075ef994485121dcd27e75577d264f75b1"
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
+-        "0x0f30c0b6846b034a146a47c5185fb9a4321df3569376773238ef30c831019190"
++        "0x78bea7db8aa3cf21062aa42ee79556258a369e6fbe39954760f92475ba39a06c"
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x21a2Db679b4e9f6183E3143cc7Dcfef955b400a6"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xfB948CB3fE208fd067d36768B2bACd5dCF886066"
+      values.multisigThreshold:
+-        "2 of 11 (18%)"
++        "2 of 12 (17%)"
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (katana:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      sourceHashes.1:
+-        "0x1ef37a50dbdd57f7019208b81019e52087cb92379f963e1ec092bd3eb81ec978"
++        "0x9e9ae8aec73e808e50f80bced53c3a020588eed516b310a10397596869dcd3b1"
+      values.$implementation:
+-        "katana:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007"
++        "katana:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96"
+      values.$pastUpgrades.0:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "2.1.1-beta.1"
++        "2.2.1"
+      values.ENCODING_OVERHEAD:
++        260
+      values.FLOOR_CALLDATA_OVERHEAD:
++        40
+      values.proxyAdmin:
++        "katana:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      values.TX_BASE_GAS:
++        21000
+      implementationNames.katana:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007:
+-        "L2CrossDomainMessenger"
+      implementationNames.katana:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96:
++        "L2CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract GasPriceOracle (katana:0x420000000000000000000000000000000000000F) [opstack/Layer2/GasPriceOracle] {
+    +++ description: Provides the current gas price for L2 transactions.
+      values.$implementation:
+-        "katana:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
++        "katana:0x547d0fba434877D7237d511cF87FABe2ee26b152"
+      values.$pastUpgrades.2:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x547d0fba434877D7237d511cF87FABe2ee26b152"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.katana:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
+-        "GasPriceOracle"
+      implementationNames.katana:0x547d0fba434877D7237d511cF87FABe2ee26b152:
++        "GasPriceOracle"
+    }
+```
+
+```diff
+    contract L2StandardBridge (katana:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      sourceHashes.1:
+-        "0xe528a1a655ef22d36419f53488f5b31752c4ecc2efea627fc6be5b0d63fa5069"
++        "0xf6ef848ca1cf88e27b5e3bb5e01b91ef79f302e5daad8ba5206c4dc60027d312"
+      values.$implementation:
+-        "katana:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010"
++        "katana:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1"
+      values.$pastUpgrades.0:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.11.1-beta.1"
++        "1.13.2"
+      values.proxyAdmin:
++        "katana:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      implementationNames.katana:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010:
+-        "L2StandardBridge"
+      implementationNames.katana:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1:
++        "L2StandardBridge"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (katana:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
+    +++ description: Collects the sequencer fees.
+      sourceHashes.1:
+-        "0x93752bf6627e91f3f4f031a686b0a57c754db8b6b8b88401d16e26724cb44f08"
++        "0xb45389729a8fffa7650568cd2922e482d03d3ed57b35f4819650d11174d9237a"
+      values.$implementation:
+-        "katana:0x8A52Ca0E8459460C6861C117285E6973Ecf7EE3f"
++        "katana:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA"
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.2:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "1.5.0-beta.5"
++        "1.6.1"
+      values.proxyAdmin:
++        "katana:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      implementationNames.katana:0x8A52Ca0E8459460C6861C117285E6973Ecf7EE3f:
+-        "SequencerFeeVault"
+      implementationNames.katana:0xb178cdAa8336f25624A63C049EdB5AF7ca36C2dA:
++        "SequencerFeeVault"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (katana:0x4200000000000000000000000000000000000012) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      template:
+-        "opstack/Layer2/OptimismMintableERC20Factory"
++        "opstack/OptimismMintableERC20Factory"
+      sourceHashes.1:
+-        "0x106f86d507a55d0f26e3683c910a71a9804d75ced3a4bb374e6a78978462274b"
++        "0x11b0ed6f15cabf613492a8d54c55304a17cf60f4fd94a655d7e720d4556906d0"
+      description:
+-        "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens."
++        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa."
+      values.$implementation:
+-        "katana:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012"
++        "katana:0xAF87f2Fd347aCb94656f9F715B4f2409B98e75b9"
+      values.$pastUpgrades.0:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0xAF87f2Fd347aCb94656f9F715B4f2409B98e75b9"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.10.1-beta.2"
++        "1.11.0"
+      values.proxyAdmin:
++        "katana:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      implementationNames.katana:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012:
+-        "OptimismMintableERC20Factory"
+      implementationNames.katana:0xAF87f2Fd347aCb94656f9F715B4f2409B98e75b9:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (katana:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      sourceHashes.1:
+-        "0x271f936ec1986057d9043b9961aa266e87908766814bdde8071f19a9de7484be"
++        "0x0d8059378487e33161e0b838f622400642360f1e311eba8c7b8fbdb504aeee1e"
+      values.$implementation:
+-        "katana:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014"
++        "katana:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833"
+      values.$pastUpgrades.0:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.7.1-beta.2"
++        "1.10.1"
+      values.proxyAdmin:
++        "katana:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      implementationNames.katana:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014:
+-        "L2ERC721Bridge"
+      implementationNames.katana:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833:
++        "L2ERC721Bridge"
+    }
+```
+
+```diff
+    contract L1Block (katana:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      sourceHashes.1:
+-        "0x399e57fff478211b47d61c5acb60592a4df8ffa5716959a1a6ee2ccabc44915e"
++        "0xca6401a4032def95df36b0d432052526888ef8a396f7e4fc37cdda3690932646"
+      values.$implementation:
+-        "katana:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
++        "katana:0x6a97C5D55A21265326150Efe12FC30Fb21cbff56"
+      values.$pastUpgrades.2:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x6a97C5D55A21265326150Efe12FC30Fb21cbff56"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.7.0"
++        "1.9.0"
+      values.proxyAdmin:
++        "katana:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      implementationNames.katana:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
+-        "L1Block"
+      implementationNames.katana:0x6a97C5D55A21265326150Efe12FC30Fb21cbff56:
++        "L1Block"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (katana:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      template:
+-        "katana/L2ToL1MessagePasser"
++        "opstack/Layer2/L2ToL1MessagePasser"
+      sourceHashes.1:
+-        "0xa53da4d87c97c2504bf8feb43888b64bb6834cfc6f9cf0fb4e59b9e507466756"
++        "0xb5be3cf9878e914d0b7feef281dbcc2b72d7c7e9106e44a7dfd516d48de8a62a"
+      description:
+-        "Contract used internally by the L2CrossDomainMessenger to send messages to L1. It can also be used directly as a low-level interface."
++        "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface."
+      values.$implementation:
+-        "katana:0xFBF44D0341C03098A1D9C0336e3d5C34E8BFdf1A"
++        "katana:0x27E51B2254433A3284D9ba73Ea551C397DB2a124"
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x27E51B2254433A3284D9ba73Ea551C397DB2a124"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.1.1-beta.1"
++        "1.2.0"
+      implementationNames.katana:0xFBF44D0341C03098A1D9C0336e3d5C34E8BFdf1A:
+-        "L2ToL1MessagePasser"
+      implementationNames.katana:0x27E51B2254433A3284D9ba73Ea551C397DB2a124:
++        "L2ToL1MessagePasser"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (katana:0x4200000000000000000000000000000000000017) [opstack/Layer2/OptimismMintableERC721Factory] {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      sourceHashes.1:
+-        "0xec1bfae18ba5717949a6969cb01d743511c076e7bc6c78ed2c2b63232b97cc57"
++        "0xf4fd8df9e9191098f5647a3568864aee248b011c092313bf392b57a4b0f43268"
+      values.$implementation:
+-        "katana:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017"
++        "katana:0xf43862B9d814BB4504158CecCB0b74b31265e4eE"
+      values.$pastUpgrades.0:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0xf43862B9d814BB4504158CecCB0b74b31265e4eE"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
+-        "1.4.1-beta.1"
++        "1.5.1"
+      values.bridge:
++        "katana:0x4200000000000000000000000000000000000014"
+      values.proxyAdmin:
++        "katana:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      values.remoteChainID:
++        1
+      implementationNames.katana:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017:
+-        "OptimismMintableERC721Factory"
+      implementationNames.katana:0xf43862B9d814BB4504158CecCB0b74b31265e4eE:
++        "OptimismMintableERC721Factory"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (katana:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      name:
+-        "ProxyAdmin"
++        "L2ProxyAdmin"
+      template:
+-        "global/ProxyAdmin"
++        "opstack/Layer2/L2ProxyAdmin_karst"
+      sourceHashes.1:
+-        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
++        "0xc9307181d90f9b86ff913d1c365245cfb8622929939cbff0389acf7f428ddc4b"
+      values.$implementation:
+-        "katana:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018"
++        "katana:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F"
+      values.$pastUpgrades.0:
++        ["2026-09-23T16:00:01.000Z","0x48aa8d6a9d281bf0eaa204e895acdfe0ba38640c34f6d133b2f4ecb879f5c72c",["katana:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F"]]
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.version:
++        "1.0.0"
+      implementationNames.katana:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018:
+-        "ProxyAdmin"
+      implementationNames.katana:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F:
++        "L2ProxyAdmin"
+      description:
++        "Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract BaseFeeVault (katana:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault_karst] {
+    +++ description: Collects EIP-1559 base fees
+      template:
+-        "opstack/Layer2/BaseFeeVault"
++        "opstack/Layer2/BaseFeeVault_karst"
+      sourceHashes.1:
+-        "0xe1e57baf3de85a14ad342b23be3bc829de637a5ac1336b089f49fcab12d6226a"
++        "0xf7b9f825b6af20abb355da09822d54e6e3fa7243439293826bd7271f87747775"
+      values.$implementation:
+-        "katana:0x7e27d992B349B96ea8D32378B7c53b3D58139a2E"
++        "katana:0xf7bed7215EEF1003fac426682Cf2edeb958569f7"
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.2:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0xf7bed7215EEF1003fac426682Cf2edeb958569f7"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "1.5.0-beta.6"
++        "1.6.1"
+      values.proxyAdmin:
++        "katana:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      implementationNames.katana:0x7e27d992B349B96ea8D32378B7c53b3D58139a2E:
+-        "BaseFeeVault"
+      implementationNames.katana:0xf7bed7215EEF1003fac426682Cf2edeb958569f7:
++        "BaseFeeVault"
+    }
+```
+
+```diff
+    contract L1FeeVault (katana:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault_karst] {
+    +++ description: Collects the L1 portion of the L2 transaction fees.
+      template:
+-        "opstack/Layer2/L1FeeVault"
++        "opstack/Layer2/L1FeeVault_karst"
+      sourceHashes.1:
+-        "0xe6ecd83f7dc6c3a0896d3311ac56023fae6df18d6b4059195c2dfc1d65717687"
++        "0xf7b9f825b6af20abb355da09822d54e6e3fa7243439293826bd7271f87747775"
+      values.$implementation:
+-        "katana:0x0ebC896698De72A444d00Dc3d046B432c555EB09"
++        "katana:0xf7bed7215EEF1003fac426682Cf2edeb958569f7"
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.2:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0xf7bed7215EEF1003fac426682Cf2edeb958569f7"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "1.5.0-beta.5"
++        "1.6.1"
+      values.proxyAdmin:
++        "katana:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      implementationNames.katana:0x0ebC896698De72A444d00Dc3d046B432c555EB09:
+-        "L1FeeVault"
+      implementationNames.katana:0xf7bed7215EEF1003fac426682Cf2edeb958569f7:
++        "BaseFeeVault"
+    }
+```
+
+```diff
+    contract OperatorFeeVault (katana:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault] {
+    +++ description: Collects the operator fees.
+      sourceHashes.1:
+-        "0xee5dca77d41cb3095dbb6dbb7f542e32ec79f4ebfb289ca0622873a493080ffb"
++        "0x0ba9b644913957c9f60eda0ab433da4523bb2437156e4dd8dadca627c884ba2a"
+      values.$implementation:
+-        "katana:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537"
++        "katana:0xEddf416c7159387cc6DF3015700F79Cfb8911373"
+      values.$pastUpgrades.1:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x2A5A3eabB9Fd571A3Af0299eebdF8EaafE29a914"]]
+      values.$pastUpgrades.2:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0xEddf416c7159387cc6DF3015700F79Cfb8911373"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.version:
+-        "1.0.0"
++        "1.1.1"
+      values.proxyAdmin:
++        "katana:0x4200000000000000000000000000000000000018"
+      values.proxyAdminOwner:
++        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      implementationNames.katana:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537:
+-        "OperatorFeeVault"
+      implementationNames.katana:0xEddf416c7159387cc6DF3015700F79Cfb8911373:
++        "OperatorFeeVault"
+    }
+```
+
+```diff
+    contract SchemaRegistry (katana:0x4200000000000000000000000000000000000020) [opstack/Layer2/SchemaRegistry] {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      sourceHashes.1:
+-        "0x184ad3273d7e257c9f1b138ecff33286528599eae858abc182fdc3068060af90"
++        "0xe2a60db541c987ffa9a6ed73b9100c7f62f2574966a20c903a73a8f730c7dfcc"
+      values.$implementation:
+-        "katana:0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020"
++        "katana:0x70DE55BC0bfBC52C5D0CCA1DA5816c2428886A34"
+      values.$pastUpgrades.0:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0x70DE55BC0bfBC52C5D0CCA1DA5816c2428886A34"]]
+      values.$upgradeCount:
+-        0
++        1
+      values.version:
+-        "1.3.1-beta.1"
++        "1.3.1-beta.2"
+      implementationNames.katana:0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020:
+-        "SchemaRegistry"
+      implementationNames.katana:0x70DE55BC0bfBC52C5D0CCA1DA5816c2428886A34:
++        "SchemaRegistry"
+    }
+```
+
+```diff
+    contract EAS (katana:0x4200000000000000000000000000000000000021) [opstack/Layer2/EAS] {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      sourceHashes.1:
+-        "0x565fcc3b9d0821e7893d6c738d9eafe13dc0e30795042c019bb419f2d6e32c78"
++        "0x16924e7d7c1a311d6c9da93c6bf8bc7bd5454a0efde4d6e365e66c87ef4a0951"
+      values.$implementation:
+-        "katana:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021"
++        "katana:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6"
+      values.$pastUpgrades.0:
++        ["2026-09-23T16:00:01.000Z","0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",["katana:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6"]]
+      values.$upgradeCount:
+-        0
++        1
+      values.version:
+-        "1.4.1-beta.1"
++        "1.4.1-beta.3"
+      implementationNames.katana:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021:
+-        "EAS"
+      implementationNames.katana:0xbEc660b456B84A081E90aF29BE43385BDa5bF7b6:
++        "EAS"
+    }
+```
+
+## Source code changes
+
+```diff
+.../BaseFeeVault/BaseFeeVault.sol                  |  955 +++++-
+ .../katana/{.flat@1788793515 => .flat}/EAS/EAS.sol |   46 +-
+ .../L1Block/L1Block.sol                            |  320 +-
+ .../katana/.flat/L1FeeVault/BaseFeeVault.sol       | 1367 ++++++++
+ .../L1FeeVault/L1FeeVault.sol => /dev/null         |  578 ----
+ .../L2CrossDomainMessenger.sol                     | 1200 ++++++-
+ .../L2ERC721Bridge/L2ERC721Bridge.sol              |  958 ++++--
+ .../katana/.flat/L2ProxyAdmin/L2ProxyAdmin.sol     |  886 +++++
+ .../L2ProxyAdmin}/Proxy.p.sol                      |    0
+ .../L2StandardBridge/L2StandardBridge.sol          | 3551 +++++++++++++-------
+ .../L2ToL1MessagePasser/L2ToL1MessagePasser.sol    |  176 +-
+ .../OperatorFeeVault/OperatorFeeVault.sol          |  923 ++++-
+ .../OptimismMintableERC20Factory.sol               |  491 ++-
+ .../OptimismMintableERC721Factory.sol              | 1180 +++++--
+ .../ProxyAdmin.sol => /dev/null                    |  427 ---
+ .../SchemaRegistry/SchemaRegistry.sol              |    4 +-
+ .../SequencerFeeVault/SequencerFeeVault.sol        |  957 +++++-
+ 17 files changed, 10731 insertions(+), 3288 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) [katana/OptimismPortal2] {
+    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0xfbdaf82ca253a793186c31406510104afbb0e1a8
+
+# Diff at Sun, 04 Oct 2026 05:55:33 GMT:
+
+- id: f5cac32b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1788793515
+- current timestamp: 1788793515
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.optimisticModeManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.aggchainManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.selectedOpSuccinctConfig:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xaA8a62563CFe4E36118ED479B5486F503b438376) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      fieldMeta.getProxiedTokensManager.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.bridgeManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      fieldMeta.globalExitRootRemover.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.globalExitRootUpdater.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x5b5287c19b9860ae961673ee37ed1a01b09e9ac2
+
+# Diff at Wed, 30 Sep 2026 22:47:34 GMT:
+
+- id: e463822b
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1788793515
+- current timestamp: 1788793515
+
+## Description
+
+Config-only rerun on the same block number. The DisputeGameFactory template now reads the Upgrade 20 super dispute game types, 9 and 5, together with their init bonds and clone arguments; both types are unset on this chain. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0xaA8a62563CFe4E36118ED479B5486F503b438376) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game5:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game5AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game5Args:
++        "0x"
++++ severity: HIGH
+      values.game5Proposer:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game9AbsolutePrestate:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game9Args:
++        "0x"
++++ severity: HIGH
+      values.game9Vm:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9Weth:
++        "UNRESOLVED"
+      values.initBondGame5:
++        0
+      values.initBondGame9:
++        0
+      fieldMeta.game9:
++        {"severity":"HIGH"}
+      fieldMeta.game5:
++        {"severity":"HIGH"}
+      fieldMeta.game9AbsolutePrestate:
++        {"severity":"HIGH"}
+      fieldMeta.game9Vm:
++        {"severity":"HIGH"}
+      fieldMeta.game9AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game9Weth:
++        {"severity":"HIGH"}
+      fieldMeta.game5AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game5Proposer:
++        {"severity":"HIGH"}
+      usedTypes.6:
++        {"typeCaster":"SliceAddress","arg":{"offset":0}}
+      usedTypes.7:
++        {"typeCaster":"SliceAddress","arg":{"offset":20}}
+    }
+```
+
+Generated with discovered.json: 0xb899e1100e258b488f013bfd5fe9f77b307460c2
+
+# Diff at Tue, 29 Sep 2026 17:44:53 GMT:
+
+- id: e8f0d865
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@97882e49075dda3a0b6c2f78b8e10cde49a7b97a block: 1788793515
+- current timestamp: 1788793515
+
+## Description
+
+Config: add the DisputeGameFactory owner permission to the shared templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
+Generated with discovered.json: 0xf60222ae9733f8f9c5fb6a7ee010bf0acf22e97a
+
+# Diff at Wed, 23 Sep 2026 05:47:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e9174e8edc4a3b646f958a1d6e0d4360abec40d block: 1788793515
+- current timestamp: 1788793515
+
+## Description
+
+Refresh config-derived discovery metadata at the main-branch block.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.gasTokenNetwork:
+-        {"severity":"HIGH"}
+      fieldMeta.gasTokenAddress:
+-        {"severity":"HIGH"}
+      fieldMeta.threshold:
+-        {"severity":"HIGH"}
+      fieldMeta.forceBatchTimeout:
+-        {"severity":"HIGH"}
+      fieldMeta.forceBatchAddress:
+-        {"severity":"HIGH"}
+      fieldMeta.bridgeAddress:
+-        {"severity":"HIGH"}
+      fieldMeta.globalExitRootManager:
+-        {"severity":"HIGH"}
+      fieldMeta.rollupManager:
+-        {"severity":"HIGH"}
+      fieldMeta.aggLayerGateway:
+-        {"severity":"HIGH"}
+      fieldMeta.aggchainMultisigHash:
+-        {"severity":"HIGH"}
+      fieldMeta.selectedOpSuccinctConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.AGGCHAIN_TYPE.severity:
+-        "HIGH"
+      fieldMeta.getThreshold:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+      directlyReceivedPermissions.4.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.portal:
+-        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x263b251D67BB154DD6b8352539466ACE7948ED56) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.pauseExpiry:
+-        {"severity":"HIGH"}
+      fieldMeta.pauseExpiryFmt:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
+-        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x99e1fe97767683bbba69fF570b4BbEd7C3e0649e) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH"},"delay":{"severity":"HIGH"},"config":{"severity":"HIGH"},"systemConfig":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xaA8a62563CFe4E36118ED479B5486F503b438376) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
++++ severity: HIGH
+      values.blacklistedGames:
++        []
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.blacklistedGames:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
+-        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
+-        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
+-        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
+-        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.8.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.8.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xD1e389c046FB734D2a0c7C390312210c408ba832) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.absolutePrestateFromDGF:
++        "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c"
++++ severity: HIGH
+      values.anchorStateRegistryFromDGF:
++        "eth:0xaA8a62563CFe4E36118ED479B5486F503b438376"
++++ severity: HIGH
+      values.chainIdFromDGF:
++        747474
++++ severity: HIGH
+      values.game8AbsolutePrestate:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8AnchorStateRegistry:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8ChainId:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game8Weth:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.vmFromDGF:
++        "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA"
+      fieldMeta.gameImpls:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+      fieldMeta.permissionedGameArgs:
+-        {"severity":"HIGH"}
+      fieldMeta.game8Args:
+-        {"severity":"HIGH"}
+      fieldMeta.absolutePrestateFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.vmFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.game8AbsolutePrestate:
++        {"severity":"HIGH"}
+      fieldMeta.game8AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game8Weth:
++        {"severity":"HIGH"}
+      fieldMeta.game8ChainId:
++        {"severity":"HIGH"}
+      fieldMeta.anchorStateRegistryFromDGF:
++        {"severity":"HIGH"}
+      fieldMeta.chainIdFromDGF:
++        {"severity":"HIGH"}
+      usedTypes.0:
++        {"typeCaster":"SliceBytes32","arg":{"offset":0}}
+      usedTypes.1:
++        {"typeCaster":"SliceAddress","arg":{"offset":32}}
+      usedTypes.3:
++        {"typeCaster":"SliceAddress","arg":{"offset":52}}
+      usedTypes.4:
++        {"typeCaster":"SliceAddress","arg":{"offset":72}}
+      usedTypes.5:
++        {"typeCaster":"SliceUint256","arg":{"offset":92}}
+      usedTypes.3:
+-        {"typeCaster":"SliceAddress","arg":{"offset":72}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      fieldMeta.getWrappedTokenBridgeImplementation:
+-        {"severity":"HIGH"}
+      fieldMeta.bridgeLib:
+-        {"severity":"HIGH"}
+      fieldMeta.polygonRollupManager:
+-        {"severity":"HIGH"}
+      fieldMeta.globalExitRootManager:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (katana:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      fieldMeta.l1CrossDomainMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2StandardBridge (katana:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      fieldMeta.l1TokenBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
+-        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
+-        {"severity":"HIGH"}
+      fieldMeta.messenger:
+-        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (katana:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      fieldMeta.bridgeAddress:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2Timelock (katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13) [polygon-cdk/L2Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 12h.
+      fieldMeta.timelockAdminAC:
+-        {"severity":"HIGH"}
+      fieldMeta.accessControl:
+-        {"severity":"HIGH"}
+      fieldMeta.polygonZkEVM.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract TokenWrappedBridgeUpgradeable (katana:0xF0777a825470092b3Debc9af291634460b8E1a2c) [katana/TokenWrappedBridgeUpgradeable] {
+    +++ description: An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract. The bridge address is set on each token proxy during initialization.
+      description:
+-        "An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract."
++        "An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract. The bridge address is set on each token proxy during initialization."
+      fieldMeta:
+-        {"bridgeAddress":{"severity":"HIGH"}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+Generated with discovered.json: 0xfba7237c1ad2ceb5342bef5604d976886b13d177
+
+# Diff at Mon, 21 Sep 2026 11:19:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1788793515
+- current timestamp: 1788793515
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.pendingOptimisticModeManager:
++        {"severity":"MEDIUM"}
+      fieldMeta.pendingAggchainManager:
++        {"severity":"MEDIUM"}
+      fieldMeta.pendingAdmin:
++        {"severity":"MEDIUM"}
+      fieldMeta.rollupConfigHash:
++        {"severity":"LOW"}
+      fieldMeta.gasTokenNetwork:
++        {"severity":"HIGH"}
+      fieldMeta.gasTokenAddress:
++        {"severity":"HIGH"}
+      fieldMeta.submissionInterval:
++        {"severity":"HIGH"}
+      fieldMeta.threshold:
++        {"severity":"HIGH"}
+      fieldMeta.forceBatchTimeout:
++        {"severity":"HIGH"}
+      fieldMeta.forceBatchAddress:
++        {"severity":"HIGH"}
+      fieldMeta.bridgeAddress:
++        {"severity":"HIGH"}
+      fieldMeta.globalExitRootManager:
++        {"severity":"HIGH"}
+      fieldMeta.rollupManager:
++        {"severity":"HIGH"}
+      fieldMeta.aggLayerGateway:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      fieldMeta.ResolvedDelegateProxy_addressManager:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.portal:
++        {"severity":"HIGH"}
+      fieldMeta.PORTAL:
++        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) [katana/OptimismPortal2] {
+    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x263b251D67BB154DD6b8352539466ACE7948ED56) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.guardian.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.pauseExpiry:
++        {"severity":"HIGH"}
+      fieldMeta.pauseExpiryFmt:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenBridge:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x99e1fe97767683bbba69fF570b4BbEd7C3e0649e) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      fieldMeta.delay:
++        {"severity":"HIGH"}
+      fieldMeta.config:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xaA8a62563CFe4E36118ED479B5486F503b438376) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.superchainConfig:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFactory:
++        {"severity":"HIGH"}
+      fieldMeta.optimismPortal:
++        {"severity":"HIGH"}
+      fieldMeta.l1CrossDomainMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.l1StandardBridge:
++        {"severity":"HIGH"}
+      fieldMeta.delayedWETH:
++        {"severity":"HIGH"}
+      fieldMeta.batchInbox:
++        {"severity":"HIGH"}
+      fieldMeta.gasPayingToken:
++        {"severity":"HIGH"}
+      fieldMeta.resourceConfig:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xD1e389c046FB734D2a0c7C390312210c408ba832) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.gameImpls:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      fieldMeta.emergencyBridgePauser.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.emergencyBridgeUnpauser.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.pendingProxiedTokensManager:
++        {"severity":"MEDIUM"}
+      fieldMeta.pendingEmergencyBridgeUnpauser:
++        {"severity":"MEDIUM"}
+      fieldMeta.pendingEmergencyBridgePauser:
++        {"severity":"MEDIUM"}
+      fieldMeta.isEmergencyState:
++        {"severity":"MEDIUM"}
+      fieldMeta.getWrappedTokenBridgeImplementation:
++        {"severity":"HIGH"}
+      fieldMeta.WETHToken:
++        {"severity":"HIGH"}
+      fieldMeta.bridgeLib:
++        {"severity":"HIGH"}
+      fieldMeta.polygonRollupManager:
++        {"severity":"HIGH"}
+      fieldMeta.globalExitRootManager:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (katana:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      fieldMeta.l1CrossDomainMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.otherMessenger:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L2StandardBridge (katana:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      fieldMeta.l1TokenBridge:
++        {"severity":"HIGH"}
+      fieldMeta.otherBridge:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_BRIDGE:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (katana:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      fieldMeta.pendingGlobalExitRootUpdater:
++        {"severity":"MEDIUM"}
+      fieldMeta.pendingGlobalExitRootRemover:
++        {"severity":"MEDIUM"}
+      fieldMeta.bridgeAddress:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2Timelock (katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13) [polygon-cdk/L2Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 12h.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.timelockAdminAC:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract TokenWrappedBridgeUpgradeable (katana:0xF0777a825470092b3Debc9af291634460b8E1a2c) [katana/TokenWrappedBridgeUpgradeable] {
+    +++ description: An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract.
+      fieldMeta:
++        {"bridgeAddress":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x56e5ce8805f49b736d56a533ab2f02407fd9843f
+
+# Diff at Fri, 18 Sep 2026 10:15:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d903624f4bbcd7c3db85ae1858dfd3303fa28c5c block: 1788793515
+- current timestamp: 1788793515
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788793515 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.admin:
++        {"severity":"HIGH"}
+      fieldMeta.optimisticModeManager:
++        {"severity":"HIGH"}
+      fieldMeta.aggchainManager:
++        {"severity":"HIGH"}
+      fieldMeta.selectedOpSuccinctConfig:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) [katana/OptimismPortal2] {
+    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.
+      fieldMeta.respectedGameType.severity:
+-        "HIGH"
++        "LOW"
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused.description:
+-        "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
++        "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses forced transactions (asset bridging through this portal is disabled)."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x263b251D67BB154DD6b8352539466ACE7948ED56) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract vbWBTC (eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta:
++        {"accessControl":{"severity":"MEDIUM"},"yieldVault":{"severity":"MEDIUM","description":"external vault where the underlying backing assets are deposited to generate yield."},"yieldRecipient":{"severity":"MEDIUM"},"migrationManager":{"severity":"MEDIUM"},"minimumReservePercentage":{"severity":"MEDIUM","description":"share of the underlying that must stay in reserve instead of being deposited into the yield vault."},"paused":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract vbETH (eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta:
++        {"accessControl":{"severity":"MEDIUM"},"yieldVault":{"severity":"MEDIUM","description":"external vault where the underlying backing assets are deposited to generate yield."},"yieldRecipient":{"severity":"MEDIUM"},"migrationManager":{"severity":"MEDIUM"},"minimumReservePercentage":{"severity":"MEDIUM","description":"share of the underlying that must stay in reserve instead of being deposited into the yield vault."},"paused":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.guardian:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract vbUSDS (eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta:
++        {"accessControl":{"severity":"MEDIUM"},"yieldVault":{"severity":"MEDIUM","description":"external vault where the underlying backing assets are deposited to generate yield."},"yieldRecipient":{"severity":"MEDIUM"},"migrationManager":{"severity":"MEDIUM"},"minimumReservePercentage":{"severity":"MEDIUM","description":"share of the underlying that must stay in reserve instead of being deposited into the yield vault."},"paused":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract MigrationManager (eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02) [polygon-cdk/MigrationManager] {
+    +++ description: Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.
+      fieldMeta:
++        {"accessControl":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract vbUSDC (eth:0x53E82ABbb12638F09d9e624578ccB666217a765e) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta:
++        {"accessControl":{"severity":"MEDIUM"},"yieldVault":{"severity":"MEDIUM","description":"external vault where the underlying backing assets are deposited to generate yield."},"yieldRecipient":{"severity":"MEDIUM"},"migrationManager":{"severity":"MEDIUM"},"minimumReservePercentage":{"severity":"MEDIUM","description":"share of the underlying that must stay in reserve instead of being deposited into the yield vault."},"paused":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract vbUSDT (eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta:
++        {"accessControl":{"severity":"MEDIUM"},"yieldVault":{"severity":"MEDIUM","description":"external vault where the underlying backing assets are deposited to generate yield."},"yieldRecipient":{"severity":"MEDIUM"},"migrationManager":{"severity":"MEDIUM"},"minimumReservePercentage":{"severity":"MEDIUM","description":"share of the underlying that must stay in reserve instead of being deposited into the yield vault."},"paused":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x99e1fe97767683bbba69fF570b4BbEd7C3e0649e) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xaA8a62563CFe4E36118ED479B5486F503b438376) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xD1e389c046FB734D2a0c7C390312210c408ba832) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.permissionedGameArgs:
++        {"severity":"HIGH"}
+      fieldMeta.game8Args:
++        {"severity":"HIGH"}
+      fieldMeta.game8Vm:
++        {"severity":"HIGH"}
+      fieldMeta.wethFromDGF:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      critical:
++        true
+      fieldMeta:
++        {"getProxiedTokensManager":{"severity":"HIGH"},"bridgeManager":{"severity":"HIGH"},"emergencyBridgePauser":{"severity":"HIGH"},"emergencyBridgeUnpauser":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (katana:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2StandardBridge (katana:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      critical:
++        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (katana:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      critical:
++        true
+      fieldMeta:
++        {"globalExitRootRemover":{"severity":"HIGH"},"globalExitRootUpdater":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract BridgeLib (katana:0xb30C032b183525de7427f04e79F45Cd19866E124) [katana/BridgeLib] {
+    +++ description: Utility library contract for the AgglayerBridgeL2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2Timelock (katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13) [polygon-cdk/L2Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 12h.
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TokenWrappedBridgeUpgradeable (katana:0xF0777a825470092b3Debc9af291634460b8E1a2c) [katana/TokenWrappedBridgeUpgradeable] {
+    +++ description: An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x56f1ace316364b51f3d20d968545c1fb5b653cf5
 
 # Diff at Mon, 07 Sep 2026 15:06:55 GMT:

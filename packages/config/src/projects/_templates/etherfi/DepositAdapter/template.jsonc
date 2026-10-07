@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositAdapter",
+  "category": "core",
+  "description": "User-facing helper that wraps ETH and accepted liquid staking tokens into weETH in one call.",
+  "ignoreMethods": ["proxiableUUID"]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RoleRegistry",
+  "category": "gov",
+  "description": "Central access-control registry: named roles gate privileged functions across the protocol. Role membership is read live.",
+  "ignoreMethods": ["roleHolderCount", "roleHolders", "proxiableUUID"]
+}

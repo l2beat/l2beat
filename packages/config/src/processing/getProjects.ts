@@ -52,7 +52,18 @@ import { getStage } from './utils/getStage'
 import { getVM } from './utils/getVM'
 
 const daBridges = refactored.filter((p) => p.daBridge)
+
+// Reading every tvs.json, diffHistory.md and discovered.json takes ~800ms, and
+// runConfigAdjustments is already one-shot, so a second call can only return
+// the same projects.
+let projects: BaseProject[] | undefined
+
 export function getProjects(): BaseProject[] {
+  projects ??= buildProjects()
+  return projects
+}
+
+function buildProjects(): BaseProject[] {
   runConfigAdjustments()
 
   return refactored
@@ -167,10 +178,12 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       p.type === 'layer2' ? p.config.trackedTxs : undefined,
     ),
     chainConfig: p.chainConfig,
+    ossificationHistory: p.ossificationHistory,
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
     ecosystemInfo: p.ecosystemInfo,
     interopConfig: p.interopConfig,
+    crops: p.crops,
     // tags
     archivedAt: p.archivedAt,
     hasTestnet: p.hasTestnet,

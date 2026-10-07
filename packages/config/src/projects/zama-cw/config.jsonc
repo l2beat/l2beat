@@ -22,6 +22,23 @@
     "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1", // Confidential XAUt wrapper
     "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762", // Confidential bbqTGBP wrapper
     "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458", // Confidential steakcUSDC wrapper
+    "eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d", // Confidential WBTC wrapper
+    "eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2", // Confidential AUSD wrapper
+    "eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df", // Confidential PENDLE wrapper
+    "eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73", // Confidential steakUSDT wrapper
+    "eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273", // Confidential bbqUSDT wrapper
+    "eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B", // Confidential bbqUSDC wrapper
+    "eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f", // Confidential armcWBTC wrapper
+    "eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B", // Confidential armUSDTs wrapper
+    "eth:0x77F8207ee451441336538bA07a2F425780dED8DB", // Confidential armUSDCs wrapper
+    "eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A", // Confidential armUSDTp wrapper
+    "eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c", // Confidential armUSDCp wrapper
+    "eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC", // Confidential pendleUSDC wrapper
+    "eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6", // Confidential fAUSDe wrapper
+    "eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F", // Confidential fcUSDT wrapper
+    "eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30", // Confidential roxcUSDC wrapper
+    "eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f", // Confidential roxUSDCy wrapper
+    "eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c", // Confidential PAPY wrapper
     "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3", // Aragon DAO
     "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6", // FHE ACL
     "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75", // FHE coprocessor / executor
@@ -49,6 +66,23 @@
     "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1": "ConfidentialXAUTWrapper",
     "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762": "ConfidentialBbqTGBPWrapper",
     "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458": "ConfidentialSteakcUSDCWrapper",
+    "eth:0xd86aE89C089B380f064Fe01899B4071F1eb6Bb3d": "ConfidentialWBTCWrapper",
+    "eth:0xEa9A15A29DD180c40442142CaeEfC491d37bfDB2": "ConfidentialAUSDWrapper",
+    "eth:0x8900123F7e17709C1D80eda1E611A9503Cf1B3df": "ConfidentialPENDLEWrapper",
+    "eth:0x1F6A937119c0c34Db0a2c4F000386a3BfD4A9e73": "ConfidentialSteakUSDTWrapper",
+    "eth:0x80Ae7dbCe3c1696d3eeD04Ec8348c3C432322273": "ConfidentialBbqUSDTWrapper",
+    "eth:0x501b014f86a73A7199E00cB31C0e9565Ac51e51B": "ConfidentialBbqUSDCWrapper",
+    "eth:0xF921A5B0634f4236B21A4e948317abf9a2E86B6f": "ConfidentialArmcWBTCWrapper",
+    "eth:0xbaC6DeDf2C10D6D381F9DBd9EFd69D93FfCef50B": "ConfidentialArmUSDTsWrapper",
+    "eth:0x77F8207ee451441336538bA07a2F425780dED8DB": "ConfidentialArmUSDCsWrapper",
+    "eth:0x63a60aCC304b84eF829b263f28e7b636Bf77d45A": "ConfidentialArmUSDTpWrapper",
+    "eth:0x2ebBd099f66b0ca94DD82B4c06fe3eEf6AFf853c": "ConfidentialArmUSDCpWrapper",
+    "eth:0xb6e5299fc56053DD5440104Fd6Fd2A3CD064edbC": "ConfidentialPendleUSDCWrapper",
+    "eth:0x76A3f985315aAc9789Cb5BF8A5bb83BFF55FD5a6": "ConfidentialFAUSDeWrapper",
+    "eth:0xA28A369Df348ac232E4DAF7B0Ef90280d8707D7F": "ConfidentialFcUSDTWrapper",
+    "eth:0xB1B18Ad1F16D744c470cb6B09Cb826AfFcc9EB30": "ConfidentialRoxcUSDCWrapper",
+    "eth:0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f": "ConfidentialRoxUSDCyWrapper",
+    "eth:0x9ABb8f3dC2863B1F108DeD7ea41902fEF6732A8c": "ConfidentialPAPYWrapper",
     "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8": "Staking (Coprocessor)",
     "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab": "Staking (KMS)",
     "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C": "ZamaGovMemberDAO",

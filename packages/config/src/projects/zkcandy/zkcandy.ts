@@ -12,6 +12,7 @@ import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zkcandy')
 const chainId = 320
+const archivedAt = UnixTime(1787684403) // 2026-08-25T19:00:03Z
 const trackedTxsSince = UnixTime(1740703583)
 const v26UpgradeTS = UnixTime(1742997647)
 const v29UpgradeTS = UnixTime(1773017027)
@@ -21,6 +22,7 @@ export const zkcandy: ScalingProject = zkStackL2({
   chainId,
   capability: 'universal',
   addedAt: UnixTime(1706088230), // 2024-01-24T09:23:50Z
+  archivedAt,
   additionalPurposes: ['Gaming'],
   additionalBadges: [BADGES.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
@@ -47,6 +49,7 @@ export const zkcandy: ScalingProject = zkStackL2({
     chainId,
     explorerUrl: 'https://explorer.zkcandy.io',
     sinceTimestamp: UnixTime(1741880977),
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'rpc',
@@ -198,6 +201,7 @@ export const zkcandy: ScalingProject = zkStackL2({
         functionSignature:
           'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v29UpgradeTS,
+        untilTimestamp: archivedAt,
       },
     },
     {
@@ -215,6 +219,7 @@ export const zkcandy: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
         sinceTimestamp: v29UpgradeTS,
+        untilTimestamp: archivedAt,
       },
     },
     {
@@ -232,6 +237,7 @@ export const zkcandy: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v29UpgradeTS,
+        untilTimestamp: archivedAt,
       },
     },
   ],

@@ -11,12 +11,10 @@ import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import { getCollection } from '~/content/getCollection'
 import type { EcosystemGovernanceLinks } from '~/pages/ecosystems/project/components/widgets/EcosystemGovernanceLinks'
 import { ps } from '~/server/projects'
-import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
-import { optionToRange } from '~/utils/range/range'
 import { getActivityLatestUops } from '../layer2s/activity/getActivityLatestTps'
 import { getApprovedOngoingAnomalies } from '../layer2s/liveness/getApprovedOngoingAnomalies'
 import {
@@ -119,7 +117,6 @@ export interface EcosystemProjectEntry extends L2SummaryEntry {
 
 export async function getEcosystemEntry(
   slug: string,
-  helpers: SsrHelpers,
 ): Promise<EcosystemEntry | undefined> {
   const ecosystem = await ps.getProject({
     slug,
@@ -187,15 +184,6 @@ export async function getEcosystemEntry(
     getApprovedOngoingAnomalies(),
     getBlobsData(liveProjects),
     getEcosystemToken(ecosystem, liveProjects),
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.activity.chart.queryOptions({
-        range: optionToRange('1y'),
-        filter: {
-          type: 'projects',
-          projectIds: liveProjects.map((project) => project.id),
-        },
-      }),
-    ),
   ])
 
   const hasRwaRestrictedTvs = liveProjects.some(

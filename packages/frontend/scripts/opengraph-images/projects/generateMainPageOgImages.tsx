@@ -10,6 +10,12 @@ const mainPages: MainPage[] = [
     title: 'Home',
   },
   {
+    title: 'Tokens',
+  },
+  {
+    title: 'Ossification',
+  },
+  {
     type: 'layer2s',
     title: 'Summary',
   },
@@ -142,6 +148,12 @@ const mainPages: MainPage[] = [
   },
   {
     title: 'Native Rollups',
+  },
+  {
+    title: 'The Infinite Garden',
+  },
+  {
+    title: 'Submit your protocol',
   },
 ]
 

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-
+import { ParentHeadingLevelProvider } from '~/components/markdown/ParentHeadingLevelContext'
 import { HighlightablePrimaryCard } from '~/components/primary-card/HighlightablePrimaryCard'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { cn } from '~/utils/cn'
@@ -28,7 +28,7 @@ export interface ExtendedProjectSectionProps {
 export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
   const content = (
-    <>
+    <ParentHeadingLevelProvider value={sectionHeadingLevel(props.nested)}>
       {props.children}
       {props.compareUrl && (
         <CompareProjectsLink
@@ -39,7 +39,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
           Compare with other projects
         </CompareProjectsLink>
       )}
-    </>
+    </ParentHeadingLevelProvider>
   )
   return (
     <HighlightablePrimaryCard
@@ -48,7 +48,6 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       nested={props.nested}
       className={cn(
         'scroll-mt-[38px] px-4 py-8 md:mt-4 md:scroll-mt-14 md:p-6 lg:scroll-mt-4',
-        'max-md:border-divider max-md:border-b max-md:last:border-none',
         'md:rounded-lg',
         !props.nested &&
           'border-t-branding-primary md:group-data-[has-colors=true]/section-wrapper:border-t-4',
@@ -104,6 +103,7 @@ interface ProjectDetailsSectionHeaderProps {
 }
 
 function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
+  const Heading = `h${sectionHeadingLevel(props.nested)}` as const
   return (
     <div
       className={cn(
@@ -125,16 +125,21 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
             {props.sectionOrder}
           </div>
         )}
-        <span
+        <Heading
           className={cn(
             'text-heading-28',
             props.nested && 'text-heading-24 leading-none!',
           )}
         >
           {props.title}
-        </span>
+        </Heading>
       </a>
       {props.headerAccessory}
     </div>
   )
+}
+
+/** The project title is the page's h1; grouped sections sit under their group. */
+function sectionHeadingLevel(nested: boolean | undefined): 2 | 3 {
+  return nested ? 3 : 2
 }

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "WeETHWithdrawAdapter",
+  "category": "core",
+  "description": "Helper that lets a holder go from weETH directly into the eETH withdrawal queue in one transaction.",
+  "ignoreMethods": ["getEETHByWeETH", "proxiableUUID"]
+}

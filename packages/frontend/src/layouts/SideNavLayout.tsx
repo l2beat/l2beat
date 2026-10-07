@@ -8,10 +8,7 @@ import { useWhatsNewContext } from '~/components/whats-new/WhatsNewContext'
 import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCloseable'
 import { navGroups } from '~/consts/navGroups'
 import { navSecondaryLinks } from '~/consts/navSecondaryLinks'
-import { env } from '~/env'
 import { cn } from '~/utils/cn'
-
-const LOGO_LINK = env.CLIENT_SIDE_HOME_PAGE ? '/' : '/layer2s/summary'
 
 export type SideNavLayoutVariant = 'default' | 'wide' | 'home'
 
@@ -82,27 +79,31 @@ export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
   variant?: SideNavLayoutVariant
+  /** Scenery behind the whole page, nav included - see `PageBackdrop`. */
+  backdrop?: React.ReactNode
 }
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
   variant = 'default',
+  backdrop,
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
 
   return (
     <SidebarProvider>
+      {backdrop}
       <div className="relative flex grow flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
         <MobileTopNavbar
           groups={navGroups}
-          logoLink={LOGO_LINK}
+          logoLink="/"
           sideLinks={navSecondaryLinks}
         />
         <NavSidebar
-          logoLink={LOGO_LINK}
+          logoLink="/"
           groups={navGroups}
           sideLinks={navSecondaryLinks}
         />

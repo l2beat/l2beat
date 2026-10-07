@@ -10,13 +10,10 @@ import type { StructureConfig } from '../config/StructureConfig'
 import type { EntryParameters, StructureOutput } from './types'
 
 export function generateStructureHash(config: StructureConfig): Hash256 {
-  // Exclude from configHash generation the following fields:
-  //   - .import - because imports modify the config, so hash will change if necessary.
-  //               Simply adding an import is not significant.
-  //   - .entrypoints - because otherwise any change in any project would
-  //                    require rediscovery of everything.
+  // Exclude .entrypoints from configHash generation, because otherwise any
+  // change in any project would require rediscovery of everything.
   // TODO: find proper way of handling such situations
-  const { import: _i, entrypoints: _e, ...strippedConfig } = config
+  const { entrypoints: _e, ...strippedConfig } = config
   // TODO: drop the `sharedModules` pin below and rediscover everything.
   // `sharedModules` was replaced by entrypoints and no longer exists on the
   // config. Every project had it defaulting to `[]`, so it was always part of

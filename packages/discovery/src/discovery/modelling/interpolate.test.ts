@@ -1,8 +1,7 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { EntryParameters } from '../output/types'
+import type { ContractValue, EntryParameters } from '../output/types'
 import {
-  contractValuesForInterpolation,
   interpolateModelTemplate,
   normalizeId,
   tryCastingToName,
@@ -87,7 +86,7 @@ describe(interpolateModelTemplate.name, () => {
       ).toString()]: 'MemberB',
     }
 
-    const values = contractValuesForInterpolation('ethereum', contract)
+    const values = toInterpolationValues(contract)
     const result = interpolateModelTemplate(
       modelTemplate,
       values,
@@ -118,7 +117,7 @@ describe(interpolateModelTemplate.name, () => {
       },
     }
 
-    const values = contractValuesForInterpolation('ethereum', contract)
+    const values = toInterpolationValues(contract)
     const result = interpolateModelTemplate(modelTemplate, values, {})
     expect(result).toEqual('msg1("hello, world!").msg2("hello, world!").')
   })
@@ -138,37 +137,20 @@ describe(interpolateModelTemplate.name, () => {
       },
     }
 
-    const values = contractValuesForInterpolation('ethereum', contract)
+    const values = toInterpolationValues(contract)
     expect(() => interpolateModelTemplate(modelTemplate, values, {})).toThrow(
       'Field "two" not found in contract ContactMsigA',
     )
   })
 })
 
-describe(contractValuesForInterpolation.name, () => {
-  it('properly prepares values for interpolation', () => {
-    const contract: EntryParameters = {
-      type: 'Contract',
-      address: ChainSpecificAddress.from(
-        'eth',
-        EthereumAddress('0x00000000000000000000000000000000DeaDBeef'),
-      ),
-      name: 'ContractA',
-      description: 'Description of ContractA',
-      values: {
-        one: 1,
-        two: 2,
-      },
-    }
-
-    const values = contractValuesForInterpolation('ethereum', contract)
-    expect(values).toEqual({
-      '$.chain': 'ethereum',
-      '$.address': 'eth:0x00000000000000000000000000000000deadbeef',
-      '$.name': 'ContractA',
-      '$.description': 'Description of ContractA',
-      one: 1,
-      two: 2,
-    })
-  })
-})
+function toInterpolationValues(
+  entry: EntryParameters,
+): Record<string, ContractValue | undefined> {
+  return {
+    '$.address': entry.address.toLowerCase(),
+    '$.name': entry.name ?? '',
+    '$.description': entry.description,
+    ...entry.values,
+  }
+}

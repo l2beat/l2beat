@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NodeOperatorManager",
+  "category": "core",
+  "description": "Registry of permissioned node operators and their key/bid allowances.",
+  "ignoreMethods": ["proxiableUUID"]
+}

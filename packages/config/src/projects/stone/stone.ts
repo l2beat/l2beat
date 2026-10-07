@@ -20,7 +20,7 @@ export const stone: BaseProject = {
   },
   display: {
     description:
-      'Stone is a proving system for programs written with Cairo language. Originally built by Starkware for proving Starknet state transition.',
+      'Stone is a proving system for programs written in the Cairo language. Originally built by Starkware for proving Starknet state transition.',
     links: {
       websites: [
         'https://starkware.co',

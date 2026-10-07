@@ -39,7 +39,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     type: 'evm',
     display: 'RH',
     color: '#00C805',
-    explorerUrl: 'https://robinhoodchain.blockscout.com',
+    explorerUrl: 'https://robin.etherscan.io',
   },
   {
     id: 'optimism',

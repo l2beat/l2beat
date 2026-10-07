@@ -328,7 +328,7 @@ function revokeIssuedTokensOnSignals() {
     process.once(signal, () => {
       // Ctrl+C would otherwise skip the `finally` in main() and leave the
       // token valid until it expires.
-      revokeIssuedTokens().finally(() =>
+      void revokeIssuedTokens().finally(() =>
         process.exit(signal === 'SIGINT' ? 130 : 143),
       )
     })

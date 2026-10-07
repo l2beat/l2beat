@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1738484927,
+      "type": "state",
+      "contract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "transaction": "0x030434ba6cf4b5517500dc84d338162f4358864010113fab8fcb9ccc8155f7de",
+      "updateId": "fb997882",
+      "reason": "The SHARP Multisig removed the EOA eth:0x3de55343499f59ceb3f1de47f2cd7eab28f2f5c6 as proxy governor of the SHARPVerifierCallProxy. Until then a single key could replace the default SHARP verifier (the upgrade delay was 0), afterwards only the 2-of-4 SHARP Multisig eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 can."
+    }
+  ]
+}

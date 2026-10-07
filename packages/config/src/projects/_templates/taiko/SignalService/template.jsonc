@@ -1,8 +1,15 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.",
   "fields": {
-    "paused": { "severity": "HIGH" },
+    "pendingOwner": {
+      "severity": "MEDIUM"
+    },
+    "resolver": {
+      "severity": "HIGH"
+    },
+    "paused": { "severity": "MEDIUM" },
     "owner": {
       "permissions": [
         {
@@ -12,6 +19,7 @@
       ]
     },
     "pauser": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

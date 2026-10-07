@@ -603,6 +603,107 @@ export class TokenValueRepository extends BaseRepository {
    * Each branch gets its own index range scan with minimal planning overhead.
    * If range count ever grows significantly (50+), consider batching into separate queries.
    */
+  /**
+   * Same sums as getSummedByProjectForRanges, but only at each project's
+   * latest timestamp within the range and at the timestamp exactly seven
+   * days before it. The 7-day breakdown reads nothing else, and aggregating
+   * every hour of the range first made it the slowest query on project pages.
+   */
+  async getSummedByProjectAtLatestAndSevenDaysBefore(
+    projectIds: string[],
+    range: [UnixTime, UnixTime],
+    opts: {
+      excludeAssociatedTokens: boolean
+      excludeRwaRestrictedTokens: boolean
+    },
+  ): Promise<SummedByProjectRow[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
+    const [from, to] = range
+
+    const withTokenFilters = <Q extends TokenFilterable>(query: Q): Q => {
+      let filtered = query
+      if (opts.excludeAssociatedTokens) {
+        filtered = filtered.where('TokenMetadata.isAssociated', '=', false)
+      }
+      if (opts.excludeRwaRestrictedTokens) {
+        filtered = filtered.where(
+          'TokenMetadata.category',
+          '!=',
+          'rwaRestricted',
+        )
+      }
+      return filtered
+    }
+
+    const query = this.db
+      // One backward index probe per project that stops at the newest row
+      // passing the token filters. Filtering here (not only in the sums)
+      // guarantees every returned project has a latest row, so the
+      // seven-days-before row can never be the only one. Taking max() over
+      // the whole range instead costs ~7x more on production-sized data.
+      .with('latest', (eb) =>
+        eb
+          .selectFrom(
+            sql<{
+              projectId: string
+            }>`(select unnest(${projectIds}::text[]) as "projectId")`.as('p'),
+          )
+          .innerJoinLateral(
+            (eb) =>
+              withTokenFilters(
+                eb
+                  .selectFrom('TokenValue')
+                  .innerJoin(
+                    'TokenMetadata',
+                    'TokenValue.tokenId',
+                    'TokenMetadata.tokenId',
+                  )
+                  .select('TokenValue.timestamp')
+                  .whereRef('TokenValue.projectId', '=', 'p.projectId')
+                  .where('TokenValue.timestamp', '>=', UnixTime.toDate(from))
+                  .where('TokenValue.timestamp', '<=', UnixTime.toDate(to)),
+              )
+                .orderBy('TokenValue.timestamp', 'desc')
+                .limit(1)
+                .as('l'),
+            (join) => join.onTrue(),
+          )
+          .select(['p.projectId', 'l.timestamp']),
+      )
+      // Two rows per project, so the join below hits the (projectId,
+      // timestamp) index instead of scanning every hour of the project.
+      .with('wanted', (eb) =>
+        eb
+          .selectFrom('latest')
+          .select(['projectId', 'timestamp'])
+          .unionAll(
+            eb
+              .selectFrom('latest')
+              .select([
+                'projectId',
+                sql<Date>`"timestamp" - interval '7 days'`.as('timestamp'),
+              ]),
+          ),
+      )
+      .selectFrom('wanted')
+      .innerJoin('TokenValue', (join) =>
+        join
+          .onRef('TokenValue.projectId', '=', 'wanted.projectId')
+          .onRef('TokenValue.timestamp', '=', 'wanted.timestamp'),
+      )
+      .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
+      .select((eb) => selectBreakdownSums(eb, 'valueForProject'))
+
+    const rows = await withTokenFilters(query)
+      .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
+      .orderBy('TokenValue.timestamp')
+      .execute()
+
+    return rows.map(toSummedByProjectRow)
+  }
+
   async getSummedByProjectForRanges(
     projectIds: string[],
     ranges: [UnixTime | null, UnixTime][],
@@ -612,24 +713,7 @@ export class TokenValueRepository extends BaseRepository {
       excludeRwaRestrictedTokens: boolean
       cutOffTimestamp?: number
     },
-  ): Promise<
-    {
-      timestamp: UnixTime
-      project: string
-      value: number
-      canonical: number
-      customCanonical: number
-      external: number
-      native: number
-      ether: number
-      stablecoin: number
-      btc: number
-      rwaRestricted: number
-      rwaPublic: number
-      other: number
-      associated: number
-    }[]
-  > {
+  ): Promise<SummedByProjectRow[]> {
     if (projectIds.length === 0 || ranges.length === 0) {
       return []
     }
@@ -644,31 +728,7 @@ export class TokenValueRepository extends BaseRepository {
           'TokenValue.tokenId',
           'TokenMetadata.tokenId',
         )
-        .select((eb) => [
-          'TokenValue.projectId',
-          'TokenValue.timestamp',
-          eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
-          sumBySource(eb, valueField, 'canonical'),
-          sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
-          sumBySource(eb, valueField, 'external'),
-          sumBySource(eb, valueField, 'native'),
-          sumByCategory(eb, valueField, 'ether'),
-          sumByCategory(eb, valueField, 'stablecoin'),
-          sumByCategory(eb, valueField, 'btc'),
-          sumByCategory(eb, valueField, 'rwaRestricted'),
-          sumByCategory(eb, valueField, 'rwaPublic'),
-          sumByCategory(eb, valueField, 'other'),
-          eb.fn
-            .sum(
-              eb
-                .case()
-                .when('TokenMetadata.isAssociated', '=', true)
-                .then(eb.ref(valueField))
-                .else(eb.cast(eb.val(0), 'double precision'))
-                .end(),
-            )
-            .as('associated'),
-        ])
+        .select((eb) => selectBreakdownSums(eb, valueField))
         .where('TokenValue.projectId', 'in', projectIds)
         .where('TokenValue.timestamp', '<=', UnixTime.toDate(to))
 
@@ -696,22 +756,7 @@ export class TokenValueRepository extends BaseRepository {
 
     const rows = await combined.orderBy('timestamp').execute()
 
-    return rows.map((row) => ({
-      project: row.projectId,
-      timestamp: UnixTime.fromDate(row.timestamp),
-      value: Number(row.value),
-      canonical: Number(row.canonical),
-      customCanonical: Number(row.customCanonical),
-      external: Number(row.external),
-      native: Number(row.native),
-      ether: Number(row.ether),
-      stablecoin: Number(row.stablecoin),
-      btc: Number(row.btc),
-      rwaRestricted: Number(row.rwaRestricted),
-      rwaPublic: Number(row.rwaPublic),
-      other: Number(row.other),
-      associated: Number(row.associated),
-    }))
+    return rows.map(toSummedByProjectRow)
   }
 
   async checkIfExists(
@@ -730,6 +775,82 @@ export class TokenValueRepository extends BaseRepository {
 
     const result = await query.executeTakeFirst()
     return result !== undefined
+  }
+}
+
+interface TokenFilterable {
+  where(column: 'TokenMetadata.isAssociated', op: '=', value: boolean): this
+  where(column: 'TokenMetadata.category', op: '!=', value: string): this
+}
+
+export interface SummedByProjectRow {
+  timestamp: UnixTime
+  project: string
+  value: number
+  canonical: number
+  customCanonical: number
+  external: number
+  native: number
+  ether: number
+  stablecoin: number
+  btc: number
+  rwaRestricted: number
+  rwaPublic: number
+  other: number
+  associated: number
+}
+
+function selectBreakdownSums(
+  eb: ExpressionBuilder<DB, 'TokenValue' | 'TokenMetadata'>,
+  valueField: 'valueForProject' | 'valueForSummary',
+) {
+  return [
+    'TokenValue.projectId' as const,
+    'TokenValue.timestamp' as const,
+    eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
+    sumBySource(eb, valueField, 'canonical'),
+    sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
+    sumBySource(eb, valueField, 'external'),
+    sumBySource(eb, valueField, 'native'),
+    sumByCategory(eb, valueField, 'ether'),
+    sumByCategory(eb, valueField, 'stablecoin'),
+    sumByCategory(eb, valueField, 'btc'),
+    sumByCategory(eb, valueField, 'rwaRestricted'),
+    sumByCategory(eb, valueField, 'rwaPublic'),
+    sumByCategory(eb, valueField, 'other'),
+    eb.fn
+      .sum(
+        eb
+          .case()
+          .when('TokenMetadata.isAssociated', '=', true)
+          .then(eb.ref(valueField))
+          .else(eb.cast(eb.val(0), 'double precision'))
+          .end(),
+      )
+      .as('associated'),
+  ]
+}
+
+function toSummedByProjectRow(row: {
+  projectId: string
+  timestamp: Date
+  [sum: string]: unknown
+}): SummedByProjectRow {
+  return {
+    project: row.projectId,
+    timestamp: UnixTime.fromDate(row.timestamp),
+    value: Number(row.value),
+    canonical: Number(row.canonical),
+    customCanonical: Number(row.customCanonical),
+    external: Number(row.external),
+    native: Number(row.native),
+    ether: Number(row.ether),
+    stablecoin: Number(row.stablecoin),
+    btc: Number(row.btc),
+    rwaRestricted: Number(row.rwaRestricted),
+    rwaPublic: Number(row.rwaPublic),
+    other: Number(row.other),
+    associated: Number(row.associated),
   }
 }
 

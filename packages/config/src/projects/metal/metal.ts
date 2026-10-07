@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('metal')
 export const metal: ScalingProject = opStackL2({
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    isPartOfSuperchain: true,
+    isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1711670400), // 2024-03-29T00:00:00Z
   discovery,
@@ -45,7 +45,7 @@ export const metal: ScalingProject = opStackL2({
       ],
     },
   },
-  hasSuperchainScUpgrades: true,
+  hasSuperchainScUpgrades: false,
   chainConfig: {
     name: 'metal',
     chainId: 1750,

@@ -1,6 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
+  // Forced-inclusion path: sequencers must drain this queue; tampering with it can censor users.
+  "critical": true,
   "ignoreMethods": [
     "getCrossDomainMessage",
     "isMessageDropped",
@@ -14,12 +16,23 @@
     "nextCrossDomainMessageIndex",
     "getFirstUnfinalizedMessageEnqueueTime"
   ],
-  "owner": {
-    "permissions": [
-      {
-        "type": "interact",
-        "description": "manage L2 base fee, max gas limit and set the whitelist checker contract."
-      }
-    ]
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage L2 base fee, max gas limit and set the whitelist checker contract."
+        }
+      ]
+    },
+    // Cap on the gas of enqueued (incl. forced) L1 -> L2 transactions; lowering it can block the forced-inclusion path.
+    "maxGasLimit": {
+      "severity": "MEDIUM"
+    },
+    // Every enqueue (including forced transactions) calls isSenderAllowed() on this
+    // contract to price the message, so a reverting checker blocks the escape hatch.
+    "whitelistChecker": {
+      "severity": "HIGH"
+    }
   }
 }

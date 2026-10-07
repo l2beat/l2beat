@@ -3,18 +3,19 @@ import { createColumnHelper } from '@tanstack/react-table'
 import type { PrivacyAsset } from '~/server/features/privacy/types'
 import { AssetCell } from './components/AssetCell'
 import { PrivacyDepositsMetric } from './components/PrivacyDepositsMetric'
+import { PRIVACY_ASSETS_BREAKDOWN_HEADERS as HEADERS } from './privacyAssetsBreakdown'
 
 const columnHelper = createColumnHelper<PrivacyAsset>()
 
 export const privacyAssetsBreakdownColumns = [
   columnHelper.accessor('symbol', {
-    header: 'Asset',
+    header: HEADERS.asset,
     cell: (ctx) => <AssetCell row={ctx.row} />,
     meta: { cellClassName: 'font-bold text-base' },
   }),
   columnHelper.accessor('bucketCount', {
     id: 'buckets',
-    header: 'Buckets',
+    header: HEADERS.buckets,
     cell: (ctx) => ctx.getValue(),
     meta: {
       align: 'right',
@@ -24,7 +25,7 @@ export const privacyAssetsBreakdownColumns = [
   }),
   columnHelper.accessor((row) => row.deposits.last7d, {
     id: 'deposits7d',
-    header: 'Deposits 7D',
+    header: HEADERS.deposits7d,
     cell: (ctx) => (
       <PrivacyDepositsMetric
         deposits={ctx.row.original.deposits.last7d}
@@ -35,7 +36,7 @@ export const privacyAssetsBreakdownColumns = [
   }),
   columnHelper.accessor((row) => row.deposits.last30d, {
     id: 'deposits30d',
-    header: 'Deposits 30D',
+    header: HEADERS.deposits30d,
     cell: (ctx) => (
       <PrivacyDepositsMetric
         deposits={ctx.row.original.deposits.last30d}
@@ -46,7 +47,7 @@ export const privacyAssetsBreakdownColumns = [
   }),
   columnHelper.accessor((row) => row.deposits.total, {
     id: 'depositsTotal',
-    header: 'Deposits Total',
+    header: HEADERS.depositsTotal,
     cell: (ctx) => (
       <PrivacyDepositsMetric
         deposits={ctx.row.original.deposits.total}
@@ -57,7 +58,7 @@ export const privacyAssetsBreakdownColumns = [
   }),
   columnHelper.accessor((row) => row.totalValueUsd, {
     id: 'valueLocked',
-    header: 'Value Locked',
+    header: HEADERS.valueLocked,
     cell: (ctx) => {
       const value = ctx.getValue()
       return value === null ? '—' : formatCurrency(value, 'usd')

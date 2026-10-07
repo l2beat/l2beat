@@ -6,17 +6,54 @@ export function toJsonSchema(
   schema: Parser<unknown>,
   topLevel: Record<string, Parser<unknown>> = {},
 ): object {
-  const remaining = Object.entries(topLevel) as [string, Imp<unknown>][]
-  const state: State = {
-    refs: new Map(remaining.map(([k, v]) => [v, `#/definitions/${k}`])),
-    lazyCounter: 0,
-    remaining,
-    skipRefs: false,
-  }
+  const state = createState(topLevel, '#/definitions/')
   const decomposed = decompose(schema as Imp<unknown>, state)
   if (state.remaining.length === 0) {
     return { $schema: SCHEMA_VERSION, ...decomposed }
   }
+  return {
+    $schema: SCHEMA_VERSION,
+    definitions: decomposeRemaining(state),
+    ...decomposed,
+  }
+}
+
+export interface JsonSchemaDefinitionsOptions {
+  /**
+   * Where `$ref`s point, e.g. `#/components/schemas/` when the caller embeds
+   * the definitions under OpenAPI components. Defaults to `#/definitions/`.
+   */
+  refPrefix?: string
+}
+
+/**
+ * Only the named schemas, for a caller that embeds them in its own document.
+ * `toJsonSchema` always emits `definitions` at the top level, so a custom
+ * prefix is offered here alone, where the caller controls the location.
+ */
+export function toJsonSchemaDefinitions(
+  topLevel: Record<string, Parser<unknown>>,
+  options: JsonSchemaDefinitionsOptions = {},
+): Record<string, object> {
+  const state = createState(topLevel, options.refPrefix ?? '#/definitions/')
+  return decomposeRemaining(state)
+}
+
+function createState(
+  topLevel: Record<string, Parser<unknown>>,
+  refPrefix: string,
+): State {
+  const remaining = Object.entries(topLevel) as [string, Imp<unknown>][]
+  return {
+    refs: new Map(remaining.map(([k, v]) => [v, `${refPrefix}${k}`])),
+    refPrefix,
+    lazyCounter: 0,
+    remaining,
+    skipRefs: false,
+  }
+}
+
+function decomposeRemaining(state: State): Record<string, object> {
   const definitions: Record<string, object> = {}
   while (state.remaining.length > 0) {
     // biome-ignore lint/style/noNonNullAssertion: It's there
@@ -25,16 +62,13 @@ export function toJsonSchema(
     state.skipRefs = true
     definitions[key] = decompose(unpacked, state)
   }
-  return {
-    $schema: SCHEMA_VERSION,
-    definitions,
-    ...decomposed,
-  }
+  return definitions
 }
 
 interface State {
   remaining: [string, Imp<unknown>][]
   refs: Map<Imp<unknown>, string>
+  refPrefix: string
   lazyCounter: number
   skipRefs: boolean
 }
@@ -138,7 +172,7 @@ function decomposeCore(
     case 'lazy': {
       state.lazyCounter++
       const key = `__lazy_${state.lazyCounter}`
-      const $ref = `#/definitions/${key}`
+      const $ref = `${state.refPrefix}${key}`
       state.refs.set(imp, $ref)
       state.remaining.push([key, imp])
       return { $ref }

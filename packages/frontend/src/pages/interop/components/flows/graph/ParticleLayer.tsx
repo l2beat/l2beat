@@ -52,6 +52,14 @@ interface Props {
  * The whole layer is clipped to everything outside the bubble discs, so
  * those parked particles never paint (icons with transparent middles would
  * otherwise show them).
+ *
+ * Browsers don't reliably apply `begin`/`dur` changes to an animation that is
+ * already running (Chrome and Safari keep the old `begin` when the new one is
+ * earlier, but take the new `dur`), so updating particles in place — e.g.
+ * after a data refetch — leaves some of them bunched together. Each flow
+ * group is therefore keyed by its timing, so any change remounts it with
+ * fresh animations, and the start offset is derived from the flow itself so
+ * that unrelated re-renders don't touch the timing at all.
  */
 export function ParticleLayer({
   flows,
@@ -83,9 +91,8 @@ export function ParticleLayer({
         const dst = layout.get(flow.dstChain)
         if (!src || !dst) return null
 
-        const particles = flowsParticles.get(
-          `${flow.srcChain}${INTEROP_PAIR_SEPARATOR}${flow.dstChain}`,
-        )
+        const flowKey = `${flow.srcChain}${INTEROP_PAIR_SEPARATOR}${flow.dstChain}`
+        const particles = flowsParticles.get(flowKey)
         if (!particles || particles.exactCount <= 0) return null
 
         const path = getConnectionPath(
@@ -97,11 +104,9 @@ export function ParticleLayer({
         )
         const color = getChainColor(interopChains, flow.srcChain)
 
-        const highlighted =
-          highlightedChains.length === 0 ||
-          highlightedChains.every(
-            (chain) => chain === flow.srcChain || chain === flow.dstChain,
-          )
+        const highlighted = highlightedChains.every(
+          (chain) => chain === flow.srcChain || chain === flow.dstChain,
+        )
 
         const groupOpacity = highlighted ? 1 : 0.15
 
@@ -111,14 +116,14 @@ export function ParticleLayer({
         const count = Math.max(1, Math.ceil(exactCount))
         const cycleDuration = (count / exactCount) * travelDuration
         const particleInterval = cycleDuration / count
-        const initialOffset = Math.random() * particleInterval
+        const initialOffset = getStableFraction(flowKey) * particleInterval
 
         // fraction of each cycle spent traveling (rest is parked at the end)
         const t = exactCount / count
 
         return (
           <g
-            key={`${flow.srcChain}-${flow.dstChain}`}
+            key={`${flowKey}-${exactCount}-${travelDuration}`}
             opacity={groupOpacity}
             transform={`translate(${src.x} ${src.y})`}
           >
@@ -146,4 +151,14 @@ export function ParticleLayer({
       })}
     </g>
   )
+}
+
+/** Deterministic value in [0, 1) so flows don't all emit in lockstep (FNV-1a) */
+function getStableFraction(key: string): number {
+  let hash = 0x811c9dc5
+  for (let i = 0; i < key.length; i++) {
+    hash ^= key.charCodeAt(i)
+    hash = Math.imul(hash, 0x01000193)
+  }
+  return (hash >>> 0) / 2 ** 32
 }

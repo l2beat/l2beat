@@ -37,7 +37,7 @@ export function TvsValueSection({
     () =>
       data?.chart.map(([timestamp, valuesByProject]) => ({
         timestamp,
-        value: valuesByProject[project.id] ?? 0,
+        value: valuesByProject[project.id] ?? null,
       })),
     [data, project.id],
   )

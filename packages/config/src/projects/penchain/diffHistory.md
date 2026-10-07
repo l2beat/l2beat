@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x74ffbf7c1b9fa9abb0a39b5d7107761f7c6a0a28
+Generated with discovered.json: 0x6b6c2478a1247f28fba671dd362f6f69b9a5ebe8
+
+# Diff at Thu, 01 Oct 2026 12:51:18 GMT:
+
+- id: e78a9992
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1777962030
+- current timestamp: 1777962030
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes: aggchainManager permission added to the AggchainECDSAMultisig template and the unused zkProver Verifier removed from initialAddresses. The CONSENSUS_TYPE field description in the AggchainECDSAMultisig template was clarified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777962030 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x8499B48896660D549b3A55e6c68a3169B5f9B382) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7","description":"replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role.","role":".aggchainManager"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) [polygon-cdk/Verifier]
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
+    contract AggchainECDSAMultisig (eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7) [polygon-cdk/AggchainECDSAMultisig] {
+    +++ description: System contract defining the Pentagon Games Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      fieldMeta.CONSENSUS_TYPE.description:
+-        "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
++        "Read by the pessimistic program. 0 - legacy single ECDSA signature, 1 - aggchain hash consisting of the multisig hash (aggchainSigners and threshold), plus an optional aggchain proof vkey and params. This contract sets the vkey and params to zero, so the pessimistic program only verifies the aggchainSigners' ECDSA signatures (multisig-only)."
+    }
+```
+
+Generated with discovered.json: 0xa95b1c49021cf34117b893ba3b100165b981c1c5
 
 # Diff at Mon, 07 Sep 2026 08:37:55 GMT:
 
@@ -8,7 +50,7 @@ Generated with discovered.json: 0x74ffbf7c1b9fa9abb0a39b5d7107761f7c6a0a28
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Cross module permission modelling
 
 ## Config/verification related changes
 

@@ -6,9 +6,12 @@ import { getInteropProtocolEntry } from '~/server/features/layer2s/interop/proto
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getInteropMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
+import { renderInteropProtocolMarkdown } from './renderInteropProtocolMarkdown'
 
 export async function getInteropProtocolPageData(
   req: Request<{ slug: string }, unknown, unknown, { update?: string }>,
@@ -17,14 +20,7 @@ export async function getInteropProtocolPageData(
 ): Promise<RenderData | undefined> {
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps(),
-    cache.get(
-      {
-        key: ['interop', 'protocols', req.params.slug],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getCachedData(req.params.slug, manifest),
-    ),
+    getCachedInteropProtocolPage(req.params.slug, manifest, cache),
   ])
 
   if (!data) return undefined
@@ -33,8 +29,8 @@ export async function getInteropProtocolPageData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${data.project.name} - L2BEAT`,
-        description: data.project.description,
+        name: data.project.name,
+        description: data.project.metaDescription,
         url: req.originalUrl,
         openGraph: {
           image: `/meta-images/interop/projects/${data.project.slug}/opengraph-image.png`,
@@ -49,12 +45,39 @@ export async function getInteropProtocolPageData(
         protocolData: data.protocolData,
         apiSelection: data.apiSelection,
         selectedUpdateId: req.query.update,
+        queryState: data.queryState,
       },
     },
   }
 }
 
-async function getCachedData(slug: string, manifest: Manifest) {
+/** The markdown alternate of the page, built from the same cached data as the HTML. */
+export async function getInteropProtocolMarkdown(
+  slug: string,
+  manifest: Manifest,
+  cache: InMemoryCache,
+): Promise<string | undefined> {
+  const data = await getCachedInteropProtocolPage(slug, manifest, cache)
+  return data && renderInteropProtocolMarkdown(data)
+}
+
+function getCachedInteropProtocolPage(
+  slug: string,
+  manifest: Manifest,
+  cache: InMemoryCache,
+) {
+  return cache.get(
+    {
+      key: ['interop', 'protocols', slug],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () => loadInteropProtocolPage(slug, manifest),
+  )
+}
+
+async function loadInteropProtocolPage(slug: string, manifest: Manifest) {
+  const helpers = getSsrHelpers()
   const interopChains = getInteropChains()
   const liveChainIds = interopChains
     .filter((chain) => !chain.isUpcoming)
@@ -83,16 +106,22 @@ async function getCachedData(slug: string, manifest: Manifest) {
     apiSelection,
     interopChainsWithIcons,
     protocolData,
+    helpers,
   )
 
   return {
     project: {
       name: project.name,
       slug: project.slug,
-      description: project.interopConfig.description,
+      metaDescription: getInteropMetadataDescription({
+        name: project.name,
+        type: project.interopConfig.type,
+        description: project.interopConfig.description,
+      }),
     },
     projectEntry,
     protocolData,
     apiSelection,
+    queryState: helpers.dehydrate(),
   }
 }

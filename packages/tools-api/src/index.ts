@@ -3,4 +3,7 @@ import { Application } from './services/Application'
 
 const config = getConfig()
 const app = new Application(config)
-app.start()
+app.start().catch((error: unknown) => {
+  console.error(error)
+  process.exit(1)
+})

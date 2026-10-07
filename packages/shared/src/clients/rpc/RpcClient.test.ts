@@ -56,6 +56,20 @@ describe(RpcClient.name, () => {
       )
     })
 
+    it('parses settledHeight when present', async () => {
+      const response = mockResponse(100)
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: { ...response.result, settledHeight: '0x62' },
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlock(100, false)
+
+      expect(result.settledHeight).toEqual(98)
+    })
+
     it('do not include tx bodies', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => mockResponse(100),
@@ -129,6 +143,19 @@ describe(RpcClient.name, () => {
   })
 
   describe(RpcClient.prototype.getTransactionReceipt.name, () => {
+    it('keeps the block hash', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: { ...mockReceipt, blockHash: '0xabcdef', status: '0x1' },
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getTransactionReceipt('0xabcd')
+
+      expect(result).toEqual({ ...parsedMockReceipt, blockHash: '0xabcdef' })
+    })
+
     it('fetches tx receipt from rpc and parses response', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
@@ -139,7 +166,7 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getTransactionReceipt('0xabcd')
 
-      expect(result).toEqual(mockReceipt)
+      expect(result).toEqual(parsedMockReceipt)
 
       expect(http.fetch.calls[0].args[1]?.body).toEqual(
         JSON.stringify({
@@ -225,7 +252,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -296,7 +323,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -312,7 +339,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockMiddleBlock.toString(16)}`,
             },
@@ -328,7 +355,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${(mockMiddleBlock + 1).toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -947,7 +974,7 @@ const mockRawTx = (to: string | undefined) => ({
   hash: '0x1',
   value: 11111111n.toString(),
   from: '0xf',
-  to,
+  to: to ?? null,
   input: '0x1',
   type: '0x2',
   blockNumber: '0x64',
@@ -967,5 +994,15 @@ const mockTx = (to: string | undefined) => ({
 })
 
 const mockReceipt = {
-  logs: [{ topics: ['0xabcd', '0xdcba'], data: '0x1234' }],
+  logs: [
+    {
+      address: '0x1111111111111111111111111111111111111111',
+      topics: ['0xabcd', '0xdcba'],
+      data: '0x1234',
+      logIndex: '0x7',
+    },
+  ],
+}
+const parsedMockReceipt = {
+  logs: [{ ...mockReceipt.logs[0], logIndex: 7 }],
 }

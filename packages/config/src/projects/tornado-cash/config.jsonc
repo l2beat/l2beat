@@ -36,6 +36,13 @@
     "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": "MiMCHasher",
     "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": "WithdrawalTree"
   },
+  // Ossification perimeter: the 19 immutable pools, their Verifier and the
+  // MiMCHasher. The pools have no admin (the legacy operator renounced in May
+  // 2020), so verifier and hasher can no longer change. Governance (TORN, Governance,
+  // InstanceRegistry, RelayerRegistry, TornadoRouter, trees and mining) can only
+  // gate the optional router path and relayers, never pool funds, proofs or
+  // direct withdrawals (cf. the May 2023 governance takeover, which left the
+  // pools untouched), so it is not critical.
   "overrides": {
     "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e": {
       "ignoreDiscovery": true
@@ -44,7 +51,8 @@
       "description": "Unverified merkle tree instance that stores legacy Tornado deposit leaves for TornadoTreesV1."
     },
     "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": {
-      "description": "MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator.",
+      "description": "MiMC hasher used by every Tornado pool for commitment-tree operations (linked library in the 2019 pools, constructor argument in the 2021 pools), manually verified against the pinned Tornado circomlib generator.",
+      "critical": true,
       "category": "core",
       "manualSourcePaths": {
         "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": "https://github.com/tornadocash/circomlib/blob/c372f14d324d57339c88451834bf2824e73bbdbc/src/mimcsponge_gencontract.js"

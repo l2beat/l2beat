@@ -1,0 +1,332 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "privacy-boost",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "privacy-boost-AAPLc",
+      "priceId": "apple-coinbase-tokenized-stock",
+      "symbol": "AAPLc",
+      "name": "Apple Inc.",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175597/large/aapl_200x200.png?1787068801",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xb200000000000000000000C2e324d24d7eEcd1fb",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 8,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "apple-coinbase-tokenized-stock"
+      },
+      "category": "rwaPublic",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-boost-bbqUSDC",
+      "priceId": "usd-coin",
+      "symbol": "bbqUSDC",
+      "name": "Steakhouse High Yield USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbeeff7aE5E00Aae3Db302e4B0d8C883810a58100",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 18,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-boost-BRETT",
+      "priceId": "based-brett",
+      "symbol": "BRETT",
+      "name": "Brett",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35529/large/1000050750.png?1709031995",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 18,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "based-brett"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-boost-CSUSDC",
+      "priceId": "usd-coin",
+      "symbol": "CSUSDC",
+      "name": "Clearstar USDC Reactor",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 18,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-boost-edgeUSDC",
+      "priceId": "usd-coin",
+      "symbol": "edgeUSDC",
+      "name": "UltraYield USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5435BC53f2C61298167cdB11Cdf0Db2BFa259ca0",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 18,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-boost-gtusdcf",
+      "priceId": "usd-coin",
+      "symbol": "gtusdcf",
+      "name": "Gauntlet USDC Frontier",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1deEfABEe758AAbdC29a542B24ca3b75aFD56765",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 18,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-boost-gtwethb",
+      "priceId": "weth",
+      "symbol": "gtwethb",
+      "name": "Gauntlet WETH Balanced",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFeFeC33668E22677c4762d0853d56245a800ff08",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 18,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "weth"
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-boost-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 6,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-boost-USDT",
+      "priceId": "l2-standard-bridged-usdt-base",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39963/large/usdt.png?1724952731",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 6,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "l2-standard-bridged-usdt-base"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-boost-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4200000000000000000000000000000000000006",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 18,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "weth"
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-boost-wstETH",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+        "chain": "base",
+        "escrowAddress": "0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+        "decimals": 18,
+        "sinceTimestamp": 1788377831
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1788377831
+        },
+        "priceId": "wrapped-steth"
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

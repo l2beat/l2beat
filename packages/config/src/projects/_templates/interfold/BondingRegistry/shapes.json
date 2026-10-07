@@ -10,5 +10,11 @@
     "address": "eth:0xd89D3fE1b53eF95111c0E68A8CeFDfd20EcCA53a",
     "chain": "ethereum",
     "blockNumber": 25883001
+  },
+  "BondingRegistryV3": {
+    "hash": "0x80851d52a1fd2a24e68aaf0931069f80c737f25dcfb52c3a02aec5a6d6b3f155",
+    "address": "eth:0x3Bb4420311fe1AD580a6971B0731Cf1825b914db",
+    "chain": "ethereum",
+    "blockNumber": 26096867
   }
 }

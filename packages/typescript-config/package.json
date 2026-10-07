@@ -3,7 +3,6 @@
   "private": true,
   "exports": {
     "./base": "./base.json",
-    "./nextjs": "./nextjs.json",
     "./react": "./react.json"
   },
   "scripts": {

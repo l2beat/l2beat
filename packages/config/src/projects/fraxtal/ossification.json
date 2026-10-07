@@ -1,0 +1,28 @@
+{
+  "events": [
+    {
+      "timestamp": 1755544619,
+      "type": "code",
+      "contract": "eth:0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
+      "transaction": "0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",
+      "updateId": "da5c2518",
+      "reason": "Upgraded the L1CrossDomainMessenger implementation through the AddressManager (AddressSet) in the same upgrade transaction as the other core proxies."
+    },
+    {
+      "timestamp": 1755544619,
+      "type": "code",
+      "contract": "eth:0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+      "transaction": "0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",
+      "updateId": "da5c2518",
+      "reason": "Upgraded the L1StandardBridge implementation (EIP-1967 slot 0x318f\u20269e41 -> 0xe89f\u2026b89f) in the same upgrade transaction as the other core proxies."
+    },
+    {
+      "timestamp": 1755544619,
+      "type": "code",
+      "contract": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+      "transaction": "0xcef51688ce9d56f2d4d2fe47ac74dcb8e75abb9ee886cc1416c4293f68dbfcb4",
+      "updateId": "da5c2518",
+      "reason": "Upgraded the implementation of SystemConfig (Upgraded event)."
+    }
+  ]
+}

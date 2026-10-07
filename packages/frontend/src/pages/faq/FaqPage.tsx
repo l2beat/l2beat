@@ -25,28 +25,23 @@ export function FaqPage(props: AppLayoutProps) {
         <Header />
         <main className="mt-0 flex gap-8 border-divider border-t md:mt-6 md:border-t-0">
           <PrimaryCard>
-            {faqItemsWithId.map((item) => {
-              const answer = Array.isArray(item.answer)
-                ? item.answer.join('\n\n')
-                : item.answer
-              return (
-                <section
-                  className="mt-6 scroll-mt-6 first:mt-0"
-                  id={item.id}
-                  key={item.id}
+            {faqItemsWithId.map((item) => (
+              <section
+                className="mt-6 scroll-mt-6 first:mt-0"
+                id={item.id}
+                key={item.id}
+              >
+                <a
+                  href={`#${item.id}`}
+                  className="mb-4 block font-bold text-2xl text-primary leading-[115%] no-underline"
                 >
-                  <a
-                    href={`#${item.id}`}
-                    className="mb-4 block font-bold text-2xl text-primary leading-[115%] no-underline"
-                  >
-                    {item.question}
-                  </a>
-                  <Markdown className="font-normal text-base text-secondary leading-7">
-                    {answer}
-                  </Markdown>
-                </section>
-              )
-            })}
+                  {item.question}
+                </a>
+                <Markdown className="font-normal text-base text-secondary leading-7">
+                  {item.answer}
+                </Markdown>
+              </section>
+            ))}
           </PrimaryCard>
           <FaqSideNav entries={faqItemsWithId} />
         </main>

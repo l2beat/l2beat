@@ -19,6 +19,7 @@ import {
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
+import type { InteropFlowData } from '~/server/features/layer2s/interop/utils/getFlows'
 import { useTRPC } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -27,6 +28,8 @@ export interface InteropVolumeSectionProps extends ProjectSectionProps {
   entry: ProtocolEntry
   interopChains: InteropChainWithIcon[]
   defaultSelectedChains: string[]
+  /** Only the markdown alternate lists them; the graph fetches the flows of the selected chains. */
+  topRoutes: InteropFlowData[]
 }
 
 export function InteropVolumeSection({
