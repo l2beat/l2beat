@@ -13,7 +13,7 @@ On blockchains like Ethereum, code age can be an even stronger signal because sm
 
 [L2BEAT](https://l2beat.com/) watches projects onchain using our *disco update monitor,* a crawler that regularly queries smart contract code and state and notifies us about changes. To measure ossification, we define a perimeter of critical smart contracts and state for a given project and reset the project’s 🦴-clock each time a critical upgrade or change is recorded. Since we also measure TVS per project over time, we can combine this data for some powerful new metrics.
 
-We do not aim to feed you random scores though, so let us introduce the evidence backing our **ossification score.** The 0-100 🦴-score is directly based on a [open dataset of blockchain hacks](https://github.com/sekuba/ossification-dataset) that we are collecting and plan to maintain. Each incident in the dataset is reviewed as to its mechanism, age of the vulnerable configuration or source code and loss in USD. This allows us to generate a curve for the 🦴-score and gives it practical meaning:
+We do not aim to feed you random scores though, so let us introduce the evidence backing our **ossification score.** The 0-100 🦴-score is directly based on a [open dataset of blockchain hacks](https://github.com/l2beat/ossification-dataset) that we are collecting and plan to maintain. Each incident in the dataset is reviewed as to its mechanism, age of the vulnerable configuration or source code and loss in USD. This allows us to generate a curve for the 🦴-score and gives it practical meaning:
 
 > a score of 67 means that 67% of hacks with a loss of \>$1k targeted younger code
 
