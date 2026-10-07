@@ -101,6 +101,7 @@ function mockBlock(
       to: `0x${(slot * 7919 + i).toString(16).padStart(40, '0')}`,
       from: `mock:${projectId ?? 'unknown'}`,
       nonce: slot * NONCES_PER_SLOT + i,
+      txHash: `0x${(slot * 7919 + i).toString(16).padStart(64, '0')}`,
     })
     blobs += size
   }

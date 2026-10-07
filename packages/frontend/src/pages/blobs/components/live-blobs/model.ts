@@ -39,9 +39,12 @@ export interface BlockLimits {
   maxBlobsPerBlock: number
 }
 
-/** The limits in force now, in blobs per block */
-export function getBlockLimits(throughputs: DaLayerThroughput[]): BlockLimits {
-  const inForce = getThroughputInForce(throughputs, UnixTime.now())
+/** The limits in force at `now`, in blobs per block */
+export function getBlockLimits(
+  throughputs: DaLayerThroughput[],
+  now = UnixTime.now(),
+): BlockLimits {
+  const inForce = getThroughputInForce(throughputs, now)
   const max =
     inForce && inForce.size !== 'NO_CAP' ? inForce.size / BLOB_BYTES : 21
   const target = inForce?.target ? inForce.target / BLOB_BYTES : (max * 2) / 3
@@ -49,4 +52,16 @@ export function getBlockLimits(throughputs: DaLayerThroughput[]): BlockLimits {
     targetBlobsPerBlock: Math.round(target),
     maxBlobsPerBlock: Math.round(max),
   }
+}
+
+/** Seconds from `now` until other limits come into force, if any are to */
+export function nextLimitsIn(
+  throughputs: DaLayerThroughput[],
+  now: number,
+): number | undefined {
+  const next = throughputs
+    .map((t) => t.sinceTimestamp)
+    .filter((since) => since > now)
+    .sort((a, b) => a - b)[0]
+  return next === undefined ? undefined : next - now
 }

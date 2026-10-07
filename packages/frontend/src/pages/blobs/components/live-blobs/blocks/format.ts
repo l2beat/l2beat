@@ -21,11 +21,6 @@ export function formatBlobCount(blobs: number): string {
   return `${blobs} ${pluralize(blobs, 'blob')}`
 }
 
-/** 1,105 blocks */
-export function formatBlocksAway(blocks: number): string {
-  return `${WHOLE.format(blocks)} ${pluralize(blocks, 'block')}`
-}
-
 /** 0.0028, 0.34, 2.0, 15.5, 152: two significant digits for small rates, whole for large */
 export function formatRate(value: number): string {
   if (value === 0) return '0'

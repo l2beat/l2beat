@@ -21,7 +21,6 @@ import {
   drawBayCaption,
   drawBlockNumbers,
   drawLaneLabels,
-  drawLastBatchNote,
   drawLimitLabels,
 } from './drawBeltLabels'
 import { LEAVE_TIME } from './lane'
@@ -71,7 +70,6 @@ export function drawBelt(
   drawBayCaption(ctx, scene, belt)
   drawLaneLabels(ctx, scene, playback, belt, now)
   drawLimitLabels(ctx, scene)
-  drawLastBatchNote(ctx, scene, belt, frame)
 }
 
 /** A batch waiting for a block is not on the chain yet, and shows it */
@@ -238,18 +236,15 @@ function drawTiles(
   frame: BeltFrame,
   reveal: number,
 ) {
-  const { layout, palette, blocks, highlighted } = scene
+  const { layout, palette, blocks } = scene
   frame.hits.length = 0
   frame.landed.length = 0
-  frame.highlightedInView = 0
-  const clearOfFade = layout.fadeLeft / 2
 
   for (let slot = belt.first; slot <= belt.last; slot++) {
     const block = blocks.get(slot)
     const batches = block?.status === 'proposed' ? block.batches : []
     const left = rackLeft(belt, layout, slot) + layout.rackPadding
     const presence = presenceAtEnds(layout, left, left + layout.tileSize)
-    const inView = left >= clearOfFade
     let landed = 0
 
     for (const [index, batch] of batches.entries()) {
@@ -259,12 +254,8 @@ function drawTiles(
       const arrivedAt = playback.arrivals.get(key)
       const flight = playback.flights.get(key)
       const below = batch.blobsBelow
-      if (highlighted === batch.posterIndex && inView) {
-        frame.highlightedInView += batch.blobs
-      }
       ctx.globalAlpha =
         presence *
-        (playback.emphasis[batch.posterIndex] ?? 1) *
         // a batch dropping in has a fade of its own
         (arrivedAt === undefined ? reveal : 1)
 
@@ -350,10 +341,7 @@ function drawLane(
     if (!ink || spot.boardsAt !== undefined || Number.isNaN(spot.x)) continue
     const leaving =
       spot.goneAt === undefined ? 0 : (now - spot.goneAt) / LEAVE_TIME
-    ctx.globalAlpha =
-      WAITING_ALPHA *
-      (playback.emphasis[batch.posterIndex] ?? 1) *
-      Math.max(0, 1 - leaving)
+    ctx.globalAlpha = WAITING_ALPHA * Math.max(0, 1 - leaving)
     // last first, so where the lane is crowded the first tile, with the
     // icon, is on top
     for (let i = batch.blobs - 1; i >= 0; i--) {

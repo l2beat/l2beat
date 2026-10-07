@@ -3,7 +3,6 @@ import {
   Component as ReactComponent,
   type ReactNode,
   Suspense,
-  useCallback,
   useMemo,
   useState,
 } from 'react'
@@ -32,12 +31,6 @@ interface Props {
 /** Ethereum's blobs, block by block, as they are made, above who posted them */
 export function LiveBlobsCard({ projects, limits }: Props) {
   const posters = useMemo(() => toLivePosters(projects), [projects])
-  const [highlighted, setHighlighted] = useState<string>()
-  const toggleHighlighted = useCallback(
-    (id: string) =>
-      setHighlighted((current) => (current === id ? undefined : id)),
-    [],
-  )
   // the belt draws on a canvas sized to the screen, which the server has not got
   const isClient = useIsClient()
   const [landings] = useState(createLandings)
@@ -52,8 +45,6 @@ export function LiveBlobsCard({ projects, limits }: Props) {
               <LiveBlocks
                 posters={posters}
                 limits={limits}
-                highlighted={highlighted}
-                onSelect={toggleHighlighted}
                 history={<LivePulse limits={limits} />}
               />
             </Suspense>
@@ -61,11 +52,7 @@ export function LiveBlobsCard({ projects, limits }: Props) {
         ) : (
           <LiveSkeleton />
         )}
-        <LivePosters
-          posters={posters}
-          highlighted={highlighted}
-          onSelect={toggleHighlighted}
-        />
+        <LivePosters posters={posters} />
       </PrimaryCard>
     </LandingsContext>
   )

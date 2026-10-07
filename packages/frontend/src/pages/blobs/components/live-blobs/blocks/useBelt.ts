@@ -1,4 +1,5 @@
 import {
+  type MouseEvent,
   type PointerEvent,
   type RefObject,
   useCallback,
@@ -22,17 +23,22 @@ import { pendingSpot, updateLane } from './lane'
 import {
   BATCH_MOTION_TIME,
   BATCH_STAGGER,
-  easeEmphasis,
-  isEmphasisSettled,
   revealed,
   SETTLE_TIME,
 } from './motion'
 
 export interface BeltHover {
   key: number
-  /** The pointer, in the belt's box */
+  /**
+   * In the belt's box: the pointer, or the top middle of a pinned batch
+   */
   x: number
   y: number
+  /**
+   * Shown by a tap rather than a hovering pointer, so it stays with its batch
+   * until another tap, and can be tapped itself
+   */
+  pinned: boolean
 }
 
 interface Options {
@@ -43,7 +49,7 @@ interface Options {
   /** For reduced motion: nothing slides or falls */
   still: boolean
   onScreen: boolean
-  /** A batch was clicked or tapped */
+  /** A batch was clicked, or tapped while its tooltip was pinned */
   onClickBatch: (key: number) => void
 }
 
@@ -52,8 +58,8 @@ interface Options {
  * mempool, drops a block's batches in as it comes, from where they waited
  * if they did, paints each frame and finds the batch under the pointer.
  *
- * Nothing here sets state per frame; only a change of hovered batch renders.
- * Nor does it paint a frame that would look like the last one: for most of
+ * Nothing here sets state per frame; only a change of hovered batch renders,
+ * or a pinned batch moving with the belt. Nor does it paint a frame that would look like the last one: for most of
  * a slot nothing on the belt moves, and each paint redraws the whole canvas.
  */
 export function useBelt({
@@ -72,20 +78,20 @@ export function useBelt({
     laneMoving: false,
     flights: new Map(),
     still,
-    emphasis: [],
     revealedAt: undefined,
   })
   playback.current.still = still
   const frame = useRef<BeltFrame>({
     hits: [],
     landed: [],
-    highlightedInView: 0,
   })
   const sceneRef = useRef(scene)
   sceneRef.current = scene
   const pointer = useRef<{ x: number; y: number } | undefined>(undefined)
   const hoveredKey = useRef<number | undefined>(undefined)
   const [hover, setHover] = useState<BeltHover>()
+  const pinned = useRef<{ key: number; x: number; y: number }>(undefined)
+  const tapped = useRef(false)
   const painted = useRef<PaintedFrame>(undefined)
 
   const paint = useCallback(
@@ -101,13 +107,14 @@ export function useBelt({
         scene: toDraw,
         hovered,
         slot: Math.floor(playback.current.progress),
-        moving: isMoving(playback.current, toDraw, now),
+        moving: isMoving(playback.current, now),
       }
     },
     [canvasRef, progressNow],
   )
 
   const findHover = useCallback(() => {
+    if (pinned.current) return
     const at = pointer.current
     const hit = at
       ? findBatchAt(frame.current.hits, sceneRef.current, at)
@@ -117,30 +124,62 @@ export function useBelt({
     hoveredKey.current = key
     const canvas = canvasRef.current
     if (canvas) canvas.style.cursor = key === undefined ? '' : 'pointer'
-    setHover(key === undefined || !at ? undefined : { key, ...at })
+    setHover(
+      key === undefined || !at ? undefined : { key, ...at, pinned: false },
+    )
   }, [canvasRef])
 
+  /** Pins the tooltip to `hit`'s batch, or lets it go */
+  const pin = useCallback((hit: BatchHit | undefined) => {
+    const anchor = hit && { key: hit.key, ...topMiddle(hit) }
+    pinned.current = anchor
+    hoveredKey.current = anchor?.key
+    setHover(anchor && { ...anchor, pinned: true })
+  }, [])
+
+  /** Keeps a pinned tooltip on its batch as the belt slides, until it leaves */
+  const followPinned = useCallback(() => {
+    const anchor = pinned.current
+    if (!anchor) return
+    const hit = frame.current.hits.find((h) => h.key === anchor.key)
+    if (!hit) return pin(undefined)
+    const { x, y } = topMiddle(hit)
+    if (x !== anchor.x || y !== anchor.y) pin(hit)
+  }, [pin])
+
   const running = onScreen && scene !== undefined
-  useAnimationFrame((dt, now) => {
+  useAnimationFrame((_dt, now) => {
     const current = sceneRef.current
     if (!current) return
     const play = playback.current
     forgetSettled(play, now)
-    easeEmphasis(play.emphasis, current.posters.length, current.highlighted, dt)
     if (play.revealedAt === undefined && current.blocks.size > 0) {
       play.revealedAt = now
     }
     play.progress = progressNow()
     moveLane(play, current, now)
     if (
-      isMoving(play, current, now) ||
+      isMoving(play, now) ||
       !isPainted(painted.current, current, hoveredKey.current, play)
     ) {
       paint(current, now, hoveredKey.current)
     }
+    followPinned()
     // the belt moves under a pointer that does not
     findHover()
   }, running)
+
+  // a tap anywhere off the belt lets a pinned tooltip go
+  useEffect(() => {
+    const onDocumentDown = (event: globalThis.PointerEvent) => {
+      const belt = canvasRef.current?.parentElement
+      if (pinned.current && !belt?.contains(event.target as Node)) {
+        pin(undefined)
+      }
+    }
+    document.addEventListener('pointerdown', onDocumentDown)
+    return () => document.removeEventListener('pointerdown', onDocumentDown)
+  }, [canvasRef, pin])
 
   // Off screen, no frames come: paint whenever what is drawn changes, with no
   // fades on the way, and again once the site's font is in, as canvas text
@@ -150,12 +189,6 @@ export function useBelt({
     if (running || !scene) return
     let cancelled = false
     const play = playback.current
-    easeEmphasis(
-      play.emphasis,
-      scene.posters.length,
-      scene.highlighted,
-      Number.POSITIVE_INFINITY,
-    )
     if (scene.blocks.size > 0) play.revealedAt ??= Number.NEGATIVE_INFINITY
     moveLane(play, scene, performance.now() / 1000)
     paint(scene, performance.now() / 1000, hoveredNow)
@@ -201,10 +234,13 @@ export function useBelt({
     )
   }, [])
 
+  // A finger shows nothing on the way down, as that may be the start of a
+  // scroll, and has no hover to follow: only a finished tap does anything
   const onPointerMove = useCallback(
     (event: PointerEvent<HTMLElement>) => {
-      const box = event.currentTarget.getBoundingClientRect()
-      const at = { x: event.clientX - box.left, y: event.clientY - box.top }
+      if (event.pointerType === 'touch') return
+      if (pinned.current) pin(undefined)
+      const at = pointInBox(event)
       pointer.current = at
       findHover()
       // the tooltip follows the pointer across the batch
@@ -212,16 +248,42 @@ export function useBelt({
         setHover((current) => current && { ...current, ...at })
       }
     },
+    [findHover, pin],
+  )
+  const onPointerDown = useCallback(
+    (event: PointerEvent<HTMLElement>) => {
+      tapped.current = event.pointerType === 'touch'
+      onPointerMove(event)
+    },
+    [onPointerMove],
+  )
+  const onPointerLeave = useCallback(
+    (event: PointerEvent<HTMLElement>) => {
+      if (event.pointerType === 'touch') return
+      pointer.current = undefined
+      findHover()
+    },
     [findHover],
   )
-  const onPointerLeave = useCallback(() => {
-    pointer.current = undefined
-    findHover()
-  }, [findHover])
-  const onClick = useCallback(() => {
-    const key = hoveredKey.current
-    if (key !== undefined) onClickBatch(key)
-  }, [onClickBatch])
+  // A tap pins the batch's tooltip, as a finger cannot read it before it
+  // lands; a second tap on the same batch acts on it
+  const onClick = useCallback(
+    (event: MouseEvent<HTMLElement>) => {
+      if (!tapped.current) {
+        const key = hoveredKey.current
+        if (key !== undefined) onClickBatch(key)
+        return
+      }
+      const hit = findBatchAt(
+        frame.current.hits,
+        sceneRef.current,
+        pointInBox(event),
+      )
+      if (hit && hit.key === pinned.current?.key) onClickBatch(hit.key)
+      else pin(hit)
+    },
+    [onClickBatch, pin],
+  )
 
   return {
     hover,
@@ -229,8 +291,7 @@ export function useBelt({
     showPending,
     handlers: {
       onPointerMove,
-      // a tap has no hover before it, so it finds its batch on the way down
-      onPointerDown: onPointerMove,
+      onPointerDown,
       onPointerLeave,
       onClick,
     },
@@ -253,13 +314,12 @@ interface PaintedFrame {
 /**
  * The belt slides at the start of a slot, batches drop as they come, and the
  * lane changes as batches join and leave it; tiles fade in when the first
- * blocks come and fade as a poster is picked
+ * blocks come
  */
-function isMoving(playback: Playback, scene: BeltScene, now: number) {
+function isMoving(playback: Playback, now: number) {
   const intoSlot = (playback.progress % 1) * SLOT_SECONDS
   if (intoSlot < SLIDE_TIME || playback.laneMoving) return true
   if (revealed(playback.revealedAt, now) < 1) return true
-  if (!isEmphasisSettled(playback.emphasis, scene.highlighted)) return true
   for (const arrivedAt of playback.arrivals.values()) {
     if (now - arrivedAt < BATCH_MOTION_TIME) return true
   }
@@ -300,6 +360,15 @@ function moveLane(playback: Playback, scene: BeltScene, now: number) {
     dt,
     playback.still,
   )
+}
+
+function pointInBox(event: MouseEvent<HTMLElement>) {
+  const box = event.currentTarget.getBoundingClientRect()
+  return { x: event.clientX - box.left, y: event.clientY - box.top }
+}
+
+function topMiddle(hit: BatchHit) {
+  return { x: (hit.left + hit.right) / 2, y: hit.top }
 }
 
 /**

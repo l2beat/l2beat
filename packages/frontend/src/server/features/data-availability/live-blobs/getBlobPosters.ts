@@ -2,34 +2,53 @@ import { INTEROP_CHAINS } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { getSovereignProjects } from './attribute'
 
 /** A project that posts blobs to Ethereum, as the live view draws it */
 export interface BlobPoster {
   id: string
   name: string
-  iconUrl: string
+  /** Sovereign chains have no icon of their own, nor a page */
+  iconUrl: string | undefined
   color: string
-  href: string
+  href: string | undefined
 }
 
-/** Every active rollup that posts its data to Ethereum */
+/**
+ * Every active rollup that posts its data to Ethereum, and the sovereign
+ * chains Ethereum's own config tracks, which have no project of their own
+ */
 export async function getBlobPosters(): Promise<BlobPoster[]> {
-  const projects = await ps.getProjects({
-    select: ['daTrackingConfig', 'scalingInfo'],
-    optional: ['colors'],
-    whereNot: ['archivedAt'],
-  })
-  return projects
-    .filter((p) =>
-      p.daTrackingConfig.some((c) => c.daLayer === ProjectId.ETHEREUM),
-    )
-    .map((p) => ({
-      id: p.id,
-      name: p.shortName ?? p.name,
-      iconUrl: manifest.getUrl(`/icons/${p.slug}.png`),
-      color: getColor(p),
-      href: `/layer2s/projects/${p.slug}`,
-    }))
+  const [projects, sovereign] = await Promise.all([
+    ps.getProjects({
+      select: ['daTrackingConfig', 'scalingInfo'],
+      optional: ['colors'],
+      whereNot: ['archivedAt'],
+    }),
+    getSovereignProjects(),
+  ])
+  return [
+    ...projects
+      .filter((p) =>
+        p.daTrackingConfig.some((c) => c.daLayer === ProjectId.ETHEREUM),
+      )
+      .map((p) => ({
+        id: p.id,
+        name: p.shortName ?? p.name,
+        iconUrl: manifest.getUrl(`/icons/${p.slug}.png`),
+        color: getColor(p),
+        href: `/layer2s/projects/${p.slug}`,
+      })),
+    ...sovereign
+      .filter((p) => p.daTrackingConfig.some((c) => c.type === 'ethereum'))
+      .map((p) => ({
+        id: p.id,
+        name: p.name,
+        iconUrl: undefined,
+        color: pickFallbackColor(p.id),
+        href: undefined,
+      })),
+  ]
 }
 
 /**

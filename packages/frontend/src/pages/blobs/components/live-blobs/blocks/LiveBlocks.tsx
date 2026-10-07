@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { CustomLinkIcon } from '~/icons/Outlink'
 import { slotStart } from '~/utils/beaconSlots'
 import {
   useElementSize,
@@ -32,16 +33,12 @@ import { type BeltScene, findBatch } from './beltScene'
 import { formatAverage, formatBlobCount, formatWhole } from './format'
 import { roundIcons } from './roundIcons'
 import { RECENT_BLOCKS, useBeaconChain } from './useBeaconChain'
-import { useBelt } from './useBelt'
+import { type BeltHover, useBelt } from './useBelt'
 
 interface Props {
   /** Every project that may post, with the stand-in for unknown senders last */
   posters: LivePoster[]
   limits: BlockLimits
-  /** Poster picked in the list or on the belt. The others step back */
-  highlighted: string | undefined
-  /** Picks a poster, or lets it go when it was picked already */
-  onSelect: (posterId: string) => void
   /** Drawn between the belt and its legend, as the hour behind the belt */
   history?: ReactNode
 }
@@ -52,13 +49,7 @@ interface Props {
  * rollup that sent them, and every block shows the room it left against the
  * target and the maximum.
  */
-export function LiveBlocks({
-  posters,
-  limits,
-  highlighted,
-  onSelect,
-  history,
-}: Props) {
+export function LiveBlocks({ posters, limits, history }: Props) {
   const beltRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const size = useElementSize(beltRef)
@@ -107,10 +98,6 @@ export function LiveBlocks({
     () => roundIcons(posters, images, iconSize),
     [posters, images, iconSize],
   )
-  const highlightedIndex = useMemo(() => {
-    const index = posters.findIndex((poster) => poster.id === highlighted)
-    return index >= 0 ? index : undefined
-  }, [posters, highlighted])
 
   // a new scene for every block that comes, as blocks change in place
   // biome-ignore lint/correctness/useExhaustiveDependencies: `version` counts the blocks
@@ -125,7 +112,6 @@ export function LiveBlocks({
         blocks: chain.blocks,
         pending: chain.pending,
         icons,
-        highlighted: highlightedIndex,
         targetBlobs: targetBlobsPerBlock,
         maxBlobs: maxBlobsPerBlock,
       },
@@ -137,7 +123,6 @@ export function LiveBlocks({
       chain.blocks,
       chain.pending,
       icons,
-      highlightedIndex,
       targetBlobsPerBlock,
       maxBlobsPerBlock,
       version,
@@ -152,8 +137,7 @@ export function LiveBlocks({
     onScreen,
     onClickBatch: (key) => {
       const found = findBatch(chain.blocks, key)
-      const poster = found && posters[found.batch.posterIndex]
-      if (poster) onSelect(poster.id)
+      if (found) openOnEtherscan(found.batch.txHash)
     },
   })
   beltControls.current = belt
@@ -182,8 +166,7 @@ export function LiveBlocks({
         />
         {belt.hover && hovered && hoveredPoster && (
           <BatchTooltip
-            x={belt.hover.x}
-            y={belt.hover.y}
+            hover={belt.hover}
             containerWidth={size.width}
             containerHeight={size.height}
           >
@@ -192,6 +175,7 @@ export function LiveBlocks({
               batch={hovered.batch}
               slot={hovered.slot}
               blockNumber={hovered.blockNumber}
+              pinned={belt.hover.pinned}
             />
           </BatchTooltip>
         )}
@@ -281,16 +265,16 @@ const TOOLTIP_GAP = 14
 /**
  * PointerTooltip, moved above the pointer where below it would run off the
  * belt. Tiles sit low in their racks, so that is where most hovers are.
+ * Pinned by a tap, it goes above its batch where there is room, clear of the
+ * finger, and keeps its taps from reaching the belt under it.
  */
 function BatchTooltip({
-  x,
-  y,
+  hover: { x, y, pinned },
   containerWidth,
   containerHeight,
   children,
 }: {
-  x: number
-  y: number
+  hover: BeltHover
   containerWidth: number
   containerHeight: number
   children: ReactNode
@@ -302,13 +286,16 @@ function BatchTooltip({
     const tooltip = ref.current?.firstElementChild
     if (tooltip instanceof HTMLElement) setHeight(tooltip.offsetHeight)
   })
+  const above = y - height - 2 * TOOLTIP_GAP
   const fitsBelow = y + TOOLTIP_GAP + height <= containerHeight
+  const goesAbove = pinned ? above + TOOLTIP_GAP >= 0 : !fitsBelow
   return (
-    <div ref={ref}>
+    <div ref={ref} onClick={(event) => event.stopPropagation()}>
       <PointerTooltip
         x={x}
-        y={fitsBelow ? y : y - height - 2 * TOOLTIP_GAP}
+        y={goesAbove ? above : y}
         containerWidth={containerWidth}
+        interactive={pinned}
       >
         {children}
       </PointerTooltip>
@@ -321,11 +308,13 @@ function BatchTooltipContent({
   batch,
   slot,
   blockNumber,
+  pinned,
 }: {
   poster: LivePoster
   batch: BlobBatch
   slot: number
   blockNumber: number
+  pinned: boolean
 }) {
   const rows: [string, string][] = [
     ['Batch', formatBlobCount(batch.blobs)],
@@ -356,12 +345,36 @@ function BatchTooltipContent({
           <span className="tabular-nums">{value}</span>
         </div>
       ))}
+      {pinned ? (
+        <a
+          href={etherscanTxUrl(batch.txHash)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1 pt-1 font-bold text-brand text-label-value-13"
+        >
+          Open on Etherscan
+          <CustomLinkIcon className="size-3.5 fill-current" />
+        </a>
+      ) : (
+        <div className="text-label-value-12 text-secondary">
+          Click to open on Etherscan
+        </div>
+      )}
     </div>
   )
 }
 
 function formatWaited(seconds: number) {
   return seconds < 1 ? 'under 1 s' : `${Math.round(seconds)} s`
+}
+
+/** In a new tab, so the belt keeps running where it was left */
+function openOnEtherscan(txHash: string) {
+  window.open(etherscanTxUrl(txHash), '_blank', 'noopener')
+}
+
+function etherscanTxUrl(txHash: string) {
+  return `https://etherscan.io/tx/${txHash}`
 }
 
 function shortAddress(address: string) {

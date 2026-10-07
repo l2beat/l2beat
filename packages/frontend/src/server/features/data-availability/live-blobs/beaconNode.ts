@@ -1,5 +1,6 @@
 import {
   type Hex,
+  keccak256,
   parseTransaction,
   recoverTransactionAddress,
   type TransactionSerializedEIP4844,
@@ -89,6 +90,7 @@ async function readBlobBatches(
       to: inbox,
       from: sender,
       nonce: nonce ?? 0,
+      txHash: keccak256(serialized),
     })
   }
   return batches

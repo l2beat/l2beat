@@ -15,7 +15,7 @@ import {
   EthereumSummaryCard,
 } from './components/EthereumSummaryCard'
 import { LiveBlobsCard } from './components/live-blobs/LiveBlobsCard'
-import { getBlockLimits } from './components/live-blobs/model'
+import { useBlockLimits } from './components/live-blobs/useBlockLimits'
 
 interface Props extends AppLayoutProps {
   ethereumSummary: EthereumSummary
@@ -34,6 +34,7 @@ export function BlobsPage({
 }: Props) {
   const tvsChart = <BlobsTvsChart projectIds={tvsProjectIds} />
   const throughputChart = <BlobsThroughputChart {...throughput} />
+  const limits = useBlockLimits(throughput.configuredThroughputs)
 
   return (
     <AppLayout {...props}>
@@ -56,10 +57,7 @@ export function BlobsPage({
             className="lg:hidden"
             charts={[tvsChart, throughputChart]}
           />
-          <LiveBlobsCard
-            projects={blobPosters}
-            limits={getBlockLimits(throughput.configuredThroughputs)}
-          />
+          <LiveBlobsCard projects={blobPosters} limits={limits} />
         </div>
       </SideNavLayout>
     </AppLayout>

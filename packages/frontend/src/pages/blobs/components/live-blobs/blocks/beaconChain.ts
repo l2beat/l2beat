@@ -13,6 +13,7 @@ export interface BlobBatch {
   key: string
   /** Unix seconds it was first seen pending, if it was */
   pendingSince: number | undefined
+  txHash: string
 }
 
 /** A batch broadcast and waiting for a block */
@@ -86,6 +87,7 @@ export function toChainBlock(
         to: batch.to,
         key: batchIdentity(batch.from, batch.nonce),
         pendingSince: batch.pendingSince,
+        txHash: batch.txHash,
       }
       blobsBelow += batch.blobs
       return placed

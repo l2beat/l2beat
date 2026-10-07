@@ -14,8 +14,8 @@ import {
   findBatch,
   type Playback,
 } from './beltScene'
-import { formatBlocksAway, formatWhole } from './format'
-import { labelEmphasis, labelPresence, smoothstep } from './motion'
+import { formatWhole } from './format'
+import { labelPresence, smoothstep } from './motion'
 
 const FONT = 'Roboto, Arial, sans-serif'
 /** Labels fade out over the end of their block's slot, from this far into it */
@@ -77,8 +77,7 @@ export function drawBlockNumbers(
  * before the block leaves the bay: left behind, it would seem to name what
  * the next block got, and riding on it would cover the next rack. A batch
  * coming too late in its slot to be read goes unnamed. A newer label at the
- * same height takes over from an older one. While a poster is highlighted,
- * only its labels show.
+ * same height takes over from an older one.
  */
 export function drawArrivalLabels(
   ctx: CanvasRenderingContext2D,
@@ -97,8 +96,6 @@ export function drawArrivalLabels(
     const { slot, batch } = found
     const poster = posters[batch.posterIndex]
     if (!poster) continue
-    const emphasis = labelEmphasis(playback.emphasis[batch.posterIndex] ?? 1)
-    if (emphasis <= 0) continue
 
     const below = batch.blobsBelow
     const lowest = tileBounds(layout, below, 0, 1)
@@ -109,11 +106,11 @@ export function drawArrivalLabels(
     const y = (highest.top + lowest.bottom) / 2 - rise
     const phase = belt.intoSlot / SLOT_SECONDS
     const leaving = smoothstep((phase - LABELS_LEAVE) / (1 - LABELS_LEAVE))
-    let shown = alpha * (1 - leaving) * emphasis
+    let shown = alpha * (1 - leaving)
     for (const newer of placed) {
       if (Math.abs(newer.y - y) < 15) shown *= 1 - newer.alpha
     }
-    placed.push({ y, alpha: alpha * emphasis })
+    placed.push({ y, alpha })
     if (shown > 0.02) {
       const x = rackLeft(belt, layout, slot) + layout.rackWidth + 6
       drawArrivalLabel(ctx, scene, batch.blobs, poster.name, x, y, shown)
@@ -176,9 +173,8 @@ export function drawLaneLabels(
     const poster = posters[batch.posterIndex]
     if (!poster || Number.isNaN(spot.x)) continue
     if (spot.boardsAt !== undefined || spot.goneAt !== undefined) continue
-    const emphasis = labelEmphasis(playback.emphasis[batch.posterIndex] ?? 1)
     const { alpha, rise } = labelPresence(now - spot.shownAt)
-    if (alpha <= 0 || emphasis <= 0) continue
+    if (alpha <= 0) continue
 
     ctx.font = `500 11px ${FONT}`
     const width = ctx.measureText(`+${batch.blobs} ${poster.name}`).width
@@ -189,14 +185,14 @@ export function drawLaneLabels(
     const right = left + width
     // on a phone there may be no room beside the caption, only above it
     const line = left < clearOfCaption ? 1 : 0
-    let shown = alpha * 0.85 * emphasis
+    let shown = alpha * 0.85
     for (const newer of placed) {
       const sameLine = newer.line === line
       if (sameLine && left < newer.right + 6 && right > newer.left - 6) {
         shown *= 1 - newer.alpha
       }
     }
-    placed.push({ left, right, alpha: alpha * emphasis, line })
+    placed.push({ left, right, alpha, line })
     if (shown > 0.02) {
       const y = layout.bayCaptionY - 4 - line * LANE_LABEL_LINE - rise
       drawArrivalLabel(ctx, scene, batch.blobs, poster.name, left, y, shown, 11)
@@ -332,62 +328,6 @@ function drawRuleLabel(
   const wordRight = right - valueWidth - 3
   fillTextOnSurface(ctx, palette, word, wordRight, y, palette.textSecondary)
   ctx.restore()
-}
-
-/**
- * A highlighted poster that posts rarely can be missing from the belt for
- * hours, which would look like nothing was highlighted. This says how long
- * ago its last batch was, counted in blocks, the belt's own unit.
- */
-export function drawLastBatchNote(
-  ctx: CanvasRenderingContext2D,
-  scene: BeltScene,
-  belt: BeltPosition,
-  frame: BeltFrame,
-) {
-  const { highlighted, posters, blocks, layout, palette } = scene
-  if (highlighted === undefined || frame.highlightedInView > 0) return
-  const poster = posters[highlighted]
-  if (!poster) return
-  const last = lastBatchSlot(scene, highlighted, belt.current)
-  const when =
-    last === undefined
-      ? `in the last ${formatBlocksAway(blocksSeen(blocks, belt.current))}`
-      : `${formatBlocksAway(belt.current - last)} ago`
-  const x = layout.fadeLeft
-  const y = (layout.maxY + layout.targetY) / 2
-  const room = layout.bayX - layout.blockPitch - x
-  ctx.save()
-  ctx.font = `500 ${layout.compact ? 11 : 12}px ${FONT}`
-  ctx.textAlign = 'left'
-  ctx.textBaseline = 'middle'
-  const lead = last === undefined ? 'No' : 'Last'
-  // short of room the name goes, never the count: a cut number misleads
-  const named = `${lead} ${poster.name} batch ${when}`
-  const text =
-    ctx.measureText(named).width <= room ? named : `${lead} batch ${when}`
-  fillTextOnSurface(ctx, palette, text, x, y, palette.textSecondary)
-  ctx.restore()
-}
-
-function lastBatchSlot(scene: BeltScene, posterIndex: number, upTo: number) {
-  let last: number | undefined
-  for (const block of scene.blocks.values()) {
-    if (block.status !== 'proposed' || block.slot > upTo) continue
-    if (last !== undefined && block.slot <= last) continue
-    if (block.batches.some((b) => b.posterIndex === posterIndex)) {
-      last = block.slot
-    }
-  }
-  return last
-}
-
-function blocksSeen(blocks: BeltScene['blocks'], upTo: number) {
-  let seen = 0
-  for (const block of blocks.values()) {
-    if (block.status === 'proposed' && block.slot <= upTo) seen++
-  }
-  return seen
 }
 
 /** Text with a rim of the card's color, so it reads over racks and hatching */
