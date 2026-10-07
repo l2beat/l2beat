@@ -33,8 +33,6 @@ interface Props {
   /** Every project that may post, with the stand-in for unknown senders last */
   posters: LivePoster[]
   limits: BlockLimits
-  /** Poster picked in the list. The others step back */
-  highlighted: string | undefined
   /** Drawn between the belt and its legend, as the hour behind the belt */
   history?: ReactNode
 }
@@ -45,7 +43,7 @@ interface Props {
  * rollup that sent them, and every block shows the room it left against the
  * target and the maximum.
  */
-export function LiveBlocks({ posters, limits, highlighted, history }: Props) {
+export function LiveBlocks({ posters, limits, history }: Props) {
   const beltRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const size = useElementSize(beltRef)
@@ -91,10 +89,6 @@ export function LiveBlocks({ posters, limits, highlighted, history }: Props) {
     () => roundIcons(posters, images, iconSize),
     [posters, images, iconSize],
   )
-  const highlightedIndex = useMemo(() => {
-    const index = posters.findIndex((poster) => poster.id === highlighted)
-    return index >= 0 ? index : undefined
-  }, [posters, highlighted])
 
   // a new scene for every block that comes, as blocks change in place
   // biome-ignore lint/correctness/useExhaustiveDependencies: `version` counts the blocks
@@ -108,7 +102,6 @@ export function LiveBlocks({ posters, limits, highlighted, history }: Props) {
         posters,
         blocks: chain.blocks,
         icons,
-        highlighted: highlightedIndex,
         targetBlobs: targetBlobsPerBlock,
         maxBlobs: maxBlobsPerBlock,
       },
@@ -119,7 +112,6 @@ export function LiveBlocks({ posters, limits, highlighted, history }: Props) {
       posters,
       chain.blocks,
       icons,
-      highlightedIndex,
       targetBlobsPerBlock,
       maxBlobsPerBlock,
       version,

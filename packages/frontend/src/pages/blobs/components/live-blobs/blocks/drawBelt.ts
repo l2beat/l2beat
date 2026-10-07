@@ -18,7 +18,6 @@ import {
   drawArrivalLabels,
   drawBayCaption,
   drawBlockNumbers,
-  drawLastBatchNote,
   drawLimitLabels,
 } from './drawBeltLabels'
 import {
@@ -63,7 +62,6 @@ export function drawBelt(
   drawArrivalLabels(ctx, scene, playback, belt, now)
   drawBayCaption(ctx, scene, belt)
   drawLimitLabels(ctx, scene)
-  drawLastBatchNote(ctx, scene, belt, frame)
 }
 
 /** Seconds over which the bay's glow settles after a landing */
@@ -200,18 +198,15 @@ function drawTiles(
   frame: BeltFrame,
   reveal: number,
 ) {
-  const { layout, palette, blocks, highlighted } = scene
+  const { layout, palette, blocks } = scene
   frame.hits.length = 0
   frame.landed.length = 0
-  frame.highlightedInView = 0
-  const clearOfFade = layout.fadeLeft / 2
 
   for (let slot = belt.first; slot <= belt.last; slot++) {
     const block = blocks.get(slot)
     const batches = block?.status === 'proposed' ? block.batches : []
     const left = rackLeft(belt, layout, slot) + layout.rackPadding
     const presence = presenceAtEnds(layout, left, left + layout.tileSize)
-    const inView = left >= clearOfFade
     let landed = 0
 
     for (const [index, batch] of batches.entries()) {
@@ -220,12 +215,8 @@ function drawTiles(
       const key = batchKey(slot, index)
       const arrivedAt = playback.arrivals.get(key)
       const below = batch.blobsBelow
-      if (highlighted === batch.posterIndex && inView) {
-        frame.highlightedInView += batch.blobs
-      }
       ctx.globalAlpha =
         presence *
-        (playback.emphasis[batch.posterIndex] ?? 1) *
         // a batch dropping in has a fade of its own
         (arrivedAt === undefined ? reveal : 1)
 

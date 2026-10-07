@@ -15,8 +15,6 @@ export interface BeltScene {
   icons: (HTMLCanvasElement | undefined)[]
   /** What looks the same on every frame, painted once */
   layers: BeltLayers
-  /** Index of the highlighted poster. The others step back */
-  highlighted: number | undefined
   targetBlobs: number
   maxBlobs: number
 }
@@ -29,11 +27,6 @@ export interface Playback {
   arrivals: Map<number, number>
   /** For reduced motion: blocks step in and batches appear where they rest */
   still: boolean
-  /**
-   * How much each poster's tiles stand out, by poster index: 1, or less while
-   * another poster is highlighted. Eased toward the scene's highlight
-   */
-  emphasis: number[]
   /** Second the first blocks came in, to fade them in rather than pop up */
   revealedAt: number | undefined
 }
@@ -43,8 +36,6 @@ export interface BeltFrame {
   hits: BatchHit[]
   /** Tiles at rest in each block drawn, from the first block on the belt */
   landed: number[]
-  /** Tiles of the highlighted poster clear of the faded end of the belt */
-  highlightedInView: number
 }
 
 /** Where a batch's tiles rest */
