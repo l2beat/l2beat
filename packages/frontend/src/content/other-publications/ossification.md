@@ -24,6 +24,8 @@ We do not aim to feed you random scores though, so let us introduce the evidence
 
 But vulnerable public code alone will not be exploited unless there is something to gain. Bones harden with regular strain, so we publish the ossification score in the context of a TVS integral, the **battle-tested exposure.** Similarly to e.g. watt-hours in physics, its dollar-years measure the dollar-time that the project's code withstood since its last critical change. This boosts projects with a low 🦴-score like Arbitrum or Base, revealing that their young code is likely under much more scrutiny than projects with lower TVS or a lower ‘bounty’.
 
+'Value secured' is something we have been watching for a while, and we know that not all value locked is automatically secured by smart contract code. This is why we will only calculate the ossification scores of projects that are reasonably permissionless.
+
 Amazing, so ossification \= security, right? No. Although we are approaching security metrics, the new ossification metrics **do not measure**:
 
 - *capability,* or if and how a smart contract can change (this is why we show you the exit window on the ossification summary page)  
@@ -31,6 +33,8 @@ Amazing, so ossification \= security, right? No. Although we are approaching sec
 - quantitative code-churn (although we are working on adding this)
 - anything that does not have to do with onchain code (e.g. key compromise)
 
-We are aware that very few projects are actually ossified today, but this is the reason we are building this. Just like we would like to incentivise decentralization with our stages and risk frameworks, the ossification score can incentivize elegant, permissionless, robust and timeless architecture for essential blockchain applications. Finally, here is every reviewed exploit in the dataset — hover a dot to see the incident behind it:
+We are aware that very few projects are actually ossified today, but this is the reason we built this. Just like we like to incentivise decentralization with our stages and risk frameworks, the ossification score can incentivize elegant, permissionless, robust and timeless architecture for essential blockchain applications. Finally, here is every reviewed exploit in the dataset — hover a dot to see the incident behind it:
 
 <iframe src="/files/ossification/charts.html#chart=scatter" style="width:100%;height:560px;border:none" loading="lazy" title="Every exploit in the dataset: incident loss versus code age at exploit, with adjustable loss threshold"></iframe>
+
+Visit the [L2BEAT ossification summary](https://l2beat.com/ossification) or the [updated figures](https://l2beat.github.io/ossification-dataset/) in the [dataset repo](https://github.com/l2beat/ossification-dataset).
