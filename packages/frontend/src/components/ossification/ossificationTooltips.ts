@@ -1,6 +1,6 @@
 export const OSSIFICATION_TOOLTIPS = {
   score:
-    "The project's critical smart contracts have stayed unchanged longer than the exploited code in N% of recorded incidents. Below 50: younger than the median exploited code. 80+: about 9 months unchanged. It is not calculated while any critical contract lacks verified source code.",
+    "The project's critical smart contracts have stayed unchanged longer than the exploited code in N% of recorded incidents. It is not calculated while any critical contract lacks verified source code. The date below is the start of the clock: the newest critical change, or the ossification genesis if there was none.",
   timeline:
     'TVS over one year. The highlighted part is the ossified period — its area is the battle-tested exposure. Ticks below the baseline are critical changes, the dot marks the ossification genesis. Heights are normalized per-project.',
   exposure:
