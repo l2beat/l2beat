@@ -80,7 +80,7 @@ const D = RAW.map(r=>({a:r[0],l:r[1],k:r[2],c:r[3],t:r[4],p:r[5]}));
 const YEAR=31557600, DAY=86400;
 const AMIN=3600, AMAX=10*YEAR, ALINMAX=8.5*YEAR;
 const clampA=a=>Math.max(AMIN,Math.min(a,AMAX));
-let TH=1000, AGELIN=false;
+let TH=1000, AGELIN=true;
 const CHART_NAMES=["curve","scatter","kinds"];
 const CHART_PARAM=(location.hash.match(/chart=(\w+)/)||[])[1];
 /* select the canonical constant, so the hash value itself never reaches the dispatch */

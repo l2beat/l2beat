@@ -24,7 +24,7 @@ We do not aim to feed you random scores though, so let us introduce the evidence
 
 But vulnerable public code alone will not be exploited unless there is something to gain. Bones harden with regular strain, so we publish the ossification score in the context of a TVS integral, the **battle-tested exposure.** Similarly to e.g. watt-hours in physics, its dollar-years measure the dollar-time that the project's code withstood since its last critical change. This boosts projects with a low 🦴-score like Arbitrum or Base, revealing that their young code is likely under much more scrutiny than the code of projects with lower TVS or a lower 'bounty'.
 
-'Value secured' is something we have been watching for a while, and we know that not all value locked is automatically secured by smart contract code. This is why we will only calculate the ossification scores of projects that are reasonably permissionless.
+'Value secured' is something we have been watching for a while, and we know that not all value locked is automatically secured by smart contract code. This is why we manually opt-in projects to the ossification metrics.
 
 Amazing, so ossification \= security, right? No. Although we are approaching security metrics, the new ossification metrics **do not measure**:
 
