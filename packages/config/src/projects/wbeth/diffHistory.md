@@ -9,7 +9,7 @@ Generated with discovered.json: 0x0b5023731a152ebb77383584a22de82de46d7a11
 
 ## Description
 
-UnwrapTokenV1ETH: `lockTime` for wBETH redemptions 10d → 40d, set by the admin.
+UnwrapTokenV1ETH: `lockTime` for wBETH redemptions 10d → 40d, set by the operator.
 
 ## Watched changes
 

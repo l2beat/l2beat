@@ -9,7 +9,7 @@ Generated with discovered.json: 0xf4af50fdb3e4403cd6d8ea8c1ec9d5317d106f47
 
 ## Description
 
-Liquifier: the timed pause (until 2026-10-01) was cleared.
+Liquifier: the 24h timed pause set on 2026-09-30 by a guardian was lifted early on 2026-10-01 by the operating multisig.
 
 ## Watched changes
 
