@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { CustomLinkIcon } from '~/icons/Outlink'
 import {
   useElementSize,
   useImages,
@@ -27,7 +28,7 @@ import { formatAverage, formatBlobCount, formatWhole } from './format'
 import { BATCH_STAGGER, LAND_AFTER } from './motion'
 import { roundIcons } from './roundIcons'
 import { RECENT_BLOCKS, useBeaconChain } from './useBeaconChain'
-import { useBelt } from './useBelt'
+import { type BeltHover, useBelt } from './useBelt'
 
 interface Props {
   /** Every project that may post, with the stand-in for unknown senders last */
@@ -155,8 +156,7 @@ export function LiveBlocks({ posters, limits, history }: Props) {
         />
         {belt.hover && hovered && hoveredPoster && (
           <BatchTooltip
-            x={belt.hover.x}
-            y={belt.hover.y}
+            hover={belt.hover}
             containerWidth={size.width}
             containerHeight={size.height}
           >
@@ -165,6 +165,7 @@ export function LiveBlocks({ posters, limits, history }: Props) {
               batch={hovered.batch}
               slot={hovered.slot}
               blockNumber={hovered.blockNumber}
+              pinned={belt.hover.pinned}
             />
           </BatchTooltip>
         )}
@@ -247,16 +248,16 @@ const TOOLTIP_GAP = 14
 /**
  * PointerTooltip, moved above the pointer where below it would run off the
  * belt. Tiles sit low in their racks, so that is where most hovers are.
+ * Pinned by a tap, it goes above its batch where there is room, clear of the
+ * finger, and keeps its taps from reaching the belt under it.
  */
 function BatchTooltip({
-  x,
-  y,
+  hover: { x, y, pinned },
   containerWidth,
   containerHeight,
   children,
 }: {
-  x: number
-  y: number
+  hover: BeltHover
   containerWidth: number
   containerHeight: number
   children: ReactNode
@@ -268,13 +269,16 @@ function BatchTooltip({
     const tooltip = ref.current?.firstElementChild
     if (tooltip instanceof HTMLElement) setHeight(tooltip.offsetHeight)
   })
+  const above = y - height - 2 * TOOLTIP_GAP
   const fitsBelow = y + TOOLTIP_GAP + height <= containerHeight
+  const goesAbove = pinned ? above + TOOLTIP_GAP >= 0 : !fitsBelow
   return (
-    <div ref={ref}>
+    <div ref={ref} onClick={(event) => event.stopPropagation()}>
       <PointerTooltip
         x={x}
-        y={fitsBelow ? y : y - height - 2 * TOOLTIP_GAP}
+        y={goesAbove ? above : y}
         containerWidth={containerWidth}
+        interactive={pinned}
       >
         {children}
       </PointerTooltip>
@@ -287,11 +291,13 @@ function BatchTooltipContent({
   batch,
   slot,
   blockNumber,
+  pinned,
 }: {
   poster: LivePoster
   batch: BlobBatch
   slot: number
   blockNumber: number
+  pinned: boolean
 }) {
   const rows: [string, string][] = [
     ['Batch', formatBlobCount(batch.blobs)],
@@ -317,16 +323,32 @@ function BatchTooltipContent({
           <span className="tabular-nums">{value}</span>
         </div>
       ))}
-      <div className="text-label-value-12 text-secondary">
-        Click to open on Etherscan
-      </div>
+      {pinned ? (
+        <a
+          href={etherscanTxUrl(batch.txHash)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1 pt-1 font-bold text-brand text-label-value-13"
+        >
+          Open on Etherscan
+          <CustomLinkIcon className="size-3.5 fill-current" />
+        </a>
+      ) : (
+        <div className="text-label-value-12 text-secondary">
+          Click to open on Etherscan
+        </div>
+      )}
     </div>
   )
 }
 
 /** In a new tab, so the belt keeps running where it was left */
 function openOnEtherscan(txHash: string) {
-  window.open(`https://etherscan.io/tx/${txHash}`, '_blank', 'noopener')
+  window.open(etherscanTxUrl(txHash), '_blank', 'noopener')
+}
+
+function etherscanTxUrl(txHash: string) {
+  return `https://etherscan.io/tx/${txHash}`
 }
 
 function shortAddress(address: string) {
