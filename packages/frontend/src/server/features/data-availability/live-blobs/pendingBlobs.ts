@@ -36,14 +36,11 @@ export class PendingBlobs {
   version = 0
   private readonly byKey = new Map<string, Tracked>()
   /**
-   * The newest nonce each sender got into a block, and the slot of that
+   * The nonces each sender got into a block of late, with the slot of each
    * block. A transaction can reach the mempool after its block, and must not
    * then wait for one
    */
-  private readonly usedNonces = new Map<
-    string,
-    { nonce: number; slot: number; at: number }
-  >()
+  private readonly usedNonces = new Map<string, Used[]>()
 
   /** Oldest first */
   list(): PendingBatch[] {
@@ -53,8 +50,7 @@ export class PendingBlobs {
   }
 
   seen(tx: PendingTx, now: number) {
-    const used = this.usedNonces.get(tx.from)
-    if (used && tx.nonce <= used.nonce) return
+    if (this.usedNonces.get(tx.from)?.some((u) => tx.nonce <= u.nonce)) return
     const key = keyOf(tx.from, tx.nonce)
     const known = this.byKey.get(key)
     if (known) {
@@ -84,9 +80,11 @@ export class PendingBlobs {
     slot: number,
     now: number,
   ): number | undefined {
-    const used = this.usedNonces.get(from)
-    if (!used || nonce >= used.nonce)
-      this.usedNonces.set(from, { nonce, slot, at: now })
+    this.usedNonces.set(from, [
+      ...(this.usedNonces.get(from)?.filter((u) => !isUsed(u, nonce, slot)) ??
+        []),
+      { nonce, slot, at: now },
+    ])
     const firstSeenAt = this.byKey.get(keyOf(from, nonce))?.firstSeenAt
     let changed = false
     for (const [key, batch] of this.byKey) {
@@ -102,13 +100,10 @@ export class PendingBlobs {
   /**
    * The chain dropped the block in `slot` that took the sender's `nonce`.
    * Unless another block took the nonce since, the batch is back in the
-   * mempool and may wait again
+   * mempool and may wait again. What older blocks took stays taken
    */
   dropped(from: string, nonce: number, slot: number) {
-    const used = this.usedNonces.get(from)
-    if (used?.nonce === nonce && used.slot === slot) {
-      this.usedNonces.delete(from)
-    }
+    this.keepUsed(from, (u) => !isUsed(u, nonce, slot))
   }
 
   /** Lets go of batches not heard of for `PENDING_LIFETIME` */
@@ -121,8 +116,8 @@ export class PendingBlobs {
       }
     }
     // a late transaction comes seconds after its block, not minutes
-    for (const [from, used] of this.usedNonces) {
-      if (now - used.at > PENDING_LIFETIME) this.usedNonces.delete(from)
+    for (const from of this.usedNonces.keys()) {
+      this.keepUsed(from, (u) => now - u.at <= PENDING_LIFETIME)
     }
     if (changed) this.version++
   }
@@ -134,6 +129,12 @@ export class PendingBlobs {
     this.usedNonces.clear()
   }
 
+  private keepUsed(from: string, keep: (used: Used) => boolean) {
+    const kept = this.usedNonces.get(from)?.filter(keep) ?? []
+    if (kept.length > 0) this.usedNonces.set(from, kept)
+    else this.usedNonces.delete(from)
+  }
+
   private dropOldestOver(limit: number) {
     if (this.byKey.size <= limit) return
     const oldest = this.list()[0]
@@ -141,9 +142,21 @@ export class PendingBlobs {
   }
 }
 
+/** A nonce a block took */
+interface Used {
+  nonce: number
+  slot: number
+  /** Unix seconds the block was seen */
+  at: number
+}
+
 interface Tracked extends PendingBatch {
   /** A resend keeps a batch from expiring */
   lastSeenAt: number
+}
+
+function isUsed(used: Used, nonce: number, slot: number) {
+  return used.nonce === nonce && used.slot === slot
 }
 
 function keyOf(from: string, nonce: number) {

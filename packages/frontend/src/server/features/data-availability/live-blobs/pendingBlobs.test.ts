@@ -88,6 +88,19 @@ describe(PendingBlobs.name, () => {
     expect(pending.list()).toEqual([])
   })
 
+  it('keeps what older blocks took when the newest block is dropped', () => {
+    // nonce 7 is in a block the chain kept; only nonce 8's block was dropped
+    const pending = new PendingBlobs()
+    pending.included(BASE, 7, SLOT, 112)
+    pending.included(BASE, 8, SLOT + 1, 124)
+
+    pending.dropped(BASE, 8, SLOT + 1)
+    pending.seen(tx({ nonce: 7 }), 125)
+    pending.seen(tx({ nonce: 8 }), 125)
+
+    expect(pending.list().map((b) => b.nonce)).toEqual([8])
+  })
+
   it('expires a batch not heard of for its lifetime, unless resent', () => {
     const pending = new PendingBlobs()
     pending.seen(tx({ nonce: 7 }), 100)
