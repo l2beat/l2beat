@@ -224,12 +224,11 @@ export function useReorder(
   }, [containerRef, order, reducedMotion])
 }
 
-/** The time, in unix seconds, renewed every `everyMs` */
-export function useNow(everyMs: number) {
-  const [now, setNow] = useState(() => Date.now() / 1000)
+/** Renders again every `everyMs`, for what counts up between blocks */
+export function useTick(everyMs: number) {
+  const [, setTick] = useState(0)
   useEffect(() => {
-    const timer = setInterval(() => setNow(Date.now() / 1000), everyMs)
+    const timer = setInterval(() => setTick((tick) => tick + 1), everyMs)
     return () => clearInterval(timer)
   }, [everyMs])
-  return now
 }

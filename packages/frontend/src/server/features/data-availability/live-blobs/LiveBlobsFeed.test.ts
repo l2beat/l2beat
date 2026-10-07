@@ -197,6 +197,37 @@ describe(LiveBlobsFeed.name, () => {
     }
   })
 
+  it('gives up on a block that keeps failing, rather than back off from the node for as long as it is recent', async () => {
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const node = fakeNode()
+      node.failing = HEAD - 5
+      feed = new LiveBlobsFeed(node.source, Logger.SILENT)
+      await feed.latest()
+
+      // three tries with the backoff between them, 2 s and 4 s, then the poll
+      // 8 s on that finds nothing left to ask for
+      await clock.tickAsync(15_000)
+      const givenUp = await feed.latest()
+      expect(givenUp?.live).toEqual(true)
+      expect(givenUp?.blocks.map((b) => b.slot) ?? []).not.toInclude(HEAD - 5)
+      expect(node.failed).toEqual(3)
+
+      // the head moves on a minute later: the slot is not asked for again
+      node.head = HEAD + 5
+      await clock.tickAsync(60_000)
+      const later = await feed.latest()
+      expect(later?.head).toEqual(HEAD + 5)
+      expect(later?.live).toEqual(true)
+      expect(node.failed).toEqual(3)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
   it('counts the wait for the first answer into how long a page is held', async () => {
     const clock = install({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
@@ -248,6 +279,8 @@ describe(LiveBlobsFeed.name, () => {
       dropped: undefined as number | undefined,
       /** A slot whose block the node fails to answer for */
       failing: undefined as number | undefined,
+      /** Asks the node failed to answer */
+      failed: 0,
       blocksAsked: 0,
       source: {} as BeaconSource,
     }
@@ -255,7 +288,10 @@ describe(LiveBlobsFeed.name, () => {
       headSlot: async () => node.head,
       block: async (slot): Promise<LiveBlock> => {
         node.blocksAsked++
-        if (slot === node.failing) throw new Error()
+        if (slot === node.failing) {
+          node.failed++
+          throw new Error()
+        }
         if (slot === MISSED || slot === node.dropped) {
           return { slot, status: 'missed' }
         }
