@@ -91,17 +91,27 @@ export function useBeaconChain({
         onFresh.current(kept)
       }
     }
-    forgetOld(chain.blocks, live.head)
-    if (changed.length > 0) setVersion((v) => v + 1)
+    const rolledBack = forgetOld(chain.blocks, live.head)
+    if (changed.length > 0 || rolledBack) setVersion((v) => v + 1)
   }, [live, chain, clock, posterIndexOf])
 
   return { chain, version }
 }
 
+/**
+ * Lets go of blocks too old to show, and of any above the head, which the
+ * chain dropped as it moved its head back. Says whether it had any such
+ */
 function forgetOld(blocks: Map<number, ChainBlock>, head: number) {
+  let rolledBack = false
   for (const slot of blocks.keys()) {
     if (slot <= head - 2 * RECENT_BLOCKS) blocks.delete(slot)
+    if (slot > head) {
+      blocks.delete(slot)
+      rolledBack = true
+    }
   }
+  return rolledBack
 }
 
 /** Seconds until the server is asked again */

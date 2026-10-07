@@ -51,7 +51,7 @@ const IDLE_AFTER = WINDOW_SLOTS * SLOT_SECONDS
 const FIRST_ANSWER_TIMEOUT = 10
 
 export const LiveBlobsParams = v.object({
-  /** The newest slot the page has: the answer waits for one newer */
+  /** The newest slot the page has: the answer waits for the head to move off it */
   after: v.number().optional(),
 })
 export type LiveBlobsParams = v.infer<typeof LiveBlobsParams>
@@ -184,9 +184,9 @@ export class LiveBlobsFeed {
   }
 
   /**
-   * The recent blocks once the head has passed `after`, or as they are after
-   * `LONG_POLL` seconds. Held open, a page hears of a block the moment the
-   * server has it, rather than at its next ask
+   * The recent blocks once the head is not `after` any more, or as they are
+   * after `LONG_POLL` seconds. Held open, a page hears of a block the moment
+   * the server has it, rather than at its next ask
    */
   async latestAfter({ after }: LiveBlobsParams) {
     const askedAt = this.now()
@@ -202,8 +202,9 @@ export class LiveBlobsFeed {
       const timer = setTimeout(done, left * 1000)
       this.waiting.add(done)
       // looked at only once waiting, or a head that moved between the look
-      // and the wait would be missed: pages are answered as they wait
-      if (this.head === undefined || this.head > after) done()
+      // and the wait would be missed: pages are answered as they wait. Any
+      // other head, as one moved back has blocks to take off the page
+      if (this.head === undefined || this.head !== after) done()
     })
     // not `latest`, which would wait for a first answer all over again
     return this.snapshot()
@@ -384,9 +385,14 @@ function slotsUnsettled(blocks: Map<number, LiveBlock>, head: number) {
   return unsettled
 }
 
+/**
+ * Lets go of what fell out of the window, and of anything above the head:
+ * the chain can move its head back, dropping its newest block for none, and
+ * that slot is then fetched afresh when a block fills it
+ */
 function forgetOld(bySlot: Map<number, unknown>, head: number) {
   for (const slot of bySlot.keys()) {
-    if (slot <= head - WINDOW_SLOTS) bySlot.delete(slot)
+    if (slot <= head - WINDOW_SLOTS || slot > head) bySlot.delete(slot)
   }
 }
 
