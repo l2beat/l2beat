@@ -12,9 +12,11 @@ export function formatWhole(value: number): string {
   return WHOLE.format(Math.round(value))
 }
 
-/** One decimal below 10, as 3.8 blobs per block; whole above */
+/** One decimal below 10, as 3.8 blobs per block, but 3 rather than 3.0; whole above */
 export function formatAverage(value: number): string {
-  return value >= 10 ? String(Math.round(value)) : value.toFixed(1)
+  if (value >= 10) return String(Math.round(value))
+  const rounded = value.toFixed(1)
+  return rounded.endsWith('.0') ? rounded.slice(0, -2) : rounded
 }
 
 export function formatBlobCount(blobs: number): string {
