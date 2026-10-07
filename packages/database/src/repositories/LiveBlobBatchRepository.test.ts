@@ -132,6 +132,7 @@ function batch(
     Partial<LiveBlobBatchRecord>,
 ): LiveBlobBatchRecord {
   return {
+    txHash: `0x${fields.slot}${fields.txIndex}`,
     blockNumber: blockOf(fields.slot),
     from: '0xfrom',
     to: '0xto',

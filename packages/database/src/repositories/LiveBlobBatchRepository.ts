@@ -8,6 +8,7 @@ export interface LiveBlobBatchRecord {
   slot: number
   /** Position of the transaction in its block */
   txIndex: number
+  txHash: string
   blockNumber: number
   from: string
   to: string
@@ -51,6 +52,7 @@ export class LiveBlobBatchRepository extends BaseRepository {
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['slot', 'txIndex']).doUpdateSet((eb) => ({
+            txHash: eb.ref('excluded.txHash'),
             blockNumber: eb.ref('excluded.blockNumber'),
             from: eb.ref('excluded.from'),
             to: eb.ref('excluded.to'),

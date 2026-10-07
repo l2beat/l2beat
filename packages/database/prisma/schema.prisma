@@ -430,6 +430,7 @@ model LiveBlock {
 model LiveBlobBatch {
   slot        Int
   txIndex     Int
+  txHash      String  @db.VarChar(66)
   blockNumber Int
   from        String  @db.VarChar(255)
   to          String  @db.VarChar(255)

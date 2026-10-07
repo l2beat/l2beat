@@ -105,6 +105,7 @@ export class EthereumDaProvider implements DaBlobProvider {
       const txLogs = logs.filter((l) => l.transactionHash === tx.hash)
       batches.push({
         txIndex,
+        txHash: tx.hash,
         from: tx.from,
         to: tx.to ?? '',
         topics: txLogs.flatMap((log) => log.topics),

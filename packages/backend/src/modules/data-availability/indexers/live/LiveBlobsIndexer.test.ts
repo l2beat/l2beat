@@ -38,10 +38,17 @@ describe(LiveBlobsIndexer.name, () => {
         configurations,
         batchSize: 4,
         batches: {
-          [HEAD - 8]: [batch({ txIndex: 2, to: INBOX, blobs: 3 })],
+          [HEAD - 8]: [
+            batch({ blockNumber: HEAD - 8, txIndex: 2, to: INBOX, blobs: 3 }),
+          ],
           [HEAD - 7]: [
-            batch({ txIndex: 0, to: INBOX, blobs: 1 }),
-            batch({ txIndex: 1, to: '0xelsewhere', blobs: 2 }),
+            batch({ blockNumber: HEAD - 7, txIndex: 0, to: INBOX, blobs: 1 }),
+            batch({
+              blockNumber: HEAD - 7,
+              txIndex: 1,
+              to: '0xelsewhere',
+              blobs: 2,
+            }),
           ],
         },
       })
@@ -254,6 +261,7 @@ function liveBatch(
   return {
     slot: blockNumber + SLOT_OFFSET,
     txIndex,
+    txHash: txHashOf(blockNumber, txIndex),
     blockNumber,
     from: '0xsequencer',
     to,
@@ -262,10 +270,22 @@ function liveBatch(
   }
 }
 
+function txHashOf(blockNumber: number, txIndex: number) {
+  return `0x${blockNumber}${txIndex}`
+}
+
 function batch(
-  fields: Pick<EthereumBlobBatch, 'txIndex' | 'to' | 'blobs'>,
+  fields: Pick<EthereumBlobBatch, 'txIndex' | 'to' | 'blobs'> & {
+    blockNumber: number
+  },
 ): EthereumBlobBatch {
-  return { from: '0xsequencer', topics: [], ...fields }
+  const { blockNumber, ...rest } = fields
+  return {
+    txHash: txHashOf(blockNumber, fields.txIndex),
+    from: '0xsequencer',
+    topics: [],
+    ...rest,
+  }
 }
 
 function ethereumConfig(

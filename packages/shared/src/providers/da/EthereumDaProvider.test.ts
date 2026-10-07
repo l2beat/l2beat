@@ -126,6 +126,7 @@ describe(EthereumDaProvider.name, () => {
           batches: [
             {
               txIndex: 1,
+              txHash: '0xblobs',
               from: '0xsequencer',
               to: '0xinbox',
               topics: ['0xtopic1', '0xtopic2'],

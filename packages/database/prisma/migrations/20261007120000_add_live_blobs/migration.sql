@@ -13,6 +13,7 @@ CREATE TABLE "LiveBlock" (
 CREATE TABLE "LiveBlobBatch" (
     "slot" INTEGER NOT NULL,
     "txIndex" INTEGER NOT NULL,
+    "txHash" VARCHAR(66) NOT NULL,
     "blockNumber" INTEGER NOT NULL,
     "from" VARCHAR(255) NOT NULL,
     "to" VARCHAR(255) NOT NULL,

@@ -28,6 +28,7 @@ export interface EthereumBlobBlock {
 export interface EthereumBlobBatch {
   /** Position of the transaction in its block */
   txIndex: number
+  txHash: string
   from: string
   to: string
   /** Of every log the transaction emitted, internal calls included */

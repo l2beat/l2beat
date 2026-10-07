@@ -150,6 +150,7 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
       return {
         slot: slotAt(block.timestamp),
         txIndex: batch.txIndex,
+        txHash: batch.txHash,
         blockNumber: block.number,
         from: batch.from,
         to: batch.to,
