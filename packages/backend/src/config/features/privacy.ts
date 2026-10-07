@@ -98,25 +98,20 @@ export async function getPrivacyConfig(
             project.projectId,
             bucket,
             'deposit',
+            bucket.deposit,
             token.token,
             minTimestamp,
           ),
-          toFlowConfig(
-            project.projectId,
-            bucket,
-            'withdrawal',
-            token.token,
-            minTimestamp,
-          ),
-          ...(bucket.additionalWithdrawals ?? []).map((source) =>
-            toFlowConfig(
-              project.projectId,
-              bucket,
-              'withdrawal',
-              token.token,
-              minTimestamp,
-              source,
-            ),
+          ...[bucket.withdrawal, ...(bucket.additionalWithdrawals ?? [])].map(
+            (source) =>
+              toFlowConfig(
+                project.projectId,
+                bucket,
+                'withdrawal',
+                source,
+                token.token,
+                minTimestamp,
+              ),
           ),
         ]
         for (const config of configs) {
@@ -286,9 +281,9 @@ function toFlowConfig(
   projectId: string,
   bucket: ProjectPrivacyBucket,
   direction: 'deposit' | 'withdrawal',
+  source: PrivacyFlowSource,
   token: ProjectPrivacyToken['token'],
   minTimestamp: UnixTime,
-  source: PrivacyFlowSource = bucket[direction],
 ): PrivacyFlowIndexerConfig | StarknetPrivacyFlowIndexerConfig {
   const privacyAddress = getPrivacyBucketAddress(bucket.address)
   const base = {

@@ -3,19 +3,14 @@ import type {
   PrivacyFlowSource,
 } from '@l2beat/config'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
+import { type BigNumber, utils } from 'ethers'
 import type { PrivacyFlowExtractResult, PrivacyRpcLog } from '../types'
+import { zkApiInterface } from '../zkapi/abi'
 import { zkMoneyInterface } from '../zkmoney/abi'
 import { erc20Interface } from './erc20'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
 
 const ERC20_TOKEN_TYPE = 0
-
-const zkApiInterface = new utils.Interface([
-  'event NoteDeposited(uint32 indexed noteId, bytes32 indexed commitment, uint128 amount, uint64 expiryTs, uint256 newRoot)',
-  'event MutualClose(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination)',
-  'event EscapeWithdrawalFinalized(uint32 indexed noteId, uint256 nullifier, uint128 finalBalance, address destination)',
-])
 
 const railgunInterface = new utils.Interface([
   'event Shield(uint256 treeNumber, uint256 startPosition, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value)[] commitments, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey)[] shieldCiphertext, uint256[] fees)',
@@ -41,18 +36,6 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
   log: PrivacyRpcLog,
 ): PrivacyFlowExtractResult | undefined {
   switch (source.extractor) {
-    case 'zkApiDeposit':
-    case 'zkApiWithdrawal': {
-      const parsed = zkApiInterface.parseLog(log)
-      const value =
-        source.extractor === 'zkApiDeposit'
-          ? parsed.args.amount
-          : parsed.args.finalBalance
-      return {
-        count: 1,
-        amount: BigInt(value.toString()) * BigInt(source.params.weiPerUnit),
-      }
-    }
     case 'fixedAmount':
       return {
         count: 1,
@@ -85,6 +68,22 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
         count: 1,
         amount: BigInt(
           zkMoneyInterface.parseLog(log).args.executionAmount.toString(),
+        ),
+      }
+    case 'zkApiDeposit':
+      return {
+        count: 1,
+        amount: zkApiUnitsToWei(
+          zkApiInterface.parseLog(log).args.amount,
+          source.params.weiPerUnit,
+        ),
+      }
+    case 'zkApiWithdrawal':
+      return {
+        count: 1,
+        amount: zkApiUnitsToWei(
+          zkApiInterface.parseLog(log).args.finalBalance,
+          source.params.weiPerUnit,
         ),
       }
     default:
@@ -206,4 +205,9 @@ function extractZamaUnwrap(
       BigInt(parsedLog.args.cleartextAmount.toString()) *
       BigInt(source.params.rate),
   }
+}
+
+// The zkAPI vault stores ETH amounts as whole units (gwei), not wei.
+function zkApiUnitsToWei(units: BigNumber, weiPerUnit: string): bigint {
+  return BigInt(units.toString()) * BigInt(weiPerUnit)
 }
