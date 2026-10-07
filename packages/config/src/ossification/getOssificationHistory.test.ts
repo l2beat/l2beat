@@ -140,7 +140,7 @@ describe(getOssificationHistory.name, () => {
           stateChangeCount: 0,
         },
       ])
-      expect(history?.resets).toEqual([T0])
+      expect(history?.arrivals).toEqual([T0])
       expect(history?.observedSince).toEqual(T0)
     })
 
@@ -216,7 +216,7 @@ describe(getOssificationHistory.name, () => {
   })
 
   describe('$pastUpgrades', () => {
-    it('resets the clock on the initialization and counts later upgrades', () => {
+    it('starts the clock at the initialization and counts later upgrades', () => {
       const history = derive({
         entries: [
           entry({
@@ -232,7 +232,7 @@ describe(getOssificationHistory.name, () => {
       expect(changes(history)).toEqual([
         ['code', T0 + 30 * DAY, T0 + 30 * DAY, undefined],
       ])
-      expect(history?.resets).toEqual([T0 + DAY])
+      expect(history?.arrivals).toEqual([T0 + DAY])
     })
 
     it('drops ignored transactions and upgrades after the contract left', () => {
@@ -425,7 +425,7 @@ describe(getOssificationHistory.name, () => {
       expect(changes(history)).toEqual([['code', RUN_1, T0, 'u1']])
     })
 
-    it('keeps the creation of a retired contract as a reset', () => {
+    it('keeps the creation of a retired contract as an arrival', () => {
       const history = derive({
         changes: [
           ...update('u1', RUN_1, T0, ADDRESS_B, [
@@ -437,7 +437,7 @@ describe(getOssificationHistory.name, () => {
         ],
         judgement: judgement({ 'x/B': true }),
       })
-      expect(history?.resets).toEqual([T0, RUN_1])
+      expect(history?.arrivals).toEqual([T0, RUN_1])
       expect(history?.observedSince).toEqual(T0)
     })
 
@@ -480,7 +480,7 @@ describe(getOssificationHistory.name, () => {
   })
 
   describe('whose change it is', () => {
-    it('moves the clock but does not count a change made before the project or the adoption', () => {
+    it('moves the clock but neither counts a change nor dates an arrival before the project or the adoption', () => {
       const history = derive({
         projectStart: RUN_1,
         entries: [
@@ -501,7 +501,7 @@ describe(getOssificationHistory.name, () => {
         ['B', RUN_2 - DAY, 0, 0],
       ])
       expect(changes(history)).toEqual([])
-      expect(history?.resets).toEqual([T0, T0, RUN_2])
+      expect(history?.arrivals).toEqual([RUN_1, RUN_1, RUN_2])
       expect(history?.observedSince).toEqual(RUN_1)
     })
 

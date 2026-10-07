@@ -3,7 +3,9 @@ import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 export interface OssificationHistory {
   contracts: OssificationContract[]
   changes: OssificationChange[]
-  resets: number[]
+  /** Moments new code entered the perimeter without a change: deployments,
+   *  initializations and perimeter joins, none before the project start. */
+  arrivals: number[]
   observedSince: number
 }
 
@@ -18,9 +20,13 @@ export interface OssificationResult {
   score: number
   /** score as a 0..1 fraction; 0 gates exposure when unverified */
   maturity: number
-  /** Start of the unchanged period: the newest deployment or critical change
-   *  anywhere in the perimeter. */
+  /** Start of the current clock, the unchanged period: the youngest contract
+   *  clock, so the newest reset, or the launch when nothing was reset since. */
   projectClockStart: number
+  /** Start of the first clock, once per project: the end of the rollout at
+   *  the start of observation. Earlier arrivals assembled the perimeter. No
+   *  clock starts before it. */
+  launch: number
   /** Timestamp of the last critical change, absent if none ever */
   lastCriticalChange?: number
   /** 24h-clustered critical change events per year, trailing window */
@@ -29,10 +35,10 @@ export interface OssificationResult {
   windowSeconds: number
   /** 24h-clustered timestamps of every critical change, ascending */
   criticalChanges: number[]
-  /** 24h-clustered timestamps of every perimeter reset, ascending: critical
-   *  changes plus deployments of critical contracts. */
-  perimeterResets: number[]
-  /** Youngest clock first. */
+  /** 24h-clustered timestamps of every reset of the clock after the launch,
+   *  ascending: critical changes plus arrivals after the launch. */
+  resets: number[]
+  /** Youngest clock first, each clock bounded by the launch. */
   contracts: OssificationContract[]
   criticalUpdates: OssificationCriticalUpdate[]
 }
@@ -42,7 +48,8 @@ export interface OssificationContract {
   address: ChainSpecificAddress
   isVerified: boolean
   /** Start of the battle-tested clock: last critical change, or deployment
-   *  if the contract never changed. */
+   *  if the contract never changed. A measured clock does not start before
+   *  the launch. */
   ossifyingSince: number
   codeChangeCount: number
   stateChangeCount: number

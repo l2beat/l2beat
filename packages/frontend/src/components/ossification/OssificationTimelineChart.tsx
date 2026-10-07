@@ -13,8 +13,9 @@ import { formatTimestamp } from '~/utils/dates'
 const WIDTH = 132
 const HEIGHT = 30
 const TOP = 2
-// The area sits above it, reset ticks and the arrow below.
+// The area sits above it, reset ticks, the launch dot and the arrow below.
 const BASELINE = 24
+const LAUNCH_RADIUS = 2
 const LINE_PROPS = {
   strokeWidth: 1.5,
   strokeLinejoin: 'round',
@@ -31,7 +32,7 @@ export function OssificationTimelineChart({
   className,
 }: Props & { className?: string }) {
   const id = useId()
-  const { from, to, clockStart, resets, values } = timeline
+  const { from, to, clockStart, launch, resets, values } = timeline
   const toX = (timestamp: number) => ((timestamp - from) / (to - from)) * WIDTH
   const clockBeforeWindow = clockStart < from
   const clockX = clockBeforeWindow ? 0 : toX(clockStart)
@@ -130,6 +131,18 @@ export function OssificationTimelineChart({
               {...CRISP}
             />
           )}
+          {/* Drawn last: with no reset since, the pink line is at the launch. */}
+          {launch >= from && (
+            <circle
+              cx={Math.min(
+                Math.max(toX(launch), LAUNCH_RADIUS),
+                WIDTH - LAUNCH_RADIUS,
+              )}
+              cy={BASELINE + 2 + LAUNCH_RADIUS}
+              r={LAUNCH_RADIUS}
+              fill="var(--secondary)"
+            />
+          )}
         </svg>
       </TooltipTrigger>
       <TooltipContent className="flex max-w-80 flex-col gap-1.5">
@@ -198,15 +211,24 @@ function getDescription({
   }
 }
 
-// One tick per reset; deployments reset the clock too, so ticks outnumber
-// critical changes.
-function getResetsLine({ resets, criticalChanges }: Props['timeline']) {
+// The launch starts the first clock and is no reset. New critical contracts
+// reset the clock too, so resets can outnumber critical changes.
+function getResetsLine({
+  from,
+  launch,
+  resets,
+  criticalChanges,
+}: Props['timeline']) {
+  const span =
+    launch >= from
+      ? `since the launch on ${formatTimestamp(launch)}`
+      : 'in this window'
   if (resets.length === 0) {
-    return 'No reset in this window.'
+    return `No reset ${span}.`
   }
   const changes =
     criticalChanges === 0
-      ? 'no critical change'
+      ? 'all from new critical contracts'
       : `${criticalChanges} critical ${pluralize(criticalChanges, 'change')}`
-  return `${resets.length} ${pluralize(resets.length, 'reset')} in this window (${changes}).`
+  return `${resets.length} ${pluralize(resets.length, 'reset')} ${span} (${changes}).`
 }

@@ -82,9 +82,7 @@ export function getOssificationHistory(
   return {
     contracts,
     changes: perimeteredChanges.map(toChange),
-    resets: [...members.values()]
-      .flatMap((m) => [m.deployedAt, m.since])
-      .filter(notUndefined),
+    arrivals: getArrivals(members, sources.projectStart),
     observedSince: getObservedSince(members, events, sources.projectStart),
   }
 }
@@ -134,6 +132,19 @@ function toChange(event: MemberEvent): OssificationChange {
     updateId: event.updateId,
     earliest: event.earliest,
   }
+}
+
+// Code that predates the project, or a module adoption, enters the project's
+// perimeter at its start.
+function getArrivals(
+  members: Map<string, Member>,
+  projectStart: number | undefined,
+): number[] {
+  return [...members.values()]
+    .flatMap((member) => [member.deployedAt, member.since])
+    .filter(notUndefined)
+    .map((arrival) => Math.max(arrival, projectStart ?? arrival))
+    .sort((a, b) => a - b)
 }
 
 function getObservedSince(

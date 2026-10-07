@@ -24,7 +24,7 @@ function history(
   return {
     contracts: [contract(address)],
     changes: [],
-    resets: [],
+    arrivals: [],
     observedSince: 100,
     ...overrides,
   }
@@ -36,13 +36,13 @@ describe(mergeOssificationHistories.name, () => {
     const merged = mergeOssificationHistories([
       history(ADDRESS_A, {
         changes: [{ timestamp: 300, type: 'code' }],
-        resets: [200],
+        arrivals: [200],
         observedSince: 200,
       }),
       history(ADDRESS_B, {
         contracts: [younger],
         changes: [{ timestamp: 250, type: 'state', updateId: 'u1' }],
-        resets: [150],
+        arrivals: [150],
         observedSince: 150,
       }),
     ])
@@ -52,7 +52,7 @@ describe(mergeOssificationHistories.name, () => {
         { timestamp: 250, type: 'state', updateId: 'u1' },
         { timestamp: 300, type: 'code' },
       ],
-      resets: [150, 200],
+      arrivals: [150, 200],
       observedSince: 150,
     })
   })
@@ -70,13 +70,13 @@ describe(mergeOssificationHistories.name, () => {
       history(ADDRESS_B, {
         contracts: [],
         changes: [{ timestamp: 50, type: 'code' }],
-        resets: [40],
+        arrivals: [40],
         observedSince: 40,
       }),
     ])
     expect(merged?.contracts).toEqual([contract(ADDRESS_A)])
     expect(merged?.changes).toEqual([{ timestamp: 50, type: 'code' }])
-    expect(merged?.resets).toEqual([40])
+    expect(merged?.arrivals).toEqual([40])
     expect(merged?.observedSince).toEqual(40)
   })
 

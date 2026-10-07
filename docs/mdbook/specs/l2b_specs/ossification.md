@@ -12,8 +12,17 @@ The ossification score is derived from that age. Configure the perimeter with
   younger than the perimeter. The `ossification-dataset`
   repository publishes the curve. `ossificationCurve.json` is a copy of the
   JSON from its website. The `hash` value identifies the dataset release.
-- **Last change.** The age of the project clock. The project clock starts at
-  the newest deployment or critical change in the current perimeter.
+- **Last change.** The age of the current clock. It starts at the newest
+  deployment or critical change of a contract in today's perimeter: the
+  newest reset, or the launch when nothing was reset since.
+- **Launch and resets.** The launch starts the first clock, once per project.
+  It is the end of the rollout at the start of observation: the newest
+  arrival (see below) within 24 hours of it, unless a critical change comes
+  first. Arrivals before it assembled the perimeter and are not resets. A
+  reset is every critical change and every arrival after the launch. No reset
+  precedes the launch, and no clock starts before it: older code is only as
+  battle-tested as the project that runs it. The timeline shows the resets as
+  24-hour clusters and marks the launch when it falls inside.
 - **Critical changes per year.** The number of critical changes in the last 36
   months, divided by the observed time. Changes that occur within 24 hours
   count as one change. The observed time starts at the oldest known event or
@@ -64,7 +73,8 @@ its own start passes the adoption time per module, the block timestamp of
 the transaction that first made a project contract depend on it:
 `getOssificationHistory(chainStart, { 'shared-sp1': UnixTime(…) })`.
 A module whose critical contracts have all retired
-still adds its historical changes and resets.
+still adds its historical changes and arrivals. A module contract deployed
+before the adoption arrives at the adoption.
 
 **Critical code change.** A change of the implementation of a critical
 contract.
@@ -129,29 +139,34 @@ The derivation answers every per-contract question. The measure only
 aggregates. The history is four tables:
 
 - `contracts`: one row per contract that is critical today, with its name,
-  address, verification status, `ossifyingSince` (the last reset of its
-  clock: deployment, initialization or change) and its own change counts.
+  address, verification status, `ossifyingSince` (the start of its own clock:
+  deployment, initialization or its last change) and its own change counts.
   Every critical contract must have a known age.
 - `changes`: every critical change made while its contract was critical,
   for current and retired contracts, ascending. A retired contract exists
   only here. A reviewed change from `ossification.json` is here when it is
   the project's own.
-- `resets`: moments the perimeter was reset without a change: deployments,
-  initializations, adoptions. The timeline only.
+- `arrivals`: moments new code entered the perimeter without a change:
+  deployments, initializations and perimeter joins (`sinceTimestamp`). An
+  arrival before the project start or the module adoption is dated at it.
+  They locate the launch and the resets of the timeline, not the score.
 - `observedSince`: when observation of the perimeter began. The rate window
   does not start earlier, and not before the project itself.
 
-The measure computes: the project clock as the youngest `ossifyingSince`; the
-score from the age of the project clock, or 0 when a row is unverified; the
-rate as the 24-hour clusters of `changes` inside the window; the timeline as
-the clusters of `changes` and `resets`; one critical-update tag per
-`updateId`.
+The measure computes: the launch from `observedSince`, `arrivals` and the
+first change; each contract clock as its `ossifyingSince`, bounded by the
+launch; the current clock as the youngest contract clock; the score from the
+age of the current clock, or 0 when a row is unverified; the rate as the
+24-hour clusters of `changes` inside the window; the resets as the clusters
+of `changes` and of the `arrivals` after the launch; one critical-update tag
+per `updateId`.
 
 **Which changes are the project's own.** A mechanical change counts when it
 happened at or after the contract's `sinceTimestamp` and at or after the
-project start. A change before that still resets the contract's clock, because
-age is physical, but it is not in `changes`. A change after `untilTimestamp`
-is dropped. A reviewed change has the same lower bounds: a review dates a
+project start. A change before that still moves the contract's clock, because
+age is physical, but it is not in `changes`. The measure bounds every clock by
+the launch, so a change before the project start leaves no trace. A change
+after `untilTimestamp` is dropped. A reviewed change has the same lower bounds: a review dates a
 change, it does not make an earlier change the project's own. A reviewed
 change after `untilTimestamp` is refused, because the bound or the event is
 wrong.
@@ -160,7 +175,7 @@ wrong.
 
 | Source | Event | Time |
 | --- | --- | --- |
-| `$pastUpgrades` of a critical contract | code change; the first entry is the initialization, a reset | exact, onchain |
+| `$pastUpgrades` of a critical contract | code change; the first entry is the initialization, an arrival | exact, onchain |
 | `$pastUpgrades.N` appended in a diffHistory entry, not yet known | code change (retired contracts, handler gaps) | exact, onchain |
 | `$implementation` change in a diffHistory entry, contract without `$pastUpgrades` | code change | between the previous run and this one |
 | change of a field that is HIGH today, in a diffHistory entry | state change | between the previous run and this one; dated at an upgrade bundled in the same diff, or, when the diff changes the implementation, at the newest known upgrade before the run |

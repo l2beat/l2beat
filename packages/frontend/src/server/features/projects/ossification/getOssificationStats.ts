@@ -38,8 +38,11 @@ type OssificationExitWindow = Pick<
 interface OssificationTimeline {
   from: number
   to: number
+  /** Start of the current clock, the unchanged period */
   clockStart: number
-  /** Perimeter resets inside the window, up to the clock start */
+  /** Start of the first clock, once per project, possibly before `from` */
+  launch: number
+  /** Resets after the launch, inside the window, up to the clock start */
   resets: number[]
   /** Critical changes inside the window, up to the clock start */
   criticalChanges: number
@@ -86,7 +89,8 @@ export async function getOssificationStats(
       from,
       to: now,
       clockStart,
-      resets: ossification.perimeterResets.filter(isInTimeline),
+      launch: ossification.launch,
+      resets: ossification.resets.filter(isInTimeline),
       criticalChanges: ossification.criticalChanges.filter(isInTimeline).length,
       values: series ? sampleTimeline(series.points, from, now) : null,
     },

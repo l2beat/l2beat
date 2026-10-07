@@ -26,8 +26,8 @@ export function mergeOssificationHistories(
     changes: histories
       .flatMap((history) => history.changes)
       .sort((a, b) => a.timestamp - b.timestamp),
-    resets: histories
-      .flatMap((history) => history.resets)
+    arrivals: histories
+      .flatMap((history) => history.arrivals)
       .sort((a, b) => a - b),
     observedSince: Math.min(
       ...histories.map((history) => history.observedSince),

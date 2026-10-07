@@ -55,7 +55,7 @@ function history(
   return {
     contracts: [row()],
     changes: [],
-    resets: [],
+    arrivals: [],
     observedSince: NOW - 3 * YEAR,
     ...overrides,
   }
@@ -70,14 +70,15 @@ describe(measureOssification.name, () => {
 
   it('scores an old unchanged perimeter as mature', () => {
     const result = measureOssification(
-      history({ resets: [NOW - 3 * YEAR] }),
+      history({ arrivals: [NOW - 3 * YEAR] }),
       NOW,
     )
     expect(result?.score).toEqual(scoreAt(3 * YEAR))
     expect(result?.projectClockStart).toEqual(NOW - 3 * YEAR)
+    expect(result?.launch).toEqual(NOW - 3 * YEAR)
     expect(result?.lastCriticalChange).toEqual(undefined)
     expect(result?.clusteredEventCount).toEqual(0)
-    expect(result?.perimeterResets).toEqual([NOW - 3 * YEAR])
+    expect(result?.resets).toEqual([])
   })
 
   it('gives the project its youngest clock, youngest contract first', () => {
@@ -158,20 +159,82 @@ describe(measureOssification.name, () => {
     expect(result?.windowSeconds).toEqual(30 * DAY)
   })
 
-  it('draws changes and resets as one clustered timeline', () => {
+  it('resets the clock after the launch on changes and arrivals, clustered', () => {
     const result = measureOssification(
       history({
-        resets: [NOW - 3 * YEAR, NOW - YEAR + HOUR],
+        arrivals: [NOW - 3 * YEAR, NOW - 2 * YEAR, NOW - YEAR + HOUR],
         changes: [change(NOW - YEAR), change(NOW - DAY)],
       }),
       NOW,
     )
-    expect(result?.perimeterResets).toEqual([
-      NOW - 3 * YEAR,
-      NOW - YEAR,
-      NOW - DAY,
-    ])
+    expect(result?.launch).toEqual(NOW - 3 * YEAR)
+    expect(result?.resets).toEqual([NOW - 2 * YEAR, NOW - YEAR, NOW - DAY])
     expect(result?.criticalChanges).toEqual([NOW - YEAR, NOW - DAY])
+  })
+
+  it('launches at the end of the rollout, after the earlier assembly', () => {
+    const start = NOW - 10 * DAY
+    const result = measureOssification(
+      history({
+        contracts: [row({ ossifyingSince: start + 4 * 60 })],
+        arrivals: [start - 37 * DAY, start - 37 * DAY, start, start + 4 * 60],
+        observedSince: start,
+      }),
+      NOW,
+    )
+    expect(result?.launch).toEqual(start + 4 * 60)
+    expect(result?.projectClockStart).toEqual(start + 4 * 60)
+    expect(result?.resets).toEqual([])
+  })
+
+  it('starts no clock before the launch', () => {
+    const result = measureOssification(
+      history({
+        contracts: [
+          row({ ossifyingSince: NOW - 5 * YEAR }),
+          row({ name: 'B', ossifyingSince: NOW - 4 * YEAR }),
+        ],
+        observedSince: NOW - 2 * YEAR,
+      }),
+      NOW,
+    )
+    expect(result?.launch).toEqual(NOW - 2 * YEAR)
+    expect(result?.projectClockStart).toEqual(NOW - 2 * YEAR)
+    expect(result?.score).toEqual(scoreAt(2 * YEAR))
+    expect(result?.contracts.map((c) => c.ossifyingSince)).toEqual([
+      NOW - 2 * YEAR,
+      NOW - 2 * YEAR,
+    ])
+  })
+
+  it('ends the rollout after a day or at the first change', () => {
+    const start = NOW - YEAR
+    const lateArrival = measureOssification(
+      history({ arrivals: [start, start + 2 * DAY], observedSince: start }),
+      NOW,
+    )
+    expect(lateArrival?.launch).toEqual(start)
+    expect(lateArrival?.resets).toEqual([start + 2 * DAY])
+
+    const earlyChange = measureOssification(
+      history({
+        arrivals: [start, start + 2 * HOUR],
+        changes: [change(start + HOUR)],
+        observedSince: start,
+      }),
+      NOW,
+    )
+    expect(earlyChange?.launch).toEqual(start)
+    expect(earlyChange?.resets).toEqual([start + HOUR])
+  })
+
+  it('never launches after a change', () => {
+    const result = measureOssification(
+      history({ changes: [change(NOW - 4 * YEAR)] }),
+      NOW,
+    )
+    expect(result?.launch).toEqual(NOW - 4 * YEAR)
+    expect(result?.resets).toEqual([NOW - 4 * YEAR])
   })
 
   it('tags each discovery update once, mixed updates as code', () => {

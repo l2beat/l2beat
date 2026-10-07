@@ -1,8 +1,8 @@
 export const OSSIFICATION_TOOLTIPS = {
   score:
-    "The project's critical smart contracts have stayed unchanged longer than the exploited code in N% of recorded incidents. Below 50: younger than the median exploited code. 80+: about a year unchanged. It is not calculated while any critical contract lacks verified source code.",
+    "The project's critical smart contracts have stayed unchanged longer than the exploited code in N% of recorded incidents. Below 50: younger than the median exploited code. 80+: about 9 months unchanged. It is not calculated while any critical contract lacks verified source code.",
   timeline:
-    'TVS over one year. The highlighted part is the ossified period — its area is the battle-tested exposure. Ticks below the baseline are earlier resets: critical changes to the smart contracts or deployments of new ones. Heights are normalized per-project.',
+    'TVS over one year. The highlighted part is the ossified period — its area is the battle-tested exposure. Ticks below the baseline are ossification resets, the dot marks the launch. Heights are normalized per-project.',
   exposure:
     'Value secured summed up over the ossified period — the implicit bug bounty the code has withstood, in dollar-years (Example: 6 months of constant 10M TVS without critical code changes gives a value of 5M, 3 years give 30M).',
   criticalChangesPerYear:
