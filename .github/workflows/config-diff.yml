@@ -41,16 +41,8 @@ jobs:
           git fetch --depth 1 origin $SHA
           git worktree add --detach $RUNNER_TEMP/config-diff-main $SHA
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Wait for main worktree
         wait: main-worktree
