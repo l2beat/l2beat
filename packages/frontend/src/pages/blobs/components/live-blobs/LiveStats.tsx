@@ -19,9 +19,9 @@ import { type BlockLimits, type LivePoster, UNKNOWN_ID } from './model'
 import { type LiveStatus, useLiveBlobs } from './useLiveBlobs'
 
 const STATUS_TEXT: Record<LiveStatus, string> = {
-  connecting: 'Connecting…',
-  live: 'Live',
-  reconnecting: 'Reconnecting…',
+  connecting: 'Connecting to Ethereum…',
+  live: 'Live from Ethereum',
+  reconnecting: 'Reconnecting to Ethereum…',
 }
 
 /** Projects named under the strip; the rest are counted */
