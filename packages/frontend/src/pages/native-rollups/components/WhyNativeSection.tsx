@@ -5,12 +5,12 @@ const FEATURES = [
   {
     title: 'Designed to upgrade with Ethereum',
     description:
-      'A native rollup proves the same EVM state transition program that Ethereum accepts for itself. Instead of being pinned to one EVM version, it follows the version recognized by L1, so upgrades can propagate without a separate rollup upgrade or governance vote.',
+      'A native rollup proves the same EVM state transition program that Ethereum accepts for itself. Instead of being pinned to one EVM version, it follows the version L1 records at each fork in the EIP-8357 registry, so upgrades propagate without a separate rollup upgrade or governance vote.',
   },
   {
     title: 'No bespoke onchain verifier stack',
     description:
-      "Operators still generate proofs, but Ethereum's consensus-layer proof infrastructure verifies them. Rollups no longer need to independently deploy and govern verifier contracts, adapters, proof routers, and circuit upgrades for EVM execution.",
+      'Operators still generate proofs, but Ethereum aggregates them and covers them with its own block proof. Rollups no longer need to independently deploy and govern verifier contracts, adapters, proof routers, and circuit upgrades for EVM execution.',
   },
 ]
 

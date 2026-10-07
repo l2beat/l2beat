@@ -12,7 +12,7 @@ export function NativeRollupsHeroIllustration({
       fill="none"
       className={className}
       role="img"
-      aria-label="An L2 block and its proofs flow through a proof-carrying transaction into Ethereum's proof engine and a rollup contract"
+      aria-label="An L2 block flows through a frame transaction that declares its proof, which EIP-8288 verifies, into a rollup contract"
     >
       <defs>
         <linearGradient
@@ -144,7 +144,7 @@ export function NativeRollupsHeroIllustration({
         fontWeight="700"
         letterSpacing="0.5"
       >
-        PROOF-CARRYING
+        EIP-8141 FRAMES
       </text>
       <text
         x="178"
@@ -160,7 +160,7 @@ export function NativeRollupsHeroIllustration({
         className="fill-secondary dark:fill-primary"
         fontSize="10"
       >
-        ● PROOF SIDECAR
+        ● DEPENDENCY
       </text>
 
       <path
@@ -198,7 +198,7 @@ export function NativeRollupsHeroIllustration({
         fontWeight="600"
         letterSpacing="0.8"
       >
-        PROOF ENGINE
+        EIP-8288
       </text>
 
       <path
