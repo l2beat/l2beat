@@ -53,6 +53,23 @@ export function isSameBlock(
   )
 }
 
+/**
+ * Whether a block the page has not had is arriving now, for the belt to drop
+ * and the numbers to count up with, rather than one from the past to put in
+ * place quietly: the newest the server has, come with a head the page had
+ * not seen (not fetched late under one it had), and of this slot or the one
+ * before, as a block reaches the page a second or two into its slot and the
+ * clock may run a little ahead
+ */
+export function arrivesNow(
+  slot: number,
+  head: number,
+  headMoved: boolean,
+  currentSlot: number,
+): boolean {
+  return headMoved && slot === head && head >= currentSlot - 1
+}
+
 export function toChainBlock(
   block: LiveBlock,
   posterIndexOf: PosterIndexOf,

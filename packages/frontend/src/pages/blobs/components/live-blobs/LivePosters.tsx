@@ -143,6 +143,7 @@ export function LivePosters({ posters, highlighted, onSelect }: Props) {
                 totalBlobs={totalBlobs}
                 head={head}
                 firstBucket={hour.firstBucket}
+                newestBlobs={hour.blobsPerSlot[0] ?? 0}
                 progress={progress}
                 highlighted={highlighted === row.poster.id}
                 onSelect={onSelect}
@@ -162,6 +163,7 @@ function PosterRow({
   totalBlobs,
   head,
   firstBucket,
+  newestBlobs,
   progress,
   highlighted,
   onSelect,
@@ -173,6 +175,8 @@ function PosterRow({
   /** The newest slot, whose batches are counted in as the belt lands them */
   head: number | undefined
   firstBucket: number
+  /** All the newest block brought, which the belt is landing */
+  newestBlobs: number
   /** Slots since genesis now, with how far into the current one */
   progress: number
   highlighted: boolean
@@ -188,6 +192,7 @@ function PosterRow({
     head,
     row.blobs,
     row.lastSlot === head ? row.lastBlobs : 0,
+    newestBlobs,
     isPosters,
   )
   useFlash(ref, arrival, toRgba(row.poster.color, 0.22))

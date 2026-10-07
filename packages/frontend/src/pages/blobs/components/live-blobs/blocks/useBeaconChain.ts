@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTRPC, useTRPCClient } from '~/trpc/React'
 import { useChainClock } from '../chainClock'
 import {
+  arrivesNow,
   type ChainBlock,
   isSameBlock,
   type PendingBlobBatch,
@@ -63,6 +64,8 @@ export function useBeaconChain({
   onFresh.current = { block: onFreshBlock, pending: onFreshPending }
   /** The server's version of what is in hand, which it waits to pass before it answers */
   const inHand = useRef<number>(undefined)
+  /** The newest slot in hand: a block under a head already seen is no arrival */
+  const headInHand = useRef<number>(undefined)
 
   const trpc = useTRPC()
   const trpcClient = useTRPCClient()
@@ -85,6 +88,8 @@ export function useBeaconChain({
     clock.correct(live.head)
     const isFirst = inHand.current === undefined
     inHand.current = live.version
+    const headMoved = live.head !== headInHand.current
+    headInHand.current = live.head
     const current = Math.floor(chain.progressNow())
     // blocks first, so a batch leaving the mempool for one is still where it waited
     const changed = live.blocks.filter(
@@ -95,7 +100,9 @@ export function useBeaconChain({
       const isArrival = !chain.blocks.has(block.slot)
       const kept = toChainBlock(block, posterIndexOf)
       chain.blocks.set(block.slot, kept)
-      if (isArrival && block.slot >= current - 1) onFresh.current.block(kept)
+      if (isArrival && arrivesNow(block.slot, live.head, headMoved, current)) {
+        onFresh.current.block(kept)
+      }
     }
     forgetOld(chain.blocks, live.head)
 

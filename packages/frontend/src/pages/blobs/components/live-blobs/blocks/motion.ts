@@ -9,6 +9,8 @@ export const DROP_STAGGER = 0.03
  * seconds apart, so each can be seen landing and named
  */
 export const BATCH_STAGGER = 0.18
+/** About how long a tile takes from the chute to the rack */
+export const LAND_AFTER = 0.35
 const APPEAR_TIME = 0.06
 const SQUASH_TIME = 0.12
 const SQUASH = 0.15
