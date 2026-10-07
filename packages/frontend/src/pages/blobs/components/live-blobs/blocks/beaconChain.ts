@@ -8,6 +8,7 @@ export interface BlobBatch {
   blobsBelow: number
   /** Where it was sent, lowercase. Says the most about a batch from an unknown sender */
   to: string
+  txHash: string
 }
 
 export type ChainBlock =
@@ -70,6 +71,7 @@ export function toChainBlock(
         blobs: batch.blobs,
         blobsBelow,
         to: batch.to,
+        txHash: batch.txHash,
       }
       blobsBelow += batch.blobs
       return placed

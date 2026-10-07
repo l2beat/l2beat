@@ -139,7 +139,7 @@ describe(LiveBlobsFeed.name, () => {
         slot: HEAD,
         status: 'proposed',
         blockNumber: HEAD + 1000,
-        batches: [{ projectId: 'base', blobs: 2, to: '0x' }],
+        batches: [{ projectId: 'base', blobs: 2, to: '0x', txHash: '0x' }],
       })
 
       // the next block is built on the one before the head
@@ -191,7 +191,7 @@ describe(LiveBlobsFeed.name, () => {
         slot: HEAD,
         status: 'proposed',
         blockNumber: HEAD + 1001,
-        batches: [{ projectId: 'base', blobs: 2, to: '0x' }],
+        batches: [{ projectId: 'base', blobs: 2, to: '0x', txHash: '0x' }],
       })
     } finally {
       clock.uninstall()
@@ -337,7 +337,9 @@ describe(LiveBlobsFeed.name, () => {
           status: 'proposed',
           blockNumber: slot + 1000 + node.reorgs,
           batches:
-            slot % 10 === 0 ? [{ projectId: 'base', blobs: 2, to: '0x' }] : [],
+            slot % 10 === 0
+              ? [{ projectId: 'base', blobs: 2, to: '0x', txHash: '0x' }]
+              : [],
         }
       },
     }

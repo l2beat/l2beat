@@ -52,6 +52,7 @@ function mockBlock(
       projectId: unattributed ? undefined : pickPoster(random()),
       blobs: size,
       to: `0x${(slot * 7919 + i).toString(16).padStart(40, '0')}`,
+      txHash: `0x${(slot * 7919 + i).toString(16).padStart(64, '0')}`,
     })
     blobs += size
   }
