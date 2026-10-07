@@ -65,13 +65,13 @@ export function DaThroughputByProjectChart({
     return result
   }, [data])
 
-  const colors = useMemo(
-    () =>
-      generateAccessibleColors(allProjects.length).filter(
-        (color) => !colorsCache.values().toArray().includes(color),
-      ),
-    [allProjects],
-  )
+  const colors = useMemo(() => {
+    // not `.values().toArray()`: browsers before 2025 have no iterator helpers
+    const taken = new Set(colorsCache.values())
+    return generateAccessibleColors(allProjects.length).filter(
+      (color) => !taken.has(color),
+    )
+  }, [allProjects])
   const chartMeta = useMemo(() => {
     let colorIndex = 0
     return allProjects?.reduce((acc, project) => {
