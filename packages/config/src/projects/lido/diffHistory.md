@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x95da12fd6cb9beac7fa6366a0d2ed1ccd6a92ece
+
+# Diff at Wed, 07 Oct 2026 13:53:19 GMT:
+
+- id: e7ac748c
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1790851094
+- current timestamp: 1791380927
+
+## Description
+
+StVaultsCommittee: member rotated.
+
+VettedGate: eligibility tree root updated.
+
+## Watched changes
+
+```diff
+    contract StVaultsCommittee (eth:0x18A1065c81b0Cc356F1b1C843ddd5E14e4AefffF) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x4D55af0756B43Ee0C1052e585a185A47771b022e"
++        "eth:0x2d55aD2742d98961D0c6E68C6372a19614357708"
+    }
+```
+
+```diff
+    contract VettedGate (eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8) [lido/VettedGate] {
+    +++ description: Merkle-gated node-operator onboarding contract. Eligible addresses can create an operator using the configured bond curve, or an existing operator owner can consume a proof to claim that curve.
+      values.treeCid:
+-        "bafkreiakdug6tbysfvwm5hoizdvmex4wxh3kfkjq6pfxxjp5cv4mrokdiq"
++        "bafkreidkgkmkpnnobwka66vaoyfovywzx7r7mnctmithx4jwbuz3fsqvs4"
+      values.treeRoot:
+-        "0xb61a11aaa84f3956f54784f7e8548ff165cab8a4866f3950ea7edbc9cd19464e"
++        "0x7c6873dce3c3fcdfc559326d5494d601c4f3a63119890642b4e04ca5a8caf384"
+    }
+```
+
 Generated with discovered.json: 0x56160c326fe673bf98b2a55da427abcfdc301948
 
 # Diff at Thu, 01 Oct 2026 12:52:03 GMT:
