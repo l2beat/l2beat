@@ -42,7 +42,7 @@ interface Options {
   /** For reduced motion: nothing slides or falls */
   still: boolean
   onScreen: boolean
-  /** A batch was clicked or tapped */
+  /** A batch was clicked, or tapped while its tooltip showed */
   onClickBatch: (key: number) => void
 }
 
@@ -80,6 +80,7 @@ export function useBelt({
   const pointer = useRef<{ x: number; y: number } | undefined>(undefined)
   const hoveredKey = useRef<number | undefined>(undefined)
   const [hover, setHover] = useState<BeltHover>()
+  const clickActs = useRef(false)
   const painted = useRef<PaintedFrame>(undefined)
 
   const paint = useCallback(
@@ -184,13 +185,30 @@ export function useBelt({
     },
     [findHover],
   )
-  const onPointerLeave = useCallback(() => {
-    pointer.current = undefined
-    findHover()
-  }, [findHover])
+  // A tap has no hover before it, so it finds its batch on the way down. It
+  // only shows the tooltip, though: a finger cannot read it before it lands,
+  // so it takes a second tap on the same batch to act on it
+  const onPointerDown = useCallback(
+    (event: PointerEvent<HTMLElement>) => {
+      const shown = hoveredKey.current
+      onPointerMove(event)
+      clickActs.current =
+        event.pointerType !== 'touch' || shown === hoveredKey.current
+    },
+    [onPointerMove],
+  )
+  const onPointerLeave = useCallback(
+    (event: PointerEvent<HTMLElement>) => {
+      // a lifted finger leaves too, and its tooltip stays for the second tap
+      if (event.pointerType === 'touch') return
+      pointer.current = undefined
+      findHover()
+    },
+    [findHover],
+  )
   const onClick = useCallback(() => {
     const key = hoveredKey.current
-    if (key !== undefined) onClickBatch(key)
+    if (key !== undefined && clickActs.current) onClickBatch(key)
   }, [onClickBatch])
 
   return {
@@ -198,8 +216,7 @@ export function useBelt({
     dropBlock,
     handlers: {
       onPointerMove,
-      // a tap has no hover before it, so it finds its batch on the way down
-      onPointerDown: onPointerMove,
+      onPointerDown,
       onPointerLeave,
       onClick,
     },

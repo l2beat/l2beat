@@ -53,7 +53,6 @@ export function LiveBlobsCard({ projects, limits }: Props) {
                 posters={posters}
                 limits={limits}
                 highlighted={highlighted}
-                onSelect={toggleHighlighted}
                 history={<LivePulse limits={limits} />}
               />
             </Suspense>
