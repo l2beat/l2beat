@@ -226,8 +226,13 @@ export class OpenCodeClient implements ModelClient {
    */
   private scratchDir(): string {
     if (this.scratch === undefined) {
-      const workDir = fs.mkdtempSync(
-        path.join(os.tmpdir(), 'discovery-templatizer-opencode-'),
+      // The real path, so that the cwd, --dir and $PWD name the same
+      // directory: on macOS the temporary directory is under /var, a
+      // symlink to /private/var.
+      const workDir = fs.realpathSync(
+        fs.mkdtempSync(
+          path.join(os.tmpdir(), 'discovery-templatizer-opencode-'),
+        ),
       )
       fs.writeFileSync(
         path.join(workDir, 'opencode.json'),
