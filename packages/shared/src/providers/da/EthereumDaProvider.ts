@@ -56,6 +56,7 @@ export class EthereumDaProvider implements DaBlobProvider {
       // to be able to track internal call we need to get logs
       this.rpcClient.getLogs(from, to),
     ])
+    assertLogsOfBlocks(blocks, logs)
     return blocks.map((block) => toBlobBlock(block, logs))
   }
 
@@ -100,6 +101,35 @@ export class EthereumDaProvider implements DaBlobProvider {
   private async getBeaconBlockId(blockNumber: number): Promise<string> {
     return await this.rpcClient.getBlockParentBeaconRoot(blockNumber + 1)
   }
+}
+
+/**
+ * A load-balanced RPC can answer the two calls from nodes on either side of a
+ * reorg, or the logs from one still behind the blocks: the batches would be
+ * stored with another chain's topics, or none. The throw makes the caller ask again
+ */
+function assertLogsOfBlocks(
+  blocks: EVMBlockWithTransactions[],
+  logs: EVMLog[],
+) {
+  const hashes = new Map(blocks.map((b) => [b.number, b.hash]))
+  for (const log of logs) {
+    assert(
+      hashes.get(log.blockNumber) === log.blockHash,
+      `Log of block ${log.blockNumber} is from another chain than the block`,
+    )
+  }
+  const withLogs = new Set(logs.map((l) => l.blockHash))
+  for (const block of blocks) {
+    assert(
+      isEmptyBloom(block.logsBloom) || withLogs.has(block.hash),
+      `Block ${block.number} has logs the logs response lacks`,
+    )
+  }
+}
+
+function isEmptyBloom(logsBloom: string) {
+  return /^0x0*$/.test(logsBloom)
 }
 
 function toBlobBlock(

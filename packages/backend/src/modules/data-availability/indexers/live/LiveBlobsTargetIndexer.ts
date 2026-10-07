@@ -142,15 +142,16 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
   }
 
   /**
-   * Compares the newest stored block the head builds on with the chain. The
-   * child can lag behind while it backfills, so that is not always the
-   * head's parent
+   * Compares the newest stored block at or below the head with the chain.
+   * The child can lag behind while it backfills, so that is not always the
+   * head's parent; and the head itself when a block of the same height
+   * replaced it
    */
   private async findForkHeight(latest: EVMBlock): Promise<number | undefined> {
     const newest = await this.$.db.liveBlock.findHead()
     if (!newest) return undefined
 
-    const checked = Math.min(latest.number - 1, newest.blockNumber)
+    const checked = Math.min(latest.number, newest.blockNumber)
     const stored = await this.$.db.liveBlock.getByBlockNumberRange(
       checked - MAX_REORG_DEPTH,
       checked,
@@ -158,10 +159,7 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
     const storedChecked = stored.at(-1)
     if (storedChecked?.blockNumber !== checked) return undefined
 
-    const onChainHash =
-      checked === latest.number - 1
-        ? latest.parentHash
-        : (await this.$.rpc.getBlock(checked, false)).hash
+    const onChainHash = await this.hashOnChain(checked, latest)
     if (onChainHash === storedChecked.hash) return undefined
 
     for (const block of stored.slice(0, -1).reverse()) {
@@ -181,6 +179,13 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
       blockNumber: latest.number,
     })
     return REFETCH_WINDOW_HEIGHT
+  }
+
+  /** The head answers for itself and its parent, sparing a call */
+  private async hashOnChain(blockNumber: number, latest: EVMBlock) {
+    if (blockNumber === latest.number) return latest.hash
+    if (blockNumber === latest.number - 1) return latest.parentHash
+    return (await this.$.rpc.getBlock(blockNumber, false)).hash
   }
 
   /**

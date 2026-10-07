@@ -11,6 +11,7 @@ import type {
   IRpcClient,
 } from '@l2beat/shared'
 import { assert, type ProjectId, slotAt, UnixTime } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../../tools/uif/indexerIdentity'
 import {
@@ -57,6 +58,7 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
         name: INDEXER_NAMES.LIVE_BLOBS,
         tags: { tag: 'ethereum' },
         updateRetryStrategy: getLiveRetryStrategy(),
+        configHash: liveBlobsConfigHash($.configurations),
       },
       logger,
     )
@@ -176,6 +178,27 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
       }
     })
   }
+}
+
+/**
+ * A batch is attributed as it is stored, so a changed config would leave the
+ * window attributed by the old one: the hash change makes `initialize` wipe
+ * it and fetch it again
+ */
+export function liveBlobsConfigHash(configurations: LiveBlobsConfig[]) {
+  const keys = configurations
+    .map((c) =>
+      JSON.stringify([
+        c.projectId,
+        c.inbox,
+        c.sequencers ?? [],
+        c.topics ?? [],
+        c.sinceBlock,
+        c.untilBlock ?? null,
+      ]),
+    )
+    .sort()
+  return createHash('sha1').update(keys.join('\n')).digest('hex').slice(0, 12)
 }
 
 /**

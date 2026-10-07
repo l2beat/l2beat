@@ -19,6 +19,8 @@ describe(EthereumDaProvider.name, () => {
         getBlock: mockFn().resolvesTo({
           timestamp: UnixTime.fromDate(mockDate),
           number: 1,
+          hash: '0xhash1',
+          logsBloom: '0x1',
           transactions: [
             {
               hash: txHash,
@@ -32,6 +34,8 @@ describe(EthereumDaProvider.name, () => {
         getLogs: mockFn().resolvesTo([
           {
             transactionHash: txHash,
+            blockNumber: 1,
+            blockHash: '0xhash1',
             address: 'inbox1',
             topics: ['topic1-1'],
           },
@@ -83,6 +87,7 @@ describe(EthereumDaProvider.name, () => {
             hash: '0xhash1',
             parentHash: '0xhash0',
             timestamp: 100,
+            logsBloom: '0x1',
             transactions: [
               { hash: '0xplain', type: '2', from: '0xa', to: '0xb' },
               {
@@ -100,11 +105,22 @@ describe(EthereumDaProvider.name, () => {
             hash: '0xhash2',
             parentHash: '0xhash1',
             timestamp: 112,
+            logsBloom: '0x0',
             transactions: [],
           }),
         getLogs: mockFn().resolvesTo([
-          { transactionHash: '0xblobs', topics: ['0xtopic1', '0xtopic2'] },
-          { transactionHash: '0xplain', topics: ['0xother'] },
+          {
+            transactionHash: '0xblobs',
+            blockNumber: 1,
+            blockHash: '0xhash1',
+            topics: ['0xtopic1', '0xtopic2'],
+          },
+          {
+            transactionHash: '0xplain',
+            blockNumber: 1,
+            blockHash: '0xhash1',
+            topics: ['0xother'],
+          },
         ]),
       })
       const provider = new EthereumDaProvider(
@@ -158,6 +174,7 @@ describe(EthereumDaProvider.name, () => {
             hash: '0xhash1',
             parentHash: '0xhash0',
             timestamp: 100,
+            logsBloom: '0x',
             transactions: [],
           }
         }) as unknown as RpcClient['getBlock'],
@@ -176,6 +193,43 @@ describe(EthereumDaProvider.name, () => {
       await provider.getBlocksWithBlobBatches(1, 1)
 
       expect(blockAskedEarly).toEqual(true)
+    })
+
+    // Methodology: the two mocked calls answer as nodes on different sides
+    // of a reorg, or at different heights, would
+    it('refuses logs from another chain than the blocks', async () => {
+      const provider = providerAnswering({
+        block: { number: 1, hash: '0xhash1', logsBloom: '0x1' },
+        logs: [{ blockNumber: 1, blockHash: '0xorphaned' }],
+      })
+
+      await expect(provider.getBlocksWithBlobBatches(1, 1)).toBeRejectedWith(
+        'Log of block 1 is from another chain than the block',
+      )
+    })
+
+    it('refuses a log set from a node that has not got the block yet', async () => {
+      const provider = providerAnswering({
+        block: { number: 1, hash: '0xhash1', logsBloom: '0x1' },
+        logs: [],
+      })
+
+      await expect(provider.getBlocksWithBlobBatches(1, 1)).toBeRejectedWith(
+        'Block 1 has logs the logs response lacks',
+      )
+    })
+
+    it('accepts a block without logs and no logs for it', async () => {
+      const provider = providerAnswering({
+        block: {
+          number: 1,
+          hash: '0xhash1',
+          logsBloom: '0x' + '0'.repeat(512),
+        },
+        logs: [],
+      })
+
+      expect(await provider.getBlocksWithBlobBatches(1, 1)).toHaveLength(1)
     })
   })
 
@@ -374,6 +428,32 @@ describe(EthereumDaProvider.name, () => {
     })
   })
 })
+
+function providerAnswering(answers: {
+  block: { number: number; hash: string; logsBloom: string }
+  logs: { blockNumber: number; blockHash: string }[]
+}) {
+  const rpc = mockObject<RpcClient>({
+    getBlock: mockFn().resolvesTo({
+      ...answers.block,
+      parentHash: '0xhash0',
+      timestamp: 100,
+      transactions: [],
+    }),
+    getLogs: mockFn().resolvesTo(
+      answers.logs.map((log) => ({
+        ...log,
+        transactionHash: '0xtx',
+        topics: [],
+      })),
+    ),
+  })
+  return new EthereumDaProvider(
+    mockObject<BeaconChainClient>(),
+    rpc,
+    'ethereum',
+  )
+}
 
 function generateKzgCommitment(): string {
   return (

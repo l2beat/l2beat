@@ -92,6 +92,20 @@ describe(LiveBlobsTargetIndexer.name, () => {
       expect(scheduleTick).toHaveBeenOnlyCalledWith(0.25)
     })
 
+    it('returns the fork height when a block of the same height replaced the head', async () => {
+      const { indexer, rpc } = setup({
+        head: HEAD,
+        forkedAfter: HEAD - 1,
+        stored: storedRange(HEAD - 10, HEAD),
+      })
+
+      // The stored head is orphaned now: waiting for the next block would
+      // show it for another slot
+      expect(await indexer.tick()).toEqual(HEAD - 1)
+      // The head's own hash gives it away, the parent is fetched to confirm
+      expect(rpc.getBlock).toHaveBeenCalledTimes(2)
+    })
+
     it('follows the head again after reporting a fork', async () => {
       const { indexer } = setup({
         head: HEAD + 1,

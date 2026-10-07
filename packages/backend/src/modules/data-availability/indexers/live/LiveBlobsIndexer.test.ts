@@ -10,7 +10,7 @@ import { ProjectId, slotStart, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
-import { LiveBlobsIndexer } from './LiveBlobsIndexer'
+import { LiveBlobsIndexer, liveBlobsConfigHash } from './LiveBlobsIndexer'
 import { LIVE_WINDOW_BLOCKS } from './liveBlobs'
 
 /**
@@ -189,7 +189,22 @@ describe(LiveBlobsIndexer.name, () => {
 
       expect(await indexer.initialize()).toEqual({
         safeHeight: WINDOW_START - 1,
-        configHash: undefined,
+        configHash: liveBlobsConfigHash([]),
+      })
+      expect(db.liveBlock.deleteAll).toHaveBeenCalledTimes(1)
+      expect(db.liveBlobBatch.deleteAll).toHaveBeenCalledTimes(1)
+    })
+
+    it('wipes the window when the configurations changed', async () => {
+      // Stored batches were attributed by the old configs, so they all go
+      const { indexer, db } = setup({
+        safeHeight: WINDOW_START,
+        storedConfigHash: 'stale',
+      })
+
+      expect(await indexer.initialize()).toEqual({
+        safeHeight: WINDOW_START - 1,
+        configHash: liveBlobsConfigHash([]),
       })
       expect(db.liveBlock.deleteAll).toHaveBeenCalledTimes(1)
       expect(db.liveBlobBatch.deleteAll).toHaveBeenCalledTimes(1)
@@ -200,7 +215,7 @@ describe(LiveBlobsIndexer.name, () => {
 
       expect(await indexer.initialize()).toEqual({
         safeHeight: WINDOW_START - 1,
-        configHash: undefined,
+        configHash: liveBlobsConfigHash([]),
       })
     })
 
@@ -209,9 +224,42 @@ describe(LiveBlobsIndexer.name, () => {
 
       expect(await indexer.initialize()).toEqual({
         safeHeight: WINDOW_START,
-        configHash: undefined,
+        configHash: liveBlobsConfigHash([]),
       })
       expect(db.liveBlock.deleteAll).not.toHaveBeenCalled()
+    })
+  })
+
+  describe(liveBlobsConfigHash.name, () => {
+    const config = {
+      type: 'ethereum' as const,
+      daLayer: ProjectId('ethereum'),
+      projectId: ProjectId('a'),
+      inbox: '0xinbox',
+      sinceBlock: 1,
+    }
+
+    it('is the same whatever the order of the configurations', () => {
+      const other = { ...config, projectId: ProjectId('b') }
+      expect(liveBlobsConfigHash([config, other])).toEqual(
+        liveBlobsConfigHash([other, config]),
+      )
+    })
+
+    it('changes with what a batch is attributed by', () => {
+      const hash = liveBlobsConfigHash([config])
+      expect(
+        liveBlobsConfigHash([{ ...config, inbox: '0xother' }]),
+      ).not.toEqual(hash)
+      expect(
+        liveBlobsConfigHash([{ ...config, sequencers: ['0xseq'] }]),
+      ).not.toEqual(hash)
+      expect(liveBlobsConfigHash([{ ...config, topics: ['0xt'] }])).not.toEqual(
+        hash,
+      )
+      expect(liveBlobsConfigHash([{ ...config, untilBlock: 5 }])).not.toEqual(
+        hash,
+      )
     })
   })
 
@@ -220,6 +268,8 @@ describe(LiveBlobsIndexer.name, () => {
     batchSize?: number
     batches?: Record<number, EthereumBlobBatch[]>
     safeHeight?: number
+    /** What the state was saved with; by default the current configs' hash */
+    storedConfigHash?: string
     stored?: LiveBlockRecord[]
     brokenLinkAt?: number
     now?: number
@@ -263,7 +313,12 @@ describe(LiveBlobsIndexer.name, () => {
       getIndexerState: mockFn().resolvesTo(
         options.safeHeight === undefined
           ? undefined
-          : { safeHeight: options.safeHeight, configHash: undefined },
+          : {
+              safeHeight: options.safeHeight,
+              configHash:
+                options.storedConfigHash ??
+                liveBlobsConfigHash(options.configurations ?? []),
+            },
       ),
     })
     const indexer = new LiveBlobsIndexer(
