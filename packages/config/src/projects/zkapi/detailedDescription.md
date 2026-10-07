@@ -1,6 +1,6 @@
-zkAPI lets users prepay for AI inference with ETH and then use it without revealing which deposit pays for which request. A user deposits ETH into a vault on Ethereum once and then makes API requests. Each request carries a zero-knowledge proof that some funded deposit can pay, without saying which one. It is built by Open Anonymity with the Ethereum Foundation and powers the Ethereum wallet option of the 'OA Chat' website.
-
 zkAPI hides the link between a user's onchain money and their AI usage. It does not hide deposits, withdrawals or prompts.
+
+zkAPI lets users prepay for AI inference with ETH and then use it without revealing which deposit pays for which request. A user deposits ETH into a vault on Ethereum once and then makes API requests. Each request carries a zero-knowledge proof that some funded deposit can pay, without saying which one. It is built by Open Anonymity with the Ethereum Foundation and powers the Ethereum wallet option of the 'OA Chat' website.
 
 ### Typical user flow
 
