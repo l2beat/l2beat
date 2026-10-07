@@ -13,7 +13,6 @@ import { stickyTableColumnRowProps } from '~/components/table/useStickyTableHead
 import type { PostedWindow } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { SLOT_SECONDS } from '~/utils/beaconSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { cn } from '~/utils/cn'
 import { Activity } from './Activity'
 import {
   BLOB_KIB,
@@ -32,8 +31,6 @@ import { useLiveBlobs } from './useLiveBlobs'
 interface Props {
   /** Every project that may post, with the stand-in for unknown senders last */
   posters: LivePoster[]
-  highlighted: string | undefined
-  onSelect: (posterId: string) => void
 }
 
 /** In the order `PosterRow` renders its cells */
@@ -81,7 +78,7 @@ const COLUMNS: {
  * It moves with the belt: a project's row lights up as its batch lands, its
  * numbers count up, and rows slide past each other as the ranking changes.
  */
-export function LivePosters({ posters, highlighted, onSelect }: Props) {
+export function LivePosters({ posters }: Props) {
   const { data } = useLiveBlobs()
   const hour = data?.window
   const rows = useMemo(() => hour && toRows(hour, posters), [hour, posters])
@@ -145,8 +142,6 @@ export function LivePosters({ posters, highlighted, onSelect }: Props) {
                 firstBucket={hour.firstBucket}
                 newestBlobs={hour.blobsPerSlot[0] ?? 0}
                 progress={progress}
-                highlighted={highlighted === row.poster.id}
-                onSelect={onSelect}
               />
             ))}
           </TableBody>
@@ -165,8 +160,6 @@ function PosterRow({
   firstBucket,
   newestBlobs,
   progress,
-  highlighted,
-  onSelect,
 }: {
   row: Row
   rank: number
@@ -179,8 +172,6 @@ function PosterRow({
   newestBlobs: number
   /** Slots since genesis now, with how far into the current one */
   progress: number
-  highlighted: boolean
-  onSelect: (posterId: string) => void
 }) {
   const ref = useRef<HTMLTableRowElement>(null)
   const posterId = row.poster.id
@@ -202,12 +193,7 @@ function PosterRow({
     <tr
       ref={ref}
       data-flip-key={row.poster.id}
-      onClick={() => onSelect(row.poster.id)}
-      aria-selected={highlighted}
-      className={cn(
-        'relative cursor-pointer border-b border-b-divider transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10 md:[&>td]:h-10',
-        highlighted && 'bg-pure-black/5 dark:bg-pure-white/10',
-      )}
+      className="relative border-b border-b-divider md:[&>td]:h-10"
     >
       <TableCell className="text-secondary tabular-nums">{rank}</TableCell>
       <TableCell>
