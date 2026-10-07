@@ -94,15 +94,6 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       ],
     ]),
   },
-  env.CLIENT_SIDE_OSSIFICATION_ENABLED && {
-    type: 'single',
-    title: 'Ossification',
-    match: 'ossification',
-    href: '/ossification',
-    icon: (
-      <OssificationIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-  },
   {
     type: 'multiple',
     title: 'Interop',
@@ -145,6 +136,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
+  env.CLIENT_SIDE_OSSIFICATION_ENABLED && {
+    type: 'single',
+    title: 'Ossification',
+    match: 'ossification',
+    href: '/ossification',
+    icon: (
+      <OssificationIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+  },
   env.CLIENT_SIDE_DEFI_ENABLED && {
     type: 'single',
     title: 'DeFi',
@@ -152,6 +152,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/defi',
     icon: (
       <DefiIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+  },
+  {
+    type: 'single',
+    title: 'ZK Catalog',
+    match: 'zk-catalog',
+    href: '/zk-catalog',
+    icon: (
+      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
   {
@@ -190,15 +199,6 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         },
       ],
     ],
-  },
-  {
-    type: 'single',
-    title: 'ZK Catalog',
-    match: 'zk-catalog',
-    href: '/zk-catalog',
-    icon: (
-      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
   },
   {
     type: 'multiple',
