@@ -36,11 +36,13 @@ export function OssificationTimelineChart({
   const toX = (timestamp: number) => ((timestamp - from) / (to - from)) * WIDTH
   const clockBeforeWindow = clockStart < from
   const clockX = clockBeforeWindow ? 0 : toX(clockStart)
+  const genesisInWindow = genesis >= from
   const area = values ? getAreaPaths(values) : undefined
   const description = getDescription({
     timeline,
     valueSource,
     clockBeforeWindow,
+    genesisInWindow,
   })
 
   return (
@@ -131,13 +133,10 @@ export function OssificationTimelineChart({
               {...CRISP}
             />
           )}
-          {/* Drawn last: with no change since, the pink line is at the genesis. */}
-          {genesis >= from && (
+          {/* Drawn last: until a change, the pink line sits on the genesis. */}
+          {genesisInWindow && (
             <circle
-              cx={Math.min(
-                Math.max(toX(genesis), GENESIS_RADIUS),
-                WIDTH - GENESIS_RADIUS,
-              )}
+              cx={dotX(toX(genesis))}
               cy={BASELINE + 2 + GENESIS_RADIUS}
               r={GENESIS_RADIUS}
               fill="var(--secondary)"
@@ -162,6 +161,11 @@ export function OssificationTimelineChart({
 /** Centers a 1px line on a device pixel, so it is not blurred over two. */
 function snap(x: number) {
   return Math.min(Math.max(Math.round(x), 0), WIDTH - 1) + 0.5
+}
+
+/** Keeps the whole genesis dot inside the SVG, even at the window's edges. */
+function dotX(x: number) {
+  return Math.min(Math.max(x, GENESIS_RADIUS), WIDTH - GENESIS_RADIUS)
 }
 
 /** Area and line through the samples, from a zero baseline to the peak. */
@@ -194,7 +198,8 @@ function getDescription({
   timeline,
   valueSource,
   clockBeforeWindow,
-}: Props & { clockBeforeWindow: boolean }) {
+  genesisInWindow,
+}: Props & { clockBeforeWindow: boolean; genesisInWindow: boolean }) {
   const { from, to, clockStart, values } = timeline
   const known = values?.filter((value) => value !== null) ?? []
   const current = known.at(-1)
@@ -203,7 +208,7 @@ function getDescription({
     period: `${formatTimestamp(from)} – ${formatTimestamp(to)}`,
     lines: [
       `Unchanged for ${formatSeconds(to - clockStart)}, since ${formatTimestamp(clockStart)}${clockBeforeWindow ? ' — before this window, so the whole year is highlighted' : ''}.`,
-      getChangesLine(timeline),
+      getChangesLine(timeline, genesisInWindow),
       current !== undefined && valueSource
         ? `${OSSIFICATION_VALUE_LABELS[valueSource].long} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(Math.max(...known), 'usd')}.`
         : 'No value data.',
@@ -211,11 +216,13 @@ function getDescription({
   }
 }
 
-function getChangesLine({ from, genesis, criticalChanges }: Props['timeline']) {
-  const span =
-    genesis >= from
-      ? `since the ossification genesis on ${formatTimestamp(genesis)}`
-      : 'in this window'
+function getChangesLine(
+  { genesis, criticalChanges }: Props['timeline'],
+  genesisInWindow: boolean,
+) {
+  const span = genesisInWindow
+    ? `since the ossification genesis on ${formatTimestamp(genesis)}`
+    : 'in this window'
   const count = criticalChanges.length
   return count === 0
     ? `No critical change ${span}.`

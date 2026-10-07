@@ -21,7 +21,8 @@ export function measureOssification(
   const changes = sortedChanges(history)
   const timestamps = changes.map((change) => change.timestamp)
   const criticalChanges = clusterStarts(timestamps)
-  const genesis = getGenesis(history)
+  const firstChange = timestamps[0] ?? Number.POSITIVE_INFINITY
+  const genesis = getGenesis(history, firstChange)
   const clockStart = Math.max(genesis, ...timestamps)
 
   const isVerified = history.contracts.every((contract) => contract.isVerified)
@@ -63,18 +64,17 @@ function sortedChanges(history: OssificationHistory): OssificationChange[] {
   return [...history.changes].sort((a, b) => a.timestamp - b.timestamp)
 }
 
-// The last deployment in the first day of observation, or the first change if
-// it comes sooner. Earlier deployments only assembled the perimeter.
-function getGenesis(history: OssificationHistory): number {
-  const firstChange = Math.min(
-    ...history.changes.map((change) => change.timestamp),
-  )
-  const rollout = history.deployments.filter(
+// The rollout's last deployment, not its first: earlier ones only assembled
+// the perimeter.
+function getGenesis(
+  { deployments, observedSince }: OssificationHistory,
+  firstChange: number,
+): number {
+  const rollout = deployments.filter(
     (deployment) =>
-      deployment <= history.observedSince + CLUSTER_WINDOW &&
-      deployment < firstChange,
+      deployment <= observedSince + CLUSTER_WINDOW && deployment < firstChange,
   )
-  return Math.min(Math.max(history.observedSince, ...rollout), firstChange)
+  return Math.min(Math.max(observedSince, ...rollout), firstChange)
 }
 
 function getCriticalUpdates(

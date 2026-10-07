@@ -2,8 +2,8 @@ import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 export interface OssificationHistory {
   contracts: OssificationContract[]
-  /** Critical changes made while their contract was critical, of current and
-   *  retired contracts. Each one resets the clock. */
+  /** Critical changes to current and retired contracts, made while they were
+   *  critical. Each one resets the clock. */
   changes: OssificationChange[]
   /** Deployments and initializations of critical contracts. They only locate
    *  the ossification genesis. */
@@ -24,8 +24,8 @@ export interface OssificationResult {
   clockStart: number
   /** Start of the first clock, once per project */
   genesis: number
-  /** 24h-clustered critical changes per year, over the last 3 years or since
-   *  the genesis */
+  /** 24h-clustered critical changes per year, over the last 3 years, or since
+   *  the genesis if it is later */
   criticalChangesPerYear: number
   /** 24h-clustered critical changes, ascending */
   criticalChanges: number[]
