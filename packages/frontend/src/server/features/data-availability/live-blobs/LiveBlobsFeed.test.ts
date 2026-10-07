@@ -197,7 +197,9 @@ describe(LiveBlobsFeed.name, () => {
         slot: HEAD,
         status: 'proposed',
         blockNumber: HEAD + 1001,
-        batches: [{ projectId: 'base', blobs: 2, to: '0x' }],
+        batches: [
+          { projectId: 'base', blobs: 2, to: '0x', from: BASE, nonce: HEAD },
+        ],
       })
     } finally {
       clock.uninstall()
