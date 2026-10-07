@@ -20,6 +20,12 @@ export const BUCKET_SLOTS = 25
  * that had a block then has none, and one that was missed may get one
  */
 const UNSETTLED_SLOTS = 2
+/**
+ * Tries at a block before it is left a gap. The node answers for its head, so
+ * it is there: a block that keeps failing is that block's trouble, not an
+ * outage to back off from for as long as the block is in the window
+ */
+const BLOCK_TRIES = 3
 /** Blocks fetched at once, by the poll and by the backfill each. Each is a few hundred kilobytes */
 const CONCURRENCY = 4
 /**
@@ -147,6 +153,8 @@ export function getLiveBlobsFeed(): LiveBlobsFeed {
  */
 export class LiveBlobsFeed {
   private readonly blocks = new Map<number, LiveBlock>()
+  /** Failed tries at each block not fetched yet */
+  private readonly tries = new Map<number, number>()
   private head: number | undefined
   private failures = 0
   private lastAskedAt = 0
@@ -214,17 +222,16 @@ export class LiveBlobsFeed {
     try {
       const head = await this.source.headSlot()
       const moved = head !== this.head
-      const missing = slotsMissing(this.blocks, head, head - RECENT_SLOTS)
+      const missing = this.slotsToFetch(head, head - RECENT_SLOTS)
       const fetched = await this.fetchAll([
         ...missing,
         ...(moved ? slotsUnsettled(this.blocks, head) : []),
       ])
       // a block that failed to come with its head, and came on this try
-      const filled =
-        slotsMissing(this.blocks, head, head - RECENT_SLOTS).length <
-        missing.length
+      const filled = missing.some((slot) => this.blocks.has(slot))
       this.head = head
       forgetOld(this.blocks, head)
+      forgetOld(this.tries, head)
       this.failures = fetched ? 0 : this.failures + 1
       this.backfill(head)
       changed = moved || filled
@@ -247,15 +254,27 @@ export class LiveBlobsFeed {
   /** Fills in the rest of the window. A gap left by a failure is retried on the next poll */
   private backfill(head: number) {
     this.backfillRun ??= this.fetchAll(
-      slotsMissing(this.blocks, head - RECENT_SLOTS, head - WINDOW_SLOTS),
+      this.slotsToFetch(head - RECENT_SLOTS, head - WINDOW_SLOTS),
     ).then(() => {
       this.backfillRun = undefined
     })
   }
 
+  /** The slots from `from` down to just above `downTo` still worth asking for, newest first */
+  private slotsToFetch(from: number, downTo: number) {
+    return slotsMissing(this.blocks, from, downTo).filter(
+      (slot) => (this.tries.get(slot) ?? 0) < BLOCK_TRIES,
+    )
+  }
+
   private fetchAll(slots: number[]) {
     return forEachLimited(slots, CONCURRENCY, async (slot) => {
-      this.blocks.set(slot, await this.source.block(slot))
+      try {
+        this.blocks.set(slot, await this.source.block(slot))
+      } catch (error) {
+        this.tries.set(slot, (this.tries.get(slot) ?? 0) + 1)
+        throw error
+      }
     })
   }
 
@@ -362,9 +381,9 @@ function slotsUnsettled(blocks: Map<number, LiveBlock>, head: number) {
   return unsettled
 }
 
-function forgetOld(blocks: Map<number, LiveBlock>, head: number) {
-  for (const slot of blocks.keys()) {
-    if (slot <= head - WINDOW_SLOTS) blocks.delete(slot)
+function forgetOld(bySlot: Map<number, unknown>, head: number) {
+  for (const slot of bySlot.keys()) {
+    if (slot <= head - WINDOW_SLOTS) bySlot.delete(slot)
   }
 }
 
