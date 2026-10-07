@@ -622,6 +622,16 @@
   --color-garden-moon: var(--garden-moon);
   --color-garden-sky: var(--garden-sky);
   --color-garden-sprout: var(--garden-sprout);
+
+  --color-stage-0-soft: var(--stage-0-soft);
+  --color-stage-0-soft-ink: var(--stage-0-soft-ink);
+  --color-stage-1-soft: var(--stage-1-soft);
+  --color-stage-1-soft-ink: var(--stage-1-soft-ink);
+  --color-stage-2-soft: var(--stage-2-soft);
+  --color-stage-2-soft-ink: var(--stage-2-soft-ink);
+  --color-stage-na-soft: var(--stage-na-soft);
+  --color-row-red: var(--row-red);
+  --color-row-yellow: var(--row-yellow);
 }
 
 @utility scrollbar-gutter-stable {
@@ -822,6 +832,34 @@
   to {
     opacity: 0;
   }
+}
+
+/* Tables: stage pills and warning row tints, kept light so a column of them doesn't outweigh the data. */
+
+:root {
+  /* `-ink` is the same hue, adjusted to read as text on the tint. */
+  --stage-0-soft: color-mix(in srgb, #f94a24 13%, transparent);
+  --stage-0-soft-ink: #bf2f0b;
+  --stage-1-soft: color-mix(in srgb, #ffc61b 30%, transparent);
+  --stage-1-soft-ink: #765400;
+  --stage-2-soft: color-mix(in srgb, #1e9a2b 14%, transparent);
+  --stage-2-soft-ink: #126c1d;
+  --stage-na-soft: color-mix(in srgb, #8a909d 16%, transparent);
+  /* Opaque, so pinned cells can reuse them to hide what scrolls beneath. */
+  --row-red: color-mix(in srgb, #f6b4b4 42%, var(--surface-primary));
+  --row-yellow: color-mix(in srgb, #ffc107 7%, var(--surface-primary));
+}
+
+.dark {
+  --stage-0-soft: color-mix(in srgb, #ff5a36 20%, transparent);
+  --stage-0-soft-ink: #ff8e74;
+  --stage-1-soft: color-mix(in srgb, #ffc61b 16%, transparent);
+  --stage-1-soft-ink: #ffd04a;
+  --stage-2-soft: color-mix(in srgb, #12d660 15%, transparent);
+  --stage-2-soft-ink: #52dd88;
+  --stage-na-soft: color-mix(in srgb, #8a909d 20%, transparent);
+  --row-red: color-mix(in srgb, #5a1a1f 75%, var(--surface-primary));
+  --row-yellow: color-mix(in srgb, #ffc107 6%, var(--surface-primary));
 }
 
 /* The Infinite Garden: crop and garden colours, the backdrop canvases and the plant animations. */

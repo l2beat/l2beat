@@ -28,7 +28,7 @@ export function PizzaRosetteCell(props: Props) {
         <TableLink href={props.href}>
           <PizzaRosetteIcon
             values={props.values}
-            className="size-6 md:size-8"
+            className="size-6 md:size-[26px]"
             isUnderReview={isUnderReview}
             background={false}
             disableSectionLinking

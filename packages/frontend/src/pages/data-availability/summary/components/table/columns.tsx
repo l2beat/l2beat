@@ -21,7 +21,7 @@ const columnHelper = createColumnHelper<DaSummaryEntry>()
 
 const daLayerColumn = (hash?: string) =>
   columnHelper.accessor('name', {
-    header: 'DA Layer',
+    header: 'DA layer',
     cell: (ctx) => (
       <ProjectNameInfoTooltip project={ctx.row.original}>
         <TableLink href={`${ctx.row.original.href}${hash ? `#${hash}` : ''}`}>
@@ -38,7 +38,7 @@ const daLayerColumn = (hash?: string) =>
 
 const daRisksColumn = columnHelper.display({
   id: 'da-risks',
-  header: 'DA Risks',
+  header: 'DA risks',
   cell: (ctx) => {
     return (
       <GrissiniCell
@@ -59,7 +59,7 @@ const daRisksColumn = columnHelper.display({
 
 const daBridgeRisksColumn = columnHelper.display({
   id: 'bridge-risks',
-  header: 'Bridge Risks',
+  header: 'Bridge risks',
   cell: (ctx) => {
     const [bridge] = ctx.row.original.bridges
     if (!bridge) {
@@ -148,7 +148,7 @@ export const publicSystemsColumns = [
   ...getDaCommonProjectColumns(columnHelper, (row) => `${row.href}`),
   daLayerColumn(),
   columnHelper.group({
-    header: 'DA Layer',
+    header: 'DA layer',
     columns: [
       daRisksColumn,
       tvsColumn(),
@@ -193,11 +193,11 @@ export const publicSystemsColumns = [
     },
   }),
   columnHelper.group({
-    header: 'DA Bridge',
+    header: 'DA bridge',
     columns: [
       columnHelper.display({
         id: 'bridge-risks',
-        header: 'Bridge Risks',
+        header: 'Bridge risks',
         cell: (ctx) => {
           const bridge = ctx.row.original.bridges[0]
           if (!bridge) {
@@ -245,7 +245,7 @@ export const publicSystemsColumns = [
       }),
       columnHelper.display({
         id: 'bridge-used-by',
-        header: 'Used By',
+        header: 'Used by',
         cell: (ctx) => {
           const bridge = ctx.row.original.bridges[0]
           if (!bridge) {

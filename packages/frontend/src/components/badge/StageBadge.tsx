@@ -6,6 +6,11 @@ interface StageBadgeProps {
   stage: Stage | 'UnderReview' | 'NotApplicable'
   isAppchain: boolean
   inline?: boolean
+  /**
+   * `soft` is a tinted pill in sentence case, for tables, where a column of
+   * solid badges would outweigh the numbers next to it.
+   */
+  variant?: 'solid' | 'soft'
   className?: string
   appchainClassName?: string
 }
@@ -14,6 +19,7 @@ export function StageBadge({
   stage,
   isAppchain,
   inline,
+  variant = 'solid',
   className,
   appchainClassName,
 }: StageBadgeProps) {
@@ -28,8 +34,15 @@ export function StageBadge({
     <div className={cn(inline && 'flex items-center gap-1.5', className)}>
       <div
         className={cn(
-          'inline-flex h-[18px] w-[60px] items-center justify-center rounded text-center font-medium text-[13px] uppercase leading-none! md:h-[22px] md:w-[66px] md:text-xs',
-          getClassNames(stage),
+          variant === 'solid'
+            ? [
+                'inline-flex h-[18px] w-[60px] items-center justify-center rounded text-center font-medium text-[13px] uppercase leading-none! md:h-[22px] md:w-[66px] md:text-xs',
+                getClassNames(stage),
+              ]
+            : [
+                'inline-flex h-5 items-center rounded-md px-[7px] font-semibold text-xs leading-none!',
+                getSoftClassNames(stage),
+              ],
         )}
       >
         {value ?? 'n/a'}
@@ -62,6 +75,25 @@ function getClassNames(stage: Stage | 'UnderReview' | 'NotApplicable'): string {
       return 'border border-current text-n-yellow-700 dark:text-yellow-200'
     case 'NotApplicable':
       return 'bg-[#B4C7D5] dark:bg-[#3D4361] border border-[#D1E1EC] dark:border-[#343955] text-zinc-800 dark:text-primary'
+    default:
+      return ''
+  }
+}
+
+function getSoftClassNames(
+  stage: Stage | 'UnderReview' | 'NotApplicable',
+): string {
+  switch (stage) {
+    case 'Stage 2':
+      return 'bg-stage-2-soft text-stage-2-soft-ink'
+    case 'Stage 1':
+      return 'bg-stage-1-soft text-stage-1-soft-ink'
+    case 'Stage 0':
+      return 'bg-stage-0-soft text-stage-0-soft-ink'
+    case 'UnderReview':
+      return 'border border-current text-n-yellow-700 dark:text-yellow-200'
+    case 'NotApplicable':
+      return 'bg-stage-na-soft text-secondary'
     default:
       return ''
   }

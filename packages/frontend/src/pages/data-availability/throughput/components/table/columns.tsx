@@ -27,7 +27,7 @@ export const publicSystemsColumns = [
   indexColumn,
   logoColumn,
   columnHelper.accessor('name', {
-    header: 'DA Layer',
+    header: 'DA layer',
     cell: (ctx) => (
       <ProjectNameInfoTooltip project={ctx.row.original}>
         <TableLink href={`${ctx.row.original.href}#throughput`}>
@@ -143,7 +143,7 @@ export const publicSystemsColumns = [
     ],
   }),
   columnHelper.accessor((e) => e.data?.pastDayData?.avgCapacityUtilization, {
-    header: 'past day avg\ncapacity used',
+    header: 'Past day avg\ncapacity used',
     cell: (ctx) => {
       const avgCapacityUtilization =
         ctx.row.original.data?.pastDayData?.avgCapacityUtilization
@@ -171,7 +171,7 @@ export const publicSystemsColumns = [
     },
   }),
   columnHelper.display({
-    header: 'past day\nlargest poster (L2)',
+    header: 'Past day\nlargest poster (L2)',
     cell: (ctx) => (
       <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
         <TableValueCell
@@ -200,7 +200,7 @@ export const publicSystemsColumns = [
     columnHelper,
     columnHelper.accessor((e) => e.data?.pastDayData?.totalPosted, {
       id: 'totalPosted',
-      header: 'past day\ntotal data posted',
+      header: 'Past day\ntotal data posted',
       cell: (ctx) => {
         const data = ctx.row.original.data?.pastDayData
         if (!data?.totalPosted) {

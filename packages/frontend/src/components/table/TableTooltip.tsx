@@ -13,8 +13,8 @@ interface Props {
 export function TableTooltip({ children }: Props) {
   return (
     <Tooltip>
-      <TooltipTrigger className="mb-px">
-        <InfoIcon className="size-3 fill-current" />
+      <TooltipTrigger className="mb-px opacity-55 transition-opacity hover:opacity-100">
+        <InfoIcon className="size-[11px] fill-current" />
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent className="z-1000">{children}</TooltipContent>

@@ -23,6 +23,7 @@ export function TokenValueCell({ valueForProject, syncStatus }: Props) {
           <PercentChange
             value={valueForProject.change}
             period={valueForProject.changePeriod}
+            signed
           />
         )}
       </div>

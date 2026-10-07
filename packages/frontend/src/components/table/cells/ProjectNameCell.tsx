@@ -249,14 +249,14 @@ function CellBottomContent({ project }: { project: ProjectCellProject }) {
   return (
     <>
       {project.nameSecondLine && !project.isLayer3 && (
-        <span className="block font-medium text-[0.8125rem] text-secondary leading-3.75">
+        <span className="block font-medium text-[0.8125rem] text-secondary leading-3.75 md:text-[12.5px]">
           {project.nameSecondLine}
         </span>
       )}
       {project.capability === 'appchain' &&
         project.purposes &&
         project.purposes?.length > 0 && (
-          <div className="text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
+          <div className="text-[13px] text-secondary leading-[14px] md:text-[12.5px] md:leading-[15px]">
             {project.purposes.join(', ')}
           </div>
         )}
@@ -276,7 +276,7 @@ function DesktopProjectNameContent({
   return (
     <div className="max-md:hidden">
       <div className="flex items-center">
-        <PrimaryValueCell className="font-bold leading-none!">
+        <PrimaryValueCell className="font-semibold leading-none!">
           {projectName}
         </PrimaryValueCell>
         <DesktopStatusIcons
@@ -303,7 +303,7 @@ function MobileProjectNameContent({
     <div className="md:hidden">
       <div className="min-w-0">
         <div className="flex items-center gap-1.5">
-          <PrimaryValueCell className="font-bold leading-none!">
+          <PrimaryValueCell className="font-semibold leading-none!">
             {projectName}
           </PrimaryValueCell>
           <ProjectNameMobileStatusIcons

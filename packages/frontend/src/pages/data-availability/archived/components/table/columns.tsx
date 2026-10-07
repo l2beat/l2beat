@@ -17,7 +17,7 @@ export const [indexColumn, logoColumn] = getDaCommonProjectColumns(
 )
 
 const daLayerColumn = columnHelper.accessor('name', {
-  header: 'DA Layer',
+  header: 'DA layer',
   cell: (ctx) => (
     <ProjectNameInfoTooltip project={ctx.row.original}>
       <TableLink href={ctx.row.original.href}>
@@ -66,7 +66,7 @@ const fraudDetectionColumn = columnHelper.display({
 
 const daLayerRisksColumns = [
   columnHelper.group({
-    header: 'Da Layer Risks',
+    header: 'DA layer risks',
     columns: [economicSecurityColumn, fraudDetectionColumn],
   }),
 ]
@@ -181,7 +181,7 @@ const relayerFailureColumn = columnHelper.display({
 
 const bridgeRisksColumns = [
   columnHelper.group({
-    header: 'Bridge Risks',
+    header: 'Bridge risks',
     columns: [
       committeeSecurityColumn,
       upgradeabilityColumn,

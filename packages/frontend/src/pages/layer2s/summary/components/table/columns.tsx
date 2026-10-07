@@ -184,7 +184,7 @@ export function getL2SummaryValidiumAndOptimiumsColumns(
   return [
     ...getL2SummaryColumns(opts).slice(0, 6),
     columnHelper.display({
-      header: 'DA Layer',
+      header: 'DA layer',
       cell: (ctx) => {
         const latestValue = ctx.row.original.dataAvailability?.[0]
         if (!latestValue) {
@@ -241,7 +241,11 @@ export function getL2SummaryOthersColumns(opts?: L2SummaryColumnsOpts) {
             {reasons.map((reason) => (
               <Tooltip key={reason.label}>
                 <TooltipTrigger>
-                  <Badge type="error" className="uppercase">
+                  <Badge
+                    type="error"
+                    size="small"
+                    className="rounded-[5px] bg-negative/11 py-0.5"
+                  >
                     {reason.label}
                   </Badge>
                 </TooltipTrigger>

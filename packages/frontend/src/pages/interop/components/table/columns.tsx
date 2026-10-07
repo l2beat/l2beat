@@ -114,7 +114,7 @@ const categoryColumn = columnHelper.accessor('type', {
 })
 
 const last24hVolumeColumn = columnHelper.accessor('volume', {
-  header: 'Last 24h\nVolume',
+  header: 'Last 24h\nvolume',
   cell: (ctx) => {
     if (!ctx.row.original.volume) return EM_DASH
     return (

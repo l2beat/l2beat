@@ -43,7 +43,7 @@ export function getBasicTableGroupedHeaderCellClassName(params: {
  * table still reads as the same component.
  */
 const COMPACT_HEADER_CELL = 'h-8'
-const COMPACT_BODY_CELL = 'md:h-12'
+const COMPACT_BODY_CELL = 'md:h-11'
 
 export function getBasicTableHeaderCellClassName(params: {
   groupParams: BasicTableGroupParams | undefined

@@ -192,7 +192,7 @@ export function getL2CostsColumns(metric: CostsMetric) {
 
     columnHelper.accessor((row) => availableCosts(row)?.uopsCount, {
       id: 'data_uopsCount',
-      header: 'L2 User ops count',
+      header: 'L2 user ops count',
       cell: (ctx) => {
         const data = ctx.row.original.data
         if (data.type === 'available') {

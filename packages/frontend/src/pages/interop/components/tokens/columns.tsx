@@ -78,7 +78,7 @@ function getCommonColumns<T extends CommonRow>(
       }),
     columnHelper.accessor((row) => row.volume, {
       id: 'volume',
-      header: 'Last 24h\nVolume',
+      header: 'Last 24h\nvolume',
       cell: (ctx) => {
         if (ctx.row.original.volume === null) return EM_DASH
         return (

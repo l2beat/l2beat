@@ -26,7 +26,7 @@ export function ValueWithPercentageChange({
 }: Props) {
   return (
     <div className={cn('flex flex-wrap items-center', containerClassName)}>
-      <span className={cn('mr-1 font-bold md:text-base', className)}>
+      <span className={cn('mr-1 font-medium md:text-[15px]', className)}>
         {children}
       </span>
       {change !== undefined && (
@@ -36,6 +36,7 @@ export function ValueWithPercentageChange({
           textClassName={changeClassName}
           period={changePeriod}
           disabledOnMobile={disabledOnMobile}
+          signed
         />
       )}
     </div>

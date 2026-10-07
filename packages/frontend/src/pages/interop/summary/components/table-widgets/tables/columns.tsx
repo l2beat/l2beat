@@ -68,7 +68,7 @@ function getLast24hVolumeColumn<T extends { volume: number }>(
   columnHelper: ColumnHelper<T>,
 ) {
   return columnHelper.accessor((row) => row.volume, {
-    header: 'Last 24h\nVolume',
+    header: 'Last 24h\nvolume',
     cell: (ctx) => {
       if (!ctx.row.original.volume) return EM_DASH
       return (

@@ -81,7 +81,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
     ),
     ecosystemId === 'arbitrum-orbit' &&
       columnHelper.accessor('gasTokens', {
-        header: 'Gas Tokens',
+        header: 'Gas tokens',
         cell: (ctx) => {
           const gasTokens = ctx.getValue()
           if (!gasTokens) {

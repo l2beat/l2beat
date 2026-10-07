@@ -34,18 +34,20 @@ export function StageCell({
       <StageBadge
         stage={stageConfig.stage}
         isAppchain={isAppchain}
-        className="flex flex-col gap-px"
+        variant="soft"
+        className="flex flex-col items-start gap-px"
+        appchainClassName="pl-[7px] text-left text-[10.5px]"
       />
       {stageConfig.stage !== 'NotApplicable' &&
         stageConfig.stage !== 'UnderReview' &&
         stageConfig.downgradePending &&
-        !emergencyWarning && <StopwatchIcon className="mt-px md:mt-[3px]" />}
-      {emergencyWarning && <EmergencyIcon className="mt-px md:mt-[3px]" />}
+        !emergencyWarning && <StopwatchIcon className="mt-0.5" />}
+      {emergencyWarning && <EmergencyIcon className="mt-0.5" />}
       {walkAway === 'passed' && (
-        <WalkAwayPassedIcon className="-mt-px size-5 fill-positive md:size-6" />
+        <WalkAwayPassedIcon className="mt-px size-[18px] fill-positive" />
       )}
       {walkAway === 'not-passed' && (
-        <WalkAwayNotPassedIcon className="-mt-px size-5 fill-negative md:size-6" />
+        <WalkAwayNotPassedIcon className="mt-px size-[18px] fill-negative" />
       )}
     </div>
   )

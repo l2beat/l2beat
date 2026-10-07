@@ -16,7 +16,13 @@ interface NumberCellProps {
 
 export function NumberCell(props: NumberCellProps) {
   if (props.signed && typeof props.children === 'number') {
-    return <PercentChange value={props.children} className={props.className} />
+    return (
+      <PercentChange
+        value={props.children}
+        className={props.className}
+        signed
+      />
+    )
   }
 
   if (props.tooltip)

@@ -3,3 +3,6 @@
 export const EM_DASH = '—'
 
 export const INFINITY = '∞'
+
+// U+2212, as wide as the plus sign, so signed figures line up.
+export const MINUS_SIGN = '−'

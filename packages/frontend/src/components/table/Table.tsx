@@ -90,7 +90,7 @@ const TableHeader = ({
 }: React.HTMLAttributes<HTMLTableSectionElement>) => (
   <thead
     className={cn(
-      'group/header whitespace-pre py-2 align-bottom font-medium text-xs text-zinc-500 uppercase dark:text-n-zinc-300',
+      'group/header whitespace-pre py-2 align-bottom font-medium text-secondary text-xs',
       className,
     )}
     {...props}
@@ -130,7 +130,7 @@ const TableRow = ({
   return (
     <tr
       className={cn(
-        'group/row border-b border-b-divider transition-colors',
+        'group/row border-b border-b-divider/60 transition-colors',
         isSelected && 'animate-row-highlight',
         className,
       )}
@@ -157,7 +157,7 @@ const TableHead = ({
 }) => (
   <th
     className={cn(
-      'h-10 py-2 text-left align-bottom font-medium text-[13px] uppercase',
+      'h-9 py-2 text-left align-bottom font-medium text-[12.5px]',
       'pr-3 first:pl-2 last:pr-2 md:pr-4',
       className,
     )}
@@ -187,7 +187,7 @@ const TableCell = ({
 }) => (
   <td
     className={cn(
-      'group h-10 whitespace-pre p-0 align-middle text-xs transition-colors md:h-14 md:text-sm',
+      'group h-10 whitespace-pre p-0 align-middle text-xs transition-colors md:h-12 md:text-sm',
       'pr-3 first:pl-3 last:pr-3 md:pr-4',
       align === 'center' && 'text-center',
       align === 'right' && 'text-right',

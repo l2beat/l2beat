@@ -1,4 +1,4 @@
-import { EM_DASH } from '~/consts/characters'
+import { EM_DASH, MINUS_SIGN } from '~/consts/characters'
 import { TrendArrowDownIcon, TrendArrowUpIcon } from '~/icons/TrendArrow'
 import {
   COMPARED_TO_PERIOD,
@@ -27,6 +27,11 @@ interface Props {
   textClassName?: string
   period?: PercentageChangePeriod
   disabledOnMobile?: boolean
+  /**
+   * A sign instead of the trend arrow. Lighter, for columns of changes in
+   * tables, where an arrow on every row adds up to a lot of ink.
+   */
+  signed?: boolean
 }
 
 export function PercentChange({
@@ -35,6 +40,7 @@ export function PercentChange({
   textClassName,
   period,
   disabledOnMobile,
+  signed,
 }: Props) {
   const isMore = value > 0
   const isLess = value < 0
@@ -43,25 +49,28 @@ export function PercentChange({
     <span
       className={cn(
         isMore && 'text-positive',
-        isLess && 'text-red-300',
+        isLess && (signed ? 'text-negative' : 'text-red-300'),
         'relative',
         className,
       )}
     >
-      {isMore && (
+      {!signed && isMore && (
         <TrendArrowUpIcon className="-translate-y-1/2 absolute top-1/2 left-0.5" />
       )}
-      {isLess && (
+      {!signed && isLess && (
         <TrendArrowDownIcon className="-translate-y-1/2 absolute top-1/2 left-0.5" />
       )}
       <span
         className={cn(
-          'relative inline-block w-[52px] pl-3.5 text-right text-xs',
+          'relative inline-block text-right text-xs',
+          signed ? 'min-w-12 pl-1.5 md:text-[12.5px]' : 'w-[52px] pl-3.5',
           value === 0 && 'text-secondary',
           textClassName,
         )}
       >
-        {isNaN(value) ? EM_DASH : formatPercent(Math.abs(value))}
+        {isNaN(value)
+          ? EM_DASH
+          : `${signed ? getSign(value) : ''}${formatPercent(Math.abs(value))}`}
       </span>
     </span>
   )
@@ -82,4 +91,10 @@ export function PercentChange({
       </TooltipPortal>
     </Tooltip>
   )
+}
+
+function getSign(value: number) {
+  if (value > 0) return '+'
+  if (value < 0) return MINUS_SIGN
+  return ''
 }

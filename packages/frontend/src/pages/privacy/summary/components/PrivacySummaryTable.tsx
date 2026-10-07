@@ -120,6 +120,7 @@ const columns = [
                   <PercentChange
                     value={ctx.row.original.totalValueLockedChange7d}
                     period="7D"
+                    signed
                   />
                 )}
               </div>

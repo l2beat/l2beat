@@ -1,4 +1,5 @@
 import type {
+  ColumnDef,
   RowData,
   TableOptions,
   VisibilityState,
@@ -9,6 +10,17 @@ import { useIsClient } from './useIsClient'
 import { useLocalStorage } from './useLocalStorage'
 
 const ALL_VISIBLE: VisibilityState = {}
+
+/**
+ * Accessor columns without a header show their id ("name", "stage"). Headers
+ * are sentence case, so the id gets a capital like any other header.
+ */
+const CAPITALIZED_ID_HEADER: Partial<ColumnDef<unknown>> = {
+  header: ({ column }) =>
+    column.accessorFn
+      ? column.id.charAt(0).toUpperCase() + column.id.slice(1)
+      : null,
+}
 
 export function useTable<TData extends RowData>(
   tableId: string,
@@ -32,6 +44,7 @@ export function useTable<TData extends RowData>(
 
   return useReactTable({
     enableSortingRemoval: false,
+    defaultColumn: CAPITALIZED_ID_HEADER as Partial<ColumnDef<TData>>,
     onColumnVisibilityChange: isControlled ? undefined : setColumnVisibility,
     ...options,
     meta: isControlled

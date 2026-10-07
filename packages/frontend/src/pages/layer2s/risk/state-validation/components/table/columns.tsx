@@ -106,7 +106,7 @@ export const l2RiskStateValidationValidityColumns = [
     },
   }),
   validityColumnHelper.accessor('executionDelay', {
-    header: 'Execution Delay',
+    header: 'Execution delay',
     cell: (ctx) => {
       const { executionDelay, executionDelayMode } = ctx.row.original
       return (
@@ -189,7 +189,7 @@ export const l2RiskStateValidationOptimisticColumns = [
     },
   }),
   optimisticColumnHelper.accessor('challengePeriod', {
-    header: 'Challenge Period',
+    header: 'Challenge period',
     cell: (ctx) => (
       <TableValueCell
         value={
@@ -206,7 +206,7 @@ export const l2RiskStateValidationOptimisticColumns = [
     ),
   }),
   optimisticColumnHelper.accessor('executionDelay', {
-    header: 'Execution Delay',
+    header: 'Execution delay',
     cell: (ctx) => {
       const { executionDelay, executionDelayMode } = ctx.row.original
       return (
@@ -230,7 +230,7 @@ export const l2RiskStateValidationOptimisticColumns = [
     },
   }),
   optimisticColumnHelper.accessor('initialBond', {
-    header: 'Initial Bond',
+    header: 'Initial bond',
     cell: (ctx) => {
       const { initialBond, defenderAdvantage } = ctx.row.original
       return (

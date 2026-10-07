@@ -157,7 +157,7 @@ export const getL2ActivityColumns = (
       columnHelper,
       columnHelper.accessor((row) => row.data?.summedCount.value, {
         id: 'summedCount',
-        header: '30D Count',
+        header: '30D count',
         cell: (ctx) => {
           const data = ctx.row.original.data
           if (!data) {

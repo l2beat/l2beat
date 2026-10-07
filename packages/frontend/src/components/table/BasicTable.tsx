@@ -264,7 +264,7 @@ function BasicTableActualHeaderRow<T>({
 function BasicTableHeaderDividerRow() {
   return (
     <TableHeaderRow>
-      <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
+      <th colSpan={100} className="h-px bg-divider" />
     </TableHeaderRow>
   )
 }

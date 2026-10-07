@@ -24,7 +24,7 @@ const columnHelper = createColumnHelper<DaLivenessTableEntry>()
 export const publicColumns = () => [
   ...getDaCommonProjectColumns(columnHelper, (row) => row.href ?? ''),
   columnHelper.accessor('name', {
-    header: 'DA Layer',
+    header: 'DA layer',
     cell: (ctx) => (
       <ProjectNameInfoTooltip project={ctx.row.original}>
         <TableLink href={ctx.row.original.href}>
@@ -60,7 +60,7 @@ export const publicColumns = () => [
   }),
   columnHelper.display({
     id: 'attestation-frequency',
-    header: 'Attestation Frequency',
+    header: 'Attestation frequency',
     cell: (ctx) => {
       const bridge = ctx.row.original.bridges[0]
       if (!bridge) {
@@ -89,7 +89,7 @@ export const publicColumns = () => [
   }),
   columnHelper.display({
     id: 'relayer-type',
-    header: 'Relayer Type',
+    header: 'Relayer type',
     cell: (ctx) => {
       const bridge = ctx.row.original.bridges[0]
       if (!bridge) {
@@ -109,7 +109,7 @@ export const publicColumns = () => [
   }),
   columnHelper.display({
     id: 'validation-type',
-    header: 'validation Type',
+    header: 'Validation type',
     cell: (ctx) => {
       const bridge = ctx.row.original.bridges[0]
       if (!bridge) {

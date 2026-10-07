@@ -7,6 +7,8 @@ interface Props {
 
 export function PrimaryValueCell({ children, className }: Props) {
   return (
-    <div className={cn('font-medium md:text-base', className)}>{children}</div>
+    <div className={cn('font-medium md:text-[15px]', className)}>
+      {children}
+    </div>
   )
 }

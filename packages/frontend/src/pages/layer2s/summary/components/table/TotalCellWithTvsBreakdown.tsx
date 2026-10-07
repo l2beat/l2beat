@@ -105,14 +105,16 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
                   {formatDollarValueNumber(totalTvs)}
                 </ValueWithPercentageChange>
               </div>
-              <div className="inline-flex flex-col items-end gap-1">
+              <div className="mt-[3px] inline-flex flex-col items-end gap-[3px]">
                 <ValueSecuredBreakdown
+                  className="h-0.5 w-auto min-w-30 self-stretch"
                   canonical={props.breakdown.canonical}
                   external={props.breakdown.external}
                   native={props.breakdown.native}
                 />
                 {props.additionalTrustAssumptionsPercentage !== undefined && (
                   <AdditionalTrustAssumptionsText
+                    className="text-[10.5px]"
                     percentage={props.additionalTrustAssumptionsPercentage}
                   />
                 )}

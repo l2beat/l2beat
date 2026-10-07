@@ -75,7 +75,7 @@ export function getIntentBridgeColumns(transfer: InteropTransferDefaults) {
     }),
     columnHelper.accessor((row) => row.activity?.volume ?? 0, {
       id: 'volume',
-      header: 'Last 24h\nVolume',
+      header: 'Last 24h\nvolume',
       cell: (ctx) => {
         const volume = ctx.row.original.activity?.volume
         if (!volume) return EM_DASH

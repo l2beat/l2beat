@@ -30,9 +30,9 @@ export function getRowClassNames(rowBackgroundColor: RowBackgroundColor) {
     case 'blue':
       return 'bg-blue-500/35 dark:bg-blue-700/25'
     case 'red':
-      return 'bg-red-100/70 dark:bg-red-900/70'
+      return 'bg-row-red'
     case 'yellow':
-      return 'bg-yellow-200/10'
+      return 'bg-row-yellow'
     default:
       return undefined
   }
@@ -50,9 +50,9 @@ export function getRowClassNamesWithoutOpacity(
     case 'blue':
       return 'bg-[color-mix(in_srgb,var(--color-blue-500)_35%,var(--surface-primary))] dark:bg-[color-mix(in_srgb,var(--color-blue-700)_25%,var(--surface-primary))]'
     case 'red':
-      return 'bg-[color-mix(in_srgb,var(--color-red-100)_70%,var(--surface-primary))] dark:bg-[color-mix(in_srgb,var(--color-red-900)_70%,var(--surface-primary))]'
+      return 'bg-row-red'
     case 'yellow':
-      return 'bg-[color-mix(in_srgb,var(--color-yellow-200)_10%,var(--surface-primary))]'
+      return 'bg-row-yellow'
     default:
       return 'bg-surface-primary'
   }

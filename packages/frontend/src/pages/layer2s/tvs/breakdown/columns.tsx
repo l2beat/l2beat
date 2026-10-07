@@ -62,7 +62,7 @@ export const columns = [
   }),
   columnHelper.display({
     id: 'bridgingType',
-    header: 'Bridging Type',
+    header: 'Bridging type',
     cell: (ctx) => {
       return (
         <TwoRowCell>
@@ -101,7 +101,7 @@ export const columns = [
   }),
   columnHelper.accessor((row) => row.valueForProject.value, {
     id: 'value',
-    header: 'TVS-Adjusted Value',
+    header: 'TVS-adjusted value',
     meta: {
       align: 'right',
       tooltip:
