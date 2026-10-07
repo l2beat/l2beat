@@ -1,4 +1,5 @@
 import {
+  EIP_8142_URL,
   EIP_8288_URL,
   EIP_8357_URL,
   ETHREX_POC_URL,
@@ -118,7 +119,7 @@ export const ROADMAP_YEARS: RoadmapGroup[] = [
         date: 'Ongoing',
         title: 'Removing the devnet’s mocks',
         description:
-          'Each L1 feature the devnet stands in for replaces its mock as it lands upstream. The EIP-8357 registry is already in its genesis; real proofs, EIP-8288, and Blocks-in-Blobs come next.',
+          'Each L1 feature the devnet stands in for replaces its mock as it lands upstream. The EIP-8357 registry is already in its genesis; real proofs, EIP-8288, and Block-in-Blobs come next.',
       },
     ],
   },
@@ -127,27 +128,42 @@ export const ROADMAP_YEARS: RoadmapGroup[] = [
     items: [
       {
         status: 'planned',
+        title: 'LeanSTARK dependencies in EIP-8288',
+        description:
+          'EIP-8288 defines its block digest only for signature dependencies, and leanVM aggregates proofs of one fixed program. Native rollups need to declare proofs of any program as LeanSTARK dependencies, more than one per mempool wrapper.',
+        url: EIP_8288_URL,
+      },
+      {
+        status: 'planned',
+        title: 'EIP-8357 in clients and a fork',
+        description:
+          'Finish the registry’s review, tests, and system contract, and propose it together with EIP-8288, so the fork that brings proof dependencies also brings the EVM program’s keys.',
+        url: EIP_8357_URL,
+      },
+      {
+        status: 'planned',
+        title: 'The block proof covers EIP-8288',
+        description:
+          'Specify how Ethereum’s mandatory block proof binds and absorbs the EIP-8288 aggregate, so validators verify a single proof without downloading full payloads.',
+      },
+      {
+        status: 'planned',
+        title: 'Block data without Block-in-Blobs in Hegotá',
+        description:
+          'The specification binds L2 data to blobs through EIP-8142, which was declined for Hegotá. Native rollups need a path: EIP-8142 in a later fork, or another way to bind the data.',
+        url: EIP_8142_URL,
+      },
+      {
+        status: 'planned',
         title: 'Real proofs on the devnet',
         description:
           'Replace the signed mock proofs with zkVM proofs of the same program, once the execution and consensus specifications agree on what the proof commits to.',
       },
       {
         status: 'planned',
-        title: 'The block proof covers EIP-8288',
+        title: 'Native rollups with extensions',
         description:
-          'Specify how Ethereum’s mandatory block proof binds and absorbs the EIP-8288 aggregate, so validators verify a single proof.',
-      },
-      {
-        status: 'planned',
-        title: 'Proof aggregation',
-        description:
-          'Make the recursive aggregation design concrete: proof propagation, pricing, and resource limits.',
-      },
-      {
-        status: 'planned',
-        title: 'ethrex on EIP-8288',
-        description:
-          'Move the ethrex proof of concept from the EXECUTE precompile to EIP-8288 and the EIP-8357 registry.',
+          'Research an extensible native program, which Arbitrum and Optimism have shown interest in: a rollup that follows Ethereum’s EVM through the EIP-8357 registry and maintains only its own precompiles, opcodes, or transaction types.',
       },
     ],
   },

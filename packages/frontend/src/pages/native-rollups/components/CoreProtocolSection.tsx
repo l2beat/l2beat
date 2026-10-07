@@ -30,7 +30,7 @@ const NEEDS = [
   {
     title: 'Block data availability',
     description:
-      'Blocks-in-Blobs (EIP-8142) binds L2 transactions and block access lists to data that Ethereum makes available. It was declined for Hegotá.',
+      'Block-in-Blobs (EIP-8142) binds L2 transactions and block access lists to data that Ethereum makes available. It was declined for Hegotá.',
   },
 ]
 
