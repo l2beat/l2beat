@@ -24,7 +24,7 @@ import { layoutBelt } from './beltLayout'
 import { paletteFor } from './beltPalette'
 import { type BeltScene, findBatch } from './beltScene'
 import { formatAverage, formatBlobCount, formatWhole } from './format'
-import { BATCH_STAGGER } from './motion'
+import { BATCH_STAGGER, LAND_AFTER } from './motion'
 import { roundIcons } from './roundIcons'
 import { RECENT_BLOCKS, useBeaconChain } from './useBeaconChain'
 import { useBelt } from './useBelt'
@@ -203,9 +203,6 @@ export function LiveBlocks({
     </div>
   )
 }
-
-/** About how long a tile takes from the chute to the rack */
-const LAND_AFTER = 0.35
 
 /**
  * Tells the numbers around the belt when each batch of a new block comes to

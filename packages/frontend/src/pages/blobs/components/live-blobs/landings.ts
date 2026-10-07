@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { slotProgressAt, slotStart } from '~/utils/beaconSlots'
 import { SLIDE_TIME } from './blocks/beltPosition'
+import { BATCH_STAGGER, LAND_AFTER } from './blocks/motion'
 import type { Arrival } from './liveMotion'
 
 /** A batch coming to rest on the belt */
@@ -32,10 +33,16 @@ export function createLandings(): Landings {
 export const LandingsContext = createContext<Landings | undefined>(undefined)
 
 /**
- * Longest a number waits for its batch to land. The belt may be scrolled
- * away, still loading, or failed, and the number must not wait for it forever
+ * Longest a number waits for `blobs` of a block to land, in milliseconds. The
+ * belt may be scrolled away, still loading, or failed, and the number must
+ * not wait for it forever; but a working belt lands a block's batches one
+ * after another, and the last of as many batches as blobs lands last
  */
-const HOLD_LIMIT_MS = 3000
+export function holdLimitMs(blobs: number) {
+  return 1000 * (blobs * BATCH_STAGGER + LAND_AFTER + HOLD_SLACK)
+}
+/** Seconds past the last landing before a number stops waiting for it */
+const HOLD_SLACK = 1
 
 /**
  * A total over the hour, as the belt shows blobs come and go. What a new
@@ -46,19 +53,22 @@ const HOLD_LIMIT_MS = 3000
  * land and climb back after, every block.
  *
  * `total` is the hour's at `stamp` (the head), `fresh` what the block at
- * `stamp` brought to it, and `matches` picks the landings that count toward
- * it. Keep `matches` stable.
+ * `stamp` brought to it, `blockBlobs` all that block brought (its last batch
+ * lands last, whoever's it is), and `matches` picks the landings that count
+ * toward it. Keep `matches` stable.
  */
 export function useLandedTotal(
   stamp: number | undefined,
   total: number,
   fresh: number,
+  blockBlobs: number,
   matches: (landing: Landing) => boolean,
 ) {
   const landings = useContext(LandingsContext)
   const [held, setHeld] = useState<Held>({
     stamp,
     total,
+    blockBlobs: 0,
     arriving: 0,
     departed: 0,
   })
@@ -66,7 +76,7 @@ export function useLandedTotal(
 
   // Caught in the render it comes in, so not one frame shows the new total
   if (stamp !== held.stamp || total !== held.total) {
-    setHeld(holdBack(held, stamp, total, landings ? fresh : 0))
+    setHeld(holdBack(held, stamp, total, landings ? fresh : 0, blockBlobs))
   }
 
   const waiting = held.arriving > 0
@@ -75,7 +85,7 @@ export function useLandedTotal(
     if (!waiting) return
     const timer = setTimeout(
       () => setHeld((current) => ({ ...current, arriving: 0 })),
-      HOLD_LIMIT_MS,
+      holdLimitMs(held.blockBlobs),
     )
     return () => clearTimeout(timer)
   }, [held.stamp, waiting])
@@ -121,7 +131,9 @@ export function useLandedTotal(
 interface Held {
   stamp: number | undefined
   total: number
-  /** What the newest block brought, until the belt lands it */
+  /** All the newest block brought, for how long its landings take */
+  blockBlobs: number
+  /** What the newest block brought to this total, until the belt lands it */
   arriving: number
   /** What left the hour as blocks came, until the belt moves on a slot */
   departed: number
@@ -133,6 +145,7 @@ function holdBack(
   stamp: number | undefined,
   total: number,
   fresh: number,
+  blockBlobs: number,
 ): Held {
   const isNew =
     stamp !== undefined && held.stamp !== undefined && stamp > held.stamp
@@ -142,6 +155,7 @@ function holdBack(
   return {
     stamp,
     total,
+    blockBlobs,
     arriving: fresh,
     departed: held.departed + departed,
   }
