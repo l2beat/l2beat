@@ -92,9 +92,9 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const summary = getSection(renderPrivacyProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
+      '- Privacy: Link privacy. Public observer: Link private (sentiment: good); Chain analyst: Link at risk (sentiment: warning); Network observer: Link private (sentiment: good); Privileged insider: Link private (sentiment: good); Future adversary: Link exposed (sentiment: bad).',
       '- Trusted setup: 1,114 participants (sentiment: good). Groth16 ceremony: A multi-party ceremony.',
       '- Exit window: Infinite (sentiment: good). The pools are immutable. This protocol passes the walkaway test: users can fully use it if all centralized protocol participants disappear.',
-      '- Privacy: Link privacy. Public observer: Link private (sentiment: good); Chain analyst: Link at risk (sentiment: warning); Network observer: Link private (sentiment: good); Privileged insider: Link private (sentiment: good); Future adversary: Link exposed (sentiment: bad).',
       '- Reproducibility: Reproducible (sentiment: good). The client can be built locally.',
     )
   })
@@ -225,6 +225,38 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     })
   })
 
+  it('marks the future adversary of a quantum resistant project', () => {
+    const markdown = renderPrivacyProjectMarkdown({
+      ...ENTRY,
+      sections: [
+        {
+          type: 'PrivacyAdversariesSection',
+          props: {
+            id: 'privacy-adversaries',
+            title: 'Privacy',
+            adversaries: {
+              ...ADVERSARIES,
+              cells: {
+                ...ADVERSARIES.cells,
+                futureAdversary: {
+                  ...ADVERSARIES.cells.futureAdversary,
+                  quantumResistant: true,
+                },
+              },
+            },
+          },
+        },
+      ],
+    })
+
+    expect(getSection(markdown, 'Summary')).toInclude(
+      'Future adversary: Link exposed (sentiment: bad), quantum resistant.',
+    )
+    expect(getSection(markdown, 'Privacy')).toInclude(
+      'A quantum computer could break the commitments.\n\n**Quantum resistant:** This privacy protocol is plausibly quantum resistant',
+    )
+  })
+
   it('tabulates assets with every bucket expanded and a total row', () => {
     const breakdown = getSection(
       renderPrivacyProjectMarkdown(ENTRY),
@@ -302,14 +334,14 @@ function cell(
   id: PrivacyAdversaryId,
   value: string,
   sentiment: PrivacyAdversaryCell['sentiment'],
-  exposure: string,
+  exposureShort: string,
   rest: Partial<PrivacyAdversaryCell> = {},
 ): PrivacyAdversaryCell {
   return {
     id,
     value,
     sentiment,
-    exposure,
+    exposureShort,
     alsoExposed: [],
     interior: PUBLIC_OBSERVER_INTERIOR,
     ...rest,
@@ -529,6 +561,7 @@ const ENTRY: ProjectPrivacyEntry = {
     sentiment: 'good',
     description: 'Groth16 ceremony: A multi-party ceremony.',
     risk: 'green',
+    label: '1,114 participants',
   },
   reproducibility: {
     value: 'Reproducible',

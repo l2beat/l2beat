@@ -6,6 +6,8 @@ import { expect } from 'earl'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
   getPrivacyAdversariesTableValue,
+  getPrivacyAdversaryDescription,
+  getPrivacyAdversaryRosetteValues,
   getPrivacyAdversaryTitle,
 } from './privacyAdversaryUi'
 
@@ -26,11 +28,9 @@ function summary(
     cells: sentiments.map((sentiment, i) => ({
       id: IDS[i] ?? 'publicObserver',
       label: IDS[i] ?? 'publicObserver',
-      description: '',
       value: '',
       sentiment,
-      exposure: '',
-      alsoExposed: [],
+      reason: '',
     })),
   }
 }
@@ -73,10 +73,50 @@ describe(getPrivacyAdversariesTableValue.name, () => {
   })
 })
 
+describe(getPrivacyAdversaryRosetteValues.name, () => {
+  it('carries the quantum resistant badge on the slice of its cell only', () => {
+    const adversaries = summary('good', 'good', 'good', 'good', 'warning')
+    const values = getPrivacyAdversaryRosetteValues({
+      ...adversaries,
+      cells: adversaries.cells.map((cell) =>
+        cell.id === 'futureAdversary'
+          ? { ...cell, quantumResistant: true }
+          : cell,
+      ),
+    })
+    expect(values.map((value) => value.quantumResistant)).toEqual([
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      true,
+    ])
+  })
+})
+
 describe(getPrivacyAdversaryTitle.name, () => {
   it('prefixes the label in lower case', () => {
     expect(getPrivacyAdversaryTitle('Public observer')).toEqual(
       'Against public observer',
     )
+  })
+})
+
+describe(getPrivacyAdversaryDescription.name, () => {
+  it('follows the short description with the long one', () => {
+    expect(
+      getPrivacyAdversaryDescription({
+        exposureShort: 'The relayer sees your IP.',
+        exposureContinued: 'Tor hides it.',
+      }),
+    ).toEqual('The relayer sees your IP. Tor hides it.')
+  })
+
+  it('is the short description alone when there is no long one', () => {
+    expect(
+      getPrivacyAdversaryDescription({
+        exposureShort: 'The relayer sees your IP.',
+      }),
+    ).toEqual('The relayer sees your IP.')
   })
 })

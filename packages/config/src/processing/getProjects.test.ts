@@ -534,6 +534,38 @@ describe('getProjects', () => {
       }
       expect(problems).toEqual([])
     })
+
+    // A badge on the privacy page must not contradict the prover's entry in the ZK catalog.
+    it('every quantum resistant project uses no prover or a quantum resistant one', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        if (!privacyInfo.adversaries?.cells.futureAdversary.quantumResistant) {
+          continue
+        }
+        const zkCatalogInfo =
+          project.zkCatalogInfo ??
+          (privacyInfo.zkCatalogId &&
+            projectsById.get(privacyInfo.zkCatalogId)?.zkCatalogInfo)
+        if (zkCatalogInfo && !zkCatalogInfo.quantumResistant) {
+          problems.push(project.id)
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    // The tooltip shows the short description alone, so a second sentence would read as cut off.
+    it('every adversary short description is one sentence', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const cells = Object.entries(privacyInfo.adversaries?.cells ?? {})
+        for (const [adversaryId, cell] of cells) {
+          if (/[.!?]\s/.test(cell.exposureShort)) {
+            problems.push(`${project.id} ${adversaryId}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
   })
 
   describe('contracts', () => {

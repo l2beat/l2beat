@@ -1127,11 +1127,6 @@ export interface ProjectPrivacyInfo {
   attributes?: PrivacyAttribute[]
   /** Per-adversary privacy assessment. Author with definePrivacyAdversaries. */
   adversaries: ProjectPrivacyAdversaries
-  /**
-   * Privacy-specific quantum-resistance flag. Distinct in meaning from
-   * ProjectZkCatalogInfo.quantumResistant
-   */
-  quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
@@ -1311,12 +1306,18 @@ export interface PrivacyAdversaryAssessment {
    */
   sentiment: PrivacyAdversarySentiment
   /**
-   * What this adversary learns beyond the public observer and what stays
-   * hidden, in one or two plain sentences; the first sentence carries the
-   * reason for the sentiment. Never refers to other cells or quotes live
-   * numbers; the tracked anonymity set stands in for them.
+   * The reason for the sentiment, in one plain sentence. Shown alone in the
+   * rosette tooltip, and followed by `exposureContinued` on the project page.
+   * Never refers to other cells or quotes live numbers; the tracked anonymity
+   * set stands in for them.
    */
-  exposure: string
+  exposureShort: string
+  /**
+   * The rest of what this adversary learns beyond the public observer and
+   * what stays hidden, under the same rules. Omit when `exposureShort`
+   * says it all.
+   */
+  exposureContinued?: string
   /**
    * How a user keeps it private, when that is conditional (the cell is at
    * risk, or a field is). Omit when nothing the user does changes the result.
@@ -1333,6 +1334,20 @@ export interface PrivacyAdversaryAssessment {
   interior?: PrivacyExposureMap
   /** Pointers to the onchain state or source code backing the verdicts. */
   sources?: PrivacySource[]
+}
+
+/** The future adversary's cell, the only one that can carry the quantum resistant badge. */
+export interface PrivacyFutureAdversaryAssessment
+  extends PrivacyAdversaryAssessment {
+  /**
+   * Shows the quantum resistant badge. Set when a large quantum computer breaks
+   * neither the privacy nor the funds: nothing the protocol relies on reduces
+   * to elliptic curves or pairings, and the prover it uses, if any, is
+   * `quantumResistant` in the ZK catalog. Not derived from the sentiment,
+   * which also counts what needs no quantum computer, such as a leaked
+   * long-lived key or retained logs.
+   */
+  quantumResistant?: true
 }
 
 /**
@@ -1366,7 +1381,10 @@ export interface PrivacyPromise {
 
 export interface PrivacyAdversariesConfig {
   promise: PrivacyPromise
-  cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
+  cells: Record<
+    Exclude<PrivacyAdversaryId, 'futureAdversary'>,
+    PrivacyAdversaryAssessment
+  > & { futureAdversary: PrivacyFutureAdversaryAssessment }
 }
 
 /** A field this adversary learns more about than the public observer. */
@@ -1386,6 +1404,8 @@ export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
    * whose leaks the promise text already describes.
    */
   alsoExposed: PrivacyAlsoExposed[]
+  /** Carried over from the future adversary's assessment; unset on every other cell. */
+  quantumResistant?: true
 }
 
 /**

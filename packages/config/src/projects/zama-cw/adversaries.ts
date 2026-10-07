@@ -18,9 +18,12 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
   },
   cells: {
     publicObserver: {
-      sentiment: 'good',
-      exposure:
-        'Only the amount of a confidential transfer is hidden. Sender, recipient, every wrap and unwrap amount and the ciphertext handles are public, and either party can later disclose a transfer amount onchain.',
+      sentiment: 'warning',
+      exposureShort: 'Only the amount of a confidential transfer is hidden.',
+      exposureContinued:
+        'Sender, recipient, every wrap and unwrap amount and the ciphertext handles are public, and either party can later disclose a transfer amount onchain.',
+      advice:
+        'Keep funds wrapped and transfer often, even zero amounts. Unwrap only after a while, and never an amount that matches a recent wrap or a known payment.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -46,8 +49,10 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      exposure:
-        "All wraps and unwraps are public, so an account's balance is bounded by what went in and out, and exact for any account that never made a confidential transfer. Transfer partners and timing are public, so a wrap, a transfer and an unwrap in a row pair up by amount.",
+      exposureShort:
+        "All wraps and unwraps are public, so an account's balance is bounded by what went in and out, and exact for any account that never made a confidential transfer.",
+      exposureContinued:
+        'Transfer partners and timing are public, so a wrap, a transfer and an unwrap in a row pair up by amount.',
       advice:
         'Keep funds wrapped and transfer often, even zero amounts. Unwrap only after a while, and never an amount that matches a recent wrap or a known payment.',
       interior: {
@@ -74,8 +79,10 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      exposure:
-        'Amounts are encrypted on your device and never leave it in clear. The default hosted relayer, which needs an operator API key, receives your address and the token contract with every encrypted input and balance view, so it learns who transacts and when, plus your IP.',
+      exposureShort:
+        'Amounts are encrypted on your device and never leave it in clear.',
+      exposureContinued:
+        'The default hosted relayer receives your address and the token contract with every encrypted input and balance view, so it learns who transacts and when, plus your IP.',
       advice: 'Route relayer requests through Tor, or self-host the relayer.',
       interior: {
         sender: 'exposed',
@@ -106,8 +113,10 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      exposure:
-        'KMS operators share one FHE key under a threshold and can collude to decrypt every balance and transfer ever made. The token owner can appoint an observer with a never-expiring view of all balances and amounts, and can upgrade the token and the ACL, all with no delay.',
+      exposureShort:
+        'KMS operators share one FHE key under a threshold and can collude to decrypt every balance and transfer ever made.',
+      exposureContinued:
+        'The token owner can appoint an observer with a never-expiring view of all balances and amounts, and can upgrade the token and the ACL, all with no delay.',
       advice:
         'Watch for ObserverAdded events and upgrades on your token; there is no delay to react. Nothing you do prevents KMS collusion.',
       interior: {
@@ -152,8 +161,11 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
-      exposure:
-        'The encryption is lattice-based and survives quantum computers, but every ciphertext is publicly downloadable and one long-lived key protects them all. If enough key shares ever leak, the entire history is exposed.',
+      quantumResistant: true,
+      exposureShort:
+        'The encryption is lattice-based and survives quantum computers, but every ciphertext is publicly downloadable and one long-lived key protects them all.',
+      exposureContinued:
+        'If enough key shares ever leak, the entire history is exposed.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
