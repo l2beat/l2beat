@@ -22,7 +22,8 @@ import {
   formatWhole,
 } from './blocks/format'
 import { useChainClock } from './chainClock'
-import { toRgba } from './color'
+import { readableColor, toRgba } from './color'
+import { useThemeTokens } from './hooks'
 import { type Landing, useLandedTotal } from './landings'
 import { Pop, RollingNumber, useFlash, useReorder, useTick } from './liveMotion'
 import { type LivePoster, UNKNOWN_ID } from './model'
@@ -92,6 +93,8 @@ export function LivePosters({ posters }: Props) {
   // and counts up between blocks, not only when they come
   useTick(1000)
   const progress = clock.progressNow()
+  // the belt's colors, so a project reads the same here as on the belt
+  const { surface } = useThemeTokens()
 
   const tableRef = useRef<HTMLDivElement>(null)
   useReorder(tableRef, rows?.map((row) => row.poster.id).join() ?? '')
@@ -135,6 +138,7 @@ export function LivePosters({ posters }: Props) {
               <PosterRow
                 key={row.poster.id}
                 row={row}
+                color={readableColor(row.poster.color, surface)}
                 rank={index + 1}
                 seconds={seconds}
                 totalBlobs={totalBlobs}
@@ -153,6 +157,7 @@ export function LivePosters({ posters }: Props) {
 
 function PosterRow({
   row,
+  color,
   rank,
   seconds,
   totalBlobs,
@@ -162,6 +167,8 @@ function PosterRow({
   progress,
 }: {
   row: Row
+  /** The poster's color, made to stand out from the card */
+  color: string
   rank: number
   seconds: number
   totalBlobs: number
@@ -186,7 +193,7 @@ function PosterRow({
     newestBlobs,
     isPosters,
   )
-  useFlash(ref, arrival, toRgba(row.poster.color, 0.22))
+  useFlash(ref, arrival, toRgba(color, 0.22))
 
   return (
     // a plain row, as TableRow keeps its element to itself, and the flash needs it
@@ -203,7 +210,7 @@ function PosterRow({
         <Activity
           buckets={row.buckets}
           firstBucket={firstBucket}
-          color={row.poster.color}
+          color={color}
         />
       </TableCell>
       <TableCell align="right" className="font-bold">
