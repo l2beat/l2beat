@@ -16,15 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Check out code
-        uses: actions/checkout@v6
-      - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v4
-        with:
-          cleanup: false
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
+      - parallel:
+          - name: Check out code
+            uses: actions/checkout@v6
+          - name: Set up Docker.io mirror
+            uses: docker/setup-buildx-action@v4
+            with:
+              cleanup: false
+              buildkitd-config-inline: |
+                [registry."docker.io"]
+                  mirrors = ["mirror.gcr.io"]
       - name: Build container
         uses: docker/build-push-action@v7
         with:
@@ -169,15 +170,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Check out code
-        uses: actions/checkout@v6
-      - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v4
-        with:
-          cleanup: false
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
+      - parallel:
+          - name: Check out code
+            uses: actions/checkout@v6
+          - name: Set up Docker.io mirror
+            uses: docker/setup-buildx-action@v4
+            with:
+              cleanup: false
+              buildkitd-config-inline: |
+                [registry."docker.io"]
+                  mirrors = ["mirror.gcr.io"]
       - name: Build container
         uses: docker/build-push-action@v7
         with:
@@ -230,19 +232,19 @@ jobs:
       COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
       TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
-    services:
-      postgres:
-        image: mirror.gcr.io/postgres:18
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
     steps:
+      # A background step rather than a service container, so the image pull
+      # overlaps with setup instead of blocking the first step
+      - name: Start Postgres
+        id: postgres
+        background: true
+        timeout-minutes: 3
+        run: |
+          docker run -d --name postgres -p 5432:5432 \
+            -e POSTGRES_PASSWORD=postgres mirror.gcr.io/postgres:18
+          # TCP, because the init-time server only listens on the unix socket
+          until docker exec postgres pg_isready -h 127.0.0.1; do sleep 1; done
+
       - name: Check out code
         uses: actions/checkout@v6
 
@@ -259,6 +261,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Wait for Postgres
+        wait: postgres
 
       - name: Test
         run: pnpm run test --reporter min
@@ -272,6 +277,14 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       TURBO_API: ${{ secrets.TURBO_API_RO }}
     steps:
+      # Needs no checkout or Node, so it overlaps with the whole setup below
+      - name: Install Playwright system libraries
+        id: playwright-libs
+        background: true
+        run: |
+          sudo apt update
+          sudo apt install -y libnss3 libatk-bridge2.0-0 libdrm2 libxcomposite1 libxdamage1 libxrandr2 libgbm1
+
       - name: Check out code
         uses: actions/checkout@v6
 
@@ -289,15 +302,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install Playwright browsers
-        run: |
-          cd packages/frontend
-          sudo apt update
-          sudo apt install -y libnss3 libatk-bridge2.0-0 libdrm2 libxcomposite1 libxdamage1 libxrandr2 libgbm1
-          pnpm exec playwright install chromium
+      - parallel:
+          - name: Install Playwright browsers
+            working-directory: packages/frontend
+            run: pnpm exec playwright install chromium
 
-      - name: Build dependencies
-        run: pnpm build:dependencies:frontend
+          - name: Build dependencies
+            run: pnpm build:dependencies:frontend
+
+      - name: Wait for Playwright system libraries
+        wait: playwright-libs
 
       - name: Run e2e tests
         run: |
@@ -313,6 +327,14 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       TURBO_API: ${{ secrets.TURBO_API_RO }}
     steps:
+      # Needs no checkout or Node, so it overlaps with the whole setup below
+      - name: Install Playwright system libraries
+        id: playwright-libs
+        background: true
+        run: |
+          sudo apt update
+          sudo apt install -y libnss3 libatk-bridge2.0-0 libdrm2 libxcomposite1 libxdamage1 libxrandr2 libgbm1
+
       - name: Check out code
         uses: actions/checkout@v6
 
@@ -330,25 +352,27 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install Playwright browsers
-        run: |
-          cd packages/protocolbeat
-          sudo apt update
-          sudo apt install -y libnss3 libatk-bridge2.0-0 libdrm2 libxcomposite1 libxdamage1 libxrandr2 libgbm1
-          pnpm exec playwright install chromium
+      - parallel:
+          - name: Install Playwright browsers
+            working-directory: packages/protocolbeat
+            run: pnpm exec playwright install chromium
 
-      - name: Build dependencies
-        run: pnpm build:dependencies:l2b
+          - name: Build dependencies
+            run: pnpm build:dependencies:l2b
 
-      - name: Run backend e2e tests
-        run: |
-          cd packages/l2b
-          pnpm test:e2e
+      - name: Wait for Playwright system libraries
+        wait: playwright-libs
 
-      - name: Run page e2e tests
-        run: |
-          cd packages/protocolbeat
-          pnpm test:e2e
+      # Independent: the backend suite listens on a random port, the page
+      # suite on its own dev server
+      - parallel:
+          - name: Run backend e2e tests
+            working-directory: packages/l2b
+            run: pnpm test:e2e
+
+          - name: Run page e2e tests
+            working-directory: packages/protocolbeat
+            run: pnpm test:e2e
 
   biome:
     name: Lint & Format
