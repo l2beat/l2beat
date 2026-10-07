@@ -1,7 +1,7 @@
+import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import { type CSSProperties, type ReactNode, useEffect, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { LiveIndicator } from '~/components/LiveIndicator'
-import { SLOT_SECONDS } from '~/utils/beaconSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import {
   BLOB_KIB,
@@ -31,8 +31,8 @@ const formatArrivedKib = (blobs: number) => formatKib(blobs * BLOB_KIB)
 const anyLanding = (_: Landing) => true
 
 /**
- * Ethereum's blob market over the last hour, above the belt: the headline
- * numbers with whether they are live level with them, then the hour's blobs
+ * Ethereum's blob market over the last 24 hours, above the belt: the headline
+ * numbers with whether they are live level with them, then the day's blobs
  * as one strip split by who posted them, in the colors the belt uses
  */
 export function LiveStats({
@@ -44,19 +44,19 @@ export function LiveStats({
   posters: LivePoster[]
 }) {
   const { data, status } = useLiveBlobs()
-  const hour = data?.window
+  const postedWindow = data?.window
   // the newest block's blobs are counted in as the belt lands them
-  const newest = hour?.blobsPerSlot[0] ?? 0
+  const newest = postedWindow?.blobsPerSlot[0] ?? 0
   const { value: blobs, arrival } = useLandedTotal(
     data?.head,
-    hour?.posted.reduce((sum, posted) => sum + posted.blobs, 0) ?? 0,
+    postedWindow?.posted.reduce((sum, posted) => sum + posted.blobs, 0) ?? 0,
     newest,
     newest,
     anyLanding,
   )
-  const shares = useShares(hour?.posted ?? [], posters)
-  const ready = hour !== undefined && hour.slots > 0
-  const projects = hour?.posted.filter((p) => p.projectId).length ?? 0
+  const shares = useShares(postedWindow?.posted ?? [], posters)
+  const ready = postedWindow !== undefined && postedWindow.slots > 0
+  const projects = postedWindow?.posted.filter((p) => p.projectId).length ?? 0
 
   return (
     <div>
@@ -80,7 +80,7 @@ export function LiveStats({
               note={`of ${limits.targetBlobsPerBlock} target`}
             >
               <RollingNumber
-                value={blobs / Math.max(1, hour.blocks)}
+                value={blobs / Math.max(1, postedWindow.blocks)}
                 format={formatAverage}
               />
             </Stat>
@@ -101,7 +101,7 @@ export function LiveStats({
           <ShareLegend
             shares={shares}
             projects={projects}
-            title={`${describeWindow(hour.slots)}, by project`}
+            title={`${describeWindow(postedWindow.slots)}, by project`}
           />
         </>
       ) : (
@@ -238,7 +238,7 @@ interface PosterShare {
   color: string
 }
 
-/** Each poster's share of the hour, most blobs first, as the window has them */
+/** Each poster's share of the day, most blobs first, as the window has them */
 function useShares(
   posted: { projectId?: string; blobs: number }[],
   posters: LivePoster[],
@@ -271,7 +271,7 @@ function gel(color: string): CSSProperties {
   }
 }
 
-/** The hour's blobs as one strip, a stretch of it per poster */
+/** The day's blobs as one strip, a stretch of it per poster */
 function ShareStrip({
   shares,
   blobs,

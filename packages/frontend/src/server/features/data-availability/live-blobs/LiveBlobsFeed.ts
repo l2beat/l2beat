@@ -1,52 +1,40 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { Database } from '@l2beat/database'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
+import { getDb } from '~/server/database'
 import { getLogger } from '~/server/utils/logger'
-import { SLOT_SECONDS, slotProgressAt } from '~/utils/beaconSlots'
-import { createAttribute, getBlobSenders } from './attribute'
-import { createBeaconNode } from './beaconNode'
+import {
+  buildLiveBlobs,
+  buildPastBlobs,
+  isLive,
+  type LiveBlobsRows,
+} from './buildLiveBlobs'
 import { getBlobPosters } from './getBlobPosters'
-import { createMockBeaconNode } from './mockBeaconNode'
-import { PAST_PAGE_SLOTS, RECENT_SLOTS } from './slots'
+import {
+  BELT_SLOTS,
+  BUCKET_SLOTS,
+  PAST_PAGE_SLOTS,
+  PULSE_SLOTS,
+  WINDOW_SLOTS,
+} from './liveBlobsSlots'
+import { createMockLiveBlobsSource } from './mockLiveBlobsSource'
 
-/** Slots summed up for who posted: an hour */
-export const WINDOW_SLOTS = 300
-/** The hour in five-minute steps, for how each project's posting went */
-export const BUCKET_SLOTS = 25
 /**
- * Slots behind the head fetched again as the head moves on. The chain can
- * still drop its newest blocks for ones built beside them (a reorg): a slot
- * that had a block then has none, and one that was missed may get one
+ * How often the head is read while pages wait, in seconds. It is a
+ * primary-key lookup, and every read sooner is that much sooner on every
+ * screen
  */
-const UNSETTLED_SLOTS = 2
-/**
- * Tries at a block before it is left a gap. The node answers for its head, so
- * it is there: a block that keeps failing is that block's trouble, not an
- * outage to back off from for as long as the block is in the window
- */
-const BLOCK_TRIES = 3
-/** Blocks fetched at once, by the poll and by the backfill each. Each is a few hundred kilobytes */
-const CONCURRENCY = 4
-/**
- * How often the head is asked for while the block being made has not come.
- * Asking costs a few hundred bytes, and every second asked sooner is a
- * second sooner on every screen
- */
-const POLL_INTERVAL = 1
-/** Blocks reach the node about a second into their slot at the earliest */
-const FIRST_POLL_INTO_SLOT = 1
+const POLL_INTERVAL = 0.25
 /**
  * How long a page's ask takes at most when there is nothing new, the wait for
  * the first answer included; within the server's 25 s request timeout
  */
 const LONG_POLL = 20
 const MAX_RETRY_DELAY = 30
-/**
- * Nobody asked for this long: the node is left alone until someone does. As
- * long as the window, so a short quiet spell does not cost a whole backfill
- */
-const IDLE_AFTER = WINDOW_SLOTS * SLOT_SECONDS
-/** How long the first answer after a quiet spell waits for the belt's blocks */
+/** Nobody asked for this long: the database is left alone until someone does. A page asks at least every `LONG_POLL` */
+const IDLE_AFTER = 3 * LONG_POLL
+/** How long the first answer after a quiet spell waits for the rows */
 const FIRST_ANSWER_TIMEOUT = 10
 
 export const LiveBlobsParams = v.object({
@@ -71,11 +59,14 @@ export type PastBlobsParams = v.infer<typeof PastBlobsParams>
 
 /** The recent blocks, as served to the page */
 export interface LiveBlobs {
-  /** The newest slot the node had at the last poll */
+  /** The newest stored slot at the last read */
   head: number
-  /** Whether the last poll reached the node. If not, the blocks may lag */
+  /**
+   * Whether the last read reached the database and found the head no older
+   * than the chain allows. If not, the blocks may lag
+   */
   live: boolean
-  /** Known blocks of the last `RECENT_SLOTS` slots up to the head, newest first */
+  /** Known blocks of the last `BELT_SLOTS` slots up to the head, newest first */
   blocks: LiveBlock[]
   window: PostedWindow
 }
@@ -90,6 +81,18 @@ export type LiveBlock =
     }
   | { slot: number; status: 'missed' }
 
+/** The blocks of one page of the hour, for a page looking back through it */
+export interface PastBlobs {
+  /** Known blocks of the page, newest first */
+  blocks: LiveBlock[]
+  /**
+   * Every slot of the page that is still in the hour is known, and the page
+   * ends behind the slots the backend may still rewrite, so looking again
+   * would bring nothing more
+   */
+  complete: boolean
+}
+
 /** One blob transaction: a project's batch in a block */
 export interface LiveBatch {
   /** Missing when no project claims it */
@@ -101,31 +104,22 @@ export interface LiveBatch {
   txHash: string
 }
 
-/** The blocks of one page of the hour, for a page looking back through it */
-export interface PastBlobs {
-  /** Known blocks of the page, newest first */
-  blocks: LiveBlock[]
-  /**
-   * Every slot of the page that is still in the hour is known, and the page
-   * ends behind the slots the chain may still swap, so looking again would
-   * bring nothing more
-   */
-  complete: boolean
-}
-
 /**
- * Who posted over the slots known back from the head without a gap. Short of
- * `WINDOW_SLOTS` while the feed is still catching up
+ * Who posted over the stored slots back from the head. Short of
+ * `WINDOW_SLOTS` while the backend has not stored a whole day yet
  */
 export interface PostedWindow {
   slots: number
   /** Of those slots, the ones that got a block */
   blocks: number
-  /** Blobs in each slot, newest first; null where the slot was missed */
+  /**
+   * Blobs in each of the last `PULSE_SLOTS` slots, newest first; null where
+   * the slot was missed
+   */
   blobsPerSlot: (number | null)[]
   /**
-   * The oldest of the five-minute steps in `Posted.buckets`, counted in
-   * `BUCKET_SLOTS` from genesis. Moves on by one as each new step starts
+   * The oldest of the steps in `Posted.buckets`, counted in `BUCKET_SLOTS`
+   * from genesis. Moves on by one as each new step starts
    */
   firstBucket: number
   /** Most blobs first */
@@ -142,17 +136,23 @@ export interface Posted {
   /** Blobs that slot brought from the project */
   lastBlobs: number
   /**
-   * Blobs in each five-minute step from `PostedWindow.firstBucket`, the last
+   * Blobs in each step from `PostedWindow.firstBucket`, the last
    * being the one under way. Steps are fixed in time, not counted back from
    * the head, so a new block adds to the last step and leaves the rest be
    */
   buckets: number[]
 }
 
-/** Where blocks come from */
-export interface BeaconSource {
-  headSlot(): Promise<number>
-  block(slot: number): Promise<LiveBlock>
+/** Where the rows come from: the database, or made up in mock mode */
+export interface LiveBlobsSource {
+  liveBlock: Pick<
+    Database['liveBlock'],
+    'findHead' | 'getSlotRange' | 'getBySlotRange'
+  >
+  liveBlobBatch: Pick<
+    Database['liveBlobBatch'],
+    'getBySlotRange' | 'getPostedSince' | 'getBucketsSince'
+  >
 }
 
 let feed: LiveBlobsFeed | undefined
@@ -161,59 +161,49 @@ let feed: LiveBlobsFeed | undefined
 export function getLiveBlobsFeed(): LiveBlobsFeed {
   feed ??= new LiveBlobsFeed(
     env.MOCK
-      ? createMockBeaconNode(
+      ? createMockLiveBlobsSource(
           getBlobPosters().then((posters) => posters.map((p) => p.id)),
         )
-      : createBeaconNode(getBlobSenders().then(createAttribute)),
+      : getDb(),
     getLogger(),
   )
   return feed
 }
 
 /**
- * Follows Ethereum as it makes blocks, for every visitor at once: each block
- * is fetched and decoded once, however many are watching. It follows only
- * while someone asks, and catches up on the next ask after a quiet spell.
- *
- * The belt's blocks come first; the rest of the hour is backfilled behind
- * them, so the belt does not wait for it.
+ * Reads the blocks the backend stores as Ethereum makes them, for every
+ * visitor at once: the head is read a few times a second while anyone asks,
+ * and the rows behind it once per new head, however many are watching. It
+ * keeps nothing but the last snapshot, so reorgs and pruning in the database
+ * show up on their own.
  */
 export class LiveBlobsFeed {
-  private readonly blocks = new Map<number, LiveBlock>()
-  /** Failed tries at each block not fetched yet */
-  private readonly tries = new Map<number, number>()
-  /**
-   * Slots whose block the chain may have dropped and whose fresh look has not
-   * come: looked at again on every poll, head moved or not, or a dropped
-   * block would be served for as long as it is in the window
-   */
-  private readonly recheck = new Set<number>()
-  private head: number | undefined
+  private snapshot: LiveBlobs | undefined
+  /** The head block the snapshot was read at; another hash is a new head, or the head replaced in its slot */
+  private headHash: string | undefined
   private failures = 0
   private lastAskedAt = 0
-  /** The first poll of the current run; unset while nobody asks */
+  /** The first read of the current run; unset while nobody asks */
   private warmup: Promise<void> | undefined
-  /** Pages waiting for a new head */
+  /** Pages waiting for a new snapshot */
   private readonly waiting = new Set<() => void>()
-  /** The backfill running now, if any */
-  private backfillRun: Promise<void> | undefined
   private timer: ReturnType<typeof setTimeout> | undefined
   private readonly logger: Logger
 
   constructor(
-    private readonly source: BeaconSource,
+    private readonly source: LiveBlobsSource,
     logger: Logger,
     private readonly now = () => Date.now() / 1000,
   ) {
     this.logger = logger.for(this)
   }
 
-  /** The recent blocks, or undefined while the node has never been reached */
+  /** The recent blocks, or undefined while no head has ever been read */
   async latest(): Promise<LiveBlobs | undefined> {
     this.lastAskedAt = this.now()
     this.warmup ??= this.poll()
     await withTimeout(this.warmup, FIRST_ANSWER_TIMEOUT)
-    return this.snapshot()
+    return this.snapshot
   }
 
   /**
@@ -224,7 +214,7 @@ export class LiveBlobsFeed {
   async latestAfter({ after }: LiveBlobsParams) {
     const askedAt = this.now()
     await this.latest()
-    if (after === undefined) return this.snapshot()
+    if (after === undefined) return this.snapshot
     const left = Math.max(0, LONG_POLL - (this.now() - askedAt))
     await new Promise<void>((resolve) => {
       const done = () => {
@@ -237,35 +227,27 @@ export class LiveBlobsFeed {
       // looked at only once waiting, or a head that moved between the look
       // and the wait would be missed: pages are answered as they wait. Any
       // other head, as one moved back has blocks to take off the page
-      if (this.head === undefined || this.head !== after) done()
+      if (this.snapshot === undefined || this.snapshot.head !== after) done()
     })
     // not `latest`, which would wait for a first answer all over again
-    return this.snapshot()
+    return this.snapshot
   }
 
   /**
-   * One page of the hour, from what is held: looking back never makes the
-   * node fetch, as the hour is backfilled for the numbers anyway
+   * One page of the hour, read straight from the database: pages looking
+   * back are few, and a complete one is never asked for again
    */
-  past({ page }: PastBlobsParams): PastBlobs {
-    const last = (page + 1) * PAST_PAGE_SLOTS - 1
-    const blocks: LiveBlock[] = []
-    let complete = this.head !== undefined && last < this.head - UNSETTLED_SLOTS
-    // counted rather than compared, so no page can keep it going for ever
-    for (let i = 0; i < PAST_PAGE_SLOTS; i++) {
-      const slot = last - i
-      const block = this.blocks.get(slot)
-      if (block) blocks.push(block)
-      else if (this.head !== undefined && slot > this.head - WINDOW_SLOTS) {
-        complete = false
-      }
-    }
-    return { blocks, complete }
-  }
-
-  /** Resolves once the backfill running now, if any, is done */
-  async backfilled() {
-    await this.backfillRun
+  async past({ page }: PastBlobsParams): Promise<PastBlobs> {
+    const first = page * PAST_PAGE_SLOTS
+    const last = first + PAST_PAGE_SLOTS - 1
+    const [head, stored, blocks, batches] = await Promise.all([
+      this.source.liveBlock.findHead(),
+      this.source.liveBlock.getSlotRange(),
+      this.source.liveBlock.getBySlotRange(first, last),
+      this.source.liveBlobBatch.getBySlotRange(first, last),
+    ])
+    if (!head) return { blocks: [], complete: false }
+    return buildPastBlobs({ stored, blocks, batches }, head.slot, first, last)
   }
 
   stop() {
@@ -274,77 +256,42 @@ export class LiveBlobsFeed {
   }
 
   private async poll() {
-    const wasLive = this.failures === 0
-    let changed = false
+    const before = this.snapshot
     try {
-      const head = await this.source.headSlot()
-      const moved = head !== this.head
-      if (moved) {
-        for (const slot of slotsUnsettled(this.blocks, head)) {
-          this.recheck.add(slot)
-        }
-      }
-      const missing = this.slotsToFetch(head, head - RECENT_SLOTS)
-      const fetched = await this.fetchAll([
-        ...missing,
-        ...this.worthAsking(this.recheck),
-      ])
-      // a block that failed to come with its head, and came on this try
-      const filled = missing.some((slot) => this.blocks.has(slot))
-      this.head = head
-      forgetOld(this.blocks, head)
-      forgetOld(this.tries, head)
-      forgetOld(this.recheck, head)
-      this.failures = fetched ? 0 : this.failures + 1
-      this.backfill(head)
-      changed = moved || filled
+      await this.read()
+      this.failures = 0
     } catch (error) {
       // logged once per outage, not on every retry
       if (this.failures === 0) {
-        this.logger.warn('Beacon node unreachable', { error })
+        this.logger.warn('Live blobs unreadable', { error })
       }
       this.failures++
+      if (this.snapshot?.live) this.snapshot = { ...this.snapshot, live: false }
     }
-    // the page also shows whether the node is reached, so it hears of that too
-    if (changed || wasLive !== (this.failures === 0)) this.answerWaiting()
+    // replaced only when a page would see a difference
+    if (this.snapshot !== before) this.answerWaiting()
     this.scheduleNext()
+  }
+
+  private async read() {
+    const head = await this.source.liveBlock.findHead()
+    if (!head) return
+    if (head.hash !== this.headHash) {
+      const rows = await readRows(this.source, head.slot)
+      this.snapshot = buildLiveBlobs(rows, head.slot, this.now())
+      this.headHash = head.hash
+      return
+    }
+    // the head stays put, but the clock does not: it may fall behind it
+    if (this.snapshot) {
+      const live = isLive(this.snapshot.head, this.now())
+      if (live !== this.snapshot.live)
+        this.snapshot = { ...this.snapshot, live }
+    }
   }
 
   private answerWaiting() {
     for (const done of [...this.waiting]) done()
-  }
-
-  /** Fills in the rest of the window. A gap left by a failure is retried on the next poll */
-  private backfill(head: number) {
-    this.backfillRun ??= this.fetchAll(
-      this.slotsToFetch(head - RECENT_SLOTS, head - WINDOW_SLOTS),
-    ).then(() => {
-      this.backfillRun = undefined
-    })
-  }
-
-  /** The slots from `from` down to just above `downTo` still worth asking for, newest first */
-  private slotsToFetch(from: number, downTo: number) {
-    return this.worthAsking(slotsMissing(this.blocks, from, downTo))
-  }
-
-  /** Of `slots`, the ones not given up on */
-  private worthAsking(slots: Iterable<number>) {
-    return [...slots].filter(
-      (slot) => (this.tries.get(slot) ?? 0) < BLOCK_TRIES,
-    )
-  }
-
-  private fetchAll(slots: number[]) {
-    return forEachLimited(slots, CONCURRENCY, async (slot) => {
-      try {
-        this.blocks.set(slot, await this.source.block(slot))
-        this.recheck.delete(slot)
-      } catch (error) {
-        this.tries.set(slot, (this.tries.get(slot) ?? 0) + 1)
-        throw error
-      }
-    })
   }
 
   private scheduleNext() {
@@ -352,152 +299,35 @@ export class LiveBlobsFeed {
       this.warmup = undefined
       return
     }
-    this.timer = setTimeout(
-      () => void this.poll(),
-      1000 * nextPollIn(this.blocks, slotProgressAt(this.now()), this.failures),
-    )
+    const delay =
+      this.failures > 0
+        ? Math.min(MAX_RETRY_DELAY, POLL_INTERVAL * 2 ** this.failures)
+        : POLL_INTERVAL
+    this.timer = setTimeout(() => void this.poll(), 1000 * delay)
     // a feed nobody stopped must not keep the process alive
     this.timer.unref()
   }
-
-  private snapshot(): LiveBlobs | undefined {
-    if (this.head === undefined) return undefined
-    const blocks: LiveBlock[] = []
-    for (let slot = this.head; slot > this.head - RECENT_SLOTS; slot--) {
-      const block = this.blocks.get(slot)
-      if (block) blocks.push(block)
-    }
-    return {
-      head: this.head,
-      live: this.failures === 0,
-      blocks,
-      window: postedWindow(this.blocks, this.head),
-    }
-  }
 }
 
-/** Sums up the blocks back from the head until the first one not known yet */
-function postedWindow(
-  blocks: Map<number, LiveBlock>,
+/**
+ * Everything a snapshot at `head` is made of. A block stored between the reads
+ * may slip into the sums; the next head read finds it and reads again.
+ */
+async function readRows(
+  source: LiveBlobsSource,
   head: number,
-): PostedWindow {
-  const byProject = new Map<string | undefined, Posted>()
-  const blobsPerSlot: (number | null)[] = []
-  // the step under way and the eleven before it, all inside the window
-  const bucketCount = WINDOW_SLOTS / BUCKET_SLOTS
-  const firstBucket = Math.floor(head / BUCKET_SLOTS) - bucketCount + 1
-  let slots = 0
-  let proposed = 0
-  for (; slots < WINDOW_SLOTS; slots++) {
-    const block = blocks.get(head - slots)
-    if (!block) break
-    if (block.status === 'missed') {
-      blobsPerSlot.push(null)
-      continue
-    }
-    proposed++
-    let blobs = 0
-    const bucket = Math.floor(block.slot / BUCKET_SLOTS) - firstBucket
-    for (const batch of block.batches) {
-      // newest first, so the first batch seen is the last one sent
-      const posted = byProject.get(batch.projectId) ?? {
-        projectId: batch.projectId,
-        blobs: 0,
-        batches: 0,
-        lastSlot: block.slot,
-        lastBlobs: 0,
-        buckets: Array<number>(bucketCount).fill(0),
-      }
-      posted.blobs += batch.blobs
-      posted.batches++
-      if (block.slot === posted.lastSlot) posted.lastBlobs += batch.blobs
-      if (bucket >= 0) {
-        posted.buckets[bucket] = (posted.buckets[bucket] ?? 0) + batch.blobs
-      }
-      byProject.set(batch.projectId, posted)
-      blobs += batch.blobs
-    }
-    blobsPerSlot.push(blobs)
-  }
-  return {
-    slots,
-    blocks: proposed,
-    blobsPerSlot,
-    firstBucket,
-    posted: [...byProject.values()].sort((a, b) => b.blobs - a.blobs),
-  }
-}
-
-/** The slots from `from` down to just above `downTo` that have no block yet, newest first */
-function slotsMissing(
-  blocks: Map<number, LiveBlock>,
-  from: number,
-  downTo: number,
-) {
-  const missing: number[] = []
-  for (let slot = from; slot > downTo; slot--) {
-    if (!blocks.has(slot)) missing.push(slot)
-  }
-  return missing
-}
-
-/** The slots just behind the head whose block the chain may have dropped since, newest first */
-function slotsUnsettled(blocks: Map<number, LiveBlock>, head: number) {
-  const unsettled: number[] = []
-  for (let slot = head - 1; slot >= head - UNSETTLED_SLOTS; slot--) {
-    if (blocks.has(slot)) unsettled.push(slot)
-  }
-  return unsettled
-}
-
-/**
- * Lets go of what fell out of the window, and of anything above the head:
- * the chain can move its head back, dropping its newest block for none, and
- * that slot is then fetched afresh when a block fills it
- */
-function forgetOld(bySlot: Set<number> | Map<number, unknown>, head: number) {
-  for (const slot of bySlot.keys()) {
-    if (slot <= head - WINDOW_SLOTS || slot > head) bySlot.delete(slot)
-  }
-}
-
-/** Seconds until the head is worth asking for again */
-function nextPollIn(
-  blocks: Map<number, LiveBlock>,
-  progress: number,
-  failures: number,
-) {
-  if (failures > 0)
-    return Math.min(MAX_RETRY_DELAY, POLL_INTERVAL * 2 ** failures)
-  const current = Math.floor(progress)
-  if (!blocks.has(current)) return POLL_INTERVAL
-  const intoSlot = (progress - current) * SLOT_SECONDS
-  return SLOT_SECONDS - intoSlot + FIRST_POLL_INTO_SLOT
-}
-
-/**
- * Runs `task` on every item, at most `limit` at once, in order of the items.
- * Says whether all of them succeeded; one failing does not stop the rest.
- */
-async function forEachLimited<T>(
-  items: T[],
-  limit: number,
-  task: (item: T) => Promise<void>,
-): Promise<boolean> {
-  let next = 0
-  let succeeded = true
-  const worker = async () => {
-    while (next < items.length) {
-      const item = items[next++] as T
-      await task(item).catch(() => {
-        succeeded = false
-      })
-    }
-  }
-  await Promise.all(
-    Array.from({ length: Math.min(limit, items.length) }, worker),
-  )
-  return succeeded
+): Promise<LiveBlobsRows> {
+  const windowStart = head - WINDOW_SLOTS + 1
+  const [stored, inWindow, blocks, batches, posted, buckets] =
+    await Promise.all([
+      source.liveBlock.getSlotRange(),
+      source.liveBlock.getSlotRange(windowStart),
+      source.liveBlock.getBySlotRange(head - PULSE_SLOTS + 1, head),
+      source.liveBlobBatch.getBySlotRange(head - BELT_SLOTS + 1, head),
+      source.liveBlobBatch.getPostedSince(windowStart),
+      source.liveBlobBatch.getBucketsSince(windowStart, BUCKET_SLOTS),
+    ])
+  return { stored, inWindow, blocks, batches, posted, buckets }
 }
 
 /** Waits for `promise`, but no longer than `seconds` */

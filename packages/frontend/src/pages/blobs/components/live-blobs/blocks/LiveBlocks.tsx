@@ -215,7 +215,11 @@ function useLookBack(layout: BeltLayout | undefined) {
   const { before, after } = layout
     ? racksAroundBay(layout)
     : { before: 0, after: 0 }
-  const hour = data && { head: data.head, slots: data.window.slots }
+  // the pulse's slots, as the window reaches a whole day back
+  const hour = data && {
+    head: data.head,
+    slots: data.window.blobsPerSlot.length,
+  }
   return {
     view: clampView(asked, hour, before),
     head: hour?.head,

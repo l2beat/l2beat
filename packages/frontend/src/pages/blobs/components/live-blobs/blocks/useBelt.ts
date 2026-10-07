@@ -1,3 +1,4 @@
+import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import {
   type MouseEvent,
   type PointerEvent,
@@ -7,7 +8,6 @@ import {
   useRef,
   useState,
 } from 'react'
-import { SLOT_SECONDS } from '~/utils/beaconSlots'
 import { prepareCanvas, useAnimationFrame } from '../hooks'
 import type { ChainBlock } from './beaconChain'
 import { livePosition, SLIDE_TIME } from './beltPosition'

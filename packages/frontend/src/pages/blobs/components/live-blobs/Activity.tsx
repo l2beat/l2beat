@@ -2,12 +2,13 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { cn } from '~/utils/cn'
 import { usePrefersReducedMotion } from './hooks'
 
-const BAR_WIDTH = 5
+// thin enough for a whole day of bars to fit a table column
+const BAR_WIDTH = 2
 const BAR_STEP = BAR_WIDTH + 1
 const SLIDE_MS = 700
 
 /**
- * Blobs in each five minutes of the hour, the step under way on the right.
+ * Blobs in each step of the day, the step under way on the right.
  * The steps are fixed in time, so the bars move only two ways: the last one
  * grows as batches land in it, and when a new step starts the whole row
  * slides one bar to the left, the oldest sliding out past the left edge.

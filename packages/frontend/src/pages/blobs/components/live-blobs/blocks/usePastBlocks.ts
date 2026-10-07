@@ -1,8 +1,8 @@
+import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import { useQueries } from '@tanstack/react-query'
 import { useMemo, useRef } from 'react'
 import type { PastBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { useTRPC } from '~/trpc/React'
-import { SLOT_SECONDS } from '~/utils/beaconSlots'
 import { isBehindLive, pastPagesFor } from '../lookBack'
 import {
   type ChainBlock,

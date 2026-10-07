@@ -1,5 +1,5 @@
+import { SLOT_SECONDS, slotProgressAt, slotStart } from '@l2beat/shared-pure'
 import { useState } from 'react'
-import { SLOT_SECONDS, slotProgressAt, slotStart } from '~/utils/beaconSlots'
 
 /**
  * The device's clock may be off, and a minute off would park the bay away

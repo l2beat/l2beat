@@ -1,4 +1,4 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import { formatSeconds, SLOT_SECONDS } from '@l2beat/shared-pure'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { BasicTableHeaderDividerRow } from '~/components/table/BasicTable'
@@ -18,7 +18,7 @@ import {
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
 import type { PostedWindow } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
-import { SLOT_SECONDS } from '~/utils/beaconSlots'
+import { BUCKET_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { Activity } from './Activity'
@@ -56,7 +56,7 @@ const COLUMNS: {
   { label: 'Name' },
   {
     label: 'Activity',
-    tooltip: 'Blobs in every five minutes of the window, newest on the right',
+    tooltip: `Blobs in every ${(BUCKET_SLOTS * SLOT_SECONDS) / 60} minutes of the window, newest on the right`,
   },
   { label: 'Blobs', align: 'right', tooltip: 'Blobs posted in the window' },
   {
@@ -81,15 +81,18 @@ const COLUMNS: {
 ]
 
 /**
- * Who posted over the last hour, as the belt saw it: the exact numbers behind
+ * Who posted over the last 24 hours: the exact numbers behind
  * the colored squares, which nobody can count off a belt that keeps moving.
  * It moves with the belt: a project's row lights up as its batch lands, its
  * numbers count up, and rows slide past each other as the ranking changes.
  */
 export function LivePosters({ posters }: Props) {
   const { data } = useLiveBlobs()
-  const hour = data?.window
-  const rows = useMemo(() => hour && toRows(hour, posters), [hour, posters])
+  const postedWindow = data?.window
+  const rows = useMemo(
+    () => postedWindow && toRows(postedWindow, posters),
+    [postedWindow, posters],
+  )
   // "Last batch" is told on the chain's clock, as the belt is: a device clock
   // a minute off would age every batch a minute, or make the newest "just now"
   const clock = useChainClock()
@@ -106,12 +109,12 @@ export function LivePosters({ posters }: Props) {
   const tableRef = useRef<HTMLDivElement>(null)
   useReorder(tableRef, rows?.map((row) => row.poster.id).join() ?? '')
 
-  if (!hour || !rows) return <PostersSkeleton />
-  const seconds = hour.slots * SLOT_SECONDS
+  if (!postedWindow || !rows) return <PostersSkeleton />
+  const seconds = postedWindow.slots * SLOT_SECONDS
   const totalBlobs = rows.reduce((sum, row) => sum + row.blobs, 0)
 
   return (
-    <section aria-label="Who posted blobs in the last hour">
+    <section aria-label="Who posted blobs in the last 24 hours">
       <div ref={tableRef}>
         <Table
           stickyHeader
@@ -152,8 +155,8 @@ export function LivePosters({ posters }: Props) {
                 seconds={seconds}
                 totalBlobs={totalBlobs}
                 head={head}
-                firstBucket={hour.firstBucket}
-                newestBlobs={hour.blobsPerSlot[0] ?? 0}
+                firstBucket={postedWindow.firstBucket}
+                newestBlobs={postedWindow.blobsPerSlot[0] ?? 0}
                 progress={progress}
               />
             ))}
@@ -274,10 +277,10 @@ interface Row {
  * One row per poster, most blobs first. A project the page does not know of
  * is counted as unknown, as the belt draws it
  */
-function toRows(hour: PostedWindow, posters: LivePoster[]): Row[] {
+function toRows(postedWindow: PostedWindow, posters: LivePoster[]): Row[] {
   const byId = new Map(posters.map((poster) => [poster.id, poster]))
   const rows = new Map<string, Row>()
-  for (const posted of hour.posted) {
+  for (const posted of postedWindow.posted) {
     const poster =
       byId.get(posted.projectId ?? UNKNOWN_ID) ?? byId.get(UNKNOWN_ID)
     if (!poster) continue
