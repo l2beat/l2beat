@@ -11,7 +11,7 @@ Generated with discovered.json: 0x95da12fd6cb9beac7fa6366a0d2ed1ccd6a92ece
 
 StVaultsCommittee: member rotated.
 
-VettedGate: eligibility tree root updated through Easy Track.
+VettedGate: tree root updated via Easy Track.
 
 ## Watched changes
 
