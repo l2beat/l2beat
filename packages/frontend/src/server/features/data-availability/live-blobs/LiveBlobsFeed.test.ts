@@ -198,6 +198,35 @@ describe(LiveBlobsFeed.name, () => {
     }
   })
 
+  it('looks again at a block behind a moved head whose fresh look failed, before the head moves on', async () => {
+    // five seconds into the head's slot, so the next poll is due in eight
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const node = fakeNode()
+      feed = new LiveBlobsFeed(node.source, Logger.SILENT)
+      await feed.latest()
+
+      // the chain drops the head's block as the next comes, but the fresh
+      // look at it fails; the head then stays put
+      node.dropped = HEAD
+      node.failing = HEAD
+      node.head = HEAD + 1
+      await clock.tickAsync(8000)
+      node.failing = undefined
+      await clock.tickAsync(12_000)
+      const blobs = await feed.latest()
+
+      expect(blobs?.blocks.find((b) => b.slot === HEAD)?.status).toEqual(
+        'missed',
+      )
+    } finally {
+      clock.uninstall()
+    }
+  })
+
   it('answers a waiting page when a block that failed to come is fetched after all', async () => {
     const clock = install({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],

@@ -157,6 +157,12 @@ export class LiveBlobsFeed {
   private readonly blocks = new Map<number, LiveBlock>()
   /** Failed tries at each block not fetched yet */
   private readonly tries = new Map<number, number>()
+  /**
+   * Slots whose block the chain may have dropped and whose fresh look has not
+   * come: looked at again on every poll, head moved or not, or a dropped
+   * block would be served for as long as it is in the window
+   */
+  private readonly recheck = new Set<number>()
   private head: number | undefined
   private failures = 0
   private lastAskedAt = 0
@@ -228,16 +234,22 @@ export class LiveBlobsFeed {
     try {
       const head = await this.source.headSlot()
       const moved = head !== this.head
+      if (moved) {
+        for (const slot of slotsUnsettled(this.blocks, head)) {
+          this.recheck.add(slot)
+        }
+      }
       const missing = this.slotsToFetch(head, head - RECENT_SLOTS)
       const fetched = await this.fetchAll([
         ...missing,
-        ...(moved ? slotsUnsettled(this.blocks, head) : []),
+        ...this.worthAsking(this.recheck),
       ])
       // a block that failed to come with its head, and came on this try
       const filled = missing.some((slot) => this.blocks.has(slot))
       this.head = head
       forgetOld(this.blocks, head)
       forgetOld(this.tries, head)
+      forgetOld(this.recheck, head)
       this.failures = fetched ? 0 : this.failures + 1
       this.backfill(head)
       changed = moved || filled
@@ -268,7 +280,12 @@ export class LiveBlobsFeed {
 
   /** The slots from `from` down to just above `downTo` still worth asking for, newest first */
   private slotsToFetch(from: number, downTo: number) {
-    return slotsMissing(this.blocks, from, downTo).filter(
+    return this.worthAsking(slotsMissing(this.blocks, from, downTo))
+  }
+
+  /** Of `slots`, the ones not given up on */
+  private worthAsking(slots: Iterable<number>) {
+    return [...slots].filter(
       (slot) => (this.tries.get(slot) ?? 0) < BLOCK_TRIES,
     )
   }
@@ -277,6 +294,7 @@ export class LiveBlobsFeed {
     return forEachLimited(slots, CONCURRENCY, async (slot) => {
       try {
         this.blocks.set(slot, await this.source.block(slot))
+        this.recheck.delete(slot)
       } catch (error) {
         this.tries.set(slot, (this.tries.get(slot) ?? 0) + 1)
         throw error
@@ -392,7 +410,7 @@ function slotsUnsettled(blocks: Map<number, LiveBlock>, head: number) {
  * the chain can move its head back, dropping its newest block for none, and
  * that slot is then fetched afresh when a block fills it
  */
-function forgetOld(bySlot: Map<number, unknown>, head: number) {
+function forgetOld(bySlot: Set<number> | Map<number, unknown>, head: number) {
   for (const slot of bySlot.keys()) {
     if (slot <= head - WINDOW_SLOTS || slot > head) bySlot.delete(slot)
   }
