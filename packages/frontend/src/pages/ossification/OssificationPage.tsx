@@ -32,9 +32,9 @@ function OssificationDescription() {
         published, onchain-verified dataset
       </CustomLink>
       ) whose exploited code was younger than the project's critical contracts
-      are today. The clock starts at the launch, and every critical change or
-      new critical contract after it resets the clock. Battle-tested exposure is
-      the value they secured over the unchanged period.
+      are today. The clock starts at the ossification genesis, and every
+      critical change resets it. Battle-tested exposure is the value they
+      secured over the unchanged period.
     </>
   )
 }

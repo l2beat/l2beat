@@ -38,14 +38,12 @@ type OssificationExitWindow = Pick<
 interface OssificationTimeline {
   from: number
   to: number
-  /** Start of the current clock, the unchanged period */
+  /** Start of the clock, the unchanged period */
   clockStart: number
-  /** Start of the first clock, once per project, possibly before `from` */
-  launch: number
-  /** Resets after the launch, inside the window, up to the clock start */
-  resets: number[]
-  /** Critical changes inside the window, up to the clock start */
-  criticalChanges: number
+  /** Start of the first clock, possibly before `from` */
+  genesis: number
+  /** 24h-clustered critical changes inside the window */
+  criticalChanges: number[]
   /** Evenly spread from `from` to `to`, see sampleTimeline */
   values: (number | null)[] | null
 }
@@ -60,11 +58,8 @@ export async function getOssificationStats(
   ossification: OssificationResult,
   now: UnixTime,
 ): Promise<OssificationStats> {
-  const clockStart = ossification.projectClockStart
+  const clockStart = ossification.clockStart
   const from = now - TIMELINE_WINDOW
-  // Later ones belong to contracts that have left the perimeter.
-  const isInTimeline = (timestamp: number) =>
-    timestamp >= from && timestamp <= clockStart
   // One read covers both the exposure since the clock start and the timeline.
   const series = await getOssificationSeries(
     project,
@@ -89,9 +84,8 @@ export async function getOssificationStats(
       from,
       to: now,
       clockStart,
-      launch: ossification.launch,
-      resets: ossification.resets.filter(isInTimeline),
-      criticalChanges: ossification.criticalChanges.filter(isInTimeline).length,
+      genesis: ossification.genesis,
+      criticalChanges: ossification.criticalChanges.filter((t) => t >= from),
       values: series ? sampleTimeline(series.points, from, now) : null,
     },
   }

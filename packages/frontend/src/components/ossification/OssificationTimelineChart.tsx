@@ -13,9 +13,9 @@ import { formatTimestamp } from '~/utils/dates'
 const WIDTH = 132
 const HEIGHT = 30
 const TOP = 2
-// The area sits above it, reset ticks, the launch dot and the arrow below.
+// The area sits above it, change ticks, the genesis dot and the arrow below.
 const BASELINE = 24
-const LAUNCH_RADIUS = 2
+const GENESIS_RADIUS = 2
 const LINE_PROPS = {
   strokeWidth: 1.5,
   strokeLinejoin: 'round',
@@ -32,7 +32,7 @@ export function OssificationTimelineChart({
   className,
 }: Props & { className?: string }) {
   const id = useId()
-  const { from, to, clockStart, launch, resets, values } = timeline
+  const { from, to, clockStart, genesis, criticalChanges, values } = timeline
   const toX = (timestamp: number) => ((timestamp - from) / (to - from)) * WIDTH
   const clockBeforeWindow = clockStart < from
   const clockX = clockBeforeWindow ? 0 : toX(clockStart)
@@ -104,11 +104,11 @@ export function OssificationTimelineChart({
               </g>
             </>
           )}
-          {resets.map((reset) => (
+          {criticalChanges.map((change) => (
             <line
-              key={reset}
-              x1={snap(toX(reset))}
-              x2={snap(toX(reset))}
+              key={change}
+              x1={snap(toX(change))}
+              x2={snap(toX(change))}
               y1={BASELINE + 2}
               y2={HEIGHT}
               stroke="var(--secondary)"
@@ -131,15 +131,15 @@ export function OssificationTimelineChart({
               {...CRISP}
             />
           )}
-          {/* Drawn last: with no reset since, the pink line is at the launch. */}
-          {launch >= from && (
+          {/* Drawn last: with no change since, the pink line is at the genesis. */}
+          {genesis >= from && (
             <circle
               cx={Math.min(
-                Math.max(toX(launch), LAUNCH_RADIUS),
-                WIDTH - LAUNCH_RADIUS,
+                Math.max(toX(genesis), GENESIS_RADIUS),
+                WIDTH - GENESIS_RADIUS,
               )}
-              cy={BASELINE + 2 + LAUNCH_RADIUS}
-              r={LAUNCH_RADIUS}
+              cy={BASELINE + 2 + GENESIS_RADIUS}
+              r={GENESIS_RADIUS}
               fill="var(--secondary)"
             />
           )}
@@ -203,7 +203,7 @@ function getDescription({
     period: `${formatTimestamp(from)} – ${formatTimestamp(to)}`,
     lines: [
       `Unchanged for ${formatSeconds(to - clockStart)}, since ${formatTimestamp(clockStart)}${clockBeforeWindow ? ' — before this window, so the whole year is highlighted' : ''}.`,
-      getResetsLine(timeline),
+      getChangesLine(timeline),
       current !== undefined && valueSource
         ? `${OSSIFICATION_VALUE_LABELS[valueSource].long} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(Math.max(...known), 'usd')}.`
         : 'No value data.',
@@ -211,24 +211,13 @@ function getDescription({
   }
 }
 
-// The launch starts the first clock and is no reset. New critical contracts
-// reset the clock too, so resets can outnumber critical changes.
-function getResetsLine({
-  from,
-  launch,
-  resets,
-  criticalChanges,
-}: Props['timeline']) {
+function getChangesLine({ from, genesis, criticalChanges }: Props['timeline']) {
   const span =
-    launch >= from
-      ? `since the launch on ${formatTimestamp(launch)}`
+    genesis >= from
+      ? `since the ossification genesis on ${formatTimestamp(genesis)}`
       : 'in this window'
-  if (resets.length === 0) {
-    return `No reset ${span}.`
-  }
-  const changes =
-    criticalChanges === 0
-      ? 'all from new critical contracts'
-      : `${criticalChanges} critical ${pluralize(criticalChanges, 'change')}`
-  return `${resets.length} ${pluralize(resets.length, 'reset')} ${span} (${changes}).`
+  const count = criticalChanges.length
+  return count === 0
+    ? `No critical change ${span}.`
+    : `${count} critical ${pluralize(count, 'change')} ${span}.`
 }

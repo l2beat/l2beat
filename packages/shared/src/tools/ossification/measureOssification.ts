@@ -2,7 +2,6 @@ import { assert, clamp, type UnixTime } from '@l2beat/shared-pure'
 import { knots as EXPLOIT_AGES } from './ossificationCurve.json'
 import type {
   OssificationChange,
-  OssificationContract,
   OssificationCriticalUpdate,
   OssificationHistory,
   OssificationResult,
@@ -21,86 +20,63 @@ export function measureOssification(
   assert(history.contracts.length > 0, 'a measured perimeter has a contract')
   const changes = sortedChanges(history)
   const timestamps = changes.map((change) => change.timestamp)
+  const genesis = getGenesis(history)
+  const clockStart = Math.max(genesis, ...timestamps)
 
-  const launch = getLaunch(history)
-  const contracts = getContractClocks(history, launch)
-  const projectClockStart = contracts[0].ossifyingSince
-  const maturity = history.contracts.every((contract) => contract.isVerified)
-    ? exploitAgePercentile(Math.max(0, now - projectClockStart))
+  const isVerified = history.contracts.every((contract) => contract.isVerified)
+  const score = isVerified
+    ? toDisplayScore(exploitAgePercentile(Math.max(0, now - clockStart)))
     : 0
 
-  const from = Math.max(now - RATE_WINDOW, history.observedSince)
-  const windowSeconds = Math.max(now - from, RATE_WINDOW_MIN)
+  const from = Math.max(now - RATE_WINDOW, genesis)
   const clusteredEventCount = clusterStarts(
     timestamps.filter((timestamp) => timestamp >= from),
   ).length
+  const years = Math.max(now - from, RATE_WINDOW_MIN) / YEAR
 
   return {
-    score: toDisplayScore(maturity),
-    maturity,
-    projectClockStart,
-    launch,
-    lastCriticalChange: timestamps.at(-1),
-    criticalChangesPerYear: clusteredEventCount / (windowSeconds / YEAR),
+    score,
+    clockStart,
+    genesis,
+    criticalChangesPerYear: clusteredEventCount / years,
     clusteredEventCount,
-    windowSeconds,
     criticalChanges: clusterStarts(timestamps),
-    resets: clusterStarts(
-      [
-        ...timestamps,
-        ...history.arrivals.filter((arrival) => arrival > launch),
-      ].sort((a, b) => a - b),
-    ),
-    contracts,
+    contracts: history.contracts
+      .map((contract) => ({
+        ...contract,
+        ossifyingSince: Math.max(contract.ossifyingSince, genesis),
+      }))
+      .sort((a, b) => b.ossifyingSince - a.ossifyingSince),
     criticalUpdates: getCriticalUpdates(changes),
   }
 }
 
+/** The newest change starts the clock, so it must be dated exactly. */
 export function getUncertainNewestChange(
   history: OssificationHistory,
 ): OssificationChange | undefined {
   const newest = sortedChanges(history).at(-1)
-  if (newest === undefined || newest.earliest === newest.timestamp) {
-    return undefined
-  }
-  const [youngest] = getContractClocks(history, getLaunch(history))
-  return newest.timestamp === youngest.ossifyingSince ? newest : undefined
+  return newest !== undefined && newest.earliest !== newest.timestamp
+    ? newest
+    : undefined
 }
 
 function sortedChanges(history: OssificationHistory): OssificationChange[] {
   return [...history.changes].sort((a, b) => a.timestamp - b.timestamp)
 }
 
-// No clock starts before the launch: older code is only as battle-tested as
-// the project that runs it. Youngest clock first, it is the project's.
-function getContractClocks(
-  history: OssificationHistory,
-  launch: number,
-): OssificationContract[] {
-  return history.contracts
-    .map((contract) => ({
-      ...contract,
-      ossifyingSince: Math.max(contract.ossifyingSince, launch),
-    }))
-    .sort((a, b) => b.ossifyingSince - a.ossifyingSince)
-}
-
-// The perimeter launches with the arrivals of its first day of observation.
-// Earlier ones assembled it. A critical change ends the rollout early, so no
-// change precedes the launch, and one at the launch only happens when nothing
-// older than that change is known.
-function getLaunch(history: OssificationHistory): number {
+// The last deployment in the first day of observation, or the first change if
+// it comes sooner. Earlier deployments only assembled the perimeter.
+function getGenesis(history: OssificationHistory): number {
   const firstChange = Math.min(
     ...history.changes.map((change) => change.timestamp),
   )
-  const rolloutEnd = history.observedSince + CLUSTER_WINDOW
-  const lastRollout = Math.max(
-    history.observedSince,
-    ...history.arrivals.filter(
-      (arrival) => arrival <= rolloutEnd && arrival < firstChange,
-    ),
+  const rollout = history.deployments.filter(
+    (deployment) =>
+      deployment <= history.observedSince + CLUSTER_WINDOW &&
+      deployment < firstChange,
   )
-  return Math.min(lastRollout, firstChange)
+  return Math.min(Math.max(history.observedSince, ...rollout), firstChange)
 }
 
 function getCriticalUpdates(
