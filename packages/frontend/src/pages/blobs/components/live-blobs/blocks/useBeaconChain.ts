@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTRPC, useTRPCClient } from '~/trpc/React'
 import { useChainClock } from '../chainClock'
 import {
+  arrivesNow,
   type ChainBlock,
   isSameBlock,
   type PosterIndexOf,
@@ -75,6 +76,7 @@ export function useBeaconChain({
   useEffect(() => {
     if (!live) return
     clock.correct(live.head)
+    const headMoved = live.head !== head.current
     head.current = live.head
     const current = Math.floor(chain.progressNow())
     const changed = live.blocks.filter(
@@ -85,7 +87,9 @@ export function useBeaconChain({
       const isNew = !chain.blocks.has(block.slot)
       const kept = toChainBlock(block, posterIndexOf)
       chain.blocks.set(block.slot, kept)
-      if (isNew && block.slot >= current - 1) onFresh.current(kept)
+      if (isNew && arrivesNow(block.slot, live.head, headMoved, current)) {
+        onFresh.current(kept)
+      }
     }
     forgetOld(chain.blocks, live.head)
     if (changed.length > 0) setVersion((v) => v + 1)
