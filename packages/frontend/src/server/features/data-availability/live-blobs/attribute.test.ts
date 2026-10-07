@@ -1,5 +1,6 @@
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { createAttribute } from './attribute'
+import { createAttribute, toBlobSenders } from './attribute'
 
 // Methodology: a few projects behind made-up inboxes and sequencers, each case
 // one way the backend's rule tells (or fails to tell) whose a blob is.
@@ -74,5 +75,68 @@ describe(createAttribute.name, () => {
     expect(attribute('0xtaiko1', '0xanyone')).toEqual(undefined)
     expect(attribute('0xtaiko2', '0xanyone')).toEqual('taiko')
     expect(attribute('0xmorph', '0xm2')).toEqual('morph')
+  })
+})
+
+// Methodology: configs shaped as in packages/config, one of a rollup with its
+// `daLayer` and one of a sovereign chain from Ethereum's own list, without
+describe(toBlobSenders.name, () => {
+  it("reads a rollup's Ethereum inbox and sequencers, lowercase", () => {
+    expect(
+      toBlobSenders('base', [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId.ETHEREUM,
+          inbox: EthereumAddress('0xFF00000000000000000000000000000000008453'),
+          sequencers: [
+            EthereumAddress('0x5050F69a9786F081509234F1a7F4684b5E5b76C9'),
+          ],
+          sinceBlock: 1,
+        },
+      ]),
+    ).toEqual([
+      {
+        projectId: 'base',
+        inbox: '0xff00000000000000000000000000000000008453',
+        sequencers: ['0x5050f69a9786f081509234f1a7f4684b5e5b76c9'],
+        sinceBlock: 1,
+        untilBlock: undefined,
+      },
+    ])
+  })
+
+  it("reads a sovereign chain's config, which names no DA layer", () => {
+    expect(
+      toBlobSenders('codex', [
+        {
+          type: 'ethereum',
+          inbox: EthereumAddress('0x8c12f051c161c2cda736f3b3fa1c4bdd35b7922c'),
+          sequencers: [
+            EthereumAddress('0xb5bd290ef8ef3840cb866c7a8b7cc9e45fde3ab9'),
+          ],
+          sinceBlock: 20953494,
+        },
+      ]).map((s) => s.projectId),
+    ).toEqual(['codex'])
+  })
+
+  it('leaves out projects told apart by events alone, and other DA layers', () => {
+    expect(
+      toBlobSenders('other', [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId.ETHEREUM,
+          inbox: EthereumAddress.ZERO,
+          topics: ['0x'],
+          sinceBlock: 1,
+        },
+        {
+          type: 'celestia',
+          daLayer: ProjectId('celestia'),
+          namespace: 'ns',
+          sinceBlock: 1,
+        },
+      ]),
+    ).toEqual([])
   })
 })
