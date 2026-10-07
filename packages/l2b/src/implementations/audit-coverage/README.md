@@ -51,7 +51,7 @@ type AuditCoverage = {
   dataset: { repository: string; commit: string }
   discoveredAt: number // discovery timestamp of the deployed sources
   collections: Record<CollectionId, { name: string; kind: 'project' | 'library' }>
-  reports: Record<ReportId, { collections: CollectionId[]; title: string; auditor: string; date?: string; document: string }>
+  reports: Record<ReportId, { collections: CollectionId[]; title: string; auditor: string; date?: string; document: string }> // used by a unit, plus every report of the project's own collection
   auditedFiles: Record<ObjectId, { repository: string; commit: string; path: string }>
   units: Record<UnitId, Unit> // UnitId: first 12 hex characters of sha256 of the deployed body
   flats: Record<FlatSha256, [UnitId, number][]> // units of a flat source and their first line

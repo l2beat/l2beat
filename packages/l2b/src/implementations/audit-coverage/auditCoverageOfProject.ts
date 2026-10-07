@@ -64,7 +64,7 @@ export async function auditCoverageOfProject(
       return [covered.id, covered.first]
     })
   }
-  const reports = usedReports(units, inputs.index)
+  const reports = reportsOf(project, units, inputs.index)
   return {
     schema_version: '1.0.0',
     project,
@@ -123,13 +123,19 @@ function addAuditedFile(
   auditedFiles.set(object, file)
 }
 
-function usedReports(
+function reportsOf(
+  project: string,
   units: Record<string, Unit>,
   index: AuditIndex,
 ): Record<string, CoverageReport> {
   const ids = new Set(
     Object.values(units).flatMap((unit) => unit.reports ?? []),
   )
+  for (const [id, report] of Object.entries(index.reports)) {
+    if (report.collections.includes(project)) {
+      ids.add(id)
+    }
+  }
   return Object.fromEntries(
     [...ids].sort().map((id) => {
       const report = index.reports[id]
