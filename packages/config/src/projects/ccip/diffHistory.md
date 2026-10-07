@@ -1,3 +1,359 @@
+Generated with discovered.json: 0xc5963371c6607d8f99b50c305e8459a8f88be532
+
+# Diff at Wed, 07 Oct 2026 13:26:38 GMT:
+
+- id: 7cd3d4d2
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@55f4b3477e6346921fce4e816d219b472a5aacf0 block: 1790867273
+- current timestamp: 1791379312
+
+## Description
+
+- 6 more Ethereum lanes moved to CCIP 2.0: the MainRouter now selects EthereumOnRamp_v2_0 for Lens, Taiko, Kaia, TAC, Mova and Gravity (69 destinations in total), and EthereumOffRamp_v2_0 routes their inbound messages through the MainRouter.
+- Kaia, Mova and Gravity were configured on the v2.0 Executor, verifier resolver and CommitteeVerifier (9-of-16 signers).
+- BOB's L1UsdcBridge, an authorized caller of BobUSDCERC20LockBox, became source-verified, which made discovery follow its messenger into BOB's OP Stack contracts. Its bridge, messenger and token fields are now ignored as relatives; its owner (Bob Multisig 2) is still tracked. CCTPVerifier_v2_0, CCTPMessageTransmitterProxy_v2_0 and Circle's SeizureRegistry USDC minter also became verified.
+- No allowed finality config changed.
+
+## Watched changes
+
+```diff
+    contract Executor (eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b) [ccip/Executor] {
+    +++ description: Fee-policy implementation used by a CCIP 2.0 executor endpoint. It quotes a flat fee for supported destination chains and refuses to quote messages whose requested finality or verifier list falls outside its configured policy. It does not deliver destination messages itself.
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.23:
++        {"destChainSelector":"gravity","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.31:
++        {"destChainSelector":"kaia","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.41:
++        {"destChainSelector":"mova","config":{"usdCentsFee":0,"enabled":true}}
+    }
+```
+
+```diff
+    contract VersionedVerifierResolver (eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b) [ccip/VersionedVerifierResolver] {
+    +++ description: CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.24:
++        {"destChainSelector":"gravity","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.32:
++        {"destChainSelector":"kaia","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.42:
++        {"destChainSelector":"mova","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
+    }
+```
+
+```diff
+    contract DeprecatedRouter (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
+      values.getOffRamps.70:
++        {"sourceChainSelector":"9813823125703490621","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.71:
++        {"sourceChainSelector":"2988178761202034333","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.72:
++        {"sourceChainSelector":"4215185756725900654","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.onRamps.kaia:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.gravity:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.mova:
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      directlyReceivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"invoke forwardFromRouter and submit messages to this OnRamp for the configured destination route.","role":".routeRouters"}
+    }
+```
+
+```diff
+    contract EthereumOffRamp_v2_0 (eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3) [ccip/OffRampV2_0] {
+    +++ description: CCIP 2.0 OffRamp used to receive messages on its local chain. Anyone can submit a packed message for execution, but the contract checks its source route, RMN curse status, destination and OnRamp addresses, and the verifier quorum required by the lane, receiver, and token pool before releasing or minting a token and calling the receiver.
+      values.sourceChainConfigs.taiko.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.lens.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.tac.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.kaia:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000002d5d6b0e3160a54c3cb84c64b7d320789fb747db"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.gravity:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000000a3d8ed619ecf1e984488710eb2cece4fdbd83ca"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.mova:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"onRamps":["0x0000000000000000000000000a3d8ed619ecf1e984488710eb2cece4fdbd83ca"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+    }
+```
+
+```diff
+    contract CommitteeVerifier (eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F) [ccip/CommitteeVerifier] {
+    +++ description: Committee-based cross-chain verifier used by CCIP 2.0. On the source chain it accepts messages only from the Router-selected OnRamp, applies RMN and optional sender-allowlist checks, and returns its version tag. On the destination chain it applies RMN checks and requires the configured per-source-chain signature quorum over the version and message hash.
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.24:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"gravity","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.32:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"kaia","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.42:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"mova","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.66:
++        "9813823125703490621"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.67:
++        "2988178761202034333"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.68:
++        "4215185756725900654"
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.24:
++        {"remoteChainSelector":"gravity","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.32:
++        {"remoteChainSelector":"kaia","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.42:
++        {"remoteChainSelector":"mova","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
+      values.signatureConfigs.kaia:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.gravity:
++        {"threshold":9,"signers":["eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.mova:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"]}
+    }
+```
+
+```diff
+    contract MainRouter (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
+      values.onRamps.lens:
+-        "eth:0x6715EA73EcAf1CaE1c736731129637B2E94a6B49"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.taiko:
+-        "eth:0x5F6e7707DE5019E13BaFbD2f4569B2453F16eB3e"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.kaia:
+-        "eth:0x8469b5AbD81987F9347c0bAbd47b9eB11dA7d0dF"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.tac:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.mova:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.gravity:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+    }
+```
+
+```diff
+    contract FeeQuoter (eth:0x93669Cf8EabE869687544De34B453063fb23Bb69) [transporter/FeeQuoterV2] {
+    +++ description: Fee oracle and price registry for CCIP. Holds the per-destination-chain fee config (size and gas limits, gas overheads, flat per-byte gas rate, flat network fee, LINK fee multiplier percent, chain-family selector), the per-(destChain, token) flat transfer fee overrides, and the USD price tables for tokens and destination gas pushed by authorized callers through updatePrices(). Prices are not staleness-checked: quoting only requires that a price was set at least once. Exposes both the CCIP 2.0 quoting interface (quoteGasForExec, getTokenTransferFee, resolveLegacyArgs) and the legacy 1.6 one (getValidatedFee, processMessageArgs), so both ramp generations can use it.
+      values.destChainConfigs.tac.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.tac.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.tac.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.tac.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.kaia.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.kaia.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.kaia.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.kaia.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.taiko.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.taiko.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.taiko.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.taiko.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.mova.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.mova.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.mova.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.mova.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.gravity.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.gravity.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.gravity.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.gravity.defaultTokenFeeUSDCents:
+-        50
++        0
+    }
+```
+
+```diff
+    contract EthereumOnRamp_v2_0 (eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7) [ccip/OnRampV2_0] {
+    +++ description: CCIP 2.0 OnRamp used to send messages from its local chain. It accepts messages from the Router configured for each destination, locks or burns at most one token, selects the required cross-chain verifiers and executor, charges their fees, and emits the packed message that is verified and executed on the destination chain.
+      values.destChainConfigs.taiko.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.lens.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.tac.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.destChainConfigs.kaia:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x626779f062fcdE0949ca93Dc5fB14d9F68C6A48D"}
+      values.destChainConfigs.gravity:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x27Da8AB83eC4d72fd744748b273F6bf9B5BDB121"}
+      values.destChainConfigs.mova:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x27Da8AB83eC4d72fd744748b273F6bf9B5BDB121"}
+      values.routeRouters.taiko:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.lens:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.tac:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.kaia:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.gravity:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.routeRouters.mova:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790867273 (main branch discovery), not current.
+
+```diff
+    contract L1UsdcBridge (eth:0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb) [N/A] {
+    +++ description: None
+      name:
+-        ""
++        "L1UsdcBridge"
+      unverified:
+-        true
+      values.burner:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.l1Usdc:
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.l2TokenBridge:
++        "eth:0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90"
+      values.l2Usdc:
++        "eth:0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0"
+      values.messenger:
++        "eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA"
+      values.MESSENGER:
++        "eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA"
+      values.OTHER_BRIDGE:
++        "eth:0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90"
+      values.otherBridge:
++        "eth:0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90"
+      values.owner:
++        "eth:0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194"
+      values.paused:
++        true
+      values.version:
++        "2.1.0"
+      implementationNames.eth:0x8815623E1a3829Ce0994d183ab1aF99E9308538D:
+-        ""
++        "L1UsdcBridge"
+      sourceHashes:
++        ["0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31","0x13efe1e10ca365d5e0c623c52e6d838c7dc2881227f808cf237c58812890b9cf"]
+    }
+```
+
+```diff
+    contract CCTPMessageTransmitterProxy_v2_0 (eth:0x65E0c4AB4Da5d22E824879DEB43123D23217DEdD) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      implementationNames.eth:0x65E0c4AB4Da5d22E824879DEB43123D23217DEdD:
+-        ""
++        "CCTPMessageTransmitterProxy"
+      sourceHashes:
++        ["0x457f2d4685becb8d5607a70f182c299b687f6fca895a5f5e63a7f84238606902"]
+    }
+```
+
+```diff
+    contract CCTPVerifier_v2_0 (eth:0xa22606F055146f0eac2FBEd49253E779b781355D) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      implementationNames.eth:0xa22606F055146f0eac2FBEd49253E779b781355D:
+-        ""
++        "CCTPVerifier"
+      sourceHashes:
++        ["0x252889c4536e72c917f51682b15ce22e99b0090de3bb519a36ce505710b81c02"]
+    }
+```
+
+```diff
+    contract SeizureRegistry (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A] {
+    +++ description: None
+      name:
+-        ""
++        "SeizureRegistry"
+      unverified:
+-        true
+      values.addressManager:
++        "eth:0xD8192E257630394aBf289fb350482264aa700cB2"
+      values.hashUpdater:
++        "eth:0x96cc15F1920E700c2fDC06546071BC44c6D62Ae2"
+      values.owner:
++        "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5"
+      values.pendingOwner:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rescuer:
++        "eth:0xEAc54284b1Eb10132c7204cF6265ae1ae122BC86"
+      values.secondaryMarketBurner:
++        "eth:0x0837EDBb99E3e8Fc740337014f690F92102a0038"
+      values.TOKEN:
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC:
+-        ""
++        "SeizureRegistry"
+      sourceHashes:
++        ["0xf66f390c3291bc5b8725bf8fa36d64494b91e8cfb2b717b52e85adcc68dcdd50","0x69d58c583f7c1689f33f52112c458212177cc01844f86873c742231206d49e50"]
+    }
+```
+
 Generated with discovered.json: 0xb72e38702619162aee619a933e50581cfaeed979
 
 # Diff at Thu, 01 Oct 2026 16:21:27 GMT:
