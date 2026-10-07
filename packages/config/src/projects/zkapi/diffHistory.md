@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc8c8ab4dc371d9a517f0fe6f4e658b759f5057ee
+Generated with discovered.json: 0x5824f3669b2887098bf63807d97bf138f6460e93
 
-# Diff at Fri, 02 Oct 2026 12:42:14 GMT:
+# Diff at Wed, 07 Oct 2026 11:42:45 GMT:
 
 - id: 193c1624
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1790944823
+- current timestamp: 1791373302
 
 ## Description
 
@@ -15,7 +15,7 @@ Initial discovery of the active native ETH vault, its Groth16 proof adapter and 
 ```diff
 +   Status: CREATED
     contract ZkApiVault (eth:0x4386FDbdA35D995beB3BF8625118Ec5982ec81fe) [zkapi/ZkApiVault]
-    +++ description: Escrows native ETH for anonymous API authorizations. Each deposit creates a publicly identified note. A Groth16 proof closes it with operator clearance or starts a delayed escape withdrawal that can be challenged with a valid request proof sharing its nullifier. The challenge does not prove service acceptance or delivery. Closures reveal the original note id, payout address and remaining balance, and send the consumed balance to the treasury. Anyone can sweep an expired active note entirely to the treasury. Pausing blocks deposits, cooperative closes and new escapes, while challenges, escape finalization and expiry sweeps remain available.
+    +++ description: Escrows ETH for anonymous API authorizations as publicly numbered notes. A Groth16 proof closes a note with operator clearance, or starts a delayed escape that any request proof with the same nullifier cancels. Closing reveals the note id, payout address and remaining balance and sends the used part to the treasury. Anyone can sweep an expired note entirely to the treasury, also while paused.
 ```
 
 ```diff

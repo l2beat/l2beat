@@ -1,22 +1,21 @@
 ## Funds can be stolen if
 
-1. the owner blocks withdrawals before expiry and redirects the full expired deposits to its treasury.
-2. retained setup secrets or a circuit/verifier flaw allow forged withdrawal proofs.
-3. malicious wallet code steals note secrets or redirects payments.
+1. the owner pauses withdrawals until notes expire and anyone sweeps them to its treasury.
+2. the single-party setup secrets or a circuit flaw allow forged withdrawal proofs.
+3. malicious wallet code reads the note secret.
 
 <br>
 
 ## Funds can be lost or frozen if
 
-1. note secrets, settlement state or operator signing keys are lost. The signing keys cannot rotate.
-2. the operator withholds a successor signature after a request proof is submitted and used to challenge an escape.
-3. active notes expire, withdrawals are paused or a destination/treasury rejects ETH.
+1. the note secret or the latest signed balance is lost.
+2. a note expires before withdrawal.
+3. the operator withholds a signed balance and cancels the escape with the request it received.
 
 <br>
 
 ## Privacy can be lost if
 
-1. note-id queries, shared Tor circuits, rpc fallback, timing or budgets identify the paying deposit.
-2. providers identify users from prompts or link requests sharing credentials. Verifier approval does not prove absence of provider logging.
-3. challenges publish authorizations, linking their nullifiers to deposits.
-4. hosted code or another process reads local secrets and chats.
+1. the operator matches a deposit to its first requests by timing or note id (see privileged insider).
+2. prompts identify you to the provider.
+3. you deposit and request from the same IP without Tor (see network observer).

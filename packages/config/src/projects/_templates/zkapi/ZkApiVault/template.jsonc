@@ -3,7 +3,7 @@
   "displayName": "ZkApiVault",
   "category": "core",
   "critical": true,
-  "description": "Escrows native ETH for anonymous API authorizations. Each deposit creates a publicly identified note. A Groth16 proof closes it with operator clearance or starts a delayed escape withdrawal that can be challenged with a valid request proof sharing its nullifier. The challenge does not prove service acceptance or delivery. Closures reveal the original note id, payout address and remaining balance, and send the consumed balance to the treasury. Anyone can sweep an expired active note entirely to the treasury. Pausing blocks deposits, cooperative closes and new escapes, while challenges, escape finalization and expiry sweeps remain available.",
+  "description": "Escrows ETH for anonymous API authorizations as publicly numbered notes. A Groth16 proof closes a note with operator clearance, or starts a delayed escape that any request proof with the same nullifier cancels. Closing reveals the note id, payout address and remaining balance and sends the used part to the treasury. Anyone can sweep an expired note entirely to the treasury, also while paused.",
   "ignoreMethods": ["notes", "pendingWithdrawals", "usedNullifiers"],
   "ignoreInWatchMode": ["currentRoot", "nextNoteId"],
   "fields": {
@@ -35,7 +35,7 @@
     "stateSigningKeyY": { "severity": "HIGH" },
     "clearanceSigningKeyX": {
       "severity": "HIGH",
-      "description": "X coordinate of the Baby-JubJub public key whose signature permits immediate cooperative closure. A delayed escape does not require clearance."
+      "description": "X coordinate of the Baby-JubJub public key whose signature permits immediate cooperative closure. A delayed escape needs no clearance."
     },
     "clearanceSigningKeyY": { "severity": "HIGH" },
     "noteTtl": {
@@ -44,11 +44,11 @@
     },
     "challengePeriod": {
       "severity": "HIGH",
-      "description": "Seconds during which an escape can be challenged with a valid request proof sharing its nullifier. The contract does not check whether the operator accepted or serviced that request."
+      "description": "Seconds during which any valid request proof sharing the escape's nullifier cancels it, served or not."
     },
     "requestChargeCap": {
       "severity": "HIGH",
-      "description": "Deployment-pinned request cap in gwei, checked by the client and authorization service. The vault does not compare request proof solvencyBound against this cap."
+      "description": "Request cap in gwei, enforced by the client and the authorization service only."
     },
     "nativeAssetWeiPerUnit": {
       "description": "Wei per balance unit. Vault balances and event amounts are denominated in whole gwei."

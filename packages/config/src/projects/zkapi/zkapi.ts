@@ -84,6 +84,11 @@ const values = {
   ),
   requestChargeCap: utils.formatEther(requestChargeCap),
 }
+// Note ids start at 0, so the next id counts the notes deposited since launch.
+const totalNotes = discovery.getContractValue<number>(
+  'ZkApiVault',
+  'nextNoteId',
+)
 const eth = getTokenByAddress(
   EthereumAddress('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'),
 )
@@ -116,7 +121,7 @@ export const zkapi: BaseProject = {
   },
   display: {
     description:
-      'An ETH-funded system that helps unlink an onchain payment from the AI inference token it paid for.',
+      'Prepaid AI inference on Ethereum that hides which deposit pays for which request.',
     detailedDescription: readProjectMarkdown(
       'zkapi',
       'detailedDescription',
@@ -227,17 +232,17 @@ export const zkapi: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'An unpaused vault and the latest usable local note state are needed to start an escape. A submitted request proof can cancel an escape from the same state, even without evidence of service acceptance or delivery. The operator must return a signed successor state to recover normal use. API access itself requires the operator, credential issuer and inference provider.',
+          'Starting an escape needs an unpaused vault and your latest signed balance. The operator can cancel it with any request proof it holds for that balance, and only a new operator signature restores normal use.',
       },
     },
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The browser frontend and local API daemon have public source and local run instructions. Production frontend, client, credential issuer and TEE builds have not been independently reproduced. Circuit source is public, but rerunning the single-party setup produces different keys. Published proof artifacts match the deployed verifier.',
+        'The browser app and the local daemon have public source and build instructions. The verifier enclave image rebuilds from source and matches its hardware attestation. The hosted frontend, the daemon releases and the key stations remain unreproduced.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
-    adversaries: zkApiAdversaries,
+    adversaries: zkApiAdversaries(totalNotes),
     riskSummary: readProjectMarkdown('zkapi', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('zkapi', 'upgradesAndGovernance'),
