@@ -50,19 +50,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Build mocked frontend
         run: pnpm build:frontend-ci
@@ -90,19 +79,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Build protocolbeat
         run: pnpm build:protocolbeat
@@ -119,19 +97,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
         
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Build tools
         run: pnpm build:tools
@@ -148,19 +115,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
         
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Build tx-decoder
         run: pnpm build:uops-dashboard
@@ -204,19 +160,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Typecheck
         run: pnpm typecheck
@@ -241,26 +186,15 @@ jobs:
         timeout-minutes: 3
         run: |
           docker run -d --name postgres -p 5432:5432 \
-            -e POSTGRES_PASSWORD=postgres mirror.gcr.io/postgres:18
+            -e POSTGRES_PASSWORD=postgres mirror.gcr.io/postgres:18-alpine
           # TCP, because the init-time server only listens on the unix socket
           until docker exec postgres pg_isready -h 127.0.0.1; do sleep 1; done
 
       - name: Check out code
         uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Wait for Postgres
         wait: postgres
@@ -277,41 +211,20 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       TURBO_API: ${{ secrets.TURBO_API_RO }}
     steps:
-      # Needs no checkout or Node, so it overlaps with the whole setup below
-      - name: Install Playwright system libraries
-        id: playwright-libs
-        background: true
-        run: |
-          sudo apt update
-          sudo apt install -y libnss3 libatk-bridge2.0-0 libdrm2 libxcomposite1 libxdamage1 libxrandr2 libgbm1
-
       - name: Check out code
         uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - parallel:
-          - name: Install Playwright browsers
-            working-directory: packages/frontend
-            run: pnpm exec playwright install chromium
+          - name: Set up Playwright
+            uses: ./.github/actions/setup-playwright
+            with:
+              package-dir: packages/frontend
 
           - name: Build dependencies
             run: pnpm build:dependencies:frontend
-
-      - name: Wait for Playwright system libraries
-        wait: playwright-libs
 
       - name: Run e2e tests
         run: |
@@ -327,41 +240,20 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       TURBO_API: ${{ secrets.TURBO_API_RO }}
     steps:
-      # Needs no checkout or Node, so it overlaps with the whole setup below
-      - name: Install Playwright system libraries
-        id: playwright-libs
-        background: true
-        run: |
-          sudo apt update
-          sudo apt install -y libnss3 libatk-bridge2.0-0 libdrm2 libxcomposite1 libxdamage1 libxrandr2 libgbm1
-
       - name: Check out code
         uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - parallel:
-          - name: Install Playwright browsers
-            working-directory: packages/protocolbeat
-            run: pnpm exec playwright install chromium
+          - name: Set up Playwright
+            uses: ./.github/actions/setup-playwright
+            with:
+              package-dir: packages/protocolbeat
 
           - name: Build dependencies
             run: pnpm build:dependencies:l2b
-
-      - name: Wait for Playwright system libraries
-        wait: playwright-libs
 
       # Independent: the backend suite listens on a random port, the page
       # suite on its own dev server
