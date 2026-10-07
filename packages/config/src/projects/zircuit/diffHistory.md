@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x9c0aa0bbaa6c90cba04da03adf6237e12a3dfefb
+
+# Diff at Wed, 07 Oct 2026 14:48:40 GMT:
+
+- id: 707b1a51
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1791217049
+- current timestamp: 1791217049
+
+## Description
+
+The permission modelling now recognizes the L2 alias of Conduit Multisig 1 (owner of the L2ProxyAdmin) as an alias, so it no longer counts as an EOA with upgrade permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791217049 (main branch discovery), not current.
+
+```diff
+    EOA (zircuit:0x5b5A62275DF8c60A80D3a25FAeC5aA7De116b857) {
+    +++ description: None
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0xc2c4d2406eac66d0c93297ad3e6a0518a73b0f20
 
 # Diff at Mon, 05 Oct 2026 16:18:38 GMT:
