@@ -1,6 +1,7 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import { BasicTableHeaderDividerRow } from '~/components/table/BasicTable'
 import {
   Table,
   TableBody,
@@ -18,7 +19,6 @@ import {
   BLOB_KIB,
   formatAverage,
   formatKib,
-  formatRate,
   formatWhole,
 } from './blocks/format'
 import { useChainClock } from './chainClock'
@@ -53,18 +53,13 @@ const COLUMNS: {
     tooltip:
       'Data posted in the window, counting every blob as its full 128 KiB',
   },
-  { label: 'Share', align: 'right', tooltip: 'Of all blobs in the window' },
-  {
-    label: 'KiB/s',
-    align: 'right',
-    tooltip: 'Data posted per second, on average over the window',
-  },
   { label: 'Batches', align: 'right', tooltip: 'Blob transactions sent' },
   {
     label: 'Per batch',
     align: 'right',
     tooltip: 'Blobs in a batch, on average',
   },
+  { label: 'Share', align: 'right', tooltip: 'Of all blobs in the window' },
   {
     label: 'Every',
     align: 'right',
@@ -129,6 +124,7 @@ export function LivePosters({ posters }: Props) {
                     </TableHead>
                   ))}
                 </TableHeaderRow>
+                <BasicTableHeaderDividerRow />
               </TableHeader>
             </>
           }
@@ -228,19 +224,13 @@ function PosterRow({
         <RollingNumber value={blobs * BLOB_KIB} format={formatKib} />
       </TableCell>
       <TableCell align="right">
-        <RollingNumber value={row.blobs / totalBlobs} format={formatPercent} />
-      </TableCell>
-      <TableCell align="right">
-        <RollingNumber
-          value={(blobs * BLOB_KIB) / seconds}
-          format={formatRate}
-        />
-      </TableCell>
-      <TableCell align="right">
         <RollingNumber value={row.batches} format={formatWhole} />
       </TableCell>
       <TableCell align="right">
         <RollingNumber value={row.blobs / row.batches} format={formatAverage} />
+      </TableCell>
+      <TableCell align="right">
+        <RollingNumber value={row.blobs / totalBlobs} format={formatPercent} />
       </TableCell>
       <TableCell align="right" className="tabular-nums">
         {/* one batch tells nothing of how often they come */}
