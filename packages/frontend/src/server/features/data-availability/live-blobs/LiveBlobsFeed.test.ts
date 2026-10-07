@@ -163,6 +163,41 @@ describe(LiveBlobsFeed.name, () => {
     }
   })
 
+  it('lets go of the block above a head that moved back, and tells a page that has it at once', async () => {
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      const node = fakeNode()
+      feed = new LiveBlobsFeed(node.source, Logger.SILENT)
+      await feed.latest()
+
+      // the chain drops its newest block for none, for now
+      node.head = HEAD - 1
+      node.reorgs = 1
+      await clock.tickAsync(8000)
+      const asked = feed.latestAfter({ after: HEAD })
+      await clock.tickAsync(0)
+      const back = await asked
+      expect(back?.head).toEqual(HEAD - 1)
+      expect(back?.blocks[0]?.slot).toEqual(HEAD - 1)
+
+      // another block fills the slot: it is fetched, not the dropped one served
+      node.head = HEAD
+      await clock.tickAsync(12_000)
+      const filled = await feed.latest()
+      expect(filled?.blocks[0]).toEqual({
+        slot: HEAD,
+        status: 'proposed',
+        blockNumber: HEAD + 1001,
+        batches: [{ projectId: 'base', blobs: 2, to: '0x' }],
+      })
+    } finally {
+      clock.uninstall()
+    }
+  })
+
   it('answers a waiting page when a block that failed to come is fetched after all', async () => {
     const clock = install({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
@@ -281,6 +316,8 @@ describe(LiveBlobsFeed.name, () => {
       failing: undefined as number | undefined,
       /** Asks the node failed to answer */
       failed: 0,
+      /** How often the chain was rebuilt: a block fetched again after one is another */
+      reorgs: 0,
       blocksAsked: 0,
       source: {} as BeaconSource,
     }
@@ -298,7 +335,7 @@ describe(LiveBlobsFeed.name, () => {
         return {
           slot,
           status: 'proposed',
-          blockNumber: slot + 1000,
+          blockNumber: slot + 1000 + node.reorgs,
           batches:
             slot % 10 === 0 ? [{ projectId: 'base', blobs: 2, to: '0x' }] : [],
         }
