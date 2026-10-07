@@ -167,8 +167,10 @@ export class CodexClient implements ModelClient {
     command: string[],
     input: ModelTurnInput,
   ): Promise<ModelTurn> {
-    const workDir = fs.mkdtempSync(
-      path.join(os.tmpdir(), 'discovery-templatizer-codex-'),
+    // The real path, which codex sees as its cwd: on macOS the temporary
+    // directory is under /var, a symlink to /private/var.
+    const workDir = fs.realpathSync(
+      fs.mkdtempSync(path.join(os.tmpdir(), 'discovery-templatizer-codex-')),
     )
     try {
       const lastMessageFile = path.join(workDir, 'last-message.txt')
