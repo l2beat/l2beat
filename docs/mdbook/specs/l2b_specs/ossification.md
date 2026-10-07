@@ -40,15 +40,13 @@ exploited in past incidents.
 **Ossification genesis.** The project start is set in the project config. The
 genesis is the last deployment of a critical contract within 24 hours after
 the project start, or the first critical change if that comes sooner.
-Contracts deployed before the project start were only assembled for it. A
-project without a start begins at the earliest known start of its
+A project without a start begins at the earliest known start of its
 contracts. No clock starts before the genesis: older code only counts from
 the moment this project uses it.
 
 **New contracts do not reset the clock.** Code only takes effect when a
 contract in the critical perimeter points to it, and that is a code change or
-a HIGH state change already. If a new contract goes live through a field that
-is not HIGH, raise the severity of that field.
+a HIGH state change already.
 
 ## Choosing the critical perimeter
 
