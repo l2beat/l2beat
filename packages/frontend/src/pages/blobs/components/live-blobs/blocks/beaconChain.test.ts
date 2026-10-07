@@ -1,5 +1,10 @@
 import { expect } from 'earl'
-import { arrivesNow, type ChainBlock, isSameBlock } from './beaconChain'
+import {
+  arrivesNow,
+  broadcastNow,
+  type ChainBlock,
+  isSameBlock,
+} from './beaconChain'
 
 // Each case holds one block for a slot and checks it against what the server
 // could answer for the same slot after the chain moved on.
@@ -58,5 +63,15 @@ describe(arrivesNow.name, () => {
 
   it('puts a block fetched late under a head the page had in place quietly', () => {
     expect(arrivesNow(HEAD, HEAD, false, HEAD)).toEqual(false)
+  })
+})
+
+describe(broadcastNow.name, () => {
+  it('shows a batch heard of a moment ago joining the lane', () => {
+    expect(broadcastNow(1000, 1000.4)).toEqual(true)
+  })
+
+  it('puts one heard of while the belt was not followed in place quietly', () => {
+    expect(broadcastNow(1000, 1030)).toEqual(false)
   })
 })

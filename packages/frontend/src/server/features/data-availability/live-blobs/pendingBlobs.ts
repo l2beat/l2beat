@@ -47,6 +47,11 @@ export class PendingBlobs {
    * mempool once, and that is before this server hears of the drop
    */
   private readonly refused = new Map<string, Tracked>()
+  /**
+   * Since when the batches blocks took had waited, kept while the chain may
+   * yet drop their block: heard of again then, they waited since the first
+   */
+  private readonly waited = new Map<string, Waited>()
 
   /** Oldest first */
   list(): PendingBatch[] {
@@ -57,8 +62,9 @@ export class PendingBlobs {
 
   seen(tx: PendingTx, now: number) {
     const key = keyOf(tx.from, tx.nonce)
+    const firstSeenAt = this.waited.get(key)?.since ?? now
     if (this.isUsed(tx.from, tx.nonce)) {
-      this.refused.set(key, { ...tx, firstSeenAt: now, lastSeenAt: now })
+      this.refused.set(key, { ...tx, firstSeenAt, lastSeenAt: now })
       dropOldestOver(this.refused, MAX_PENDING)
       return
     }
@@ -73,7 +79,7 @@ export class PendingBlobs {
         lastSeenAt: now,
       })
     } else {
-      this.byKey.set(key, { ...tx, firstSeenAt: now, lastSeenAt: now })
+      this.byKey.set(key, { ...tx, firstSeenAt, lastSeenAt: now })
       dropOldestOver(this.byKey, MAX_PENDING)
     }
     this.version++
@@ -95,7 +101,11 @@ export class PendingBlobs {
         []),
       { nonce, slot, at: now },
     ])
-    const firstSeenAt = this.byKey.get(keyOf(from, nonce))?.firstSeenAt
+    const key = keyOf(from, nonce)
+    const firstSeenAt = this.byKey.get(key)?.firstSeenAt
+    if (firstSeenAt !== undefined) {
+      this.waited.set(key, { since: firstSeenAt, at: now })
+    }
     let changed = false
     for (const [key, batch] of this.byKey) {
       if (batch.from === from && batch.nonce <= nonce) {
@@ -142,6 +152,9 @@ export class PendingBlobs {
     for (const from of this.usedNonces.keys()) {
       this.keepUsed(from, (u) => now - u.at <= PENDING_LIFETIME)
     }
+    for (const [key, { at }] of this.waited) {
+      if (now - at > PENDING_LIFETIME) this.waited.delete(key)
+    }
     if (changed) this.version++
   }
 
@@ -151,6 +164,7 @@ export class PendingBlobs {
     this.byKey.clear()
     this.usedNonces.clear()
     this.refused.clear()
+    this.waited.clear()
   }
 
   /** Whether a block took the nonce, or a higher one of the sender's */
@@ -178,6 +192,13 @@ function dropOldestOver(tracked: Map<string, Tracked>, limit: number) {
 interface Used {
   nonce: number
   slot: number
+  /** Unix seconds the block was seen */
+  at: number
+}
+
+/** How long a batch a block took had waited */
+interface Waited {
+  since: number
   /** Unix seconds the block was seen */
   at: number
 }

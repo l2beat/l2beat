@@ -4,6 +4,7 @@ import { useTRPC, useTRPCClient } from '~/trpc/React'
 import { useChainClock } from '../chainClock'
 import {
   arrivesNow,
+  broadcastNow,
   type ChainBlock,
   isSameBlock,
   type PendingBlobBatch,
@@ -86,7 +87,6 @@ export function useBeaconChain({
   useEffect(() => {
     if (!live) return
     clock.correct(live.head)
-    const isFirst = inHand.current === undefined
     inHand.current = live.version
     const headMoved = live.head !== headInHand.current
     headInHand.current = live.head
@@ -109,8 +109,11 @@ export function useBeaconChain({
     const pending = live.pending.map((b) =>
       toPendingBlobBatch(b, posterIndexOf),
     )
-    const isNew = (batch: PendingBlobBatch) => !chain.pending.has(batch.key)
-    const freshPending = isFirst ? [] : pending.filter(isNew)
+    const now = clock.now()
+    const freshPending = pending.filter(
+      (batch) =>
+        !chain.pending.has(batch.key) && broadcastNow(batch.firstSeenAt, now),
+    )
     chain.pending.clear()
     for (const batch of pending) chain.pending.set(batch.key, batch)
     for (const batch of freshPending) onFresh.current.pending(batch)

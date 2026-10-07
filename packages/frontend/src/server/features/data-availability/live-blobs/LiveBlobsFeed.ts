@@ -339,26 +339,29 @@ export class LiveBlobsFeed {
     )
   }
 
+  /**
+   * The blocks are kept back until all have come, then taken in oldest
+   * first: told to the pending batches in the order they came, a newer
+   * block's nonce would put the sender's lower nonces out of the pending
+   * ones, and with them since when an older block's batch waited; and served
+   * before it is told, a block would show a batch both in it and waiting
+   */
   private async fetchAll(slots: number[]) {
-    const came = new Map<number, { block: LiveBlock; held?: LiveBlock }>()
+    const came = new Map<number, LiveBlock>()
     const all = await forEachLimited(slots, CONCURRENCY, async (slot) => {
-      let block: LiveBlock
       try {
-        block = await this.source.block(slot)
+        came.set(slot, await this.source.block(slot))
       } catch (error) {
         this.tries.set(slot, (this.tries.get(slot) ?? 0) + 1)
         throw error
       }
-      came.set(slot, { block, held: this.blocks.get(slot) })
+    })
+    for (const slot of [...came.keys()].sort((a, b) => a - b)) {
+      const block = came.get(slot)
+      if (!block) continue
+      this.takeFromPending(block, this.blocks.get(slot))
       this.blocks.set(slot, block)
       this.recheck.delete(slot)
-    })
-    // oldest first, however they came: a newer block's nonce puts the
-    // sender's lower nonces out of the pending ones, and with them since when
-    // an older block's batch waited
-    for (const slot of [...came.keys()].sort((a, b) => a - b)) {
-      const { block, held } = came.get(slot) ?? {}
-      if (block) this.takeFromPending(block, held)
     }
     return all
   }

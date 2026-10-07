@@ -501,6 +501,36 @@ describe(LiveBlobsFeed.name, () => {
     }
   })
 
+  it('never shows a batch both in its block and waiting, while blocks fetched together are still coming', async () => {
+    const clock = install({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      now: (slotStart(HEAD) + 5) * 1000,
+    })
+    try {
+      // the head's block failed to come and is tried again with the next
+      // head's, which is slow to come; its batch was heard of meanwhile
+      const node = fakeNode()
+      const mempool = fakeMempool()
+      node.failing = HEAD
+      feed = new LiveBlobsFeed(node.source, Logger.SILENT, mempool.source)
+      await feed.latest()
+      mempool.broadcast(baseBatch(HEAD))
+      node.failing = undefined
+      node.slow = HEAD + 1
+      node.head = HEAD + 1
+      // a failure has the node asked again after two seconds
+      await clock.tickAsync(2000)
+      const blobs = await feed.latest()
+
+      const block = blobs?.blocks.find((b) => b.slot === HEAD)
+      const inBlock = block?.status === 'proposed' && block.batches.length > 0
+      const waiting = blobs?.pending.some((b) => b.nonce === HEAD)
+      expect(inBlock && waiting).toEqual(false)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
   it('lets a batch wait again when the chain moved its head back off its block', async () => {
     const clock = install({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
@@ -584,6 +614,8 @@ describe(LiveBlobsFeed.name, () => {
       dropped: undefined as number | undefined,
       /** A slot whose block the node fails to answer for */
       failing: undefined as number | undefined,
+      /** A slot whose block the node never gets round to answering for */
+      slow: undefined as number | undefined,
       /** Asks the node failed to answer */
       failed: 0,
       /** How often the chain was rebuilt: a block fetched again after one is another */
@@ -599,6 +631,7 @@ describe(LiveBlobsFeed.name, () => {
           node.failed++
           throw new Error()
         }
+        if (slot === node.slow) await new Promise<never>(() => {})
         if (slot === MISSED || slot === node.dropped) {
           return { slot, status: 'missed' }
         }

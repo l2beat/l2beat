@@ -62,6 +62,17 @@ export function isSameBlock(
  * before, as a block reaches the page a second or two into its slot and the
  * clock may run a little ahead
  */
+/**
+ * Whether a batch the page has not had was broadcast just now, for the belt
+ * to show joining the lane, rather than one heard of while the belt was not
+ * followed (a hidden tab, or scrolled away) to put in place quietly
+ */
+export function broadcastNow(firstSeenAt: number, now: number): boolean {
+  return now - firstSeenAt < BROADCAST_FRESH_FOR
+}
+/** Seconds after it was heard of that a batch still counts as broadcast now */
+const BROADCAST_FRESH_FOR = 3
+
 export function arrivesNow(
   slot: number,
   head: number,
