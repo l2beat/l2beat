@@ -38,7 +38,7 @@ export function LiveBlobsCard({ projects, limits }: Props) {
   return (
     <LandingsContext value={landings}>
       <PrimaryCard className="space-y-5">
-        <LiveStats limits={limits} />
+        <LiveStats limits={limits} posters={posters} />
         {isClient ? (
           <LiveBoundary>
             <Suspense fallback={<LiveSkeleton />}>
