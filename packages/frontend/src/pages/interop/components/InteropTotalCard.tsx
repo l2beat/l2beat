@@ -44,7 +44,7 @@ export function InteropTotalCard({
           {value}
         </span>
       )}
-      <span className="font-medium text-label-value-15 text-secondary">
+      <span className="font-medium text-paragraph-15 text-secondary">
         {description}
       </span>
     </PrimaryCard>

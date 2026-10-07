@@ -24,7 +24,7 @@ export function LockAndMintCard({
     <PrimaryCard className="flex flex-col max-md:border-b max-md:border-b-divider md:border-t-4 md:border-t-lock-and-mint">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="font-bold text-heading-20 decoration-lock-and-mint underline-offset-6 max-md:underline md:text-heading-24">
+          <h2 className="font-bold text-heading-18 decoration-lock-and-mint underline-offset-6 max-md:underline md:text-heading-20">
             Lock & Mint
           </h2>
           <TopNBadge n={5} />

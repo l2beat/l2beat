@@ -20,14 +20,15 @@ export function Footer({ className, innerContainerClassName }: Props) {
     >
       <div
         className={cn(
-          'mx-auto flex max-w-[1216px] flex-col items-center gap-2 text-secondary md:h-6 md:flex-row md:justify-between',
+          // Three equal columns keep the middle link centred whatever the side texts' widths.
+          'mx-auto flex max-w-[1216px] flex-col items-center gap-2 text-secondary md:grid md:h-6 md:grid-cols-3',
           innerContainerClassName,
         )}
       >
-        <p className="text-center font-medium text-xs leading-none">
+        <p className="text-center font-medium text-xs leading-none md:text-left">
           Made with 💗 by the L2BEAT team
         </p>
-        <p>
+        <p className="text-center">
           <CustomLink
             href="/terms-of-service"
             variant="plain"

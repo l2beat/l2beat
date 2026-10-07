@@ -1,4 +1,5 @@
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 
 export function PrivacyDepositsMetric({
   deposits,
@@ -8,11 +9,11 @@ export function PrivacyDepositsMetric({
   depositedValueUsd: number
 }) {
   return (
-    <div className="text-right">
-      <div className="font-bold">{formatInteger(deposits)}</div>
-      <div className="font-medium text-[10px] text-secondary leading-none md:text-[11px]">
+    <TwoRowCell className="text-right">
+      <TwoRowCell.First>{formatInteger(deposits)}</TwoRowCell.First>
+      <TwoRowCell.Second>
         {formatCurrency(depositedValueUsd, 'usd')}
-      </div>
-    </div>
+      </TwoRowCell.Second>
+    </TwoRowCell>
   )
 }

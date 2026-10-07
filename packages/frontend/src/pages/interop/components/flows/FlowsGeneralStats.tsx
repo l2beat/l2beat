@@ -88,7 +88,7 @@ export function FlowsGeneralStats({
     >
       {!!title && <div className="font-bold text-heading-20">{title}</div>}
       {!!description && (
-        <div className="mt-1 font-medium text-label-value-14 text-secondary">
+        <div className="mt-1 font-medium text-paragraph-14 text-secondary">
           {description}
         </div>
       )}

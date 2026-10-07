@@ -28,7 +28,7 @@ export function InteropTransferSpeedRow({
         <span className="ml-auto font-bold text-label-value-18">
           {durationSeconds !== null ? formatSeconds(durationSeconds) : '—'}
         </span>
-        <span className="w-16 text-right font-medium text-label-value-15 text-secondary">
+        <span className="w-22 whitespace-nowrap text-right font-medium text-label-value-15 text-secondary">
           {durationSeconds !== null
             ? `${formatInteger(transferCount)} txs`
             : '—'}

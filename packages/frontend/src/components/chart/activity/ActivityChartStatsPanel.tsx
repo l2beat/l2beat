@@ -69,9 +69,7 @@ export function ActivityChartStatsPanel({
           >
             {formatActivityCount(metricStats.pastDayCount)}
           </ValueWithPercentageChange>
-        ) : (
-          'No data'
-        )}
+        ) : undefined}
       </ChartStatsItem>
       <ChartStatsItem
         label={`Past Day ${metricUi.countLabel} count`}
@@ -81,7 +79,7 @@ export function ActivityChartStatsPanel({
         {metricStats?.pastDaySum !== undefined &&
         metricStats.pastDaySum !== null
           ? formatInteger(metricStats.pastDaySum)
-          : 'No data'}
+          : undefined}
       </ChartStatsItem>
       {showTotalCount && (
         <ChartStatsItem
@@ -96,9 +94,7 @@ export function ActivityChartStatsPanel({
                 since {formatTimestamp(totalCount.sinceTimestamp)}
               </div>
             </div>
-          ) : (
-            'No data'
-          )}
+          ) : undefined}
         </ChartStatsItem>
       )}
       <ChartStatsItem
@@ -114,9 +110,7 @@ export function ActivityChartStatsPanel({
               {formatTimestamp(metricStats.maxCount.timestamp)}
             </div>
           </div>
-        ) : (
-          'No data'
-        )}
+        ) : undefined}
       </ChartStatsItem>
       <ChartStatsItem
         label="Past day UOPS/TPS Ratio"
@@ -126,7 +120,7 @@ export function ActivityChartStatsPanel({
       >
         {lastRatio !== undefined && lastRatio !== null
           ? formatUopsRatio(lastRatio)
-          : 'No data'}
+          : undefined}
       </ChartStatsItem>
     </ChartStats>
   )

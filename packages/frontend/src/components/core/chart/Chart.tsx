@@ -118,7 +118,8 @@ function ChartContainer<T extends { timestamp: number }>({
   logoClassName?: string
   isLoading?: boolean
   project?: ChartProject
-  size?: 'regular' | 'small'
+  /** `compact` is a fixed 176px plot for charts sharing a widget with other content. */
+  size?: 'regular' | 'compact' | 'small'
   noDataSourceMessage?: string
 }) {
   // Recharts renders nothing until it has measured its container, and every
@@ -140,6 +141,7 @@ function ChartContainer<T extends { timestamp: number }>({
           className={cn(
             size === 'regular' &&
               'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
+            size === 'compact' && 'h-44 min-h-44 w-full',
             size === 'small' && 'h-[114px] min-h-[114px] w-full',
           )}
         >
@@ -173,7 +175,7 @@ function ChartContainer<T extends { timestamp: number }>({
         {!hasData &&
           !isLoading &&
           !(noDataSourcesSelected && shouldMountChart) && (
-            <ChartNoDataState size={size} />
+            <ChartNoDataState size={size === 'small' ? 'small' : 'regular'} />
           )}
         {noDataSourcesSelected && !isLoading && shouldMountChart && (
           <ChartNoDataSourceState message={noDataSourceMessage} />

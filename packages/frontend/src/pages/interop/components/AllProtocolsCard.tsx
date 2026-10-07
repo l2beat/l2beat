@@ -29,8 +29,8 @@ export function AllProtocolsCard({
 }) {
   return (
     <PrimaryCard className="col-span-full flex flex-col max-md:border-divider max-md:border-b">
-      <h2 className="font-bold text-heading-20 md:text-heading-24">
-        All Protocols
+      <h2 className="font-bold text-heading-18 md:text-heading-20">
+        All protocols
       </h2>
       <BetweenChainsInfo className="mt-1" />
       {isLoading && <Skeleton className="mt-2 h-[400px] w-full rounded-sm" />}

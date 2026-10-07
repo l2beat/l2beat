@@ -34,7 +34,7 @@ export function FrameworksTable({
   )
 
   return (
-    <PrimaryCard className="rounded-none! p-0 md:px-0 md:py-0">
+    <PrimaryCard className="overflow-clip p-0 md:px-0 md:py-0">
       <div className="overflow-x-auto">
         <div className="flex min-w-fit">
           {sortedFrameworks.map((framework, i) => (

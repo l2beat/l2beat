@@ -29,7 +29,7 @@ export function InteropDominanceCompareCard({
       <Tabs name={name} defaultValue="dominance" variant="highlighted">
         <TabsList className="w-full">
           <TabsTrigger value="dominance">{dominanceLabel}</TabsTrigger>
-          <TabsTrigger value="compare">Compare Mode</TabsTrigger>
+          <TabsTrigger value="compare">Compare mode</TabsTrigger>
         </TabsList>
         <TabsContent value="dominance" className={dominanceClassName}>
           {dominance}

@@ -311,5 +311,6 @@ const ENTRY: ProjectDefiEntry = {
   discoUi: DISCO_UI,
   isUnderReview: false,
   warnings: {},
+  recentUpdatesCount: 0,
   sections: SECTIONS,
 }

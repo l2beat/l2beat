@@ -3,6 +3,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import { EM_DASH } from '~/consts/characters'
@@ -38,7 +39,11 @@ export const l2ArchivedColumns = [
   columnHelper.accessor('type', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
+      <TwoRowCell>
+        <TwoRowCell.First>
+          <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
+        </TwoRowCell.First>
+      </TwoRowCell>
     ),
   }),
   columnHelper.accessor('proofSystem', {

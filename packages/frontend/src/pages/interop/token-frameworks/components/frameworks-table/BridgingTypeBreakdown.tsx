@@ -22,24 +22,6 @@ export function BridgingTypeBreakdown({
           className: INTEROP_TYPE_TO_BG_COLOR[item.type],
         }))}
       />
-      <div className="flex flex-wrap gap-x-3 gap-y-1">
-        {items.map((item) => (
-          <div
-            key={item.type}
-            className="flex items-center gap-1 text-label-value-12 text-secondary"
-          >
-            <span
-              className={cn(
-                'size-2 rounded-full',
-                INTEROP_TYPE_TO_BG_COLOR[item.type],
-              )}
-            />
-            <span className="font-medium">
-              {TRANSFER_TYPE_DISPLAY[item.type].label}
-            </span>
-          </div>
-        ))}
-      </div>
       <div className="flex flex-col gap-0.5">
         {items.map((item) => (
           <div

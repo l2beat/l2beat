@@ -24,7 +24,7 @@ export function NonMintingCard({
     <PrimaryCard className="flex flex-col border-t-non-minting max-md:border-b max-md:border-b-divider md:border-t-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="font-bold text-heading-20 decoration-non-minting underline-offset-6 max-md:underline md:text-heading-24">
+          <h2 className="font-bold text-heading-18 decoration-non-minting underline-offset-6 max-md:underline md:text-heading-20">
             Non-minting
           </h2>
           <TopNBadge n={5} />

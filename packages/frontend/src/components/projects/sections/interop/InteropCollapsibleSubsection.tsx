@@ -26,7 +26,7 @@ export function InteropCollapsibleSubsection({
     >
       <Subsection
         title={
-          <SubsectionHeading className="text-heading-24 leading-none!">
+          <SubsectionHeading className="text-heading-20 leading-none!">
             <CollapsibleTrigger className="flex w-full cursor-pointer items-center justify-between gap-3">
               {title}
               <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/Collapsible:rotate-180" />

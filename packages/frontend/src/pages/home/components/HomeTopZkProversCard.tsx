@@ -88,7 +88,7 @@ const columns = [
   }),
   columnHelper.display({
     id: 'trusted-setups',
-    header: 'Trusted setups',
+    header: 'Trusted\nsetups',
     cell: (ctx) => (
       <TrustedSetupsSummaryCell
         trustedSetupsByProofSystem={ctx.row.original.trustedSetupsByProofSystem}

@@ -45,7 +45,7 @@ export function ExternalDependenciesSection({
                   <span className="font-bold">{dependency.name}</span>
                 )}
                 {!dependency.reviewed && (
-                  <span className="inline-block h-min rounded bg-zinc-200 px-1.5 py-[3px] font-medium text-2xs text-zinc-600 uppercase leading-none! dark:bg-zinc-700 dark:text-zinc-300">
+                  <span className="inline-block h-min rounded bg-surface-secondary px-1.5 py-[3px] font-medium text-2xs text-secondary uppercase leading-none!">
                     Not reviewed
                   </span>
                 )}

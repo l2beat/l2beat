@@ -462,12 +462,12 @@ export const aztecnetwork: ScalingProject = {
         ' Governance can register a new canonical rollup and bonus-instance validators automatically follow the latest version, but this does not mutate the current instance, its verifier, messaging contracts, or already-installed EscapeHatch. Governance can change bounded validator-entry parameters and can set the GSE proof-of-possession gas limit too low for new deposits; validators explicitly bound to this instance remain on it.',
     },
     sequencerFailure: {
-      value: 'Decentralized Sequencer Set',
+      value: 'Decentralized sequencer set',
       sentiment: 'good',
       description: `Users can permissionlessly become a sequencer by staking ${activationThresholdString} to join the queue and wait to obtain committee-based block production rights. If the pseudo-randomly sampled committees censor proposals, anyone who bonds ${escapeHatchBondString} will join the escape hatch candidate set. Every ${escapeHatchFrequencyString}, a candidate is pseudo-randomly selected to propose and prove checkpoints fully autonomously. A candidate remains in the set until they are selected or leave voluntarily.`,
     },
     proposerFailure: {
-      value: 'Self Propose',
+      value: 'Self propose',
       sentiment: 'good',
       description:
         'Checkpoint proposals come from the open sequencer set, with the escape hatch providing a bonded fallback if the sampled committees are censoring or unavailable. Anyone with access to the required hardware can submit epoch root proofs which finalize the proven checkpoints.',

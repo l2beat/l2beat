@@ -43,7 +43,10 @@ export function ProofSystemCell({
       <TwoRowCell>
         <TwoRowCell.First>
           {hideType && proofSystem?.name ? (
-            <TypeInfo stacks={stacks}>{proofSystem.name}</TypeInfo>
+            <TypeInfo stacks={stacks}>
+              {/* A combined name ("A / B") goes one per line so the column stays narrow. */}
+              {proofSystem.name.replaceAll(' / ', ' /\n')}
+            </TypeInfo>
           ) : (
             <TypeInfo stacks={stacks}>{proofSystem?.type ?? 'None'}</TypeInfo>
           )}

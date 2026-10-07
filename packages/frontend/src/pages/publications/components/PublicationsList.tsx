@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/CountBadge'
+import { Button } from '~/components/core/Button'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
@@ -86,13 +87,18 @@ function PublicationsGrid({
             proposals, and more.
           </div>
         </div>
-        <a
-          className="flex h-fit items-center justify-center whitespace-nowrap rounded-sm bg-white px-6 py-4 font-bold text-label-value-16 text-neutral-900 max-md:w-full"
-          href={externalLinks.substackSubscribe}
-          target="_blank"
+        <Button
+          className="h-fit whitespace-nowrap py-4 text-label-value-16 max-md:w-full"
+          asChild
         >
-          Subscribe to our newsletter
-        </a>
+          <a
+            href={externalLinks.substackSubscribe}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Subscribe to our newsletter
+          </a>
+        </Button>
       </div>
       {publications.map((publication) => (
         <PublicationCard publication={publication} key={publication.id} />

@@ -75,6 +75,7 @@
   --chart-teal: #2ec4b6;
   --chart-orange: #f98a24;
   --chart-yellow-lime: #d6db5b;
+  --chart-plum: #503047;
 
   --chart-stacked-pink: #ff45b5;
   --chart-stacked-yellow: #ffc300;
@@ -145,6 +146,8 @@
   --chart-fuchsia: #a65ec4;
   --chart-lime: #61ff12;
   --chart-sky: #66ccff;
+  /* The light-mode plum all but vanishes on dark cards. */
+  --chart-plum: #9b6a8f;
 
   --chart-stacked-pink: #ff45b5;
   --chart-stacked-yellow: #ffc300;

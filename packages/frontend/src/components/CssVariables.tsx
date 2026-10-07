@@ -17,8 +17,9 @@ export function CssVariables({
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(([theme, prefix]) => {
+            // The theme class sits on <html>, so a scoped rule must descend from it.
             const selector = isLocalScope
-              ? `[data-css-vars="${uniqueId}"]${prefix}`
+              ? `${prefix} [data-css-vars="${uniqueId}"]`.trim()
               : `html${prefix}`
 
             return `

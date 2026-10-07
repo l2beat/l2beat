@@ -6,6 +6,7 @@ import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { ProjectIconList } from '~/components/ProjectIconList'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
+import { MobileSummaryLinks } from '~/components/projects/links/MobileSummaryLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
@@ -165,6 +166,11 @@ export function PrivacyProjectPage({
                           )}
                         </div>
                       </div>
+                      <HorizontalSeparator className="-mx-4 mt-4 mb-2 w-[calc(100%+2rem)] md:hidden" />
+                      <MobileSummaryLinks
+                        projectLinks={entry.projectLinks}
+                        discoUiHref={entry.discoveryHref}
+                      />
                     </PrimaryCard>
 
                     <ProjectDetails

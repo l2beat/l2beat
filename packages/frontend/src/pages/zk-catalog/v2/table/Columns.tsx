@@ -55,7 +55,7 @@ export const zkCatalogColumns = [
               {formatCurrency(ctx.getValue(), 'usd')}
             </div>
           </TwoRowCell.First>
-          <TwoRowCell.Second>
+          <TwoRowCell.Second className="whitespace-nowrap">
             {`${ctx.row.original.tvs.numberOfProjects} ${pluralize(ctx.row.original.tvs.numberOfProjects, 'project')}`}
           </TwoRowCell.Second>
         </TwoRowCell>
@@ -146,6 +146,7 @@ export const zkCatalogColumns = [
             ...(ctx.row.original.techStack.zkVM ?? []),
             ...(ctx.row.original.techStack.snark ?? []),
           ]}
+          className="md:min-w-[190px]"
         />
       )
     },
@@ -179,7 +180,7 @@ export const zkCatalogColumns = [
       return (
         <TechStackCell
           tags={ctx.row.original.techStack.finalWrap ?? []}
-          className="md:min-w-[180px]"
+          className="md:min-w-[140px]"
           emptyText="No final wrap"
         />
       )

@@ -170,7 +170,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
   return [
     ...tvsBreakdownColumn({
       id: 'canonical',
-      header: 'Canonically bridged',
+      header: 'Canonically\nbridged',
       dataKey: 'canonical',
       type: 'bridgingType',
       isTvsLoading: opts.isTvsLoading,
@@ -186,7 +186,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
     }),
     ...tvsBreakdownColumn({
       id: 'native',
-      header: 'Natively minted',
+      header: 'Natively\nminted',
       dataKey: 'native',
       type: 'bridgingType',
       isTvsLoading: opts.isTvsLoading,
@@ -200,7 +200,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
     }),
     ...tvsBreakdownColumn({
       id: 'external',
-      header: 'Externally bridged',
+      header: 'Externally\nbridged',
       dataKey: 'external',
       type: 'bridgingType',
       isTvsLoading: opts.isTvsLoading,
@@ -224,7 +224,7 @@ function getTokenAssetCategoryColumns(opts: {
   return [
     ...tvsBreakdownColumn({
       id: 'ether',
-      header: 'ETH & derivatives',
+      header: 'ETH &\nderivatives',
       dataKey: 'ether',
       type: 'category',
       isTvsLoading: opts.isTvsLoading,
@@ -246,7 +246,7 @@ function getTokenAssetCategoryColumns(opts: {
     }),
     ...tvsBreakdownColumn({
       id: 'btc',
-      header: 'BTC & derivatives',
+      header: 'BTC &\nderivatives',
       dataKey: 'btc',
       type: 'category',
       isTvsLoading: opts.isTvsLoading,
@@ -268,7 +268,7 @@ function getTokenAssetCategoryColumns(opts: {
     }),
     ...tvsBreakdownColumn({
       id: 'rwaPublic',
-      header: 'Public RWAs',
+      header: 'Public\nRWAs',
       dataKey: 'rwaPublic',
       type: 'category',
       isTvsLoading: opts.isTvsLoading,
@@ -280,7 +280,7 @@ function getTokenAssetCategoryColumns(opts: {
     ...(!opts.excludeRwaRestrictedTokens
       ? tvsBreakdownColumn({
           id: 'rwaRestricted',
-          header: 'Restricted RWAs',
+          header: 'Restricted\nRWAs',
           dataKey: 'rwaRestricted',
           type: 'category',
           isTvsLoading: opts.isTvsLoading,

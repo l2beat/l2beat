@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { cn } from '~/utils/cn'
 import { type BadgeTheme, type BadgeVariant, cropsBadgeSnippet } from '../badge'
 import { BadgeHtml } from './BadgeHtml'
@@ -83,23 +84,17 @@ function Switcher<T extends string>({
       <span className="font-semibold text-secondary text-subtitle-12 uppercase tracking-wider">
         {label}
       </span>
-      <div className="flex rounded-lg bg-surface-tertiary p-0.5">
+      <RadioGroup
+        name={`crops-badge-${label.toLowerCase()}`}
+        value={value}
+        onValueChange={(value) => onChange(value as T)}
+      >
         {options.map((option) => (
-          <button
-            key={option.value}
-            type="button"
-            onClick={() => onChange(option.value)}
-            className={cn(
-              'rounded-md px-2.5 py-1 font-medium text-paragraph-13 transition-colors',
-              option.value === value
-                ? 'bg-surface-primary text-primary shadow-sm'
-                : 'text-secondary hover:text-primary',
-            )}
-          >
+          <RadioGroupItem key={option.value} value={option.value}>
             {option.label}
-          </button>
+          </RadioGroupItem>
         ))}
-      </div>
+      </RadioGroup>
     </div>
   )
 }

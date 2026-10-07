@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { SectionHeading } from '../../components/SectionHeading'
@@ -18,7 +19,7 @@ export function AttestationsSection({
         title="Verifying the set onchain"
         description={describeAttestation(attestations)}
       />
-      <PrimaryCard className="max-md:mx-4 md:p-8">
+      <PrimaryCard className="md:p-8">
         <dl className="grid gap-x-8 gap-y-3 md:grid-cols-[auto_1fr]">
           <Constant label="Network">
             {attestations.network} (chain id {attestations.chainId})
@@ -28,14 +29,7 @@ export function AttestationsSection({
           <Constant label="Attester">{attestations.attester}</Constant>
           <Constant label="Attestation">
             {current ? (
-              <a
-                href={current.explorerUrl}
-                className="underline underline-offset-2"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {current.uid}
-              </a>
+              <CustomLink href={current.explorerUrl}>{current.uid}</CustomLink>
             ) : (
               'not published yet'
             )}

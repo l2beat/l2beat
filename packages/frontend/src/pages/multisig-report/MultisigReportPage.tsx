@@ -1,4 +1,6 @@
 import { Logo } from '~/components/Logo'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { PolygonLogo } from '~/icons/PolygonLogo'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -18,11 +20,12 @@ export function MultisigReportPage({ multisigReportImage, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <main className="flex flex-col md:items-center">
+        <MainPageHeader>Multisig Report</MainPageHeader>
+        <PrimaryCard className="flex flex-col md:items-center">
           <ReportBanner image={multisigReportImage} />
           <ReportDownloadButton fileUrl={multisigReportUrl} />
           <div className="mt-12 mb-6 w-full leading-7">
-            <h2 className="mb-3 font-bold text-2xl md:mb-5 md:text-4xl">
+            <h2 className="mb-3 font-bold text-xl md:mb-5 md:text-2xl">
               About the report
             </h2>
             <div>
@@ -60,9 +63,9 @@ export function MultisigReportPage({ multisigReportImage, ...props }: Props) {
           </div>
           <ReportDownloadButton
             fileUrl={multisigReportUrl}
-            className="visible mt-12 md:invisible"
+            className="mt-12 md:hidden"
           />
-        </main>
+        </PrimaryCard>
       </SideNavLayout>
     </AppLayout>
   )

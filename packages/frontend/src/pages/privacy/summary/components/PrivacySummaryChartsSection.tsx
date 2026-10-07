@@ -90,19 +90,20 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     </div>
   )
 
+  // One card, so the shared range control reads as belonging to both charts.
   return (
-    <>
-      <div className="mb-4 grid grid-cols-2 gap-x-3 max-md:mt-2 max-lg:hidden">
-        <PrimaryCard>{tvlChart}</PrimaryCard>
-        <PrimaryCard>{countsChart}</PrimaryCard>
+    <PrimaryCard>
+      <div className="mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
+        {tvlChart}
+        {countsChart}
       </div>
       <ChartTabs
-        className="mt-2 mb-4 lg:hidden"
+        className="-mx-4 md:-mx-6 pb-1! lg:hidden"
         charts={[tvlChart, countsChart]}
       />
-      <ChartControlsWrapper className="justify-end max-md:pr-4">
+      <ChartControlsWrapper className="justify-end">
         <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
-    </>
+    </PrimaryCard>
   )
 }

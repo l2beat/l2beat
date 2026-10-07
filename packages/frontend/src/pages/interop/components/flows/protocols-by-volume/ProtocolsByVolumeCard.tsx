@@ -36,7 +36,7 @@ export function ProtocolsByVolumeCard({ isEnabled }: { isEnabled: boolean }) {
     <PrimaryCard className="flex flex-col border-divider max-md:border-t md:mt-5">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h2 className="font-bold text-heading-20 md:text-heading-24">
+          <h2 className="font-bold text-heading-18 md:text-heading-20">
             Protocols by volume
           </h2>
           <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">

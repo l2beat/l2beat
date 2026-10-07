@@ -1,11 +1,16 @@
 @reference "tailwindcss";
 
-.article:not(.changelog) > * {
+.article > * {
   @apply mb-4;
 }
 
 .article:not(.changelog) > *:last-child {
   @apply mb-8;
+}
+
+/* Changelog entries sit in a padded box, so the last block needs no gap below it. */
+.article.changelog > *:last-child {
+  @apply mb-0;
 }
 
 .article p,
@@ -44,7 +49,7 @@
 }
 
 .article hr {
-  @apply opacity-80 dark:opacity-50;
+  @apply border-divider;
 }
 
 .article ul {

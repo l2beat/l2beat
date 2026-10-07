@@ -115,6 +115,7 @@ export function EcosystemsTvsChart({
         invert={id === 'superchain'}
       />
       <ChartContainer
+        size="compact"
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
@@ -123,7 +124,6 @@ export function EcosystemsTvsChart({
         <AreaChart
           responsive
           data={chartData}
-          className="h-44! min-h-44!"
           // Without right:1 the chart last point is not hoverable for some reason
           margin={{ top: 20, right: 1 }}
         >

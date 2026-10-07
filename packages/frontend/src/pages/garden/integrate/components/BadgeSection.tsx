@@ -20,7 +20,7 @@ export function BadgeSection({ href }: { href: string }) {
 
       <section className="mt-8 md:mt-12">
         <SectionHeading title="Using it fairly" size="md" />
-        <PrimaryCard className="max-md:mx-4 md:p-8">
+        <PrimaryCard className="md:p-8">
           <ul className="flex flex-col gap-3">
             {BADGE_RULES.map((rule) => (
               <li

@@ -70,7 +70,7 @@ function Header({
             ecosystem towards a safer, more secure decentralized future.
           </p>
           <div className="flex flex-col gap-2.5">
-            <span className="font-medium text-purple-100 text-xs uppercase tracking-[-0.14px] dark:text-pink-200">
+            <span className="font-medium text-brand text-xs uppercase tracking-[-0.14px]">
               Delegate your tokens
             </span>
             <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">

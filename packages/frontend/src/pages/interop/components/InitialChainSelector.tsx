@@ -48,7 +48,7 @@ export function InitialChainSelector({ interopChains, type }: Props) {
   }
 
   return (
-    <div className="flex w-full grow flex-col items-center justify-center gap-6 bg-surface-primary p-6 md:rounded-lg">
+    <div className="flex w-full grow flex-col items-center justify-center gap-6 bg-surface-primary p-6 md:rounded-xl">
       <h2 className="text-balance text-center text-brand text-heading-32">
         Select a pair of chains
       </h2>

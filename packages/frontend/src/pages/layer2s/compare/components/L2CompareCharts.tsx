@@ -297,7 +297,7 @@ function AddChartButton({
     // The button stays visible (not hidden) at the cap: a vanishing button
     // reads as a bug, while the tooltip teaches the limit. It stays a real
     // enabled element so the tooltip still receives pointer events.
-    <div className="max-md:px-4">
+    <div className="max-md:px-4 max-md:pb-6">
       <Tooltip>
         <TooltipTrigger asChild disabled={!atCap}>
           <DashedButton

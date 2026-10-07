@@ -40,7 +40,7 @@ export function FrameworkCompareContent({
 
   return (
     <InteropCompareContent
-      title="Frameworks Head-to-Head"
+      title="Frameworks head-to-head"
       description="Select two frameworks & view head-to-head comparison"
       options={options}
       isLoading={isLoading}

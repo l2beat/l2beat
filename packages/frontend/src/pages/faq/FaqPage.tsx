@@ -30,6 +30,7 @@ export function FaqPage(props: AppLayoutProps) {
                 className="mt-6 scroll-mt-6 first:mt-0"
                 id={item.id}
                 key={item.id}
+                data-role="nav-section"
               >
                 <a
                   href={`#${item.id}`}

@@ -41,7 +41,7 @@ export function IntentBridgeCompareContent({
 
   return (
     <InteropCompareContent
-      title="Intent Bridges Head-to-Head"
+      title="Intent bridges head-to-head"
       description="Select two intent bridges and compare usage plus execution properties."
       options={options}
       isLoading={isLoading}

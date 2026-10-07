@@ -52,7 +52,7 @@ export function Markdown(props: MarkdownProps) {
   const collapsed = processCollapsibleText(rendered)
 
   return (
-    <GlossaryTooltipWrapper>
+    <GlossaryTooltipWrapper inline={props.inline}>
       <Comp
         className={cn('mdc', props.className)}
         dangerouslySetInnerHTML={{ __html: collapsed }}
@@ -71,6 +71,6 @@ function processCollapsibleText(markdown: string): string {
 
   return markdown.replace(collapsiblePattern, (_match, label, content) => {
     const uniqueId = useId()
-    return `<button class="inline text-gray-600 dark:text-secondary bg-gray-100 dark:bg-surface-secondary rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-surface-tertiary focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-600" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
+    return `<button class="inline text-secondary bg-surface-secondary rounded px-1 text-sm cursor-pointer select-none hover:bg-surface-tertiary focus:outline-none focus:ring-1 focus:ring-divider" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
   })
 }

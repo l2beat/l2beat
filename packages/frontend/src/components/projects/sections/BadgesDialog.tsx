@@ -150,7 +150,9 @@ function BadgesDialogBody({
             <h2 className="font-bold text-3xl leading-none">
               {data.badge.name}
             </h2>
-            <p className="text-md text-secondary">{data.badge.description}</p>
+            <p className="text-paragraph-16 text-secondary">
+              {data.badge.description}
+            </p>
             <p className="font-bold text-lg">
               {data.projectCount}{' '}
               {data.projectCount === 1 ? 'Project' : 'Projects'}

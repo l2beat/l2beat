@@ -43,7 +43,7 @@ export function MultipleBridgeDetails({ project }: Props) {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <div className="text-blue-700 text-paragraph-13 italic">
+        <div className="text-link text-paragraph-13 italic">
           Please select DA bridge to view detailed risks & characteristics.
           Bridge selection will define total DA risks.
         </div>
@@ -155,8 +155,8 @@ export function MultipleBridgeDetails({ project }: Props) {
                 >
                   View all bridges
                 </DrawerTrigger>
-                <DrawerContent className="bg-pure-white dark:bg-pure-black">
-                  <div className="mb-2 font-semibold text-lg text-zinc-800 dark:text-zinc-300">
+                <DrawerContent>
+                  <div className="mb-2 font-semibold text-lg">
                     Select bridge
                   </div>
                   <div>
@@ -164,7 +164,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                       <label
                         key={bridge.slug}
                         htmlFor={bridge.slug}
-                        className="flex cursor-pointer flex-row items-center gap-2 border-gray-200 border-b py-3 dark:border-zinc-700"
+                        className="flex cursor-pointer flex-row items-center gap-2 border-divider border-b py-3"
                       >
                         <RadioButton
                           id={bridge.slug}
@@ -176,7 +176,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                             )
                           }}
                         />
-                        <div className="flex-1 font-semibold text-sm text-zinc-800 dark:text-zinc-300">
+                        <div className="flex-1 font-semibold text-sm">
                           {bridge.name}
                         </div>
                         <div>
@@ -187,7 +187,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                   </div>
                   <DrawerFooter className="flex flex-row justify-center pt-6">
                     <DrawerClose asChild>
-                      <Button className="bg-transparent text-sm text-zinc-500 underline dark:bg-transparent">
+                      <Button className="bg-transparent text-secondary text-sm underline">
                         Close
                       </Button>
                     </DrawerClose>

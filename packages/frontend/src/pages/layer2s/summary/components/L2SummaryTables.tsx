@@ -5,7 +5,6 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   OthersInfo,
   RollupsInfo,
@@ -40,8 +39,7 @@ export function L2SummaryTables(props: Props) {
 
   return (
     <>
-      <HorizontalSeparator className="my-4 max-md:hidden" />
-      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2 max-md:mt-4 max-md:px-4">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2 max-md:mt-4 max-md:px-4 md:mt-6">
         <TableFilters
           entries={[
             ...props.rollups,

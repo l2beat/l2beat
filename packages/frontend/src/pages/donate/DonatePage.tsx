@@ -109,14 +109,14 @@ function DonationDescription() {
 function DonationNetworks({ networks }: { networks: HeaderProps['networks'] }) {
   return (
     <div className="z-10 mt-4">
-      <span className="font-medium text-purple-100 text-xs uppercase dark:text-pink-200">
+      <span className="font-medium text-brand text-xs uppercase">
         Donate through
       </span>
       <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
         {networks.map((network) => (
           <CustomLink
             key={network.name}
-            className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-sm transition-colors duration-200 hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1"
+            className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-sm transition-colors duration-200 hover:bg-surface-secondary/50 md:w-max md:p-2 md:text-xs"
             href={network.linkURL}
             underline={false}
           >
@@ -219,9 +219,13 @@ export const fundingSources = [
     tier: 'Medium',
     description: (
       <span>
-        Live at <a href="https://dydx.l2beat.com">dydx.l2beat.com</a>, view the
-        code <a href="https://github.com/l2beat/starkex-explorer">here</a>.
-        Funded by StarkWare and dYdX
+        Live at{' '}
+        <CustomLink href="https://dydx.l2beat.com">dydx.l2beat.com</CustomLink>,
+        view the code{' '}
+        <CustomLink href="https://github.com/l2beat/starkex-explorer">
+          here
+        </CustomLink>
+        . Funded by StarkWare and dYdX
       </span>
     ),
   },

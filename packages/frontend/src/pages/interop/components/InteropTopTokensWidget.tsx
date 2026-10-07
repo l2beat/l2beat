@@ -9,6 +9,7 @@ import {
 } from '~/components/core/Tabs'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { cn } from '~/utils/cn'
+import { EmptyWidgetMessage } from './EmptyWidgetMessage'
 import { InteropTokenRow, type InteropTokenRowData } from './InteropTokenRow'
 import type { InteropTransferDefaults } from './InteropTransferTrigger'
 import { Last24HoursBadge } from './Last24HoursBadge'
@@ -48,7 +49,7 @@ export function InteropTopTokensWidget({
     >
       <div className="flex items-center gap-2.5">
         <h2 className="font-bold text-heading-18 md:text-heading-20">
-          Top Tokens by Volume
+          Top tokens by volume
         </h2>
         <Last24HoursBadge />
       </div>
@@ -91,7 +92,7 @@ export function InteropTopTokensWidget({
           {isLoading ? (
             <RowsSkeleton />
           ) : rows.length === 0 ? (
-            <EmptyState />
+            <EmptyWidgetMessage>No tokens found.</EmptyWidgetMessage>
           ) : (
             <div className="flex flex-col gap-3">
               {rows.map((row) => (
@@ -115,14 +116,6 @@ function RowsSkeleton() {
       {Array.from({ length: 5 }).map((_, i) => (
         <Skeleton key={i} className="h-7 w-full" />
       ))}
-    </div>
-  )
-}
-
-function EmptyState() {
-  return (
-    <div className="flex min-h-40 items-center justify-center font-medium text-secondary text-sm">
-      No tokens found.
     </div>
   )
 }

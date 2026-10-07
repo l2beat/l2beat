@@ -12,14 +12,18 @@ export function MobileSelectedLink({
 }) {
   const pathname = usePathname()
 
-  const selectedGroup = groups.find((group) => {
-    if (group.type === 'single') {
-      return isLinkActive({ href: group.href, pathname })
-    }
-    return group.links
-      .flat()
-      .some((link) => isLinkActive({ href: link.href, pathname }))
-  })
+  const selectedGroup =
+    groups.find((group) => {
+      if (group.type === 'single') {
+        return isLinkActive({ href: group.href, pathname })
+      }
+      return group.links
+        .flat()
+        .some((link) => isLinkActive({ href: link.href, pathname }))
+    }) ??
+    // Pages without a nav link of their own (project pages, interop
+    // sub-pages) still belong to their section, as the sidebar shows.
+    groups.find((group) => pathname.startsWith(`/${group.match}/`))
 
   const selectedSideLink = sideLinks.find((link) =>
     pathname.startsWith(link.href),

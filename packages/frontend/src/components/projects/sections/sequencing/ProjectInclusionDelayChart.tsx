@@ -61,8 +61,8 @@ export function ProjectInclusionDelayChart({
             setYAxisScale(value as InclusionDelayYAxisScale)
           }
         >
-          <RadioGroupItem value="linear">LIN</RadioGroupItem>
           <RadioGroupItem value="log">LOG</RadioGroupItem>
+          <RadioGroupItem value="linear">LIN</RadioGroupItem>
         </RadioGroup>
       </ChartControlsWrapper>
       <div className="mt-4 mb-3">

@@ -129,7 +129,7 @@ export function EcosystemTvsByStage({
                   <span className="font-medium text-label-value-14 text-secondary">
                     {formatPercent(data.tvs / totalTvs)}
                   </span>{' '}
-                  <span className="font-medium text-[#9399A9] text-label-value-14">
+                  <span className="font-medium text-label-value-14 text-secondary">
                     ({data.projectCount})
                   </span>
                 </div>

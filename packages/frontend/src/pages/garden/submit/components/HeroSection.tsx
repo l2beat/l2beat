@@ -6,7 +6,7 @@ import { GARDEN_PATH, SUBMISSION_QUESTIONS_PATH } from '../../paths'
 
 export function HeroSection() {
   return (
-    <PrimaryCard className="relative overflow-hidden md:p-8">
+    <PrimaryCard className="relative overflow-hidden max-lg:mt-4 md:p-8">
       <div
         aria-hidden
         className="-top-28 -right-20 pointer-events-none absolute size-72 rounded-full bg-radial from-garden-accent/25 to-transparent blur-2xl"

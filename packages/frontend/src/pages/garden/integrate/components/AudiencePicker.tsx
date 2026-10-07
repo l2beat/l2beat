@@ -50,7 +50,8 @@ function AudienceCard({
   return (
     <a
       href={href}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-divider bg-surface-primary transition-colors hover:border-garden-accent/60"
+      // Subgrid rows give both cards' art panels, and so their titles, the same height.
+      className="group flex flex-col overflow-hidden rounded-2xl border border-divider bg-surface-primary transition-colors hover:border-garden-accent/60 md:row-span-2 md:grid md:grid-rows-subgrid md:gap-0"
     >
       <div className="flex min-h-[220px] items-center justify-center bg-gradient-to-b from-garden-tint to-surface-primary px-6 py-8">
         {art}

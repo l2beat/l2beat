@@ -66,7 +66,7 @@ function makeNameColumn(opts?: {
                 <div
                   className={cn(
                     'w-fit break-words font-bold text-label-value-15 md:leading-none',
-                    opts?.nameMaxWidthClass ?? 'max-w-[76px]',
+                    opts?.nameMaxWidthClass ?? 'max-w-[80px]',
                   )}
                 >
                   {ctx.row.original.name}

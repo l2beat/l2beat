@@ -94,9 +94,7 @@ function MaterialCard({ material }: { material: Material }) {
             </span>
             <CustomLinkIcon className="ml-auto shrink-0 fill-secondary transition-colors group-hover:fill-primary" />
           </div>
-          <h4 className="mt-2.5 font-bold text-label-value-15 md:text-label-value-16">
-            {material.label}
-          </h4>
+          <h4 className="mt-2.5 text-heading-16">{material.label}</h4>
           <p className="mt-1 grow text-2xs text-secondary leading-relaxed md:text-paragraph-14">
             {material.description}
           </p>

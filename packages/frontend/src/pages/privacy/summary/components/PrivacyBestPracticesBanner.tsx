@@ -15,13 +15,13 @@ export function PrivacyBestPracticesBanner({
   return (
     <PrimaryCard
       asChild
-      className={cn('mt-4 overflow-hidden rounded-lg! p-0 md:p-0', className)}
+      className={cn('mt-4 overflow-hidden p-0 md:p-0', className)}
     >
       <CustomLink
         variant="plain"
         underline={false}
         href="/publications/privacy-best-practices"
-        className="group relative flex min-h-[128px] select-none overflow-hidden rounded-lg text-pure-white"
+        className="group relative flex min-h-[128px] select-none overflow-hidden text-pure-white"
       >
         <div
           className="absolute inset-0 origin-left bg-center bg-cover transition-[scale] ease-in-out group-hover:scale-110"

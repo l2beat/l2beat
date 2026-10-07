@@ -50,17 +50,19 @@ const contentAreaVariants = cva('mx-auto flex w-full min-w-0 grow flex-col', {
     variant: {
       default: 'max-w-(--breakpoint-lg) md:px-5 lg:pl-0',
       wide: 'max-w-412 md:px-5 lg:pl-0',
-      home: 'max-w-none px-4 pb-6 max-md:px-0 md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px]',
+      home: 'max-w-none px-4 pb-6 max-md:px-0 max-md:pb-0 md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px]',
     },
   },
 })
 
+// `lg:pr-11` and the 1132px cap line the footer up with the cards' content.
+// On mobile the last home card already draws the divider above the footer.
 const footerVariants = cva(undefined, {
   variants: {
     variant: {
-      default: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
-      wide: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
-      home: 'md:px-8 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
+      default: 'md:px-12 md:pt-8 lg:pr-11 lg:pl-6',
+      wide: 'md:px-12 md:pt-8 lg:pr-11 lg:pl-6',
+      home: 'max-md:border-t-0 md:px-8 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
     },
   },
 })
@@ -68,8 +70,8 @@ const footerVariants = cva(undefined, {
 const footerInnerVariants = cva(undefined, {
   variants: {
     variant: {
-      default: 'max-w-[1142px]',
-      wide: 'max-w-[1142px]',
+      default: 'max-w-[1132px]',
+      wide: 'max-w-[1132px]',
       home: 'max-w-none',
     },
   },

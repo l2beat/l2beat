@@ -43,7 +43,7 @@ export const transferSizeBuckets = {
   },
   from10KTo100K: {
     label: '$10K-$100K',
-    color: '#503047',
+    color: 'var(--chart-plum)',
   },
   over100K: {
     label: 'Over $100K',

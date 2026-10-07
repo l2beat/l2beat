@@ -16,6 +16,7 @@ import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
+import { EmptyWidgetMessage } from './EmptyWidgetMessage'
 import { Last24HoursBadge } from './Last24HoursBadge'
 
 export type DominanceMetric = 'volume' | 'transfers'
@@ -100,7 +101,7 @@ export function InteropDominanceContent({
           {isLoading ? (
             <RowsSkeleton />
           ) : rows.length === 0 ? (
-            <EmptyState message={emptyState} />
+            <EmptyWidgetMessage>{emptyState}</EmptyWidgetMessage>
           ) : scrollClassName ? (
             <ScrollWithGradient
               className={cn('flex flex-col gap-5', scrollClassName)}
@@ -162,7 +163,7 @@ function DominanceRowItem({
     <div className="flex flex-col gap-1">
       <div className="flex items-center justify-between gap-3">
         {row.header}
-        <div className="flex items-baseline gap-1">
+        <div className="flex shrink-0 items-baseline gap-1 whitespace-nowrap">
           <span className="font-bold text-label-value-16">
             {metric === 'volume'
               ? formatCurrency(value, 'usd', { decimals: 2 })
@@ -226,7 +227,7 @@ function Stat({
     <div
       className={cn('flex flex-col gap-0.5', align === 'right' && 'items-end')}
     >
-      <span className="font-medium text-[13px] text-secondary leading-none">
+      <span className="font-medium text-paragraph-13 text-secondary">
         {label}
       </span>
       <span className="font-medium text-label-value-15">{value}</span>
@@ -244,14 +245,6 @@ function RowsSkeleton() {
           <Skeleton className="h-8 w-full" />
         </div>
       ))}
-    </div>
-  )
-}
-
-function EmptyState({ message }: { message: string }) {
-  return (
-    <div className="flex min-h-40 items-center justify-center font-medium text-secondary text-sm">
-      {message}
     </div>
   )
 }

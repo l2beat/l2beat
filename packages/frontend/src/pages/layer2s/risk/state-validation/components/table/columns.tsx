@@ -35,7 +35,7 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
     columnHelper,
     columnHelper.accessor((e) => e.tvs?.breakdown?.total ?? 0, {
       id: 'total',
-      header: 'Total value secured',
+      header: 'Total value\nsecured',
       cell: (ctx) => {
         const value = ctx.row.original.tvs
         return (
@@ -76,7 +76,7 @@ export const l2RiskStateValidationValidityColumns = [
     (row) => `/layer2s/projects/${row.slug}#state-validation`,
   ),
   validityColumnHelper.accessor('proofSystem', {
-    header: 'Proof system',
+    header: 'Proof\nsystem',
     cell: (ctx) => <ProofSystemCell {...ctx.row.original} hideType />,
     meta: {
       tooltip:
@@ -106,7 +106,7 @@ export const l2RiskStateValidationValidityColumns = [
     },
   }),
   validityColumnHelper.accessor('executionDelay', {
-    header: 'Execution Delay',
+    header: 'Execution\ndelay',
     cell: (ctx) => {
       const { executionDelay, executionDelayMode } = ctx.row.original
       return (
@@ -129,27 +129,29 @@ export const l2RiskStateValidationValidityColumns = [
       )
     },
   }),
-  validityColumnHelper.accessor('isa', {
+  validityColumnHelper.accessor('isas', {
     header: 'ISA',
-    cell: (ctx) => (
-      <TableValueCell
-        value={
-          ctx.row.original.isa
-            ? {
-                value: ctx.row.original.isa,
-              }
-            : undefined
-        }
-        emptyMode="n/a"
-      />
-    ),
+    cell: (ctx) => {
+      const isas = ctx.row.original.isas
+
+      if (isas.length === 0) {
+        return <TableValueCell value={undefined} emptyMode="n/a" />
+      }
+      return (
+        <div className="flex flex-col gap-2 py-2">
+          {isas.map((isa) => (
+            <TableValueCell key={isa} value={{ value: isa }} />
+          ))}
+        </div>
+      )
+    },
     meta: {
       tooltip:
         'Instruction Set Architecture (ISA) specifies the virtual machine or computational model that the proof system targets when generating proofs.',
     },
   }),
   validityColumnHelper.accessor('trustedSetups', {
-    header: 'Trusted setup',
+    header: 'Trusted\nsetup',
     cell: (ctx) => {
       const trustedSetups = ctx.row.original.trustedSetups
 

@@ -31,6 +31,7 @@ const fontSize = [
   'paragraph-15',
   'paragraph-14',
   'paragraph-13',
+  'paragraph-12',
 ]
 
 const customTwMerge = extendTailwindMerge({

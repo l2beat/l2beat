@@ -26,7 +26,7 @@ export function IntentBridgeDominanceContent({
 }) {
   return (
     <InteropDominanceContent
-      title="Intent Bridge Dominance by"
+      title="Intent bridge dominance by"
       tabsName="intentBridgeDominanceMetric"
       transfersStatLabel="Transfers"
       emptyState="No intent bridge activity found."

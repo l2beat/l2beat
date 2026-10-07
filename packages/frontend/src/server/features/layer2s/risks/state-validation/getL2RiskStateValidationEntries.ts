@@ -118,7 +118,7 @@ export interface TvsData {
 export interface L2RiskStateValidationValidityEntry extends CommonL2Entry {
   tvsOrder: number
   proofSystem: ProjectScalingProofSystem
-  isa: string | undefined
+  isas: string[]
   trustedSetups: Pick<
     TrustedSetupsByProofSystem[string],
     'trustedSetups' | 'verifiers'
@@ -174,7 +174,7 @@ function getL2RiskStateValidationValidityEntry(
     ...getCommonL2Entry({ project, changes }),
     tvsOrder: projectTvs?.breakdown?.total ?? -1,
     proofSystem: getProofSystemWithName(proofSystem, zkCatalogProjects),
-    isa: isas.length > 0 ? isas.join(' / ') : undefined,
+    isas,
     trustedSetups,
     executionDelay: project.scalingRisks.self.stateValidation?.executionDelay,
     executionDelayMode:

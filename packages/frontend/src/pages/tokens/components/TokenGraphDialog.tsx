@@ -39,7 +39,7 @@ export function TokenGraphDialog({
       onOpenChange={(open) => !open && onClose()}
     >
       <DialogContent
-        className="bg-surface-primary max-md:overflow-y-auto md:max-w-[min(1400px,95vw)]"
+        className="bg-surface-primary max-md:content-start max-md:overflow-y-auto md:max-w-[min(1400px,95vw)]"
         fullScreenMobile
       >
         <DialogClose />

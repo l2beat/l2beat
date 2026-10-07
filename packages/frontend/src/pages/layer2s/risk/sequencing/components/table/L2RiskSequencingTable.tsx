@@ -32,7 +32,7 @@ export function L2RiskSequencingTable({ entries }: Props) {
     <>
       <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <h2 className="font-bold text-heading-16 md:text-heading-20">
-          Decentralized Sequencing
+          Decentralized sequencing
         </h2>
         <ColumnsControls columns={table.getAllColumns()} />
       </div>

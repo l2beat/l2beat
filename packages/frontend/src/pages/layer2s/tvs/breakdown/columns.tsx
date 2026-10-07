@@ -54,9 +54,12 @@ export const columns = [
     header: 'Project',
     cell: (ctx) => {
       return (
-        <div className="font-medium text-xs">
-          {ctx.row.original.projectName}
-        </div>
+        <TwoRowCell>
+          {/* The one column allowed to wrap, so the table fits its card. */}
+          <TwoRowCell.First className="whitespace-normal">
+            {ctx.row.original.projectName}
+          </TwoRowCell.First>
+        </TwoRowCell>
       )
     },
   }),
@@ -80,9 +83,11 @@ export const columns = [
     id: 'category',
     header: 'Category',
     cell: (ctx) => (
-      <div className="font-medium text-xs">
-        {categoryToLabel(ctx.row.original.category)}
-      </div>
+      <TwoRowCell>
+        <TwoRowCell.First>
+          {categoryToLabel(ctx.row.original.category)}
+        </TwoRowCell.First>
+      </TwoRowCell>
     ),
   }),
   columnHelper.accessor((row) => row.priceUsd.value, {
@@ -101,7 +106,7 @@ export const columns = [
   }),
   columnHelper.accessor((row) => row.valueForProject.value, {
     id: 'value',
-    header: 'TVS-Adjusted Value',
+    header: 'TVS-adjusted\nvalue',
     meta: {
       align: 'right',
       tooltip:

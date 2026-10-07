@@ -37,7 +37,7 @@ export function FrameworkDominanceContent({
 
   return (
     <InteropDominanceContent
-      title="Framework Dominance by"
+      title="Framework dominance by"
       tabsName="frameworkDominanceMetric"
       transfersStatLabel="Number of transfers"
       emptyState="No data for the selected chains."

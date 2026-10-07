@@ -12,7 +12,7 @@ export function ActivityChartHeader() {
 
   return (
     <div className="flex items-center gap-2">
-      <h2 className="whitespace-nowrap font-bold text-xl max-md:ml-1 md:text-2xl">
+      <h2 className="whitespace-nowrap font-bold text-xl md:text-2xl">
         Daily average
       </h2>
       <div className="flex items-center gap-2">
@@ -31,7 +31,7 @@ function SwitchInfoTooltip() {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <InfoIcon className="size-3.5 fill-blue-700" />
+        <InfoIcon className="size-3.5 fill-blue-700 dark:fill-blue-500" />
       </TooltipTrigger>
       <TooltipContent>
         User Operations Per Second (UOPS) takes into account the user

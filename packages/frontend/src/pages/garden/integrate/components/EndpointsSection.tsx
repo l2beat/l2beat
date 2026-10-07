@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { SectionHeading } from '../../components/SectionHeading'
 import { SproutIcon } from '../../components/SproutIcon'
@@ -46,7 +47,7 @@ export function EndpointsSection({
 
 function ApiNotes() {
   return (
-    <PrimaryCard className="max-md:mx-4 md:p-8">
+    <PrimaryCard className="md:p-8">
       <ul className="flex flex-col gap-3">
         {API_NOTES.map((note) => (
           <li
@@ -62,30 +63,11 @@ function ApiNotes() {
       </ul>
       <p className="mt-4 text-paragraph-14 text-secondary md:text-paragraph-16">
         Browse the{' '}
-        <ExternalLink href={CROPS_API_DOCS_URL}>interactive docs</ExternalLink>{' '}
-        or read the{' '}
-        <ExternalLink href={CROPS_API_SPEC_URL}>OpenAPI spec</ExternalLink>.
+        <CustomLink href={CROPS_API_DOCS_URL}>interactive docs</CustomLink> or
+        read the <CustomLink href={CROPS_API_SPEC_URL}>OpenAPI spec</CustomLink>
+        .
       </p>
     </PrimaryCard>
-  )
-}
-
-function ExternalLink({
-  href,
-  children,
-}: {
-  href: string
-  children: ReactNode
-}) {
-  return (
-    <a
-      href={href}
-      className="underline underline-offset-2"
-      target="_blank"
-      rel="noreferrer"
-    >
-      {children}
-    </a>
   )
 }
 
@@ -97,7 +79,7 @@ function EndpointCard({
   example: IntegrateExample
 }) {
   return (
-    <PrimaryCard className="max-md:mx-4 md:p-8">
+    <PrimaryCard className="md:p-8">
       <Code>{endpoint.path}</Code>
       <h3 className="mt-3 font-bold text-heading-20">{endpoint.summary}</h3>
       <p className="mt-1 max-w-3xl text-paragraph-14 text-secondary md:text-paragraph-16">

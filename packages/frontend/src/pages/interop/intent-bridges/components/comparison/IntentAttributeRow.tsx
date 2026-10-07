@@ -26,7 +26,7 @@ export function IntentAttributeRow({
       >
         {left?.value ?? EM_DASH}
       </CompareChip>
-      <span className="text-center font-medium text-label-value-13 text-secondary">
+      <span className="text-center font-semibold text-base text-secondary leading-none">
         {label}
       </span>
       <CompareChip

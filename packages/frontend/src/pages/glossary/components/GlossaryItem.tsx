@@ -11,6 +11,7 @@ export function GlossaryItem(props: Props) {
     <section
       className="mt-6 scroll-m-20 first:mt-0 md:scroll-mt-[115px]"
       id={props.entry.id}
+      data-role="nav-section"
     >
       <div className="group flex items-center gap-2 pb-2 text-primary">
         <a

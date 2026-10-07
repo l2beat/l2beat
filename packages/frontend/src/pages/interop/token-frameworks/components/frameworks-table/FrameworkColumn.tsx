@@ -43,7 +43,7 @@ export function FrameworkColumn({
 
       <div className="mt-5 space-y-8">
         <Section
-          title="Tokens by Volume"
+          title="Tokens by volume"
           subtitle={
             entry && entry.tokens.length > 0
               ? `${formatInteger(entry.tokens.length)} total tokens`
@@ -69,7 +69,7 @@ export function FrameworkColumn({
           </ScrollList>
         </Section>
 
-        <Section title="Chain Paths by Volume">
+        <Section title="Chain paths by volume">
           <ScrollList>
             {isLoading ? (
               <RowsSkeleton />
@@ -88,7 +88,7 @@ export function FrameworkColumn({
           </ScrollList>
         </Section>
 
-        <Section title="Bridging Type Breakdown">
+        <Section title="Bridging type breakdown">
           {isLoading ? (
             <BreakdownSkeleton />
           ) : !entry || entry.bridgingTypeBreakdown.length === 0 ? (

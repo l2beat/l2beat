@@ -6,6 +6,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import { env } from '~/env'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
+import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -47,6 +48,7 @@ export interface ProjectDefiEntry {
     red?: ProjectRedWarning
     emergency?: string
   }
+  recentUpdatesCount: number
   sections: ProjectDetailsSection[]
 }
 
@@ -230,6 +232,7 @@ export async function getDefiProjectEntry(
       red: project.statuses.redWarning,
       emergency: project.statuses.emergencyWarning,
     },
+    recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
     sections,
   }
 }

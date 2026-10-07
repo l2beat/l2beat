@@ -4,6 +4,7 @@ import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { cn } from '~/utils/cn'
 import { ChainPairSelector } from './chain-selector/ChainPairSelector'
 import type { InteropChainWithIcon } from './chain-selector/types'
+import { EmptyWidgetMessage } from './EmptyWidgetMessage'
 import { InteropTransferSpeedRow } from './InteropTransferSpeedRow'
 
 /** An entity (intent bridge or framework) rendered as a transfer-speed row. */
@@ -78,25 +79,31 @@ export function InteropTransferSpeedWidget({
       <ScrollWithGradient
         className={cn('mt-2 flex flex-1 flex-col gap-2.5', scrollClassName)}
       >
-        {isLoading
-          ? entities.map((entity) => (
-              <Skeleton key={entity.id} className="h-9.5" />
-            ))
-          : sorted.map((entry) => {
-              const entity = entitiesById.get(entry.id)
-              if (!entity) return null
-              return (
-                <InteropTransferSpeedRow
-                  key={`${src}-${dst}-${entry.id}`}
-                  slug={entity.slug}
-                  iconUrl={entity.iconUrl}
-                  label={entity.label}
-                  color={entity.color}
-                  durationSeconds={entry.averageDurationSeconds}
-                  transferCount={entry.transferCount}
-                />
-              )
-            })}
+        {isLoading ? (
+          entities.map((entity) => (
+            <Skeleton key={entity.id} className="h-9.5" />
+          ))
+        ) : sorted.length === 0 ? (
+          <EmptyWidgetMessage>
+            No transfers between these chains.
+          </EmptyWidgetMessage>
+        ) : (
+          sorted.map((entry) => {
+            const entity = entitiesById.get(entry.id)
+            if (!entity) return null
+            return (
+              <InteropTransferSpeedRow
+                key={`${src}-${dst}-${entry.id}`}
+                slug={entity.slug}
+                iconUrl={entity.iconUrl}
+                label={entity.label}
+                color={entity.color}
+                durationSeconds={entry.averageDurationSeconds}
+                transferCount={entry.transferCount}
+              />
+            )
+          })
+        )}
       </ScrollWithGradient>
     </PrimaryCard>
   )

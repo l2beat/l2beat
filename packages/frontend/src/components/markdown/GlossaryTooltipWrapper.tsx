@@ -10,10 +10,16 @@ import {
 
 interface GlossaryTooltipWrapperProps {
   children: React.ReactNode
+  /**
+   * Inline markdown flows with the surrounding text. Block markdown keeps a
+   * block wrapper, or the parent's spacing (e.g. `space-y-*`) never reaches it.
+   */
+  inline?: boolean
 }
 
 export function GlossaryTooltipWrapper({
   children,
+  inline,
 }: GlossaryTooltipWrapperProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const rootsRef = useRef<Root[]>([])
@@ -94,7 +100,7 @@ export function GlossaryTooltipWrapper({
   }, [children])
 
   return (
-    <div ref={containerRef} className="inline">
+    <div ref={containerRef} className={inline ? 'inline' : undefined}>
       {children}
     </div>
   )

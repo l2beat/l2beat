@@ -18,7 +18,7 @@ export function News({ news }: Props) {
                 <Tag key={tag} tag={tag} />
               ))}
             </div>
-            <div className="mt-3 mb-2 text-heading-20 leading-none md:text-heading-28">
+            <div className="mt-3 mb-2 text-heading-20 md:text-heading-28">
               {item.title}
             </div>
             <Article>{item.content}</Article>

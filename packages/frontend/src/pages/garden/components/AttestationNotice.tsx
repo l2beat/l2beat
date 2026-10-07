@@ -1,3 +1,4 @@
+import { CustomLink } from '~/components/link/CustomLink'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { formatTimestamp } from '~/utils/dates'
 import { SproutIcon } from './SproutIcon'
@@ -24,14 +25,12 @@ export function AttestationNotice({
           </span>
         </p>
       </div>
-      <a
+      <CustomLink
         href={attestation.explorerUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="shrink-0 font-semibold text-paragraph-14 underline underline-offset-2 hover:no-underline"
+        className="shrink-0 text-paragraph-14"
       >
         View the attestation
-      </a>
+      </CustomLink>
     </div>
   )
 }

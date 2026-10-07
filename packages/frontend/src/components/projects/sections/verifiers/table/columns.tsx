@@ -77,7 +77,7 @@ const baseVerifiersColumns = [
                 </span>
               ))}
               {extraCount > 0 && (
-                <span className="ml-1 text-label-muted-12">
+                <span className="ml-1 text-label-value-12 text-secondary">
                   +{extraCount} more
                 </span>
               )}

@@ -24,25 +24,44 @@ export function ChainBubblesLayer({
 }: ChainBubblesLayerProps) {
   const { highlightedChains, toggleHighlightedChain } = useInteropFlows()
 
-  return interopChains.map((chain) => {
+  const nodes = interopChains.flatMap((chain) => {
     const nodeLayout = layout.get(chain.id)
-    if (!chain || !nodeLayout) return null
-
-    const netFlow = chainData.find((f) => f.chainId === chain.id)?.netFlow ?? 0
-
-    return (
-      <ChainBubble
-        key={chain.id}
-        chain={chain}
-        layout={nodeLayout}
-        highlightedChains={highlightedChains}
-        color={getChainColor(interopChains, chain.id)}
-        netFlow={netFlow}
-        isSmallScreen={isSmallScreen}
-        onClick={() => toggleHighlightedChain(chain.id)}
-      />
-    )
+    if (!nodeLayout) return []
+    return [
+      {
+        chain,
+        layout: nodeLayout,
+        netFlow: chainData.find((f) => f.chainId === chain.id)?.netFlow ?? 0,
+        onClick: () => toggleHighlightedChain(chain.id),
+      },
+    ]
   })
+
+  // Labels are drawn after every bubble, so no bubble or logo covers another chain's label.
+  return (
+    <>
+      {nodes.map((node) => (
+        <ChainBubble
+          key={node.chain.id}
+          chain={node.chain}
+          layout={node.layout}
+          highlightedChains={highlightedChains}
+          color={getChainColor(interopChains, node.chain.id)}
+          onClick={node.onClick}
+        />
+      ))}
+      {nodes.map((node) => (
+        <ChainLabel
+          key={node.chain.id}
+          chain={node.chain}
+          layout={node.layout}
+          netFlow={node.netFlow}
+          isSmallScreen={isSmallScreen}
+          onClick={node.onClick}
+        />
+      ))}
+    </>
+  )
 }
 
 interface ChainBubbleProps {
@@ -50,8 +69,6 @@ interface ChainBubbleProps {
   layout: ChainNodeLayout
   highlightedChains: string[]
   color: string
-  netFlow: number
-  isSmallScreen: boolean
   onClick: () => void
 }
 
@@ -60,16 +77,10 @@ function ChainBubble({
   layout,
   highlightedChains,
   color,
-  netFlow,
-  isSmallScreen,
   onClick,
 }: ChainBubbleProps) {
   const { x, y, radius } = layout
   const iconSize = radius * 1.1
-  const nameLines = getChainNameLines(chain.name, isSmallScreen)
-  const nameLineHeight = isSmallScreen ? 11 : 12
-  const nameY = y + radius + 16
-  const netFlowY = nameY + (nameLines.length - 1) * nameLineHeight + 14
 
   const highlighted = highlightedChains.includes(chain.id)
 
@@ -97,12 +108,44 @@ function ChainBubble({
         width={iconSize}
         height={iconSize}
       />
+    </g>
+  )
+}
+
+interface ChainLabelProps {
+  chain: InteropChainWithIcon
+  layout: ChainNodeLayout
+  netFlow: number
+  isSmallScreen: boolean
+  onClick: () => void
+}
+
+// A halo in the card colour keeps a label legible where it crosses a neighbouring bubble.
+const LABEL_HALO =
+  'stroke-surface-primary [paint-order:stroke] [stroke-linejoin:round] [stroke-width:3px]'
+
+function ChainLabel({
+  chain,
+  layout,
+  netFlow,
+  isSmallScreen,
+  onClick,
+}: ChainLabelProps) {
+  const { x, y, radius } = layout
+  const nameLines = getChainNameLines(chain.name, isSmallScreen)
+  const nameLineHeight = isSmallScreen ? 11 : 12
+  const nameY = y + radius + 16
+  const netFlowY = nameY + (nameLines.length - 1) * nameLineHeight + 14
+
+  return (
+    <g className="cursor-pointer" onClick={onClick}>
       <text
         x={x}
         y={nameY}
         textAnchor="middle"
         className={cn(
           'fill-primary font-medium',
+          LABEL_HALO,
           isSmallScreen ? 'text-label-value-13' : 'text-label-value-14',
         )}
       >
@@ -118,6 +161,7 @@ function ChainBubble({
         textAnchor="middle"
         className={cn(
           'font-medium text-label-value-12',
+          LABEL_HALO,
           netFlow > 0 ? 'fill-positive' : 'fill-negative',
         )}
       >

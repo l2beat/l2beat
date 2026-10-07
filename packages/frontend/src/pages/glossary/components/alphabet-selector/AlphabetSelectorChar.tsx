@@ -16,9 +16,9 @@ export function AlphabetSelectorChar({ char, href, selected, ref }: CharProps) {
         aria-disabled={!href}
         className={cn(
           'flex size-[34px] items-center justify-center rounded border transition ease-out',
-          'border-divider bg-pure-white dark:border-divider dark:bg-zinc-900',
-          selected && 'border-brand! bg-n-pink-350!',
-          href && !selected && 'hover:bg-gray-100 dark:hover:bg-zinc-800',
+          'border-divider bg-surface-primary',
+          selected && 'border-brand bg-brand text-primary-invert',
+          href && !selected && 'hover:bg-surface-primary-hover',
           !href && 'cursor-not-allowed text-secondary/50',
         )}
       >

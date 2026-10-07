@@ -276,7 +276,9 @@ function VerifierStatusBlock({
 }) {
   return (
     <div
-      className={mobile ? 'flex flex-col gap-1.5' : 'flex items-center gap-2'}
+      className={
+        mobile ? 'flex flex-col items-start gap-1.5' : 'flex items-center gap-2'
+      }
     >
       <p className="font-medium text-label-value-12 text-secondary">
         Verifiers

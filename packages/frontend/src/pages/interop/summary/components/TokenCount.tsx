@@ -25,7 +25,7 @@ export function TokenCount({
   return (
     <PrimaryCard className="flex flex-col border-transparent max-md:border-b max-md:border-b-divider md:border-t-4">
       <div className="flex h-[34px] shrink-0 items-center gap-2">
-        <h2 className="font-bold text-heading-20 md:text-heading-24">
+        <h2 className="font-bold text-heading-18 md:text-heading-20">
           Count of all tokens
         </h2>
       </div>

@@ -45,7 +45,7 @@ export function Last30DayAnomalies({
 
   return (
     <div>
-      <SubsectionHeading className="font-bold text-heading-20 md:text-heading-24">
+      <SubsectionHeading className="font-bold text-heading-20">
         Last 30 day anomalies
       </SubsectionHeading>
       <p className="mt-4 text-paragraph-15 md:text-paragraph-16">

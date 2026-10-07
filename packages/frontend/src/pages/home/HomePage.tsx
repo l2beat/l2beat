@@ -130,7 +130,7 @@ export function HomePage({
               <HomeWhatsNewCard item={whatsNewItem} />
               <HomeRecentProjectsCard projects={recentProjects} />
             </div>
-            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2">
+            <div className="grid grid-cols-1 md:gap-4 xl:grid-cols-2">
               <HomeTopInteropProtocolsCard
                 interopChains={interopChains}
                 defaultSelectedFlowChains={defaultSelectedFlowChains}

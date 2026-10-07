@@ -38,7 +38,7 @@
 }
 
 .mdc hr {
-  @apply opacity-80 dark:opacity-50;
+  @apply border-divider;
 }
 
 .mdc blockquote {

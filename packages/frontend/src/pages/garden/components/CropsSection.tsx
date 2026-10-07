@@ -1,5 +1,6 @@
 import { CropBadge } from '~/components/garden/CropBadge'
 import { CROP_COLUMNS, type CropDefinition } from '~/components/garden/crops'
+import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import {
@@ -13,6 +14,7 @@ export function CropsSection() {
   return (
     <section className="mt-8 md:mt-12">
       <SectionHeading
+        size="md"
         title="The four crops"
         description="Each crop is judged on its own. Here are the criteria."
       />
@@ -125,15 +127,13 @@ function Minimum({
   return (
     <>
       {before}
-      <a
+      <CustomLink
         href={reference.href}
-        target="_blank"
-        rel="noreferrer noopener"
-        className="inline-flex items-baseline gap-1 font-medium text-link"
+        className="inline-flex items-baseline gap-1"
       >
         {reference.label}
         <CustomLinkIcon className="fill-current" />
-      </a>
+      </CustomLink>
       {after}
     </>
   )

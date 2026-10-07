@@ -44,14 +44,14 @@ export function FlowsParticleLegend({
     return (
       <div
         className={cn(
-          'flex flex-wrap items-center gap-x-2 gap-y-1 font-medium text-label-value-11 text-secondary md:text-label-value-12',
+          'flex flex-wrap items-center gap-x-2 gap-y-1 font-medium text-label-value-12 text-secondary',
           className,
         )}
       >
         <span>{avgLine}</span>
         {particleLine && (
           <>
-            <span className="text-tertiary">|</span>
+            <span className="text-divider">|</span>
             <span className="inline-flex items-center gap-1">
               {particleLine}
             </span>
