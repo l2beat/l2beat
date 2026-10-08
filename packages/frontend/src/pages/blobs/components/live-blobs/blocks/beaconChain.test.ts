@@ -8,6 +8,7 @@ describe(isSameBlock.name, () => {
     slot: 100,
     status: 'proposed',
     blockNumber: 5,
+    hash: '0xaa',
     batches: [],
   }
   const missed: ChainBlock = { slot: 100, status: 'missed' }
@@ -27,9 +28,9 @@ describe(isSameBlock.name, () => {
     expect(isSameBlock(missed, { ...proposed, batches: [] })).toEqual(false)
   })
 
-  it('tells a held block from another one in its slot', () => {
+  it('tells a held block from another one in its slot, of the same number', () => {
     expect(
-      isSameBlock(proposed, { ...proposed, blockNumber: 4, batches: [] }),
+      isSameBlock(proposed, { ...proposed, hash: '0xbb', batches: [] }),
     ).toEqual(false)
   })
 

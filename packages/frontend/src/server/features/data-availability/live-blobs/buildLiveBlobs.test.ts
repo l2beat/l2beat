@@ -45,6 +45,7 @@ describe(buildLiveBlobs.name, () => {
         slot: HEAD,
         status: 'proposed',
         blockNumber: HEAD + 1000,
+        hash: `0x${HEAD}`,
         batches: [
           { projectId: 'arbitrum', blobs: 3, to: '0xto', txHash: '0x0' },
         ],
@@ -53,6 +54,7 @@ describe(buildLiveBlobs.name, () => {
         slot: HEAD - 1,
         status: 'proposed',
         blockNumber: HEAD + 999,
+        hash: `0x${HEAD - 1}`,
         batches: [
           { projectId: 'base', blobs: 2, to: '0xto', txHash: '0x0' },
           { projectId: undefined, blobs: 1, to: '0xto', txHash: '0x1' },
@@ -205,6 +207,7 @@ describe(buildLiveBlobs.name, () => {
           slot: GAP + 1,
           status: 'proposed',
           blockNumber: GAP + 1001,
+          hash: `0x${GAP + 1}`,
           batches: [
             { projectId: 'base', blobs: 2, to: '0xto', txHash: '0x0' },
             { projectId: 'op', blobs: 1, to: '0xto', txHash: '0x1' },

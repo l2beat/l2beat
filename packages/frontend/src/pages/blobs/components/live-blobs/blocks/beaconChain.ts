@@ -16,6 +16,7 @@ export type ChainBlock =
       slot: number
       status: 'proposed'
       blockNumber: number
+      hash: string
       /** In the block's order, so bottom up */
       batches: BlobBatch[]
     }
@@ -27,7 +28,8 @@ export type PosterIndexOf = (projectId: string | undefined) => number
 /**
  * Whether the block held for a slot is still the one the server has there.
  * The chain can drop a block shortly after it came, and its slot then holds
- * none, or another one
+ * none, or another one. Another one built on the same parent has the same
+ * number, so only the hash tells them apart
  */
 export function isSameBlock(
   held: ChainBlock | undefined,
@@ -36,7 +38,7 @@ export function isSameBlock(
   if (!held || held.status !== block.status) return false
   return (
     held.status === 'missed' ||
-    (block.status === 'proposed' && held.blockNumber === block.blockNumber)
+    (block.status === 'proposed' && held.hash === block.hash)
   )
 }
 

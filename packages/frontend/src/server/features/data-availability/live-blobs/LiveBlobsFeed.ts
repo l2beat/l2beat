@@ -76,6 +76,8 @@ export type LiveBlock =
       slot: number
       status: 'proposed'
       blockNumber: number
+      /** Tells the block from another the chain put in its slot, at the same height */
+      hash: string
       /** In the block's order */
       batches: LiveBatch[]
     }

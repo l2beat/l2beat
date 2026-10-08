@@ -131,6 +131,7 @@ function toLiveBlock(
     slot,
     status: 'proposed',
     blockNumber: block.blockNumber,
+    hash: block.hash,
     batches: batches.map((batch) => ({
       projectId: batch.projectId,
       blobs: batch.blobs,
