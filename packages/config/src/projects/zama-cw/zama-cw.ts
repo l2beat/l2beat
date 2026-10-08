@@ -121,6 +121,16 @@ const coprocessorSignerCount = discovery.getContractValue<string[]>(
   'InputVerifier',
   'getCoprocessorSigners',
 ).length
+const priorityCoprocessorTxSender =
+  discovery.getContractValue<ChainSpecificAddress>(
+    'GatewayConfig',
+    'getPriorityCoprocessorTxSender',
+  )
+const priorityCoprocessorMode =
+  ChainSpecificAddress.address(priorityCoprocessorTxSender) ===
+  EthereumAddress.ZERO
+    ? 'off'
+    : 'on'
 const multisigAStats = discovery.getMultisigStats('ZamaGovMultisigA')
 const multisigBStats = discovery.getMultisigStats('ZamaGovMultisigB')
 
@@ -190,6 +200,7 @@ export const zamaCw: BaseProject = {
       kmsSignerCount,
       coprocessorThreshold,
       coprocessorSignerCount,
+      priorityCoprocessorMode,
     }),
     links: {
       websites: ['https://www.zama.org'],
