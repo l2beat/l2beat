@@ -102,7 +102,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposure:
-        'Your ISP sees when you send Aztec transactions and can match your deposit and withdrawal to the blocks they land in. Desktop has no Tor or proxy setting.',
+        'Anyone on your network path sees when you send Aztec transactions and can match your deposit and withdrawal to the blocks they land in. Desktop has no Tor or proxy setting.',
       advice: 'Route zk.money Desktop through Tor with system-wide tools.',
       interior: {
         ...INTERIOR,

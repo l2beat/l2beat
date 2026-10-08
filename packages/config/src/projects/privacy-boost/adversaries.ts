@@ -70,7 +70,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposure:
-        'Your ISP sees when your wallet deposits and when the app sends requests to the operator, and can match both to the chain. The SDK has no Tor or proxy setting.',
+        'Anyone on your network path sees when your wallet deposits and when the app contacts the operator, and can match both to the chain. The SDK has no Tor or proxy setting.',
       advice: 'Route the app through Tor with system-wide tools.',
       interior: {
         ...INTERIOR,
