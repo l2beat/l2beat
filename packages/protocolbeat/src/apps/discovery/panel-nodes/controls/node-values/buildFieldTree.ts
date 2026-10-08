@@ -1,17 +1,6 @@
 import { partition } from '@l2beat/shared-pure'
 import type { Field } from '../../store/State'
 
-export function groupByPath(fields: Field[]) {
-  const grouped: Record<string, Field[]> = {}
-  for (const field of fields) {
-    const parts = field.name.split('.')
-    const groupingPath = parts.slice(0, -1).join('.')
-    if (!grouped[groupingPath]) grouped[groupingPath] = []
-    grouped[groupingPath].push(field)
-  }
-  return grouped
-}
-
 export type SimpleField = {
   type: 'simple'
   property: string

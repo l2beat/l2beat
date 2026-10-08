@@ -14,7 +14,7 @@ export function MarkdownLink({ href }: { href: string }) {
         href={href}
         className={cn(
           navigationMenuTriggerStyle(),
-          'ring-brand ring-inset focus:ring-2',
+          'ring-brand ring-inset focus-visible:ring-2',
           'flex flex-row items-center gap-1.5',
         )}
       >

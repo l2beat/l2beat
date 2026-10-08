@@ -111,6 +111,7 @@ export const EVMTransactionReceiptResponse = z.object({
 const _EVMBlock = {
   timestamp: Quantity.decode.transform((n) => Number(n)),
   hash: z.string(),
+  parentHash: z.string(),
   logsBloom: z.string(),
   number: Quantity.decode.transform((n) => Number(n)),
   parentBeaconBlockRoot: z.string().optional(),

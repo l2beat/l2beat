@@ -1,3 +1,205 @@
+Generated with discovered.json: 0x06ccc1160d798638819c0b5cbb9dbe4b25e68e82
+
+# Diff at Thu, 08 Oct 2026 11:23:05 GMT:
+
+- id: 5931caeb
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ea0f844d485c4192528096e99c5cace57e234c4c block: 1790851379
+- current timestamp: 1791458506
+
+## Description
+
+Upgraded:
+
+- Gateway contracts introduce a priority coprocessor mode, where a single registered coprocessor can ignore the majority threshold and finalize input-proof verification and rejection, and ciphertext commits on its own (GatewayConfig: https://disco.l2beat.com/diff/zama:0x1950aD98e834f6c07553365196d4CddeD179c536/zama:0x94209410f6CAa4A8c6Fd7ED4AB67560eD8A3002C, InputVerification: https://disco.l2beat.com/diff/zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821/zama:0xa9A3eA1cdD078a79bB31c3a284a4abA80bd0E8d8, CiphertextCommits: https://disco.l2beat.com/diff/zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622/zama:0x81a6CBD6B1bb0296BfFd38AD8584918640F35948). This mode effectively removes coprocessor decentralization. Zama coprocessor is also set as the priority coprocessor.
+- FHEVMExecutor has new validity checks (https://disco.l2beat.com/diff/eth:0xf444B2B5e45cD07F1E735122F53A2d70A8c81dB5/eth:0x0675c7BFA34aF170C49e6590A2cBf845c3029d7B).
+
+## Watched changes
+
+```diff
+    contract FHEVMExecutor (eth:0xD82385dADa1ae3E969447f20A3164F6213100e75) [zama/ZamaFHEVMExecutor_v0_5_0] {
+    +++ description: FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results. v0.5.0 rejects plaintext scalar operands and trivial-encryption inputs that do not fit their FHE type, checks division by zero in the shared binary-operation path, and adds a checkHandleType view that asserts the type of an initialized handle.
+      template:
+-        "zama/ZamaFHEVMExecutor_v0_4_0"
++        "zama/ZamaFHEVMExecutor_v0_5_0"
+      sourceHashes.1:
+-        "0x8521799e0a57218bcbd587c2f46222a266bbcbe2f27780cc0bf6ed66eb9cda1f"
++        "0x270ee2b9f564ae13a2f925f057cc5baca30e031fab0362ab7ce086bdd2cd1a01"
+      description:
+-        "FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results. v0.4.0 adds the n-ary encrypted operations fheSum and fheIsIn (encrypted set membership) over bounded ciphertext collections."
++        "FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results. v0.5.0 rejects plaintext scalar operands and trivial-encryption inputs that do not fit their FHE type, checks division by zero in the shared binary-operation path, and adds a checkHandleType view that asserts the type of an initialized handle."
+      values.$implementation:
+-        "eth:0xf444B2B5e45cD07F1E735122F53A2d70A8c81dB5"
++        "eth:0x0675c7BFA34aF170C49e6590A2cBf845c3029d7B"
+      values.$pastUpgrades.5:
++        ["2026-10-05T16:11:11.000Z","0x63594740e6849980ffeecf14392b8b7f3e1e382c2e1ea023eb7a3df345f61328",["eth:0x0675c7BFA34aF170C49e6590A2cBf845c3029d7B"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.getVersion:
+-        "FHEVMExecutor v0.4.0"
++        "FHEVMExecutor v0.5.0"
+      implementationNames.eth:0xf444B2B5e45cD07F1E735122F53A2d70A8c81dB5:
+-        "FHEVMExecutor"
+      implementationNames.eth:0x0675c7BFA34aF170C49e6590A2cBf845c3029d7B:
++        "FHEVMExecutor"
+    }
+```
+
+```diff
+    EOA (zama:0x373E36A8684A3344E177C5894179845Cbe57AE44) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287","description":"finalize encrypted input proof verification or rejection in InputVerification alone while priority mode is active.","role":".gatewayPriorityCoprocessorTxSender"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F","description":"commit ciphertext and SNS ciphertext digests to CiphertextCommits alone while priority mode is active.","role":".gatewayPriorityCoprocessorTxSender"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"zama:0xDE537Be194777A56f8B19d14079E6a78249390ab","description":"finalize coprocessor consensus alone for encrypted input proofs and ciphertext material commitments while priority mode is active.","role":".getPriorityCoprocessorTxSender"}
+    }
+```
+
+```diff
+    contract SafeL2 (zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE) [GnosisSafe] {
+    +++ description: Gateway owner Safe. Its LayerZero governance module is outside the Zama Gateway protocol surface covered here.
+      receivedPermissions.4.description:
+-        "create KMS contexts that immediately become current, destroy historical KMS contexts, update thresholds of any live context, manage coprocessors, custodians and host chains, transfer ownership, and unpause gateway workflow contracts."
++        "create KMS contexts that immediately become current, destroy historical KMS contexts, update thresholds of any live context, manage coprocessors, custodians and host chains, set or remove the priority coprocessor that alone finalizes coprocessor consensus, transfer ownership, and unpause gateway workflow contracts."
+    }
+```
+
+```diff
+    contract InputVerification (zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287) [zama/InputVerification_v0_5_0] {
+    +++ description: Gateway contract that receives encrypted input verification requests from registered and enabled host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Since v0.5.0, if GatewayConfig designates a priority coprocessor, that coprocessor's single response finalizes verification or rejection and the attestation carries only its signature. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain.
+      template:
+-        "zama/InputVerification"
++        "zama/InputVerification_v0_5_0"
+      sourceHashes.1:
+-        "0x58bb055397e294a46ebccbc53c94bb2494bf05acd7ad77f2fb7cc46b3ef1eb92"
++        "0x5018850c43e4cdb57f9d66bfa3b13efd5321f0c3d39a78259aab0c007663a1ef"
+      description:
+-        "Gateway contract that receives encrypted input verification requests from registered and enabled host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain."
++        "Gateway contract that receives encrypted input verification requests from registered and enabled host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Since v0.5.0, if GatewayConfig designates a priority coprocessor, that coprocessor's single response finalizes verification or rejection and the attestation carries only its signature. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain."
+      values.$implementation:
+-        "zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821"
++        "zama:0xa9A3eA1cdD078a79bB31c3a284a4abA80bd0E8d8"
+      values.$pastUpgrades.4:
++        ["2026-10-08T10:05:10.000Z","0x2dc9ffacebc169a90ee746b5818b83d470bf7dbc5855c1ae05268b76caf604aa",["zama:0xa9A3eA1cdD078a79bB31c3a284a4abA80bd0E8d8"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.getVersion:
+-        "InputVerification v0.4.0"
++        "InputVerification v0.5.0"
++++ description: Priority coprocessor transaction sender configured in GatewayConfig, or zero when disabled. While set, this single coprocessor finalizes encrypted input proof verification and rejection on its own and other coprocessor responses cannot finalize.
++++ severity: HIGH
+      values.gatewayPriorityCoprocessorTxSender:
++        "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"
+      fieldMeta.gatewayCoprocessorMajorityThreshold.description:
+-        "Minimum number of matching coprocessor responses required for an encrypted input proof to be verified or rejected."
++        "Minimum number of matching coprocessor responses required for an encrypted input proof to be verified or rejected. Inert while a priority coprocessor is set in GatewayConfig (see gatewayPriorityCoprocessorTxSender)."
+      fieldMeta.gatewayPriorityCoprocessorTxSender:
++        {"severity":"HIGH","description":"Priority coprocessor transaction sender configured in GatewayConfig, or zero when disabled. While set, this single coprocessor finalizes encrypted input proof verification and rejection on its own and other coprocessor responses cannot finalize.","type":"PERMISSION"}
+      implementationNames.zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821:
+-        "InputVerification"
+      implementationNames.zama:0xa9A3eA1cdD078a79bB31c3a284a4abA80bd0E8d8:
++        "InputVerification"
+    }
+```
+
+```diff
+    contract CiphertextCommits (zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F) [zama/CiphertextCommits_v0_5_0] {
+    +++ description: Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material. Digests referencing unregistered or disabled host chains are rejected. Since v0.5.0, if GatewayConfig designates a priority coprocessor, that coprocessor's single submission commits the material on its own.
+      template:
+-        "zama/CiphertextCommits"
++        "zama/CiphertextCommits_v0_5_0"
+      sourceHashes.1:
+-        "0xa3aa22a184258ca16a5d83ce495ae0d307d4c5ec9fda8a7622d4f95728f4af03"
++        "0x2b3db0e0d5ff22923e545ffb64992573f75c3b020179bd81534fb16c054dfa7c"
+      description:
+-        "Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material. Digests referencing unregistered or disabled host chains are rejected."
++        "Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material. Digests referencing unregistered or disabled host chains are rejected. Since v0.5.0, if GatewayConfig designates a priority coprocessor, that coprocessor's single submission commits the material on its own."
+      values.$implementation:
+-        "zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622"
++        "zama:0x81a6CBD6B1bb0296BfFd38AD8584918640F35948"
+      values.$pastUpgrades.4:
++        ["2026-10-08T10:05:10.000Z","0x2dc9ffacebc169a90ee746b5818b83d470bf7dbc5855c1ae05268b76caf604aa",["zama:0x81a6CBD6B1bb0296BfFd38AD8584918640F35948"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.getVersion:
+-        "CiphertextCommits v0.4.0"
++        "CiphertextCommits v0.5.0"
++++ description: Priority coprocessor transaction sender configured in GatewayConfig, or zero when disabled. While set, this single coprocessor commits ciphertext material on its own and other coprocessor submissions cannot finalize.
++++ severity: HIGH
+      values.gatewayPriorityCoprocessorTxSender:
++        "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"
+      fieldMeta.gatewayCoprocessorMajorityThreshold.description:
+-        "Minimum number of matching coprocessor submissions required before ciphertext material is committed."
++        "Minimum number of matching coprocessor submissions required before ciphertext material is committed. Inert while a priority coprocessor is set in GatewayConfig (see gatewayPriorityCoprocessorTxSender)."
+      fieldMeta.gatewayPriorityCoprocessorTxSender:
++        {"severity":"HIGH","description":"Priority coprocessor transaction sender configured in GatewayConfig, or zero when disabled. While set, this single coprocessor commits ciphertext material on its own and other coprocessor submissions cannot finalize.","type":"PERMISSION"}
+      implementationNames.zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622:
+-        "CiphertextCommits"
+      implementationNames.zama:0x81a6CBD6B1bb0296BfFd38AD8584918640F35948:
++        "CiphertextCommits"
+    }
+```
+
+```diff
+    contract GatewayConfig (zama:0xDE537Be194777A56f8B19d14079E6a78249390ab) [zama/GatewayConfig_v0_7_0] {
+    +++ description: Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; the owner can create new contexts, retune the thresholds of any live context, and destroy non-current contexts, which immediately invalidates them for decryption. Registered host chains can be disabled, re-enabled, or removed by the owner. Since v0.7.0 the owner can designate a priority coprocessor transaction sender whose single response finalizes coprocessor consensus in InputVerification and CiphertextCommits, making the coprocessor majority threshold inert, and coprocessor set and threshold updates are applied live without pausing InputVerification.
+      template:
+-        "zama/GatewayConfig_v0_6_0"
++        "zama/GatewayConfig_v0_7_0"
+      sourceHashes.1:
+-        "0xe903576aaecdd97c5036c6bc029149a11b44484c78d9c6b0d802a882d4744597"
++        "0x26ff42c37647db207e8c9fa6bbc7ff8e6a15f782d4f85480a5fe711b95f25894"
+      description:
+-        "Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; the owner can create new contexts, retune the thresholds of any live context, and destroy non-current contexts, which immediately invalidates them for decryption. Registered host chains can be disabled, re-enabled, or removed by the owner."
++        "Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; the owner can create new contexts, retune the thresholds of any live context, and destroy non-current contexts, which immediately invalidates them for decryption. Registered host chains can be disabled, re-enabled, or removed by the owner. Since v0.7.0 the owner can designate a priority coprocessor transaction sender whose single response finalizes coprocessor consensus in InputVerification and CiphertextCommits, making the coprocessor majority threshold inert, and coprocessor set and threshold updates are applied live without pausing InputVerification."
+      values.$implementation:
+-        "zama:0x1950aD98e834f6c07553365196d4CddeD179c536"
++        "zama:0x94209410f6CAa4A8c6Fd7ED4AB67560eD8A3002C"
+      values.$pastUpgrades.5:
++        ["2026-10-08T10:05:10.000Z","0x2dc9ffacebc169a90ee746b5818b83d470bf7dbc5855c1ae05268b76caf604aa",["zama:0x94209410f6CAa4A8c6Fd7ED4AB67560eD8A3002C"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.getVersion:
+-        "GatewayConfig v0.6.0"
++        "GatewayConfig v0.7.0"
++++ description: Priority coprocessor transaction sender, or zero when priority mode is disabled. While set, a single response from this registered coprocessor finalizes encrypted input proof verification and rejection in InputVerification and ciphertext material commitments in CiphertextCommits; the coprocessor majority threshold is inert and other coprocessors cannot finalize. The owner can set or remove it live, and updateCoprocessors cannot drop the active priority coprocessor or rotate its signer.
++++ severity: HIGH
+      values.getPriorityCoprocessorTxSender:
++        "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"
+      fieldMeta.owner.description:
+-        "Owner of GatewayConfig. This account creates and destroys KMS contexts, changes the thresholds of any live context, manages coprocessors, custodians and host chains (including disabling and removing them), transfers ownership, and unpauses gateway contracts. A newly created context becomes current immediately; older contexts remain selectable by Decryption requests until destroyed."
++        "Owner of GatewayConfig. This account creates and destroys KMS contexts, changes the thresholds of any live context, manages coprocessors, custodians and host chains (including disabling and removing them), sets or removes the priority coprocessor, transfers ownership, and unpauses gateway contracts. A newly created context becomes current immediately; older contexts remain selectable by Decryption requests until destroyed. Coprocessor set, threshold and priority updates are applied live without pausing InputVerification."
+      fieldMeta.inputVerification.description:
+-        "InputVerification workflow contract paused and unpaused by GatewayConfig. Coprocessor set and threshold updates require this contract to be paused first."
++        "InputVerification workflow contract paused and unpaused by GatewayConfig. Since v0.7.0 coprocessor set, threshold and priority coprocessor updates are applied live without pausing this contract first."
+      fieldMeta.getCoprocessorMajorityThreshold.description:
+-        "Minimum number of matching coprocessor messages required for gateway coprocessor consensus. Updates require InputVerification to be paused first."
++        "Minimum number of matching coprocessor messages required for gateway coprocessor consensus. Updates are applied live without pausing InputVerification. The threshold is inert while a priority coprocessor is set (see getPriorityCoprocessorTxSender)."
+      fieldMeta.getPriorityCoprocessorTxSender:
++        {"severity":"HIGH","description":"Priority coprocessor transaction sender, or zero when priority mode is disabled. While set, a single response from this registered coprocessor finalizes encrypted input proof verification and rejection in InputVerification and ciphertext material commitments in CiphertextCommits; the coprocessor majority threshold is inert and other coprocessors cannot finalize. The owner can set or remove it live, and updateCoprocessors cannot drop the active priority coprocessor or rotate its signer.","type":"PERMISSION"}
+      implementationNames.zama:0x1950aD98e834f6c07553365196d4CddeD179c536:
+-        "GatewayConfig"
+      implementationNames.zama:0x94209410f6CAa4A8c6Fd7ED4AB67560eD8A3002C:
++        "GatewayConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../CiphertextCommits/CiphertextCommits.sol        | 200 +++++++++---
+ .../FHEVMExecutor/FHEVMExecutor.sol                |  83 +++--
+ .../GatewayConfig/GatewayConfig.sol                | 363 +++++++++++++++++----
+ .../InputVerification/InputVerification.sol        | 234 +++++++++----
+ 4 files changed, 673 insertions(+), 207 deletions(-)
+```
+
 Generated with discovered.json: 0xd28096c21188062bcb93ebf960294e1ac11a2606
 
 # Diff at Thu, 01 Oct 2026 11:11:08 GMT:

@@ -152,7 +152,7 @@ export async function makeConfig(
       ),
       timeout: env.integer(['ETHEREUM_BEACON_API_TIMEOUT'], 10000),
     },
-    da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
+    da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env, flags)),
     blockSync: {
       delayFromTipInSeconds: env.integer(
         ['BLOCK_SYNC_DELAY_FROM_TIP_IN_SECONDS'],

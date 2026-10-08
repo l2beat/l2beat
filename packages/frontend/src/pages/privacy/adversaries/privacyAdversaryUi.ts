@@ -1,9 +1,12 @@
 import type {
-  PrivacyAdversaryId,
+  PrivacyAdversary,
+  PrivacyAdversaryCell,
+  PrivacyAdversarySentiment,
   PrivacyExposure,
   PrivacyFieldExposure,
   TableReadyValue,
 } from '@l2beat/config'
+import type { RosetteValue } from '~/components/rosette/types'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
@@ -25,15 +28,6 @@ export const PRIVACY_EXPOSURE_CHIP_CLASS_NAME: Record<PrivacyExposure, string> =
     unverifiable: 'text-[#3A3F4B] bg-[#E3E6EC] border-[#9AA1AE]',
   }
 
-/** Text colours of the interior field verdicts. */
-export const PRIVACY_EXPOSURE_TEXT_CLASS_NAME: Record<PrivacyExposure, string> =
-  {
-    private: 'text-[#2C8A57] dark:text-[#4FC98B]',
-    atRisk: 'text-[#C9900E] dark:text-[#E7A63A]',
-    exposed: 'text-[#C2413E] dark:text-[#F07670]',
-    unverifiable: 'text-[#6A5DB5] dark:text-[#AA9DEA]',
-  }
-
 /** Title of the interior field chips; entry and exit are public and have none. */
 export const PRIVACY_INTERIOR_LABEL = 'Inside'
 
@@ -52,10 +46,17 @@ export function getPrivacyAdversaryTitle(label: string): string {
   return `Against ${label.charAt(0).toLowerCase()}${label.slice(1)}`
 }
 
+/** The full cell description of the project page; the tooltip shows only the short one. */
+export function getPrivacyAdversaryDescription(
+  cell: Pick<PrivacyAdversaryCell, 'exposureShort' | 'exposureContinued'>,
+): string {
+  return [cell.exposureShort, cell.exposureContinued].filter(Boolean).join(' ')
+}
+
 /**
  * All adversaries folded into one value: the homepage dot colour and the
  * summary table sort key. The future adversary is left out: it grades a
- * potential post-quantum world, not today's protocol. Any red cell makes it
+ * future cryptographic break, not today's protocol. Any red cell makes it
  * red, otherwise the majority colour wins and a tie is green. Within a colour,
  * fewer red and yellow cells sort first.
  */
@@ -77,7 +78,52 @@ export function getPrivacyAdversariesTableValue(
   }
 }
 
-/** Anchor of an adversary block inside the project page section. */
-export function getPrivacyAdversaryAnchor(id: PrivacyAdversaryId): string {
-  return `privacy-adversaries-${id}`
+/** How each slice of the rosette words its sentiment. */
+export const PRIVACY_ADVERSARY_VERDICT: Record<
+  PrivacyAdversarySentiment,
+  string
+> = {
+  good: 'Private',
+  warning: 'At risk',
+  bad: 'Exposed',
+}
+
+/** One rosette slice per adversary, in spine order, explained by its reason. */
+export function getPrivacyAdversaryRosetteValues(
+  adversaries: PrivacyAdversariesSummary,
+): RosetteValue[] {
+  return adversaries.cells.map((cell) =>
+    toPrivacyRosetteValue(cell.label, cell.sentiment, cell.reason),
+  )
+}
+
+/** A slice of the project page rosette, explaining who the adversary is. */
+export function getPrivacyAdversarySectionRosetteValue(
+  adversary: PrivacyAdversary,
+  cell: PrivacyAdversaryCell,
+): RosetteValue {
+  return toPrivacyRosetteValue(
+    adversary.label,
+    cell.sentiment,
+    `${adversary.description} Examples: ${adversary.examples}`,
+  )
+}
+
+function toPrivacyRosetteValue(
+  name: string,
+  sentiment: PrivacyAdversarySentiment,
+  description: string,
+): RosetteValue {
+  return {
+    name,
+    value: PRIVACY_ADVERSARY_VERDICT[sentiment],
+    sentiment,
+    description,
+  }
+}
+
+export const PRIVACY_ADVERSARIES_SECTION_ID = 'privacy-adversaries'
+
+export function getPrivacyAdversariesSectionHref(projectHref: string): string {
+  return `${projectHref}#${PRIVACY_ADVERSARIES_SECTION_ID}`
 }

@@ -14,7 +14,6 @@ import { findTransferLogAround } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
-  defineNetworks,
   findChain,
   type InteropEvent,
   type InteropEventDb,
@@ -95,7 +94,6 @@ const DEBRIDGE_CHAIN_LOOKUP = [
   { chainId: '8453', chain: 'base' },
   { chainId: '59144', chain: 'linea' },
   { chainId: '2741', chain: 'abstract' },
-  // local canonical subset is exported below via defineNetworks()
   // apechain not supported
   { chainId: '100', chain: 'gnosis' },
   { chainId: '747', chain: 'flow' },
@@ -124,26 +122,6 @@ const DEBRIDGE_CHAIN_LOOKUP = [
   { chainId: '100000031', chain: 'megaeth' },
   // tempo unsupported
 ]
-
-export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
-  { chainId: '1', chain: 'ethereum' },
-  { chainId: '42161', chain: 'arbitrum' },
-  { chainId: '8453', chain: 'base' },
-  { chainId: '10', chain: 'optimism' },
-  // apechain not supported
-  { chainId: '137', chain: 'polygonpos' },
-  // zksync not supported
-  { chainId: '2741', chain: 'abstract' },
-  // katana not supported
-  { chainId: '56', chain: 'bsc' },
-  { chainId: '100', chain: 'gnosis' },
-  { chainId: '43114', chain: 'avalanche' },
-  { chainId: '59144', chain: 'linea' },
-  { chainId: '999', chain: 'hyperevm' },
-  { chainId: '143', chain: 'monad' },
-  { chainId: '4326', chain: 'megaeth' },
-  // tempo unsupported
-])
 
 export function findDeBridgeChain(chainId: string | number | bigint): string {
   return findChain(DEBRIDGE_CHAIN_LOOKUP, (x) => x.chainId, String(chainId))

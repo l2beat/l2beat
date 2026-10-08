@@ -51,7 +51,6 @@ import type {
   ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectTechnologyChoice,
-  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -138,10 +137,6 @@ export interface ZkStackConfigCommon {
   stage1Principle?: boolean | 'UnderReview'
   /** Stage 1: is the chain's own Security Council / ChainAdmin properly set up? */
   hasProperSecurityCouncil?: boolean
-}
-
-export type Upgradeability = {
-  upgradableBy?: ProjectUpgradeableActor[]
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
