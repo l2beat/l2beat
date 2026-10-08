@@ -186,7 +186,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       exposureShort:
         "All of an account's rotated addresses share one incoming viewing key on the Pallas curve, and every payout address is public on NEAR.",
       exposureContinued:
-        "Whoever breaks elliptic-curve cryptography recovers that key from any one address and decrypts every note the account ever received, including the change notes of its exits, which joins both legs of every round trip. Ironwood's quantum-recoverable notes protect funds, not privacy.",
+        "Whoever breaks elliptic-curve cryptography recovers that key from any one address and decrypts every note the account ever received. Those include the change notes of its exits, which join both legs of every round trip. Ironwood's quantum-recoverable notes protect funds, not privacy.",
       advice:
         'Use a separate Zodl account per round trip, so one recovered key exposes only that trip.',
       interior: {

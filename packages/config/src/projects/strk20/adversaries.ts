@@ -182,7 +182,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         'The proofs rest only on hashes, the encryption on elliptic curves.',
       exposureContinued:
-        'Channel keys, note contents and the auditor escrow use elliptic-curve key exchange, and the auditor public key sits onchain. Whoever breaks elliptic-curve cryptography recovers that one key and with it every escrowed viewing key, and so the whole history.',
+        'Channel keys, note contents and the auditor escrow all use this encryption. Whoever breaks elliptic-curve cryptography recovers the auditor key from its onchain public key, and with it every escrowed viewing key and the whole history.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
