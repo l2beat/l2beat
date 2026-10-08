@@ -7,6 +7,7 @@ import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
+import { createBlobsRouter } from './blobs/BlobsRouter'
 import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDefiRouter } from './defi/DefiRouter'
@@ -57,6 +58,7 @@ export function createServerPageRouter(
     createL2Router,
     createInteropRouter,
     createTokensRouter,
+    createBlobsRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,
     createGovernanceRouter,

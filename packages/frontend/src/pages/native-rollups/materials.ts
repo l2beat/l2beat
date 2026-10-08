@@ -2,12 +2,15 @@ import type { ImageParams } from '~/utils/project/getImageParams'
 import {
   EIP_8025_URL,
   EIP_8142_URL,
+  EIP_8288_URL,
+  EIP_8357_URL,
   ETHREX_POC_URL,
   FOUNDING_POST_URL,
   L2_FOCIL_RESEARCH_URL,
   L2_FOCIL_URL,
   NATIVE_PROOF_VERIFICATION_URL,
   NATIVE_ROLLUPS_BOOK_URL,
+  NATIVE_ROLLUPS_DEMO_URL,
   NATIVE_ROLLUPS_EIP_URL,
   NATIVE_ROLLUPS_REPO_URL,
 } from './links'
@@ -20,7 +23,7 @@ interface MaterialBase {
 }
 
 export interface Article extends MaterialBase {
-  kind: 'document' | 'code'
+  kind: 'document' | 'code' | 'demo'
 }
 
 export interface Talk extends MaterialBase {
@@ -33,11 +36,43 @@ export type Material = Article | Talk
 export const ARTICLES: Article[] = [
   {
     kind: 'document',
-    label: 'Native proof verification',
-    source: 'ethresear.ch',
+    label: 'The Native Rollups Book',
+    source: 'l2beat.com',
     description:
-      'The program-agnostic proposal for proof-carrying transactions, multi-proofs, and consensus-layer verification.',
-    href: NATIVE_PROOF_VERIFICATION_URL,
+      'The open technical notebook covering native execution, settlement contracts, messaging, fees, and proof design.',
+    href: NATIVE_ROLLUPS_BOOK_URL,
+  },
+  {
+    kind: 'demo',
+    label: 'Native rollup devnet explorer',
+    source: 'nativerollups.fyi',
+    description:
+      'A native rollup running on a local EIP-8141 devnet, with an explorer that shows what is real and what is still mocked.',
+    href: NATIVE_ROLLUPS_DEMO_URL,
+  },
+  {
+    kind: 'document',
+    label: 'EIP-8288: In-mempool signature and proof aggregation',
+    source: 'eips.ethereum.org',
+    description:
+      'The frame mode through which a transaction declares the proofs it depends on, aggregated recursively in the mempool and by the builder.',
+    href: EIP_8288_URL,
+  },
+  {
+    kind: 'document',
+    label: 'EIP-8357: EVM Verification Key Registry',
+    source: 'github.com/ethereum',
+    description:
+      'The proposed L1 registry of the EVM program’s verification keys, which lets native rollups follow L1 upgrades.',
+    href: EIP_8357_URL,
+  },
+  {
+    kind: 'code',
+    label: 'Native rollups repo',
+    source: 'github.com/l2beat',
+    description:
+      'The book’s source, the native rollup contract, the devnet and its explorer, and the forced-inclusion prototype.',
+    href: NATIVE_ROLLUPS_REPO_URL,
   },
   {
     kind: 'document',
@@ -57,19 +92,11 @@ export const ARTICLES: Article[] = [
   },
   {
     kind: 'document',
-    label: 'The Native Rollups Book',
-    source: 'l2beat.com',
+    label: 'Native proof verification',
+    source: 'ethresear.ch',
     description:
-      'The open technical notebook covering native execution, settlement contracts, messaging, fees, and proof design.',
-    href: NATIVE_ROLLUPS_BOOK_URL,
-  },
-  {
-    kind: 'code',
-    label: 'Native rollups research repo',
-    source: 'github.com/l2beat',
-    description:
-      'The living specification, design notes, proof examples, and forced-inclusion prototypes behind this page.',
-    href: NATIVE_ROLLUPS_REPO_URL,
+      'Proof-carrying transactions, the main alternative to EIP-8288: a new transaction type with consensus-layer proof verification.',
+    href: NATIVE_PROOF_VERIFICATION_URL,
   },
   {
     kind: 'document',
@@ -92,7 +119,7 @@ export const ARTICLES: Article[] = [
     label: 'EIP-8025: Optional Execution Proofs',
     source: 'eips.ethereum.org',
     description:
-      'The experimental consensus-layer proof infrastructure that native proof verification proposes to generalize.',
+      'The consensus-layer infrastructure for execution proofs, on the way to the mandatory proofs native rollups need.',
     href: EIP_8025_URL,
   },
   {
@@ -108,7 +135,7 @@ export const ARTICLES: Article[] = [
     label: 'ethrex native rollups PoC',
     source: 'github.com/lambdaclass/ethrex',
     description:
-      'The Phase-1 proof-of-concept implementing EIP-8079 via re-execution behind a feature flag.',
+      'The Phase-1 proof-of-concept implementing EIP-8079 via re-execution.',
     href: ETHREX_POC_URL,
   },
 ]

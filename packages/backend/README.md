@@ -133,6 +133,9 @@ FEATURES=*,!interop.relay
 
 - `COINGECKO_API_KEY` - Optional. Speeds up price collection. See
   https://www.coingecko.com/en/api/pricing
+- `COINGECKO_API_URL` - Optional. Replaces the CoinGecko API root (default
+  `https://pro-api.coingecko.com/api/v3` with a key), e.g. with a
+  CoinGecko-compatible proxy.
 
 - `ETHERSCAN_API_URL` - Etherscan API url
 - `ETHERSCAN_API_KEY` - Etherscan API key Blockscout doesn't need it.
@@ -190,6 +193,22 @@ The activity feature is configured via the following environment variables:
 **Feature flags:**
 
 - `activity` - enables activity feature
+
+### `da.liveBlobs` feature
+
+Follows the Ethereum head slot by slot and keeps the last ~25 h of blocks and blob batches, attributed
+to projects, for the live blobs view. Needs the Ethereum layer of `da` (`ETHEREUM_BEACON_API_URL`).
+
+- `ETHEREUM_LIVE_BLOBS_BATCH_SIZE` - Optional. Blocks fetched at once while catching up with the
+  head. Defaults to 50
+- `ETHEREUM_LIVE_BLOBS_RPC_URL` - Optional. An RPC that keeps up with the head, used only by these
+  indexers. Defaults to `ETHEREUM_RPC_URL`, then to the public RPC of Ethereum's chain config
+- `ETHEREUM_LIVE_BLOBS_RPC_CALLS_PER_MINUTE` - Optional. Defaults to 600: the head is asked for every
+  quarter second until a slot's block comes
+
+**Feature flags:**
+
+- `da.liveBlobs` - enables the live blobs indexers. On whenever `da` is, unless `!da.liveBlobs` is set
 
 ### `status` feature
 

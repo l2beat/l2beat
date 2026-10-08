@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x01f739275f8319b91c449e9ab6743bd46cab25f7
+Generated with discovered.json: 0x9a875dceecda9b7942803eafaf99989a09d855dc
 
-# Diff at Mon, 05 Oct 2026 10:54:37 GMT:
+# Diff at Thu, 08 Oct 2026 13:08:15 GMT:
 
 - id: f9f51fe7
 - author: torztomasz (<tomasz.torz@l2beat.com>)
-- comparing to: main@a75295231feb8dffb1ce44d0210944af7687f7e0 block: 1790944832
-- current timestamp: 1790944832
+- comparing to: main@3975f74b769e77d0d6f407f5175b3ea295b337f1 block: 1791458527
+- current timestamp: 1791458527
 
 ## Description
 
@@ -15,7 +15,7 @@ Vector contracts are now discovered here instead of referenced from the vector p
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1790944832 (main branch discovery), not current.
+discovery. Values are for block 1791458527 (main branch discovery), not current.
 
 ```diff
     contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
@@ -105,6 +105,51 @@ discovery. Values are for block 1790944832 (main branch discovery), not current.
 +   Status: CREATED
     contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe]
     +++ description: None
+```
+
+Generated with discovered.json: 0xfebf248a6f82216524bfae1472df39b8f817c213
+
+# Diff at Thu, 08 Oct 2026 11:23:09 GMT:
+
+- id: 305978a8
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ea0f844d485c4192528096e99c5cace57e234c4c block: 1790944832
+- current timestamp: 1791458527
+
+## Description
+
+EOA 7702-delegated smart contract wallet implementation became verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790944832 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845) {
+    +++ description: None
+      unverified:
+-        true
+      values.CUSTOM_STORAGE_ROOT:
++        "0x653ff6dcbda533c3c7d8ffb646da3e510d0de40f237170c4da3f874472aecb00"
+      values.eip712Domain:
++        {"fields":"0x0f","name":"SmartWallet","version":"1.1.0","chainId":1,"verifyingContract":"eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
+      values.entryPoint:
++        "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032"
+      values.getOwnerKeys:
++        []
+      values.IMPLEMENTATION:
++        "eth:0xe40ccB2D94975c51bff0C004eFDfd9B3a5796fA4"
+      values.namespace:
++        "SmartWallet.ERC7201.CustomStorage"
+      values.ownerAt:
++        []
+      values.ownerCount:
++        0
+      sourceHashes:
++        ["0x75edcc789e2feb6dd3863127fde1296f7df029e9ba2e9a8aa0ea96c257bc9432"]
+    }
 ```
 
 Generated with discovered.json: 0x2a19221d459c0a812ffc3663e510f19fc96adb49

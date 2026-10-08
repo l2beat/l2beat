@@ -2,10 +2,19 @@ import {
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
+import type { PrivacyExposureMap } from '../../types'
 
 const PROTOCOL =
-  'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/contracts/src/'
-const SDK = 'https://www.npmjs.com/package/@sunnyside-io/privacy-boost'
+  'https://github.com/sunnyside-io/privacy-boost-protocol/blob/5792c139b9529ed80643262d75b5489055be11b0/contracts/src/'
+const SDK = 'https://www.npmjs.com/package/@sunnyside-io/privacy-boost/v/1.2.5'
+
+const INTERIOR: PrivacyExposureMap = {
+  sender: 'private',
+  recipient: 'private',
+  amount: { verdict: 'atRisk', note: 'Public in gateway DeFi legs.' },
+  asset: { verdict: 'atRisk', note: 'Public in gateway DeFi legs.' },
+  linkage: 'private',
+}
 
 export const privacyBoostAdversaries = definePrivacyAdversaries({
   promise: {
@@ -15,47 +24,31 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      exposure: `Transfers inside publish only encrypted notes. ${S.entryExitPublic()} Each epoch's calldata pairs every exit with the nullifiers and the input/output shape of the transfer that funded it.`,
-      advice:
-        "Exit through the operator's relay; a forced exit reveals your account and the notes you spend. A public gift exit names the destination.",
-      interior: {
-        sender: 'private',
-        recipient: 'private',
-        amount: {
-          verdict: 'private',
-          note: 'Leaked for gateway DeFi legs.',
-        },
-        asset: {
-          verdict: 'private',
-          note: 'Leaked for gateway DeFi legs.',
-        },
-        linkage: {
-          verdict: 'private',
-          note: 'Epoch calldata ties each exit to the nullifiers and shape of one transfer.',
-        },
-      },
+      exposureShort: 'Transfers inside publish only encrypted notes.',
+      exposureContinued: `${S.entryExitPublic()} Each epoch pairs every exit with the nullifiers and note shape of the transfer that funded it. Forced withdrawals publish the spent notes and the account, public gift exits the destination.`,
+      advice: "Exit through the operator's relay.",
+      interior: INTERIOR,
       sources: [
         { contract: 'PrivacyBoost' },
         {
           title: 'Epoch calldata: withdrawals, nullifiers and transfer shapes',
-          url: PROTOCOL + 'interfaces/IPrivacyBoost.sol#L828-L852',
+          url: `${PROTOCOL}interfaces/IPrivacyBoost.sol#L828-L852`,
         },
         {
-          title: 'Forced withdrawal publishes account, destination and notes',
-          url: PROTOCOL + 'interfaces/IPrivacyBoost.sol#L582-L592',
+          title: 'Forced withdrawal publishes account and notes',
+          url: `${PROTOCOL}interfaces/IPrivacyBoost.sol#L582-L591`,
         },
         {
-          title: 'Gift claim and refund are indistinguishable',
-          url: PROTOCOL + 'interfaces/IPrivacyBoost.sol#L694-L707',
+          title: 'Public gift exit names the destination',
+          url: `${PROTOCOL}interfaces/IPrivacyBoost.sol#L707`,
         },
       ],
     },
     chainAnalyst: {
       sentiment: 'bad',
-      exposure:
-        'The anonymity set is small, so most withdrawals can be linked to their funding deposits by amount and timing.',
-      advice:
-        'There is currently no crowd to hide in. Keep funds inside and transfer often, withdraw amounts that match no deposit, and never exit to an address that has deposited.',
+      exposureShort: 'The anonymity set is very small.',
+      exposureContinued:
+        'Most pool activity is one address that keeps depositing and withdrawing 0.001 WETH, which an analyst can filter out.',
       interior: {
         sender: 'atRisk',
         recipient: 'atRisk',
@@ -65,44 +58,44 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
         },
         asset: 'atRisk',
         linkage: {
-          verdict: 'atRisk',
-          note: 'The anonymity set is too small for care to hide the link.',
+          verdict: 'exposed',
+          note: 'The set is too small to hide in.',
         },
       },
       sources: [
         {
-          title: 'Operator heartbeat address',
+          title: 'Address with 0.001 WETH round trips',
           url: 'https://basescan.org/address/0xf977237b7d978dde922ee4909619740c73d8a49b',
         },
-        { contract: 'PrivacyBoost', title: 'Withdrawal fee in basis points' },
       ],
     },
     networkObserver: {
-      sentiment: 'good',
-      exposure:
-        "All shielded actions go to the operator's server as an encrypted envelope, and note keys stay in a local vault. Only the operator's relay submits epochs onchain, so nothing of yours reaches a public node.",
+      sentiment: 'warning',
+      exposureShort:
+        'Anyone on your network path sees when your wallet deposits and when the app contacts the operator, and can match both to the chain.',
+      exposureContinued: 'The SDK has no Tor or proxy setting.',
+      advice: 'Route the app through Tor with system-wide tools.',
       interior: {
-        sender: 'private',
-        recipient: 'private',
-        amount: 'private',
-        asset: 'private',
-        linkage: 'private',
+        ...INTERIOR,
+        linkage: {
+          verdict: 'atRisk',
+          note: 'Private only over Tor, which the SDK lacks.',
+        },
       },
       sources: [
-        { title: 'SDK package, closed Rust core', url: SDK },
         {
-          title: 'Server info endpoint',
+          title: 'Operator endpoint',
           url: 'https://base.privacyboost.io/api/v1/info',
         },
-        { contract: 'PrivacyBoost', title: 'Single permitted relay' },
+        { title: 'SDK 1.2.5, configured with one server URL', url: SDK },
       ],
     },
     privilegedInsider: {
       sentiment: 'bad',
-      exposure:
-        "The operator runs the enclave that holds every transfer in plaintext and the key to every onchain note. The client fetches that key from the operator's web endpoint and the published SDK checks no enclave attestation, so a substituted key would read every note unnoticed. Appointed auditors can pull any account's history without consent, and the audit log is written by the operator's own unpublished code.",
-      advice:
-        'Treat everything in the pool as visible to the operator. A forced exit is the only path that does not need it, and it is public.',
+      exposureShort:
+        "The operator's enclave holds every transfer in plaintext and a key to every note.",
+      exposureContinued:
+        "The SDK trusts the enclave key it fetches from the operator's endpoint. Auditors appointed by the admin can pull any account's history without consent.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -113,18 +106,19 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       sources: [
         { contract: 'AuditGateway' },
         { section: 'permissions', title: 'Admin and operator multisigs' },
-        { title: 'TEE key is fetched from the operator endpoint', url: SDK },
+        { title: 'SDK fetches the enclave key from the endpoint', url: SDK },
         {
-          title:
-            'Notes wrap an ephemeral key for the TEE alongside the receiver',
-          url: PROTOCOL + 'interfaces/IStructs.sol#L36-L56',
+          title: 'Notes wrap a key for the enclave beside the receiver',
+          url: `${PROTOCOL}interfaces/IStructs.sol#L36-L56`,
         },
       ],
     },
     futureAdversary: {
       sentiment: 'bad',
-      exposure:
-        "Every note wraps its key to the enclave's long-lived elliptic-curve public key as well as the receiver's. A quantum computer, or a leak of that one key, decrypts the entire history.",
+      exposureShort:
+        "Every note wraps its key to the enclave's long-lived elliptic-curve public key as well as the receiver's.",
+      exposureContinued:
+        'A quantum computer, or a leak of that one key, decrypts the entire history.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -133,11 +127,9 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
         linkage: 'exposed',
       },
       sources: [
-        { contract: 'PrivacyBoost', title: 'Ciphertext layout' },
         {
-          title:
-            'Every output and deposit ciphertext carries a TEE-wrapped key',
-          url: PROTOCOL + 'interfaces/IStructs.sol#L36-L125',
+          title: 'Every output and deposit ciphertext carries an enclave key',
+          url: `${PROTOCOL}interfaces/IStructs.sol#L36-L125`,
         },
       ],
     },

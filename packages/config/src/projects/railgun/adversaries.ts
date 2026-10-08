@@ -2,136 +2,136 @@ import {
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
+import type { PrivacyExposureMap } from '../../types'
 
-const ENGINE = 'https://github.com/Railgun-Community/engine/blob/main/src/'
+const ENGINE =
+  'https://github.com/Railgun-Community/engine/blob/6e2614d53a106dd62abad91e7ce03ee4a3956138/src/'
+// Railgun names no reference wallet. The cells are rated with RailOxide, the
+// most private released open-source client we found.
+const RAILOXIDE =
+  'https://github.com/triamazikamno/railoxide/blob/8773f4ecb00c6ac7cf164ba1f989eb77dd4b0ec5/'
 
-export const railgunAdversaries = definePrivacyAdversaries({
-  promise: {
-    protects: 'linkage',
-    text: 'Hides everything inside the pool, including which shield funds which unshield. Shields and unshields are public.',
-  },
-  cells: {
-    publicObserver: {
-      sentiment: 'good',
-      exposure: `Everything inside the pool is hidden, including which shield funds which unshield. ${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to the adapter in cleartext.`,
-      advice: S.exitViaRelayer('broadcaster'),
-      interior: {
-        sender: 'private',
-        recipient: 'private',
-        amount: {
-          verdict: 'private',
-          note: 'Leaked for DeFi bundles, which unshield to the adapter in cleartext.',
-        },
-        asset: {
-          verdict: 'private',
-          note: 'Leaked for DeFi bundles.',
-        },
-        linkage: 'private',
-      },
-      sources: [
-        { contract: 'RailgunSmartWallet' },
-        {
-          title: 'Note ciphertext format',
-          url: ENGINE + 'note/transact-note.ts',
-        },
-      ],
+const INTERIOR: PrivacyExposureMap = {
+  sender: 'private',
+  recipient: 'private',
+  amount: { verdict: 'atRisk', note: 'Public in DeFi bundles.' },
+  asset: { verdict: 'atRisk', note: 'Public in DeFi bundles.' },
+  linkage: 'private',
+}
+
+/** @param upgradeDelay formatted DAO execution delay, from discovery */
+export function railgunAdversaries(upgradeDelay: string) {
+  return definePrivacyAdversaries({
+    promise: {
+      protects: 'linkage',
+      text: 'Hides everything inside the pool, including which shield funds which unshield. Shields and unshields are public.',
     },
-    chainAnalyst: {
-      sentiment: 'good',
-      exposure: `The candidates for an unshield are the shields of the same token. In-pool transfers break the one-to-one match of a mixer, but timing and exact or round amounts narrow the set. ${S.walletFingerprint('broadcaster')}`,
-      advice: `${S.commonAmounts} ${S.freshExit}`,
-      interior: {
-        sender: 'private',
-        recipient: 'private',
-        amount: 'private',
-        asset: 'private',
-        linkage: 'private',
+    cells: {
+      publicObserver: {
+        sentiment: 'good',
+        exposureShort:
+          'Everything inside the pool is hidden, including which shield funds which unshield.',
+        exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to the adapter in cleartext.`,
+        advice: S.exitViaRelayer('broadcaster'),
+        interior: INTERIOR,
+        sources: [
+          { contract: 'RailgunSmartWallet', title: 'Shield and unshield' },
+          { contract: 'RelayAdapt', title: 'DeFi bundles' },
+        ],
       },
-      sources: [
-        {
-          title: 'A Tattered Cloak of Invisibility (arXiv:2606.25926)',
-          url: 'https://arxiv.org/abs/2606.25926',
-        },
-        {
-          title: 'The Anonymity Gap (arXiv:2608.22987)',
-          url: 'https://arxiv.org/abs/2608.22987',
-        },
-      ],
-    },
-    networkObserver: {
-      sentiment: 'good',
-      exposure:
-        'The wallet finds its notes by trial-decrypting every note locally, so nodes learn nothing about which are yours. By default it sends the pending unshield to the configured node for a gas estimate, which reveals the destination early.',
-      advice: S.ownNodeAndTor('broadcaster'),
-      interior: {
-        sender: 'private',
-        recipient: 'private',
-        amount: 'private',
-        asset: 'private',
-        linkage: 'private',
+      chainAnalyst: {
+        sentiment: 'good',
+        exposureShort:
+          'The candidates for an unshield are the shields of the same token.',
+        exposureContinued:
+          'In-pool transfers break a one-to-one match, while timing and exact amounts narrow it.',
+        advice: `${S.commonAmounts} ${S.freshExit}`,
+        interior: INTERIOR,
+        sources: [
+          {
+            title: 'A Tattered Cloak of Invisibility (arXiv:2606.25926)',
+            url: 'https://arxiv.org/abs/2606.25926',
+          },
+          {
+            title: 'The Anonymity Gap (arXiv:2608.22987)',
+            url: 'https://arxiv.org/abs/2608.22987',
+          },
+        ],
       },
-      sources: [
-        {
-          title: 'Gas estimation with dummy proof',
-          url: 'https://github.com/Railgun-Community/wallet/blob/main/src/services/transactions/tx-gas-details.ts',
+      networkObserver: {
+        sentiment: 'good',
+        exposureShort:
+          'RailOxide sends all traffic over built-in Tor, broadcaster messages included, and finds your notes by decrypting every note locally.',
+        advice:
+          'Use RailOxide, the wallet these ratings assume, and read the chain from your own node.',
+        interior: {
+          ...INTERIOR,
+          linkage: {
+            verdict: 'atRisk',
+            note: 'Private only over Tor, which RailOxide uses by default.',
+          },
         },
-        {
-          title: 'Broadcaster decrypts request',
-          url: 'https://github.com/Railgun-Community/ppoi-safe-broadcaster-example/blob/main/src/server/waku-broadcaster/methods/transact-method.ts',
-        },
-      ],
-    },
-    privilegedInsider: {
-      sentiment: 'good',
-      exposure:
-        'There is no view key, so nobody can read past activity. The DAO can upgrade the contracts after a seven-day delay. The proof-of-innocence list provider can refuse to list a shield, leaving only a self-broadcast exit.',
-      advice:
-        'Watch governance proposals. You have seven days to unshield before an upgrade takes effect. Be ready to self-broadcast if the list provider censors you.',
-      interior: {
-        sender: 'private',
-        recipient: 'private',
-        amount: 'private',
-        asset: 'private',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'POI nodes tie a session to a note cluster and its transaction ids.',
-        },
+        sources: [
+          {
+            title: 'RailOxide privacy model',
+            url: `${RAILOXIDE}docs/privacy-model.md`,
+          },
+          {
+            title: 'Built-in Tor is the default',
+            url: `${RAILOXIDE}crates/wallet-ops/src/settings/network_chains.rs#L10-L15`,
+          },
+        ],
       },
-      sources: [
-        { section: 'permissions', title: 'Governance roles' },
-        {
-          title: 'POI required lists',
-          url: 'https://github.com/Railgun-Community/shared-models/blob/main/src/models/poi.ts',
+      privilegedInsider: {
+        sentiment: 'good',
+        exposureShort: `Only the user holds viewing keys, and DAO upgrades wait ${upgradeDelay}.`,
+        exposureContinued:
+          'PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists, so the notes you spend stay on your device.',
+        advice:
+          'Watch governance proposals and unshield before an upgrade you reject executes.',
+        interior: {
+          ...INTERIOR,
+          linkage: {
+            verdict: 'atRisk',
+            note: 'Private only with a wallet that builds PPoIs locally, like RailOxide.',
+          },
         },
-        { title: 'POI node interface', url: ENGINE + 'poi/poi.ts' },
-      ],
-    },
-    futureAdversary: {
-      sentiment: 'warning',
-      exposure:
-        'Notes are encrypted with elliptic-curve key exchange. A quantum computer decrypts every note sent to a 0zk address that was ever shared, including broadcaster fee notes: amounts, tokens and counterparties.',
-      advice:
-        'Treat your 0zk address as a secret: share it privately, and use a fresh one per counterparty where you can.',
-      interior: {
-        sender: {
-          verdict: 'atRisk',
-          note: 'Decrypts for notes touching any shared 0zk address.',
-        },
-        recipient: 'atRisk',
-        amount: 'atRisk',
-        asset: 'atRisk',
-        linkage: 'atRisk',
+        sources: [
+          { section: 'upgrades-and-governance' },
+          {
+            title: 'RailOxide builds PPoIs locally',
+            url: `${RAILOXIDE}crates/wallet-ops/src/poi_contexts.rs#L116-L150`,
+          },
+        ],
       },
-      sources: [
-        {
-          title: 'Shared key derivation (Ed25519 ECDH)',
-          url: ENGINE + 'utils/keys-utils.ts',
+      futureAdversary: {
+        sentiment: 'warning',
+        exposureShort: 'Notes are encrypted with elliptic-curve key exchange.',
+        exposureContinued:
+          'A quantum computer decrypts every note sent to a 0zk address that was ever shared, broadcaster fee notes included.',
+        advice:
+          'Share your 0zk address privately, with a fresh one per counterparty where you can.',
+        interior: {
+          sender: 'atRisk',
+          recipient: 'atRisk',
+          amount: 'atRisk',
+          asset: 'atRisk',
+          linkage: {
+            verdict: 'atRisk',
+            note: 'Private only while your 0zk address stays unshared.',
+          },
         },
-        {
-          title: 'AES-GCM note encryption',
-          url: ENGINE + 'utils/encryption/aes.ts',
-        },
-      ],
+        sources: [
+          {
+            title: 'Shared key derivation (Ed25519 ECDH)',
+            url: `${ENGINE}utils/keys-utils.ts#L186-L224`,
+          },
+          {
+            title: 'AES-GCM note encryption',
+            url: `${ENGINE}utils/encryption/aes.ts#L24-L40`,
+          },
+        ],
+      },
     },
-  },
-})
+  })
+}

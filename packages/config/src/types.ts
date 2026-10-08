@@ -1128,12 +1128,11 @@ export interface ProjectPrivacyInfo {
 export type ProjectPrivacyRelayerTracking =
   | {
       type: 'onchainEvents'
-      metric?: 'paidFinalizers'
       sources: ProjectPrivacyOnchainRelayerSource[]
     }
   | ProjectPrivacyRailgunWakuRelayerSource
 
-/** Addresses identified from onchain operations and confirmed fee payouts. */
+/** Relayer addresses identified from onchain withdrawals. */
 export type ProjectPrivacyOnchainRelayerSource = {
   address: ChainSpecificAddress
   sinceTimestamp: UnixTime
@@ -1141,10 +1140,9 @@ export type ProjectPrivacyOnchainRelayerSource = {
 
 export type PrivacyRelayerExtractorConfig =
   | { extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal' }
-  | { extractor: 'zkMoneyDepositPayout'; params: ZkMoneyDepositPayoutParams }
   | {
-      extractor: 'zkMoneyWithdrawalPayout'
-      params: ZkMoneyWithdrawalPayoutParams
+      extractor: 'zkMoneyWithdrawalRelayer'
+      params: ZkMoneyWithdrawalRelayerParams
     }
 
 /** Locates a portal deposit's funding transfer and authenticates its sender with the SIPA factory. */
@@ -1169,16 +1167,8 @@ export type ZkMoneyFundingParams = ZkMoneyDepositParams & {
   historyFromBlock: number
 }
 
-/** Confirms the fee paid to whoever finalized a deposit sweep. */
-export type ZkMoneyDepositPayoutParams = ZkMoneyDepositParams & {
-  depositFee: string
-  registrationSweepFee: string
-  /** Helper that forwards fees to its caller, so the payout is followed through it. */
-  operationExecutor: EthereumAddress
-}
-
-/** Confirms the tip paid to whoever finalized a withdrawal. */
-export type ZkMoneyWithdrawalPayoutParams = {
+/** Identifies withdrawal finalizers and excludes observable self-finalizations. */
+export type ZkMoneyWithdrawalRelayerParams = {
   tokenAddress: EthereumAddress
   executorAddress: EthereumAddress
   /** Helper that forwards fees to its caller, so the payout is followed through it. */
@@ -1308,12 +1298,18 @@ export interface PrivacyAdversaryAssessment {
    */
   sentiment: PrivacyAdversarySentiment
   /**
-   * What this adversary learns beyond the public observer and what stays
-   * hidden, in one or two plain sentences; the first sentence carries the
-   * reason for the sentiment. Never refers to other cells or quotes live
-   * numbers; the tracked anonymity set stands in for them.
+   * The reason for the sentiment, in one plain sentence. Shown alone in the
+   * rosette tooltip, and followed by `exposureContinued` on the project page.
+   * Never refers to other cells or quotes live numbers; the tracked anonymity
+   * set stands in for them.
    */
-  exposure: string
+  exposureShort: string
+  /**
+   * The rest of what this adversary learns beyond the public observer and
+   * what stays hidden, under the same rules. Omit when `exposureShort`
+   * says it all.
+   */
+  exposureContinued?: string
   /**
    * How a user keeps it private, when that is conditional (the cell is at
    * risk, or a field is). Omit when nothing the user does changes the result.

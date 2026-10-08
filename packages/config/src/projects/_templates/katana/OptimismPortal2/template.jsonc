@@ -14,6 +14,8 @@
         "0": "FaultDisputeGame",
         "1": "PermissionedDisputeGame",
         "8": "FaultDisputeGame",
+        "9": "SuperFaultDisputeGame",
+        "5": "SuperPermissionedDisputeGame",
         "621": "AggregateVerifier",
         "1337": "KailuaGame"
       }

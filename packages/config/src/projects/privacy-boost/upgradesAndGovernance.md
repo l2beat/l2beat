@@ -1,3 +1,3 @@
-Privacy Boost is controlled by the {{adminMultisigStats}} admin multisig, which can upgrade the pool, registries and AuditGateway without delay. It can replace all five proof verifiers and register or replace their verification keys, set withdrawal and portal sweep fees up to 10% each, configure portal minimum sweeps, and change the treasury, operator and gateway route manager.
+The {{adminMultisigStats}} admin multisig upgrades the pool, registries and AuditGateway instantly. It can replace all five verifiers and their keys, set withdrawal and portal fees up to 10% each, configure portal minimum sweeps, appoint auditors, and change the treasury, operator and gateway route manager.
 
-The external-call gateway owner manages target/selector policies, selects its guardian, and can pause or unpause execution. The guardian can pause and remove policies. Stranded gateway tokens can only be swept back to the pool while paused.
+The gateway owner manages target and selector policies, picks the guardian and can pause execution. The guardian can pause and remove policies. Stranded gateway tokens return to the pool only while paused.

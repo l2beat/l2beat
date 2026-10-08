@@ -181,16 +181,24 @@ const typeToIcon: Record<NonNullable<MainPage['type']>, React.ReactNode> = {
       stroke="#DB8BF7"
     >
       <path
-        d="m10 2.5-5.5 2v4.4c0 3.6 2.28 6.89 5.5 8.6 3.22-1.71 5.5-5 5.5-8.6V4.5z"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-      <path
-        d="m7.75 9.75 1.5 1.5L12.5 8"
+        d="M8.94 4.23a8.95 8.95 0 0 1 9.34 5.48.83.83 0 0 1 0 .58 8.96 8.96 0 0 1-1.2 2.07"
         strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+      <path
+        d="M11.74 11.8a2.5 2.5 0 0 1-3.54-3.54"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14.57 14.58a8.96 8.96 0 0 1-12.85-4.29.83.83 0 0 1 0-.58 8.96 8.96 0 0 1 3.7-4.29"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="m2.5 2.5 15 15" strokeWidth="1.7" strokeLinecap="round" />
     </svg>
   ),
   defi: (

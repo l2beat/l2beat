@@ -13,6 +13,7 @@ import {
   LighterClient,
   type LogsClient,
   MulticallV3Client,
+  type RetryHandlerVariant,
   RpcClient,
   RpcClientCompat,
   RpcMetricsAggregator,
@@ -38,6 +39,8 @@ export interface Clients {
   starkex: StarkexClient | undefined
   coingecko: CoingeckoClient
   beacon: BeaconChainClient | undefined
+  /** Ethereum, for following the head: see `LiveBlobsTrackingConfig.rpc` */
+  liveBlobsRpc: IRpcClient | undefined
   getRpcClient: (chain: string) => IRpcClient
   getStarknetClient: (chain: string) => StarknetClient
   rpcClients: IRpcClient[]
@@ -51,10 +54,32 @@ export function initClients(config: Config, logger: Logger): Clients {
   const rpcMetricsAggregator = new RpcMetricsAggregator({
     logger: logger.for(RpcMetricsAggregator.name),
   })
+  function createRpcClient(options: {
+    chain: string
+    url: string
+    callsPerMinute: number
+    retryStrategy: RetryHandlerVariant
+    logger: Logger
+    multicallClient?: MulticallV3Client
+    timeout?: number
+  }): IRpcClient {
+    return config.newClientsEnabled
+      ? RpcClientCompat.create({ ...options, http, rpcMetricsAggregator })
+      : new RpcClient({
+          ...options,
+          http,
+          rpcMetrics: rpcMetricsAggregator.createRecorder({
+            rpcChain: options.chain,
+            rpcClient: RpcClient.name,
+          }),
+        })
+  }
+
   let starkexClient: StarkexClient | undefined
   let voyagerClient: VoyagerClient | undefined
   let ethereumClient: IRpcClient | undefined
   let beaconChainClient: BeaconChainClient | undefined
+  let liveBlobsRpc: IRpcClient | undefined
   let dune: DuneClient | undefined
 
   const starknetClients: StarknetClient[] = []
@@ -89,32 +114,15 @@ export function initClients(config: Config, logger: Logger): Clients {
                 500,
               )
             : undefined
-          const rpcClient = config.newClientsEnabled
-            ? RpcClientCompat.create({
-                chain: chain.name,
-                url: blockApi.url,
-                http,
-                callsPerMinute: blockApi.callsPerMinute,
-                retryStrategy: blockApi.retryStrategy,
-                logger: chainLogger,
-                multicallClient,
-                rpcMetricsAggregator,
-                timeout: blockApi.timeout,
-              })
-            : new RpcClient({
-                chain: chain.name,
-                url: blockApi.url,
-                http,
-                callsPerMinute: blockApi.callsPerMinute,
-                retryStrategy: blockApi.retryStrategy,
-                logger: chainLogger,
-                multicallClient,
-                rpcMetrics: rpcMetricsAggregator.createRecorder({
-                  rpcChain: chain.name,
-                  rpcClient: RpcClient.name,
-                }),
-                timeout: blockApi.timeout,
-              })
+          const rpcClient = createRpcClient({
+            chain: chain.name,
+            url: blockApi.url,
+            callsPerMinute: blockApi.callsPerMinute,
+            retryStrategy: blockApi.retryStrategy,
+            logger: chainLogger,
+            multicallClient,
+            timeout: blockApi.timeout,
+          })
           blockClients.push(rpcClient)
           logsClients.push(rpcClient)
           rpcClients.push(rpcClient)
@@ -190,6 +198,17 @@ export function initClients(config: Config, logger: Logger): Clients {
     }
   }
 
+  if (config.da && config.da.liveBlobs) {
+    liveBlobsRpc = createRpcClient({
+      chain: 'ethereum',
+      ...config.da.liveBlobs.rpc,
+      // The newest block reaches each node behind a load balancer at its
+      // own pace: the next node asked has it a moment later
+      retryStrategy: 'FAST',
+      logger: logger.tag({ chain: 'ethereum', feature: 'liveBlobs' }),
+    })
+  }
+
   if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {
     const retryOptions = toRetryOptions('RELIABLE')
     dune = withRetries(
@@ -209,6 +228,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   const coingeckoClient = new CoingeckoClient({
     sourceName: 'coingeckoApi',
     apiKey: config.coingeckoApiKey,
+    apiUrl: config.coingeckoApiUrl,
     http,
     logger,
     callsPerMinute: config.coingeckoApiKey ? 400 : 10,
@@ -267,6 +287,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     starkex: starkexClient,
     coingecko: coingeckoClient,
     beacon: beaconChainClient,
+    liveBlobsRpc,
     getStarknetClient,
     getRpcClient,
     rpcClients,

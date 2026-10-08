@@ -13,6 +13,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { command, option, optional, positional, run, string } from 'cmd-ts'
 import { config as dotenv } from 'dotenv'
 import * as path from 'path'
+import { FeatureFlags } from '../../src/config/FeatureFlags'
 import { getDaTrackingConfig } from '../../src/config/features/da'
 import { BlobService } from '../../src/modules/data-availability/services/BlobService'
 import {
@@ -80,7 +81,7 @@ const cmd = command({
     }
 
     const ps = new ProjectService()
-    const daConfig = await getDaTrackingConfig(ps, env)
+    const daConfig = await getDaTrackingConfig(ps, env, new FeatureFlags(''))
 
     const blockConfigs = daConfig.blockProjects.filter(
       (c) => !args.project || c.projectId === args.project,

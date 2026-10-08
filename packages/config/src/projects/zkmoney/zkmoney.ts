@@ -19,7 +19,6 @@ import type {
   BaseProject,
   ProjectPrivacyToken,
   ZkMoneyDepositParams,
-  ZkMoneyDepositPayoutParams,
   ZkMoneyFundingParams,
 } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
@@ -182,12 +181,6 @@ const funderTracing: ZkMoneyFundingParams = {
 const operationExecutor = ChainSpecificAddress.address(
   discovery.getContract('OperationExecutor').address,
 )
-const depositFinalizerPayout: ZkMoneyDepositPayoutParams = {
-  ...depositLocation,
-  depositFee: depositFee.toString(),
-  registrationSweepFee: registrationSweepFee.toString(),
-  operationExecutor,
-}
 for (const [name, sourceHash] of Object.entries(SIPA_SOURCE_HASHES)) {
   assert(
     discovery.getContract(name).sourceHashes?.includes(sourceHash),
@@ -250,7 +243,9 @@ export const zkmoney: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-09-29')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossificationHistory: discovery.getOssificationHistory(),
+  // The project starts with the portal. CertManager and NitroValidator were
+  // deployed 37 days earlier.
+  ossificationHistory: discovery.getOssificationHistory(PORTAL_SINCE),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -293,18 +288,11 @@ export const zkmoney: BaseProject = {
     anonymitySet: { type: 'partially-attributed' },
     relayerTracking: {
       type: 'onchainEvents',
-      metric: 'paidFinalizers',
       sources: [
         {
           address: portal.address,
           sinceTimestamp: PORTAL_SINCE,
-          extractor: 'zkMoneyDepositPayout',
-          params: depositFinalizerPayout,
-        },
-        {
-          address: portal.address,
-          sinceTimestamp: PORTAL_SINCE,
-          extractor: 'zkMoneyWithdrawalPayout',
+          extractor: 'zkMoneyWithdrawalRelayer',
           params: {
             tokenAddress: underlyingAddress,
             executorAddress: ChainSpecificAddress.address(
@@ -322,22 +310,21 @@ export const zkmoney: BaseProject = {
       value: 'Infinite',
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
-      description:
-        'The escrow and approved enclave image cannot be upgraded. Every withdrawal and refund still needs a proof and a live approved enclave. If Aztec changes its canonical rollup, anyone can freeze deposits and fix refundable ownership at the last proven checkpoint. Later L2 transfers do not change it.',
+      description: 'The escrow and the approved enclave image are immutable.',
       walkawayTest: {
         passed: false,
         reason:
-          'Withdrawals and refunds require a live enclave running the approved image published by Aztec Labs. Running one requires AWS Nitro infrastructure. Both released wallets also depend on zk.money services, so independent operation requires a modified desktop build.',
+          'Withdrawals and refunds need a live enclave running the approved image on AWS Nitro. The released wallets also depend on zk.money services, so independent operation needs a modified desktop build.',
       },
     },
     // Recheck the hosted wallet's [boot] commit before publication. On
-    // 2026-09-30 it was 2236b3fd7350c09fcb938f8a1aa6895ab26ef42e,
-    // which is absent from the public source at 1ac7d607.
+    // 2026-10-08 it was d5c0a1a7221c0ccc273fd412080de461c3cc79f1,
+    // which is absent from the public source at 68425f9c.
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The contract, desktop wallet, enclave and circuit sources are public. The deployed refund and resolver verifiers match the published circuits. The approved enclave binary has not been reproduced. The resolver service, frozen-chain snapshot service and hosted wallet release source are unpublished. Verification instructions cover the refund and resolver circuits and the Aztec token pinned by the Ethereum portal.',
+        'The contract, desktop wallet, enclave and circuit sources are public. The deployed refund and resolver verifiers match the published circuits. The approved enclave binary remains unreproduced. The resolver service, frozen-chain snapshot service and hosted wallet release source are unpublished. Verification instructions cover the refund and resolver circuits and the Aztec token pinned by the Ethereum portal.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

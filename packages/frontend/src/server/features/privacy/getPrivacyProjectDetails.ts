@@ -349,7 +349,7 @@ async function getRelayerStat(
     switch (tracking.type) {
       case 'onchainEvents':
         return {
-          kind: tracking.metric ?? 'activeRelayers',
+          kind: 'activeRelayers',
           value: Math.round(Math.random() * 20),
         }
       case 'railgunWaku':
@@ -369,7 +369,7 @@ async function getRelayerStat(
         from,
         to,
       )
-      return { kind: tracking.metric ?? 'activeRelayers', value: count }
+      return { kind: 'activeRelayers', value: count }
     }
     case 'railgunWaku': {
       const result = await getDb().privacyRelayerSample.getAverageRelayerCount(

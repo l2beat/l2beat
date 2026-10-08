@@ -1,7 +1,6 @@
 import type {
   PrivacyAdversaryId,
   PrivacyAdversarySentiment,
-  PrivacyAlsoExposed,
   PrivacyPromise,
   Project,
   ProjectZkCatalogInfo,
@@ -31,12 +30,10 @@ export interface PrivacyRelayerStat {
   /**
    * activeRelayers - unique relayer addresses seen in onchain withdrawals
    * over the last 30 days.
-   * paidFinalizers - unique addresses paid a fee for finalizing deposits,
-   * withdrawals or refunds over the last 30 days.
    * avgDailyRelayers - average count of unique relayers seen in daily
    * network observations over the last 30 days.
    */
-  kind: 'activeRelayers' | 'paidFinalizers' | 'avgDailyRelayers'
+  kind: 'activeRelayers' | 'avgDailyRelayers'
   value: number
 }
 
@@ -72,21 +69,19 @@ export interface PrivacyAsset {
   buckets: PrivacyBucket[]
 }
 
-/** One adversary cell, reduced to what tooltips and dots need. */
+/** One adversary cell, reduced to what the rosette and dots need. */
 export interface PrivacyAdversarySummaryCell {
   id: PrivacyAdversaryId
   label: string
-  description: string
   value: string
   sentiment: PrivacyAdversarySentiment
-  exposure: string
-  /** Other fields leaking beyond the public observer, with their labels. */
-  alsoExposed: (PrivacyAlsoExposed & { label: string })[]
+  /** The cell's short description, which carries the reason for the sentiment. */
+  reason: string
 }
 
 export interface PrivacyAdversariesSummary {
   promise: PrivacyPromise
-  /** Caption under the dots, e.g. "Link privacy". */
+  /** Name of the promise, e.g. "Link privacy". */
   promiseLabel: string
   /** In spine order: public observer, chain analyst, network observer, insider, future. */
   cells: PrivacyAdversarySummaryCell[]

@@ -33,6 +33,7 @@ export interface Config {
   readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
+  readonly coingeckoApiUrl: string | undefined
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
@@ -345,6 +346,21 @@ export type BlockLayerDaTrackingConfig = {
 export interface DataAvailabilityTrackingConfig {
   readonly blockLayers: BlockLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
+  /** The last day of Ethereum blocks and blobs, kept slot by slot */
+  readonly liveBlobs: LiveBlobsTrackingConfig | false
+}
+
+export interface LiveBlobsTrackingConfig {
+  /** Blocks fetched at once while catching up with the head */
+  readonly batchSize: number
+  /**
+   * An RPC of its own: it has to keep up with the head, and the hourly
+   * indexers' backfill must not hold up its calls
+   */
+  readonly rpc: {
+    readonly url: string
+    readonly callsPerMinute: number
+  }
 }
 
 export interface BlockSyncModuleConfig {

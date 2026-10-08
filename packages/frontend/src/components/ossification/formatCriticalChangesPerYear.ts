@@ -2,12 +2,10 @@ import { pluralize } from '@l2beat/shared-pure'
 
 export function formatCriticalChangesPerYear({
   criticalChangesPerYear,
-  clusteredEventCount,
 }: {
   criticalChangesPerYear: number
-  clusteredEventCount: number
 }): string {
-  if (clusteredEventCount === 0) {
+  if (criticalChangesPerYear === 0) {
     return '0'
   }
   return criticalChangesPerYear < 10

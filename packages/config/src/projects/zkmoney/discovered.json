@@ -1,6 +1,6 @@
 {
   "name": "zkmoney",
-  "timestamp": 1790840907,
+  "timestamp": 1791192874,
   "configHash": "0xaafee78a54b9b2e6a9097c1fcc7bc7bfc1f17d6533225ad61a739d68f9082737",
   "entries": [
     {
@@ -69,7 +69,7 @@
         "0x5d55267ee005d05d45a308ff6053276ff510b8c1b1cb98729e0e7702c9679d1e"
       ],
       "proxyType": "immutable",
-      "description": "UltraHonk verifier for a zk.money circuit with a hardcoded verification key.",
+      "description": "UltraHonk verifier for a zk.money refund circuit with a hardcoded verification key.",
       "critical": true,
       "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
       "sinceTimestamp": 1790298599,
@@ -206,7 +206,7 @@
         "inputToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "L2_BENEFICIARY": "0x29a05add03279509317161fc25a0621159cdbaab95b042a53e098da664cb8ff1",
         "quoteBalanceAndBounty": {
-          "balance": "300000000000000000",
+          "balance": "4500000000000000000",
           "bounty": 0
         }
       },
@@ -260,7 +260,7 @@
         "0x3ea198cde16f8721f12298a5e60de6838d18cc87753fa9a9481c6292e4a94f09"
       ],
       "proxyType": "immutable",
-      "description": "UltraHonk verifier for a zk.money circuit with a hardcoded verification key.",
+      "description": "UltraHonk verifier for a zk.money refund circuit with a hardcoded verification key.",
       "critical": true,
       "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
       "sinceTimestamp": 1790298623,
@@ -290,7 +290,7 @@
         "0x2599443408cdb65c811611ef0f6b0aa4ac75624823fca394f22f8898c1440d5d"
       ],
       "proxyType": "immutable",
-      "description": "UltraHonk verifier for a zk.money circuit with a hardcoded verification key.",
+      "description": "UltraHonk verifier for a zk.money refund circuit with a hardcoded verification key.",
       "critical": true,
       "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
       "sinceTimestamp": 1790298575,
@@ -335,7 +335,8 @@
         "owner": { "severity": "MEDIUM" },
         "domainOwner": { "severity": "MEDIUM" },
         "registrationController": { "severity": "HIGH" },
-        "accountMetadataRegistry": { "severity": "HIGH" }
+        "accountMetadataRegistry": { "severity": "HIGH" },
+        "resolver": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a": "NameRegistry"
@@ -346,13 +347,12 @@
       "name": "ResolverVerifier",
       "address": "eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451",
       "type": "Contract",
-      "template": "zkmoney/HonkVerifier",
+      "template": "zkmoney/ResolverVerifier",
       "sourceHashes": [
         "0x4037936aa34f65195d0dc7ef3c98cc82e4f969470558a15ede8590867175baf2"
       ],
       "proxyType": "immutable",
-      "description": "UltraHonk verifier for a zk.money circuit with a hardcoded verification key.",
-      "critical": true,
+      "description": "UltraHonk verifier for the zk.money resolver circuit with a hardcoded verification key. The Resolver uses it to check that a resolver operator's answer matches the user's registered keys and L2 address.",
       "deployerAddress": "eth:0x8c5EE3f90cA6D24eD2e2c1817f0caEE89e521601",
       "sinceTimestamp": 1789423367,
       "sinceBlock": 25978553,
@@ -419,7 +419,7 @@
       "fieldMeta": {
         "owner": { "severity": "MEDIUM" },
         "blessedImplementations": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Blessed implementations per portal and intent (1 = Deposit, 2 = Registration, 3 = UpdateMetadata)."
         }
       },
@@ -521,7 +521,7 @@
       "sinceTimestamp": 1790298635,
       "sinceBlock": 26051097,
       "values": {
-        "_$cachedAvailable": "49995513486223862279561",
+        "_$cachedAvailable": "49990002160758024800123",
         "_$freezeArchive": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "_$freezeCheckpointCount": 0,
         "_$freezeCheckpointNumber": 0,
@@ -529,7 +529,7 @@
         "_$frozen": false,
         "_$initialized": true,
         "_$l2Portal": "0x015ca4a43f83d08a038c36c06ca92527f120dc1f9176ea85d1ea347decaf444d",
-        "_$lastUpdatedTime": 1790840267,
+        "_$lastUpdatedTime": 1791191327,
         "$immutable": true,
         "approvedPcr0Hashes": [
           "0x9c846102f8ac909695f7176cec0f60380ac770286bb9eec459d6152f6e676988"
@@ -559,7 +559,7 @@
         "UNPROCESSED_DEPOSIT_REFUND_VERIFIER": "eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "approvedPcr0Hashes": {
           "severity": "HIGH",
           "description": "Hashes of the AWS Nitro enclave images (PCR0) whose attestations can register TEE signers."
@@ -568,11 +568,10 @@
           "description": "Registered TEE signers. Registrations are permanent."
         },
         "_$l2Portal": {
-          "severity": "HIGH",
           "description": "zk.money token contract on Aztec whose L2->L1 messages can release funds."
         },
         "_$frozen": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership."
         },
         "REGISTRY": {
@@ -1347,7 +1346,7 @@
     "zkmoney/DepositSIPA": "0xb76ce03ef8d6ad2a449e7b71857fb89c06417c1a0ffea67b8bdb89a9019f0dca",
     "zkmoney/FPCFunderDAI": "0xacec2afd12ab2a7de2da5b55a8f81587cad46e3f25bcae1a24f731757415c21f",
     "zkmoney/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "zkmoney/NameRegistry": "0xcc308907a5c5ed94f6121c00402d22a02660efdff665990c0e58c85ab97d4444",
+    "zkmoney/NameRegistry": "0xed9599e7437a4393c20c08ef698d0988b19f41790eb0d8e43b5906dcff92f39b",
     "zkmoney/NitroValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zkmoney/OperationExecutor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zkmoney/OxideAccount": "0x1f1e8032b3c9ffe720d9da775c6550d9b715e7f93127cf74763edc1844e5d46c",
@@ -1355,13 +1354,14 @@
     "zkmoney/PlainWithdrawalExecutor": "0x911e8e59c1909f8c418151892ea82bad4130d80f7209e9b398bb0585c2089357",
     "zkmoney/RegistrationController": "0x7d40edff658ec51a29ba6a99b69f3a9ddc052d87d4f05e01e82ca620d0a9fd3a",
     "zkmoney/RegistrationSIPA": "0xb76ce03ef8d6ad2a449e7b71857fb89c06417c1a0ffea67b8bdb89a9019f0dca",
-    "zkmoney/Resolver": "0x580a1dfd9c9b4be7e25f9fa12914d7761d488728f109b7eb136e3913c5e62b2b",
+    "zkmoney/Resolver": "0xd8dc2261b85fae54b9184ceb70d0b735e5950bb2be7399c015cba2722725c54f",
+    "zkmoney/ResolverVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zkmoney/SIPAFactory": "0x6015b0def645b353825fa1a4fe67b72d8b62ab9ffd99ace348dae0075d2dfd60",
     "zkmoney/SwapEscrow": "0xb67c3531cfb5bc288fa5dd8326d0620b26194674c3e56e478a14214fc7b5ee03",
     "zkmoney/SwapEscrowFactory": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
     "zkmoney/ZkMoneyPortal": "0x4973bd1af550f7408763624fe569c4ab1c2aa189ffd34a28b01592af94832c40"
   },
-  "usedBlockNumbers": { "ethereum": 26096074 },
+  "usedBlockNumbers": { "ethereum": 26125302 },
   "permissionsConfigHash": "0x9d63bc911344a8a2834cf06399afadbb434f9a78804bac69594959f84cd5b066",
   "permissions": {
     "eth:0x768001056E4d89fd45Bf74Df3d91809F9BEb1ee1": {

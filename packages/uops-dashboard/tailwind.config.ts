@@ -1,15 +1,15 @@
-import { content, plugin } from 'flowbite-react/tailwind'
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  content: ['./index.html', './src/**/*.{ts,tsx}', content()],
+  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  darkMode: 'class',
   theme: {
-    colors: {
-      'brand-red': '#F9347B',
-      'brand-red-dark': '#BD114F',
-      'brand-black': '#222222',
-    },
     extend: {
+      colors: {
+        'brand-red': '#F9347B',
+        'brand-red-dark': '#BD114F',
+        'brand-black': '#222222',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -17,7 +17,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [plugin()],
   safelist: [
     {
       pattern: /pl-.+/,

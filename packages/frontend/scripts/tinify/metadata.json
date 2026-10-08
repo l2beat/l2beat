@@ -1472,7 +1472,7 @@
   "static/images/architecture/privacy-pools.png": "3436667a12899346cf51b431fba6ce46",
   "static/images/architecture/railgun.png": "7d07b74824338d9c272cec90d974d993",
   "static/images/architecture/tornado-cash.png": "64e55bb445c7f5d935b967ab4ff5276b",
-  "static/meta-images/privacy/summary/opengraph-image.png": "68ec99f90fc4f7349d471fa64784a1f7",
+  "static/meta-images/privacy/summary/opengraph-image.png": "4bf15a3188cca68f45fed06706381964",
   "static/images/badges/Compliance.png": "8243156ef3f8d66d6d58e8f5bb11fac4",
   "static/images/badges/PrivateTransfers.png": "8b09f0ba2b12cf654fd3e68e57a0904f",
   "static/images/badges/SmartContractInteractions.png": "740fad5242d7dd7e346c5f2d71a4fe87",
@@ -1570,6 +1570,7 @@
   "static/meta-images/zk-catalog/projects/privacy-boost/opengraph-image.png": "3846e8359ecef180a9482a573c9a69fe",
   "static/icons/cloaked.png": "d6b35a364c788135893b87774ea736ff",
   "static/meta-images/privacy/projects/cloaked/opengraph-image.png": "ec087c9997e682cbc2accc568b290fc3",
+  "static/meta-images/publications/ossification.png": "2cdaa4da502a62a0a70ddfdde13fd2bf",
   "static/images/architecture/cloaked.png": "bcc011b88a1fdbe3c078587d505673ec",
   "static/icons/basesolbridge.png": "49e1cdfa364cfa9ff227d26d8381827f",
   "static/meta-images/interop/projects/basesolbridge/opengraph-image.png": "8c551fb08d9261833a6038c82f6b646d",
@@ -1612,5 +1613,6 @@
   "static/icons/monero-cake-wallet.png": "f89fb53c67150ccce59166c7487dc75c",
   "static/meta-images/privacy/projects/monero-cake-wallet/opengraph-image.png": "408c06b6fcef8db017ce810943f61114",
   "static/meta-images/ossification/opengraph-image.png": "91a3ca4a8e017d0f4d0096cdd2ecc930",
-  "static/images/da-layer-technology/anytrust/architecture5.png": "a7d9b3e8dd1e614895350ee2877223cc"
+  "static/images/da-layer-technology/anytrust/architecture5.png": "a7d9b3e8dd1e614895350ee2877223cc",
+  "static/meta-images/blobs/opengraph-image.png": "1fd8fb15b0bc023a7cf0a54e4e78b2a1"
 }

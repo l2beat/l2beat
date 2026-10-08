@@ -91,6 +91,7 @@ export async function makeConfig(
       flags.isEnabled('notifications') &&
       getNotificationsConfig(env, flags, deploymentEnv),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
+    coingeckoApiUrl: env.optionalString('COINGECKO_API_URL'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
       cache: {
@@ -150,7 +151,7 @@ export async function makeConfig(
       ),
       timeout: env.integer(['ETHEREUM_BEACON_API_TIMEOUT'], 10000),
     },
-    da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
+    da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env, flags)),
     blockSync: {
       delayFromTipInSeconds: env.integer(
         ['BLOCK_SYNC_DELAY_FROM_TIP_IN_SECONDS'],

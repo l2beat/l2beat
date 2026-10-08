@@ -1,8 +1,8 @@
-import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { DaBlob } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
+import { matchEthereumConfigs } from './matchEthereumConfigs'
 
 export class DaService {
   generateRecords(
@@ -60,32 +60,5 @@ export class DaService {
 function matchesConfiguration(blob: DaBlob, c: BlockDaIndexedConfig) {
   return c.type === 'baseLayer'
     ? blob.daLayer === c.daLayer
-    : matchEthereumProject(blob, c)
-}
-
-export function matchEthereumProject(
-  blob: { inbox: string; sequencer: string; topics: string[] },
-  config: EthereumDaTrackingConfig,
-) {
-  if (config.topics) {
-    const hasTopicMatch = config.topics.some((topic) =>
-      blob.topics.includes(topic.toLowerCase()),
-    )
-
-    if (hasTopicMatch) {
-      return true
-    }
-  }
-
-  const hasInboxMatch = config.inbox.toLowerCase() === blob.inbox.toLowerCase()
-
-  if (!config.sequencers || config.sequencers.length === 0) {
-    return hasInboxMatch
-  }
-
-  const hasMatchingSequencer = config.sequencers.some(
-    (sequencer) => sequencer.toLowerCase() === blob.sequencer.toLowerCase(),
-  )
-
-  return hasInboxMatch && hasMatchingSequencer
+    : matchEthereumConfigs([c], blob.blockNumber, blob).length > 0
 }

@@ -1252,7 +1252,7 @@
         "UNPROCESSED_DEPOSIT_REFUND_VERIFIER": "eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "approvedPcr0Hashes": {
           "severity": "HIGH",
           "description": "Hashes of the AWS Nitro enclave images (PCR0) whose attestations can register TEE signers."
@@ -1261,11 +1261,10 @@
           "description": "Registered TEE signers. Registrations are permanent."
         },
         "_$l2Portal": {
-          "severity": "HIGH",
           "description": "zk.money token contract on Aztec whose L2->L1 messages can release funds."
         },
         "_$frozen": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the portal is permanently frozen. A frozen portal accepts no deposits. Withdrawals within the frozen checkpoint and epoch bounds remain available alongside refunds against the frozen state. L2 transfers are not disabled but do not change refundable ownership."
         },
         "REGISTRY": {

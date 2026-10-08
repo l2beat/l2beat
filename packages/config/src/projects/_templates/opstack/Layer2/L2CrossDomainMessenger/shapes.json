@@ -19,5 +19,11 @@
     "address": "ink:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96",
     "chain": "ink",
     "blockNumber": 50178011
+  },
+  "L2CrossDomainMessenger_v2_1_1beta_4": {
+    "hash": "0xfb9b6038f92aab239c0d4ae0e732ef9ba91590fee841a84ed2aea05732414997",
+    "address": "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
+    "chain": "celo",
+    "blockNumber": 79482303
   }
 }
