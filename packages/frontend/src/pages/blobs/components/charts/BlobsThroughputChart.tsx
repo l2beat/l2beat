@@ -37,21 +37,26 @@ export function BlobsThroughputChart({
   const [range] = useState(() => optionToRange('1y'))
   const resolution = useMemo(() => rangeToResolution(range), [range])
 
-  const { data, isLoading } = useQuery(
-    trpc.da.projectCharts.queryOptions({
-      range,
-      projectId: project.id,
-      // Everything posted counts towards the capacity, not only what
-      // scaling projects posted
-      includeL2Only: false,
+  const params = {
+    range,
+    projectId: project.id,
+    // Everything posted counts towards the capacity, not only what
+    // scaling projects posted
+    includeL2Only: false,
+  }
+  const total = useQuery(trpc.da.projectChart.queryOptions(params))
+  // A year of every poster's hourly records, so it waits to be asked for
+  const byProject = useQuery(
+    trpc.da.projectCharts.queryOptions(params, {
+      enabled: view === 'per-project',
     }),
   )
-  const { data: pastDay } = useQuery(
+  const pastDay = useQuery(
     trpc.da.pastDayUsage.queryOptions({ daLayerId: project.id }),
   )
 
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
-    data?.totalChart.data,
+    total.data?.chart,
     configuredThroughputs,
     resolution,
   )
@@ -59,9 +64,9 @@ export function BlobsThroughputChart({
   return (
     <div className="flex flex-col gap-4 lg:contents">
       <Header
-        used={pastDay?.used}
-        capacity={pastDay?.capacity}
-        isLoading={pastDay === undefined}
+        used={pastDay.data?.used}
+        capacity={pastDay.data?.capacity}
+        isLoading={pastDay.isLoading}
         view={view}
         setView={setView}
       />
@@ -69,18 +74,18 @@ export function BlobsThroughputChart({
         <ProjectDaAbsoluteThroughputChart
           project={project}
           dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
-          isLoading={isLoading}
+          isLoading={total.isLoading}
           milestones={milestones}
-          syncedUntil={data?.syncedUntil}
+          syncedUntil={total.data?.syncedUntil}
           resolution={resolution}
-          dataGap={data?.totalChart.dataGap}
+          dataGap={undefined}
           hideProjectLogo
         />
       ) : (
         <DaThroughputByProjectChart
-          data={data?.byProjectChart.data}
-          syncedUntil={data?.syncedUntil}
-          isLoading={isLoading}
+          data={byProject.data?.byProjectChart.data}
+          syncedUntil={byProject.data?.syncedUntil}
+          isLoading={byProject.isLoading}
           customColors={customColors}
           milestones={milestones}
           resolution={resolution}

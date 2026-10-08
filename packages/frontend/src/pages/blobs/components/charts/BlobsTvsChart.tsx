@@ -34,7 +34,7 @@ import type { DaTvsProjectIds } from '~/server/features/data-availability/summar
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
-import { getTvsSeriesStats } from './getTvsSeriesStats'
+import { getTvsSeriesStats, type TvsSeriesStats } from './getTvsSeriesStats'
 import { mergeTvsSeries } from './mergeTvsSeries'
 
 const chartMeta = {
@@ -95,7 +95,7 @@ export function BlobsTvsChart({ projectIds }: { projectIds: DaTvsProjectIds }) {
 
   return (
     <div className="flex flex-col gap-4 lg:contents">
-      <Header total={stats?.total} change={stats?.change} range={range} />
+      <Header stats={stats} isLoading={isLoading} range={range} />
       <ChartContainer
         meta={chartMeta}
         data={chartData}
@@ -218,12 +218,12 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
 }
 
 function Header({
-  total,
-  change,
+  stats,
+  isLoading,
   range,
 }: {
-  total: number | undefined
-  change: number | undefined
+  stats: TvsSeriesStats | undefined
+  isLoading: boolean
   range: ChartRange
 }) {
   return (
@@ -235,16 +235,18 @@ function Header({
         <ViewDetailsLink href="/layer2s/tvs" />
       </div>
       <div className="flex flex-col items-end">
-        {total === undefined || change === undefined ? (
+        {isLoading ? (
           <Skeleton className="my-[5px] h-5 w-40" />
+        ) : stats === undefined ? (
+          <span className="whitespace-nowrap font-bold text-xl">No data</span>
         ) : (
           // the change drops under the total where there is no room beside it
           <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
             <span className="whitespace-nowrap font-bold text-xl">
-              {formatCurrency(total, 'usd')}
+              {formatCurrency(stats.total, 'usd')}
             </span>
             <span className="whitespace-nowrap text-xs">
-              <PercentChange value={change} />
+              <PercentChange value={stats.change} />
               <span className="text-secondary">
                 {' '}
                 / {tvsRangeToReadable(range)}

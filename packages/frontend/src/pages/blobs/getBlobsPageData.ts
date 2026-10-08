@@ -20,6 +20,7 @@ export async function getBlobsPageData(
     daLayers,
     daBridges,
     customDaProjects,
+    scalingProjects,
     ethereum,
     projectsWithColors,
     blobPosters,
@@ -28,6 +29,7 @@ export async function getBlobsPageData(
     ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
     ps.getProjects({ select: ['daBridge'] }),
     ps.getProjects({ select: ['customDa'], whereNot: ['archivedAt'] }),
+    ps.getProjects({ select: ['scalingInfo'] }),
     ps.getProject({
       id: ProjectId.ETHEREUM,
       select: ['daLayer'],
@@ -78,6 +80,7 @@ export async function getBlobsPageData(
           daLayers,
           daBridges,
           customDaProjects,
+          scalingProjects,
         ),
         blobPosters,
         throughput: {

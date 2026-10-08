@@ -22,10 +22,7 @@ export interface DaPastDayUsage {
   capacity: number | undefined
 }
 
-type PostedRecord = Pick<
-  DataAvailabilityRecord,
-  'projectId' | 'timestamp' | 'totalSize'
->
+type PostedRecord = Pick<DataAvailabilityRecord, 'timestamp' | 'totalSize'>
 
 export async function getDaPastDayUsage({
   daLayerId,
@@ -43,54 +40,48 @@ export async function getDaPastDayUsage({
     return { used: Math.round((capacity ?? 1e9) * 0.8), capacity }
   }
 
-  // two days, so that a whole one is at hand while the indexer lags
-  const fetched: [number, number] = [today - 2 * UnixTime.DAY, today]
-  const records = await getDb().dataAvailability.getByDaLayersAndTimeRange(
+  // Everything posted to the layer is kept under its own id. Two days back,
+  // so that a whole one is at hand while the indexer lags, and through today,
+  // so that yesterday's last hour can be told complete
+  const earliest = today - 2 * UnixTime.DAY
+  const records = await getDb().dataAvailability.getByProjectIdsAndTimeRange(
     [daLayerId],
-    fetched,
+    [earliest, today + UnixTime.DAY],
   )
-  const day = getSyncedDay(records, daLayerId, fetched)
+  const day = getSyncedDay(records, [earliest, today])
   if (!day) return { used: undefined, capacity: undefined }
 
   return {
-    used: sumUsed(records, daLayerId, day),
+    used: sumUsed(records, day),
     capacity: getCapacity(daLayerId, throughput, day),
   }
 }
 
 /**
- * The newest 24 hours the indexer has written, [from, to), out of the range
- * the records were fetched for. Records are hourly and the indexer can lag,
- * so a day that simply ended at midnight would count the hours not written
- * yet as empty. Undefined when the range does not hold a whole day up to the
- * last record.
+ * Yesterday, or when the indexer lags, the newest 24 whole hours it has
+ * written, as [from, to). Records are hourly and the newest one is still
+ * being written: the indexer adds blobs to it batch by batch, so it is only
+ * complete once the next hour has started. Undefined when the records do not
+ * reach a whole day back from there.
  */
 export function getSyncedDay(
   records: PostedRecord[],
-  daLayerId: string,
-  [fetchedFrom, fetchedTo]: [number, number],
+  [earliest, dayEnd]: [number, number],
 ): [number, number] | undefined {
-  const hours = records
-    .filter((r) => r.projectId === daLayerId && r.timestamp < fetchedTo)
-    .map((r) => r.timestamp)
-  if (hours.length === 0) return undefined
+  if (records.length === 0) return undefined
 
-  const to = Math.max(...hours) + UnixTime.HOUR
+  const newest = Math.max(...records.map((r) => r.timestamp))
+  const to = Math.min(newest, dayEnd)
   const from = to - UnixTime.DAY
-  return from >= fetchedFrom ? [from, to] : undefined
+  return from >= earliest ? [from, to] : undefined
 }
 
-/** Everything posted to the DA layer, which it keeps under its own id */
 export function sumUsed(
   records: PostedRecord[],
-  daLayerId: string,
   [from, to]: [number, number],
 ): number {
   return records
-    .filter(
-      (r) =>
-        r.projectId === daLayerId && r.timestamp >= from && r.timestamp < to,
-    )
+    .filter((r) => r.timestamp >= from && r.timestamp < to)
     .reduce((sum, r) => sum + Number(r.totalSize), 0)
 }
 
