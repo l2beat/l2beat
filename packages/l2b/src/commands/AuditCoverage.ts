@@ -14,7 +14,7 @@ import {
   fetchAuditDataset,
   readAuditDataset,
 } from '../implementations/audit-coverage/auditDataset'
-import { deployedSourceFromCache } from '../implementations/audit-coverage/deployedSource'
+import { deployedSourceFromDiscovery } from '../implementations/audit-coverage/deployedSource'
 import { createCliLogger } from '../implementations/common/CliLogger'
 import { File, HttpUrl } from './types'
 
@@ -76,7 +76,7 @@ export const AuditCoverage = command({
         code,
         dataset: { repository: dataset.repository, commit: dataset.commit },
       },
-      deployedSourceFromCache(),
+      deployedSourceFromDiscovery(),
       (address, covered, count) =>
         covering.update(progress(covered, count, `Covering ${address}`)),
     )

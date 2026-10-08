@@ -1,9 +1,13 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
-  type ContractSource,
+  AllProviders,
+  getChainConfigs,
   getChainFullName,
   getDiscoveryPaths,
+  type IProvider,
   SQLiteCache,
 } from '@l2beat/discovery'
+import { HttpClient } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { flattenContractSource } from '../flatten'
 import { splitSource } from './splitSource'
@@ -18,24 +22,39 @@ export type GetDeployedSource = (
   address: ChainSpecificAddress,
 ) => Promise<DeployedSource>
 
-// Discovery caches every verified source it fetched, so after discovery a
-// missing entry means the contract is not verified.
-export function deployedSourceFromCache(): GetDeployedSource {
-  const cache = new SQLiteCache(getDiscoveryPaths().cache)
+export function deployedSourceFromDiscovery(): GetDeployedSource {
+  const allProviders = new AllProviders(
+    getChainConfigs(),
+    new HttpClient(),
+    new SQLiteCache(getDiscoveryPaths().cache),
+    Logger.SILENT,
+  )
+  const providers = new Map<string, Promise<IProvider>>()
   return async (address) => {
     const chain = getChainFullName(ChainSpecificAddress.chain(address))
-    const key = `${chain}.getSource-v3.${ChainSpecificAddress.address(address)}`
-    const entry = await cache.get(key)
-    if (entry === undefined) {
+    let provider = providers.get(chain)
+    if (provider === undefined) {
+      provider = providerAtLatestBlock(allProviders, chain)
+      providers.set(chain, provider)
+    }
+    const source = await (await provider).getSource(address)
+    if (!source.isVerified) {
       return { kind: 'unverified' }
     }
-    const source: ContractSource = JSON.parse(entry)
     const flat = flattenContractSource(source, true)
     if (flat === undefined) {
       return { kind: 'non-solidity' }
     }
     return { kind: 'flat', flat, aliases: aliasesByDeclaration(source.files) }
   }
+}
+
+async function providerAtLatestBlock(
+  allProviders: AllProviders,
+  chain: string,
+): Promise<IProvider> {
+  const blockNumber = await allProviders.getLatestBlockNumber(chain)
+  return allProviders.getByBlockNumber(chain, blockNumber)
 }
 
 // Flattening replaces import aliases with the names they stand for, so the

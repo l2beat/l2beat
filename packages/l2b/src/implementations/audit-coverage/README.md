@@ -14,7 +14,7 @@ By default both files are read from `main` of `github.com/sergeyshemyakov/audit-
 
 How the frontend reads the output, the deployed code and the audited code is described in [FRONTEND.md](FRONTEND.md).
 
-Run it anywhere in the repository after discovery: deployed sources are read from the discovery cache, so no contract source is fetched.
+Run it anywhere in the repository after discovery. Deployed sources come from discovery's provider, so they are read from the discovery cache and only fetched from the explorer when missing.
 
 ## Inputs
 
