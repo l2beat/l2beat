@@ -11,7 +11,7 @@ Generated with discovered.json: 0x915be121c3bde25ede63f3145adfb76ff7fc19a3
 
 Created two new proposals. Both deploy new pools.
 
-- Proposal 71 (by pcaversaccio): deploy five new classic ETH pools (0.01, 0.03, 0.3, 3, 30 ETH) with protocol fee 0 for the three small pools and 0.3% for 3 and 30 ETH.
+- Proposal 71: deploy five new classic ETH pools (0.01, 0.03, 0.3, 3, 30 ETH) with protocol fee 0 for the three small pools and 0.3% for 3 and 30 ETH.
 - Proposal 72: deploy one 0.01 ETH pool of a new type, `FeeEnforcedTornado_eth` (https://github.com/frogheadtornado/tc-new-pool-design-proposal). It has a 0.3% withdrawal fee. Direct withdrwals (not by registered routers) pay additional fee, governance can raise withdrawal fees up to 5% total.
 
 Also, several anonymity mining legacy contract sources are verified now, they were templatized.
