@@ -326,18 +326,11 @@ export async function getPrivacyProjectDetails(
 async function getTrackedOn(
   project: PrivacyProject,
 ): Promise<ProjectIconListItem[]> {
-  const [chainProjects, daLayers] = await Promise.all([
-    ps.getProjects({
-      select: ['chainConfig'],
-      optional: [...PROJECT_PAGE_METADATA_FIELDS],
-    }),
-    ps.getProjects({ where: ['daLayer'] }),
-  ])
-  return getPrivacyTrackedChains(
-    project.privacyInfo.trackedOn,
-    chainProjects,
-    daLayers,
-  )
+  const chainProjects = await ps.getProjects({
+    select: ['chainConfig'],
+    optional: [...PROJECT_PAGE_METADATA_FIELDS],
+  })
+  return getPrivacyTrackedChains(project.privacyInfo.trackedOn, chainProjects)
 }
 
 const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7

@@ -36,10 +36,6 @@ const SECTIONS: Record<string, Breadcrumb> = {
   interop: { name: 'Interop', path: '/interop/summary' },
   privacy: { name: 'Privacy', path: '/privacy/summary' },
   defi: { name: 'DeFi', path: '/defi/summary' },
-  'data-availability': {
-    name: 'Data Availability',
-    path: '/data-availability/summary',
-  },
   blobs: { name: 'Blobs', path: '/blobs' },
   'zk-catalog': { name: 'ZK Catalog', path: '/zk-catalog' },
   publications: { name: 'Publications', path: '/publications' },

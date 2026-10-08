@@ -3,7 +3,6 @@ import { LazyHydrate } from '~/components/LazyHydrate'
 import { ActivitySection } from './sections/ActivitySection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
-import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
 import { DefiTvlSection } from './sections/defi/DefiTvlSection'
@@ -37,7 +36,6 @@ import { StateDerivationSection } from './sections/StateDerivationSection'
 import { StateValidationSection } from './sections/state-validation/StateValidationSection'
 import { TechnologyChoicesSection } from './sections/TechnologyChoicesSection'
 import { TrustedSetupSection } from './sections/TrustedSetupsSection'
-import { ThroughputSection } from './sections/throughput/ThroughputSection'
 import { L2TvsSection } from './sections/tvs/L2TvsSection'
 import { TvsValueSection } from './sections/tvs/TvsValueSection'
 import { ZkCatalogTvsSection } from './sections/tvs/ZkCatalogTvsSection'
@@ -131,14 +129,6 @@ function renderSection(
           {...item.props}
         />
       )
-    case 'ThroughputSection':
-      return (
-        <ThroughputSection
-          key={item.props.id}
-          {...{ nested, sectionOrder }}
-          {...item.props}
-        />
-      )
     case 'DetailedDescriptionSection':
       return (
         <DetailedDescriptionSection
@@ -158,14 +148,6 @@ function renderSection(
     case 'RiskSummarySection':
       return (
         <RiskSummarySection
-          key={item.props.id}
-          {...{ nested, sectionOrder }}
-          {...item.props}
-        />
-      )
-    case 'DaRiskSummarySection':
-      return (
-        <DaRiskSummarySection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}

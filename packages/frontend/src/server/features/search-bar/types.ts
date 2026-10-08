@@ -11,7 +11,6 @@ export type SearchBarProjectEntry = SearchBarEntry & {
   kind:
     | 'layer2'
     | 'layer3'
-    | 'da'
     | 'interop'
     | 'zkCatalog'
     | 'ecosystem'

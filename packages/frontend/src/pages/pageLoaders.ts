@@ -65,27 +65,6 @@ export const pageLoaders = {
   InteropIntentBridgesPage: async () =>
     (await import('./interop/intent-bridges/InteropIntentBridgesPage'))
       .InteropIntentBridgesPage,
-  DataAvailabilitySummaryPage: async () =>
-    (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
-      .DataAvailabilitySummaryPage,
-  DataAvailabilityRiskPage: async () =>
-    (await import('./data-availability/risk/DataAvailabilityRiskPage'))
-      .DataAvailabilityRiskPage,
-  DataAvailabilityThroughputPage: async () =>
-    (
-      await import(
-        './data-availability/throughput/DataAvailabilityThroughputPage'
-      )
-    ).DataAvailabilityThroughputPage,
-  DataAvailabilityLivenessPage: async () =>
-    (await import('./data-availability/liveness/DataAvailabilityLivenessPage'))
-      .DataAvailabilityLivenessPage,
-  DataAvailabilityProjectPage: async () =>
-    (await import('./data-availability/project/DataAvailabilityProjectPage'))
-      .DataAvailabilityProjectPage,
-  DataAvailabilityArchivedPage: async () =>
-    (await import('./data-availability/archived/DataAvailabilityArchivedPage'))
-      .DataAvailabilityArchivedPage,
   BlobsPage: async () => (await import('./blobs/BlobsPage')).BlobsPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
@@ -129,9 +108,6 @@ export const pageLoaders = {
   ChangelogPage: async () =>
     (await import('./changelog/ChangelogPage')).ChangelogPage,
   DonatePage: async () => (await import('./donate/DonatePage')).DonatePage,
-  DaRiskFrameworkPage: async () =>
-    (await import('./da-risk-framework/DaRiskFrameworkPage'))
-      .DaRiskFrameworkPage,
   MultisigReportPage: async () =>
     (await import('./multisig-report/MultisigReportPage')).MultisigReportPage,
   TermsOfServicePage: async () =>

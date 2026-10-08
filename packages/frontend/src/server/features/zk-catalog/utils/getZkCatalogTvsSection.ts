@@ -63,7 +63,7 @@ export function getZkCatalogTvsSection(
 
   const milestonesFromProjects: Milestone[] = projectsForTvs.flatMap((p) => {
     const resolved = projectsUsedIn.get(p.projectId)
-    if (!resolved) return []
+    if (!resolved?.url) return []
 
     return [
       {

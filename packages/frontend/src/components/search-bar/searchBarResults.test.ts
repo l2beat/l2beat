@@ -15,9 +15,9 @@ describe(searchEntries.name, () => {
         category: 'l2',
       }),
       projectEntry({
-        name: 'Ethereum with Enshrined Bridge',
+        name: 'Ethereum',
         tags: ['ethereum', 'Ethereum'],
-        category: 'da',
+        category: 'interop',
       }),
       projectEntry({
         name: 'Jetstream',
@@ -28,10 +28,7 @@ describe(searchEntries.name, () => {
 
     const results = searchEntries('ethere', entries)
 
-    expect(results.map((entry) => entry.name)).toEqual([
-      'Ethereal',
-      'Ethereum with Enshrined Bridge',
-    ])
+    expect(results.map((entry) => entry.name)).toEqual(['Ethereal', 'Ethereum'])
     expect(isDirectMatch('ethere', entries[0]!)).toEqual(true)
     expect(isDirectMatch('ethere', entries[1]!)).toEqual(true)
     expect(isDirectMatch('ethere', entries[2]!)).toEqual(false)
@@ -87,9 +84,9 @@ describe(groupSearchResults.name, () => {
           category: 'l2',
         }),
         projectEntry({
-          name: 'Ethereum with Enshrined Bridge',
+          name: 'Ethereum',
           tags: ['ethereum', 'Ethereum'],
-          category: 'da',
+          category: 'interop',
         }),
         projectEntry({
           name: 'Jetstream',
@@ -99,10 +96,10 @@ describe(groupSearchResults.name, () => {
       ]),
     )
 
-    expect(grouped.map(([category]) => category)).toEqual(['l2', 'da'])
+    expect(grouped.map(([category]) => category)).toEqual(['l2', 'interop'])
     expect(
       grouped.flatMap(([, entries]) => entries.map((entry) => entry.name)),
-    ).toEqual(['Ethereal', 'Ethereum with Enshrined Bridge'])
+    ).toEqual(['Ethereal', 'Ethereum'])
   })
 
   it('places tokens as the last shown group', () => {
@@ -128,7 +125,7 @@ function projectEntry({
 }: {
   name: string
   tags: string[]
-  category?: 'l2' | 'da'
+  category?: 'l2' | 'interop'
 }) {
   return {
     type: 'project' as const,

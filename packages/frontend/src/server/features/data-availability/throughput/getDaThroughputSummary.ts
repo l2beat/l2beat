@@ -2,8 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { groupByTimestampAndDaLayerId } from './getDaThroughputChart'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
+import { groupByTimestampAndDaLayerId } from './utils/groupByTimestampAndDaLayerId'
 
 export const DaThroughputSummaryParams = v.object({
   to: v.number().optional(),

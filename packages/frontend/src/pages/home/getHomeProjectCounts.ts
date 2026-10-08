@@ -7,7 +7,6 @@ export interface HomeProjectCounts {
   interop: number
   interopProtocols: number
   privacy: number
-  dataAvailability: number
   blobs: number
   zkCatalog: number
   ecosystems: number
@@ -16,8 +15,6 @@ export interface HomeProjectCounts {
 export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
   const [
     l2Projects,
-    daLayers,
-    customDa,
     zkProjects,
     ecosystems,
     privacy,
@@ -26,14 +23,6 @@ export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
-      whereNot: ['archivedAt'],
-    }),
-    ps.getProjects({
-      where: ['daLayer'],
-      whereNot: ['archivedAt'],
-    }),
-    ps.getProjects({
-      where: ['customDa'],
       whereNot: ['archivedAt'],
     }),
     ps.getProjects({
@@ -61,7 +50,6 @@ export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
     interop: interopChains.length,
     interopProtocols: interopProtocols.length,
     privacy: privacy.length,
-    dataAvailability: daLayers.length + customDa.length,
     blobs: daTrackedProjects.filter(postsToEthereum).length,
     zkCatalog: zkProjects.length,
     ecosystems: ecosystems.length,

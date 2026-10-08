@@ -33,17 +33,13 @@ describe(getPrivacyTrackedChains.name, () => {
   const projects = [ethereum, polygon, arbitrum]
 
   it('resolves chain names in configured order', () => {
-    const result = getPrivacyTrackedChains(
-      ['polygonpos', 'ethereum'],
-      projects,
-      [],
-    )
+    const result = getPrivacyTrackedChains(['polygonpos', 'ethereum'], projects)
     expect(result.map((c) => c.id)).toEqual(['polygonpos', 'ethereum'])
     expect(result.map((c) => c.name)).toEqual(['Polygon PoS', 'Ethereum'])
   })
 
   it('uses the project slug for the icon', () => {
-    const [result] = getPrivacyTrackedChains(['polygonpos'], projects, [])
+    const [result] = getPrivacyTrackedChains(['polygonpos'], projects)
     expect(result?.iconUrl).toEqual('/icons/polygon-pos.png')
   })
 
@@ -51,18 +47,13 @@ describe(getPrivacyTrackedChains.name, () => {
     const [ethereumChain, arbitrumChain] = getPrivacyTrackedChains(
       ['ethereum', 'arbitrum'],
       projects,
-      [],
     )
     expect(ethereumChain?.href).toEqual(undefined)
     expect(arbitrumChain?.href).toEqual('/layer2s/projects/arbitrum')
   })
 
   it('skips chains without a matching chainConfig', () => {
-    const result = getPrivacyTrackedChains(
-      ['ethereum', 'unknown'],
-      projects,
-      [],
-    )
+    const result = getPrivacyTrackedChains(['ethereum', 'unknown'], projects)
     expect(result.map((c) => c.id)).toEqual(['ethereum'])
   })
 })

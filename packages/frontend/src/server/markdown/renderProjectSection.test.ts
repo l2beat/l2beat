@@ -315,7 +315,7 @@ describe(renderProjectSection.name, () => {
             references: [],
             relatedProjectBanner: {
               text: 'Learn more about the DA layer here:',
-              href: '/data-availability/projects/celestia/no-bridge',
+              href: '/layer2s/projects/celestia',
               project: { name: 'Celestia', icon: '/icons/celestia.png' },
             },
           },
@@ -328,7 +328,7 @@ describe(renderProjectSection.name, () => {
     )
     expect(technology).toInclude(
       'The section considers only the L3 properties. For more details please refer to [Arbitrum One](https://l2beat.com/layer2s/projects/arbitrum)',
-      'Blobs go to Celestia.\n\nLearn more about the DA layer here: [Celestia](https://l2beat.com/data-availability/projects/celestia/no-bridge)',
+      'Blobs go to Celestia.\n\nLearn more about the DA layer here: [Celestia](https://l2beat.com/layer2s/projects/celestia)',
     )
   })
 
@@ -459,33 +459,8 @@ describe(renderProjectSection.name, () => {
     )
   })
 
-  it('keeps the throughput sync warning and explanation next to the chart pointer', () => {
-    const markdown = render({
-      type: 'ThroughputSection',
-      props: {
-        id: 'throughput',
-        title: 'Throughput',
-        project: CHART_PROJECT,
-        throughput: [],
-        customColors: undefined,
-        syncStatus: {
-          warning: 'No throughput data since 2026-09-01.',
-          isSynced: false,
-        },
-        milestones: [],
-      },
-    })
-
-    expect(markdown).toInclude(
-      '**Warning:** No throughput data since 2026-09-01.\n\nThe chart shows the actual size of data posted to the DA Layer per day',
-      'The interactive throughput chart and its past day stats are shown on [the HTML page](https://l2beat.com/layer2s/projects/arbitrum#throughput).',
-    )
-  })
-
   it('names the DA layers a project posts to, or posted to once it stopped', () => {
-    const dataPosted = (
-      currentDaLayers: { name: string; logo: string; href: string }[],
-    ) =>
+    const dataPosted = (currentDaLayers: { name: string; logo: string }[]) =>
       render({
         type: 'DataPostedSection',
         props: {
@@ -501,10 +476,10 @@ describe(renderProjectSection.name, () => {
       })
 
     expect(dataPosted([ETHEREUM])).toInclude(
-      'The project currently posts data to [Ethereum](https://l2beat.com/data-availability/projects/ethereum/ethereum); previously it posted to [Celestia](https://l2beat.com/data-availability/projects/celestia/no-bridge).',
+      'The project currently posts data to Ethereum; previously it posted to Celestia.',
     )
     expect(dataPosted([])).toInclude(
-      'The project no longer posts data; previously it posted to [Celestia](https://l2beat.com/data-availability/projects/celestia/no-bridge).',
+      'The project no longer posts data; previously it posted to Celestia.',
     )
   })
 
@@ -692,13 +667,11 @@ const GROTH16 = {
 const ETHEREUM = {
   name: 'Ethereum',
   logo: '/icons/ethereum.png',
-  href: '/data-availability/projects/ethereum/ethereum',
 }
 
 const CELESTIA = {
   name: 'Celestia',
   logo: '/icons/celestia.png',
-  href: '/data-availability/projects/celestia/no-bridge',
 }
 
 const CHART_PROJECT = {
