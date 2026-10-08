@@ -64,9 +64,9 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'futureAdversary',
       label: 'Future adversary',
       description:
-        'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and future cryptanalysis such as a large quantum computer that breaks elliptic-curve key exchange and pairings, but not hashes, symmetric ciphers or lattices.',
+        'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and breaks all public-key cryptography, by quantum computer or new mathematics: elliptic curves, pairings, RSA, lattices and isogenies. Hashes, Poseidon included, and symmetric ciphers survive.',
       examples:
-        'First well-funded insiders, then everyone in a potential post-quantum future.',
+        'An intelligence agency archiving chain data today, then anyone once a break is public.',
     },
   }
 
@@ -258,9 +258,9 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
 
   // Future adversary
   /** Stealth addresses without onchain announcements. */
-  noAnnouncementQuantum:
-    'No announcement is published, so a quantum computer cannot replay address derivations from the chain alone.',
-  /** Follows `noAnnouncementQuantum` when the operator holds the viewing key. */
+  noAnnouncement:
+    'No announcement is published, so address derivations cannot be replayed from the chain alone.',
+  /** Follows `noAnnouncement` when the operator holds the viewing key. */
   operatorViewingKeyRegardless: (operator: string) =>
     `The viewing key held by ${operator} exposes the history regardless.`,
   /** Account keys derived from a wallet signature. `extra` names what else is needed, e.g. a PIN. */

@@ -56,7 +56,7 @@ export function getPrivacyAdversaryDescription(
 /**
  * All adversaries folded into one value: the homepage dot colour and the
  * summary table sort key. The future adversary is left out: it grades a
- * potential post-quantum world, not today's protocol. Any red cell makes it
+ * future cryptographic break, not today's protocol. Any red cell makes it
  * red, otherwise the majority colour wins and a tie is green. Within a colour,
  * fewer red and yellow cells sort first.
  */

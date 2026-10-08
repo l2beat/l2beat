@@ -145,7 +145,7 @@ export const umbraAdversaries = definePrivacyAdversaries({
       exposureShort:
         'Each announcement stores the ephemeral public key and the encrypted scalar.',
       exposureContinued:
-        'A quantum computer that breaks secp256k1 decrypts the scalar against every registered viewing key and checks which spending key yields the stealth address, identifying the recipient of every past payment.',
+        'Whoever breaks secp256k1 decrypts the scalar against every registered viewing key and checks which spending key yields the stealth address, identifying the recipient of every past payment.',
       sources: [
         {
           contract: 'Umbra',
