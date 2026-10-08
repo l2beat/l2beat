@@ -47,17 +47,17 @@ describe(LiveBlobsFeed.name, () => {
     expect(db.loads).toEqual(1)
   })
 
-  it('reads the head every 250 ms, and the rows only when it moved', async () => {
+  it('reads the head every 100 ms, and the rows only when it moved', async () => {
     const db = fakeDb()
     feed = new LiveBlobsFeed(db.source, Logger.SILENT)
     await feed.latest()
 
     await clock.tickAsync(1000)
-    expect(db.headReads).toEqual(5)
+    expect(db.headReads).toEqual(11)
     expect(db.loads).toEqual(1)
 
     db.head = HEAD + 1
-    await clock.tickAsync(250)
+    await clock.tickAsync(100)
     expect(db.loads).toEqual(2)
   })
 
@@ -143,8 +143,8 @@ describe(LiveBlobsFeed.name, () => {
 
     const answer = answerOf(feed.latestAfter({ after: HEAD }))
     db.failing = false
-    // backed off: half a second after one failure
-    await clock.tickAsync(500)
+    // backed off: a fifth of a second after one failure
+    await clock.tickAsync(200)
 
     expect(answer.value?.live).toEqual(true)
   })

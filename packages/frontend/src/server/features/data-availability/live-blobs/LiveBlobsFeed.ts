@@ -22,10 +22,10 @@ import { createMockLiveBlobsSource } from './mockLiveBlobsSource'
 
 /**
  * How often the head is read while pages wait, in seconds. It is a
- * primary-key lookup, and every read sooner is that much sooner on every
- * screen
+ * primary-key lookup, and half of it is, on average, how long a stored block
+ * waits to be served to every screen
  */
-const POLL_INTERVAL = 0.25
+const POLL_INTERVAL = 0.1
 /**
  * How long a page's ask takes at most when there is nothing new, the wait for
  * the first answer included; within the server's 25 s request timeout
