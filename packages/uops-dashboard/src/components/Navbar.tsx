@@ -16,9 +16,11 @@ export function MainNavbar() {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-controls="navbar-menu"
           className="inline-flex items-center rounded-lg p-2 text-gray-400 text-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 md:hidden"
         >
-          <span className="sr-only">Open main menu</span>
+          <span className="sr-only">Main menu</span>
           <svg
             aria-hidden="true"
             className="h-6 w-6 shrink-0"
@@ -28,7 +30,10 @@ export function MainNavbar() {
             <path d="M3 5h18v2.5H3zm0 5.75h18v2.5H3zM3 16.5h18V19H3z" />
           </svg>
         </button>
-        <div className={`w-full md:block md:w-auto ${isOpen ? '' : 'hidden'}`}>
+        <div
+          id="navbar-menu"
+          className={`w-full md:block md:w-auto ${isOpen ? '' : 'hidden'}`}
+        >
           <ul className="mt-4 flex flex-col md:mt-0 md:flex-row md:space-x-8 md:font-medium md:text-sm">
             <NavbarLink href="/" currentPath={currentPath}>
               Details
