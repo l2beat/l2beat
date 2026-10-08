@@ -217,12 +217,14 @@ export class LiveBlobsFeed {
   /**
    * The recent blocks once the head is not `after` any more, or as they are
    * after `LONG_POLL` seconds. Held open, a page hears of a block the moment
-   * the server has it, rather than at its next ask
+   * the server has it, rather than at its next ask. A page with no head yet
+   * is held the same way until there is one, rather than answered with
+   * nothing and asked again at once
    */
   async latestAfter({ after }: LiveBlobsParams) {
     const askedAt = this.now()
     await this.latest()
-    if (after === undefined) return this.snapshot
+    if (this.isBehind(after)) return this.snapshot
     const left = Math.max(0, LONG_POLL - (this.now() - askedAt))
     await new Promise<void>((resolve) => {
       const done = () => {
@@ -232,13 +234,17 @@ export class LiveBlobsFeed {
       }
       const timer = setTimeout(done, left * 1000)
       this.waiting.add(done)
-      // looked at only once waiting, or a head that moved between the look
-      // and the wait would be missed: pages are answered as they wait. Any
-      // other head, as one moved back has blocks to take off the page
-      if (this.snapshot === undefined || this.snapshot.head !== after) done()
+      // looked at again only once waiting, or a head that moved between the
+      // look and the wait would be missed: pages are answered as they wait
+      if (this.isBehind(after)) done()
     })
     // not `latest`, which would wait for a first answer all over again
     return this.snapshot
+  }
+
+  /** Whether a page holding `after` has a head to hear of: any other, as one moved back has blocks to take off the page */
+  private isBehind(after: number | undefined) {
+    return this.snapshot !== undefined && this.snapshot.head !== after
   }
 
   /**

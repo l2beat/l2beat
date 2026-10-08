@@ -75,6 +75,20 @@ describe(LiveBlobsFeed.name, () => {
     expect(answer.value?.head).toEqual(HEAD + 1)
   })
 
+  it('holds a page with no head yet until the first block is stored', async () => {
+    const db = fakeDb()
+    db.head = undefined
+    feed = new LiveBlobsFeed(db.source, Logger.SILENT)
+
+    const answer = answerOf(feed.latestAfter({}))
+    await clock.tickAsync(5000)
+    expect(answer.value).toEqual(undefined)
+
+    db.head = HEAD
+    await clock.tickAsync(250)
+    expect(answer.value?.head).toEqual(HEAD)
+  })
+
   it('answers a page that is behind at once', async () => {
     feed = new LiveBlobsFeed(fakeDb().source, Logger.SILENT)
 
