@@ -21,7 +21,8 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      exposure: `Private payments publish encrypted notes. Fixed log tags identify zk.money transactions on Aztec, and the first payment to a new contact reveals the recipient's Aztec address through a handshake. The Ethereum registry maps that address to a tag. The first sponsored transaction after registration also identifies the sender's account. ${S.entryExitPublic()} Claiming a tag links it and the Aztec address to the funding L1 wallet.`,
+      exposureShort: 'Private payments publish encrypted notes.',
+      exposureContinued: `Fixed log tags identify zk.money transactions on Aztec, and the first payment to a new contact reveals the recipient's Aztec address through a handshake. The Ethereum registry maps that address to a tag. The first sponsored transaction after registration also identifies the sender's account. ${S.entryExitPublic()} Claiming a tag links it and the Aztec address to the funding L1 wallet.`,
       advice:
         'Claim your tag from a wallet with no public link to you and fund each deposit address once. Wait for deposits to be swept. Recovering them reveals the link to your account.',
       interior: {
@@ -67,8 +68,9 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      exposure:
-        'The anonymity set is limited to zk.money users. The first payment to a tag from outside zk.money is publicly tied to that tag. Anyone who records Aztec transactions can also tie the first deposit address your wallet creates after registration to your account.',
+      exposureShort: 'The anonymity set is limited to zk.money users.',
+      exposureContinued:
+        'The first payment to a tag from outside zk.money is publicly tied to that tag. Anyone who records Aztec transactions can also tie the first deposit address your wallet creates after registration to your account.',
       advice: `Watch the anonymity set in this early stage. Give outside payers a deposit address your wallet created instead of your tag. Fund your first deposit address after registration from the wallet that claimed your tag. ${S.commonAmounts} ${S.freshExit}`,
       interior: {
         sender: 'atRisk',
@@ -109,8 +111,9 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      exposure:
-        'Keys and proving stay on your device. Note discovery reveals your account address to the Aztec node. Ethereum RPC requests reveal funding wallets, deposit addresses and L1 transaction senders. XMTP carries payment requests and contact links under public account addresses, exposing who asks whom for money. Both wallets support custom Aztec, Ethereum and enclave endpoints.',
+      exposureShort: 'Keys and proving stay on your device.',
+      exposureContinued:
+        'Note discovery reveals your account address to the Aztec node. Ethereum RPC requests reveal funding wallets, deposit addresses and L1 transaction senders. XMTP carries payment requests and contact links under public account addresses, exposing who asks whom for money. Both wallets support custom Aztec, Ethereum and enclave endpoints.',
       advice:
         'Use zk.money Desktop with your own Aztec and Ethereum nodes. Send L1 transactions from your Ethereum wallet over a public RPC. Route all computer traffic through a VPN or Tor. Avoid payment requests and contact links with counterparties that must stay private.',
       interior: {
@@ -152,8 +155,10 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      exposure:
-        'Wallets encrypt payments, withdrawals and deposit claims to an enclave key registered in the portal. The approved code decrypts them inside the enclave. Privacy against the operator depends on AWS Nitro and that code, whose binary has not been reproduced. The resolver operator can re-derive all deposit addresses, including those created by your wallet, linking L1 deposits to L2 recipients.',
+      exposureShort:
+        'Wallets encrypt payments, withdrawals and deposit claims to an enclave key registered in the portal.',
+      exposureContinued:
+        'The approved code decrypts them inside the enclave. Privacy against the operator depends on AWS Nitro and that code, whose binary has not been reproduced. The resolver operator can re-derive all deposit addresses, including those created by your wallet, linking L1 deposits to L2 recipients.',
       advice:
         "Run your own enclave, which is permissionless onchain but still depends on AWS. Running your own resolver operator is also permissionless, but its service is unpublished and the released wallets only use Aztec Labs' operator.",
       interior: {
@@ -197,8 +202,10 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      exposure:
-        'A quantum computer that breaks elliptic-curve key exchange can decrypt historical notes and payment events published to Ethereum. Registered Aztec addresses identify the accounts. Deposit address secrets and enclave communication use the same class of cryptography.',
+      exposureShort:
+        'A quantum computer that breaks elliptic-curve key exchange can decrypt historical notes and payment events published to Ethereum.',
+      exposureContinued:
+        'Registered Aztec addresses identify the accounts. Deposit address secrets and enclave communication use the same class of cryptography.',
       advice: S.permanentlyDisclosed('every payment and every deposit link'),
       interior: {
         sender: 'exposed',

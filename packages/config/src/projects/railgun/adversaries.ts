@@ -13,7 +13,9 @@ export const railgunAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      exposure: `Everything inside the pool is hidden, including which shield funds which unshield. ${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to the adapter in cleartext.`,
+      exposureShort:
+        'Everything inside the pool is hidden, including which shield funds which unshield.',
+      exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to the adapter in cleartext.`,
       advice: S.exitViaRelayer('broadcaster'),
       interior: {
         sender: 'private',
@@ -38,7 +40,9 @@ export const railgunAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      exposure: `The candidates for an unshield are the shields of the same token. In-pool transfers break the one-to-one match of a mixer, but timing and exact or round amounts narrow the set. ${S.walletFingerprint('broadcaster')}`,
+      exposureShort:
+        'The candidates for an unshield are the shields of the same token.',
+      exposureContinued: `In-pool transfers break the one-to-one match of a mixer, but timing and exact or round amounts narrow the set. ${S.walletFingerprint('broadcaster')}`,
       advice: `${S.commonAmounts} ${S.freshExit}`,
       interior: {
         sender: 'private',
@@ -60,8 +64,10 @@ export const railgunAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      exposure:
-        'The wallet finds its notes by trial-decrypting every note locally, so nodes learn nothing about which are yours. By default it sends the pending unshield to the configured node for a gas estimate, which reveals the destination early.',
+      exposureShort:
+        'The wallet finds its notes by trial-decrypting every note locally, so nodes learn nothing about which are yours.',
+      exposureContinued:
+        'By default it sends the pending unshield to the configured node for a gas estimate, which reveals the destination early.',
       advice: S.ownNodeAndTor('broadcaster'),
       interior: {
         sender: 'private',
@@ -83,8 +89,9 @@ export const railgunAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'good',
-      exposure:
-        'There is no view key, so nobody can read past activity. The DAO can upgrade the contracts after a seven-day delay. The proof-of-innocence list provider can refuse to list a shield, leaving only a self-broadcast exit.',
+      exposureShort: 'There is no view key, so nobody can read past activity.',
+      exposureContinued:
+        'The DAO can upgrade the contracts after a seven-day delay. The proof-of-innocence list provider can refuse to list a shield, leaving only a self-broadcast exit.',
       advice:
         'Watch governance proposals. You have seven days to unshield before an upgrade takes effect. Be ready to self-broadcast if the list provider censors you.',
       interior: {
@@ -108,8 +115,9 @@ export const railgunAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
-      exposure:
-        'Notes are encrypted with elliptic-curve key exchange. A quantum computer decrypts every note sent to a 0zk address that was ever shared, including broadcaster fee notes: amounts, tokens and counterparties.',
+      exposureShort: 'Notes are encrypted with elliptic-curve key exchange.',
+      exposureContinued:
+        'A quantum computer decrypts every note sent to a 0zk address that was ever shared, including broadcaster fee notes: amounts, tokens and counterparties.',
       advice:
         'Treat your 0zk address as a secret: share it privately, and use a fresh one per counterparty where you can.',
       interior: {
