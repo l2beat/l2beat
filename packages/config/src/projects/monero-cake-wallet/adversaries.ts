@@ -4,7 +4,7 @@ import {
 } from '../../common/privacyAdversaries'
 
 const CAKE =
-  'https://github.com/cake-tech/cake_wallet/blob/b7247dd0969d9004e49ce592b855cff2c7706fd6/'
+  'https://github.com/cake-tech/cake_wallet/blob/7ce3cd75c3fd0c0add1cead41038ab8806ffebde/'
 const MONERO = 'https://github.com/monero-project/monero/blob/v0.18.5.1/'
 
 export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
@@ -16,10 +16,10 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       exposureShort:
-        'Nothing public ties the deposit into a swap service to the later payout from a service hot wallet, because the Monero transactions in between hide sender, recipient and amount.',
+        'The Monero transactions between the deposit into a swap service and the payout from its hot wallet hide sender, recipient and amount.',
       exposureContinued: S.entryExitPublic('Both Ethereum transfers'),
       advice:
-        'Exit to a new in-app Ethereum wallet created from a fresh seed, never the wallet that deposited.',
+        'Exit to a new in-app Ethereum wallet made with Create New Recovery Phrase.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -58,7 +58,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'good',
       exposureShort:
-        'Only amount and timing can pair the two Ethereum legs: a deposit into a swap service and a payout from a hot wallet that serves every asset the service trades.',
+        'Only amount and timing can pair a deposit into a swap service with a payout from a hot wallet serving every asset the service trades.',
       advice: `${S.commonAmounts} ${S.freshExit}`,
       interior: {
         sender: 'private',
@@ -72,11 +72,13 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       },
     },
     networkObserver: {
-      sentiment: 'bad',
+      sentiment: 'warning',
       exposureShort:
-        "Cake's Tor config does not support isolation, so Moralis, which cannot be switched off, and Blink and Etherscan, if left on, can see both Ethereum wallets on one IP.",
+        'Built-in Tor sends every call over one shared circuit for up to ten minutes, so only separate app sessions keep the legs apart.',
+      exposureContinued:
+        'Moralis receives every Ethereum wallet the app opens, so deposit and exit wallets kept in the app pair up whenever both open close together.',
       advice:
-        'Turn on Tor, switch off Blink and Etherscan, set your own Monero node and Ethereum RPC, then restart the app, since the Ethereum client keeps its first connection. Wait and restart it again between the legs.',
+        'Turn on built-in Tor and restart the app, since the Ethereum client keeps the connection it started with. After the entry, delete the deposit wallet from Cake and restart, so later sessions only see the exit wallet.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -84,43 +86,35 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Ethereum wallets opened in one session share a Tor circuit toward Moralis.',
+          note: 'Private only over built-in Tor, with each leg in its own app session.',
         },
       },
       sources: [
         {
           title: 'Built-in Tor is off unless the user enables it',
-          url: CAKE + 'lib/store/settings_store.dart#L1561',
+          url: CAKE + 'lib/store/settings_store.dart#L1590',
         },
         {
           title:
-            'Embedded Tor config: one SocksPort, no isolation flags, no control port',
+            'Opening a wallet connects its node and sends its address to Moralis',
+          url: CAKE + 'lib/reactions/on_current_wallet_change.dart#L94-L113',
+        },
+        {
+          title: 'Embedded Tor config: one SocksPort, no isolation flags',
           url: CAKE + 'cw_core/lib/utils/tor/torch.dart#L65-L70',
         },
         {
           title: 'The Ethereum client binds its proxy setting once',
           url: CAKE + 'cw_evm/lib/clients/evm_chain_client.dart#L24',
         },
-        {
-          title:
-            'Every wallet switch sends the address to Moralis, gated only by the API key',
-          url: CAKE + 'cw_evm/lib/clients/evm_chain_client.dart#L615-L640',
-        },
-        {
-          title: 'Blink and Etherscan toggles under Connections',
-          url:
-            CAKE + 'lib/src/screens/settings/connection_sync_page.dart#L64-L79',
-        },
       ],
     },
     privilegedInsider: {
       sentiment: 'bad',
       exposureShort:
-        'The swap-in service that pays your XMR knows that Monero output, and the service you exit with sees the rings of your Monero transaction.',
+        'Each swap service custodies its leg and can hold the funds until you pass identity checks, and identities on both legs link them.',
       exposureContinued:
-        "One party holding both finds its known output in the rings behind the exit. Each service also holds the addresses, amounts, IP and Cake's API key of its leg, screens them and can hold the funds until KYC.",
-      advice:
-        'Force different services for entry and exit. Self-transfer the XMR several times, hours to days apart, and never pay the exit service the whole amount.',
+        'The entry service knows the XMR output it paid you, and the exit service sees the rings of the transaction that pays it. Together they find that output in the rings behind the exit, and self-transfers only widen the search.',
       interior: {
         sender: {
           verdict: 'atRisk',
@@ -131,7 +125,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only if no party holds the records of both legs.',
+          note: 'A service can hold either leg until you identify yourself.',
         },
       },
       sources: [
@@ -141,44 +135,27 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
           url: 'https://www.monerooutreach.org/breaking-monero/poisoned-outputs.html',
         },
         {
-          title: 'The user can force a provider, otherwise the best rate wins',
-          url:
-            CAKE + 'lib/view_model/exchange/exchange_view_model.dart#L596-L603',
-        },
-        {
-          title:
-            'Trocador is asked for partners of KYC grade C or better and both addresses are forwarded',
-          url:
-            CAKE +
-            'lib/exchange/provider/trocador_exchange_provider.dart#L226-L240',
-        },
-        {
-          title: 'Cake ships its API key with the providers',
-          url: CAKE + 'tool/utils/secret_key.dart#L15-L106',
-        },
-        {
           title:
             'ChangeNOW: automated AML holds, KYC through SumSub, refund minus fees',
           url: 'https://changenow.io/faq/kyc-aml',
         },
-        { section: 'upgrades-and-governance' },
       ],
     },
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        'Whoever breaks elliptic-curve cryptography recovers the key of every ring member from public chain data, recomputes its key image and can link every transaction.',
+        'Whoever breaks elliptic-curve cryptography recovers every Monero output key from public chain data, so every ring shows its real spend.',
       exposureContinued:
-        "The services' records of payout and deposit then join the Ethereum legs.",
+        "A known address also yields its view key, and anyone learns a service's address by starting a trade. Your XMR can then be followed from the entry service to the exit service, where amounts and timing pair it with both Ethereum legs.",
       interior: {
         sender: 'exposed',
         recipient: {
           verdict: 'atRisk',
-          note: 'Readable for every output to an address the attacker knows, as the services know yours.',
+          note: 'Readable for outputs to known addresses, and the services know yours.',
         },
         amount: {
           verdict: 'atRisk',
-          note: 'Readable for every output to an address the attacker knows.',
+          note: 'Readable for outputs to known addresses.',
         },
         asset: 'exposed',
         linkage: 'exposed',

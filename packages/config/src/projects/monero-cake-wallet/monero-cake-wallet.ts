@@ -55,14 +55,14 @@ export const moneroCakeWallet: BaseProject = {
     anonymitySet: {
       type: 'not-applicable',
       description:
-        'Each Monero spend hides among 16 ring members, not among all outputs. A party that knows the entry output looks for it in the rings behind the exit, so against the swap services the set is small. Entry and exit amounts are public on Ethereum.',
+        'Each Monero spend hides among the 16 members of its ring, and each self-transfer multiplies the candidates by about 30.',
     },
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'No contract and no delay. The swap service can hold funds in transit. Cake can change providers with an update.',
+        'Funds in transit sit with the swap service, which can steal them.',
       walkawayTest: {
         passed: false,
         reason:
@@ -73,7 +73,7 @@ export const moneroCakeWallet: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'Cake wallet and Monero are open source. Every service that swaps Monero is a closed exchange.',
+        'Cake Wallet and Monero are open source. The swap services run closed systems.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,
