@@ -31,9 +31,10 @@ import {
 const LIVE_LAG_SLOTS = 3
 /**
  * Slots behind the head the backend may still rewrite: on a reorg a slot that
- * had a block may lose it, and one that was missed may get one
+ * had a block may lose it, and one that was missed may get one. The backend
+ * follows reorgs 32 blocks deep; two epochs on, the chain is final
  */
-const UNSETTLED_SLOTS = 2
+const UNSETTLED_SLOTS = 64
 
 /** The rows a snapshot is made of, read back from one head */
 export interface LiveBlobsRows {

@@ -199,11 +199,11 @@ describe(LiveBlobsFeed.name, () => {
   it('reads a page of the day from the database, behind the head', async () => {
     feed = new LiveBlobsFeed(fakeDb().source, Logger.SILENT)
 
-    // slots 960-991
-    const page = await feed.past({ page: 30 })
+    // slots 896-927, final behind the head
+    const page = await feed.past({ page: 28 })
 
     expect(page.blocks.map((b) => b.slot)).toEqual(
-      Array.from({ length: 32 }, (_, i) => 991 - i),
+      Array.from({ length: 32 }, (_, i) => 927 - i),
     )
     expect(page.complete).toEqual(true)
   })

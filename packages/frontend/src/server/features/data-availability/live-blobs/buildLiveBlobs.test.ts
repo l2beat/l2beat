@@ -215,7 +215,6 @@ describe(buildLiveBlobs.name, () => {
         },
         { slot: GAP, status: 'missed' },
       ])
-      expect(past.complete).toEqual(true)
     })
 
     it('serves no slots past the head, nor out of the day or the database', () => {
@@ -256,8 +255,8 @@ describe(buildLiveBlobs.name, () => {
           last,
         ).complete
 
-      expect(endingAt(HEAD - 2)).toEqual(false)
-      expect(endingAt(HEAD - 3)).toEqual(true)
+      expect(endingAt(HEAD - 64)).toEqual(false)
+      expect(endingAt(HEAD - 65)).toEqual(true)
     })
   })
 

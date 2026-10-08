@@ -57,7 +57,7 @@ export function LiveStats({
   )
   const shares = useShares(postedWindow?.posted ?? [], posters)
   const ready = postedWindow !== undefined && postedWindow.slots > 0
-  const projects = postedWindow?.posted.filter((p) => p.projectId).length ?? 0
+  const projects = shares.filter((share) => share.id !== UNKNOWN_ID).length
 
   return (
     <div>
@@ -250,18 +250,26 @@ function useShares(
     1,
     posted.reduce((sum, p) => sum + p.blobs, 0),
   )
-  // blobs no project claims go to the stand-in, as on the belt
+  // blobs no listed project claims, an archived one's included, go to the
+  // stand-in, as on the belt
   const unknown = byId.get(UNKNOWN_ID)
-  return posted.flatMap((p) => {
+  const shares = new Map<string, PosterShare>()
+  for (const p of posted) {
     const poster = byId.get(p.projectId ?? UNKNOWN_ID) ?? unknown
-    if (!poster) return []
-    return {
-      id: p.projectId ?? UNKNOWN_ID,
+    if (!poster) continue
+    const share = shares.get(poster.id)
+    if (share) {
+      share.share += p.blobs / total
+      continue
+    }
+    shares.set(poster.id, {
+      id: poster.id,
       name: poster.name,
       share: p.blobs / total,
       color: readableColor(poster.color, surface),
-    }
-  })
+    })
+  }
+  return [...shares.values()].sort((a, b) => b.share - a.share)
 }
 
 /** A tile like the belt's: its color, lit along the top edge like a gel */
