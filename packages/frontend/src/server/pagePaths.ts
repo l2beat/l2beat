@@ -47,7 +47,6 @@ export const STATIC_PAGE_PATHS = [
   '/data-availability/liveness',
   '/data-availability/archived',
   '/privacy/summary',
-  '/blobs',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
@@ -72,6 +71,9 @@ export async function getPages(): Promise<Page[]> {
   }
   if (env.CLIENT_SIDE_TOKENS_PAGE) {
     paths.push('/tokens')
+  }
+  if (env.CLIENT_SIDE_BLOBS_PAGE) {
+    paths.push('/blobs')
   }
   if (env.CLIENT_SIDE_OSSIFICATION_ENABLED) {
     paths.push('/ossification')

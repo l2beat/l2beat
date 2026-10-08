@@ -155,7 +155,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <DefiIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
-  {
+  env.CLIENT_SIDE_BLOBS_PAGE && {
     type: 'single',
     title: 'Blobs',
     match: 'blobs',
