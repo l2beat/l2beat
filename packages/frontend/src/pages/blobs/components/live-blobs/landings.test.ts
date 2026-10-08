@@ -1,3 +1,4 @@
+import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { SLIDE_TIME } from './blocks/beltPosition'
 import { BATCH_STAGGER, LAND_AFTER } from './blocks/motion'
@@ -24,12 +25,15 @@ describe(holdLimitMs.name, () => {
 // wait is checked against where the belt's slide into that slot ends.
 describe(secondsUntilSlideEnds.name, () => {
   it('waits for the slide under way to end', () => {
-    const progress = 1000 + SLIDE_TIME / 2 / 12
+    const progress = 1000 + SLIDE_TIME / 2 / SLOT_SECONDS
     expect(secondsUntilSlideEnds(progress)).toBeCloseTo(SLIDE_TIME / 2, 6)
   })
 
   it("waits for the next slide once this slot's is over", () => {
-    expect(secondsUntilSlideEnds(1000.5)).toBeCloseTo(6 + SLIDE_TIME, 6)
+    expect(secondsUntilSlideEnds(1000.5)).toBeCloseTo(
+      SLOT_SECONDS / 2 + SLIDE_TIME,
+      6,
+    )
   })
 })
 

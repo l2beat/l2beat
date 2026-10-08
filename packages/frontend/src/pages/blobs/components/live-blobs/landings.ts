@@ -68,6 +68,9 @@ export function useLandedTotal(
 ) {
   const landings = useContext(LandingsContext)
   const clock = useChainClock()
+  // put right here, before the read below: the belt's correction comes in
+  // its effect, after this render has already judged the newest block
+  if (stamp !== undefined) clock.correct(stamp)
   const [held, setHeld] = useState<Held>(() =>
     firstHeld(
       stamp,
@@ -109,7 +112,6 @@ export function useLandedTotal(
   // Not before the new blobs are in, so the number never falls as they land,
   // and just after the belt's slide, so its count-down never slows the slide
   const departing = held.departed > 0 && !waiting
-  // biome-ignore lint/correctness/useExhaustiveDependencies: timed from when the departure is seen
   useEffect(() => {
     if (!departing) return
     const timer = setTimeout(
@@ -117,7 +119,7 @@ export function useLandedTotal(
       secondsUntilSlideEnds(clock.progressNow()) * 1000,
     )
     return () => clearTimeout(timer)
-  }, [departing])
+  }, [departing, clock])
 
   useEffect(
     () =>
@@ -210,7 +212,7 @@ export function holdBack(
   }
 }
 
-/** How long the belt's slide into the slot under way at `progress` has left, in seconds */
+/** Seconds until the belt's slide under way at `progress` ends, or the next one's once this slot's is over */
 export function secondsUntilSlideEnds(progress: number) {
   const slideStartedAt = progress - SLIDE_TIME / SLOT_SECONDS
   const slideEnds = Math.floor(slideStartedAt) + 1

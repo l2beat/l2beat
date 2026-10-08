@@ -101,10 +101,10 @@ export function LivePosters({ posters }: Props) {
     [postedWindow, posters],
   )
   // "Last batch" is told on the chain's clock, as the belt is: a device clock
-  // a minute off would age every batch a minute, or make the newest "just now".
-  // It counts up between blocks, not only when they come
+  // a minute off would age every batch a minute, or make the newest "just now"
   const clock = useChainClock()
   const head = data?.head
+  // and counts up between blocks, not only when they come
   useTick(1000)
   const progress = clock.progressNow()
   // the belt's colors, so a project reads the same here as on the belt
