@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import type { SvgIconProps } from '~/icons/SvgIcon'
 import { cn } from '~/utils/cn'
 
@@ -12,6 +13,9 @@ export function Logo({
   small = false,
   ...props
 }: LogoProps) {
+  // `begin` names the beat by id, and an id with React's punctuation in it
+  // cannot be named there
+  const beatId = `logo-beat-${useId().replace(/[^\w-]/g, '')}`
   return (
     <svg
       className={cn('-mt-0.5 overflow-visible', className)}
@@ -26,17 +30,21 @@ export function Logo({
       {/* The beat scales around the icon's bbox centre (18.71, 18). Using an SVG
           animateTransform rather than a CSS transform keeps the mark crisp: the
           vector is re-rendered each frame instead of being composited to a bitmap
-          and rescaled (which softens edges on non-retina displays). */}
+          and rescaled (which softens edges on non-retina displays).
+          The beat is its own one-second animation, started again four seconds
+          after it ends, rather than a five-second one that holds still for
+          four: a running animation rewrites the transform on every frame even
+          while it holds, and the page restyles each time. */}
       <g transform="translate(18.71 18)">
         <g>
           {animated && (
             <animateTransform
+              id={beatId}
               attributeName="transform"
               type="scale"
-              values="1;1;1.05;1;1.05;1"
-              keyTimes="0;0.8;0.85;0.9;0.95;1"
-              dur="5s"
-              repeatCount="indefinite"
+              values="1;1.05;1;1.05;1"
+              dur="1s"
+              begin={`4s;${beatId}.end+4s`}
             />
           )}
           <g transform="translate(-18.71 -18)">
