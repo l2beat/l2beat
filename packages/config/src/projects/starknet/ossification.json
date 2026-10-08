@@ -197,6 +197,14 @@
       "transaction": "0x1cb0539554280c12c187b73ed0f973108b2b5a26949612dac8921aae68cc875c",
       "updateId": "9d5a75e1",
       "reason": "Starkware Multisig 1 executed a matured DelayedExecutor batch on the Starknet core that changed the Starknet OS programHash, the aggregatorProgramHash and the configHash (Starknet OS config V4): these hashes decide which state-transition proofs the core accepts from the SHARP verifier."
+    },
+    {
+      "timestamp": 1791287267,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x3fb775a984627b308a9ca83f06bfb45eddd55591eeb78640050b3ad7e581ae2d",
+      "updateId": "abe67a8d",
+      "reason": "Starkware Multisig 1 executed a matured DelayedExecutor batch on the Starknet core that changed the Starknet OS programHash (v0.14.4 OS) and re-set the aggregatorProgramHash to its existing value: the OS hash decides which state-transition proofs the core accepts from the SHARP verifier."
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "name": "linea",
-  "timestamp": 1789919089,
-  "configHash": "0x8ed7f59ec46c831458e2b33159629a3c1f0a7490e7b17e594da499052eff2460",
+  "timestamp": 1791455017,
+  "configHash": "0x2065d22edc42cabb516c774ee0cc6f9d767b2addc90c3dec404ec73153fdb05d",
   "entries": [
     {
       "name": "TokenBridge",
@@ -234,29 +234,29 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x0F4df4939a6B126a088A40B4Bbf9F30337ACBFE4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PlonkVerifierFull",
-      "address": "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77",
+      "address": "eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532",
       "type": "Contract",
       "sourceHashes": [
-        "0x5284cae847244cb9b1159302d71c4e787c6ad89fd6c57dc2e22d7283cf511707"
+        "0x1d1baa607e6225d1ace35bf0c70dfd7545618926c71b3af123b56aa6809d1cce"
       ],
       "proxyType": "immutable",
       "critical": true,
       "deployerAddress": "eth:0x89F1668D215Bb5839A0A7a1A4619b1541258388c",
-      "sinceTimestamp": 1783527107,
-      "sinceBlock": 25488961,
+      "sinceTimestamp": 1791279407,
+      "sinceBlock": 26132483,
       "values": {
         "$immutable": true,
         "getChainConfiguration": "0x1158d7540c8112906dbb6eb322d24c3e2dc2fcc6ce8f63c3a55c5ab3e2bdc78d"
       },
       "implementationNames": {
-        "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": "PlonkVerifierFull"
+        "eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532": "PlonkVerifierFull"
       }
-    },
-    {
-      "address": "eth:0x0F4df4939a6B126a088A40B4Bbf9F30337ACBFE4",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f",
@@ -595,7 +595,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 80,
+        "nonce": 81,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -708,7 +708,7 @@
           "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 19,
+        "nonce": 20,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -936,9 +936,9 @@
         "CONTRACT_VERSION": "8.0",
         "COOLDOWN_DURATION": 172800,
         "COOLDOWN_DURATION_fmt": "2d",
-        "currentFinalizedShnarf": "0xe98bf38d654fcaec67add696a189c74fbebe220ffc816701ba8d9729e3442007",
-        "currentFinalizedState": "0x9d238c2d38f6a72f3c8ca96513c395baacbe71c626c5011ac4cd1d8a101b5d70",
-        "currentPeriodAmountInWei": "18808773893957830615",
+        "currentFinalizedShnarf": "0xf5529c36d62c0c518fd99831fb773595adefda740c0a73f212a86163b3d9c0ce",
+        "currentFinalizedState": "0xb65de82f77332aac7c7dc8f30a75fc547b442817f188e7215b031a8df1539df5",
+        "currentPeriodAmountInWei": "852705868256608160",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
@@ -1026,7 +1026,7 @@
         "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
         "verifiers": [
           "eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F",
-          "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77",
+          "eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
@@ -1357,7 +1357,7 @@
         "isPaused_NATIVE_YIELD_REPORTING": false,
         "isPaused_NATIVE_YIELD_STAKING": false,
         "isPaused_NATIVE_YIELD_UNSTAKING": false,
-        "isWithdrawalReserveBelowMinimum": false,
+        "isWithdrawalReserveBelowMinimum": true,
         "L1_MESSAGE_SERVICE": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "minimumWithdrawalReserveAmount": "17500000000000000000000",
         "minimumWithdrawalReservePercentageBps": 3500,
@@ -1399,7 +1399,7 @@
           "11": "0x7961622440af20a7a00804174e730d12d511766368df55fbaf2d698ffa1d4216",
           "12": "0x32026462812ef90f03ebdf4117c1e143d38ab0e31e1266d4e8bd348c28ee2aa5"
         },
-        "userFundsInYieldProvidersTotal": "24019075269409861953636",
+        "userFundsInYieldProvidersTotal": "24019411122956594613375",
         "WITHDRAWAL_RESERVE_SETTER_ROLE": "0x58cd6cd2c63b9e5685aee547419caac3d1184e3aeb3ed7c8b63ec61cda1e27e0",
         "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
         "YIELD_PROVIDER_UNSTAKER_ROLE": "0x1208ee08ba851b41059d729bfba4fffc3a98c2b6d121e3cf0db274417dea3d70",
@@ -1902,8 +1902,8 @@
         "allUnpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "CONTRACT_VERSION": "1.0",
         "COOLDOWN_DURATION": 172800,
-        "currentPeriodAmountInWei": "191864081495223522",
-        "currentPeriodEnd": 1789876249,
+        "currentPeriodAmountInWei": "4000280891303750000000",
+        "currentPeriodEnd": 1791450897,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -1927,11 +1927,11 @@
         "l1l2Unpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "l2l1Pausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "l2l1Unpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
-        "lastAnchoredL1MessageNumber": 809598,
+        "lastAnchoredL1MessageNumber": 810520,
         "limitInWei": "8000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 108385,
+        "nextMessageNumber": 108520,
         "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_DURATION": 172800,
@@ -2543,7 +2543,7 @@
       "function verifiers(uint256 proofType) view returns (address verifierAddress)",
       "function yieldManager() view returns (address)"
     ],
-    "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": [
+    "eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532": [
       "constructor(tuple(bytes32 value, string name)[] _chainConfiguration)",
       "error ChainConfigurationNotProvided()",
       "event ChainConfigurationSet(bytes32 chainConfigurationHash, tuple(bytes32 value, string name)[] parameters)",
@@ -3616,8 +3616,8 @@
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/YieldManager": "0x15befc37e3984bc9e0b8548c3b5266b2ad9e24ca61f02cd9ab3c9176983303ab"
   },
-  "usedBlockNumbers": { "ethereum": 26019706, "linea": 32092404 },
-  "permissionsConfigHash": "0x8eaa56eb49d99e7d9296bc15341fe35049bf4ab76874017ba749e86a42aea71a",
+  "usedBlockNumbers": { "ethereum": 26147060, "linea": 32264045 },
+  "permissionsConfigHash": "0xf49cfea4e29aeafa5d92e463f33237818af544e2270838009fb197034328d471",
   "permissions": {
     "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0": {
       "receivedPermissions": [

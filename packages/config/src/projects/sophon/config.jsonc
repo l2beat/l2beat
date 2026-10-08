@@ -12,6 +12,20 @@
     "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1": "SophonChainAdminMultisig"
   },
   "overrides": {
+    // EIP-7702 EOA delegating to a SmartWallet (0xe40ccB2D…).
+    // getExpiration/getHook/isAdmin/isSettingsExpired are pure decoders of a
+    // `settings` word that never revert, so they overflow as arrays;
+    // getImmutableFactory/proxiableUUID revert when called on the EOA.
+    "eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845": {
+      "ignoreMethods": [
+        "getExpiration",
+        "getHook",
+        "isAdmin",
+        "isSettingsExpired",
+        "getImmutableFactory",
+        "proxiableUUID"
+      ]
+    },
     "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
       "fields": {
         "validatorsVTLFullAC": {
