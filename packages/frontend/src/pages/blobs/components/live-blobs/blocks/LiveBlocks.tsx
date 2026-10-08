@@ -16,12 +16,15 @@ import {
   usePrefersReducedMotion,
   useThemeTokens,
 } from '../hooks'
+import { LivePulse } from '../LivePulse'
 import { LandingsContext } from '../landings'
+import { clampView } from '../lookBack'
 import { type BlockLimits, type LivePoster, UNKNOWN_ID } from '../model'
 import { PointerTooltip } from '../PointerTooltip'
+import { useLiveBlobs } from '../useLiveBlobs'
 import type { BlobBatch, ChainBlock, PosterIndexOf } from './beaconChain'
 import { paintLayers } from './beltLayers'
-import { layoutBelt } from './beltLayout'
+import { type BeltLayout, layoutBelt, racksAroundBay } from './beltLayout'
 import { paletteFor } from './beltPalette'
 import { type BeltScene, findBatch } from './beltScene'
 import { formatAverage, formatBlobCount, formatWhole } from './format'
@@ -29,22 +32,22 @@ import { BATCH_STAGGER, LAND_AFTER } from './motion'
 import { roundIcons } from './roundIcons'
 import { RECENT_BLOCKS, useBeaconChain } from './useBeaconChain'
 import { type BeltHover, useBelt } from './useBelt'
+import { usePastBlocks, withPast } from './usePastBlocks'
 
 interface Props {
   /** Every project that may post, with the stand-in for unknown senders last */
   posters: LivePoster[]
   limits: BlockLimits
-  /** Drawn between the belt and its legend, as the hour behind the belt */
-  history?: ReactNode
 }
 
 /**
  * Ethereum's blob market, live, as a conveyor of 12-second blocks. Each
  * block's blobs drop into the loading bay as Ethereum makes it, sorted by the
  * rollup that sent them, and every block shows the room it left against the
- * target and the maximum.
+ * target and the maximum. Under it, the hour behind it takes the belt back
+ * to any of its blocks.
  */
-export function LiveBlocks({ posters, limits, history }: Props) {
+export function LiveBlocks({ posters, limits }: Props) {
   const beltRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const size = useElementSize(beltRef)
@@ -79,6 +82,20 @@ export function LiveBlocks({ posters, limits, history }: Props) {
         : undefined,
     [size, maxBlobsPerBlock, targetBlobsPerBlock],
   )
+  const look = useLookBack(layout)
+  const past = usePastBlocks({
+    from: look.view === undefined ? undefined : look.view - look.before - 1,
+    head: look.head,
+    oldest: look.oldest,
+    posterIndexOf,
+  })
+  const beltView = useViewOnceLoaded(look.view, past.loaded)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `version` counts the blocks
+  const blocks = useMemo(
+    () => withPast(chain.blocks, past.blocks, look.head),
+    [chain.blocks, past.blocks, look.head, version],
+  )
+
   const palette = useMemo(() => paletteFor(tokens, posters), [tokens, posters])
   const layers = useMemo(
     () => layout && paintLayers(layout, palette, targetBlobsPerBlock),
@@ -101,7 +118,7 @@ export function LiveBlocks({ posters, limits, history }: Props) {
         palette,
         layers,
         posters,
-        blocks: chain.blocks,
+        blocks,
         icons,
         targetBlobs: targetBlobsPerBlock,
         maxBlobs: maxBlobsPerBlock,
@@ -111,7 +128,7 @@ export function LiveBlocks({ posters, limits, history }: Props) {
       palette,
       layers,
       posters,
-      chain.blocks,
+      blocks,
       icons,
       targetBlobsPerBlock,
       maxBlobsPerBlock,
@@ -124,14 +141,15 @@ export function LiveBlocks({ posters, limits, history }: Props) {
     scene,
     progressNow: chain.progressNow,
     still: reducedMotion,
+    view: beltView,
     onScreen,
     onClickBatch: (key) => {
-      const found = findBatch(chain.blocks, key)
+      const found = findBatch(blocks, key)
       if (found) openOnEtherscan(found.batch.txHash)
     },
   })
   dropBlock.current = belt.dropBlock
-  const hovered = belt.hover && findBatch(chain.blocks, belt.hover.key)
+  const hovered = belt.hover && findBatch(blocks, belt.hover.key)
   const hoveredPoster = hovered && posters[hovered.batch.posterIndex]
 
   // for screen readers; recomputed as blocks come in, which `version` counts
@@ -171,7 +189,7 @@ export function LiveBlocks({ posters, limits, history }: Props) {
         )}
       </div>
 
-      {history}
+      <LivePulse limits={limits} brush={look} />
 
       <Legend
         items={[
@@ -185,6 +203,38 @@ export function LiveBlocks({ posters, limits, history }: Props) {
       />
     </div>
   )
+}
+
+/**
+ * Where on the hour the belt is taken, if anywhere: undefined while live. Held
+ * as asked and kept within the hour on every render, as the hour moves on
+ */
+function useLookBack(layout: BeltLayout | undefined) {
+  const { data } = useLiveBlobs()
+  const [asked, setAsked] = useState<number>()
+  const { before, after } = layout
+    ? racksAroundBay(layout)
+    : { before: 0, after: 0 }
+  const hour = data && { head: data.head, slots: data.window.slots }
+  return {
+    view: clampView(asked, hour, before),
+    head: hour?.head,
+    oldest: hour && hour.head - hour.slots + 1,
+    before,
+    after,
+    onView: (slot: number | undefined) =>
+      setAsked(clampView(slot, hour, before)),
+  }
+}
+
+/**
+ * The view for the belt to go to, held where it was until the pages it needs
+ * are in: gliding off at once, it would pass racks still to be filled
+ */
+function useViewOnceLoaded(view: number | undefined, loaded: boolean) {
+  const shown = useRef(view)
+  if (view === undefined || loaded) shown.current = view
+  return shown.current
 }
 
 /**

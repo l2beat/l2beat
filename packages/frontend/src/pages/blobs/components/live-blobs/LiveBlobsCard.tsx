@@ -12,7 +12,6 @@ import { useIsClient } from '~/hooks/useIsClient'
 import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
 import { useBeaconChain } from './blocks/useBeaconChain'
 import { LivePosters } from './LivePosters'
-import { LivePulse } from './LivePulse'
 import { LiveStats } from './LiveStats'
 import { createLandings, LandingsContext } from './landings'
 import { type BlockLimits, toLivePosters } from './model'
@@ -42,11 +41,7 @@ export function LiveBlobsCard({ projects, limits }: Props) {
         {isClient ? (
           <LiveBoundary>
             <Suspense fallback={<LiveSkeleton />}>
-              <LiveBlocks
-                posters={posters}
-                limits={limits}
-                history={<LivePulse limits={limits} />}
-              />
+              <LiveBlocks posters={posters} limits={limits} />
             </Suspense>
           </LiveBoundary>
         ) : (

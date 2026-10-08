@@ -7,9 +7,8 @@ import { createAttribute, getBlobSenders } from './attribute'
 import { createBeaconNode } from './beaconNode'
 import { getBlobPosters } from './getBlobPosters'
 import { createMockBeaconNode } from './mockBeaconNode'
+import { PAST_PAGE_SLOTS, RECENT_SLOTS } from './slots'
 
-/** Slots served back from the head: enough to fill the belt left of the bay */
-export const RECENT_SLOTS = 32
 /** Slots summed up for who posted: an hour */
 export const WINDOW_SLOTS = 300
 /** The hour in five-minute steps, for how each project's posting went */
@@ -56,6 +55,20 @@ export const LiveBlobsParams = v.object({
 })
 export type LiveBlobsParams = v.infer<typeof LiveBlobsParams>
 
+export const PastBlobsParams = v.object({
+  /** Which `PAST_PAGE_SLOTS` slots, counted from genesis */
+  page: v
+    .number()
+    .check(
+      (page) =>
+        Number.isInteger(page) &&
+        page >= 0 &&
+        Number.isSafeInteger((page + 1) * PAST_PAGE_SLOTS),
+      'Page must be a whole number of slots from genesis',
+    ),
+})
+export type PastBlobsParams = v.infer<typeof PastBlobsParams>
+
 /** The recent blocks, as served to the page */
 export interface LiveBlobs {
   /** The newest slot the node had at the last poll */
@@ -86,6 +99,18 @@ export interface LiveBatch {
   to: string
   /** For the page to link the transaction to an explorer */
   txHash: string
+}
+
+/** The blocks of one page of the hour, for a page looking back through it */
+export interface PastBlobs {
+  /** Known blocks of the page, newest first */
+  blocks: LiveBlock[]
+  /**
+   * Every slot of the page that is still in the hour is known, and the page
+   * ends behind the slots the chain may still swap, so looking again would
+   * bring nothing more
+   */
+  complete: boolean
 }
 
 /**
@@ -216,6 +241,26 @@ export class LiveBlobsFeed {
     })
     // not `latest`, which would wait for a first answer all over again
     return this.snapshot()
+  }
+
+  /**
+   * One page of the hour, from what is held: looking back never makes the
+   * node fetch, as the hour is backfilled for the numbers anyway
+   */
+  past({ page }: PastBlobsParams): PastBlobs {
+    const last = (page + 1) * PAST_PAGE_SLOTS - 1
+    const blocks: LiveBlock[] = []
+    let complete = this.head !== undefined && last < this.head - UNSETTLED_SLOTS
+    // counted rather than compared, so no page can keep it going for ever
+    for (let i = 0; i < PAST_PAGE_SLOTS; i++) {
+      const slot = last - i
+      const block = this.blocks.get(slot)
+      if (block) blocks.push(block)
+      else if (this.head !== undefined && slot > this.head - WINDOW_SLOTS) {
+        complete = false
+      }
+    }
+    return { blocks, complete }
   }
 
   /** Resolves once the backfill running now, if any, is done */
