@@ -2379,7 +2379,12 @@ export const ProjectAuditCoverageSchema = v.object({
   ),
   auditedFiles: v.record(
     v.string(),
-    v.object({ repository: v.string(), commit: v.string(), path: v.string() }),
+    v.object({
+      repository: v.string(),
+      commit: v.string(),
+      path: v.string(),
+      blob: v.string(),
+    }),
   ),
   units: v.record(v.string(), AuditCoverageUnit),
   flats: v.record(v.string(), v.array(v.tuple([v.string(), v.number()]))),

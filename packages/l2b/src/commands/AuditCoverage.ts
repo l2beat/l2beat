@@ -72,6 +72,7 @@ export const AuditCoverage = command({
       args.project,
       {
         index,
+        objects,
         code,
         dataset: { repository: dataset.repository, commit: dataset.commit },
       },

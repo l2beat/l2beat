@@ -16,11 +16,13 @@ import type {
 } from './AuditCoverage'
 import type { AuditedCode } from './AuditedCode'
 import type { AuditIndex } from './AuditIndex'
+import { type AuditObjects, sha1BlobId } from './AuditObjects'
 import { type CoveredUnit, coverFlat } from './coverFlat'
 import type { GetDeployedSource } from './deployedSource'
 
 export interface AuditCoverageInputs {
   index: AuditIndex
+  objects: AuditObjects
   code: AuditedCode
   dataset: { repository: string; commit: string }
 }
@@ -40,7 +42,7 @@ export async function auditCoverageOfProject(
   const units: Record<string, Unit> = {}
   const flats: Record<string, [string, number][]> = {}
   const contracts: Record<string, Contract> = {}
-  const auditedFiles = new Map<string, AuditedFile>()
+  const auditedFiles = new Map<string, Omit<AuditedFile, 'blob'>>()
   const entries = discovered.entries.filter((e) => e.type === 'Contract')
   const count = entries.reduce(
     (sum, e) => sum + 1 + get$Implementations(e.values).length,
@@ -84,7 +86,13 @@ export async function auditCoverageOfProject(
     collections: collectionsOf(reports, inputs.index),
     reports,
     auditedFiles: Object.fromEntries(
-      [...auditedFiles].sort(([a], [b]) => (a < b ? -1 : 1)),
+      [...auditedFiles]
+        .sort(([a], [b]) => (a < b ? -1 : 1))
+        .map(([object, file]) => {
+          const content = inputs.objects.get(object)
+          assert(content !== undefined, `Object ${object} is not in the bundle`)
+          return [object, { ...file, blob: sha1BlobId(content) }]
+        }),
     ),
     units,
     flats,
@@ -125,7 +133,7 @@ function addUnit(units: Record<string, Unit>, covered: CoveredUnit) {
 }
 
 function addAuditedFile(
-  auditedFiles: Map<string, AuditedFile>,
+  auditedFiles: Map<string, Omit<AuditedFile, 'blob'>>,
   covered: CoveredUnit,
 ) {
   if (covered.auditedFile === undefined) {

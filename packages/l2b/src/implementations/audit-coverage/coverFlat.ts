@@ -16,7 +16,7 @@ export interface CoveredUnit {
   id: string
   first: number
   unit: Unit
-  auditedFile?: { object: string; file: AuditedFile }
+  auditedFile?: { object: string; file: Omit<AuditedFile, 'blob'> }
 }
 
 const UNIT_ID_LENGTH = 12

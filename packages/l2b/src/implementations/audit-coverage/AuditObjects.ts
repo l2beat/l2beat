@@ -50,3 +50,11 @@ function gitBlobIdStartsWith(bytes: Buffer, object: string): boolean {
       .startsWith(object),
   )
 }
+
+export function sha1BlobId(content: string): string {
+  const bytes = Buffer.from(content, 'utf8')
+  return createHash('sha1')
+    .update(`blob ${bytes.length}\0`)
+    .update(bytes)
+    .digest('hex')
+}
