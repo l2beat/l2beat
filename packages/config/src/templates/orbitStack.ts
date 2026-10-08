@@ -183,10 +183,7 @@ interface OrbitStackConfigCommon {
   daAttestedByIndependentParty?: boolean
   daVerifierSecureOnL1?: boolean
   daVerifier7DayExitWindow?: boolean
-  daVerifier30DayExitWindow?: boolean
   daCommitteeDecentralized?: boolean
-  /** Override for the static economic-security check derived from the DA layer. */
-  daMechanismEconomicSecurity?: boolean
   daVerifierLink?: string
   proverSourceLink?: string
   securityCouncilReference?: string
@@ -1367,15 +1364,6 @@ function computedStage(
         proverSourcePublished: null,
         verifierContractsReproducible: null,
         programHashesReproducible: programHashesReproducible(wasmModuleRoot),
-      },
-      stage2: {
-        fraudProofSystemIsPermissionless: false,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow:
-          templateVars.daVerifier30DayExitWindow ?? null,
-        daMechanismEconomicSecurity:
-          templateVars.daMechanismEconomicSecurity ?? null,
       },
     },
     {
