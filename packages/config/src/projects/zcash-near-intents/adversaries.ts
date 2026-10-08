@@ -165,7 +165,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
           url: DOCS + 'security-compliance/risk-and-compliance',
         },
         {
-          title: 'Any account can be locked by DAO or locker role',
+          title: 'Any account can be locked by the multisig or a locker',
           url: INTENTS + 'defuse/src/contract/accounts/force.rs#L21-L33',
         },
         {

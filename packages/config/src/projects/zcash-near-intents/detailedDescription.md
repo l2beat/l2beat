@@ -2,7 +2,7 @@ Zcash via NEAR Intents touches three blockchains, but can be abstracted as a pri
 
 ### Flow
 
-1. **Ethereum to NEAR Intents.** Each swap quote from the 1Click API comes with a fresh Ethereum deposit EOA. The user sends ETH or an ERC-20 there. The operator's so-called Proof-of-Authority (PoA) bridge, in practice a custodial bridge with a single admin key, sweeps the funds into its treasury account [`0x2CfF…2680`](https://etherscan.io/address/0x2CfF890f0378a11913B6129B2E97417a2c302680), also an EOA, and mints a wrapped token (`eth.omft.near` or `eth-0x…omft.near`) on NEAR. There is no multisig or onchain verification on either side. The mint memo names the Ethereum transaction hash.
+1. **Ethereum to NEAR Intents.** Each swap quote from the 1Click API comes with a fresh Ethereum deposit EOA. The user sends ETH or an ERC-20 there. The operator's so-called Proof-of-Authority (PoA) bridge, in practice a custodial bridge with a single admin key, sweeps the funds into its treasury account [`0x2CfF…2680`](https://etherscan.io/address/0x2CfF890f0378a11913B6129B2E97417a2c302680), also an EOA, and mints a wrapped token (`eth.omft.near` or `eth-0x…omft.near`) on NEAR. Nothing onchain verifies either side. The mint memo names the Ethereum transaction hash.
 2. **Swap to ZEC.** Market makers quote off-chain through a relay run by the operator. The winning quote settles atomically in the Verifier contract [`intents.near`](https://nearblocks.io/address/intents.near). Every balance and swap is public state on the NEAR blockchain.
 3. **Withdraw into Zcash.** The wrapped ZEC (`zec.omft.near`) is burned through the Zcash connector `zcash-connector.bridge.near`, which builds a transaction from bridge UTXOs and has it signed by NEAR's MPC network (`v1.signer`, 11/17 signers). The payout can be a shielded Orchard output into the Ironwood pool. Zodl requests a fresh shielded address for every swap. The recipient address is published in the burn message on NEAR.
 4. **Inside Zcash.** The ZEC now sits in the shielded pool. Transfers inside the pool hide sender, recipient and amount.
@@ -16,7 +16,7 @@ The Zcash side of the flow is only as private as the wallet. Zodl syncs through 
 
 ### Custody and control
 
-The Ethereum leg is fully custodial: the treasury and deposit addresses are EOAs controlled by the operator, and a single key (`bridge-mng.near`) mints the wrapped tokens. Deposits and withdrawals on the Ethereum side are executed by off-chain services. The Verifier lets two single-key accounts and the DAO freeze any account's balance, which the operator uses for compliance holds. On Zcash, funds are held by MPC-derived addresses, deposits are verified against an on-chain light client, and an unverified deposit can be refunded permissionlessly after a two-day timelock. Normal withdrawals still need a whitelisted relayer to trigger the MPC signature.
+The Ethereum leg is fully custodial: the treasury and deposit addresses are EOAs controlled by the operator, and a single key (`bridge-mng.near`) mints the wrapped tokens. Deposits and withdrawals on the Ethereum side are executed by off-chain services. The Verifier lets two single-key accounts and the NEAR Intents multisig freeze any account's balance, which the operator uses for compliance holds. On Zcash, funds are held by MPC-derived addresses, deposits are verified against an on-chain light client, and an unverified deposit can be refunded permissionlessly after a two-day timelock. Normal withdrawals still need a whitelisted relayer to trigger the MPC signature.
 
 ### Fees
 
