@@ -230,10 +230,6 @@ export function getSequencerMapping(): SequencerMapping {
   return cachedMappings?.sequencers ?? new Map()
 }
 
-export function getReceiverMapping(): ReceiverMapping {
-  return cachedMappings?.receivers ?? STATIC_RECEIVER_MAPPING
-}
-
 export function getProjectByReceiver(receiver: string): string | undefined {
   const mapping = cachedMappings?.receivers ?? STATIC_RECEIVER_MAPPING
   return mapping[receiver.toLowerCase()]
@@ -248,10 +244,6 @@ export function getReceiverName(receiver: string): string | undefined {
   const utilityName = KNOWN_UTILITY_CONTRACTS[lower]
   if (utilityName) return utilityName
   return NON_L2_RECEIVERS[lower]
-}
-
-export function isNonL2Receiver(receiver: string): boolean {
-  return receiver.toLowerCase() in NON_L2_RECEIVERS
 }
 
 export function getContractInfo(address: string): ContractInfo | undefined {

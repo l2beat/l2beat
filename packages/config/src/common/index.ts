@@ -1,4 +1,3 @@
-export * from './bridgeRiskView'
 export * from './contracts'
 export * from './crops'
 export * from './DaCommitteeSecurityRisk'
