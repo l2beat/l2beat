@@ -12,6 +12,8 @@ l2b audit-coverage tornado-cash \
 
 By default both files are read from `main` of `github.com/sergeyshemyakov/audit-dataset`, or of the repository passed with `--github`, at the commit `main` points to. Local files need all of `--index`, `--objects` and `--dataset-commit`, and are attributed to the same repository. The repository and commit are recorded as `dataset`, so report documents can be linked as `https://github.com/<repository>/blob/<commit>/<document>`. The output goes to `audit-coverage.json` in the project directory unless `-o` is given.
 
+How the frontend reads the output, the deployed code and the audited code is described in [FRONTEND.md](FRONTEND.md).
+
 Run it anywhere in the repository after discovery: deployed sources are read from the discovery cache, so no contract source is fetched.
 
 ## Inputs
