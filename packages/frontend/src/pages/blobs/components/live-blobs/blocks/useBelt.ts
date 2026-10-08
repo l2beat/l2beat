@@ -10,7 +10,7 @@ import {
 import { SLOT_SECONDS } from '~/utils/beaconSlots'
 import { prepareCanvas, useAnimationFrame } from '../hooks'
 import type { ChainBlock } from './beaconChain'
-import { SLIDE_TIME } from './beltPosition'
+import { livePosition, SLIDE_TIME } from './beltPosition'
 import {
   type BatchHit,
   type BeltFrame,
@@ -47,14 +47,17 @@ interface Options {
   progressNow: () => number
   /** For reduced motion: nothing slides or falls */
   still: boolean
+  /** The slot to bring into the bay, looking back; undefined to follow the chain */
+  view: number | undefined
   onScreen: boolean
   /** A batch was clicked, or tapped while its tooltip was pinned */
   onClickBatch: (key: number) => void
 }
 
 /**
- * Runs the belt: keeps it on the chain's clock, drops a block's batches in
- * as it comes, paints each frame and finds the batch under the pointer.
+ * Runs the belt: keeps it on the chain's clock, or takes it back through the
+ * hour, drops a block's batches in as it comes, paints each frame and finds
+ * the batch under the pointer.
  *
  * Nothing here sets state per frame; only a change of hovered batch renders,
  * or a pinned batch moving with the belt. Nor does it paint a frame that would look like the last one: for most of
@@ -65,6 +68,7 @@ export function useBelt({
   scene,
   progressNow,
   still,
+  view,
   onScreen,
   onClickBatch,
 }: Options) {
@@ -73,8 +77,11 @@ export function useBelt({
     arrivals: new Map(),
     still,
     revealedAt: undefined,
+    view,
   })
   playback.current.still = still
+  const viewTarget = useRef(view)
+  viewTarget.current = view
   const frame = useRef<BeltFrame>({
     hits: [],
     landed: [],
@@ -142,7 +149,7 @@ export function useBelt({
   }, [pin])
 
   const running = onScreen && scene !== undefined
-  useAnimationFrame((_dt, now) => {
+  useAnimationFrame((dt, now) => {
     const current = sceneRef.current
     if (!current) return
     const play = playback.current
@@ -151,7 +158,10 @@ export function useBelt({
       play.revealedAt = now
     }
     play.progress = progressNow()
+    const viewWas = play.view
+    play.view = travel(play, viewTarget.current, dt)
     if (
+      play.view !== viewWas ||
       isMoving(play, now) ||
       !isPainted(painted.current, current, hoveredKey.current, play)
     ) {
@@ -183,6 +193,7 @@ export function useBelt({
     let cancelled = false
     const play = playback.current
     if (scene.blocks.size > 0) play.revealedAt ??= Number.NEGATIVE_INFINITY
+    play.view = view
     paint(scene, performance.now() / 1000, hoveredNow)
     void document.fonts?.ready.then(() => {
       if (!cancelled) paint(scene, performance.now() / 1000, hoveredNow)
@@ -190,7 +201,7 @@ export function useBelt({
     return () => {
       cancelled = true
     }
-  }, [running, paint, scene, hoveredNow])
+  }, [running, paint, scene, hoveredNow, view])
 
   /** A new block came in: its batches drop into their rack one after another */
   const dropBlock = useCallback((block: ChainBlock) => {
@@ -278,6 +289,32 @@ interface PaintedFrame {
    * as when the belt went off screen or the tab was hidden mid-drop
    */
   moving: boolean
+}
+
+/** Seconds the belt takes to cover most of the way to where it is taken */
+const TRAVEL_TIME = 0.12
+/** Slots off where it is going that the belt counts as there */
+const ARRIVED_WITHIN = 0.002
+
+/**
+ * Where the belt stands this frame as it goes where it is taken: quickly at
+ * first, then easing in, so a long jump back through the hour still reads as
+ * a move along the belt. Headed back to live, it goes for where the live belt
+ * is, and is live again once it gets there
+ */
+function travel(
+  playback: Playback,
+  target: number | undefined,
+  dt: number,
+): number | undefined {
+  if (playback.still) return target
+  if (target === undefined && playback.view === undefined) return undefined
+  const live = livePosition(playback.progress)
+  const to = target ?? live
+  const from = playback.view ?? live
+  const next = from + (to - from) * (1 - Math.exp(-dt / TRAVEL_TIME))
+  if (Math.abs(to - next) > ARRIVED_WITHIN) return next
+  return target
 }
 
 /**

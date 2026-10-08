@@ -147,8 +147,9 @@ function drawArrivalLabel(
 }
 
 /**
- * "Building slot 15,354,012" above the bay. Changed digits roll up like an
- * odometer, in step with the belt bringing that slot's rack in
+ * "Building slot 15,354,012" above the bay, or "Slot 15,354,012" for a block
+ * looked back at. Changed digits roll up like an odometer, in step with the
+ * belt bringing that slot's rack in
  */
 export function drawBayCaption(
   ctx: CanvasRenderingContext2D,
@@ -156,7 +157,7 @@ export function drawBayCaption(
   belt: BeltPosition,
 ) {
   const { layout, palette } = scene
-  const word = 'Building slot '
+  const word = belt.lookingBack ? 'Slot ' : 'Building slot '
   const number = formatWhole(belt.current)
   const previous = formatWhole(belt.current - 1)
   const wordFont = `500 12px ${FONT}`

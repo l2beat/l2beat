@@ -6,6 +6,7 @@ import {
   beltAt,
   presenceAtEnds,
   rackLeft,
+  sealedness,
 } from './beltPosition'
 import {
   type BeltFrame,
@@ -55,6 +56,7 @@ export function drawBelt(
   drawRacks(ctx, scene, belt)
   drawBay(ctx, scene, belt, landingPulse(scene, playback, belt, now))
   drawTiles(ctx, scene, playback, belt, now, frame, reveal)
+  drawBayRing(ctx, scene, belt)
   drawBlockNumbers(ctx, scene, belt, frame, reveal)
 
   // Pass 3: what stays put, on top
@@ -99,24 +101,21 @@ function drawRacks(
   const { layout, layers } = scene
   const { rackTop, rackWidth, rackHeight } = layout
 
-  for (let slot = belt.first; slot < belt.current; slot++) {
+  for (let slot = belt.first; slot <= belt.last; slot++) {
     const left = rackLeft(belt, layout, slot)
-    ctx.globalAlpha = presenceAtEnds(layout, left, left + rackWidth)
-    ctx.drawImage(layers.sealedRack, left, rackTop, rackWidth, rackHeight)
+    const presence = presenceAtEnds(layout, left, left + rackWidth)
+    // The rack of the slot being made shows the room it has as it comes, so
+    // it does not change look in a single frame
+    const sealed = sealedness(belt, slot)
+    if (sealed < 1) {
+      ctx.globalAlpha = presence * (1 - sealed)
+      ctx.drawImage(layers.futureRack, left, rackTop, rackWidth, rackHeight)
+    }
+    if (sealed > 0) {
+      ctx.globalAlpha = presence * sealed
+      ctx.drawImage(layers.sealedRack, left, rackTop, rackWidth, rackHeight)
+    }
   }
-  for (let slot = belt.current + 1; slot <= belt.last; slot++) {
-    const left = rackLeft(belt, layout, slot)
-    ctx.globalAlpha = presenceAtEnds(layout, left, left + rackWidth)
-    ctx.drawImage(layers.futureRack, left, rackTop, rackWidth, rackHeight)
-  }
-
-  // The rack rolling into the bay shows the room it has as it comes, so it
-  // does not change look in a single frame
-  const left = rackLeft(belt, layout, belt.current)
-  ctx.globalAlpha = 1 - belt.handover
-  ctx.drawImage(layers.futureRack, left, rackTop, rackWidth, rackHeight)
-  ctx.globalAlpha = belt.handover
-  ctx.drawImage(layers.sealedRack, left, rackTop, rackWidth, rackHeight)
   ctx.globalAlpha = 1
 }
 
@@ -167,6 +166,26 @@ function drawChute(
     top,
     layout.tileSize,
     layout.rackTop - top,
+  )
+}
+
+/**
+ * The bay's outline again, over the tiles: at rest they sit inside it, but
+ * racks sliding through the bay would cover it with theirs. The glow stays
+ * under them, where it lights the gaps rather than tinting the tiles
+ */
+function drawBayRing(
+  ctx: CanvasRenderingContext2D,
+  scene: BeltScene,
+  belt: BeltPosition,
+) {
+  const { layout, layers } = scene
+  ctx.drawImage(
+    layers.bayRing,
+    belt.bayLeft,
+    layout.rackTop,
+    layout.rackWidth,
+    layout.rackHeight,
   )
 }
 
