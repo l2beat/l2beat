@@ -54,8 +54,7 @@ function NodeViewImpl(props: NodeViewProps) {
           fullHeight ? 'rounded-2xl' : isGroup ? 'rounded-xl' : 'rounded-sm',
           props.isSelected
             ? 'outline-4 outline-autumn-300 outline-solid'
-            : isGroup &&
-                'outline-dashed outline-2 outline-coffee-200 outline-solid',
+            : isGroup && 'outline-dashed outline-2 outline-coffee-200',
         )}
       >
         <div
