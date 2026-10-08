@@ -59,17 +59,38 @@ export const structureFieldPolicy: MergePolicy<StructureContractField> = {
   edit: (base, override) => override ?? base,
 }
 
-export function assertHandlerOrCopy(field: StructureContractField): void {
-  assert(handlerAndCopyAreExclusive(field), HANDLER_AND_COPY_EXCLUSIVE_MESSAGE)
+export function mergeFieldWithPolicy<F extends StructureContractField>(
+  policy: MergePolicy<F>,
+  base: F,
+  override: F,
+): F {
+  const merged = mergeWithPolicy(
+    policy,
+    dropValueSourceReplacedBy(base, override),
+    override,
+  )
+  assert(handlerAndCopyAreExclusive(merged), HANDLER_AND_COPY_EXCLUSIVE_MESSAGE)
+  return merged
+}
+
+function dropValueSourceReplacedBy<F extends StructureContractField>(
+  base: F,
+  override: F,
+): F {
+  if (override.handler !== undefined) {
+    return { ...base, copy: undefined }
+  }
+  if (override.copy !== undefined) {
+    return { ...base, handler: undefined }
+  }
+  return base
 }
 
 function mergeStructureField(
   base: StructureContractField,
   override: StructureContractField,
 ): StructureContractField {
-  const merged = mergeWithPolicy(structureFieldPolicy, base, override)
-  assertHandlerOrCopy(merged)
-  return merged
+  return mergeFieldWithPolicy(structureFieldPolicy, base, override)
 }
 
 const structureContractPolicy: MergePolicy<StructureContract> = {

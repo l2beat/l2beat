@@ -122,22 +122,24 @@ describe(makeEntryStructureConfig.name, () => {
       expect(config.fields.a?.edit).toEqual(['get', '#'])
     })
 
-    it('crashes when a template handler meets an override copy on one field', () => {
-      expect(() =>
-        mergeTemplateIntoOverride(
-          { fields: { a: { copy: 'b' } } },
-          { fields: { a: { handler: { type: 'storage', slot: 1 } } } },
-        ),
-      ).toThrow('handler and copy cannot both be defined')
+    it('replaces a template handler with an override copy on one field', () => {
+      const config = mergeTemplateIntoOverride(
+        { fields: { a: { copy: 'b' } } },
+        { fields: { a: { handler: { type: 'storage', slot: 1 } } } },
+      )
+
+      expect(config.fields.a?.copy).toEqual('b')
+      expect(config.fields.a?.handler).toEqual(undefined)
     })
 
-    it('crashes when a template copy meets an override handler on one field', () => {
-      expect(() =>
-        mergeTemplateIntoOverride(
-          { fields: { a: { handler: { type: 'storage', slot: 1 } } } },
-          { fields: { a: { copy: 'b' } } },
-        ),
-      ).toThrow('handler and copy cannot both be defined')
+    it('replaces a template copy with an override handler on one field', () => {
+      const config = mergeTemplateIntoOverride(
+        { fields: { a: { handler: { type: 'storage', slot: 1 } } } },
+        { fields: { a: { copy: 'b' } } },
+      )
+
+      expect(config.fields.a?.handler).toEqual({ type: 'storage', slot: 1 })
+      expect(config.fields.a?.copy).toEqual(undefined)
     })
 
     it('replaces a redefined template type wholesale instead of merging its keys', () => {
