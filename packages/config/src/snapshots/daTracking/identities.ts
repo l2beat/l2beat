@@ -11,9 +11,8 @@ import type {
 } from '../types'
 
 /**
- * The id hashes the identity fields only (inbox, sequencers, topics,
- * namespace, appIds, customerId), so a disappeared id means those fields
- * changed - typically discovery picked up a sequencer/inbox rotation through
+ * The id hashes the identity fields only (inbox, sequencers, topics), so a
+ * disappeared id means those fields changed - typically discovery picked up a sequencer/inbox rotation through
  * the project's open helper entry (getOpStackDaTracking & co). Editing the
  * entry in place loses everything indexed under the old id; the old entry has
  * to be frozen instead. See projects/ink/ink.ts for the resulting shape.
@@ -21,7 +20,7 @@ import type {
 const FREEZE_RECIPE = [
   'Freeze the old configuration instead of letting it disappear:',
   "1. In the project's .ts daTracking array, turn the old entry into literals so it keeps producing exactly this id - paste the frozen entry printed below in front of the last array element. If the old entry is a helper call (getOpStackDaTracking / getOrbitStackDaTracking / getZkStackDaTracking), the pasted literal replaces nothing - the helper now derives the new configuration and stays as the open entry.",
-  "2. Close it with 'untilBlock' (or 'untilTimestamp' for eigen-da) at the last block the old configuration was live - verify the exact block on-chain. If you cannot, the current discovery run's usedBlockNumbers[<chain>] in discovered.json is a safe upper bound (the change had already happened by then).",
+  "2. Close it with 'untilBlock' at the last block the old configuration was live - verify the exact block on-chain. If you cannot, the current discovery run's usedBlockNumbers[<chain>] in discovered.json is a safe upper bound (the change had already happened by then).",
   "3. Add the new entry with the new values as the last array element, starting where the old one ended (sinceBlock = the old entry's untilBlock). For a template stack that is the helper call again - getOpStackDaTracking(discovery, { sinceBlock }) - so the next rotation is caught the same way. If you only bracketed the change, start it at the previous discovery run's usedBlockNumbers[<chain>] (from the pre-change discovered.json) - overlaps between entries are fine, holes are not.",
   '4. If the configuration really stopped being used (the project left the layer), close it as in step 2 and do not add a new entry - a deleted entry is gone for good, a closed one is kept.',
   "5. Only then run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot as the sign-off. With the old entry frozen its id survives, so the plain command accepts the change; --overwrite (which drops disappeared identities) should never be needed here - reaching for it means step 1 went wrong.",
@@ -108,28 +107,15 @@ function generateDaTrackingIdentities(projects: BaseProject[]): Snapshot {
   )
 }
 
-/** Blocks for the block-based layers, unix seconds for eigen-da. */
 function getRange(config: ProjectDaTrackingConfig): Range {
-  return config.type === 'eigen-da'
-    ? { since: config.sinceTimestamp, until: config.untilTimestamp }
-    : { since: config.sinceBlock, until: config.untilBlock }
+  return { since: config.sinceBlock, until: config.untilBlock }
 }
 
 function createLabel(config: ProjectDaTrackingConfig): string {
-  switch (config.type) {
-    case 'ethereum': {
-      const sequencers = config.sequencers
-        ? ` sequencers[${config.sequencers.length}]`
-        : ''
-      return `ethereum inbox ${config.inbox}${sequencers} since ${config.sinceBlock}`
-    }
-    case 'celestia':
-      return `celestia namespace ${config.namespace} since ${config.sinceBlock}`
-    case 'avail':
-      return `avail appIds [${[...config.appIds].sort((a, b) => a.localeCompare(b)).join(', ')}] since ${config.sinceBlock}`
-    case 'eigen-da':
-      return `eigen-da customer ${config.customerId} since ${config.sinceTimestamp}`
-  }
+  const sequencers = config.sequencers
+    ? ` sequencers[${config.sequencers.length}]`
+    : ''
+  return `ethereum inbox ${config.inbox}${sequencers} since ${config.sinceBlock}`
 }
 
 /**
@@ -148,38 +134,22 @@ export function freezeSnippet(identity: SnapshotIdentity): string {
     `      daLayer: ProjectId('${config.daLayer}'),`,
   ]
   const untilTodo = ' // TODO step 2: last point the old configuration was live'
-  if (config.type === 'eigen-da') {
+  lines.push(
+    `      sinceBlock: ${config.sinceBlock},`,
+    config.untilBlock !== undefined
+      ? `      untilBlock: ${config.untilBlock},`
+      : `      untilBlock: 0,${untilTodo}`,
+    `      inbox: ${address(config.inbox)},`,
+  )
+  if (config.sequencers) {
     lines.push(
-      `      customerId: '${config.customerId}',`,
-      `      sinceTimestamp: UnixTime(${config.sinceTimestamp}),`,
-      config.untilTimestamp !== undefined
-        ? `      untilTimestamp: UnixTime(${config.untilTimestamp}),`
-        : `      untilTimestamp: UnixTime(0),${untilTodo}`,
+      '      sequencers: [',
+      ...config.sequencers.map((a) => `        ${address(a)},`),
+      '      ],',
     )
-  } else {
-    lines.push(
-      `      sinceBlock: ${config.sinceBlock},`,
-      config.untilBlock !== undefined
-        ? `      untilBlock: ${config.untilBlock},`
-        : `      untilBlock: 0,${untilTodo}`,
-    )
-    if (config.type === 'ethereum') {
-      lines.push(`      inbox: ${address(config.inbox)},`)
-      if (config.sequencers) {
-        lines.push(
-          '      sequencers: [',
-          ...config.sequencers.map((a) => `        ${address(a)},`),
-          '      ],',
-        )
-      }
-      if (config.topics) {
-        lines.push(`      topics: [${strings(config.topics)}],`)
-      }
-    } else if (config.type === 'celestia') {
-      lines.push(`      namespace: '${config.namespace}',`)
-    } else {
-      lines.push(`      appIds: [${strings(config.appIds)}],`)
-    }
+  }
+  if (config.topics) {
+    lines.push(`      topics: [${strings(config.topics)}],`)
   }
   lines.push('    },')
   return lines.join('\n')

@@ -5,10 +5,6 @@ import { formatPublicationDate } from '~/utils/dates'
 import { getActivityLatestUops } from '../layer2s/activity/getActivityLatestTps'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import {
-  type DaMonthlyUpdateEntry,
-  getDaMonthlyUpdateEntries,
-} from './getDaEntries'
-import {
   type EcosystemMonthlyUpdateEntry,
   getEcosystemMonthlyUpdateEntries,
 } from './getEcosystemEntries'
@@ -24,7 +20,6 @@ interface MonthlyUpdateEntry {
   from: UnixTime
   to: UnixTime
   ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
-  daUpdatesEntries: DaMonthlyUpdateEntry[]
   upcomingProjectsUpdatesEntries: UpcomingProjectUpdateEntry[]
 }
 
@@ -43,24 +38,14 @@ export async function getMonthlyUpdateEntry(
     getActivityLatestUops(allL2Projects, [from, to]),
   ])
 
-  const [ecosystemsUpdatesEntries, daUpdatesEntries] = await Promise.all([
-    getEcosystemMonthlyUpdateEntries(
-      entry.data.updates.filter((update) => update.type === 'ecosystem'),
-      allL2Projects,
-      tvs,
-      activity,
-      from,
-      to,
-    ),
-    getDaMonthlyUpdateEntries(
-      entry.data.updates.filter(
-        (update) => update.type === 'data-availability',
-      ),
-      tvs,
-      activity,
-      to,
-    ),
-  ])
+  const ecosystemsUpdatesEntries = await getEcosystemMonthlyUpdateEntries(
+    entry.data.updates.filter((update) => update.type === 'ecosystem'),
+    allL2Projects,
+    tvs,
+    activity,
+    from,
+    to,
+  )
 
   const upcomingProjectsUpdatesEntries = getUpcomingProjectUpdateEntries(
     entry.data.updates.filter((update) => update.type === 'upcoming-project'),
@@ -73,7 +58,6 @@ export async function getMonthlyUpdateEntry(
     to,
     publishedOn: formatPublicationDate(entry.data.publishedOn),
     ecosystemsUpdatesEntries,
-    daUpdatesEntries,
     upcomingProjectsUpdatesEntries,
   }
 }

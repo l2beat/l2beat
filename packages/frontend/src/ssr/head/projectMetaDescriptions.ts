@@ -25,36 +25,6 @@ export function getScalingMetadataDescription(project: {
   )
 }
 
-export function getDaMetadataDescription(project: {
-  name: string
-  bridge: { name: string; isNoBridge: boolean } | undefined
-  tvs: number
-  economicSecurity: number | undefined
-  description: string
-}) {
-  return describe(
-    [
-      unlessMentioned('DA layer', project.description),
-      unlessMentioned(bridgeFact(project.bridge), project.description),
-      usd(project.tvs, 'TVS'),
-      usd(project.economicSecurity, 'economic security'),
-    ],
-    project,
-  )
-}
-
-// A layer has one page per bridge, all sharing the layer's description; the
-// bridge tells them apart.
-function bridgeFact(bridge: { name: string; isNoBridge: boolean } | undefined) {
-  if (!bridge) {
-    return undefined
-  }
-  if (bridge.isNoBridge) {
-    return 'no DA bridge'
-  }
-  return /bridge$/i.test(bridge.name) ? bridge.name : `${bridge.name} bridge`
-}
-
 export function getZkCatalogMetadataDescription(project: {
   name: string
   creator: string | undefined

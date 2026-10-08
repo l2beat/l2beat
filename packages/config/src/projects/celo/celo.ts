@@ -241,13 +241,5 @@ export const celo: ScalingProject = opStackL2({
     startBlock: 31060842,
     adjustCount: { type: 'SubtractOne' },
   },
-  daTracking: [
-    getOpStackDaTracking(discovery, { sinceBlock: 22038831 }),
-    {
-      type: 'eigen-da',
-      customerId: '0xecf08b0a4f196e06e9aece95d5dd724bc121f09c',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1741806000),
-    },
-  ],
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 22038831 })],
 })

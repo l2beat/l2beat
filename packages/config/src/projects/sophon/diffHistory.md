@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x9a875dceecda9b7942803eafaf99989a09d855dc
+
+# Diff at Thu, 08 Oct 2026 13:08:15 GMT:
+
+- id: f9f51fe7
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@3975f74b769e77d0d6f407f5175b3ea295b337f1 block: 1791458527
+- current timestamp: 1791458527
+
+## Description
+
+Vector contracts are now discovered here instead of referenced from the vector project, which was removed with the rest of the alt-DA projects.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791458527 (main branch discovery), not current.
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      type:
+-        "Reference"
++        "Contract"
+      targetType:
+-        "Contract"
+      targetProject:
+-        "vector"
+      template:
++        "succinct/SP1Vector"
+      sourceHashes:
++        ["0x0940bdd2da00547eb0c190e7c4c5648e1147c96389d9771c2749b98270fc6315","0xe7fda3c09c3912281f605cde13565f94a164de607ec5784e028531883f3a6077"]
+      proxyType:
++        "EIP1967 proxy"
+      description:
++        "The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum."
+      deployerAddress:
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
++        1720128227
+      sinceBlock:
++        20235805
+      values:
++        {"$admin":"eth:0x0000000000000000000000000000000000000000","$implementation":"eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D","$pastUpgrades":[["2024-07-04T21:23:47.000Z","0x6c2c609d7a13fbdad53b1530d34d740ffa36653f29b5f14220429d7c0d6a3ffc",["eth:0x2434564f3524b44258B11643729343Ef57D60989"]],["2024-07-20T01:29:35.000Z","0x13d7977b9fca12882ea6ba47ce1b20a87de540c358b5e260584e0d921e786f5e",["eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]]],"$upgradeCount":2,"accessControl":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]}},"checkRelayer":true,"DEFAULT_ADMIN_ROLE":"0x0000000000000000000000000000000000000000000000000000000000000000","frozen":false,"gateway_deprecated":"eth:0x0000000000000000000000000000000000000000","GUARDIAN_ROLE":"0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041","guardians":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],"headerRangeCommitmentTreeSize":2048,"headerRangeFunctionId_deprecated":"0x0000000000000000000000000000000000000000000000000000000000000000","isRelayerApproved":true,"latestAuthoritySetId":895,"latestBlock":3538176,"relayers":["eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"],"rotateFunctionId_deprecated":"0x0000000000000000000000000000000000000000000000000000000000000000","TIMELOCK_ROLE":"0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05","timelocks":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],"vectorXProgramVkey":"0x005f3914526e9f0d261b56a3613985801d3060584f95874548c70fda5f81efdb","verifier":"eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e","VERSION":"2.0.0"}
+    }
+```
+
+```diff
+    contract AvailBridgeV1 (eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a) [avail/AvailBridgeV1] {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      type:
+-        "Reference"
++        "Contract"
+      targetType:
+-        "Contract"
+      targetProject:
+-        "vector"
+      template:
++        "avail/AvailBridgeV1"
+      sourceHashes:
++        ["0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413","0x3903ac9a0d6e9221ce37976cf87cacfc141984011d05bf62c9bfffc3479f77c0"]
+      proxyType:
++        "EIP1967 proxy"
+      description:
++        "Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum."
+      deployerAddress:
++        "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42"
+      sinceTimestamp:
++        1720568903
+      sinceBlock:
++        20272316
+      values:
++        {"$admin":"eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B","$implementation":"eth:0x737539737b44493F65c17eAfE165197b6410d254","$pastUpgrades":[["2024-07-09T23:48:23.000Z","0x980ea7f295336624f103c47b5ec482f90c2c90f4b7d05140ceb5d40aa077963c",["eth:0x737539737b44493F65c17eAfE165197b6410d254"]]],"$upgradeCount":1,"accessControl":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x45828180bbE489350D621d002968A0585406d487"]},"PAUSER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"]}},"avail":"eth:0xEeB4d8400AEefafC1B2953e0094134A887C76Bd8","DEFAULT_ADMIN_ROLE":"0x0000000000000000000000000000000000000000000000000000000000000000","defaultAdmin":"eth:0x45828180bbE489350D621d002968A0585406d487","defaultAdminAC":["eth:0x45828180bbE489350D621d002968A0585406d487"],"defaultAdminDelay":0,"defaultAdminDelayIncreaseWait":432000,"feePerByte":0,"feeRecipient":"eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","fees":0,"messageId":1885,"owner":"eth:0x45828180bbE489350D621d002968A0585406d487","paused":false,"pauserAC":["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],"pendingDefaultAdmin":{"newAdmin":"eth:0x0000000000000000000000000000000000000000","schedule":0},"pendingDefaultAdminDelay":{"newDelay":0,"schedule":0},"vectorx":"eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"}
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 2 (eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0xfebf248a6f82216524bfae1472df39b8f817c213
 
 # Diff at Thu, 08 Oct 2026 11:23:09 GMT:

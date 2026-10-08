@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
@@ -41,14 +41,6 @@ export const molten: ScalingProject = orbitStackL3({
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
-  daTracking: [
-    {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      sinceBlock: 5305699,
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpNR57blEA=',
-    },
-  ],
   customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   associatedTokens: ['MOLTEN'],
   chainConfig: {
@@ -128,7 +120,7 @@ function getProgramHashes(): string[] {
   const result = []
   result.push(
     discovery.getContractValue<string>(
-      'ArbitrumBlobstream',
+      'SP1Blobstream',
       'blobstreamProgramVkey',
     ),
   )

@@ -164,30 +164,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "EigenDA Powers Data Availability for Ronin’s Migration to Ethereum",
-          "content": "EigenDA announced that it is providing the data availability layer for Ronin following the gaming network’s migration from a sidechain architecture to an Ethereum Layer 2 built on the OP Stack.\n\nThe migration marks a significant milestone for Ronin, one of the largest blockchain gaming ecosystems, which has processed billions of dollars in NFT trading volume and onboarded millions of users through games such as Axie Infinity and Pixels. By leveraging EigenDA, Ronin aims to reduce data availability costs while maintaining the scalability required to support large-scale gaming activity."
-        },
-        {
-          "title": "EigenCloud Advances Darkbloom Distributed AI Network to Public Alpha",
-          "content": "EigenCloud announced that Darkbloom, its distributed AI inference network, has progressed from a research preview to a public alpha release. According to the team, the network has already served more than 600 million tokens using unused computing capacity from thousands of consumer devices, including idle Mac computers.\n\nThe latest upgrade reportedly delivers significant performance improvements across inference metrics such as time to first token, throughput, and overall token serving capacity, while reducing costs compared to traditional data-center-based infrastructure. EigenCloud positions Darkbloom as part of a broader effort to create decentralized, verifiable infrastructure for open-weight AI models, leveraging EigenLayer’s security and coordination mechanisms to support distributed compute networks."
-        },
-        {
-          "title": "EIGEN Token Becomes Available on Bitstamp by Robinhood",
-          "content": "The Eigen Foundation announced that the EIGEN token is now available for trading on Bitstamp by Robinhood, expanding access to the asset through one of the longest-operating cryptocurrency exchanges.\n\nThe listing adds EIGEN alongside several other newly supported digital assets and increases the token’s availability to a broader base of retail and institutional market participants. The announcement comes as EigenLayer continues to expand its ecosystem around verifiable cloud infrastructure, decentralized services, and AI-focused applications.\n\nExchange listings typically improve market accessibility and liquidity for ecosystem tokens, supporting broader participation from users interested in the EigenLayer and EigenCloud ecosystems."
-        },
-        {
-          "title": "EigenCloud Introduces Verifiable Telemetry for AI Agents",
-          "content": "EigenCloud introduced Eigen Trace Mirror, a new system designed to provide verifiable telemetry for AI agents and autonomous software systems.\n\nThe project aims to address a growing challenge in agent-based applications: verifying that an AI system actually executed the actions it claims to have performed. According to EigenCloud, Eigen Trace Mirror combines trusted execution environments and cryptographic signatures to create auditable execution records, allowing users to independently verify agent activity rather than relying solely on logs, traces, or application dashboards.\n\nThe solution is built on EigenCompute infrastructure and represents another step in EigenCloud’s broader effort to develop verifiable cloud services for AI workloads, where computation, execution, and agent behavior can be independently validated."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

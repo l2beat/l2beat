@@ -1,6 +1,5 @@
 import { expect } from 'earl'
 import {
-  getDaMetadataDescription,
   getInteropMetadataDescription,
   getPrivacyMetadataDescription,
   getProjectMetadataDescription,
@@ -162,84 +161,6 @@ describe(getScalingMetadataDescription.name, () => {
       `Stage 1 · $16B TVS. ${sentences.slice(0, 9).join(' ')}`,
     )
     expect(description.length).toBeLessThanOrEqual(300)
-  })
-})
-
-describe(getDaMetadataDescription.name, () => {
-  it('leads with TVS and economic security', () => {
-    const description = getDaMetadataDescription({
-      name: 'Celestia',
-      bridge: undefined,
-      tvs: 1_500_000_000,
-      economicSecurity: 2_300_000_000,
-      description: 'Celestia is a modular data availability network.',
-    })
-
-    expect(description).toEqual(
-      'DA layer · $1.5B TVS · $2.3B economic security. Celestia is a modular data availability network.',
-    )
-  })
-
-  it('omits economic security when the layer has none', () => {
-    const description = getDaMetadataDescription({
-      name: 'EigenDA',
-      bridge: undefined,
-      tvs: 1_500_000_000,
-      economicSecurity: undefined,
-      description: 'EigenDA is a data availability service.',
-    })
-
-    expect(description).toEqual(
-      'DA layer · $1.5B TVS. EigenDA is a data availability service.',
-    )
-  })
-})
-
-describe('DA bridge pages', () => {
-  // The page joins the layer's and the bridge's descriptions; a layer's own
-  // bridge repeats the layer text word for word.
-  it('names the bridge and drops a repeated sentence', () => {
-    const description = getDaMetadataDescription({
-      name: 'EigenDA',
-      bridge: { name: 'EigenDA', isNoBridge: false },
-      tvs: 20_000_000,
-      economicSecurity: undefined,
-      description:
-        'EigenDA is a data availability solution. EigenDA is a data availability solution.',
-    })
-
-    expect(description).toEqual(
-      'DA layer · EigenDA bridge · $20M TVS. EigenDA is a data availability solution.',
-    )
-  })
-
-  it('says so when the page is for the layer without a bridge', () => {
-    const description = getDaMetadataDescription({
-      name: 'EigenDA',
-      bridge: { name: 'No bridge', isNoBridge: true },
-      tvs: 20_000_000,
-      economicSecurity: undefined,
-      description: 'EigenDA is a data availability solution.',
-    })
-
-    expect(description).toEqual(
-      'DA layer · no DA bridge · $20M TVS. EigenDA is a data availability solution.',
-    )
-  })
-
-  it('leaves out a bridge the description already names', () => {
-    const description = getDaMetadataDescription({
-      name: 'Celestia',
-      bridge: { name: 'Blobstream', isNoBridge: false },
-      tvs: 20_000_000,
-      economicSecurity: undefined,
-      description:
-        'Celestia is a modular network. The Blobstream bridge serves as a ZK light client.',
-    })
-
-    expect(description).toEqual(
-      'DA layer · $20M TVS. Celestia is a modular network. The Blobstream bridge serves as a ZK light client.',
-    )
   })
 })
 

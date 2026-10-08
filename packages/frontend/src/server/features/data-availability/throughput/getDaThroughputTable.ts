@@ -243,10 +243,7 @@ function getMockDaThroughputTableData(
             daLayerId,
             {
               syncedUntil:
-                daLayerId === 'avail'
-                  ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
-                  : UnixTime.toStartOf(UnixTime.now(), 'day') -
-                    1 * UnixTime.DAY,
+                UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY,
               pastDayData: {
                 largestPoster: {
                   name: 'Base',
@@ -290,10 +287,7 @@ function getMockDaThroughputTableData(
                 avgThroughputPerSecond: 100000,
               },
               syncedUntil:
-                daLayerId === 'avail'
-                  ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
-                  : UnixTime.toStartOf(UnixTime.now(), 'day') -
-                    1 * UnixTime.DAY,
+                UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY,
               maxThroughputPerSecond: 400000,
               maxRegistered: {
                 value: 390000,

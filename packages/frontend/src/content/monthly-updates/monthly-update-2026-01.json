@@ -105,22 +105,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "EigenDA Captures 98% of L2 Blobspace Usage",
-          "content": "Gajesh [posted](https://x.com/gajesh/status/2015945766741880885) that EigenDA currently accounts for roughly 98% of L2 blobspace usage, overtaking Ethereum-native blobs as the dominant source of data availability for rollups. This reflects how quickly EigenLayer’s EigenDA has become a core infrastructure layer for scaling ecosystems, optimizing blob costs, and throughput.\n\nThis trend is also observable through public analytics dashboards such as [L2BEAT](https://l2beat.com/layer2s/risk/data-availability), where the data each L2 posts to its data availability layer can be monitored directly."
-        },
-        {
-          "title": "How EigenAI Makes AI Inference Deterministic and Verifiable",
-          "content": "EigenCloud [published](https://blog.eigencloud.xyz/deterministic-ai-inference-eigenai/) a technical explainer detailing how EigenAI achieves bit-exact deterministic inference for large language models on GPUs, addressing a core limitation of modern AI systems: nondeterministic outputs. Because GPU execution introduces variability through floating-point behavior and parallelism, the same prompt can produce different results across runs, making verification impossible in high-stakes applications.\n\nIt also explains how EigenAI enforces determinism across the full stack—hardware constraints, deterministic math libraries, and a controlled inference engine—while adding cryptoeconomic verification through EigenLayer primitives. This enables AI outputs to be replayed, audited, and economically enforced, laying the foundation for verifiable autonomous agents in areas such as trading, prediction markets, and on-chain decision-making."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

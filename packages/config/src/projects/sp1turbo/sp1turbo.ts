@@ -94,14 +94,6 @@ export const sp1turbo: BaseProject = {
         sinceTimestamp: UnixTime(1751328000),
       },
       {
-        projectId: ProjectId('blobstream'),
-        sinceTimestamp: UnixTime(1717608107),
-      },
-      {
-        projectId: ProjectId('vector'),
-        sinceTimestamp: UnixTime(1720128227),
-      },
-      {
         projectId: ProjectId('sophon'),
         sinceTimestamp: UnixTime(1745341091),
       },

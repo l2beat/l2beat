@@ -7,11 +7,9 @@ import { SectionNavigation } from '~/components/section-navigation/SectionNaviga
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
 import type { UpcomingProjectUpdateEntry } from '~/server/features/monthly-reports/getUpcomingEntries'
 import { PublicationTag } from '../components/PublicationsList'
-import { DaUpdateSection } from './components/da/DaUpdateSection'
 import { EcosystemUpdateSection } from './components/ecosystems/EcosystemUpdateSection'
 import { UpcomingProjectUpdateSection } from './components/upcoming/UpcomingProjectUpdateSection'
 
@@ -22,7 +20,6 @@ interface Props extends AppLayoutProps {
     from: UnixTime
     to: UnixTime
     ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
-    daUpdatesEntries: DaMonthlyUpdateEntry[]
     upcomingProjectsUpdatesEntries: UpcomingProjectUpdateEntry[]
   }
 }
@@ -30,7 +27,6 @@ interface Props extends AppLayoutProps {
 export function MonthlyUpdatePage({ entry, ...props }: Props) {
   const sections = [
     ...entry.ecosystemsUpdatesEntries,
-    ...entry.daUpdatesEntries,
     ...entry.upcomingProjectsUpdatesEntries,
   ].map((item) => ({
     id: item.id,
@@ -65,14 +61,6 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
                 <EcosystemUpdateSection
                   key={ecosystem.id}
                   ecosystem={ecosystem}
-                  from={entry.from}
-                  to={entry.to}
-                />
-              ))}
-              {entry.daUpdatesEntries.map((da) => (
-                <DaUpdateSection
-                  key={da.id}
-                  daLayer={da}
                   from={entry.from}
                   to={entry.to}
                 />

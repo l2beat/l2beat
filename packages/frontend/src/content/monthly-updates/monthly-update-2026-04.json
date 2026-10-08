@@ -185,30 +185,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "EigenLayer Thesis Explores the Rise of “Agentic Companies”",
-          "content": "EigenLayer co-founder Sreeram Kannan [published](https://blog.eigencloud.xyz/agents-will-become-companies/) a piece outlining the concept of “agentic companies,” arguing that AI and crypto will enable software-native businesses owned and operated by autonomous agents.\n\nThe article frames blockchains as coordination and capital formation infrastructure for agents, allowing them to function as independent economic entities rather than tools."
-        },
-        {
-          "title": "Eigen Labs Explores Distributed AI Inference with Project Darkbloom",
-          "content": "Eigen Labs [introduced](https://x.com/eigencloud/status/2044072648372863091) Project Darkbloom, a research initiative exploring how idle compute from consumer hardware, particularly Apple Silicon devices, can power distributed AI inference networks.\n\nThe model uses verified nodes, secure enclaves, and attestation mechanisms to provide hardware-backed privacy guarantees while improving capital efficiency versus centralized infrastructure."
-        },
-        {
-          "title": "EigenLayer Highlights Throughput Expansion with EigenDA",
-          "content": "EigenLayer [published](https://blog.eigencloud.xyz/living-outside-the-box-how-eigenda-unlocks-the-expansion-of-blockchain-throughput/) an overview explaining how EigenDA expands blockchain throughput by increasing data availability capacity.\n\nBy distributing data across a network of operators with cryptographic guarantees, EigenDA allows rollups to process higher volumes of transactions without being bottlenecked by Ethereum’s native data capacity."
-        },
-        {
-          "title": "EigenLayer Highlights Verifiable AI Agent Use Cases from Hackathon",
-          "content": "EigenLayer [shared](https://blog.eigencloud.xyz/ai-gent-hackathon-sythesis/) a recap of standout Synthesis hackathon projects focused on verifiable AI agents.\n\nFeatured examples include Bob Is Alive, an autonomous on-chain artist running inside a trusted execution environment; DealForge, a machine-to-machine deal protocol; and Boss Raid, a multi-agent coordination system for task execution."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

@@ -13,8 +13,7 @@ export function getDaLayersInfo(
   const daLayersMap = new Map<ProjectId, DaLayerInfo & { isActive: boolean }>()
 
   for (const config of configs) {
-    const isActive =
-      config.type === 'eigen-da' ? !config.untilTimestamp : !config.untilBlock
+    const isActive = !config.untilBlock
 
     const existingEntry = daLayersMap.get(config.daLayer)
     if (!existingEntry) {

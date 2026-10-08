@@ -1,7 +1,6 @@
 import type {
-  BlockDaTrackingConfig,
   ProjectActivityConfig,
-  TimestampDaTrackingConfig,
+  ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { CleanableRepoName } from '@l2beat/database'
 import type {
@@ -308,11 +307,6 @@ export interface DaBeatConfig {
   readonly projectsForDaBeatStats: ProjectId[]
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
-  readonly celestiaApiUrl: string
-  readonly celestiaCallsPerMinute: number
-  readonly nearRpcUrl: string
-  readonly availRpcUrl: string
-  readonly espressoApiUrl: string
 }
 
 export interface EcosystemTokenConfig {
@@ -331,15 +325,8 @@ type BlockLayerAsProjectDaTrackingConfig = {
   untilBlock?: number
 }
 
-type TimestampLayerAsProjectDaTrackingConfig = {
-  type: 'baseLayer'
-  daLayer: string
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
-}
-
 export type BlockDaIndexedConfig = (
-  | BlockDaTrackingConfig
+  | ProjectDaTrackingConfig
   | BlockLayerAsProjectDaTrackingConfig
 ) & {
   /** Hash computed automatically based on fields */
@@ -347,39 +334,18 @@ export type BlockDaIndexedConfig = (
   projectId: ProjectId
 }
 
-export type TimestampDaIndexedConfig = (
-  | TimestampDaTrackingConfig
-  | TimestampLayerAsProjectDaTrackingConfig
-) & {
-  /** Hash computed automatically based on fields */
-  configurationId: string
-  projectId: ProjectId
-}
-
 export type BlockLayerDaTrackingConfig = {
-  type: 'ethereum' | 'celestia' | 'avail'
+  type: 'ethereum'
   name: string
   url: string
   callsPerMinute: number
-  timeout?: number
   batchSize: number
   startingBlock: number
 }
 
-export type TimestampLayerDaTrackingConfig = {
-  type: 'eigen-da'
-  name: string
-  url: string
-  callsPerMinute: number
-  startingTimestamp: UnixTime
-  perProjectUrl?: string
-}
-
 export interface DataAvailabilityTrackingConfig {
   readonly blockLayers: BlockLayerDaTrackingConfig[]
-  readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
-  readonly timestampProjects: TimestampDaIndexedConfig[]
   /** The last day of Ethereum blocks and blobs, kept slot by slot */
   readonly liveBlobs: LiveBlobsTrackingConfig | false
 }
