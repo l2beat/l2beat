@@ -33,8 +33,6 @@ export const COMPARE_TVS_ASSET_CATEGORIES = [
   'rwaRestricted',
   'other',
 ] as const
-export type CompareTvsAssetCategory =
-  (typeof COMPARE_TVS_ASSET_CATEGORIES)[number]
 
 /**
  * The TVS component filter, restricting the compared value to a single

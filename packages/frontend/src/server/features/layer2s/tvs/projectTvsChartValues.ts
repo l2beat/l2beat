@@ -17,9 +17,6 @@ export const PROJECT_TVS_CHART_VALUE_KEYS = [
   'other',
 ] as const
 
-export type ProjectTvsChartValueKey =
-  (typeof PROJECT_TVS_CHART_VALUE_KEYS)[number]
-
 // Generic so the mapped type stays a tuple (the array special case only
 // applies to homomorphic mappings over a type parameter).
 type SameLengthNumberTuple<Keys extends readonly unknown[]> = {

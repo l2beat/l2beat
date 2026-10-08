@@ -2,12 +2,7 @@ import { type EntryParameters, get$Implementations } from '@l2beat/discovery'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import unionBy from 'lodash/unionBy'
 import uniqWith from 'lodash/uniqWith'
-import type {
-  Badge,
-  ProjectContracts,
-  ProjectPermissions,
-  ReferenceLink,
-} from '../types'
+import type { Badge, ProjectPermissions, ReferenceLink } from '../types'
 
 export function mergeBadges(inherentBadges: Badge[], definedBadges: Badge[]) {
   const allBadges = definedBadges.concat(inherentBadges)
@@ -50,20 +45,6 @@ export function mergePermissions(
     if (value.actors !== undefined) {
       result[key].actors = (result[key].actors ?? []).concat(value.actors)
     }
-  }
-
-  return result
-}
-
-export function mergeContracts(
-  base: ProjectContracts['addresses'],
-  pushed: ProjectContracts['addresses'],
-): ProjectContracts['addresses'] {
-  const result: ProjectContracts['addresses'] = structuredClone(base)
-
-  for (const [key, value] of Object.entries(pushed)) {
-    result[key] ??= []
-    result[key] = unionBy(value, result[key] ?? [], 'address')
   }
 
   return result

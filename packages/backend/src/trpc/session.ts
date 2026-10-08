@@ -5,13 +5,6 @@ export interface Session {
   email: string
 }
 
-export interface AuthCredentials {
-  JWKS: Parameters<typeof jwtVerify>[1]
-  aud: string
-  teamDomain: string
-  bypassAuthToken?: string
-}
-
 export async function getSession(
   headers: Headers,
   auth: BackofficeAuthConfig | false,
