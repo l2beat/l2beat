@@ -24,10 +24,11 @@
     overflow-wrap: break-word;
   }
 
-  /* Matches the ring-brand focus rings, for elements without one of their own. */
+  /* Matches the ring-brand focus rings, for elements without one of their own.
+     Only the colour changes: the browser's auto style also rings a link that
+     wraps a block image, where a solid outline would draw nothing. */
   :focus-visible {
-    outline: 2px solid var(--brand);
-    outline-offset: 2px;
+    outline-color: var(--brand);
   }
 }
 
