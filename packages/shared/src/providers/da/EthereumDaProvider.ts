@@ -5,6 +5,7 @@ import type {
   BeaconChainClient,
   EVMBlockWithTransactions,
   EVMLog,
+  EVMTransaction,
 } from '../../clients'
 import type { IRpcClient } from '../../clients2'
 import type { DaBlobProvider } from './DaProvider'
@@ -47,17 +48,62 @@ export class EthereumDaProvider implements DaBlobProvider {
     from: number,
     to: number,
   ): Promise<EthereumBlobBlock[]> {
-    const blockNumbers = Array.from(
-      { length: to - from + 1 },
-      (_, i) => from + i,
-    )
     const [blocks, logs] = await Promise.all([
-      Promise.all(blockNumbers.map((n) => this.rpcClient.getBlock(n, true))),
+      this.getBlocks(from, to),
       // to be able to track internal call we need to get logs
       this.rpcClient.getLogs(from, to),
     ])
     assertLogsOfBlocks(blocks, logs)
-    return blocks.map((block) => toBlobBlock(block, logs))
+    return blocks.map((block) =>
+      toBlobBlock(block, (txHash) =>
+        logs
+          .filter((log) => log.transactionHash === txHash)
+          .flatMap((log) => log.topics),
+      ),
+    )
+  }
+
+  /**
+   * As `getBlocksWithBlobBatches`, with the topics from the receipts of the
+   * blob transactions alone: a few small calls per block in place of every
+   * log of the range, so it suits the newest blocks, not long ranges. Some
+   * RPCs answer logs from an index that trails their head; a receipt the
+   * node has not got yet throws instead, and the caller asks again
+   */
+  async getBlocksWithBlobBatchesFromReceipts(
+    from: number,
+    to: number,
+  ): Promise<EthereumBlobBlock[]> {
+    const blocks = await this.getBlocks(from, to)
+    return await Promise.all(
+      blocks.map(async (block) => {
+        const topics = await this.getBlobTxTopics(block)
+        return toBlobBlock(block, (txHash) => topics.get(txHash) ?? [])
+      }),
+    )
+  }
+
+  /** By transaction hash, from receipts of `block` and no other */
+  private async getBlobTxTopics(block: EVMBlockWithTransactions) {
+    const entries = await Promise.all(
+      block.transactions.filter(isBlobTx).map(async (tx) => {
+        const receipt = await this.rpcClient.getTransactionReceipt(tx.hash)
+        assert(
+          receipt.blockHash === block.hash,
+          `Receipt of ${tx.hash} is from another chain than block ${block.number}`,
+        )
+        return [tx.hash, receipt.logs.flatMap((log) => log.topics)] as const
+      }),
+    )
+    return new Map(entries)
+  }
+
+  private getBlocks(from: number, to: number) {
+    return Promise.all(
+      Array.from({ length: to - from + 1 }, (_, i) =>
+        this.rpcClient.getBlock(from + i, true),
+      ),
+    )
   }
 
   async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
@@ -134,22 +180,19 @@ function isEmptyBloom(logsBloom: string) {
 
 function toBlobBlock(
   block: EVMBlockWithTransactions,
-  logs: EVMLog[],
+  topicsOf: (txHash: string) => string[],
 ): EthereumBlobBlock {
   const batches: EthereumBlobBatch[] = []
   block.transactions.forEach((tx, txIndex) => {
-    // Skip blob processing for type 2 transactions
-    if (Number(tx.type) === 2 || !tx.blobVersionedHashes) {
+    if (!isBlobTx(tx)) {
       return
     }
-
-    const txLogs = logs.filter((l) => l.transactionHash === tx.hash)
     batches.push({
       txIndex,
       txHash: tx.hash,
       from: tx.from,
       to: tx.to ?? '',
-      topics: txLogs.flatMap((log) => log.topics),
+      topics: topicsOf(tx.hash),
       blobs: tx.blobVersionedHashes.length,
     })
   })
@@ -161,6 +204,12 @@ function toBlobBlock(
     timestamp: block.timestamp,
     batches,
   }
+}
+
+function isBlobTx(
+  tx: EVMTransaction,
+): tx is EVMTransaction & { blobVersionedHashes: string[] } {
+  return Number(tx.type) !== 2 && !!tx.blobVersionedHashes
 }
 
 function filterOutIrrelevant(

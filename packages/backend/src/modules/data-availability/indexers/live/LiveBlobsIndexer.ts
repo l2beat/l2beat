@@ -75,10 +75,11 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
         const start = Math.max(from, windowStart)
         const end = Math.min(start + this.$.batchSize - 1, to)
 
-        const blocks = await this.$.daProvider.getBlocksWithBlobBatches(
-          start,
-          end,
-        )
+        const blocks =
+          await this.$.daProvider.getBlocksWithBlobBatchesFromReceipts(
+            start,
+            end,
+          )
         await this.assertBuildsOnStored(start, blocks)
         const liveBlocks = blocks.map(toLiveBlock)
         const liveBatches = blocks.flatMap((b) => this.toLiveBatches(b))

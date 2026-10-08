@@ -233,6 +233,127 @@ describe(EthereumDaProvider.name, () => {
     })
   })
 
+  // Methodology: the same blocks as for getBlocksWithBlobBatches, but the
+  // topics answered by the blob transactions' receipts, and no logs at all
+  describe(
+    EthereumDaProvider.prototype.getBlocksWithBlobBatchesFromReceipts.name,
+    () => {
+      it('takes the topics from the receipts of the blob transactions alone', async () => {
+        const mockRpcClient = mockObject<RpcClient>({
+          getBlock: mockFn()
+            .given(1, true as unknown as false)
+            .resolvesToOnce({
+              number: 1,
+              hash: '0xhash1',
+              parentHash: '0xhash0',
+              timestamp: 100,
+              logsBloom: '0x1',
+              transactions: [
+                { hash: '0xplain', type: '2', from: '0xa', to: '0xb' },
+                {
+                  hash: '0xblobs',
+                  type: '3',
+                  blobVersionedHashes: ['0x01', '0x02', '0x03'],
+                  from: '0xsequencer',
+                  to: '0xinbox',
+                },
+              ],
+            })
+            .given(2, true as unknown as false)
+            .resolvesToOnce({
+              number: 2,
+              hash: '0xhash2',
+              parentHash: '0xhash1',
+              timestamp: 112,
+              logsBloom: '0x0',
+              transactions: [],
+            }),
+          getTransactionReceipt: mockFn().resolvesTo({
+            blockHash: '0xhash1',
+            logs: [
+              { topics: ['0xtopic1', '0xtopic2'] },
+              { topics: ['0xtopic3'] },
+            ],
+          }),
+          getLogs: mockFn().resolvesTo([]),
+        })
+        const provider = new EthereumDaProvider(
+          mockObject<BeaconChainClient>(),
+          mockRpcClient,
+          'ethereum',
+        )
+
+        const result = await provider.getBlocksWithBlobBatchesFromReceipts(1, 2)
+
+        expect(result).toEqual([
+          {
+            number: 1,
+            hash: '0xhash1',
+            parentHash: '0xhash0',
+            timestamp: UnixTime(100),
+            batches: [
+              {
+                txIndex: 1,
+                txHash: '0xblobs',
+                from: '0xsequencer',
+                to: '0xinbox',
+                topics: ['0xtopic1', '0xtopic2', '0xtopic3'],
+                blobs: 3,
+              },
+            ],
+          },
+          {
+            number: 2,
+            hash: '0xhash2',
+            parentHash: '0xhash1',
+            timestamp: UnixTime(112),
+            batches: [],
+          },
+        ])
+        expect(mockRpcClient.getTransactionReceipt).toHaveBeenOnlyCalledWith(
+          '0xblobs',
+        )
+        expect(mockRpcClient.getLogs).not.toHaveBeenCalled()
+      })
+
+      // As a node on the other side of a reorg would answer
+      it('refuses a receipt from another chain than the block', async () => {
+        const provider = new EthereumDaProvider(
+          mockObject<BeaconChainClient>(),
+          mockObject<RpcClient>({
+            getBlock: mockFn().resolvesTo({
+              number: 1,
+              hash: '0xhash1',
+              parentHash: '0xhash0',
+              timestamp: 100,
+              logsBloom: '0x1',
+              transactions: [
+                {
+                  hash: '0xblobs',
+                  type: '3',
+                  blobVersionedHashes: ['0x01'],
+                  from: '0xsequencer',
+                  to: '0xinbox',
+                },
+              ],
+            }),
+            getTransactionReceipt: mockFn().resolvesTo({
+              blockHash: '0xorphaned',
+              logs: [],
+            }),
+          }),
+          'ethereum',
+        )
+
+        await expect(
+          provider.getBlocksWithBlobBatchesFromReceipts(1, 1),
+        ).toBeRejectedWith(
+          'Receipt of 0xblobs is from another chain than block 1',
+        )
+      })
+    },
+  )
+
   describe(
     EthereumDaProvider.prototype.getBlobsByVersionedHashesAndBlockNumber.name,
     () => {

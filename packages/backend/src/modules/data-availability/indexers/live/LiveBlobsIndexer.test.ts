@@ -52,10 +52,9 @@ describe(LiveBlobsIndexer.name, () => {
       const newHeight = await indexer.update(HEAD - 9, HEAD)
 
       expect(newHeight).toEqual(HEAD - 6)
-      expect(daProvider.getBlocksWithBlobBatches).toHaveBeenOnlyCalledWith(
-        HEAD - 9,
-        HEAD - 6,
-      )
+      expect(
+        daProvider.getBlocksWithBlobBatchesFromReceipts,
+      ).toHaveBeenOnlyCalledWith(HEAD - 9, HEAD - 6)
       expect(db.liveBlock.upsertMany).toHaveBeenOnlyCalledWith([
         liveBlock(HEAD - 9, 0),
         liveBlock(HEAD - 8, 3),
@@ -149,10 +148,9 @@ describe(LiveBlobsIndexer.name, () => {
       const newHeight = await indexer.update(1, HEAD)
 
       expect(newHeight).toEqual(WINDOW_START + 49)
-      expect(daProvider.getBlocksWithBlobBatches).toHaveBeenOnlyCalledWith(
-        WINDOW_START,
-        WINDOW_START + 49,
-      )
+      expect(
+        daProvider.getBlocksWithBlobBatchesFromReceipts,
+      ).toHaveBeenOnlyCalledWith(WINDOW_START, WINDOW_START + 49)
     })
 
     it('refuses a batch that does not build on the newest stored block', async () => {
@@ -272,17 +270,18 @@ describe(LiveBlobsIndexer.name, () => {
       liveBlobBatch,
     })
     const daProvider = mockObject<EthereumDaProvider>({
-      getBlocksWithBlobBatches: mockFn(async (from: number, to: number) =>
-        Array.from({ length: to - from + 1 }, (_, i) => ({
-          number: from + i,
-          hash: `0x${from + i}`,
-          parentHash:
-            from + i === options.brokenLinkAt
-              ? '0xelsewhere'
-              : `0x${from + i - 1}`,
-          timestamp: timestampOf(from + i),
-          batches: options.batches?.[from + i] ?? [],
-        })),
+      getBlocksWithBlobBatchesFromReceipts: mockFn(
+        async (from: number, to: number) =>
+          Array.from({ length: to - from + 1 }, (_, i) => ({
+            number: from + i,
+            hash: `0x${from + i}`,
+            parentHash:
+              from + i === options.brokenLinkAt
+                ? '0xelsewhere'
+                : `0x${from + i - 1}`,
+            timestamp: timestampOf(from + i),
+            batches: options.batches?.[from + i] ?? [],
+          })),
       ),
     })
     const indexerService = mockObject<IndexerService>({
