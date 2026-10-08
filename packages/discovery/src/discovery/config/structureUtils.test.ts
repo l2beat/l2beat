@@ -251,6 +251,64 @@ describe(makeEntryStructureConfig.name, () => {
       expect(config.fields?.sequencerInbox?.template).toEqual('from override')
     })
 
+    describe('discoverLibraries', () => {
+      function resolveDiscoverLibraries(
+        project: boolean | undefined,
+        override: Record<string, unknown>,
+        template: Record<string, unknown>,
+      ) {
+        const config = makeEntryStructureConfig(
+          {
+            discoverLibraries: project,
+            overrides: {
+              [ADDRESS.toString()]: StructureContract.parse(override),
+            },
+          },
+          ADDRESS,
+        )
+        config.pushValues(StructureContract.parse(template))
+        return config.discoverLibraries
+      }
+
+      it('takes the template value when the override does not set it', () => {
+        const result = resolveDiscoverLibraries(
+          undefined,
+          {},
+          { discoverLibraries: true },
+        )
+
+        expect(result).toEqual(true)
+      })
+
+      it('takes the template value over the project value', () => {
+        const result = resolveDiscoverLibraries(
+          false,
+          {},
+          { discoverLibraries: true },
+        )
+
+        expect(result).toEqual(true)
+      })
+
+      it('keeps an override false over a template true', () => {
+        const result = resolveDiscoverLibraries(
+          undefined,
+          { discoverLibraries: false },
+          { discoverLibraries: true },
+        )
+
+        expect(result).toEqual(false)
+      })
+
+      it('falls back to the project value when neither side sets it', () => {
+        expect(resolveDiscoverLibraries(true, {}, {})).toEqual(true)
+      })
+
+      it('defaults to false when nothing sets it', () => {
+        expect(resolveDiscoverLibraries(undefined, {}, {})).toEqual(false)
+      })
+    })
+
     it('merges a contract field that is itself named handler', () => {
       const config = mergeTemplateIntoOverride(
         { fields: { handler: { template: 'from override' } } },

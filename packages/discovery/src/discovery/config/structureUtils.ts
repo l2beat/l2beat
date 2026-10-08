@@ -32,15 +32,22 @@ export function makeEntryStructureConfig(
     config.overrides?.[address.toString()] ?? {},
   )
 
+  const projectDiscoverLibraries = config.discoverLibraries ?? false
+
   return {
     ...override,
     address,
-    discoverLibraries:
-      override.discoverLibraries ?? config.discoverLibraries ?? false,
+    discoverLibraries: override.discoverLibraries ?? projectDiscoverLibraries,
     types: { ...config.types, ...override.types },
     pushValues: function (template: StructureContract) {
       const { address: _address, pushValues: _pushValues, ...current } = this
-      Object.assign(this, mergeStructureContract(template, current))
+      const merged = mergeStructureContract(template, {
+        ...current,
+        discoverLibraries: override.discoverLibraries,
+      })
+      Object.assign(this, merged, {
+        discoverLibraries: merged.discoverLibraries ?? projectDiscoverLibraries,
+      })
     },
   }
 }

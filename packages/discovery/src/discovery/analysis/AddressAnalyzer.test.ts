@@ -1,6 +1,7 @@
 import {
   Bytes,
   ChainSpecificAddress,
+  EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -427,6 +428,77 @@ describe(AddressAnalyzer.name, () => {
           [admin.toString()]: new Set(),
         },
       })
+    })
+
+    it('discovers libraries when a shape-matched template enables them', async () => {
+      const address = ChainSpecificAddress.random()
+      const library = EthereumAddress.random()
+
+      const sources: ContractSources = {
+        name: 'Test',
+        isVerified: true,
+        abi: [],
+        abis: {},
+        sources: [
+          {
+            hash: Hash256.random(),
+            name: 'Test',
+            address,
+            source: {
+              name: 'Test',
+              rootFile: 'Foo.sol',
+              isVerified: true,
+              abi: [],
+              solidityVersion: '0.8.0',
+              constructorArguments: '',
+              files: { 'Foo.sol': 'contract Test {}' },
+              remappings: [],
+              libraries: { 'Lib.sol:Lib': library },
+            },
+          },
+        ],
+      }
+
+      const addressAnalyzer = new AddressAnalyzer(
+        mockObject<ProxyDetector>({
+          detectProxy: async () => ({
+            type: 'immutable',
+            values: {},
+            deployment: undefined,
+            addresses: [address],
+          }),
+        }),
+        mockObject<SourceCodeService>({
+          getSources: async () => sources,
+        }),
+        mockObject<HandlerExecutor>({
+          execute: async () => ({
+            results: [],
+            values: {},
+            usedTypes: [],
+            errors: {},
+          }),
+        }),
+        mockObject<TemplateService>({
+          findMatchingTemplates: () => ['WithLibraries'],
+          loadContractTemplate: () =>
+            StructureContract.parse({ discoverLibraries: true }),
+          getTemplateHash: () => Hash256.random(),
+        }),
+      )
+
+      const result = await addressAnalyzer.analyze(
+        mockObject<IProvider>({
+          getBytecode: async () => Bytes.fromHex('0x1234'),
+          chain: 'ethereum',
+        }),
+        address,
+        makeEntryStructureConfig({}, address),
+      )
+
+      expect(result.type === 'Contract' && result.values.$libraries).toEqual([
+        ChainSpecificAddress.fromLong('ethereum', library),
+      ])
     })
   })
 })
