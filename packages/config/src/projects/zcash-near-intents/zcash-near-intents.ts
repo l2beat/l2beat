@@ -13,6 +13,7 @@ export const zcashNearIntents: BaseProject = {
   slug: 'zcash-near-intents',
   name: 'Zcash via NEAR Intents',
   shortName: undefined,
+  aliases: ['Zodl', 'Zashi'],
   addedAt: UnixTime.fromDate(new Date('2026-09-15')),
   statuses: {
     yellowWarning:
