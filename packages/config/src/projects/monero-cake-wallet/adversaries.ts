@@ -167,7 +167,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        'A quantum computer recovers the key of every ring member from public chain data, recomputes its key image and can link every transaction.',
+        'Whoever breaks elliptic-curve cryptography recovers the key of every ring member from public chain data, recomputes its key image and can link every transaction.',
       exposureContinued:
         "The services' records of payout and deposit then join the Ethereum legs.",
       interior: {

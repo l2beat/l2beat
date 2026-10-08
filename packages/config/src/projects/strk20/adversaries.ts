@@ -179,9 +179,10 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      exposureShort: 'The proofs are post-quantum, the encryption is not.',
+      exposureShort:
+        'The proofs rest only on hashes, the encryption on elliptic curves.',
       exposureContinued:
-        'Channel keys, note contents and the auditor escrow use elliptic-curve key exchange, and the auditor public key sits onchain. A quantum computer recovers that one key and with it every escrowed viewing key, and so the whole history.',
+        'Channel keys, note contents and the auditor escrow use elliptic-curve key exchange, and the auditor public key sits onchain. Whoever breaks elliptic-curve cryptography recovers that one key and with it every escrowed viewing key, and so the whole history.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
