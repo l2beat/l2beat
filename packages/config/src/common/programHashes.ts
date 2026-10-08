@@ -2124,6 +2124,16 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
         'common/programHashes/760308386675154762009993173725077399730170358078020153308029499928875469870.md',
       ),
     },
+  '569015423733809580615518794546253350390163920370934709723320624838312178729':
+    {
+      ...STARKNET_OS,
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.4-RC.8/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/569015423733809580615518794546253350390163920370934709723320624838312178729.md',
+      ),
+    },
   '2006389624453304912912750132846114593020263069652857561377702883656839453432':
     {
       ...STARKNET_OS,
@@ -2134,12 +2144,25 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
         'common/programHashes/2006389624453304912912750132846114593020263069652857561377702883656839453432.md',
       ),
     },
+  '805228098265968069660874977190930466751870110207234534021332896450772718372':
+    {
+      title: 'Virtual Starknet OS',
+      proverSystemProject: ProjectId('stwo'),
+      description:
+        'Proves correct execution of a single Starknet transaction against a recent finalized block, used for client-side proving (e.g. STRK-20 privacy pool actions). The Starknet OS only accepts client proof facts whose program hash is in its hardcoded allowlist, which contains this hash and the previous virtual OS hash.',
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.4-RC.8/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/805228098265968069660874977190930466751870110207234534021332896450772718372.md',
+      ),
+    },
   '2373625305120835200243020426311988160128377108314438505880592663683179928225':
     {
       title: 'Virtual Starknet OS',
       proverSystemProject: ProjectId('stwo'),
       description:
-        'Proves correct execution of a single Starknet transaction against a recent finalized block, used for client-side proving (e.g. STRK-20 privacy pool actions). The Starknet OS only accepts client proof facts whose program hash is in its hardcoded allowlist, which contains exactly this hash.',
+        'Proves correct execution of a single Starknet transaction against a recent finalized block, used for client-side proving (e.g. STRK-20 privacy pool actions). The Starknet OS only accepts client proof facts whose program hash is in its hardcoded allowlist. This hash was the only allowlisted entry in the v0.14.3 OS and remains allowlisted alongside the newer virtual OS hash in the v0.14.4 OS.',
       programUrl:
         'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os',
       verificationStatus: 'successful',

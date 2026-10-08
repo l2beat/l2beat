@@ -63,8 +63,9 @@
           ]
         },
         "executionDelayEra": {
-          // effective delay for ZKsync Era: max(executionDelay, chainExecutionDelay(Era diamond))
-          "severity": "HIGH",
+          // effective delay for ZKsync Era: max(executionDelay, chainExecutionDelay(Era diamond)).
+          // MEDIUM: the chain admin tuning its own delay is reviewed but does not reset the ossification clock.
+          "severity": "MEDIUM",
           "handler": {
             "type": "call",
             "method": "getExecutionDelay",
@@ -72,7 +73,7 @@
           }
         },
         "executionDelayEra_fmt": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "handler": {
             "type": "call",
             "method": "getExecutionDelay",
