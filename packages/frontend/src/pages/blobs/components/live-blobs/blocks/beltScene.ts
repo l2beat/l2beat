@@ -30,7 +30,7 @@ export interface Playback {
   /** Second the first blocks came in, to fade them in rather than pop up */
   revealedAt: number | undefined
   /**
-   * Where the belt stands while looking back through the hour: the slot in
+   * Where the belt stands while looking back through the day: the slot in
    * the bay, fractional on the way between two. Undefined while live
    */
   view: number | undefined

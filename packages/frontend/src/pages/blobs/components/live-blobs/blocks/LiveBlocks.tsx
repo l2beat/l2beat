@@ -44,7 +44,7 @@ interface Props {
  * Ethereum's blob market, live, as a conveyor of 12-second blocks. Each
  * block's blobs drop into the loading bay as Ethereum makes it, sorted by the
  * rollup that sent them, and every block shows the room it left against the
- * target and the maximum. Under it, the hour behind it takes the belt back
+ * target and the maximum. Under it, the day behind it takes the belt back
  * to any of its blocks.
  */
 export function LiveBlocks({ posters, limits }: Props) {
@@ -84,8 +84,10 @@ export function LiveBlocks({ posters, limits }: Props) {
   )
   const look = useLookBack(layout)
   const past = usePastBlocks({
-    from: look.view === undefined ? undefined : look.view - look.before - 1,
+    view: look.view,
     head: look.head,
+    before: look.before,
+    after: look.after,
     oldest: look.oldest,
     posterIndexOf,
   })
@@ -206,8 +208,8 @@ export function LiveBlocks({ posters, limits }: Props) {
 }
 
 /**
- * Where on the hour the belt is taken, if anywhere: undefined while live. Held
- * as asked and kept within the hour on every render, as the hour moves on
+ * Where on the day the belt is taken, if anywhere: undefined while live. Held
+ * as asked and kept within the day on every render, as the day moves on
  */
 function useLookBack(layout: BeltLayout | undefined) {
   const { data } = useLiveBlobs()
@@ -215,19 +217,15 @@ function useLookBack(layout: BeltLayout | undefined) {
   const { before, after } = layout
     ? racksAroundBay(layout)
     : { before: 0, after: 0 }
-  // the pulse's slots, as the window reaches a whole day back
-  const hour = data && {
-    head: data.head,
-    slots: data.window.blobsPerSlot.length,
-  }
+  const day = data && { head: data.head, slots: data.window.slots }
   return {
-    view: clampView(asked, hour, before),
-    head: hour?.head,
-    oldest: hour && hour.head - hour.slots + 1,
+    view: clampView(asked, day, before),
+    head: day?.head,
+    oldest: day && day.head - day.slots + 1,
     before,
     after,
     onView: (slot: number | undefined) =>
-      setAsked(clampView(slot, hour, before)),
+      setAsked(clampView(slot, day, before)),
   }
 }
 

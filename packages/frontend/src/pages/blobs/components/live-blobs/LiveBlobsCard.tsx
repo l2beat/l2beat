@@ -54,7 +54,7 @@ export function LiveBlobsCard({ projects, limits }: Props) {
 }
 
 function LiveSkeleton() {
-  // as tall as the belt with the hour and the legend under it
+  // as tall as the belt with the day and the legend under it
   return <Skeleton className="h-[30rem] w-full rounded-lg md:h-[40rem]" />
 }
 

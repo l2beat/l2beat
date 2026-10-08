@@ -1,4 +1,4 @@
-import { SLOT_SECONDS } from '@l2beat/shared-pure'
+import { clamp, SLOT_SECONDS } from '@l2beat/shared-pure'
 import {
   type MouseEvent,
   type PointerEvent,
@@ -9,6 +9,7 @@ import {
   useState,
 } from 'react'
 import { prepareCanvas, useAnimationFrame } from '../hooks'
+import { GLIDE_SLOTS } from '../lookBack'
 import type { ChainBlock } from './beaconChain'
 import { livePosition, SLIDE_TIME } from './beltPosition'
 import {
@@ -56,7 +57,7 @@ interface Options {
 
 /**
  * Runs the belt: keeps it on the chain's clock, or takes it back through the
- * hour, drops a block's batches in as it comes, paints each frame and finds
+ * day, drops a block's batches in as it comes, paints each frame and finds
  * the batch under the pointer.
  *
  * Nothing here sets state per frame; only a change of hovered batch renders,
@@ -298,9 +299,11 @@ const ARRIVED_WITHIN = 0.002
 
 /**
  * Where the belt stands this frame as it goes where it is taken: quickly at
- * first, then easing in, so a long jump back through the hour still reads as
- * a move along the belt. Headed back to live, it goes for where the live belt
- * is, and is live again once it gets there
+ * first, then easing in, so a long jump back through the day still reads as
+ * a move along the belt. A jump longer than `GLIDE_SLOTS` starts that far
+ * off, as only the racks around where it lands are loaded. Headed back to
+ * live, it goes for where the live belt is, and is live again once it gets
+ * there
  */
 function travel(
   playback: Playback,
@@ -311,7 +314,7 @@ function travel(
   if (target === undefined && playback.view === undefined) return undefined
   const live = livePosition(playback.progress)
   const to = target ?? live
-  const from = playback.view ?? live
+  const from = clamp(playback.view ?? live, to - GLIDE_SLOTS, to + GLIDE_SLOTS)
   const next = from + (to - from) * (1 - Math.exp(-dt / TRAVEL_TIME))
   if (Math.abs(to - next) > ARRIVED_WITHIN) return next
   return target

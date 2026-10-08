@@ -196,7 +196,7 @@ describe(LiveBlobsFeed.name, () => {
     expect(await feed.latest()).toEqual(undefined)
   })
 
-  it('reads a page of the hour from the database, behind the head', async () => {
+  it('reads a page of the day from the database, behind the head', async () => {
     feed = new LiveBlobsFeed(fakeDb().source, Logger.SILENT)
 
     // slots 960-991
@@ -264,6 +264,10 @@ describe(LiveBlobsFeed.name, () => {
           return Array.from({ length: to - from + 1 }, (_, i) =>
             block(from + i),
           )
+        },
+        getBucketsSince: async () => {
+          fail()
+          return []
         },
       },
       liveBlobBatch: {

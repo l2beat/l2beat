@@ -8,14 +8,20 @@ import {
   useState,
 } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import type { Pulse } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
+import {
+  PULSE_BUCKET_SLOTS,
+  PULSE_BUCKETS,
+  WINDOW_SLOTS,
+} from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { cn } from '~/utils/cn'
-import { formatClock, formatWhole } from './blocks/format'
+import { formatClock } from './blocks/format'
 import { usePrefersReducedMotion } from './hooks'
 import { earliestView } from './lookBack'
 import type { BlockLimits } from './model'
 import { useLiveBlobs } from './useLiveBlobs'
 
-/** What of the hour the belt shows, for the pulse to show where that is */
+/** What of the day the belt shows, for the pulse to show where that is */
 export interface PulseBrush {
   /** The slot in the bay, looking back; undefined while live */
   view: number | undefined
@@ -26,7 +32,7 @@ export interface PulseBrush {
   onView: (slot: number | undefined) => void
 }
 
-/** The hour behind the belt, under it, with what of it the belt shows */
+/** The day behind the belt, under it, with what of it the belt shows */
 export function LivePulse({
   limits,
   brush,
@@ -38,7 +44,8 @@ export function LivePulse({
   if (!data) return <Skeleton className="h-14 w-full" />
   return (
     <BlobPulse
-      blobsPerSlot={data.window.blobsPerSlot}
+      pulse={data.window.pulse}
+      slots={data.window.slots}
       head={data.head}
       limits={limits}
       brush={brush}
@@ -49,67 +56,72 @@ export function LivePulse({
 const PULSE_HEIGHT = 48
 const BAR_STEP = 4
 const BAR_WIDTH = 3
-const SLOTS_SHOWN = 300
-/** Slots a Page Up or Page Down moves the belt: five minutes */
-const PAGE_SLOTS = 25
+const BAR_MINUTES = (PULSE_BUCKET_SLOTS * SLOT_SECONDS) / 60
+/** Slots a Page Up or Page Down moves the belt: an hour */
+const PAGE_SLOTS = 300
+/**
+ * The band is at least this wide, in bars: true to scale, the few blocks the
+ * belt shows would be a sliver of the day
+ */
+const MIN_BAND_BARS = 2
 /** Pixels a finger moves sideways before it drags, rather than taps or scrolls */
 const DRAG_FROM = 4
 
 /**
- * Every block of the hour as a bar of its blobs, newest on the right. Each
- * new block slides the hour along by one and grows in at the end, so the
- * hour reads as passing, block by block.
+ * The day as a bar per five minutes of its blobs per block, newest on the
+ * right. The bars are fixed in time: the last fills in as blocks come, and
+ * each new five minutes slides the day along by one bar and grows in at the
+ * end, so the day reads as passing.
  *
  * It works as a brush over the belt: the band is what the belt shows, and
- * dragging it, or pressing anywhere on the hour, takes the belt back there.
+ * dragging it, or pressing anywhere on the day, takes the belt back there.
  */
 function BlobPulse({
-  blobsPerSlot,
+  pulse,
+  slots,
   head,
   limits,
   brush,
 }: {
-  blobsPerSlot: (number | null)[]
+  pulse: Pulse
+  /** Slots of the day the server has, back from the head */
+  slots: number
   head: number
   limits: BlockLimits
   brush: PulseBrush
 }) {
-  const barsRef = useRef<SVGGElement>(null)
-  const bandRef = useRef<SVGRectElement>(null)
-  const bayRef = useRef<SVGLineElement>(null)
+  const slidingRef = useRef<SVGGElement>(null)
   const reducedMotion = usePrefersReducedMotion()
-  // Bars keep their place by slot and the group moves, so a new block
-  // moves one element rather than all 300
-  const firstHead = useRef(head)
-  const width = SLOTS_SHOWN * BAR_STEP
+  // Bars keep their place by bucket and the group moves, so a new bucket
+  // moves one element rather than all of them
+  const firstBucketEver = useRef(pulse.firstBucket)
+  const width = PULSE_BUCKETS * BAR_STEP
   const scale = PULSE_HEIGHT / limits.maxBlobsPerBlock
   const targetY = PULSE_HEIGHT - limits.targetBlobsPerBlock * scale
-  const drag = useBrushDrag(head, brush)
+  const firstSlot = pulse.firstBucket * PULSE_BUCKET_SLOTS
+  const drag = useBrushDrag(head, firstSlot, brush)
   const { view, before, after } = brush
   // live, the bay holds the newest block for most of its slot
   const bay = view ?? head
-  const xOf = (slot: number) => width - (head - slot + 1) * BAR_STEP
+  const xOf = (slot: number) =>
+    ((slot - firstSlot) / PULSE_BUCKET_SLOTS) * BAR_STEP
+  const shownLeft = xOf(bay - before)
+  const shownRight = xOf(bay + after + 1)
+  const bandWidth = Math.max(shownRight - shownLeft, MIN_BAND_BARS * BAR_STEP)
+  const bayX = xOf(bay + 0.5)
 
-  // A band on slots of the past slides with their bars. Live, it stays put
-  // at the right end, where the slot being made always is
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new head is what slides it
+  // The bars, the band and the bay slide together as a new bucket starts
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a new bucket is what slides them
   useLayoutEffect(() => {
     if (reducedMotion) return
-    const sliding = [barsRef.current]
-    if (view !== undefined) sliding.push(bandRef.current, bayRef.current)
-    for (const element of sliding) {
-      element?.animate(
-        [{ transform: `translateX(${BAR_STEP}px)` }, { transform: 'none' }],
-        { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
-      )
-    }
-  }, [head, reducedMotion])
+    slidingRef.current?.animate(
+      [{ transform: `translateX(${BAR_STEP}px)` }, { transform: 'none' }],
+      { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+    )
+  }, [pulse.firstBucket, reducedMotion])
 
-  // as far back as the belt can be taken, or live while the hour is too short
-  const earliest = Math.min(
-    earliestView({ head, slots: blobsPerSlot.length }, before),
-    head,
-  )
+  // as far back as the belt can be taken, or live while the day is too short
+  const earliest = Math.min(earliestView({ head, slots }, before), head)
   // the belt's caption has the slot's number, so this says when it was
   const viewTime = view === undefined ? '' : formatClock(slotStart(view))
   const describeView =
@@ -120,7 +132,7 @@ function BlobPulse({
       <div
         role="slider"
         tabIndex={0}
-        aria-label="Look back through the last hour"
+        aria-label="Look back through the last 24 hours"
         aria-valuemin={earliest}
         aria-valuemax={head}
         aria-valuenow={bay}
@@ -138,46 +150,47 @@ function BlobPulse({
           preserveAspectRatio="none"
           className="block h-10 w-full"
           role="img"
-          aria-label={`Blobs in each of the last ${formatWhole(blobsPerSlot.length)} slots`}
+          aria-label={`Blobs per block in each ${BAR_MINUTES} minutes of the last 24 hours`}
         >
-          <rect
-            ref={bandRef}
-            x={xOf(bay - before)}
-            width={(before + 1 + after) * BAR_STEP}
-            y={0}
-            height={PULSE_HEIGHT}
-            className="fill-brand/10 stroke-brand/40"
-            strokeWidth={1}
-            vectorEffect="non-scaling-stroke"
-          />
-          <g ref={barsRef}>
+          <g ref={slidingRef}>
+            <rect
+              x={(shownLeft + shownRight - bandWidth) / 2}
+              width={bandWidth}
+              y={0}
+              height={PULSE_HEIGHT}
+              className="fill-brand/10 stroke-brand/40"
+              strokeWidth={1}
+              vectorEffect="non-scaling-stroke"
+            />
             <g
-              transform={`translate(${width - (head - firstHead.current + 1) * BAR_STEP} 0)`}
+              transform={`translate(${(firstBucketEver.current - pulse.firstBucket) * BAR_STEP} 0)`}
             >
-              {blobsPerSlot.map((blobs, i) =>
-                blobs === null || blobs === 0 ? null : (
+              {pulse.buckets.map(({ blocks, blobs }, i) => {
+                if (blocks === 0 || blobs === 0) return null
+                const perBlock = blobs / blocks
+                const bucket = pulse.firstBucket + i
+                return (
                   <PulseBar
-                    key={head - i}
-                    x={(head - i - firstHead.current) * BAR_STEP}
-                    height={blobs * scale}
-                    aboveTarget={blobs > limits.targetBlobsPerBlock}
-                    grow={i === 0 && !reducedMotion}
+                    key={bucket}
+                    x={(bucket - firstBucketEver.current) * BAR_STEP}
+                    height={perBlock * scale}
+                    aboveTarget={perBlock > limits.targetBlobsPerBlock}
+                    grow={i === pulse.buckets.length - 1 && !reducedMotion}
                   />
-                ),
-              )}
+                )
+              })}
             </g>
+            {/* the bay, as on the belt: where the block looked at sits */}
+            <line
+              x1={bayX}
+              x2={bayX}
+              y1={0}
+              y2={PULSE_HEIGHT}
+              className="stroke-primary"
+              strokeWidth={1.5}
+              vectorEffect="non-scaling-stroke"
+            />
           </g>
-          {/* the bay, as on the belt: where the block looked at sits */}
-          <line
-            ref={bayRef}
-            x1={xOf(bay) + BAR_WIDTH / 2}
-            x2={xOf(bay) + BAR_WIDTH / 2}
-            y1={0}
-            y2={PULSE_HEIGHT}
-            className="stroke-primary"
-            strokeWidth={1.5}
-            vectorEffect="non-scaling-stroke"
-          />
           <line
             x1={0}
             x2={width}
@@ -191,11 +204,11 @@ function BlobPulse({
         </svg>
       </div>
       <div className="mt-1 flex items-center justify-between gap-4 font-medium text-label-value-12 text-secondary">
-        <span>1 hour ago</span>
+        <span>24 hours ago</span>
         {view === undefined ? (
           <span className="max-md:hidden">
-            The last hour, a bar per block, against the target (dashed). Drag to
-            look back
+            Blobs per block every {BAR_MINUTES} minutes, against the target
+            (dashed). Drag to look back
           </span>
         ) : (
           // on a phone, the time alone fits between the ends
@@ -226,7 +239,7 @@ function BlobPulse({
  * on the way down, as that may start a scroll: a tap takes the belt there,
  * and a sideways drag carries the band.
  */
-function useBrushDrag(head: number, brush: PulseBrush) {
+function useBrushDrag(head: number, firstSlot: number, brush: PulseBrush) {
   const [dragging, setDragging] = useState(false)
   const drag = useRef<{
     pointerId: number
@@ -240,8 +253,8 @@ function useBrushDrag(head: number, brush: PulseBrush) {
 
   const slotUnder = (event: PointerEvent<HTMLElement>) => {
     const box = event.currentTarget.getBoundingClientRect()
-    const fromRight = 1 - (event.clientX - box.left) / box.width
-    return head - Math.floor(fromRight * SLOTS_SHOWN)
+    const across = (event.clientX - box.left) / box.width
+    return firstSlot + Math.floor(across * WINDOW_SLOTS)
   }
 
   const onPointerDown = (event: PointerEvent<HTMLElement>) => {
@@ -303,7 +316,7 @@ function useBrushDrag(head: number, brush: PulseBrush) {
   }
 }
 
-/** Arrows step a block, Page Up and Down five minutes; End or Escape is live */
+/** Arrows step a block, Page Up and Down an hour; End or Escape is live */
 function onBrushKey(
   event: KeyboardEvent<HTMLElement>,
   head: number,
@@ -330,15 +343,19 @@ function onBrushKey(
 }
 
 /**
- * "4 min ago", counted in slots back from the head rather than by the
- * device's clock, which may be off
+ * "4 min ago" or "3 h 20 min ago", counted in slots back from the head rather
+ * than by the device's clock, which may be off
  */
 function ago(slot: number, head: number) {
   const minutes = Math.floor(((head - slot) * SLOT_SECONDS) / 60)
-  return minutes < 1 ? 'under a minute ago' : `${minutes} min ago`
+  if (minutes < 1) return 'under a minute ago'
+  if (minutes < 60) return `${minutes} min ago`
+  const hours = Math.floor(minutes / 60)
+  const rest = minutes % 60
+  return rest === 0 ? `${hours} h ago` : `${hours} h ${rest} min ago`
 }
 
-/** Memoized, so a new block renders the one bar it brings, not all 300 */
+/** Memoized, so a new block renders the one bar it changes, not all of them */
 const PulseBar = memo(function PulseBar({
   x,
   height,
@@ -348,7 +365,7 @@ const PulseBar = memo(function PulseBar({
   x: number
   height: number
   aboveTarget: boolean
-  /** Only the bar a new block brings grows in; the others were there already */
+  /** Only the bar a new bucket brings grows in; the others were there already */
   grow: boolean
 }) {
   const ref = useRef<SVGRectElement>(null)

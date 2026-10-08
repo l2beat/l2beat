@@ -1,5 +1,6 @@
 import type {
   LiveBlobBatchRecord,
+  LiveBlockBucketRecord,
   LiveBlockRecord,
   LiveBucketRecord,
   LivePostedRecord,
@@ -12,12 +13,14 @@ import type {
   PastBlobs,
   Posted,
   PostedWindow,
+  Pulse,
 } from './LiveBlobsFeed'
 import {
   BELT_SLOTS,
   BUCKET_SLOTS,
   BUCKETS,
-  PULSE_SLOTS,
+  PULSE_BUCKET_SLOTS,
+  PULSE_BUCKETS,
   WINDOW_SLOTS,
 } from './liveBlobsSlots'
 
@@ -38,7 +41,7 @@ export interface LiveBlobsRows {
   stored: LiveSlotRange | undefined
   /** The stored slots of the window */
   inWindow: LiveSlotRange | undefined
-  /** Of the last `PULSE_SLOTS` slots */
+  /** Of the last `BELT_SLOTS` slots */
   blocks: LiveBlockRecord[]
   /** Of the last `BELT_SLOTS` slots, in block order */
   batches: LiveBlobBatchRecord[]
@@ -46,6 +49,8 @@ export interface LiveBlobsRows {
   posted: LivePostedRecord[]
   /** Over the window, `BUCKET_SLOTS` wide */
   buckets: LiveBucketRecord[]
+  /** Over the window, `PULSE_BUCKET_SLOTS` wide */
+  pulse: LiveBlockBucketRecord[]
 }
 
 /**
@@ -71,10 +76,6 @@ export function buildLiveBlobs(
     toLiveBlock(slot, blocks.get(slot), batches.get(slot)),
   )
 
-  const blobsPerSlot = recentSlots(PULSE_SLOTS).map(
-    (slot) => blocks.get(slot)?.blobCount ?? null,
-  )
-
   return {
     head,
     live: isLive(head, now),
@@ -82,13 +83,14 @@ export function buildLiveBlobs(
     window: {
       slots: head - oldest + 1,
       blocks: rows.inWindow?.blocks ?? 0,
-      blobsPerSlot,
+      newestBlobs: blocks.get(head)?.blobCount ?? 0,
+      pulse: pulseOf(rows.pulse, head),
       ...postedWithBuckets(rows, head),
     },
   }
 }
 
-/** The rows of one page of the hour, read back from one head */
+/** The rows of one page of the day, read back from one head */
 export interface PastBlobsRows {
   stored: LiveSlotRange | undefined
   /** Of the page's slots */
@@ -98,7 +100,7 @@ export interface PastBlobsRows {
 }
 
 /**
- * The page's slots that are still in the hour and not past the head, newest
+ * The page's slots that are still in the day and not past the head, newest
  * first. The backend stores without a gap, so every such slot is known: the
  * page is complete once the backend can no longer rewrite any of them.
  */
@@ -108,7 +110,7 @@ export function buildPastBlobs(
   first: number,
   last: number,
 ): PastBlobs {
-  const oldest = Math.max(rows.stored?.from ?? head, head - PULSE_SLOTS + 1)
+  const oldest = Math.max(rows.stored?.from ?? head, head - WINDOW_SLOTS + 1)
   const blocks = new Map(rows.blocks.map((block) => [block.slot, block]))
   const batches = Map.groupBy(rows.batches, (batch) => batch.slot)
   return {
@@ -165,6 +167,23 @@ function postedWithBuckets(
   // ties go to the newer, so rows with equal totals do not swap on every read
   posted.sort((a, b) => b.blobs - a.blobs || b.lastSlot - a.lastSlot)
   return { firstBucket, posted }
+}
+
+/**
+ * The day under the belt in steps fixed from genesis, as the posters' buckets
+ * are, so a new block changes only the last step and the rest stay put
+ */
+function pulseOf(records: LiveBlockBucketRecord[], head: number): Pulse {
+  const firstBucket = Math.floor(head / PULSE_BUCKET_SLOTS) - PULSE_BUCKETS + 1
+  const buckets = Array.from({ length: PULSE_BUCKETS }, () => ({
+    blocks: 0,
+    blobs: 0,
+  }))
+  for (const { bucket, blocks, blobs } of records) {
+    const i = bucket - firstBucket
+    if (i >= 0 && i < PULSE_BUCKETS) buckets[i] = { blocks, blobs }
+  }
+  return { firstBucket, buckets }
 }
 
 /** From `from` down to `downTo`, both included */

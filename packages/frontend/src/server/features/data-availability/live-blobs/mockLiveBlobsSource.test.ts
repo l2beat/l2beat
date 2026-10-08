@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { slotStart } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { LiveBlobsFeed } from './LiveBlobsFeed'
-import { BUCKETS, WINDOW_SLOTS } from './liveBlobsSlots'
+import { BUCKETS, PULSE_BUCKETS, WINDOW_SLOTS } from './liveBlobsSlots'
 import { createMockLiveBlobsSource } from './mockLiveBlobsSource'
 
 // Methodology: the feed reads the mock as it would the database, at a fixed
@@ -40,6 +40,15 @@ describe(createMockLiveBlobsSource.name, () => {
       newest?.status === 'proposed'
         ? newest.batches.reduce((sum, b) => sum + b.blobs, 0)
         : undefined
-    expect(blobs?.window.blobsPerSlot[0]).toEqual(newestBlobs)
+    expect(blobs?.window.newestBlobs).toEqual(newestBlobs)
+    // the pulse's oldest step is cut by the window's edge too
+    const pulse = blobs?.window.pulse.buckets ?? []
+    expect(pulse.length).toEqual(PULSE_BUCKETS)
+    expect(pulse.reduce((sum, b) => sum + b.blocks, 0)).toBeLessThanOrEqual(
+      blobs?.window.blocks ?? 0,
+    )
+    expect(pulse.reduce((sum, b) => sum + b.blobs, 0)).toBeLessThanOrEqual(
+      posted.reduce((sum, p) => sum + p.blobs, 0),
+    )
   })
 })

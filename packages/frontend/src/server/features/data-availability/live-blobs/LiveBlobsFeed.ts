@@ -15,7 +15,7 @@ import {
   BELT_SLOTS,
   BUCKET_SLOTS,
   PAST_PAGE_SLOTS,
-  PULSE_SLOTS,
+  PULSE_BUCKET_SLOTS,
   WINDOW_SLOTS,
 } from './liveBlobsSlots'
 import { createMockLiveBlobsSource } from './mockLiveBlobsSource'
@@ -81,12 +81,12 @@ export type LiveBlock =
     }
   | { slot: number; status: 'missed' }
 
-/** The blocks of one page of the hour, for a page looking back through it */
+/** The blocks of one page of the day, for a page looking back through it */
 export interface PastBlobs {
   /** Known blocks of the page, newest first */
   blocks: LiveBlock[]
   /**
-   * Every slot of the page that is still in the hour is known, and the page
+   * Every slot of the page that is still in the day is known, and the page
    * ends behind the slots the backend may still rewrite, so looking again
    * would bring nothing more
    */
@@ -112,11 +112,9 @@ export interface PostedWindow {
   slots: number
   /** Of those slots, the ones that got a block */
   blocks: number
-  /**
-   * Blobs in each of the last `PULSE_SLOTS` slots, newest first; null where
-   * the slot was missed
-   */
-  blobsPerSlot: (number | null)[]
+  /** Blobs the head's block brought */
+  newestBlobs: number
+  pulse: Pulse
   /**
    * The oldest of the steps in `Posted.buckets`, counted in `BUCKET_SLOTS`
    * from genesis. Moves on by one as each new step starts
@@ -143,11 +141,19 @@ export interface Posted {
   buckets: number[]
 }
 
+/** Blocks and their blobs over the window, a step per `PULSE_BUCKET_SLOTS` */
+export interface Pulse {
+  /** The oldest step, counted in `PULSE_BUCKET_SLOTS` from genesis */
+  firstBucket: number
+  /** Each step from `firstBucket`, the last being the one under way */
+  buckets: { blocks: number; blobs: number }[]
+}
+
 /** Where the rows come from: the database, or made up in mock mode */
 export interface LiveBlobsSource {
   liveBlock: Pick<
     Database['liveBlock'],
-    'findHead' | 'getSlotRange' | 'getBySlotRange'
+    'findHead' | 'getSlotRange' | 'getBySlotRange' | 'getBucketsSince'
   >
   liveBlobBatch: Pick<
     Database['liveBlobBatch'],
@@ -234,7 +240,7 @@ export class LiveBlobsFeed {
   }
 
   /**
-   * One page of the hour, read straight from the database: pages looking
+   * One page of the day, read straight from the database: pages looking
    * back are few, and a complete one is never asked for again
    */
   async past({ page }: PastBlobsParams): Promise<PastBlobs> {
@@ -318,16 +324,18 @@ async function readRows(
   head: number,
 ): Promise<LiveBlobsRows> {
   const windowStart = head - WINDOW_SLOTS + 1
-  const [stored, inWindow, blocks, batches, posted, buckets] =
+  const beltStart = head - BELT_SLOTS + 1
+  const [stored, inWindow, blocks, batches, posted, buckets, pulse] =
     await Promise.all([
       source.liveBlock.getSlotRange(),
       source.liveBlock.getSlotRange(windowStart),
-      source.liveBlock.getBySlotRange(head - PULSE_SLOTS + 1, head),
-      source.liveBlobBatch.getBySlotRange(head - BELT_SLOTS + 1, head),
+      source.liveBlock.getBySlotRange(beltStart, head),
+      source.liveBlobBatch.getBySlotRange(beltStart, head),
       source.liveBlobBatch.getPostedSince(windowStart),
       source.liveBlobBatch.getBucketsSince(windowStart, BUCKET_SLOTS),
+      source.liveBlock.getBucketsSince(windowStart, PULSE_BUCKET_SLOTS),
     ])
-  return { stored, inWindow, blocks, batches, posted, buckets }
+  return { stored, inWindow, blocks, batches, posted, buckets, pulse }
 }
 
 /** Waits for `promise`, but no longer than `seconds` */

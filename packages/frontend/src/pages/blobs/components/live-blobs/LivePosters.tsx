@@ -162,7 +162,7 @@ export function LivePosters({ posters }: Props) {
                 totalBlobs={totalBlobs}
                 head={head}
                 firstBucket={postedWindow.firstBucket}
-                newestBlobs={postedWindow.blobsPerSlot[0] ?? 0}
+                newestBlobs={postedWindow.newestBlobs}
                 progress={progress}
               />
             ))}

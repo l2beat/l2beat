@@ -1,5 +1,6 @@
 import type {
   LiveBlobBatchRecord,
+  LiveBlockBucketRecord,
   LiveBlockRecord,
   LiveBucketRecord,
   LivePostedRecord,
@@ -86,6 +87,13 @@ export function createMockLiveBlobsSource(
       },
       getBySlotRange: async (from, to) =>
         (await storedSlots(from, to)).map((s) => s.block),
+      getBucketsSince: async (fromSlot, bucketSlots) =>
+        sumBlockBuckets(
+          (await storedSlots(fromSlot, Number.POSITIVE_INFINITY)).map(
+            (s) => s.block,
+          ),
+          bucketSlots,
+        ),
     },
     liveBlobBatch: {
       getBySlotRange: (from, to) => storedBatches(from, to),
@@ -139,6 +147,22 @@ function sumBuckets(
     byKey.set(key, record)
   }
   return [...byKey.values()]
+}
+
+/** As `LiveBlockRepository.getBucketsSince` sums them */
+function sumBlockBuckets(
+  blocks: LiveBlockRecord[],
+  bucketSlots: number,
+): LiveBlockBucketRecord[] {
+  const byBucket = new Map<number, LiveBlockBucketRecord>()
+  for (const block of blocks) {
+    const bucket = Math.floor(block.slot / bucketSlots)
+    const record = byBucket.get(bucket) ?? { bucket, blocks: 0, blobs: 0 }
+    record.blocks++
+    record.blobs += block.blobCount
+    byBucket.set(bucket, record)
+  }
+  return [...byBucket.values()]
 }
 
 /** The block of `slot` and its blob transactions, or undefined where it was missed */
