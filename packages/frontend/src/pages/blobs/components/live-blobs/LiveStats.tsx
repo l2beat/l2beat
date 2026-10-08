@@ -13,6 +13,7 @@ import {
 import { useChainClock } from './chainClock'
 import { mixColors, readableColor } from './color'
 import { useAnimationFrame, useIsOnScreen, useThemeTokens } from './hooks'
+import { LIVE_POSTERS_ID } from './LivePosters'
 import { type Landing, useLandedTotal } from './landings'
 import { type Arrival, Pop, RollingNumber, writeText } from './liveMotion'
 import { type BlockLimits, type LivePoster, UNKNOWN_ID } from './model'
@@ -324,7 +325,14 @@ function ShareLegend({
           </span>
         </span>
       ))}
-      {projects > named.length && <span>+{projects - named.length} more</span>}
+      {projects > named.length && (
+        <a
+          href={`#${LIVE_POSTERS_ID}`}
+          className="underline decoration-dotted underline-offset-2 hover:text-primary"
+        >
+          +{projects - named.length} more
+        </a>
+      )}
     </div>
   )
 }
