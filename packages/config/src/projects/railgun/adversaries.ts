@@ -85,7 +85,8 @@ export function railgunAdversaries(upgradeDelay: string) {
       privilegedInsider: {
         sentiment: 'good',
         exposureShort: `Only the user holds viewing keys, and DAO upgrades wait ${upgradeDelay}.`,
-        exposureContinued: `PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists, so the notes you spend stay on your device.`,
+        exposureContinued:
+          'PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists, so the notes you spend stay on your device.',
         advice:
           'Watch governance proposals and unshield before an upgrade you reject executes.',
         interior: {
