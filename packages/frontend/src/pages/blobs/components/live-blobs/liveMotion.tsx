@@ -5,7 +5,9 @@ import {
   useRef,
   useState,
 } from 'react'
+import { PINNED_CELL_ATTRIBUTE } from '~/components/table/utils/commonPinningStyles'
 import { cn } from '~/utils/cn'
+import { mixColors, toRgba } from './color'
 import { usePrefersReducedMotion } from './hooks'
 
 /** Long enough to read as counting, short enough to be done before the next block */
@@ -168,10 +170,15 @@ export interface Arrival {
   slot: number
 }
 
+/** How strongly a row takes its project's color as a batch lands */
+const FLASH_STRENGTH = 0.22
+
 /**
- * Washes the cells of row `ref` in `color` and lets it fade, each time a new
- * arrival comes. An inset shadow rather than the row's background, as pinned
- * cells are opaque and would hide that
+ * Washes row `ref` in `color` and lets it fade, each time a new arrival
+ * comes. An inset shadow on the row rather than its background: a row's
+ * background is painted cell by cell, and where cells meet on a fraction of a
+ * pixel it shows seams. Pinned cells are opaque, to hide what scrolls under
+ * them, so each takes the same wash already laid over its own background
  */
 export function useFlash(
   ref: RefObject<HTMLElement | null>,
@@ -179,12 +186,25 @@ export function useFlash(
   color: string,
 ) {
   useEffect(() => {
-    if (!arrival || !ref.current) return
-    for (const cell of ref.current.children) {
-      cell.animate([{ boxShadow: `inset 0 0 0 100vmax ${color}` }, {}], {
-        duration: FLASH_MS,
-        easing: 'ease-out',
-      })
+    const row = ref.current
+    if (!arrival || !row) return
+    const timing = { duration: FLASH_MS, easing: 'ease-out' }
+    row.animate(
+      [
+        { boxShadow: `inset 0 0 0 100vmax ${toRgba(color, FLASH_STRENGTH)}` },
+        {},
+      ],
+      timing,
+    )
+    const pinned = row.querySelectorAll(`[${PINNED_CELL_ATTRIBUTE}]`)
+    for (const cell of pinned) {
+      // its own background, not one still washed by the last arrival
+      for (const animation of cell.getAnimations()) animation.cancel()
+      const background = getComputedStyle(cell).backgroundColor
+      cell.animate(
+        [{ backgroundColor: mixColors(background, color, FLASH_STRENGTH) }, {}],
+        timing,
+      )
     }
   }, [ref, arrival, color])
 }
