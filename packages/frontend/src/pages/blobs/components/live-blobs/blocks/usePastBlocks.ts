@@ -11,28 +11,35 @@ import {
 } from './beaconChain'
 
 interface Options {
-  /**
-   * The belt's left end, looking back: every slot from it to the live answers
-   * is fetched. Undefined while live
-   */
-  from: number | undefined
+  /** The slot in the bay, looking back; undefined while live */
+  view: number | undefined
   head: number | undefined
-  /** The hour's oldest slot: blocks before it are let go of */
+  /** Racks the belt shows left of the bay, and right of it */
+  before: number
+  after: number
+  /** The day's oldest slot: blocks before it are let go of */
   oldest: number | undefined
   posterIndexOf: PosterIndexOf
 }
 
 /**
- * The blocks of the hour the live answers no longer carry, for the belt to
- * show while looking back: a page at a time, from the belt's left end up to
- * the live answers, so the belt passes no empty racks on its way back to
- * live. Each page is kept once the server says nothing more will come of it.
- * `loaded` says every page asked for has answered, or failed to
+ * The blocks of the day the live answers no longer carry, for the belt to
+ * show while looking back: a page at a time, around the view and on the way
+ * back to live, so the belt passes no empty racks. Each page is kept once the
+ * server says nothing more will come of it. `loaded` says every page asked
+ * for has answered, or failed to
  */
-export function usePastBlocks({ from, head, oldest, posterIndexOf }: Options) {
+export function usePastBlocks({
+  view,
+  head,
+  before,
+  after,
+  oldest,
+  posterIndexOf,
+}: Options) {
   const trpc = useTRPC()
-  const lookingBack = from !== undefined && head !== undefined
-  const pages = lookingBack ? pastPagesFor(from, head) : []
+  const lookingBack = view !== undefined && head !== undefined
+  const pages = lookingBack ? pastPagesFor(view, head, { before, after }) : []
   const { answers, loaded } = useQueries({
     queries: pages.map((page) => ({
       ...trpc.da.pastBlobs.queryOptions({ page }),
@@ -47,7 +54,7 @@ export function usePastBlocks({ from, head, oldest, posterIndexOf }: Options) {
 
   // Pages the belt has left are kept, as it glides on from them: to a later
   // slot, or back to live. Fresher answers replace what was kept, and what
-  // left the hour goes
+  // left the day goes
   const kept = useRef<ReadonlyMap<number, ChainBlock>>(new Map())
   const blocks = useMemo(() => {
     const found = new Map<number, ChainBlock>()

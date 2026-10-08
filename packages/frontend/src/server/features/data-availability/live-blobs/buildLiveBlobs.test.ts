@@ -10,7 +10,8 @@ import {
   BELT_SLOTS,
   BUCKET_SLOTS,
   BUCKETS,
-  PULSE_SLOTS,
+  PULSE_BUCKET_SLOTS,
+  PULSE_BUCKETS,
   WINDOW_SLOTS,
 } from './liveBlobsSlots'
 
@@ -72,14 +73,12 @@ describe(buildLiveBlobs.name, () => {
     expect(blobs.blocks.length).toEqual(10)
     expect(blobs.window.slots).toEqual(10)
     expect(blobs.window.blocks).toEqual(9)
-    expect(blobs.window.blobsPerSlot.length).toEqual(10)
   })
 
-  it('caps the window at a day, and the pulse at an hour', () => {
+  it('caps the window at a day', () => {
     const blobs = buildLiveBlobs(rows(), HEAD, NOW)
 
     expect(blobs.window.slots).toEqual(WINDOW_SLOTS)
-    expect(blobs.window.blobsPerSlot.length).toEqual(PULSE_SLOTS)
   })
 
   it('counts a window whose first slot was missed as whole', () => {
@@ -94,11 +93,40 @@ describe(buildLiveBlobs.name, () => {
     expect(blobs.window.blocks).toEqual(7198)
   })
 
-  it('counts the blobs of each slot from its block, null where it was missed', () => {
-    const blobs = buildLiveBlobs(rows(), HEAD, NOW)
+  it("counts the head's blobs from its block", () => {
+    const blobs = buildLiveBlobs(
+      rows({ blocks: [{ ...block(HEAD), blobCount: 5 }] }),
+      HEAD,
+      NOW,
+    )
 
-    // blobCount is the slot's distance from the head, mod 4
-    expect(blobs.window.blobsPerSlot.slice(0, 4)).toEqual([0, 1, null, 3])
+    expect(blobs.window.newestBlobs).toEqual(5)
+  })
+
+  it('lays the pulse out in steps fixed from genesis, the last under way', () => {
+    // the head's step is 4000 and the 287 before it start at 3713. The
+    // window's oldest slots fall in the middle of 3712, which is left out
+    const current = Math.floor(HEAD / PULSE_BUCKET_SLOTS)
+    const first = current - PULSE_BUCKETS + 1
+
+    const blobs = buildLiveBlobs(
+      rows({
+        pulse: [
+          { bucket: first - 1, blocks: 20, blobs: 99 },
+          { bucket: first, blocks: 24, blobs: 120 },
+          { bucket: current, blocks: 1, blobs: 6 },
+        ],
+      }),
+      HEAD,
+      NOW,
+    )
+
+    expect(blobs.window.pulse.firstBucket).toEqual(first)
+    const steps = blobs.window.pulse.buckets
+    expect(steps.length).toEqual(PULSE_BUCKETS)
+    expect(steps[0]).toEqual({ blocks: 24, blobs: 120 })
+    expect(steps[1]).toEqual({ blocks: 0, blobs: 0 })
+    expect(steps.at(-1)).toEqual({ blocks: 1, blobs: 6 })
   })
 
   it('sums up each poster with its buckets, most blobs first', () => {
@@ -187,7 +215,7 @@ describe(buildLiveBlobs.name, () => {
       expect(past.complete).toEqual(true)
     })
 
-    it('serves no slots past the head, nor out of the hour or the database', () => {
+    it('serves no slots past the head, nor out of the day or the database', () => {
       const atHead = buildPastBlobs(
         { stored, blocks: [block(HEAD)], batches: [] },
         HEAD,
@@ -196,13 +224,13 @@ describe(buildLiveBlobs.name, () => {
       )
       expect(atHead.blocks.map((b) => b.slot)).toEqual([HEAD, HEAD - 1])
 
-      const outOfHour = HEAD - PULSE_SLOTS
+      const outOfDay = HEAD - WINDOW_SLOTS
       expect(
         buildPastBlobs(
           { stored, blocks: [], batches: [] },
           HEAD,
-          outOfHour - 31,
-          outOfHour,
+          outOfDay - 31,
+          outOfDay,
         ),
       ).toEqual({ blocks: [], complete: true })
 
@@ -232,7 +260,7 @@ describe(buildLiveBlobs.name, () => {
 
   function rows(overrides: Partial<LiveBlobsRows> = {}): LiveBlobsRows {
     const blocks: LiveBlockRecord[] = []
-    for (let slot = HEAD - PULSE_SLOTS + 1; slot <= HEAD; slot++) {
+    for (let slot = HEAD - BELT_SLOTS + 1; slot <= HEAD; slot++) {
       if (slot !== MISSED) blocks.push(block(slot))
     }
     return {
@@ -242,6 +270,7 @@ describe(buildLiveBlobs.name, () => {
       batches: [],
       posted: [],
       buckets: [],
+      pulse: [],
       ...overrides,
     }
   }

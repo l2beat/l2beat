@@ -47,7 +47,7 @@ export function LiveStats({
   const { data, status } = useLiveBlobs()
   const postedWindow = data?.window
   // the newest block's blobs are counted in as the belt lands them
-  const newest = postedWindow?.blobsPerSlot[0] ?? 0
+  const newest = postedWindow?.newestBlobs ?? 0
   const { value: blobs, arrival } = useLandedTotal(
     data?.head,
     postedWindow?.posted.reduce((sum, posted) => sum + posted.blobs, 0) ?? 0,
