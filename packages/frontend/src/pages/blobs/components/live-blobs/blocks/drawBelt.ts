@@ -56,6 +56,7 @@ export function drawBelt(
   drawRacks(ctx, scene, belt)
   drawBay(ctx, scene, belt, landingPulse(scene, playback, belt, now))
   drawTiles(ctx, scene, playback, belt, now, frame, reveal)
+  drawBayRing(ctx, scene, belt)
   drawBlockNumbers(ctx, scene, belt, frame, reveal)
 
   // Pass 3: what stays put, on top
@@ -165,6 +166,26 @@ function drawChute(
     top,
     layout.tileSize,
     layout.rackTop - top,
+  )
+}
+
+/**
+ * The bay's outline again, over the tiles: at rest they sit inside it, but
+ * racks sliding through the bay would cover it with theirs. The glow stays
+ * under them, where it lights the gaps rather than tinting the tiles
+ */
+function drawBayRing(
+  ctx: CanvasRenderingContext2D,
+  scene: BeltScene,
+  belt: BeltPosition,
+) {
+  const { layout, layers } = scene
+  ctx.drawImage(
+    layers.bayRing,
+    belt.bayLeft,
+    layout.rackTop,
+    layout.rackWidth,
+    layout.rackHeight,
   )
 }
 

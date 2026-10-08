@@ -15,6 +15,8 @@ export interface BeltLayers {
   rules: HTMLCanvasElement
   /** The bay's outline with its glow, reaching `GLOW_REACH` past the rack */
   litRack: HTMLCanvasElement
+  /** The bay's outline alone, laid over the tiles sliding through it */
+  bayRing: HTMLCanvasElement
 }
 
 const HATCH_SPACING = 6
@@ -52,18 +54,24 @@ export function paintLayers(
     ctx.strokeStyle = palette.futureStroke
     ctx.stroke()
   })
-  const litRack = paintRack(layout, density, GLOW_REACH, (ctx) => {
-    ctx.shadowColor = palette.glow
-    ctx.shadowBlur = GLOW_BLUR
+  const strokeBay = (ctx: CanvasRenderingContext2D) => {
     ctx.strokeStyle = palette.brand
     ctx.lineWidth = 1.5
     ctx.beginPath()
     traceRackOutline(ctx, layout, 0)
     ctx.stroke()
+  }
+  const litRack = paintRack(layout, density, GLOW_REACH, (ctx) => {
+    ctx.shadowColor = palette.glow
+    ctx.shadowBlur = GLOW_BLUR
+    strokeBay(ctx)
   })
+  const bayRing = paintRack(layout, density, 0, strokeBay)
   const rules = paintRules(layout, palette, density)
-  if (!sealedRack || !futureRack || !litRack || !rules) return undefined
-  return { sealedRack, futureRack, rules, litRack }
+  if (!sealedRack || !futureRack || !litRack || !bayRing || !rules) {
+    return undefined
+  }
+  return { sealedRack, futureRack, rules, litRack, bayRing }
 }
 
 /** A rack on a canvas of its own size, plus `margin` around it */
