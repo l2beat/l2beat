@@ -53,15 +53,17 @@
   animation-delay: calc(var(--pixel-index) * 0.05s);
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #f97315 transparent;
-}
+@layer utilities {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #f97315 transparent;
+  }
 
-:focus-visible {
-  @apply outline-solid outline-orange-500;
-}
+  :focus-visible {
+    @apply outline-solid outline-orange-500;
+  }
 
-::selection {
-  @apply bg-orange-900;
+  ::selection {
+    @apply bg-orange-900;
+  }
 }
