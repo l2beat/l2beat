@@ -176,6 +176,7 @@ export async function getPrivacyProjectEntry(
         defaultRange: defaultChartRange,
         rangeControls: 'privacy',
         project: chartProject,
+        milestones: details.milestones,
       },
     })
   }
@@ -188,6 +189,7 @@ export async function getPrivacyProjectEntry(
         title: 'Anonymity sets',
         defaultRange: defaultChartRange,
         project: chartProject,
+        milestones: details.milestones,
       },
     })
   }
@@ -200,6 +202,7 @@ export async function getPrivacyProjectEntry(
         title: 'Flows',
         defaultRange: defaultChartRange,
         project: chartProject,
+        milestones: details.milestones,
       },
     })
 

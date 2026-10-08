@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
@@ -22,11 +23,13 @@ import type { ProjectSectionProps } from '../types'
 export interface PrivacyAnonymitySetSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
+  milestones: Milestone[]
 }
 
 export function PrivacyAnonymitySetSection({
   defaultRange,
   project,
+  milestones,
   ...projectSectionProps
 }: PrivacyAnonymitySetSectionProps) {
   const trpc = useTRPC()
@@ -90,6 +93,7 @@ export function PrivacyAnonymitySetSection({
             syncedUntil={data?.syncedUntil}
             isLoading={isLoading}
             project={project}
+            milestones={milestones}
             type="history"
           />
           <p className="mt-4 text-paragraph-14 text-secondary">
