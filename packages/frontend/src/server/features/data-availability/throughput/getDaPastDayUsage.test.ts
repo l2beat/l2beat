@@ -4,6 +4,8 @@ import { getCapacity, getSyncedDay, sumUsed } from './getDaPastDayUsage'
 
 const RANGE: [number, number] = [1000, 2000]
 
+// Methodology: hourly records are summed over a range, and the range edges
+// checked to be inclusive at the start and exclusive at the end.
 describe(sumUsed.name, () => {
   it('sums the records inside the range', () => {
     const used = sumUsed(
@@ -92,6 +94,9 @@ describe(getSyncedDay.name, () => {
   })
 })
 
+// Methodology: a layer's limits in force at the range's start are turned
+// into the bytes a day could carry: at the target for Ethereum, at the
+// maximum for the rest.
 describe(getCapacity.name, () => {
   const day: [number, number] = [1_000_000, 1_000_000 + UnixTime.DAY]
   const throughput = [

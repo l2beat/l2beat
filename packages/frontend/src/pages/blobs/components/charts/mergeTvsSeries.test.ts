@@ -1,6 +1,9 @@
 import { expect } from 'earl'
 import { mergeTvsSeries } from './mergeTvsSeries'
 
+// Methodology: two raw TVS series, full data and settlement only, as the API
+// returns them ([timestamp, native, canonical, external, ethPrice]), are merged
+// and the points checked one by one.
 describe(mergeTvsSeries.name, () => {
   it('sums native, canonical and external into one value per series', () => {
     const result = mergeTvsSeries(
