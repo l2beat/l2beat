@@ -239,11 +239,17 @@ function PosterRow({
         </TableLink>
       </TableCell>
       <TableCell>
-        <Activity
-          buckets={row.buckets}
-          firstBucket={firstBucket}
-          color={color}
-        />
+        {/* to the project's long-run chart, for those who want more than a day */}
+        <TableLink
+          href={row.poster.href && `${row.poster.href}#data-posted`}
+          aria-label={`${row.poster.name} data posted`}
+        >
+          <Activity
+            buckets={row.buckets}
+            firstBucket={firstBucket}
+            color={color}
+          />
+        </TableLink>
       </TableCell>
       <TableCell align="right" className="font-bold">
         <span className="relative">
