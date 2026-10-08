@@ -41,9 +41,12 @@ interface Props {
   posters: LivePoster[]
 }
 
-/** # and Name stay in view on a phone, as the numbers scroll under them */
+/**
+ * # and the logo stay in view on a phone, as the name and numbers scroll
+ * under them; the name would take most of a narrow screen
+ */
 const PINNED_COLUMNS = 2
-/** Where Name sticks until the sticky header measures the # column */
+/** Where the logo sticks until the sticky header measures the # column */
 const RANK_WIDTH = 32
 
 /** In the order `PosterRow` renders its cells */
@@ -53,6 +56,7 @@ const COLUMNS: {
   tooltip?: string
 }[] = [
   { label: '#' },
+  { label: '' },
   { label: 'Name' },
   {
     label: 'Activity',
@@ -223,8 +227,13 @@ function PosterRow({
       <TableCell {...pinnedCellProps(0, 'text-secondary tabular-nums')}>
         {rank}
       </TableCell>
-      <TableCell {...pinnedCellProps(1)}>
-        {/* sovereign chains and unknown senders have no page, so no link */}
+      {/* sovereign chains and unknown senders have no page, so no link */}
+      <TableCell {...pinnedCellProps(1, 'w-0 pr-1.5')}>
+        <TableLink href={row.poster.href}>
+          <PosterLogo poster={row.poster} />
+        </TableLink>
+      </TableCell>
+      <TableCell>
         <TableLink href={row.poster.href}>
           <PosterName poster={row.poster} />
         </TableLink>
@@ -310,23 +319,29 @@ function toRows(postedWindow: PostedWindow, posters: LivePoster[]): Row[] {
   return [...rows.values()].sort((a, b) => b.blobs - a.blobs)
 }
 
+function PosterLogo({ poster }: { poster: LivePoster }) {
+  if (poster.iconUrl) {
+    return (
+      <img
+        src={poster.iconUrl}
+        alt={`${poster.name} logo`}
+        className="block size-5 min-w-5 rounded-full"
+      />
+    )
+  }
+  return (
+    <span
+      className="block size-5 min-w-5 rounded-full"
+      style={{ backgroundColor: poster.color }}
+    />
+  )
+}
+
 function PosterName({ poster }: { poster: LivePoster }) {
   return (
-    <span className="flex items-center gap-2 font-bold">
-      {poster.iconUrl ? (
-        <img
-          src={poster.iconUrl}
-          alt=""
-          className="size-5 shrink-0 rounded-full"
-        />
-      ) : (
-        <span
-          className="size-5 shrink-0 rounded-full"
-          style={{ backgroundColor: poster.color }}
-        />
-      )}
-      {/* a phone has room for the name or the numbers, so long names give way */}
-      <span className="truncate max-md:max-w-[7rem]">{poster.name}</span>
+    // a phone has room for the name or the numbers, so long names give way
+    <span className="block truncate font-bold max-md:max-w-[7rem]">
+      {poster.name}
     </span>
   )
 }
