@@ -1,6 +1,6 @@
 {
   "name": "rise",
-  "timestamp": 1785249452,
+  "timestamp": 1790947041,
   "configHash": "0x374a009191527785f3d74b365ecb6cb8186eb942799dcf3dd036447652f735f0",
   "entries": [
     {
@@ -85,7 +85,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -301,13 +301,13 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0xF7A67c5e48D05b9C1258B9D9Af93B321a6354abF",
+        "anchorGame": "eth:0xB64d53C4B763287e25a5eD86aB69CAD89d3E881D",
         "disputeGameFactory": "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3",
         "disputeGameFinalityDelaySeconds": 302400,
         "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
-          "0xbb7c16550138626bf019e2a47f2e9299195b7d1421fdacbdff8d51bca2b13816",
-          17146900
+          "0x6715b72b96686913b108f5fd7193e9fa2d3b5e54a7fde6e64094fd1589c1af89",
+          22176100
         ],
         "initVersion": 1,
         "paused": false,
@@ -322,7 +322,7 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
         "disputeGameFactory": { "severity": "HIGH" },
         "systemConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
@@ -453,7 +453,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xBf60dBc272833cD25f0426983c3175C32C8E5A7a",
-        "gameCount": 9438,
+        "gameCount": 11021,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x2e7758aAD2B6D3D1Fd2C937D9B322378fC644633",
@@ -589,7 +589,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 617545,
-          "prevBlockNum": 25631368
+          "prevBlockNum": 26100057
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -795,7 +795,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620506",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621193",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -882,7 +882,7 @@
         "disputeGameFactory": "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3",
         "eip1559Denominator": 1,
         "eip1559Elasticity": 1,
-        "gasLimit": 1500000000,
+        "gasLimit": 2250000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0xC0de1d9B1cD2Caf782355C66a6A8e5948e63c9c6",
           "l1ERC721Bridge": "eth:0x01A6274B9607ac024e8c191E491d0b25ad14c217",
@@ -1080,7 +1080,7 @@
         "DISPUTE_GAME_FACTORY": "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3",
         "FALLBACK_TIMEOUT": 1209600,
         "FALLBACK_TIMEOUT_fmt": "14d",
-        "getLastProposalTimestamp": 1785246983,
+        "getLastProposalTimestamp": 1790945963,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9196464e3F828A50233C20732fa6898F4317002c",
         "proposers": ["eth:0xa069F839728264E2EADa60d98Bb303859de154bA"]
@@ -1090,15 +1090,15 @@
           "description": "Formatted fallback timeout after which proposing becomes permissionless."
         },
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Address that can update the proposer and challenger allowlists and transfer ownership."
         },
         "challengers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Addresses allowed to challenge dispute games."
         },
         "proposers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Addresses allowed to propose dispute games."
         }
       },
@@ -2001,7 +2001,7 @@
     "succinct/OPSuccinct/AccessManager": "0x4dfa9533d437cf2efb76347ce42e28eaa3a388c509f141d483bf9c9ab7c799b0",
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
-  "usedBlockNumbers": { "ethereum": 25631963 },
+  "usedBlockNumbers": { "ethereum": 26104882 },
   "permissionsConfigHash": "0x63b6dd2ed4f8a8096b2a1b39fff9e07d57a9f258813dc0a41af4831dd594c0fb",
   "modelledAgainst": {
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"

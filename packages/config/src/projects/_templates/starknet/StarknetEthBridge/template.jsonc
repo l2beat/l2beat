@@ -54,7 +54,9 @@
       }
     },
     "maxTotalBalance": {
-      "severity": "HIGH",
+      // deposit cap only: it can block new deposits but cannot freeze or move locked funds,
+      // so it is reviewed like a pause (MEDIUM) and does not reset the ossification clock
+      "severity": "MEDIUM",
       "description": "The maximum total balance that can be locked in the bridge.",
       "handler": {
         "type": "call",

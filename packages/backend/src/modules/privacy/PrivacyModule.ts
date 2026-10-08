@@ -217,6 +217,9 @@ export function createPrivacyModule({
       indexers.push(
         new PrivacyRelayerActivityIndexer(
           {
+            rpcClient: providers.clients.getRpcClient(
+              blockTimestampConfig.chain,
+            ),
             chain: blockTimestampConfig.chain,
             parents: [blockTimestampIndexer],
             indexerService,

@@ -448,7 +448,12 @@ export const taiko: ScalingProject = {
       { type: 'etherscan', chainId },
     ],
   },
-  ossificationHistory: discovery.getOssificationHistory(chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart, {
+    // Shasta TaikoSP1Verifier deployed with the SP1VerifierGateway as its
+    // immutable verifier (tx 0xe29fb424); earlier SP1 verifiers called
+    // SP1Verifier instances directly
+    'shared-sp1': UnixTime(1772638115),
+  }),
   type: 'layer2',
   riskView: {
     stateValidation: {

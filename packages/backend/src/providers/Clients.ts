@@ -280,6 +280,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   const coingeckoClient = new CoingeckoClient({
     sourceName: 'coingeckoApi',
     apiKey: config.coingeckoApiKey,
+    apiUrl: config.coingeckoApiUrl,
     http,
     logger,
     callsPerMinute: config.coingeckoApiKey ? 400 : 10,

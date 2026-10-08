@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "timestamp": 1790862365,
-  "configHash": "0xf0e71ab948300bdd76b5c37a5df509250b5380ac99fba701cd53d1d167d53338",
+  "configHash": "0x8af2a7831176497b59a2dd6fb7344614343bf3dcdfdb9750dec5ca1bc1ae314d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -129,7 +129,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1716902219,
@@ -147,10 +146,6 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 6,
         "VERSION": "1.3.0"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GnosisSafeProxy",
@@ -513,8 +508,9 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" },
+        "RespectedGameString": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
+        "blacklistedGames": { "severity": "MEDIUM" },
         "disputeGameFinalityDelaySeconds": {
           "severity": "HIGH",
           "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
@@ -687,7 +683,6 @@
         "game9AnchorStateRegistry": { "severity": "HIGH" },
         "game9Weth": { "severity": "HIGH" },
         "game5AnchorStateRegistry": { "severity": "HIGH" },
-        "game5Proposer": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -802,7 +797,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1783362755 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c",
       "sinceTimestamp": 1707420875,
@@ -821,10 +815,6 @@
         "multisigThreshold": "2 of 2 (100%)",
         "nonce": 44,
         "VERSION": "1.3.0"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "GnosisSafeProxy",
@@ -1171,7 +1161,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c",
       "sinceTimestamp": 1707420755,
@@ -1198,10 +1187,6 @@
         "nonce": 73,
         "VERSION": "1.4.1"
       },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "GnosisSafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
@@ -1217,7 +1202,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x5451D0ff17735067e9ccaa77470Caa13c6027B11",
       "sinceTimestamp": 1730143223,
@@ -1239,10 +1223,6 @@
         "multisigThreshold": "3 of 5 (60%)",
         "nonce": 11,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1": "SafeProxy",
@@ -1623,7 +1603,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c",
       "sinceTimestamp": 1707420419,
@@ -1655,10 +1634,6 @@
         "multisigThreshold": "10 of 13 (77%)",
         "nonce": 71,
         "VERSION": "1.3.0"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "GnosisSafeProxy",
@@ -2561,7 +2536,6 @@
         "owner": "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
         "version": "1.0.0"
       },
-      "fieldMeta": { "addressManager": { "severity": "HIGH" } },
       "implementationNames": {
         "unichain:0x4200000000000000000000000000000000000018": "Proxy",
         "unichain:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F": "L2ProxyAdmin"

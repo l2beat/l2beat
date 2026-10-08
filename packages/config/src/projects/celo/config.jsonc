@@ -19,6 +19,12 @@
     "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223": "CeloProxyAdminOwner - L2 Alias"
   },
   "overrides": {
+    // L2 predeploys: critical from the L2 migration (chainStart). They were
+    // written into state by the migration, but discovery dates them at the Celo L1
+    // genesis (2020-04-22); harmless, they are older than every other row. As of
+    // 2026-10-03 the implementations 0xC0d3...0007 and 0xC0d3...0010 are
+    // unverified on celoscan, celo.blockscout.com and sourcify, so Celo scores 0
+    // until they are verified.
     "celo:0x4200000000000000000000000000000000000007": {
       "critical": { "sinceTimestamp": 1742960663 },
       "fields": {

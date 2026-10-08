@@ -13,8 +13,9 @@ import { formatTimestamp } from '~/utils/dates'
 const WIDTH = 132
 const HEIGHT = 30
 const TOP = 2
-// The area sits above it, reset ticks and the arrow below.
+// The area sits above it, change ticks, the genesis dot and the arrow below.
 const BASELINE = 24
+const GENESIS_RADIUS = 2
 const LINE_PROPS = {
   strokeWidth: 1.5,
   strokeLinejoin: 'round',
@@ -31,15 +32,17 @@ export function OssificationTimelineChart({
   className,
 }: Props & { className?: string }) {
   const id = useId()
-  const { from, to, clockStart, resets, values } = timeline
+  const { from, to, clockStart, genesis, criticalChanges, values } = timeline
   const toX = (timestamp: number) => ((timestamp - from) / (to - from)) * WIDTH
   const clockBeforeWindow = clockStart < from
   const clockX = clockBeforeWindow ? 0 : toX(clockStart)
+  const genesisInWindow = genesis >= from
   const area = values ? getAreaPaths(values) : undefined
   const description = getDescription({
     timeline,
     valueSource,
     clockBeforeWindow,
+    genesisInWindow,
   })
 
   return (
@@ -103,11 +106,11 @@ export function OssificationTimelineChart({
               </g>
             </>
           )}
-          {resets.map((reset) => (
+          {criticalChanges.map((change) => (
             <line
-              key={reset}
-              x1={snap(toX(reset))}
-              x2={snap(toX(reset))}
+              key={change}
+              x1={snap(toX(change))}
+              x2={snap(toX(change))}
               y1={BASELINE + 2}
               y2={HEIGHT}
               stroke="var(--secondary)"
@@ -130,6 +133,15 @@ export function OssificationTimelineChart({
               {...CRISP}
             />
           )}
+          {/* Drawn last: until a change, the pink line sits on the genesis. */}
+          {genesisInWindow && (
+            <circle
+              cx={dotX(toX(genesis))}
+              cy={BASELINE + 2 + GENESIS_RADIUS}
+              r={GENESIS_RADIUS}
+              fill="var(--secondary)"
+            />
+          )}
         </svg>
       </TooltipTrigger>
       <TooltipContent className="flex max-w-80 flex-col gap-1.5">
@@ -149,6 +161,11 @@ export function OssificationTimelineChart({
 /** Centers a 1px line on a device pixel, so it is not blurred over two. */
 function snap(x: number) {
   return Math.min(Math.max(Math.round(x), 0), WIDTH - 1) + 0.5
+}
+
+/** Keeps the whole genesis dot inside the SVG, even at the window's edges. */
+function dotX(x: number) {
+  return Math.min(Math.max(x, GENESIS_RADIUS), WIDTH - GENESIS_RADIUS)
 }
 
 /** Area and line through the samples, from a zero baseline to the peak. */
@@ -181,7 +198,8 @@ function getDescription({
   timeline,
   valueSource,
   clockBeforeWindow,
-}: Props & { clockBeforeWindow: boolean }) {
+  genesisInWindow,
+}: Props & { clockBeforeWindow: boolean; genesisInWindow: boolean }) {
   const { from, to, clockStart, values } = timeline
   const known = values?.filter((value) => value !== null) ?? []
   const current = known.at(-1)
@@ -190,7 +208,7 @@ function getDescription({
     period: `${formatTimestamp(from)} – ${formatTimestamp(to)}`,
     lines: [
       `Unchanged for ${formatSeconds(to - clockStart)}, since ${formatTimestamp(clockStart)}${clockBeforeWindow ? ' — before this window, so the whole year is highlighted' : ''}.`,
-      getResetsLine(timeline),
+      getChangesLine(timeline, genesisInWindow),
       current !== undefined && valueSource
         ? `${OSSIFICATION_VALUE_LABELS[valueSource].long} now ${formatCurrency(current, 'usd')}, peaking at ${formatCurrency(Math.max(...known), 'usd')}.`
         : 'No value data.',
@@ -198,15 +216,15 @@ function getDescription({
   }
 }
 
-// One tick per reset; deployments reset the clock too, so ticks outnumber
-// critical changes.
-function getResetsLine({ resets, criticalChanges }: Props['timeline']) {
-  if (resets.length === 0) {
-    return 'No reset in this window.'
-  }
-  const changes =
-    criticalChanges === 0
-      ? 'no critical change'
-      : `${criticalChanges} critical ${pluralize(criticalChanges, 'change')}`
-  return `${resets.length} ${pluralize(resets.length, 'reset')} in this window (${changes}).`
+function getChangesLine(
+  { genesis, criticalChanges }: Props['timeline'],
+  genesisInWindow: boolean,
+) {
+  const span = genesisInWindow
+    ? `since the ossification genesis on ${formatTimestamp(genesis)}`
+    : 'in this window'
+  const count = criticalChanges.length
+  return count === 0
+    ? `No critical change ${span}.`
+    : `${count} critical ${pluralize(count, 'change')} ${span}.`
 }

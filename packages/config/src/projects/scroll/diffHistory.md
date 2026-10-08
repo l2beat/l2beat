@@ -1,3 +1,219 @@
+Generated with discovered.json: 0xa78f88b1ebcbcc01dc104a79f99354b6a6112d93
+
+# Diff at Sun, 04 Oct 2026 05:55:36 GMT:
+
+- id: 57478642
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790601073
+- current timestamp: 1790601073
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790601073 (main branch discovery), not current.
+
+```diff
+    contract Safe (eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"untilTimestamp":1780317383}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Scroll Security Council Minority (eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"untilTimestamp":1780920587}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D) [scroll/SystemConfig] {
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
+      fieldMeta.messageQueueParameters.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ScrollChain (eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556) [scroll/ScrollChain] {
+    +++ description: The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.
+      fieldMeta.isEnforcedModeEnabled.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        true
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ScrollAdminMultisig (eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761) [GnosisSafe] {
+    +++ description: Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.
+      critical:
+-        {"sinceTimestamp":1780317383}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        true
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) [scroll/L1GatewayRouter] {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      fieldMeta.gateways.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
++        null
+      implementationNames.scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F:
+-        "GnosisSafeProxy"
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"untilTimestamp":1780317750}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Scroll Security Council Minority (scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"untilTimestamp":1780920632}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
++        null
+      implementationNames.scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825:
+-        "SafeProxy"
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
++        null
+      implementationNames.scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC:
+-        "SafeProxy"
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x9479ABfebefEea3c846163012a472b44F305b3d7) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
++        null
+      implementationNames.scr:0x9479ABfebefEea3c846163012a472b44F305b3d7:
+-        "SafeProxy"
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        true
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
++        null
+      implementationNames.scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896:
+-        "SafeProxy"
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract ScrollAdminMultisig (scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761) [GnosisSafe] {
+    +++ description: L2 counterpart of ScrollAdminMultisig.
+      critical:
+-        {"sinceTimestamp":1780317750}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        true
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x6b9ddd8db68ce5c02ae666fb7f68df4783f85519
 
 # Diff at Mon, 28 Sep 2026 13:34:41 GMT:

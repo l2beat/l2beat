@@ -120,7 +120,9 @@ without one are skipped with a warning:
 Note that the live ethereum path fetches logs and blocks over rpc for every
 block in the window, so prefer `DA_PREVIEW_DB_URL` for windows longer than a
 few hours. EigenDA per-project data is published as daily files starting
-2025-08-01; days without a file are skipped with a warning.
+2025-08-01. Each file is a full export, so a day whose file was never
+published is read from the next one; only a file that is not published yet
+is skipped with a warning.
 
 ## Editing sinceBlock / untilBlock
 

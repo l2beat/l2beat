@@ -1,223 +1,235 @@
 # Ossification
 
-The critical perimeter is the project's security-critical contracts. Its age
-is the time since the newest deployment or relevant code or state change.
-The ossification score is derived from that age. Configure the perimeter with
-`critical` and relevant state with field `severity`.
+Ossification measures how battle-tested the code securing a project is. The
+longer the critical contracts stay unchanged while holding value, the more potential
+attacks they have survived. We compare that age with the age of code that was
+exploited in past incidents.
 
-## The metric
+## Terms
 
-- **Ossification (0 to 100).** The percentile of the age of the perimeter on
-  the exploit-age curve. The value is the part of the recorded code-bug
-  exploits that hit code younger than the perimeter. The `ossification-dataset`
-  repository publishes the curve. `ossificationCurve.json` is a copy of the
-  JSON from its website. The `hash` value identifies the dataset release.
-- **Last change.** The age of the project clock. The project clock starts at
-  the newest deployment or critical change in the current perimeter.
-- **Critical changes per year.** The number of critical changes in the last 36
-  months, divided by the observed time. Changes that occur within 24 hours
-  count as one change. The observed time starts at the oldest known event or
-  at the project start. It is not less than 30 days.
+- **Critical perimeter.** The contracts of a project whose code or
+  configuration decides the safety of user funds. Research picks them, see
+  [Choosing the critical perimeter](#choosing-the-critical-perimeter).
+- **Critical change.** A change to a contract in the critical perimeter,
+  made while it is critical:
+  - a **code change**: a new implementation
+  - a **state change**: a new value of a field with `severity: "HIGH"`
+- **Clock reset.** What a critical change does: the clock starts again.
+  Critical changes within 24 hours count as one.
+- **Ossification genesis.** The start of the first clock, once per project.
+- **Clock.** Runs from the ossification genesis, or from the newest critical
+  change if there is one.
 
-## Definitions
+## Metrics
 
-**Critical contract.** A contract is critical when a change to its code or its
-configuration can change the security of the protected assets, state,
-availability, or privacy. Include custody, verification, core protocol,
-escape and pause contracts, and their upgrade or governance mechanisms.
-Actor containers, for example Safes and EOAs, are not critical.
+- **Ossification score (0 to 100).** The share of recorded code-bug exploits
+  whose exploited code was younger than the clock. 0 while any critical
+  contract is unverified. The exploit ages come from the
+  `ossification-dataset` repository. `ossificationCurve.json` is a copy of
+  the JSON on its website, and its `hash` names the dataset release.
+- **Critical changes per year.** The critical changes of the last 3 years, or
+  since the ossification genesis if that is more recent, divided by that
+  time, but never by less than 30 days.
+- **Battle-tested exposure.** The value secured, summed over the time since
+  the clock started, in USD·years. The frontend computes it from the TVS or
+  DefiLlama TVL series.
+- **Contract age.** Shown per contract, not scored: since its last critical
+  change, its deployment or the moment it became critical, and never before
+  the ossification genesis or the module adoption.
 
-Include an escrow only when the project governs and manages both it and its
-L2 counterpart. Exclude escrows controlled by external token owners, including
-those with privileged roles. This often leaves only one or two canonical
-escrows per project.
+**Ossification genesis.** The project start is set in the project config. The
+genesis is the last deployment of a critical contract within 24 hours after
+the project start, or the first critical change if that comes sooner.
+A project without a start begins at the earliest known start of its
+contracts. No clock starts before the genesis: older code only counts from
+the moment this project uses it.
 
-Declare a critical contract in a discovery template or `config.jsonc` override:
+**New contracts do not reset the clock.** Code only takes effect when a
+contract in the critical perimeter points to it, and that is a code change or
+a HIGH state change already.
 
-```jsonc
-"critical": true                                  // critical for the full life of the contract
-"critical": { "sinceTimestamp": 1712862035 }      // critical from this time
-"critical": { "untilTimestamp": 1754340995 }      // critical until this time
-"critical": { "sinceTimestamp": 1, "untilTimestamp": 2 }
+## Choosing the critical perimeter
+
+A contract is critical when a change to its code or configuration can change
+the security of the assets, state, availability or privacy it protects.
+Include custody, verification, core protocol, escape and pause contracts, and
+the contracts that upgrade or govern them.
+
+- **Not critical:** actor containers like Safes and EOAs, which research
+  handles by hand. Ethereum system contracts like the EIP-2935 history
+  storage are the L1 trust root and not critical either.
+- **Can be critical:** Safe modules and guards with their own logic, and
+  multisigs with custom code.
+- **Tokens:** critical only when the project governs the token and it is
+  either the voting power of a binding upgrade path, or a natively minted
+  asset counted in TVS.
+- **Escrows:** critical only when the project governs and manages both the
+  escrow and its L2 counterpart. Escrows controlled by external token owners
+  are left out, also when they have privileged roles. This often leaves one
+  or two canonical escrows per project.
+
+Mark a contract with `critical` in a discovery template or in a
+`config.jsonc` override. An override beats a template and stays valid when
+discovery no longer finds the contract.
+
+- `sinceTimestamp`: the contract is critical from then on. Its earlier
+  changes do not count.
+- `untilTimestamp`: the contract stops being critical, for example a verifier
+  that now only accepts proofs for finalized batches. Use the onchain time it
+  was detached. Its later changes do not count, and its verification status
+  no longer matters. Set it on an override to keep the history of a contract
+  that left without a deletion in `diffHistory.md`.
+
+**Shared modules.** A project's critical perimeter includes the critical
+contracts of the shared modules it references and can reach, with the same
+reachability `ProjectDiscovery` uses for contracts and permissions. Each
+module is judged by its own `config.jsonc`, templates, `diffHistory.md` and
+`ossification.json`. A module's changes count from the project start. If the
+project adopted the module later, pass the adoption time: the block time of
+the transaction that first made a project contract depend on it.
+
+```ts
+getOssificationHistory(chainStart, { 'shared-sp1': UnixTime(…) })
 ```
 
-Changes before `sinceTimestamp` do not count for the change rate. The clock
-keeps the full age of the contract. After `untilTimestamp` the contract has no
-clock. Its verification status has no effect on the score. Its changes before
-`untilTimestamp` count. A `config.jsonc` override has priority over a template.
-The override remains valid when discovery does not find the contract any more.
-Set `untilTimestamp` on the override to keep the history of a contract that
-left the project.
+A module whose critical contracts have all retired still adds its past
+changes.
 
-**Shared modules.** The perimeter of a project includes the critical
-contracts of every shared module it references that the project can reach.
-These are the discoveries `ProjectDiscovery` loads with the project, and the
-reachability is the one it uses for contracts and permissions. A module
-contract the project cannot reach is left out together with its overrides and
-reviewed events. A retired contract known only from a module's
-`diffHistory.md` counts for every project that references it. Each module's
-contracts are judged by the module's own `config.jsonc`, templates,
-`diffHistory.md` and `ossification.json`. The project start also bounds the
-changes of the module. A module whose critical contracts have all retired
-still adds its changes and resets. A contract that two discoveries both
-contain must have the same row in both, and has one row.
+## Field severity
 
-**Critical code change.** A change of the implementation of a critical
-contract.
+- **HIGH:** decides how assets or protected state can be controlled,
+  validated, finalized, frozen, censored, lost, created or disclosed. For
+  example role powers, thresholds, delays, controllers, modules, authority
+  paths, verifiers, vkeys, program or config hashes, custody or accounting
+  rules. A change resets the clock.
+- **MEDIUM:** needs review but does not reset the clock. For example the pause
+  state, holders of pause roles (`guardian`, `pauser`), or watched state of
+  excluded escrows. A change reaches the update monitor and puts the project
+  under review on the frontend.
+- **LOW or unset:** who fills an unchanged role, like multisig members,
+  sequencers, batch posters or operators. Leave it unset until researched.
 
-**Critical state change.** A change of a field with `severity: "HIGH"` on a
-critical contract resets its clock and counts as a critical change.
+Before you mark a field HIGH, check that it:
 
-## Configuring field severity
-
-- **HIGH:** conditions under which assets or protected state can be controlled,
-  validated, finalized, frozen, censored, lost, created or disclosed. Examples:
-  role powers or scope, thresholds, delays, controllers, modules, authority
-  paths, verifiers or vkeys, program or config hashes, custody or accounting rules.
-- **MEDIUM:** needs review without resetting the clock. Examples: pause state,
-  pause-role holders (`guardian`, `pauser`), watched state of excluded escrows.
-  Changes reach the update monitor and put the project under review on the frontend.
-- **LOW or unset:** identity within an unchanged role, such as multisig members,
-  sequencers, batch posters or operators. Prefer unset until researched.
-
-Before marking a field HIGH, check that it:
-
-1. Represents contract state. `opStackDA` observes recent batcher transactions.
-2. Can change on a live system. Genesis-fixed `gasPayingToken` changes are
-   already covered by implementation upgrades.
-3. Separates configuration from live counters. Derive `bufferConfig` from
+1. Is contract state. `opStackDA` is not: it observes recent batcher
+   transactions.
+2. Can change on a live system. `gasPayingToken` is fixed at genesis, so it
+   only changes with an upgrade, which counts already.
+3. Holds configuration, not a live counter. Derive `bufferConfig` from
    `SequencerInbox.buffer` with `"edit": ["delete", "prevBlockNumber", …]`.
-4. Does not duplicate a value classified differently. Making
-   `UpgradeExecutor.accessControl` HIGH also counts changes to
-   `EXECUTOR_ROLE.members`, already exposed as LOW in `executors`.
+4. Does not repeat a value with another severity. Making
+   `UpgradeExecutor.accessControl` HIGH would also count changes to
+   `EXECUTOR_ROLE.members`, which `executors` shows as LOW.
 
-For role-holder changes, distinguish identity from mechanism, such as EOA to
-multisig. Record confirmed mechanism changes in `ossification.json` against
-the critical contract controlled.
+Role holders of critical contracts are MEDIUM. A new holder is reviewed, and
+it resets the clock only when it changes the mechanism, not just the person.
+Record such a change in `ossification.json` on the critical contract the role
+controls. On a Safe, the mechanism changes with: one signer to a multisig or
+back, a new threshold, crossing the Security Council bar (at least 8 members
+and a 75% threshold), replacing or nesting the authority, or a module or guard
+that adds or removes a path that can do more than pause. Owner swaps,
+standard singleton upgrades and pause-only modules do not change it.
 
-Put severity in the template when it applies to the contract shape. Use a
-project override for untemplated contracts or deployment-specific judgements,
-with a comment explaining why.
+Put the severity in the template when it follows from the contract type. Use
+a project override for untemplated contracts or deployment-specific calls,
+with a comment why.
 
-History follows the field's current name. Renaming a field disconnects its
-old history. Give raw and formatted twins the same severity, for example
-`getMinDelay` and `getMinDelayFormatted`. Today's `fieldMeta` applies
-retroactively: raising severity to HIGH counts past changes, lowering it
-stops counting them. Old diff annotations are not consulted.
+The history follows a field's current name, so renaming a field cuts off its
+history. Give raw and formatted twins the same severity, for example
+`getMinDelay` and `getMinDelayFormatted`. Severity applies to the past too:
+raising a field to HIGH counts its old changes, lowering it stops counting
+them.
 
-Run `l2b colorize` after severity edits to refresh `fieldMeta` in
-`discovered.json`. Field severity values are excluded from the structure hash,
-so changing one does not trigger rediscovery. Adding a field key changes the
-hash and requires rediscovery of dependent projects.
+## Where changes come from
 
-## Data flow
+From most to least precise:
 
-```
-discovered.json ─┐
-diffHistory.md  ─┼─ getOssificationHistory ─► OssificationHistory ─► measureOssification ─► OssificationResult
-config.jsonc    ─┤        (judgement)          four tables                (arithmetic)
-templates       ─┤
-ossification.json┘         (patch)
-```
-
-The derivation answers every per-contract question. The measure only
-aggregates. The history is four tables:
-
-- `contracts`: one row per contract that is critical today, with its name,
-  address, verification status, `ossifyingSince` (the last reset of its
-  clock: deployment, initialization or change) and its own change counts.
-  Every critical contract must have a known age.
-- `changes`: every critical change made while its contract was critical,
-  for current and retired contracts, ascending. A retired contract exists
-  only here. A reviewed change from `ossification.json` is always here.
-- `resets`: moments the perimeter was reset without a change: deployments,
-  initializations, adoptions. The timeline only.
-- `observedSince`: when observation of the perimeter began. The rate window
-  does not start earlier, and not before the project itself.
-
-The measure computes: the project clock as the youngest `ossifyingSince`; the
-score from the age of the project clock, or 0 when a row is unverified; the
-rate as the 24-hour clusters of `changes` inside the window; the timeline as
-the clusters of `changes` and `resets`; one critical-update tag per
-`updateId`.
-
-**Which changes are the project's own.** A mechanical change counts when it
-happened at or after the contract's `sinceTimestamp` and at or after the
-project start. A change before that still resets the contract's clock, because
-age is physical, but it is not in `changes`. A change after `untilTimestamp`
-is dropped. A reviewed change always counts.
-
-**Events.** In order of trust:
-
-| Source | Event | Time |
+| Source | Change | Time |
 | --- | --- | --- |
-| `$pastUpgrades` of a critical contract | code change; the first entry is the initialization, a reset | exact, onchain |
-| `$pastUpgrades.N` appended in a diffHistory entry, not yet known | code change (retired contracts, handler gaps) | exact, onchain |
-| `$implementation` change in a diffHistory entry, contract without `$pastUpgrades` | code change | between the previous run and this one |
-| change of a field that is HIGH today, in a diffHistory entry | state change | between the previous run and this one; dated at an upgrade bundled in the same diff when there is one |
-| `ossification.json` `events` | reviewed code or state change | exact, tx-anchored |
+| `ossification.json` `events` | code or state, reviewed by research | exact, from the transaction |
+| `$pastUpgrades` of a critical contract | code; the first entry is the initialization, not a change | exact, onchain |
+| `$pastUpgrades` entry appended in `diffHistory.md` and not known yet | code, for retired contracts and handler gaps | exact, onchain |
+| `$implementation` change in `diffHistory.md`, contract without `$pastUpgrades` | code | between two discovery runs |
+| change of a field that is HIGH today, in `diffHistory.md` | state | between two discovery runs, or at an upgrade in the same diff |
 
-Every change carries `timestamp` (when it was certainly in effect) and, when
-known, `earliest` (the earliest it can have happened). The measure uses
-`timestamp`, the conservative choice.
+A change between two discovery runs is dated at the later run, so it never
+looks older than it is. When the diff also changes the implementation, the
+state change is dated at the newest known upgrade before the run.
 
-**The newest change must be dated.** The score hinges on the timestamp of the
-change that starts the project clock. `ossificationUncertainty.test.ts` fails
-for any project whose newest change sets the clock and is only known as an
-interval, until the review either adds a reviewed event with the exact time or
-lists the update in `acceptedIntervals`.
+**The newest change must be exact.** It starts the clock, so the score depends
+on it. `ossificationUncertainty.test.ts` fails while a project's newest change
+is only known to lie between two runs. Fix it with a reviewed event, or accept
+the interval in `acceptedIntervals`.
 
 ## ossification.json
 
-`ossification.json` contains manual corrections. `OssificationPatch.ts`
-validates the file. The file does not define the perimeter. The perimeter is
-in the discovery configuration. A file corrects only the contracts of its own
-discovery, so the corrections for a shared module are in the module's file.
+Manual corrections, validated by `OssificationPatch.ts`. It does not define
+the critical perimeter, discovery config does. Each file only corrects the
+contracts of its own discovery, so a shared module has its own file.
 
-Add a reviewed event when discovery cannot date a change or mistakes a later
-upgrade for initialization. For proxies without `$pastUpgrades`, bisect the
-implementation slot or use a block number recorded by the contract. For a
-change bounded by two discovery runs, find its transaction. Record the
-transaction hash, its block timestamp and a reason. Use `updateId` to link the
-diffHistory entry, and re-check that link after rediscovery.
+Add a reviewed event when discovery cannot date a change, or takes a later
+upgrade for the initialization. For proxies without `$pastUpgrades`, bisect
+the implementation slot or use a block number the contract records. For a
+change between two runs, find its transaction. Record the transaction hash,
+its block time and a reason. Link the `diffHistory.md` entry with `updateId`,
+and check the link again after rediscovery. Changes after the latest
+discovery come in with the next rediscovery, not as reviewed events.
 
-- `events`: reviewed changes anchored to their transaction, each on a
-  perimeter contract (a change on an excluded Safe is attributed to the
-  contract the Safe controls). One replaces the mechanical event of its
-  contract with the same transaction, so a first upgrade that was a real
-  change is listed here as a code event. A transaction that upgraded several
-  contracts needs one event for each contract it replaces. One naming
-  `updateId` replaces the mechanical events of that update for its contract
-  with the precise time.
-- `ignoredTransactions`: `$pastUpgrades` transactions that did not change the
-  contract. The list applies to every perimeter contract the transaction
-  touched. If one transaction was a no-op on one contract and a real upgrade
-  on another, research will tell us, and the entries can then name a contract.
-- `ignoredUpdates`: `diffHistory.md` entries that came from a discovery bug.
-- `acceptedIntervals`: `diffHistory.md` entries with an interval time that can
-  remain the newest change.
+- `events`: reviewed changes, each on a contract in the critical perimeter. A
+  change on an excluded Safe goes on the contract the Safe controls. An event
+  replaces the automatic change of its contract with the same transaction, so
+  a first upgrade that was a real change is listed here as a code event. A
+  transaction that upgraded several contracts needs one event per contract.
+  An event with an `updateId` replaces the automatic changes of that update
+  for its contract.
+- `ignoredTransactions`: `$pastUpgrades` transactions that changed nothing,
+  for every critical contract they touched.
+- `ignoredUpdates`: `diffHistory.md` entries caused by a discovery bug.
+- `acceptedIntervals`: `diffHistory.md` entries that may stay the newest
+  change although only their interval is known.
 
-## Files
+Reviewed events follow the same rules as automatic changes: one before the
+project start or the contract's `sinceTimestamp` does not count, and one after
+its `untilTimestamp` is an error.
 
-- `@l2beat/discovery`: `parseDiffHistoryBlocks` reads diff blocks back into
-  the structure `discoveryDiffToMarkdown` rendered; `getDiffHistoryChanges`
-  types every watched change (implementation, appended upgrade, value,
-  representation-only) with a chain-specific address, resolving the chain
-  of legacy entries from their header; `parsePastUpgrades` reads the
-  `$pastUpgrades` tuples. A round-trip test, a seeded fuzz test and corpus
-  tests over every project's diffHistory.md pin them. `CriticalFlag` in
-  `ColorConfig.ts` is the shape of `critical`.
-- `packages/config/src/ossification/`: `getOssificationHistory`
-  calculates the history. `loadOssificationHistory` reads the files.
-  `ProjectDiscovery` exposes it as `getOssificationHistory`. A project opts in
-  by setting `ossificationHistory: discovery.getOssificationHistory(chainStart)`
-  in its config, so ossification can be switched off per project without
-  touching the discovery data. The build stores the history in the
-  `ossificationHistory` column of the SQLite database. The history has no
-  `now`, so it only changes when the files it is read from change.
-- `packages/shared/src/tools/ossification/`: `measureOssification(history, now)`
-  calculates the result, together with the history and result types. The
-  frontend calls it with the request time.
-- `l2b ossification <project> [--history]`: Shows the result for a project.
-  With `--history`, it shows the perimeter and the events. Build `packages/config`
-  first.
+## Code
+
+```
+discovered.json ──┐
+diffHistory.md   ─┤
+config.jsonc     ─┼─ getOssificationHistory ─► OssificationHistory ─► measureOssification(now) ─► OssificationResult
+templates        ─┤      (judgement)                                      (arithmetic)
+ossification.json┘
+```
+
+`getOssificationHistory` (`packages/config/src/ossification/`) makes every
+judgement. It has no `now`, so it only changes when its files change. The
+history holds:
+
+- `contracts`: the contracts critical today, with name, address, verification
+  status, age (`ossifyingSince`) and their own change counts.
+- `changes`: the critical changes, of current and retired contracts.
+- `deployments`: deployments and initializations of critical contracts, to
+  find the ossification genesis.
+- `observedSince`: the project start, or the earliest known contract start.
+
+`measureOssification` (`packages/shared/src/tools/ossification/`) only does
+arithmetic: the genesis, the clock, the score, the rate, and one critical
+update tag per `updateId`. The frontend calls it with the request time.
+
+A project opts in with
+`ossificationHistory: discovery.getOssificationHistory(chainStart)` in its
+config, so ossification can be switched off per project without touching
+discovery data. The build stores the history in the `ossificationHistory`
+column of the config database.
+
+- `@l2beat/discovery` parses the inputs: `parseDiffHistoryBlocks` reads
+  `diffHistory.md` back into diff blocks, `getDiffHistoryChanges` types each
+  watched change, and `parsePastUpgrades` reads `$pastUpgrades`. Round-trip,
+  fuzz and corpus tests over every `diffHistory.md` pin them. `CriticalFlag`
+  in `ColorConfig.ts` is the shape of `critical`.
+- `l2b ossification <project> [--history]` prints the result, or with
+  `--history` the history. For an opted-in project it uses the config build,
+  with the project start and module adoptions, so build `packages/config`
+  first. For any other project it derives the history from discovery without
+  them.

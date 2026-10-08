@@ -3,8 +3,8 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
 import { SectionNavigation } from '~/components/section-navigation/SectionNavigation'
+import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
@@ -40,9 +40,10 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout childrenWrapperClassName="md:pt-0">
-        <div className="md:-mx-5 sticky top-0 z-100 md:mb-6 lg:hidden">
-          <MobileSectionNavigation sections={sections} />
-        </div>
+        <StickyMobileSectionNavigation
+          sections={sections}
+          className="md:mb-6"
+        />
 
         <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
           <MainPageHeader>Publication</MainPageHeader>

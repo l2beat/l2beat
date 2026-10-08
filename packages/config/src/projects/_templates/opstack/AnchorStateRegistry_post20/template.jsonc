@@ -28,6 +28,7 @@
       "severity": "HIGH"
     },
     "RespectedGameString": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "expectRevert": true,
@@ -37,10 +38,13 @@
       "edit": ["format", "DisputeGameMap"]
     },
     "retirementTimestamp": {
-      "severity": "HIGH"
+      // guardian emergency action that does not change the rules: it retires
+      // every earlier game, like a pause of pending withdrawals
+      "severity": "MEDIUM"
     },
     "blacklistedGames": {
-      "severity": "HIGH",
+      // guardian emergency action on single games, like a pause
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": "disputeGame",

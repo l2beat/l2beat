@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SIPAFactory",
+  "critical": true,
+  "category": "core",
+  "description": "Deploys zk.money deposit addresses (SIPAs) as deterministic clones. The implementation per portal and intent is blessed once by the owner and cannot be changed afterwards.",
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "bless the deposit address implementation for any portal and intent that has none yet. This decides the code of all deposit addresses for that portal and intent."
+        }
+      ]
+    },
+    // Not HIGH, as privacy-pools `registeredPools`: bless reverts for a portal and
+    // intent that already has an implementation, so a blessing adopts new
+    // deposit-address code (a reset at its deployment once templated as critical)
+    // and never changes existing deposit addresses.
+    "blessedImplementations": {
+      "description": "Blessed implementations per portal and intent (1 = Deposit, 2 = Registration, 3 = UpdateMetadata).",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["portal", "intent", "implementation"],
+        "add": { "event": "ImplementationBlessed" }
+      }
+    }
+  }
+}

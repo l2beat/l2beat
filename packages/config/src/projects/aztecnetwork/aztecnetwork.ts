@@ -11,6 +11,7 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   OPERATOR,
   RISK_VIEW,
@@ -177,6 +178,7 @@ const rollup = discovery.getContract('Rollup')
 const escapeHatch = discovery.getContract('EscapeHatch')
 const slasher = discovery.getContract('Slasher')
 const slashingProposer = discovery.getContract('SlashingProposer')
+const zkMoneyPortal = discovery.getContract('ZkMoneyPortal')
 
 const rollupAddress = ChainSpecificAddress.address(rollup.address)
 const verifierAddress = ChainSpecificAddress.address(honkVerifier.address)
@@ -365,6 +367,13 @@ export const aztecnetwork: ScalingProject = {
       discovery.getEscrowDetails({
         address: feeJuicePortal.address,
         tokens: ['AZTEC'],
+      }),
+      discovery.getEscrowDetails({
+        address: zkMoneyPortal.address,
+        tokens: ['DAI'],
+        ...ESCROW.CANONICAL_ADD_TA,
+        description:
+          'zk.money escrow. Withdrawals need a proven Aztec L2->L1 message and a signature from a TEE signer (AWS Nitro enclave) registered on the portal, so exits depend on a live enclave running the approved image.',
       }),
     ],
     daTracking: [

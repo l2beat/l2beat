@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x1fe5f3f97657b5eb9776ac8209c85b0e34891efe
+
+# Diff at Sun, 04 Oct 2026 05:55:34 GMT:
+
+- id: 66ed277b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1784193913
+- current timestamp: 1784193913
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784193913 (main branch discovery), not current.
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      fieldMeta.maxTotalBalance.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x4c78109d04c6c1af6f36994cb516fa84a43e3093
 
 # Diff at Wed, 23 Sep 2026 05:48:14 GMT:

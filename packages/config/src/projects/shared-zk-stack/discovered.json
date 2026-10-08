@@ -209,7 +209,6 @@
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
-        "tokenMultiplierSetter": { "severity": "HIGH" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -1914,7 +1913,7 @@
         "securityCouncil": { "severity": "HIGH" },
         "L2_PROTOCOL_GOVERNOR": { "severity": "HIGH" },
         "protocolFrozenUntil": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"
         }
       },
@@ -2174,7 +2173,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1726123295 },
       "ignoreInWatchMode": ["clock", "totalSupply"],
       "deployerAddress": "zksync:0x478A1eBE665396ce0F2F87aB0F057aC273451B92",
       "sinceTimestamp": 1716317326,
@@ -2345,6 +2344,7 @@
       },
       "fieldMeta": {
         "currentQuorum": { "severity": "HIGH" },
+        "currentQuorum_MTokens": { "severity": "HIGH" },
         "proposalThreshold_MTokens": { "severity": "HIGH" },
         "votingDelay": { "severity": "HIGH" },
         "votingPeriod": { "severity": "HIGH" },
@@ -2413,6 +2413,7 @@
       },
       "fieldMeta": {
         "currentQuorum": { "severity": "HIGH" },
+        "currentQuorum_MTokens": { "severity": "HIGH" },
         "proposalThreshold_MTokens": { "severity": "HIGH" },
         "votingDelay": { "severity": "HIGH" },
         "votingPeriod": { "severity": "HIGH" },
@@ -2615,6 +2616,7 @@
       },
       "fieldMeta": {
         "currentQuorum": { "severity": "HIGH" },
+        "currentQuorum_MTokens": { "severity": "HIGH" },
         "proposalThreshold_MTokens": { "severity": "HIGH" },
         "votingDelay": { "severity": "HIGH" },
         "votingPeriod": { "severity": "HIGH" },

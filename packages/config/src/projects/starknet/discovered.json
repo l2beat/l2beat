@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1786612387,
-  "configHash": "0xe8f9dbfcf6cc00f95801b1d250d049acb0adc17c8cc683877c31a76343f52e62",
+  "configHash": "0x5fdc559a1d8b8085fcd8b63f1752cf42db217caf7d7a4801cdf7e40596a36712",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -278,7 +278,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1738755371 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1738599599,
@@ -307,10 +306,6 @@
         "multisigThreshold": "9 of 12 (75%)",
         "nonce": 11,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "SafeProxy",
@@ -668,7 +663,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
@@ -735,7 +730,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1727697611 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x030ceEE5D4CBc304287234720B11E00f47695755",
       "sinceTimestamp": 1727171111,
@@ -755,10 +749,6 @@
         "multisigThreshold": "1 of 3 (33%)",
         "nonce": 2,
         "VERSION": "1.3.0"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "GnosisSafeProxy",
@@ -790,7 +780,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1672589267 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xB7B2d6d7a1ca768410B424bEd7f065F9756Cc299",
       "sinceTimestamp": 1672587635,
@@ -813,10 +802,6 @@
         "multisigThreshold": "2 of 6 (33%)",
         "nonce": 41,
         "VERSION": "1.3.0"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988": "GnosisSafeProxy",
@@ -1258,7 +1243,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
@@ -1432,7 +1417,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
@@ -1585,7 +1570,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
@@ -2036,7 +2021,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
@@ -2188,7 +2173,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
@@ -2374,7 +2359,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
@@ -2518,7 +2503,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
@@ -2661,7 +2646,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
@@ -2980,7 +2965,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
@@ -3042,7 +3027,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1746449747 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1738599755,
@@ -3071,10 +3055,6 @@
         "multisigThreshold": "3 of 12 (25%)",
         "nonce": 9,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": "SafeProxy",
@@ -3183,7 +3163,7 @@
           "description": "Tokens whose withdrawals are currently limited. The remaining allowance is tracked separately."
         },
         "maxTotalBalance": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {

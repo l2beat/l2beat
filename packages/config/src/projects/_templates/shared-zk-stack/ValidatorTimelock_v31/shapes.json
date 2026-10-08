@@ -1,0 +1,8 @@
+{
+  "ValidatorTimelock": {
+    "hash": "0x51d6000b0e4437a2b99d13d332658fffb3da867cd56b05cbcb4bf4f954ff12ff",
+    "address": "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35",
+    "chain": "ethereum",
+    "blockNumber": 26103836
+  }
+}

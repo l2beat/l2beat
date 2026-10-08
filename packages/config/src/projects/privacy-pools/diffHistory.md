@@ -1,3 +1,167 @@
+Generated with discovered.json: 0x1cfdee93b2b289430f4c83042fd841675aa3c0fc
+
+# Diff at Sun, 04 Oct 2026 05:55:35 GMT:
+
+- id: 2c0099f9
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1779964040
+- current timestamp: 1779964040
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779964040 (main branch discovery), not current.
+
+```diff
+    contract PrivacyPoolUSDS (eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolWstETH (eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolDAI (eth:0x1c31C03B8CB2EE674D0F11De77135536db828257) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolsEntrypoint (eth:0x6818809EefCe719E480a7526D76bD3e561526b46) [privacy-pools/Entrypoint] {
+    +++ description: Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management.
+      fieldMeta.registeredPools.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolWOETH (eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Privacy Pools Multisig (eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        true
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PrivacyPoolUSDC (eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolBOLD (eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolSUSDS (eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolUSD1 (eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolFrxUSD (eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolFxUSD (eth:0xD14F4B36E1D1D98c218db782c49149876042BC56) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolUSDe (eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolUSDT (eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolETH (eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB) [privacy-pools/PrivacyPoolSimple] {
+    +++ description: Native-asset Privacy Pool that escrows ETH commitments for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PrivacyPoolWBTC (eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      fieldMeta.dead.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x27dcaa2c13f4aa71743d080f753f712074bfb302
 
 # Diff at Wed, 23 Sep 2026 05:56:01 GMT:

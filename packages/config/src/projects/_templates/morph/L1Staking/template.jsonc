@@ -45,8 +45,9 @@
     "withdrawalLockBlocks": {
       "severity": "HIGH"
     },
+    // role holder: mechanism changes are reviewed events
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

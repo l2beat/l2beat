@@ -6,8 +6,10 @@
   "ignoreRelatives": ["addressManager"],
   "fields": {
     "addressManager": {
-      // a second upgrade path: proxies that resolve through the manager follow it
-      "severity": "HIGH"
+      // Not HIGH: every L2 predeploy is an ERC-1967 proxy that never reads an
+      // AddressManager, so this pointer (zero on all chains using this template)
+      // only changes what the admin writes for RESOLVED-type proxies, of which
+      // there are none. Predeploy upgrades are covered by their $pastUpgrades.
     },
     "owner": {
       "permissions": [{ "type": "act" }]

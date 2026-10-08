@@ -1,7 +1,7 @@
 {
   "name": "morph",
   "timestamp": 1790851283,
-  "configHash": "0xf07a36f1b491a8376d4ad3e89896e4d07aef718b80cbfb64f59fef943ce1c550",
+  "configHash": "0x7eb845296018494c200abc82ea8455be5363f2896919b0ceec78d040e6fd323d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -90,7 +90,7 @@
         "stakingValue": { "severity": "HIGH" },
         "challengeDeposit": { "severity": "HIGH" },
         "withdrawalLockBlocks": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7": "TransparentUpgradeableProxy",
@@ -304,7 +304,7 @@
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
       "fieldMeta": {
-        "maxGasLimit": { "severity": "HIGH" },
+        "maxGasLimit": { "severity": "MEDIUM" },
         "whitelistChecker": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -633,7 +633,7 @@
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
       },
       "fieldMeta": {
-        "erc20Gateways": { "severity": "HIGH" },
+        "erc20Gateways": { "severity": "MEDIUM" },
         "ethGateway": { "severity": "HIGH" },
         "defaultERC20Gateway": { "severity": "HIGH" }
       },
@@ -800,7 +800,7 @@
         },
         "messageQueue": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "getMinDelayFormatted": {
           "severity": "HIGH",
           "description": "commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now"
@@ -878,6 +878,7 @@
       ],
       "proxyType": "immutable",
       "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
+      "critical": { "sinceTimestamp": 1779354407 },
       "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
       "sinceTimestamp": 1779335891,
       "sinceBlock": 25141074,
@@ -1008,7 +1009,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1729764539 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x05e1d4694041aF987Af6F8402D902686018E2136",
       "sinceTimestamp": 1729598531,
@@ -1030,10 +1030,6 @@
         "multisigThreshold": "3 of 5 (60%)",
         "nonce": 82,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": "SafeProxy",
@@ -1123,7 +1119,6 @@
       },
       "fieldMeta": {
         "feeVault": {
-          "severity": "HIGH",
           "description": "Recipient of fees charged for forced transactions."
         },
         "paused": {
@@ -1256,12 +1251,8 @@
         "xDomainMessageSender": "eth:0x000000000000000000000000000000000000dEaD"
       },
       "fieldMeta": {
-        "maxReplayTimes": { "severity": "HIGH" },
         "rollup": { "severity": "HIGH" },
-        "feeVault": {
-          "severity": "HIGH",
-          "description": "Recipient of L1-to-L2 message fees."
-        },
+        "feeVault": { "description": "Recipient of L1-to-L2 message fees." },
         "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
@@ -1304,7 +1295,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1737455087 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3",
       "sinceTimestamp": 1730976923,
@@ -1327,10 +1317,6 @@
         "multisigThreshold": "4 of 6 (67%)",
         "nonce": 28,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": "SafeProxy",
@@ -1384,7 +1370,7 @@
         "rewardPercentage": { "severity": "HIGH" },
         "rollupContract": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6": "TransparentUpgradeableProxy",

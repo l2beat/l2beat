@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x1504a061949e1bc52900b7e5651b8d7ecbd7278f
+
+# Diff at Sun, 04 Oct 2026 05:55:32 GMT:
+
+- id: fa144253
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1787644642
+- current timestamp: 1787644642
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787644642 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0xf9E57a0B702dF449295DEc146eC2bc80339FAAED) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xefc7cb7cc5dea8d92e8949a85414fc793d535e1c
 
 # Diff at Fri, 02 Oct 2026 08:08:46 GMT:
