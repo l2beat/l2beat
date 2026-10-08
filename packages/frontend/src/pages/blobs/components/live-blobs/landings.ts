@@ -81,7 +81,16 @@ export function useLandedTotal(
 
   // Caught in the render it comes in, so not one frame shows the new total
   if (stamp !== held.stamp || total !== held.total) {
-    setHeld(holdBack(held, stamp, total, landings ? fresh : 0, blockBlobs))
+    setHeld(
+      holdBack(
+        held,
+        stamp,
+        total,
+        landings ? fresh : 0,
+        blockBlobs,
+        Math.floor(clock.progressNow()),
+      ),
+    )
   }
   const stampInHand = useRef(held.stamp)
   stampInHand.current = held.stamp
@@ -180,7 +189,12 @@ export function holdBack(
   total: number,
   fresh: number,
   blockBlobs: number,
+  currentSlot: number,
 ): Held {
+  // the number came before any data: the first data is its start
+  if (held.stamp === undefined) {
+    return firstHeld(stamp, total, fresh, blockBlobs, currentSlot)
+  }
   // the chain took its newest block back: nothing of it is arriving any more,
   // and what left the window as it came is back in
   if (isAbove(held.stamp, stamp)) {

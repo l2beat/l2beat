@@ -25,7 +25,7 @@ describe(holdBack.name, () => {
   }
 
   it('holds back what a new block brought, and what left the window with it', () => {
-    expect(holdBack(held, 1001, 103, 5, 7)).toEqual({
+    expect(holdBack(held, 1001, 103, 5, 7, 1001)).toEqual({
       stamp: 1001,
       total: 103,
       blockBlobs: 7,
@@ -35,9 +35,16 @@ describe(holdBack.name, () => {
   })
 
   it('lets go of all it held when the chain takes its newest block back', () => {
-    const arriving = holdBack(held, 1001, 103, 5, 7)
+    const arriving = holdBack(held, 1001, 103, 5, 7, 1001)
 
-    expect(holdBack(arriving, 1000, 100, 0, 0)).toEqual(held)
+    expect(holdBack(arriving, 1000, 100, 0, 0, 1001)).toEqual(held)
+  })
+
+  it('waits for the newest block to land when the first data comes after the number started', () => {
+    const empty = firstHeld(undefined, 0, 0, 0, 1000)
+
+    expect(holdBack(empty, 1000, 103, 5, 7, 1000).arriving).toEqual(5)
+    expect(holdBack(empty, 1000, 103, 5, 7, 1002).arriving).toEqual(0)
   })
 })
 
