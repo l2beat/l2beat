@@ -5,84 +5,90 @@ import { getCapacity, getSyncedDay, sumUsed } from './getDaPastDayUsage'
 const RANGE: [number, number] = [1000, 2000]
 
 describe(sumUsed.name, () => {
-  it("sums the DA layer's own records inside the range", () => {
+  it('sums the records inside the range', () => {
     const used = sumUsed(
       [
-        record('ethereum', 999, 1n),
-        record('ethereum', 1000, 10n),
-        record('ethereum', 1500, 100n),
-        record('ethereum', 2000, 1000n),
-        record('base', 1500, 7n),
+        record(999, 1n),
+        record(1000, 10n),
+        record(1500, 100n),
+        record(2000, 1000n),
       ],
-      'ethereum',
       RANGE,
     )
 
     expect(used).toEqual(110)
   })
 
-  it('returns zero when the layer has no record', () => {
-    expect(sumUsed([record('base', 1500, 7n)], 'ethereum', RANGE)).toEqual(0)
+  it('returns zero when there is no record', () => {
+    expect(sumUsed([], RANGE)).toEqual(0)
   })
 })
 
-// Each case places the layer's last hourly record somewhere in the two days
-// fetched before midnight and checks which 24 hours get summed.
+// Each case places the layer's hourly records somewhere in the two days
+// before midnight and today, and checks which 24 hours get summed.
 describe(getSyncedDay.name, () => {
   const MIDNIGHT = 10 * UnixTime.DAY
   const fetched: [number, number] = [MIDNIGHT - 2 * UnixTime.DAY, MIDNIGHT]
 
-  it('takes the day up to midnight when its last hour is written', () => {
+  it('takes yesterday once the first hour of today is written', () => {
     const day = getSyncedDay(
-      [record('ethereum', MIDNIGHT - UnixTime.HOUR, 1n)],
-      'ethereum',
+      [record(MIDNIGHT - UnixTime.HOUR, 1n), record(MIDNIGHT, 1n)],
       fetched,
     )
 
     expect(day).toEqual([MIDNIGHT - UnixTime.DAY, MIDNIGHT])
   })
 
-  it('takes the 24 hours up to the last hour written when the indexer lags', () => {
+  it('takes yesterday however far into today the indexer is', () => {
+    const day = getSyncedDay(
+      [record(MIDNIGHT + 5 * UnixTime.HOUR, 1n)],
+      fetched,
+    )
+
+    expect(day).toEqual([MIDNIGHT - UnixTime.DAY, MIDNIGHT])
+  })
+
+  it('leaves out the newest hour, which is still being written', () => {
     const day = getSyncedDay(
       [
-        record('ethereum', MIDNIGHT - 5 * UnixTime.HOUR, 1n),
-        record('ethereum', MIDNIGHT - 4 * UnixTime.HOUR, 1n),
+        record(MIDNIGHT - 2 * UnixTime.HOUR, 1n),
+        record(MIDNIGHT - UnixTime.HOUR, 1n),
       ],
-      'ethereum',
       fetched,
     )
 
     expect(day).toEqual([
-      MIDNIGHT - UnixTime.DAY - 3 * UnixTime.HOUR,
-      MIDNIGHT - 3 * UnixTime.HOUR,
+      MIDNIGHT - UnixTime.DAY - UnixTime.HOUR,
+      MIDNIGHT - UnixTime.HOUR,
     ])
   })
 
-  it("goes by the layer's own records, not by a project's", () => {
+  it('takes the 24 whole hours up to the newest when the indexer lags', () => {
     const day = getSyncedDay(
       [
-        record('ethereum', MIDNIGHT - 3 * UnixTime.HOUR, 1n),
-        record('base', MIDNIGHT - UnixTime.HOUR, 1n),
+        record(MIDNIGHT - 5 * UnixTime.HOUR, 1n),
+        record(MIDNIGHT - 4 * UnixTime.HOUR, 1n),
       ],
-      'ethereum',
       fetched,
     )
 
-    expect(day?.[1]).toEqual(MIDNIGHT - 2 * UnixTime.HOUR)
+    expect(day).toEqual([
+      MIDNIGHT - UnixTime.DAY - 4 * UnixTime.HOUR,
+      MIDNIGHT - 4 * UnixTime.HOUR,
+    ])
   })
 
   it('returns nothing when the indexer is more than a day behind', () => {
     const day = getSyncedDay(
-      [record('ethereum', MIDNIGHT - UnixTime.DAY - 2 * UnixTime.HOUR, 1n)],
-      'ethereum',
+      [record(MIDNIGHT - UnixTime.DAY - 2 * UnixTime.HOUR, 1n)],
       fetched,
     )
 
     expect(day).toEqual(undefined)
   })
 
-  it('returns nothing when the layer has no record', () => {
-    expect(getSyncedDay([], 'ethereum', fetched)).toEqual(undefined)
+  it('returns nothing when there is no record', () => {
+    expect(getSyncedDay([], fetched)).toEqual(undefined)
   })
 })
 
@@ -124,6 +130,6 @@ describe(getCapacity.name, () => {
   })
 })
 
-function record(projectId: string, timestamp: number, totalSize: bigint) {
-  return { projectId, timestamp: UnixTime(timestamp), totalSize }
+function record(timestamp: number, totalSize: bigint) {
+  return { timestamp: UnixTime(timestamp), totalSize }
 }

@@ -2,6 +2,8 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getDaTvsProjectIds } from './getDaTvsProjectIds'
 
+// Every project named in a layer, bridge or custom DA entry is an L2 unless
+// the case says otherwise, so the split alone decides where it lands.
 describe(getDaTvsProjectIds.name, () => {
   it('splits projects by whether their data goes to Ethereum', () => {
     const result = getDaTvsProjectIds(
@@ -13,6 +15,7 @@ describe(getDaTvsProjectIds.name, () => {
         bridge('eigenda', ['celo']),
       ],
       [],
+      l2s('base', 'arbitrum', 'eclipse', 'derive', 'celo'),
     )
 
     expect(result).toEqual({
@@ -26,6 +29,7 @@ describe(getDaTvsProjectIds.name, () => {
       [layer('ethereum'), layer('celestia', ['sovereign'])],
       [bridge('ethereum', ['base']), bridge('celestia', ['eclipse'])],
       [],
+      l2s('base', 'sovereign', 'eclipse'),
     )
 
     expect(result).toEqual({
@@ -44,6 +48,7 @@ describe(getDaTvsProjectIds.name, () => {
         bridge('celestia', ['eclipse']),
       ],
       [],
+      l2s('base', 'eclipse'),
     )
 
     expect(result).toEqual({ fullData: ['base'], settlementOnly: ['eclipse'] })
@@ -54,6 +59,7 @@ describe(getDaTvsProjectIds.name, () => {
       [layer('ethereum'), layer('eigenda')],
       [bridge('ethereum', ['celo']), bridge('eigenda', ['celo', 'rise'])],
       [],
+      l2s('celo', 'rise'),
     )
 
     expect(result).toEqual({ fullData: ['celo'], settlementOnly: ['rise'] })
@@ -64,6 +70,7 @@ describe(getDaTvsProjectIds.name, () => {
       [layer('ethereum'), layer('celestia')],
       [bridge('ethereum', ['base']), bridge('celestia', ['eclipse'])],
       [customDaProject('reya')],
+      l2s('base', 'eclipse', 'reya'),
     )
 
     expect(result).toEqual({
@@ -77,13 +84,34 @@ describe(getDaTvsProjectIds.name, () => {
       [layer('ethereum'), layer('celestia')],
       [bridge('ethereum', ['base']), bridge('celestia', ['eclipse'])],
       [customDaProject('base'), customDaProject('eclipse')],
+      l2s('base', 'eclipse'),
     )
 
     expect(result).toEqual({ fullData: ['base'], settlementOnly: ['eclipse'] })
   })
 
+  it('leaves out L3s wherever their data goes', () => {
+    const result = getDaTvsProjectIds(
+      [layer('ethereum'), layer('celestia', ['l3-sovereign'])],
+      [
+        bridge('ethereum', ['base', 'l3-on-ethereum']),
+        bridge('celestia', ['eclipse', 'l3-on-celestia']),
+      ],
+      [customDaProject('reya'), customDaProject('l3-on-dac')],
+      [
+        ...l2s('base', 'eclipse', 'reya'),
+        ...l3s('l3-sovereign', 'l3-on-ethereum', 'l3-on-celestia', 'l3-on-dac'),
+      ],
+    )
+
+    expect(result).toEqual({
+      fullData: ['base'],
+      settlementOnly: ['eclipse', 'reya'],
+    })
+  })
+
   it('returns nothing when there are no layers', () => {
-    expect(getDaTvsProjectIds([], [], [])).toEqual({
+    expect(getDaTvsProjectIds([], [], [], [])).toEqual({
       fullData: [],
       settlementOnly: [],
     })
@@ -114,4 +142,16 @@ function bridge(daLayer: string, usedIn: string[]) {
 
 function usedInProject(id: string) {
   return { id: ProjectId(id), name: id, slug: id }
+}
+
+function l2s(...ids: string[]) {
+  return ids.map((id) => scalingProject(id, 'layer2'))
+}
+
+function l3s(...ids: string[]) {
+  return ids.map((id) => scalingProject(id, 'layer3'))
+}
+
+function scalingProject(id: string, layer: 'layer2' | 'layer3') {
+  return { id: ProjectId(id), scalingInfo: { layer } }
 }
