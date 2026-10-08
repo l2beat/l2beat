@@ -8,7 +8,7 @@ const popoverTriggerClasses = cn(
   'group inline-flex cursor-pointer select-none items-center gap-1.5 whitespace-pre rounded-lg bg-surface-primary px-3 py-1 font-medium text-xs leading-none md:text-sm',
   'transition-colors data-[state=selected]:hover:bg-surface-secondary',
   'primary-card:bg-surface-secondary primary-card:data-[state=selected]:hover:bg-surface-tertiary',
-  'focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
 )
 
 const PopoverTrigger = ({

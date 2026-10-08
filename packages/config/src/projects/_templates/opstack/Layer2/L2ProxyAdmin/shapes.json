@@ -3,5 +3,11 @@
     "hash": "0x5685f6e3015a6b9a257228bb8ef3c33efb233627bc5c81b7005670a10a37bd47",
     "address": "ink:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
     "blockNumber": 10183769
+  },
+  "L2ProxyAdmin_celo": {
+    "hash": "0x7f6864f2ed905cae4ebf163729df004c7b19520740e00ee1710427ec016e60ce",
+    "address": "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
+    "chain": "celo",
+    "blockNumber": 79482303
   }
 }

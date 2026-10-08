@@ -24,7 +24,8 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      exposure: `${S.entryExitPublic()} Each epoch pairs every exit with the nullifiers and note shape of the transfer that funded it. Forced withdrawals publish the spent notes and the account, public gift exits the destination.`,
+      exposureShort: 'Transfers inside publish only encrypted notes.',
+      exposureContinued: `${S.entryExitPublic()} Each epoch pairs every exit with the nullifiers and note shape of the transfer that funded it. Forced withdrawals publish the spent notes and the account, public gift exits the destination.`,
       advice: "Exit through the operator's relay.",
       interior: INTERIOR,
       sources: [
@@ -45,8 +46,9 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'bad',
-      exposure:
-        'Most pool activity is one address that keeps depositing and withdrawing 0.001 WETH, which an analyst can filter out. The remaining anonymity set is very small.',
+      exposureShort: 'The anonymity set is very small.',
+      exposureContinued:
+        'Most pool activity is one address that keeps depositing and withdrawing 0.001 WETH, which an analyst can filter out.',
       interior: {
         sender: 'atRisk',
         recipient: 'atRisk',
@@ -69,8 +71,9 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'warning',
-      exposure:
-        'Anyone on your network path sees when your wallet deposits and when the app contacts the operator, and can match both to the chain. The SDK has no Tor or proxy setting.',
+      exposureShort:
+        'Anyone on your network path sees when your wallet deposits and when the app contacts the operator, and can match both to the chain.',
+      exposureContinued: 'The SDK has no Tor or proxy setting.',
       advice: 'Route the app through Tor with system-wide tools.',
       interior: {
         ...INTERIOR,
@@ -89,8 +92,10 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      exposure:
-        "The operator's enclave holds every transfer in plaintext and a key to every note. The SDK trusts the enclave key it fetches from the operator's endpoint. Auditors appointed by the admin can pull any account's history without consent.",
+      exposureShort:
+        "The operator's enclave holds every transfer in plaintext and a key to every note.",
+      exposureContinued:
+        "The SDK trusts the enclave key it fetches from the operator's endpoint. Auditors appointed by the admin can pull any account's history without consent.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -110,8 +115,10 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      exposure:
-        "Every note wraps its key to the enclave's long-lived elliptic-curve public key as well as the receiver's. A quantum computer, or a leak of that one key, decrypts the entire history.",
+      exposureShort:
+        "Every note wraps its key to the enclave's long-lived elliptic-curve public key as well as the receiver's.",
+      exposureContinued:
+        'A quantum computer, or a leak of that one key, decrypts the entire history.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

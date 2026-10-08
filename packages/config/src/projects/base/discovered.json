@@ -78,13 +78,13 @@
         "$implementation": "base:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+        "l1CrossDomainMessenger": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292680358",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+        "OTHER_MESSENGER": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "RELAY_CALL_OVERHEAD": 40000,
         "RELAY_CONSTANT_OVERHEAD": 200000,
         "RELAY_GAS_CHECK_BUFFER": 5000,
@@ -95,7 +95,8 @@
       "implementationNames": {
         "base:0x4200000000000000000000000000000000000007": "Proxy",
         "base:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": "L2CrossDomainMessenger"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "L2StandardBridge",
@@ -117,17 +118,18 @@
         "$implementation": "base:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l1TokenBridge": "base:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "l1TokenBridge": "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "messenger": "base:0x4200000000000000000000000000000000000007",
         "MESSENGER": "base:0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "base:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "OTHER_BRIDGE": "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "version": "1.1.0"
       },
       "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0x4200000000000000000000000000000000000010": "Proxy",
         "base:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": "L2StandardBridge"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "SequencerFeeVault",
@@ -4757,9 +4759,9 @@
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xd82fdc4cca4e4480df42ce9cc0c0bf9b71ade8dbc73dd8c46519a0d37c93735c",
+    "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/L2StandardBridge": "0x43f9de36085fd31eaccaa3249b87da157440022278c664ab18e5a9d4fa8174af",
+    "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

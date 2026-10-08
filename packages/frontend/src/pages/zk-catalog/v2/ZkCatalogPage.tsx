@@ -40,7 +40,7 @@ function TrustedSetupFrameworkLink() {
       className={cn(
         'flex items-center gap-1 rounded-lg bg-linear-to-r from-purple-100 to-pink-100 font-semibold text-sm text-white',
         'h-8 w-fit px-2 py-1',
-        'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',
+        'ring-brand ring-offset-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2',
       )}
       onClick={() => {
         track('trustedSetupFrameworkSelected')

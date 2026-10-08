@@ -1,15 +1,21 @@
 {
   "name": "celo",
-  "timestamp": 1791217058,
-  "configHash": "0x6c5cb3d109ff6f2adbb6b318f3b4e0be0389e5b3a4a5aac6f595aaf0a96e5739",
+  "timestamp": 1791383565,
+  "configHash": "0xde09d9bd917efb26b0b7aba8097681386ea92084ba7f94c21c3c6451f0f0c4ec",
   "entries": [
     {
       "name": "L2CrossDomainMessenger",
       "address": "celo:0x4200000000000000000000000000000000000007",
       "type": "Contract",
-      "unverified": true,
+      "template": "opstack/Layer2/L2CrossDomainMessenger",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0xfb9b6038f92aab239c0d4ae0e732ef9ba91590fee841a84ed2aea05732414997"
+      ],
       "proxyType": "EIP1967 proxy",
+      "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
       "critical": { "sinceTimestamp": 1742960663 },
+      "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1587571205,
       "sinceBlock": 0,
@@ -17,20 +23,43 @@
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
         "$pastUpgrades": [],
-        "$upgradeCount": 0
+        "$upgradeCount": 0,
+        "l1CrossDomainMessenger": "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
+        "MESSAGE_VERSION": 1,
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620535",
+        "MIN_GAS_CALLDATA_OVERHEAD": 16,
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
+        "OTHER_MESSENGER": "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
+        "otherMessenger": "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
+        "paused": false,
+        "RELAY_CALL_OVERHEAD": 40000,
+        "RELAY_CONSTANT_OVERHEAD": 200000,
+        "RELAY_GAS_CHECK_BUFFER": 5000,
+        "RELAY_RESERVED_GAS": 40000,
+        "version": "2.1.1-beta.4"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "celo:0x4200000000000000000000000000000000000007": "Proxy",
-        "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": ""
-      }
+        "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": "L2CrossDomainMessenger"
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "L2StandardBridge",
       "address": "celo:0x4200000000000000000000000000000000000010",
       "type": "Contract",
-      "unverified": true,
+      "template": "opstack/Layer2/L2StandardBridge",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x1d5e294663c579fbf93ce17a16e1ea24409366a02df03e17d4e64c499376ac68"
+      ],
       "proxyType": "EIP1967 proxy",
+      "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
       "critical": { "sinceTimestamp": 1742960663 },
       "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1587571205,
@@ -39,20 +68,36 @@
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
         "$pastUpgrades": [],
-        "$upgradeCount": 0
+        "$upgradeCount": 0,
+        "l1TokenBridge": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+        "messenger": "celo:0x4200000000000000000000000000000000000007",
+        "MESSENGER": "celo:0x4200000000000000000000000000000000000007",
+        "OTHER_BRIDGE": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+        "otherBridge": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+        "paused": false,
+        "version": "1.11.1-beta.3"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "celo:0x4200000000000000000000000000000000000010": "Proxy",
-        "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": ""
-      }
+        "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": "L2StandardBridge"
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "L2ToL1MessagePasser",
       "address": "celo:0x4200000000000000000000000000000000000016",
       "type": "Contract",
-      "unverified": true,
+      "template": "opstack/Layer2/L2ToL1MessagePasser",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x139a7bcf87ffc29f97c88feb9de39cb420dd36a61aeddf64c01af03d5b91b4ef"
+      ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
       "critical": { "sinceTimestamp": 1742960663 },
       "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1587571205,
@@ -61,20 +106,27 @@
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
         "$pastUpgrades": [],
-        "$upgradeCount": 0
+        "$upgradeCount": 0,
+        "MESSAGE_VERSION": 1,
+        "version": "1.1.1-beta.1"
       },
       "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "celo:0x4200000000000000000000000000000000000016": "Proxy",
-        "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": ""
+        "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "L2ProxyAdmin",
       "address": "celo:0x4200000000000000000000000000000000000018",
       "type": "Contract",
-      "unverified": true,
+      "template": "opstack/Layer2/L2ProxyAdmin",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x7f6864f2ed905cae4ebf163729df004c7b19520740e00ee1710427ec016e60ce"
+      ],
       "proxyType": "EIP1967 proxy",
+      "description": "Administration contract for other contract proxies.",
       "critical": { "sinceTimestamp": 1742960663 },
       "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1587571205,
@@ -84,17 +136,14 @@
         "$implementation": "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
+        "addressManager": "celo:0x0000000000000000000000000000000000000000",
+        "isUpgrading": false,
         "owner": "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223"
       },
-      "fieldMeta": {
-        "owner": {
-          "severity": "HIGH",
-          "description": "L2 alias of the CeloProxyAdminOwner. It can upgrade the security-critical L2 predeploys."
-        }
-      },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "celo:0x4200000000000000000000000000000000000018": "Proxy",
-        "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": ""
+        "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "ProxyAdmin"
       }
     },
     {
@@ -294,7 +343,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621595",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621597",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1170,13 +1219,13 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x62F45ce0358061557c46f1939672381fB08E6C8a",
+        "anchorGame": "eth:0x9DbBba40BDe59B8334866421C694a66D8524FAb1",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
-          "0x5501c89159c85f53a7927b44d756b5d0fda6a6f3b2506d80230fa5c2399ba250",
-          78709106
+          "0x9a176ef5e8e89ae3c84e3225e78fa297d83994ca7af351e8967956229eb7af99",
+          78876506
         ],
         "initVersion": 1,
         "paused": false,
@@ -1744,7 +1793,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 463628,
-          "prevBlockNum": 26122907
+          "prevBlockNum": 26137250
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1981,7 +2030,7 @@
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
         "FALLBACK_TIMEOUT_fmt": "14d",
-        "getLastProposalTimestamp": 1791216179,
+        "getLastProposalTimestamp": 1791383531,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
         "proposers": [
@@ -2060,7 +2109,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF",
-        "gameCount": 40450,
+        "gameCount": 40543,
         "gameImpls": [
           "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F",
           "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9",
@@ -2227,6 +2276,93 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": [
+      "constructor()",
+      "event FailedRelayedMessage(bytes32 indexed msgHash)",
+      "event Initialized(uint8 version)",
+      "event RelayedMessage(bytes32 indexed msgHash)",
+      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
+      "event SentMessageExtension1(address indexed sender, uint256 value)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function MIN_GAS_CALLDATA_OVERHEAD() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR() view returns (uint64)",
+      "function OTHER_MESSENGER() view returns (address)",
+      "function RELAY_CALL_OVERHEAD() view returns (uint64)",
+      "function RELAY_CONSTANT_OVERHEAD() view returns (uint64)",
+      "function RELAY_GAS_CHECK_BUFFER() view returns (uint64)",
+      "function RELAY_RESERVED_GAS() view returns (uint64)",
+      "function baseGas(bytes _message, uint32 _minGasLimit) pure returns (uint64)",
+      "function failedMessages(bytes32) view returns (bool)",
+      "function initialize(address _l1CrossDomainMessenger)",
+      "function l1CrossDomainMessenger() view returns (address)",
+      "function messageNonce() view returns (uint256)",
+      "function otherMessenger() view returns (address)",
+      "function paused() view returns (bool)",
+      "function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _value, uint256 _minGasLimit, bytes _message) payable",
+      "function sendMessage(address _target, bytes _message, uint32 _minGasLimit) payable",
+      "function successfulMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)",
+      "function xDomainMessageSender() view returns (address)"
+    ],
+    "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": [
+      "constructor()",
+      "event DepositFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event Initialized(uint8 version)",
+      "event WithdrawalInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function initialize(address _otherBridge)",
+      "function l1TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function version() pure returns (string)",
+      "function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
+      "function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable"
+    ],
+    "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
+      "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
+      "event WithdrawerBalanceBurnt(uint256 indexed amount)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function burn()",
+      "function initiateWithdrawal(address _target, uint256 _gasLimit, bytes _data) payable",
+      "function messageNonce() view returns (uint256)",
+      "function sentMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)"
+    ],
+    "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": [
+      "constructor(address _owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addressManager() view returns (address)",
+      "function changeProxyAdmin(address _proxy, address _newAdmin)",
+      "function getProxyAdmin(address _proxy) view returns (address)",
+      "function getProxyImplementation(address _proxy) view returns (address)",
+      "function implementationName(address) view returns (string)",
+      "function isUpgrading() view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxyType(address) view returns (uint8)",
+      "function renounceOwnership()",
+      "function setAddress(string _name, address _address)",
+      "function setAddressManager(address _address)",
+      "function setImplementationName(address _address, string _name)",
+      "function setProxyType(address _address, uint8 _type)",
+      "function setUpgrading(bool _upgrading)",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _proxy, address _implementation)",
+      "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": [
       "constructor(address _safe, address _livenessGuard, uint256 _livenessInterval, uint256 _minOwners, uint256 _thresholdPercentage, address _fallbackOwner)",
@@ -3485,6 +3621,10 @@
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
+    "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
+    "opstack/Layer2/L2ProxyAdmin": "0xd86564ec3c7e3195dd10abf37058aeeb801c6cb63d35c2b81df15ec0b67ea5ff",
+    "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
+    "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2": "0xe53b15bf3d92307599513bfc4cc3c92ccbd3b002df06d48f2e462ec4d7770f28",
@@ -3496,14 +3636,14 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225",
     "tokens/CELO": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82"
   },
-  "usedBlockNumbers": { "celo": 79316300, "ethereum": 26127308 },
-  "permissionsConfigHash": "0x6d73448dc7350d9687886e73bb98ba166a08513c3a6f42da6848b1971d5639a7",
+  "usedBlockNumbers": { "celo": 79482807, "ethereum": 26141126 },
+  "permissionsConfigHash": "0x9634e27737004864ea40269b3821d429aa765a785f4d5d520954a4ce0913762e",
   "modelledAgainst": {
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
   "permissions": {
     "celo:0x4200000000000000000000000000000000000018": {
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "celo:0x4200000000000000000000000000000000000007",
@@ -3523,6 +3663,49 @@
           "permission": "upgrade",
           "from": "celo:0x4200000000000000000000000000000000000018",
           "role": "admin"
+        }
+      ]
+    },
+    "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000007",
+          "role": "admin",
+          "via": [
+            { "address": "celo:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000010",
+          "role": "admin",
+          "via": [
+            { "address": "celo:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000016",
+          "role": "admin",
+          "via": [
+            { "address": "celo:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000018",
+          "role": "admin",
+          "via": [
+            { "address": "celo:0x4200000000000000000000000000000000000018" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "celo:0x4200000000000000000000000000000000000018",
+          "role": ".owner"
         }
       ]
     },

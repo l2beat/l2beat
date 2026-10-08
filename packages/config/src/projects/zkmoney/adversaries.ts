@@ -41,7 +41,8 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     // registration, the SDK's subscribe[registration,authorize_intents].
     publicObserver: {
       sentiment: 'good',
-      exposure:
+      exposureShort: 'Private payments publish encrypted notes.',
+      exposureContinued:
         'Claiming a name ties it and its Aztec address to the wallet that funds the registration. The first payment to a new contact reveals the recipient through a handshake, and L2 logs mark every transaction of the shared token smart contract. Your first sponsored transaction after registration is tied to your account, with the payment, deposit address or withdrawal it carries.',
       advice:
         'Claim your name from a wallet with no public link to you, and make your first transaction after registration a deposit from that wallet. Fund each deposit address once and let it be swept/relayed.',
@@ -67,8 +68,10 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      exposure:
-        "In practice the anonymity set is zk.money's users on Aztec, although the L2 contract is permissionless. The first payment to a name from outside zk.money is publicly tied to that name.",
+      exposureShort:
+        "In practice the anonymity set is zk.money's users on Aztec, although the L2 contract is permissionless.",
+      exposureContinued:
+        'The first payment to a name from outside zk.money is publicly tied to that name.',
       advice: `Give outside payers a deposit address your wallet created. ${S.commonAmounts} ${S.freshExit}`,
       interior: {
         ...INTERIOR,
@@ -101,8 +104,9 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'warning',
-      exposure:
-        'Anyone on your network path sees when you send Aztec transactions and can match your deposit and withdrawal to the blocks they land in. Desktop has no Tor or proxy setting.',
+      exposureShort:
+        'Anyone on your network path sees when you send Aztec transactions and can match your deposit and withdrawal to the blocks they land in.',
+      exposureContinued: 'Desktop has no Tor or proxy setting.',
       advice: 'Route zk.money Desktop through Tor with system-wide tools.',
       interior: {
         ...INTERIOR,
@@ -128,8 +132,10 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      exposure:
-        'The wallets derive their own deposit addresses from an ECDH secret shared with the resolver operator, Aztec Labs today. Matching the derived commitments against public portal deposits lets the operator link L1 deposits to L2 recipients. Payments, withdrawals and deposit claims are encrypted to an enclave admitted with an AWS Nitro attestation, which reads them inside.',
+      exposureShort:
+        'The wallets derive their own deposit addresses from an ECDH secret shared with the resolver operator, Aztec Labs today.',
+      exposureContinued:
+        'Matching the derived commitments against public portal deposits lets the operator link L1 deposits to L2 recipients. Payments, withdrawals and deposit claims are encrypted to an enclave admitted with an AWS Nitro attestation, which reads them inside.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -158,8 +164,10 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      exposure:
-        'A quantum computer that breaks elliptic-curve key exchange can decrypt historical notes and payment events published to Ethereum. Registered Aztec addresses identify the accounts. Deposit address secrets and enclave communication use the same class of cryptography.',
+      exposureShort:
+        'A quantum computer that breaks elliptic-curve key exchange can decrypt historical notes and payment events published to Ethereum.',
+      exposureContinued:
+        'Registered Aztec addresses identify the accounts. Deposit address secrets and enclave communication use the same class of cryptography.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

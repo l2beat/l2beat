@@ -29,7 +29,9 @@ export function railgunAdversaries(upgradeDelay: string) {
     cells: {
       publicObserver: {
         sentiment: 'good',
-        exposure: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to the adapter in cleartext.`,
+        exposureShort:
+          'Everything inside the pool is hidden, including which shield funds which unshield.',
+        exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to the adapter in cleartext.`,
         advice: S.exitViaRelayer('broadcaster'),
         interior: INTERIOR,
         sources: [
@@ -39,8 +41,10 @@ export function railgunAdversaries(upgradeDelay: string) {
       },
       chainAnalyst: {
         sentiment: 'good',
-        exposure:
-          'The candidates for an unshield are the shields of the same token. In-pool transfers break a one-to-one match, while timing and exact amounts narrow it.',
+        exposureShort:
+          'The candidates for an unshield are the shields of the same token.',
+        exposureContinued:
+          'In-pool transfers break a one-to-one match, while timing and exact amounts narrow it.',
         advice: `${S.commonAmounts} ${S.freshExit}`,
         interior: INTERIOR,
         sources: [
@@ -56,7 +60,7 @@ export function railgunAdversaries(upgradeDelay: string) {
       },
       networkObserver: {
         sentiment: 'good',
-        exposure:
+        exposureShort:
           'RailOxide sends all traffic over built-in Tor, broadcaster messages included, and finds your notes by decrypting every note locally.',
         advice:
           'Use RailOxide, the wallet these ratings assume, and read the chain from your own node.',
@@ -80,7 +84,8 @@ export function railgunAdversaries(upgradeDelay: string) {
       },
       privilegedInsider: {
         sentiment: 'good',
-        exposure: `Only the user holds viewing keys, and DAO upgrades wait ${upgradeDelay}. PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists, so the notes you spend stay on your device.`,
+        exposureShort: `Only the user holds viewing keys, and DAO upgrades wait ${upgradeDelay}.`,
+        exposureContinued: `PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists, so the notes you spend stay on your device.`,
         advice:
           'Watch governance proposals and unshield before an upgrade you reject executes.',
         interior: {
@@ -100,8 +105,9 @@ export function railgunAdversaries(upgradeDelay: string) {
       },
       futureAdversary: {
         sentiment: 'warning',
-        exposure:
-          'Notes are encrypted with elliptic-curve key exchange. A quantum computer decrypts every note sent to a 0zk address that was ever shared, broadcaster fee notes included.',
+        exposureShort: 'Notes are encrypted with elliptic-curve key exchange.',
+        exposureContinued:
+          'A quantum computer decrypts every note sent to a 0zk address that was ever shared, broadcaster fee notes included.',
         advice:
           'Share your 0zk address privately, with a fresh one per counterparty where you can.',
         interior: {
