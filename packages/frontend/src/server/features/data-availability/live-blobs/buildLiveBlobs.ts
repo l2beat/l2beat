@@ -19,16 +19,12 @@ import {
   BELT_SLOTS,
   BUCKET_SLOTS,
   BUCKETS,
+  LIVE_LAG_SLOTS,
   PULSE_BUCKET_SLOTS,
   PULSE_BUCKETS,
   WINDOW_SLOTS,
 } from './liveBlobsSlots'
 
-/**
- * Slots the head may trail the clock and still be live: the slot under way,
- * whose block has not come yet, and two missed in a row
- */
-const LIVE_LAG_SLOTS = 3
 /**
  * Slots behind the head the backend may still rewrite: on a reorg a slot that
  * had a block may lose it, and one that was missed may get one. The backend

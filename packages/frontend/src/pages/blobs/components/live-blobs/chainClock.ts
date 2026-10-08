@@ -1,11 +1,14 @@
 import { SLOT_SECONDS, slotProgressAt, slotStart } from '@l2beat/shared-pure'
 import { useState } from 'react'
+import { LIVE_LAG_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 
 /**
  * The device's clock may be off, and a minute off would park the bay away
- * from the blocks coming in, so the head's slot corrects it
+ * from the blocks coming in, so the head's slot corrects it. A head the
+ * server calls live is not taken for a clock that runs ahead: its own slot
+ * and the ones the server lets it trail by
  */
-const MAX_HEAD_LAG = 3 * SLOT_SECONDS
+const MAX_HEAD_LAG = (LIVE_LAG_SLOTS + 1) * SLOT_SECONDS
 /** Where a corrected clock is put: about when a block reaches us */
 const HEAD_SEEN_INTO_SLOT = 2
 
