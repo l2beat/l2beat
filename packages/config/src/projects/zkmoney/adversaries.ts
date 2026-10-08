@@ -2,51 +2,54 @@ import {
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
+import type { PrivacyExposureMap } from '../../types'
 
-const DOCS = 'https://docs.zk.money/docs/'
-// Public source of the zk.money desktop release. vendor/oxide holds the Oxide
+// zk.money Desktop v0.1.0, the reference client. vendor/oxide holds the Oxide
 // sources, which match the deployed Oxide commit a534df2f.
 const ZKMONEY_REPO =
-  'https://github.com/aztec-labs-eng/zkmoney-public/blob/fc37a3e25440bc4bd7a9de81a7f4830ec753a4d4/'
+  'https://github.com/aztec-labs-eng/zkmoney-public/blob/f04743f5d57d1b89f9190cad0f6affd28b0793f2/'
 const OXIDE = `${ZKMONEY_REPO}vendor/oxide/`
-// The resolver circuit was vendored after the pinned desktop release.
-const RESOLVER_CIRCUIT =
-  'https://github.com/aztec-labs-eng/zkmoney-public/blob/68425f9cf408ac803eade04d10318fcf345444a0/vendor/oxide/noir-projects/resolver_circuit/'
+const HANDSHAKE_REGISTRY =
+  'https://github.com/AztecProtocol/aztec-packages/blob/v5.2.0/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L82-L96'
+
+const INTERIOR: PrivacyExposureMap = {
+  sender: {
+    verdict: 'atRisk',
+    note: 'Public for your first sponsored transaction after registration.',
+  },
+  recipient: {
+    verdict: 'exposed',
+    note: 'Revealed by the first payment to each new contact.',
+  },
+  amount: 'private',
+  asset: { verdict: 'exposed', note: 'Only DAI.' },
+  linkage: {
+    verdict: 'atRisk',
+    note: 'Exposed when your first sponsored transaction after registration withdraws or pays a new contact.',
+  },
+}
 
 export const zkMoneyAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'linkage',
-    text: 'Hides senders, amounts and links between deposits and withdrawals within the ledger. Tags, deposits and withdrawals are public. The first payment to a new contact reveals the recipient, and the first sponsored transaction after registration reveals the sender’s account.',
+    text: 'Hides senders, amounts and the link between deposits and withdrawals inside the ledger. Names, deposits and withdrawals are public.',
   },
   cells: {
+    // Green rests on advice the wallet never surfaces: make the first sponsored
+    // transaction after registration a deposit. Revisit if hidden advice stops
+    // earning a colour. Wallet fix to propose: an empty subscribe right after
+    // registration, the SDK's subscribe[registration,authorize_intents].
     publicObserver: {
       sentiment: 'good',
       exposureShort: 'Private payments publish encrypted notes.',
-      exposureContinued: `Fixed log tags identify zk.money transactions on Aztec, and the first payment to a new contact reveals the recipient's Aztec address through a handshake. The Ethereum registry maps that address to a tag. The first sponsored transaction after registration also identifies the sender's account. ${S.entryExitPublic()} Claiming a tag links it and the Aztec address to the funding L1 wallet.`,
+      exposureContinued:
+        'Claiming a name ties it and its Aztec address to the wallet that funds the registration. The first payment to a new contact reveals the recipient through a handshake, and L2 logs mark every transaction of the shared token smart contract. Your first sponsored transaction after registration is tied to your account, with the payment, deposit address or withdrawal it carries.',
       advice:
-        'Claim your tag from a wallet with no public link to you and fund each deposit address once. Wait for deposits to be swept. Recovering them reveals the link to your account.',
-      interior: {
-        sender: {
-          verdict: 'atRisk',
-          note: 'Your first sponsored transaction after registration is publicly tied to your account.',
-        },
-        recipient: {
-          verdict: 'exposed',
-          note: "The first payment to a new contact reveals the recipient's Aztec address.",
-        },
-        amount: 'private',
-        asset: {
-          verdict: 'exposed',
-          note: 'zk.money only holds DAI.',
-        },
-        linkage: {
-          verdict: 'atRisk',
-          note: 'If your first sponsored transaction after registration is a payment to a new contact, it shows both ends.',
-        },
-      },
+        'Claim your name from a wallet with no public link to you, and make your first transaction after registration a deposit from that wallet. Fund each deposit address once and let it be swept/relayed.',
+      interior: INTERIOR,
       sources: [
         {
-          title: 'Fixed log tags on every zk.money transaction',
+          title: 'Fixed log tags on every token transaction',
           url: `${OXIDE}noir-projects/oxide_lib/src/constants.nr#L77-L81`,
         },
         {
@@ -58,41 +61,31 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
           url: `${ZKMONEY_REPO}packages/contracts/contracts/fee_paying/claim_fpc/src/main.nr#L205-L217`,
         },
         {
-          title: 'Withdrawals publish their L1 payload',
-          url: `${OXIDE}noir-projects/oxide_token_contract/src/withdrawal.nr#L32-L42`,
+          contract: 'AccountMetadataRegistry',
+          title: 'Names map to Aztec addresses',
         },
-        { contract: 'RegistrationController' },
-        { contract: 'AccountMetadataRegistry' },
-        { contract: 'DepositSIPA' },
       ],
     },
     chainAnalyst: {
       sentiment: 'warning',
-      exposureShort: 'The anonymity set is limited to zk.money users.',
+      exposureShort:
+        "In practice the anonymity set is zk.money's users on Aztec, although the L2 contract is permissionless.",
       exposureContinued:
-        'The first payment to a tag from outside zk.money is publicly tied to that tag. Anyone who records Aztec transactions can also tie the first deposit address your wallet creates after registration to your account.',
-      advice: `Watch the anonymity set in this early stage. Give outside payers a deposit address your wallet created instead of your tag. Fund your first deposit address after registration from the wallet that claimed your tag. ${S.commonAmounts} ${S.freshExit}`,
+        'The first payment to a name from outside zk.money is publicly tied to that name.',
+      advice: `Give outside payers a deposit address your wallet created. ${S.commonAmounts} ${S.freshExit}`,
       interior: {
-        sender: 'atRisk',
-        recipient: 'exposed',
+        ...INTERIOR,
         amount: {
           verdict: 'atRisk',
           note: 'Inferable when a payment sits between a matching public deposit and withdrawal.',
         },
-        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Registration deposits are publicly tied to their tag.',
+          note: 'Registration deposits are publicly tied to their name.',
         },
       },
       sources: [
-        { contract: 'ZkMoneyPortal' },
         { contract: 'RegistrationSIPA' },
-        { contract: 'PlainWithdrawalExecutor' },
-        {
-          title: 'Private transfers credit the recipient with new notes',
-          url: `${OXIDE}noir-projects/oxide_token_contract/src/main.nr#L133-L167`,
-        },
         {
           title: 'Resolver notifies the recipient of each deposit address',
           url: `${OXIDE}noir-projects/oxide_token_contract/src/main.nr#L236-L251`,
@@ -105,62 +98,44 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         {
           title:
             'Handshake announcements are tagged with the recipient address',
-          url: 'https://github.com/AztecProtocol/aztec-packages/blob/v5.2.0/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L82-L96',
+          url: HANDSHAKE_REGISTRY,
         },
       ],
     },
     networkObserver: {
-      sentiment: 'good',
-      exposureShort: 'Keys and proving stay on your device.',
-      exposureContinued:
-        'Note discovery reveals your account address to the Aztec node. Ethereum RPC requests reveal funding wallets, deposit addresses and L1 transaction senders. XMTP carries payment requests and contact links under public account addresses, exposing who asks whom for money. Both wallets support custom Aztec, Ethereum and enclave endpoints.',
-      advice:
-        'Use zk.money Desktop with your own Aztec and Ethereum nodes. Send L1 transactions from your Ethereum wallet over a public RPC. Route all computer traffic through a VPN or Tor. Avoid payment requests and contact links with counterparties that must stay private.',
+      sentiment: 'warning',
+      exposureShort:
+        'Anyone on your network path sees when you send Aztec transactions and can match your deposit and withdrawal to the blocks they land in.',
+      exposureContinued: 'Desktop has no Tor or proxy setting.',
+      advice: 'Route zk.money Desktop through Tor with system-wide tools.',
       interior: {
+        ...INTERIOR,
         sender: {
           verdict: 'atRisk',
-          note: 'Payment requests over XMTP show who asks whom.',
+          note: 'XMTP shows who asks whom for payment.',
         },
-        recipient: 'exposed',
-        amount: 'private',
-        asset: 'exposed',
-        linkage: 'atRisk',
+        linkage: {
+          verdict: 'atRisk',
+          note: 'Private only over Tor, which Desktop lacks.',
+        },
       },
       sources: [
         {
-          title: 'Desktop endpoint overrides',
+          title: 'Desktop settings: endpoints only, no proxy',
           url: `${ZKMONEY_REPO}packages/web-wallet-desktop/src/config.js#L36-L47`,
-        },
-        {
-          title: 'Handshakes are found by a tag derived from your address',
-          url: 'https://github.com/AztecProtocol/aztec-packages/blob/v5.2.0/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L82-L96',
-        },
-        {
-          title: 'L1 gas estimates over the wallet RPC carry your address',
-          url: `${ZKMONEY_REPO}packages/web-wallet/src/features/deposit/sipaRecovery.ts#L166-L193`,
-        },
-        {
-          title: 'Desktop sends screening to zk.money from its own process',
-          url: `${ZKMONEY_REPO}packages/web-wallet-desktop/scripts/compose-config.js#L15-L20`,
         },
         {
           title: 'XMTP identity is the account bootstrap address',
           url: `${ZKMONEY_REPO}packages/web-wallet/src/platform/xmtp/WebXmtpClient.ts#L95-L109`,
-        },
-        {
-          title: 'Pointing the wallet at a different service',
-          url: `${DOCS}desktop`,
         },
       ],
     },
     privilegedInsider: {
       sentiment: 'bad',
       exposureShort:
-        'Wallets encrypt payments, withdrawals and deposit claims to an enclave key registered in the portal.',
+        'The wallets derive their own deposit addresses from an ECDH secret shared with the resolver operator, Aztec Labs today.',
       exposureContinued:
-        'The approved code decrypts them inside the enclave. Privacy against the operator depends on AWS Nitro and that code, whose binary has not been reproduced. The resolver operator can re-derive all deposit addresses, including those created by your wallet, linking L1 deposits to L2 recipients.',
-      advice:
-        "Run your own enclave, which is permissionless onchain but still depends on AWS. Running your own resolver operator is also permissionless, but its service is unpublished and the released wallets only use Aztec Labs' operator.",
+        'Matching the derived commitments against public portal deposits lets the operator link L1 deposits to L2 recipients. Payments, withdrawals and deposit claims are encrypted to an enclave admitted with an AWS Nitro attestation, which reads them inside.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -170,34 +145,21 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Enclave requests carry notes and the nullifier hiding key',
-          url: `${OXIDE}yarn-project/oxide-lib/src/types.ts#L336-L392`,
+          title: 'Wallets derive deposit addresses against the resolver key',
+          url: `${ZKMONEY_REPO}packages/web-wallet/src/features/deposit/sipaGateway.ts#L857-L871`,
+        },
+        {
+          title: 'Their nonces count down a predictable range',
+          url: `${ZKMONEY_REPO}packages/sdk/src/services/sipaSelfResolve.ts#L49-L58`,
         },
         {
           title: 'Wallets encrypt to the enclave key registered in the portal',
           url: `${OXIDE}yarn-project/oxide-client/src/fleet_signer.ts#L172-L202`,
         },
         {
-          title: 'Deposit address secrets derive from the resolver key',
-          url: `${ZKMONEY_REPO}packages/sdk/src/services/sipaStealth.ts#L80-L100`,
+          contract: 'ZkMoneyPortal',
+          title: 'Deposits publish the recipient commitment',
         },
-        {
-          title:
-            'The resolver circuit derives each secret from the operator key',
-          url: `${RESOLVER_CIRCUIT}src/main.nr#L23-L79`,
-        },
-        {
-          title: 'Self-made deposit addresses use predictable nonces',
-          url: `${ZKMONEY_REPO}packages/sdk/src/services/sipaSelfResolve.ts#L47-L53`,
-        },
-        {
-          title: 'Addresses are sent to Predicate for screening',
-          url: `${ZKMONEY_REPO}packages/front-core/src/core/services/screening/PredicateScreeningService.ts#L86-L97`,
-        },
-        { contract: 'ZkMoneyPortal', title: 'Registered TEE signers' },
-        { contract: 'Resolver' },
-        { contract: 'AccountMetadataRegistry', title: 'Resolver operators' },
-        { section: 'permissions' },
       ],
     },
     futureAdversary: {
@@ -206,7 +168,6 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         'A quantum computer that breaks elliptic-curve key exchange can decrypt historical notes and payment events published to Ethereum.',
       exposureContinued:
         'Registered Aztec addresses identify the accounts. Deposit address secrets and enclave communication use the same class of cryptography.',
-      advice: S.permanentlyDisclosed('every payment and every deposit link'),
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
