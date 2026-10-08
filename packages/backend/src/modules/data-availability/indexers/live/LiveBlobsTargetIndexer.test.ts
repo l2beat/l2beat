@@ -276,6 +276,8 @@ function setup(
   const stored = options.stored
   const liveBlock = mockObject<Database['liveBlock']>({
     findHead: async () => stored.at(-1),
+    findByBlockNumber: async (blockNumber: number) =>
+      stored.find((b) => b.blockNumber === blockNumber),
     getByBlockNumberRange: async (from: number, to: number) =>
       stored.filter((b) => from <= b.blockNumber && b.blockNumber <= to),
   })

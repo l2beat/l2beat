@@ -145,7 +145,7 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
     const storedChecked =
       checked === newestStored.blockNumber
         ? newestStored
-        : await this.findStored(checked)
+        : await this.$.db.liveBlock.findByBlockNumber(checked)
     if (!storedChecked) return undefined
 
     const onChainHash = await this.hashOnChain(checked, latest)
@@ -172,14 +172,6 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
       blockNumber: latest.number,
     })
     return REFETCH_WINDOW_HEIGHT
-  }
-
-  private async findStored(blockNumber: number) {
-    const [stored] = await this.$.db.liveBlock.getByBlockNumberRange(
-      blockNumber,
-      blockNumber,
-    )
-    return stored
   }
 
   /** The head answers for itself and its parent, sparing a call */

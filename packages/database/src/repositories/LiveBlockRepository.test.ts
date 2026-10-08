@@ -75,6 +75,16 @@ describeDatabase(LiveBlockRepository.name, (db) => {
     })
   })
 
+  describe(LiveBlockRepository.prototype.findByBlockNumber.name, () => {
+    it('returns the block of the number', async () => {
+      expect(await repository.findByBlockNumber(1001)).toEqual(BLOCKS[1])
+    })
+
+    it('returns undefined when no block has the number', async () => {
+      expect(await repository.findByBlockNumber(999)).toEqual(undefined)
+    })
+  })
+
   describe(LiveBlockRepository.prototype.getByBlockNumberRange.name, () => {
     it('returns the blocks of the numbers, both ends included', async () => {
       expect(await repository.getByBlockNumberRange(1001, 1002)).toEqual(

@@ -119,10 +119,7 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
     start: number,
     blocks: EthereumBlobBlock[],
   ) {
-    const [parent] = await this.$.db.liveBlock.getByBlockNumberRange(
-      start - 1,
-      start - 1,
-    )
+    const parent = await this.$.db.liveBlock.findByBlockNumber(start - 1)
     let parentHash = parent?.hash
     for (const block of blocks) {
       assert(
