@@ -1,8 +1,4 @@
 import {
-  DaThroughputChartParams,
-  getDaThroughputChart,
-} from '~/server/features/data-availability/throughput/getDaThroughputChart'
-import {
   getLiveBlobsFeed,
   LiveBlobsParams,
   PastBlobsParams,
@@ -11,6 +7,10 @@ import {
   DaPastDayUsageParams,
   getDaPastDayUsage,
 } from '~/server/features/data-availability/throughput/getDaPastDayUsage'
+import {
+  DaThroughputChartParams,
+  getDaThroughputChart,
+} from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import {
   DataPostedChartWithProjectsRangesDataParams,
   getDetailedDataPostedChartWithProjectsRanges,
