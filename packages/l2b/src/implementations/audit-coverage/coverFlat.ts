@@ -5,6 +5,7 @@ import type { AuditedFile, Unit } from './AuditCoverage'
 import type { AuditedCode } from './AuditedCode'
 import type { DeployedAliases } from './deployedSource'
 import {
+  isCodeLine,
   type Match,
   matchDeclaration,
   newestOccurrence,
@@ -85,7 +86,9 @@ function toUnit(
     unit.findings = findings
   }
   if (!match.identical) {
-    Object.assign(unit, changesOf(match.diff, unit.lines))
+    const changes = changesOf(match.diff, unit.lines)
+    Object.assign(unit, changes)
+    unit.covered = unit.lines - addedCodeLines(declaration.body, changes.added)
   }
   const { repository, commit, path } = occurrence
   return {
@@ -95,6 +98,22 @@ function toUnit(
       file: { repository, commit, path },
     },
   }
+}
+
+function addedCodeLines(
+  body: string,
+  added: [number, number][] | undefined,
+): number {
+  const lines = body.split('\n')
+  let count = 0
+  for (const [first, last] of added ?? []) {
+    for (let line = first; line <= last; line++) {
+      if (isCodeLine(lines[line] as string)) {
+        count++
+      }
+    }
+  }
+  return count
 }
 
 function reportsOf(objects: string[], code: AuditedCode): string[] {

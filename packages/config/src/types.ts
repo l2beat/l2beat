@@ -2340,6 +2340,7 @@ const AuditCoverageUnit = v.object({
   findings: v.record(v.string(), v.array(v.string())).optional(),
   added: v.array(LineSpan).optional(),
   removed: v.array(v.tuple([v.number(), v.number(), v.number()])).optional(),
+  covered: v.number().optional(),
 })
 
 const AuditCoverageContract = v.object({

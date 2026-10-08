@@ -126,12 +126,12 @@ function summary(coverage: Coverage): string {
   for (const flat of Object.values(coverage.flats)) {
     for (const [id] of flat) {
       const unit = coverage.units[id] as Coverage['units'][string]
-      const added = (unit.added ?? []).reduce(
-        (sum, [a, b]) => sum + b - a + 1,
-        0,
-      )
       lines += unit.lines
-      covered += unit.status === 'none' ? 0 : unit.lines - added
+      if (unit.status === 'identical') {
+        covered += unit.lines
+      } else if (unit.status === 'differs') {
+        covered += unit.covered ?? 0
+      }
     }
   }
   const contracts = Object.keys(coverage.contracts).length

@@ -77,6 +77,7 @@ type Unit = {
   findings?: Record<ReportId, FindingId[]> // major findings open in the audited code
   added?: [number, number][] // deployed lines, relative to the unit's first line
   removed?: [number, number, number][] // [before deployed line, audited first, audited last], relative
+  covered?: number // when status is differs: lines minus added lines that hold code, not only comments
 }
 ```
 

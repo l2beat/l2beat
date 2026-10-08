@@ -168,7 +168,7 @@ function codeLineCount(source: string): number {
   return source.split('\n').filter(isCodeLine).length
 }
 
-function isCodeLine(line: string): boolean {
+export function isCodeLine(line: string): boolean {
   const trimmed = line.trim()
   if (trimmed.length === 0) {
     return false
