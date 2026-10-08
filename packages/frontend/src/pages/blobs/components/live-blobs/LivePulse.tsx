@@ -7,9 +7,9 @@ import {
   useState,
 } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
-import { SLOT_SECONDS } from '~/utils/beaconSlots'
+import { SLOT_SECONDS, slotStart } from '~/utils/beaconSlots'
 import { cn } from '~/utils/cn'
-import { formatWhole } from './blocks/format'
+import { formatClock, formatWhole } from './blocks/format'
 import { usePrefersReducedMotion } from './hooks'
 import { earliestView } from './lookBack'
 import type { BlockLimits } from './model'
@@ -110,10 +110,10 @@ function BlobPulse({
     earliestView({ head, slots: blobsPerSlot.length }, before),
     head,
   )
+  // the belt's caption has the slot's number, so this says when it was
+  const viewTime = view === undefined ? '' : formatClock(slotStart(view))
   const describeView =
-    view === undefined
-      ? 'Live'
-      : `Slot ${formatWhole(view)}, ${ago(view, head)}`
+    view === undefined ? 'Live' : `${viewTime} · ${ago(view, head)}`
 
   return (
     <div>
@@ -192,11 +192,18 @@ function BlobPulse({
       </div>
       <div className="mt-1 flex items-center justify-between gap-4 font-medium text-label-value-12 text-secondary">
         <span>1 hour ago</span>
-        <span className="max-md:hidden">
-          {view === undefined
-            ? 'The last hour, a bar per block, against the target (dashed). Drag to look back'
-            : describeView}
-        </span>
+        {view === undefined ? (
+          <span className="max-md:hidden">
+            The last hour, a bar per block, against the target (dashed). Drag to
+            look back
+          </span>
+        ) : (
+          // on a phone, the time alone fits between the ends
+          <span>
+            <span className="text-primary tabular-nums">{viewTime}</span>
+            <span className="max-md:hidden"> · {ago(view, head)}</span>
+          </span>
+        )}
         {view === undefined ? (
           <span>Now</span>
         ) : (
