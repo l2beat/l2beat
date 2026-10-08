@@ -380,6 +380,21 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
+  /** The last day of Ethereum blocks and blobs, kept slot by slot */
+  readonly liveBlobs: LiveBlobsTrackingConfig | false
+}
+
+export interface LiveBlobsTrackingConfig {
+  /** Blocks fetched at once while catching up with the head */
+  readonly batchSize: number
+  /**
+   * An RPC of its own: it has to keep up with the head, and the hourly
+   * indexers' backfill must not hold up its calls
+   */
+  readonly rpc: {
+    readonly url: string
+    readonly callsPerMinute: number
+  }
 }
 
 export interface BlockSyncModuleConfig {
