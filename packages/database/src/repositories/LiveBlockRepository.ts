@@ -67,6 +67,17 @@ export class LiveBlockRepository extends BaseRepository {
     return row && toRecord(row)
   }
 
+  async findByBlockNumber(
+    blockNumber: number,
+  ): Promise<LiveBlockRecord | undefined> {
+    const row = await this.db
+      .selectFrom('LiveBlock')
+      .selectAll()
+      .where('blockNumber', '=', blockNumber)
+      .executeTakeFirst()
+    return row && toRecord(row)
+  }
+
   async getSlotRange(fromSlot = 0): Promise<LiveSlotRange | undefined> {
     const row = await this.db
       .selectFrom('LiveBlock')
