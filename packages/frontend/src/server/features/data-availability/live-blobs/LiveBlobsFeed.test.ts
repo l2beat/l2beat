@@ -138,6 +138,23 @@ describe(LiveBlobsFeed.name, () => {
     expect(feed.past({ page: 20 })).toEqual({ blocks: [], complete: true })
   })
 
+  it('keeps a page open while the chain may still swap its last slots', async () => {
+    const node = fakeNode()
+    // slots 992-1023: the head's two before it may yet be swapped for others
+    node.head = 1025
+    feed = new LiveBlobsFeed(node.source, Logger.SILENT)
+    await feed.latest()
+    await feed.backfilled()
+    expect(feed.past({ page: 31 }).complete).toEqual(false)
+
+    feed.stop()
+    node.head = 1026
+    feed = new LiveBlobsFeed(node.source, Logger.SILENT)
+    await feed.latest()
+    await feed.backfilled()
+    expect(feed.past({ page: 31 }).complete).toEqual(true)
+  })
+
   it('takes only whole pages counted from genesis', () => {
     expect(PastBlobsParams.safeValidate({ page: 30 }).success).toEqual(true)
     // past the safe integers, a slot minus one is the same slot

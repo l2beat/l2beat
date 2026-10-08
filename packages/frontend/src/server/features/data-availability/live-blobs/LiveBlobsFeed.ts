@@ -107,7 +107,8 @@ export interface PastBlobs {
   blocks: LiveBlock[]
   /**
    * Every slot of the page that is still in the hour is known, and the page
-   * ends at the head or before, so looking again would bring nothing more
+   * ends behind the slots the chain may still swap, so looking again would
+   * bring nothing more
    */
   complete: boolean
 }
@@ -249,7 +250,7 @@ export class LiveBlobsFeed {
   past({ page }: PastBlobsParams): PastBlobs {
     const last = (page + 1) * PAST_PAGE_SLOTS - 1
     const blocks: LiveBlock[] = []
-    let complete = this.head !== undefined && last <= this.head
+    let complete = this.head !== undefined && last < this.head - UNSETTLED_SLOTS
     // counted rather than compared, so no page can keep it going for ever
     for (let i = 0; i < PAST_PAGE_SLOTS; i++) {
       const slot = last - i

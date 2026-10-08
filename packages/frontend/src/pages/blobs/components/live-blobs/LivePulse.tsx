@@ -75,6 +75,8 @@ function BlobPulse({
   brush: PulseBrush
 }) {
   const barsRef = useRef<SVGGElement>(null)
+  const bandRef = useRef<SVGRectElement>(null)
+  const bayRef = useRef<SVGLineElement>(null)
   const reducedMotion = usePrefersReducedMotion()
   // Bars keep their place by slot and the group moves, so a new block
   // moves one element rather than all 300
@@ -88,13 +90,19 @@ function BlobPulse({
   const bay = view ?? head + 1
   const xOf = (slot: number) => width - (head - slot + 1) * BAR_STEP
 
+  // A band on slots of the past slides with their bars. Live, it stays put
+  // at the right end, where the slot being made always is
   // biome-ignore lint/correctness/useExhaustiveDependencies: a new head is what slides it
   useLayoutEffect(() => {
-    if (reducedMotion || !barsRef.current) return
-    barsRef.current.animate(
-      [{ transform: `translateX(${BAR_STEP}px)` }, { transform: 'none' }],
-      { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
-    )
+    if (reducedMotion) return
+    const sliding = [barsRef.current]
+    if (view !== undefined) sliding.push(bandRef.current, bayRef.current)
+    for (const element of sliding) {
+      element?.animate(
+        [{ transform: `translateX(${BAR_STEP}px)` }, { transform: 'none' }],
+        { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+      )
+    }
   }, [head, reducedMotion])
 
   // as far back as the belt can be taken, or live while the hour is too short
@@ -130,16 +138,17 @@ function BlobPulse({
           role="img"
           aria-label={`Blobs in each of the last ${formatWhole(blobsPerSlot.length)} slots`}
         >
+          <rect
+            ref={bandRef}
+            x={xOf(bay - before)}
+            width={(before + 1 + after) * BAR_STEP}
+            y={0}
+            height={PULSE_HEIGHT}
+            className="fill-brand/10 stroke-brand/40"
+            strokeWidth={1}
+            vectorEffect="non-scaling-stroke"
+          />
           <g ref={barsRef}>
-            <rect
-              x={xOf(bay - before)}
-              width={(before + 1 + after) * BAR_STEP}
-              y={0}
-              height={PULSE_HEIGHT}
-              className="fill-brand/10 stroke-brand/40"
-              strokeWidth={1}
-              vectorEffect="non-scaling-stroke"
-            />
             <g
               transform={`translate(${width - (head - firstHead.current + 1) * BAR_STEP} 0)`}
             >
@@ -155,17 +164,18 @@ function BlobPulse({
                 ),
               )}
             </g>
-            {/* the bay, as on the belt: where the block looked at sits */}
-            <line
-              x1={xOf(bay) + BAR_WIDTH / 2}
-              x2={xOf(bay) + BAR_WIDTH / 2}
-              y1={0}
-              y2={PULSE_HEIGHT}
-              className="stroke-primary"
-              strokeWidth={1.5}
-              vectorEffect="non-scaling-stroke"
-            />
           </g>
+          {/* the bay, as on the belt: where the block looked at sits */}
+          <line
+            ref={bayRef}
+            x1={xOf(bay) + BAR_WIDTH / 2}
+            x2={xOf(bay) + BAR_WIDTH / 2}
+            y1={0}
+            y2={PULSE_HEIGHT}
+            className="stroke-primary"
+            strokeWidth={1.5}
+            vectorEffect="non-scaling-stroke"
+          />
           <line
             x1={0}
             x2={width}
@@ -212,6 +222,7 @@ function useBrushDrag(head: number, brush: PulseBrush) {
   const drag = useRef<{
     pointerId: number
     startX: number
+    startY: number
     /** Slots from the pointer to the bay, kept as the band is carried */
     offset: number
     touch: boolean
@@ -233,6 +244,7 @@ function useBrushDrag(head: number, brush: PulseBrush) {
     drag.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
+      startY: event.clientY,
       offset: onBand ? bay - slot : 0,
       touch,
       moved: false,
@@ -248,7 +260,15 @@ function useBrushDrag(head: number, brush: PulseBrush) {
     const current = drag.current
     if (current?.pointerId !== event.pointerId) return
     if (!current.moved) {
-      if (Math.abs(event.clientX - current.startX) < DRAG_FROM) return
+      const across = Math.abs(event.clientX - current.startX)
+      const down = Math.abs(event.clientY - current.startY)
+      // a finger going more down than across is scrolling the page, and the
+      // browser takes it over; it must not move the belt on its way
+      if (current.touch && down > across) {
+        if (down >= DRAG_FROM) drag.current = undefined
+        return
+      }
+      if (across < DRAG_FROM) return
       current.moved = true
       setDragging(true)
     }

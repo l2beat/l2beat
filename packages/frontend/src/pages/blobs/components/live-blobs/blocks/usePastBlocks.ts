@@ -13,7 +13,7 @@ import {
 interface Options {
   /**
    * The belt's left end, looking back: every slot from it to the live answers
-   * is fetched. Undefined while live, which keeps what was fetched before
+   * is fetched. Undefined while live
    */
   from: number | undefined
   head: number | undefined
@@ -42,19 +42,19 @@ export function usePastBlocks({ from, head, posterIndexOf }: Options) {
     combine: dataOf,
   })
 
-  const blocks = useMemo(() => {
-    const found = new Map<number, ChainBlock>()
+  // Pages the belt has left are kept, as it glides on from them: to a later
+  // slot, or back to live. Fresher answers replace what was kept
+  const kept = useRef<ReadonlyMap<number, ChainBlock>>(new Map())
+  return useMemo(() => {
+    const blocks = new Map(kept.current)
     for (const answer of answers) {
       for (const block of answer?.blocks ?? []) {
-        found.set(block.slot, toChainBlock(block, posterIndexOf))
+        blocks.set(block.slot, toChainBlock(block, posterIndexOf))
       }
     }
-    return found
+    kept.current = blocks
+    return blocks
   }, [answers, posterIndexOf])
-  // kept once back to live, as the belt passes them on its way there
-  const kept = useRef(blocks)
-  if (lookingBack) kept.current = blocks
-  return kept.current
 }
 
 // kept stable, so the answers come back the same while none of them changed
