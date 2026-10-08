@@ -38,16 +38,17 @@ jobs:
       TURBO_API: ${{ secrets.TURBO_API }}
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     steps:
-      - name: Check out code
-        uses: actions/checkout@v6
+      - parallel:
+          - name: Check out code
+            uses: actions/checkout@v6
 
-      - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v4
-        with:
-          cleanup: false
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
+          - name: Set up Docker.io mirror
+            uses: docker/setup-buildx-action@v4
+            with:
+              cleanup: false
+              buildkitd-config-inline: |
+                [registry."docker.io"]
+                  mirrors = ["mirror.gcr.io"]
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v4
