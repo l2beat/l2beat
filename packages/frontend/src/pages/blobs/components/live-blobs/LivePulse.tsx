@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
-import { slotStart } from '~/utils/beaconSlots'
+import { SLOT_SECONDS } from '~/utils/beaconSlots'
 import { cn } from '~/utils/cn'
 import { formatWhole } from './blocks/format'
 import { usePrefersReducedMotion } from './hooks'
@@ -86,8 +86,8 @@ function BlobPulse({
   const targetY = PULSE_HEIGHT - limits.targetBlobsPerBlock * scale
   const drag = useBrushDrag(head, brush)
   const { view, before, after } = brush
-  // live, the bay holds the slot being made, just past the newest bar
-  const bay = view ?? head + 1
+  // live, the bay holds the newest block for most of its slot
+  const bay = view ?? head
   const xOf = (slot: number) => width - (head - slot + 1) * BAR_STEP
 
   // A band on slots of the past slides with their bars. Live, it stays put
@@ -108,10 +108,12 @@ function BlobPulse({
   // as far back as the belt can be taken, or live while the hour is too short
   const earliest = Math.min(
     earliestView({ head, slots: blobsPerSlot.length }, before),
-    head + 1,
+    head,
   )
   const describeView =
-    view === undefined ? 'Live' : `Slot ${formatWhole(view)}, ${ago(view)}`
+    view === undefined
+      ? 'Live'
+      : `Slot ${formatWhole(view)}, ${ago(view, head)}`
 
   return (
     <div>
@@ -120,7 +122,7 @@ function BlobPulse({
         tabIndex={0}
         aria-label="Look back through the last hour"
         aria-valuemin={earliest}
-        aria-valuemax={head + 1}
+        aria-valuemax={head}
         aria-valuenow={bay}
         aria-valuetext={describeView}
         // sideways drags are the brush's; up and down still scroll the page
@@ -238,7 +240,7 @@ function useBrushDrag(head: number, brush: PulseBrush) {
   const onPointerDown = (event: PointerEvent<HTMLElement>) => {
     if (event.button !== 0) return
     const slot = slotUnder(event)
-    const bay = brush.view ?? head + 1
+    const bay = brush.view ?? head
     const onBand = slot >= bay - brush.before && slot <= bay + brush.after
     const touch = event.pointerType === 'touch'
     drag.current = {
@@ -301,10 +303,12 @@ function onBrushKey(
   earliest: number,
   brush: PulseBrush,
 ) {
-  const bay = brush.view ?? head + 1
+  const bay = brush.view ?? head
   const to: Record<string, number | undefined> = {
     ArrowLeft: bay - 1,
+    ArrowDown: bay - 1,
     ArrowRight: bay + 1,
+    ArrowUp: bay + 1,
     PageDown: bay - PAGE_SLOTS,
     PageUp: bay + PAGE_SLOTS,
     Home: earliest,
@@ -318,9 +322,12 @@ function onBrushKey(
   brush.onView(to[event.key])
 }
 
-/** "4 min ago", from the slot's start */
-function ago(slot: number) {
-  const minutes = Math.floor((Date.now() / 1000 - slotStart(slot)) / 60)
+/**
+ * "4 min ago", counted in slots back from the head rather than by the
+ * device's clock, which may be off
+ */
+function ago(slot: number, head: number) {
+  const minutes = Math.floor(((head - slot) * SLOT_SECONDS) / 60)
   return minutes < 1 ? 'under a minute ago' : `${minutes} min ago`
 }
 

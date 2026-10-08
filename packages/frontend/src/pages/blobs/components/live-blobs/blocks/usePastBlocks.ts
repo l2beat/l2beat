@@ -17,6 +17,8 @@ interface Options {
    */
   from: number | undefined
   head: number | undefined
+  /** The hour's oldest slot: blocks before it are let go of */
+  oldest: number | undefined
   posterIndexOf: PosterIndexOf
 }
 
@@ -24,13 +26,14 @@ interface Options {
  * The blocks of the hour the live answers no longer carry, for the belt to
  * show while looking back: a page at a time, from the belt's left end up to
  * the live answers, so the belt passes no empty racks on its way back to
- * live. Each page is kept once the server says nothing more will come of it
+ * live. Each page is kept once the server says nothing more will come of it.
+ * `loaded` says every page asked for has answered, or failed to
  */
-export function usePastBlocks({ from, head, posterIndexOf }: Options) {
+export function usePastBlocks({ from, head, oldest, posterIndexOf }: Options) {
   const trpc = useTRPC()
   const lookingBack = from !== undefined && head !== undefined
   const pages = lookingBack ? pastPagesFor(from, head) : []
-  const answers = useQueries({
+  const { answers, loaded } = useQueries({
     queries: pages.map((page) => ({
       ...trpc.da.pastBlobs.queryOptions({ page }),
       staleTime: (query: { state: { data?: PastBlobs } }) =>
@@ -39,27 +42,35 @@ export function usePastBlocks({ from, head, posterIndexOf }: Options) {
       refetchInterval: (query: { state: { data?: PastBlobs } }) =>
         query.state.data?.complete ? false : SLOT_SECONDS * 1000,
     })),
-    combine: dataOf,
+    combine: answersOf,
   })
 
   // Pages the belt has left are kept, as it glides on from them: to a later
-  // slot, or back to live. Fresher answers replace what was kept
+  // slot, or back to live. Fresher answers replace what was kept, and what
+  // left the hour goes
   const kept = useRef<ReadonlyMap<number, ChainBlock>>(new Map())
-  return useMemo(() => {
-    const blocks = new Map(kept.current)
+  const blocks = useMemo(() => {
+    const found = new Map<number, ChainBlock>()
+    for (const [slot, block] of kept.current) {
+      if (oldest === undefined || slot >= oldest) found.set(slot, block)
+    }
     for (const answer of answers) {
       for (const block of answer?.blocks ?? []) {
-        blocks.set(block.slot, toChainBlock(block, posterIndexOf))
+        found.set(block.slot, toChainBlock(block, posterIndexOf))
       }
     }
-    kept.current = blocks
-    return blocks
-  }, [answers, posterIndexOf])
+    kept.current = found
+    return found
+  }, [answers, oldest, posterIndexOf])
+  return { blocks, loaded }
 }
 
 // kept stable, so the answers come back the same while none of them changed
-function dataOf<T>(results: { data: T }[]): T[] {
-  return results.map((result) => result.data)
+function answersOf<T>(results: { data: T; isPending: boolean }[]) {
+  return {
+    answers: results.map((result) => result.data),
+    loaded: results.every((result) => !result.isPending),
+  }
 }
 
 /**

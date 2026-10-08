@@ -10,21 +10,22 @@ export interface KnownHour {
 }
 
 /**
- * Where the belt may be taken back to, or undefined for live. Past the head
- * is live, as the live bay holds the slot after it; and it goes back no
- * further than leaves the hour's oldest block at its left end, `before` racks
- * left of the bay, so the belt never shows slots it cannot fill
+ * Where the belt may be taken back to, or undefined for live. From the head
+ * on is live, as the live bay holds the head's block for most of its slot;
+ * and it goes back no further than leaves the hour's oldest block at its left
+ * end, `before` racks left of the bay, so the belt never shows slots it
+ * cannot fill
  */
 export function clampView(
   slot: number | undefined,
   hour: KnownHour | undefined,
   before: number,
 ): number | undefined {
-  if (slot === undefined || hour === undefined || slot > hour.head) {
+  if (slot === undefined || hour === undefined || slot >= hour.head) {
     return undefined
   }
   const earliest = earliestView(hour, before)
-  if (earliest > hour.head) return undefined
+  if (earliest >= hour.head) return undefined
   return Math.max(Math.round(slot), earliest)
 }
 

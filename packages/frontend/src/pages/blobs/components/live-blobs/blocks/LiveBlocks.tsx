@@ -83,15 +83,17 @@ export function LiveBlocks({ posters, limits }: Props) {
     [size, maxBlobsPerBlock, targetBlobsPerBlock],
   )
   const look = useLookBack(layout)
-  const pastBlocks = usePastBlocks({
+  const past = usePastBlocks({
     from: look.view === undefined ? undefined : look.view - look.before - 1,
     head: look.head,
+    oldest: look.oldest,
     posterIndexOf,
   })
+  const beltView = useViewOnceLoaded(look.view, past.loaded)
   // biome-ignore lint/correctness/useExhaustiveDependencies: `version` counts the blocks
   const blocks = useMemo(
-    () => withPast(chain.blocks, pastBlocks, look.head),
-    [chain.blocks, pastBlocks, look.head, version],
+    () => withPast(chain.blocks, past.blocks, look.head),
+    [chain.blocks, past.blocks, look.head, version],
   )
 
   const palette = useMemo(() => paletteFor(tokens, posters), [tokens, posters])
@@ -139,7 +141,7 @@ export function LiveBlocks({ posters, limits }: Props) {
     scene,
     progressNow: chain.progressNow,
     still: reducedMotion,
-    view: look.view,
+    view: beltView,
     onScreen,
     onClickBatch: (key) => {
       const found = findBatch(blocks, key)
@@ -217,11 +219,22 @@ function useLookBack(layout: BeltLayout | undefined) {
   return {
     view: clampView(asked, hour, before),
     head: hour?.head,
+    oldest: hour && hour.head - hour.slots + 1,
     before,
     after,
     onView: (slot: number | undefined) =>
       setAsked(clampView(slot, hour, before)),
   }
+}
+
+/**
+ * The view for the belt to go to, held where it was until the pages it needs
+ * are in: gliding off at once, it would pass racks still to be filled
+ */
+function useViewOnceLoaded(view: number | undefined, loaded: boolean) {
+  const shown = useRef(view)
+  if (view === undefined || loaded) shown.current = view
+  return shown.current
 }
 
 /**

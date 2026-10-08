@@ -4,9 +4,10 @@ import { clampView, pastPagesFor } from './lookBack'
 describe(clampView.name, () => {
   const hour = { head: 1000, slots: 300 }
 
-  it('is live past the head, whose slot the live bay holds', () => {
+  it('is live from the head on, whose block the live bay holds', () => {
     expect(clampView(1001, hour, 20)).toEqual(undefined)
-    expect(clampView(1000, hour, 20)).toEqual(1000)
+    expect(clampView(1000, hour, 20)).toEqual(undefined)
+    expect(clampView(999, hour, 20)).toEqual(999)
   })
 
   it('goes back no further than fills the belt left of the bay', () => {
