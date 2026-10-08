@@ -61,7 +61,10 @@ export function LiquidStakingLineChart({
             </span>
           ),
           color: colors[project.id] ?? 'var(--secondary)',
-          indicatorType: { shape: 'line' },
+          indicatorType: {
+            shape: 'line',
+            strokeDasharray: project.benchmark ? '5 5' : undefined,
+          },
         }
         return acc
       }, {}),
@@ -94,6 +97,7 @@ export function LiquidStakingLineChart({
             dataKey={project.id}
             hide={!dataKeys.includes(project.id)}
             stroke={chartMeta[project.id]?.color}
+            strokeDasharray={project.benchmark ? '5 5' : undefined}
             dot={false}
             isAnimationActive={false}
           />

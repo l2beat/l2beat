@@ -28,11 +28,14 @@ export function DefiLiquidStakingCharts({
   charts: DefiLiquidStakingChartsData
 }) {
   const colors = useMemo(() => {
-    const palette = generateAccessibleColors(charts.projects.length)
+    const protocols = charts.projects.filter((project) => !project.benchmark)
+    const palette = generateAccessibleColors(protocols.length)
     return Object.fromEntries(
-      charts.projects.map((project, index) => [
+      charts.projects.map((project) => [
         project.id,
-        palette[index] ?? 'var(--secondary)',
+        project.benchmark
+          ? 'var(--chart-ethereum)'
+          : (palette[protocols.indexOf(project)] ?? 'var(--secondary)'),
       ]),
     )
   }, [charts.projects])
@@ -70,13 +73,21 @@ export function DefiLiquidStakingCharts({
   const bufferEmptyDays = exitDays.data.filter(
     (point) => point[BURN_BUFFER_PROJECT] === null,
   ).length
+  const benchmarkCharted = apr.projects.some((project) => project.benchmark)
   const snapshot = `Static snapshot up to ${charts.asOf}.`
 
   return (
     <div className="grid gap-x-6 gap-y-8 lg:grid-cols-2">
       <ChartBlock
         title="Rate-implied yield, 30-day trailing"
-        info={`Annualised drift of each token's own oracle rate over the previous 30 days: the yield a holder received, net of protocol fees. ${snapshot}`}
+        info={[
+          "Annualised drift of each token's own oracle rate over the previous 30 days: the yield a holder received, net of protocol fees.",
+          benchmarkCharted &&
+            'Network average is the return of all Ethereum validators before any protocol fee: consensus issuance plus MEV-boost payments and tips, over the active stake, for the same 30 days.',
+          snapshot,
+        ]
+          .filter(Boolean)
+          .join(' ')}
         timeRange={timeRange}
       >
         <LiquidStakingLineChart
