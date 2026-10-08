@@ -226,12 +226,20 @@ function PosterRow({
       </TableCell>
       {/* sovereign chains and unknown senders have no page, so no link */}
       <TableCell {...pinnedCellProps(1, 'w-0 pr-1.5')}>
-        <TableLink href={row.poster.href}>
+        {/* a bare link, as in other tables: the cell hugs the logo, so a
+            hover box would not fit it */}
+        {row.poster.href ? (
+          <a href={row.poster.href}>
+            <PosterLogo poster={row.poster} />
+          </a>
+        ) : (
           <PosterLogo poster={row.poster} />
-        </TableLink>
+        )}
       </TableCell>
       <TableCell>
-        <TableLink href={row.poster.href}>
+        {/* the hover box stays in its own cell: reaching left under the
+            pinned logo, it would be cut by the logo's fade */}
+        <TableLink href={row.poster.href} className="md:ml-0 md:pl-1.5">
           <PosterName poster={row.poster} />
         </TableLink>
       </TableCell>
