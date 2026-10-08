@@ -29,7 +29,7 @@ import {
   formatWhole,
 } from './blocks/format'
 import { useChainClock } from './chainClock'
-import { readableColor, toRgba } from './color'
+import { readableColor } from './color'
 import { useThemeTokens } from './hooks'
 import { type Landing, useLandedTotal } from './landings'
 import { Pop, RollingNumber, useFlash, useReorder, useTick } from './liveMotion'
@@ -202,7 +202,7 @@ function PosterRow({
     newestBlobs,
     isPosters,
   )
-  useFlash(ref, arrival, toRgba(color, 0.22))
+  useFlash(ref, arrival, color)
 
   return (
     // a plain row, as TableRow keeps its element to itself, and the flash needs it
