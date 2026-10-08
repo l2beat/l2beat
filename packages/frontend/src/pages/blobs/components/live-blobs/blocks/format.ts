@@ -50,3 +50,15 @@ export function formatKib(kib: number): string {
   const decimals = value >= 100 || unit === 0 ? 0 : value >= 10 ? 1 : 2
   return `${value.toFixed(decimals)} ${SIZE_UNITS[unit]}`
 }
+
+// In the reader's own zone and way of writing the time
+const CLOCK = new Intl.DateTimeFormat(undefined, {
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+})
+
+/** 14:32:11, at `unixSeconds`: slots are 12 seconds, so minutes alone repeat */
+export function formatClock(unixSeconds: number): string {
+  return CLOCK.format(unixSeconds * 1000)
+}
