@@ -11,17 +11,11 @@
   scrollbar-color: var(--scrollbar) transparent;
 }
 
-/* cursor: pointer by default for buttons */
 @layer base {
+  /* cursor: pointer by default for buttons */
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
-  }
-
-  :root {
-    /* Addresses and hashes are one long word. Break one only when it cannot
-       fit on a line by itself, so it never pushes the page sideways. */
-    overflow-wrap: break-word;
   }
 
   /* Matches the ring-brand focus rings, for elements without one of their own.
