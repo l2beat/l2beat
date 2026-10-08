@@ -66,6 +66,9 @@ export const AuditCoverage = command({
     loading.done(
       `Indexed ${code.declarations.length} audited units from ${objects.size} files, ${code.unparsed.length} do not parse`,
     )
+    if (code.unparsed.length > 0) {
+      cli.log(`Do not parse: ${code.unparsed.join(', ')}`)
+    }
 
     const covering = cli.status()
     const coverage = await auditCoverageOfProject(
