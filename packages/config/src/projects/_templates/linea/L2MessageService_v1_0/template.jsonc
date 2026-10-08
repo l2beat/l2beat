@@ -12,8 +12,10 @@
     "accessControl": {
       "handler": { "type": "accessControl" }
     },
+    // Which role may pause / unpause each pause type: pause routing, MEDIUM like
+    // pause state and pause-role holders (spec). It cannot move funds or change validation.
     "pauseTypeToRole": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": ["role"],
@@ -22,7 +24,7 @@
       }
     },
     "unpauseTypeToRole": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": ["role"],
@@ -82,7 +84,7 @@
     },
     "limitInWei": {
       "severity": "HIGH",
-      "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
+      "description": "The cap on the total amount of ether (value plus postman fee) that can be sent from L2 to L1 via sendMessage per period given by periodInSeconds."
     },
     "periodInSeconds": {
       "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."

@@ -49,22 +49,25 @@ const sheetVariants = cva(
 
 interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-    VariantProps<typeof sheetVariants> {}
+    VariantProps<typeof sheetVariants> {
+  overlayClassName?: string
+}
 
 function SheetContent({
   side = 'right',
   className,
+  overlayClassName,
   children,
   ...props
 }: SheetContentProps) {
   return (
     <SheetPortal>
-      <SheetOverlay className="z-998" />
+      <SheetOverlay className={cn('z-998', overlayClassName)} />
       <SheetPrimitive.Content
         className={cn(sheetVariants({ side }), className)}
         {...props}
       >
-        <SheetPrimitive.Close className="absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+        <SheetPrimitive.Close className="absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
           <span className="sr-only">Close</span>
         </SheetPrimitive.Close>
         {children}

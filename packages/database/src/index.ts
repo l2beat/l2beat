@@ -52,7 +52,10 @@ export type {
   DeployedTokenUpdateable,
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
-export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'
+export type {
+  FlatSourcesJsonRecord,
+  FlatSourcesRecord,
+} from './repositories/FlatSourcesRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
 export type {

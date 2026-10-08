@@ -4,5 +4,54 @@
   "import": ["../globalConfig.jsonc"],
   // Covers the full CCTP graph so transitive permissions resolve to attesters.
   "maxAddresses": 150,
-  "initialAddresses": ["eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+  "initialAddresses": ["eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"],
+  "names": {
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": "SeizureRegistry"
+  },
+  "overrides": {
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": {
+      // not part of CCTP or Gateway; UUPS proxy registered as a USDC minter
+      "description": "USDC minter that re-mints seized balances. When the balance of a blocklisted address on any CCTP domain is written off, the secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The written-off balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.",
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "allowedRecipients": {
+          "description": "Recipients that re-minted USDC can be sent to, managed by the address manager.",
+          "handler": {
+            "type": "event",
+            "select": "recipient",
+            "add": { "event": "AllowedRecipientAdded" },
+            "remove": { "event": "AllowedRecipientRemoved" }
+          }
+        },
+        "owner": {
+          "permissions": [
+            {
+              "type": "upgrade",
+              "description": "upgrade the implementation."
+            },
+            {
+              "type": "interact",
+              "description": "replace the secondary market burner, hash updater, rescuer and address manager."
+            }
+          ]
+        },
+        "secondaryMarketBurner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "record the written-off balance of a blocklisted address and mint the same amount of USDC to an allowlisted recipient, within the minter allowance."
+            }
+          ]
+        },
+        "addressManager": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "add or remove the recipients that re-minted USDC can be sent to."
+            }
+          ]
+        }
+      }
+    }
+  }
 }

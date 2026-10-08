@@ -27,7 +27,7 @@ export async function getL2RiskSequencingData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Sequencing - L2BEAT',
+        name: 'Sequencing',
         description:
           'Compare Ethereum scaling projects with decentralized sequencer sets and understand how they differ from centralized sequencers with forced-inclusion mechanisms.',
         url: req.originalUrl,

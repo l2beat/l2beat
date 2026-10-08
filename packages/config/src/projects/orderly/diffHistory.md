@@ -1,3 +1,141 @@
+Generated with discovered.json: 0xa08f04b3dc96c6c6714649961fe41e375ee07e49
+
+# Diff at Sun, 04 Oct 2026 05:55:34 GMT:
+
+- id: 6204e439
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1787834344
+- current timestamp: 1787834344
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787834344 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0xBaf9dD4C5DD9389b263A5394513943bE06f1C0F0) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xC8BF04A73704051E5E274F1B43B1F2F153Db2136) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xc10a4622a052e7307f97e123b5ab691a5c6440f1
+
+# Diff at Wed, 30 Sep 2026 22:47:36 GMT:
+
+- id: 79a11c66
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1787834344
+- current timestamp: 1787834344
+
+## Description
+
+Config-only rerun on the same block number. The DisputeGameFactory template now reads the Upgrade 20 super dispute game types, 9 and 5, together with their init bonds and clone arguments; both types are unset on this chain. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787834344 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x91493a61ab83b62943E6dCAa5475Dd330704Cc84) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xBaf9dD4C5DD9389b263A5394513943bE06f1C0F0) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xC8BF04A73704051E5E274F1B43B1F2F153Db2136) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game5:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game5AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game5Args:
++        "0x"
++++ severity: HIGH
+      values.game5Proposer:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game9AbsolutePrestate:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game9Args:
++        "0x"
++++ severity: HIGH
+      values.game9Vm:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9Weth:
++        "UNRESOLVED"
+      values.initBondGame5:
++        0
+      values.initBondGame9:
++        0
+      fieldMeta.game9:
++        {"severity":"HIGH"}
+      fieldMeta.game5:
++        {"severity":"HIGH"}
+      fieldMeta.game9AbsolutePrestate:
++        {"severity":"HIGH"}
+      fieldMeta.game9Vm:
++        {"severity":"HIGH"}
+      fieldMeta.game9AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game9Weth:
++        {"severity":"HIGH"}
+      fieldMeta.game5AnchorStateRegistry:
++        {"severity":"HIGH"}
+      fieldMeta.game5Proposer:
++        {"severity":"HIGH"}
+      usedTypes.6:
++        {"typeCaster":"SliceAddress","arg":{"offset":0}}
+      usedTypes.7:
++        {"typeCaster":"SliceAddress","arg":{"offset":20}}
+    }
+```
+
 Generated with discovered.json: 0x165e783e1463a6543379c80c253e5be28a5d1d49
 
 # Diff at Tue, 29 Sep 2026 17:45:25 GMT:

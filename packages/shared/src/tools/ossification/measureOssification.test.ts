@@ -1,0 +1,312 @@
+import {
+  Bytes,
+  ChainSpecificAddress,
+  Hash160,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { expect } from 'earl'
+import {
+  exploitAgePercentile,
+  getUncertainNewestChange,
+  measureOssification,
+  toDisplayScore,
+} from './measureOssification'
+import ossificationCurve from './ossificationCurve.json'
+import type {
+  OssificationChange,
+  OssificationContract,
+  OssificationHistory,
+} from './types'
+
+const NOW = UnixTime(1_800_000_000)
+const YEAR = 365 * 24 * 60 * 60
+const DAY = 24 * 60 * 60
+const HOUR = 60 * 60
+
+const scoreAt = (ageSeconds: number) =>
+  Math.round(100 * exploitAgePercentile(ageSeconds))
+
+function row(
+  overrides: Partial<OssificationContract> = {},
+): OssificationContract {
+  return {
+    name: 'A',
+    address: ChainSpecificAddress(
+      'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+    ),
+    isVerified: true,
+    ossifyingSince: NOW - 3 * YEAR,
+    codeChangeCount: 0,
+    stateChangeCount: 0,
+    ...overrides,
+  }
+}
+
+function change(
+  timestamp: number,
+  overrides: Partial<OssificationChange> = {},
+): OssificationChange {
+  return { timestamp, type: 'code', earliest: timestamp, ...overrides }
+}
+
+function history(
+  overrides: Partial<OssificationHistory> = {},
+): OssificationHistory {
+  return {
+    contracts: [row()],
+    changes: [],
+    deployments: [],
+    observedSince: NOW - 3 * YEAR,
+    ...overrides,
+  }
+}
+
+describe(measureOssification.name, () => {
+  it('refuses a history without a critical contract', () => {
+    expect(() => measureOssification(history({ contracts: [] }), NOW)).toThrow(
+      'has a contract',
+    )
+  })
+
+  it('scores an old unchanged perimeter as mature', () => {
+    const result = measureOssification(
+      history({ deployments: [NOW - 3 * YEAR] }),
+      NOW,
+    )
+    expect(result?.score).toEqual(scoreAt(3 * YEAR))
+    expect(result?.clockStart).toEqual(NOW - 3 * YEAR)
+    expect(result?.genesis).toEqual(NOW - 3 * YEAR)
+    expect(result?.criticalChangesPerYear).toEqual(0)
+    expect(result?.criticalChanges).toEqual([])
+  })
+
+  it('starts the clock at the newest change', () => {
+    const result = measureOssification(
+      history({ changes: [change(NOW - 2 * YEAR), change(NOW - YEAR)] }),
+      NOW,
+    )
+    expect(result?.clockStart).toEqual(NOW - YEAR)
+    expect(result?.score).toEqual(scoreAt(YEAR))
+  })
+
+  it('does not reset the clock for a later deployment', () => {
+    const result = measureOssification(
+      history({
+        contracts: [row(), row({ name: 'B', ossifyingSince: NOW - YEAR })],
+        deployments: [NOW - 3 * YEAR, NOW - YEAR],
+      }),
+      NOW,
+    )
+    expect(result?.clockStart).toEqual(NOW - 3 * YEAR)
+    expect(result?.contracts.map((c) => c.name)).toEqual(['B', 'A'])
+  })
+
+  it('scores zero while any critical contract is unverified', () => {
+    const result = measureOssification(
+      history({ contracts: [row(), row({ isVerified: false })] }),
+      NOW,
+    )
+    expect(result?.score).toEqual(0)
+  })
+
+  it('counts changes over the last three years', () => {
+    const result = measureOssification(
+      history({
+        observedSince: NOW - 5 * YEAR,
+        changes: [change(NOW - 4 * YEAR), change(NOW - YEAR)],
+      }),
+      NOW,
+    )
+    expect(result?.criticalChangesPerYear).toEqual(1 / 3)
+  })
+
+  it('clusters changes within 24 hours into one decision', () => {
+    const result = measureOssification(
+      history({
+        changes: [
+          change(NOW - YEAR),
+          change(NOW - YEAR + HOUR, { type: 'state' }),
+          change(NOW - YEAR + 2 * DAY),
+        ],
+      }),
+      NOW,
+    )
+    expect(result?.criticalChanges).toEqual([NOW - YEAR, NOW - YEAR + 2 * DAY])
+  })
+
+  it('counts changes since the genesis when it is more recent', () => {
+    const result = measureOssification(
+      history({ observedSince: NOW - YEAR, changes: [change(NOW - DAY)] }),
+      NOW,
+    )
+    expect(result?.criticalChangesPerYear).toEqual(1)
+  })
+
+  it('counts a cluster when it starts inside the window', () => {
+    const result = measureOssification(
+      history({
+        observedSince: NOW - 5 * YEAR,
+        changes: [
+          change(NOW - 3 * YEAR - HOUR),
+          change(NOW - 3 * YEAR + HOUR),
+          change(NOW - DAY),
+        ],
+      }),
+      NOW,
+    )
+    expect(result?.criticalChangesPerYear).toEqual(1 / 3)
+  })
+
+  it('never divides by less than thirty days', () => {
+    const result = measureOssification(
+      history({ observedSince: NOW - DAY, changes: [change(NOW - HOUR)] }),
+      NOW,
+    )
+    expect(result?.criticalChangesPerYear).toEqual(1 / ((30 * DAY) / YEAR))
+  })
+
+  it('places the genesis at the end of the rollout, after the earlier assembly', () => {
+    const start = NOW - 10 * DAY
+    const result = measureOssification(
+      history({
+        contracts: [row({ ossifyingSince: start + 4 * 60 })],
+        deployments: [
+          start - 37 * DAY,
+          start - 37 * DAY,
+          start,
+          start + 4 * 60,
+        ],
+        observedSince: start,
+      }),
+      NOW,
+    )
+    expect(result?.genesis).toEqual(start + 4 * 60)
+    expect(result?.clockStart).toEqual(start + 4 * 60)
+    expect(result?.criticalChanges).toEqual([])
+  })
+
+  it('starts no clock before the genesis', () => {
+    const result = measureOssification(
+      history({
+        contracts: [
+          row({ ossifyingSince: NOW - 5 * YEAR }),
+          row({ name: 'B', ossifyingSince: NOW - 4 * YEAR }),
+        ],
+        observedSince: NOW - 2 * YEAR,
+      }),
+      NOW,
+    )
+    expect(result?.genesis).toEqual(NOW - 2 * YEAR)
+    expect(result?.clockStart).toEqual(NOW - 2 * YEAR)
+    expect(result?.score).toEqual(scoreAt(2 * YEAR))
+    expect(result?.contracts.map((c) => c.ossifyingSince)).toEqual([
+      NOW - 2 * YEAR,
+      NOW - 2 * YEAR,
+    ])
+  })
+
+  it('ends the rollout after a day or at the first change', () => {
+    const start = NOW - YEAR
+    const lateDeployment = measureOssification(
+      history({ deployments: [start, start + 2 * DAY], observedSince: start }),
+      NOW,
+    )
+    expect(lateDeployment?.genesis).toEqual(start)
+
+    const earlyChange = measureOssification(
+      history({
+        deployments: [start, start + 2 * HOUR],
+        changes: [change(start + HOUR)],
+        observedSince: start,
+      }),
+      NOW,
+    )
+    expect(earlyChange?.genesis).toEqual(start)
+  })
+
+  it('never places the genesis after a change', () => {
+    const result = measureOssification(
+      history({ changes: [change(NOW - 4 * YEAR)] }),
+      NOW,
+    )
+    expect(result?.genesis).toEqual(NOW - 4 * YEAR)
+  })
+
+  it('tags each discovery update once, mixed updates as code', () => {
+    const result = measureOssification(
+      history({
+        changes: [
+          change(NOW - YEAR, { type: 'state', updateId: 'u1' }),
+          change(NOW - YEAR + HOUR, { type: 'code', updateId: 'u1' }),
+          change(NOW - DAY, { type: 'state', updateId: 'u2' }),
+          change(NOW - HOUR),
+        ],
+      }),
+      NOW,
+    )
+    expect(result?.criticalUpdates).toEqual([
+      { id: 'u1', type: 'code' },
+      { id: 'u2', type: 'state' },
+    ])
+  })
+
+  it('accepts changes in any order', () => {
+    const result = measureOssification(
+      history({ changes: [change(NOW - DAY), change(NOW - YEAR)] }),
+      NOW,
+    )
+    expect(result?.criticalChanges).toEqual([NOW - YEAR, NOW - DAY])
+  })
+})
+
+describe(getUncertainNewestChange.name, () => {
+  const interval = (timestamp: number) =>
+    change(timestamp, {
+      type: 'state',
+      updateId: 'u1',
+      earliest: timestamp - 30 * DAY,
+    })
+
+  it('is nothing when the newest change is dated exactly', () => {
+    const exact = history({
+      changes: [interval(NOW - YEAR), change(NOW - DAY)],
+    })
+    expect(getUncertainNewestChange(exact)).toEqual(undefined)
+    expect(getUncertainNewestChange(history())).toEqual(undefined)
+  })
+
+  it('is the newest change when it is only known as an interval', () => {
+    const uncertain = interval(NOW - DAY)
+    const known = history({ changes: [change(NOW - YEAR), uncertain] })
+    expect(getUncertainNewestChange(known)).toEqual(uncertain)
+    const legacy = change(NOW - DAY, { earliest: undefined })
+    const unknown = history({ changes: [legacy] })
+    expect(getUncertainNewestChange(unknown)).toEqual(legacy)
+  })
+})
+
+describe(toDisplayScore.name, () => {
+  it('reserves 0 for the unverified gate and never fakes the extremes', () => {
+    expect(toDisplayScore(0)).toEqual(0)
+    expect(toDisplayScore(0.001)).toEqual(1)
+    expect(toDisplayScore(0.999)).toEqual(99)
+    expect(toDisplayScore(1)).toEqual(99)
+  })
+})
+
+describe('ossificationCurve', () => {
+  it('should have a hash', () => {
+    const hash = Hash160(Bytes.fromHex(ossificationCurve.hash).toString())
+    expect(hash).not.toBeEmpty()
+  })
+
+  it('knots can not be empty', () => {
+    expect(ossificationCurve.knots).not.toBeEmpty()
+  })
+
+  it('knots should be ascending', () => {
+    const sorted = structuredClone(ossificationCurve.knots)
+    sorted.sort((a, b) => a - b)
+    expect(ossificationCurve.knots).toEqual(sorted)
+  })
+})

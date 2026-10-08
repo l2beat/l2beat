@@ -3,7 +3,7 @@
   "name": "edgechain",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
-    "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+    "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
     "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20"
   ]
 }

@@ -1,4 +1,4 @@
-import { getEnv } from '@l2beat/backend-tools'
+import { type Env, getEnv } from '@l2beat/backend-tools'
 
 import type { ExplorerConfig } from '../utils/IEtherscanClient'
 import { chains } from './chains'
@@ -65,10 +65,7 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
       `${ENV_NAME}_REORG_SAFE_DEPTH`,
     ]),
-    coingeckoApiKey: env.optionalString([
-      'COINGECKO_API_KEY_FOR_DISCOVERY',
-      'COINGECKO_API_KEY',
-    ]),
+    ...getDiscoveryCoingeckoConfig(env),
     multicall: chainConfig.multicall,
     explorer: ensureArray(chainConfig.explorer).map((e) =>
       e.type === 'blockscout'
@@ -100,6 +97,24 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
                 unsupported: e.unsupported,
               } as ExplorerConfig),
     ),
+  }
+}
+
+// Falls back to COINGECKO_API_KEY with its URL; a discovery key is never sent
+// to the URL configured for COINGECKO_API_KEY.
+export function getDiscoveryCoingeckoConfig(
+  env: Env,
+): Pick<DiscoveryChainConfig, 'coingeckoApiKey' | 'coingeckoApiUrl'> {
+  const discoveryKey = env.optionalString('COINGECKO_API_KEY_FOR_DISCOVERY')
+  if (discoveryKey !== undefined) {
+    return {
+      coingeckoApiKey: discoveryKey,
+      coingeckoApiUrl: env.optionalString('COINGECKO_API_URL_FOR_DISCOVERY'),
+    }
+  }
+  return {
+    coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
+    coingeckoApiUrl: env.optionalString('COINGECKO_API_URL'),
   }
 }
 

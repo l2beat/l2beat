@@ -99,9 +99,23 @@ describe('readConfig layering', () => {
     const config = new ConfigReader('/layered').readConfig('proj')
     expect(config.structure.overrides?.[ADDRESS]?.ignoreDiscovery).toEqual(true)
   })
+
+  it('makes every config value read-only, inherited or not', () => {
+    const reader = new ConfigReader('/layered')
+    const config = reader.readConfig('proj')
+    const names = config.color.names ?? {}
+    const ignoreMethods = config.structure.overrides?.[ADDRESS]?.ignoreMethods
+
+    expect(() => {
+      names[ADDRESS] = 'Changed'
+    }).toThrow(TypeError)
+    expect(() => ignoreMethods?.push('c')).toThrow(TypeError)
+    expect(reader.readConfig('proj').color.names?.[ADDRESS]).toEqual('Global')
+  })
 })
 
 describe('config and discovery resolution', () => {
+  const ADDRESS = 'eth:0x1234567890123456789012345678901234567890'
   afterEach(() => mockFs.restore())
 
   describe('resolveProjectPath', () => {
@@ -212,6 +226,58 @@ describe('config and discovery resolution', () => {
 
       expect(config.structure.name).toEqual('usdc')
       expect(config.structure.maxAddresses).toEqual(10)
+    })
+
+    describe('rejects', () => {
+      const log = console.log
+      beforeEach(() => {
+        console.log = () => {}
+      })
+      afterEach(() => {
+        console.log = log
+      })
+
+      it('a field with both handler and copy, naming the file', () => {
+        mockFs({
+          '/base/usdc/config.jsonc': JSON.stringify({
+            name: 'usdc',
+            initialAddresses: [ADDRESS],
+            overrides: {
+              [ADDRESS]: {
+                fields: {
+                  f: { handler: { type: 'storage', slot: 1 }, copy: 'g' },
+                },
+              },
+            },
+          }),
+        })
+
+        expect(() => new ConfigReader('/base').readConfig('usdc')).toThrow(
+          'Cannot parse file usdc/config.jsonc',
+        )
+      })
+
+      it('a names key with an invalid checksum, naming the file', () => {
+        mockFs({
+          '/base/usdc/config.jsonc': JSON.stringify({
+            name: 'usdc',
+            initialAddresses: [ADDRESS],
+            names: { 'eth:0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2788': 'Bad' },
+          }),
+        })
+
+        expect(() => new ConfigReader('/base').readConfig('usdc')).toThrow(
+          'Cannot parse file usdc/config.jsonc',
+        )
+      })
+
+      it('a merged config without initialAddresses', () => {
+        mockFs({ '/base/usdc/config.jsonc': JSON.stringify({ name: 'usdc' }) })
+
+        expect(() => new ConfigReader('/base').readConfig('usdc')).toThrow(
+          'usdc has no initialAddresses',
+        )
+      })
     })
   })
 

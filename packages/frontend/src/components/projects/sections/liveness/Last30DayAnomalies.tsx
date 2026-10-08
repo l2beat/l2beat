@@ -12,6 +12,10 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { AnomalyText } from '~/pages/layer2s/liveness/components/AnomalyText'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { SubsectionHeading } from '../Subsection'
+import {
+  LAST_30_DAY_ANOMALIES_DESCRIPTION,
+  TRACKED_CONTRACTS_CHANGED_WARNING,
+} from '../sectionCopy'
 
 const ANOMALIES_PER_PAGE = 5
 
@@ -45,8 +49,7 @@ export function Last30DayAnomalies({
         Last 30 day anomalies
       </SubsectionHeading>
       <p className="mt-4 text-paragraph-15 md:text-paragraph-16">
-        All liveness anomalies detected for this project in the last 30 days,
-        helping you review recent downtime and availability issues.
+        {LAST_30_DAY_ANOMALIES_DESCRIPTION}
       </p>
       {hasTrackedContractsChanged && (
         <Callout
@@ -54,7 +57,7 @@ export function Last30DayAnomalies({
           color="yellow"
           small
           icon={<RoundedWarningIcon className="size-4" sentiment="warning" />}
-          body="There are implementation changes to tracked contracts, anomaly data might be inaccurate."
+          body={TRACKED_CONTRACTS_CHANGED_WARNING}
         />
       )}
       <div className="mt-4 flex flex-col">

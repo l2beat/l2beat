@@ -282,7 +282,7 @@ function DiffoLink({ href }: { href: string }) {
       href={href}
       rel="noopener noreferrer"
       target="_blank"
-      className="flex h-6 flex-row items-center gap-1.5 rounded-sm bg-linear-to-r from-[#854220] to-[#DE7B16] px-[9px] ring-brand ring-inset focus:ring-2"
+      className="flex h-6 flex-row items-center gap-1.5 rounded-sm bg-linear-to-r from-[#854220] to-[#DE7B16] px-[9px] ring-brand ring-inset focus-visible:ring-2"
     >
       <DiffoIcon className="h-[14px] w-[67px] fill-white" />
     </a>

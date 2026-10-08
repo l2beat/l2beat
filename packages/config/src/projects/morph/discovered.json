@@ -1,7 +1,7 @@
 {
   "name": "morph",
-  "timestamp": 1790080873,
-  "configHash": "0xf07a36f1b491a8376d4ad3e89896e4d07aef718b80cbfb64f59fef943ce1c550",
+  "timestamp": 1790851283,
+  "configHash": "0x7eb845296018494c200abc82ea8455be5363f2896919b0ceec78d040e6fd323d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -90,7 +90,7 @@
         "stakingValue": { "severity": "HIGH" },
         "challengeDeposit": { "severity": "HIGH" },
         "withdrawalLockBlocks": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7": "TransparentUpgradeableProxy",
@@ -202,7 +202,7 @@
         "messenger": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
-        "totalBridgedUSDC": 530982686484,
+        "totalBridgedUSDC": 510058062777,
         "withdrawPaused": false
       },
       "fieldMeta": {
@@ -293,18 +293,18 @@
         ],
         "$upgradeCount": 4,
         "ENFORCED_TX_GATEWAAY": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-        "getFirstUnfinalizedMessageEnqueueTime": 1789929815,
+        "getFirstUnfinalizedMessageEnqueueTime": 1790770835,
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 27664,
+        "nextCrossDomainMessageIndex": 27678,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 27647,
+        "pendingQueueIndex": 27674,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
       "fieldMeta": {
-        "maxGasLimit": { "severity": "HIGH" },
+        "maxGasLimit": { "severity": "MEDIUM" },
         "whitelistChecker": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -633,7 +633,7 @@
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
       },
       "fieldMeta": {
-        "erc20Gateways": { "severity": "HIGH" },
+        "erc20Gateways": { "severity": "MEDIUM" },
         "ethGateway": { "severity": "HIGH" },
         "defaultERC20Gateway": { "severity": "HIGH" }
       },
@@ -773,8 +773,8 @@
         "finalizationPeriodSeconds": 172800,
         "getMinDelayFormatted": "7d",
         "inChallenge": false,
-        "lastCommittedBatchIndex": 60499,
-        "lastFinalizedBatchIndex": 60320,
+        "lastCommittedBatchIndex": 61253,
+        "lastFinalizedBatchIndex": 61089,
         "LAYER_2_CHAIN_ID": 2818,
         "legacyCutoverBatchIndex": 60477,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
@@ -800,7 +800,7 @@
         },
         "messageQueue": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "getMinDelayFormatted": {
           "severity": "HIGH",
           "description": "commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now"
@@ -878,6 +878,7 @@
       ],
       "proxyType": "immutable",
       "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
+      "critical": { "sinceTimestamp": 1779354407 },
       "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
       "sinceTimestamp": 1779335891,
       "sinceBlock": 25141074,
@@ -962,7 +963,31 @@
     {
       "address": "eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442",
       "type": "EOA",
-      "proxyType": "EOA"
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x92af0176a7cce342bb4d9b4a5da3322f3bd575abd9be6d24ec51f986b8f734c8",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
     },
     {
       "address": "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184",
@@ -984,7 +1009,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1729764539 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x05e1d4694041aF987Af6F8402D902686018E2136",
       "sinceTimestamp": 1729598531,
@@ -1006,10 +1030,6 @@
         "multisigThreshold": "3 of 5 (60%)",
         "nonce": 82,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": "SafeProxy",
@@ -1099,7 +1119,6 @@
       },
       "fieldMeta": {
         "feeVault": {
-          "severity": "HIGH",
           "description": "Recipient of fees charged for forced transactions."
         },
         "paused": {
@@ -1224,7 +1243,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 27664,
+        "messageNonce": 27678,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "paused": false,
@@ -1232,12 +1251,8 @@
         "xDomainMessageSender": "eth:0x000000000000000000000000000000000000dEaD"
       },
       "fieldMeta": {
-        "maxReplayTimes": { "severity": "HIGH" },
         "rollup": { "severity": "HIGH" },
-        "feeVault": {
-          "severity": "HIGH",
-          "description": "Recipient of L1-to-L2 message fees."
-        },
+        "feeVault": { "description": "Recipient of L1-to-L2 message fees." },
         "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
@@ -1280,7 +1295,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1737455087 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3",
       "sinceTimestamp": 1730976923,
@@ -1303,10 +1317,6 @@
         "multisigThreshold": "4 of 6 (67%)",
         "nonce": 28,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": "SafeProxy",
@@ -1360,7 +1370,7 @@
         "rewardPercentage": { "severity": "HIGH" },
         "rollupContract": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6": "TransparentUpgradeableProxy",
@@ -1736,6 +1746,58 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
     ],
     "eth:0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c": [
       "constructor()",
@@ -2149,7 +2211,7 @@
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
     "morph/ZkEvmVerifierV1": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26033092 },
+  "usedBlockNumbers": { "ethereum": 26096936 },
   "permissionsConfigHash": "0xe74b332c940d5685063452ce9c4741c853d2cb876784a0d9bb28ff4c1de151e4",
   "permissions": {
     "eth:0x0092bC49078f130D27e70dBeee441E227280B97D": {

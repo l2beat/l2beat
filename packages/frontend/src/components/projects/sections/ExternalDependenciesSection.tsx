@@ -1,6 +1,7 @@
 import { CustomLink } from '~/components/link/CustomLink'
 import type { DefiDependency } from '~/server/features/defi/resolveDefiDependencies'
 import { ProjectSection } from './ProjectSection'
+import { NO_EXTERNAL_DEPENDENCIES } from './sectionCopy'
 import type { ProjectSectionProps } from './types'
 
 export interface ExternalDependenciesSectionProps extends ProjectSectionProps {
@@ -15,8 +16,7 @@ export function ExternalDependenciesSection({
     return (
       <ProjectSection {...sectionProps}>
         <p className="text-paragraph-15 md:text-paragraph-16">
-          This project has no external dependencies: no oracle, bridge, or other
-          third-party contract is required for its contracts to operate.
+          {NO_EXTERNAL_DEPENDENCIES}
         </p>
       </ProjectSection>
     )

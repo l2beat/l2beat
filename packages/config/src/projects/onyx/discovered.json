@@ -592,6 +592,7 @@
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
         },
         "confirmPeriodBlocks": {
+          "severity": "HIGH",
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
@@ -878,8 +879,6 @@
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
-        "isUsingFeeToken": { "severity": "HIGH" },
-        "isDelayBufferable": { "severity": "HIGH" },
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
@@ -887,7 +886,7 @@
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         },
-        "batchPosterManager": { "severity": "HIGH" },
+        "batchPosterManager": { "severity": "MEDIUM" },
         "batchPosters": { "severity": "LOW" },
         "dacKeyset": { "severity": "HIGH" }
       },

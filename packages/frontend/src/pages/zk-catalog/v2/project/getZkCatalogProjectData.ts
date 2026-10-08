@@ -69,7 +69,7 @@ async function loadZkCatalogProjectPage(manifest: Manifest, slug: string) {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${project.name} - L2BEAT`,
+        name: project.name,
         description: getZkCatalogMetadataDescription({
           name: project.name,
           creator: project.zkCatalogInfo.creator,

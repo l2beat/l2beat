@@ -17,7 +17,7 @@ export async function getDataAvailabilityRiskData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Data Availability Risk Analysis - L2BEAT',
+        name: 'Data Availability Risk Analysis',
         description:
           'Learn more about the risks of data availability solutions.',
         url,

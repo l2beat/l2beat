@@ -43,7 +43,7 @@ describe(createDefiRouter.name, () => {
     )
 
     expect(response.headers.get('content-type')).toEqual(
-      'text/plain; charset=utf-8',
+      'text/markdown; charset=utf-8',
     )
     expect(await response.text()).toMatchRegex(/^# Lido\n/)
   })
@@ -61,7 +61,7 @@ describe(createDefiRouter.name, () => {
 
 function createRouter() {
   const manifest = mockObject<Manifest>({})
-  const cachedPage = { head: {}, ssr: { props: { entry: ENTRY } } }
+  const cachedPage = { head: {}, props: { entry: ENTRY } }
   const cache = mockObject<InMemoryCache>({
     get: (async () => cachedPage) as InMemoryCache['get'],
   })

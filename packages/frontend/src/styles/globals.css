@@ -2,6 +2,7 @@
 
 @import "./markdown.css" layer(base);
 @import "./article.css" layer(base);
+@import "./sticky-table.css";
 
 @plugin "tailwindcss-animate";
 
@@ -10,11 +11,39 @@
   scrollbar-color: var(--scrollbar) transparent;
 }
 
-/* cursor: pointer by default for buttons */
 @layer base {
+  /* cursor: pointer by default for buttons */
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+
+  /* Matches the ring-brand focus rings, for elements without one of their own.
+     Only the colour changes: the browser's auto style also rings a link that
+     wraps a block image, where a solid outline would draw nothing. */
+  :focus-visible {
+    outline-color: var(--brand);
+  }
+}
+
+/* Opt-out rather than opt-in: motion ships from many components, and one
+   switch here covers them all. Fades stay, since they move nothing. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    /* tailwindcss-animate's enter/exit keyframes read these. */
+    --tw-enter-scale: 1 !important;
+    --tw-enter-rotate: 0 !important;
+    --tw-enter-translate-x: 0 !important;
+    --tw-enter-translate-y: 0 !important;
+    --tw-exit-scale: 1 !important;
+    --tw-exit-rotate: 0 !important;
+    --tw-exit-translate-x: 0 !important;
+    --tw-exit-translate-y: 0 !important;
+    /* Not 0s: ScrollWithGradient waits for transitionend, which a zero
+       duration never fires. */
+    transition-duration: 0.01ms !important;
   }
 }
 
@@ -629,7 +658,6 @@
   --color-garden-border: var(--garden-border);
   --color-garden-tint: var(--garden-tint);
   --color-garden-soil: var(--garden-soil);
-  --color-garden-canvas: var(--garden-canvas);
   --color-plot-canvas: var(--plot-canvas);
   --color-garden-sun: var(--garden-sun);
   --color-garden-bloom: var(--garden-bloom);
@@ -855,7 +883,6 @@
   --garden-border: #cfe3c0;
   --garden-tint: #f2f9ec;
   --garden-soil: #cfc4b0;
-  --garden-canvas: #eaf4e6;
   --plot-canvas: #fdf1de;
   --garden-sun: #ffd54a;
   --garden-bloom: var(--garden-sun);
@@ -878,7 +905,6 @@
   --garden-border: #2c3a22;
   --garden-tint: #161f0e;
   --garden-soil: #4a3d2b;
-  --garden-canvas: #0a0f08;
   --plot-canvas: #0f0d07;
   --garden-sun: #c9a437;
   /* The dimmed sun would sink into the dark petals, so the bloom keeps the bright one and gets a ring. */
@@ -887,15 +913,6 @@
   --garden-moon: #e9e4c8;
   --garden-sky: #0e1830;
   --garden-sprout: #3f6b3a;
-}
-
-/* Rubber-band overscroll reveals the root background, and only ever one flat
-   colour of it, so both ends of a backdrop page get its canvas. */
-html:has([data-backdrop="garden"]) {
-  background-color: var(--garden-canvas);
-}
-html:has([data-backdrop="plot"]) {
-  background-color: var(--plot-canvas);
 }
 
 /* Referenced from inline styles in CropPlant, CropsBed and the page backdrops. */

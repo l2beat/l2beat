@@ -3821,16 +3821,14 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
           "description": "Can upgrade the proxy logic and replace the default SHARP fact registry after the configured delay. A malicious target can make arbitrary facts valid for callers routed to it."
         },
         "callProxyImplementation": {
-          "severity": "HIGH",
           "description": "Default SHARP fact registry called by the proxy and the only registry queried directly by its explicit `isValid` entry point. Replacing it changes the complete proof-verification trust chain: outer bootloader, bootloader commitments, recursive verifier allowlist, Solidity CPU verifiers, and temporary reference registries.",
           "type": "CODE_CHANGE"
         },
         "customFactRegistryRoutes": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Latest nonzero caller-to-registry fallback routes reconstructed from events. These are `call` targets, not delegatecall implementations. The stored route is usable only while the target is in the default registry's unexpired reference chain; otherwise the caller's fallback call reverts. This affects proof submissions but not the proxy's explicit `isValid`, which always queries the default target."
         }
       },

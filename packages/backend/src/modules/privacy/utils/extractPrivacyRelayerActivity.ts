@@ -1,11 +1,16 @@
-import type { ProjectPrivacyOnchainRelayerSource } from '@l2beat/config'
-import { assertUnreachable, EthereumAddress } from '@l2beat/shared-pure'
+import type { PrivacyRelayerExtractorConfig } from '@l2beat/config'
+import {
+  assertUnreachable,
+  EthereumAddress,
+  type Log,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type {
   PrivacyRelayerActivityExtractResult,
-  PrivacyRelayerActivityIndexerConfig,
-  PrivacyRpcLog,
+  PrivacyRpcContext,
 } from '../types'
+import { WITHDRAWAL_TOPIC } from '../zkmoney/abi'
+import { extractZkMoneyWithdrawalRelayer } from '../zkmoney/relayers'
 
 const privacyPoolsInterface = new utils.Interface([
   'event WithdrawalRelayed(address indexed _relayer, address indexed _recipient, address indexed _asset, uint256 _amount, uint256 _feeAmount)',
@@ -15,13 +20,12 @@ const tornadoCashInterface = new utils.Interface([
   'event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)',
 ])
 
-type RelayerExtractor = ProjectPrivacyOnchainRelayerSource['extractor']
-
 interface RelayerExtractorDefinition {
   event: string
   extract: (
-    log: PrivacyRpcLog,
-  ) => PrivacyRelayerActivityExtractResult | undefined
+    log: Log,
+    context: PrivacyRpcContext,
+  ) => Promise<PrivacyRelayerActivityExtractResult | undefined>
 }
 
 const privacyPoolsWithdrawalRelayed: RelayerExtractorDefinition = {
@@ -47,29 +51,36 @@ const tornadoCashWithdrawal: RelayerExtractorDefinition = {
 }
 
 export function getPrivacyRelayerExtractor(
-  extractor: RelayerExtractor,
+  source: PrivacyRelayerExtractorConfig,
 ): RelayerExtractorDefinition {
-  switch (extractor) {
+  switch (source.extractor) {
     case 'privacyPoolsWithdrawalRelayed':
       return privacyPoolsWithdrawalRelayed
     case 'tornadoCashWithdrawal':
       return tornadoCashWithdrawal
+    case 'zkMoneyWithdrawalRelayer':
+      return {
+        event: WITHDRAWAL_TOPIC,
+        extract: (log, context) =>
+          extractZkMoneyWithdrawalRelayer(log, source.params, context),
+      }
     default:
-      assertUnreachable(extractor)
+      assertUnreachable(source)
   }
 }
 
 export function extractPrivacyRelayerActivity(
-  source: PrivacyRelayerActivityIndexerConfig,
-  log: PrivacyRpcLog,
-): PrivacyRelayerActivityExtractResult | undefined {
-  return getPrivacyRelayerExtractor(source.extractor).extract(log)
+  source: PrivacyRelayerExtractorConfig,
+  log: Log,
+  context: PrivacyRpcContext,
+): Promise<PrivacyRelayerActivityExtractResult | undefined> {
+  return getPrivacyRelayerExtractor(source).extract(log, context)
 }
 
 function toRelayerActivity(
   relayer: string,
   recipient: string,
-): PrivacyRelayerActivityExtractResult | undefined {
+): Promise<PrivacyRelayerActivityExtractResult | undefined> {
   const relayerAddress = EthereumAddress(relayer)
   const recipientAddress = EthereumAddress(recipient)
 
@@ -77,8 +88,8 @@ function toRelayerActivity(
     relayerAddress === EthereumAddress.ZERO ||
     relayerAddress === recipientAddress
   ) {
-    return undefined
+    return Promise.resolve(undefined)
   }
 
-  return { relayerAddress }
+  return Promise.resolve({ relayerAddress })
 }

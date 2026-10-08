@@ -115,6 +115,22 @@ Verify:
 5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash. The range commitment is the \`hash_u32()\` digest converted to big-endian bytes.
 `
 
+const OP_SUCCINCT_V3141_STEPS = `
+Prepare:
+
+1. Install sp1 toolchain version \`v6.8.1\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v v6.8.1\`.
+2. Install docker https://docs.docker.com/get-started/get-docker/.
+3. Install \`clang\` / \`libclang\` and Go, required by the host-side vkey printing command.
+
+Verify:
+
+1. Checkout the correct tag in [succinctlabs/op-succinct](https://github.com/succinctlabs/op-succinct) repo: \`git checkout v3.14.1\`. Commit hash should be \`35d98244c9b4ccc2b93f016be249788c5d6d5372\`.
+2. Make sure docker is running: \`docker ps\`.
+3. Reproducibly rebuild the Ethereum DA range ELF from source: from \`programs/range/ethereum\` run \`cargo prove build --elf-name range-elf-embedded --docker --tag v6.8.1 --output-directory ../../../elf\`.
+4. Reproducibly rebuild the aggregation ELF from source: from \`programs/aggregation\` run \`cargo prove build --elf-name aggregation-elf --docker --tag v6.8.1 --output-directory ../../elf\`.
+5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash.
+`
+
 const PESSIMISTIC_PROG = (version: string) => ({
   title: `Pessimistic program of agglayer ${version}`,
   description:
@@ -165,18 +181,24 @@ const RAIKO2_GUEST_DIGEST_STEPS = (
   options: {
     enableDigestsFeature?: boolean
     forceRebuild?: boolean
+    buildGuestCargoCommand?: string
+    guestDigestsCommand?: string
     reference?: string
   } = {},
 ) => {
-  const guestDigestsCommand = options.enableDigestsFeature
-    ? 'cargo run -r -p xtask-build-guest --bin guest-digests --features digests --'
-    : 'cargo run -p xtask-build-guest --bin guest-digests --'
+  const guestDigestsCommand =
+    options.guestDigestsCommand ??
+    (options.enableDigestsFeature
+      ? 'cargo run -r -p xtask-build-guest --bin guest-digests --features digests --'
+      : 'cargo run -p xtask-build-guest --bin guest-digests --')
   const buildGuestCommand = options.forceRebuild
     ? 'just build-guest all --force'
     : 'just build-guest all'
-  const buildGuestCargoCommand = options.forceRebuild
-    ? 'cargo run -r -p xtask -- build-guest all --force'
-    : 'cargo run -r -p xtask-build-guest --bin xtask-build-guest -- all'
+  const buildGuestCargoCommand =
+    options.buildGuestCargoCommand ??
+    (options.forceRebuild
+      ? 'cargo run -r -p xtask -- build-guest all --force'
+      : 'cargo run -r -p xtask-build-guest --bin xtask-build-guest -- all')
   const reference = options.reference ? `\n\n${options.reference}` : ''
 
   return `
@@ -231,6 +253,18 @@ const RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS = {
   forceRebuild: true,
   reference:
     'Reference: [Raiko2 v0.8.0-rc1 release](https://github.com/taikoxyz/raiko2/releases/tag/v0.8.0-rc1), rolled out by Taiko multisig proposal `0xa3cd408eabf658ce08f25450f837679f09269742eabc672fbbf4479db59ec2cf`.',
+}
+
+const RAIKO2_V090_COMMIT_HASH = 'dcbfdec7396c7e25a53ee26b43c55d58f63e0b81'
+
+const RAIKO2_V090_GUEST_DIGEST_OPTIONS = {
+  forceRebuild: true,
+  buildGuestCargoCommand:
+    'CARGO_PROFILE_RELEASE_OPT_LEVEL=1 cargo run -r -p xtask-build-guest --bin xtask-build-guest -- all --force',
+  guestDigestsCommand:
+    'CARGO_PROFILE_RELEASE_OPT_LEVEL=1 cargo run -r -p xtask-build-guest --bin guest-digests --features digests --',
+  reference:
+    'Reference: [Taiko council proposal 26 creation transaction](https://etherscan.io/tx/0x5b3db8656ea83df099bb246711a43e4a0bee5340c9bc7802f06aa1b2c6354f71). All six proposed zk program hashes reproduced from source on 2026-09-30.',
 }
 
 const KAILUA_FP = (version: string, descAppendix = '') => ({
@@ -478,6 +512,14 @@ Verify:
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_AGGLAYER_V3120_STEPS,
   },
+  '0x00070992a03760456403e800b0bd1a0e907a85a5c2cffca292b5994b56b5363b': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.14.1/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_V3141_STEPS,
+  },
   '0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     programUrl:
@@ -520,6 +562,14 @@ Verify:
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_AGGLAYER_V3120_STEPS,
+  },
+  '0x5ae13fed447a94f57d6ee8fc44cce8075ef994485121dcd27e75577d264f75b1': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.14.1/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_V3141_STEPS,
   },
   '0x00d9be2980d484ba29aaa1e0d27648b8182df8616a4ec85c3c2b528b29d1a085': {
     ...OP_SUCCINCT_LITE_AGG_BLOBS,
@@ -1218,6 +1268,62 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS,
     ),
   },
+  '0x0017912dfd72308e2e2cd4211b05ed73a97eb7f576816adec2606a37507de51e': {
+    ...RAIKO2_AGG('v0.9.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/sp1/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_bn254',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x0bc896fe5c8c238b459a8423305ed73a4bf5bfab5a05ab7b04c0d46e507de51e': {
+    ...RAIKO2_AGG('v0.9.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/sp1/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_hash_bytes',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x0012b97234e59f2319d44202c7b093fed9c9a51b2068e38d26625c139d668c97': {
+    ...RAIKO2_PROPOSAL('v0.9.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/sp1/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_bn254',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x095cb91a3967c8c63a8840587b093fed4e4d28d901a38e344cc4b8271d668c97': {
+    ...RAIKO2_PROPOSAL('v0.9.0'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/sp1/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_hash_bytes',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
+    ),
+  },
   '0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3': {
     ...RAIKO_AGG('v1.10.4'),
     proverSystemProject: ProjectId('sp1turbo'),
@@ -1650,6 +1756,34 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'v0.8.0-rc1',
       RAIKO2_V080RC1_COMMIT_HASH,
       RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x04480b22e244d60165f3d0898bc61ea084d9c76221464a8a3c3343c74889040a': {
+    ...RAIKO2_AGG('v0.9.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/risc0/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_aggregation',
+      'image_id',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x88712dad7dc78126ee7bb592282d3102569c706f1b9db80580a582e5ffd1dfb0': {
+    ...RAIKO2_PROPOSAL('v0.9.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.9.0/guests/risc0/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_proposal',
+      'image_id',
+      'v0.9.0',
+      RAIKO2_V090_COMMIT_HASH,
+      RAIKO2_V090_GUEST_DIGEST_OPTIONS,
     ),
   },
   '0xcecc85819e15d173c2991577727525b136e820728f7aaaede612f1281cac2249': {
@@ -2435,6 +2569,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   },
   // Active CANNON_KONA prestate (Karst). Reproduced via kona Docker build,
   // tag kona-client/v1.6.0-rc.2 (commit d7cea91b).
+  '0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1df': {
+    title:
+      'OP Kona interop absolute prestate v1.7.0-rc.2 (cannon64-kona-interop)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program of Kona client, in the interop variant run by the super fault dispute game (respected game type 9).',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/kona-client/v1.7.0-rc.2/rust/kona',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1df.md',
+    ),
+  },
   '0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025': {
     title: 'OP Kona absolute prestate v1.6.0-rc.2 (cannon64)',
     description:
@@ -2700,6 +2846,22 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x00a147f0c69da81e3d530cca91310f9605f980dc155726bb33fbde0e493a3836.md',
     ),
   },
+  '0x00f500229b99db6a14c508c444e4527793f2f178168847acf3f755118614568a': {
+    title: 'Aggregation program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v1.4.2/crates/proof/zk/programs/succinct/aggregation',
+    description:
+      'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/base-aggregate-verifier-vkeys.md',
+      {
+        version: 'v1.4.2',
+        commitHash: '5034ef80bc90261ff6c4841fdf4baed34283abad',
+      },
+    ),
+  },
   '0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f': {
     title: 'Range program of Base AggregateVerifier',
     programUrl:
@@ -2740,6 +2902,22 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x5fd09a2f4338ca7063bc37b02f9411645d0ef2784fe644cc71ab48ae64200beb.md',
     ),
   },
+  '0x25e035df08601f4b0b862be24c4bd08b1ee0524623fe737e7e8e378458ec7c21': {
+    title: 'Range program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v1.4.2/crates/proof/zk/programs/succinct/range/ethereum',
+    description:
+      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/base-aggregate-verifier-vkeys.md',
+      {
+        version: 'v1.4.2',
+        commitHash: '5034ef80bc90261ff6c4841fdf4baed34283abad',
+      },
+    ),
+  },
   '0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c': {
     title: 'TEE enclave image hash of Base client',
     programUrl:
@@ -2763,6 +2941,21 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       {
         version: 'v1.1.1',
         commitHash: '01e732cdbae0c624d652da9e608d7d3fe0f9c74b',
+      },
+    ),
+  },
+  '0x45c538bc396fe4a01b3f9ddc999494c3b993480ecac0a917e2f1af230d78b0e0': {
+    title: 'TEE enclave image hash of Base client',
+    programUrl:
+      'https://github.com/base/base/tree/v1.4.2/crates/proof/tee/nitro-enclave',
+    description:
+      'TEE image hash of Base L2 node program. AWS Nitro Enclave attestations guarantee that exactly this program was run within a TEE.',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/base-tee-enclave-image-mold.md',
+      {
+        version: 'v1.4.2',
+        commitHash: '5034ef80bc90261ff6c4841fdf4baed34283abad',
       },
     ),
   },

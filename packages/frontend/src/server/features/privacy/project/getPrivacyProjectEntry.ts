@@ -9,8 +9,9 @@ import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
-import { getUpdatesSectionProps } from '~/server/features/projects/discovery-updates/getUpdatesSectionProps'
+import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -20,6 +21,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { optionToRange } from '~/utils/range/range'
@@ -92,14 +94,7 @@ export async function getPrivacyProjectEntry(
   const [contractUtils, allProjects, tvs] = await Promise.all([
     getContractUtils(),
     ps.getProjects({
-      optional: [
-        'display',
-        'daBridge',
-        'scalingInfo',
-        'daLayer',
-        'privacyInfo',
-        'defiInfo',
-      ],
+      optional: ['display', ...PROJECT_PAGE_METADATA_FIELDS],
     }),
     get7dTvsBreakdown({ type: 'all' }),
   ])
@@ -278,19 +273,14 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (discoveryUpdates.length > 0) {
-    sections.push({
-      type: 'UpdatesSection',
-      props: {
-        id: 'updates',
-        title: 'Updates',
-        ...(await getUpdatesSectionProps(
-          helpers,
-          details.id,
-          discoveryUpdates,
-        )),
-      },
-    })
+  const updatesSection = await getUpdatesSection(
+    helpers,
+    details.id,
+    discoveryUpdates,
+    details.ossification,
+  )
+  if (updatesSection) {
+    sections.push(updatesSection)
   }
 
   if (permissionsSection) {
@@ -320,8 +310,9 @@ export async function getPrivacyProjectEntry(
   sections.splice(adversariesSectionIndex, 0, {
     type: 'PrivacyAdversariesSection',
     props: {
-      id: 'privacy-adversaries',
+      id: PRIVACY_ADVERSARIES_SECTION_ID,
       title: 'Privacy',
+      isUnderReview: !!details.statuses.reviewStatus,
       adversaries: resolvePrivacySources(details.adversaries, sections),
     },
   })

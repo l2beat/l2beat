@@ -15,6 +15,7 @@ import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTv
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getOrganizationStructuredData } from '~/ssr/head/structured-data/getOrganizationStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -65,6 +66,7 @@ export async function getHomeData(
         openGraph: {
           image: '/meta-images/home/opengraph-image.png',
         },
+        structuredData: () => [getOrganizationStructuredData()],
       }),
     },
     ssr: {

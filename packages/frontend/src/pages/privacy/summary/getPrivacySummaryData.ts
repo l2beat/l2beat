@@ -7,27 +7,33 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
+import { getPrivacySummaryGroups } from './privacySummaryGroups'
 
 export async function getPrivacySummaryData(
   manifest: Manifest,
   url: string,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const { appLayoutProps, entries, queryState, defaultChartRange } =
-    await cache.get(
-      {
-        key: ['privacy', 'summary', 'data'],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      getCachedData,
-    )
+  const {
+    appLayoutProps,
+    groups,
+    chartProjects,
+    queryState,
+    defaultChartRange,
+  } = await cache.get(
+    {
+      key: ['privacy', 'summary', 'data'],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    getCachedData,
+  )
 
   return {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Privacy - L2BEAT',
+        name: 'Privacy',
         description:
           'Track live balances and daily privacy flows across tracked privacy protocols.',
         url,
@@ -40,7 +46,8 @@ export async function getPrivacySummaryData(
       page: 'PrivacySummaryPage',
       props: {
         ...appLayoutProps,
-        entries,
+        groups,
+        chartProjects,
         defaultChartRange,
         bestPracticesBannerImageUrl: manifest.getUrl(
           '/images/best-practices-banner.png',
@@ -89,7 +96,10 @@ async function getCachedData() {
   ])
   return {
     appLayoutProps,
-    entries,
+    groups: getPrivacySummaryGroups(entries),
+    chartProjects: entries
+      .filter((e) => e.isTracked || e.hasTvl)
+      .map((e) => ({ id: e.id, name: e.name, hasTvl: e.hasTvl })),
     queryState: helpers.dehydrate(),
     defaultChartRange,
   }

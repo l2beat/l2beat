@@ -10,11 +10,22 @@ import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
  * Free of server imports, because the links bar resolves it in the browser.
  */
 export function getMarkdownAlternatePath(pagePath: string): string | undefined {
-  const routedPath = toRoutedPath(pagePath)
-  if (routedPath.endsWith('.md')) return undefined
-  return PAGES_WITH_MARKDOWN.some((page) => matchesPage(page, routedPath))
-    ? `${routedPath}.md`
-    : undefined
+  const path = trimTrailingSlashes(pagePath)
+  if (path.toLowerCase().endsWith('.md')) return undefined
+  return hasMarkdownVersion(path) ? `${path}.md` : undefined
+}
+
+/**
+ * For links to markdown documents, e.g. `/defi/projects/{slug}.md`, where a
+ * `{name}` placeholder stands for a path segment: false while the page is
+ * switched off, as the registry then leaves it out.
+ */
+export function isServedAsMarkdown(markdownPath: `${string}.md`) {
+  return hasMarkdownVersion(markdownPath.slice(0, -'.md'.length))
+}
+
+function hasMarkdownVersion(path: string) {
+  return PAGES_WITH_MARKDOWN.some((page) => matchesPage(page, path))
 }
 
 export const LIST_PAGES_WITH_MARKDOWN = [
@@ -22,7 +33,12 @@ export const LIST_PAGES_WITH_MARKDOWN = [
   '/data-availability/summary',
   '/zk-catalog',
   '/privacy/summary',
-] as const satisfies StaticPagePath[]
+  '/interop/summary',
+  // Behind the same flag as the pages: advertised while off, these would be
+  // 404s. Everything that lists markdown pages filters by this registry, so
+  // the flag is read here only.
+  ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/summary'] as const) : []),
+] as const satisfies ListPagePath[]
 
 /**
  * Express route patterns, where `:name` stands for one path segment and
@@ -42,17 +58,13 @@ export type ListPageWithMarkdown = (typeof LIST_PAGES_WITH_MARKDOWN)[number]
 export type ProjectPageWithMarkdown =
   (typeof PROJECT_PAGES_WITH_MARKDOWN)[number]
 
-type StaticPagePath = (typeof STATIC_PAGE_PATHS)[number]
+/** Static pages plus the flagged ones `STATIC_PAGE_PATHS` cannot list unconditionally. */
+type ListPagePath = (typeof STATIC_PAGE_PATHS)[number] | '/defi/summary'
 
 const PAGES_WITH_MARKDOWN: readonly string[] = [
   ...LIST_PAGES_WITH_MARKDOWN,
   ...PROJECT_PAGES_WITH_MARKDOWN,
 ]
-
-/** Express routing is neither strict nor case-sensitive, so `/Layer2s/Summary/` serves the same page. */
-function toRoutedPath(pagePath: string) {
-  return trimTrailingSlashes(pagePath).toLowerCase()
-}
 
 /** A loop, not `/\/+$/`: the regex is quadratic on a request path of many slashes, and every page request goes through here. */
 function trimTrailingSlashes(path: string) {
@@ -61,10 +73,15 @@ function trimTrailingSlashes(path: string) {
   return path.slice(0, end)
 }
 
-function matchesPage(page: string, routedPath: string) {
+/**
+ * Case-insensitive like Express routing, so `/Layer2s/Summary/` finds its
+ * page. The path itself keeps its case: slugs and token ids are
+ * case-sensitive, so a lowercased alternate would be another resource.
+ */
+function matchesPage(page: string, path: string) {
   const pattern = page
     .replaceAll('{', '(?:')
     .replaceAll('}', ')?')
     .replaceAll(/:\w+/g, '[^/]+')
-  return new RegExp(`^${pattern}$`).test(routedPath)
+  return new RegExp(`^${pattern}$`, 'i').test(path)
 }

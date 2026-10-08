@@ -32,8 +32,8 @@ describe(renderInteropTokenMarkdown.name, () => {
       '- Last 24h transfer count: 4.32 K',
       '- Last 24h avg. transfer time: 1m 30s',
       '- Last 24h avg. transfer value: $2.89 K',
-      '- Last 24h top path: Ethereum <-> Base ($5.00 M)',
-      '- Top protocol (based on 24h volume): [CCTP](https://l2beat.com/interop/protocols/cctp) (volume $8.00 M, 1.20 K transactions)',
+      '- Last 24h top path: Hyperliquid ↔ Polygon PoS ($5.00 M)',
+      '- Top protocol (based on 24h volume): [CCTP](https://l2beat.com/interop/protocols/cctp) (volume $8.00 M, 1.20 K transfers)',
       '- Protocols used: CCTP, Across',
       '- Deployments: 4',
     )
@@ -53,12 +53,18 @@ describe(renderInteropTokenMarkdown.name, () => {
     ])
   })
 
-  it('points the flows chart and the transfers browser to the HTML page', () => {
-    const markdown = renderInteropTokenMarkdown(PAGE)
-
-    expect(getSection(markdown, 'Volume and flows')).toInclude(
+  it('lists the top routes by their chain names, then points the flows graph to the HTML page', () => {
+    expect(
+      getSection(renderInteropTokenMarkdown(PAGE), 'Volume and flows'),
+    ).toInclude(
+      '### Top routes by volume (last 24h)\n\n- Hyperliquid → Arbitrum One: $3.00 M\n- Polygon PoS → Ethereum: $2.00 M',
       'https://l2beat.com/interop/tokens/usdc01/circle/usdc#interop-volume',
     )
+  })
+
+  it('points the transfers browser to the HTML page', () => {
+    const markdown = renderInteropTokenMarkdown(PAGE)
+
     expect(getSection(markdown, 'Transfers')).toInclude(
       'https://l2beat.com/interop/tokens/usdc01/circle/usdc#interop-transfers',
     )
@@ -120,10 +126,45 @@ describe(renderInteropTokenMarkdown.name, () => {
       [
         '### Backing relations',
         '',
-        '- Burn and mint between USDC on Base, Arbitrum One via [CCTP](https://l2beat.com/interop/protocols/cctp)',
-        '- USDC on Base, Arbitrum One is backed by USDC on Ethereum (0xA0b8...eB48) (bridge not identified)',
+        'Burn-and-mint groups, whose deployments move between chains by burning on one and minting on another:',
+        '',
+        '- Group 1: USDC, 2 deployments, burned and minted via [CCTP](https://l2beat.com/interop/protocols/cctp); last 24h volume $4.00 M, 1.20 K transfers; deployments: Base (0x8335...2913), Arbitrum One (0xaf88...5831)',
+        '',
+        'Backing, where a deployment is minted against the one backing it:',
+        '',
+        '- Group 1 (USDC, 2 deployments) is backed by USDC on Ethereum (0xA0b8...eB48) (bridge not identified)',
         '- USDC.e on Unichain (0x078D...7AD6) is backed by USDC on Ethereum (0xA0b8...eB48) via [Stargate](https://l2beat.com/interop/protocols/stargate)',
       ].join('\n'),
+    )
+  })
+
+  it('spells out a group once and refers to it by number in every relation', () => {
+    const graph: InteropTokenRelationsGraph = {
+      ...GRAPH,
+      edges: [
+        { backer: 'cctp-group', backed: 'ethereum', bridges: [] },
+        { backer: 'cctp-group', backed: 'unichain', bridges: [STARGATE] },
+      ],
+    }
+    const deployments = getSection(
+      renderInteropTokenMarkdown({
+        ...PAGE,
+        tokenEntry: {
+          ...PAGE.tokenEntry,
+          sections: PAGE.tokenEntry.sections.map((section) =>
+            section.type === 'InteropTokenOnchainDeploymentsSection'
+              ? { ...section, props: { ...section.props, graph } }
+              : section,
+          ),
+        },
+      }),
+      'Onchain deployments',
+    )
+
+    expect(deployments.split('Base (0x8335...2913)').length - 1).toEqual(1)
+    expect(deployments).toInclude(
+      '- USDC on Ethereum (0xA0b8...eB48) is backed by group 1 (USDC, 2 deployments) (bridge not identified)',
+      '- USDC.e on Unichain (0x078D...7AD6) is backed by group 1 (USDC, 2 deployments) via [Stargate]',
     )
   })
 
@@ -298,8 +339,12 @@ const TOKEN_DATA: InteropTokenDashboardData = {
     netMintedValue: undefined,
     flows: [],
   },
-  flows: [],
-  topPath: { chainA: 'ethereum', chainB: 'base', volume: 5_000_000 },
+  // Ids as the data carries them; the markdown names them as configured.
+  flows: [
+    { srcChain: 'hyperliquid', dstChain: 'arbitrum', volume: 3_000_000 },
+    { srcChain: 'polygonpos', dstChain: 'ethereum', volume: 2_000_000 },
+  ],
+  topPath: { chainA: 'hyperliquid', chainB: 'polygonpos', volume: 5_000_000 },
   topProtocol: {
     name: 'CCTP',
     slug: 'cctp',

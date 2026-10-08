@@ -57,11 +57,15 @@
       "description:": "changes if anything in the aggchainSigners multisig changes"
     },
     "admin": {
-      // rollup admin: can change the trusted sequencer and forced-batch parameters.
-      "severity": "HIGH"
+      // sets the trustedSequencer, which is committed in aggchainParams and whose signature
+      // replaces the OP Succinct proof in optimistic mode. Role holder: identity changes only
+      // need review, mechanism changes are recorded in the project's ossification.json.
+      "severity": "MEDIUM"
     },
     "optimisticModeManager": {
-      "severity": "HIGH",
+      // role holder: swapping one multisig for another is identity, not mechanism.
+      // Mechanism changes of this role are recorded in the project's ossification.json.
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -70,7 +74,8 @@
       ]
     },
     "aggchainManager": {
-      "severity": "HIGH",
+      // role holder (see optimisticModeManager): identity changes only need review.
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -84,7 +89,10 @@
     },
     "selectedOpSuccinctConfig": {
       // the live OP-Succinct verification keys and rollup config hash: changing any
-      // of them changes what counts as a valid state transition proof.
+      // of them changes what counts as a valid state transition proof. HIGH next to
+      // selectedOpSuccinctConfigName because a config can be deleted and re-added
+      // under the same name with other keys.
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function opSuccinctConfigs(bytes32) view returns (bytes32 aggregationVkey, bytes32 rangeVkeyCommitment, bytes32 rollupConfigHash)",

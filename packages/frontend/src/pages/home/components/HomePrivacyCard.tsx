@@ -7,12 +7,7 @@ import { HomeKpiChart } from './charts/HomeKpiChart'
 import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
 import { HomePrivacyDot } from './HomePrivacyDot'
-import {
-  HomeRankedTable,
-  HomeRankedValue,
-  HomeRankedValueWithChange,
-  VALUE_WITH_CHANGE_HEADER_CLASS,
-} from './HomeRankedTable'
+import { HomeRankedTable, HomeRankedValue } from './HomeRankedTable'
 
 export function HomePrivacyCard({
   data,
@@ -95,23 +90,14 @@ export function HomePrivacyCard({
             header: 'Privacy',
             middle: true,
             cell: (protocol) => (
-              <HomePrivacyDot
-                adversaries={protocol.adversaries}
-                href={protocol.href}
-              />
+              <HomePrivacyDot adversaries={protocol.adversaries} />
             ),
           },
           {
             id: 'tvl',
             header: 'TVL',
-            headerClassName: VALUE_WITH_CHANGE_HEADER_CLASS,
             align: 'right',
-            cell: (protocol) => (
-              <HomeRankedValueWithChange
-                value={protocol.tvl}
-                change={protocol.tvlChange}
-              />
-            ),
+            cell: (protocol) => <HomeRankedValue value={protocol.tvl} />,
           },
           {
             id: 'deposited30d',

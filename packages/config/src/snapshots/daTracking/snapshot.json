@@ -1485,11 +1485,22 @@
   ],
   "paradex": [
     {
+      "id": "d86796359f38",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 25531490,
+        "inbox": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+        "sequencers": ["0x09d1ad25B369A0C48Bdf4CaAb85aFd08a3f07044"]
+      }
+    },
+    {
       "id": "ea3ee1247c59",
       "config": {
         "type": "ethereum",
         "daLayer": "ethereum",
         "sinceBlock": 0,
+        "untilBlock": 25531490,
         "inbox": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
         "sequencers": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"]
       }

@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x5cf00481296f5f8e04dd452a5210148459815e1a
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 1259a7ec
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790851757
+- current timestamp: 1790851757
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790851757 (main branch discovery), not current.
+
+```diff
+    contract MiMCHasher (eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe) [N/A] {
+    +++ description: MiMC hasher used by every Tornado pool for commitment-tree operations (linked library in the 2019 pools, constructor argument in the 2021 pools), manually verified against the pinned Tornado circomlib generator.
+      description:
+-        "MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator."
++        "MiMC hasher used by every Tornado pool for commitment-tree operations (linked library in the 2019 pools, constructor argument in the 2021 pools), manually verified against the pinned Tornado circomlib generator."
+    }
+```
+
+Generated with discovered.json: 0xf755477ff1fe7222cad81e3cd93f56dbc2396c2b
+
+# Diff at Thu, 01 Oct 2026 11:11:05 GMT:
+
+- id: 6b9ec1ab
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790592851
+- current timestamp: 1790851757
+
+## Description
+
+Proposal 69 (1,000 TORN to Mr Anon) was defeated (~163k for vs ~458k TORN against). The same proposer resubmitted it as proposal 70 (voting active, ends 2026-10-06) with a new verified Proposal contract (eth:0x04C2eb6Df3bF6032b8e07a03Fc9a5Ca424414483): 1,000 TORN split into 500 TORN to abusedotch and 500 TORN to JJ (Mr Anon's share, redirected as repayment). It only transfers TORN from governance, no protocol parameters or contracts are changed.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        69
++        70
+    }
+```
+
 Generated with discovered.json: 0x2e16fadd112013d339429f6094c9434c899a3237
 
 # Diff at Mon, 28 Sep 2026 13:34:46 GMT:

@@ -77,8 +77,14 @@
     }
   },
   "overrides": {
-    // canonical escrows in the ossification perimeter (bridge templates carry no critical flag because
-    // escrows with additional trust assumptions share their shape and are flagged MEDIUM only)
+    // Canonical escrows in the ossification perimeter: ETH and STRK (the gas tokens) are the only
+    // StarkGate escrows governed by the protocol governance (Security Council + DelayedExecutor),
+    // with an L2 side governed by Starknet. The bridge templates carry no critical flag because
+    // escrows of external tokens under the separate StarkGate bridge multisig share their shape.
+    // The STRK token itself (eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766) is not a proxy, so
+    // its code cannot change and it stays outside the perimeter.
+    // The governing Safes (Security Council, Multisig 1, 4, SCMinority) are actor containers and
+    // not critical: their mechanism changes are reviewed events on the contracts they control.
     "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": { "critical": true },
     "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": { "critical": true },
     "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": {
@@ -129,12 +135,6 @@
     },
     // Starkware Security Council: can upgrade the Starknet core, ETHBridge and STRKBridge and manage core governance (program/config hashes)
     "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": {
-      // First accepted as a Starknet governor in transaction 0x1f47ef738911d5125334e29a4f5f7d19089666d7c7bb25f6347e61c4bea6d0c6.
-      "critical": { "sinceTimestamp": 1738755371 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      },
       "references": [
         {
           "text": "Security Council - Starknet Docs",
@@ -144,30 +144,6 @@
     },
     "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
       "ignoreDiscovery": true
-    },
-    "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988": {
-      // Core proxy governor since transaction 0x2c4d976a5da00cbeafbac9741bd44659462c0d9a874348527515024d0707671c; now controls DelayedExecutor.
-      "critical": { "sinceTimestamp": 1672589267 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
-    "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": {
-      // Can enable ETH withdrawal limits since transaction 0xc2da5d5d038c38ff298048afebcac1da9f612a62e4c7faa4a90d787079ce6867.
-      "critical": { "sinceTimestamp": 1727697611 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
-    "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": {
-      // Can disable ETH withdrawal limits and appoint security agents since transaction 0xab161ac07e153979237f7fccb1ccdcca632abe037e55602fbfa8137881ca594e.
-      "critical": { "sinceTimestamp": 1746449747 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
     },
     "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4": {
       "ignoreRelatives": ["cleareanceAddress"],
@@ -179,12 +155,11 @@
         "tokenHaltCompleted": { "severity": "MEDIUM" }
       }
     },
-    // Perimeter rule: only asset escrows whose TVS is counted WITHOUT the
-    // 'additional trust assumptions' tag are critical (ETHBridge, STRKBridge).
-    // Every ADD_TA-tagged escrow below (USDC included) is outside the
-    // ossification perimeter; its important state is MEDIUM so changes still
-    // put the project under review and light up the update monitor without
-    // resetting the ossification clock.
+    // Escrows of external tokens below (USDC included) sit under the separate
+    // StarkGate bridge multisig, not the protocol governance, and are outside the
+    // ossification perimeter (spec escrow rule). Their important state is MEDIUM so
+    // changes still put the project under review and light up the update monitor
+    // without resetting the ossification clock.
     "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": {
       "fields": {
         "$admin": { "severity": "MEDIUM" },

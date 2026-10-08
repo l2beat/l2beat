@@ -31,7 +31,7 @@ describe(createL2Router.name, () => {
     )
 
     expect(response.headers.get('content-type')).toEqual(
-      'text/plain; charset=utf-8',
+      'text/markdown; charset=utf-8',
     )
     expect(await response.text()).toMatchRegex(/^# Arbitrum One\n/)
   })

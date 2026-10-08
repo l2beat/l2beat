@@ -22,13 +22,6 @@
       "reason": "Transferred control of the legacy address mappings to the Bedrock ProxyAdmin."
     },
     {
-      "timestamp": 1696542003,
-      "type": "state",
-      "contract": "oeth:0x2A82ae142b2E62Cb7d10B55E323acb1Cab663A26",
-      "transaction": "0xa0c510a0e82cbd8612634beb71509c0423a0c91cd3f3065535631055318ec888",
-      "reason": "Changed the MintManagerOwner Safe threshold governing OP minting policy from 2 to 3."
-    },
-    {
       "timestamp": 1707514547,
       "type": "state",
       "contract": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
@@ -63,18 +56,18 @@
     {
       "timestamp": 1718045303,
       "type": "state",
-      "contract": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-      "transaction": "0x50db5f9d459613b07977e0d0c8fff898920271dfc90e4a9678a46fcc9e4f1144",
+      "contract": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+      "transaction": "0x50db9c1b9f5a8616f982022429a1d75c35986bcfb67bd1e3358d97ddbe751144",
       "updateId": "d86b3fe1",
-      "reason": "Changed the Security Council Safe threshold to 10 and enabled the LivenessModule."
+      "reason": "The Optimism Security Council Safe, one of the two members of the SuperchainProxyAdminOwner, raised its threshold from 4 to 10 of 13 (crossing the Security Council bar) and enabled the LivenessModule and LivenessGuard, which can hand it to the Foundation fallback owner."
     },
     {
       "timestamp": 1718045303,
       "type": "state",
-      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-      "transaction": "0x50db5f9d459613b07977e0d0c8fff898920271dfc90e4a9678a46fcc9e4f1144",
+      "contract": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+      "transaction": "0x50db9c1b9f5a8616f982022429a1d75c35986bcfb67bd1e3358d97ddbe751144",
       "updateId": "d86b3fe1",
-      "reason": "Enabled the initial protocol-pause module on the Guardian Safe."
+      "reason": "The Guardian Safe, which became the SuperchainConfig guardian in this upgrade, enabled DeputyGuardianModule 1.1.0, letting the OP Foundation Operations Safe pause, blacklist dispute games and set the respected game type through the guardian."
     },
     {
       "timestamp": 1720551167,
@@ -82,6 +75,14 @@
       "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
       "transaction": "0x7abecacd8b1a54db8f0835a5c82edfab96ff922a41d2faa914c339e3e9319b43",
       "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
+      "timestamp": 1723833359,
+      "type": "state",
+      "contract": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+      "transaction": "0x493e2f3354e8c6c46fb37925a13c02364c1f3b38f88548b9bb4673e3fc762e69",
+      "updateId": "a259c851",
+      "reason": "The OP Foundation Operations Safe, through the Guardian Safe's DeputyGuardianModule, switched the respected game type from the permissionless FaultDisputeGame (0) to the PermissionedDisputeGame (1), so only permissioned games could finalize withdrawals."
     },
     {
       "timestamp": 1726016099,
@@ -93,10 +94,18 @@
     {
       "timestamp": 1726070915,
       "type": "state",
-      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+      "contract": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "transaction": "0x592e73fdf57e7cc2c51cfaafa891fe91164d125b7943aa26a15285276de27509",
       "updateId": "fd9b3eaa",
-      "reason": "Replaced the Guardian Safe module that delegated protocol pause authority."
+      "reason": "The Guardian Safe replaced DeputyGuardianModule 1.1.0 with 2.0.0, which additionally lets the OP Foundation Operations Safe set the AnchorStateRegistry anchor state through the guardian."
+    },
+    {
+      "timestamp": 1726070915,
+      "type": "state",
+      "contract": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+      "transaction": "0x592e73fdf57e7cc2c51cfaafa891fe91164d125b7943aa26a15285276de27509",
+      "updateId": "fd9b3eaa",
+      "reason": "The guardian switched the respected game type back from the PermissionedDisputeGame (1) to the permissionless FaultDisputeGame (0) after the Granite fix."
     },
     {
       "timestamp": 1733920163,
@@ -104,6 +113,13 @@
       "contract": "eth:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbc",
       "transaction": "0x6b9ad25cef01bd97f1be9642d96cbf75d533129608d5a62e4ae3d69ead47d3dc",
       "reason": "Upgraded the (since retired) DelayedWETH that held the bonds of permissioned dispute games."
+    },
+    {
+      "timestamp": 1733920211,
+      "type": "code",
+      "contract": "eth:0x323dFC63c9B83CB83f40325AaB74b245937cbdF0",
+      "transaction": "0x01fcf03047d62053c36632d455437fb4cee158324af1d57a50cb50b43a7f8499",
+      "reason": "Upgraded the (since retired) DelayedWETH that held the bonds of permissionless dispute games."
     },
     {
       "timestamp": 1736352527,
@@ -122,17 +138,17 @@
     {
       "timestamp": 1743612623,
       "type": "code",
+      "contract": "eth:0x323dFC63c9B83CB83f40325AaB74b245937cbdF0",
+      "transaction": "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",
+      "reason": "Upgraded the (since retired) DelayedWETH that held the bonds of permissionless dispute games."
+    },
+    {
+      "timestamp": 1743612623,
+      "type": "code",
       "contract": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
       "transaction": "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",
       "updateId": "62284543",
       "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
-    },
-    {
-      "timestamp": 1745511383,
-      "type": "state",
-      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
-      "transaction": "0xbe44244e352a9ffa67ad7f7133e9ed014b380e4b1bd789419e6d33aaad780d12",
-      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
     },
     {
       "timestamp": 1745511383,
@@ -143,19 +159,18 @@
       "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
     },
     {
+      "timestamp": 1745511383,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "transaction": "0xbe44244e352a9ffa67ad7f7133e9ed014b380e4b1bd789419e6d33aaad780d12",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
       "timestamp": 1746628403,
       "type": "state",
       "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
       "transaction": "0xc4a7089a92c96b83475a7c20e40b4c888a277a90208d649c81df243ecdceb587",
       "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
-    },
-    {
-      "timestamp": 1753378247,
-      "type": "state",
-      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-      "transaction": "0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
-      "updateId": "793e7ea6",
-      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe."
     },
     {
       "timestamp": 1753379243,
@@ -168,10 +183,10 @@
     {
       "timestamp": 1753380539,
       "type": "state",
-      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+      "contract": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "transaction": "0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
       "updateId": "793e7ea6",
-      "reason": "Disabled the former deputy module on the Guardian Safe."
+      "reason": "The Guardian Safe disabled DeputyGuardianModule 2.0.0, removing the OP Foundation Operations Safe's path to set the respected game type, blacklist games and set the anchor state through the guardian. Only the pause-only DeputyPauseModule remains."
     },
     {
       "timestamp": 1759422923,
@@ -190,28 +205,20 @@
       "reason": "Upgraded the L1StandardBridge implementation as part of a core protocol release."
     },
     {
-      "timestamp": 1765898063,
-      "type": "code",
-      "contract": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-      "transaction": "0x50705c3d1a35df65f3690ab89546b4a2895b01a51e02b9d3d163d947bd99f829",
-      "updateId": "e7f01124",
-      "reason": "Upgraded the Foundation Upgrade Safe singleton to Safe 1.4.1."
-    },
-    {
       "timestamp": 1769109083,
       "type": "state",
-      "contract": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+      "contract": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
       "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
       "updateId": "5871bec8",
-      "reason": "Enabled the SaferSafes execution module on the Foundation Upgrade Safe."
+      "reason": "The OP Foundation Upgrade Safe, one of the two members of the SuperchainProxyAdminOwner, enabled the SaferSafes module: after an unanswered liveness challenge (30-day response period) its fallback owner, the Security Council, can take over the Foundation's half of the upgrade authority."
     },
     {
       "timestamp": 1775575311,
       "type": "state",
-      "contract": "oeth:0x2A82ae142b2E62Cb7d10B55E323acb1Cab663A26",
+      "contract": "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
       "transaction": "0xcab1687f5c496d1f2447a4dd9205cd5c9965c74444a8f9be9d5d5345ce6ed647",
       "updateId": "4bd2123b",
-      "reason": "Changed the MintManagerOwner Safe threshold from 3 to 1 and moved effective approval into the nested SafeL2 authority path."
+      "reason": "The MintManagerOwner Safe, owner of the MintManager, replaced its 3-of-5 signer set with the nested SafeL2 (6-of-9, with a SaferSafes module) as its only owner, threshold 1."
     },
     {
       "timestamp": 1782428747,

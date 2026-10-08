@@ -277,7 +277,7 @@ export const base: ScalingProject = opStackL2({
       { type: 'blockscoutV2', url: 'https://base.blockscout.com/api/v2' },
     ],
   },
-  ossification: discovery.getOssification(chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   stateDerivation: DERIVATION.OPSTACK('BASE'),
   centralizedSequencing: {
     hardcoded: HARDCODED.BASE,
@@ -313,11 +313,11 @@ export const base: ScalingProject = opStackL2({
       },
       {
         title: 'OptimismPortal2 - source code',
-        url: 'https://etherscan.io/address/0x66d94eE8F529b683ED6013729784e8bb44697A64#code',
+        url: 'https://etherscan.io/address/0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C#code',
       },
       {
         title: 'AggregateVerifier - source code',
-        url: 'https://etherscan.io/address/0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2#code',
+        url: 'https://etherscan.io/address/0xeF9eCeA15265321753047EBF7D54C858D53cB94f#code',
       },
     ],
   },
@@ -421,7 +421,7 @@ export const base: ScalingProject = opStackL2({
         Composition: `**${securityCouncilStats}**, nested as one of two signers in the ${governanceStats} \`Base Governance Multisig\` alongside Coinbase's ${coordinatorStats} \`Base Coordinator Multisig\`. Base counts this as ${upgradeRequiredApprovals} of ${upgradeApprovingEntities} entities, or ${upgradeQuorumPercent}%; the Council Safe on its own is ${councilOnlyPercent}%. Members serve staggered cohort terms and are appointed against published criteria, not elected.`,
         'Members public': `**Mapped (${securityCouncilSize - 1} of ${securityCouncilSize})** — [Base publishes](https://docs.base.org/base-chain/security/security-council) Aerodrome (JP), Moonwell (BR), Blackbird (US), ChainSafe (CA), Talent Protocol (PT) and Moshicam (US) as entities, plus Seneca (US), Juan Suarez (US), Toady Hawk (CA), Roberto Bayardo (US) and Yele Bademosi (UK) as individuals. One address is unpublished, as are the people who sign for each entity. Five of the six entities are Base-ecosystem projects and two of the individuals are former Coinbase or Base contributors.`,
         Charter: `**None** — the [docs page](https://docs.base.org/base-chain/security/security-council) sets out selection criteria, cohort terms and member duties, but no removal procedure, quorum-loss fallback or conflict-of-interest enforcement. Coinbase's [Neutrality Principles](https://www.coinbase.com/blog/coinbases-neutrality-principles-for-base) cover transaction ordering, user assets and exit rights, and do not bind the Council.`,
-        'Can Coinbase bypass the Council?': `**Not for upgrades** — every \`ProxyAdmin\` action needs the ${governanceStats}. Elsewhere Coinbase acts alone: the ${incidentResponderStats} \`Base Multisig 1\` owns \`SystemConfig\` (sequencer, gas configuration) and is Incident Responder, and the Coordinator Multisig owns \`TEEProverRegistry\` and \`NitroEnclaveVerifier\`, so it can change the TEE prover allowlist, one of the two proof arms, without the Council.`,
+        'Can Coinbase bypass the Council?': `**Not for upgrades** — every \`ProxyAdmin\` action needs the ${governanceStats}. Elsewhere Coinbase acts alone: the ${incidentResponderStats} \`Base Multisig 1\` owns \`SystemConfig\` (sequencer, gas configuration) and is Incident Responder, and the Coordinator Multisig owns \`TEEProverRegistry\` and \`CertManager\`, so it can change the TEE prover allowlist, one of the two proof arms, without the Council.`,
         'Who can override the Council?': `**Nobody — it administers itself.** Seats are changed by the Council Safe calling itself, so ${securityCouncilThreshold} of the ${securityCouncilSize} sitting members decide who joins or leaves. There is no token, DAO or veto body. The ${governanceStats} blocks both ways: neither side can upgrade alone. Below ${securityCouncilThreshold} available signers upgrades stall, and there is no liveness module handing control to a fallback.`,
       },
       upgrades: {
@@ -472,10 +472,6 @@ function getBaseProgramHashes(): string[] {
   result.push(
     discovery.getContractValue<string>('AggregateVerifier', 'ZK_RANGE_HASH'),
   )
-  // risc0 set verifier program
-  result.push(
-    discovery.getContractValue<string[]>('RiscZeroSetVerifier', 'imageInfo')[0],
-  )
   // TEE image hash
   result.push(
     discovery.getContractValue<string>(
@@ -483,45 +479,9 @@ function getBaseProgramHashes(): string[] {
       'getExpectedImageHash',
     ),
   )
-  // TEE verification programs
-  const zkConfigRiscZero = discovery.getContractValue<{
-    verifierId: string
-    aggregatorId: string
-    zkVerifier: string
-  }>('NitroEnclaveVerifier', 'zkConfigRiscZero')
-  const zkConfigSuccinct = discovery.getContractValue<{
-    verifierId: string
-    aggregatorId: string
-    zkVerifier: string
-  }>('NitroEnclaveVerifier', 'zkConfigSuccinct')
-  result.push(zkConfigRiscZero.aggregatorId)
-  result.push(zkConfigRiscZero.verifierId)
-  result.push(zkConfigSuccinct.aggregatorId)
-  result.push(zkConfigSuccinct.verifierId)
-  return result.filter(
-    (h) =>
-      h !==
-      '0x0000000000000000000000000000000000000000000000000000000000000000',
-  )
+  return result
 }
 
 function getBaseVerifiers(): ChainSpecificAddress[] {
-  const sp1Verifiers = getSP1Verifiers(discovery)
-  const router = discovery.getContract('RiscZeroVerifierRouter')
-  const wrappers = Object.entries(router.values ?? {})
-    .filter(([key]) => key.startsWith('verifier_'))
-    .map(([, value]) => value as ChainSpecificAddress)
-
-  // get all risc zero verifiers via verifier_... on the router
-  const riscZeroVerifiers = wrappers
-    .map((wrapper) =>
-      discovery.getContractValue<ChainSpecificAddress>(wrapper, 'verifier'),
-    )
-    .filter(
-      // RiscZeroSetVerifier is not actually a verifier, it redirects zk verification to other contracts
-      (verifier) =>
-        discovery.getContract(verifier).name === 'RiscZeroGroth16Verifier',
-    )
-
-  return [...sp1Verifiers, ...riscZeroVerifiers]
+  return getSP1Verifiers(discovery)
 }

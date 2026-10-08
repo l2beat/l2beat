@@ -1,6 +1,6 @@
-import MarkdownIt from 'markdown-it'
 import { useId } from 'react'
 import { cn } from '~/utils/cn'
+import { createMarkdown } from '~/utils/markdown/createMarkdown'
 import {
   type GlossaryRenderEnv,
   glossaryPlugin,
@@ -22,10 +22,7 @@ interface MarkdownProps {
   ignoreGlossary?: boolean
 }
 
-const markdown = MarkdownIt({
-  html: true,
-  typographer: true,
-})
+const markdown = createMarkdown()
   .use(outLinksPlugin)
   .use(glossaryPlugin)
   .use(headingLevelPlugin)
@@ -74,6 +71,6 @@ function processCollapsibleText(markdown: string): string {
 
   return markdown.replace(collapsiblePattern, (_match, label, content) => {
     const uniqueId = useId()
-    return `<button class="inline text-gray-600 dark:text-secondary bg-gray-100 dark:bg-surface-secondary rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-surface-tertiary focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-600" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
+    return `<button class="inline text-gray-600 dark:text-secondary bg-gray-100 dark:bg-surface-secondary rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-300 dark:focus-visible:ring-gray-600" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
   })
 }

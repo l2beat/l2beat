@@ -40,6 +40,8 @@ export function MetricsMiddleware() {
         status: res.statusCode,
         duration: Math.round(durationMs),
         size: contentLength ? Number(contentLength) : undefined,
+        // Tells markdown served on a page URL (Accept: text/markdown) from its HTML.
+        contentType: res.get('Content-Type'),
         referer: req.headers.referer ?? 'unknown',
         userAgent: req.headers['user-agent'] ?? 'unknown',
       })

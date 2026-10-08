@@ -26,9 +26,9 @@ export async function getNativeRollupsData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Native Rollups - L2BEAT',
+        name: 'Native Rollups',
         description:
-          'Native rollups use proof-carrying transactions so Ethereum can verify L2 blocks with its own execution program and proof infrastructure.',
+          'Native rollups let Ethereum verify L2 blocks with its own EVM program, through proofs that frame transactions declare and Ethereum aggregates.',
         url,
         openGraph: {
           image: '/meta-images/native-rollups/opengraph-image.png',

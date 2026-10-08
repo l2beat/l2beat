@@ -133,8 +133,8 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         },
         {
           title: 'Ossification',
-          href: '/security/ossification',
-          disabled: true,
+          href: '/ossification',
+          disabled: !env.CLIENT_SIDE_OSSIFICATION_ENABLED,
         },
       ],
     ],

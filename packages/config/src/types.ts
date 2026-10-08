@@ -1,4 +1,5 @@
 import type {
+  OssificationHistory,
   RetryHandlerVariant,
   TrackedTxConfigEntryWithoutId,
 } from '@l2beat/shared'
@@ -280,9 +281,9 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
   /** Public entries of diffHistory.md, newest first. */
   discoveryUpdates?: ProjectDiscoveryUpdate[]
-  /** Ossification factor measured at config build time, for projects with a
-   *  critical contract in their discovery config. */
-  ossification?: ProjectOssification
+  /** Ossification perimeter and history, for projects with a critical
+   *  contract in their discovery config. */
+  ossificationHistory?: OssificationHistory
 
   // tags
   archivedAt?: UnixTime
@@ -1104,10 +1105,18 @@ export interface ProjectPrivacyInfo {
   relayerTracking?: ProjectPrivacyRelayerTracking
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
-  anonymitySet?: {
-    type: 'not-applicable'
-    description: string
-  }
+  anonymitySet?:
+    | {
+        type: 'not-applicable'
+        description: string
+      }
+    /**
+     * Depositors are traced through intermediate deposit addresses. Deposits
+     * that cannot be traced are left out, so the frontend reports coverage.
+     */
+    | { type: 'partially-attributed' }
+    /** Too few users to matter, so exact tracking is not set up. */
+    | { type: 'too-small' }
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
@@ -1136,11 +1145,47 @@ export type ProjectPrivacyRelayerTracking =
     }
   | ProjectPrivacyRailgunWakuRelayerSource
 
-/** Relayers identified by extracting their addresses from onchain withdrawal events. */
+/** Relayer addresses identified from onchain withdrawals. */
 export type ProjectPrivacyOnchainRelayerSource = {
   address: ChainSpecificAddress
   sinceTimestamp: UnixTime
-  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
+} & PrivacyRelayerExtractorConfig
+
+export type PrivacyRelayerExtractorConfig =
+  | { extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal' }
+  | {
+      extractor: 'zkMoneyWithdrawalRelayer'
+      params: ZkMoneyWithdrawalRelayerParams
+    }
+
+/** Locates a portal deposit's funding transfer and authenticates its sender with the SIPA factory. */
+export type ZkMoneyDepositParams = {
+  tokenAddress: EthereumAddress
+  /** Fee sponsorship the portal keeps: the funding transfer is the credited amount plus this. */
+  fundingCut: string
+  factoryAddress: EthereumAddress
+  depositImplementation: EthereumAddress
+  registrationImplementation: EthereumAddress
+}
+
+/** Traces who funded each deposit address (SIPA) from its token history. */
+export type ZkMoneyFundingParams = ZkMoneyDepositParams & {
+  /** Tokens a SIPA accepts; those other than `tokenAddress` reach it through `exchangeAddress`. */
+  fundingTokens: EthereumAddress[]
+  exchangeAddress: EthereumAddress
+  /**
+   * SIPA factory deployment. Funding scans never start earlier; balances held
+   * before a scan starts count as untraceable until the SIPA is emptied.
+   */
+  historyFromBlock: number
+}
+
+/** Identifies withdrawal finalizers and excludes observable self-finalizations. */
+export type ZkMoneyWithdrawalRelayerParams = {
+  tokenAddress: EthereumAddress
+  executorAddress: EthereumAddress
+  /** Helper that forwards fees to its caller, so the payout is followed through it. */
+  operationExecutor: EthereumAddress
 }
 
 /** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
@@ -1266,12 +1311,18 @@ export interface PrivacyAdversaryAssessment {
    */
   sentiment: PrivacyAdversarySentiment
   /**
-   * What this adversary learns beyond the public observer and what stays
-   * hidden, in one or two plain sentences; the first sentence carries the
-   * reason for the sentiment. Never refers to other cells or quotes live
-   * numbers; the tracked anonymity set stands in for them.
+   * The reason for the sentiment, in one plain sentence. Shown alone in the
+   * rosette tooltip, and followed by `exposureContinued` on the project page.
+   * Never refers to other cells or quotes live numbers; the tracked anonymity
+   * set stands in for them.
    */
-  exposure: string
+  exposureShort: string
+  /**
+   * The rest of what this adversary learns beyond the public observer and
+   * what stays hidden, under the same rules. Omit when `exposureShort`
+   * says it all.
+   */
+  exposureContinued?: string
   /**
    * How a user keeps it private, when that is conditional (the cell is at
    * risk, or a field is). Omit when nothing the user does changes the result.
@@ -1415,7 +1466,13 @@ export type PrivacyAnonymitySetDepositSource = {
   event: string
 } & Extract<
   PrivacyFlowExtractorConfig,
-  { extractor: 'fixedAmount' | 'privacyPoolsValue' | 'railgunShield' }
+  {
+    extractor:
+      | 'fixedAmount'
+      | 'privacyPoolsValue'
+      | 'railgunShield'
+      | 'zkMoneyDeposit'
+  }
 >
 
 export type PrivacyFlowExtractorConfig =
@@ -1481,6 +1538,16 @@ export type PrivacyFlowExtractorConfig =
       params: {
         tokenAddress: string
       }
+    }
+  | {
+      /** Credited DAI amount, after the portal's fee sponsorship cut. */
+      extractor: 'zkMoneyDeposit'
+      params: ZkMoneyFundingParams
+    }
+  | {
+      /** Withdrawal and refund payouts, after prover tips and sponsorship cuts. */
+      extractor: 'zkMoneyWithdrawal'
+      params: Record<string, never>
     }
 
 export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
@@ -1881,55 +1948,6 @@ export interface ProjectEscrow {
     warning?: string
   }
   sharedEscrow?: SharedEscrow
-}
-
-export type OssificationChangeType = 'code' | 'state'
-
-export interface ProjectOssificationCriticalUpdate {
-  /** Discovery update id, shared with diffHistory.md and discoveryUpdates. */
-  id: string
-  type: OssificationChangeType
-}
-
-export interface ProjectOssificationContract {
-  name: string
-  address: string
-  isVerified: boolean
-  /** Start of the battle-tested clock: last critical change, or deployment
-   *  if the contract never changed. */
-  ossifyingSince: number
-  codeChangeCount: number
-  stateChangeCount: number
-}
-
-/** Score, change rate and clock timestamps of the critical perimeter. Ages
- *  are not stored: the frontend subtracts the timestamps from the request
- *  time. Score and change rate are measured against the config build time,
- *  which lags the request by at most the age of the deploy. The TVS exposure
- *  needs the database and is added by the frontend. */
-export interface ProjectOssification {
-  /** 0-100: the share of recorded code-bug exploits (published, versioned
-   *  incident dataset, see ossificationCurve.json) whose exploited code was
-   *  younger than this perimeter's age. 0 while any critical contract is
-   *  unverified. */
-  score: number
-  /** score as a 0..1 fraction; 0 gates exposure when unverified */
-  maturity: number
-  /** Start of the unchanged period: the newest deployment or critical change
-   *  anywhere in the perimeter. */
-  projectClockStart: number
-  /** Timestamp of the last critical change, absent if none ever */
-  lastCriticalChange?: number
-  /** 24h-clustered critical change events per year, trailing window */
-  criticalChangesPerYear: number
-  clusteredEventCount: number
-  windowSeconds: number
-  /** 24h-clustered timestamps of every perimeter reset, ascending: critical
-   *  changes plus deployments of critical contracts. */
-  perimeterResets: number[]
-  /** Youngest clock first. */
-  contracts: ProjectOssificationContract[]
-  criticalUpdates: ProjectOssificationCriticalUpdate[]
 }
 
 export interface ProjectDiscoveryInfo {

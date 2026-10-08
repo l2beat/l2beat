@@ -1,0 +1,71 @@
+name: Set up pnpm and install dependencies
+description: >
+  Installs Node.js and the pnpm version pinned in package.json, restores the
+  pnpm store from cache and runs `pnpm install`.
+
+runs:
+  using: composite
+  steps:
+    # pnpm/action-setup installs pnpm through npm and then self-updates to the
+    # pinned version. Downloading the release binary directly skips both.
+    - name: Install pnpm
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        version=$(jq -r .packageManager package.json | sed -E 's/^pnpm@([^+]+).*/\1/')
+        asset=pnpm-linux-x64.tar.gz
+        dir="$RUNNER_TEMP/pnpm"
+        mkdir -p "$dir"
+        curl -fsSL --retry 3 -o "$dir/$asset" \
+          "https://github.com/pnpm/pnpm/releases/download/v$version/$asset"
+        digest=$(gh api "repos/pnpm/pnpm/releases/tags/v$version" \
+          --jq ".assets[] | select(.name == \"$asset\") | .digest")
+        echo "${digest#sha256:}  $dir/$asset" | sha256sum --check --quiet
+        tar -xzf "$dir/$asset" -C "$dir"
+        echo "$dir" >> "$GITHUB_PATH"
+
+    - name: Install Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        # The steps below cache the pnpm store and save it only from main.
+        package-manager-cache: false
+
+    - name: Locate pnpm store
+      id: store
+      shell: bash
+      run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+    # Only main saves the cache. PRs can't read each other's caches, so saving
+    # one per PR only filled the repo's 10 GB cache quota.
+    # lockfile-verified.jsonl records that this lockfile already passed pnpm's
+    # supply-chain check, which otherwise spends ~9s querying the registry.
+    - name: Restore pnpm cache
+      id: restore
+      uses: actions/cache/restore@v6
+      with:
+        path: |
+          ${{ steps.store.outputs.path }}
+          ~/.cache/pnpm/lockfile-verified.jsonl
+        key: pnpm-v1-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: pnpm-v1-${{ runner.os }}-
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install
+
+    # A partial restore brings back packages the lockfile no longer uses.
+    - name: Prune pnpm store
+      if: github.ref == 'refs/heads/main' && steps.restore.outputs.cache-hit != 'true'
+      shell: bash
+      run: pnpm store prune
+
+    - name: Save pnpm cache
+      if: github.ref == 'refs/heads/main' && steps.restore.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v6
+      with:
+        path: |
+          ${{ steps.store.outputs.path }}
+          ~/.cache/pnpm/lockfile-verified.jsonl
+        key: ${{ steps.restore.outputs.cache-primary-key }}

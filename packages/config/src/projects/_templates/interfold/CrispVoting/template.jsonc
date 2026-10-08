@@ -6,6 +6,7 @@
   "ignoreRelatives": ["interfoldFeeToken"],
   "ignoreMethods": [
     "canExecute",
+    "earliestVotingStart",
     "proposalPayer",
     "getProposal",
     "getTally",

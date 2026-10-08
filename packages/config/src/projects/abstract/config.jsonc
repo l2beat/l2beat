@@ -15,6 +15,8 @@
             "type": "crossChainAccessControl",
             "pickChainAddress": "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
           },
+          // UPGRADER_ROLE is tracked separately in upgraderVTL
+          "edit": ["delete", "UPGRADER_ROLE"],
           "permissions": [
             {
               "type": "interact",
@@ -29,6 +31,38 @@
             "pickChainAddress": "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
           },
           "edit": ["get", "EXECUTOR_ROLE", "members"]
+        },
+        "upgraderVTL": {
+          // `pick` instead of `get` / `pickRoleMembers` so that the field does not fail while the role has no members
+          "handler": {
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
+          },
+          "edit": ["pick", "UPGRADER_ROLE"],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Permissioned to call `upgradeChainFromVersion()` through the ValidatorTimelock, executing the protocol upgrade (diamond cut) of the main Diamond contract that is pre-approved for its current protocol version in the ChainTypeManager."
+            }
+          ]
+        },
+        "executionDelayAbstract": {
+          // effective delay for Abstract: max(executionDelay, chainExecutionDelay(Abstract diamond))
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutionDelay",
+            "args": ["0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"]
+          }
+        },
+        "executionDelayAbstract_fmt": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutionDelay",
+            "args": ["0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"]
+          },
+          "edit": ["format", "FormatSeconds"]
         }
       }
     },

@@ -67,7 +67,10 @@ export const mantle: ScalingProject = opStackL2({
       },
     ],
   },
-  ossification: discovery.getOssification(genesisTimestamp),
+  ossificationHistory: discovery.getOssificationHistory(genesisTimestamp, {
+    // OPSuccinctL2OutputOracle verifier set to the SP1 Groth16 gateway (tx 0xf9fc68ef)
+    'shared-sp1': UnixTime(1758005207),
+  }),
   nonTemplateProofSystem: {
     type: 'Validity',
     zkCatalogIds: [ProjectId('sp1hypercube')],

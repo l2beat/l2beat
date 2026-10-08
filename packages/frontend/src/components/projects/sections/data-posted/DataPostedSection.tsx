@@ -6,6 +6,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
+import { DATA_POSTED_DESCRIPTION, EIGENLAYER_DATA_SOURCE } from '../sectionCopy'
 import type { ProjectSectionProps } from '../types'
 import { DataPostedTrackedTransactions } from './DataPostedTrackedTransactions'
 
@@ -40,9 +41,7 @@ export function DataPostedSection({
   return (
     <ProjectSection {...sectionProps}>
       <p className="text-paragraph-15 md:text-paragraph-16">
-        This section shows how much data the project publishes to its
-        data-availability (DA) layer over time. The project currently posts data
-        to
+        {DATA_POSTED_DESCRIPTION} The project currently posts data to
         <span>
           {currentDaLayers.map((daLayer) => (
             <CustomLink key={daLayer.href} href={daLayer.href} className="ml-1">
@@ -79,7 +78,7 @@ export function DataPostedSection({
       <HorizontalSeparator className="my-4" />
       {[...pastDaLayers, ...currentDaLayers].some(
         (daLayer) => daLayer.name === 'EigenDA',
-      ) && <ChartDataSourceInfo dataSource="API provided by EigenLayer" />}
+      ) && <ChartDataSourceInfo dataSource={EIGENLAYER_DATA_SOURCE} />}
       <ProjectDataPostedChart
         project={project}
         defaultRange={defaultRange}

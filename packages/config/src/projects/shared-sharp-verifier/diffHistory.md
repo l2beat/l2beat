@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x455240415232448cdd807b3716924e5f481cafec
+
+# Diff at Sun, 04 Oct 2026 05:55:36 GMT:
+
+- id: 05bb64d0
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1788530147
+- current timestamp: 1788530147
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788530147 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) [shared-sharp-verifier/SHARPVerifierCallProxy] {
+    +++ description: Upgradeable call router through which Starknet and other applications access SHARP fact registries. It uses `call`, not `delegatecall`, so facts and immutable verifier configuration remain at each target registry. The explicit `isValid` entry point always queries the default target. Other calls handled by the fallback, principally proof submissions, can be routed per caller to a still-active registry in the default target's reference chain. The default target can be replaced by eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 after 8d.
+      fieldMeta.$admin.severity:
+-        "HIGH"
+      fieldMeta.callProxyImplementation.severity:
+-        "HIGH"
+      fieldMeta.customFactRegistryRoutes.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xdc45a80a79120a19b40451993219063faadff645
 
 # Diff at Fri, 18 Sep 2026 10:24:55 GMT:

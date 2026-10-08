@@ -33,7 +33,7 @@ describe(createPrivacyRouter.name, () => {
     )
 
     expect(response.headers.get('content-type')).toEqual(
-      'text/plain; charset=utf-8',
+      'text/markdown; charset=utf-8',
     )
     expect(await response.text()).toMatchRegex(/^# Tornado Cash\n/)
   })
@@ -80,7 +80,7 @@ const ENTRY: ProjectPrivacyEntry = {
   attributes: [],
   trackedOn: [],
   exitWindow: { ...RISK, walkawayTest: { passed: true } },
-  trustedSetup: { ...RISK, risk: 'green' },
+  trustedSetup: { ...RISK, risk: 'green', label: RISK.value },
   reproducibility: RISK,
   summary: {
     totalValueLockedUsd: undefined,

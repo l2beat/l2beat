@@ -78,24 +78,8 @@
     "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0": {
       "ignoreRelatives": ["lido", "stEthPriceFeed"]
     },
-    "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F": {
-      "//": "EtherFiNode implementation (behind the beacon): cut EigenLayer wiring",
-      "ignoreRelatives": [
-        "delegationManager",
-        "eigenPodManager",
-        "getEigenPod",
-        "BEACON_ETH_STRATEGY_ADDRESS"
-      ]
-    },
-    "eth:0x556Db8c611FE63e694413F718d795f976dcF5881": {
-      "//": "EtherFiNode impl address as resolved via beacon: same EigenLayer cuts",
-      "ignoreRelatives": [
-        "delegationManager",
-        "eigenPodManager",
-        "getEigenPod",
-        "BEACON_ETH_STRATEGY_ADDRESS"
-      ]
-    },
+    // EtherFiNode implementation (behind beacon 0x3c55...): the EigenLayer and
+    // EIP-7002/7251 cuts live in the etherfi/EtherFiNode template.
     "eth:0xcfC6d9Bd7411962Bfe7145451A7EF71A24b6A7A2": {
       "//": "DepositAdapter: external LST/wETH tokens it zaps from",
       "ignoreRelatives": ["stETH", "wETH", "wstETH"]

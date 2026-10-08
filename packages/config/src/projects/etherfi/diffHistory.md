@@ -1,3 +1,189 @@
+Generated with discovered.json: 0x2fbe4952c5f4bf0aef668ba8f04ae06432e1948d
+
+# Diff at Thu, 01 Oct 2026 11:10:31 GMT:
+
+- id: e2a34318
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1789917578
+- current timestamp: 1790850991
+
+## Description
+
+- Upgrade via the 10d Upgrade timelock of EtherFiNodesManager, StakingManager, EtherFiAdmin and the EtherFiNode beacon implementation. Adds pod-less EtherFiNodes (node itself is the withdrawal credential target and calls the EIP-7002/EIP-7251 predeploys directly), EigenPod retirement, checks that consolidation targets are ether.fi validators, moves `linkLegacyValidatorIds` to the operating multisig, opens call forwarding to the housekeeping role (still selector-whitelisted) and drops id-based overloads.
+  - EtherFiNodesManager: https://disco.l2beat.com/diff/eth:0xcF5928EA7d7F164ec868cEdA7a69E08a102B5e05/eth:0x020016Fa077515451975712595EB3e984907ad3b
+  - StakingManager: https://disco.l2beat.com/diff/eth:0x66e1C53e846eF3E9f3722591868AfcFfB7f39800/eth:0x6515B41BDcf83BE5543B88591BC0bC34d844c9c2
+  - EtherFiAdmin: https://disco.l2beat.com/diff/eth:0x5b083DDe26FBA0E43940b2e161FCd129903FC27d/eth:0x841fA691AA6E30E97c817608F90111701a3D0Ac8
+  - EtherFiNode (beacon impl): https://disco.l2beat.com/diff/eth:0x556Db8c611FE63e694413F718d795f976dcF5881/eth:0x73Df4a005332525fB0A0B2cf067352a9b706f233
+- LiquidityPool `validatorSizeWei` 32 -> 1901 ETH (Operating timelock): new validators are funded as 1901 ETH compounding validators.
+- Liquifier paused for 1 day by a guardian (`pausedUntil`).
+- Treasury Safe signer swapped.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x0c83EAe1FE72c390A02E426572854931EefF93BA) [GnosisSafe] {
+    +++ description: None
+      values.$members.7:
+-        "eth:0x4024380A7c52328a0BB2B608846dCf2E4621f049"
++        "eth:0x513A849d64C3a199C288D679946a65e5a5B709F4"
+    }
+```
+
+```diff
+    contract EtherFiAdmin (eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705) [etherfi/EtherFiAdmin] {
+    +++ description: Executor that validates and applies EtherFiOracle reports (rebase, withdrawal finalization, validator approvals) subject to per-task bounds.
+      sourceHashes.1:
+-        "0xb5f2218dca3868408b4238b08b798eb2ab3e45919de0d85dd4f5963c3e2cecdc"
++        "0x3736ab2214c0d4dffc6a163cadb347acb16e34bffc95d8a146cfc90158618d94"
+      values.$implementation:
+-        "eth:0x5b083DDe26FBA0E43940b2e161FCd129903FC27d"
++        "eth:0x841fA691AA6E30E97c817608F90111701a3D0Ac8"
+      values.$pastUpgrades.6:
++        ["2026-09-25T14:59:11.000Z","0x6a586a6e6ff829746c75f63317f5bda559191c3fac5240220ea45fae3023ea1d",["eth:0x841fA691AA6E30E97c817608F90111701a3D0Ac8"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.getImplementation:
+-        "eth:0x5b083DDe26FBA0E43940b2e161FCd129903FC27d"
++        "eth:0x841fA691AA6E30E97c817608F90111701a3D0Ac8"
+      implementationNames.eth:0x5b083DDe26FBA0E43940b2e161FCd129903FC27d:
+-        "EtherFiAdmin"
+      implementationNames.eth:0x841fA691AA6E30E97c817608F90111701a3D0Ac8:
++        "EtherFiAdmin"
+    }
+```
+
+```diff
+    contract StakingManager (eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d) [etherfi/StakingManager] {
+    +++ description: Registers validators and creates EtherFiNode instances (behind a beacon), with or without an EigenLayer EigenPod. Batches beacon-chain deposits from LiquidityPool ETH, binding withdrawal credentials to the node's EigenPod or, for a node without a pod, to the node itself.
+      sourceHashes.1:
+-        "0xf36cf379595a1d17bc1065160d3a3eaa2d035f0b27b4b68d02d98f38ce47b663"
++        "0x81978cd715155eb02a9c441bf197fe27a8ae61eb6589c8255f400431c01b398a"
+      values.$implementation:
+-        "eth:0x66e1C53e846eF3E9f3722591868AfcFfB7f39800"
++        "eth:0x6515B41BDcf83BE5543B88591BC0bC34d844c9c2"
+      values.$pastUpgrades.10:
++        ["2026-09-25T14:59:11.000Z","0x6a586a6e6ff829746c75f63317f5bda559191c3fac5240220ea45fae3023ea1d",["eth:0x6515B41BDcf83BE5543B88591BC0bC34d844c9c2"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.implementation:
+-        "eth:0x556Db8c611FE63e694413F718d795f976dcF5881"
++        "eth:0x73Df4a005332525fB0A0B2cf067352a9b706f233"
+      implementationNames.eth:0x66e1C53e846eF3E9f3722591868AfcFfB7f39800:
+-        "StakingManager"
+      implementationNames.eth:0x6515B41BDcf83BE5543B88591BC0bC34d844c9c2:
++        "StakingManager"
+    }
+```
+
+```diff
+    contract LiquidityPool (eth:0x308861A430be4cce5502d0A12724771Fc6DaF216) [etherfi/LiquidityPool] {
+    +++ description: The protocol hub and ETH custodian. Holds pooled ETH, mints/burns eETH, prices shares, routes deposits to validators via StakingManager and serves withdrawals through the WithdrawRequestNFT queue and the EtherFiRedemptionManager buffer.
+      values.validatorSizeWei:
+-        "32000000000000000000"
++        "1901000000000000000000"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x73Df4a005332525fB0A0B2cf067352a9b706f233. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      description:
+-        "A beacon with an upgradeable implementation currently set as eth:0x556Db8c611FE63e694413F718d795f976dcF5881. Beacon proxy contracts pointing to this beacon will all use its implementation."
++        "A beacon with an upgradeable implementation currently set as eth:0x73Df4a005332525fB0A0B2cf067352a9b706f233. Beacon proxy contracts pointing to this beacon will all use its implementation."
++++ severity: HIGH
+      values.implementation:
+-        "eth:0x556Db8c611FE63e694413F718d795f976dcF5881"
++        "eth:0x73Df4a005332525fB0A0B2cf067352a9b706f233"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EtherFiNode (eth:0x556Db8c611FE63e694413F718d795f976dcF5881) [etherfi/EtherFiNode]
+    +++ description: Per-node implementation (behind a beacon). A node either owns an EigenLayer EigenPod that is its validators' withdrawal address, or, if created without a pod, is the withdrawal address itself and calls the EIP-7002/EIP-7251 system contracts directly to request exits and consolidations. ETH it receives is swept to the LiquidityPool. EigenLayer contracts are external.
+```
+
+```diff
+    contract EtherFiNodesManager (eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F) [etherfi/EtherFiNodesManager] {
+    +++ description: Manages the fleet of EtherFiNode contracts: resolves each node's withdrawal-credential target (its EigenPod, or the node itself if it has none), forwards whitelisted EigenLayer and external calls, submits EIP-7002 exit and EIP-7251 consolidation requests and sweeps node ETH to the LiquidityPool.
+      sourceHashes.1:
+-        "0x254c6c89d62670152c9108204fc7b53e3b2e9de699f29271f75bb6d6f5e654f2"
++        "0xa3bff41a6f2d4f89f69fef7d5aa8b83d941986ea885f6b9cf76af4c1d0fbf106"
+      values.$implementation:
+-        "eth:0xcF5928EA7d7F164ec868cEdA7a69E08a102B5e05"
++        "eth:0x020016Fa077515451975712595EB3e984907ad3b"
+      values.$pastUpgrades.18:
++        ["2026-09-25T14:59:11.000Z","0x6a586a6e6ff829746c75f63317f5bda559191c3fac5240220ea45fae3023ea1d",["eth:0x020016Fa077515451975712595EB3e984907ad3b"]]
+      values.$upgradeCount:
+-        18
++        19
+      implementationNames.eth:0xcF5928EA7d7F164ec868cEdA7a69E08a102B5e05:
+-        "EtherFiNodesManager"
+      implementationNames.eth:0x020016Fa077515451975712595EB3e984907ad3b:
++        "EtherFiNodesManager"
+    }
+```
+
+```diff
+    contract Liquifier (eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F) [etherfi/Liquifier] {
+    +++ description: Accepts whitelisted liquid staking tokens and restaked positions in exchange for eETH, later unwinding them to ETH.
+      values.pausedUntil:
+-        0
++        1790894891
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EtherFiNode (eth:0x73Df4a005332525fB0A0B2cf067352a9b706f233) [etherfi/EtherFiNode]
+    +++ description: Per-node implementation (behind a beacon). A node either owns an EigenLayer EigenPod that is its validators' withdrawal address, or, if created without a pod, is the withdrawal address itself and calls the EIP-7002/EIP-7251 system contracts directly to request exits and consolidations. ETH it receives is swept to the LiquidityPool. EigenLayer contracts are external.
+```
+
+## Source code changes
+
+```diff
+.../EtherFiAdmin/EtherFiAdmin.sol                  |   63 +-
+ .../{.flat@1789917578 => .flat}/EtherFiNode.sol    | 3291 ++++++++++----------
+ .../EtherFiNodesManager/EtherFiNodesManager.sol    |  314 +-
+ .../StakingManager/StakingManager.sol              |   82 +-
+ 4 files changed, 2082 insertions(+), 1668 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917578 (main branch discovery), not current.
+
+```diff
+    contract StakingManager (eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d) [etherfi/StakingManager] {
+    +++ description: Registers validators and creates EtherFiNode instances (behind a beacon), with or without an EigenLayer EigenPod. Batches beacon-chain deposits from LiquidityPool ETH, binding withdrawal credentials to the node's EigenPod or, for a node without a pod, to the node itself.
+      description:
+-        "Registers validators and creates EtherFiNode instances (behind a beacon). Batches beacon-chain deposits from LiquidityPool ETH."
++        "Registers validators and creates EtherFiNode instances (behind a beacon), with or without an EigenLayer EigenPod. Batches beacon-chain deposits from LiquidityPool ETH, binding withdrawal credentials to the node's EigenPod or, for a node without a pod, to the node itself."
+    }
+```
+
+```diff
+    contract EtherFiNode (eth:0x556Db8c611FE63e694413F718d795f976dcF5881) [etherfi/EtherFiNode] {
+    +++ description: Per-node implementation (behind a beacon). A node either owns an EigenLayer EigenPod that is its validators' withdrawal address, or, if created without a pod, is the withdrawal address itself and calls the EIP-7002/EIP-7251 system contracts directly to request exits and consolidations. ETH it receives is swept to the LiquidityPool. EigenLayer contracts are external.
+      description:
+-        "Per-node implementation (behind a beacon) that holds an EigenLayer EigenPod and splits validator rewards. EigenLayer contracts are external."
++        "Per-node implementation (behind a beacon). A node either owns an EigenLayer EigenPod that is its validators' withdrawal address, or, if created without a pod, is the withdrawal address itself and calls the EIP-7002/EIP-7251 system contracts directly to request exits and consolidations. ETH it receives is swept to the LiquidityPool. EigenLayer contracts are external."
+    }
+```
+
+```diff
+    contract EtherFiNodesManager (eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F) [etherfi/EtherFiNodesManager] {
+    +++ description: Manages the fleet of EtherFiNode contracts: resolves each node's withdrawal-credential target (its EigenPod, or the node itself if it has none), forwards whitelisted EigenLayer and external calls, submits EIP-7002 exit and EIP-7251 consolidation requests and sweeps node ETH to the LiquidityPool.
+      description:
+-        "Manages the fleet of EtherFiNode contracts: withdrawal credentials, rewards distribution and validator lifecycle."
++        "Manages the fleet of EtherFiNode contracts: resolves each node's withdrawal-credential target (its EigenPod, or the node itself if it has none), forwards whitelisted EigenLayer and external calls, submits EIP-7002 exit and EIP-7251 consolidation requests and sweeps node ETH to the LiquidityPool."
+    }
+```
+
 Generated with discovered.json: 0xf540b9213090c715d1bd68a678e5a331c8f3e040
 
 # Diff at Wed, 23 Sep 2026 05:46:19 GMT:
