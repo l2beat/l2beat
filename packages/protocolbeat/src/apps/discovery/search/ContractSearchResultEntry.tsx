@@ -32,7 +32,7 @@ export function ContractSearchResultEntry({
             setOpen(false)
           }}
         >
-          <span className="max-w-[25rem] truncate font-medium">
+          <span className="max-w-100 truncate font-medium">
             <HighlightedText text={result.name ?? 'EOA'} run={searchTerm} />
           </span>
           <span className="truncate font-mono text-coffee-400">

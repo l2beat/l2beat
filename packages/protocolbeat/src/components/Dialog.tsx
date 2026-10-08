@@ -70,7 +70,7 @@ function DialogBody({
     <DialogOverlay>
       <RadixDialog.Content
         className={cn(
-          '-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-[25] max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-6 shadow-[var(--shadow-6)] focus:outline-none',
+          '-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-25 max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-6 shadow-(--shadow-6) focus:outline-hidden',
           className,
         )}
         {...props}
@@ -81,7 +81,7 @@ function DialogBody({
         {!noCloseButton && (
           <Dialog.Close asChild>
             <button
-              className="absolute top-2.5 right-2.5 inline-flex cursor-pointer appearance-none items-center justify-center rounded-full focus:outline-none"
+              className="absolute top-2.5 right-2.5 inline-flex cursor-pointer appearance-none items-center justify-center rounded-full focus:outline-hidden"
               aria-label="Close"
             >
               <IconClose className="stroke-coffee-200" />

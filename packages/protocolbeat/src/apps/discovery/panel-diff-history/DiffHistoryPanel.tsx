@@ -224,7 +224,7 @@ interface ToolbarProps {
 
 function Toolbar(props: ToolbarProps) {
   return (
-    <div className="absolute right-3 bottom-1 z-10 flex flex-col items-stretch gap-0.5 rounded border border-coffee-600 bg-coffee-800/95 p-1 shadow-lg backdrop-blur">
+    <div className="absolute right-3 bottom-1 z-10 flex flex-col items-stretch gap-0.5 rounded-sm border border-coffee-600 bg-coffee-800/95 p-1 shadow-lg backdrop-blur-sm">
       {props.onLoadAll && (
         <>
           <ToolbarButton
@@ -289,7 +289,7 @@ function ToolbarButton(props: {
       title={props.title}
       onClick={props.onClick}
       disabled={props.disabled}
-      className="flex h-7 w-7 items-center justify-center rounded text-coffee-200 hover:bg-coffee-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
+      className="flex h-7 w-7 items-center justify-center rounded-sm text-coffee-200 hover:bg-coffee-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
     >
       {props.children}
     </button>

@@ -89,7 +89,7 @@ export function DiffView(props: DiffViewProps) {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="grid w-full grid-cols-[minmax(0,_1fr)_auto_minmax(0,_1fr)] items-center gap-x-4 border-coffee-200/40 border-b bg-coffee-900 px-4 py-2 shadow-[0_2px_4px_0_black]">
+      <div className="grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-x-4 border-coffee-200/40 border-b bg-coffee-900 px-4 py-2 shadow-[0_2px_4px_0_black]">
         {/* Left section: logo and left address */}
         <div className="flex min-w-0 items-center gap-4">
           <Link to="/diff" className="shrink-0 items-center">
@@ -108,10 +108,10 @@ export function DiffView(props: DiffViewProps) {
         </div>
 
         {/* Center Controls */}
-        <div className="flex gap-1 rounded-lg border border-coffee-700 bg-coffee-800/90 p-1 backdrop-blur-sm">
+        <div className="flex gap-1 rounded-lg border border-coffee-700 bg-coffee-800/90 p-1 backdrop-blur-xs">
           <button
             className={clsx(
-              'rounded p-1.5 transition-colors',
+              'rounded-sm p-1.5 transition-colors',
               removeUnchanged
                 ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
                 : 'hover:bg-coffee-700',
@@ -123,7 +123,7 @@ export function DiffView(props: DiffViewProps) {
           </button>
           <button
             className={clsx(
-              'rounded p-1.5 transition-colors',
+              'rounded-sm p-1.5 transition-colors',
               ignoreComments
                 ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
                 : 'hover:bg-coffee-700',
@@ -135,7 +135,7 @@ export function DiffView(props: DiffViewProps) {
           </button>
           <button
             className={clsx(
-              'rounded p-1.5 transition-colors',
+              'rounded-sm p-1.5 transition-colors',
               fold
                 ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
                 : 'hover:bg-coffee-700',
@@ -147,7 +147,7 @@ export function DiffView(props: DiffViewProps) {
           </button>
           <button
             className={clsx(
-              'rounded p-1.5 transition-colors',
+              'rounded-sm p-1.5 transition-colors',
               'hover:bg-coffee-700',
             )}
             onClick={swapSides}
@@ -157,14 +157,14 @@ export function DiffView(props: DiffViewProps) {
           </button>
           <div className="w-px bg-coffee-700" />
           <button
-            className="rounded p-1.5 transition-colors hover:bg-coffee-700"
+            className="rounded-sm p-1.5 transition-colors hover:bg-coffee-700"
             onClick={() => editor?.toNextDiff()}
             title="Next difference"
           >
             <IconArrowToDotDown className="size-4" />
           </button>
           <button
-            className="rounded p-1.5 transition-colors hover:bg-coffee-700"
+            className="rounded-sm p-1.5 transition-colors hover:bg-coffee-700"
             onClick={() => editor?.toPreviousDiff()}
             title="Previous difference"
           >
@@ -172,7 +172,7 @@ export function DiffView(props: DiffViewProps) {
           </button>
           <div className="w-px bg-coffee-700" />
           <button
-            className="rounded p-1.5 transition-colors hover:bg-coffee-700"
+            className="rounded-sm p-1.5 transition-colors hover:bg-coffee-700"
             onClick={() => {
               if (diff === undefined) {
                 return
@@ -186,7 +186,7 @@ export function DiffView(props: DiffViewProps) {
             {inlineDiffCopied && <IconTick className="block text-aux-green" />}
           </button>
           <button
-            className="rounded p-1.5 transition-colors hover:bg-coffee-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-sm p-1.5 transition-colors hover:bg-coffee-700 disabled:cursor-not-allowed disabled:opacity-50"
             onClick={() => {
               if (url) {
                 copyUrl(url)

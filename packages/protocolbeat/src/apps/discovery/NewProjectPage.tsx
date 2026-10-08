@@ -53,7 +53,7 @@ export function NewProjectPage() {
   return (
     <>
       <Title title={`DiscoUI - ${!title ? 'New project' : title}`} />
-      <div className="mx-auto max-w-screen-md space-y-6 p-4">
+      <div className="mx-auto max-w-(--breakpoint-md) space-y-6 p-4">
         <div>
           <div className="mb-1 flex items-stretch text-sm">
             <div className="whitespace-nowrap">Project title</div>

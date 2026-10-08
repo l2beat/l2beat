@@ -51,10 +51,11 @@ function NodeViewImpl(props: NodeViewProps) {
         }}
         className={clsx(
           'absolute bg-black',
-          fullHeight ? 'rounded-2xl' : isGroup ? 'rounded-xl' : 'rounded',
+          fullHeight ? 'rounded-2xl' : isGroup ? 'rounded-xl' : 'rounded-sm',
           props.isSelected
-            ? 'outline outline-4 outline-autumn-300'
-            : isGroup && 'outline outline-dashed outline-2 outline-coffee-200',
+            ? 'outline-4 outline-autumn-300 outline-solid'
+            : isGroup &&
+                'outline-dashed outline-2 outline-coffee-200 outline-solid',
         )}
       >
         <div
@@ -100,7 +101,7 @@ function NodeViewImpl(props: NodeViewProps) {
         <div
           className={clsx(
             'pointer-events-none absolute border-2 border-dashed',
-            fullHeight ? 'rounded-2xl' : 'rounded',
+            fullHeight ? 'rounded-2xl' : 'rounded-sm',
           )}
           style={{
             left: props.node.box.x,

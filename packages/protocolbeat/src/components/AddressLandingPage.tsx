@@ -34,7 +34,7 @@ export function AddressLandingPage(props: {
             {props.children}
             <button
               type="submit"
-              className="bg-autumn-300 px-4 py-2 font-semibold text-coffee-900 text-sm transition-colors hover:bg-autumn-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-coffee-200"
+              className="bg-autumn-300 px-4 py-2 font-semibold text-coffee-900 text-sm transition-colors hover:bg-autumn-200 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-coffee-200"
             >
               {props.submitLabel}
             </button>
