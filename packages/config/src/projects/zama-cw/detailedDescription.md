@@ -8,7 +8,7 @@ Zama Confidential Tokens is an account-based confidential token system on Ethere
 
 The Zama FHE protocol uses fully homomorphic encryption to let smart contracts operate on encrypted values. Balances are stored as encrypted handles instead of plaintext balances, and FHEVM system contracts are called for encrypted arithmetic, comparisons, transfers, minting, or burning, but most of the actual FHE execution happens offchain.
 
-The FHE coprocessor is an offchain service that performs FHE-related work the EVM cannot execute directly. Encrypted user inputs are accepted onchain only after the InputVerifier checks signatures from the coprocessor signer set (currently {{coprocessorThreshold}}/{{coprocessorSignerCount}}). The coprocessor is constrained on what it can commit onchain by the smart contract, but it is not trustless and can affect validity if compromised.
+The FHE coprocessor is an offchain service that performs FHE-related work the EVM cannot execute directly. Encrypted user inputs are accepted onchain only after the InputVerifier checks signatures from the coprocessor signer set (currently {{coprocessorThreshold}}/{{coprocessorSignerCount}}). When priority coprocessor mode is on, a single coprocessor submits encrypted data (currently {{priorityCoprocessorMode}}). The coprocessor is constrained on what it can commit onchain by the smart contract, but it is not trustless and can affect validity if compromised.
 
 The ACL is the onchain access-control registry for encrypted handles. It records which accounts or contracts are allowed to use a ciphertext handle, which prevents arbitrary users from reusing encrypted values they do not control.
 

@@ -1,6 +1,6 @@
 {
   "name": "zksync2",
-  "timestamp": 1790934395,
+  "timestamp": 1791452652,
   "configHash": "0x4b5abe5d9b1c75dd3fb4c374a75e4a2ac6558bcb98eae68e27664842f37efa7a",
   "entries": [
     {
@@ -105,8 +105,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "executionDelay": 10800,
         "executionDelay_fmt": "3h",
-        "executionDelayEra": 10800,
-        "executionDelayEra_fmt": "3h",
+        "executionDelayEra": 86400,
+        "executionDelayEra_fmt": "1d",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getName": "ValidatorTimelock",
         "MAX_EXECUTION_DELAY": 2592000,
@@ -156,8 +156,8 @@
           "severity": "HIGH",
           "description": "Ecosystem-wide minimum execution delay, set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
         },
-        "executionDelayEra": { "severity": "HIGH" },
-        "executionDelayEra_fmt": { "severity": "HIGH" }
+        "executionDelayEra": { "severity": "MEDIUM" },
+        "executionDelayEra_fmt": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",
@@ -631,7 +631,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3317795,
+        "getFirstUnprocessedPriorityTx": 3318084,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -639,8 +639,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 9,
-        "getPriorityTreeRoot": "0x85c3145c7c01b523cff4db8cb8394d0f4d052024757dafa0455c5e643edcf6e8",
+        "getPriorityQueueSize": 48,
+        "getPriorityTreeRoot": "0x5038bb0008e80303284bc644a9161213c0278ef33cfeab7416329e5b13d36054",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -648,13 +648,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 518079,
-        "getTotalBatchesExecuted": 518073,
-        "getTotalBatchesVerified": 518079,
-        "getTotalBlocksCommitted": 518079,
-        "getTotalBlocksExecuted": 518073,
-        "getTotalBlocksVerified": 518079,
-        "getTotalPriorityTxs": 3317804,
+        "getTotalBatchesCommitted": 518366,
+        "getTotalBatchesExecuted": 518324,
+        "getTotalBatchesVerified": 518365,
+        "getTotalBlocksCommitted": 518366,
+        "getTotalBlocksExecuted": 518324,
+        "getTotalBlocksVerified": 518365,
+        "getTotalPriorityTxs": 3318132,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
         "getVerifierParams": {
@@ -1742,7 +1742,7 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_v31": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
-  "usedBlockNumbers": { "ethereum": 26103836 },
+  "usedBlockNumbers": { "ethereum": 26146863 },
   "permissionsConfigHash": "0xdba055c063d7c0d740e9770a9ee8c46527b2e484090f77dc017292a129086846",
   "modelledAgainst": {
     "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"
