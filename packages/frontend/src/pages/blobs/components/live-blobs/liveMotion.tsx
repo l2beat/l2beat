@@ -168,7 +168,11 @@ export interface Arrival {
   slot: number
 }
 
-/** Washes `ref` in `color` and lets it fade, each time a new arrival comes */
+/**
+ * Washes the cells of row `ref` in `color` and lets it fade, each time a new
+ * arrival comes. An inset shadow rather than the row's background, as pinned
+ * cells are opaque and would hide that
+ */
 export function useFlash(
   ref: RefObject<HTMLElement | null>,
   arrival: Arrival | undefined,
@@ -176,10 +180,12 @@ export function useFlash(
 ) {
   useEffect(() => {
     if (!arrival || !ref.current) return
-    ref.current.animate([{ backgroundColor: color }, {}], {
-      duration: FLASH_MS,
-      easing: 'ease-out',
-    })
+    for (const cell of ref.current.children) {
+      cell.animate([{ boxShadow: `inset 0 0 0 100vmax ${color}` }, {}], {
+        duration: FLASH_MS,
+        easing: 'ease-out',
+      })
+    }
   }, [ref, arrival, color])
 }
 

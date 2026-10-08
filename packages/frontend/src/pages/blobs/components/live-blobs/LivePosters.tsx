@@ -10,10 +10,17 @@ import {
   TableHeader,
   TableHeaderRow,
 } from '~/components/table/Table'
+import { TableLink } from '~/components/table/TableLink'
 import { stickyTableColumnRowProps } from '~/components/table/useStickyTableHeader'
+import {
+  getLeftPinnedCellStyles,
+  PINNED_CELL_ATTRIBUTE,
+} from '~/components/table/utils/commonPinningStyles'
+import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
 import type { PostedWindow } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { SLOT_SECONDS } from '~/utils/beaconSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
+import { cn } from '~/utils/cn'
 import { Activity } from './Activity'
 import {
   BLOB_KIB,
@@ -33,6 +40,11 @@ interface Props {
   /** Every project that may post, with the stand-in for unknown senders last */
   posters: LivePoster[]
 }
+
+/** # and Name stay in view on a phone, as the numbers scroll under them */
+const PINNED_COLUMNS = 2
+/** Where Name sticks until the sticky header measures the # column */
+const RANK_WIDTH = 32
 
 /** In the order `PosterRow` renders its cells */
 const COLUMNS: {
@@ -114,11 +126,12 @@ export function LivePosters({ posters }: Props) {
               </colgroup>
               <TableHeader>
                 <TableHeaderRow {...stickyTableColumnRowProps}>
-                  {COLUMNS.map((column) => (
+                  {COLUMNS.map((column, index) => (
                     <TableHead
                       key={column.label}
                       align={column.align}
                       tooltip={column.tooltip}
+                      {...pinnedCellProps(index)}
                     >
                       {column.label}
                     </TableHead>
@@ -198,9 +211,14 @@ function PosterRow({
       data-flip-key={row.poster.id}
       className="relative border-b border-b-divider md:[&>td]:h-10"
     >
-      <TableCell className="text-secondary tabular-nums">{rank}</TableCell>
-      <TableCell>
-        <PosterName poster={row.poster} />
+      <TableCell {...pinnedCellProps(0, 'text-secondary tabular-nums')}>
+        {rank}
+      </TableCell>
+      <TableCell {...pinnedCellProps(1)}>
+        {/* sovereign chains and unknown senders have no page, so no link */}
+        <TableLink href={row.poster.href}>
+          <PosterName poster={row.poster} />
+        </TableLink>
       </TableCell>
       <TableCell>
         <Activity
@@ -302,6 +320,23 @@ function PosterName({ poster }: { poster: LivePoster }) {
       <span className="truncate max-md:max-w-[7rem]">{poster.name}</span>
     </span>
   )
+}
+
+/**
+ * Sticks a cell of the first `PINNED_COLUMNS` to the left, on the card's color
+ * so what scrolls under it does not show through
+ */
+function pinnedCellProps(index: number, className?: string) {
+  if (index >= PINNED_COLUMNS) return { className }
+  return {
+    style: getLeftPinnedCellStyles(
+      index,
+      index * RANK_WIDTH,
+      index === PINNED_COLUMNS - 1,
+    ),
+    className: cn(getRowClassNamesWithoutOpacity(null), className),
+    [PINNED_CELL_ATTRIBUTE]: '',
+  }
 }
 
 function PostersSkeleton() {
