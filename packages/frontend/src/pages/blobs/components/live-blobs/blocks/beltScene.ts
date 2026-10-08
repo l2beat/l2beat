@@ -29,6 +29,11 @@ export interface Playback {
   still: boolean
   /** Second the first blocks came in, to fade them in rather than pop up */
   revealedAt: number | undefined
+  /**
+   * Where the belt stands while looking back through the hour: the slot in
+   * the bay, fractional on the way between two. Undefined while live
+   */
+  view: number | undefined
 }
 
 /** Filled in while drawing, for the pointer to find batches by */

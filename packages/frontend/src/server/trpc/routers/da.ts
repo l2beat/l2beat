@@ -5,6 +5,7 @@ import {
 import {
   getLiveBlobsFeed,
   LiveBlobsParams,
+  PastBlobsParams,
 } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import {
   DaPastDayUsageParams,
@@ -57,4 +58,8 @@ export const daRouter = router({
       async ({ input }) =>
         (await getLiveBlobsFeed().latestAfter(input)) ?? null,
     ),
+
+  pastBlobs: procedure
+    .input(PastBlobsParams)
+    .query(({ input }) => getLiveBlobsFeed().past(input)),
 })

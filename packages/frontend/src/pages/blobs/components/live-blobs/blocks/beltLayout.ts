@@ -146,6 +146,14 @@ export function layoutBelt(
   }
 }
 
+/** Racks the belt shows whole or for the most part, left of the bay and right of it */
+export function racksAroundBay(layout: BeltLayout) {
+  return {
+    before: Math.floor(layout.bayX / layout.blockPitch),
+    after: Math.floor((layout.width - layout.bayX) / layout.blockPitch),
+  }
+}
+
 /** Top and bottom of the tile in `row` (0 at the bottom), by where it sits in its batch */
 export function tileBounds(
   layout: BeltLayout,
