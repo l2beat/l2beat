@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { Database, LiveBlockRecord } from '@l2beat/database'
 import type { EVMBlock, IRpcClient } from '@l2beat/shared'
-import { slotAt, slotStart, UnixTime } from '@l2beat/shared-pure'
+import { slotAt, slotStart } from '@l2beat/shared-pure'
 import { RootIndexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
 import {
@@ -20,19 +20,12 @@ const FIRST_TICK_INTO_SLOT = 1
 const RETRY_SECONDS = 0.25
 /** Stored blocks compared with the chain, back from the newest, in search of a fork */
 const MAX_REORG_DEPTH = 32
-/**
- * Height reported for a fork deeper than `MAX_REORG_DEPTH`: below every stored
- * block, so they all go and the window is fetched again
- */
+/** Below every stored block, so they all go and the window is fetched again */
 const REFETCH_WINDOW_HEIGHT = 0
 
-export interface LiveBlobsTargetDependencies {
+export interface LiveBlobsTargetIndexerDependencies {
   rpc: IRpcClient
   db: Database
-  /** Unix seconds */
-  now?: () => number
-  /** Arranges the next tick in `seconds` */
-  scheduleTick?: (seconds: number) => void
 }
 
 interface Head {
@@ -48,23 +41,18 @@ interface Head {
  */
 export class LiveBlobsTargetIndexer extends RootIndexer {
   private head: Head | undefined
-  /** The stored head stands in for the one followed before a restart */
+  /** After a restart the stored head stands in for the one followed before */
   private headLoaded = false
-  /** What the last log said, so that one goes out only when it changes */
   private lastLogged: { head: number; slot: number } | undefined
   private timer: ReturnType<typeof setTimeout> | undefined
-  private readonly now: () => number
-  private readonly scheduleTick: (seconds: number) => void
 
   constructor(
-    private readonly $: LiveBlobsTargetDependencies,
+    private readonly $: LiveBlobsTargetIndexerDependencies,
     logger: Logger,
   ) {
-    super(logger.tag({ tag: 'ethereum' }), {
+    super(logger.tag({ tag: 'ethereum', project: 'ethereum' }), {
       tickRetryStrategy: getLiveRetryStrategy(),
     })
-    this.now = $.now ?? UnixTime.now
-    this.scheduleTick = $.scheduleTick ?? ((s) => this.setTickTimer(s))
   }
 
   override initialize() {
@@ -78,7 +66,8 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
       { daLayer: 'ethereum' },
       async () => {
         const latest = await this.$.rpc.getBlock('latest', false)
-        const height = await this.follow(latest)
+        const newestStored = await this.$.db.liveBlock.findHead()
+        const height = await this.follow(latest, newestStored)
 
         this.logHead(this.head ?? toHead(latest))
 
@@ -95,9 +84,12 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
     )
   }
 
-  private async follow(latest: EVMBlock): Promise<number> {
+  private async follow(
+    latest: EVMBlock,
+    newestStored: LiveBlockRecord | undefined,
+  ): Promise<number> {
     if (!this.headLoaded) {
-      this.head = await this.loadStoredHead()
+      this.head = newestStored && toStoredHead(newestStored)
       this.headLoaded = true
     }
     if (this.head && latest.number < this.head.blockNumber) {
@@ -105,7 +97,7 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
       return this.head.blockNumber
     }
 
-    const forkHeight = await this.findForkHeight(latest)
+    const forkHeight = await this.findForkHeight(latest, newestStored)
     if (forkHeight !== undefined) {
       // The chain may now be shorter than the head followed so far
       this.head = undefined
@@ -122,7 +114,7 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
    * its lag growing slot by slot
    */
   private logHead(head: Head) {
-    const now = this.now()
+    const now = nowSeconds()
     const slot = slotAt(now)
     if (this.lastLogged?.head === head.slot && this.lastLogged.slot === slot) {
       return
@@ -136,33 +128,34 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
     })
   }
 
-  private async loadStoredHead(): Promise<Head | undefined> {
-    const stored = await this.$.db.liveBlock.findHead()
-    return stored && { blockNumber: stored.blockNumber, slot: stored.slot }
-  }
-
   /**
    * Compares the newest stored block at or below the head with the chain.
    * The child can lag behind while it backfills, so that is not always the
    * head's parent; and the head itself when a block of the same height
-   * replaced it
+   * replaced it. The blocks below are read only once that one is off the
+   * chain: the check runs up to four times a second
    */
-  private async findForkHeight(latest: EVMBlock): Promise<number | undefined> {
-    const newest = await this.$.db.liveBlock.findHead()
-    if (!newest) return undefined
+  private async findForkHeight(
+    latest: EVMBlock,
+    newestStored: LiveBlockRecord | undefined,
+  ): Promise<number | undefined> {
+    if (!newestStored) return undefined
 
-    const checked = Math.min(latest.number, newest.blockNumber)
-    const stored = await this.$.db.liveBlock.getByBlockNumberRange(
-      checked - MAX_REORG_DEPTH,
-      checked,
-    )
-    const storedChecked = stored.at(-1)
-    if (storedChecked?.blockNumber !== checked) return undefined
+    const checked = Math.min(latest.number, newestStored.blockNumber)
+    const storedChecked =
+      checked === newestStored.blockNumber
+        ? newestStored
+        : await this.findStored(checked)
+    if (!storedChecked) return undefined
 
     const onChainHash = await this.hashOnChain(checked, latest)
     if (onChainHash === storedChecked.hash) return undefined
 
-    for (const block of stored.slice(0, -1).reverse()) {
+    const below = await this.$.db.liveBlock.getByBlockNumberRange(
+      checked - MAX_REORG_DEPTH,
+      checked - 1,
+    )
+    for (const block of below.reverse()) {
       const onChain = await this.$.rpc.getBlock(block.blockNumber, false)
       if (onChain.hash === block.hash) {
         this.logger.warn('Chain reorganized', {
@@ -181,6 +174,14 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
     return REFETCH_WINDOW_HEIGHT
   }
 
+  private async findStored(blockNumber: number) {
+    const [stored] = await this.$.db.liveBlock.getByBlockNumberRange(
+      blockNumber,
+      blockNumber,
+    )
+    return stored
+  }
+
   /** The head answers for itself and its parent, sparing a call */
   private async hashOnChain(blockNumber: number, latest: EVMBlock) {
     if (blockNumber === latest.number) return latest.hash
@@ -194,17 +195,29 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
    * block may still come, or the slot is missed: asked again shortly
    */
   private secondsUntilNextBlock(answered: Head): number {
-    const now = this.now()
+    const now = nowSeconds()
     if (answered.slot < slotAt(now)) return RETRY_SECONDS
     return slotStart(answered.slot + 1) + FIRST_TICK_INTO_SLOT - now
   }
 
-  private setTickTimer(seconds: number) {
+  private scheduleTick(seconds: number) {
     clearTimeout(this.timer)
-    this.timer = setTimeout(() => this.requestTick(), seconds * 1000)
+    this.timer = setTimeout(
+      () => this.requestTick(),
+      Math.round(seconds * 1000),
+    )
   }
+}
+
+/** `UnixTime.now` drops the fraction, which would put every tick up to a second late */
+function nowSeconds() {
+  return Date.now() / 1000
 }
 
 function toHead(block: EVMBlock): Head {
   return { blockNumber: block.number, slot: slotAt(block.timestamp) }
+}
+
+function toStoredHead(block: LiveBlockRecord): Head {
+  return { blockNumber: block.blockNumber, slot: block.slot }
 }
