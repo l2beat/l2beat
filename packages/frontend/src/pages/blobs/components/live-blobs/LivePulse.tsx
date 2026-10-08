@@ -1,12 +1,38 @@
-import { memo, useLayoutEffect, useRef } from 'react'
+import {
+  type KeyboardEvent,
+  memo,
+  type PointerEvent,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import { slotStart } from '~/utils/beaconSlots'
+import { cn } from '~/utils/cn'
 import { formatWhole } from './blocks/format'
 import { usePrefersReducedMotion } from './hooks'
 import type { BlockLimits } from './model'
 import { useLiveBlobs } from './useLiveBlobs'
 
-/** The hour behind the belt, under it */
-export function LivePulse({ limits }: { limits: BlockLimits }) {
+/** What of the hour the belt shows, for the pulse to show where that is */
+export interface PulseBrush {
+  /** The slot in the bay, looking back; undefined while live */
+  view: number | undefined
+  /** Racks the belt shows left of the bay, and right of it */
+  before: number
+  after: number
+  /** Takes the belt to `slot`, or back to live for undefined */
+  onView: (slot: number | undefined) => void
+}
+
+/** The hour behind the belt, under it, with what of it the belt shows */
+export function LivePulse({
+  limits,
+  brush,
+}: {
+  limits: BlockLimits
+  brush: PulseBrush
+}) {
   const { data } = useLiveBlobs()
   if (!data) return <Skeleton className="h-14 w-full" />
   return (
@@ -14,6 +40,7 @@ export function LivePulse({ limits }: { limits: BlockLimits }) {
       blobsPerSlot={data.window.blobsPerSlot}
       head={data.head}
       limits={limits}
+      brush={brush}
     />
   )
 }
@@ -22,20 +49,29 @@ const PULSE_HEIGHT = 48
 const BAR_STEP = 4
 const BAR_WIDTH = 3
 const SLOTS_SHOWN = 300
+/** Slots a Page Up or Page Down moves the belt: five minutes */
+const PAGE_SLOTS = 25
+/** Pixels a finger moves sideways before it drags, rather than taps or scrolls */
+const DRAG_FROM = 4
 
 /**
  * Every block of the hour as a bar of its blobs, newest on the right. Each
  * new block slides the hour along by one and grows in at the end, so the
  * hour reads as passing, block by block.
+ *
+ * It works as a brush over the belt: the band is what the belt shows, and
+ * dragging it, or pressing anywhere on the hour, takes the belt back there.
  */
 function BlobPulse({
   blobsPerSlot,
   head,
   limits,
+  brush,
 }: {
   blobsPerSlot: (number | null)[]
   head: number
   limits: BlockLimits
+  brush: PulseBrush
 }) {
   const barsRef = useRef<SVGGElement>(null)
   const reducedMotion = usePrefersReducedMotion()
@@ -45,6 +81,11 @@ function BlobPulse({
   const width = SLOTS_SHOWN * BAR_STEP
   const scale = PULSE_HEIGHT / limits.maxBlobsPerBlock
   const targetY = PULSE_HEIGHT - limits.targetBlobsPerBlock * scale
+  const drag = useBrushDrag(head, brush)
+  const { view, before, after } = brush
+  // live, the bay holds the slot being made, just past the newest bar
+  const bay = view ?? head + 1
+  const xOf = (slot: number) => width - (head - slot + 1) * BAR_STEP
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: a new head is what slides it
   useLayoutEffect(() => {
@@ -55,52 +96,207 @@ function BlobPulse({
     )
   }, [head, reducedMotion])
 
+  const earliest = head - blobsPerSlot.length + 1
+  const describeView =
+    view === undefined ? 'Live' : `Slot ${formatWhole(view)}, ${ago(view)}`
+
   return (
     <div>
-      <svg
-        viewBox={`0 0 ${width} ${PULSE_HEIGHT}`}
-        preserveAspectRatio="none"
-        className="block h-10 w-full"
-        role="img"
-        aria-label={`Blobs in each of the last ${formatWhole(blobsPerSlot.length)} slots`}
+      <div
+        role="slider"
+        tabIndex={0}
+        aria-label="Look back through the last hour"
+        aria-valuemin={earliest}
+        aria-valuemax={head + 1}
+        aria-valuenow={bay}
+        aria-valuetext={describeView}
+        // sideways drags are the brush's; up and down still scroll the page
+        className={cn(
+          'touch-pan-y select-none rounded-sm focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2',
+          drag.dragging ? 'cursor-grabbing' : 'cursor-pointer',
+        )}
+        onKeyDown={(event) => onBrushKey(event, head, earliest, brush)}
+        {...drag.handlers}
       >
-        <g ref={barsRef}>
-          <g
-            transform={`translate(${width - (head - firstHead.current + 1) * BAR_STEP} 0)`}
-          >
-            {blobsPerSlot.map((blobs, i) =>
-              blobs === null || blobs === 0 ? null : (
-                <PulseBar
-                  key={head - i}
-                  x={(head - i - firstHead.current) * BAR_STEP}
-                  height={blobs * scale}
-                  aboveTarget={blobs > limits.targetBlobsPerBlock}
-                  grow={i === 0 && !reducedMotion}
-                />
-              ),
-            )}
+        <svg
+          viewBox={`0 0 ${width} ${PULSE_HEIGHT}`}
+          preserveAspectRatio="none"
+          className="block h-10 w-full"
+          role="img"
+          aria-label={`Blobs in each of the last ${formatWhole(blobsPerSlot.length)} slots`}
+        >
+          <g ref={barsRef}>
+            <rect
+              x={xOf(bay - before)}
+              width={(before + 1 + after) * BAR_STEP}
+              y={0}
+              height={PULSE_HEIGHT}
+              className="fill-brand/10 stroke-brand/40"
+              strokeWidth={1}
+              vectorEffect="non-scaling-stroke"
+            />
+            <g
+              transform={`translate(${width - (head - firstHead.current + 1) * BAR_STEP} 0)`}
+            >
+              {blobsPerSlot.map((blobs, i) =>
+                blobs === null || blobs === 0 ? null : (
+                  <PulseBar
+                    key={head - i}
+                    x={(head - i - firstHead.current) * BAR_STEP}
+                    height={blobs * scale}
+                    aboveTarget={blobs > limits.targetBlobsPerBlock}
+                    grow={i === 0 && !reducedMotion}
+                  />
+                ),
+              )}
+            </g>
+            {/* the bay, as on the belt: where the block looked at sits */}
+            <line
+              x1={xOf(bay) + BAR_WIDTH / 2}
+              x2={xOf(bay) + BAR_WIDTH / 2}
+              y1={0}
+              y2={PULSE_HEIGHT}
+              className="stroke-primary"
+              strokeWidth={1.5}
+              vectorEffect="non-scaling-stroke"
+            />
           </g>
-        </g>
-        <line
-          x1={0}
-          x2={width}
-          y1={targetY}
-          y2={targetY}
-          className="stroke-secondary"
-          strokeDasharray="4 4"
-          strokeWidth={1}
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
-      <div className="mt-1 flex justify-between gap-4 font-medium text-label-value-12 text-secondary">
+          <line
+            x1={0}
+            x2={width}
+            y1={targetY}
+            y2={targetY}
+            className="stroke-secondary"
+            strokeDasharray="4 4"
+            strokeWidth={1}
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+      </div>
+      <div className="mt-1 flex items-center justify-between gap-4 font-medium text-label-value-12 text-secondary">
         <span>1 hour ago</span>
         <span className="max-md:hidden">
-          The last hour, a bar per block, against the target (dashed)
+          {view === undefined
+            ? 'The last hour, a bar per block, against the target (dashed). Drag to look back'
+            : describeView}
         </span>
-        <span>Now</span>
+        {view === undefined ? (
+          <span>Now</span>
+        ) : (
+          <button
+            type="button"
+            onClick={() => brush.onView(undefined)}
+            className="font-bold text-brand"
+          >
+            Back to live
+          </button>
+        )}
       </div>
     </div>
   )
+}
+
+/**
+ * Drags the brush. A mouse takes the belt to where it is pressed at once,
+ * unless pressed on the band, which it then carries. A finger does nothing
+ * on the way down, as that may start a scroll: a tap takes the belt there,
+ * and a sideways drag carries the band.
+ */
+function useBrushDrag(head: number, brush: PulseBrush) {
+  const [dragging, setDragging] = useState(false)
+  const drag = useRef<{
+    pointerId: number
+    startX: number
+    /** Slots from the pointer to the bay, kept as the band is carried */
+    offset: number
+    touch: boolean
+    moved: boolean
+  }>(undefined)
+
+  const slotUnder = (event: PointerEvent<HTMLElement>) => {
+    const box = event.currentTarget.getBoundingClientRect()
+    const fromRight = 1 - (event.clientX - box.left) / box.width
+    return head - Math.floor(fromRight * SLOTS_SHOWN)
+  }
+
+  const onPointerDown = (event: PointerEvent<HTMLElement>) => {
+    if (event.button !== 0) return
+    const slot = slotUnder(event)
+    const bay = brush.view ?? head + 1
+    const onBand = slot >= bay - brush.before && slot <= bay + brush.after
+    const touch = event.pointerType === 'touch'
+    drag.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      offset: onBand ? bay - slot : 0,
+      touch,
+      moved: false,
+    }
+    event.currentTarget.setPointerCapture(event.pointerId)
+    if (!touch) {
+      setDragging(true)
+      if (!onBand) brush.onView(slot)
+    }
+  }
+
+  const onPointerMove = (event: PointerEvent<HTMLElement>) => {
+    const current = drag.current
+    if (current?.pointerId !== event.pointerId) return
+    if (!current.moved) {
+      if (Math.abs(event.clientX - current.startX) < DRAG_FROM) return
+      current.moved = true
+      setDragging(true)
+    }
+    brush.onView(slotUnder(event) + current.offset)
+  }
+
+  const onPointerUp = (event: PointerEvent<HTMLElement>) => {
+    const current = drag.current
+    if (current?.pointerId !== event.pointerId) return
+    if (current.touch && !current.moved) brush.onView(slotUnder(event))
+    drag.current = undefined
+    setDragging(false)
+  }
+
+  const onPointerCancel = () => {
+    drag.current = undefined
+    setDragging(false)
+  }
+
+  return {
+    dragging,
+    handlers: { onPointerDown, onPointerMove, onPointerUp, onPointerCancel },
+  }
+}
+
+/** Arrows step a block, Page Up and Down five minutes; End or Escape is live */
+function onBrushKey(
+  event: KeyboardEvent<HTMLElement>,
+  head: number,
+  earliest: number,
+  brush: PulseBrush,
+) {
+  const bay = brush.view ?? head + 1
+  const to: Record<string, number | undefined> = {
+    ArrowLeft: bay - 1,
+    ArrowRight: bay + 1,
+    PageDown: bay - PAGE_SLOTS,
+    PageUp: bay + PAGE_SLOTS,
+    Home: earliest,
+    End: undefined,
+    Escape: undefined,
+  }
+  if (!(event.key in to)) return
+  // Escape while live is left to whatever else listens for it
+  if (event.key === 'Escape' && brush.view === undefined) return
+  event.preventDefault()
+  brush.onView(to[event.key])
+}
+
+/** "4 min ago", from the slot's start */
+function ago(slot: number) {
+  const minutes = Math.floor((Date.now() / 1000 - slotStart(slot)) / 60)
+  return minutes < 1 ? 'under a minute ago' : `${minutes} min ago`
 }
 
 /** Memoized, so a new block renders the one bar it brings, not all 300 */

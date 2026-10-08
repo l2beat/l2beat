@@ -8,9 +8,9 @@ import {
   type LiveBlobs,
   LiveBlobsFeed,
   type LiveBlock,
-  RECENT_SLOTS,
   WINDOW_SLOTS,
 } from './LiveBlobsFeed'
+import { PAST_PAGE_SLOTS, RECENT_SLOTS } from './slots'
 
 // Methodology: a fake node whose head is slot 1000, where slot 998 was missed
 // and Base posts 2 blobs every 10th slot. The feed is asked the way the route
@@ -97,6 +97,44 @@ describe(LiveBlobsFeed.name, () => {
     const blobs = await feed.latest()
 
     expect(blobs?.window.slots).toEqual(HEAD - GAP)
+  })
+
+  it('serves a page of the hour from what it holds, newest first', async () => {
+    const node = fakeNode()
+    feed = new LiveBlobsFeed(node.source, Logger.SILENT)
+    await feed.latest()
+    await feed.backfilled()
+    const asked = node.blocksAsked
+
+    // slots 960-991, all behind the head
+    const page = feed.past({ page: 30 })
+
+    expect(page.blocks.map((b) => b.slot)).toEqual(
+      Array.from({ length: PAST_PAGE_SLOTS }, (_, i) => 991 - i),
+    )
+    expect(page.complete).toEqual(true)
+    expect(node.blocksAsked).toEqual(asked)
+  })
+
+  it('tells a page still to be filled from one that is done', async () => {
+    const GAP = 970
+    const node = fakeNode()
+    feed = new LiveBlobsFeed(
+      {
+        ...node.source,
+        block: (slot) =>
+          slot === GAP ? Promise.reject(new Error()) : node.source.block(slot),
+      },
+      Logger.SILENT,
+    )
+    await feed.latest()
+    await feed.backfilled()
+
+    // a block of slots 960-991 failed to come, and 992-1023 runs past the head
+    expect(feed.past({ page: 30 }).complete).toEqual(false)
+    expect(feed.past({ page: 31 }).complete).toEqual(false)
+    // slots 640-671 left the hour, so there is nothing more to come for them
+    expect(feed.past({ page: 20 })).toEqual({ blocks: [], complete: true })
   })
 
   it('holds a page that is up to date until the next block comes', async () => {
