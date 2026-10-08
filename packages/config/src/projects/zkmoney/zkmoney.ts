@@ -310,8 +310,7 @@ export const zkmoney: BaseProject = {
       value: 'Infinite',
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
-      description:
-        'The escrow and the approved enclave image are immutable.',
+      description: 'The escrow and the approved enclave image are immutable.',
       walkawayTest: {
         passed: false,
         reason:

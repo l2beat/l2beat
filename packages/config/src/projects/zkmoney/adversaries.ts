@@ -42,7 +42,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       exposure:
-        "Claiming a name ties it and its Aztec address to the wallet that funds the registration. The first payment to a new contact reveals the recipient through a handshake, and L2 logs mark every transaction of the shared token smart contract. Your first sponsored transaction after registration is tied to your account, with the payment, deposit address or withdrawal it carries.",
+        'Claiming a name ties it and its Aztec address to the wallet that funds the registration. The first payment to a new contact reveals the recipient through a handshake, and L2 logs mark every transaction of the shared token smart contract. Your first sponsored transaction after registration is tied to your account, with the payment, deposit address or withdrawal it carries.',
       advice:
         'Claim your name from a wallet with no public link to you, and make your first transaction after registration a deposit from that wallet. Fund each deposit address once and let it be swept/relayed.',
       interior: INTERIOR,
@@ -103,8 +103,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       exposure:
         'Your ISP sees when you send Aztec transactions and can match your deposit and withdrawal to the blocks they land in. Desktop has no Tor or proxy setting.',
-      advice:
-        'Route zk.money Desktop through Tor with system-wide tools.',
+      advice: 'Route zk.money Desktop through Tor with system-wide tools.',
       interior: {
         ...INTERIOR,
         sender: {

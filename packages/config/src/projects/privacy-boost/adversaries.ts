@@ -55,7 +55,10 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
           note: 'Bounded by the public deposit and exit amounts.',
         },
         asset: 'atRisk',
-        linkage: { verdict: 'exposed', note: 'The set is too small to hide in.' },
+        linkage: {
+          verdict: 'exposed',
+          note: 'The set is too small to hide in.',
+        },
       },
       sources: [
         {
