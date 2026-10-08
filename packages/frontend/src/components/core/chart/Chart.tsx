@@ -60,7 +60,7 @@ export function useChart() {
 
 const chartContainerClassNames = cn(
   "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent",
-  'select-none outline-none [&>svg]:outline-none [&_svg_*]:outline-none',
+  'select-none outline-none [&_svg_*]:outline-none',
   // Series strokes (Area/Line curves). Fill-only areas keep strokeWidth={0}.
   '[&_.recharts-area-curve]:[stroke-linecap:round] [&_.recharts-area-curve]:[stroke-linejoin:round]',
   '[&_.recharts-line-curve]:[stroke-linecap:round] [&_.recharts-line-curve]:[stroke-linejoin:round]',
