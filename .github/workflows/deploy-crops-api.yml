@@ -46,19 +46,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Build dependencies
         run: pnpm build:dependencies:crops-api

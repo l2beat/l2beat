@@ -5,7 +5,9 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
 import type {
+  BlockDaIndexedConfig,
   DataAvailabilityTrackingConfig,
+  LiveBlobsTrackingConfig,
   NotificationsConfig,
 } from '../../config/Config'
 import type { Providers } from '../../providers/Providers'
@@ -19,6 +21,8 @@ import { DaIndexer } from './indexers/DaIndexer'
 import { EthereumBlobNotifierIndexer } from './indexers/EthereumBlobNotifierIndexer'
 import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
 import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
+import { LiveBlobsIndexer } from './indexers/live/LiveBlobsIndexer'
+import { LiveBlobsTargetIndexer } from './indexers/live/LiveBlobsTargetIndexer'
 import { BlobService } from './services/BlobService'
 import { DaService } from './services/DaService'
 import { createDataAvailabilityTrpcRouter } from './trpc/router'
@@ -40,15 +44,20 @@ export function initDataAvailabilityModule({
     module: 'data-availability',
   })
 
-  const { targetIndexers, daIndexers, eigenIndexers, notificationIndexers } =
-    createIndexers(
-      config.da,
-      config.notifications,
-      clock,
-      db,
-      logger,
-      providers,
-    )
+  const {
+    targetIndexers,
+    daIndexers,
+    eigenIndexers,
+    notificationIndexers,
+    liveIndexers,
+  } = createIndexers(
+    config.da,
+    config.notifications,
+    clock,
+    db,
+    logger,
+    providers,
+  )
   const trpcRouter = createDataAvailabilityTrpcRouter({ config: config.da })
 
   return {
@@ -99,6 +108,14 @@ export function initDataAvailabilityModule({
         )
         logger.info('Notification indexers started')
       }
+
+      if (liveIndexers.length > 0) {
+        logger.info('Starting live blobs indexers')
+        for (const indexer of liveIndexers) {
+          await indexer.start()
+        }
+        logger.info('Live blobs indexers started')
+      }
     },
   }
 }
@@ -123,6 +140,7 @@ function createIndexers(
   )[] = []
   const notificationIndexers: (HourlyIndexer | EthereumBlobNotifierIndexer)[] =
     []
+  const liveIndexers: (LiveBlobsTargetIndexer | LiveBlobsIndexer)[] = []
 
   for (const daLayer of config.blockLayers) {
     const configurations = config.blockProjects.filter(
@@ -186,6 +204,19 @@ function createIndexers(
           logger,
         )
         notificationIndexers.push(notifierIndexer)
+      }
+
+      if (config.liveBlobs) {
+        liveIndexers.push(
+          ...createLiveBlobsIndexers(
+            config.liveBlobs,
+            configurations,
+            database,
+            logger,
+            providers,
+            indexerService,
+          ),
+        )
       }
     }
 
@@ -292,5 +323,43 @@ function createIndexers(
     daIndexers,
     eigenIndexers,
     notificationIndexers,
+    liveIndexers,
   }
+}
+
+function createLiveBlobsIndexers(
+  config: LiveBlobsTrackingConfig,
+  configurations: BlockDaIndexedConfig[],
+  database: Database,
+  logger: Logger,
+  providers: Providers,
+  indexerService: IndexerService,
+) {
+  const rpc = providers.clients.liveBlobsRpc
+  assert(rpc, 'Live blobs RPC client is required')
+  assert(providers.liveBlobsDa, 'Live blobs DA provider is required')
+
+  const targetIndexer = new LiveBlobsTargetIndexer(
+    { rpc, db: database },
+    logger,
+  )
+  const indexer = new LiveBlobsIndexer(
+    {
+      db: database,
+      daProvider: providers.liveBlobsDa,
+      configurations: configurations.filter(isEthereumConfig),
+      batchSize: config.batchSize,
+      indexerService,
+      minHeight: 0,
+      parents: [targetIndexer],
+    },
+    logger,
+  )
+  return [targetIndexer, indexer]
+}
+
+function isEthereumConfig(
+  config: BlockDaIndexedConfig,
+): config is Extract<BlockDaIndexedConfig, { type: 'ethereum' }> {
+  return config.type === 'ethereum'
 }
