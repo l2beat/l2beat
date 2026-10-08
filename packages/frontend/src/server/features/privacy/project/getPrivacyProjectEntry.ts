@@ -214,6 +214,17 @@ export async function getPrivacyProjectEntry(
     })
   }
 
+  if (details.milestones.length > 0) {
+    sections.push({
+      type: 'MilestonesAndIncidentsSection',
+      props: {
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
+        milestones: details.milestones,
+      },
+    })
+  }
+
   if (details.riskSummary) {
     sections.push({
       type: 'MarkdownSection',
