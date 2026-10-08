@@ -80,6 +80,9 @@ const COLUMNS: {
   { label: 'Last batch', align: 'right' },
 ]
 
+/** The legend's "+N more" links here, to the projects it leaves out */
+export const LIVE_POSTERS_ID = 'live-posters'
+
 /**
  * Who posted over the last 24 hours: the exact numbers behind
  * the colored squares, which nobody can count off a belt that keeps moving.
@@ -114,7 +117,10 @@ export function LivePosters({ posters }: Props) {
   const totalBlobs = rows.reduce((sum, row) => sum + row.blobs, 0)
 
   return (
-    <section aria-label="Who posted blobs in the last 24 hours">
+    <section
+      id={LIVE_POSTERS_ID}
+      aria-label="Who posted blobs in the last 24 hours"
+    >
       <div ref={tableRef}>
         <Table
           stickyHeader
