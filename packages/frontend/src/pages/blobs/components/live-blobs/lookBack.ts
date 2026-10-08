@@ -23,9 +23,14 @@ export function clampView(
   if (slot === undefined || hour === undefined || slot > hour.head) {
     return undefined
   }
-  const earliest = hour.head - hour.slots + 1 + before
+  const earliest = earliestView(hour, before)
   if (earliest > hour.head) return undefined
   return Math.max(Math.round(slot), earliest)
+}
+
+/** The furthest back the bay can go: the hour's oldest block `before` racks left of it */
+export function earliestView(hour: KnownHour, before: number) {
+  return hour.head - hour.slots + 1 + before
 }
 
 /**

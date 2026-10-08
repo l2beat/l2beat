@@ -11,6 +11,7 @@ import { slotStart } from '~/utils/beaconSlots'
 import { cn } from '~/utils/cn'
 import { formatWhole } from './blocks/format'
 import { usePrefersReducedMotion } from './hooks'
+import { earliestView } from './lookBack'
 import type { BlockLimits } from './model'
 import { useLiveBlobs } from './useLiveBlobs'
 
@@ -96,7 +97,11 @@ function BlobPulse({
     )
   }, [head, reducedMotion])
 
-  const earliest = head - blobsPerSlot.length + 1
+  // as far back as the belt can be taken, or live while the hour is too short
+  const earliest = Math.min(
+    earliestView({ head, slots: blobsPerSlot.length }, before),
+    head + 1,
+  )
   const describeView =
     view === undefined ? 'Live' : `Slot ${formatWhole(view)}, ${ago(view)}`
 

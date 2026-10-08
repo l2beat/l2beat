@@ -8,6 +8,7 @@ import {
   type LiveBlobs,
   LiveBlobsFeed,
   type LiveBlock,
+  PastBlobsParams,
   WINDOW_SLOTS,
 } from './LiveBlobsFeed'
 import { PAST_PAGE_SLOTS, RECENT_SLOTS } from './slots'
@@ -135,6 +136,14 @@ describe(LiveBlobsFeed.name, () => {
     expect(feed.past({ page: 31 }).complete).toEqual(false)
     // slots 640-671 left the hour, so there is nothing more to come for them
     expect(feed.past({ page: 20 })).toEqual({ blocks: [], complete: true })
+  })
+
+  it('takes only whole pages counted from genesis', () => {
+    expect(PastBlobsParams.safeValidate({ page: 30 }).success).toEqual(true)
+    // past the safe integers, a slot minus one is the same slot
+    for (const page of [1e20, -1, 1.5, Number.NaN]) {
+      expect(PastBlobsParams.safeValidate({ page }).success).toEqual(false)
+    }
   })
 
   it('holds a page that is up to date until the next block comes', async () => {

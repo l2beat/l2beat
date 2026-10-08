@@ -57,7 +57,15 @@ export type LiveBlobsParams = v.infer<typeof LiveBlobsParams>
 
 export const PastBlobsParams = v.object({
   /** Which `PAST_PAGE_SLOTS` slots, counted from genesis */
-  page: v.number(),
+  page: v
+    .number()
+    .check(
+      (page) =>
+        Number.isInteger(page) &&
+        page >= 0 &&
+        Number.isSafeInteger((page + 1) * PAST_PAGE_SLOTS),
+      'Page must be a whole number of slots from genesis',
+    ),
 })
 export type PastBlobsParams = v.infer<typeof PastBlobsParams>
 
@@ -239,11 +247,12 @@ export class LiveBlobsFeed {
    * node fetch, as the hour is backfilled for the numbers anyway
    */
   past({ page }: PastBlobsParams): PastBlobs {
-    const first = page * PAST_PAGE_SLOTS
-    const last = first + PAST_PAGE_SLOTS - 1
+    const last = (page + 1) * PAST_PAGE_SLOTS - 1
     const blocks: LiveBlock[] = []
     let complete = this.head !== undefined && last <= this.head
-    for (let slot = last; slot >= first; slot--) {
+    // counted rather than compared, so no page can keep it going for ever
+    for (let i = 0; i < PAST_PAGE_SLOTS; i++) {
+      const slot = last - i
       const block = this.blocks.get(slot)
       if (block) blocks.push(block)
       else if (this.head !== undefined && slot > this.head - WINDOW_SLOTS) {
