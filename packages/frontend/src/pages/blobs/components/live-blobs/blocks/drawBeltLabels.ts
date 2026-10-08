@@ -1,4 +1,4 @@
-import { SLOT_SECONDS } from '~/utils/beaconSlots'
+import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import { mixColors } from '../color'
 import { tileBounds } from './beltLayout'
 import type { BeltPalette } from './beltPalette'

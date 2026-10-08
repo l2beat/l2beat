@@ -2,7 +2,6 @@ import { INTEROP_CHAINS } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import { getSovereignProjects } from './attribute'
 
 /** A project that posts blobs to Ethereum, as the live view draws it */
 export interface BlobPoster {
@@ -49,6 +48,19 @@ export async function getBlobPosters(): Promise<BlobPoster[]> {
         href: undefined,
       })),
   ]
+}
+
+/** Chains posting to Ethereum that are not projects of their own, as the backend's DA indexer tracks them */
+async function getSovereignProjects() {
+  const ethereum = await ps.getProject({
+    id: ProjectId.ETHEREUM,
+    select: ['daLayer'],
+  })
+  return (ethereum?.daLayer.sovereignProjectsTrackingConfig ?? []).map((p) => ({
+    id: p.projectId,
+    name: p.name,
+    daTrackingConfig: p.daTrackingConfig,
+  }))
 }
 
 /**

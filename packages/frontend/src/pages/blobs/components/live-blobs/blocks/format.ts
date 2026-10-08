@@ -1,5 +1,4 @@
-import { pluralize } from '@l2beat/shared-pure'
-import { SLOT_SECONDS } from '~/utils/beaconSlots'
+import { pluralize, SLOT_SECONDS } from '@l2beat/shared-pure'
 
 /** Every blob takes its full size, used or not */
 export const BLOB_KIB = 128
@@ -31,10 +30,11 @@ export function formatRate(value: number): string {
   return value.toPrecision(2)
 }
 
-/** "Last hour", or how far back it reaches while the server catches up */
+/** "Last 24 h", or how far back it reaches while the backend fills the day */
 export function describeWindow(slots: number) {
   const minutes = Math.floor((slots * SLOT_SECONDS) / 60)
-  return minutes >= 60 ? 'Last hour' : `Last ${Math.max(1, minutes)} min`
+  if (minutes < 60) return `Last ${Math.max(1, minutes)} min`
+  return `Last ${Math.floor(minutes / 60)} h`
 }
 
 const SIZE_UNITS = ['KiB', 'MiB', 'GiB', 'TiB'] as const

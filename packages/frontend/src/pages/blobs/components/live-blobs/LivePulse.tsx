@@ -1,3 +1,4 @@
+import { SLOT_SECONDS, slotStart } from '@l2beat/shared-pure'
 import {
   type KeyboardEvent,
   memo,
@@ -7,7 +8,6 @@ import {
   useState,
 } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
-import { SLOT_SECONDS, slotStart } from '~/utils/beaconSlots'
 import { cn } from '~/utils/cn'
 import { formatClock, formatWhole } from './blocks/format'
 import { usePrefersReducedMotion } from './hooks'

@@ -1,7 +1,7 @@
 import {
+  BELT_SLOTS,
   PAST_PAGE_SLOTS,
-  RECENT_SLOTS,
-} from '~/server/features/data-availability/live-blobs/slots'
+} from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 
 /** The hour as the server knows it: back from `head`, `slots` long */
 export interface KnownHour {
@@ -40,7 +40,7 @@ export function earliestView(hour: KnownHour, before: number) {
  * back to live
  */
 export function pastPagesFor(from: number, head: number) {
-  const last = head - RECENT_SLOTS
+  const last = head - BELT_SLOTS
   if (from > last) return []
   const first = Math.floor(from / PAST_PAGE_SLOTS)
   const count = Math.floor(last / PAST_PAGE_SLOTS) - first + 1
@@ -52,5 +52,5 @@ export function pastPagesFor(from: number, head: number) {
  * filled from the past: where the live answers reach, theirs is the newer word
  */
 export function isBehindLive(slot: number, head: number) {
-  return slot <= head - RECENT_SLOTS
+  return slot <= head - BELT_SLOTS
 }

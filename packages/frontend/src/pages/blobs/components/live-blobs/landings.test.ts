@@ -13,7 +13,7 @@ describe(holdLimitMs.name, () => {
   })
 })
 
-// Methodology: a number at 100 blobs over the hour at slot 1000 is told the
+// Methodology: a number at 100 blobs over the window at slot 1000 is told the
 // totals that one more block, or one taken back, make of it.
 describe(holdBack.name, () => {
   const held: Held = {
@@ -24,7 +24,7 @@ describe(holdBack.name, () => {
     departed: 0,
   }
 
-  it('holds back what a new block brought, and what left the hour with it', () => {
+  it('holds back what a new block brought, and what left the window with it', () => {
     expect(holdBack(held, 1001, 103, 5, 7)).toEqual({
       stamp: 1001,
       total: 103,

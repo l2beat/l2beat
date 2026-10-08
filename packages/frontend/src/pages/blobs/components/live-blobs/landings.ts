@@ -1,5 +1,5 @@
+import { slotProgressAt, slotStart } from '@l2beat/shared-pure'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { slotProgressAt, slotStart } from '~/utils/beaconSlots'
 import { arrivesNow } from './blocks/beaconChain'
 import { SLIDE_TIME } from './blocks/beltPosition'
 import { BATCH_STAGGER, LAND_AFTER } from './blocks/motion'
@@ -47,14 +47,14 @@ export function holdLimitMs(blobs: number) {
 const HOLD_SLACK = 1
 
 /**
- * A total over the hour, as the belt shows blobs come and go. What a new
+ * A total over the window, as the belt shows blobs come and go. What a new
  * block brought is counted in as the belt lands it, rather than when the data
  * comes in, and every landing it hears is an arrival to show. What left the
- * hour with that block is let go of once the belt has moved on to the next
+ * window with that block is let go of once the belt has moved on to the next
  * slot: let go of at once, the number would dip just before the new blobs
  * land and climb back after, every block.
  *
- * `total` is the hour's at `stamp` (the head), `fresh` what the block at
+ * `total` is the window's at `stamp` (the head), `fresh` what the block at
  * `stamp` brought to it, `blockBlobs` all that block brought (its last batch
  * lands last, whoever's it is), and `matches` picks the landings that count
  * toward it. Keep `matches` stable.
@@ -137,7 +137,7 @@ export function useLandedTotal(
   return { value: total - held.arriving + held.departed, arrival }
 }
 
-/** A total over the hour, with what is held back from it for now */
+/** A total over the window, with what is held back from it for now */
 export interface Held {
   stamp: number | undefined
   total: number
@@ -145,7 +145,7 @@ export interface Held {
   blockBlobs: number
   /** What the newest block brought to this total, until the belt lands it */
   arriving: number
-  /** What left the hour as blocks came, until the belt moves on a slot */
+  /** What left the window as blocks came, until the belt moves on a slot */
   departed: number
 }
 
@@ -182,12 +182,12 @@ export function holdBack(
   blockBlobs: number,
 ): Held {
   // the chain took its newest block back: nothing of it is arriving any more,
-  // and what left the hour as it came is back in
+  // and what left the window as it came is back in
   if (isAbove(held.stamp, stamp)) {
     return { stamp, total, blockBlobs: 0, arriving: 0, departed: 0 }
   }
   if (!isAbove(stamp, held.stamp)) return { ...held, stamp, total }
-  // what left the hour: the old total and the new blobs, less the new total
+  // what left the window: the old total and the new blobs, less the new total
   const departed = Math.max(0, held.total + fresh - total)
   return {
     stamp,

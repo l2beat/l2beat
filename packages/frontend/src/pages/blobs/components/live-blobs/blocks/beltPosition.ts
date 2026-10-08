@@ -1,4 +1,4 @@
-import { SLOT_SECONDS } from '~/utils/beaconSlots'
+import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import type { BeltLayout } from './beltLayout'
 import type { Playback } from './beltScene'
 import { easeInOutCubic, smoothstep } from './motion'
