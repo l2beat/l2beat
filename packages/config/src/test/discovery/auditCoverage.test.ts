@@ -12,7 +12,12 @@ describe('audit-coverage.json', () => {
     it(`${project.id} covers the contracts discovery found`, () => {
       const discovery = discoveryOrUndefined(project.id)
       assert(discovery !== undefined, `${project.id} has no discovery`)
-      const covered = Object.keys(auditCoverage.contracts)
+      const covered = Object.entries(auditCoverage.contracts).flatMap(
+        ([address, contract]) => [
+          address,
+          ...Object.keys(contract.implementations ?? {}),
+        ],
+      )
       const discovered = codeAddresses(discovery)
       const missing = discovered.filter((a) => !covered.includes(a))
       const extra = covered.filter((a) => !discovered.includes(a))

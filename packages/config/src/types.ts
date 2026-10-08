@@ -2342,6 +2342,21 @@ const AuditCoverageUnit = v.object({
   removed: v.array(v.tuple([v.number(), v.number(), v.number()])).optional(),
 })
 
+const AuditCoverageContract = v.object({
+  name: v.string(),
+  critical: v
+    .union([
+      v.literal(true),
+      v.object({
+        sinceTimestamp: v.number().optional(),
+        untilTimestamp: v.number().optional(),
+      }),
+    ])
+    .optional(),
+  source: v.string(),
+  implementations: v.record(v.string(), v.string()).optional(),
+})
+
 export const ProjectAuditCoverageSchema = v.object({
   schema_version: v.literal('1.0.0'),
   project: v.string(),
@@ -2367,7 +2382,7 @@ export const ProjectAuditCoverageSchema = v.object({
   ),
   units: v.record(v.string(), AuditCoverageUnit),
   flats: v.record(v.string(), v.array(v.tuple([v.string(), v.number()]))),
-  contracts: v.record(v.string(), v.string()),
+  contracts: v.record(v.string(), AuditCoverageContract),
 })
 export type ProjectAuditCoverage = v.infer<typeof ProjectAuditCoverageSchema>
 

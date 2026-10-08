@@ -1,6 +1,6 @@
 import {
   ConfigReader,
-  type DiscoveryOutput,
+  type EntryParameters,
   get$Implementations,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
@@ -9,6 +9,7 @@ import { createHash } from 'crypto'
 import type {
   AuditCoverage,
   AuditedFile,
+  Contract,
   CoverageCollection,
   CoverageReport,
   Unit,
@@ -38,31 +39,41 @@ export async function auditCoverageOfProject(
   const discovered = discovery.readDiscovery(project)
   const units: Record<string, Unit> = {}
   const flats: Record<string, [string, number][]> = {}
-  const contracts: Record<string, string> = {}
+  const contracts: Record<string, Contract> = {}
   const auditedFiles = new Map<string, AuditedFile>()
-  const addresses = codeAddresses(discovered)
-  for (const [i, address] of addresses.entries()) {
-    onProgress(address, i, addresses.length)
-    const source = await getDeployedSource(address)
-    if (source.kind !== 'flat') {
-      contracts[address] = source.kind
-      continue
+  const entries = discovered.entries.filter((e) => e.type === 'Contract')
+  const count = entries.reduce(
+    (sum, e) => sum + 1 + get$Implementations(e.values).length,
+    0,
+  )
+  let done = 0
+  for (const entry of entries) {
+    const addresses = [entry.address, ...get$Implementations(entry.values)]
+    const sources: string[] = []
+    for (const address of addresses) {
+      onProgress(address, done++, count)
+      const source = await getDeployedSource(address)
+      if (source.kind !== 'flat') {
+        sources.push(source.kind)
+        continue
+      }
+      const flat = createHash('sha256').update(source.flat).digest('hex')
+      sources.push(flat)
+      if (flats[flat] !== undefined) {
+        continue
+      }
+      flats[flat] = coverFlat(
+        source.flat,
+        source.aliases,
+        inputs.code,
+        project,
+      ).map((covered) => {
+        addUnit(units, covered)
+        addAuditedFile(auditedFiles, covered)
+        return [covered.id, covered.first]
+      })
     }
-    const flatSha256 = createHash('sha256').update(source.flat).digest('hex')
-    contracts[address] = flatSha256
-    if (flats[flatSha256] !== undefined) {
-      continue
-    }
-    flats[flatSha256] = coverFlat(
-      source.flat,
-      source.aliases,
-      inputs.code,
-      project,
-    ).map((covered) => {
-      addUnit(units, covered)
-      addAuditedFile(auditedFiles, covered)
-      return [covered.id, covered.first]
-    })
+    contracts[entry.address] = toContract(entry, addresses, sources)
   }
   const reports = reportsOf(project, units, inputs.index)
   return {
@@ -81,18 +92,24 @@ export async function auditCoverageOfProject(
   }
 }
 
-function codeAddresses(discovered: DiscoveryOutput): ChainSpecificAddress[] {
-  const addresses = new Set<ChainSpecificAddress>()
-  for (const entry of discovered.entries) {
-    if (entry.type !== 'Contract') {
-      continue
-    }
-    addresses.add(entry.address)
-    for (const implementation of get$Implementations(entry.values)) {
-      addresses.add(implementation)
-    }
+function toContract(
+  entry: EntryParameters,
+  addresses: ChainSpecificAddress[],
+  sources: string[],
+): Contract {
+  const [source, ...implementations] = sources
+  assert(source !== undefined, `${entry.address} has no source`)
+  assert(entry.name !== undefined, `${entry.address} has no name`)
+  const contract: Contract = { name: entry.name, source }
+  if (entry.critical !== undefined) {
+    contract.critical = entry.critical
   }
-  return [...addresses]
+  if (implementations.length > 0) {
+    contract.implementations = Object.fromEntries(
+      implementations.map((s, i) => [addresses[i + 1], s]),
+    )
+  }
+  return contract
 }
 
 function addUnit(units: Record<string, Unit>, covered: CoveredUnit) {

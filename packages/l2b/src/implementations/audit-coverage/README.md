@@ -55,8 +55,17 @@ type AuditCoverage = {
   auditedFiles: Record<ObjectId, { repository: string; commit: string; path: string }>
   units: Record<UnitId, Unit> // UnitId: first 12 hex characters of sha256 of the deployed body
   flats: Record<FlatSha256, [UnitId, number][]> // units of a flat source and their first line
-  contracts: Record<ChainSpecificAddress, FlatSha256 | 'unverified' | 'non-solidity'>
+  contracts: Record<ChainSpecificAddress, Contract> // every contract discovery found
 }
+
+type Contract = {
+  name: string
+  critical?: true | { sinceTimestamp?: number; untilTimestamp?: number } // as in discovery
+  source: Source
+  implementations?: Record<ChainSpecificAddress, Source>
+}
+
+type Source = FlatSha256 | 'unverified' | 'non-solidity'
 
 type Unit = {
   name: string
