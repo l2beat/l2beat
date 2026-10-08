@@ -1,94 +1,13 @@
-import type { Milestone } from '@l2beat/config'
 import { assert, formatCurrency } from '@l2beat/shared-pure'
-import { Area, AreaChart } from 'recharts'
-import type {
-  ChartMeta,
-  ChartProject,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipWrapper,
-  useChart,
-} from '~/components/core/chart/Chart'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import type { CustomChartTooltipProps } from '~/components/core/chart/Chart'
+import { ChartTooltipWrapper, useChart } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartUnit } from '../types'
 
 export interface TvsChartDataPoint {
   timestamp: number
   value: number | null
-}
-
-interface Props {
-  data: TvsChartDataPoint[] | undefined
-  project?: ChartProject
-  unit: ChartUnit
-  isLoading: boolean
-  syncedUntil: number | undefined
-  milestones: Milestone[] | undefined
-  tickCount?: number
-}
-
-export function TvsChart({
-  data,
-  project,
-  unit,
-  isLoading,
-  milestones,
-  syncedUntil,
-  tickCount,
-}: Props) {
-  const chartMeta = {
-    value: {
-      color: 'var(--chart-pink)',
-      indicatorType: { shape: 'line' },
-      label: unit.toUpperCase(),
-    },
-  } satisfies ChartMeta
-
-  return (
-    <ChartContainer
-      project={project}
-      meta={chartMeta}
-      data={data}
-      isLoading={isLoading}
-      milestones={milestones}
-    >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
-        <defs>
-          <PinkFillGradientDef id="fill" />
-          <PinkStrokeGradientDef id="stroke" />
-        </defs>
-        <Area
-          dataKey="value"
-          fill="url(#fill)"
-          fillOpacity={1}
-          stroke="url(#stroke)"
-          isAnimationActive={false}
-        />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            tickFormatter: (value: number) => formatCurrency(value, unit),
-            tickCount,
-          }}
-          syncedUntil={syncedUntil}
-        />
-        <ChartTooltip
-          filterNull={false}
-          content={<TvsCustomTooltip unit={unit} />}
-        />
-      </AreaChart>
-    </ChartContainer>
-  )
 }
 
 export function TvsCustomTooltip({

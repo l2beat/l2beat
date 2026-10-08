@@ -52,7 +52,7 @@ export function BlockCountInput({
         id="quantity-input"
         data-input-counter
         aria-describedby="helper-text-explanation"
-        className="block h-11 w-full border-gray-300 border-x-0 bg-gray-50 py-2.5 text-center text-gray-900 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+        className="block h-11 w-full border-gray-300 border-y bg-gray-50 py-2.5 text-center text-gray-900 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
         required
       />
       <button

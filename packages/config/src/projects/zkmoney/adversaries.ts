@@ -165,7 +165,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        'A quantum computer that breaks elliptic-curve key exchange can decrypt historical notes and payment events published to Ethereum.',
+        'Whoever breaks elliptic-curve cryptography can decrypt historical notes and payment events published to Ethereum.',
       exposureContinued:
         'Registered Aztec addresses identify the accounts. Deposit address secrets and enclave communication use the same class of cryptography.',
       interior: {

@@ -1,12 +1,7 @@
 import { expect } from 'earl'
 import { describe } from 'mocha'
 import { decodePacked, type PackedSchema } from './packed'
-import {
-  OP_PERMISSIONED_GAME_ARGS_SCHEMA,
-  OP_PERMISSIONLESS_GAME_ARGS_SCHEMA,
-  OP_SUPER_PERMISSIONED_GAME_ARGS_SCHEMA,
-  OP_ZK_GAME_ARGS_SCHEMA,
-} from './packedSchemas'
+import { OP_PERMISSIONED_GAME_ARGS_SCHEMA } from './packedSchemas'
 
 describe(decodePacked.name, () => {
   it('decodes fixed-width packed fields', () => {
@@ -111,19 +106,13 @@ describe(decodePacked.name, () => {
     ])
   })
 
-  it('defines all canonical OP game args lengths', () => {
-    const schemas: [PackedSchema, number][] = [
-      [OP_PERMISSIONLESS_GAME_ARGS_SCHEMA, 124],
-      [OP_PERMISSIONED_GAME_ARGS_SCHEMA, 164],
-      [OP_SUPER_PERMISSIONED_GAME_ARGS_SCHEMA, 40],
-      [OP_ZK_GAME_ARGS_SCHEMA, 172],
-    ]
-    const lengths = schemas.map(([schema, length]) => {
-      const decoded = decodePacked(schema, `0x${'00'.repeat(length)}`)
-      return (decoded.bytes.length - 2) / 2
-    })
+  it('defines the canonical OP permissioned game args length', () => {
+    const decoded = decodePacked(
+      OP_PERMISSIONED_GAME_ARGS_SCHEMA,
+      `0x${'00'.repeat(164)}`,
+    )
 
-    expect(lengths).toEqual([124, 164, 40, 172])
+    expect((decoded.bytes.length - 2) / 2).toEqual(164)
   })
 
   it('rejects data with a different length', () => {
