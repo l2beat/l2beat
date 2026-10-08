@@ -7,6 +7,7 @@ import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureR
 import {
   getLiveRetryStrategy,
   LIVE_METRICS_CONTEXT,
+  nowSeconds,
   secondsSince,
 } from './liveBlobs'
 
@@ -20,6 +21,8 @@ const FIRST_TICK_INTO_SLOT = 1
 const RETRY_SECONDS = 0.25
 /** Stored blocks compared with the chain, back from the newest, in search of a fork */
 const MAX_REORG_DEPTH = 32
+/** No recent stored block is on the chain */
+const REFETCH_WINDOW = 'refetch-window'
 /** Below every stored block, so they all go and the window is fetched again */
 const REFETCH_WINDOW_HEIGHT = 0
 
@@ -97,11 +100,17 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
       return this.head.blockNumber
     }
 
-    const forkHeight = await this.findForkHeight(latest, newestStored)
-    if (forkHeight !== undefined) {
-      // The chain may now be shorter than the head followed so far
+    const fork = await this.findFork(latest, newestStored)
+    if (fork === REFETCH_WINDOW) {
       this.head = undefined
-      return forkHeight
+      return REFETCH_WINDOW_HEIGHT
+    }
+    if (fork !== undefined) {
+      // The chain may now be shorter than the head followed so far, but not
+      // shorter than the fork block: a node answering from below it next is
+      // behind, not on another chain
+      this.head = toStoredHead(fork)
+      return fork.blockNumber
     }
 
     this.head = toHead(latest)
@@ -129,16 +138,17 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
   }
 
   /**
-   * Compares the newest stored block at or below the head with the chain.
-   * The child can lag behind while it backfills, so that is not always the
-   * head's parent; and the head itself when a block of the same height
-   * replaced it. The blocks below are read only once that one is off the
-   * chain: the check runs up to four times a second
+   * The newest stored block still on the chain, when the chain moved off the
+   * stored blocks. Compares the newest stored block at or below the head with
+   * the chain. The child can lag behind while it backfills, so that is not
+   * always the head's parent; and the head itself when a block of the same
+   * height replaced it. The blocks below are read only once that one is off
+   * the chain: the check runs up to four times a second
    */
-  private async findForkHeight(
+  private async findFork(
     latest: EVMBlock,
     newestStored: LiveBlockRecord | undefined,
-  ): Promise<number | undefined> {
+  ): Promise<LiveBlockRecord | typeof REFETCH_WINDOW | undefined> {
     if (!newestStored) return undefined
 
     const checked = Math.min(latest.number, newestStored.blockNumber)
@@ -162,7 +172,7 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
           forkHeight: block.blockNumber,
           blockNumber: latest.number,
         })
-        return block.blockNumber
+        return block
       }
     }
 
@@ -171,7 +181,7 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
       maxDepth: MAX_REORG_DEPTH,
       blockNumber: latest.number,
     })
-    return REFETCH_WINDOW_HEIGHT
+    return REFETCH_WINDOW
   }
 
   /** The head answers for itself and its parent, sparing a call */
@@ -199,11 +209,6 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
       Math.round(seconds * 1000),
     )
   }
-}
-
-/** `UnixTime.now` drops the fraction, which would put every tick up to a second late */
-function nowSeconds() {
-  return Date.now() / 1000
 }
 
 function toHead(block: EVMBlock): Head {

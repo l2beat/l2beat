@@ -13,6 +13,8 @@ export interface LiveBlobBatchRecord {
   from: string
   to: string
   blobs: number
+  /** Of every event the transaction emitted */
+  topics: string[]
   /** Missing when no project claims the batch */
   projectId: ProjectId | undefined
 }
@@ -57,6 +59,7 @@ export class LiveBlobBatchRepository extends BaseRepository {
             from: eb.ref('excluded.from'),
             to: eb.ref('excluded.to'),
             blobs: eb.ref('excluded.blobs'),
+            topics: eb.ref('excluded.topics'),
             projectId: eb.ref('excluded.projectId'),
           })),
         )
@@ -75,6 +78,22 @@ export class LiveBlobBatchRepository extends BaseRepository {
       .selectAll()
       .where('slot', '>=', from)
       .where('slot', '<=', to)
+      .orderBy('slot')
+      .orderBy('txIndex')
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  /** Both ends included, in block order */
+  async getByBlockNumberRange(
+    from: number,
+    to: number,
+  ): Promise<LiveBlobBatchRecord[]> {
+    const rows = await this.db
+      .selectFrom('LiveBlobBatch')
+      .selectAll()
+      .where('blockNumber', '>=', from)
+      .where('blockNumber', '<=', to)
       .orderBy('slot')
       .orderBy('txIndex')
       .execute()

@@ -1,12 +1,16 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { EthereumDaTrackingConfig } from '@l2beat/config'
-import type { Database, LiveBlockRecord } from '@l2beat/database'
+import type {
+  Database,
+  LiveBlobBatchRecord,
+  LiveBlockRecord,
+} from '@l2beat/database'
 import type { EthereumBlobBatch, EthereumDaProvider } from '@l2beat/shared'
 import { ProjectId, slotStart, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
-import { LiveBlobsIndexer, liveBlobsConfigHash } from './LiveBlobsIndexer'
+import { LiveBlobsIndexer } from './LiveBlobsIndexer'
 import { LIVE_WINDOW_BLOCKS } from './liveBlobs'
 
 /**
@@ -109,7 +113,7 @@ describe(LiveBlobsIndexer.name, () => {
 
       await indexer.update(HEAD - 9, HEAD - 6)
 
-      expect(info).toHaveBeenOnlyCalledWith('Stored live blocks', {
+      expect(info).toHaveBeenLastCalledWith('Stored live blocks', {
         from: HEAD - 9,
         to: HEAD - 6,
         delaySeconds: 2.5,
@@ -117,8 +121,7 @@ describe(LiveBlobsIndexer.name, () => {
     })
 
     it('drops what was stored at the fetched heights before storing', async () => {
-      // A replay after a crash, or after a config change, may fetch a chain
-      // or an attribution other than the stored one
+      // A replay after a crash may fetch a chain other than the stored one
       const { indexer, db } = setup({ batchSize: 4 })
 
       await indexer.update(HEAD - 9, HEAD)
@@ -177,6 +180,48 @@ describe(LiveBlobsIndexer.name, () => {
     })
   })
 
+  describe('reattributing the stored batches', () => {
+    it('updates the stored batches whose project changed, on the first update only', async () => {
+      // Stored before a deploy that moved the inbox to another project; the
+      // window is not fetched again for it
+      const kept = liveBatch(HEAD - 20, 0, '0xelsewhere', 1, undefined)
+      const moved = liveBatch(HEAD - 20, 1, INBOX, 2, ProjectId('old'))
+      const { indexer, db } = setup({
+        configurations: [ethereumConfig('new', { inbox: INBOX })],
+        storedBatches: [kept, moved],
+      })
+
+      await indexer.update(HEAD - 9, HEAD - 9)
+      const reads = db.liveBlobBatch.getByBlockNumberRange.calls.length
+      await indexer.update(HEAD - 8, HEAD - 8)
+
+      expect(db.liveBlobBatch.upsertMany).toHaveBeenNthCalledWith(1, [
+        { ...moved, projectId: ProjectId('new') },
+      ])
+      expect(db.liveBlobBatch.getByBlockNumberRange).toHaveBeenCalledTimes(
+        reads,
+      )
+    })
+
+    it('matches a stored batch by the topics of its events', async () => {
+      // Some projects are told only by an event their batch emits
+      const stored = {
+        ...liveBatch(HEAD - 20, 0, '0xelsewhere', 1, undefined),
+        topics: ['0xtopic'],
+      }
+      const { indexer, db } = setup({
+        configurations: [ethereumConfig('topical', { topics: ['0xTOPIC'] })],
+        storedBatches: [stored],
+      })
+
+      await indexer.update(HEAD - 9, HEAD - 9)
+
+      expect(db.liveBlobBatch.upsertMany).toHaveBeenNthCalledWith(1, [
+        { ...stored, projectId: ProjectId('topical') },
+      ])
+    })
+  })
+
   describe(LiveBlobsIndexer.prototype.invalidate.name, () => {
     it('deletes the blocks above the height', async () => {
       const { indexer, db } = setup({})
@@ -190,63 +235,12 @@ describe(LiveBlobsIndexer.name, () => {
     })
   })
 
-  describe(LiveBlobsIndexer.prototype.initialize.name, () => {
-    it('starts over when the configurations changed', async () => {
-      // Stored batches were attributed by the old configs: the first update
-      // drops them all, starting at the window
-      const { indexer } = setup({
-        safeHeight: WINDOW_START,
-        storedConfigHash: 'stale',
-      })
-
-      expect(await indexer.initialize()).toEqual({
-        safeHeight: -1,
-        configHash: liveBlobsConfigHash([]),
-      })
-    })
-  })
-
-  describe(liveBlobsConfigHash.name, () => {
-    const config = {
-      type: 'ethereum' as const,
-      daLayer: ProjectId('ethereum'),
-      projectId: ProjectId('a'),
-      inbox: '0xinbox',
-      sinceBlock: 1,
-    }
-
-    it('is the same whatever the order of the configurations', () => {
-      const other = { ...config, projectId: ProjectId('b') }
-      expect(liveBlobsConfigHash([config, other])).toEqual(
-        liveBlobsConfigHash([other, config]),
-      )
-    })
-
-    it('changes with what a batch is attributed by', () => {
-      const hash = liveBlobsConfigHash([config])
-      expect(
-        liveBlobsConfigHash([{ ...config, inbox: '0xother' }]),
-      ).not.toEqual(hash)
-      expect(
-        liveBlobsConfigHash([{ ...config, sequencers: ['0xseq'] }]),
-      ).not.toEqual(hash)
-      expect(liveBlobsConfigHash([{ ...config, topics: ['0xt'] }])).not.toEqual(
-        hash,
-      )
-      expect(liveBlobsConfigHash([{ ...config, untilBlock: 5 }])).not.toEqual(
-        hash,
-      )
-    })
-  })
-
   function setup(options: {
     configurations?: (EthereumDaTrackingConfig & { projectId: ProjectId })[]
     batchSize?: number
     batches?: Record<number, EthereumBlobBatch[]>
-    safeHeight?: number
-    /** What the state was saved with; by default the current configs' hash */
-    storedConfigHash?: string
     stored?: LiveBlockRecord[]
+    storedBatches?: LiveBlobBatchRecord[]
     brokenLinkAt?: number
     now?: number
     logger?: Logger
@@ -259,7 +253,13 @@ describe(LiveBlobsIndexer.name, () => {
       deleteBeforeBlock: mockFn().resolvesTo(0),
       deleteAfterBlock: mockFn().resolvesTo(0),
     })
+    const storedBatches = options.storedBatches ?? []
     const liveBlobBatch = mockObject<Database['liveBlobBatch']>({
+      getByBlockNumberRange: mockFn(async (from: number, to: number) =>
+        storedBatches.filter(
+          (b) => from <= b.blockNumber && b.blockNumber <= to,
+        ),
+      ),
       upsertMany: mockFn().resolvesTo(0),
       deleteBeforeBlock: mockFn().resolvesTo(0),
       deleteAfterBlock: mockFn().resolvesTo(0),
@@ -284,18 +284,7 @@ describe(LiveBlobsIndexer.name, () => {
           })),
       ),
     })
-    const indexerService = mockObject<IndexerService>({
-      getIndexerState: mockFn().resolvesTo(
-        options.safeHeight === undefined
-          ? undefined
-          : {
-              safeHeight: options.safeHeight,
-              configHash:
-                options.storedConfigHash ??
-                liveBlobsConfigHash(options.configurations ?? []),
-            },
-      ),
-    })
+    const indexerService = mockObject<IndexerService>({})
     const indexer = new LiveBlobsIndexer(
       {
         db,
@@ -344,6 +333,7 @@ function liveBatch(
     from: '0xsequencer',
     to,
     blobs,
+    topics: [],
     projectId,
   }
 }

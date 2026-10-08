@@ -6,8 +6,12 @@ import type {
   LiveBlockRecord,
 } from '@l2beat/database'
 import type { EthereumBlobBlock, EthereumDaProvider } from '@l2beat/shared'
-import { assert, type ProjectId, slotAt, UnixTime } from '@l2beat/shared-pure'
-import { createHash } from 'crypto'
+import {
+  assert,
+  type ProjectId,
+  slotAt,
+  type UnixTime,
+} from '@l2beat/shared-pure'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../../tools/uif/indexerIdentity'
 import {
@@ -19,8 +23,12 @@ import {
   getLiveRetryStrategy,
   LIVE_METRICS_CONTEXT,
   liveWindowStart,
+  nowSeconds,
   secondsSince,
 } from './liveBlobs'
+
+/** Blocks whose stored batches are read at once, to keep a window's worth out of memory */
+const BLOCKS_PER_READ = 1000
 
 export type LiveBlobsConfig = EthereumDaTrackingConfig & {
   projectId: ProjectId
@@ -45,6 +53,8 @@ export interface LiveBlobsIndexerDependencies
  * retried, so the window is cut and the stale blocks dropped in `update`
  */
 export class LiveBlobsIndexer extends ManagedChildIndexer {
+  private storedReattributed = false
+
   constructor(
     private readonly $: LiveBlobsIndexerDependencies,
     logger: Logger,
@@ -55,7 +65,6 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
         name: INDEXER_NAMES.LIVE_BLOBS,
         tags: { tag: 'ethereum' },
         updateRetryStrategy: getLiveRetryStrategy(),
-        configHash: liveBlobsConfigHash($.configurations),
       },
       logger,
     )
@@ -71,6 +80,11 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
       LIVE_METRICS_CONTEXT,
       { daLayer: 'ethereum' },
       async () => {
+        if (!this.storedReattributed) {
+          await this.reattributeStored(to)
+          this.storedReattributed = true
+        }
+
         const windowStart = liveWindowStart(to)
         const start = Math.max(from, windowStart)
         const end = Math.min(start + this.$.batchSize - 1, to)
@@ -85,9 +99,8 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
         const liveBatches = blocks.flatMap((b) => this.toLiveBatches(b))
 
         await this.$.db.transaction(async () => {
-          // Rows above the safe height may be from a chain since reorganized,
-          // or attributed by configs since changed: upserting by slot would
-          // leave the ones no fetched block lands on
+          // Rows above the safe height may be from a chain since reorganized:
+          // upserting by slot would leave the ones no fetched block lands on
           await this.$.db.liveBlock.deleteAfterBlock(start - 1)
           await this.$.db.liveBlobBatch.deleteAfterBlock(start - 1)
           await this.$.db.liveBlock.upsertMany(liveBlocks)
@@ -131,9 +144,39 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
     }
   }
 
+  /**
+   * A batch is attributed as it is stored, so after a deploy that changed the
+   * configs the stored ones are reattributed in place. Fetching the window
+   * again instead would leave the view a day behind the chain until it
+   * reached the head
+   */
+  private async reattributeStored(head: number) {
+    const changed: LiveBlobBatchRecord[] = []
+    for (
+      let from = liveWindowStart(head);
+      from <= head;
+      from += BLOCKS_PER_READ
+    ) {
+      const stored = await this.$.db.liveBlobBatch.getByBlockNumberRange(
+        from,
+        Math.min(from + BLOCKS_PER_READ - 1, head),
+      )
+      for (const batch of stored) {
+        const projectId = this.attribute(batch.blockNumber, batch)
+        if (projectId !== batch.projectId) {
+          changed.push({ ...batch, projectId })
+        }
+      }
+    }
+    if (changed.length > 0) {
+      await this.$.db.liveBlobBatch.upsertMany(changed)
+    }
+    this.logger.info('Reattributed stored batches', { changed: changed.length })
+  }
+
   /** The view can show a block no sooner than it is stored */
   private logStored(from: number, to: number, newest: UnixTime | undefined) {
-    const now = (this.$.now ?? UnixTime.now)()
+    const now = (this.$.now ?? nowSeconds)()
     this.logger.info('Stored live blocks', {
       from,
       to,
@@ -142,48 +185,30 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
   }
 
   private toLiveBatches(block: EthereumBlobBlock): LiveBlobBatchRecord[] {
-    return block.batches.map((batch) => {
-      const config = closestMatch(
-        matchEthereumConfigs(this.$.configurations, block.number, {
-          inbox: batch.to,
-          sequencer: batch.from,
-          topics: batch.topics,
-        }),
-        batch.from,
-      )
-      return {
-        slot: slotAt(block.timestamp),
-        txIndex: batch.txIndex,
-        txHash: batch.txHash,
-        blockNumber: block.number,
-        from: batch.from,
-        to: batch.to,
-        blobs: batch.blobs,
-        projectId: config?.projectId,
-      }
-    })
+    return block.batches.map((batch) => ({
+      slot: slotAt(block.timestamp),
+      txIndex: batch.txIndex,
+      txHash: batch.txHash,
+      blockNumber: block.number,
+      from: batch.from,
+      to: batch.to,
+      blobs: batch.blobs,
+      topics: batch.topics,
+      projectId: this.attribute(block.number, batch),
+    }))
   }
-}
 
-/**
- * A batch is attributed as it is stored, so a changed config would leave the
- * window attributed by the old one: the hash change starts the child over,
- * and its first update drops the window and fetches it again
- */
-export function liveBlobsConfigHash(configurations: LiveBlobsConfig[]) {
-  const keys = configurations
-    .map((c) =>
-      JSON.stringify([
-        c.projectId,
-        c.inbox,
-        c.sequencers ?? [],
-        c.topics ?? [],
-        c.sinceBlock,
-        c.untilBlock ?? null,
-      ]),
-    )
-    .sort()
-  return createHash('sha1').update(keys.join('\n')).digest('hex').slice(0, 12)
+  private attribute(
+    blockNumber: number,
+    batch: Pick<LiveBlobBatchRecord, 'from' | 'to' | 'topics'>,
+  ): ProjectId | undefined {
+    const configs = matchEthereumConfigs(this.$.configurations, blockNumber, {
+      inbox: batch.to,
+      sequencer: batch.from,
+      topics: batch.topics,
+    })
+    return closestMatch(configs, batch.from)?.projectId
+  }
 }
 
 /**

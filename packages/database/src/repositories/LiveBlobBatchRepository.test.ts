@@ -46,6 +46,14 @@ describeDatabase(LiveBlobBatchRepository.name, (db) => {
     })
   })
 
+  describe(LiveBlobBatchRepository.prototype.getByBlockNumberRange.name, () => {
+    it('returns the batches of the blocks in block order', async () => {
+      expect(
+        await repository.getByBlockNumberRange(blockOf(101), blockOf(103)),
+      ).toEqual(BATCHES.slice(2, 5))
+    })
+  })
+
   describe(LiveBlobBatchRepository.prototype.getPostedSince.name, () => {
     it('sums each project up, the unattributed batches as one', async () => {
       const posted = await repository.getPostedSince(100)
@@ -136,6 +144,7 @@ function batch(
     blockNumber: blockOf(fields.slot),
     from: '0xfrom',
     to: '0xto',
+    topics: ['0xtopic'],
     projectId: undefined,
     ...fields,
   }

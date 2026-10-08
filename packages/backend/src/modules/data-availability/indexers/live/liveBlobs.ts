@@ -30,3 +30,8 @@ export const LIVE_METRICS_CONTEXT = 'dataAvailability.live'
 export function secondsSince(timestamp: number, now: number) {
   return Math.round((now - timestamp) * 100) / 100
 }
+
+/** Unix seconds with the fraction, which `UnixTime.now` drops */
+export function nowSeconds() {
+  return Date.now() / 1000
+}

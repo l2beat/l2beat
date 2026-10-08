@@ -133,6 +133,20 @@ describe(LiveBlobsTargetIndexer.name, () => {
       expect(rpc.getBlock).toHaveBeenCalledTimes(2)
     })
 
+    it('keeps the fork height when a lagging RPC answers next', async () => {
+      // A node behind the fork sees no fork there: reporting its head would
+      // make the child drop good blocks and fetch them again
+      const chain = { head: HEAD + 1, forkedAfter: HEAD - 3 }
+      const { indexer } = setup(time, {
+        chain,
+        stored: storedRange(HEAD - 10, HEAD),
+      })
+      expect(await indexer.tick()).toEqual(HEAD - 3)
+
+      chain.head = HEAD - 5
+      expect(await indexer.tick()).toEqual(HEAD - 3)
+    })
+
     it('follows the head again after reporting a fork', async () => {
       const { indexer } = setup(time, {
         head: HEAD + 1,
@@ -254,7 +268,7 @@ function setup(
   options: {
     head?: number
     forkedAfter?: number
-    chain?: { head: number; forkedAfter: number | undefined }
+    chain?: { head: number; forkedAfter?: number }
     stored: LiveBlockRecord[]
     /** Unix seconds */
     now?: number
