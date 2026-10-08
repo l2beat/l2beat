@@ -1,6 +1,8 @@
 import { expect } from 'earl'
 import { clampView, pastPagesFor } from './lookBack'
 
+// Methodology: a day of 300 slots ending at head 1000, with a belt of 20
+// racks left of the bay; a slot asked for is clamped and checked.
 describe(clampView.name, () => {
   const day = { head: 1000, slots: 300 }
 

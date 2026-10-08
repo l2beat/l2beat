@@ -11,6 +11,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useIsClient } from '~/hooks/useIsClient'
 import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
 import { useBeaconChain } from './blocks/useBeaconChain'
+import { ChainClockContext, createChainClock } from './chainClock'
 import { LivePosters } from './LivePosters'
 import { LiveStats } from './LiveStats'
 import { createLandings, LandingsContext } from './landings'
@@ -33,23 +34,27 @@ export function LiveBlobsCard({ projects, limits }: Props) {
   // the belt draws on a canvas sized to the screen, which the server has not got
   const isClient = useIsClient()
   const [landings] = useState(createLandings)
+  // corrected by the belt as blocks come in, and read by every number
+  const [clock] = useState(createChainClock)
 
   return (
-    <LandingsContext value={landings}>
-      <PrimaryCard className="space-y-5">
-        <LiveStats limits={limits} posters={posters} />
-        {isClient ? (
-          <LiveBoundary>
-            <Suspense fallback={<LiveSkeleton />}>
-              <LiveBlocks posters={posters} limits={limits} />
-            </Suspense>
-          </LiveBoundary>
-        ) : (
-          <LiveSkeleton />
-        )}
-        <LivePosters posters={posters} />
-      </PrimaryCard>
-    </LandingsContext>
+    <ChainClockContext value={clock}>
+      <LandingsContext value={landings}>
+        <PrimaryCard className="space-y-5">
+          <LiveStats limits={limits} posters={posters} />
+          {isClient ? (
+            <LiveBoundary>
+              <Suspense fallback={<LiveSkeleton />}>
+                <LiveBlocks posters={posters} limits={limits} />
+              </Suspense>
+            </LiveBoundary>
+          ) : (
+            <LiveSkeleton />
+          )}
+          <LivePosters posters={posters} />
+        </PrimaryCard>
+      </LandingsContext>
+    </ChainClockContext>
   )
 }
 

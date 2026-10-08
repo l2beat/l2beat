@@ -1,5 +1,5 @@
 import { formatSeconds, SLOT_SECONDS } from '@l2beat/shared-pure'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { BasicTableHeaderDividerRow } from '~/components/table/BasicTable'
 import {
@@ -101,13 +101,10 @@ export function LivePosters({ posters }: Props) {
     [postedWindow, posters],
   )
   // "Last batch" is told on the chain's clock, as the belt is: a device clock
-  // a minute off would age every batch a minute, or make the newest "just now"
+  // a minute off would age every batch a minute, or make the newest "just now".
+  // It counts up between blocks, not only when they come
   const clock = useChainClock()
   const head = data?.head
-  useEffect(() => {
-    if (head !== undefined) clock.correct(head)
-  }, [clock, head])
-  // and counts up between blocks, not only when they come
   useTick(1000)
   const progress = clock.progressNow()
   // the belt's colors, so a project reads the same here as on the belt

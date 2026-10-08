@@ -1,6 +1,13 @@
 import { expect } from 'earl'
+import { SLIDE_TIME } from './blocks/beltPosition'
 import { BATCH_STAGGER, LAND_AFTER } from './blocks/motion'
-import { firstHeld, type Held, holdBack, holdLimitMs } from './landings'
+import {
+  firstHeld,
+  type Held,
+  holdBack,
+  holdLimitMs,
+  secondsUntilSlideEnds,
+} from './landings'
 
 // A block of n one-blob batches lands its last one latest; the number must
 // still be waiting for it then, whatever n the blob limit allows.
@@ -10,6 +17,19 @@ describe(holdLimitMs.name, () => {
       const lastLandsMs = 1000 * ((blobs - 1) * BATCH_STAGGER + LAND_AFTER)
       expect(holdLimitMs(blobs)).toBeGreaterThan(lastLandsMs)
     }
+  })
+})
+
+// Methodology: the clock is put at a progress into a slot, in slots, and the
+// wait is checked against where the belt's slide into that slot ends.
+describe(secondsUntilSlideEnds.name, () => {
+  it('waits for the slide under way to end', () => {
+    const progress = 1000 + SLIDE_TIME / 2 / 12
+    expect(secondsUntilSlideEnds(progress)).toBeCloseTo(SLIDE_TIME / 2, 6)
+  })
+
+  it("waits for the next slide once this slot's is over", () => {
+    expect(secondsUntilSlideEnds(1000.5)).toBeCloseTo(6 + SLIDE_TIME, 6)
   })
 })
 

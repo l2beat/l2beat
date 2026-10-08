@@ -1,5 +1,5 @@
 import { SLOT_SECONDS } from '@l2beat/shared-pure'
-import { type CSSProperties, type ReactNode, useEffect, useRef } from 'react'
+import { type CSSProperties, type ReactNode, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -93,7 +93,7 @@ export function LiveStats({
         )}
         <div className="col-start-2 row-start-1 flex flex-col items-end gap-1.5 md:ml-auto">
           <StatusText status={status} />
-          {status === 'live' && <NextBlock head={data?.head} />}
+          {status === 'live' && <NextBlock />}
         </div>
       </dl>
       {ready ? (
@@ -175,15 +175,12 @@ const RING_LENGTH = 2 * Math.PI * RING_RADIUS
  * the wait between blocks, made visible. Drawn straight to the elements on
  * every frame it is on screen, so it renders no React
  */
-function NextBlock({ head }: { head: number | undefined }) {
+function NextBlock() {
   const clock = useChainClock()
   const rootRef = useRef<HTMLDivElement>(null)
   const onScreen = useIsOnScreen(rootRef)
   const ringRef = useRef<SVGCircleElement>(null)
   const textRef = useRef<HTMLSpanElement>(null)
-  useEffect(() => {
-    if (head !== undefined) clock.correct(head)
-  }, [clock, head])
 
   useAnimationFrame(() => {
     const progress = clock.progressNow()

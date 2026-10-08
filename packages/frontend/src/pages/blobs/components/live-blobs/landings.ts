@@ -1,4 +1,4 @@
-import { slotProgressAt, slotStart } from '@l2beat/shared-pure'
+import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { arrivesNow } from './blocks/beaconChain'
 import { SLIDE_TIME } from './blocks/beltPosition'
@@ -109,14 +109,12 @@ export function useLandedTotal(
   // Not before the new blobs are in, so the number never falls as they land,
   // and just after the belt's slide, so its count-down never slows the slide
   const departing = held.departed > 0 && !waiting
+  // biome-ignore lint/correctness/useExhaustiveDependencies: timed from when the departure is seen
   useEffect(() => {
     if (!departing) return
-    const now = Date.now() / 1000
-    const slideEnds =
-      slotStart(Math.floor(slotProgressAt(now - SLIDE_TIME)) + 1) + SLIDE_TIME
     const timer = setTimeout(
       () => setHeld((current) => ({ ...current, departed: 0 })),
-      (slideEnds - now) * 1000,
+      secondsUntilSlideEnds(clock.progressNow()) * 1000,
     )
     return () => clearTimeout(timer)
   }, [departing])
@@ -210,6 +208,13 @@ export function holdBack(
     arriving: fresh,
     departed: held.departed + departed,
   }
+}
+
+/** How long the belt's slide into the slot under way at `progress` has left, in seconds */
+export function secondsUntilSlideEnds(progress: number) {
+  const slideStartedAt = progress - SLIDE_TIME / SLOT_SECONDS
+  const slideEnds = Math.floor(slideStartedAt) + 1
+  return (slideEnds - progress) * SLOT_SECONDS + SLIDE_TIME
 }
 
 function isAbove(slot: number | undefined, than: number | undefined) {

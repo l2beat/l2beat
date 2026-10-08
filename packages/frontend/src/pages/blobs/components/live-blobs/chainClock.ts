@@ -1,5 +1,5 @@
 import { SLOT_SECONDS, slotProgressAt, slotStart } from '@l2beat/shared-pure'
-import { useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { LIVE_LAG_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 
 /**
@@ -19,10 +19,15 @@ export interface ChainClock {
   correct: (head: number) => void
 }
 
-/** A clock that lives as long as the component */
+/** The one clock of the live view, so a correction from the belt reaches every number and the bay alike */
+export const ChainClockContext = createContext<ChainClock | undefined>(
+  undefined,
+)
+
+/** The view's clock, or one that lives as long as the component outside a view */
 export function useChainClock(): ChainClock {
-  const [clock] = useState(createChainClock)
-  return clock
+  const [own] = useState(createChainClock)
+  return useContext(ChainClockContext) ?? own
 }
 
 /**
@@ -30,7 +35,7 @@ export function useChainClock(): ChainClock {
  * device is far off: the head is never ahead of the true time, and rarely
  * far behind it
  */
-function createChainClock(): ChainClock {
+export function createChainClock(): ChainClock {
   let offset = 0
   const now = () => Date.now() / 1000 + offset
   return {
