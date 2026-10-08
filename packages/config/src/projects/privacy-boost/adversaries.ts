@@ -70,9 +70,8 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposure:
-        "Deposits go through the wallet's RPC and every other action goes encrypted to the operator's endpoint behind Cloudflare. Each service sees one leg, and only your IP ties them together. The SDK has no Tor setting.",
-      advice:
-        'Run the app over Tor, with deposit and withdrawal in separate sessions.',
+        'Your ISP sees when your wallet deposits and when the app sends requests to the operator, and can match both to the chain. The SDK has no Tor or proxy setting.',
+      advice: 'Route the app through Tor with system-wide tools.',
       interior: {
         ...INTERIOR,
         linkage: {

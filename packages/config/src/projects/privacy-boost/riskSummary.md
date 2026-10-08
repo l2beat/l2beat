@@ -10,3 +10,4 @@
 1. the TEE or its hardware vendor is compromised (see privileged insider).
 2. an appointed auditor fetches the user's history through the Audit API.
 3. a user exits through a forced withdrawal (see public observer).
+4. a user relies on today's anonymity set, which is too small to hide in (see chain analyst).
