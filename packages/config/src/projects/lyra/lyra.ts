@@ -17,6 +17,7 @@ export const lyra: ScalingProject = opStackL2({
     isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1702978961), // 2023-12-19T09:42:41Z
+  archivedAt: UnixTime(1791309600), // 2026-10-06T18:00:00Z, V3 migration snapshot
   daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['LYRA'],
@@ -28,12 +29,14 @@ export const lyra: ScalingProject = opStackL2({
   ],
   display: {
     name: 'Derive',
+    headerWarning:
+      'Derive migrated from Derive Chain to [Derive V3](https://l2beat.com/scaling/projects/derivev3), a separate system that settles on Ethereum. Derive Chain is being wound down. See the [proposal](https://forums.derive.xyz/t/dip-launch-derive-v3/322) for details.',
     warning:
       'The fault proof system is deployed but is not functional. The dispute game commits to an op-program release that predates the Jovian hardfork active on the chain, so it cannot derive current blocks and no dispute can be resolved correctly by execution. Security relies entirely on the permissioned proposer and challengers.',
     aliases: ['Lyra'],
     slug: 'derive',
     description:
-      'Derive Chain is an L2 scaling solution built using OP Stack specially for the Derive protocol - a settlement protocol for spot, perpetuals, and options trading.',
+      'Derive Chain was an L2 scaling solution built using OP Stack specially for the Derive protocol - a settlement protocol for spot, perpetuals, and options trading - before Derive migrated to Derive V3.',
     links: {
       websites: ['https://derive.xyz/'],
       bridges: ['https://derive.xyz/options/eth'],
@@ -66,6 +69,14 @@ export const lyra: ScalingProject = opStackL2({
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
   milestones: [
+    {
+      title: 'Derive V3 launch',
+      url: 'https://x.com/DeriveXYZ/status/2108069298673758548',
+      date: '2026-10-06T00:00:00Z',
+      description:
+        'Derive Chain state is snapshotted into Derive V3 on Ethereum and the chain begins winding down.',
+      type: 'general',
+    },
     {
       title: 'Derive rebrand',
       url: 'https://x.com/derivexyz/status/1828607400116658227',
