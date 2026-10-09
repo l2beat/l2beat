@@ -67,7 +67,7 @@ export const ethereum: BaseProject = {
       ],
       socialMedia: [
         'https://x.com/ethereum',
-        'https://discord.com/invite/ethereum-org',
+        'https://discord.gg/MWpjbnsfNE',
       ],
     },
     badges: [],
