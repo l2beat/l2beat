@@ -24,6 +24,8 @@ export const lyra: ScalingProject = opStackL2({
   ],
   display: {
     name: 'Derive',
+    headerWarning:
+      'Derive has migrated to Derive V3, a separate system that settles on Ethereum. Derive Chain is being wound down and the Socket bridge escrows on Ethereum have been emptied.',
     warning:
       'The fault proof system is deployed but is not functional. The dispute game commits to an op-program release that predates the Jovian hardfork active on the chain, so it cannot derive current blocks and no dispute can be resolved correctly by execution. Security relies entirely on the permissioned proposer and challengers.',
     aliases: ['Lyra'],
@@ -59,6 +61,14 @@ export const lyra: ScalingProject = opStackL2({
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
   milestones: [
+    {
+      title: 'Derive V3 launch',
+      url: 'https://x.com/DeriveXYZ/status/2108069298673758548',
+      date: '2026-10-06T00:00:00Z',
+      description:
+        'Derive Chain state is snapshotted into Derive V3 on Ethereum and the chain begins winding down.',
+      type: 'general',
+    },
     {
       title: 'Derive rebrand',
       url: 'https://x.com/derivexyz/status/1828607400116658227',
