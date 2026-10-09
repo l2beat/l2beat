@@ -1,6 +1,7 @@
-// View models served to the audits pages. They are derived from the engine's
-// data contract (`@l2beat/audit-diff`) on the server so that page components
-// never depend on the engine directly.
+// View models served to the audits pages. They are derived on the server from
+// `project.auditCoverage` (the output of `l2b audit-coverage`, see
+// packages/l2b/src/implementations/audit-coverage/README.md) so that page
+// components never depend on that format directly.
 
 export type AuditUnitStatus = 'identical' | 'library' | 'differs' | 'unaudited'
 export type AuditUnitKind =
@@ -8,17 +9,16 @@ export type AuditUnitKind =
   | 'abstract'
   | 'interface'
   | 'library'
-  | 'file-level'
-  /** A whole non-Solidity source file, e.g. a zk circuit. */
-  | 'program'
+  /** A free function declared at file level. */
+  | 'function'
 
-/** How the evidence collection relates to the project. */
-export type AuditMatchOrigin =
-  | 'own'
-  | 'upstream'
-  | 'stack'
-  | 'library'
-  | 'other'
+/**
+ * How the collection of an audit report relates to the project: the project's
+ * own audits, the audits of its stack (OP Stack chains and the `optimism`
+ * collection), an audited standard library, or another project that deployed
+ * the same code.
+ */
+export type AuditReportOrigin = 'own' | 'stack' | 'library' | 'other'
 
 export type AuditStatusCounts = Record<AuditUnitStatus, number>
 
@@ -29,8 +29,7 @@ export interface AuditCoverageNumbers {
 
 /**
  * A dated report that counts as one of the project's audits: a report of its
- * own collections, or a matched report of an upstream or stack project
- * collection. See
+ * own collection, or a matched report of its stack collection. See
  * docs/superpowers/specs/2026-10-07-audit-timeline-project-audits-design.md.
  */
 export interface AuditsProjectReport {
@@ -38,8 +37,8 @@ export interface AuditsProjectReport {
   title: string
   auditor: string
   timestamp: number
-  url?: string
-  origin: 'own' | 'upstream' | 'stack'
+  url: string
+  origin: 'own' | 'stack'
   collectionName: string
   /** The report matched at least one deployed unit; always true unless own. */
   matched: boolean
@@ -47,15 +46,15 @@ export interface AuditsProjectReport {
 
 /**
  * A dated matched report that is not a project audit: a library audit or a
- * report of a project outside the ranked context.
+ * report of another project.
  */
 export interface AuditsOtherReport {
   id: string
   title: string
   auditor: string
   timestamp: number
-  url?: string
-  origin: AuditMatchOrigin
+  url: string
+  origin: AuditReportOrigin
   collectionName: string
 }
 
@@ -91,7 +90,7 @@ export interface AuditsSummaryEntry {
   uniqueUnits: AuditStatusCounts
   /** Reports from the project's own collection that matched a unit. */
   ownReportsCount: number
-  /** Reports from every other collection (upstream, stack, libraries, ...). */
+  /** Matched reports from every other collection (stack, libraries, ...). */
   sharedReportsCount: number
   discoveryTimestamp: number
   timeline: AuditsSummaryTimeline
@@ -102,48 +101,51 @@ export interface AuditsReportEntry {
   title: string
   auditor: string
   reportDate: string | null
-  /** Report file (pdf when available) in the dataset repository. */
-  url?: string
-  origin: AuditMatchOrigin
+  /** The report document in the dataset repository. */
+  url: string
+  origin: AuditReportOrigin
   collection: string
+  collectionName: string
+  /** The report matched at least one deployed unit. */
+  matched: boolean
+}
+
+export interface AuditsUnitReportRef {
+  id: string
+  title: string
+  auditor: string
+  url: string
+  origin: AuditReportOrigin
   collectionName: string
 }
 
 export interface AuditsUnitMatchEntry {
-  origin: AuditMatchOrigin
-  collection: string
+  /** Closest origin among the unit's reports: own, stack, library, other. */
+  origin: AuditReportOrigin
   collectionName: string
-  /** Human readable relation, e.g. "fork of ethereum-optimism/optimism". */
-  relation: string
-  auditedName: string
-  renamed: boolean
-  matchedBy: 'identity' | 'name' | 'alias' | 'similarity'
-  similarity: number
-  reportId: string
-  reportTitle: string
-  auditor: string
-  /** Report file (pdf when available) in the dataset repository. */
-  reportUrl?: string
+  /** Name of the audited unit when it differs from the deployed one. */
+  auditedName?: string
+  /** The report shown for the unit, see primaryReportId. */
+  report: AuditsUnitReportRef
+  /** Every report that audited a file containing the matched code. */
+  reports: AuditsUnitReportRef[]
   repository: string
   path: string
   commit: string
-  commitTimestamp: string | null
+  /** The audited file in its upstream repository. */
   url: string
-  auditStatus: string
-  reviewPhase: string
-  coverage: string
-  majorFindings: number
-  /** Identifiers of those findings as printed in the report, for navigation. */
-  findingIds?: string[]
-  laterAuditedVersionExists: boolean
-  totalVersions: number
+  /** Identifiers of the major findings open in the audited code, by report. */
+  findings: { report: AuditsUnitReportRef; ids: string[] }[]
+  /** Flattened finding identifiers, in report order. */
+  findingIds: string[]
 }
 
 export interface AuditsUnitEntry {
-  /** Unique within a project page. */
+  /** Unique within a project page: `<flat hash>:<unit id>`. */
   id: string
-  unitHash: string
-  contextKey: string
+  /** Parameters of the unit details query. */
+  flat: string
+  unitId: string
   name: string
   kind: AuditUnitKind
   startLine: number
@@ -151,40 +153,31 @@ export interface AuditsUnitEntry {
   lines: number
   status: AuditUnitStatus
   coveredLines: number
-  warnings: ('low-similarity' | 'kind-mismatch')[]
   match?: AuditsUnitMatchEntry
-  /** Significant and ignored (comments, require messages) changed lines. */
-  diffStats?: {
-    added: number
-    removed: number
-    ignoredAdded: number
-    ignoredRemoved: number
-    ignoredOnly: boolean
-  }
+  /** Changed lines when the unit differs from the audited code. */
+  changedLines?: { added: number; removed: number }
 }
 
-export interface AuditsFileEntry {
-  path: string
-  role: 'implementation' | 'proxy'
+export interface AuditsSourceEntry {
+  /** Chain specific address whose verified source this is. */
+  address: string
+  role: 'proxy' | 'implementation'
+  /** sha256 of the flat source; undefined without verified Solidity. */
+  flat?: string
   lines: number
   units: AuditsUnitEntry[]
 }
 
 export interface AuditsContractEntry {
   name: string
+  /** Chain specific address, e.g. `eth:0x...`. */
   address: string
   chain: string
-  template?: string
+  /** Address without the chain prefix. */
+  shortAddress: string
   noSource: boolean
   coverage: AuditCoverageNumbers
-  files: AuditsFileEntry[]
-}
-
-export interface AuditsContextEntry {
-  collection: string
-  collectionName: string
-  origin: AuditMatchOrigin
-  relation: string
+  sources: AuditsSourceEntry[]
 }
 
 /** Markers and stats of the audits and upgrades timeline section. */
@@ -229,8 +222,9 @@ export interface AuditsProjectDetails {
   icon: string
   contractSelection: 'critical' | 'all'
   discoveryTimestamp: number
-  generatedAt: number
-  datasetRevision?: string
+  /** The audit dataset commit the coverage was generated from. */
+  datasetCommit: string
+  datasetUrl: string
   contracts: number
   contractsWithoutSource: number
   /** Contracts whose every unit is identical to audited code. */
@@ -238,8 +232,8 @@ export interface AuditsProjectDetails {
   coverage: AuditCoverageNumbers
   uniqueUnits: AuditStatusCounts
   reports: AuditsReportEntry[]
-  /** Own, upstream and stack collections ranked for this project. */
-  context: AuditsContextEntry[]
+  /** The stack collection whose matched audits count as project audits. */
+  stackCollectionName?: string
   contractEntries: AuditsContractEntry[]
   /** The project's own L2BEAT page, when it has one. */
   projectHref?: string
@@ -249,11 +243,11 @@ export interface AuditsProjectDetails {
 
 export interface AuditsDiffLine {
   type: ' ' | '+' | '-'
+  /** Line in the audited file. */
   oldLine?: number
+  /** Line in the deployed flat source. */
   newLine?: number
   text: string
-  /** Changed line that does not count: comment or require message. */
-  ignored?: boolean
 }
 
 export interface AuditsDiffHunk {
@@ -263,14 +257,23 @@ export interface AuditsDiffHunk {
 }
 
 export interface AuditsUnitDetails {
+  /** First line of the unit in the deployed flat source. */
   startLine: number
+  /** The deployed unit, line by line. */
   source: string
+  /**
+   * The deployed flat source the coverage was generated from is not the one
+   * the database holds: the contract changed since. No source is returned.
+   */
+  stale?: true
+  audited?: {
+    url: string
+    /** First line of the audited unit in the dataset's formatted copy. */
+    startLine: number
+  }
   diff?: {
     added: number
     removed: number
-    ignoredAdded: number
-    ignoredRemoved: number
-    ignoredOnly: boolean
     hunks: AuditsDiffHunk[]
   }
 }
