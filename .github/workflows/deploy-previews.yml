@@ -38,14 +38,14 @@ jobs:
           fetch-depth: 2
           persist-credentials: false
 
-      # turbo reads the workspace graph from package.json files and the
-      # lockfile, so no install is needed. A package counts as affected when it
-      # or any workspace package it depends on changed.
+      - name: List affected packages
+        id: affected
+        uses: ./.github/actions/affected-packages
+
       - name: Select previews of affected packages
         id: select
         env:
-          TURBO_SCM_BASE: HEAD^1
-          TURBO_SCM_HEAD: HEAD
+          AFFECTED: ${{ steps.affected.outputs.packages }}
           PREVIEWS: |
             [
               { "name": "frontend-production", "package": "@l2beat/frontend", "uuidSecret": "COOLIFY_FRONTEND_PROD_PREVIEW_ID" },
@@ -54,11 +54,7 @@ jobs:
               { "name": "token-ui", "package": "@l2beat/token-ui", "uuidSecret": "COOLIFY_TOKEN_UI_PREVIEW_ID" }
             ]
         run: |
-          turbo_version=$(jq -r .devDependencies.turbo package.json)
-          affected=$(npx --yes "turbo@$turbo_version" ls --affected --output=json | jq -c '[.packages.items[].name]')
-          echo "Affected packages: $affected"
-
-          previews=$(jq -c --argjson affected "$affected" \
+          previews=$(jq -c --argjson affected "$AFFECTED" \
             '[.[] | select(.package as $p | $affected | index($p))]' <<< "$PREVIEWS")
           echo "Previews to deploy: $(jq -c 'map(.name)' <<< "$previews")"
           echo "previews=$previews" >> "$GITHUB_OUTPUT"

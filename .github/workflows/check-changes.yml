@@ -9,7 +9,7 @@ on:
         type: boolean
         default: false
       package:
-        description: "Package name for turbo-ignore (e.g., @l2beat/backend)"
+        description: "Package to check (e.g., @l2beat/backend)"
         required: true
         type: string
     outputs:
@@ -28,40 +28,33 @@ jobs:
     outputs:
       should_deploy: ${{ steps.check.outputs.should_deploy }}
     steps:
+      # fetch-depth 2 so the action can diff HEAD against the previous commit.
       - name: Check out code
+        if: ${{ !inputs.force }}
         uses: actions/checkout@v6
         with:
           fetch-depth: 2
+          persist-credentials: false
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
+      - name: List affected packages
+        if: ${{ !inputs.force }}
+        id: affected
+        uses: ./.github/actions/affected-packages
 
       - name: Check if package changed
         id: check
+        env:
+          FORCE: ${{ inputs.force }}
+          PACKAGE: ${{ inputs.package }}
+          AFFECTED: ${{ steps.affected.outputs.packages }}
         run: |
-          set +e
-          npx turbo-ignore ${{ inputs.package }} --fallback=HEAD~1
-          exit_code=$?
-          set -e
-
-          if ${{ inputs.force }}; then
-            echo "should_deploy=true" >> $GITHUB_OUTPUT
+          if [[ "$FORCE" == "true" ]]; then
+            echo "should_deploy=true" >> "$GITHUB_OUTPUT"
             echo "✓ Forced deployment"
-          elif [ $exit_code -eq 1 ]; then
-            echo "should_deploy=true" >> $GITHUB_OUTPUT
-            echo "✓ ${{ inputs.package }} package changed, will deploy"
-          elif [ $exit_code -eq 0 ]; then
-            echo "should_deploy=false" >> $GITHUB_OUTPUT
-            echo "✗ ${{ inputs.package }} package unchanged, skipping deployment"
+          elif jq -e --arg p "$PACKAGE" 'index($p) != null' <<< "$AFFECTED" > /dev/null; then
+            echo "should_deploy=true" >> "$GITHUB_OUTPUT"
+            echo "✓ $PACKAGE package changed, will deploy"
           else
-            echo "✗ package detection script failed"
-            exit $exit_code
+            echo "should_deploy=false" >> "$GITHUB_OUTPUT"
+            echo "✗ $PACKAGE package unchanged, skipping deployment"
           fi

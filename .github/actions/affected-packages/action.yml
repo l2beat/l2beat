@@ -1,0 +1,28 @@
+name: List affected packages
+description: >
+  Lists the workspace packages that HEAD changes relative to its first parent,
+  plus every package that depends on them. On main that parent is the previous
+  commit; on a PR merge commit it is the base branch tip. Needs a checkout with
+  fetch-depth 2.
+
+outputs:
+  packages:
+    description: JSON array of package names, e.g. ["@l2beat/frontend"]
+    value: ${{ steps.affected.outputs.packages }}
+
+runs:
+  using: composite
+  steps:
+    # turbo reads the workspace graph from package.json files and the lockfile,
+    # so this needs no pnpm install.
+    - name: List affected packages
+      id: affected
+      shell: bash
+      env:
+        TURBO_SCM_BASE: HEAD^1
+        TURBO_SCM_HEAD: HEAD
+      run: |
+        turbo_version=$(jq -r .devDependencies.turbo package.json)
+        packages=$(npx --yes "turbo@$turbo_version" ls --affected --output=json | jq -c '[.packages.items[].name]')
+        echo "Affected packages: $packages"
+        echo "packages=$packages" >> "$GITHUB_OUTPUT"
