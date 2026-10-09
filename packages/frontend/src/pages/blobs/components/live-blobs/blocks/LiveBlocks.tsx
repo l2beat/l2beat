@@ -18,7 +18,7 @@ import {
 } from '../hooks'
 import { LivePulse } from '../LivePulse'
 import { LandingsContext } from '../landings'
-import { clampView } from '../lookBack'
+import { clampView, earliestView } from '../lookBack'
 import { type BlockLimits, type LivePoster, UNKNOWN_ID } from '../model'
 import { PointerTooltip } from '../PointerTooltip'
 import { useLiveBlobs } from '../useLiveBlobs'
@@ -154,10 +154,11 @@ export function LiveBlocks({ posters, limits }: Props) {
   })
   dropBlock.current = belt.dropBlock
   const swipe = useBeltSwipe({
-    view: look.view,
-    head: look.head,
+    position: belt.position,
     blockPitch: layout?.blockPitch,
+    earliest: look.earliest,
     onView: look.onView,
+    onHold: belt.hold,
   })
   const hovered = belt.hover && findBatch(blocks, belt.hover.key)
   const hoveredPoster = hovered && posters[hovered.batch.posterIndex]
@@ -233,6 +234,7 @@ function useLookBack(layout: BeltLayout | undefined) {
     view: clampView(asked, day, before),
     head: day?.head,
     oldest: day && day.head - day.slots + 1,
+    earliest: day && earliestView(day, before),
     before,
     after,
     onView: (slot: number | undefined) =>

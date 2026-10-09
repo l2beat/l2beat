@@ -1,5 +1,5 @@
 import { formatSeconds, SLOT_SECONDS } from '@l2beat/shared-pure'
-import { useCallback, useMemo, useRef } from 'react'
+import { memo, useCallback, useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { BasicTableHeaderDividerRow } from '~/components/table/BasicTable'
 import {
@@ -32,7 +32,14 @@ import { useChainClock } from './chainClock'
 import { readableColor } from './color'
 import { useThemeTokens } from './hooks'
 import { type Landing, useLandedTotal } from './landings'
-import { Pop, RollingNumber, useFlash, useReorder, useTick } from './liveMotion'
+import {
+  FLASH_CLASS_NAME,
+  Pop,
+  RollingNumber,
+  useFlash,
+  useReorder,
+  useTick,
+} from './liveMotion'
 import { type LivePoster, UNKNOWN_ID } from './model'
 import { useLiveBlobs } from './useLiveBlobs'
 
@@ -100,13 +107,7 @@ export function LivePosters({ posters }: Props) {
     () => postedWindow && toRows(postedWindow, posters),
     [postedWindow, posters],
   )
-  // "Last batch" is told on the chain's clock, as the belt is: a device clock
-  // a minute off would age every batch a minute, or make the newest "just now"
-  const clock = useChainClock()
   const head = data?.head
-  // and counts up between blocks, not only when they come
-  useTick(1000)
-  const progress = clock.progressNow()
   // the belt's colors, so a project reads the same here as on the belt
   const { surface } = useThemeTokens()
 
@@ -164,7 +165,6 @@ export function LivePosters({ posters }: Props) {
                 head={head}
                 firstBucket={postedWindow.firstBucket}
                 newestBlobs={postedWindow.newestBlobs}
-                progress={progress}
               />
             ))}
           </TableBody>
@@ -174,7 +174,11 @@ export function LivePosters({ posters }: Props) {
   )
 }
 
-function PosterRow({
+/**
+ * Rendered again only when what it shows changes, not with the clock: the
+ * ages tick in cells of their own
+ */
+const PosterRow = memo(function PosterRow({
   row,
   color,
   rank,
@@ -183,7 +187,6 @@ function PosterRow({
   head,
   firstBucket,
   newestBlobs,
-  progress,
 }: {
   row: Row
   /** The poster's color, made to stand out from the card */
@@ -196,8 +199,6 @@ function PosterRow({
   firstBucket: number
   /** All the newest block brought, which the belt is landing */
   newestBlobs: number
-  /** Slots since genesis now, with how far into the current one */
-  progress: number
 }) {
   const ref = useRef<HTMLTableRowElement>(null)
   const posterId = row.poster.id
@@ -219,7 +220,10 @@ function PosterRow({
     <tr
       ref={ref}
       data-flip-key={row.poster.id}
-      className="relative border-b border-b-divider md:[&>td]:h-10"
+      className={cn(
+        'relative border-b border-b-divider md:[&>td]:h-10',
+        FLASH_CLASS_NAME,
+      )}
     >
       <TableCell {...pinnedCellProps(0, 'text-secondary tabular-nums')}>
         {rank}
@@ -284,10 +288,22 @@ function PosterRow({
         {row.batches > 1 ? formatSeconds(seconds / row.batches) : '–'}
       </TableCell>
       <TableCell align="right" className="tabular-nums">
-        {describeAgo((progress - row.lastSlot) * SLOT_SECONDS)}
+        <LastBatchAgo lastSlot={row.lastSlot} />
       </TableCell>
     </tr>
   )
+})
+
+/**
+ * How long since a poster's last batch, counting up between blocks, not only
+ * when they come, and alone in the row to render every second. On the
+ * chain's clock, as the belt is: a device clock a minute off would age every
+ * batch a minute, or make the newest "just now"
+ */
+function LastBatchAgo({ lastSlot }: { lastSlot: number }) {
+  const clock = useChainClock()
+  useTick(1000)
+  return describeAgo((clock.progressNow() - lastSlot) * SLOT_SECONDS)
 }
 
 interface Row {
@@ -369,7 +385,11 @@ function pinnedCellProps(index: number, className?: string) {
       index * RANK_WIDTH,
       index === PINNED_COLUMNS - 1,
     ),
-    className: cn(getRowClassNamesWithoutOpacity(null), className),
+    className: cn(
+      getRowClassNamesWithoutOpacity(null),
+      FLASH_CLASS_NAME,
+      className,
+    ),
     [PINNED_CELL_ATTRIBUTE]: '',
   }
 }

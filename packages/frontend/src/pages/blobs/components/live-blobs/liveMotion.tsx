@@ -7,7 +7,7 @@ import {
 } from 'react'
 import { PINNED_CELL_ATTRIBUTE } from '~/components/table/utils/commonPinningStyles'
 import { cn } from '~/utils/cn'
-import { mixColors, toRgba } from './color'
+import { toRgba } from './color'
 import { usePrefersReducedMotion } from './hooks'
 
 /** Long enough to read as counting, short enough to be done before the next block */
@@ -172,13 +172,25 @@ export interface Arrival {
 
 /** How strongly a row takes its project's color as a batch lands */
 const FLASH_STRENGTH = 0.22
+/** Spelled out again in `FLASH_CLASS_NAME`, for Tailwind to find */
+const FLASH_COLOR_VARIABLE = '--live-flash'
+
+/**
+ * For a row and each of its pinned cells: the wash `useFlash` fades, laid
+ * over it. Pinned cells are opaque and stacked over the row, to hide what
+ * scrolls under them, so each takes a wash of its own
+ */
+export const FLASH_CLASS_NAME =
+  "after:pointer-events-none after:absolute after:inset-0 after:bg-(--live-flash) after:opacity-0 after:content-['']"
 
 /**
  * Washes row `ref` in `color` and lets it fade, each time a new arrival
- * comes. An inset shadow on the row rather than its background: a row's
- * background is painted cell by cell, and where cells meet on a fraction of a
- * pixel it shows seams. Pinned cells are opaque, to hide what scrolls under
- * them, so each takes the same wash already laid over its own background
+ * comes. Only the wash's opacity moves, which the compositor runs without
+ * painting the row again: easing the row's own shadow or background repaints
+ * it, and its masked pinned cells, on every frame, which in Safari stalls a
+ * swipe on the belt. One wash over the whole row, as a row's background is
+ * painted cell by cell and shows seams where cells meet on a fraction of a
+ * pixel
  */
 export function useFlash(
   ref: RefObject<HTMLElement | null>,
@@ -188,23 +200,14 @@ export function useFlash(
   useEffect(() => {
     const row = ref.current
     if (!arrival || !row) return
-    const timing = { duration: FLASH_MS, easing: 'ease-out' }
-    row.animate(
-      [
-        { boxShadow: `inset 0 0 0 100vmax ${toRgba(color, FLASH_STRENGTH)}` },
-        {},
-      ],
-      timing,
-    )
-    const pinned = row.querySelectorAll(`[${PINNED_CELL_ATTRIBUTE}]`)
-    for (const cell of pinned) {
-      // its own background, not one still washed by the last arrival
-      for (const animation of cell.getAnimations()) animation.cancel()
-      const background = getComputedStyle(cell).backgroundColor
-      cell.animate(
-        [{ backgroundColor: mixColors(background, color, FLASH_STRENGTH) }, {}],
-        timing,
-      )
+    row.style.setProperty(FLASH_COLOR_VARIABLE, toRgba(color, FLASH_STRENGTH))
+    const washed = [row, ...row.querySelectorAll(`[${PINNED_CELL_ATTRIBUTE}]`)]
+    for (const element of washed) {
+      element.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: FLASH_MS,
+        easing: 'ease-out',
+        pseudoElement: '::after',
+      })
     }
   }, [ref, arrival, color])
 }

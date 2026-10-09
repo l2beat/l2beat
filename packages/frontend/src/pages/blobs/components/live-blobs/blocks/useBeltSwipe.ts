@@ -7,30 +7,42 @@ import { type PointerEvent, useRef } from 'react'
 const SWIPE_FROM = 8
 
 interface Options {
-  /** The slot in the bay, looking back; undefined while live */
-  view: number | undefined
-  /** The live bay's slot, where a swipe starts from while live */
-  head: number | undefined
+  /** Where the belt stands now, as a view would put it, which a swipe starts from */
+  position: () => number
   /** Pixels from one block to the next along the belt */
   blockPitch: number | undefined
+  /** The furthest back the bay can go */
+  earliest: number | undefined
   /** Takes the belt to `slot`, or back to live for undefined */
   onView: (slot: number | undefined) => void
+  /**
+   * Holds the belt under the finger at `slot`, between two or on one, or
+   * lets it go for undefined
+   */
+  onHold: (slot: number | undefined) => void
 }
 
 /**
  * Lets a finger swipe the belt through the day, as a phone shows few racks
- * at once: the racks follow the finger, a block per rack it moves, so a
- * swipe right brings older blocks in and one left goes back towards live.
+ * at once: the racks stay under the finger as it moves, so a swipe right
+ * brings older blocks in and one left goes back towards live. Let go, the
+ * belt settles on the block nearest where it was left.
  * Only sideways moves are taken; the belt is `touch-action: pan-y`, so up
  * and down still scroll the page. A mouse is left alone, as it has the day
  * under the belt to drag.
  */
-export function useBeltSwipe({ view, head, blockPitch, onView }: Options) {
+export function useBeltSwipe({
+  position,
+  blockPitch,
+  earliest,
+  onView,
+  onHold,
+}: Options) {
   const swipe = useRef<{
     pointerId: number
     startX: number
     startY: number
-    /** The bay's slot when the finger went down */
+    /** Where the belt stood when the finger went down */
     from: number
     moved: boolean
   }>(undefined)
@@ -39,12 +51,12 @@ export function useBeltSwipe({ view, head, blockPitch, onView }: Options) {
 
   const onPointerDown = (event: PointerEvent<HTMLElement>) => {
     swiped.current = false
-    if (event.pointerType !== 'touch' || head === undefined) return
+    if (event.pointerType !== 'touch') return
     swipe.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
       startY: event.clientY,
-      from: view ?? head,
+      from: position(),
       moved: false,
     }
   }
@@ -66,11 +78,21 @@ export function useBeltSwipe({ view, head, blockPitch, onView }: Options) {
       // keeps the swipe going when the finger leaves the belt
       event.currentTarget.setPointerCapture(event.pointerId)
     }
-    onView(current.from - Math.round(across / blockPitch))
+    const under = Math.max(
+      current.from - across / blockPitch,
+      earliest ?? Number.NEGATIVE_INFINITY,
+    )
+    onHold(under)
+    // the block nearest the finger, for what goes with the view: the day's
+    // band under the belt, and the pages it loads
+    onView(Math.round(under))
   }
 
   const onPointerEnd = (event: PointerEvent<HTMLElement>) => {
-    if (swipe.current?.pointerId === event.pointerId) swipe.current = undefined
+    if (swipe.current?.pointerId !== event.pointerId) return
+    // let go, the belt eases onto that nearest block
+    if (swipe.current.moved) onHold(undefined)
+    swipe.current = undefined
   }
 
   /** Whether a click is a swipe's end, to be ignored; asked once per click */

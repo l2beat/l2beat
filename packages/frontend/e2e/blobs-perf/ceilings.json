@@ -1,13 +1,13 @@
 {
   "1440x1000": {
-    "restyledElements": 22592,
+    "restyledElements": 6678,
     "quietPaintsPerSecond": 166,
     "layouts": 585,
-    "beltPaints": 688,
+    "beltPaints": 622,
     "scriptMs": 1656
   },
   "402x874": {
-    "restyledElements": 20780,
+    "restyledElements": 14794,
     "quietPaintsPerSecond": 164,
     "layouts": 596,
     "beltPaints": 665,
