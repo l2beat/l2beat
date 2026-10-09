@@ -4,6 +4,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { CropOssification, ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiSummaryEntries'
 import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { getCropOssification } from '~/server/features/garden/getCropOssification'
 import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
@@ -78,13 +79,18 @@ export async function getGardenData(
     ],
   })
 
-  const [tvsBreakdown, depositCounts] = await Promise.all([
+  const [tvsBreakdown, depositCounts, defiTvl] = await Promise.all([
     get7dTvsBreakdown({
       type: 'projects',
       projectIds: projects.map((p) => p.id),
     }),
     getTotalDepositCounts(
       projects.filter((p) => p.privacyInfo).map((p) => p.id),
+    ),
+    getTotalValueLockedByProject(
+      projects.flatMap((p) =>
+        p.defiInfo ? [{ id: p.id, defiInfo: p.defiInfo }] : [],
+      ),
     ),
   ])
 
@@ -108,7 +114,7 @@ export async function getGardenData(
         subtitle: getSubtitle(project),
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         crops,
-        metric: getMetric(project, tvsBreakdown, depositCounts),
+        metric: getMetric(project, tvsBreakdown, depositCounts, defiTvl),
         ossification: await getCropOssification(project),
       })),
   )
@@ -170,12 +176,14 @@ async function getTotalDepositCounts(
   return counts
 }
 
-// Value secured where tracked; otherwise the deposit count, for a privacy
-// protocol whose payments are forwarded rather than escrowed.
+// Value secured where tracked, by L2BEAT or, for DeFi, the TVL source the
+// DeFi pages use; otherwise the deposit count, for a privacy protocol whose
+// payments are forwarded rather than escrowed.
 function getMetric(
   project: GardenProject,
   tvsBreakdown: SevenDayTvsBreakdown,
   depositCounts: Record<string, number>,
+  defiTvl: ReadonlyMap<string, number>,
 ): GardenMetric | undefined {
   const tvs = tvsBreakdown.projects[project.id]
   if (tvs) {
@@ -185,6 +193,10 @@ function getMetric(
       value: tvs.breakdown.total,
       change: tvs.change.total,
     }
+  }
+  const tvl = defiTvl.get(project.id)
+  if (tvl !== undefined) {
+    return { kind: 'usd', label: 'TVL', value: tvl }
   }
   const deposits = depositCounts[project.id]
   if (deposits !== undefined) {
