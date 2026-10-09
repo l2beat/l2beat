@@ -222,6 +222,7 @@ jobs:
             uses: ./.github/actions/setup-playwright
             with:
               package-dir: packages/frontend
+              webkit: 'true'
 
           - name: Build dependencies
             run: pnpm build:dependencies:frontend
