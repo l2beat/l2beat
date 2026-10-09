@@ -108,7 +108,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'warning',
         exposureShort: 'Notes are encrypted with elliptic-curve key exchange.',
         exposureContinued:
-          'A quantum computer decrypts every note sent to a 0zk address that was ever shared, broadcaster fee notes included.',
+          'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address that was ever shared, broadcaster fee notes included.',
         advice:
           'Share your 0zk address privately, with a fresh one per counterparty where you can.',
         interior: {

@@ -8,4 +8,3 @@ export type FinancialTransfersFilterInput =
 export type FinancialTransfersResult =
   BackendRouterOutputs['interop']['financials']['transfers']
 export type FinancialTransferRow = FinancialTransfersResult['transfers'][number]
-export type FinancialTransfersStats = FinancialTransfersResult['stats']

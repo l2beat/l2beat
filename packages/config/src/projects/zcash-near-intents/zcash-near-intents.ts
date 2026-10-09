@@ -13,6 +13,7 @@ export const zcashNearIntents: BaseProject = {
   slug: 'zcash-near-intents',
   name: 'Zcash via NEAR Intents',
   shortName: undefined,
+  aliases: ['Zodl', 'Zashi'],
   addedAt: UnixTime.fromDate(new Date('2026-09-15')),
   statuses: {
     yellowWarning:
@@ -68,25 +69,25 @@ export const zcashNearIntents: BaseProject = {
     anonymitySet: {
       type: 'not-applicable',
       description:
-        "The anonymity set is Zcash's Ironwood shielded pool, which lives outside the chains L2BEAT indexes. Payout and deposit amounts are public at the pool edge, so the effective set behind an exit is the pool entries (public on NEAR) that could match it in amount and time.",
+        "The set is Zcash's shielded pool, outside the chains L2BEAT indexes. Amounts are public at the pool edge, so an exit hides among the pool entries that could match it in amount and time.",
     },
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The Verifier can be upgraded at once by 4/5 NEAR Intents DAO members, the Zcash bridge by 3/5 Rainbow Bridge DAO members with no verified delay, and the Ethereum-side funds sit in an operator-controlled EOA, so there is no window to leave before a change takes effect.',
+        'The NEAR Intents multisig (3/5) upgrades the Verifier and the Rainbow Bridge multisig (3/5) the Zcash bridge, both instantly. The Ethereum funds sit in an EOA the operator controls.',
       walkawayTest: {
         passed: false,
         reason:
-          'Ethereum deposits and withdrawals are executed off-chain by the custodial bridge operator, and Zcash withdrawals need a whitelisted relayer to trigger the MPC signature. Without the operators, only Zcash deposits that were never credited can be refunded, after a two-day timelock.',
+          'The custodial bridge operator executes every Ethereum deposit and withdrawal offchain. For the Zcash light client on NEAR, anyone staking 1,000 NEAR can relay after seven days, unless the Rainbow Bridge multisig rejects them.',
       },
     },
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The Verifier, the custodial bridge token, the Zcash bridge and the Zodl wallet are open source, but the bridge back end, the 1Click API and the solver relay are closed services that every Ethereum leg depends on.',
+        'The Verifier, the bridge token, the Zcash bridge and Zodl are open source. The bridge back end, the 1Click API and the solver relay that every Ethereum leg needs are closed.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,

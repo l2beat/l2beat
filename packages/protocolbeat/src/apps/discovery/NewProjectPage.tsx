@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { createConfigFile } from '../../api/api'
 import { Button } from '../../components/Button'
 import { Checkbox } from '../../components/Checkbox'
@@ -41,7 +41,7 @@ export function NewProjectPage() {
       await queryClient.invalidateQueries({ queryKey: ['projects'] })
     },
     onSuccess: () => {
-      navigate(`/ui/p/${title}`)
+      void navigate(`/ui/p/${title}`)
     },
   })
 
@@ -53,7 +53,7 @@ export function NewProjectPage() {
   return (
     <>
       <Title title={`DiscoUI - ${!title ? 'New project' : title}`} />
-      <div className="mx-auto max-w-screen-md space-y-6 p-4">
+      <div className="mx-auto max-w-(--breakpoint-md) space-y-6 p-4">
         <div>
           <div className="mb-1 flex items-stretch text-sm">
             <div className="whitespace-nowrap">Project title</div>

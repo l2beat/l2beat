@@ -1,6 +1,5 @@
 import type { AnyRouter } from '@trpc/server'
 import {
-  type NodeHTTPCreateContextFnOptions,
   type NodeHTTPHandlerOptions,
   type NodeHTTPRequest,
   type NodeHTTPResponse,
@@ -19,10 +18,6 @@ declare module 'http' {
   }
 }
 
-export type CreateTrpcKoaContextOptions = NodeHTTPCreateContextFnOptions<
-  NodeHTTPRequest,
-  NodeHTTPResponse
->
 export type AdditionalMiddlewareOpts = { prefix?: `/${string}` }
 export type CreateKoaMiddlewareOptions<TRouter extends AnyRouter> =
   NodeHTTPHandlerOptions<TRouter, NodeHTTPRequest, NodeHTTPResponse> &

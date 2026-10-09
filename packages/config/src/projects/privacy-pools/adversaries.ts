@@ -132,7 +132,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'good',
       exposureShort:
-        'Nothing encrypted is written onchain and commitments are plain hashes, so a quantum computer recovers nothing.',
+        'Nothing encrypted is written onchain and commitments are hashes, so whoever breaks public-key cryptography recovers nothing from the chain.',
       exposureContinued: S.walletSignatureAccounts(),
       advice: S.notWalletSignature('from a seed phrase'),
       sources: [

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { AddressLandingPage } from '../../components/AddressLandingPage'
 import {
   type ChainAddress,
@@ -26,7 +26,7 @@ export function AddressSelectionPage() {
       document.getElementById('address')?.focus()
       return
     }
-    navigate(`/address/${address}`)
+    void navigate(`/address/${address}`)
   }
 
   return (

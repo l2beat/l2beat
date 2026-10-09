@@ -6,10 +6,6 @@ import { cn } from '~/utils/cn'
 
 const Sheet = SheetPrimitive.Root
 
-const SheetTrigger = SheetPrimitive.Trigger
-
-const SheetClose = SheetPrimitive.Close
-
 const SheetPortal = SheetPrimitive.Portal
 
 function SheetOverlay({
@@ -135,8 +131,6 @@ export {
   Sheet,
   SheetPortal,
   SheetOverlay,
-  SheetTrigger,
-  SheetClose,
   SheetContent,
   SheetHeader,
   SheetFooter,

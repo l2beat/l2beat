@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { getProjects } from '../../api/api'
 import type { ApiProjectEntry } from '../../api/types'
 import { ErrorState } from '../../components/ErrorState'
@@ -30,7 +30,7 @@ export function HomePage() {
   return (
     <>
       <Title title="DiscoUI - Home" />
-      <div className="mx-auto max-w-screen-md p-4">
+      <div className="mx-auto max-w-(--breakpoint-md) p-4">
         <h1 className="my-8 flex justify-center">
           <img
             className="w-[200px] md:w-[400px]"
@@ -187,10 +187,10 @@ function AllProjects(props: { search: string }) {
             const favoriteIndex = selectedIndex
             const otherIndex = selectedIndex - favoriteList.length
             if (favoriteList[favoriteIndex]?.name !== undefined) {
-              navigate(`/ui/p/${favoriteList[favoriteIndex].name}`)
+              void navigate(`/ui/p/${favoriteList[favoriteIndex].name}`)
             }
             if (otherList[otherIndex]?.name !== undefined) {
-              navigate(`/ui/p/${otherList[otherIndex].name}`)
+              void navigate(`/ui/p/${otherList[otherIndex].name}`)
             }
           }
           break
@@ -321,7 +321,7 @@ function ProjectList(props: {
         return (
           <li
             ref={props.itemRefs[i]}
-            className={`group flex items-center gap-2 p-1 ${isSelected ? 'rounded bg-coffee-700' : ''}`}
+            className={`group flex items-center gap-2 p-1 ${isSelected ? 'rounded-sm bg-coffee-700' : ''}`}
             key={i}
           >
             <button
@@ -378,11 +378,11 @@ function ProjectListSkeleton(props: { amount: number }) {
         return (
           <div key={i} className="flex flex-col gap-1">
             <li
-              className="h-5 animate-breath rounded bg-coffee-400/50"
+              className="h-5 animate-breath rounded-sm bg-coffee-400/50"
               style={{ width: `${projectNameWidth}%` }}
             />
             <li
-              className="h-2 animate-breath rounded bg-coffee-400/30"
+              className="h-2 animate-breath rounded-sm bg-coffee-400/30"
               style={{ width: `${chainsWidth}%` }}
             />
           </div>

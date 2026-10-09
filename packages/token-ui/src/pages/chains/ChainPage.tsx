@@ -2,7 +2,7 @@ import type { ChainRecord } from '@l2beat/token-backend'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -59,7 +59,7 @@ function ChainView({ chain }: { chain: ChainRecord }) {
         queryClient.invalidateQueries(trpc.chains.getAll.queryFilter())
         // If name changed, navigate to new URL
         if (vars.update.name && vars.update.name !== chain.name) {
-          navigate(`/chains/${vars.update.name}`)
+          void navigate(`/chains/${vars.update.name}`)
         } else {
           queryClient.invalidateQueries(
             trpc.chains.getByName.queryFilter(chain.name),
@@ -79,7 +79,7 @@ function ChainView({ chain }: { chain: ChainRecord }) {
       onSuccess: () => {
         toast.success('Chain deleted successfully')
         queryClient.invalidateQueries(trpc.chains.getAll.queryFilter())
-        navigate('/chains')
+        void navigate('/chains')
       },
       onError: (error: { message?: string }) => {
         toast.error(error.message || 'Failed to delete chain')

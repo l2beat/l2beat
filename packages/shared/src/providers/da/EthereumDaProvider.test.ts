@@ -268,13 +268,15 @@ describe(EthereumDaProvider.name, () => {
               logsBloom: '0x0',
               transactions: [],
             }),
-          getTransactionReceipt: mockFn().resolvesTo({
-            blockHash: '0xhash1',
-            logs: [
-              { topics: ['0xtopic1', '0xtopic2'] },
-              { topics: ['0xtopic3'] },
-            ],
-          }),
+          getTransactionReceipts: mockFn().resolvesTo([
+            {
+              blockHash: '0xhash1',
+              logs: [
+                { topics: ['0xtopic1', '0xtopic2'] },
+                { topics: ['0xtopic3'] },
+              ],
+            },
+          ]),
           getLogs: mockFn().resolvesTo([]),
         })
         const provider = new EthereumDaProvider(
@@ -310,9 +312,10 @@ describe(EthereumDaProvider.name, () => {
             batches: [],
           },
         ])
-        expect(mockRpcClient.getTransactionReceipt).toHaveBeenOnlyCalledWith(
+        // block 2 has no blob transaction, so no receipt of it is asked for
+        expect(mockRpcClient.getTransactionReceipts).toHaveBeenOnlyCalledWith([
           '0xblobs',
-        )
+        ])
         expect(mockRpcClient.getLogs).not.toHaveBeenCalled()
       })
 
@@ -337,10 +340,9 @@ describe(EthereumDaProvider.name, () => {
                 },
               ],
             }),
-            getTransactionReceipt: mockFn().resolvesTo({
-              blockHash: '0xorphaned',
-              logs: [],
-            }),
+            getTransactionReceipts: mockFn().resolvesTo([
+              { blockHash: '0xorphaned', logs: [] },
+            ]),
           }),
           'ethereum',
         )

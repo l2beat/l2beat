@@ -1,4 +1,5 @@
 import type {
+  Milestone,
   PrivacyAttribute,
   PrivacyCategory,
   PrivacyExitWindow,
@@ -77,6 +78,7 @@ export interface PrivacyProjectDetails {
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
+  milestones: Milestone[]
   trackedOn: ProjectIconListItem[]
   assets: PrivacyAsset[]
   summary: {
@@ -301,6 +303,9 @@ export async function getPrivacyProjectDetails(
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],
+    milestones: [...(project.milestones ?? [])].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ),
     trackedOn,
     assets: orderedAssets,
     summary: {

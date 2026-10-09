@@ -109,7 +109,7 @@ function DepthSelector(props: {
             commit(e.target.value)
           }}
           onBlur={(e) => commit(e.target.value)}
-          className="w-20 border border-coffee-400/30 bg-coffee-700 px-2 py-0.5 text-sm tabular-nums focus:outline-none focus:ring-1 focus:ring-autumn-300"
+          className="w-20 border border-coffee-400/30 bg-coffee-700 px-2 py-0.5 text-sm tabular-nums focus:outline-hidden focus:ring-1 focus:ring-autumn-300"
         />
       </label>
       <div className="pl-0 font-light text-coffee-400 text-xs">

@@ -121,8 +121,56 @@ const coprocessorSignerCount = discovery.getContractValue<string[]>(
   'InputVerifier',
   'getCoprocessorSigners',
 ).length
+const priorityCoprocessorTxSender =
+  discovery.getContractValue<ChainSpecificAddress>(
+    'GatewayConfig',
+    'getPriorityCoprocessorTxSender',
+  )
+const priorityCoprocessorMode =
+  ChainSpecificAddress.address(priorityCoprocessorTxSender) ===
+  EthereumAddress.ZERO
+    ? 'off'
+    : 'on'
+// Shamir sharing of degree t: t + 1 operators reconstruct the FHE key.
+const kmsKeyThreshold =
+  discovery.getContractValue<number>('ProtocolConfig', 'getMpcThreshold') + 1
 const multisigAStats = discovery.getMultisigStats('ZamaGovMultisigA')
 const multisigBStats = discovery.getMultisigStats('ZamaGovMultisigB')
+const gatewaySafeStats = discovery.getMultisigStats('SafeL2')
+const aclPauserCount = discovery.getContractValue<string[]>(
+  'PauserSet',
+  'pausers',
+).length
+const gatewayPauserCount = discovery.getContractValue<string[]>(
+  'GatewayPauserSet',
+  'pausers',
+).length
+
+function formatZama(wei: string): string {
+  return (Number(BigInt(wei) / 10n ** 14n) / 10_000).toString()
+}
+const inputPrice = formatZama(
+  discovery.getContractValue<string>(
+    'ProtocolPayment',
+    'getInputVerificationPrice',
+  ),
+)
+const decryptionPrice = formatZama(
+  discovery.getContractValue<string>(
+    'ProtocolPayment',
+    'getPublicDecryptionPrice',
+  ),
+)
+assert(
+  decryptionPrice ===
+    formatZama(
+      discovery.getContractValue<string>(
+        'ProtocolPayment',
+        'getUserDecryptionPrice',
+      ),
+    ),
+  'Public and user decryption prices differ: update the fees text.',
+)
 
 const privacyTokens: ProjectPrivacyToken[] = trackedWrappers.map(
   ({
@@ -188,8 +236,12 @@ export const zamaCw: BaseProject = {
     detailedDescription: readProjectMarkdown('zama-cw', 'detailedDescription', {
       kmsThreshold,
       kmsSignerCount,
+      kmsKeyThreshold,
       coprocessorThreshold,
       coprocessorSignerCount,
+      priorityCoprocessorMode,
+      inputPrice,
+      decryptionPrice,
     }),
     links: {
       websites: ['https://www.zama.org'],
@@ -217,24 +269,24 @@ export const zamaCw: BaseProject = {
     anonymitySet: {
       type: 'not-applicable',
       description:
-        'Zama confidential tokens hide amounts, but sender and receiver addresses remain public and are not mixed in a shared anonymity set.',
+        'Only amounts are hidden. Every transfer names its sender and recipient.',
     },
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The confidential token contracts and system contracts are upgradeable without an onchain delay, so users do not get a guaranteed withdrawal window before changes take effect.',
+        'The governance multisigs upgrade the contracts instantly, before users can leave.',
       walkawayTest: {
         passed: false,
-        reason: `Only KMS ${kmsThreshold}/${kmsSignerCount} multisig members can decrypt FHE ciphertext. Also, FHE coprocessor operator is currently essential for protocol liveness.`,
+        reason: `Every unwrap needs a decryption signed by ${kmsThreshold} of ${kmsSignerCount} KMS operators, and every input needs Zama's coprocessor.`,
       },
     },
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The smart contracts are source-available, but users also rely on offchain FHE execution and threshold decryption services whose outputs are accepted onchain through signature verification. The offchain data cannot currently be fully reproduced from Ethereum DA.',
+        "The contracts, the SDK and the KMS and coprocessor sources are public. Zama's app source is unpublished.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,
@@ -243,14 +295,14 @@ export const zamaCw: BaseProject = {
       {
         ...PRIVACY_ATTRIBUTES.defi,
         description:
-          'Interop with DeFi (swaps, vaults) from within the confidential token.',
+          'Interop with DeFi vaults from within the confidential token.',
       },
     ],
-    adversaries: zamaCwAdversaries,
+    adversaries: zamaCwAdversaries(kmsKeyThreshold, kmsSignerCount),
     quantumResistant: true,
     riskSummary: readProjectMarkdown('zama-cw', 'riskSummary', {
-      kmsThreshold,
       kmsSignerCount,
+      kmsKeyThreshold,
       coprocessorThreshold,
       coprocessorSignerCount,
     }),
@@ -258,6 +310,9 @@ export const zamaCw: BaseProject = {
       content: readProjectMarkdown('zama-cw', 'upgradesAndGovernance', {
         multisigAStats,
         multisigBStats,
+        gatewaySafeStats,
+        aclPauserCount,
+        gatewayPauserCount,
       }),
     },
   },

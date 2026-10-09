@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { Area, AreaChart } from 'recharts'
 import type {
@@ -32,6 +33,7 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   project?: ChartProject
+  milestones?: Milestone[]
 }
 
 const chartMeta = {
@@ -47,6 +49,7 @@ export function TvsValueChart({
   syncedUntil,
   isLoading,
   project,
+  milestones,
 }: Props) {
   return (
     <ChartContainer
@@ -54,6 +57,7 @@ export function TvsValueChart({
       meta={chartMeta}
       isLoading={isLoading}
       project={project}
+      milestones={milestones}
     >
       <AreaChart responsive data={data} margin={{ top: 20 }}>
         <defs>

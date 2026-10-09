@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { useTerminalStore } from '../panel-terminal/store'
 
 export function RediscoverPrompt() {
@@ -22,7 +22,7 @@ export function RediscoverPrompt() {
         Rediscovering should fix this issue.
       </div>
       <button
-        className="mt-2 rounded bg-autumn-300 px-6 py-2 font-medium text-black transition-colors hover:bg-autumn-300 disabled:opacity-50"
+        className="mt-2 rounded-sm bg-autumn-300 px-6 py-2 font-medium text-black transition-colors hover:bg-autumn-300 disabled:opacity-50"
         onClick={() => {
           setDevMode(true)
           discover(project).then(() => {

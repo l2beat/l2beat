@@ -77,10 +77,12 @@ export async function getDaTrackingConfig(
             ['ETHEREUM_LIVE_BLOBS_RPC_URL', 'ETHEREUM_RPC_URL'],
             await ethereumPublicRpcUrl(ps),
           ),
-          // The head is asked for every quarter second until a slot's block comes
+          // The head is asked for every tenth of a second until a slot's block
+          // comes, then the block and its receipts. The limiter spaces calls
+          // evenly, so the block's call waits out the gap after the head's
           callsPerMinute: env.integer(
             'ETHEREUM_LIVE_BLOBS_RPC_CALLS_PER_MINUTE',
-            600,
+            1200,
           ),
         },
       }

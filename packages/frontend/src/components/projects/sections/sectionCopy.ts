@@ -124,7 +124,7 @@ export function l3RisksShownText(isCombined: boolean) {
 export const EIGENLAYER_DATA_SOURCE = 'API provided by EigenLayer'
 
 export function anonymitySetHistoricDescription(windowDays: number) {
-  return `How many unique addresses you could have blended in with if you withdrew on a particular day after depositing during the previous ${windowDays} days. This metric is a proxy for the historic anonymity set and shows how it developed over time.`
+  return `How many unique depositors you could have blended in with if you withdrew on a particular day after depositing during the previous ${windowDays} days. This metric is a proxy for the historic anonymity set and shows how it developed over time.`
 }
 
 export const ANONYMITY_SET_LOOKS_BACKWARDS_NOTE =
@@ -141,7 +141,7 @@ export function anonymitySetCoverageNote(
 }
 
 export function anonymitySetByHoldingDurationDescription(windowDays: number) {
-  return `An estimate of how many unique addresses you blend in with, depending on how long you leave your deposit in the pool. It is based on historic data of past deposits: each point counts depositors from the preceding period, so holding for up to ${windowDays} days effectively means blending in with everyone who deposited during the last ${windowDays} days.`
+  return `An estimate of how many unique depositors you blend in with, depending on how long you leave your deposit in the pool. It is based on historic data of past deposits: each point counts depositors from the preceding period, so holding for up to ${windowDays} days effectively means blending in with everyone who deposited during the last ${windowDays} days.`
 }
 
 export function gardenVerdictText(listing: GardenListing) {

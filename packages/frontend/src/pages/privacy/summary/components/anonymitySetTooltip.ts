@@ -32,11 +32,11 @@ export function getAnonymitySetSteps(
   const firstStep =
     anonymitySet.bucketType === 'denomination'
       ? `Deposit into the ${anonymitySet.formattedAmount} ${anonymitySet.token} ${projectName} pool on ${chain}.`
-      : `Deposit at most ${anonymitySet.formattedAmount} ${anonymitySet.token} into ${projectName} on ${chain}.`
+      : `Deposit into ${projectName} on ${chain}.`
   const finalStep =
     anonymitySet.bucketType === 'denomination'
       ? 'Withdraw to an unlinkable address.'
-      : 'Withdraw to an unlinkable address. Make sure the withdrawal amount is not equal to the deposit amount, leaving a small amount still deposited.'
+      : `Withdraw at most ${anonymitySet.formattedAmount} ${anonymitySet.token} to an unlinkable address, and not exactly your deposit amount.`
 
   return [
     firstStep,

@@ -28,10 +28,10 @@ const PLACEMENTS = {
     linkClassName: undefined,
     drawerTriggerClassName: 'flex size-full items-center justify-center',
     // The trigger is the rosette alone.
-    label: 'Privacy risk analysis',
+    label: 'Privacy assessment',
     // The reasons appear nowhere else on the summary page.
     contentInHtml: true,
-    hint: 'Click on the rosette to visit the detailed pages for more info.',
+    hint: 'Click the rosette for the full assessment.',
     drawerLinkLabel: 'Open project page',
     isSectionOnPage: false,
   },
@@ -108,9 +108,9 @@ export function PrivacyRosetteTrigger({
           onCloseAutoFocus={onCloseAutoFocus}
         >
           <DrawerHeader className="sr-only">
-            <DrawerTitle>Privacy risk analysis</DrawerTitle>
+            <DrawerTitle>Privacy assessment</DrawerTitle>
             <DrawerDescription>
-              How private the protocol stays against each adversary.
+              Whether the privacy promise holds against each adversary.
             </DrawerDescription>
           </DrawerHeader>
           {analysis}
