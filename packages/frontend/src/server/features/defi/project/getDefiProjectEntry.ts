@@ -22,6 +22,7 @@ import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
 } from '../resolveDefiDependencies'
+import { hasDefiProjectPage } from './hasDefiProjectPage'
 
 export interface ProjectDefiEntry {
   id: ProjectId
@@ -67,7 +68,7 @@ export async function getDefiProjectEntry(
     ],
   })
 
-  if (!project) {
+  if (!project || !hasDefiProjectPage(project)) {
     return undefined
   }
 
