@@ -513,7 +513,7 @@ function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
       <div
         id={anchor}
         tabIndex={-1}
-        className="group scroll-mt-4 rounded focus:outline focus:outline-1 focus:outline-blue-400"
+        className="group scroll-mt-4 rounded-sm focus:outline-1 focus:outline-blue-400 focus:outline-solid"
       >
         {nameElement}
         <DisplayAddress

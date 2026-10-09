@@ -32,11 +32,10 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
+    "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.1",
     "abitype": "^1.0.6",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.14",
+    "tailwindcss": "^4.3.3",
     "vite": "^8.3.0"
   }
 }

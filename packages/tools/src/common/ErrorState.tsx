@@ -11,7 +11,7 @@ export function ErrorState() {
         <div className="mb-2 text-red-500">
           [{new Array(loadingBarWidth).fill('X').join('')}]
         </div>
-        <div className="break-words text-red-500 text-xs">
+        <div className="wrap-break-word text-red-500 text-xs">
           Report this error to the L2BEAT team.
         </div>
       </div>
