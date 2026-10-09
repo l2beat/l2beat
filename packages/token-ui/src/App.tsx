@@ -77,3 +77,4 @@ export function App() {
     </TRPCReactProvider>
   )
 }
+// Coolify stacked preview end-to-end test, do not merge
