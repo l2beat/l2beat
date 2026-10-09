@@ -208,7 +208,7 @@ function BlobPulse({
         {view === undefined ? (
           <span className="max-md:hidden">
             Average blobs per block every {BAR_MINUTES} minutes, against the
-            target (dashed), above which the blob fee rises. Drag to look back
+            target (dashed). Drag to look back
           </span>
         ) : (
           // on a phone, the time alone fits between the ends
