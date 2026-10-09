@@ -250,7 +250,7 @@ export const railgun: BaseProject = {
       value: formatSeconds(executionStartOffset),
       sentiment: 'warning',
       orderHint: executionStartOffset,
-      description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before they can execute, giving users time to unshield funds if they do not approve the change.`,
+      description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before execution, so users can unshield before a change they reject.`,
       walkawayTest: { passed: true },
     },
     reproducibility: {
@@ -265,8 +265,12 @@ export const railgun: BaseProject = {
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
-    adversaries: railgunAdversaries,
-    riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
+    adversaries: railgunAdversaries(
+      formatSeconds(executionStartOffset, { fullUnit: true }),
+    ),
+    riskSummary: readProjectMarkdown('railgun', 'riskSummary', {
+      executionDelay: formatSeconds(executionStartOffset, { fullUnit: true }),
+    }),
     upgradesAndGovernance: {
       content: readProjectMarkdown('railgun', 'upgradesAndGovernance'),
       governanceInfo: {

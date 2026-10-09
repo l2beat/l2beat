@@ -1,3 +1,4 @@
+import type { Project } from '@l2beat/config'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 
@@ -7,6 +8,7 @@ export interface HomeProjectCounts {
   interopProtocols: number
   privacy: number
   dataAvailability: number
+  blobs: number
   zkCatalog: number
   ecosystems: number
 }
@@ -20,6 +22,7 @@ export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
     ecosystems,
     privacy,
     interopProtocols,
+    daTrackedProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -45,6 +48,10 @@ export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
     ps.getProjects({
       where: ['interopConfig'],
     }),
+    ps.getProjects({
+      select: ['daTrackingConfig'],
+      whereNot: ['archivedAt'],
+    }),
   ])
 
   const interopChains = getInteropChains().filter((chain) => !chain.isUpcoming)
@@ -55,7 +62,14 @@ export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
     interopProtocols: interopProtocols.length,
     privacy: privacy.length,
     dataAvailability: daLayers.length + customDa.length,
+    blobs: daTrackedProjects.filter(postsToEthereum).length,
     zkCatalog: zkProjects.length,
     ecosystems: ecosystems.length,
   }
+}
+
+function postsToEthereum(project: Project<'daTrackingConfig'>) {
+  return project.daTrackingConfig.some(
+    (config) => config.type === 'ethereum' && config.untilBlock === undefined,
+  )
 }

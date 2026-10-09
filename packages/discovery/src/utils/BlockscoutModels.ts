@@ -1,15 +1,11 @@
 import { EthereumAddress, Hash256, type json } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
-export type BlockscoutSuccessResponse = v.infer<
-  typeof BlockscoutSuccessResponse
->
 const BlockscoutSuccessResponse = v.object({
   message: v.literal('OK'),
   result: v.unknown(),
 })
 
-export type BlockscoutErrorResponse = v.infer<typeof BlockscoutErrorResponse>
 const BlockscoutErrorResponse = v.object({
   message: v.literal('NOTOK'),
   result: v.string(),

@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xdf75e523538932e3ffd982720e6f36c49afb21f3
+
+# Diff at Thu, 08 Oct 2026 12:03:29 GMT:
+
+- id: 4cedd31d
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ea0f844d485c4192528096e99c5cace57e234c4c block: 1789919089
+- current timestamp: 1791455017
+
+## Description
+
+Upgraded Linea type 1 verifier, it is not yet reproduced from the sources.
+
+Also, because of ETH withdrawals from Linea, withdraw reserves are below the limits. Staking stops and anyone can unstake some Lido-staked positions.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierFull (eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.1:
+-        "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77"
++        "eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: True when the LineaRollup ETH balance (the withdrawal reserve backing L2 exits) is below the effective minimum reserve. While true, no more ETH can be moved to the YieldManager or staked, and anyone can permissionlessly trigger unstaking from yield providers (with beacon chain proofs) and replenish the reserve up to the target. Refilling a deficit depends on beacon chain withdrawal latency.
++++ severity: MEDIUM
+      values.isWithdrawalReserveBelowMinimum:
+-        false
++        true
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierFull (eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...rifierFull-eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532.sol} | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789919089 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierFull (eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77) [N/A] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
 Generated with discovered.json: 0xf0baf8ad4317589f252201c23ca7883a465ad374
 
 # Diff at Sun, 04 Oct 2026 05:55:33 GMT:

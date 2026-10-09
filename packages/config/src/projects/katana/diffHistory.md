@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x48c73b80ebd60653d03e3fe758ffbc8cd65003c0
+
+# Diff at Wed, 07 Oct 2026 14:48:12 GMT:
+
+- id: e16b0e3f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1791217041
+- current timestamp: 1791217041
+
+## Description
+
+The L1 counterpart fields of the L2CrossDomainMessenger and L2StandardBridge are formatted as Ethereum addresses (opstack/Layer2 template change), which removes the L1 addresses previously indexed as L2 EOAs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791217041 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (katana:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      values.l1CrossDomainMessenger:
+-        "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
++        "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
+      values.OTHER_MESSENGER:
+-        "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
++        "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
+      values.otherMessenger:
+-        "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
++        "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (katana:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      values.l1TokenBridge:
+-        "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC"
++        "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC"
+      values.OTHER_BRIDGE:
+-        "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC"
++        "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC"
+      values.otherBridge:
+-        "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC"
++        "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
 Generated with discovered.json: 0x67743923cef504405123c9da07249775fe3c935d
 
 # Diff at Mon, 05 Oct 2026 16:18:28 GMT:

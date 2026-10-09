@@ -1,4 +1,4 @@
-import { createBrowserRouter, type RouteObject } from 'react-router-dom'
+import { createBrowserRouter, type RouteObject } from 'react-router'
 import { NotFoundPage } from './discovery/NotFoundPage'
 
 export interface AppModule {

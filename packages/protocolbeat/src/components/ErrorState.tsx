@@ -1,7 +1,7 @@
 export function ErrorState() {
   return (
     <div className="flex min-h-full w-full flex-col items-center justify-center">
-      <div className="flex max-h-[100px] w-full flex-col items-center justify-center gap-1 font-mono text-aux-red/450 italic">
+      <div className="flex max-h-[100px] w-full flex-col items-center justify-center gap-1 font-mono text-aux-red italic">
         <HeartCrack />
         Something went wrong
       </div>

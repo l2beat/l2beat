@@ -284,6 +284,7 @@ export interface BaseProject {
   /** Ossification perimeter and history, for projects with a critical
    *  contract in their discovery config. */
   ossificationHistory?: OssificationHistory
+  auditCoverage?: ProjectAuditCoverage
 
   // tags
   archivedAt?: UnixTime
@@ -1311,12 +1312,18 @@ export interface PrivacyAdversaryAssessment {
    */
   sentiment: PrivacyAdversarySentiment
   /**
-   * What this adversary learns beyond the public observer and what stays
-   * hidden, in one or two plain sentences; the first sentence carries the
-   * reason for the sentiment. Never refers to other cells or quotes live
-   * numbers; the tracked anonymity set stands in for them.
+   * The reason for the sentiment, in one plain sentence. Shown alone in the
+   * rosette tooltip, and followed by `exposureContinued` on the project page.
+   * Never refers to other cells or quotes live numbers; the tracked anonymity
+   * set stands in for them.
    */
-  exposure: string
+  exposureShort: string
+  /**
+   * The rest of what this adversary learns beyond the public observer and
+   * what stays hidden, under the same rules. Omit when `exposureShort`
+   * says it all.
+   */
+  exposureContinued?: string
   /**
    * How a user keeps it private, when that is conditional (the cell is at
    * risk, or a field is). Omit when nothing the user does changes the result.
@@ -2320,6 +2327,76 @@ export const TvsTokenSchema = v.object({
     })
     .optional(),
 })
+
+const LineSpan = v.tuple([v.number(), v.number()])
+
+const AuditCoverageUnit = v.object({
+  name: v.string(),
+  kind: v.enum(['contract', 'abstract', 'library', 'interface', 'function']),
+  lines: v.number(),
+  status: v.enum(['identical', 'differs', 'none']),
+  audited: v
+    .object({
+      object: v.string(),
+      lines: LineSpan,
+      name: v.string().optional(),
+    })
+    .optional(),
+  reports: v.array(v.string()).optional(),
+  findings: v.record(v.string(), v.array(v.string())).optional(),
+  added: v.array(LineSpan).optional(),
+  removed: v.array(v.tuple([v.number(), v.number(), v.number()])).optional(),
+  covered: v.number().optional(),
+})
+
+const AuditCoverageContract = v.object({
+  name: v.string(),
+  critical: v
+    .union([
+      v.literal(true),
+      v.object({
+        sinceTimestamp: v.number().optional(),
+        untilTimestamp: v.number().optional(),
+      }),
+    ])
+    .optional(),
+  source: v.string(),
+  implementations: v.record(v.string(), v.string()).optional(),
+})
+
+export const ProjectAuditCoverageSchema = v.object({
+  schema_version: v.literal('1.0.0'),
+  project: v.string(),
+  dataset: v.object({ repository: v.string(), commit: v.string() }),
+  discoveredAt: v.number(),
+  collections: v.record(
+    v.string(),
+    v.object({ name: v.string(), kind: v.enum(['project', 'library']) }),
+  ),
+  reports: v.record(
+    v.string(),
+    v.object({
+      collections: v.array(v.string()),
+      title: v.string(),
+      auditor: v.string(),
+      date: v.string().optional(),
+      document: v.string(),
+    }),
+  ),
+  auditedFiles: v.record(
+    v.string(),
+    v.object({
+      repository: v.string(),
+      commit: v.string(),
+      path: v.string(),
+      blob: v.string(),
+    }),
+  ),
+  units: v.record(v.string(), AuditCoverageUnit),
+  flats: v.record(v.string(), v.array(v.tuple([v.string(), v.number()]))),
+  contracts: v.record(v.string(), AuditCoverageContract),
+})
+export type ProjectAuditCoverage = v.infer<typeof ProjectAuditCoverageSchema>
 
 export const ProjectTvsConfigSchema = v.object({
   projectId: v.string(),

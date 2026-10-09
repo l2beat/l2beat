@@ -4,6 +4,7 @@ on:
   pull_request:
 
 permissions:
+  contents: read
   pull-requests: write # For commenting on PRs
 
 jobs:
@@ -14,31 +15,52 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       TURBO_API: ${{ secrets.TURBO_API_RO }}
+    # Unlike diff.sh, main gets its own worktree so both sides build at once.
+    # The API gives the merge base, which spares a full-history checkout.
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
+      - parallel:
+          - name: Find merge base with main
+            id: merge-base
+            env:
+              GH_TOKEN: ${{ github.token }}
+            run: |
+              sha=$(gh api "repos/${{ github.repository }}/compare/main...${{ github.event.pull_request.head.sha }}" --jq .merge_base_commit.sha)
+              echo "sha=$sha" >> $GITHUB_OUTPUT
 
-      - name: Fetch branches
-        run: git fetch origin main:main
+          - name: Checkout
+            uses: actions/checkout@v6
+            with:
+              ref: ${{ github.event.pull_request.head.sha }}
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
+      - name: Check out main into a worktree
+        id: main-worktree
+        background: true
+        env:
+          SHA: ${{ steps.merge-base.outputs.sha }}
+        run: |
+          git fetch --depth 1 origin $SHA
+          git worktree add --detach $RUNNER_TEMP/config-diff-main $SHA
 
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'pnpm'
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Wait for main worktree
+        wait: main-worktree
+
+      - parallel:
+          - name: Build main config
+            working-directory: ${{ runner.temp }}/config-diff-main
+            run: bash $GITHUB_WORKSPACE/packages/config/scripts/diff/snapshot.sh main
+
+          - name: Build PR config
+            run: bash ./packages/config/scripts/diff/snapshot.sh pr
 
       - name: Compute diff
         id: diff
+        working-directory: packages/config
         run: |
-          bash ./packages/config/scripts/diff/diff.sh
+          mkdir -p /tmp/compare/out
+          pnpm exec tsx scripts/diff/index.ts /tmp/compare/out/index.html /tmp/compare/out/index-llms.txt
           echo "has_changes=$(cat /tmp/compare/out/index.html | grep -c "No changes detected" || true)" >> $GITHUB_OUTPUT
 
       - name: Publish diff

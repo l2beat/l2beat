@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {

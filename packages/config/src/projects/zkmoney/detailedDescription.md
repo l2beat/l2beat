@@ -1,38 +1,40 @@
-Internal payments are hidden, but names, deposits and withdrawals are public. The first payment to a new contact reveals the recipient. The first sponsored transaction after registration reveals the sender's account.
+zk.money is a private DAI wallet on Aztec, with funds escrowed in an Ethereum portal. Payments inside are hidden, while names, deposits and withdrawals are public.
 
-Every withdrawal and refund needs a proof and a live AWS Nitro enclave. Operations are encrypted to the enclave (TEE), which decrypts and reads them. Its approved binary has not been reproduced from the published source. Aztec Labs controls zk.money names and the released wallets' contract configuration.
+Every withdrawal and refund needs a zk proof and a signature from a live AWS Nitro enclave (TEE). The enclave decrypts and reads the operations it handles. Aztec Labs controls zk.money names and the contract lists the released wallets use.
 
-### Multiproofs and exits
-The portal releases funds only after Aztec proves the withdrawal message (zk proof of validity) and any one registered enclave signer co-signs it (TEE signature). Stealing escrowed funds requires both layers to fail while privacy leaks depend on either. Anyone can register an enclave running the approved image with a fresh AWS attestation.
+### Multiproof system
+The portal releases funds only after Aztec proves the withdrawal message and one registered enclave signer co-signs it. Stealing escrowed funds requires both layers to fail, while a failure of either breaks privacy.
 
-If Aztec governance changes its canonical rollup, anyone can freeze the portal. Deposits stop and refundable ownership is fixed at the last proven checkpoint. Later L2 transfers do not change it. Withdrawals and refunds still need an enclave. Refunds expose note or deposit amounts on Ethereum and use proofs without zero knowledge.
+If Aztec Network governance changes its canonical rollup, anyone can freeze the zk.money portal, see [upgrades and governance](#upgrades-and-governance). Refunds then publish note or deposit amounts on Ethereum and use proofs without zero knowledge.
 
-### Wallet
-- **Hosted:** loads code from zk.money on every visit. Whoever controls deployment can read viewing keys and request harmful passkey signatures. Passkey prompts do not show the operation.
-- **Desktop:** runs local code but fetches contract addresses from two unsigned Aztec Labs lists. Substituting them can redirect future deposits and payments.
-- **Independent operation:** requires modifying the desktop build to pin verified addresses, remove screening and serve it under auth.zk.money. Users can submit Ethereum transactions themselves and run the approved enclave on AWS. New names still require Aztec Labs' signature. L2BEAT has not run this setup.
+### Wallets
+The privacy ratings assume [zk.money Desktop v0.1.0](https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.1.0). There also is a hosted wallet without published source and the potential to build your independent wallet:
+- **Desktop:** runs local code but fetches contract addresses from two unsigned Aztec Labs lists. The wallet checks the [profile](https://github.com/aztec-labs-eng/zkmoney-public/blob/f04743f5d57d1b89f9190cad0f6affd28b0793f2/packages/config-client/src/toContractServiceConfig.ts#L41-L68) against the [manifest](https://github.com/aztec-labs-eng/zkmoney-public/blob/f04743f5d57d1b89f9190cad0f6affd28b0793f2/packages/core/src/oxide/index.ts#L108-L170), and both come from Aztec Labs. Substituting them can redirect future deposits and payments.
+- **Hosted:** loads code from zk.money on every visit, which makes its owner an insider. It can read viewing keys and request harmful passkey signatures behind prompts that hide the operation.
+- **Independent operation:** would allow a desktop build modified to pin verified addresses, remove screening and serve it under auth.zk.money. Users could submit Ethereum transactions themselves and run the approved enclave on AWS. New names still require Aztec Labs' signature. This setup is untested.
 
-Both released wallets allow custom Aztec, Ethereum and enclave endpoints. Their passkeys belong to auth.zk.money, which must authorize wallet.zk.money on every use. Onchain contracts do not check the signature's origin. A modified wallet served under auth.zk.money would bypass this dependency.
+### Deposits
+Users fund L1 deposit addresses called SIPAs, and anyone can sweep them into the Ethereum portal. USDC and USDT are swapped to DAI through Curve. After fees, DAI stays in escrow and an Inbox message credits private notes on Aztec L2. Reusing a SIPA links its deposits.
 
-Wallets use XMTP, an end-to-end encrypted messaging network, to confirm contacts added by QR code or link and to send payment requests. Messages are encrypted, but each inbox is publicly tied to a name, so XMTP's servers can see which names talk to each other.
+### Names
+Tags like l2beat.zk.money publicly map to Aztec addresses and keys on Ethereum. They have two uses:
+- **L1 deposits:** any Ethereum wallet with ENS offchain lookups can pay l2beat.zk.money. The lookup returns a deposit address from the recipient's chosen resolver operator.
+- **L2 transfers:** zk.money users add a tag as a contact, and the wallet reads its Aztec address from the onchain registry to send private transfers.
 
-The browser stores the master key unencrypted until sign-out, and viewing keys and decrypted notes until local data is cleared. All keys except the spending key derive from the master key (privacy is lost if the master key is leaked).
+Claims require the domain owner's signature from a closed-source server with a name blocklist. The released wallet requires a registered name to access an account on a new device. Wallets use XMTP, an end-to-end encrypted messaging network, to confirm contacts added by QR code or link and to send payment requests.
 
-### Deposits and fees
-Users fund deposit addresses called SIPAs. Anyone can sweep them into the Ethereum portal. USDC and USDT are swapped to DAI through Curve. After fees, DAI stays in escrow and an Inbox message credits private notes on Aztec L2. SIPAs can be reused, at the expense of user privacy.
+### Resolver
+For ENS lookups, the resolver operator derives each deposit address from a secret shared with the recipient and announces it to them on L2. The wallets derive their own deposit addresses from the same shared secret, so the operator can link them. The onchain Resolver checks a zk proof on every lookup, which stops the operator from redirecting payments. Users can choose a custom operator for name payments.
 
-A sweep pays {{depositFee}}, or {{registrationSweepFee}} when claiming a name. Registration costs {{registrationFee}} by default, including its sweep fee. The domain owner (onchain role in NameRegistry) can sign custom prices and add fee beneficiaries. Users select a beneficiary in their registration intent.
+### Compliance
+The wallet sends Ethereum addresses to Predicate through zk.money for screening, which funding a deposit SIPA directly avoids. The relayer screens token movements against OFAC and optionally Predicate, and self-submitted sweeps and withdrawals skip it.
 
-The portal takes {{fpcFundingCut}} from each deposit and ordinary withdrawal to sponsor Aztec fees. Sponsorship requires a registered name or a voucher from a registered account. An empty fee-paying contract or fees above its allowance stall the released wallet. Modified code can pay with the account's own Fee Juice (potential privacy implications). Deposits share a {{depositLimit}} capacity, refilling over {{depositRefillTime}}. Deposit, payment and withdrawal transaction amounts are capped at {{transactionAmountCap}} each.
+The name resolver screens deposit addresses and funders against OFAC before notifying the recipient on L2. A blocked payment leaves funds at an address unknown to the wallet. Recovery requires the recipient's own tooling to re-derive it and authorization from their L1 account. Screening happens only in these offchain services.
 
-### Names and Compliance
-Names (tags) publicly map to Aztec addresses and keys on Ethereum. Claims require the domain owner's signature from a closed-source server with a name blocklist. The released wallet requires a registered name to access an account on a new device.
+### Fees and limits
+A sweep pays {{depositFee}}, or {{registrationSweepFee}} when claiming a name. Registration costs {{registrationFee}} by default, including its sweep fee.
 
-External name payments use a resolver operator to derive and announce deposit addresses. Internal payments skip it (reading from the onchain contract), but wallet-created deposit addresses still derive from Aztec Labs' operator key. The onchain Resolver checks a zk proof on every lookup, binding each address to the recipient's registered keys, Aztec address and L1 account, so the operator cannot redirect payments. It can still re-derive every deposit address of its users. Users can choose another operator for name payments. The only registered operator is Aztec Labs, and its service is unpublished.
-
-The wallet sends Ethereum addresses to Predicate through zk.money for screening, which can be bypassed by funding a deposit SIPA directly. The relayer also screens token movements against OFAC and optionally Predicate. Self-submitting sweeps and proven withdrawals bypasses relayer screening.
-
-The name resolver screens deposit addresses and funders against OFAC before notifying the recipient on L2. A blocked payment leaves funds at an address the wallet never learns. Recovery requires the recipient's own tooling to re-derive it and authorization from their L1 account. Onchain contracts and the enclave do not check compliance lists.
+The portal takes {{fpcFundingCut}} from each deposit and ordinary withdrawal to sponsor Aztec fees. Sponsorship requires a registered name or a voucher from a registered account. An empty fee-paying contract, or fees above its allowance, stall the released wallet. Modified code can pay with the account's own Fee Juice. Deposits share a {{depositLimit}} capacity, refilling over {{depositRefillTime}}. Deposit, payment and withdrawal amounts are capped at {{transactionAmountCap}} each.
 
 ### Source verification
-The [token verification steps](https://github.com/l2beat/l2beat/blob/main/packages/config/src/projects/zkmoney/verificationSteps-token.md) compare a fresh source build with the Aztec instance (L2 contract) pinned by the Ethereum portal. The [verifier steps](/zk-catalog/barretenberg#verifiers) regenerate the keys and Solidity verifiers of the refund and resolver circuits and compare them with the deployed contracts.
+The [token verification steps](https://github.com/l2beat/l2beat/blob/main/packages/config/src/projects/zkmoney/verificationSteps-token.md) compare a fresh source build with the Aztec instance (L2 contract) pinned by the Ethereum portal. The [verifier steps](/zk-catalog/barretenberg#verifiers) regenerate the keys and Solidity verifiers of the refund and resolver circuits.

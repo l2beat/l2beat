@@ -17,7 +17,7 @@ export function LiveIndicator({
     >
       <span
         className={cn(
-          'absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75',
+          'absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75 motion-reduce:animate-none',
           disabled && 'hidden',
         )}
       />

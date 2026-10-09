@@ -58,7 +58,7 @@ export function ChainAddressField(props: {
           autoComplete="off"
           spellCheck={false}
           placeholder="0x… or eth:0x…"
-          className="min-w-0 flex-1 bg-transparent px-3 py-2 font-mono text-sm placeholder:font-sans placeholder:text-coffee-400/60 focus:outline-none"
+          className="min-w-0 flex-1 bg-transparent px-3 py-2 font-mono text-sm placeholder:font-sans placeholder:text-coffee-400/60 focus:outline-hidden"
           value={props.value.address}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}

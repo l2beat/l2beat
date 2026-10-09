@@ -22,8 +22,10 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      exposure:
-        'A payment reaches a predicted Safe before it is deployed, with no onchain announcement linking it to the recipient account. Deployment later exposes the individual stealth owner and enabled modules, not the parent account.',
+      exposureShort:
+        'A payment reaches a predicted Safe before it is deployed, with no onchain data linking it to the recipient account.',
+      exposureContinued:
+        'Deployment later exposes the individual stealth signer (private signer controlling the safe) and enabled modules, not the parent account.',
       advice: S.freshReceive('keep unrelated funds separate with labels'),
       sources: [
         {
@@ -46,8 +48,10 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      exposure:
-        'Safe deployment and auto-earn events make service use recognizable, which narrows the anonymity set to Fluidkey users. Nothing onchain maps Safes to accounts, but timing, amounts, common destinations and reuse across chains can identify or cluster recipients, and a send draws from several Safes by default, which links them. The optional Hide Trail routes through Houdini and two exchanges, a separate service with its own trust assumptions.',
+      exposureShort:
+        'Safe deployment and auto-earn events make service use recognizable, which narrows the anonymity set to Fluidkey users.',
+      exposureContinued:
+        'Nothing onchain maps Safes to accounts, but timing, amounts, common destinations and reuse across chains can identify or cluster recipients, and a send draws from several Safes by default, which links them. The optional Hide Trail routes through Houdini and two exchanges, a separate service with its own trust assumptions.',
       advice:
         'Label payments so a send draws from one Safe. Check related activity across chains and space out distinctive payments.',
       sources: [
@@ -71,8 +75,10 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'warning',
-      exposure:
-        "The hosted client is closed source, so which RPC and analytics providers see your Safe list cannot be verified. Paying to your fkey.id name hands the name and the fresh address to whoever resolves ENS for the payer, often the payer's RPC provider. Only the open kit and the recovery app can be pointed at your own node.",
+      exposureShort:
+        'The hosted client is closed source, so which RPC and analytics providers see your Safe list cannot be verified.',
+      exposureContinued:
+        "Paying to your fkey.id name hands the name and the fresh address to whoever resolves ENS for the payer, often the payer's RPC provider. Only the open kit and the recovery app can be pointed at your own node.",
       advice:
         'Derive addresses with the kit and hand them to payers directly instead of the ENS name. Read balances with the recovery app on your own RPC, and deploy and spend from a fresh gas wallet, since the recovery app deploys Safes from the connected wallet.',
       sources: [
@@ -97,7 +103,9 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      exposure: `${S.operatorViewingKey('Fluidkey')} Optional identity-verified services add identity attributes, and Hide Trail adds route knowledge at Houdini and each exchange.`,
+      exposureShort: S.operatorViewingKey('Fluidkey'),
+      exposureContinued:
+        'Optional identity-verified services add identity attributes, and Hide Trail adds route knowledge at Houdini and each exchange.',
       advice: S.localClientSpendingKeys('Fluidkey'),
       sources: [
         {
@@ -130,7 +138,8 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
-      exposure: `${S.noAnnouncementQuantum('Fluidkey')} ${S.walletSignatureAccounts('plus a four-digit PIN')}`,
+      exposureShort: S.noAnnouncement,
+      exposureContinued: `${S.operatorViewingKeyRegardless('Fluidkey')} ${S.walletSignatureAccounts('plus a four-digit PIN')}`,
       advice: `${S.notWalletSignature('with independently generated keys')} ${S.permanentlyDisclosed('the viewing key shared with Fluidkey')}`,
       sources: [
         {

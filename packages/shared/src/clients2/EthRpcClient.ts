@@ -197,6 +197,17 @@ export class EthRpcClient {
     return ReceiptResponse.parse(data)
   }
 
+  /** In one batch request, in the order of `hashes` */
+  async getTransactionReceipts(
+    hashes: string[],
+  ): Promise<(RpcReceipt | null)[]> {
+    const data = await this.rawBatchCall(
+      'eth_getTransactionReceipt',
+      hashes.map((hash) => [hash]),
+    )
+    return data.map((item) => ReceiptResponse.parse(item))
+  }
+
   async getLogs(filter: FilterParameter): Promise<RpcLog[]> {
     const data = await this.rawCall('eth_getLogs', [encodeFilter(filter)])
     return LogsResponse.parse(data)
@@ -213,6 +224,57 @@ export class EthRpcClient {
       rewardPercentiles,
     ])
     return FeeHistory.parse(data)
+  }
+
+  /** Results in the order of `paramsList` */
+  async rawBatchCall(
+    method: string,
+    paramsList: unknown[],
+  ): Promise<unknown[]> {
+    const ids = paramsList.map(() => this.nextId())
+
+    try {
+      const response = await this.http.fetch(this.url, {
+        method: 'POST',
+        body: JSON.stringify(
+          paramsList.map((params, i) => ({
+            jsonrpc: '2.0',
+            id: ids[i],
+            method,
+            params,
+          })),
+        ),
+        headers: { 'Content-Type': 'application/json' },
+        timeout: this.timeout,
+      })
+      let data: unknown
+      try {
+        data = JSON.parse(response.body)
+      } catch {}
+      const parsed = v.array(JsonRpcResponse).safeValidate(data)
+      if (!parsed.success) {
+        throw new Error(
+          `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+        )
+      }
+      const byId = new Map(
+        parsed.data.map((envelope) => [envelope.id, envelope]),
+      )
+      return ids.map((id) => {
+        const envelope = byId.get(id)
+        if (!envelope) {
+          throw new Error('RPC call failed. ID mismatch.')
+        }
+        if ('error' in envelope) {
+          throw new Error(
+            `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
+          )
+        }
+        return envelope.result
+      })
+    } finally {
+      this.rpcMetrics?.record({ method, count: paramsList.length })
+    }
   }
 
   async rawCall(method: string, params: unknown = []) {

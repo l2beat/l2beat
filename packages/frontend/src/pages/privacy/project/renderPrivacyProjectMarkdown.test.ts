@@ -92,9 +92,9 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const summary = getSection(renderPrivacyProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- Trusted setup: 1,114 participants (sentiment: good). Groth16 ceremony: A multi-party ceremony.',
-      '- Exit window: Infinite (sentiment: good). The pools are immutable. This protocol passes the walkaway test: users can fully use it if all centralized protocol participants disappear.',
       '- Privacy: Link privacy. Public observer: Link private (sentiment: good); Chain analyst: Link at risk (sentiment: warning); Network observer: Link private (sentiment: good); Privileged insider: Link private (sentiment: good); Future adversary: Link exposed (sentiment: bad).',
+      '- Trusted setup: 1,114 participants (sentiment: good). Groth16 ceremony: A multi-party ceremony.',
+      '- Exit window: Infinite (sentiment: good). The pools are immutable. This protocol passes the walkaway test: users can still fully use it if every centralized participant disappears.',
       '- Reproducibility: Reproducible (sentiment: good). The client can be built locally.',
     )
   })
@@ -133,7 +133,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      'This protocol does not pass the walkaway test: users cannot fully use it if all centralized protocol participants disappear. Withdrawals need a relayer.',
+      'This protocol fails the walkaway test: users cannot fully use it if every centralized participant disappears. Withdrawals need a relayer.',
     )
   })
 
@@ -302,14 +302,14 @@ function cell(
   id: PrivacyAdversaryId,
   value: string,
   sentiment: PrivacyAdversaryCell['sentiment'],
-  exposure: string,
+  exposureShort: string,
   rest: Partial<PrivacyAdversaryCell> = {},
 ): PrivacyAdversaryCell {
   return {
     id,
     value,
     sentiment,
-    exposure,
+    exposureShort,
     alsoExposed: [],
     interior: PUBLIC_OBSERVER_INTERIOR,
     ...rest,
@@ -529,6 +529,7 @@ const ENTRY: ProjectPrivacyEntry = {
     sentiment: 'good',
     description: 'Groth16 ceremony: A multi-party ceremony.',
     risk: 'green',
+    label: '1,114 participants',
   },
   reproducibility: {
     value: 'Reproducible',

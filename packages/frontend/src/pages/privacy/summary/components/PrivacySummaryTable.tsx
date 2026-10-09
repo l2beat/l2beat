@@ -1,4 +1,4 @@
-import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -6,9 +6,6 @@ import {
 } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
-import { PercentChange } from '~/components/PercentChange'
-import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import {
   ProjectNameCell,
@@ -16,8 +13,6 @@ import {
 } from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
-import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
-import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import {
   adjustTableValue,
   sortTableValues,
@@ -26,12 +21,15 @@ import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
-import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
 import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { PrivacyRosetteCell } from '../../rosette/PrivacyRosetteCell'
 import { toPrivacyProjectCellProject } from '../../toPrivacyProjectCellProject'
+import {
+  PRIVACY_SUMMARY_OPTIONAL_COLUMNS as OPTIONAL_COLUMNS,
+  type PrivacySummaryOptionalColumn,
+} from '../privacySummaryGroups'
 import { AnonymitySetCell } from './AnonymitySetCell'
-import { DotWithLabel } from './DotWithLabel'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
@@ -79,15 +77,13 @@ const columns = [
     {
       id: 'adversaries',
       header: PRIVACY_ASSESSMENT.title,
-      cell: (ctx) => {
-        const { adversaries, href } = ctx.row.original
-        return (
-          <DotWithLabel
-            dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
-            label={adversaries.promiseLabel}
-          />
-        )
-      },
+      cell: (ctx) => (
+        <PrivacyRosetteCell
+          adversaries={ctx.row.original.adversaries}
+          href={ctx.row.original.href}
+          isUnderReview={ctx.row.original.isUnderReview}
+        />
+      ),
       sortDescFirst: true,
       sortingFn: (a, b) =>
         sortTableValues(
@@ -100,52 +96,18 @@ const columns = [
       },
     },
   ),
-  ...withChangeSort(
-    columnHelper,
-    columnHelper.accessor('totalValueLockedUsd', {
-      id: 'totalValueLockedUsd',
-      header: 'TVL',
-      cell: (ctx) => {
-        if (!ctx.row.original.hasTvl) {
-          return <NotApplicableBadge />
-        }
-
-        const value = ctx.getValue()
-        return (
-          <MetricCell>
-            {value === undefined ? undefined : (
-              <div className="flex items-center justify-end gap-2">
-                {formatCurrency(value, 'usd')}
-                {ctx.row.original.totalValueLockedChange7d !== undefined && (
-                  <PercentChange
-                    value={ctx.row.original.totalValueLockedChange7d}
-                    period="7D"
-                  />
-                )}
-              </div>
-            )}
-          </MetricCell>
-        )
-      },
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        tooltip:
-          'Total USD value currently held across all tracked assets for the protocol.',
-      },
-    }),
-    (row) => ({
-      change: row.totalValueLockedChange7d,
-      period: '7D',
-    }),
-  ),
-  columnHelper.accessor('totalDeposits', {
-    header: 'Deposits',
+  columnHelper.accessor('totalValueLockedUsd', {
+    id: OPTIONAL_COLUMNS.tvl,
+    header: 'TVL',
     cell: (ctx) => {
+      if (!ctx.row.original.hasTvl) {
+        return <NotApplicableBadge />
+      }
+
       const value = ctx.getValue()
       return (
         <MetricCell>
-          {value === undefined ? undefined : formatInteger(value)}
+          {value === undefined ? undefined : formatCurrency(value, 'usd')}
         </MetricCell>
       )
     },
@@ -153,11 +115,11 @@ const columns = [
     meta: {
       align: 'right',
       tooltip:
-        'Total deposit count aggregated across all tracked tokens and buckets.',
+        'Total USD value currently held across all tracked assets for the protocol.',
     },
   }),
   columnHelper.accessor('totalValueDeposited30dUsd', {
-    id: 'totalValueDeposited30dUsd',
+    id: OPTIONAL_COLUMNS.volume30d,
     header: '30D vol.',
     cell: (ctx) => {
       const value = ctx.getValue()
@@ -170,8 +132,7 @@ const columns = [
     sortUndefined: 'last',
     meta: {
       align: 'right',
-      tooltip:
-        'Total USD value of all deposits over the last 30 days, based on configured token prices.',
+      tooltip: 'Total USD value deposited over the last 30 days.',
     },
   }),
   columnHelper.accessor(
@@ -183,8 +144,8 @@ const columns = [
       return entry.anonymitySet.status === 'too-small' ? -1 : undefined
     },
     {
-      id: 'anonymitySet',
-      header: `${ANONYMITY_SET_WINDOW_DAYS}D anon. set`,
+      id: OPTIONAL_COLUMNS.anonymitySet,
+      header: 'Anon. set',
       cell: (ctx) => (
         <AnonymitySetCell
           anonymitySet={ctx.row.original.anonymitySet}
@@ -194,97 +155,79 @@ const columns = [
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        tooltip: `Largest configured anonymity set: unique deposit senders during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
+        tooltip: `Unique depositors over the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days, in the largest tracked pool.`,
       },
     },
   ),
-  columnHelper.display({
-    id: 'trustedSetup',
-    header: 'Setup',
-    cell: (ctx) => (
-      <PrivacyTrustedSetupCell trustedSetup={ctx.row.original.trustedSetup} />
-    ),
-    enableSorting: false,
-    meta: {
-      align: 'center',
-      tooltip:
-        "Trusted setup used by the project's proving system and its risk.",
-    },
-  }),
-  columnHelper.accessor((entry) => adjustTableValue(entry.exitWindow), {
-    id: 'exitWindow',
-    header: 'Exit',
-    cell: (ctx) => (
-      <PrivacyAssessmentCell
-        value={ctx.row.original.exitWindow}
-        walkawayTest={ctx.row.original.exitWindow.walkawayTest}
-      />
-    ),
-    sortDescFirst: true,
-    sortUndefined: 'last',
-    sortingFn: (a, b) =>
-      sortTableValues(a.original.exitWindow, b.original.exitWindow),
-    meta: {
-      align: 'center',
-      tooltip:
-        'Time users have to withdraw before a malicious upgrade can take effect.',
-    },
-  }),
-  columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {
-    id: 'reproducibility',
-    header: 'Repro',
-    cell: (ctx) => (
-      <PrivacyAssessmentCell value={ctx.row.original.reproducibility} />
-    ),
-    sortDescFirst: true,
-    sortUndefined: 'last',
-    sortingFn: (a, b) =>
-      sortTableValues(a.original.reproducibility, b.original.reproducibility),
-    meta: {
-      align: 'center',
-      tooltip:
-        'Whether all source code needed to audit the protocol and participate in it is published and can be used locally.',
-    },
-  }),
-  columnHelper.display({
-    id: 'attributes',
-    header: 'Attributes',
-    cell: (ctx) => {
-      const attributes = ctx.row.original.attributes
-
-      if (attributes.length === 0) {
-        return <NoDataBadge />
-      }
-
-      const half = Math.ceil(attributes.length / 2)
-      const rows = [attributes.slice(0, half), attributes.slice(half)].filter(
-        (row) => row.length > 0,
-      )
-
-      return (
-        <div className="flex w-max flex-col gap-1">
-          {rows.map((row, index) => (
-            <div key={index} className="flex gap-1">
-              {row.map((attribute) => (
-                <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
-              ))}
-            </div>
-          ))}
-        </div>
-      )
-    },
-    enableSorting: false,
-    meta: {
-      cellClassName: 'py-2',
-      tooltip: 'Protocol attributes and capabilities.',
-    },
+  columnHelper.group({
+    id: 'protocolRisks',
+    columns: [
+      columnHelper.display({
+        id: OPTIONAL_COLUMNS.trustedSetup,
+        header: 'Setup',
+        cell: (ctx) => (
+          <PrivacyTrustedSetupCell
+            trustedSetup={ctx.row.original.trustedSetup}
+          />
+        ),
+        enableSorting: false,
+        meta: {
+          align: 'center',
+          tooltip:
+            "Trusted setup used by the project's proving system and its risk.",
+        },
+      }),
+      columnHelper.accessor((entry) => adjustTableValue(entry.exitWindow), {
+        id: 'exitWindow',
+        header: 'Exit',
+        cell: (ctx) => (
+          <PrivacyAssessmentCell
+            value={ctx.row.original.exitWindow}
+            walkawayTest={ctx.row.original.exitWindow.walkawayTest}
+          />
+        ),
+        sortDescFirst: true,
+        sortUndefined: 'last',
+        sortingFn: (a, b) =>
+          sortTableValues(a.original.exitWindow, b.original.exitWindow),
+        meta: {
+          align: 'center',
+          tooltip:
+            'Time users have to withdraw before a malicious upgrade can take effect. The walkaway test says whether users can still fully use the protocol if every centralized participant disappears.',
+        },
+      }),
+      columnHelper.accessor(
+        (entry) => adjustTableValue(entry.reproducibility),
+        {
+          id: 'reproducibility',
+          header: 'Repro',
+          cell: (ctx) => (
+            <PrivacyAssessmentCell value={ctx.row.original.reproducibility} />
+          ),
+          sortDescFirst: true,
+          sortUndefined: 'last',
+          sortingFn: (a, b) =>
+            sortTableValues(
+              a.original.reproducibility,
+              b.original.reproducibility,
+            ),
+          meta: {
+            align: 'center',
+            tooltip:
+              'Whether all source code needed to audit the protocol and participate in it is published and can be used locally.',
+          },
+        },
+      ),
+    ],
   }),
 ]
 
 export function PrivacySummaryTable({
   entries,
+  hiddenColumns,
 }: {
   entries: PrivacySummaryEntry[]
+  hiddenColumns: PrivacySummaryOptionalColumn[]
 }) {
   const table = useTable('PrivacySummaryTable', {
     data: entries,
@@ -292,6 +235,9 @@ export function PrivacySummaryTable({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     state: {
+      columnVisibility: Object.fromEntries(
+        hiddenColumns.map((column) => [column, false]),
+      ),
       columnPinning: {
         left: ['#', 'logo'],
       },
@@ -303,10 +249,5 @@ export function PrivacySummaryTable({
     },
   })
 
-  return (
-    <PrimaryCard className="mt-4">
-      <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
-    </PrimaryCard>
-  )
+  return <BasicTable table={table} />
 }

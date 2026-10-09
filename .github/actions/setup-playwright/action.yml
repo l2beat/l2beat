@@ -1,0 +1,33 @@
+name: Set up Playwright
+description: >
+  Installs the headless Chromium used by Playwright tests, cached per
+  Playwright version. Run after setup-pnpm.
+
+inputs:
+  package-dir:
+    description: Package whose Playwright version is installed
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Read Playwright version
+      id: version
+      shell: bash
+      working-directory: ${{ inputs.package-dir }}
+      run: echo "version=$(pnpm exec playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+    - name: Restore Playwright browsers
+      id: cache
+      uses: actions/cache@v6
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ steps.version.outputs.version }}-headless-shell
+
+    # Headless tests run on the headless shell, so the full Chrome build and
+    # ffmpeg are never used. The runner image already has the system libraries.
+    - name: Install Playwright browsers
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      working-directory: ${{ inputs.package-dir }}
+      run: pnpm exec playwright install --only-shell chromium

@@ -126,14 +126,6 @@ export function normalizeAddress(address: string): string {
   return '0x' + addr.padStart(64, '0')
 }
 
-export const LAYERZERO_CONSTANTS = {
-  PACKET_VERSION: 1,
-  EID_LENGTH: 4,
-  NONCE_LENGTH: 8,
-  SENDER_LENGTH: 32,
-  RECEIVER_LENGTH: 32,
-} as const
-
 // https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F14#L41
 // https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F8#L8
 // https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F30#L53

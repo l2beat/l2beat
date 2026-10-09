@@ -16,7 +16,7 @@ export const ScalableView = forwardRef(
     return (
       <div
         ref={ref}
-        className="relative h-full w-full origin-[0_0] select-none"
+        className="relative h-full w-full origin-top-left select-none"
         style={{
           transform: `translate(${offsetX}px, ${offsetY}px) scale(${scale})`,
         }}
@@ -30,7 +30,7 @@ export const ScalableView = forwardRef(
           }}
         >
           <div
-            className="pointer-events-none absolute bg-[url(/grid.svg)] bg-left-top"
+            className="pointer-events-none absolute bg-[url(/grid.svg)] bg-top-left"
             style={{
               backgroundSize: size,
               top: -20 + '%',

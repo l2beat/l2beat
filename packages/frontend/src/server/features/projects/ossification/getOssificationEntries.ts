@@ -2,7 +2,7 @@ import type { Project } from '@l2beat/config'
 import { measureOssification } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getRowBackgroundColor } from '~/components/table/utils/rowType'
-import { env } from '~/env'
+import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
@@ -21,7 +21,7 @@ export interface OssificationEntry
       'slug' | 'name' | 'icon' | 'backgroundColor' | 'statuses'
     > {
   category: OssificationCategory
-  /** Project page; absent for DeFi projects while DeFi pages are disabled */
+  /** Project page; absent for DeFi projects without one */
   href?: string
 }
 
@@ -102,7 +102,7 @@ function getPlacement(
   if (project.defiInfo) {
     return {
       category: 'DeFi',
-      ...(env.CLIENT_SIDE_DEFI_ENABLED && {
+      ...(hasDefiProjectPage(project) && {
         href: `/defi/projects/${project.slug}`,
       }),
     }

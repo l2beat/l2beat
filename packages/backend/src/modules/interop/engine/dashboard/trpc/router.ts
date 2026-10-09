@@ -1,5 +1,4 @@
 import type { TokenDbClient } from '@l2beat/token-backend'
-import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import type { InteropAggregationConfig } from '../../../../../config/features/interop'
 import { router } from '../../../../../trpc/init'
 import type { PluginSyncStatus } from '../../sync/InteropSyncersManager'
@@ -61,5 +60,3 @@ export function createInteropTrpcRouter(deps: InteropTrpcRouterDeps) {
 }
 
 export type InteropTrpcRouter = ReturnType<typeof createInteropTrpcRouter>
-export type RouterOutputs = inferRouterOutputs<InteropTrpcRouter>
-export type RouterInputs = inferRouterInputs<InteropTrpcRouter>

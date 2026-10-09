@@ -39,6 +39,8 @@ export class Providers {
   day: DayProviders
   circulatingSupply: CirculatingSupplyProvider
   da: DaProvider
+  /** Ethereum blocks with their blob batches, from the RPC that follows the head */
+  liveBlobsDa: EthereumDaProvider | undefined
   clients: Clients
   blockTimestamp: BlockTimestampProvider
   totalSupply: TotalSupplyProvider
@@ -93,6 +95,13 @@ export class Providers {
       const ethereumRpc = this.clients.getRpcClient('ethereum')
       blobProviders.push(
         new EthereumDaProvider(this.clients.beacon, ethereumRpc, 'ethereum'),
+      )
+    }
+    if (this.clients.beacon && this.clients.liveBlobsRpc) {
+      this.liveBlobsDa = new EthereumDaProvider(
+        this.clients.beacon,
+        this.clients.liveBlobsRpc,
+        'ethereum',
       )
     }
     if (this.clients.celestia) {

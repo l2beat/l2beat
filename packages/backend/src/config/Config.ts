@@ -14,7 +14,6 @@ import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
 import type { DefiTvlConfig } from '../modules/defi-tvl/types'
 import type { PrivacyConfig } from '../modules/privacy/types'
-import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
   BlockTimestampConfig,
@@ -128,35 +127,6 @@ export interface TrackedTxsConfig {
         }
       | false
   }
-}
-
-export interface BlockscoutChainConfig {
-  readonly type: 'blockscout'
-  readonly url: string
-}
-
-export interface EtherscanChainConfig {
-  readonly type: 'etherscan'
-  readonly apiKey: string
-  readonly url: string
-}
-
-export interface RoutescanChainConfig {
-  readonly type: 'routescan'
-  readonly url: string
-}
-
-export interface ChainTvlConfig {
-  readonly name: string
-  readonly providerUrl: string
-  readonly providerCallsPerMinute: number
-  readonly minBlockTimestamp: UnixTime
-  readonly blockExplorerConfig:
-    | EtherscanChainConfig
-    | BlockscoutChainConfig
-    | RoutescanChainConfig
-    | undefined
-  readonly multicallConfig: MulticallConfigEntry[]
 }
 
 export interface HealthConfig {
@@ -380,6 +350,21 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
+  /** The last day of Ethereum blocks and blobs, kept slot by slot */
+  readonly liveBlobs: LiveBlobsTrackingConfig | false
+}
+
+export interface LiveBlobsTrackingConfig {
+  /** Blocks fetched at once while catching up with the head */
+  readonly batchSize: number
+  /**
+   * An RPC of its own: it has to keep up with the head, and the hourly
+   * indexers' backfill must not hold up its calls
+   */
+  readonly rpc: {
+    readonly url: string
+    readonly callsPerMinute: number
+  }
 }
 
 export interface BlockSyncModuleConfig {

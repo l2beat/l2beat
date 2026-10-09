@@ -27,11 +27,15 @@ export const abstract: ScalingProject = zkStackL2({
   display: {
     name: 'Abstract',
     slug: 'abstract',
+    headerWarning:
+      'Abstract is winding down. See the [announcement](https://x.com/AbstractChain/status/2107554632675340420) and make sure to bridge off your funds until December 15, 2026.',
     description:
       'Abstract is a ZK Rollup built on top of Ethereum using the ZK stack, designed to securely power consumer-facing blockchain applications at scale with low fees and fast transaction speeds.',
     links: {
       websites: ['https://abs.xyz/'],
       bridges: [
+        'https://migrate.abs.xyz/',
+        'https://native-bridge.abs.xyz/',
         'https://jumper.exchange/?toChain=2741&toToken=0x0000000000000000000000000000000000000000',
       ],
       documentation: ['https://docs.abs.xyz/'],
@@ -315,6 +319,14 @@ export const abstract: ScalingProject = zkStackL2({
     },
   ],
   milestones: [
+    {
+      title: 'Abstract shutdown announcement',
+      url: 'https://x.com/AbstractChain/status/2107554632675340420',
+      date: '2026-10-06T00:00:00Z',
+      description:
+        'Abstract announces its shutdown on December 15, 2026. Users must bridge off funds before that date.',
+      type: 'incident',
+    },
     {
       title: 'Liveness failure (batch 16529)',
       url: 'https://dashboard.tenderly.co/tx/0xcaefda7f4c6e29f90b34a0b68817feeb9fac3da2cb66538ea15fbeed434a7201/state-diff',

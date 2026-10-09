@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x0b5023731a152ebb77383584a22de82de46d7a11
+
+# Diff at Wed, 07 Oct 2026 13:54:36 GMT:
+
+- id: 1a7dd30b
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1789673382
+- current timestamp: 1791381204
+
+## Description
+
+UnwrapTokenV1ETH: `lockTime` 10d → 40d, set by the operator.
+
+## Watched changes
+
+```diff
+    contract UnwrapTokenV1ETH (eth:0x79973d557CD9dd87eb61E250cc2572c990e20196) [wbeth/UnwrapTokenV1ETH] {
+    +++ description: Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of 1mo 10d has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. The operator can also send any surplus ETH back to the ethBackAddress.
+      description:
+-        "Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of 10d has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. The operator can also send any surplus ETH back to the ethBackAddress."
++        "Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of 1mo 10d has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. The operator can also send any surplus ETH back to the ethBackAddress."
++++ description: Time between a redemption request and the earliest claim. Set by the operator, floor of 2 days.
+      values.lockTime:
+-        "10d"
++        "1mo 10d"
++++ description: Raw copy of lockTime, in seconds, for the project page to spell out.
+      values.lockTimeSeconds:
+-        864000
++        3456000
+    }
+```
+
 Generated with discovered.json: 0xdc789509eb187fe0fe3edd9050248cb1f9ad3231
 
 # Diff at Thu, 17 Sep 2026 19:30:52 GMT:
