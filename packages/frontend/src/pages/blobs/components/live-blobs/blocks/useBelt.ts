@@ -83,6 +83,8 @@ export function useBelt({
   playback.current.still = still
   const viewTarget = useRef(view)
   viewTarget.current = view
+  // where a finger holds the belt, as a slot between two or on one
+  const held = useRef<number>(undefined)
   const frame = useRef<BeltFrame>({
     hits: [],
     landed: [],
@@ -160,7 +162,10 @@ export function useBelt({
     }
     play.progress = progressNow()
     const viewWas = play.view
-    play.view = travel(play, viewTarget.current, dt)
+    play.view =
+      held.current === undefined
+        ? travel(play, viewTarget.current, dt)
+        : heldView(held.current, play.progress)
     if (
       play.view !== viewWas ||
       isMoving(play, now) ||
@@ -267,9 +272,26 @@ export function useBelt({
     [onClickBatch, pin],
   )
 
+  /**
+   * A finger holds the belt at `slot`, which may fall between two: it goes
+   * there on the next frame, without easing, so it stays under the finger.
+   * Let go, it eases to `view` as before
+   */
+  const hold = useCallback((slot: number | undefined) => {
+    held.current = slot
+  }, [])
+
+  /** Where the belt stands now, as a view would put it */
+  const position = useCallback(
+    () => playback.current.view ?? livePosition(playback.current.progress),
+    [],
+  )
+
   return {
     hover,
     dropBlock,
+    hold,
+    position,
     handlers: {
       onPointerMove,
       onPointerDown,
@@ -318,6 +340,11 @@ function travel(
   const next = from + (to - from) * (1 - Math.exp(-dt / TRAVEL_TIME))
   if (Math.abs(to - next) > ARRIVED_WITHIN) return next
   return target
+}
+
+/** Held past where the live belt is, the belt is live */
+function heldView(slot: number, progress: number) {
+  return slot < livePosition(progress) ? slot : undefined
 }
 
 /**
