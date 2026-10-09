@@ -125,7 +125,7 @@ export class RpcClientCompat implements IRpcClient {
         rpcChain: deps.chain,
         rpcClient: RpcClientCompat.name,
       }),
-      deps.maxBatchSize,
+      { maxBatchSize: deps.maxBatchSize, logger },
     )
     const retryOptions = toRetryOptions(deps.retryStrategy)
     const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)

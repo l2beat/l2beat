@@ -14,13 +14,6 @@ export interface ClientCoreDependencies {
   retryStrategy: RetryHandlerVariant
 }
 
-export interface FetchOptions {
-  /** For callers that read error bodies themselves */
-  skipValidation?: boolean
-  /** Failures that a retry would only repeat, thrown at once */
-  isPermanentError?: (error: unknown) => boolean
-}
-
 export abstract class ClientCore {
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
@@ -49,27 +42,20 @@ export abstract class ClientCore {
    * @param init Params for the request, `timeout` is an idle timeout in ms
    * @returns Parsed JSON object
    */
-  async fetch(
-    url: string,
-    init: FetchInit,
-    options: FetchOptions = {},
-  ): Promise<json> {
+  async fetch(url: string, init: FetchInit): Promise<json> {
     // Resolved here, synchronously in the caller's async context. The rate
     // limiter dispatches later from a timer or another call's completion, so
     // the context is not reliable inside `_fetch`.
     const label = getRpcMetricsLabel()
-    const attempt = () =>
-      this.rateLimiter.call(() => this._fetch(url, init, label, options), label)
     try {
-      return await attempt()
+      return await this.rateLimiter.call(
+        () => this._fetch(url, init, label),
+        label,
+      )
     } catch (error) {
-      if (options.isPermanentError?.(error)) {
-        throw error
-      }
       return await this.retryHandler.retry(
-        attempt,
+        () => this.rateLimiter.call(() => this._fetch(url, init, label), label),
         { error, url, init },
-        options.isPermanentError,
       )
     }
   }
@@ -78,7 +64,6 @@ export abstract class ClientCore {
     url: string,
     init: FetchInit,
     label: string,
-    options: FetchOptions,
   ): Promise<json> {
     const start = Date.now()
 
@@ -88,10 +73,6 @@ export abstract class ClientCore {
     const size = Buffer.byteLength(JSON.stringify(response), 'utf8')
 
     this.metricsAggregator.push({ duration, size, label })
-
-    if (options.skipValidation) {
-      return response
-    }
 
     const validationInfo = this.validateResponse(response)
 

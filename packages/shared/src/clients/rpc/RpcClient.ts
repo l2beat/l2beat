@@ -8,11 +8,12 @@ import { v } from '@l2beat/validate'
 import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import { HttpError } from '../http/HttpClient'
+import type { FetchInit } from '../http/fetchWithTimeout'
 import type { LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
+import { getRpcMetricsLabel } from './RpcMetricsContext'
 import {
   BlockNumberResponse,
   type CallParameters,
@@ -58,7 +59,10 @@ export class RpcClient extends ClientCore implements IRpcClient {
   constructor(private readonly $: Dependencies) {
     super({ ...$, sourceName: $.chain })
     this.multicallClient = $.multicallClient
-    this.batcher = new RpcBatcher($.maxBatchSize)
+    this.batcher = new RpcBatcher({
+      maxBatchSize: $.maxBatchSize,
+      logger: $.logger.for(this).tag({ source: $.chain }),
+    })
   }
 
   async getLatestBlockNumber() {
@@ -394,6 +398,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
   /** Results in the order of `paramsBatch` */
   async batchQuery(method: string, paramsBatch: Param[][]) {
     return await this.batcher.run(
+      method,
       paramsBatch,
       (chunk) => this.sendBatch(method, chunk),
       async (params) => RpcResponse.parse(await this.query(method, params)),
@@ -407,30 +412,26 @@ export class RpcClient extends ClientCore implements IRpcClient {
       id: this.$.generateId ? this.$.generateId() : generateId(),
       jsonrpc: '2.0',
     }))
+    const init: FetchInit = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(queries),
+      redirect: 'follow',
+      timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
+    }
+    // Read before the rate limiter, which loses the async context
+    const label = getRpcMetricsLabel()
+    const attempt = () =>
+      this.rateLimiter.call(() => this.fetchBatch(init, label), label)
 
+    let rejected = false
     try {
-      let response: json
-      try {
-        response = await this.fetch(
-          this.$.url,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(queries),
-            redirect: 'follow',
-            timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
-          },
-          { skipValidation: true, isPermanentError: isBatchRejectedHttpError },
-        )
-      } catch (error) {
-        if (isBatchRejectedHttpError(error)) {
-          return this.onBatchRejected(method, paramsBatch, error)
-        }
-        throw error
-      }
-      // fetch has thrown for any status but 2xx
-      if (isBatchRejected(200, response)) {
-        return this.onBatchRejected(method, paramsBatch, response)
+      const response = await attempt().catch((error) =>
+        this.retryHandler.retry(attempt, { error, url: this.$.url, init }),
+      )
+      if (response === BATCH_REJECTED) {
+        rejected = true
+        return BATCH_REJECTED
       }
 
       const results = new Map(
@@ -446,24 +447,47 @@ export class RpcClient extends ClientCore implements IRpcClient {
         return r
       })
     } finally {
-      this.$.rpcMetrics?.record({
-        count: paramsBatch.length,
-        method,
-      })
+      // The calls of a rejected batch are recorded when sent again
+      if (!rejected) {
+        this.$.rpcMetrics?.record({
+          count: paramsBatch.length,
+          method,
+        })
+      }
     }
   }
 
-  private onBatchRejected(
-    method: string,
-    paramsBatch: Param[][],
-    reason: unknown,
-  ): typeof BATCH_REJECTED {
-    this.$.logger.warn('Batch rejected, calling one by one', {
-      method,
-      size: paramsBatch.length,
-      reason: reason instanceof Error ? reason.message : JSON.stringify(reason),
+  /**
+   * Unlike ClientCore.fetch, reads the body of a failed request and returns a
+   * rejection instead of throwing it, so no retry repeats it
+   */
+  private async fetchBatch(
+    init: FetchInit,
+    label: string,
+  ): Promise<unknown[] | typeof BATCH_REJECTED> {
+    const start = Date.now()
+    const response = await this.$.http.fetchRaw(this.$.url, init)
+    const text = await response.text()
+    this.metricsAggregator.push({
+      duration: Date.now() - start,
+      size: Buffer.byteLength(text, 'utf8'),
+      label,
     })
-    return BATCH_REJECTED
+
+    let body: unknown
+    try {
+      body = JSON.parse(text)
+    } catch {}
+    if (isBatchRejected(response.status, body)) {
+      return BATCH_REJECTED
+    }
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status} ${response.statusText}`)
+    }
+    if (!Array.isArray(body)) {
+      throw new Error(`Batch not answered with an array: ${text}`)
+    }
+    return body
   }
 
   override validateResponse(response: json): {
@@ -503,10 +527,6 @@ function buildCallObject(callParams: CallParameters): Record<string, string> {
     to: callParams.to.toString(),
     input: callParams.input.toString(),
   }
-}
-
-function isBatchRejectedHttpError(error: unknown) {
-  return error instanceof HttpError && isBatchRejected(error.status, undefined)
 }
 
 export function isLimitExceededError({ message }: { message: string }) {

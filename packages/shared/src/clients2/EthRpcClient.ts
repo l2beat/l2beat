@@ -4,6 +4,7 @@ import {
   BATCH_REJECTED,
   isBatchRejected,
   RpcBatcher,
+  type RpcBatcherOptions,
 } from '../clients/rpc/RpcBatcher'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
 import type { Http } from './Http'
@@ -42,9 +43,9 @@ export class EthRpcClient {
     private nextId: () => string | number = randomId,
     private timeout?: number,
     private readonly rpcMetrics?: RpcMetricsRecorder,
-    maxBatchSize?: number,
+    batching?: RpcBatcherOptions,
   ) {
-    this.batcher = new RpcBatcher(maxBatchSize)
+    this.batcher = new RpcBatcher(batching)
   }
 
   async getChainId(): Promise<bigint> {
@@ -242,6 +243,7 @@ export class EthRpcClient {
     paramsList: unknown[],
   ): Promise<unknown[]> {
     return await this.batcher.run(
+      method,
       paramsList,
       (chunk) => this.sendBatch(method, chunk),
       (params) => this.rawCall(method, params),
@@ -253,6 +255,7 @@ export class EthRpcClient {
     paramsList: unknown[],
   ): Promise<unknown[] | typeof BATCH_REJECTED> {
     const ids = paramsList.map(() => this.nextId())
+    let rejected = false
 
     try {
       const response = await this.http.fetch(this.url, {
@@ -273,6 +276,7 @@ export class EthRpcClient {
         data = JSON.parse(response.body)
       } catch {}
       if (isBatchRejected(response.status, data)) {
+        rejected = true
         return BATCH_REJECTED
       }
       const parsed = v.array(JsonRpcResponse).safeValidate(data)
@@ -297,7 +301,10 @@ export class EthRpcClient {
         return envelope.result
       })
     } finally {
-      this.rpcMetrics?.record({ method, count: paramsList.length })
+      // The calls of a rejected batch are recorded when sent again
+      if (!rejected) {
+        this.rpcMetrics?.record({ method, count: paramsList.length })
+      }
     }
   }
 

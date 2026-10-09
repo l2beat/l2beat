@@ -126,7 +126,7 @@ describe(EthRpcClient.name, () => {
         'HTTP 413': () => makeHttpResponse(413, 'Request Entity Too Large'),
       }
 
-    const TRANSIENT_FAILURES: Record<
+    const OTHER_FAILURES: Record<
       string,
       (request: RpcRequest | RpcRequest[]) => HttpResponse
     > = {
@@ -139,6 +139,9 @@ describe(EthRpcClient.name, () => {
           429,
           JSON.stringify(rpcError(null, 'Rate limit exceeded')),
         ),
+      'a rate limit in place of the array': () =>
+        ok(rpcError(null, 'Rate limit exceeded')),
+      'HTTP 401': () => makeHttpResponse(401, 'Unauthorized'),
     }
 
     // Methodology: 5 receipts at 2 per batch, a node that answers every batch
@@ -171,37 +174,64 @@ describe(EthRpcClient.name, () => {
     })
 
     // Methodology: each case is a rejection as a real RPC sends it, for any
-    // batch over 1 call; the calls must then go one by one, and the next
-    // batches must be half the rejected size
+    // batch over 2 calls, at the default size; the rejected batch must go
+    // again in halves, and the next batches must be of the learned size
     for (const [name, reject] of Object.entries(REJECTIONS)) {
-      it(`calls one by one when the RPC rejects the batch: ${name}`, async () => {
+      it(`sends smaller batches when the RPC rejects one for its size: ${name}`, async () => {
         const node = new FakeNode((request) =>
           Array.isArray(request) && request.length > 2
             ? reject(request)
             : answerReversed(request),
         )
-        const client = batchingClient(node, 4)
+        const client = batchingClient(node)
 
         const first = await client.getTransactionReceipts(HASHES.slice(0, 4))
         const second = await client.getTransactionReceipts(HASHES.slice(0, 4))
 
         expect(first.map((r) => r?.transactionHash)).toEqual(HASHES.slice(0, 4))
         expect(second).toEqual(first)
-        expect(node.requests.map(callsIn)).toEqual([
-          4,
-          ...Array(4).fill('single'),
-          2,
-          2,
-        ])
+        expect(node.requests.map(callsIn)).toEqual([4, 2, 2, 2, 2])
       })
     }
 
-    // Methodology: failures of the request, not of its size; each must reach
-    // the caller, which retries, after one request and no single calls
-    for (const [name, fail] of Object.entries(TRANSIENT_FAILURES)) {
-      it(`does not call one by one when a retry would do: ${name}`, async () => {
+    // Methodology: a configured size of 4 that the RPC rejects
+    it('throws when the RPC rejects a batch of the configured size', async () => {
+      const node = new FakeNode(REJECTIONS['HTTP 413'] as () => HttpResponse)
+      const client = batchingClient(node, 4)
+
+      await expect(
+        client.getTransactionReceipts(HASHES.slice(0, 4)),
+      ).toBeRejectedWith(
+        'RPC rejected a batch of 4 eth_getTransactionReceipt calls, within the configured maxBatchSize of 4',
+      )
+      expect(node.requests.map(callsIn)).toEqual([4])
+    })
+
+    // Methodology: a batch of 4 rejected, then sent as 2 batches of 2; the
+    // metrics must count 4 calls, not 8
+    it('counts the calls of a rejected batch once', async () => {
+      const node = new FakeNode((request) =>
+        Array.isArray(request) && request.length > 2
+          ? makeHttpResponse(413, 'Request Entity Too Large')
+          : answerReversed(request),
+      )
+      const counts: number[] = []
+      const client = batchingClient(node, undefined, {
+        record: ({ count }) => counts.push(count ?? 1),
+      })
+
+      await client.getTransactionReceipts(HASHES.slice(0, 4))
+
+      expect(counts).toEqual([2, 2])
+    })
+
+    // Methodology: failures of the request, not of its size, at the default
+    // size; each must reach the caller, which retries, after one request and
+    // no smaller ones
+    for (const [name, fail] of Object.entries(OTHER_FAILURES)) {
+      it(`does not send smaller batches for a failure not about size: ${name}`, async () => {
         const node = new FakeNode(fail)
-        const client = batchingClient(node, 4)
+        const client = batchingClient(node)
 
         await expect(
           client.getTransactionReceipts(HASHES.slice(0, 4)),
@@ -583,15 +613,19 @@ class FakeNode extends Http {
   }
 }
 
-function batchingClient(http: Http, maxBatchSize: number) {
+function batchingClient(
+  http: Http,
+  maxBatchSize?: number,
+  rpcMetrics?: RpcMetricsRecorder,
+) {
   let id = 0
   return new EthRpcClient(
     http,
     'https://rpc.url',
     () => ++id,
     undefined,
-    undefined,
-    maxBatchSize,
+    rpcMetrics,
+    { maxBatchSize },
   )
 }
 

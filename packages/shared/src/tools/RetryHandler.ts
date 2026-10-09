@@ -28,7 +28,6 @@ export class RetryHandler {
   async retry<T>(
     fn: () => Promise<T>,
     metadata?: { error?: unknown; url?: string; init?: FetchInit },
-    isPermanentError?: (error: unknown) => boolean,
   ): Promise<T> {
     let attempt = 0
     let error = metadata?.error
@@ -51,7 +50,7 @@ export class RetryHandler {
         return await fn()
       } catch (retryError) {
         error = retryError
-        if (attempt >= this.$.maxRetries || isPermanentError?.(retryError)) {
+        if (attempt >= this.$.maxRetries) {
           throw retryError
         }
       }
