@@ -50,7 +50,7 @@ export function zamaCwAdversaries(
         exposureShort:
           'Wraps and unwraps publish their amounts, while confidential transfers keep theirs encrypted.',
         exposureContinued:
-          'Either party to a transfer can disclose its amount onchain at any time. An unwrap larger than the balance finalizes as zero, which shows the balance fell short.',
+          'Either party to a transfer can disclose its amount onchain at any time.',
         advice:
           'Pay and get paid inside the confidential token, and unwrap only what you need.',
         interior: INTERIOR,
