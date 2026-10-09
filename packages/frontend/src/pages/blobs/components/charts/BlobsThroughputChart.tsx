@@ -80,6 +80,7 @@ export function BlobsThroughputChart({
           resolution={resolution}
           dataGap={undefined}
           hideProjectLogo
+          disableLegendOnboarding
         />
       ) : (
         <DaThroughputByProjectChart
@@ -89,6 +90,7 @@ export function BlobsThroughputChart({
           customColors={customColors}
           milestones={milestones}
           resolution={resolution}
+          disableLegendOnboarding
         />
       )}
     </div>
