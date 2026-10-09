@@ -30,8 +30,8 @@ import {
 import chalk from 'chalk'
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
+import { rm } from 'fs/promises'
 import path, { relative } from 'path'
-import { rimraf } from 'rimraf'
 import { getPlainLogger } from '../common/getPlainLogger'
 import { updateDiffHistoryHash } from './hashing'
 import {
@@ -203,7 +203,7 @@ async function revertDiffHistory(
   if (historyFileFromMainBranch.trim() !== '') {
     writeFileSync(diffHistoryPath, historyFileFromMainBranch)
   } else {
-    await rimraf(diffHistoryPath)
+    await rm(diffHistoryPath, { force: true })
   }
 }
 
