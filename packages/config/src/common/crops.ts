@@ -12,5 +12,7 @@ export const CROP_NOTES = {
   notReviewed: {
     circuitBreakers: 'Circuit breakers and rate limits.',
     quantumSafety: 'Quantum safety.',
+    /** Required for Security: drop it once the project has an ossification history. */
+    ossification: 'Ossification score.',
   },
 }

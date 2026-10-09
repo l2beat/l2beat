@@ -6,7 +6,11 @@ import {
   CROP_SWATCH,
   CROP_TINT,
 } from '~/components/garden/cropPalette'
-import type { ResolvedCrops } from '~/components/garden/crops'
+import type {
+  CropOssification,
+  GardenListing,
+  ResolvedCrops,
+} from '~/components/garden/crops'
 import {
   type CropEntry,
   getCropStatusText,
@@ -31,17 +35,20 @@ const STAGGER = 0.05
  */
 export function CropsBed({
   crops,
-  inGarden,
+  listing,
+  ossification,
 }: {
   crops: ResolvedCrops
-  inGarden: boolean
+  listing: GardenListing
+  ossification: CropOssification | undefined
 }) {
-  const entries = toCropEntries(crops)
+  const inGarden = listing === 'listed'
+  const entries = toCropEntries(crops, ossification)
   const entranceHold = useEntranceHold()
 
   return (
     <div className={cn('@container', entranceHold)}>
-      <Verdict inGarden={inGarden} entries={entries} />
+      <Verdict listing={listing} entries={entries} />
       <div
         className={cn(
           'relative mt-4 overflow-hidden rounded-t-xl border border-b-0',
@@ -162,7 +169,10 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
           '@min-[900px]:text-paragraph-14',
         )}
       >
-        <CropFindings evaluation={evaluation} />
+        <CropFindings
+          evaluation={evaluation}
+          ossification={entry.ossification}
+        />
       </div>
       <CropNote
         note={definition.note}
@@ -174,13 +184,13 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
 
 /** The verdict as a headline, with a swatch per crop so the tally can be read at a glance. */
 function Verdict({
-  inGarden,
+  listing,
   entries,
 }: {
-  inGarden: boolean
+  listing: GardenListing
   entries: CropEntry[]
 }) {
-  const bloomCount = entries.filter(
+  const goodCount = entries.filter(
     (e) => e.evaluation.sentiment === 'good',
   ).length
   return (
@@ -188,14 +198,14 @@ function Verdict({
       <p
         className={cn(
           'font-bold text-heading-20 leading-tight',
-          inGarden ? 'text-garden-accent' : 'text-primary',
+          listing === 'listed' ? 'text-garden-accent' : 'text-primary',
         )}
       >
-        {gardenVerdictText(inGarden)}
+        {gardenVerdictText(listing)}
       </p>
       <div className="flex items-center gap-2">
         <span className="font-medium text-[12px] text-secondary uppercase tracking-wider">
-          {bloomCount} of 4 in bloom
+          {goodCount} of 4 rated good
         </span>
         <span className="flex gap-1" aria-hidden>
           {entries.map((entry) => (

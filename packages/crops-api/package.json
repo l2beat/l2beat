@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@l2beat/config": "workspace:*",
+    "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "swagger-ui-dist": "^5.29.1"

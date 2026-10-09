@@ -427,7 +427,7 @@ describe(renderProjectSection.name, () => {
       props: {
         id: 'crops',
         title: 'Crops',
-        inGarden: false,
+        listing: 'ratedBad',
         crops: {
           censorshipResistance: {
             ...crop,
@@ -447,15 +447,22 @@ describe(renderProjectSection.name, () => {
           privacy: { ...crop, status: 'notReviewed', sentiment: 'neutral' },
           security: crop,
         },
+        ossification: {
+          score: 99,
+          isUnverified: false,
+          unchangedSince: UnixTime.fromDate(new Date('2020-05-18T12:00:00Z')),
+          exposure: null,
+        },
       },
     })
 
     expect(markdown).toInclude(
-      'Not in the garden yet. 2 of 4 in bloom.',
+      'Not listed in The Infinite Garden: a property is rated bad. 2 of 4 rated good.',
+      '### Security\n\nGood\n\n**Ossification**\n\n- Score: 99 of 100.\n- No critical change since 2020 May 18.',
       '### Censorship resistance\n\nBad\n\n**What is missing**\n\n- No forced transactions.',
       "### Open source\n\nGood\n\n**What's good**\n\n- License: [MIT License](https://mit)\n- Code is public.",
       '### Privacy\n\nNot reviewed',
-      '[See the whole garden](https://l2beat.com/garden).',
+      '[See The Infinite Garden](https://l2beat.com/garden).',
     )
   })
 

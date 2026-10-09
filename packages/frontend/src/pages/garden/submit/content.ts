@@ -17,7 +17,7 @@ export const PROCESS_STEPS = [
   {
     title: 'We review it',
     description:
-      'We review based on onchain data and the provided sources, and come up with a conclusion. If it is CROPS-y enough, it will be added to the garden. If not, you will get the feedback in the forum.',
+      'We review it based on onchain data and the sources provided, measure its ossification score, and reach a conclusion. If none of the four properties is rated bad, the protocol is listed in The Infinite Garden. Otherwise, you get the feedback on the forum.',
   },
   {
     title: 'We monitor and stay open for feedback',

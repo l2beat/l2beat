@@ -1,4 +1,5 @@
 import type { CropKey } from '~/components/garden/crops'
+import { OSSIFICATION_SCORE_BANDS } from '~/components/ossification/ossificationScoreBands'
 
 /** Marks where `reference` is linked inside a minimum. */
 export const REFERENCE_SLOT = '{{reference}}'
@@ -18,33 +19,33 @@ export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
   censorshipResistance: {
     question: 'Can anyone use it, and can everyone leave?',
     summary:
-      'Nobody - not the team, not an operator, not a governance vote - can stand between a user and their funds.',
+      'No one, including the team, an operator or governance, can stop a user from using the protocol or withdrawing their funds.',
     minimums: [
-      'Permissionless access and exit: no allowlist, no KYC gate, no operator whose approval you need.',
-      'An infinite exit window, or one long enough to leave: the core contracts are immutable, unpausable, and cannot be upgraded.',
-      'Passes the walkaway test: with the team, the frontend and every relayer gone, users can still claim and withdraw.',
-      'Any power over users is named and bounded - it applies to everyone equally and cannot reach payment or withdrawal logic.',
+      'Anyone can use it and exit it: no allowlist, no KYC, and no operator whose approval is needed.',
+      'The core contracts cannot be upgraded or paused, or any change waits at least 30 days, so users can exit first.',
+      'Passes the walkaway test: users can still withdraw if the team, the frontend and every relayer disappear.',
+      'Any remaining admin power is documented and limited: it applies to all users equally and cannot affect payments or withdrawals.',
     ],
     pullsDown: [
-      'Inclusion that is only probabilistic, with no forced-transaction path a user can count on.',
-      'A single relayer, or a set users cannot bypass by self-relaying.',
-      'A pause or a transaction filter a user cannot see coming - in the contracts, the RPC, or the node itself.',
+      'Transactions are only included probabilistically, with no guaranteed way to force one in.',
+      'A single relayer, or relayers that users cannot bypass by relaying their own transactions.',
+      'A pause or a transaction filter that can be applied without notice, in the contracts, the RPC or the node.',
     ],
   },
   openSource: {
     question: 'Can we read it, rebuild it, and run it ourselves?',
     summary:
-      'Everything needed to participate is published, under a license that lets you use it.',
+      'Everything needed to use the protocol is published under a license that allows running, modifying and forking it.',
     minimums: [
-      `A license granting the right to run, modify and fork - one on ${REFERENCE_SLOT}. Delayed-source counts only once the grant is in effect.`,
-      'Every component you need in order to participate is published: contracts, node, prover, interface.',
-      'Deployed bytecode verified against that source, with verifier contracts and program hashes anyone can regenerate.',
-      'It can be built and run locally, so forking is a real option rather than a licence to read.',
+      `A license granting the right to run, modify and fork, as listed on ${REFERENCE_SLOT}. Code under a delayed license counts only once that license has converted.`,
+      'Every component needed to use the protocol is published, such as the contracts, the interface and, for rollups, the node and prover.',
+      'Deployed bytecode is verified against the published source. Where there is a ZK verifier or a program hash, anyone can regenerate it from source.',
+      'It can be built and run locally, so it can actually be forked.',
     ],
     pullsDown: [
-      'A source-available license still reserving commercial or competing use.',
-      'A closed component in the critical path - prover, indexer or interface.',
-      'Unverified contracts, or a program hash nobody outside the team can reproduce.',
+      'A source-available license that restricts commercial or competing use.',
+      'A closed-source component that users depend on, such as the prover, indexer or interface.',
+      'Unverified contracts, or a program hash that no one outside the team can reproduce.',
     ],
     reference: {
       label: 'the OSI register of approved licenses',
@@ -54,33 +55,38 @@ export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
   privacy: {
     question: 'Does using it cost you your privacy?',
     summary:
-      'Privacy enforced by cryptography rather than by policy, with no way to undo it after the fact.',
+      'Privacy is enforced by cryptography, not by policy, and cannot be undone later.',
     minimums: [
-      'Unlinkability observers cannot undo: zk proofs, encrypted state or stealth addresses.',
-      'No backdoor. No privileged view key, no admin de-anonymization, nothing retroactive.',
-      'Private by default, not a mode most users never switch on.',
-      'A stated anonymity set, and an honest account of what stays public.',
+      'Outside observers cannot link transactions, thanks to ZK proofs, encrypted state or stealth addresses.',
+      'No backdoor: no privileged viewing key and no way for an admin to deanonymize users, now or retroactively.',
+      'Private by default, not an optional mode.',
+      'The size of the anonymity set is published, together with what remains public.',
     ],
     pullsDown: [
-      'Metadata that still reaches someone - a provider, an oracle, a sequencer - or an anonymity set too small to hide in.',
-      'Compliance gating or address screening anywhere in the stack, whatever the current policy says.',
-      'Privacy that depends on a relayer staying available, or that users can be pushed out of.',
+      'Metadata visible to a third party, such as a provider, an oracle or a sequencer, or an anonymity set too small to protect users.',
+      'Compliance checks or address screening anywhere in the stack, even if not currently enforced.',
+      'Privacy that depends on a relayer staying available, or that users can be excluded from.',
     ],
   },
   security: {
-    question: 'What has to go right for your funds to stay yours?',
+    question: 'Can users lose their funds?',
     summary:
-      'Less about the audit count than about who can move user funds, and how much warning there would be.',
+      'Who can move or freeze user funds, and how much notice users get before a change.',
     minimums: [
-      'Contracts holding user funds are immutable, or upgrades sit behind a delay long enough to exit.',
-      'State validated by the canonical route - proofs on L1, not an external oracle or a committee.',
-      'A small, calm surface: few dependencies, a quiet upgrade history, and time live without incident.',
-      'An honest account of what a single failure would cost - a second proof system, circuit breakers, or the bound stated plainly.',
+      'Contracts holding user funds cannot be upgraded, or upgrades wait at least 30 days, so users can exit first.',
+      'Where the system posts state to L1, that state is validated by proofs, not by an external oracle or a committee.',
+      `Few external dependencies, such as oracles, bridges or offchain services, and an ${REFERENCE_SLOT} of at least ${OSSIFICATION_SCORE_BANDS.good}, which takes about a year without a critical change.`,
+      'Protection against a single failure, such as a second proof system or circuit breakers, or a clear statement of the maximum possible loss.',
     ],
     pullsDown: [
-      'A lone proof system with known vulnerabilities, or a prover bug nobody has bounded.',
-      'A multisig that can swap an implementation or a root with no delay.',
-      'Cryptography that is not quantum-resistant, exposing users to harvest-now-decrypt-later.',
+      'A single proof system with known vulnerabilities, or no limit on what a prover bug could cost.',
+      'A multisig that can upgrade contracts or replace state roots without delay.',
+      'Cryptography that is not quantum-resistant.',
+      `An ossification score below ${OSSIFICATION_SCORE_BANDS.good} limits Security to medium. Below ${OSSIFICATION_SCORE_BANDS.warning}, which means a critical change in roughly the last five weeks, Security is bad and the project is not listed.`,
     ],
+    reference: {
+      label: 'ossification score',
+      href: '/publications/ossification',
+    },
   },
 }

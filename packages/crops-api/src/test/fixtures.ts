@@ -69,6 +69,22 @@ export const UNISWAP: CropsApiInputProject = {
   slug: 'uniswap-v3',
   name: 'Uniswap V3',
   crops: ALL_GOOD,
+  // Unchanged since 2021, so the score clears every band.
+  ossificationHistory: {
+    contracts: [
+      {
+        name: 'UniswapV3Factory',
+        address: FACTORY,
+        isVerified: true,
+        ossifyingSince: 1620000000,
+        codeChangeCount: 0,
+        stateChangeCount: 0,
+      },
+    ],
+    changes: [],
+    deployments: [1620000000],
+    observedSince: 1620000000,
+  },
   scalingInfo: {} as ProjectScalingInfo,
   contracts: {
     addresses: {

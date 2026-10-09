@@ -56,37 +56,93 @@ describe('crops', () => {
     })
   })
 
-  describe(qualifiesForGarden.name, () => {
-    const crops = (overrides: Partial<ProjectCrops> = {}): ProjectCrops => ({
-      censorshipResistance: { sentiment: 'good' },
-      openSource: { sentiment: 'good' },
-      privacy: { sentiment: 'good' },
-      security: { sentiment: 'good' },
-      ...overrides,
-    })
+  const crops = (overrides: Partial<ProjectCrops> = {}): ProjectCrops => ({
+    censorshipResistance: { sentiment: 'good' },
+    openSource: { sentiment: 'good' },
+    privacy: { sentiment: 'good' },
+    security: { sentiment: 'good' },
+    ...overrides,
+  })
 
+  describe(qualifiesForGarden.name, () => {
     it('lets a project in when no crop is red', () => {
       const resolved = resolveProjectCrops(
         crops({
           privacy: { status: 'fullyTransparent' },
           security: { sentiment: 'warning', status: 'partiallyReviewed' },
         }),
+        undefined,
       )
-      expect(qualifiesForGarden(resolved)).toEqual(true)
+      expect(qualifiesForGarden(resolved, true)).toEqual(true)
     })
 
     it('keeps a project out when any crop is red', () => {
       const resolved = resolveProjectCrops(
         crops({ security: { sentiment: 'bad' } }),
+        undefined,
       )
-      expect(qualifiesForGarden(resolved)).toEqual(false)
+      expect(qualifiesForGarden(resolved, true)).toEqual(false)
+    })
+
+    it('keeps a project out until it has an ossification score', () => {
+      const resolved = resolveProjectCrops(crops(), undefined)
+      expect(qualifiesForGarden(resolved, false)).toEqual(false)
     })
 
     it('keeps it out even when the red crop is only partially reviewed', () => {
       const resolved = resolveProjectCrops(
         crops({ security: { sentiment: 'bad', status: 'partiallyReviewed' } }),
+        undefined,
       )
-      expect(qualifiesForGarden(resolved)).toEqual(false)
+      expect(qualifiesForGarden(resolved, true)).toEqual(false)
+    })
+  })
+
+  describe('Security capped by ossification', () => {
+    const security = (score: number, isUnverified = false) =>
+      resolveProjectCrops(
+        crops({ security: { sentiment: 'good', missing: ['Written.'] } }),
+        { score, isUnverified },
+      ).security
+
+    it('keeps the written rating from 80 up', () => {
+      expect(security(80)).toHaveSubset({
+        sentiment: 'good',
+        missing: ['Written.'],
+      })
+    })
+
+    it('caps at warning below 80 and says why first', () => {
+      expect(security(79)).toHaveSubset({
+        sentiment: 'warning',
+        missing: [
+          'Ossification score below 80: critical contracts changed within about the last year.',
+          'Written.',
+        ],
+      })
+    })
+
+    it('rates it bad below 50, which keeps the project out', () => {
+      const capped = resolveProjectCrops(crops(), {
+        score: 49,
+        isUnverified: false,
+      })
+      expect(capped.security.sentiment).toEqual('bad')
+      expect(qualifiesForGarden(capped, true)).toEqual(false)
+    })
+
+    it('blames unverified contracts rather than a recent change', () => {
+      expect(security(0, true).missing[0]).toEqual(
+        'No ossification score: some critical contracts are unverified.',
+      )
+    })
+
+    it('never raises a written rating', () => {
+      const capped = resolveProjectCrops(
+        crops({ security: { sentiment: 'bad' } }),
+        { score: 99, isUnverified: false },
+      )
+      expect(capped.security.sentiment).toEqual('bad')
     })
   })
 })

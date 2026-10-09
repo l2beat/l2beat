@@ -24,6 +24,10 @@ import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import {
+  type CropsOssificationScore,
+  scoreOssification,
+} from '~/server/features/garden/resolveCrops'
+import {
   getProjectOssification,
   type ProjectOssificationView,
 } from '~/server/features/projects/ossification/getProjectOssification'
@@ -57,6 +61,8 @@ export interface PrivacyProjectDetails {
   permissions?: Record<string, ProjectPermissions>
   discoveryUpdates?: ProjectDiscoveryUpdate[]
   ossification?: ProjectOssificationView
+  /** From config, so it holds even while the ossification feature is off. */
+  ossificationScore: CropsOssificationScore | undefined
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
   crops?: ProjectCrops
@@ -278,6 +284,7 @@ export async function getPrivacyProjectDetails(
     permissions: project.permissions,
     discoveryUpdates: project.discoveryUpdates,
     ossification,
+    ossificationScore: scoreOssification(project.ossificationHistory, now),
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
     crops: project.crops,

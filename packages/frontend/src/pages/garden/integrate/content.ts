@@ -23,7 +23,7 @@ export const CROPS_API_ENDPOINTS: CropsApiEndpoint[] = [
     path: '/v1/address/{chainId}/{address}.json',
     summary: 'Which protocol is this address?',
     description:
-      'The reviewed protocols a contract, proxy implementation or permission holder belongs to, with a rating per crop. A shared contract lists every protocol that claims it, each once, with the name that protocol gives it.',
+      'The reviewed protocols a contract, proxy implementation or permission holder belongs to, with a rating per property. A shared contract lists every protocol that claims it, each once, with the name that protocol gives it.',
     params: [
       {
         name: 'chainId',
@@ -38,16 +38,16 @@ export const CROPS_API_ENDPOINTS: CropsApiEndpoint[] = [
     path: '/v1/project/{id}.json',
     summary: 'Everything about one protocol',
     description:
-      'The crop evaluations of one protocol, with the reasoning behind each rating.',
+      'The CROPS evaluations of one protocol, with the reasoning behind each rating.',
     params: [{ name: 'id', description: 'The project id or its slug.' }],
     notFound: 'L2BEAT has not reviewed this project.',
   },
   {
     key: 'crops',
     path: '/v1/crops.json',
-    summary: 'The whole garden',
+    summary: 'All reviewed protocols',
     description:
-      'Every reviewed protocol in one response, with the full crop evaluations and the attestation that names them.',
+      'Every reviewed protocol in one response, with the full CROPS evaluations and the attestation that names them.',
     params: [],
   },
 ]
@@ -64,11 +64,11 @@ export const VERIFY_STEPS = [
   'Check `revocationTime == 0`. When the set changes we revoke the old attestation and issue the next revision, so a revoked attestation is a stale claim and must not be shown.',
   'Check `attester` and `schema` against the values below, so an attestation someone else made cannot be mistaken for ours.',
   'Decode `projectIds` - these are the protocols we have reviewed, as of `reviewedAt`, at revision `revision`.',
-  'For details on the rating per crop, the reasoning, what we did not look at - read `/v1/project/{id}.json`. Ratings might change as protocols change.',
+  'For the rating per property, the reasoning, and what we did not look at, read `/v1/project/{id}.json`. Ratings might change as protocols change.',
 ]
 
 export const BADGE_RULES = [
-  'Link the badge to the garden, so a visitor can read the evaluation rather than only see that one exists.',
+  'Link the badge to your project page on L2BEAT, so a visitor can read the evaluation rather than only see that one exists.',
   'The badge says we have reviewed you and named you onchain. It is not a certification, an audit, or an endorsement - please do not describe it as any of those.',
   'Your rating can change. Make sure to check the API for the latest status before showing the badge.',
 ]

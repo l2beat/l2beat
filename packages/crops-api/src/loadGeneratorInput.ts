@@ -9,7 +9,13 @@ export async function loadGeneratorInput(): Promise<CropsApiInput> {
     projectService.getProjects({
       where: ['crops'],
       select: ['crops'],
-      optional: ['contracts', 'permissions', 'scalingInfo', 'privacyInfo'],
+      optional: [
+        'contracts',
+        'permissions',
+        'scalingInfo',
+        'privacyInfo',
+        'ossificationHistory',
+      ],
     }),
     loadChains(projectService),
   ])

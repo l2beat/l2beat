@@ -896,6 +896,7 @@ export const aztecnetwork: ScalingProject = {
       notReviewed: [
         CROP_NOTES.notReviewed.quantumSafety,
         CROP_NOTES.notReviewed.circuitBreakers,
+        CROP_NOTES.notReviewed.ossification,
       ],
     },
   },

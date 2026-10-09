@@ -255,7 +255,7 @@ export const tornadoCash: BaseProject = {
     },
     security: {
       sentiment: 'good',
-      points: ['Simple, well-ossified design.'],
+      points: ['Simple design.'],
       missing: [
         'Not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
         'Brittle onchain governance (token voting) controls the official frontend (ENS+IPFS).',

@@ -16,7 +16,7 @@ export function ClosingSection() {
         />
         <div className="relative mx-auto flex max-w-2xl flex-col items-center">
           <h2 className="text-balance font-bold text-heading-24 md:text-heading-32">
-            Ready to plant?
+            Ready to submit?
           </h2>
           <p className="mt-3 text-pretty text-paragraph-15 text-secondary md:text-paragraph-16">
             Send us the details and we will take it from there. Questions, or

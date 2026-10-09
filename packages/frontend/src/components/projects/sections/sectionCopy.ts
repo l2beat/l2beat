@@ -1,4 +1,5 @@
 import { formatNumberWithCommas } from '@l2beat/shared-pure'
+import type { GardenListing } from '~/components/garden/crops'
 import type { PrivacyAnonymitySetCoverage } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetCoverage'
 
 /*
@@ -143,8 +144,15 @@ export function anonymitySetByHoldingDurationDescription(windowDays: number) {
   return `An estimate of how many unique addresses you blend in with, depending on how long you leave your deposit in the pool. It is based on historic data of past deposits: each point counts depositors from the preceding period, so holding for up to ${windowDays} days effectively means blending in with everyone who deposited during the last ${windowDays} days.`
 }
 
-export function gardenVerdictText(inGarden: boolean) {
-  return inGarden ? 'Grows in the garden.' : 'Not in the garden yet.'
+export function gardenVerdictText(listing: GardenListing) {
+  switch (listing) {
+    case 'listed':
+      return 'Listed in The Infinite Garden.'
+    case 'ratedBad':
+      return 'Not listed in The Infinite Garden: a property is rated bad.'
+    case 'noOssificationScore':
+      return 'Not listed in The Infinite Garden yet: it has no ossification score.'
+  }
 }
 
 /** Split around the stage, which the page shows as a badge. */
