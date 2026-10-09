@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { getDiffHistory } from '../../../api/api'
 import type {
   ApiDiffHistoryEntry,
