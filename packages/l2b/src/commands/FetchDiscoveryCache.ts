@@ -2,7 +2,10 @@ import { getDiscoveryPaths, SQLiteCache } from '@l2beat/discovery'
 import chalk from 'chalk'
 import { command, positional, string } from 'cmd-ts'
 import { createCliLogger } from '../implementations/common/CliLogger'
-import { fetchDiscoveryCache } from '../implementations/fetch-discovery-cache/fetchDiscoveryCache'
+import {
+  FETCHED_KINDS,
+  fetchDiscoveryCache,
+} from '../implementations/fetch-discovery-cache/fetchDiscoveryCache'
 
 const SCAN_COUNT = 10_000
 
@@ -19,31 +22,33 @@ export const FetchDiscoveryCache = command({
   handler: async (args) => {
     const { commandOptions, createClient } = await import('redis')
     const cli = createCliLogger({ output: process.stdout, quiet: false })
-    const client = createClient({
-      url: args.redisUrl,
-      socket: { reconnectStrategy: false },
+    const clients = FETCHED_KINDS.map(() => {
+      const client = createClient({
+        url: args.redisUrl,
+        socket: { reconnectStrategy: false },
+      })
+      client.on('error', (error) => cli.log(chalk.red(String(error))))
+      return client
     })
-    client.on('error', (error) => cli.log(chalk.red(String(error))))
     const cachePath = getDiscoveryPaths().cache
     const cache = new SQLiteCache(cachePath)
 
-    await client.connect()
     try {
+      await Promise.all(clients.map((client) => client.connect()))
       cli.log(`Fetching into ${chalk.magenta(cachePath)}`)
       await fetchDiscoveryCache(
         cli,
-        {
+        clients.map((client) => ({
           scan: (cursor, pattern) =>
             client.scan(cursor, { MATCH: pattern, COUNT: SCAN_COUNT }),
           dump: (key) =>
             client.dump(commandOptions({ returnBuffers: true }), key),
-        },
+        })),
         cache,
       )
     } finally {
-      if (client.isOpen) {
-        await client.quit()
-      }
+      const openClients = clients.filter((client) => client.isOpen)
+      await Promise.all(openClients.map((client) => client.quit()))
     }
   },
 })

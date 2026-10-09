@@ -4,7 +4,11 @@ import { mkdtempSync, rmSync } from 'fs'
 import { tmpdir } from 'os'
 import path from 'path'
 import { createCliLogger } from '../common/CliLogger'
-import { type DumpSource, fetchDiscoveryCache } from './fetchDiscoveryCache'
+import {
+  type DumpSource,
+  FETCHED_KINDS,
+  fetchDiscoveryCache,
+} from './fetchDiscoveryCache'
 
 describe(fetchDiscoveryCache.name, () => {
   let directory: string
@@ -31,7 +35,11 @@ describe(fetchDiscoveryCache.name, () => {
     })
     await cache.set('ethereum.getSource-v3.0x2', 'local source 2')
 
-    const stats = await fetchDiscoveryCache(quietCli(), source, cache)
+    const stats = await fetchDiscoveryCache(
+      quietCli(),
+      onePerKind(source),
+      cache,
+    )
 
     expect(stats.keysScanned).toEqual(5)
     expect(stats.keysFetched).toEqual(4)
@@ -55,13 +63,46 @@ describe(fetchDiscoveryCache.name, () => {
       dump: async () => null,
     }
 
-    const stats = await fetchDiscoveryCache(quietCli(), evictingSource, cache)
+    const stats = await fetchDiscoveryCache(
+      quietCli(),
+      onePerKind(evictingSource),
+      cache,
+    )
 
     expect(stats.keysEvicted).toEqual(1)
     expect(stats.keysFetched).toEqual(0)
     expect(await cache.get('ethereum.getSource-v3.0x1')).toEqual(undefined)
   })
+
+  it('scans each kind on its own source', async () => {
+    const scannedPatterns: string[][] = FETCHED_KINDS.map(() => [])
+    const sources: DumpSource[] = scannedPatterns.map((patterns) => ({
+      scan: async (_, pattern) => {
+        patterns.push(pattern)
+        return { cursor: 0, keys: [] }
+      },
+      dump: async () => null,
+    }))
+
+    await fetchDiscoveryCache(quietCli(), sources, cache)
+
+    expect(scannedPatterns).toEqual(
+      FETCHED_KINDS.map((kind) => [`*.${kind}.*`]),
+    )
+  })
+
+  it('requires one source per kind', async () => {
+    const source = fakeSource({})
+
+    await expect(
+      fetchDiscoveryCache(quietCli(), [source], cache),
+    ).toBeRejectedWith('Expected one source per fetched kind')
+  })
 })
+
+function onePerKind(source: DumpSource): DumpSource[] {
+  return FETCHED_KINDS.map(() => source)
+}
 
 function quietCli() {
   return createCliLogger({ output: process.stdout, quiet: true })
