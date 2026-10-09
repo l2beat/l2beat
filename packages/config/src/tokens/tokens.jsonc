@@ -8446,6 +8446,42 @@
           }
         ]
       }
+    },
+    {
+      // Ethena USDe OFT; peer is the USDe OFT adapter (lockbox) on ethereum.
+      "symbol": "USDe",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "coingeckoId": "ethena-usde",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1761566187
+    },
+    {
+      // Ethena sUSDe OFT; peer is the sUSDe OFT adapter (lockbox) on ethereum.
+      "symbol": "sUSDe",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "coingeckoId": "ethena-staked-usde",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1761566506
     }
   ],
   "soneium": [
@@ -9994,6 +10030,64 @@
           }
         ]
       }
+    },
+    {
+      // Ethena USDe OFT; peer is the USDe OFT adapter (lockbox) on ethereum.
+      "symbol": "USDe",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "coingeckoId": "ethena-usde",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      // manual override: the megaeth RPC prunes state. Creation tx in block 4311884.
+      "deploymentTimestamp": 1767108895
+    },
+    {
+      // Ethena sUSDe OFT; peer is the sUSDe OFT adapter (lockbox) on ethereum.
+      "symbol": "sUSDe",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "coingeckoId": "ethena-staked-usde",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      // manual override: the megaeth RPC prunes state. Creation tx in block 4312010.
+      "deploymentTimestamp": 1767109021
+    },
+    {
+      // Cap staked cUSD OFT; peer is an adapter locking ethereum stcUSD.
+      // Not a vault here (holds no megaeth cUSD), so no overlap with megaeth cUSD.
+      "symbol": "stcUSD",
+      "address": "0x88887bE419578051FF9F4eb6C858A951921D8888",
+      "coingeckoId": "staked-cap-usd",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      // manual override: the megaeth RPC prunes state. Creation tx in block 4237024.
+      "deploymentTimestamp": 1767034035
     }
   ],
   "roninnetwork": [
