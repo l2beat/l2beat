@@ -70,11 +70,11 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning',
+      sentiment: 'bad',
       exposureShort:
-        'Anyone on your network path sees when your wallet deposits and when the app contacts the operator, and can match both to the chain.',
-      exposureContinued: 'The SDK has no Tor or proxy setting.',
-      advice: 'Route the app through Tor with system-wide tools.',
+        "The SDK's core is closed source with no open alternative, so what it sends, and where, is up to the operator and can change with any release.",
+      exposureContinued:
+        "Today, anyone on your network path sees when your wallet deposits and when the app contacts the operator, and can match both to the chain. The SDK has no Tor or proxy setting, and the operator's server tells it which endpoints to use.",
       interior: {
         ...INTERIOR,
         linkage: {
@@ -88,6 +88,11 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
           url: 'https://base.privacyboost.io/api/v1/info',
         },
         { title: 'SDK 1.2.5, configured with one server URL', url: SDK },
+        {
+          title:
+            'The compiled core builds and sends every request, its Rust source is unpublished',
+          url: SDK + '?activeTab=code',
+        },
       ],
     },
     privilegedInsider: {

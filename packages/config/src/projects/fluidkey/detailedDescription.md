@@ -14,7 +14,7 @@ Your keys come from a wallet signature and a four-digit PIN. On the web, that wa
 
 ### App
 
-The web and mobile apps are closed source. The web app reads the chain only through Fluidkey's servers. Outside services see your login (Privy), your username (Intercom, for support) and app errors (Sentry). Banking and identity checks use Noah, Bridge, Persona and Sumsub. Two open tools work without the app: the [stealth account kit](https://github.com/fluidkey/fluidkey-stealth-account-kit) creates addresses, and the [recovery app](https://github.com/fluidkey/sara) finds and withdraws your funds through any RPC.
+The web and mobile apps are closed source. The web app reads the chain only through Fluidkey's servers. Outside services see your login (Privy), your username (Intercom, for support) and app errors (Sentry). Banking and identity checks use Noah, Bridge, Persona and Sumsub. For recovery, two open tools work without the app: the [stealth account kit](https://github.com/fluidkey/fluidkey-stealth-account-kit) creates addresses, and the [recovery app](https://github.com/fluidkey/sara) finds and withdraws your funds through any RPC.
 
 ### Special features
 

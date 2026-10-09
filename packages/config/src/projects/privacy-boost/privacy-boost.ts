@@ -347,7 +347,7 @@ export const privacyBoost: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The circuits are published. The epoch, forced withdrawal and gift claim verification keys deployed in September 2026 remain unreproduced, and the TEE source code is unpublished.',
+        "The circuits are published. The epoch, forced withdrawal and gift claim verification keys deployed in September 2026 remain unreproduced, and the source code of the TEE and of the SDK's compiled core is unpublished.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

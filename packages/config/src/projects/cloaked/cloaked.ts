@@ -73,7 +73,7 @@ export const cloaked: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The web app, its vault and the browser extension are closed source. The open stealth library and recovery tool derive keys and recover funds without Cloaked. The API, ENS gateway, indexer and relay are closed.',
+        'The web app and the browser extension are closed source. The open stealth library and recovery tool derive keys and recover funds without Cloaked. The API, ENS gateway, indexer and relay are closed.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.stealthAddresses,

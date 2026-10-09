@@ -82,13 +82,11 @@ export function fluidkeyAdversaries(accounts: number) {
         ],
       },
       networkObserver: {
-        sentiment: 'warning',
+        sentiment: 'bad',
         exposureShort:
-          'The app is closed source, so what it sends to third parties is up to Fluidkey and can change at any time.',
+          'The app is closed source with no open alternative, so what it sends to third parties is up to Fluidkey and can change at any time.',
         exposureContinued:
           "Today, the web app reads the chain only through Fluidkey's servers and gives outside services just your login and username. A payer who looks up your name through a third-party RPC shows it your name and the new address.",
-        advice:
-          'Create addresses with the open kit and give them to payers yourself. Find and spend your funds with the open recovery app on your own node, paying gas from a new wallet, because the app deploys Safes from the wallet you connect.',
         sources: [
           {
             title:
@@ -96,16 +94,9 @@ export function fluidkeyAdversaries(accounts: number) {
             url: 'https://app.fluidkey.com',
           },
           {
-            title: 'Local address prediction needs no RPC',
-            url: KIT + 'predictStealthSafeAddress.ts#L120-L180',
-          },
-          {
-            title: 'Recovery app accepts a custom RPC',
-            url: SARA + '/src/components/RecoverAddressesJourneyStep.tsx#L468',
-          },
-          {
-            title: 'Recovery app deploys the Safe from the connected wallet',
-            url: SARA + '/src/hooks/useDeployStealthSafe.ts#L63-L99',
+            contract: 'OffchainResolver',
+            title:
+              "Name lookups return the signed answer through the payer's RPC",
           },
         ],
       },

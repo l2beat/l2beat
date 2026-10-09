@@ -1,12 +1,13 @@
 ## Funds can be stolen if
-1. a user relies on the hosted wallet and it is malicious or compromised and exfiltrates derived spending keys. The production wallet is closed source and has no published reproducible build, so users cannot inspect its source or verify the code being served.
-2. the accepted ENS signer returns an attacker-controlled payment address for a Cloaked name. The resolver authenticates the answer but does not prove that the intended recipient controls it.
+1. the closed-source app is malicious or compromised and exfiltrates spending keys.
+2. the accepted ENS signer returns an attacker-controlled payment address for a Cloaked name.
 <br>
 ## Funds can be lost if
-1. a user loses the passkey and encrypted backup, or the wallet and PIN, needed to re-derive their private spending keys.
-2. the service and client derive different address data and a payment is sent to an address for which the user cannot recreate the private key.
+1. a user loses the passkey and encrypted backup, or the wallet and PIN, needed to re-derive the spending key.
+2. the service and the app derive different address data and a payment reaches an address whose key the user cannot recreate.
 <br>
 ## Privacy can be lost if
-1. Cloaked, or an attacker who obtains its viewing data, uses the service's viewing capability and index to link an account's stealth addresses and onchain activity.
-2. spending from several stealth addresses together, reusing destinations, or recognizable timing and amounts links otherwise separate payments onchain.
-3. a user relies on the Incognito balance, because Cloaked's relay observes the association between Privacy Pools deposits and withdrawals even though it is hidden from public onchain observers.
+1. Cloaked, or anyone who obtains its records now or later, uses the viewing keys to link every account's addresses (see privileged insider and future adversary).
+2. Cloaked's relayers and fee Safe mark every spend, so an address hides only among Cloaked's few users (see chain analyst).
+3. Cloaked changes its closed-source app to send account data to third parties, which users cannot check (see network observer).
+4. a user relies on the Incognito balance, whose relay keeps the link between deposit and withdrawal (see privileged insider).
