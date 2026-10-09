@@ -76,7 +76,9 @@ for (const viewport of Object.keys(ceilings)) {
   test(`watching /blobs at ${viewport} stays under its ceiling`, async ({
     browser,
   }) => {
-    test.setTimeout((WATCHES + SPARE_WATCHES + 3) * SLOT_MS + 30_000)
+    // Up to a slot to reach the first watch, then two slots each: a watch
+    // ends half a second into the next slot, too late to start on it
+    test.setTimeout((1 + 2 * (WATCHES + SPARE_WATCHES)) * SLOT_MS + 30_000)
     const [width, height] = viewport.split('x').map(Number)
     const { page, cdp, close } = await openBlobs(browser, width!, height!)
 

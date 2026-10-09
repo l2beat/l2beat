@@ -13,9 +13,7 @@ export function Logo({
   small = false,
   ...props
 }: LogoProps) {
-  // `begin` names the beat by id, and an id with React's punctuation in it
-  // cannot be named there
-  const beatId = `logo-beat-${useId().replace(/[^\w-]/g, '')}`
+  const beatId = toBeatId(useId())
   return (
     <svg
       className={cn('-mt-0.5 overflow-visible', className)}
@@ -75,4 +73,9 @@ export function Logo({
       )}
     </svg>
   )
+}
+
+/** React's ids have colons in them, which `begin` would read as syntax */
+function toBeatId(reactId: string) {
+  return `logo-beat-${reactId.replace(/\W/g, '')}`
 }
