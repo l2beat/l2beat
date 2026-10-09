@@ -95,8 +95,9 @@ function Plant({ entry, index }: { entry: CropEntry; index: number }) {
     <div
       role="img"
       aria-label={`${definition.label}: ${getCropStatusText(evaluation.status, evaluation.sentiment)}`}
-      // The mound sinks a little into the soil so the plant reads as planted.
-      className="-mb-1.5 flex justify-center"
+      // The mound's centre sits 11.5% of the plant's height above its base;
+      // shifting by that buries the lower half in the soil, so it reads as planted.
+      className="flex translate-y-[11.5%] justify-center"
     >
       <CropPlant
         status={evaluation.status}
