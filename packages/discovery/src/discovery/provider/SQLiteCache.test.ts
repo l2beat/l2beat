@@ -80,6 +80,15 @@ describe('SQLiteCache', () => {
       expect(await sqlCache.get('a')).toEqual('new')
       expect(await sqlCache.get('b')).toEqual('value')
     }))
+
+  it('closes a database it has not queried yet', async () => {
+    const file = randomSqlFile()
+    const sqlCache = new SQLiteCache(file)
+
+    await sqlCache.close()
+
+    destroyFile(file)
+  })
 })
 
 interface CacheEntry {

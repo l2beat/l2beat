@@ -19,7 +19,8 @@ describe(fetchDiscoveryCache.name, () => {
     cache = new SQLiteCache(path.join(directory, 'discovery.sqlite'))
   })
 
-  afterEach(() => {
+  afterEach(async () => {
+    await cache.close()
     rmSync(directory, { recursive: true, force: true })
   })
 

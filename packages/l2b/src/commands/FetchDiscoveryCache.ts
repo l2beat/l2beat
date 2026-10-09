@@ -53,6 +53,7 @@ export const FetchDiscoveryCache = command({
     } finally {
       const openClients = clients.filter((client) => client.isOpen)
       await Promise.all(openClients.map((client) => client.quit()))
+      await cache.close()
     }
   },
 })

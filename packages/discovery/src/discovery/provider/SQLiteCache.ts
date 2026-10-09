@@ -81,6 +81,18 @@ export class SQLiteCache implements DiscoveryCache {
     )
   }
 
+  close(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.db.close((error: Error | null) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve()
+      })
+    })
+  }
+
   private async init(): Promise<void> {
     if (this.initialized) {
       return
