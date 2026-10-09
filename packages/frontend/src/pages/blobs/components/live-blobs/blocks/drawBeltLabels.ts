@@ -72,6 +72,39 @@ export function drawBlockNumbers(
 }
 
 /**
+ * "Missed" up a rack whose slot got no block, from its floor: with no blobs
+ * either way, only this tells a slot nobody proposed a block in from a block
+ * nobody posted to
+ */
+export function drawMissedLabels(
+  ctx: CanvasRenderingContext2D,
+  scene: BeltScene,
+  belt: BeltPosition,
+  reveal: number,
+) {
+  const { layout, palette, blocks } = scene
+  ctx.save()
+  ctx.textAlign = 'left'
+  ctx.textBaseline = 'middle'
+  ctx.font = `500 ${layout.compact ? 9 : 11}px ${FONT}`
+  ctx.fillStyle = palette.textSecondary
+  const bottom = layout.floorY - layout.rackPadding
+
+  for (let slot = belt.first; slot <= belt.last; slot++) {
+    if (blocks.get(slot)?.status !== 'missed') continue
+    const left = rackLeft(belt, layout, slot)
+    ctx.globalAlpha =
+      presenceAtEnds(layout, left, left + layout.rackWidth) * reveal
+    ctx.save()
+    ctx.translate(left + layout.rackWidth / 2, bottom)
+    ctx.rotate(-Math.PI / 2)
+    ctx.fillText('Missed', 0, 0)
+    ctx.restore()
+  }
+  ctx.restore()
+}
+
+/**
  * "+5 Base Chain" where a batch is about to land in the bay, as its tiles
  * start to drop, rising as it fades. A label rides with its block and is gone
  * before the block leaves the bay: left behind, it would seem to name what

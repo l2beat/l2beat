@@ -20,6 +20,7 @@ import {
   drawBayCaption,
   drawBlockNumbers,
   drawLimitLabels,
+  drawMissedLabels,
 } from './drawBeltLabels'
 import {
   DROP_STAGGER,
@@ -54,6 +55,7 @@ export function drawBelt(
   // Pass 2: the belt, each block fading out towards the ends, and the bay's
   // light between the racks and the tiles in them
   drawRacks(ctx, scene, belt)
+  drawMissedLabels(ctx, scene, belt, reveal)
   drawBay(ctx, scene, belt, landingPulse(scene, playback, belt, now))
   drawTiles(ctx, scene, playback, belt, now, frame, reveal)
   drawBayRing(ctx, scene, belt)
@@ -98,10 +100,14 @@ function drawRacks(
   scene: BeltScene,
   belt: BeltPosition,
 ) {
-  const { layout, layers } = scene
+  const { layout, layers, blocks } = scene
   const { rackTop, rackWidth, rackHeight } = layout
 
   for (let slot = belt.first; slot <= belt.last; slot++) {
+    const sealedRack =
+      blocks.get(slot)?.status === 'missed'
+        ? layers.missedRack
+        : layers.sealedRack
     const left = rackLeft(belt, layout, slot)
     const presence = presenceAtEnds(layout, left, left + rackWidth)
     // The rack of the slot being made shows the room it has as it comes, so
@@ -113,7 +119,7 @@ function drawRacks(
     }
     if (sealed > 0) {
       ctx.globalAlpha = presence * sealed
-      ctx.drawImage(layers.sealedRack, left, rackTop, rackWidth, rackHeight)
+      ctx.drawImage(sealedRack, left, rackTop, rackWidth, rackHeight)
     }
   }
   ctx.globalAlpha = 1
