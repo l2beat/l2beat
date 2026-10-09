@@ -1,5 +1,6 @@
 import type {
   ProjectCrops,
+  ProjectDefiInfo,
   ProjectPrivacyInfo,
   ProjectScalingInfo,
 } from '@l2beat/config'
@@ -265,6 +266,7 @@ export interface CropsSourceProject {
   ossificationHistory?: OssificationHistory | undefined
   privacyInfo?: ProjectPrivacyInfo | undefined
   scalingInfo?: ProjectScalingInfo | undefined
+  defiInfo?: ProjectDefiInfo | undefined
 }
 
 export function resolveCropsProject(
@@ -306,6 +308,12 @@ function getGardenProjectPath(project: CropsSourceProject): string | null {
   }
   if (project.scalingInfo) {
     return `/layer2s/projects/${project.slug}`
+  }
+  // While the DeFi section is off on l2beat.com, a DeFi project has a page
+  // only when the ossification view shows it, as in the frontend's
+  // hasDefiProjectPage.
+  if (project.defiInfo && project.ossificationHistory) {
+    return `/defi/projects/${project.slug}`
   }
   return null
 }

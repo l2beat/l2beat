@@ -14,6 +14,7 @@ export async function loadGeneratorInput(): Promise<CropsApiInput> {
         'permissions',
         'scalingInfo',
         'privacyInfo',
+        'defiInfo',
         'ossificationHistory',
       ],
     }),
