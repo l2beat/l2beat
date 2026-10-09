@@ -4,7 +4,7 @@ import { RiskAnalysisUnderReview } from '~/components/rosette/RiskAnalysisUnderR
 import type { RosetteValue } from '~/components/rosette/types'
 import { SentimentText } from '~/components/SentimentText'
 
-const TITLE = 'Privacy risk analysis'
+const TITLE = 'Privacy assessment'
 
 /**
  * The privacy take on the L2 risk analysis, with each verdict explained by
