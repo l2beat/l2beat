@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { Dialog } from '../../../components/Dialog'
 import { usePanelStore } from '../store/panel-store'
 import { ClosedSearch } from './ClosedSearch'

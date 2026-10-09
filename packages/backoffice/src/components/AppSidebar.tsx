@@ -8,7 +8,7 @@ import {
   ShieldCheckIcon,
   SigmaIcon,
 } from 'lucide-react'
-import { Link, matchPath, useLocation } from 'react-router-dom'
+import { Link, matchPath, useLocation } from 'react-router'
 import {
   Sidebar,
   SidebarContent,

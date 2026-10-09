@@ -13,16 +13,16 @@ const LEGEND: {
   {
     sentiment: 'good',
     description:
-      "An average user's privacy can't be compromised by this adversary.",
+      "The promise holds for a careful user with the app's own settings.",
   },
   {
     sentiment: 'warning',
     description:
-      'Privacy can be compromised, but a careful user taking extra steps can avoid it.',
+      'The promise holds only with significant extra work, like a custom build or your own servers.',
   },
   {
     sentiment: 'bad',
-    description: 'Privacy can be compromised and there is no way around it.',
+    description: 'The promise breaks, and no reasonable effort prevents that.',
   },
 ]
 
@@ -51,7 +51,7 @@ export function PrivacyRosetteLegend({ className }: { className?: string }) {
             How to read the privacy rosette
           </h2>
           <p className="mt-1 text-pretty font-medium text-label-value-12 text-secondary">
-            Each slice is one adversary trying to break the protocol's privacy.
+            Each slice is one adversary testing the protocol's privacy promise.
           </p>
         </div>
         <ul className="grid min-w-0 flex-1 gap-x-6 gap-y-2 md:grid-cols-3">

@@ -1,4 +1,4 @@
-import { RouterProvider } from 'react-router-dom'
+import { RouterProvider } from 'react-router/dom'
 import { CodeAppModule } from './apps/code/CodeApp'
 import { type AppModule, createRouter } from './apps/createRouter'
 import { DiffoveryAppModule } from './apps/diffovery/DiffoveryApp'

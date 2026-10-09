@@ -38,21 +38,21 @@ const GROUPS: PrivacySummaryGroupConfig[] = [
     field: 'linkage',
     label: 'Link privacy',
     description:
-      'Breaks the link between deposits and withdrawals; both stay public.',
+      'Hides which deposit became which withdrawal. Both stay public.',
     hiddenColumns: [COLUMNS.volume30d],
   },
   {
     field: 'recipient',
     label: 'Recipient privacy',
     description:
-      'Hides who is paid: each transfer lands at a fresh one-time address.',
+      'Hides who is paid. Each payment lands at a fresh one-time address.',
     // Stealth payments lock nothing in a contract and need no ZK proofs.
     hiddenColumns: [COLUMNS.tvl, COLUMNS.trustedSetup],
   },
   {
     field: 'amount',
     label: 'Amount privacy',
-    description: 'Hides how much moves: balances and transfers are encrypted.',
+    description: 'Hides how much moves. Balances and transfers are encrypted.',
     // No ZK proofs, and the crowd a deposit hides in says nothing about how
     // well its amount is hidden.
     hiddenColumns: [
