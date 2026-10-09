@@ -3,12 +3,38 @@ import { expect } from 'earl'
 import { SLIDE_TIME } from './blocks/beltPosition'
 import { BATCH_STAGGER, LAND_AFTER } from './blocks/motion'
 import {
+  cameAfterLoad,
+  createLandings,
   firstHeld,
   type Held,
   holdBack,
   holdLimitMs,
   secondsUntilSlideEnds,
 } from './landings'
+
+// Methodology: one page's landings are asked about the block it loaded with,
+// as every number does on the first data, and then about later blocks.
+describe(cameAfterLoad.name, () => {
+  it('takes the block the page loaded with for no arrival, and later ones for arrivals', () => {
+    const landings = createLandings()
+
+    expect(cameAfterLoad(landings, 1000)).toEqual(false)
+    expect(cameAfterLoad(landings, 1000)).toEqual(false)
+    expect(cameAfterLoad(landings, 1001)).toEqual(true)
+  })
+
+  it('takes a block for an arrival once the chain took back the one the page loaded with', () => {
+    const landings = createLandings()
+    cameAfterLoad(landings, 1000)
+
+    expect(cameAfterLoad(landings, 999)).toEqual(false)
+    expect(cameAfterLoad(landings, 1000)).toEqual(true)
+  })
+
+  it('has no block to land before the first data', () => {
+    expect(cameAfterLoad(createLandings(), undefined)).toEqual(false)
+  })
+})
 
 // A block of n one-blob batches lands its last one latest; the number must
 // still be waiting for it then, whatever n the blob limit allows.
