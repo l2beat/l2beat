@@ -609,9 +609,6 @@ importers:
       lru_map:
         specifier: 0.4.1
         version: 0.4.1
-      sqlite3:
-        specifier: 5.1.7
-        version: 5.1.7(supports-color@8.1.1)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
