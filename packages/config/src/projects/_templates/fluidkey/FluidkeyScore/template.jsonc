@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FluidkeyScore",
+  "description": "Non-transferable ERC-20 score that Fluidkey's distributor allocates to its users, based partly on their total balance. Only the owner and whitelisted senders can transfer it.",
+  "category": "core",
+  "ignoreInWatchMode": ["holders", "totalSupply"],
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "holders": {
+      "description": "Number of distinct addresses that ever received the score, the distributor included.",
+      "handler": {
+        "type": "event",
+        "add": { "event": "Transfer" },
+        "select": "to",
+        "dedupBy": "to"
+      },
+      "edit": ["length"]
+    },
+    "owner": {
+      "description": "Owner of the score token.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "choose which addresses may transfer the score, such as the distributor."
+        }
+      ]
+    }
+  }
+}

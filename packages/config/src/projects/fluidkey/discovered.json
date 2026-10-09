@@ -1,7 +1,7 @@
 {
   "name": "fluidkey",
-  "timestamp": 1790851084,
-  "configHash": "0xf0d6956b629bc8d352b676a61e22cbf7f6036cb5f5fa28ecd4a0fcb6c4b21587",
+  "timestamp": 1791532024,
+  "configHash": "0xffec3a90b6a9e21d50b6883e20fadbc2fd63176969f4b21a2bded4ebbd25e4c4",
   "entries": [
     {
       "address": "arb1:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1",
@@ -12,6 +12,7 @@
       "name": "FluidkeyEarnModule",
       "address": "arb1:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
       "type": "Contract",
+      "template": "fluidkey/FluidkeyEarnModule",
       "sourceHashes": [
         "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
       ],
@@ -37,7 +38,8 @@
       },
       "implementationNames": {
         "arb1:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "arb1:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
@@ -98,6 +100,7 @@
       "name": "FluidkeyEarnModule",
       "address": "base:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
       "type": "Contract",
+      "template": "fluidkey/FluidkeyEarnModule",
       "sourceHashes": [
         "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
       ],
@@ -123,12 +126,59 @@
       },
       "implementationNames": {
         "base:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "base:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "FluidkeyScore",
+      "address": "base:0x894c663757f6953544548EFA1aebc0846AC08bEa",
+      "type": "Contract",
+      "template": "fluidkey/FluidkeyScore",
+      "sourceHashes": [
+        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
+        "0xcdbf1af8b4dd01f4c9340e145c6ee7a8cefd58b3e15a8d3597ba8e9a266d71e9"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Non-transferable ERC-20 score that Fluidkey's distributor allocates to its users, based partly on their total balance. Only the owner and whitelisted senders can transfer it.",
+      "ignoreInWatchMode": ["holders", "totalSupply"],
+      "deployerAddress": "base:0xB3aA47edBc9A1178B56bB55D1a9E3821845870e8",
+      "sinceTimestamp": 1748264389,
+      "sinceBlock": 30737521,
+      "values": {
+        "$admin": "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+        "$implementation": "base:0xB5311Cf821AB519CCF08e8f80742efDDC7d6659F",
+        "$pastUpgrades": [
+          [
+            "2025-05-26T12:59:49.000Z",
+            "0xb6021b7130d6faf2da89cf3e606c4e49b72e040e2a8a3f7251b6af3a1aa55f15",
+            ["base:0xB5311Cf821AB519CCF08e8f80742efDDC7d6659F"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "decimals": 18,
+        "holders": 2191,
+        "name": "Fluidkey Score",
+        "owner": "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+        "symbol": "FKS",
+        "totalSupply": "1000000000000000000000000000",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "holders": {
+          "description": "Number of distinct addresses that ever received the score, the distributor included."
+        },
+        "owner": { "description": "Owner of the score token." }
+      },
+      "implementationNames": {
+        "base:0x894c663757f6953544548EFA1aebc0846AC08bEa": "ERC1967Proxy",
+        "base:0xB5311Cf821AB519CCF08e8f80742efDDC7d6659F": "FluidkeyScore"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Fluidkey Earn Owner",
@@ -189,6 +239,7 @@
       "name": "FluidkeyEarnModule",
       "address": "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
       "type": "Contract",
+      "template": "fluidkey/FluidkeyEarnModule",
       "sourceHashes": [
         "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
       ],
@@ -214,7 +265,8 @@
       },
       "implementationNames": {
         "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
@@ -235,6 +287,7 @@
       "name": "OffchainResolver",
       "address": "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c",
       "type": "Contract",
+      "template": "fluidkey/OffchainResolver",
       "sourceHashes": [
         "0x04f4a6fa707d0ac615fc02603f8514c54d1f605e28459b11249433b2ef8b5475"
       ],
@@ -261,7 +314,8 @@
       },
       "implementationNames": {
         "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c": "OffchainResolver"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Fluidkey Earn Owner",
@@ -359,6 +413,7 @@
       "name": "FluidkeyEarnModule",
       "address": "gno:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
       "type": "Contract",
+      "template": "fluidkey/FluidkeyEarnModule",
       "sourceHashes": [
         "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
       ],
@@ -384,7 +439,8 @@
       },
       "implementationNames": {
         "gno:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "gno:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
@@ -445,6 +501,7 @@
       "name": "FluidkeyEarnModule",
       "address": "matic:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
       "type": "Contract",
+      "template": "fluidkey/FluidkeyEarnModule",
       "sourceHashes": [
         "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
       ],
@@ -470,7 +527,8 @@
       },
       "implementationNames": {
         "matic:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "matic:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
@@ -531,6 +589,7 @@
       "name": "FluidkeyEarnModule",
       "address": "oeth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
       "type": "Contract",
+      "template": "fluidkey/FluidkeyEarnModule",
       "sourceHashes": [
         "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
       ],
@@ -556,7 +615,8 @@
       },
       "implementationNames": {
         "oeth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "oeth:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
@@ -809,8 +869,65 @@
       "function transferOwnership(address newOwner)",
       "function wrappedNative() view returns (address)"
     ],
+    "base:0x894c663757f6953544548EFA1aebc0846AC08bEa": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
     "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
       "constructor(address _singleton)"
+    ],
+    "base:0xB5311Cf821AB519CCF08e8f80742efDDC7d6659F": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error TransferNotAllowed()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Upgraded(address indexed implementation)",
+      "event WhitelistUpdated(address indexed account, bool isWhitelisted)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function addToWhitelist(address account)",
+      "function adminBurn(address account, uint256 amount)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 value)",
+      "function burnFrom(address account, uint256 value)",
+      "function decimals() view returns (uint8)",
+      "function initialize(address initialOwner)",
+      "function isWhitelisted(address account) view returns (bool)",
+      "function mint(uint256 amount)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function removeFromWhitelist(address account)",
+      "function renounceOwnership()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": [
       "constructor(address _authorizedRelayer, address _wrappedNative, address _owner)",
@@ -1294,17 +1411,20 @@
     ]
   },
   "usedTemplates": {
+    "fluidkey/FluidkeyEarnModule": "0xea908be572f4783ba02d1c93afdcbb18f757f9ff43c1415bc90223173397d873",
+    "fluidkey/FluidkeyScore": "0x9cd0aa56e9c9be9d575818d3821b9e2a4d0a815b8de52d614c8236ebb781caa5",
+    "fluidkey/OffchainResolver": "0x81a805a0cfe7069827e443ec15f1ccf892cb47c773579d168f0b11c968a0ad48",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": {
-    "arbitrum": 510634199,
-    "base": 52030868,
-    "ethereum": 26096919,
-    "gnosis": 48531923,
-    "optimism": 157626153,
-    "polygonpos": 94763962
+    "arbitrum": 513134279,
+    "base": 52371338,
+    "ethereum": 26153449,
+    "gnosis": 48665458,
+    "optimism": 157966623,
+    "polygonpos": 95217870
   },
-  "permissionsConfigHash": "0xe0751756338785f0de449880933873c9cda6b52956eb2f2f14008bfa22031add",
+  "permissionsConfigHash": "0x641e075233b9c0d20e58635f58ebeb27cd65368394a10e960034da8bf1525c3c",
   "permissions": {
     "arb1:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
       "receivedPermissions": [
@@ -1343,6 +1463,17 @@
           "from": "base:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
           "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0x894c663757f6953544548EFA1aebc0846AC08bEa",
+          "description": "choose which addresses may transfer the score, such as the distributor.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x894c663757f6953544548EFA1aebc0846AC08bEa",
+          "role": "admin"
         }
       ]
     },
