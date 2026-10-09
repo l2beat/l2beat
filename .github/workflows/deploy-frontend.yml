@@ -29,15 +29,15 @@ on:
       - main
 
 jobs:
-  check-changes:
-    uses: ./.github/workflows/check-changes.yml
-    with:
-      package: '@l2beat/frontend'
-      force: ${{ github.event.inputs.force == 'true' }}
+  affected:
+    # Jobs below run whenever this one doesn't succeed, so a forced run or a
+    # detection error still deploys.
+    if: github.event.inputs.force != 'true'
+    uses: ./.github/workflows/affected-packages.yml
 
   build:
-    needs: check-changes
-    if: ${{ always() && (needs.check-changes.result != 'success' || needs.check-changes.outputs.should_deploy == 'true') }}
+    needs: affected
+    if: ${{ always() && (needs.affected.result != 'success' || contains(fromJSON(needs.affected.outputs.packages || '[]'), '@l2beat/frontend')) }}
     uses: ./.github/workflows/build-docker-image.yml
     with:
       project: frontend

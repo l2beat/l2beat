@@ -26,16 +26,16 @@ on:
       - main
 
 jobs:
-  check-changes:
-    uses: ./.github/workflows/check-changes.yml
-    with:
-      package: '@l2beat/crops-api'
-      force: ${{ github.event.inputs.force == 'true' }}
+  affected:
+    # Jobs below run whenever this one doesn't succeed, so a forced run or a
+    # detection error still deploys.
+    if: github.event.inputs.force != 'true'
+    uses: ./.github/workflows/affected-packages.yml
 
   deploy:
     name: Deploy to ${{ github.event.inputs.environment || 'production' }}
-    needs: check-changes
-    if: ${{ always() && (needs.check-changes.result != 'success' || needs.check-changes.outputs.should_deploy == 'true') }}
+    needs: affected
+    if: ${{ always() && (needs.affected.result != 'success' || contains(fromJSON(needs.affected.outputs.packages || '[]'), '@l2beat/crops-api')) }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
