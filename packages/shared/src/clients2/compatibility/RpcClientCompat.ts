@@ -261,7 +261,8 @@ export class RpcClientCompat implements IRpcClient {
       if (
         e instanceof Error &&
         e.message.startsWith('RPC call failed') &&
-        isLimitExceededError(e)
+        isLimitExceededError(e) &&
+        from < to
       ) {
         const midpoint = Math.floor((from + to) / 2)
         const results = await Promise.all([

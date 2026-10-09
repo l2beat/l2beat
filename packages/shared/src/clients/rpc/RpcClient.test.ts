@@ -265,6 +265,41 @@ describe(RpcClient.name, () => {
       )
     })
 
+    it('rejects without splitting when a single block exceeds the limit', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: mockFn()
+          .resolvesToOnce({
+            error: {
+              code: -32602,
+              message: 'Log response size exceeded',
+            },
+          })
+          .resolvesTo({ result: [] }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      await expect(rpc.getLogs(100, 100)).toBeRejectedWith(
+        'Error during parsing',
+      )
+
+      expect(http.fetch).toHaveBeenCalledTimes(1)
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getLogs',
+          params: [
+            {
+              address: [],
+              topics: [],
+              fromBlock: '0x64',
+              toBlock: '0x64',
+            },
+          ],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+
     it('splits in half when limit exceeded', async () => {
       const mockAddresses = [EthereumAddress.random(), EthereumAddress.random()]
       const mockTopics = ['0xabcd', '0xdcba']
