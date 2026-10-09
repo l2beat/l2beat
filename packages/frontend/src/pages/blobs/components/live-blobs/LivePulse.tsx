@@ -150,7 +150,7 @@ function BlobPulse({
           preserveAspectRatio="none"
           className="block h-10 w-full"
           role="img"
-          aria-label={`Blobs per block in each ${BAR_MINUTES} minutes of the last 24 hours`}
+          aria-label={`Average blobs per block in each ${BAR_MINUTES} minutes of the last 24 hours`}
         >
           <g ref={slidingRef}>
             <rect
@@ -207,8 +207,8 @@ function BlobPulse({
         <span>24 hours ago</span>
         {view === undefined ? (
           <span className="max-md:hidden">
-            Blobs per block every {BAR_MINUTES} minutes, against the target
-            (dashed). Drag to look back
+            Average blobs per block every {BAR_MINUTES} minutes, against the
+            target (dashed), above which the blob fee rises. Drag to look back
           </span>
         ) : (
           // on a phone, the time alone fits between the ends
