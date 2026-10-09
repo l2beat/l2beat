@@ -34,7 +34,7 @@ export function Tooltip({
         <div
           ref={tooltipRef}
           role="tooltip"
-          className="fixed z-10 max-w-[calc(100vw-1rem)] rounded-lg bg-gray-700 px-3 py-2 font-medium text-sm text-white shadow-sm"
+          className="fixed z-10 max-w-[calc(100vw-1rem)] rounded-lg bg-gray-700 px-3 py-2 font-medium text-sm text-white shadow-xs"
           style={position}
         >
           {content}

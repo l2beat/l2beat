@@ -1467,8 +1467,8 @@ importers:
         specifier: 19.0.0
         version: 19.0.0(react@19.0.0)
       tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.5.4
+        specifier: ^3.4.0
+        version: 3.4.0
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -1479,6 +1479,9 @@ importers:
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@tailwindcss/vite':
+        specifier: ^4.3.3
+        version: 4.3.3(vite@8.3.0(@types/node@24.13.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0))
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
@@ -1497,12 +1500,9 @@ importers:
       esbuild:
         specifier: ^0.28.0
         version: 0.28.1
-      postcss:
-        specifier: ^8
-        version: 8.5.6
       tailwindcss:
-        specifier: ^3.4.0
-        version: 3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@24.13.6)(typescript@5.9.3))
+        specifier: ^4.3.3
+        version: 4.3.3
       tsx:
         specifier: ^4.9.3
         version: 4.19.2
@@ -8076,9 +8076,6 @@ packages:
   table-layout@4.1.1:
     resolution: {integrity: sha512-iK5/YhZxq5GO5z8wb0bY1317uDF3Zjpha0QFFLA8/trAoiLbQD0HUbMesEaxyzUgDxi2QlcbM8IvqOlEjgoXBA==}
     engines: {node: '>=12.17'}
-
-  tailwind-merge@2.5.4:
-    resolution: {integrity: sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q==}
 
   tailwind-merge@3.3.1:
     resolution: {integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==}
@@ -15021,14 +15018,6 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.5.6
 
-  postcss-load-config@4.0.2(postcss@8.5.6)(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@24.13.6)(typescript@5.9.3)):
-    dependencies:
-      lilconfig: 3.1.2
-      yaml: 2.6.0
-    optionalDependencies:
-      postcss: 8.5.6
-      ts-node: 10.9.2(@swc/core@1.15.13)(@types/node@24.13.6)(typescript@5.9.3)
-
   postcss-load-config@4.0.2(postcss@8.5.6)(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@24.13.6)(typescript@7.0.2)):
     dependencies:
       lilconfig: 3.1.2
@@ -15947,8 +15936,6 @@ snapshots:
       array-back: 6.2.2
       wordwrapjs: 5.1.0
 
-  tailwind-merge@2.5.4: {}
-
   tailwind-merge@3.3.1: {}
 
   tailwind-merge@3.4.0: {}
@@ -15956,33 +15943,6 @@ snapshots:
   tailwindcss-animate@1.0.7(tailwindcss@4.3.3):
     dependencies:
       tailwindcss: 4.3.3
-
-  tailwindcss@3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@24.13.6)(typescript@5.9.3)):
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      arg: 5.0.2
-      chokidar: 3.6.0
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.3.2
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      jiti: 1.21.7
-      lilconfig: 2.1.0
-      micromatch: 4.0.8
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.1.1
-      postcss: 8.5.6
-      postcss-import: 15.1.0(postcss@8.5.6)
-      postcss-js: 4.0.1(postcss@8.5.6)
-      postcss-load-config: 4.0.2(postcss@8.5.6)(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@24.13.6)(typescript@5.9.3))
-      postcss-nested: 6.2.0(postcss@8.5.6)
-      postcss-selector-parser: 6.1.2
-      resolve: 1.22.8
-      sucrase: 3.35.0
-    transitivePeerDependencies:
-      - ts-node
 
   tailwindcss@3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@24.13.6)(typescript@7.0.2)):
     dependencies:
@@ -16111,27 +16071,6 @@ snapshots:
       punycode: 2.3.1
 
   ts-interface-checker@0.1.13: {}
-
-  ts-node@10.9.2(@swc/core@1.15.13)(@types/node@24.13.6)(typescript@5.9.3):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 24.13.6
-      acorn: 8.16.0
-      acorn-walk: 8.3.4
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 5.9.3
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optionalDependencies:
-      '@swc/core': 1.15.13
-    optional: true
 
   ts-node@10.9.2(@swc/core@1.15.13)(@types/node@24.13.6)(typescript@7.0.2):
     dependencies:
