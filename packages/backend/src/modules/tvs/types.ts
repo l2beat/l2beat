@@ -30,10 +30,6 @@ export interface BlockTimestampConfig {
   untilTimestamp?: UnixTime
 }
 
-export interface ProjectValueConfig {
-  project: string
-}
-
 export interface AmountConfigBase {
   id: string
 }

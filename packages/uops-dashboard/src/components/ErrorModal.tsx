@@ -12,11 +12,11 @@ export function ErrorModal({
       className="z-50 m-auto h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0"
     >
       <div className="relative max-h-full w-full max-w-md p-4">
-        <div className="relative rounded-lg bg-white shadow dark:bg-gray-700">
+        <div className="relative rounded-lg bg-white shadow-sm dark:bg-gray-700">
           <button
             onClick={onClose}
             type="button"
-            className="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-gray-400 text-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+            className="absolute inset-e-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-gray-400 text-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
             data-modal-hide="popup-modal"
           >
             <svg

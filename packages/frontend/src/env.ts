@@ -18,22 +18,26 @@ const positiveInteger = z
     'Expected a positive integer',
   )
 
-const featureFlag = coerceBoolean.optional()
+// Unreleased features are on everywhere but production, so local, preview and
+// staging show what is about to ship without per-deployment env setup.
+const featureFlag = coerceBoolean
+  .optional()
+  .default(getRawEnv().DEPLOYMENT_ENV !== 'production')
 
 const CLIENT_CONFIG = {
   NODE_ENV: z
     .enum(['development', 'test', 'production'])
     .default('development'),
   DEPLOYMENT_ENV: z.enum(['preview', 'staging', 'production']).optional(),
-  CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default(false),
-  CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
-  CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
-  CLIENT_SIDE_DEFI_ENABLED: featureFlag.default(false),
-  CLIENT_SIDE_GARDEN_ENABLED: featureFlag.default(false),
+  CLIENT_SIDE_GITCOIN_ROUND_LIVE: coerceBoolean.default(false),
+  CLIENT_SIDE_SHOW_HIRING_BADGE: coerceBoolean.default(false),
+  CLIENT_SIDE_TRACKED_TXS_OUTAGE: coerceBoolean.default(false),
+  CLIENT_SIDE_DEFI_ENABLED: featureFlag,
+  CLIENT_SIDE_GARDEN_ENABLED: featureFlag,
   CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
-  CLIENT_SIDE_TOKENS_PAGE: featureFlag.default(false),
-  CLIENT_SIDE_BLOBS_PAGE: featureFlag.default(false),
-  CLIENT_SIDE_OSSIFICATION_ENABLED: featureFlag.default(false),
+  CLIENT_SIDE_TOKENS_PAGE: featureFlag,
+  CLIENT_SIDE_BLOBS_PAGE: featureFlag,
+  CLIENT_SIDE_OSSIFICATION_ENABLED: featureFlag,
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 export const CLIENT_ENV_KEYS = Object.keys(CLIENT_CONFIG)

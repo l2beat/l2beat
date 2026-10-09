@@ -1,4 +1,4 @@
-import { createCallerFactory, router } from '~/server/trpc/trpc'
+import { router } from '~/server/trpc/trpc'
 import { activityRouter } from './routers/activity'
 import { auditsRouter } from './routers/audits'
 import { costsRouter } from './routers/costs'
@@ -34,12 +34,3 @@ export const appRouter = router({
 
 // export type definition of API
 export type AppRouter = typeof appRouter
-
-/**
- * Create a server-side caller for the tRPC API.
- * @example
- * const trpc = createCaller(createContext);
- * const res = await trpc.example.hello({ text: "world" });
- *       ^? string = "Hello world"
- */
-export const createCaller = createCallerFactory(appRouter)

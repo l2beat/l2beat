@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { AddressIcon } from '../../../components/AddressIcon'
@@ -210,7 +210,7 @@ function Display({
                   {value.fieldNames.map((fieldName, i) => (
                     <span
                       key={i}
-                      className="mr-2 inline-block rounded bg-coffee-800 px-1.5 py-0.5"
+                      className="mr-2 inline-block rounded-sm bg-coffee-800 px-1.5 py-0.5"
                     >
                       {fieldName}
                     </span>
@@ -408,5 +408,7 @@ function Description() {
 }
 
 function SkeletonLine() {
-  return <div className="h-3 w-full animate-breath rounded bg-coffee-400/50" />
+  return (
+    <div className="h-3 w-full animate-breath rounded-sm bg-coffee-400/50" />
+  )
 }

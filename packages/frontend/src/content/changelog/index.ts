@@ -22,8 +22,6 @@ const changelog = v
     (entry) => !entry.whatsNew || entry.whatsNew.expiresAt > entry.publishedAt,
   )
 
-export type ChangelogEntryData = v.infer<typeof changelog>
-
 export const changelogCollection = defineCollection({
   type: 'content',
   schema: changelog,

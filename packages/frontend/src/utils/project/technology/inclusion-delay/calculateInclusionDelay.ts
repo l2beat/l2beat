@@ -106,13 +106,6 @@ function hasFiniteDelay(
   return entry.delayDays !== null
 }
 
-/** The project's own inclusion-delay line, sampled across the fraction range. */
-export function getProjectInclusionDelay(
-  chart: ProjectInclusionDelayChart,
-): InclusionDelayPoint[] {
-  return buildProjectPoints(createInclusionDelayModel(chart))
-}
-
 function buildProjectPoints(model: InclusionDelayModel): InclusionDelayPoint[] {
   return getSampledCensoringFractions(model.maxCensorFraction).map(
     (censoringFraction) => ({

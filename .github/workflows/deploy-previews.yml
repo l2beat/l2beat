@@ -1,0 +1,57 @@
+name: Deploy previews
+
+# Coolify's preview webhook rebuilds every preview app on every PR push, so a
+# frontend-only change also rebuilds Disco UI and token-ui. This workflow
+# deploys only the previews whose package the PR affects. Turn off "Preview
+# Deployments" for these apps in Coolify: the toggle gates only the webhook,
+# the API ignores it, and Coolify still deletes previews when the PR closes.
+
+concurrency:
+  group: deploy-previews-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  affected:
+    # Fork PRs get no secrets, so they could not reach Coolify anyway.
+    if: github.event.pull_request.head.repo.fork == false
+    uses: ./.github/workflows/affected-packages.yml
+
+  deploy-frontend:
+    needs: affected
+    if: contains(fromJSON(needs.affected.outputs.packages || '[]'), '@l2beat/frontend')
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    with:
+      preview: true
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_FRONTEND_PREVIEW_ID }}
+
+  deploy-disco-ui:
+    needs: affected
+    if: contains(fromJSON(needs.affected.outputs.packages || '[]'), '@l2beat/l2b')
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    with:
+      preview: true
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_DISCO_UI_PREVIEW_ID }}
+
+  deploy-token-ui:
+    needs: affected
+    if: contains(fromJSON(needs.affected.outputs.packages || '[]'), '@l2beat/token-ui')
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    with:
+      preview: true
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_TOKEN_UI_PREVIEW_ID }}

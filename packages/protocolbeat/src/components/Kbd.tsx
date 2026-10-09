@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '../utils/cn'
 
 const kbdVariants = cva(
-  'flex items-center justify-center gap-1 rounded border-b-2 leading-none',
+  'flex items-center justify-center gap-1 rounded-sm border-b-2 leading-none',
   {
     variants: {
       tone: {

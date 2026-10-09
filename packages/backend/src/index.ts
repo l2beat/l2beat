@@ -13,7 +13,6 @@ import {
 } from '@l2beat/backend-tools/elastic-search'
 import { RpcMetricsAggregator, withRpcMetricsContext } from '@l2beat/shared'
 import { Indexer } from '@l2beat/uif'
-import apm from 'elastic-apm-node'
 import { Application } from './Application'
 import { getConfig } from './config'
 
@@ -25,14 +24,6 @@ async function main() {
   const env = getEnv()
 
   const logger = createLogger(env)
-
-  apm.start({
-    active: process.env.ES_APM_ENABLED === 'true',
-    environment: env.optionalString('DEPLOYMENT_ENV') ?? 'local',
-    secretToken: process.env.ES_APM_SECRET_TOKEN ?? '',
-    serverUrl: process.env.ES_APM_SERVER_URL ?? 'http://localhost:8200',
-    serviceName: process.env.ES_APM_SERVICE_NAME ?? 'l2beat-local',
-  })
 
   try {
     await withRpcMetricsContext({ coreFeature: 'uncategorized' }, async () => {
