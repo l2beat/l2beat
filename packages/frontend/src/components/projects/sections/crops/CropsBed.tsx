@@ -77,6 +77,14 @@ export function CropsBed({
           <Findings key={entry.definition.key} entry={entry} index={index} />
         ))}
       </div>
+      {/* Standing caveats span the bed instead of lengthening their own column. */}
+      {entries.map(({ definition }) => (
+        <CropNote
+          key={definition.key}
+          note={definition.note}
+          className="mt-4 text-[12px] leading-snug"
+        />
+      ))}
     </div>
   )
 }
@@ -174,10 +182,6 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
           ossification={entry.ossification}
         />
       </div>
-      <CropNote
-        note={definition.note}
-        className="mt-3 text-[12px] leading-snug"
-      />
     </div>
   )
 }
