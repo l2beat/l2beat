@@ -10,6 +10,8 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useIsClient } from '~/hooks/useIsClient'
 import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
+import { cn } from '~/utils/cn'
+import { BELT_HEIGHT, BeltLegend, PulseSkeleton } from './blocks/BeltFrame'
 import { useBeaconChain } from './blocks/useBeaconChain'
 import { ChainClockContext, createChainClock } from './chainClock'
 import { LivePosters } from './LivePosters'
@@ -58,9 +60,15 @@ export function LiveBlobsCard({ projects, limits }: Props) {
   )
 }
 
+/** The belt, the day under it and their legend, laid out as LiveBlocks lays them */
 function LiveSkeleton() {
-  // as tall as the belt with the day and the legend under it
-  return <Skeleton className="h-[30rem] w-full rounded-lg md:h-[40rem]" />
+  return (
+    <div className="flex flex-col gap-3">
+      <Skeleton className={cn('w-full rounded-lg', BELT_HEIGHT)} />
+      <PulseSkeleton />
+      <BeltLegend />
+    </div>
+  )
 }
 
 /**

@@ -1,5 +1,4 @@
 import {
-  Fragment,
   type ReactNode,
   useContext,
   useEffect,
@@ -9,6 +8,7 @@ import {
   useState,
 } from 'react'
 import { CustomLinkIcon } from '~/icons/Outlink'
+import { cn } from '~/utils/cn'
 import {
   useElementSize,
   useImages,
@@ -22,6 +22,7 @@ import { clampView } from '../lookBack'
 import { type BlockLimits, type LivePoster, UNKNOWN_ID } from '../model'
 import { PointerTooltip } from '../PointerTooltip'
 import { useLiveBlobs } from '../useLiveBlobs'
+import { BELT_HEIGHT, BeltLegend } from './BeltFrame'
 import type { BlobBatch, ChainBlock, PosterIndexOf } from './beaconChain'
 import { paintLayers } from './beltLayers'
 import { type BeltLayout, layoutBelt, racksAroundBay } from './beltLayout'
@@ -160,11 +161,9 @@ export function LiveBlocks({ posters, limits }: Props) {
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Just tall enough for a full rack with its caption and numbers: at
-          its largest, 21 rows of 21 px, so nothing is left empty above it */}
       <div
         ref={beltRef}
-        className="relative h-[24rem] md:h-[34rem]"
+        className={cn('relative', BELT_HEIGHT)}
         {...belt.handlers}
       >
         <canvas
@@ -193,16 +192,7 @@ export function LiveBlocks({ posters, limits }: Props) {
 
       <LivePulse limits={limits} brush={look} />
 
-      <Legend
-        items={[
-          <>
-            1 square = <LegendValue>1 blob</LegendValue>
-          </>,
-          <>
-            1 column = <LegendValue>1 block</LegendValue>
-          </>,
-        ]}
-      />
+      <BeltLegend />
     </div>
   )
 }
@@ -404,35 +394,6 @@ function etherscanTxUrl(txHash: string) {
 
 function shortAddress(address: string) {
   return `${address.slice(0, 6)}…${address.slice(-4)}`
-}
-
-/**
- * How to read the belt, under it. One line where it fits; on a phone, one
- * item per line, as wrapped separators would start lines.
- */
-function Legend({ items }: { items: ReactNode[] }) {
-  return (
-    <>
-      <div className="flex flex-wrap items-center justify-center gap-x-2 font-medium text-label-value-12 text-secondary max-md:hidden">
-        {items.map((item, i) => (
-          <Fragment key={i}>
-            {i > 0 && <span className="text-tertiary">|</span>}
-            <span>{item}</span>
-          </Fragment>
-        ))}
-      </div>
-      <div className="space-y-1 text-center font-medium text-label-value-14 text-secondary md:hidden">
-        {items.map((item, i) => (
-          <div key={i}>{item}</div>
-        ))}
-      </div>
-    </>
-  )
-}
-
-/** A value in the legend, in the brand color like the hub's legend */
-function LegendValue({ children }: { children: ReactNode }) {
-  return <span className="font-bold text-brand">{children}</span>
 }
 
 function describeForScreenReaders(limits: BlockLimits, average: Average) {

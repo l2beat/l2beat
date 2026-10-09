@@ -3,6 +3,7 @@ import { type CSSProperties, type ReactNode, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { formatPercent } from '~/utils/calculatePercentageChange'
+import { cn } from '~/utils/cn'
 import {
   BLOB_KIB,
   describeWindow,
@@ -64,33 +65,36 @@ export function LiveStats({
       {/* On a phone the status takes the corner beside the first number, so
           it never sits on a line of its own above them */}
       <dl className="grid grid-cols-2 gap-x-6 gap-y-3 md:flex md:items-end md:gap-x-8">
-        {ready ? (
-          <>
-            <Stat label="Blobs posted" arrival={arrival}>
-              <RollingNumber value={blobs} format={formatWhole} />
-            </Stat>
-            <Stat
-              label="Data"
-              arrival={arrival}
-              formatArrival={formatArrivedKib}
-            >
-              <RollingNumber value={blobs * BLOB_KIB} format={formatKib} />
-            </Stat>
-            <Stat
-              label="Per block"
-              note={`of ${limits.targetBlobsPerBlock} target`}
-            >
-              <RollingNumber
-                value={blobs / Math.max(1, postedWindow.blocks)}
-                format={formatAverage}
-              />
-            </Stat>
-          </>
-        ) : (
-          Array.from({ length: 3 }, (_, i) => (
-            <Skeleton key={i} className="h-[52px] w-full md:w-32" />
-          ))
-        )}
+        {/* The labels stand from the first paint and only the numbers wait,
+            so nothing shifts as they come */}
+        <Stat label="Blobs posted" arrival={arrival}>
+          {ready ? (
+            <RollingNumber value={blobs} format={formatWhole} />
+          ) : (
+            <NumberSkeleton />
+          )}
+        </Stat>
+        <Stat label="Data" arrival={arrival} formatArrival={formatArrivedKib}>
+          {ready ? (
+            <RollingNumber value={blobs * BLOB_KIB} format={formatKib} />
+          ) : (
+            <NumberSkeleton />
+          )}
+        </Stat>
+        <Stat
+          label="Per block"
+          note={`of ${limits.targetBlobsPerBlock} target`}
+        >
+          {ready ? (
+            <RollingNumber
+              value={blobs / Math.max(1, postedWindow.blocks)}
+              format={formatAverage}
+            />
+          ) : (
+            // narrow as the number it stands for, or the note wraps on a phone
+            <NumberSkeleton className="w-14" />
+          )}
+        </Stat>
         <div className="col-start-2 row-start-1 flex flex-col items-end gap-1.5 md:ml-auto">
           <StatusText status={status} />
           {status === 'live' && <NextBlock />}
@@ -106,9 +110,38 @@ export function LiveStats({
           />
         </>
       ) : (
-        <Skeleton className="mt-4 h-12 w-full" />
+        <SharesSkeleton />
       )}
     </div>
+  )
+}
+
+/** As tall as a stat's number, which sets its line */
+function NumberSkeleton({ className }: { className?: string }) {
+  return (
+    <Skeleton
+      className={cn('inline-block h-8 w-24 align-bottom md:h-9', className)}
+    />
+  )
+}
+
+/** Rough widths of the legend's title, four names and "+N more" */
+const LEGEND_SKELETON_WIDTHS = ['w-28', 'w-24', 'w-20', 'w-24', 'w-28', 'w-12']
+
+/**
+ * The strip and its legend, the legend as pieces as wide as what it holds, so
+ * it wraps where the real one does: onto a second line on a phone
+ */
+function SharesSkeleton() {
+  return (
+    <>
+      <Skeleton className="mt-4 h-4 w-full rounded-[3px] md:h-5" />
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+        {LEGEND_SKELETON_WIDTHS.map((width, i) => (
+          <Skeleton key={i} className={cn('h-3 rounded-sm', width)} />
+        ))}
+      </div>
+    </>
   )
 }
 
