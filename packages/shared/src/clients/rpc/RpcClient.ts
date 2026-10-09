@@ -8,9 +8,12 @@ import { v } from '@l2beat/validate'
 import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import type { FetchInit } from '../http/fetchWithTimeout'
 import type { LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
+import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
+import { getRpcMetricsLabel } from './RpcMetricsContext'
 import {
   BlockNumberResponse,
   type CallParameters,
@@ -39,6 +42,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   multicallClient?: MulticallV3Client
   rpcMetrics?: RpcMetricsRecorder
   timeout?: number
+  maxBatchSize?: number
 }
 
 type Param =
@@ -50,10 +54,15 @@ type Param =
 
 export class RpcClient extends ClientCore implements IRpcClient {
   multicallClient?: MulticallV3Client
+  private readonly batcher: RpcBatcher
 
   constructor(private readonly $: Dependencies) {
     super({ ...$, sourceName: $.chain })
     this.multicallClient = $.multicallClient
+    this.batcher = new RpcBatcher({
+      maxBatchSize: $.maxBatchSize,
+      logger: $.logger.for(this).tag({ source: $.chain }),
+    })
   }
 
   async getLatestBlockNumber() {
@@ -386,22 +395,44 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   // TODO: add multi-method support
+  /** Results in the order of `paramsBatch` */
   async batchQuery(method: string, paramsBatch: Param[][]) {
+    return await this.batcher.run(
+      method,
+      paramsBatch,
+      (chunk) => this.sendBatch(method, chunk),
+      async (params) => RpcResponse.parse(await this.query(method, params)),
+    )
+  }
+
+  private async sendBatch(method: string, paramsBatch: Param[][]) {
     const queries = paramsBatch.map((params) => ({
       method: method,
       params: params,
       id: this.$.generateId ? this.$.generateId() : generateId(),
       jsonrpc: '2.0',
     }))
+    const init: FetchInit = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(queries),
+      redirect: 'follow',
+      timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
+    }
+    // Read before the rate limiter, which loses the async context
+    const label = getRpcMetricsLabel()
+    const attempt = () =>
+      this.rateLimiter.call(() => this.fetchBatch(init, label), label)
 
+    let rejected = false
     try {
-      const response = await this.fetch(this.$.url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(queries),
-        redirect: 'follow',
-        timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
-      })
+      const response = await attempt().catch((error) =>
+        this.retryHandler.retry(attempt, { error, url: this.$.url, init }),
+      )
+      if (response === BATCH_REJECTED) {
+        rejected = true
+        return BATCH_REJECTED
+      }
 
       const results = new Map(
         v
@@ -416,11 +447,47 @@ export class RpcClient extends ClientCore implements IRpcClient {
         return r
       })
     } finally {
-      this.$.rpcMetrics?.record({
-        count: paramsBatch.length,
-        method,
-      })
+      // The calls of a rejected batch are recorded when sent again
+      if (!rejected) {
+        this.$.rpcMetrics?.record({
+          count: paramsBatch.length,
+          method,
+        })
+      }
     }
+  }
+
+  /**
+   * Unlike ClientCore.fetch, reads the body of a failed request and returns a
+   * rejection instead of throwing it, so no retry repeats it
+   */
+  private async fetchBatch(
+    init: FetchInit,
+    label: string,
+  ): Promise<unknown[] | typeof BATCH_REJECTED> {
+    const start = Date.now()
+    const response = await this.$.http.fetchRaw(this.$.url, init)
+    const text = await response.text()
+    this.metricsAggregator.push({
+      duration: Date.now() - start,
+      size: Buffer.byteLength(text, 'utf8'),
+      label,
+    })
+
+    let body: unknown
+    try {
+      body = JSON.parse(text)
+    } catch {}
+    if (isBatchRejected(response.status, body)) {
+      return BATCH_REJECTED
+    }
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status} ${response.statusText}`)
+    }
+    if (!Array.isArray(body)) {
+      throw new Error(`Batch not answered with an array: ${text}`)
+    }
+    return body
   }
 
   override validateResponse(response: json): {

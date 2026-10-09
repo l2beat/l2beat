@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress, type json } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import type { FetchInit } from '../http/fetchWithTimeout'
 import type { HttpClient } from '../http/HttpClient'
 import { MulticallV3Client } from './multicall/MulticallV3Client'
 import { RpcClient } from './RpcClient'
@@ -704,11 +705,12 @@ describe(RpcClient.name, () => {
   describe(RpcClient.prototype.batchCall.name, () => {
     it('batches multiple calls correctly and returns results in order', async () => {
       const http = mockObject<HttpClient>({
-        fetch: async () => [
-          { id: '0x1', result: '0x123abc' },
-          { id: '0x3', result: '0x789abc' },
-          { id: '0x2', result: '0x456def' },
-        ],
+        fetchRaw: async () =>
+          jsonResponse([
+            { id: '0x1', result: '0x123abc' },
+            { id: '0x3', result: '0x789abc' },
+            { id: '0x2', result: '0x456def' },
+          ]),
       })
 
       const rpc = mockClient({
@@ -751,7 +753,7 @@ describe(RpcClient.name, () => {
         Bytes.fromHex('0x789abc'),
       ])
 
-      expect(http.fetch).toHaveBeenCalledWith('API_URL', {
+      expect(http.fetchRaw).toHaveBeenCalledWith('API_URL', {
         body: JSON.stringify([
           {
             method: 'eth_call',
@@ -855,7 +857,7 @@ describe(RpcClient.name, () => {
       ]
 
       const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse,
+        fetchRaw: async () => jsonResponse(mockResponse),
       })
 
       const rpc = mockClient({
@@ -882,7 +884,7 @@ describe(RpcClient.name, () => {
       }))
 
       expect(result).toEqual(expectedResult)
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
+      expect(http.fetchRaw).toHaveBeenOnlyCalledWith('API_URL', {
         body: JSON.stringify(expectedPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -893,10 +895,11 @@ describe(RpcClient.name, () => {
 
     it('records rpc metrics for batch queries', async () => {
       const http = mockObject<HttpClient>({
-        fetch: async () => [
-          { id: '0x1', result: 'one' },
-          { id: '0x2', result: 'two' },
-        ],
+        fetchRaw: async () =>
+          jsonResponse([
+            { id: '0x1', result: 'one' },
+            { id: '0x2', result: 'two' },
+          ]),
       })
       const rpcMetrics = {
         record: mockFn<RpcMetricsRecorder['record']>().returns(undefined),
@@ -915,6 +918,153 @@ describe(RpcClient.name, () => {
       expect(rpcMetrics.record).toHaveBeenCalledTimes(1)
       expect(rpcMetrics.record.calls[0]?.args[0]?.method).toEqual('rpc_method')
       expect(rpcMetrics.record.calls[0]?.args[0]?.count).toEqual(2)
+    })
+  })
+
+  describe('batches', () => {
+    const REJECTIONS: Record<string, (request: RpcRequest[]) => Reply> = {
+      // dRPC's free plan
+      'every call fails with a batch error': (request) =>
+        ok(
+          request.map((call) =>
+            rpcError(call.id, 'Batch of more than 3 requests are not allowed'),
+          ),
+        ),
+      // publicnode
+      'one batch error for the whole batch': (request) =>
+        ok([rpcError(request[0]?.id ?? null, 'batch too large')]),
+      // Cloudflare, Flashbots
+      'one error in place of the array': () =>
+        ok(rpcError(null, 'too many RPC calls in batch request')),
+      'HTTP 413': () => ({ status: 413, body: 'Payload Too Large' }),
+    }
+
+    const OTHER_FAILURES: Record<string, () => Reply> = {
+      'network error': () => {
+        throw new Error('Failed to fetch: network error.')
+      },
+      'HTTP 503': () => ({ status: 503, body: 'Service Unavailable' }),
+      'HTTP 429': () => ({ status: 429, body: 'Too Many Requests' }),
+      'HTTP 401': () => ({ status: 401, body: 'Unauthorized' }),
+      'a rate limit in place of the array': () =>
+        ok(rpcError(null, 'Rate limit exceeded')),
+    }
+
+    // Methodology: 5 calls at 2 per batch, a node that answers every batch
+    // reversed; the requests must hold at most 2 calls (the lone fifth goes
+    // as a plain call) and the results must follow the asked order
+    it('splits calls into requests of maxBatchSize and keeps their order', async () => {
+      const node = fakeNode(answerEcho)
+      const rpc = batchingClient(node.http, 2)
+
+      const result = await rpc.batchQuery('rpc_method', PARAMS)
+
+      expect(result.map((r) => r.result)).toEqual(PARAMS.map(([p]) => p))
+      expect(node.requests.map(callsIn)).toEqual([2, 2, 'single'])
+    })
+
+    // Methodology: the node drops a call from the second batch only
+    it('refuses a batch that lacks the answer to one of its calls', async () => {
+      const node = fakeNode((request) => {
+        const answer = answerEcho(request)
+        return Array.isArray(request) && request[0]?.params[0] === 'c'
+          ? ok((answer.body as unknown[]).slice(1))
+          : answer
+      })
+      const rpc = batchingClient(node.http, 2)
+
+      await expect(rpc.batchQuery('rpc_method', PARAMS)).toBeRejectedWith(
+        'Request with 0x4 not found',
+      )
+    })
+
+    // Methodology: each case is a rejection as a real RPC sends it, for any
+    // batch over 2 calls, at the default size; the rejected batch must go
+    // again in halves without a retry, and the next batches must be of the
+    // learned size
+    for (const [name, reject] of Object.entries(REJECTIONS)) {
+      it(`sends smaller batches when the RPC rejects one for its size: ${name}`, async () => {
+        const node = fakeNode((request) =>
+          Array.isArray(request) && request.length > 2
+            ? reject(request)
+            : answerEcho(request),
+        )
+        const rpc = batchingClient(node.http)
+
+        const first = await rpc.batchQuery('rpc_method', PARAMS.slice(0, 4))
+        const second = await rpc.batchQuery('rpc_method', PARAMS.slice(0, 4))
+
+        expect(first.map((r) => r.result)).toEqual(['a', 'b', 'c', 'd'])
+        expect(second.map((r) => r.result)).toEqual(['a', 'b', 'c', 'd'])
+        expect(node.requests.map(callsIn)).toEqual([4, 2, 2, 2, 2])
+      })
+    }
+
+    // Methodology: a configured size of 4 that the RPC rejects
+    it('throws when the RPC rejects a batch of the configured size', async () => {
+      const node = fakeNode(REJECTIONS['HTTP 413'] as () => Reply)
+      const rpc = batchingClient(node.http, 4)
+
+      await expect(
+        rpc.batchQuery('rpc_method', PARAMS.slice(0, 4)),
+      ).toBeRejectedWith(
+        'RPC rejected a batch of 4 rpc_method calls, within the configured maxBatchSize of 4',
+      )
+      expect(node.requests.map(callsIn)).toEqual([4])
+    })
+
+    // Methodology: a batch of 4 rejected, then sent as 2 batches of 2; the
+    // metrics must count 4 calls, not 8
+    it('counts the calls of a rejected batch once', async () => {
+      const node = fakeNode((request) =>
+        Array.isArray(request) && request.length > 2
+          ? { status: 413, body: 'Payload Too Large' }
+          : answerEcho(request),
+      )
+      const rpcMetrics = {
+        record: mockFn<RpcMetricsRecorder['record']>().returns(undefined),
+      }
+      const rpc = mockClient({ http: node.http, rpcMetrics })
+
+      await rpc.batchQuery('rpc_method', PARAMS.slice(0, 4))
+
+      expect(rpcMetrics.record.calls.map((c) => c.args[0].count)).toEqual([
+        2, 2,
+      ])
+    })
+
+    // Methodology: failures of the request, not of its size, at the default
+    // size; the client retries the batch once (the TEST strategy) and then
+    // must throw without a smaller batch
+    for (const [name, fail] of Object.entries(OTHER_FAILURES)) {
+      it(`does not send smaller batches for a failure not about size: ${name}`, async () => {
+        const node = fakeNode(fail)
+        const rpc = batchingClient(node.http)
+
+        await expect(
+          rpc.batchQuery('rpc_method', PARAMS.slice(0, 4)),
+        ).toBeRejected()
+        expect(node.requests.map(callsIn)).toEqual([4, 4])
+      })
+    }
+
+    // Methodology: one receipt fails for a reason of its own, not the batch's
+    it('refuses receipts when one call of an answered batch fails', async () => {
+      const node = fakeNode((request) =>
+        ok(
+          (request as RpcRequest[]).map((call, i) =>
+            i === 0
+              ? { id: call.id, result: mockReceipt }
+              : rpcError(call.id, 'header not found'),
+          ),
+        ),
+      )
+      const rpc = batchingClient(node.http)
+
+      await expect(rpc.getTransactionReceipts(['0x1', '0x2'])).toBeRejectedWith(
+        'Receipts of 2 txs: Error during parsing',
+      )
+      expect(node.requests.map(callsIn)).toEqual([2])
     })
   })
 
@@ -948,6 +1098,7 @@ function mockClient(deps: {
   rpcMetrics?: RpcMetricsRecorder
   url?: string
   generateId?: () => string
+  maxBatchSize?: number
 }) {
   return new RpcClient({
     chain: 'chain',
@@ -958,7 +1109,79 @@ function mockClient(deps: {
     logger: Logger.SILENT,
     generateId: deps.generateId,
     rpcMetrics: deps.rpcMetrics,
+    maxBatchSize: deps.maxBatchSize,
   })
+}
+
+const PARAMS = [['a'], ['b'], ['c'], ['d'], ['e']]
+
+interface RpcRequest {
+  id: string
+  params: string[]
+}
+
+interface Reply {
+  status: number
+  body: unknown
+}
+
+/** Answers by the request body, so batches sent at once get their own answers */
+function fakeNode(answer: (request: RpcRequest | RpcRequest[]) => Reply) {
+  const requests: (RpcRequest | RpcRequest[])[] = []
+  const reply = (init: FetchInit) => {
+    const request = JSON.parse(init.body as string)
+    requests.push(request)
+    return answer(request)
+  }
+  const http = mockObject<HttpClient>({
+    // Single calls
+    fetch: async (_url: string, init: FetchInit) => {
+      const { status, body } = reply(init)
+      if (status !== 200) {
+        throw new Error(`HTTP error: ${status}`)
+      }
+      return body as json
+    },
+    // Batches
+    fetchRaw: async (_url: string, init: FetchInit) => {
+      const { status, body } = reply(init)
+      return jsonResponse(body, status)
+    },
+  })
+  return { http, requests }
+}
+
+function batchingClient(http: HttpClient, maxBatchSize?: number) {
+  let id = 0
+  return mockClient({
+    http,
+    maxBatchSize,
+    generateId: () => `0x${(++id).toString(16)}`,
+  })
+}
+
+/** Each call's result is its first param, batches answered reversed */
+function answerEcho(request: RpcRequest | RpcRequest[]) {
+  const answer = (call: RpcRequest) => ({ id: call.id, result: call.params[0] })
+  return ok(
+    Array.isArray(request) ? request.map(answer).reverse() : answer(request),
+  )
+}
+
+function ok(body: unknown): Reply {
+  return { status: 200, body }
+}
+
+function jsonResponse(body: unknown, status = 200) {
+  return new Response(JSON.stringify(body), { status })
+}
+
+function callsIn(request: RpcRequest | RpcRequest[]) {
+  return Array.isArray(request) ? request.length : 'single'
+}
+
+function rpcError(id: string | null, message: string) {
+  return { jsonrpc: '2.0', id, error: { code: -32600, message } }
 }
 
 const mockResponse = (blockNumber: number) => ({
