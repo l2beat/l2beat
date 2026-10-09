@@ -7,10 +7,17 @@
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "holders": {
-      "description": "Number of distinct addresses that ever received the score, the distributor included.",
+      "description": "Number of distinct addresses the distributor sent the score to, one per account that claimed it.",
       "handler": {
         "type": "event",
-        "add": { "event": "Transfer" },
+        "add": {
+          "event": "Transfer",
+          "where": [
+            "=",
+            "#from",
+            "base:0x83Da511603C650bF3c7FF8d02FC6423AF455535F"
+          ]
+        },
         "select": "to",
         "dedupBy": "to"
       },

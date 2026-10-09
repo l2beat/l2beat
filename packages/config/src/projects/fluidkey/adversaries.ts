@@ -8,162 +8,156 @@ const KIT =
 const EARN =
   'https://github.com/fluidkey/fluidkey-earn-module/blob/122cde19940d06b94c0027f4cd2e22e7fa19129a/src/FluidkeyEarnModule.sol'
 const SARA =
-  'https://github.com/fluidkey/sara/blob/6ab939e176cbae60a33214d292070d6a1dfe9b30'
-const WALKTHROUGH =
-  'https://docs.fluidkey.com/technical-documentation/technical-walkthrough/'
-const HIDE_TRAIL = 'https://docs.fluidkey.com/readme/advanced-privacy/'
+  'https://github.com/fluidkey/sara/blob/e6e4fcd9e718722948b82fa0e819e0c4fca46e0d'
+const DOCS = 'https://docs.fluidkey.com/'
+const WALKTHROUGH = DOCS + 'technical-documentation/technical-walkthrough/'
 const PRIVACY = 'https://www.fluidkey.com/privacy'
 
-export const fluidkeyAdversaries = definePrivacyAdversaries({
-  promise: {
-    protects: 'recipient',
-    text: `Hides which account a receiving Safe belongs to. ${S.stealthPromiseTail}`,
-  },
-  cells: {
-    publicObserver: {
-      sentiment: 'good',
-      exposureShort:
-        'A payment reaches a predicted Safe before it is deployed, with no onchain data linking it to the recipient account.',
-      exposureContinued:
-        'Deployment later exposes the individual stealth signer (private signer controlling the safe) and enabled modules, not the parent account.',
-      advice: S.freshReceive('keep unrelated funds separate with labels'),
-      sources: [
-        {
-          title: 'Counterfactual receiving Safe and individual stealth signer',
-          url: WALKTHROUGH + '#3-stealth-accounts',
-        },
-        {
-          title: 'Safe owner and initialization data determine the address',
-          url: KIT + 'predictStealthSafeAddress.ts#L32-L104',
-        },
-        {
-          contract: 'FluidkeyEarnModule',
-          title: 'AutoEarnExecuted exposes Safe, token and deposited amount',
-        },
-        {
-          title: 'Labels restrict which balances fund a send',
-          url: 'https://docs.fluidkey.com/readme/labels/',
-        },
-      ],
+export function fluidkeyAdversaries(accounts: number) {
+  return definePrivacyAdversaries({
+    promise: {
+      protects: 'recipient',
+      text: `Hides which account a receiving Safe belongs to. ${S.stealthPromiseTail}`,
     },
-    chainAnalyst: {
-      sentiment: 'warning',
-      exposureShort:
-        'Safe deployment and auto-earn events make service use recognizable, which narrows the anonymity set to Fluidkey users.',
-      exposureContinued:
-        'Nothing onchain maps Safes to accounts, but timing, amounts, common destinations and reuse across chains can identify or cluster recipients, and a send draws from several Safes by default, which links them. The optional Hide Trail routes through Houdini and two exchanges, a separate service with its own trust assumptions.',
-      advice:
-        'Label payments so a send draws from one Safe. Check related activity across chains and space out distinctive payments.',
-      sources: [
-        {
-          title:
-            'onInstall records its caller; an event alone is not proof of a Fluidkey user',
-          url: EARN + '#L243-L260',
-        },
-        {
-          title:
-            'Different auto-earn versions use different initialization data',
-          url: 'https://docs.fluidkey.com/technical-documentation/stealth-account-initdata/',
-        },
-        {
-          title:
-            'Shared derivation path permits the same addresses across chains',
-          url: WALKTHROUGH + '#3a-stealth-signer-derivation',
-        },
-        { title: 'Hide Trail integration', url: HIDE_TRAIL },
-      ],
+    cells: {
+      publicObserver: {
+        sentiment: 'good',
+        exposureShort:
+          'Each payment reaches a fresh Safe, and nothing onchain names the account behind it.',
+        exposureContinued:
+          'A send that draws from several of your Safes shows onchain that they belong together.',
+        advice: S.freshReceive(
+          'label payments by payer and send from one label at a time',
+        ),
+        sources: [
+          {
+            title: 'Counterfactual receiving Safe and one-time stealth signer',
+            url: WALKTHROUGH + '#3-stealth-accounts',
+          },
+          {
+            title: 'Safe owner and initialization data determine the address',
+            url: KIT + 'predictStealthSafeAddress.ts#L32-L104',
+          },
+          {
+            title: 'Labels limit which Safes fund a send',
+            url: DOCS + 'readme/labels/',
+          },
+        ],
+      },
+      chainAnalyst: {
+        sentiment: 'good',
+        exposureShort: `At least ${accounts.toLocaleString('en-US')} accounts have claimed Fluidkey's 'score' token, giving a lower bound of the anonymity set.`,
+        exposureContinued:
+          "A Safe looks like any new address until Fluidkey's relayer spends from it or deposits its funds for auto-earn. A claimed score sits on its own stealth address that holds nothing else, and its amount grows partly with the account's balance.",
+        advice:
+          'Ask for a new address for each payment, also when it arrives on another chain.',
+        sources: [
+          {
+            contract: 'FluidkeyScore',
+            title: 'Score holders, one address per claiming account',
+          },
+          {
+            title: 'Score claimed in the app, based partly on total balance',
+            url: DOCS + 'readme/score/',
+          },
+          {
+            title:
+              'The score accrues on a stealth address that holds nothing else',
+            url: 'https://www.fluidkey.com/blog/fluidkey-score',
+          },
+          {
+            contract: 'SmartAccountRelayer',
+            title:
+              "Fluidkey's relayer contract submits every send and auto-earn deposit",
+          },
+          {
+            title: 'Auto-earn setup records the Safe that installs it',
+            url: EARN + '#L243-L260',
+          },
+          {
+            title:
+              'Shared derivation path permits the same address on several chains',
+            url: WALKTHROUGH + '#3a-stealth-signer-derivation',
+          },
+        ],
+      },
+      networkObserver: {
+        sentiment: 'warning',
+        exposureShort:
+          'The app is closed source, so what it sends to third parties is up to Fluidkey and can change at any time.',
+        exposureContinued:
+          "Today, the web app reads the chain only through Fluidkey's servers and gives outside services just your login and username. A payer who looks up your name through a third-party RPC shows it your name and the new address.",
+        advice:
+          'Create addresses with the open kit and give them to payers yourself. Find and spend your funds with the open recovery app on your own node, paying gas from a new wallet, because the app deploys Safes from the wallet you connect.',
+        sources: [
+          {
+            title:
+              "The app's content security policy lists every endpoint it contacts",
+            url: 'https://app.fluidkey.com',
+          },
+          {
+            title: 'Local address prediction needs no RPC',
+            url: KIT + 'predictStealthSafeAddress.ts#L120-L180',
+          },
+          {
+            title: 'Recovery app accepts a custom RPC',
+            url: SARA + '/src/components/RecoverAddressesJourneyStep.tsx#L468',
+          },
+          {
+            title: 'Recovery app deploys the Safe from the connected wallet',
+            url: SARA + '/src/hooks/useDeployStealthSafe.ts#L63-L99',
+          },
+        ],
+      },
+      privilegedInsider: {
+        sentiment: 'bad',
+        exposureShort: S.operatorViewingKey('Fluidkey'),
+        exposureContinued:
+          "It also runs the closed-source app that handles your keys. With Google or Apple login on the web, Privy's code creates the signature your keys come from. Bank transfers add your verified identity, and Hide Trail shows your route to Houdini and two exchanges.",
+        sources: [
+          {
+            title: 'Private viewing key shared with the service',
+            url: KIT + 'extractViewingPrivateKeyNode.ts#L14-L30',
+          },
+          {
+            title: 'Web keys are generated through a Privy embedded wallet',
+            url: DOCS + 'readme/account-set-up/',
+          },
+          {
+            title: 'Verification results and identity attributes',
+            url: PRIVACY,
+          },
+          {
+            title: 'Hide Trail and its exchange intermediaries',
+            url: DOCS + 'readme/advanced-privacy/',
+          },
+        ],
+      },
+      futureAdversary: {
+        sentiment: 'warning',
+        exposureShort: S.noAnnouncement,
+        exposureContinued: `${S.operatorViewingKeyRegardless('Fluidkey')} ${S.walletSignatureAccounts('plus a four-digit PIN')}`,
+        advice: `Create your account in the mobile app, with Google or Apple login, or with a new wallet that has never sent a transaction. ${S.permanentlyDisclosed('the viewing key shared with Fluidkey')}`,
+        sources: [
+          {
+            title: 'Stealth signer depends on a hashed shared secret',
+            url: KIT + 'generateStealthPrivateKey.ts#L11-L21',
+          },
+          {
+            title: 'Signature halves generate the viewing and spending keys',
+            url: KIT + 'generateKeysFromSignature.ts#L11-L36',
+          },
+          {
+            title:
+              'Wallet address and PIN determine the key-generation message',
+            url: KIT + 'utils/generateFluidkeyMessage.ts#L10-L32',
+          },
+          {
+            title: 'Recovery supports a four-digit PIN, defaulting to 0000',
+            url: SARA + '/src/components/GenerateKeysJourneyStep.tsx#L28-L90',
+          },
+        ],
+      },
     },
-    networkObserver: {
-      sentiment: 'warning',
-      exposureShort:
-        'The hosted client is closed source, so which RPC and analytics providers see your Safe list cannot be verified.',
-      exposureContinued:
-        "Paying to your fkey.id name hands the name and the fresh address to whoever resolves ENS for the payer, often the payer's RPC provider. Only the open kit and the recovery app can be pointed at your own node.",
-      advice:
-        'Derive addresses with the kit and hand them to payers directly instead of the ENS name. Read balances with the recovery app on your own RPC, and deploy and spend from a fresh gas wallet, since the recovery app deploys Safes from the connected wallet.',
-      sources: [
-        { contract: 'OffchainResolver', title: 'Offchain ENS gateway' },
-        {
-          title: 'Local CREATE2 prediction needs no RPC',
-          url: KIT + 'predictStealthSafeAddress.ts#L120-L180',
-        },
-        {
-          title: 'Recovery app accepts a custom RPC',
-          url: SARA + '/src/components/RecoverAddressesJourneyStep.tsx#L468',
-        },
-        {
-          title: 'Recovery app deploys the Safe from the connected wallet',
-          url: SARA + '/src/hooks/useDeployStealthSafe.ts#L63-L99',
-        },
-        {
-          title: 'Disclosed service providers and transport encryption',
-          url: PRIVACY,
-        },
-      ],
-    },
-    privilegedInsider: {
-      sentiment: 'bad',
-      exposureShort: S.operatorViewingKey('Fluidkey'),
-      exposureContinued:
-        'Optional identity-verified services add identity attributes, and Hide Trail adds route knowledge at Houdini and each exchange.',
-      advice: S.localClientSpendingKeys('Fluidkey'),
-      sources: [
-        {
-          title: 'Private viewing key shared with the service',
-          url: KIT + 'extractViewingPrivateKeyNode.ts#L14-L30',
-        },
-        {
-          title: 'Ephemeral key plus public spending key generates each signer',
-          url: KIT + 'generateStealthAddresses.ts#L14-L49',
-        },
-        {
-          contract: 'OffchainResolver',
-          title:
-            'ENS signature authenticates the service, not recipient control',
-        },
-        { section: 'permissions' },
-        {
-          section: 'upgrades-and-governance',
-          title: 'Hosted-client trust boundary',
-        },
-        {
-          title: 'Optional verification results and identity attributes',
-          url: PRIVACY,
-        },
-        {
-          title: 'Hide Trail and its exchange intermediaries',
-          url: HIDE_TRAIL,
-        },
-      ],
-    },
-    futureAdversary: {
-      sentiment: 'warning',
-      exposureShort: S.noAnnouncement,
-      exposureContinued: `${S.operatorViewingKeyRegardless('Fluidkey')} ${S.walletSignatureAccounts('plus a four-digit PIN')}`,
-      advice: `${S.notWalletSignature('with independently generated keys')} ${S.permanentlyDisclosed('the viewing key shared with Fluidkey')}`,
-      sources: [
-        {
-          title: 'Stealth signer depends on a hashed shared secret',
-          url: KIT + 'generateStealthPrivateKey.ts#L11-L21',
-        },
-        {
-          title: 'Signature halves generate the viewing and spending keys',
-          url: KIT + 'generateKeysFromSignature.ts#L11-L36',
-        },
-        {
-          title: 'Wallet address and PIN determine the key-generation message',
-          url: KIT + 'utils/generateFluidkeyMessage.ts#L10-L32',
-        },
-        {
-          title: 'Recovery supports a four-digit PIN, defaulting to 0000',
-          url: SARA + '/src/components/GenerateKeysJourneyStep.tsx#L28-L90',
-        },
-        {
-          title: 'Distinct web embedded-wallet and mobile device-key setups',
-          url: 'https://docs.fluidkey.com/readme/account-set-up/',
-        },
-        { title: 'Operator data retention', url: PRIVACY },
-      ],
-    },
-  },
-})
+  })
+}

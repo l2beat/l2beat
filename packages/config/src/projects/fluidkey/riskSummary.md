@@ -1,14 +1,15 @@
 ## Funds can be stolen if
-1. a user relies on the hosted wallet and it is malicious or compromised and exfiltrates derived spending keys. The production wallet is closed source and has no published reproducible build, so users cannot inspect its source or verify the code being served.
-2. an accepted ENS signer returns an attacker-controlled payment address for a Fluidkey name. The resolver authenticates the answer but does not prove that the intended recipient controls it.
-3. the hosted service supplies malicious transaction data and the client signs it without independently checking the destination, amount, and calls being authorized.
+1. the closed-source app is malicious or hacked and steals the user's spending keys.
+2. Privy's code or key share is compromised, for accounts created with Google or Apple login on the web.
+3. a Fluidkey signer returns an attacker's address when a payer looks up a Fluidkey name.
+4. Fluidkey sends the app a malicious transaction and the user signs it without checking it.
 <br>
 ## Funds can be lost if
-1. a user loses the wallet, PIN, login, or backup needed to recover their private spending keys.
-2. the service and client derive different address data or Safe initialization parameters and a payment is sent to an address that the user cannot recover.
-3. an auto-earn vault loses funds or cannot honor withdrawals, or a service used by Hide Trail fails to return the funds routed through it.
+1. a user loses the login, wallet, PIN or backup needed to recover the spending key.
+2. Fluidkey's server gives out a wrong address, for example one built with a different Safe setup, and the user's keys cannot withdraw from it.
+3. an auto-earn vault loses funds or blocks withdrawals, or a service used by Hide Trail keeps the funds.
 <br>
 ## Privacy can be lost if
-1. Fluidkey, or an attacker who obtains its viewing data, uses the service's viewing capability and index to link an account's stealth addresses and onchain activity.
-2. spending from several stealth addresses together, reusing destinations, or recognizable timing and amounts links otherwise separate payments onchain.
-3. a user relies on Hide Trail and the swap service or participating exchanges use their transfer records to link activity that is obscured from public onchain observers.
+1. Fluidkey, or anyone who gets its records now or later, uses the viewing keys to link all Safes of every account (see privileged insider and future adversary).
+2. Fluidkey changes its closed-source app to send account data to outside services, which users cannot check (see network observer).
+3. a user takes Hide Trail and Houdini or the exchanges link the route from their records (see privileged insider).

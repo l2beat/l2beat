@@ -1,7 +1,7 @@
 {
   "name": "fluidkey",
-  "timestamp": 1791532024,
-  "configHash": "0xffec3a90b6a9e21d50b6883e20fadbc2fd63176969f4b21a2bded4ebbd25e4c4",
+  "timestamp": 1791549206,
+  "configHash": "0x71d98b475cc05d2f3897c2b044b30e83e4e60ea0725c6b691d9b83dd4ee5dd36",
   "entries": [
     {
       "address": "arb1:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1",
@@ -45,6 +45,33 @@
       "address": "arb1:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SmartAccountRelayer",
+      "address": "arb1:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+      "type": "Contract",
+      "template": "fluidkey/SmartAccountRelayer",
+      "sourceHashes": [
+        "0xbedcb217211aa7fe4a5ca4239c15e653b8aeebd5b61a99acb35e0418f9859b09"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable contract through which Fluidkey submits Safe deployments, sends, auto-earn deposits and score transfers. Anyone can submit an operation, but each needs a signature from the authorized caller. It holds no rights over Safes, so a send still needs the Safe owner's signature.",
+      "deployerAddress": "arb1:0x629F72215a9914F6d3D061F306E923F5DD9dFc60",
+      "sinceTimestamp": 1761331017,
+      "sinceBlock": 392988437,
+      "values": {
+        "$immutable": true,
+        "authorizedCaller": "arb1:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a"
+      },
+      "fieldMeta": {
+        "authorizedCaller": {
+          "description": "Address whose signature every forwarded operation needs."
+        }
+      },
+      "implementationNames": {
+        "arb1:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": "SmartAccountRelayer"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Fluidkey Earn Owner",
@@ -92,6 +119,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "base:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -135,6 +167,33 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SmartAccountRelayer",
+      "address": "base:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+      "type": "Contract",
+      "template": "fluidkey/SmartAccountRelayer",
+      "sourceHashes": [
+        "0xbedcb217211aa7fe4a5ca4239c15e653b8aeebd5b61a99acb35e0418f9859b09"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable contract through which Fluidkey submits Safe deployments, sends, auto-earn deposits and score transfers. Anyone can submit an operation, but each needs a signature from the authorized caller. It holds no rights over Safes, so a send still needs the Safe owner's signature.",
+      "deployerAddress": "base:0x629F72215a9914F6d3D061F306E923F5DD9dFc60",
+      "sinceTimestamp": 1761330679,
+      "sinceBlock": 37270666,
+      "values": {
+        "$immutable": true,
+        "authorizedCaller": "base:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a"
+      },
+      "fieldMeta": {
+        "authorizedCaller": {
+          "description": "Address whose signature every forwarded operation needs."
+        }
+      },
+      "implementationNames": {
+        "base:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": "SmartAccountRelayer"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "name": "FluidkeyScore",
       "address": "base:0x894c663757f6953544548EFA1aebc0846AC08bEa",
       "type": "Contract",
@@ -161,7 +220,7 @@
         ],
         "$upgradeCount": 1,
         "decimals": 18,
-        "holders": 2191,
+        "holders": 2189,
         "name": "Fluidkey Score",
         "owner": "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
         "symbol": "FKS",
@@ -170,7 +229,7 @@
       },
       "fieldMeta": {
         "holders": {
-          "description": "Number of distinct addresses that ever received the score, the distributor included."
+          "description": "Number of distinct addresses the distributor sent the score to, one per account that claimed it."
         },
         "owner": { "description": "Owner of the score token." }
       },
@@ -222,6 +281,11 @@
     },
     {
       "address": "base:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -282,6 +346,33 @@
       "address": "eth:0x74C19105f358BAb85f8E9FDA9202A1326A714d89",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SmartAccountRelayer",
+      "address": "eth:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+      "type": "Contract",
+      "template": "fluidkey/SmartAccountRelayer",
+      "sourceHashes": [
+        "0xbedcb217211aa7fe4a5ca4239c15e653b8aeebd5b61a99acb35e0418f9859b09"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable contract through which Fluidkey submits Safe deployments, sends, auto-earn deposits and score transfers. Anyone can submit an operation, but each needs a signature from the authorized caller. It holds no rights over Safes, so a send still needs the Safe owner's signature.",
+      "deployerAddress": "eth:0x629F72215a9914F6d3D061F306E923F5DD9dFc60",
+      "sinceTimestamp": 1761330599,
+      "sinceBlock": 23649119,
+      "values": {
+        "$immutable": true,
+        "authorizedCaller": "eth:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a"
+      },
+      "fieldMeta": {
+        "authorizedCaller": {
+          "description": "Address whose signature every forwarded operation needs."
+        }
+      },
+      "implementationNames": {
+        "eth:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": "SmartAccountRelayer"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OffchainResolver",
@@ -400,6 +491,11 @@
       }
     },
     {
+      "address": "eth:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xFE972D3976F7cc5ba1C9b471D48362B82C6c5fDd",
       "type": "EOA",
       "proxyType": "EOA"
@@ -448,6 +544,33 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SmartAccountRelayer",
+      "address": "gno:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+      "type": "Contract",
+      "template": "fluidkey/SmartAccountRelayer",
+      "sourceHashes": [
+        "0xbedcb217211aa7fe4a5ca4239c15e653b8aeebd5b61a99acb35e0418f9859b09"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable contract through which Fluidkey submits Safe deployments, sends, auto-earn deposits and score transfers. Anyone can submit an operation, but each needs a signature from the authorized caller. It holds no rights over Safes, so a send still needs the Safe owner's signature.",
+      "deployerAddress": "gno:0x629F72215a9914F6d3D061F306E923F5DD9dFc60",
+      "sinceTimestamp": 1761332800,
+      "sinceBlock": 42793729,
+      "values": {
+        "$immutable": true,
+        "authorizedCaller": "gno:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a"
+      },
+      "fieldMeta": {
+        "authorizedCaller": {
+          "description": "Address whose signature every forwarded operation needs."
+        }
+      },
+      "implementationNames": {
+        "gno:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": "SmartAccountRelayer"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "name": "Fluidkey Earn Owner",
       "address": "gno:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
       "type": "Contract",
@@ -489,6 +612,11 @@
     },
     {
       "address": "gno:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -536,6 +664,33 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SmartAccountRelayer",
+      "address": "matic:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+      "type": "Contract",
+      "template": "fluidkey/SmartAccountRelayer",
+      "sourceHashes": [
+        "0xbedcb217211aa7fe4a5ca4239c15e653b8aeebd5b61a99acb35e0418f9859b09"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable contract through which Fluidkey submits Safe deployments, sends, auto-earn deposits and score transfers. Anyone can submit an operation, but each needs a signature from the authorized caller. It holds no rights over Safes, so a send still needs the Safe owner's signature.",
+      "deployerAddress": "matic:0x629F72215a9914F6d3D061F306E923F5DD9dFc60",
+      "sinceTimestamp": 1761330950,
+      "sinceBlock": 78113063,
+      "values": {
+        "$immutable": true,
+        "authorizedCaller": "matic:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a"
+      },
+      "fieldMeta": {
+        "authorizedCaller": {
+          "description": "Address whose signature every forwarded operation needs."
+        }
+      },
+      "implementationNames": {
+        "matic:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": "SmartAccountRelayer"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "name": "Fluidkey Earn Owner",
       "address": "matic:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
       "type": "Contract",
@@ -577,6 +732,11 @@
     },
     {
       "address": "matic:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -624,6 +784,33 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SmartAccountRelayer",
+      "address": "oeth:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+      "type": "Contract",
+      "template": "fluidkey/SmartAccountRelayer",
+      "sourceHashes": [
+        "0xbedcb217211aa7fe4a5ca4239c15e653b8aeebd5b61a99acb35e0418f9859b09"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable contract through which Fluidkey submits Safe deployments, sends, auto-earn deposits and score transfers. Anyone can submit an operation, but each needs a signature from the authorized caller. It holds no rights over Safes, so a send still needs the Safe owner's signature.",
+      "deployerAddress": "oeth:0x629F72215a9914F6d3D061F306E923F5DD9dFc60",
+      "sinceTimestamp": 1761330907,
+      "sinceBlock": 142866065,
+      "values": {
+        "$immutable": true,
+        "authorizedCaller": "oeth:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a"
+      },
+      "fieldMeta": {
+        "authorizedCaller": {
+          "description": "Address whose signature every forwarded operation needs."
+        }
+      },
+      "implementationNames": {
+        "oeth:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": "SmartAccountRelayer"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "name": "Fluidkey Earn Owner",
       "address": "oeth:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
       "type": "Contract",
@@ -665,6 +852,11 @@
     },
     {
       "address": "oeth:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "oeth:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -768,6 +960,15 @@
       "function transferOwnership(address newOwner)",
       "function wrappedNative() view returns (address)"
     ],
+    "arb1:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": [
+      "constructor(address _authorizedCaller)",
+      "error OperationAlreadyExecuted()",
+      "error UnauthorizedSignature()",
+      "event OperationRelayed(uint256 indexed operationId, bool indexed success)",
+      "function authorizedCaller() view returns (address)",
+      "function relayOperation(uint256 operationId, address to, bytes data, bytes signature) returns (bool success, bytes returnData)",
+      "function usedOperationIds(uint256) view returns (bool)"
+    ],
     "arb1:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
       "constructor(address _singleton)"
     ],
@@ -868,6 +1069,15 @@
       "function setConfig(tuple(uint256 chainId, address token, address vault)[] newConfigs)",
       "function transferOwnership(address newOwner)",
       "function wrappedNative() view returns (address)"
+    ],
+    "base:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": [
+      "constructor(address _authorizedCaller)",
+      "error OperationAlreadyExecuted()",
+      "error UnauthorizedSignature()",
+      "event OperationRelayed(uint256 indexed operationId, bool indexed success)",
+      "function authorizedCaller() view returns (address)",
+      "function relayOperation(uint256 operationId, address to, bytes data, bytes signature) returns (bool success, bytes returnData)",
+      "function usedOperationIds(uint256) view returns (bool)"
     ],
     "base:0x894c663757f6953544548EFA1aebc0846AC08bEa": [
       "constructor(address implementation, bytes _data) payable",
@@ -1025,6 +1235,15 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": [
+      "constructor(address _authorizedCaller)",
+      "error OperationAlreadyExecuted()",
+      "error UnauthorizedSignature()",
+      "event OperationRelayed(uint256 indexed operationId, bool indexed success)",
+      "function authorizedCaller() view returns (address)",
+      "function relayOperation(uint256 operationId, address to, bytes data, bytes signature) returns (bool success, bytes returnData)",
+      "function usedOperationIds(uint256) view returns (bool)"
     ],
     "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c": [
       "constructor(string _url, address[] _signers, uint256 _env)",
@@ -1204,6 +1423,15 @@
       "function transferOwnership(address newOwner)",
       "function wrappedNative() view returns (address)"
     ],
+    "gno:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": [
+      "constructor(address _authorizedCaller)",
+      "error OperationAlreadyExecuted()",
+      "error UnauthorizedSignature()",
+      "event OperationRelayed(uint256 indexed operationId, bool indexed success)",
+      "function authorizedCaller() view returns (address)",
+      "function relayOperation(uint256 operationId, address to, bytes data, bytes signature) returns (bool success, bytes returnData)",
+      "function usedOperationIds(uint256) view returns (bool)"
+    ],
     "gno:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
       "constructor(address _singleton)"
     ],
@@ -1304,6 +1532,15 @@
       "function setConfig(tuple(uint256 chainId, address token, address vault)[] newConfigs)",
       "function transferOwnership(address newOwner)",
       "function wrappedNative() view returns (address)"
+    ],
+    "matic:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": [
+      "constructor(address _authorizedCaller)",
+      "error OperationAlreadyExecuted()",
+      "error UnauthorizedSignature()",
+      "event OperationRelayed(uint256 indexed operationId, bool indexed success)",
+      "function authorizedCaller() view returns (address)",
+      "function relayOperation(uint256 operationId, address to, bytes data, bytes signature) returns (bool success, bytes returnData)",
+      "function usedOperationIds(uint256) view returns (bool)"
     ],
     "matic:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
       "constructor(address _singleton)"
@@ -1406,25 +1643,35 @@
       "function transferOwnership(address newOwner)",
       "function wrappedNative() view returns (address)"
     ],
+    "oeth:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0": [
+      "constructor(address _authorizedCaller)",
+      "error OperationAlreadyExecuted()",
+      "error UnauthorizedSignature()",
+      "event OperationRelayed(uint256 indexed operationId, bool indexed success)",
+      "function authorizedCaller() view returns (address)",
+      "function relayOperation(uint256 operationId, address to, bytes data, bytes signature) returns (bool success, bytes returnData)",
+      "function usedOperationIds(uint256) view returns (bool)"
+    ],
     "oeth:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
       "constructor(address _singleton)"
     ]
   },
   "usedTemplates": {
     "fluidkey/FluidkeyEarnModule": "0xea908be572f4783ba02d1c93afdcbb18f757f9ff43c1415bc90223173397d873",
-    "fluidkey/FluidkeyScore": "0x9cd0aa56e9c9be9d575818d3821b9e2a4d0a815b8de52d614c8236ebb781caa5",
+    "fluidkey/FluidkeyScore": "0x7e83dbac8058eb131da81206b813cba1763fa65ca5c5b86d5cfd9aff52ff6ea9",
     "fluidkey/OffchainResolver": "0x81a805a0cfe7069827e443ec15f1ccf892cb47c773579d168f0b11c968a0ad48",
+    "fluidkey/SmartAccountRelayer": "0x3c4b377ef5920e3395f693987c824040294b5f7cdbb1cb3fefb7246b235125c1",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": {
-    "arbitrum": 513134279,
-    "base": 52371338,
-    "ethereum": 26153449,
-    "gnosis": 48665458,
-    "optimism": 157966623,
-    "polygonpos": 95217870
+    "arbitrum": 513197445,
+    "base": 52379929,
+    "ethereum": 26154878,
+    "gnosis": 48668694,
+    "optimism": 157975214,
+    "polygonpos": 95229324
   },
-  "permissionsConfigHash": "0x641e075233b9c0d20e58635f58ebeb27cd65368394a10e960034da8bf1525c3c",
+  "permissionsConfigHash": "0x371809e28349e048c51f6e732bb69ecf4593111970edb74312c87cb44f07946e",
   "permissions": {
     "arb1:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
       "receivedPermissions": [
@@ -1443,6 +1690,16 @@
           "from": "arb1:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
           "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe.",
           "role": ".owner"
+        }
+      ]
+    },
+    "arb1:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+          "description": "authorize every call this contract forwards.",
+          "role": ".authorizedCaller"
         }
       ]
     },
@@ -1474,6 +1731,16 @@
           "permission": "upgrade",
           "from": "base:0x894c663757f6953544548EFA1aebc0846AC08bEa",
           "role": "admin"
+        }
+      ]
+    },
+    "base:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+          "description": "authorize every call this contract forwards.",
+          "role": ".authorizedCaller"
         }
       ]
     },
@@ -1517,6 +1784,16 @@
         }
       ]
     },
+    "eth:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+          "description": "authorize every call this contract forwards.",
+          "role": ".authorizedCaller"
+        }
+      ]
+    },
     "gno:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
       "receivedPermissions": [
         {
@@ -1534,6 +1811,16 @@
           "from": "gno:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
           "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe.",
           "role": ".owner"
+        }
+      ]
+    },
+    "gno:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+          "description": "authorize every call this contract forwards.",
+          "role": ".authorizedCaller"
         }
       ]
     },
@@ -1557,6 +1844,16 @@
         }
       ]
     },
+    "matic:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+          "description": "authorize every call this contract forwards.",
+          "role": ".authorizedCaller"
+        }
+      ]
+    },
     "oeth:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
       "receivedPermissions": [
         {
@@ -1574,6 +1871,16 @@
           "from": "oeth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
           "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe.",
           "role": ".owner"
+        }
+      ]
+    },
+    "oeth:0xe78288221aaE3A0D3ddf8Fa08D3602C3014eeD7a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0x8090a9DB6Aca56fFA186C75Ca0787B18af1058a0",
+          "description": "authorize every call this contract forwards.",
+          "role": ".authorizedCaller"
         }
       ]
     }
