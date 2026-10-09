@@ -1,0 +1,193 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "derivev3",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
+    "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
+    "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e"
+  ],
+  "names": {
+    "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB": "VerifiableApp",
+    "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3": "OnchainActionManager",
+    "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63": "WithdrawalOutbox",
+    "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42": "SpotVault",
+    "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e": "WithdrawFactory",
+    "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
+    "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7": "Derive Owner Multisig",
+    "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78": "DeriveTimelock",
+    "eth:0x5F8D40613d49179376a200cc808d322f4331453a": "Derive Bypass Multisig",
+    "eth:0x169a99B9958386a5D91E732Ed08B344946A92391": "Derive Multisig",
+    "eth:0x682CD085aC63739a9F44E069E91BB6AA09a312E8": "Derive Guardian Multisig"
+  },
+  "overrides": {
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB": {
+      "description": "Holds the state root and verifies SP1 validity proofs for each batch. Each proof also commits to a Celestia header range and blob hash-chain, which this contract chains from a stored Celestia anchor and checks for freshness.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "stateRoot",
+        "consumedPublicAccIndex",
+        "consumedAdminAccIndex",
+        "lastOpTimestamp",
+        "celestiaTrustedHeight",
+        "celestiaTrustedHash",
+        "celestiaLastCommitment",
+        "getCelestiaAnchor"
+      ],
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "replace the state root, the program verification key, the verifier and the trusted Celestia anchor, and set the batch submitter and its stall timeout."
+            }
+          ]
+        },
+        "batchSubmitter": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "exclusively submit batches with validity proofs, until the oldest unprocessed L1 action is older than the submitter stall timeout."
+            }
+          ]
+        },
+        "submitterStallTimeout": {
+          "severity": "HIGH",
+          "description": "Time after which anyone can remove the batch submitter if an L1 action stays unprocessed."
+        },
+        "programVKey": { "severity": "HIGH" },
+        "verifier": { "severity": "HIGH" }
+      }
+    },
+    "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3": {
+      "description": "Entry point for L1 deposits and withdrawal requests. Every action is appended to an accumulator that each proven batch must consume in order.",
+      "ignoreMethods": [
+        "publicAccHistory",
+        "adminAccHistory",
+        "publicActionTimes",
+        "adminActionTimes"
+      ],
+      "ignoreInWatchMode": [
+        "publicActionsAcc",
+        "adminActionsAcc",
+        "publicHeadIndex",
+        "adminHeadIndex"
+      ],
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "withdraw the collected withdrawal fees."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63": {
+      "description": "Pays out withdrawals committed to by proven batches from the SpotVault, subject to USD-denominated per-recipient and global rate limits.",
+      "ignoreMethods": ["deferredWithdrawals"],
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, unpause, and pay out deferred withdrawals without rate limits."
+            }
+          ]
+        },
+        "guardian": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "refill withdrawal rate limit buckets and pause withdrawals."
+            }
+          ]
+        },
+        "pausers": {
+          "handler": {
+            "type": "event",
+            "select": "pauser",
+            "add": { "event": "PauserSet", "where": ["=", "#allowed", true] },
+            "remove": {
+              "event": "PauserSet",
+              "where": ["!=", "#allowed", true]
+            }
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "pause all withdrawal payouts. Only the owner can unpause."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78": {
+      // Executors are the individual signers of the proposer multisig and can only execute
+      // what it scheduled, so the proposer, not each executor, acts through the timelock.
+      "fields": {
+        "Proposer": {
+          "permissions": [
+            { "type": "interact", "description": "propose transactions." },
+            { "type": "act", "delay": "{{getMinDelay}}" }
+          ]
+        },
+        "Executor": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "execute transactions that are ready."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e": {
+      "description": "Deploys a deterministic escrow per recipient and destination chain. Withdrawals paid to such an escrow are bridged onward by keepers via LayerZero OFT or CCIP.",
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to itself."
+            }
+          ]
+        },
+        "keepers": {
+          "handler": {
+            "type": "event",
+            "select": "keeper",
+            "add": { "event": "KeeperSet", "where": ["=", "#allowed", true] },
+            "remove": {
+              "event": "KeeperSet",
+              "where": ["!=", "#allowed", true]
+            }
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "bridge the balance of a withdraw escrow to its recipient on the configured destination chain."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42": {
+      "description": "Escrow for the collateral deposited to Derive. It grants the WithdrawalOutbox unlimited allowance for approved tokens.",
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "approve or revoke the WithdrawalOutbox's allowance for any token."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

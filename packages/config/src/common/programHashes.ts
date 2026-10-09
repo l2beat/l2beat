@@ -783,6 +783,15 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x0022379400ea3157fae440ae7a8101e8bb01ca58e6a5f132c66751513aa58f08.md',
     ),
   },
+  '0x008dcff8e9d15e87916a63645d1075cb1d545b5bd1f40a3ba05b407f2ffa543b': {
+    title: 'Derive V3 exchange program',
+    description:
+      'Proves batches of the Derive V3 exchange: margin, settlement, deposits and withdrawals, plus a Celestia light client step and the inclusion of the batch data on Celestia.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'The program source is not public, so the program hash cannot be regenerated.',
+  },
   '0x0006e0a9f37edc912bb269856518599d61689c78300c23615b2f90868d0181cf': {
     ...OP_SUCCINCT_AGG_BLOBS,
     programUrl:

@@ -1,0 +1,1717 @@
+{
+  "name": "derivev3",
+  "timestamp": 1791549055,
+  "configHash": "0xbb427ce18999a749cda2adc7039424c29dade07ab8068290b20c4351ffd90c2d",
+  "entries": [
+    {
+      "address": "eth:0x000000c88C2C8A7F8317783f2268eB2B9b41257E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x1034487e0B3442ab302b8368713773abEEeF2e44",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DeriveTimelock",
+      "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+      "type": "Contract",
+      "template": "global/TimelockController",
+      "sourceHashes": [
+        "0xdd8ec07f87f722860fc7bc13d58cdf22e5a4c9f819dde1856586684b8e0ea9d5"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 10m.",
+      "deployerAddress": "eth:0xA82994cc5e9D94FED2916f762e03245FcBE79f23",
+      "sinceTimestamp": 1790840771,
+      "sinceBlock": 26096063,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x169a99B9958386a5D91E732Ed08B344946A92391"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x169a99B9958386a5D91E732Ed08B344946A92391",
+              "eth:0x6074595197e5637c1b50FDE0e6244Ff43634289B",
+              "eth:0x7E1fbF7631eCba68d08bC75534c0c56bb5600AD6",
+              "eth:0x1034487e0B3442ab302b8368713773abEEeF2e44",
+              "eth:0x192b678f988738E7F5e2641B3EF0cde603566705",
+              "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x6074595197e5637c1b50FDE0e6244Ff43634289B",
+              "eth:0x7E1fbF7631eCba68d08bC75534c0c56bb5600AD6",
+              "eth:0x1034487e0B3442ab302b8368713773abEEeF2e44",
+              "eth:0x192b678f988738E7F5e2641B3EF0cde603566705",
+              "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E"
+            ]
+          }
+        },
+        "Canceller": [
+          "eth:0x169a99B9958386a5D91E732Ed08B344946A92391",
+          "eth:0x6074595197e5637c1b50FDE0e6244Ff43634289B",
+          "eth:0x7E1fbF7631eCba68d08bC75534c0c56bb5600AD6",
+          "eth:0x1034487e0B3442ab302b8368713773abEEeF2e44",
+          "eth:0x192b678f988738E7F5e2641B3EF0cde603566705",
+          "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E"
+        ],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78"],
+        "Executor": [
+          "eth:0x6074595197e5637c1b50FDE0e6244Ff43634289B",
+          "eth:0x7E1fbF7631eCba68d08bC75534c0c56bb5600AD6",
+          "eth:0x1034487e0B3442ab302b8368713773abEEeF2e44",
+          "eth:0x192b678f988738E7F5e2641B3EF0cde603566705",
+          "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E"
+        ],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 600,
+        "getMinDelayFormatted": "10m",
+        "Proposer": ["eth:0x169a99B9958386a5D91E732Ed08B344946A92391"],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "implementationNames": {
+        "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78": "TimelockController"
+      }
+    },
+    {
+      "name": "Derive Multisig",
+      "address": "eth:0x169a99B9958386a5D91E732Ed08B344946A92391",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E",
+      "sinceTimestamp": 1757306315,
+      "sinceBlock": 23316038,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x6074595197e5637c1b50FDE0e6244Ff43634289B",
+          "eth:0x7E1fbF7631eCba68d08bC75534c0c56bb5600AD6",
+          "eth:0x1034487e0B3442ab302b8368713773abEEeF2e44",
+          "eth:0x192b678f988738E7F5e2641B3EF0cde603566705",
+          "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xc7c714769d8b67af1996ebc2ac5eda9f558f39f84f65c46cb34170fdcd2de2c2",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 113,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0x192b678f988738E7F5e2641B3EF0cde603566705",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
+      "sinceTimestamp": 1790859095,
+      "sinceBlock": 26097583,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "SpotVault",
+      "address": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
+        "0xf1d666784891a92db2f7311793ade4b7b76d00deecd0cca4c675b3f28317d64e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Escrow for the collateral deposited to Derive. It grants the WithdrawalOutbox unlimited allowance for approved tokens.",
+      "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
+      "sinceTimestamp": 1790859047,
+      "sinceBlock": 26097579,
+      "values": {
+        "$admin": "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D",
+        "$implementation": "eth:0x5D6d9D01a79625d5175D68A4B7Eb1fF390438245",
+        "$pastUpgrades": [
+          [
+            "2026-10-01T12:50:47.000Z",
+            "0x6abdad8e2eca4f6ec25940d2b5141f0b8202131858896f3f9619386fb1ed3829",
+            ["eth:0x5D6d9D01a79625d5175D68A4B7Eb1fF390438245"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+        "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42": "TransparentUpgradeableProxy",
+        "eth:0x5D6d9D01a79625d5175D68A4B7Eb1fF390438245": "SpotVault"
+      }
+    },
+    {
+      "name": "SP1VerifierGateway",
+      "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sp1"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
+      "sinceTimestamp": 1790859047,
+      "sinceBlock": 26097579,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "eth:0x546caBdF948d1f0E9102B28Fc48E77F29Cb01E09",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5759C0B7e9Dd894c1c4516558eE739746CF43f4f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5b216A8fdF0dc78807730a17EDC0374603E3666e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Derive Bypass Multisig",
+      "address": "eth:0x5F8D40613d49179376a200cc808d322f4331453a",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xe11de7576ff53dbc2f216729426016b32575102a9e8b0d9ec13e34766ffae943",
+        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xA82994cc5e9D94FED2916f762e03245FcBE79f23",
+      "sinceTimestamp": 1790831711,
+      "sinceBlock": 26095310,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
+        "$members": [
+          "eth:0x6074595197e5637c1b50FDE0e6244Ff43634289B",
+          "eth:0x7E1fbF7631eCba68d08bC75534c0c56bb5600AD6",
+          "eth:0x1034487e0B3442ab302b8368713773abEEeF2e44",
+          "eth:0x192b678f988738E7F5e2641B3EF0cde603566705",
+          "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E",
+          "eth:0x5759C0B7e9Dd894c1c4516558eE739746CF43f4f",
+          "eth:0x5b216A8fdF0dc78807730a17EDC0374603E3666e",
+          "eth:0x8C9aB48884c20f5760F5aB57cFe0a02b7b43E9c6"
+        ],
+        "$threshold": 6,
+        "domainSeparator": "0xfd7aba518677cbdb39b1e9c061254837d96cb6184b3ede4b634a88fb401f2ca2",
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "6 of 8 (75%)",
+        "nonce": 1,
+        "VERSION": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0x5F8D40613d49179376a200cc808d322f4331453a": "SafeProxy",
+        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": "Safe"
+      }
+    },
+    {
+      "address": "eth:0x6074595197e5637c1b50FDE0e6244Ff43634289B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Derive Owner Multisig",
+      "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xe11de7576ff53dbc2f216729426016b32575102a9e8b0d9ec13e34766ffae943",
+        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xA82994cc5e9D94FED2916f762e03245FcBE79f23",
+      "sinceTimestamp": 1790831963,
+      "sinceBlock": 26095330,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
+        "$members": [
+          "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "eth:0x5F8D40613d49179376a200cc808d322f4331453a"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x2e9eb6561e5ec36b90ce48d58041a29bf70627c027020f7a28e1fc75865b3aa4",
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 3,
+        "VERSION": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7": "SafeProxy",
+        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": "Safe"
+      }
+    },
+    {
+      "name": "Derive Guardian Multisig",
+      "address": "eth:0x682CD085aC63739a9F44E069E91BB6AA09a312E8",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xe11de7576ff53dbc2f216729426016b32575102a9e8b0d9ec13e34766ffae943",
+        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xA82994cc5e9D94FED2916f762e03245FcBE79f23",
+      "sinceTimestamp": 1790830043,
+      "sinceBlock": 26095172,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
+        "$members": [
+          "eth:0x7E1fbF7631eCba68d08bC75534c0c56bb5600AD6",
+          "eth:0x1034487e0B3442ab302b8368713773abEEeF2e44",
+          "eth:0x192b678f988738E7F5e2641B3EF0cde603566705",
+          "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E",
+          "eth:0x5759C0B7e9Dd894c1c4516558eE739746CF43f4f",
+          "eth:0x5b216A8fdF0dc78807730a17EDC0374603E3666e",
+          "eth:0xA0A2A7d71AB8908238aCbf73C3F6f274eE8DeEf4"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xfcd64e1db27f7d6e5172795dbedb048153220dc0ea32a4cdab13069538fe03c1",
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 7 (29%)",
+        "nonce": 7,
+        "VERSION": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0x682CD085aC63739a9F44E069E91BB6AA09a312E8": "SafeProxy",
+        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": "Safe"
+      }
+    },
+    {
+      "name": "WithdrawalOutbox",
+      "address": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
+        "0x183b8ad317f163052674979c2518b6395f60a8502032d8b36cb4e0e546953db2"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Pays out withdrawals committed to by proven batches from the SpotVault, subject to USD-denominated per-recipient and global rate limits.",
+      "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
+      "sinceTimestamp": 1790859023,
+      "sinceBlock": 26097577,
+      "values": {
+        "$admin": "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd",
+        "$implementation": "eth:0xda213F6af45A7d6Dc728BAB03fA4a1d81ff2B418",
+        "$pastUpgrades": [
+          [
+            "2026-10-01T12:50:23.000Z",
+            "0xa8e7c1369fb8e3408a6bec4074c21ddbf38f1ff956563ea0cd3db3418a693378",
+            ["eth:0x2e101Bf62e11c002495AF0AcaC7BEB9adC7B2475"]
+          ],
+          [
+            "2026-10-05T11:57:11.000Z",
+            "0x651eb703e0f902bcdfa3eea4f6fa4420c8bb5aac90dd69966a8216569b95cb62",
+            ["eth:0xda213F6af45A7d6Dc728BAB03fA4a1d81ff2B418"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "deferredWithdrawalId": 4,
+        "guardian": "eth:0x682CD085aC63739a9F44E069E91BB6AA09a312E8",
+        "minGuardianRefill": 180,
+        "NATIVE_ETH": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "NATIVE_TRANSFER_GAS": 50000,
+        "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
+        "paused": false,
+        "pausers": [
+          "eth:0x7E1fbF7631eCba68d08bC75534c0c56bb5600AD6",
+          "eth:0x1034487e0B3442ab302b8368713773abEEeF2e44",
+          "eth:0x192b678f988738E7F5e2641B3EF0cde603566705",
+          "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E",
+          "eth:0x5759C0B7e9Dd894c1c4516558eE739746CF43f4f",
+          "eth:0x5b216A8fdF0dc78807730a17EDC0374603E3666e",
+          "eth:0xA0A2A7d71AB8908238aCbf73C3F6f274eE8DeEf4"
+        ],
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "VERIFIABLE_APP": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
+        "WRAPPED_ETH_ASSET": "eth:0xE201fCEfD4852f96810C069f66560dc25B2C7A55"
+      },
+      "implementationNames": {
+        "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63": "TransparentUpgradeableProxy",
+        "eth:0xda213F6af45A7d6Dc728BAB03fA4a1d81ff2B418": "WithdrawalOutbox"
+      }
+    },
+    {
+      "address": "eth:0x7E1fbF7631eCba68d08bC75534c0c56bb5600AD6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x8C9aB48884c20f5760F5aB57cFe0a02b7b43E9c6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA0A2A7d71AB8908238aCbf73C3F6f274eE8DeEf4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DepositEscrow",
+      "address": "eth:0xA20f87a5443E3Be4925109cA189134c825932560",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3b9cceeb2ce2679e7c0a8e7f25dbd622db493fdd72f1381b67b2aa65dbffb6ce"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
+      "sinceTimestamp": 1791201527,
+      "sinceBlock": 26126021,
+      "values": {
+        "$immutable": true,
+        "FACTORY": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
+        "NATIVE_ETH_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+      },
+      "implementationNames": {
+        "eth:0xA20f87a5443E3Be4925109cA189134c825932560": "DepositEscrow"
+      }
+    },
+    {
+      "name": "VerifiableApp",
+      "address": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
+        "0x6e3b1ac1cc102f46bc3fae01faa62cbca8b39d3c889648ad4beef337bd86e439"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Holds the state root and verifies SP1 validity proofs for each batch. Each proof also commits to a Celestia header range and blob hash-chain, which this contract chains from a stored Celestia anchor and checks for freshness.",
+      "critical": true,
+      "ignoreInWatchMode": [
+        "stateRoot",
+        "consumedPublicAccIndex",
+        "consumedAdminAccIndex",
+        "lastOpTimestamp",
+        "celestiaTrustedHeight",
+        "celestiaTrustedHash",
+        "celestiaLastCommitment",
+        "getCelestiaAnchor"
+      ],
+      "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
+      "sinceTimestamp": 1790859095,
+      "sinceBlock": 26097583,
+      "values": {
+        "$admin": "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781",
+        "$implementation": "eth:0x3d35cA539242a2b5f7a08340F8b96006EdEB91CB",
+        "$pastUpgrades": [
+          [
+            "2026-10-01T12:51:35.000Z",
+            "0x23ee56d3116b72bb29bbd8851b473305514612ad7106a2a7cfde7073f7fc725e",
+            ["eth:0xdFF4997D8B1Dc1BBCe0d1CFF21a413dB79d3537b"]
+          ],
+          [
+            "2026-10-05T11:58:11.000Z",
+            "0x78a165cc9170695cc3f700818572f2ee460e42dd7a7d6afd34d460ad7aa6f4d5",
+            ["eth:0x3d35cA539242a2b5f7a08340F8b96006EdEB91CB"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "ACTION_MANAGER": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
+        "batchSubmitter": "eth:0x000000c88C2C8A7F8317783f2268eB2B9b41257E",
+        "celestiaLastCommitment": "0xac078bbd35eb9cf2ab53d3bea1aed4659e731235a6fa12c80fb5d19265e71cc6",
+        "celestiaTrustedHash": "0x434ea46ad9a313fdd375fd82a6d5fbaa901751b218e3748e44ba2c200f984333",
+        "celestiaTrustedHeight": 14796247,
+        "consumedAdminAccIndex": 2,
+        "consumedPublicAccIndex": 723,
+        "getCelestiaAnchor": {
+          "height": 14796247,
+          "headerHash": "0x434ea46ad9a313fdd375fd82a6d5fbaa901751b218e3748e44ba2c200f984333",
+          "lastCommitment": "0xac078bbd35eb9cf2ab53d3bea1aed4659e731235a6fa12c80fb5d19265e71cc6"
+        },
+        "lastOpTimestamp": 1791548522,
+        "MAX_DA_HEADER_AGE": 172800,
+        "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "programVKey": "0x008dcff8e9d15e87916a63645d1075cb1d545b5bd1f40a3ba05b407f2ffa543b",
+        "stateRoot": "0xe7988a71400595135c07ca97cea91997a55aebe5ccf114565b657fdd2b0217a1",
+        "submitterStallTimeout": 2419200,
+        "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+        "WITHDRAWAL_OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63"
+      },
+      "fieldMeta": {
+        "submitterStallTimeout": {
+          "severity": "HIGH",
+          "description": "Time after which anyone can remove the batch submitter if an L1 action stays unprocessed."
+        },
+        "programVKey": { "severity": "HIGH" },
+        "verifier": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB": "TransparentUpgradeableProxy",
+        "eth:0x3d35cA539242a2b5f7a08340F8b96006EdEB91CB": "VerifiableApp"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
+      "sinceTimestamp": 1790859023,
+      "sinceBlock": 26097577,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "eth:0xE201fCEfD4852f96810C069f66560dc25B2C7A55",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OnchainActionManager",
+      "address": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
+        "0x96546882f573a4752f008c8b4d63a4a296075b20009679749baea2cbb09b6ef2"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Entry point for L1 deposits and withdrawal requests. Every action is appended to an accumulator that each proven batch must consume in order.",
+      "ignoreInWatchMode": [
+        "publicActionsAcc",
+        "adminActionsAcc",
+        "publicHeadIndex",
+        "adminHeadIndex"
+      ],
+      "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
+      "sinceTimestamp": 1790859071,
+      "sinceBlock": 26097581,
+      "values": {
+        "$admin": "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811",
+        "$implementation": "eth:0x42Fd440db1b84E95B4Ab6A8Ec5fc3073B1c0A4E5",
+        "$pastUpgrades": [
+          [
+            "2026-10-01T12:51:11.000Z",
+            "0xe21c089646cc8fee6750e6e75644e31c97b4e0211782134efe5e5cd3e11595c9",
+            ["eth:0x370d06b5D6038e092d9B5ab3A36Ea5DCB813E009"]
+          ],
+          [
+            "2026-10-05T11:57:47.000Z",
+            "0xa0f75fa2736ce3e264b03005805c32ea1e16164d94e3056411d1adbd7be1d6b3",
+            ["eth:0x42Fd440db1b84E95B4Ab6A8Ec5fc3073B1c0A4E5"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "ADMIN_ACTION_DOMAIN": "0xa5e61ed3383fa55751f8b780f03f78fffc10dbd49f13cebc809dc09cda953ec3",
+        "ADMIN_ACTION_MIN_ID": 10000,
+        "adminActionsAcc": "0x53544a82772d190a1efbc02bfa3672d9f877521d6909aec3e2b893e0a4245c9c",
+        "adminHeadIndex": 2,
+        "DEPOSIT_TO_NEW_SUBACCOUNT_TYPE": 2,
+        "DEPOSIT_TYPE": 1,
+        "MAX_RESERVED_ACTION_ID": 50,
+        "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "PUBLIC_ACTION_DOMAIN": "0xe40f88659781022c735f391b4acc350fa0730948845bed98f660e46c61c3a256",
+        "publicActionsAcc": "0xf39bab552826fe1c983d0f1809dcbe79e257efffa5f7e81e039c2988e6e9a10b",
+        "publicHeadIndex": 727,
+        "WITHDRAWAL_FEE": 2000000000000000,
+        "WITHDRAWAL_OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+        "WITHDRAWAL_TYPE": 3
+      },
+      "implementationNames": {
+        "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3": "TransparentUpgradeableProxy",
+        "eth:0x42Fd440db1b84E95B4Ab6A8Ec5fc3073B1c0A4E5": "OnchainActionManager"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
+      "sinceTimestamp": 1790859071,
+      "sinceBlock": 26097581,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "WithdrawFactory",
+      "address": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x01547708714ce8bb28bd69c406667cf549e6008063c5f5d0b1676a89581715fc"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys a deterministic escrow per recipient and destination chain. Withdrawals paid to such an escrow are bridged onward by keepers via LayerZero OFT or CCIP.",
+      "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
+      "sinceTimestamp": 1791201527,
+      "sinceBlock": 26126021,
+      "values": {
+        "$immutable": true,
+        "ESCROW_IMPL": "eth:0xA20f87a5443E3Be4925109cA189134c825932560",
+        "keepers": ["eth:0x546caBdF948d1f0E9102B28Fc48E77F29Cb01E09"],
+        "NATIVE_ETH_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "implementationNames": {
+        "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e": "WithdrawFactory"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedCall()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0x169a99B9958386a5D91E732Ed08B344946A92391": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC1967ProxyUninitialized()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x3d35cA539242a2b5f7a08340F8b96006EdEB91CB": [
+      "constructor(address _withdrawalOutbox, address _actionManager)",
+      "error BatchAccIndexMismatch(bool admin, uint128 consumed, uint128 provided)",
+      "error BatchActionsAccMismatch(bool admin, bool isNew, bytes32 onchain, bytes32 provided)",
+      "error CelestiaBlobChainMismatch(bytes32 storedTip, bytes32 providedTip)",
+      "error CelestiaHeadMismatch(uint64 headHeight, bytes32 headHash, uint64 providedHeight, bytes32 providedHash)",
+      "error CelestiaHeadNotAdvancing(uint64 prevHeight, uint64 newHeight)",
+      "error CelestiaHeaderStale(uint64 oldestHeaderTime, uint64 blockTimestamp)",
+      "error InvalidInitialization()",
+      "error InvalidOpTimestamp(uint64 minOpTimestamp, uint64 maxOpTimestamp, uint64 lastOpTimestamp, uint256 blockTimestamp)",
+      "error InvalidSubmitterStallTimeout()",
+      "error NewAccIndexBeforeConsumed(uint128 consumed, uint128 provided)",
+      "error NoPendingAction()",
+      "error NotInitializing()",
+      "error OldRootMismatch(bytes32 expected, bytes32 provided)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error RootMismatch(bytes32 current, bytes32 provided)",
+      "error SubmitterNotStalled(uint256 stalledAt)",
+      "error UnauthorizedBatchSubmitter(address caller)",
+      "error WithdrawalDigestMismatch(bytes32 expected, bytes32 provided)",
+      "error ZeroAddress()",
+      "event BatchSubmitted(bytes32 indexed oldRoot, bytes32 indexed newRoot, uint128 oldPublicAccIndex, uint128 newPublicAccIndex, uint128 oldAdminAccIndex, uint128 newAdminAccIndex, bytes32 oldPublicActionsAcc, bytes32 newPublicActionsAcc, bytes32 oldAdminActionsAcc, bytes32 newAdminActionsAcc, bytes32 withdrawalDigest, uint64 minOpTimestamp, uint64 maxOpTimestamp)",
+      "event BatchSubmitterSet(address indexed submitter)",
+      "event CelestiaBlobChainAdvanced(bytes32 indexed fromCommitment, bytes32 indexed toCommitment)",
+      "event CelestiaHeadAdvanced(uint64 indexed fromHeight, uint64 indexed toHeight, bytes32 toHash)",
+      "event CelestiaHeadBootstrapped(uint64 height, bytes32 headerHash)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RootRotated(bytes32 newRoot)",
+      "event SubmitterStallTimeoutSet(uint64 timeout)",
+      "event VKeyRotated(bytes32 newProgramVKey)",
+      "function ACTION_MANAGER() view returns (address)",
+      "function MAX_DA_HEADER_AGE() view returns (uint64)",
+      "function WITHDRAWAL_OUTBOX() view returns (address)",
+      "function acceptOwnership()",
+      "function batchSubmitter() view returns (address)",
+      "function celestiaLastCommitment() view returns (bytes32)",
+      "function celestiaTrustedHash() view returns (bytes32)",
+      "function celestiaTrustedHeight() view returns (uint64)",
+      "function clearBatchSubmitter()",
+      "function computeWithdrawalDigest(tuple(uint8 source, uint64 nonceOrActionId, uint64 accountId, address asset, address recipient, uint128 amount)[] withdrawals) pure returns (bytes32)",
+      "function consumedAdminAccIndex() view returns (uint128)",
+      "function consumedPublicAccIndex() view returns (uint128)",
+      "function getCelestiaAnchor() view returns (uint64 height, bytes32 headerHash, bytes32 lastCommitment)",
+      "function initialize(address owner_, address _verifier, bytes32 _programVKey, bytes32 _initialStateRoot, address _batchSubmitter)",
+      "function lastOpTimestamp() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function programVKey() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setBatchSubmitter(address newSubmitter)",
+      "function setCelestiaAnchor(uint64 height, bytes32 headerHash, bytes32 lastCommitment)",
+      "function setRoot(bytes32 expectedRoot, bytes32 newRoot)",
+      "function setSubmitterStallTimeout(uint64 newTimeout)",
+      "function setVKey(bytes32 newProgramVKey)",
+      "function setVerifier(address newVerifier, bytes32 newProgramVKey)",
+      "function stateRoot() view returns (bytes32)",
+      "function submitBatch(bytes32 oldRoot, bytes32 newRoot, uint128 oldPublicAccIndex, uint128 newPublicAccIndex, uint128 oldAdminAccIndex, uint128 newAdminAccIndex, tuple(bytes32 oldPublic, bytes32 newPublic, bytes32 oldAdmin, bytes32 newAdmin) submittedAccs, bytes32 withdrawalDigest, uint64 minOpTimestamp, uint64 maxOpTimestamp, tuple(uint64 prevHeight, bytes32 prevHash, uint64 newHeight, bytes32 newHash, bytes32 prevLastCommitment, bytes32 newLastCommitment, uint64 oldestHeaderTime) da, tuple(uint8 source, uint64 nonceOrActionId, uint64 accountId, address asset, address recipient, uint128 amount)[] withdrawals, bytes proofBytes)",
+      "function submitterStallTimeout() view returns (uint64)",
+      "function transferOwnership(address newOwner)",
+      "function verifier() view returns (address)"
+    ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x42Fd440db1b84E95B4Ab6A8Ec5fc3073B1c0A4E5": [
+      "constructor(address _outbox)",
+      "error DepositAmountTooLarge()",
+      "error FeeChargingTokensNotSupported()",
+      "error InvalidInitialization()",
+      "error NativeEthDirectDepositNotSupported()",
+      "error NativeTransferFailed()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error ReservedActionIdForbidden()",
+      "error SafeERC20FailedOperation(address token)",
+      "error UnexpectedNativePayment()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "error ZeroBalance()",
+      "event AdminActionQueued(uint256 indexed actionId, address indexed sender, uint64 indexed actionType, bytes data, bytes32 acc)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PublicActionQueued(uint256 indexed actionId, address indexed sender, uint64 indexed actionType, bytes data, bytes32 acc)",
+      "event WithdrawalFeeClaimed(address indexed recipient, uint256 amount)",
+      "function ADMIN_ACTION_DOMAIN() view returns (bytes32)",
+      "function ADMIN_ACTION_MIN_ID() view returns (uint64)",
+      "function DEPOSIT_TO_NEW_SUBACCOUNT_TYPE() view returns (uint64)",
+      "function DEPOSIT_TYPE() view returns (uint64)",
+      "function MAX_RESERVED_ACTION_ID() view returns (uint64)",
+      "function PUBLIC_ACTION_DOMAIN() view returns (bytes32)",
+      "function WITHDRAWAL_FEE() view returns (uint256)",
+      "function WITHDRAWAL_OUTBOX() view returns (address)",
+      "function WITHDRAWAL_TYPE() view returns (uint64)",
+      "function acceptOwnership()",
+      "function actionAccsAt(uint128 oldPublicIndex, uint128 newPublicIndex, uint128 oldAdminIndex, uint128 newAdminIndex) view returns (tuple(bytes32 oldPublic, bytes32 newPublic, bytes32 oldAdmin, bytes32 newAdmin))",
+      "function adminAccHistory(uint256) view returns (bytes32)",
+      "function adminActionTimes(uint256) view returns (uint64)",
+      "function adminActionsAcc() view returns (bytes32)",
+      "function adminHeadIndex() view returns (uint256)",
+      "function claimWithdrawalFee(address recipient)",
+      "function deposit(address asset, uint256 amount, uint64 subaccountId, address fallbackRecipient) returns (uint256 actionId)",
+      "function depositToNewSubaccount(address asset, uint256 amount, uint32 managerId, address owner_) returns (uint256 actionId)",
+      "function initialize(address _owner)",
+      "function oldestPendingActionTime(uint256 consumedPublicIndex, uint256 consumedAdminIndex) view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function publicAccHistory(uint256) view returns (bytes32)",
+      "function publicActionTimes(uint256) view returns (uint64)",
+      "function publicActionsAcc() view returns (bytes32)",
+      "function publicHeadIndex() view returns (uint256)",
+      "function renounceOwnership()",
+      "function submit(uint64 actionType, bytes data) returns (uint256 actionId)",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(tuple(uint64 subaccountId, address protocolAsset, uint128 maxFeeUsdE18, address recipient, uint128 amountInUnderlying, bool forceBatch) params) payable returns (uint256 actionId)"
+    ],
+    "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x5D6d9D01a79625d5175D68A4B7Eb1fF390438245": [
+      "constructor(address outbox)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "error ZeroAddress()",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TokenApproved(address indexed token)",
+      "event TokenDisabled(address indexed token)",
+      "function OUTBOX() view returns (address)",
+      "function acceptOwnership()",
+      "function approveToken(address token)",
+      "function disableToken(address token)",
+      "function initialize(address owner)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x5F8D40613d49179376a200cc808d322f4331453a": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x682CD085aC63739a9F44E069E91BB6AA09a312E8": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC1967ProxyUninitialized()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xA20f87a5443E3Be4925109cA189134c825932560": [
+      "constructor(address factory)",
+      "error NativeTransferFailed()",
+      "error OnlyFactory()",
+      "error SafeERC20FailedOperation(address token)",
+      "function FACTORY() view returns (address)",
+      "function NATIVE_ETH_TOKEN() view returns (address)",
+      "function sweep(address token, uint256 amount)"
+    ],
+    "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC1967ProxyUninitialized()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xda213F6af45A7d6Dc728BAB03fA4a1d81ff2B418": [
+      "constructor(address _verifiableApp, address _wrappedEthAsset)",
+      "error BucketConfigTooRestrictive()",
+      "error BucketNotConfigured(address recipient, address asset)",
+      "error DeferredWithdrawalMismatch(uint256 deferredId)",
+      "error DustWithdrawal()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error InvalidBucketConfig()",
+      "error InvalidInitialization()",
+      "error InvalidRecipient()",
+      "error InvalidStaticPrice()",
+      "error InvalidWrappedEthAsset()",
+      "error MinGuardianRefillTimeNotMet()",
+      "error NativeEthNotRegistrable()",
+      "error NoPriceForAsset(address asset)",
+      "error NotGuardian()",
+      "error NotInitializing()",
+      "error NotPauser()",
+      "error NotVerifiableApp(address caller)",
+      "error OnlySelf()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error RefillRateExceedsCapacity()",
+      "error RegisterNewAssetWithSamePrice()",
+      "error SafeERC20FailedOperation(address token)",
+      "error TokenDecimalsMismatch(address token, uint8 supplied, uint8 onchain)",
+      "error UnexpectedEth()",
+      "error UnknownAsset(address asset)",
+      "error VaultNotEmpty()",
+      "error ZeroAddress()",
+      "error ZeroMinRefillTime()",
+      "event AssetRegistered(address indexed asset, address indexed token, address indexed vault, uint8 decimals)",
+      "event BucketLimitSet(address indexed recipient, address indexed asset, uint64 capacity, uint64 refillRate)",
+      "event GuardianRefilled(address indexed recipient, address indexed asset, uint64 bucket, uint64 at)",
+      "event GuardianSet(address indexed newGuardian)",
+      "event Initialized(uint64 version)",
+      "event MinGuardianRefillTimeSet(uint64 minimumRefillTime)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PauserSet(address indexed pauser, bool allowed)",
+      "event StaticPriceUpdated(address indexed asset, uint64 priceX6)",
+      "event Unpaused(address account)",
+      "event WithdrawalDeferred(uint256 indexed deferredId, bytes32 indexed id, address indexed asset, uint64 accountId, address recipient, uint128 amount)",
+      "event WithdrawalEnqueued(bytes32 indexed id, address indexed asset, address indexed recipient, uint128 amount, address bucketRecipient, address bucketAsset, uint256 queueIndex)",
+      "event WithdrawalPaid(bytes32 indexed id, address indexed asset, address indexed recipient, uint128 paid, uint128 remaining)",
+      "event WithdrawalSkipped(bytes32 indexed id)",
+      "function NATIVE_ETH() view returns (address)",
+      "function NATIVE_TRANSFER_GAS() view returns (uint256)",
+      "function VERIFIABLE_APP() view returns (address)",
+      "function WRAPPED_ETH_ASSET() view returns (address)",
+      "function _settle(tuple(uint8 source, uint64 nonceOrActionId, uint64 accountId, address asset, address recipient, uint128 amount) w, bytes32 id)",
+      "function _settleQueued(tuple(bytes32 id, address asset, uint64 accountId, address recipient, uint128 remainingAmount) entry, uint64 bucketVal) returns (uint64 newBucketVal, uint128 paid, uint128 remaining)",
+      "function acceptOwnership()",
+      "function assetConfig(address a) view returns (tuple(address vault, uint64 staticPriceX6, address token, uint8 decimals))",
+      "function bucketKey(address recipient, address asset) view returns (address resolvedRecipient, address resolvedAsset)",
+      "function chargeUsdValue(address asset, uint128 amount) view returns (uint256)",
+      "function computeWithdrawalId(tuple(uint8 source, uint64 nonceOrActionId, uint64 accountId, address asset, address recipient, uint128 amount) w) pure returns (bytes32)",
+      "function consumed(bytes32) view returns (bool)",
+      "function deferredProcess(uint256 deferredId, bytes32 withdrawalId, address asset, uint64 accountId, address recipient, uint128 amount, uint256 gasLimit)",
+      "function deferredWithdrawalId() view returns (uint256)",
+      "function deferredWithdrawals(uint256) view returns (bytes32)",
+      "function executeWithdrawals(tuple(uint8 source, uint64 nonceOrActionId, uint64 accountId, address asset, address recipient, uint128 amount)[] withdrawals)",
+      "function guardian() view returns (address)",
+      "function guardianRefill(address recipient, address asset)",
+      "function initialize(uint64 _capacity, uint64 _refillRate, uint64 _minGuardianRefill)",
+      "function lastGuardianRefillFor(address recipient, address asset) view returns (uint64)",
+      "function minGuardianRefill() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pausers(address) view returns (bool)",
+      "function pendingBucket(address recipient, address asset) view returns (uint64)",
+      "function pendingOwner() view returns (address)",
+      "function processQueue(address recipient, address asset, uint256 maxItems)",
+      "function queueEntry(address recipient, address asset, uint256 index) view returns (tuple(bytes32 id, address asset, uint64 accountId, address recipient, uint128 remainingAmount))",
+      "function queueHeadAndTail(address recipient, address asset) view returns (uint128, uint128)",
+      "function queueLength(address recipient, address asset) view returns (uint256)",
+      "function registerAsset(address asset, address token, address vault, uint8 tokenDecimals, uint64 staticPriceX6)",
+      "function renounceOwnership()",
+      "function resolveAsset(address asset) view returns (tuple(address vault, uint64 staticPriceX6, address token, uint8 decimals), address, bool)",
+      "function setBucketLimit(address recipient, address asset, uint64 capacity, uint64 refillRate)",
+      "function setGuardian(address newGuardian)",
+      "function setMinGuardianRefill(uint64 minimumRefill)",
+      "function setPauser(address pauser, bool allowed)",
+      "function setStaticPrice(address asset, uint64 priceX6)",
+      "function throttleFor(address recipient, address asset) view returns (tuple(uint64 capacity, uint64 refillRate, uint64 bucket, uint64 lastRefill))",
+      "function transferOwnership(address newOwner)",
+      "function unpause()"
+    ],
+    "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC1967ProxyUninitialized()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e": [
+      "constructor(address owner_, address weth)",
+      "error BridgeNotConfigured()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error InvalidBridge()",
+      "error InvalidDestination()",
+      "error NativeTransferFailed()",
+      "error NotKeeper()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "error ZeroAddress()",
+      "error ZeroBalance()",
+      "event BridgeConfigSet(address indexed token, uint256 indexed chainId, tuple(uint8 bridgeType, address bridge, uint64 destination, bytes extraArgs) config)",
+      "event EscrowDeployed(bytes32 indexed recipient, uint256 indexed chainId, address escrow)",
+      "event KeeperSet(address indexed keeper, bool allowed)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Recovered(bytes32 indexed recipient, uint256 indexed chainId, address indexed token, uint256 amount)",
+      "event WithdrawalBridged(bytes32 indexed recipient, uint256 indexed chainId, address indexed token, uint256 amount, address escrow)",
+      "function ESCROW_IMPL() view returns (address)",
+      "function NATIVE_ETH_TOKEN() view returns (address)",
+      "function WETH() view returns (address)",
+      "function acceptOwnership()",
+      "function getBridgeConfig(address token, uint256 chainId) view returns (tuple(uint8 bridgeType, address bridge, uint64 destination, bytes extraArgs))",
+      "function getWithdrawAddress(bytes32 recipient, uint256 chainId) view returns (address)",
+      "function isDeployed(bytes32 recipient, uint256 chainId) view returns (bool)",
+      "function keepers(address) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function processWithdrawal(bytes32 recipient, uint256 chainId, address token)",
+      "function recover(bytes32 recipient, uint256 chainId, address token)",
+      "function renounceOwnership()",
+      "function rescue(address token, uint256 amount)",
+      "function setBridgeConfig(address token, uint256 chainId, tuple(uint8 bridgeType, address bridge, uint64 destination, bytes extraArgs) config)",
+      "function setKeeper(address keeper, bool allowed)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedModuleGuard(address indexed moduleGuard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkNSignatures(address executor, bytes32 dataHash, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function checkSignatures(address executor, bytes32 dataHash, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32 txHash)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setModuleGuard(address moduleGuard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "ethereum": 26154865 },
+  "permissionsConfigHash": "0x774fa297fa8b47799ca895c1c868b71daf26979de3d041b304580f0f4ec4d9d9",
+  "modelledAgainst": {
+    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
+  },
+  "permissions": {
+    "eth:0x000000c88C2C8A7F8317783f2268eB2B9b41257E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
+          "description": "exclusively submit batches with validity proofs, until the oldest unprocessed L1 action is older than the submitter stall timeout.",
+          "role": ".batchSubmitter"
+        }
+      ]
+    },
+    "eth:0x1034487e0B3442ab302b8368713773abEEeF2e44": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "pause all withdrawal payouts. Only the owner can unpause.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "eth:0x169a99B9958386a5D91E732Ed08B344946A92391": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+              "delay": 600
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
+          "description": "approve or revoke the WithdrawalOutbox's allowance for any token.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
+            {
+              "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+              "delay": 600
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, unpause, and pay out deferred withdrawals without rate limits.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
+            {
+              "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+              "delay": 600
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
+          "description": "replace the state root, the program verification key, the verifier and the trusted Celestia anchor, and set the batch submitter and its stall timeout.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
+            {
+              "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+              "delay": 600
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
+          "description": "withdraw the collected withdrawal fees.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
+            {
+              "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+              "delay": 600
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
+          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to itself.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
+            {
+              "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+              "delay": 600
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D" },
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
+            {
+              "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+              "delay": 600
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd" },
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
+            {
+              "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+              "delay": 600
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781" },
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
+            {
+              "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+              "delay": 600
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811" },
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
+            {
+              "address": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+              "delay": 600
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "delay": 600,
+          "role": ".Proposer"
+        }
+      ]
+    },
+    "eth:0x192b678f988738E7F5e2641B3EF0cde603566705": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "pause all withdrawal payouts. Only the owner can unpause.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x546caBdF948d1f0E9102B28Fc48E77F29Cb01E09": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
+          "description": "bridge the balance of a withdraw escrow to its recipient on the configured destination chain.",
+          "role": ".keepers"
+        }
+      ]
+    },
+    "eth:0x5759C0B7e9Dd894c1c4516558eE739746CF43f4f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "pause all withdrawal payouts. Only the owner can unpause.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x5F8D40613d49179376a200cc808d322f4331453a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
+          "description": "approve or revoke the WithdrawalOutbox's allowance for any token.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, unpause, and pay out deferred withdrawals without rate limits.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
+          "description": "replace the state root, the program verification key, the verifier and the trusted Celestia anchor, and set the batch submitter and its stall timeout.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
+          "description": "withdraw the collected withdrawal fees.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
+          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to itself.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D" },
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd" },
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781" },
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811" },
+            { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
+          ]
+        }
+      ]
+    },
+    "eth:0x5b216A8fdF0dc78807730a17EDC0374603E3666e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "pause all withdrawal payouts. Only the owner can unpause.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x6074595197e5637c1b50FDE0e6244Ff43634289B": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        }
+      ]
+    },
+    "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
+          "description": "approve or revoke the WithdrawalOutbox's allowance for any token.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, unpause, and pay out deferred withdrawals without rate limits.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
+          "description": "replace the state root, the program verification key, the verifier and the trusted Celestia anchor, and set the batch submitter and its stall timeout.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
+          "description": "withdraw the collected withdrawal fees.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
+          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to itself.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x682CD085aC63739a9F44E069E91BB6AA09a312E8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "refill withdrawal rate limit buckets and pause withdrawals.",
+          "role": ".guardian"
+        }
+      ]
+    },
+    "eth:0x7E1fbF7631eCba68d08bC75534c0c56bb5600AD6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "pause all withdrawal payouts. Only the owner can unpause.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x87327f19d857ae3530169acEa0EDd4ab1064229E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x12D612647e8bcacec9148e477CAdE67bD07abc78",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "pause all withdrawal payouts. Only the owner can unpause.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0xA0A2A7d71AB8908238aCbf73C3F6f274eE8DeEf4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "description": "pause all withdrawal payouts. Only the owner can unpause.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
+          "role": "admin"
+        }
+      ]
+    }
+  }
+}

@@ -86,6 +86,10 @@ export const sp1turbo: BaseProject = {
         sinceTimestamp: UnixTime(1776599267), // first onchain commitBatch 2026-04-19
       },
       {
+        projectId: ProjectId('derivev3'),
+        sinceTimestamp: UnixTime(1791311591), // first submitBatch 2026-10-06
+      },
+      {
         projectId: ProjectId('forknet'),
         sinceTimestamp: UnixTime(1753882500),
       },
