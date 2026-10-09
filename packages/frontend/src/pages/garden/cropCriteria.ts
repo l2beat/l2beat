@@ -66,6 +66,7 @@ export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
       'Metadata visible to a third party, such as a provider, an oracle or a sequencer, or an anonymity set too small to protect users.',
       'Compliance checks or address screening anywhere in the stack, even if not currently enforced.',
       'Privacy that depends on a relayer staying available, or that users can be excluded from.',
+      'Privacy that relies on trusted hardware, such as a TEE.',
     ],
   },
   security: {
@@ -81,7 +82,6 @@ export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
     pullsDown: [
       'A single proof system with known vulnerabilities, or no limit on what a prover bug could cost.',
       'A multisig that can upgrade contracts or replace state roots without delay.',
-      'Cryptography that is not quantum-resistant.',
       `An ossification score below ${OSSIFICATION_SCORE_BANDS.good} limits Security to medium. Below ${OSSIFICATION_SCORE_BANDS.warning}, which means a critical change in roughly the last five weeks, Security is bad and the project is not listed.`,
     ],
     reference: {

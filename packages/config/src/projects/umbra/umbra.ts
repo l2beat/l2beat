@@ -169,9 +169,6 @@ export const umbra: BaseProject = {
       points: [
         'A small, immutable, externally audited contract set with no proof system and no trusted setup.',
       ],
-      missing: [
-        'Stealth addresses rely on elliptic-curve key derivation, so they are not quantum-resistant.',
-      ],
       notReviewed: [CROP_NOTES.notReviewed.ossification],
     },
   },
