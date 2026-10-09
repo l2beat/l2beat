@@ -23,12 +23,12 @@ describe(cameAfterLoad.name, () => {
     expect(cameAfterLoad(landings, 1001)).toEqual(true)
   })
 
-  it('keeps the head the page loaded with, whichever number asks later', () => {
+  it('takes a block for an arrival once the chain took back the one the page loaded with', () => {
     const landings = createLandings()
     cameAfterLoad(landings, 1000)
 
     expect(cameAfterLoad(landings, 999)).toEqual(false)
-    expect(landings.firstHead(1005)).toEqual(1000)
+    expect(cameAfterLoad(landings, 1000)).toEqual(true)
   })
 
   it('has no block to land before the first data', () => {

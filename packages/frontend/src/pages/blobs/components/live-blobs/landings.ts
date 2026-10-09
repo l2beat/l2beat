@@ -18,15 +18,16 @@ export interface Landings {
   emit: (landing: Landing) => void
   subscribe: (listener: (landing: Landing) => void) => () => void
   /**
-   * The head the page first had data at, taken as `head` if it has had none.
-   * The reader never saw the window without its block
+   * The newest block the reader has had from the start, given `head`: the
+   * head the page loaded with, or a lower one once the chain takes that back,
+   * as a block in its slot then comes in front of the reader
    */
-  firstHead: (head: number) => number
+  loadedHead: (head: number) => number
 }
 
 export function createLandings(): Landings {
   const listeners = new Set<(landing: Landing) => void>()
-  let first: number | undefined
+  let loaded: number | undefined
   return {
     emit: (landing) => {
       for (const listener of listeners) listener(landing)
@@ -35,9 +36,9 @@ export function createLandings(): Landings {
       listeners.add(listener)
       return () => listeners.delete(listener)
     },
-    firstHead: (head) => {
-      first ??= head
-      return first
+    loadedHead: (head) => {
+      loaded = Math.min(loaded ?? head, head)
+      return loaded
     },
   }
 }
@@ -51,7 +52,7 @@ export const LandingsContext = createContext<Landings | undefined>(undefined)
  * number that was never 11 lower
  */
 export function cameAfterLoad(landings: Landings, slot: number | undefined) {
-  return slot !== undefined && slot > landings.firstHead(slot)
+  return slot !== undefined && slot > landings.loadedHead(slot)
 }
 
 /**
