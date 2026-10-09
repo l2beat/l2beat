@@ -1,6 +1,7 @@
 import { AddShape } from './AddShape'
 import { AdriansCommand } from './AdriansCommand'
 import { Analyze } from './Analyze'
+import { AuditCoverage } from './AuditCoverage'
 import { BlobSenders } from './BlobSenders'
 import { CheckRpc } from './CheckRpc'
 import { Colorize } from './Colorize'
@@ -56,6 +57,7 @@ export function getSubcommands() {
     AddShape,
     AdriansCommand,
     Analyze,
+    AuditCoverage,
     BlobSenders,
     CheckRpc,
     Colorize,
