@@ -54,6 +54,32 @@ describe('SQLiteCache', () => {
       expect(result.key).toEqual(key)
       expect(result.value).toEqual(newValue)
     }))
+
+  it('finds keys missing from the cache', () =>
+    withTemporaryFile(async (sqlCache) => {
+      await sqlCache.set('a', 'value')
+      await sqlCache.set('c', 'value')
+
+      expect(await sqlCache.findMissingKeys(['a', 'b', 'c', 'd'])).toEqual([
+        'b',
+        'd',
+      ])
+      expect(await sqlCache.findMissingKeys([])).toEqual([])
+    }))
+
+  it('sets many entries, replacing old values', () =>
+    withTemporaryFile(async (sqlCache) => {
+      await sqlCache.set('a', 'old')
+
+      await sqlCache.setMany([
+        { key: 'a', value: 'new' },
+        { key: 'b', value: 'value' },
+      ])
+      await sqlCache.setMany([])
+
+      expect(await sqlCache.get('a')).toEqual('new')
+      expect(await sqlCache.get('b')).toEqual('value')
+    }))
 })
 
 interface CacheEntry {

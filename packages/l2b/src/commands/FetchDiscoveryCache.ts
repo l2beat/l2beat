@@ -1,77 +1,49 @@
-import { SQLiteCache } from '@l2beat/discovery'
-import { formatSI } from '@l2beat/shared'
-import { formatSeconds } from '@l2beat/shared-pure'
+import { getDiscoveryPaths, SQLiteCache } from '@l2beat/discovery'
 import chalk from 'chalk'
 import { command, positional, string } from 'cmd-ts'
 import { createCliLogger } from '../implementations/common/CliLogger'
+import { fetchDiscoveryCache } from '../implementations/fetch-discovery-cache/fetchDiscoveryCache'
+
+const SCAN_COUNT = 10_000
 
 export const FetchDiscoveryCache = command({
   name: 'fetch-discovery-cache',
   description:
-    'Connects to the redis cache and downloads it into an SQLite database.',
+    'Copies block independent entries (sources, deployments, transactions, ...) from the update monitor cache into the local discovery cache.',
   args: {
-    redisPath: positional({
+    redisUrl: positional({
       type: string,
-      displayName: 'redisPath',
+      displayName: 'redisUrl',
     }),
   },
   handler: async (args) => {
-    const { createClient } = await import('redis')
+    const { commandOptions, createClient } = await import('redis')
     const cli = createCliLogger({ output: process.stdout, quiet: false })
-    const client = createClient({ url: args.redisPath })
+    const client = createClient({
+      url: args.redisUrl,
+      socket: { reconnectStrategy: false },
+    })
     client.on('error', (error) => cli.log(chalk.red(String(error))))
-    const cache = new SQLiteCache()
+    const cachePath = getDiscoveryPaths().cache
+    const cache = new SQLiteCache(cachePath)
 
-    if (!client.isOpen) {
-      await client.connect()
-    }
-
-    const SCAN_COUNT = 50_000
-    let cursor = 0
-    let rowsFetched = 0
-    const startedAtMs = Date.now()
-    const progress = cli.status()
-    do {
-      let scanElapsed = -performance.now()
-      const result = await client.scan(cursor, { COUNT: SCAN_COUNT })
-      scanElapsed += performance.now()
-      cursor = result.cursor
-
-      let getElapsed = -performance.now()
-      const values = await client.MGET(result.keys)
-      getElapsed += performance.now()
-
-      let dbElapsed = -performance.now()
-      for (const [i, key] of result.keys.entries()) {
-        if (values[i] !== null) {
-          cache.set(key, values[i])
-        }
-      }
-      dbElapsed += performance.now()
-
-      rowsFetched += result.keys.length
-
-      const timePerMillionRows =
-        values.length === 0
-          ? '-'
-          : formatSeconds(
-              (((scanElapsed + getElapsed + dbElapsed) / values.length) *
-                1_000_000) /
-                1000,
-            )
-
-      progress.update(
-        `Progress: ${formatSI(rowsFetched, 'rows').padStart(13)} | ` +
-          `Batch: ${result.keys.length.toLocaleString().padStart(6)} keys | ` +
-          `KRead: ${scanElapsed.toFixed(2).padStart(7)}ms | ` +
-          `VRead: ${getElapsed.toFixed(2).padStart(7)}ms | ` +
-          `Write: ${dbElapsed.toFixed(2).padStart(7)}ms | ` +
-          `1MRow: ${timePerMillionRows.padStart(10)}`,
+    await client.connect()
+    try {
+      cli.log(`Fetching into ${chalk.magenta(cachePath)}`)
+      await fetchDiscoveryCache(
+        cli,
+        {
+          scan: (cursor, pattern) =>
+            client.scan(cursor, { MATCH: pattern, COUNT: SCAN_COUNT }),
+          dump: (key) =>
+            client.dump(commandOptions({ returnBuffers: true }), key),
+        },
+        cache,
       )
-    } while (cursor !== 0)
-    await client.quit()
-    progress.done(
-      `Fetched ${formatSI(rowsFetched, 'rows')} in ${formatSeconds((Date.now() - startedAtMs) / 1000)}`,
-    )
+    } finally {
+      if (client.isOpen) {
+        await client.quit()
+      }
+    }
   },
 })
