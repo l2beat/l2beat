@@ -49,6 +49,7 @@ property are listed on https://l2beat.com/garden.
 say so and skip this section.
 
 16. What is hidden, and what stays public?
+    Does anyone have to approve a user or a deposit before it gets privacy?
 17. What enforces it? `[choose all]`
     ZK proofs / encrypted state / stealth addresses / trusted hardware / other
 18. Can anyone deanonymize a user, for example through a viewing key, an admin
@@ -67,7 +68,8 @@ say so and skip this section.
 23. Which multisigs or admin keys exist, and what can each of them do?
 24. If the system posts state to L1, how is that state validated?
 25. Which external dependencies does it rely on, such as oracles, bridges or
-    offchain services?
+    offchain services? Who operates them, and can they mint, move or misprice
+    user funds?
 26. When were the critical contracts last upgraded, or last changed hands?
 27. Which audits have been done: by whom, when, and where can we read them?
 28. Is there a trusted setup? `[choose one]` no / yes (say which ceremony)

@@ -57,6 +57,7 @@ export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
     summary:
       'Privacy is enforced by cryptography, not by policy, and cannot be undone later.',
     minimums: [
+      'Privacy is unconditional: no provider, list or approval decides who gets it.',
       'Outside observers cannot link transactions, thanks to ZK proofs, encrypted state or stealth addresses.',
       'No backdoor: no privileged viewing key and no way for an admin to deanonymize users, now or retroactively.',
       'Private by default, not an optional mode.',
@@ -76,7 +77,8 @@ export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
     minimums: [
       'Contracts holding user funds cannot be upgraded, or upgrades wait at least 30 days, so users can exit first.',
       'Where the system posts state to L1, that state is validated by proofs, not by an external oracle or a committee.',
-      `Few external dependencies, such as oracles, bridges or offchain services, and an ${REFERENCE_SLOT} of at least ${OSSIFICATION_SCORE_BANDS.good}, which takes about a year without a critical change.`,
+      'No dependency on permissioned actors that can mint, move or misprice user funds, such as a price oracle or a bridge run by a fixed set of operators.',
+      `An ${REFERENCE_SLOT} of at least ${OSSIFICATION_SCORE_BANDS.good}, which takes about a year without a critical change.`,
       'Protection against a single failure, such as a second proof system or circuit breakers, or a clear statement of the maximum possible loss.',
     ],
     pullsDown: [
