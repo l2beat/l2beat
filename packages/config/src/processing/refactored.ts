@@ -66,6 +66,7 @@ import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { tempo } from '../projects/tempo/tempo'
 import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { umbra } from '../projects/umbra/umbra'
+import { uniswapv2 } from '../projects/uniswapv2/uniswapv2'
 import { uniswapv3 } from '../projects/uniswapv3/uniswapv3'
 import { uniswapv4 } from '../projects/uniswapv4/uniswapv4'
 import { vector } from '../projects/vector/vector'
@@ -150,6 +151,7 @@ export const refactored: BaseProject[] = [
   frankencoin,
   liquityv2,
   chainlink,
+  uniswapv2,
   uniswapv3,
   lido,
   etherfi,

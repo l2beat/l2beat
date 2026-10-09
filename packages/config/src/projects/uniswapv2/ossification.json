@@ -1,0 +1,53 @@
+{
+  "events": [
+    {
+      "timestamp": 1601054316,
+      "type": "state",
+      "contract": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+      "transaction": "0x3607594695636139217ee27040e044ca52d53e1b820db42d7f91341e72095bc8",
+      "reason": "The deployer handed the UniswapV2Factory fee setter role to the FeeToSetter contract (0x18e433c7Bf8A2E1d0197CE5d8f9AFAda1A771360)."
+    },
+    {
+      "timestamp": 1623463819,
+      "type": "state",
+      "contract": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "transaction": "0x0231116321d9f8ea39226747fd529367413d4b9ca1eb6ab7dcf1c7abd392daf1",
+      "reason": "Nominated a second GovernorAlpha (0xC4e172459f1E7939D522503B81AFAaC1014CE6F6, proposal threshold lowered from 10M to 2.5M UNI) to replace the original GovernorAlpha (0x5e4be8Bc9637f0EAA1A755019e06A68ce081D58F) as Timelock admin."
+    },
+    {
+      "timestamp": 1623463958,
+      "type": "state",
+      "contract": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "transaction": "0x08150f5f05b1765468b66df8f64faad120876f7d59a3125403ace0f1ada2d7c4",
+      "reason": "The second GovernorAlpha (0xC4e172459f1E7939D522503B81AFAaC1014CE6F6) accepted the Timelock admin role, replacing the original GovernorAlpha."
+    },
+    {
+      "timestamp": 1630165176,
+      "type": "state",
+      "contract": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "transaction": "0x8787f2dd5663bfe76c5e2fdbeb4da441e8e477eb35a7497b4f52a1ceac0a6e3e",
+      "reason": "Migrated the Timelock admin role from the second GovernorAlpha to GovernorBravo (nomination and acceptance in one transaction)."
+    },
+    {
+      "timestamp": 1706556011,
+      "type": "state",
+      "contract": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+      "transaction": "0x62d12a3dbd80bf7d6e5ade63d12997c99c964be6647b8a5f232b9e6ab4e8d5bd",
+      "reason": "Lowered the delegated UNI threshold required to submit a governance proposal from 2.5M to 1M UNI."
+    },
+    {
+      "timestamp": 1766867591,
+      "type": "state",
+      "contract": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+      "transaction": "0x091f0083242a777d55821c1189e568d6d033d9da501b75087dc736fa143d2c1e",
+      "reason": "UNIfication: set the protocol fee recipient to the TokenJar (0xf38521f130fcCF29dB1961597bc5d2B60F995f85), switching on the protocol fee of 1/6 of LP fees on every pair."
+    },
+    {
+      "timestamp": 1766867591,
+      "type": "state",
+      "contract": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+      "transaction": "0x091f0083242a777d55821c1189e568d6d033d9da501b75087dc736fa143d2c1e",
+      "reason": "UNIfication: moved the UniswapV2Factory fee setter role from the FeeToSetter contract to the governance Timelock."
+    }
+  ]
+}
