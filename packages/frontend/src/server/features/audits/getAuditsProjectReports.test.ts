@@ -1,111 +1,75 @@
-import type { CollectionRef, ProjectAuditCoverage } from '@l2beat/audit-diff'
-import { expect, mockObject } from 'earl'
-import type { AuditCoverageSource } from './AuditCoverageSource'
+import type { ProjectAuditCoverage } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 import {
   getAuditsProjectReports,
   parseReportDate,
 } from './getAuditsProjectReports'
 
 describe(getAuditsProjectReports.name, () => {
-  const report = {
-    reportIds: [
-      'own/matched',
-      'optimism/matched',
-      'openzeppelin/matched',
-      'lib/other',
-      'kailua/matched',
-    ],
-    context: {
-      key: 'k',
-      collections: [
-        { id: 'own', rank: 0, origin: 'own', relation: { type: 'own' } },
-        {
-          id: 'optimism',
-          rank: 2,
-          origin: 'stack',
-          relation: { type: 'template', template: 'opstack/L1StandardBridge' },
-        },
-        {
-          id: 'openzeppelin',
-          rank: 2,
-          origin: 'stack',
-          relation: { type: 'template', template: 'global/ProxyAdmin' },
-        },
-        {
-          id: 'lib',
-          rank: 3,
-          origin: 'library',
-          relation: { type: 'library' },
-        },
-      ],
+  const coverage = {
+    dataset: { repository: 'o/d', commit: 'c' },
+    collections: {
+      own: { name: 'Own', kind: 'project' },
+      optimism: { name: 'OP Mainnet', kind: 'project' },
+      '_libs/openzeppelin': { name: 'OpenZeppelin', kind: 'library' },
+      kailua: { name: 'Kailua', kind: 'project' },
+    },
+    reports: {
+      'own/matched': report(['own'], '2024-03-01'),
+      'own/unmatched': report(['own'], '2022-01-15'),
+      'own/undated': report(['own'], null),
+      'own/dated-by-id-2021-03': report(['own'], null),
+      'optimism/matched': report(['optimism'], '2023-06-01'),
+      'optimism/unmatched': report(['optimism'], '2023-09-01'),
+      'openzeppelin/matched': report(['_libs/openzeppelin'], '2023-10-03'),
+      'kailua/matched': report(['kailua'], '2024-01-01'),
     },
   } as unknown as ProjectAuditCoverage
 
-  const collections: Record<string, CollectionRef> = {
-    own: { id: 'own', name: 'Own', kind: 'project' },
-    optimism: { id: 'optimism', name: 'Optimism', kind: 'project' },
-    openzeppelin: { id: 'openzeppelin', name: 'OpenZeppelin', kind: 'library' },
-    lib: { id: 'lib', name: 'Lib', kind: 'library' },
-    kailua: { id: 'kailua', name: 'Kailua', kind: 'project' },
-  }
+  const matched = new Set([
+    'own/matched',
+    'optimism/matched',
+    'openzeppelin/matched',
+    'kailua/matched',
+  ])
 
-  const source = mockObject<AuditCoverageSource>({
-    listReports: () => [
-      ref('own/matched', 'own', '2024-03-01'),
-      ref('own/unmatched', 'own', '2022-01-15'),
-      ref('own/undated', 'own', null),
-      ref('optimism/matched', 'optimism', '2023-06-01'),
-      ref('optimism/unmatched', 'optimism', '2023-09-01'),
-      ref('openzeppelin/matched', 'openzeppelin', '2023-10-03'),
-      ref('lib/other', 'lib', '2023-06-01'),
-      ref('kailua/matched', 'kailua', '2025-02-18'),
-    ],
-    getCollection: (id) => collections[id],
-  })
-
-  it('returns the dated own reports and the matched stack project reports ascending', () => {
-    const result = getAuditsProjectReports(report, source)
-    expect(result.map((r) => [r.id, r.origin, r.matched])).toEqual([
+  it('lists dated own reports and matched stack reports, ascending', () => {
+    const audits = getAuditsProjectReports(coverage, 'own', 'optimism', matched)
+    expect(audits.map((a) => [a.id, a.origin, a.matched])).toEqual([
+      ['own/dated-by-id-2021-03', 'own', false],
       ['own/unmatched', 'own', false],
       ['optimism/matched', 'stack', true],
       ['own/matched', 'own', true],
     ])
-    expect(result[0]?.timestamp).toEqual(parseReportDate('2022-01-15'))
-    expect(result[1]?.collectionName).toEqual('Optimism')
+    expect(audits[2]?.collectionName).toEqual('OP Mainnet')
+    expect(audits[2]?.url).toEqual(
+      'https://github.com/o/d/blob/c/optimism/reports/x.pdf',
+    )
+  })
+
+  it('counts no stack audits without a stack collection', () => {
+    const audits = getAuditsProjectReports(coverage, 'own', undefined, matched)
+    expect(audits.map((a) => a.origin)).toEqual(['own', 'own', 'own'])
   })
 })
 
 describe(parseReportDate.name, () => {
-  it('parses ISO days to unix seconds', () => {
-    expect(parseReportDate('2024-03-01')).toEqual(1709251200)
-  })
-
-  it('treats null and garbage as undated', () => {
-    expect(parseReportDate(null)).toEqual(undefined)
-    expect(parseReportDate('soon')).toEqual(undefined)
-  })
-
-  it('falls back to the month or day the id ends with', () => {
-    expect(parseReportDate(null, 'umbra/consensys-umbra-2021-03')).toEqual(
-      parseReportDate('2021-03-01'),
+  it('parses ISO days and falls back to the id suffix', () => {
+    expect(parseReportDate('2024-03-01')).toEqual(UnixTime(1709251200))
+    expect(parseReportDate(null, 'consensys-umbra-2021-03')).toEqual(
+      UnixTime(1614556800),
     )
-    expect(parseReportDate(null, 'own/abdk-audit-2019-11-19')).toEqual(
-      parseReportDate('2019-11-19'),
-    )
-    expect(parseReportDate(null, 'own/certora-safe-1-3-0')).toEqual(undefined)
-    expect(parseReportDate('2024-03-01', 'own/x-2020-01')).toEqual(
-      parseReportDate('2024-03-01'),
-    )
+    expect(parseReportDate(null, 'no-date-here')).toEqual(undefined)
   })
 })
 
-function ref(id: string, collection: string, reportDate: string | null) {
+function report(collections: string[], date: string | null) {
   return {
-    id,
-    collection,
-    title: id,
+    collections,
+    title: 'T',
     auditor: 'A',
-    reportDate,
-    reportFile: `${id}.md`,
+    ...(date === null ? {} : { date }),
+    document: `${collections[0]}/reports/x.pdf`,
   }
 }

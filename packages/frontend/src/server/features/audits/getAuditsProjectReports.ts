@@ -1,57 +1,45 @@
-import type { ProjectAuditCoverage } from '@l2beat/audit-diff'
+import type { ProjectAuditCoverage } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { AuditCoverageSource } from './AuditCoverageSource'
+import { reportCollection, reportOrigin, reportUrl } from './coverage/coverageReports'
 import type { AuditsProjectReport } from './types'
 
 /**
  * The dated reports that count as the project's audits, ascending by date:
- * every report of its own collections, matched to deployed code or not, and
- * the matched reports of its upstream and stack project collections. Library
- * collections ranked as stack through a template hint do not count, nor do
- * the reports of projects outside the ranked context. Undated reports have
- * no place on a timeline.
+ * every report of its own collection, matched to deployed code or not, and
+ * the matched reports of its stack collection. Library audits and the
+ * reports of other projects do not count. Undated reports have no place on a
+ * timeline.
  * See docs/superpowers/specs/2026-10-07-audit-timeline-project-audits-design.md.
  */
 export function getAuditsProjectReports(
-  report: ProjectAuditCoverage,
-  source: AuditCoverageSource,
+  coverage: ProjectAuditCoverage,
+  projectId: string,
+  stackCollection: string | undefined,
+  matched: Set<string>,
 ): AuditsProjectReport[] {
-  const origins = new Map<string, AuditsProjectReport['origin']>()
-  for (const collection of report.context.collections) {
-    if (collection.origin === 'own') {
-      origins.set(collection.id, 'own')
-    } else if (
-      (collection.origin === 'upstream' || collection.origin === 'stack') &&
-      source.getCollection(collection.id)?.kind === 'project'
-    ) {
-      origins.set(collection.id, collection.origin)
-    }
-  }
-  const matchedIds = new Set(report.reportIds)
-  return source
-    .listReports()
-    .flatMap((ref) => {
-      const origin = origins.get(ref.collection)
-      if (origin === undefined) return []
-      const matched = matchedIds.has(ref.id)
-      if (origin !== 'own' && !matched) return []
-      const timestamp = parseReportDate(ref.reportDate, ref.id)
+  return Object.entries(coverage.reports)
+    .flatMap(([id, report]): AuditsProjectReport[] => {
+      const origin = reportOrigin(id, coverage, projectId, stackCollection)
+      if (origin !== 'own' && origin !== 'stack') return []
+      const isMatched = matched.has(id)
+      if (origin === 'stack' && !isMatched) return []
+      const timestamp = parseReportDate(report.date ?? null, id)
       if (timestamp === undefined) return []
+      const collection = reportCollection(id, coverage)
       return [
         {
-          id: ref.id,
-          title: ref.title,
-          auditor: ref.auditor,
+          id,
+          title: report.title,
+          auditor: report.auditor,
           timestamp,
-          url: ref.url,
+          url: reportUrl(coverage, id),
           origin,
-          collectionName:
-            source.getCollection(ref.collection)?.name ?? ref.collection,
-          matched,
+          collectionName: coverage.collections[collection]?.name ?? collection,
+          matched: isMatched,
         },
       ]
     })
-    .sort((a, b) => a.timestamp - b.timestamp)
+    .sort((a, b) => a.timestamp - b.timestamp || a.id.localeCompare(b.id))
 }
 
 /**
