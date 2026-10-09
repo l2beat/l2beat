@@ -6,20 +6,20 @@ import { UnitSourceView } from './UnitSourceView'
 
 /** Loads the unit source or diff on first expand. */
 export function UnitDetails({
+  slug,
   unit,
   view,
-  hideIgnoredChanges,
 }: {
+  slug: string
   unit: AuditsUnitEntry
   view: 'source' | 'diff'
-  hideIgnoredChanges: boolean
 }) {
   const trpc = useTRPC()
   const { data, isLoading, error } = useQuery(
     trpc.audits.unitDetails.queryOptions({
-      unitHash: unit.unitHash,
-      contextKey: unit.contextKey,
-      startLine: unit.startLine,
+      slug,
+      flat: unit.flat,
+      unitId: unit.unitId,
     }),
   )
 
@@ -35,32 +35,36 @@ export function UnitDetails({
       </div>
     )
   }
+  if (data.stale) {
+    return (
+      <div className="px-3 py-2 text-secondary text-xs">
+        The deployed source of this contract changed since the audit coverage
+        was generated, so its code is not shown. The coverage is regenerated
+        with the next discovery update.
+      </div>
+    )
+  }
 
   return (
     <div className="border-divider border-t bg-surface-secondary px-3 py-2">
-      {view === 'diff' && data.diff && unit.match ? (
+      {view === 'diff' && data.diff && unit.match && data.audited ? (
         <>
           <div className="mb-2 text-secondary text-xs">
             Diff from audited{' '}
             <a
-              href={unit.match.url}
+              href={data.audited.url}
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono hover:underline"
             >
               {unit.match.path}@{unit.match.commit.slice(0, 8)}
             </a>{' '}
-            ({unit.match.reportTitle}) to the deployed unit. Removed lines are
+            ({unit.match.report.title}) to the deployed unit. Removed lines are
             audited code missing onchain, added lines are deployed code that was
-            not audited.{' '}
-            {hideIgnoredChanges
-              ? 'Ignored changes (comments, require messages) are hidden.'
-              : 'Ignored changes (comments, require messages) are shown too, although they do not count.'}
+            not audited. Audited line numbers refer to the dataset's formatted
+            copy of the file.
           </div>
-          <UnitDiffView
-            diff={data.diff}
-            hideIgnoredChanges={hideIgnoredChanges}
-          />
+          <UnitDiffView diff={data.diff} />
         </>
       ) : (
         <UnitSourceView source={data.source} startLine={data.startLine} />

@@ -138,7 +138,12 @@ export function primaryReportId(
   projectId: string,
   stackCollection: string | undefined,
 ): string | undefined {
-  return sortReportIds(unit.reports ?? [], coverage, projectId, stackCollection)[0]
+  return sortReportIds(
+    unit.reports ?? [],
+    coverage,
+    projectId,
+    stackCollection,
+  )[0]
 }
 
 /** Report ids by origin, then newest first, then id. */

@@ -116,6 +116,7 @@ export async function getPrivacyProjectEntry(
       contracts: details.contracts,
       isVerified: true,
       isUnderReview: !!details.statuses.reviewStatus,
+      auditCoverage: details.auditCoverage,
     },
     contractUtils,
     EMPTY_PROJECTS_CHANGE_REPORT,

@@ -106,8 +106,9 @@ describe('coverageModel', () => {
 
     it('maps none and differs', () => {
       expect(unitStatus(unit({ status: 'none' }), c, 'p')).toEqual('unaudited')
-      expect(unitStatus(unit({ status: 'differs', reports: ['oz'] }), c, 'p'))
-        .toEqual('differs')
+      expect(
+        unitStatus(unit({ status: 'differs', reports: ['oz'] }), c, 'p'),
+      ).toEqual('differs')
     })
 
     it('shows identical library-only matches as library', () => {
@@ -118,7 +119,11 @@ describe('coverageModel', () => {
 
     it('shows identical matches with a project report as identical', () => {
       expect(
-        unitStatus(unit({ status: 'identical', reports: ['oz', 'op'] }), c, 'p'),
+        unitStatus(
+          unit({ status: 'identical', reports: ['oz', 'op'] }),
+          c,
+          'p',
+        ),
       ).toEqual('identical')
       expect(
         unitStatus(unit({ status: 'identical', reports: ['own'] }), c, 'p'),
@@ -154,7 +159,9 @@ describe('coverageModel', () => {
     it('treats a single source as the implementation', () => {
       expect(
         contractSources('eth:0x1', { name: 'A', source: 'non-solidity' }),
-      ).toEqual([{ address: 'eth:0x1', role: 'implementation', flat: undefined }])
+      ).toEqual([
+        { address: 'eth:0x1', role: 'implementation', flat: undefined },
+      ])
     })
 
     it('recognizes flat hashes', () => {

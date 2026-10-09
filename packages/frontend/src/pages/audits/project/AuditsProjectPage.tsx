@@ -96,7 +96,7 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
                   >
                     <AuditReportsList
                       reports={details.reports}
-                      context={details.context}
+                      stackCollectionName={details.stackCollectionName}
                     />
                   </ProjectSection>
                   <ProjectSection
@@ -105,7 +105,10 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
                     sectionOrder="3"
                   >
                     <AuditsDisclaimer className="mb-4" />
-                    <ContractCoverageList contracts={details.contractEntries} />
+                    <ContractCoverageList
+                      slug={details.slug}
+                      contracts={details.contractEntries}
+                    />
                   </ProjectSection>
                 </div>
 

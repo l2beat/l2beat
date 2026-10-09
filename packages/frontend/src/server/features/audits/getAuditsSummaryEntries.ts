@@ -1,14 +1,14 @@
-import type { ProjectAuditCoverage } from '@l2beat/audit-diff'
 import { UnixTime } from '@l2beat/shared-pure'
-import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import { auditCoverageSource } from './AuditCoverageSource'
 import {
   countFullyCoveredContracts,
   fullyCoveredShare,
   linesCoveredShare,
 } from './countFullyCoveredContracts'
+import { reportOrigin } from './coverage/coverageReports'
+import { buildProjectCoverage } from './coverage/projectCoverage'
 import { getAuditsProjectReports } from './getAuditsProjectReports'
+import { getAuditsProjects } from './getAuditsProjects'
 import {
   getAuditsLaunch,
   getAuditsProjectTimeline,
@@ -17,50 +17,52 @@ import {
 import type { AuditsSummaryEntry } from './types'
 
 export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
-  const reports = auditCoverageSource.listProjects()
-  const projects = await ps.getProjects({
-    slugs: reports.map((r) => r.slug),
-    optional: ['ossificationHistory', 'chainConfig'],
-  })
+  const projects = await getAuditsProjects()
   const now = UnixTime.now()
 
-  const entries = reports.map((report): AuditsSummaryEntry => {
-    const project = projects.find((p) => p.slug === report.slug)
-    const own = new Set(
-      report.context.collections
-        .filter((c) => c.origin === 'own')
-        .map((c) => c.id),
+  const entries = projects.map((project): AuditsSummaryEntry => {
+    const model = buildProjectCoverage(
+      project.auditCoverage,
+      project.id,
+      project.scalingInfo?.stacks,
     )
-    const ownReportsCount = report.reportIds.filter((id) =>
-      own.has(collectionOf(id)),
+    const matchedOwn = [...model.matched].filter(
+      (id) =>
+        reportOrigin(id, model.coverage, project.id, model.stackCollection) ===
+        'own',
     ).length
     const timeline = getAuditsProjectTimeline(
       {
-        audits: getAuditsProjectReports(report, auditCoverageSource),
+        audits: getAuditsProjectReports(
+          model.coverage,
+          project.id,
+          model.stackCollection,
+          model.matched,
+        ),
         otherAudits: [],
         ossification: {
-          history: project?.ossificationHistory,
+          history: project.ossificationHistory,
           href: undefined,
         },
-        launch: project ? getAuditsLaunch(project) : null,
+        launch: getAuditsLaunch(project),
       },
       now,
     )
     return {
-      id: report.projectId,
-      slug: report.slug,
-      name: project?.name ?? report.projectId,
-      shortName: project?.shortName,
-      icon: manifest.getUrl(`/icons/${report.slug}.png`),
-      href: `/audits/projects/${report.slug}`,
-      contracts: report.summary.contracts,
-      contractsWithoutSource: report.summary.contractsWithoutSource,
-      fullyCoveredContracts: countFullyCoveredContracts(report.contracts),
-      coverage: toCoverageNumbers(report.summary),
-      uniqueUnits: report.summary.uniqueUnits,
-      ownReportsCount,
-      sharedReportsCount: report.reportIds.length - ownReportsCount,
-      discoveryTimestamp: report.discoveryTimestamp,
+      id: project.id,
+      slug: project.slug,
+      name: project.name,
+      shortName: project.shortName,
+      icon: manifest.getUrl(`/icons/${project.slug}.png`),
+      href: `/audits/projects/${project.slug}`,
+      contracts: model.contracts.length,
+      contractsWithoutSource: model.contractsWithoutSource,
+      fullyCoveredContracts: countFullyCoveredContracts(model.contracts),
+      coverage: { units: model.summary.units, lines: model.summary.lines },
+      uniqueUnits: model.summary.uniqueUnits,
+      ownReportsCount: matchedOwn,
+      sharedReportsCount: model.matched.size - matchedOwn,
+      discoveryTimestamp: model.coverage.discoveredAt,
       timeline: toAuditsSummaryTimeline(timeline),
     }
   })
@@ -71,13 +73,4 @@ export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
       linesCoveredShare(b) - linesCoveredShare(a) ||
       a.name.localeCompare(b.name),
   )
-}
-
-/** Global report ids are `<collection>/<report id>`. */
-function collectionOf(reportId: string): string {
-  return reportId.split('/')[0] ?? reportId
-}
-
-export function toCoverageNumbers(summary: ProjectAuditCoverage['summary']) {
-  return { units: summary.units, lines: summary.lines }
 }

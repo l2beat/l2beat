@@ -1,6 +1,8 @@
-import type { UnitRef } from '@l2beat/audit-diff'
+import type { ProjectAuditCoverage, ProjectScalingStack } from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
 import { contractAnchorId } from '~/components/audits/contractAnchor'
-import { auditCoverageSource } from './AuditCoverageSource'
+import { buildProjectCoverage } from './coverage/projectCoverage'
+import type { AuditsUnitEntry } from './types'
 
 export interface ContractAuditInfo {
   /** Row of this contract on the project's audit page. */
@@ -11,7 +13,7 @@ export interface ContractAuditInfo {
    * recorded major findings, so the fix is not present in the deployment.
    */
   majorFinding?: {
-    reportUrl?: string
+    reportUrl: string
     reportTitle: string
     auditor: string
     findingIds: string[]
@@ -24,23 +26,26 @@ export interface ContractAuditInfo {
  * and for contracts without verified source.
  */
 export function getContractsAuditInfo(
+  coverage: ProjectAuditCoverage | undefined,
   slug: string,
+  stacks?: ProjectScalingStack[],
 ): Map<string, ContractAuditInfo> {
   const result = new Map<string, ContractAuditInfo>()
-  const report = auditCoverageSource.getProject(slug)
-  if (!report) return result
+  if (!coverage) return result
+  const model = buildProjectCoverage(
+    coverage,
+    ProjectId(coverage.project),
+    stacks,
+  )
 
-  for (const contract of report.contracts) {
-    if (!contract.address || contract.noSource) continue
-    if (contract.summary.lines.total === 0) continue
-    const key = contractKey(contract.chain, contract.address)
+  for (const contract of model.contracts) {
+    if (contract.noSource || contract.coverage.lines.total === 0) continue
+    const key = contractKey(contract.chain, contract.shortAddress)
     if (result.has(key)) continue
-
-    const units = contract.files.flatMap((f) => f.units)
     result.set(key, {
-      href: `/audits/projects/${slug}#${contractAnchorId(contract.chain, contract.address)}`,
-      lines: contract.summary.lines,
-      majorFinding: toMajorFinding(units),
+      href: `/audits/projects/${slug}#${contractAnchorId(contract.chain, contract.shortAddress)}`,
+      lines: contract.coverage.lines,
+      majorFinding: toMajorFinding(contract.sources.flatMap((s) => s.units)),
     })
   }
   return result
@@ -51,25 +56,26 @@ export function contractKey(chain: string, address: string): string {
 }
 
 function toMajorFinding(
-  units: UnitRef[],
+  units: AuditsUnitEntry[],
 ): ContractAuditInfo['majorFinding'] | undefined {
   const flagged = units.filter(
     (u) =>
       (u.status === 'identical' || u.status === 'library') &&
-      u.match &&
-      u.match.majorFindings > 0,
+      u.match !== undefined &&
+      u.match.findingIds.length > 0,
   )
   const first = flagged[0]?.match
   if (!first) return undefined
-  const report = auditCoverageSource.getReport(first.reportId)
+  // The report holding the first unit's findings, so the ids can be found in it.
+  const report = first.findings[0]?.report ?? first.report
   const findingIds = new Set<string>()
   for (const unit of flagged) {
     for (const id of unit.match?.findingIds ?? []) findingIds.add(id)
   }
   return {
-    reportUrl: report?.url,
-    reportTitle: report?.title ?? first.reportId,
-    auditor: report?.auditor ?? '',
+    reportUrl: report.url,
+    reportTitle: report.title,
+    auditor: report.auditor,
     findingIds: [...findingIds],
   }
 }

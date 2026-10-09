@@ -1,23 +1,22 @@
-import type { ContractCoverage } from '@l2beat/audit-diff'
-import type { AuditsSummaryEntry } from './types'
+import type { AuditsContractEntry, AuditsSummaryEntry } from './types'
 
 /**
- * Deployed contracts whose whole flattened source (every unit of every file,
- * proxy included) is identical to audited code. A contract without verified
- * source or without any unit never counts, but it stays in the denominator
- * used by `fullyCoveredShare`.
+ * Deployed contracts whose whole flattened source (every unit of every
+ * source, proxy included) is identical to audited code. A contract without
+ * verified source or without any unit never counts, but it stays in the
+ * denominator used by `fullyCoveredShare`.
  */
 export function countFullyCoveredContracts(
-  contracts: Pick<ContractCoverage, 'noSource' | 'summary'>[],
+  contracts: Pick<AuditsContractEntry, 'noSource' | 'coverage'>[],
 ): number {
   return contracts.filter(isFullyCovered).length
 }
 
 function isFullyCovered(
-  contract: Pick<ContractCoverage, 'noSource' | 'summary'>,
+  contract: Pick<AuditsContractEntry, 'noSource' | 'coverage'>,
 ): boolean {
   if (contract.noSource) return false
-  const { units } = contract.summary
+  const { units } = contract.coverage
   const total =
     units.identical + units.library + units.differs + units.unaudited
   return total > 0 && units.differs === 0 && units.unaudited === 0

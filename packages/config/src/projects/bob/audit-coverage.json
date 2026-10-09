@@ -1,0 +1,4734 @@
+{
+  "schema_version": "1.0.0",
+  "project": "bob",
+  "dataset": {
+    "repository": "sergeyshemyakov/audit-dataset",
+    "commit": "ce069f3e6a59d6ebfeb4efb183e39608fc86d1a6"
+  },
+  "discoveredAt": 1790944898,
+  "collections": {
+    "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
+    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "_libs/solady": { "name": "Solady", "kind": "library" },
+    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
+    "bob": { "name": "BOB", "kind": "project" },
+    "celo": { "name": "Celo", "kind": "project" },
+    "mantle": { "name": "Mantle", "kind": "project" },
+    "morph": { "name": "Morph", "kind": "project" },
+    "optimism": { "name": "OP Mainnet", "kind": "project" },
+    "scroll": { "name": "Scroll", "kind": "project" },
+    "taiko": { "name": "Taiko Alethia", "kind": "project" },
+    "zksync2": { "name": "ZKsync Era", "kind": "project" }
+  },
+  "reports": {
+    "ackee-safe-1-5-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account Security Review",
+      "auditor": "Ackee Blockchain Security",
+      "date": "2025-05-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
+    },
+    "base-mt64cannon-2025-02": {
+      "collections": ["optimism"],
+      "title": "MT64Cannon Security Review (Coinbase Protocol Security)",
+      "auditor": "Base",
+      "date": "2025-02-06",
+      "document": "optimism/reports/2025_01-MT-Cannon-Base.pdf"
+    },
+    "cantina-eip7702-2025-02": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Review (Cantina, EIP-7702 / Pectra impact)",
+      "auditor": "Cantina",
+      "date": "2025-03-09",
+      "document": "optimism/reports/2025_02-EIP7702-Cantina.pdf"
+    },
+    "cantina-interop-l2-rereview-2026-06": {
+      "collections": ["optimism"],
+      "title": "Optimism L2 Interop Re-review (Cantina Managed)",
+      "auditor": "Cantina",
+      "date": "2026-06-18",
+      "document": "optimism/reports/2026_06-Interop-L2-Contracts.pdf"
+    },
+    "cantina-interop-portal-2025-04": {
+      "collections": ["optimism"],
+      "title": "Interop portal - Competition",
+      "auditor": "Cantina",
+      "date": "2025-06-04",
+      "document": "optimism/reports/2025_04-Interop-Portal-Cantina.pdf"
+    },
+    "cantina-mcp-l1-2024-02": {
+      "collections": ["optimism"],
+      "title": "Optimism Cycle 19 Security Review (Cantina, MCP L1)",
+      "auditor": "Cantina",
+      "date": "2024-02-15",
+      "document": "optimism/reports/2024_02-MCP_L1-Cantina.pdf"
+    },
+    "cantina-u17-2025-10": {
+      "collections": ["optimism"],
+      "title": "Optimism u17 Security Review",
+      "auditor": "Cantina",
+      "date": "2025-10-27",
+      "document": "optimism/reports/2025_10-U17-Spearbit.pdf"
+    },
+    "cantina-u18-2026-01": {
+      "collections": ["optimism"],
+      "title": "Optimism PBC U18 Security Review (Cantina)",
+      "auditor": "Cantina",
+      "date": "2026-01-12",
+      "document": "optimism/reports/2026_01-U18-Cantina.pdf"
+    },
+    "cantina-u19-2026-05": {
+      "collections": ["optimism"],
+      "title": "Optimism: Upgrade 19 Security Review (Cantina)",
+      "auditor": "Cantina",
+      "date": "2026-05-23",
+      "document": "optimism/reports/2026_05-U19-Cantina.pdf"
+    },
+    "cantina-upgrade20-2026-08": {
+      "collections": ["optimism"],
+      "title": "Optimism Upgrade 20 Security Review (Cantina Managed)",
+      "auditor": "Cantina",
+      "date": "2026-08-20",
+      "document": "optimism/reports/2026_08-U20-Cantina.pdf"
+    },
+    "certora-safe-1-3-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.3.0 Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-07-29",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Certora.pdf"
+    },
+    "certora-safe-1-5-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
+      "auditor": "Certora",
+      "date": "2025-01-14",
+      "document": "_libs/safe/reports/safe-verification__docs__Safe_Audit_Report_1_5_0_Certora.pdf"
+    },
+    "certora-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-02-16",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-certora.pdf"
+    },
+    "code4rena-base-2023-08": {
+      "collections": ["optimism"],
+      "title": "BASE Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2023-08-10",
+      "document": "optimism/reports/2023_08-OP-Stack-Base-Code4rena.html"
+    },
+    "code4rena-superchain-2024-08": {
+      "collections": ["optimism"],
+      "title": "Optimism Superchain Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2024-08-16",
+      "document": "optimism/reports/2024_08-Superchain-Code4rena.html"
+    },
+    "code4rena-taiko-2024-04": {
+      "collections": ["taiko"],
+      "title": "Taiko Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2024-04-26",
+      "document": "taiko/reports/2024_04-code4rena-taiko.html"
+    },
+    "code4rena-zksync-era-system-contracts-2023-03": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era System Contracts contest Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2023-06-14",
+      "document": "zksync2/reports/2023_03-code4rena-zksync-era-system-contracts.html"
+    },
+    "common-prefix-fusionlock-2024-03": {
+      "collections": ["bob"],
+      "title": "BOB FusionLock Smart Contract Audit",
+      "auditor": "Common Prefix",
+      "date": "2024-03-29",
+      "document": "bob/reports/Common Prefix - FusionLock.pdf"
+    },
+    "contracts__audits__2023-05-v4.9": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 4.9 Release Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2023-05-09",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-05-v4.9.pdf"
+    },
+    "contracts__audits__2023-10-v5.0": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 5.0 Release",
+      "auditor": "OpenZeppelin",
+      "date": "2023-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
+    },
+    "contracts__audits__2024-10-v5.1": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.1 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2024-10-v5.1.pdf"
+    },
+    "contracts__audits__2025-04-v5.3": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.3 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-04-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-04-v5.3.pdf"
+    },
+    "contracts__audits__2025-07-v5.4": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.4 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-07-17",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-07-v5.4.pdf"
+    },
+    "contracts__audits__2026-02-v5.6": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts v5.6 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2026-02-27",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
+    },
+    "cure53-bob-usdc-bridge-library-2024-04": {
+      "collections": ["bob"],
+      "title": "Review-Report BOB modified USDC bridge library 04.2024 (BOB-02-WP1)",
+      "auditor": "Cure53",
+      "date": "2024-04-30",
+      "document": "bob/reports/Cure53 - BOB Modified USDC Bridge Library (WP1).pdf"
+    },
+    "formal-verification__fv__reports__2022-05": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Formal Verification of OpenZeppelin (May - June 2022)",
+      "auditor": "Certora",
+      "document": "_libs/openzeppelin/reports/formal-verification__fv__reports__2022-05.pdf"
+    },
+    "g0-safe-1-1-0": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_0.pdf"
+    },
+    "g0-safe-1-1-1": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0 and v1.1.1",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_1.pdf"
+    },
+    "g0-safe-1-3-0-final": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
+      "auditor": "G0 Group",
+      "date": "2021-05-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
+    },
+    "g0-safe-1-3-0-initial": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
+      "auditor": "G0 Group",
+      "date": "2021-04-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Initial.pdf"
+    },
+    "hashlock-celo-optimism-superchain-2026-02": {
+      "collections": ["celo"],
+      "title": "Celo Smart Contract Audit Report (Optimism and Superchain, 2nd audit)",
+      "auditor": "Hashlock Pty Ltd",
+      "date": "2026-02-28",
+      "document": "celo/reports/Hashlock - Celo Optimism and Superchain (2nd Audit).pdf"
+    },
+    "nethermind-nm-0561-celo-custom-gas-token-2025-07-01": {
+      "collections": ["celo"],
+      "title": "NM-0561 Celo Custom Gas Token Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2025-07-01",
+      "document": "celo/reports/Nethermind - NM-0561 Celo Custom Gas Token.pdf"
+    },
+    "nethermind-safe-1-3-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.3.0 Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2026-08-17",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Nethermind.pdf"
+    },
+    "nethermind-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2026-08-17",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-nethermind.pdf"
+    },
+    "offbeatlabs-incident-response-updates-2025-01": {
+      "collections": ["optimism"],
+      "title": "Optimism Incident Response Updates Review (Offbeat Security)",
+      "auditor": "Offbeat Labs",
+      "date": "2025-01-24",
+      "document": "optimism/reports/2025_01-IRI-OffbeatLabs.pdf"
+    },
+    "openzeppelin-bedrock-bridge-2022-05": {
+      "collections": ["optimism"],
+      "title": "Optimism Bridge Audit (OpenZeppelin, May 2022)",
+      "auditor": "OpenZeppelin",
+      "date": "2022-05-16",
+      "document": "optimism/reports/2022_05-Bedrock_Contracts-Zeppelin.pdf"
+    },
+    "openzeppelin-bedrock-periphery-2022-09": {
+      "collections": ["optimism"],
+      "title": "Optimism Bedrock and Periphery Audit (OpenZeppelin)",
+      "auditor": "OpenZeppelin",
+      "date": "2022-09-02",
+      "document": "optimism/reports/2022_09-Bedrock_and_Periphery-Zeppelin.pdf"
+    },
+    "openzeppelin-mantle-v2-solidity-contracts-2024-03": {
+      "collections": ["mantle"],
+      "title": "Mantle V2 Solidity Contracts Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-03-15",
+      "document": "mantle/reports/2024_03-openzeppelin-mantle-v2-solidity-contracts-audit.pdf"
+    },
+    "openzeppelin-scroll-layer1-audit-2023-07": {
+      "collections": ["scroll"],
+      "title": "Scroll Layer 1 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2023-07-18",
+      "document": "scroll/reports/openzeppelin-scroll-layer1-audit-2023-07.pdf"
+    },
+    "openzeppelin-taiko-protocol-2024-06": {
+      "collections": ["taiko"],
+      "title": "Taiko Protocol Audit (OpenZeppelin)",
+      "auditor": "OpenZeppelin",
+      "date": "2024-06-19",
+      "document": "taiko/reports/2024_06-openzeppelin-taiko-protocol-audit.pdf"
+    },
+    "openzeppelin-zksync-l1-diff-2023-02": {
+      "collections": ["zksync2"],
+      "title": "zkSync | Layer 1 Diff Audit February",
+      "auditor": "OpenZeppelin",
+      "date": "2023-03-08",
+      "document": "zksync2/reports/2023_02-openzeppelin-zksync-l1-diff-audit.html"
+    },
+    "ottersec-fusionlock-2024-03": {
+      "collections": ["bob"],
+      "title": "Bob Collective Security Assessment (fusion-lock)",
+      "auditor": "OtterSec",
+      "date": "2024-03-30",
+      "document": "bob/reports/OtterSec - FusionLock.pdf"
+    },
+    "pashov-bob-usdc-bridge-2024-04": {
+      "collections": ["bob"],
+      "title": "BOB USDC Bridge Security Review",
+      "auditor": "Pashov Audit Group",
+      "date": "2024-04-22",
+      "document": "bob/reports/Pashov - BOB USDC Bridge (Apr 2024).pdf"
+    },
+    "secure3-mantle-v1-contest-2023-07": {
+      "collections": ["mantle"],
+      "title": "Mantle Competitive Security Assessment",
+      "auditor": "Secure3",
+      "date": "2023-07-17",
+      "document": "mantle/reports/2023_07-secure3-mantle-v1-competitive-security-assessment.pdf"
+    },
+    "secure3-mantle-v2-public-contest-2024-04": {
+      "collections": ["mantle"],
+      "title": "Mantle_V2_Public Competitive Security Assessment (Secure3, April 2024 edition)",
+      "auditor": "Secure3",
+      "date": "2024-04-18",
+      "document": "mantle/reports/2024_04-secure3-mantle-v2-public-audit-contest.pdf"
+    },
+    "secure3-mantle-v2-public-contest-final-2024-05": {
+      "collections": ["mantle"],
+      "title": "Mantle_V2_Public Competitive Security Assessment (Secure3, May 2024 final edition)",
+      "auditor": "Secure3",
+      "date": "2024-05-10",
+      "document": "mantle/reports/2024_05-secure3-mantle-v2-public-audit-contest-final.pdf"
+    },
+    "secure3-mantle-v2-tectonic-2024-03": {
+      "collections": ["mantle"],
+      "title": "Mantle V2 Competitive Security Assessment (Secure3, March 2024)",
+      "auditor": "Secure3",
+      "date": "2024-03-04",
+      "document": "mantle/reports/2024_03-secure3-mantle-v2-tectonic-competitive-security-assessment.pdf"
+    },
+    "sigma-prime-taiko-smart-contracts-2024-02": {
+      "collections": ["taiko"],
+      "title": "Taiko Smart Contract Security Assessment (Sigma Prime)",
+      "auditor": "Sigma Prime",
+      "document": "taiko/reports/2024_02-sigma-prime-taiko-smart-contract-security-assessment.pdf"
+    },
+    "sigmaprime-mantle-l2-rollup-2023-07": {
+      "collections": ["mantle"],
+      "title": "Mantle L2 Rollup Security Assessment (Sigma Prime)",
+      "auditor": "Sigma Prime",
+      "document": "mantle/reports/2023_07-sigmaprime-mantle-l2-rollup-security-assessment.pdf"
+    },
+    "sigmaprime-mantle-l2-rollup-v2-2024-04": {
+      "collections": ["mantle"],
+      "title": "Mantle L2 Rollup V2 Security Assessment Report",
+      "auditor": "Sigma Prime",
+      "document": "mantle/reports/2024_04-sigmaprime-mantle-l2-rollup-v2-security-assessment.pdf"
+    },
+    "spearbit-cannon-eventfd-syscall-fix-review-2025-06": {
+      "collections": ["optimism"],
+      "title": "Optimism - Fix Review: MIPS EventFd and Syscall Error Handling (Spearbit/Cantina)",
+      "auditor": "Cantina",
+      "date": "2025-06-21",
+      "document": "optimism/reports/2025_06-Spearbit-Cannon-fix-review.pdf"
+    },
+    "spearbit-fault-proofs-no-mips-2024-08": {
+      "collections": ["optimism"],
+      "title": "Base Fault Proofs no MIPS Security Review (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2024-08-14",
+      "document": "optimism/reports/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf"
+    },
+    "spearbit-interop-portal-2025-05": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Review",
+      "auditor": "Spearbit",
+      "date": "2025-05-20",
+      "document": "optimism/reports/2025_05-Interop-Portal-Spearbit.pdf"
+    },
+    "spearbit-mt-cannon-2025-02": {
+      "collections": ["optimism"],
+      "title": "Optimism Mt Cannon Security Review (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2025-02-20",
+      "document": "optimism/reports/2025_01-MT-Cannon-Spearbit.pdf"
+    },
+    "spearbit-u16a-2025-09": {
+      "collections": ["optimism"],
+      "title": "Optimism u16 Security Review - U16a (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2025-10-07",
+      "document": "optimism/reports/2025_09-U16a-Spearbit.pdf"
+    },
+    "spearbit-upgrade16-2025-05": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Review - Upgrade 16 (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2025-05-20",
+      "document": "optimism/reports/2025_05-Upgrade16-Spearbit.pdf"
+    },
+    "trail-of-bits-fusionlock-2024-04": {
+      "collections": ["bob"],
+      "title": "BOB FusionLock Security Assessment (Summary Report)",
+      "auditor": "Trail of Bits",
+      "date": "2024-04-03",
+      "document": "bob/reports/Trail of Bits - FusionLock.pdf"
+    },
+    "trailofbits-bold-dac-rewards-updates-2024-08": {
+      "collections": ["arbitrum"],
+      "title": "Offchain Labs BoLD and DAC Rewards Updates Security Assessment (Trail of Bits, June 2024)",
+      "auditor": "Trail of Bits",
+      "date": "2024-08-05",
+      "document": "arbitrum/reports/2024-06-offchain-labs-bold-dac-rewards-updates-securityreview.pdf"
+    },
+    "trailofbits-custom-fee-erc20-bridge-upgrade-eip7702-2025-03": {
+      "collections": ["arbitrum"],
+      "title": "Offchain Labs Custom Fee ERC-20 Bridge Upgrade and EIP-7702 Fixes Summary Report (Trail of Bits, March 2025)",
+      "auditor": "Trail of Bits",
+      "date": "2025-03-31",
+      "document": "arbitrum/reports/2025-03-offchain-custom-fee-erc20-bridge-securityreview.pdf"
+    },
+    "trailofbits-custom-fee-token-2024-08": {
+      "collections": ["arbitrum"],
+      "title": "Offchain Labs Custom Fee Token Security Assessment Summary Report (Trail of Bits, 2023)",
+      "auditor": "Trail of Bits",
+      "date": "2024-08-01",
+      "document": "arbitrum/reports/2024-08-offchain-labs-custom-fee-token-securityreview.pdf"
+    },
+    "trailofbits-governance-actions-2023-08": {
+      "collections": ["arbitrum"],
+      "title": "Offchain Labs Governance Actions Security Assessment Summary Report (Trail of Bits, August 2023)",
+      "auditor": "Trail of Bits",
+      "date": "2023-08-21",
+      "document": "arbitrum/reports/2023_08_21_trail_of_bits_governance_actions_summary_report.pdf"
+    },
+    "trailofbits-governance-token-bridge-2023-06": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Governance Security Assessment (Trail of Bits, governance and token bridge, 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2023-01-06",
+      "document": "arbitrum/reports/2023_06_23_trail_of_bits_security_audit_governance_report_governance_token_bridge.pdf"
+    },
+    "trailofbits-invariant-testing-2022-11": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Assessment (testing strategy and invariants, November 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2022-11-10",
+      "document": "optimism/reports/2022_11-Invariant_Testing-TrailOfBits.pdf"
+    },
+    "trailofbits-morph-l2-2024-07": {
+      "collections": ["morph"],
+      "title": "Morph L2 Security Assessment (Comprehensive Report with Fix Review)",
+      "auditor": "Trail of Bits",
+      "date": "2024-07-18",
+      "document": "morph/reports/2024_07-trailofbits-morph-l2-security-assessment-with-fix-review.pdf"
+    },
+    "trailofbits-nitro-2-of-2-2022-10": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Nitro Security Assessment (Trail of Bits, second Nitro review, 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2022-10-10",
+      "document": "arbitrum/reports/2022_10_22_trail_of_bits_security_audit_nitro_2_of_2.pdf"
+    },
+    "trailofbits-nitro-contracts-with-bold-2024-10": {
+      "collections": ["arbitrum"],
+      "title": "Offchain Labs Nitro Contracts with BoLD Security Assessment Summary Report (Trail of Bits, October 2024)",
+      "auditor": "Trail of Bits",
+      "date": "2024-10-30",
+      "document": "arbitrum/reports/2024-10-30-Offchain-NitroContractswithBoLD-securityreview.pdf"
+    },
+    "trailofbits-opnode-fix-review-2022-07": {
+      "collections": ["optimism"],
+      "title": "Optimism: Rollup Node and Execution Engine - Fix Review",
+      "auditor": "Trail of Bits",
+      "date": "2022-07-07",
+      "document": "optimism/reports/2022_05-OpNode-TrailOfBits.pdf"
+    },
+    "trust-superchainconfig-upgrade-2024-01": {
+      "collections": ["optimism"],
+      "title": "Smart Contract Audit: Optimism Bedrock upgrade (Trust Security)",
+      "auditor": "Trust Security",
+      "date": "2024-01-11",
+      "document": "optimism/reports/2023_12_SuperchainConfigUpgrade_Trust.pdf"
+    },
+    "veridise-kailua-2025-02": {
+      "collections": ["bob"],
+      "title": "Veridise Auditing Report for Kailua Protocol (February 2025)",
+      "auditor": "Veridise",
+      "date": "2025-02-18",
+      "document": "bob/reports/Veridise - Kailua Security Audit (Feb 2025).pdf"
+    },
+    "veridise-kailua-2025-05": {
+      "collections": ["bob"],
+      "title": "Veridise Auditing Report for Kailua Protocol (May 2025)",
+      "auditor": "Veridise",
+      "date": "2025-05-22",
+      "document": "bob/reports/Veridise - Kailua Security Audit (May 2025).pdf"
+    },
+    "veridise-kailua-2025-06": {
+      "collections": ["bob"],
+      "title": "Veridise Auditing Report for Kailua Protocol (June 2025)",
+      "auditor": "Veridise",
+      "date": "2025-06-16",
+      "document": "bob/reports/Veridise - Kailua Security Audit (Jun 2025).pdf"
+    },
+    "veridise-kailua-2025-10": {
+      "collections": ["bob"],
+      "title": "Veridise Auditing Report for Kailua (October 2025)",
+      "auditor": "Veridise",
+      "date": "2025-11-04",
+      "document": "bob/reports/Veridise - Kailua Security Audit (Oct 2025).pdf"
+    },
+    "veridise-kailua-2026-02": {
+      "collections": ["bob"],
+      "title": "Veridise Auditing Report for Kailua (February 2026)",
+      "auditor": "Veridise",
+      "date": "2026-03-06",
+      "document": "bob/reports/Veridise - Kailua Security Audit (Feb 2026).pdf"
+    },
+    "xuwinnie-solady-cbrt-proof": {
+      "collections": ["_libs/solady"],
+      "title": "Solady cbrt & cbrtWad Audit Report",
+      "auditor": "xuwinnie",
+      "date": "2024-07-31",
+      "document": "_libs/solady/reports/cbrt-proof__audits__xuwinnie-solady-cbrt-proof.pdf"
+    },
+    "zellic-scroll-bridge-rollup-audit-2023-05": {
+      "collections": ["scroll"],
+      "title": "Scroll Tech Smart Contract Security Assessment",
+      "auditor": "Zellic",
+      "date": "2023-05-26",
+      "document": "scroll/reports/zellic-scroll-bridge-rollup-audit-2023-05.pdf"
+    }
+  },
+  "auditedFiles": {
+    "0045b2bbd612": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/GnosisSafe.sol",
+      "blob": "0045b2bbd61230dbb61abbddfefb0bef6f366d84"
+    },
+    "0487cb845c4b": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/L1/L1ERC721Bridge.sol",
+      "blob": "0487cb845c4b487781e5b1b0e6de278793e1b865"
+    },
+    "08654fbfcc82": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/libraries/Encoding.sol",
+      "blob": "08654fbfcc82fcddd1f9ebd8b994e449ffbf221a"
+    },
+    "0b859cc51b9a": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "475801690f7a451469ee4da87b5fe3c54c92f372",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Syscalls.sol",
+      "blob": "0b859cc51b9a143aebd3e7481e14800051dfa2de"
+    },
+    "0b8ab296c0f9": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/base/Executor.sol",
+      "blob": "0b8ab296c0f951e04b18400891a007fb78620462"
+    },
+    "0ec1ecc1cc35": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Instructions.sol",
+      "blob": "0ec1ecc1cc3531658e1fd91298de936809464490"
+    },
+    "0fbc0a1a474d": {
+      "repository": "boundless-xyz/kailua",
+      "commit": "04cb174bebbe305082b8746b1542e0db3cd352fc",
+      "path": "crates/contracts/foundry/src/KailuaGame.sol",
+      "blob": "0fbc0a1a474d8f3c2fe4c17e553be9bc42c16873"
+    },
+    "10bfc5e90f72": {
+      "repository": "OffchainLabs/nitro-contracts",
+      "commit": "961a498b3ae3e218535a2a9fd28c306aaa04f3ee",
+      "path": "src/bridge/IOwnable.sol",
+      "blob": "10bfc5e90f72d3e7ce827e676e03461aced66bd8"
+    },
+    "11522e3740d7": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+      "blob": "11522e3740d7cc2ed41fb72e4295656b2f683c85"
+    },
+    "1a56eb43bd1e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "1a56eb43bd1e25dff33868bade27b3a8e8f7fc4e"
+    },
+    "1ac24cfad012": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "7f339a26424c499e7338045da5bab603762727a1",
+      "path": "packages/contracts-bedrock/contracts/L1/ResourceMetering.sol",
+      "blob": "1ac24cfad012b6a8a0ccf30ffe4feeec831a5225"
+    },
+    "1c4aeb9fb2a0": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/access/AccessControl.sol",
+      "blob": "1c4aeb9fb2a036093ba444a5b9146aece4f213a2"
+    },
+    "1cc118f42f1e": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
+      "blob": "1cc118f42f1e947ea87295c30fa1a237c31777b5"
+    },
+    "1cf7e0b2edfc": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "blob": "1cf7e0b2edfce1fb89d4f1ab51380cec2b9960aa"
+    },
+    "1eb423f63bd3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/token/ERC721/IERC721.sol",
+      "blob": "1eb423f63bd30a984c44bfba460c587c32c47a0d"
+    },
+    "1f18f98e389b": {
+      "repository": "Vectorized/solady",
+      "commit": "43f9d49815c8126d92771b26bd9bdbe2dbea87a5",
+      "path": "src/utils/FixedPointMathLib.sol",
+      "blob": "1f18f98e389b9b4263b3f5952af2a44c7deb15d3"
+    },
+    "206e1ba146f6": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/DevFeatures.sol",
+      "blob": "206e1ba146f6fd4dac9482514225f667048ad384"
+    },
+    "20cfdbc92607": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/dispute/FaultDisputeGame.sol",
+      "blob": "20cfdbc9260787be9972feca5a8204ad938a2409"
+    },
+    "254cf6eabe82": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+      "path": "packages/contracts-bedrock/src/libraries/EOA.sol",
+      "blob": "254cf6eabe822a91673f3ebd898a5455ecbccf5e"
+    },
+    "2a56119aa12b": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+      "path": "contracts/proxy/utils/Initializable.sol",
+      "blob": "2a56119aa12b8bf6088f9490433596450145f7bd"
+    },
+    "2addf0516442": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+      "path": "packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
+      "blob": "2addf0516442396b9ac86bbb17aab6db3a953afe"
+    },
+    "2d517987d5b4": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/utils/Context.sol",
+      "blob": "2d517987d5b49aee1a37634c95a69dae911b9d7a"
+    },
+    "2d531d2ea0d2": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "fa9974a2cd38d9e7633a12f9024d52f41de55f86",
+      "path": "packages/contracts-bedrock/src/libraries/Hashing.sol",
+      "blob": "2d531d2ea0d2dc88012df7fae69dc070acf03f53"
+    },
+    "2e7c50ed862d": {
+      "repository": "code-423n4/2024-07-optimism",
+      "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol",
+      "blob": "2e7c50ed862d1c8c7ae8869400836fa3c711c2a0"
+    },
+    "2f52c1dcc2b1": {
+      "repository": "mantlenetworkio/mantle",
+      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "path": "packages/contracts/contracts/libraries/bridge/CrossDomainEnabled.sol",
+      "blob": "2f52c1dcc2b132014fcd041300eb26aa60b2e460"
+    },
+    "332d2a2984e9": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+      "path": "contracts/utils/Strings.sol",
+      "blob": "332d2a2984e917adbca3dd915d8f6a7dc5561504"
+    },
+    "33d08b4a94b8": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/dispute/lib/Types.sol",
+      "blob": "33d08b4a94b88a257d569202baa84413db10727b"
+    },
+    "3445c40ff078": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/Features.sol",
+      "blob": "3445c40ff0784c291cd732c902c855e711c4f749"
+    },
+    "34c5cfea3b7b": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+      "blob": "34c5cfea3b7b3a46ad914b8453545b0a8539152d"
+    },
+    "3bcafda6d740": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/utils/Address.sol",
+      "blob": "3bcafda6d740e2879b7594c7587995b0a83cc32d"
+    },
+    "3cad4512d200": {
+      "repository": "celo-org/optimism",
+      "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+      "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
+      "blob": "3cad4512d2007abe76477d9b3b87ca8809b7c4f5"
+    },
+    "4272cb5a06c3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "4272cb5a06c3d4803df5f2861d7b6713bd9216dd"
+    },
+    "428cc5ce6a43": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
+      "path": "contracts/proxies/SafeProxy.sol",
+      "blob": "428cc5ce6a4363c7b81e367eca0d33295cf7a241"
+    },
+    "43212ea60fab": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/L1/SuperchainConfig.sol",
+      "blob": "43212ea60fab95da149a526a83482a7cd7e668e5"
+    },
+    "46e79cb472f7": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "e9f3c4588b6c59e0b6881a4a842763c2a4827839",
+      "path": "contracts/utils/cryptography/MerkleProof.sol",
+      "blob": "46e79cb472f7c9e13c33faac1f104da86f2802af"
+    },
+    "4ccae82dfed6": {
+      "repository": "celo-org/optimism",
+      "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+      "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+      "blob": "4ccae82dfed64459d2c29e742a7f4210941688d7"
+    },
+    "56477c92a27d": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/proxy/beacon/IBeacon.sol",
+      "blob": "56477c92a27d451ba5e72983b3b502d95a35a3a7"
+    },
+    "5903ba1d7b26": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
+      "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
+      "blob": "5903ba1d7b2604d83e023273a135acf87fa78caa"
+    },
+    "5bbd73283f02": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+      "path": "contracts/utils/cryptography/ECDSA.sol",
+      "blob": "5bbd73283f02dfd4a88829b4fb87138698bbb237"
+    },
+    "645202915fbb": {
+      "repository": "mantlenetworkio/mantle",
+      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "path": "packages/contracts/contracts/L1/messaging/IL1ERC20Bridge.sol",
+      "blob": "645202915fbb91e49e5c6a228a41ac6a47397385"
+    },
+    "674334e0c0de": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/token/ERC721/utils/ERC721Holder.sol",
+      "blob": "674334e0c0dea15772840db843d8fb7588bee260"
+    },
+    "6974af456c9b": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7cbcb58ffb7322343f0ed6b926f65bea7630ce3e",
+      "path": "packages/contracts-bedrock/src/dispute/AnchorStateRegistry.sol",
+      "blob": "6974af456c9b808bdad2160bd0fa132e993d2bf2"
+    },
+    "69d0bb2ebd87": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "7040d029eefc7a2d5a33e03bc15d6815e4a25fd6",
+      "path": "packages/sdk/test/contracts/ICrossDomainMessenger.sol",
+      "blob": "69d0bb2ebd87d49041eed5b598ac2ccd60124d45"
+    },
+    "6b58a07e098b": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "4fc9181a73795334f0c657a79ea8177b8de1814c",
+      "path": "packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+      "blob": "6b58a07e098be55571966b3a813568df4a989852"
+    },
+    "6f74b4e83125": {
+      "repository": "code-423n4/2024-07-optimism",
+      "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+      "path": "packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
+      "blob": "6f74b4e831253e9af85d031057239c6ab828a9f8"
+    },
+    "71e6b0f7adf0": {
+      "repository": "boundless-xyz/kailua",
+      "commit": "895939cd1acaca3e902a2e6d22d95d3416e2b474",
+      "path": "crates/contracts/foundry/src/KailuaVerifier.sol",
+      "blob": "71e6b0f7adf07ff146d1e0b1ed6cbbf6032688d9"
+    },
+    "72437bc34ce4": {
+      "repository": "safe-fndn/safe-modules",
+      "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+      "path": "modules/allowances/contracts/SignatureDecoder.sol",
+      "blob": "72437bc34ce4e1463c4105a513d6edca451e147c"
+    },
+    "732cc02b109a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IERC165.sol",
+      "blob": "732cc02b109aec16f55b6851bbdc1aaea463a5f5"
+    },
+    "763455f04af3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/external/GnosisSafeMath.sol",
+      "blob": "763455f04af3b886884a3d9ee56f325ea9ffa2b1"
+    },
+    "786d4d0f11d7": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/universal/OptimismMintableERC20Factory.sol",
+      "blob": "786d4d0f11d7a1467f00c3f0b7610dfe8df1a1d7"
+    },
+    "7e11f59c4288": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+      "path": "contracts/utils/cryptography/EIP712.sol",
+      "blob": "7e11f59c4288c9120543a755ddf3ce291c9b41c1"
+    },
+    "80d020ff7c1d": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/utils/introspection/ERC165Checker.sol",
+      "blob": "80d020ff7c1d2c73623fa050892d634514c3f869"
+    },
+    "8259df1c162b": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
+      "blob": "8259df1c162bc9a04875a8591f919ca79b08e36f"
+    },
+    "85efd6d294e3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "106a201788c23f8d8419053d05fd250969e7af28",
+      "path": "contracts/utils/cryptography/Hashes.sol",
+      "blob": "85efd6d294e3f8a3f239e26466e8b1281a6a12a7"
+    },
+    "8699afc9d67a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/EtherPaymentFallback.sol",
+      "blob": "8699afc9d67a512502ebf5beae4a812a28957627"
+    },
+    "895f80a4bc17": {
+      "repository": "mantlenetworkio/mantle",
+      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "path": "packages/contracts/contracts/L2/messaging/IL2ERC20Bridge.sol",
+      "blob": "895f80a4bc17e15ec6c631652f93682dd6f17ac7"
+    },
+    "89a3e6314f67": {
+      "repository": "OffchainLabs/token-bridge-contracts",
+      "commit": "6396a178e001da2b86509bb21c775488530fd541",
+      "path": "contracts/tokenbridge/libraries/ERC165.sol",
+      "blob": "89a3e6314f6724bede3e5452edc2f838220e95c0"
+    },
+    "8d366ae9c470": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/dispute/DisputeGameFactory.sol",
+      "blob": "8d366ae9c470b7eba3a6049d41cbc459709d2171"
+    },
+    "8d475bd3daf8": {
+      "repository": "code-423n4/2023-03-zksync",
+      "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
+      "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+      "blob": "8d475bd3daf8df3bf2d086ef429b5d9f9c05aeb1"
+    },
+    "8d983f5b9744": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7cbcb58ffb7322343f0ed6b926f65bea7630ce3e",
+      "path": "packages/contracts-bedrock/src/L1/OptimismPortal2.sol",
+      "blob": "8d983f5b9744520f94067f9444c039a10f6022f1"
+    },
+    "8e6b8516d1a5": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/token/ERC1155/utils/ERC1155Holder.sol",
+      "blob": "8e6b8516d1a576c76af387ca212f36a8e913c67f"
+    },
+    "8fef1c6527d0": {
+      "repository": "celo-org/optimism",
+      "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+      "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+      "blob": "8fef1c6527d06ba1c9f711c4a1cafde50c9af520"
+    },
+    "962e6ad8a397": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0",
+      "path": "contracts/utils/Pausable.sol",
+      "blob": "962e6ad8a397f0efcd582b56d0cb7b7a25b95dc9"
+    },
+    "979554d4061c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/token/ERC20/extensions/IERC20Permit.sol",
+      "blob": "979554d4061c5a62d62524fbfda1c16307f4a7cb"
+    },
+    "98633d508d18": {
+      "repository": "celo-org/optimism",
+      "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+      "path": "packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+      "blob": "98633d508d181f3263576ee14e195496d8514bd3"
+    },
+    "9a19be7ce3c0": {
+      "repository": "boundless-xyz/kailua",
+      "commit": "04cb174bebbe305082b8746b1542e0db3cd352fc",
+      "path": "crates/contracts/foundry/src/KailuaLib.sol",
+      "blob": "9a19be7ce3c0e2b56b26d3153f2d5f1f54dce901"
+    },
+    "9d9bd7b5568f": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "a3aed5ad0e7877b1d825381ed9a8c5f3cb5d2a83",
+      "path": "contracts/governance/TimelockController.sol",
+      "blob": "9d9bd7b5568f35f9f29430cf30266b66dc98f6f2"
+    },
+    "9ec9f07fc0ec": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/legacy/AddressManager.sol",
+      "blob": "9ec9f07fc0ecdef52acdd9339e18c00ae6c3a736"
+    },
+    "9f02979f1ee6": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/proxy/Proxy.sol",
+      "blob": "9f02979f1ee66d455e547298479d143f0f7f91c7"
+    },
+    "9fafeba8c058": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/Singleton.sol",
+      "blob": "9fafeba8c0589b764fe558a913411217e9420a9a"
+    },
+    "a19535a30046": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "a19535a30046f312e5208ab5b2ff7eb351a0f72d"
+    },
+    "a1d689e731db": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "b8c011f18c79d735e01168345fc1c6f02fac584f",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Arch.sol",
+      "blob": "a1d689e731dba1e5e6f7d429028418f8c00c0f0a"
+    },
+    "a2cd6ce57ad5": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+      "blob": "a2cd6ce57ad582cba4ea7ec515b66d354e0fba60"
+    },
+    "a3cb9793bed6": {
+      "repository": "celo-org/optimism",
+      "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+      "path": "packages/contracts-bedrock/src/L1/L1StandardBridge.sol",
+      "blob": "a3cb9793bed631d09c18bef502062952cb91d0c9"
+    },
+    "aab31696d64e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "aab31696d64e9fbce70c6280db56b39a2a3eebac"
+    },
+    "aeda91fb5c75": {
+      "repository": "boundless-xyz/kailua",
+      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+      "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+      "blob": "aeda91fb5c75ebd4191ac8c551a1a4685cf3e115"
+    },
+    "b0e9189675cc": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/utils/StorageSlot.sol",
+      "blob": "b0e9189675cc5f0b86963d29b363a9568d156dd0"
+    },
+    "b21f7e9bd367": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/introspection/ERC165.sol",
+      "blob": "b21f7e9bd3670ef8b51f30c2eeb4ca03c1f9b373"
+    },
+    "ba10c900a3db": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC1155/IERC1155Receiver.sol",
+      "blob": "ba10c900a3dbd2339cd3eab887c3e674afe55ec4"
+    },
+    "bce9237d9700": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "b8c011f18c79d735e01168345fc1c6f02fac584f",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64State.sol",
+      "blob": "bce9237d9700625183b4c6962205d4dae1f94c50"
+    },
+    "bf2312317a1a": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7cbcb58ffb7322343f0ed6b926f65bea7630ce3e",
+      "path": "packages/contracts-bedrock/src/L1/SystemConfig.sol",
+      "blob": "bf2312317a1aa33c7895f0eb29426d6ffc2b90d1"
+    },
+    "c29005491aea": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+      "path": "packages/contracts-bedrock/src/dispute/interfaces/IBigStepper.sol",
+      "blob": "c29005491aea6e79367a13e4fe65d8628ae0312f"
+    },
+    "c3f36cb881fd": {
+      "repository": "code-423n4/2024-07-optimism",
+      "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+      "path": "packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
+      "blob": "c3f36cb881fd328c3b6224523d6dd5e16a6c4ddf"
+    },
+    "c52c3b8f832b": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7cbcb58ffb7322343f0ed6b926f65bea7630ce3e",
+      "path": "packages/contracts-bedrock/src/cannon/MIPS64.sol",
+      "blob": "c52c3b8f832befe64a78f04bedff62a29d8c4e37"
+    },
+    "c6c458e0aa0c": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "b8c011f18c79d735e01168345fc1c6f02fac584f",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Memory.sol",
+      "blob": "c6c458e0aa0c90403050956f5912aac70d4cc79e"
+    },
+    "c8f243d15377": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/SecuredTokenTransfer.sol",
+      "blob": "c8f243d15377b3066c7857e8c9e3459ec8405881"
+    },
+    "c9ed9c0487ff": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "c9ed9c0487ffad8099f10a986c677a69ffa1f6f8"
+    },
+    "ca09e0350541": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/access/Ownable.sol",
+      "blob": "ca09e035054133545c505f7d1c4ca829f8b67df9"
+    },
+    "cb50e3377d76": {
+      "repository": "celo-org/optimism",
+      "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+      "path": "packages/contracts-bedrock/src/L1/L1CrossDomainMessenger.sol",
+      "blob": "cb50e3377d766c4fc4f38729b468bf38033abbdb"
+    },
+    "cbc5aef79df2": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/ERC20.sol",
+      "blob": "cbc5aef79df2fa45e68ad7ff4044f29c0b3b60d2"
+    },
+    "ccb979f61c95": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/utils/math/SafeCast.sol",
+      "blob": "ccb979f61c9577e6338276cff49625d5a2191eb3"
+    },
+    "cd36168f725d": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/universal/ProxyAdmin.sol",
+      "blob": "cd36168f725d632dee2bdab22ebe05e8b6dce1fa"
+    },
+    "ce662c6592b6": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/universal/IOptimismMintableERC20.sol",
+      "blob": "ce662c6592b6ab79d598ed2d0d5205bde3fbc8de"
+    },
+    "d2a927d58c33": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "121be5dd09caa2f7ce731f0806b0e14761023bd6",
+      "path": "contracts/proxy/ERC1967/ERC1967Proxy.sol",
+      "blob": "d2a927d58c3302e723c766b904f909d73a920b05"
+    },
+    "d4aed6739b60": {
+      "repository": "boundless-xyz/kailua",
+      "commit": "ccf2771857721a9cda5f7943ed7ef1d236c20bbd",
+      "path": "crates/contracts/foundry/src/KailuaTreasury.sol",
+      "blob": "d4aed6739b6063146188061f1c0f3e07d1636561"
+    },
+    "d4febfa2c0c9": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/legacy/ResolvedDelegateProxy.sol",
+      "blob": "d4febfa2c0c90109805fd78d723110955ba19c9b"
+    },
+    "d508d2de925e": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7cbcb58ffb7322343f0ed6b926f65bea7630ce3e",
+      "path": "packages/contracts-bedrock/src/dispute/PermissionedDisputeGame.sol",
+      "blob": "d508d2de925e8fffaea7d05f88d744b3fb016451"
+    },
+    "d934eddafe9c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/access/AccessControl.sol",
+      "blob": "d934eddafe9cd6f9dc4955cb7994a2e298cd20ae"
+    },
+    "e2c3c2f19a71": {
+      "repository": "boundless-xyz/kailua",
+      "commit": "ccf2771857721a9cda5f7943ed7ef1d236c20bbd",
+      "path": "crates/contracts/foundry/src/KailuaTournament.sol",
+      "blob": "e2c3c2f19a71c00ea14dfd585f06fc710651ab9c"
+    },
+    "e60171eac28a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/proxies/GnosisSafeProxy.sol",
+      "blob": "e60171eac28ab42852376215e7b78ec351b2e400"
+    },
+    "e77c193bdf4e": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",
+      "blob": "e77c193bdf4ec8c79ffe054952c4f732c103d076"
+    },
+    "eb0529a71f33": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
+      "blob": "eb0529a71f332a5b6cfc565133e83a00ec3866ee"
+    },
+    "f189ff3cf77c": {
+      "repository": "celo-org/optimism",
+      "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+      "path": "packages/contracts-bedrock/src/universal/OptimismMintableERC20.sol",
+      "blob": "f189ff3cf77c72791ec92782b666ea40e3028d09"
+    },
+    "f20ab01bcd2b": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/legacy/L1ChugSplashProxy.sol",
+      "blob": "f20ab01bcd2b00e53c0390c4549d7d5b53761f24"
+    },
+    "f3b8944f25b1": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/external/SafeMath.sol",
+      "blob": "f3b8944f25b1f8efcf9bf3451dc023602f223206"
+    },
+    "f452b5e34b74": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/interfaces/draft-IERC1822.sol",
+      "blob": "f452b5e34b744cf925b808e42e338e7146b14a8c"
+    },
+    "f8313c732a79": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+      "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+      "blob": "f8313c732a79f288743ca1d2cc1321a2c9987dec"
+    },
+    "f93d219f21bd": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/token/ERC721/IERC721Receiver.sol",
+      "blob": "f93d219f21bd9c817755d1500100013ef1ca310d"
+    },
+    "fb2397d8bcda": {
+      "repository": "boundless-xyz/kailua",
+      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+      "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+      "blob": "fb2397d8bcda844c00004d4b7ec6ec0a60406eb9"
+    }
+  },
+  "units": {
+    "ecedf963bc64": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 214,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "b0006e2cedea": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 82,
+      "status": "identical",
+      "audited": { "object": "2a56119aa12b", "lines": [57, 138] },
+      "reports": ["formal-verification__fv__reports__2022-05"]
+    },
+    "8f7da050ddb2": {
+      "name": "SignedMath",
+      "kind": "library",
+      "lines": 35,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [452, 486] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "727591669b8c": {
+      "name": "FixedPointMathLib",
+      "kind": "library",
+      "lines": 361,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [2128, 2468] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "7d6554b6cb64": {
+      "name": "Arithmetic",
+      "kind": "library",
+      "lines": 20,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4699, 4718] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "26ad7b61b37b": {
+      "name": "Math",
+      "kind": "library",
+      "lines": 218,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [234, 443] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "9b73a9b5c9f6": {
+      "name": "Burner",
+      "kind": "contract",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [2707, 2711] },
+      "reports": [
+        "openzeppelin-bedrock-bridge-2022-05",
+        "openzeppelin-mantle-v2-solidity-contracts-2024-03",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05",
+        "secure3-mantle-v2-tectonic-2024-03",
+        "trailofbits-invariant-testing-2022-11",
+        "trailofbits-opnode-fix-review-2022-07",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "433c37b5a737": {
+      "name": "Burn",
+      "kind": "library",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [2685, 2701] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "2d60ee7f3ed2": {
+      "name": "ResourceMetering",
+      "kind": "abstract",
+      "lines": 148,
+      "status": "identical",
+      "audited": { "object": "1ac24cfad012", "lines": [15, 182] },
+      "reports": [
+        "openzeppelin-mantle-v2-solidity-contracts-2024-03",
+        "secure3-mantle-v2-tectonic-2024-03",
+        "sigmaprime-mantle-l2-rollup-v2-2024-04"
+      ]
+    },
+    "d44c0cfb8c85": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 37,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [6075, 6111] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "3f3d60f9e37d": {
+      "name": "Proxy",
+      "kind": "contract",
+      "lines": 159,
+      "status": "differs",
+      "audited": { "object": "8259df1c162b", "lines": [10, 213] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ],
+      "added": [
+        [94, 94],
+        [96, 96],
+        [105, 105],
+        [107, 107],
+        [141, 141],
+        [143, 143],
+        [152, 152],
+        [154, 154]
+      ],
+      "removed": [
+        [1, 1, 15],
+        [96, 133, 133],
+        [107, 146, 146],
+        [143, 186, 186],
+        [154, 199, 199]
+      ],
+      "covered": 151
+    },
+    "5fe8253cda76": {
+      "name": "IOwnable",
+      "kind": "interface",
+      "lines": 15,
+      "status": "none"
+    },
+    "ed326933a23e": {
+      "name": "IAddressManager",
+      "kind": "interface",
+      "lines": 8,
+      "status": "none"
+    },
+    "e2b40f3d642c": {
+      "name": "IProxyAdmin",
+      "kind": "interface",
+      "lines": 29,
+      "status": "none"
+    },
+    "e59a41a9002d": {
+      "name": "Storage",
+      "kind": "library",
+      "lines": 83,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [3020, 3102] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "e60933e352ce": {
+      "name": "IResourceMetering",
+      "kind": "interface",
+      "lines": 24,
+      "status": "none"
+    },
+    "c7852b22a645": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 63,
+      "status": "differs",
+      "audited": { "object": "a2cd6ce57ad5", "lines": [11, 76] },
+      "reports": ["cantina-upgrade20-2026-08"],
+      "added": [],
+      "removed": [[48, 48, 50]],
+      "covered": 63
+    },
+    "383d0a473e13": {
+      "name": "ProxyAdminOwnedBase",
+      "kind": "abstract",
+      "lines": 87,
+      "status": "identical",
+      "audited": { "object": "6b58a07e098b", "lines": [22, 108] },
+      "reports": ["spearbit-interop-portal-2025-05"]
+    },
+    "498007571a41": {
+      "name": "ReinitializableBase",
+      "kind": "abstract",
+      "lines": 20,
+      "status": "none"
+    },
+    "34e3ca2fb900": {
+      "name": "WETH98",
+      "kind": "contract",
+      "lines": 128,
+      "status": "differs",
+      "audited": { "object": "2addf0516442", "lines": [26, 99] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
+      "added": [
+        [0, 0],
+        [4, 28],
+        [42, 42],
+        [48, 48],
+        [51, 65],
+        [68, 69],
+        [76, 77],
+        [92, 93],
+        [112, 117],
+        [120, 121]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [4, 2, 4],
+        [42, 17, 17],
+        [48, 22, 22],
+        [68, 27, 28],
+        [76, 34, 35],
+        [92, 46, 47],
+        [114, 59, 59],
+        [115, 61, 63],
+        [120, 66, 67]
+      ],
+      "covered": 100
+    },
+    "b61f946296f1": {
+      "name": "ISemver",
+      "kind": "interface",
+      "lines": 7,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [3362, 3368] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "b5dcc6adafd5": {
+      "name": "IProxyAdminOwnedBase",
+      "kind": "interface",
+      "lines": 11,
+      "status": "none"
+    },
+    "9e1f6b2ac65d": {
+      "name": "ISuperchainConfig",
+      "kind": "interface",
+      "lines": 31,
+      "status": "none"
+    },
+    "1bc80c4939df": {
+      "name": "ISystemConfig",
+      "kind": "interface",
+      "lines": 108,
+      "status": "differs",
+      "audited": { "object": "11522e3740d7", "lines": [8, 110] },
+      "reports": ["cantina-upgrade20-2026-08"],
+      "added": [[29, 30], [42, 42], [58, 58], [87, 87]],
+      "removed": [[29, 29, 29]],
+      "covered": 104
+    },
+    "cb9cc7f64ae0": {
+      "name": "DelayedWETH",
+      "kind": "contract",
+      "lines": 106,
+      "status": "differs",
+      "audited": { "object": "1cc118f42f1e", "lines": [27, 132] },
+      "reports": ["spearbit-upgrade16-2025-05"],
+      "added": [[9, 9]],
+      "removed": [[9, 9, 9]],
+      "covered": 105
+    },
+    "85cff3d52895": {
+      "name": "Proxy",
+      "kind": "abstract",
+      "lines": 71,
+      "status": "differs",
+      "audited": { "object": "9f02979f1ee6", "lines": [16, 74] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[54, 61]],
+      "removed": [],
+      "covered": 68
+    },
+    "0d3c0f868cae": {
+      "name": "StorageSlot",
+      "kind": "library",
+      "lines": 53,
+      "status": "differs",
+      "audited": { "object": "b0e9189675cc", "lines": [34, 138] },
+      "reports": [
+        "contracts__audits__2023-05-v4.9",
+        "contracts__audits__2023-10-v5.0"
+      ],
+      "added": [],
+      "removed": [[16, 16, 23], [52, 64, 103]],
+      "covered": 53
+    },
+    "aee6957dba32": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 214,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "d60656a5ad24": {
+      "name": "IERC1822Proxiable",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "f452b5e34b74", "lines": [10, 20] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "170545296a7e": {
+      "name": "IBeacon",
+      "kind": "interface",
+      "lines": 8,
+      "status": "identical",
+      "audited": { "object": "56477c92a27d", "lines": [9, 16] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "a9f53b5b08f3": {
+      "name": "ERC1967Upgrade",
+      "kind": "abstract",
+      "lines": 167,
+      "status": "none"
+    },
+    "b95eaa0c5979": {
+      "name": "ERC1967Proxy",
+      "kind": "contract",
+      "lines": 19,
+      "status": "differs",
+      "audited": { "object": "d2a927d58c33", "lines": [15, 40] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0], [8, 9], [16, 16]],
+      "removed": [[0, 0, 0], [9, 12, 12], [16, 23, 23]],
+      "covered": 15
+    },
+    "b7be9deb7869": {
+      "name": "OssifiableProxy",
+      "kind": "contract",
+      "lines": 82,
+      "status": "none"
+    },
+    "0c98f555c1c4": {
+      "name": "IL1ERC20Bridge",
+      "kind": "interface",
+      "lines": 77,
+      "status": "differs",
+      "audited": { "object": "645202915fbb", "lines": [7, 118] },
+      "reports": ["secure3-mantle-v1-contest-2023-07"],
+      "added": [[31, 36], [49, 54], [69, 74]],
+      "removed": [[31, 46, 46], [49, 61, 66], [69, 90, 95], [76, 97, 110]],
+      "covered": 59
+    },
+    "d768b8759414": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "3f1c67a98ffa": {
+      "name": "IAccessControl",
+      "kind": "interface",
+      "lines": 80,
+      "status": "none"
+    },
+    "f98775a7d0f9": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": [
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "571e63d071b4": {
+      "name": "ERC165",
+      "kind": "abstract",
+      "lines": 8,
+      "status": "identical",
+      "audited": { "object": "89a3e6314f67", "lines": [25, 32] },
+      "reports": [
+        "trailofbits-custom-fee-token-2024-08",
+        "trailofbits-governance-token-bridge-2023-06"
+      ]
+    },
+    "d01239fbce9a": {
+      "name": "Strings",
+      "kind": "library",
+      "lines": 59,
+      "status": "none"
+    },
+    "d32b62f5fb94": {
+      "name": "AccessControl",
+      "kind": "abstract",
+      "lines": 187,
+      "status": "differs",
+      "audited": { "object": "d934eddafe9c", "lines": [49, 212] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [
+        [35, 35],
+        [60, 69],
+        [79, 79],
+        [93, 93],
+        [106, 106],
+        [124, 125],
+        [127, 127],
+        [129, 150]
+      ],
+      "removed": [
+        [35, 33, 33],
+        [60, 56, 56],
+        [79, 66, 66],
+        [93, 82, 82],
+        [106, 97, 97],
+        [124, 117, 120],
+        [127, 122, 122]
+      ],
+      "covered": 167
+    },
+    "afe92c65c72d": {
+      "name": "BridgingManager",
+      "kind": "contract",
+      "lines": 126,
+      "status": "none"
+    },
+    "0e08fd2e4643": {
+      "name": "BridgeableTokens",
+      "kind": "contract",
+      "lines": 42,
+      "status": "none"
+    },
+    "f191c6cbdf50": {
+      "name": "ICrossDomainMessenger",
+      "kind": "interface",
+      "lines": 13,
+      "status": "differs",
+      "audited": { "object": "69d0bb2ebd87", "lines": [9, 39] },
+      "reports": [
+        "secure3-mantle-v1-contest-2023-07",
+        "secure3-mantle-v2-tectonic-2024-03",
+        "sigmaprime-mantle-l2-rollup-2023-07"
+      ],
+      "added": [],
+      "removed": [[1, 1, 14]],
+      "covered": 13
+    },
+    "d7f570c7bad1": {
+      "name": "CrossDomainEnabled",
+      "kind": "contract",
+      "lines": 38,
+      "status": "differs",
+      "audited": { "object": "2f52c1dcc2b1", "lines": [13, 85] },
+      "reports": [
+        "secure3-mantle-v1-contest-2023-07",
+        "sigmaprime-mantle-l2-rollup-2023-07"
+      ],
+      "added": [[2, 2], [5, 6], [14, 19], [25, 31], [34, 36]],
+      "removed": [
+        [2, 8, 8],
+        [5, 19, 20],
+        [14, 68, 68],
+        [19, 70, 70],
+        [25, 34, 41],
+        [34, 44, 58],
+        [34, 60, 62]
+      ],
+      "covered": 20
+    },
+    "809d3ad2bcb8": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 74,
+      "status": "identical",
+      "audited": { "object": "a19535a30046", "lines": [9, 78] },
+      "reports": [
+        "code4rena-zksync-era-system-contracts-2023-03",
+        "contracts__audits__2023-10-v5.0"
+      ]
+    },
+    "3b4df54a2b17": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 82,
+      "status": "differs",
+      "audited": { "object": "8d475bd3daf8", "lines": [19, 95] },
+      "reports": ["code4rena-zksync-era-system-contracts-2023-03"],
+      "added": [],
+      "removed": [[63, 42, 57]],
+      "covered": 82
+    },
+    "e324d5265c4d": {
+      "name": "IL2ERC20Bridge",
+      "kind": "interface",
+      "lines": 81,
+      "status": "differs",
+      "audited": { "object": "895f80a4bc17", "lines": [7, 102] },
+      "reports": [
+        "openzeppelin-bedrock-bridge-2022-05",
+        "secure3-mantle-v1-contest-2023-07",
+        "sigmaprime-mantle-l2-rollup-2023-07"
+      ],
+      "added": [[38, 43], [53, 59], [73, 78]],
+      "removed": [[38, 54, 54], [53, 66, 66], [73, 88, 93]],
+      "covered": 62
+    },
+    "0aff0cb3c262": {
+      "name": "L1ERC20TokenBridge",
+      "kind": "contract",
+      "lines": 130,
+      "status": "none"
+    },
+    "bb24b365b687": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [1736, 1748] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "ee5a26ce51e5": {
+      "name": "IAccessControl",
+      "kind": "interface",
+      "lines": 90,
+      "status": "none"
+    },
+    "550e7ec19a1f": {
+      "name": "ERC165",
+      "kind": "abstract",
+      "lines": 8,
+      "status": "identical",
+      "audited": { "object": "b21f7e9bd367", "lines": [20, 25] },
+      "reports": ["contracts__audits__2025-07-v5.4"]
+    },
+    "257d184669b9": {
+      "name": "AccessControl",
+      "kind": "abstract",
+      "lines": 161,
+      "status": "identical",
+      "audited": { "object": "1c4aeb9fb2a0", "lines": [49, 207] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "b0148cb6d897": {
+      "name": "IERC721Receiver",
+      "kind": "interface",
+      "lines": 18,
+      "status": "identical",
+      "audited": { "object": "f93d219f21bd", "lines": [11, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "d1257bdb2505": {
+      "name": "ERC721Holder",
+      "kind": "abstract",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "674334e0c0de", "lines": [17, 26] },
+      "reports": [
+        "contracts__audits__2023-10-v5.0",
+        "contracts__audits__2026-02-v5.6"
+      ]
+    },
+    "f3d2f2fe12b5": {
+      "name": "IERC1155Receiver",
+      "kind": "interface",
+      "lines": 48,
+      "status": "identical",
+      "audited": { "object": "ba10c900a3db", "lines": [11, 54] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "881f5aa05fea": {
+      "name": "ERC1155Holder",
+      "kind": "abstract",
+      "lines": 28,
+      "status": "identical",
+      "audited": { "object": "8e6b8516d1a5", "lines": [17, 40] },
+      "reports": [
+        "contracts__audits__2025-07-v5.4",
+        "contracts__audits__2026-02-v5.6"
+      ]
+    },
+    "b7a6b1cb9727": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 151,
+      "status": "identical",
+      "audited": { "object": "3bcafda6d740", "lines": [9, 159] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "eeca1d6d3ff3": {
+      "name": "TimelockController",
+      "kind": "contract",
+      "lines": 449,
+      "status": "identical",
+      "audited": { "object": "9d9bd7b5568f", "lines": [25, 474] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "9b385480472b": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 64,
+      "status": "differs",
+      "audited": { "object": "ca09e0350541", "lines": [20, 97] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 9], [31, 31], [50, 50]],
+      "removed": [[2, 2, 11], [8, 18, 19], [31, 41, 43], [50, 62, 64]],
+      "covered": 60
+    },
+    "7ac9eb435da8": {
+      "name": "AddressManager",
+      "kind": "contract",
+      "lines": 51,
+      "status": "identical",
+      "audited": { "object": "9ec9f07fc0ec", "lines": [14, 64] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "33c344e65c65": {
+      "name": "IStaticERC1967Proxy",
+      "kind": "interface",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "cd36168f725d", "lines": [13, 17] },
+      "reports": [
+        "code4rena-base-2023-08",
+        "openzeppelin-bedrock-periphery-2022-09",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "1bbdc9103ae0": {
+      "name": "IStaticL1ChugSplashProxy",
+      "kind": "interface",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "cd36168f725d", "lines": [23, 27] },
+      "reports": [
+        "code4rena-base-2023-08",
+        "openzeppelin-bedrock-periphery-2022-09",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "d2fdb69068e3": {
+      "name": "Proxy",
+      "kind": "interface",
+      "lines": 9,
+      "status": "none"
+    },
+    "a5d623f4f582": {
+      "name": "L1ChugSplashProxy",
+      "kind": "interface",
+      "lines": 8,
+      "status": "none"
+    },
+    "6fc12095da10": {
+      "name": "ProxyAdmin",
+      "kind": "contract",
+      "lines": 220,
+      "status": "identical",
+      "audited": { "object": "cd36168f725d", "lines": [35, 254] },
+      "reports": [
+        "code4rena-base-2023-08",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "1718b9171168": {
+      "name": "IRiscZeroVerifier",
+      "kind": "interface",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [1941, 1956] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "31e42eba5b0a": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 81,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [1974, 2054] },
+      "reports": ["contracts__audits__2023-10-v5.0", "veridise-kailua-2025-02"]
+    },
+    "f748c01f5fad": {
+      "name": "Ownable2Step",
+      "kind": "abstract",
+      "lines": 41,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [2071, 2111] },
+      "reports": ["contracts__audits__2023-10-v5.0", "veridise-kailua-2025-02"]
+    },
+    "b7f0088d6cad": {
+      "name": "Pausable",
+      "kind": "abstract",
+      "lines": 103,
+      "status": "identical",
+      "audited": { "object": "962e6ad8a397", "lines": [17, 112] },
+      "reports": ["contracts__audits__2025-04-v5.3"]
+    },
+    "b8b844a5b9c4": {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "kind": "contract",
+      "lines": 48,
+      "status": "none"
+    },
+    "ce960142fae6": {
+      "name": "IRiscZeroSelectable",
+      "kind": "interface",
+      "lines": 14,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [1417, 1430] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "0f1607e2e79d": {
+      "name": "Groth16Verifier",
+      "kind": "contract",
+      "lines": 173,
+      "status": "differs",
+      "audited": { "object": "fb2397d8bcda", "lines": [1546, 1720] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [],
+      "removed": [[164, 164, 165]],
+      "covered": 173
+    },
+    "e5d681466c6d": {
+      "name": "OutputLib",
+      "kind": "library",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [1919, 1934] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "78eafa525368": {
+      "name": "reverseByteOrderUint32",
+      "kind": "function",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [1479, 1487] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "9fb9a030a051": {
+      "name": "SystemStateLib",
+      "kind": "library",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [1857, 1873] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "343bce563607": {
+      "name": "ReceiptClaimLib",
+      "kind": "library",
+      "lines": 47,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [1797, 1843] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "08be295201e9": {
+      "name": "SafeCast",
+      "kind": "library",
+      "lines": 1135,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [264, 1398] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "c1d41a25750a": {
+      "name": "StructHash",
+      "kind": "library",
+      "lines": 38,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [2177, 2214] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "d4069aa8dbd6": {
+      "name": "reverseByteOrderUint256",
+      "kind": "function",
+      "lines": 22,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [1452, 1473] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "9214c015d2cc": {
+      "name": "RiscZeroGroth16Verifier",
+      "kind": "contract",
+      "lines": 132,
+      "status": "differs",
+      "audited": { "object": "fb2397d8bcda", "lines": [2536, 2667] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[6, 6], [112, 112]],
+      "removed": [[6, 6, 6], [112, 112, 112]],
+      "covered": 130
+    },
+    "a1ed768de02b": {
+      "name": "SafeCast",
+      "kind": "library",
+      "lines": 1144,
+      "status": "identical",
+      "audited": { "object": "ccb979f61c95", "lines": [19, 1162] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "f17652a078fb": {
+      "name": "RiscZeroGroth16Verifier",
+      "kind": "contract",
+      "lines": 133,
+      "status": "differs",
+      "audited": { "object": "fb2397d8bcda", "lines": [2536, 2667] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[7, 7], [113, 113]],
+      "removed": [[7, 6, 6], [113, 112, 112]],
+      "covered": 131
+    },
+    "477fadda0baa": {
+      "name": "SafeProxy",
+      "kind": "contract",
+      "lines": 34,
+      "status": "differs",
+      "audited": { "object": "428cc5ce6a43", "lines": [18, 60] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"],
+      "added": [[18, 18], [21, 21], [27, 27], [29, 29]],
+      "removed": [[18, 22, 22], [21, 31, 31], [27, 37, 37]],
+      "covered": 30
+    },
+    "150878a81f46": {
+      "name": "Singleton",
+      "kind": "abstract",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
+      "reports": [
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "447d1057dc7c": {
+      "name": "NativeCurrencyPaymentFallback",
+      "kind": "abstract",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
+      "reports": [
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "aa97dd1bf3f1": {
+      "name": "SelfAuthorized",
+      "kind": "abstract",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [745, 755] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "40ce0b25499c": {
+      "name": "Enum",
+      "kind": "interface",
+      "lines": 6,
+      "status": "none"
+    },
+    "06a60947381e": {
+      "name": "Executor",
+      "kind": "abstract",
+      "lines": 32,
+      "status": "identical",
+      "audited": { "object": "0b8ab296c0f9", "lines": [10, 42] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "af0af37b8cfc": {
+      "name": "ModuleManager",
+      "kind": "abstract",
+      "lines": 176,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [4897, 5076] },
+      "reports": ["nethermind-safe-1-3-0", "veridise-kailua-2025-02"],
+      "added": [[22, 22]],
+      "removed": [[22, 22, 22]],
+      "covered": 175
+    },
+    "f1b466f7c6f6": {
+      "name": "OwnerManager",
+      "kind": "abstract",
+      "lines": 150,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [3806, 3962] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "13e5d12afa8b": {
+      "name": "SignatureDecoder",
+      "kind": "abstract",
+      "lines": 29,
+      "status": "identical",
+      "audited": { "object": "72437bc34ce4", "lines": [7, 33] },
+      "reports": [
+        "certora-safe-allowance-v1-0-0",
+        "nethermind-safe-allowance-v1-0-0"
+      ]
+    },
+    "844a8fe51e4f": {
+      "name": "SecuredTokenTransfer",
+      "kind": "abstract",
+      "lines": 31,
+      "status": "identical",
+      "audited": { "object": "c8f243d15377", "lines": [8, 34] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "de59e343d914": {
+      "name": "ISignatureValidatorConstants",
+      "kind": "contract",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [942, 945] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-1-0",
+        "g0-safe-1-1-1",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "f44a94390330": {
+      "name": "FallbackManager",
+      "kind": "abstract",
+      "lines": 73,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [3726, 3795] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "e213c56fc229": {
+      "name": "StorageAccessible",
+      "kind": "abstract",
+      "lines": 42,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [818, 859] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "b3dc850565d8": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": [
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "051f4e0bd8fb": {
+      "name": "Guard",
+      "kind": "interface",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4814, 4830] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "d63eef9ff914": {
+      "name": "GuardManager",
+      "kind": "abstract",
+      "lines": 42,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4843, 4884] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "6cd3fcc5ec00": {
+      "name": "SafeMath",
+      "kind": "library",
+      "lines": 57,
+      "status": "identical",
+      "audited": { "object": "f3b8944f25b1", "lines": [8, 64] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "d1308f86f627": {
+      "name": "ISignatureValidator",
+      "kind": "abstract",
+      "lines": 12,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [947, 958] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "268c431cb6b0": {
+      "name": "Safe",
+      "kind": "contract",
+      "lines": 409,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [6325, 6756] },
+      "reports": ["nethermind-safe-1-3-0", "veridise-kailua-2025-02"],
+      "added": [[14, 14]],
+      "removed": [[14, 14, 14]],
+      "covered": 408
+    },
+    "34ceb7e1b670": {
+      "name": "IL1ChugSplashDeployer",
+      "kind": "interface",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "f20ab01bcd2b", "lines": [7, 9] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "185b8bd0deb1": {
+      "name": "L1ChugSplashProxy",
+      "kind": "contract",
+      "lines": 266,
+      "status": "identical",
+      "audited": { "object": "f20ab01bcd2b", "lines": [24, 284] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "5c1b98c91663": {
+      "name": "IERC20Permit",
+      "kind": "interface",
+      "lines": 47,
+      "status": "identical",
+      "audited": { "object": "979554d4061c", "lines": [42, 83] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "33c1bc98e249": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 98,
+      "status": "identical",
+      "audited": { "object": "8d475bd3daf8", "lines": [19, 95] },
+      "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
+    },
+    "39694e72167f": {
+      "name": "ICrossDomainMessenger",
+      "kind": "interface",
+      "lines": 40,
+      "status": "none"
+    },
+    "a4a11528bc42": {
+      "name": "EOA",
+      "kind": "library",
+      "lines": 20,
+      "status": "identical",
+      "audited": { "object": "254cf6eabe82", "lines": [6, 25] },
+      "reports": ["cantina-eip7702-2025-02"]
+    },
+    "aeebc2fe3441": {
+      "name": "SafeCall",
+      "kind": "library",
+      "lines": 163,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [2883, 3014] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[6, 18], [20, 26], [33, 37], [40, 53], [55, 69]],
+      "removed": [[6, 6, 20], [33, 28, 42]],
+      "covered": 122
+    },
+    "efa75a106aeb": {
+      "name": "IOptimismMintableERC20",
+      "kind": "interface",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "ce662c6592b6", "lines": [12, 20] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "e950fe694422": {
+      "name": "ERC165Checker",
+      "kind": "library",
+      "lines": 109,
+      "status": "differs",
+      "audited": { "object": "80d020ff7c1d", "lines": [15, 124] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[10, 12], [23, 23], [48, 48], [72, 72], [80, 107]],
+      "removed": [
+        [10, 10, 11],
+        [23, 22, 22],
+        [48, 45, 45],
+        [72, 69, 69],
+        [80, 77, 108]
+      ],
+      "covered": 91
+    },
+    "197395080909": {
+      "name": "ILegacyMintableERC20",
+      "kind": "interface",
+      "lines": 7,
+      "status": "identical",
+      "audited": { "object": "ce662c6592b6", "lines": [28, 34] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "c241e95f2bca": {
+      "name": "StandardBridge",
+      "kind": "abstract",
+      "lines": 466,
+      "status": "identical",
+      "audited": { "object": "3cad4512d200", "lines": [27, 454] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "700c3d5545e0": {
+      "name": "DevFeatures",
+      "kind": "library",
+      "lines": 48,
+      "status": "differs",
+      "audited": { "object": "206e1ba146f6", "lines": [30, 72] },
+      "reports": ["cantina-upgrade20-2026-08"],
+      "added": [[4, 6], [13, 15], [33, 34], [36, 36]],
+      "removed": [[33, 27, 27], [36, 29, 29]],
+      "covered": 44
+    },
+    "1a109846495d": {
+      "name": "Predeploys",
+      "kind": "library",
+      "lines": 255,
+      "status": "differs",
+      "audited": { "object": "eb0529a71f33", "lines": [9, 265] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [
+        [99, 104],
+        [123, 123],
+        [137, 138],
+        [156, 161],
+        [167, 189],
+        [209, 253]
+      ],
+      "removed": [
+        [93, 93, 105],
+        [99, 112, 114],
+        [123, 161, 162],
+        [135, 197, 205],
+        [138, 212, 213],
+        [156, 224, 224],
+        [171, 229, 239]
+      ],
+      "covered": 193
+    },
+    "6a1ed4d6f29f": {
+      "name": "L1StandardBridge",
+      "kind": "contract",
+      "lines": 327,
+      "status": "differs",
+      "audited": { "object": "a3cb9793bed6", "lines": [29, 320] },
+      "reports": [
+        "cantina-u17-2025-10",
+        "hashlock-celo-optimism-superchain-2026-02"
+      ],
+      "added": [[53, 53]],
+      "removed": [[53, 53, 53]],
+      "covered": 326
+    },
+    "512b3c05083f": {
+      "name": "IRiscZeroSetVerifier",
+      "kind": "interface",
+      "lines": 15,
+      "status": "differs",
+      "audited": { "object": "fb2397d8bcda", "lines": [2137, 2149] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[1, 2], [4, 4]],
+      "removed": [[4, 2, 2]],
+      "covered": 13
+    },
+    "9dccd3e12c32": {
+      "name": "RiscZeroSetVerifierLib",
+      "kind": "library",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [2307, 2322] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "01b2aedf2844": {
+      "name": "Hashes",
+      "kind": "library",
+      "lines": 21,
+      "status": "identical",
+      "audited": { "object": "85efd6d294e3", "lines": [8, 28] },
+      "reports": ["contracts__audits__2024-10-v5.1"]
+    },
+    "2975043acec3": {
+      "name": "MerkleProof",
+      "kind": "library",
+      "lines": 484,
+      "status": "identical",
+      "audited": { "object": "46e79cb472f7", "lines": [31, 509] },
+      "reports": ["contracts__audits__2024-10-v5.1"]
+    },
+    "f7f1e986265a": {
+      "name": "RiscZeroSetVerifier",
+      "kind": "contract",
+      "lines": 105,
+      "status": "differs",
+      "audited": { "object": "fb2397d8bcda", "lines": [2325, 2413] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [
+        [4, 9],
+        [32, 34],
+        [54, 54],
+        [62, 70],
+        [76, 76],
+        [78, 78],
+        [83, 88],
+        [91, 91],
+        [94, 94]
+      ],
+      "removed": [
+        [4, 4, 4],
+        [54, 47, 47],
+        [62, 55, 60],
+        [76, 66, 66],
+        [78, 68, 68],
+        [91, 75, 75],
+        [94, 78, 78]
+      ],
+      "covered": 88
+    },
+    "370895a58716": {
+      "name": "RiscZeroGroth16Verifier",
+      "kind": "contract",
+      "lines": 132,
+      "status": "differs",
+      "audited": { "object": "fb2397d8bcda", "lines": [2536, 2667] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[6, 6], [112, 112]],
+      "removed": [[6, 6, 6], [112, 112, 112]],
+      "covered": 130
+    },
+    "6d49c8c4c3a1": {
+      "name": "Proxy",
+      "kind": "contract",
+      "lines": 208,
+      "status": "identical",
+      "audited": { "object": "8259df1c162b", "lines": [10, 213] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "30bf994f1153": {
+      "name": "IOptimismERC20Factory",
+      "kind": "interface",
+      "lines": 6,
+      "status": "none"
+    },
+    "5cb0721f72f0": {
+      "name": "IERC20Metadata",
+      "kind": "interface",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "1cf7e0b2edfc", "lines": [13, 28] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "c6d0c3b96308": {
+      "name": "ERC20",
+      "kind": "contract",
+      "lines": 349,
+      "status": "differs",
+      "audited": { "object": "cbc5aef79df2", "lines": [38, 343] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [
+        [0, 0],
+        [12, 14],
+        [166, 166],
+        [169, 169],
+        [171, 171],
+        [191, 210],
+        [217, 218],
+        [222, 231],
+        [245, 259],
+        [280, 282],
+        [302, 302],
+        [308, 347]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [9, 9, 13],
+        [166, 164, 164],
+        [169, 167, 169],
+        [171, 171, 171],
+        [191, 187, 194],
+        [212, 196, 230],
+        [212, 232, 232],
+        [222, 240, 244],
+        [245, 255, 259],
+        [280, 276, 281],
+        [302, 297, 299]
+      ],
+      "covered": 298
+    },
+    "0b07a9c1be22": {
+      "name": "Strings",
+      "kind": "library",
+      "lines": 67,
+      "status": "differs",
+      "audited": { "object": "332d2a2984e9", "lines": [12, 87] },
+      "reports": ["contracts__audits__2023-05-v4.9"],
+      "added": [[1, 1], [8, 26], [33, 42], [53, 53]],
+      "removed": [
+        [1, 1, 1],
+        [26, 8, 28],
+        [28, 30, 36],
+        [42, 42, 44],
+        [53, 55, 55],
+        [66, 68, 74]
+      ],
+      "covered": 39
+    },
+    "2b1640f289ea": {
+      "name": "ECDSA",
+      "kind": "library",
+      "lines": 205,
+      "status": "differs",
+      "audited": { "object": "5bbd73283f02", "lines": [14, 218] },
+      "reports": ["contracts__audits__2023-05-v4.9"],
+      "added": [[18, 20], [138, 140], [174, 174], [177, 177], [201, 202]],
+      "removed": [
+        [18, 19, 19],
+        [174, 152, 152],
+        [177, 156, 160],
+        [201, 184, 184],
+        [202, 186, 192],
+        [204, 194, 203]
+      ],
+      "covered": 195
+    },
+    "86ab20534f15": {
+      "name": "EIP712",
+      "kind": "abstract",
+      "lines": 78,
+      "status": "differs",
+      "audited": { "object": "7e11f59c4288", "lines": [35, 140] },
+      "reports": ["contracts__audits__2023-05-v4.9"],
+      "added": [[0, 12], [27, 37], [44, 45], [47, 47], [52, 54], [56, 56]],
+      "removed": [
+        [0, 0, 18],
+        [31, 33, 36],
+        [35, 38, 40],
+        [44, 47, 48],
+        [47, 50, 50],
+        [56, 55, 55],
+        [77, 76, 104]
+      ],
+      "covered": 53
+    },
+    "e043a4dd253b": {
+      "name": "Counters",
+      "kind": "library",
+      "lines": 30,
+      "status": "none"
+    },
+    "38d1718b8fc3": {
+      "name": "ERC20Permit",
+      "kind": "abstract",
+      "lines": 74,
+      "status": "differs",
+      "audited": { "object": "e77c193bdf4e", "lines": [22, 82] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [
+        [0, 4],
+        [8, 15],
+        [36, 36],
+        [43, 43],
+        [51, 52],
+        [59, 59],
+        [62, 72]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [8, 4, 13],
+        [36, 30, 32],
+        [43, 39, 41],
+        [51, 49, 50],
+        [59, 57, 57]
+      ],
+      "covered": 60
+    },
+    "e91d703227c9": {
+      "name": "Preinstalls",
+      "kind": "library",
+      "lines": 173,
+      "status": "none"
+    },
+    "7be25136d99c": {
+      "name": "OptimismMintableERC20",
+      "kind": "contract",
+      "lines": 131,
+      "status": "identical",
+      "audited": { "object": "f189ff3cf77c", "lines": [24, 148] },
+      "reports": [
+        "cantina-u17-2025-10",
+        "hashlock-celo-optimism-superchain-2026-02"
+      ]
+    },
+    "16a3c382b82e": {
+      "name": "OptimismMintableERC20Factory",
+      "kind": "contract",
+      "lines": 126,
+      "status": "differs",
+      "audited": { "object": "786d4d0f11d7", "lines": [20, 133] },
+      "reports": ["cantina-u17-2025-10"],
+      "added": [[0, 0], [36, 36], [46, 46]],
+      "removed": [[0, 0, 0], [36, 36, 36]],
+      "covered": 123
+    },
+    "0255f34a839a": {
+      "name": "ERC721Bridge",
+      "kind": "abstract",
+      "lines": 183,
+      "status": "differs",
+      "audited": { "object": "f8313c732a79", "lines": [12, 186] },
+      "reports": ["cantina-mcp-l1-2024-02"],
+      "added": [[7, 7], [11, 11], [60, 62], [75, 75], [83, 83], [126, 126]],
+      "removed": [
+        [7, 7, 7],
+        [11, 11, 11],
+        [60, 61, 61],
+        [75, 73, 73],
+        [83, 81, 81],
+        [126, 122, 122]
+      ],
+      "covered": 175
+    },
+    "6052ff08685e": {
+      "name": "IERC721",
+      "kind": "interface",
+      "lines": 133,
+      "status": "differs",
+      "audited": { "object": "1eb423f63bd3", "lines": [11, 132] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[115, 115]],
+      "removed": [[115, 104, 104]],
+      "covered": 132
+    },
+    "d263e4b84ecd": {
+      "name": "IERC721Bridge",
+      "kind": "interface",
+      "lines": 44,
+      "status": "none"
+    },
+    "bf98f394dbe3": {
+      "name": "IL2ERC721Bridge",
+      "kind": "interface",
+      "lines": 15,
+      "status": "none"
+    },
+    "35b38a2e0c49": {
+      "name": "L1ERC721Bridge",
+      "kind": "contract",
+      "lines": 122,
+      "status": "differs",
+      "audited": { "object": "0487cb845c4b", "lines": [27, 139] },
+      "reports": ["cantina-u17-2025-10"],
+      "added": [[12, 12]],
+      "removed": [[12, 12, 12]],
+      "covered": 121
+    },
+    "e565cfa17434": {
+      "name": "Clone",
+      "kind": "abstract",
+      "lines": 380,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [966, 1333] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "28cc2b40fa61": {
+      "name": "LibPosition",
+      "kind": "library",
+      "lines": 190,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [2493, 2679] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "043c3c292b42": {
+      "name": "LibHash",
+      "kind": "library",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4131, 4140] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "401eb66867f1": {
+      "name": "LibClaim",
+      "kind": "library",
+      "lines": 31,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4081, 4107] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "3a8d9764d8a4": {
+      "name": "LibDuration",
+      "kind": "library",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4115, 4124] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "f596c9295bd4": {
+      "name": "LibTimestamp",
+      "kind": "library",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4147, 4156] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "50f26d5b74f2": {
+      "name": "LibClock",
+      "kind": "library",
+      "lines": 41,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [3987, 4027] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "4185e87640c2": {
+      "name": "LibGameType",
+      "kind": "library",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4179, 4188] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "dad13f394614": {
+      "name": "LibKeccak",
+      "kind": "library",
+      "lines": 380,
+      "status": "none"
+    },
+    "0900421b7dc4": {
+      "name": "LPPMetadataLib",
+      "kind": "library",
+      "lines": 76,
+      "status": "identical",
+      "audited": { "object": "2e7c50ed862d", "lines": [20, 95] },
+      "reports": ["code4rena-superchain-2024-08"]
+    },
+    "a8ac2aff9c48": {
+      "name": "IPreimageOracle",
+      "kind": "interface",
+      "lines": 111,
+      "status": "none"
+    },
+    "722461548a39": {
+      "name": "LocalPreimageKey",
+      "kind": "library",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "33d08b4a94b8", "lines": [124, 139] },
+      "reports": [
+        "cantina-u17-2025-10",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "offbeatlabs-incident-response-updates-2025-01",
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "e9aa0f101d68": {
+      "name": "Types",
+      "kind": "library",
+      "lines": 91,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [3108, 3172] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[25, 42], [82, 89]],
+      "removed": [],
+      "covered": 78
+    },
+    "13d441dd1b0f": {
+      "name": "RLPWriter",
+      "kind": "library",
+      "lines": 155,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [3201, 3355] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "4676b736bef2": {
+      "name": "Encoding",
+      "kind": "library",
+      "lines": 336,
+      "status": "differs",
+      "audited": { "object": "08654fbfcc82", "lines": [12, 277] },
+      "reports": ["cantina-u17-2025-10"],
+      "added": [[6, 8], [293, 334]],
+      "removed": [],
+      "covered": 301
+    },
+    "3e463bddb22c": {
+      "name": "Hashing",
+      "kind": "library",
+      "lines": 147,
+      "status": "identical",
+      "audited": { "object": "2d531d2ea0d2", "lines": [11, 140] },
+      "reports": [
+        "cantina-interop-l2-rereview-2026-06",
+        "cantina-interop-portal-2025-04",
+        "spearbit-upgrade16-2025-05"
+      ]
+    },
+    "ee71dbd9b1d7": {
+      "name": "RLPReader",
+      "kind": "library",
+      "lines": 232,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4197, 4462] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "6d4853d36d81": {
+      "name": "IBigStepper",
+      "kind": "interface",
+      "lines": 19,
+      "status": "identical",
+      "audited": { "object": "c29005491aea", "lines": [27, 41] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "28c2fba54f06": {
+      "name": "IInitializable",
+      "kind": "interface",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [2474, 2478] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "b667763fb033": {
+      "name": "IDisputeGame",
+      "kind": "interface",
+      "lines": 17,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [5691, 5750] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ],
+      "added": [[3, 5], [9, 9], [11, 11], [15, 15]],
+      "removed": [
+        [3, 7, 7],
+        [4, 11, 11],
+        [5, 15, 15],
+        [9, 32, 35],
+        [11, 37, 40]
+      ],
+      "covered": 11
+    },
+    "803ad8f660e7": {
+      "name": "IReinitializableBase",
+      "kind": "interface",
+      "lines": 8,
+      "status": "none"
+    },
+    "7d1791449349": {
+      "name": "LibGameId",
+      "kind": "library",
+      "lines": 37,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4042, 4074] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "c957ce169cf6": {
+      "name": "IDisputeGameFactory",
+      "kind": "interface",
+      "lines": 71,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [5798, 5909] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ],
+      "added": [
+        [0, 0],
+        [8, 11],
+        [15, 15],
+        [17, 18],
+        [20, 23],
+        [41, 46],
+        [59, 62],
+        [64, 64],
+        [66, 69]
+      ],
+      "removed": [
+        [0, 0, 3],
+        [15, 11, 14],
+        [20, 68, 73],
+        [28, 77, 81],
+        [42, 55, 61],
+        [43, 39, 39],
+        [59, 66, 66],
+        [64, 83, 87]
+      ],
+      "covered": 46
+    },
+    "9f38f3086c8f": {
+      "name": "IAnchorStateRegistry",
+      "kind": "interface",
+      "lines": 49,
+      "status": "none"
+    },
+    "3aa811a41203": {
+      "name": "IDelayedWETH",
+      "kind": "interface",
+      "lines": 58,
+      "status": "none"
+    },
+    "59c1837f9107": {
+      "name": "FixedPointMathLib",
+      "kind": "library",
+      "lines": 1069,
+      "status": "differs",
+      "audited": { "object": "1f18f98e389b", "lines": [7, 1169] },
+      "reports": ["xuwinnie-solady-cbrt-proof"],
+      "added": [
+        [351, 351],
+        [372, 372],
+        [382, 382],
+        [405, 405],
+        [407, 418],
+        [433, 486],
+        [490, 493],
+        [495, 496],
+        [526, 526],
+        [530, 530],
+        [540, 540],
+        [544, 544],
+        [595, 595],
+        [689, 696],
+        [701, 713],
+        [724, 724],
+        [889, 889],
+        [897, 897]
+      ],
+      "removed": [
+        [351, 355, 355],
+        [372, 376, 376],
+        [382, 386, 386],
+        [405, 409, 417],
+        [407, 419, 421],
+        [432, 435, 442],
+        [485, 444, 485],
+        [501, 490, 515],
+        [525, 540, 540],
+        [526, 542, 542],
+        [530, 546, 546],
+        [539, 555, 555],
+        [540, 557, 557],
+        [544, 561, 561],
+        [568, 585, 592],
+        [595, 620, 620],
+        [689, 714, 724],
+        [701, 729, 753],
+        [720, 760, 760],
+        [724, 765, 765],
+        [889, 930, 930],
+        [897, 938, 938],
+        [900, 941, 948],
+        [974, 1019, 1067]
+      ],
+      "covered": 995
+    },
+    "a2abc9923bbe": {
+      "name": "LibVMStatus",
+      "kind": "library",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [4163, 4172] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "e304276af8e0": {
+      "name": "VMStatuses",
+      "kind": "library",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "33d08b4a94b8", "lines": [108, 120] },
+      "reports": ["cantina-upgrade20-2026-08"]
+    },
+    "d8ccc083d503": {
+      "name": "FaultDisputeGame",
+      "kind": "contract",
+      "lines": 1247,
+      "status": "differs",
+      "audited": { "object": "20cfdbc92607", "lines": [77, 1376] },
+      "reports": ["cantina-u17-2025-10"],
+      "added": [
+        [49, 52],
+        [79, 79],
+        [153, 160],
+        [183, 189],
+        [192, 192],
+        [203, 219],
+        [239, 239],
+        [246, 246],
+        [248, 272],
+        [325, 325],
+        [357, 357],
+        [435, 435],
+        [480, 480],
+        [516, 516],
+        [540, 540],
+        [560, 560],
+        [776, 783],
+        [795, 796],
+        [805, 805],
+        [811, 812],
+        [818, 819],
+        [825, 826],
+        [832, 833],
+        [839, 840],
+        [850, 850],
+        [932, 932],
+        [944, 944],
+        [970, 970],
+        [981, 981],
+        [989, 989],
+        [992, 992]
+      ],
+      "removed": [
+        [27, 27, 28],
+        [31, 33, 36],
+        [49, 55, 62],
+        [63, 73, 87],
+        [79, 104, 104],
+        [149, 178, 185],
+        [153, 190, 212],
+        [165, 217, 220],
+        [192, 243, 243],
+        [199, 252, 268],
+        [239, 294, 294],
+        [246, 301, 301],
+        [325, 354, 354],
+        [357, 388, 388],
+        [435, 482, 482],
+        [480, 529, 529],
+        [516, 567, 567],
+        [540, 591, 591],
+        [560, 611, 611],
+        [795, 841, 842],
+        [805, 872, 872],
+        [811, 1091, 1092],
+        [818, 1116, 1117],
+        [825, 1126, 1127],
+        [832, 1121, 1122],
+        [839, 1131, 1132],
+        [850, 882, 882],
+        [932, 966, 966],
+        [944, 980, 980],
+        [970, 1008, 1008],
+        [981, 1019, 1019],
+        [989, 1027, 1027],
+        [992, 1030, 1030]
+      ],
+      "covered": 1196
+    },
+    "7d21aa87a014": {
+      "name": "PermissionedDisputeGame",
+      "kind": "contract",
+      "lines": 81,
+      "status": "identical",
+      "audited": { "object": "d508d2de925e", "lines": [20, 92] },
+      "reports": ["cantina-u19-2026-05"]
+    },
+    "fe0a638f2551": {
+      "name": "PreimageKeyLib",
+      "kind": "library",
+      "lines": 54,
+      "status": "identical",
+      "audited": { "object": "c3f36cb881fd", "lines": [6, 59] },
+      "reports": [
+        "code4rena-superchain-2024-08",
+        "spearbit-fault-proofs-no-mips-2024-08"
+      ]
+    },
+    "f808e23cc55e": {
+      "name": "PreimageOracle",
+      "kind": "contract",
+      "lines": 862,
+      "status": "differs",
+      "audited": { "object": "6f74b4e83125", "lines": [15, 820] },
+      "reports": [
+        "code4rena-superchain-2024-08",
+        "spearbit-fault-proofs-no-mips-2024-08"
+      ],
+      "findings": {
+        "code4rena-superchain-2024-08": ["H-02", "H-03", "H-04", "H-05"]
+      },
+      "added": [
+        [0, 0],
+        [15, 16],
+        [20, 20],
+        [79, 83],
+        [150, 150],
+        [372, 372],
+        [384, 388],
+        [390, 390],
+        [393, 402],
+        [405, 405],
+        [410, 410],
+        [486, 489],
+        [713, 715]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [20, 18, 18],
+        [150, 113, 113],
+        [387, 320, 324],
+        [390, 326, 326],
+        [410, 335, 335]
+      ],
+      "covered": 845
+    },
+    "4a4a709ef23b": {
+      "name": "Arithmetic",
+      "kind": "library",
+      "lines": 46,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [4699, 4718] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[19, 44]],
+      "removed": [],
+      "covered": 36
+    },
+    "7768d7b8daff": {
+      "name": "ResourceMetering",
+      "kind": "abstract",
+      "lines": 158,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [5917, 6067] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[0, 0], [136, 142]],
+      "removed": [[0, 0, 0]],
+      "covered": 154
+    },
+    "beef9d9054b0": {
+      "name": "IOptimismPortal2",
+      "kind": "interface",
+      "lines": 102,
+      "status": "differs",
+      "audited": { "object": "34c5cfea3b7b", "lines": [14, 106] },
+      "reports": ["cantina-upgrade20-2026-08"],
+      "added": [],
+      "removed": [[26, 26, 27]],
+      "covered": 102
+    },
+    "83f950fd95a2": {
+      "name": "IETHLockbox",
+      "kind": "interface",
+      "lines": 30,
+      "status": "none"
+    },
+    "198c2a4ee2f3": {
+      "name": "GameTypes",
+      "kind": "library",
+      "lines": 52,
+      "status": "differs",
+      "audited": { "object": "33d08b4a94b8", "lines": [53, 104] },
+      "reports": ["cantina-upgrade20-2026-08"],
+      "added": [[15, 17], [48, 49]],
+      "removed": [[15, 15, 17], [48, 48, 49]],
+      "covered": 49
+    },
+    "7eadf5cfd6c0": {
+      "name": "Bytes",
+      "kind": "library",
+      "lines": 139,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [2717, 2855] },
+      "reports": [
+        "sigma-prime-taiko-smart-contracts-2024-02",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "6f6f5cc580d2": {
+      "name": "MerkleTrie",
+      "kind": "library",
+      "lines": 210,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [5391, 5595] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06",
+        "sigma-prime-taiko-smart-contracts-2024-02",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "1e116b431cf7": {
+      "name": "SecureMerkleTrie",
+      "kind": "library",
+      "lines": 41,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [5757, 5792] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06",
+        "sigma-prime-taiko-smart-contracts-2024-02",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "d0e269c9f6e8": {
+      "name": "AddressAliasHelper",
+      "kind": "library",
+      "lines": 23,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [3388, 3410] },
+      "reports": [
+        "openzeppelin-scroll-layer1-audit-2023-07",
+        "openzeppelin-zksync-l1-diff-2023-02",
+        "secure3-mantle-v1-contest-2023-07",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05",
+        "sigmaprime-mantle-l2-rollup-2023-07",
+        "trailofbits-custom-fee-token-2024-08",
+        "trailofbits-invariant-testing-2022-11",
+        "trailofbits-morph-l2-2024-07",
+        "veridise-kailua-2025-02",
+        "zellic-scroll-bridge-rollup-audit-2023-05"
+      ]
+    },
+    "b97eae6408cb": {
+      "name": "Features",
+      "kind": "library",
+      "lines": 15,
+      "status": "identical",
+      "audited": { "object": "3445c40ff078", "lines": [31, 45] },
+      "reports": ["cantina-upgrade20-2026-08"]
+    },
+    "af71d034b39a": {
+      "name": "OptimismPortal2",
+      "kind": "contract",
+      "lines": 754,
+      "status": "identical",
+      "audited": { "object": "8d983f5b9744", "lines": [40, 789] },
+      "reports": ["cantina-u19-2026-05"]
+    },
+    "3f573efd6df3": {
+      "name": "RiscZeroVerifierRouter",
+      "kind": "contract",
+      "lines": 77,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [2432, 2509] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "21c9e76387ed": {
+      "name": "AddressUpgradeable",
+      "kind": "library",
+      "lines": 187,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [495, 674] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "8d8dc0a58b96": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 82,
+      "status": "differs",
+      "audited": { "object": "2a56119aa12b", "lines": [57, 138] },
+      "reports": ["formal-verification__fv__reports__2022-05"],
+      "added": [[24, 24]],
+      "removed": [[24, 24, 24]],
+      "covered": 81
+    },
+    "9c557c702fdd": {
+      "name": "ContextUpgradeable",
+      "kind": "abstract",
+      "lines": 21,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [4478, 4497] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[0, 0]],
+      "removed": [[0, 0, 0]],
+      "covered": 20
+    },
+    "a5d693e781e6": {
+      "name": "OwnableUpgradeable",
+      "kind": "abstract",
+      "lines": 75,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [4736, 4810] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[0, 0]],
+      "removed": [[0, 0, 0]],
+      "covered": 74
+    },
+    "7f6263045100": {
+      "name": "LibClone",
+      "kind": "library",
+      "lines": 801,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [1365, 2122] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "f6f30e301f28": {
+      "name": "DisputeGameFactory",
+      "kind": "contract",
+      "lines": 307,
+      "status": "differs",
+      "audited": { "object": "8d366ae9c470", "lines": [27, 301] },
+      "reports": ["cantina-u17-2025-10"],
+      "added": [[36, 36], [149, 191]],
+      "removed": [[36, 36, 36], [143, 139, 155]],
+      "covered": 290
+    },
+    "be4755047798": {
+      "name": "IKailuaTreasury",
+      "kind": "interface",
+      "lines": 32,
+      "status": "identical",
+      "audited": { "object": "9a19be7ce3c0", "lines": [92, 123] },
+      "reports": ["veridise-kailua-2026-02"]
+    },
+    "95a653e3139b": {
+      "name": "IKailuaTournament",
+      "kind": "interface",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "9a19be7ce3c0", "lines": [125, 141] },
+      "reports": ["veridise-kailua-2026-02"]
+    },
+    "7d8185d32ebd": {
+      "name": "IDisputeGame",
+      "kind": "interface",
+      "lines": 16,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [5691, 5750] },
+      "reports": [
+        "spearbit-fault-proofs-no-mips-2024-08",
+        "veridise-kailua-2025-02"
+      ],
+      "added": [[3, 5], [10, 10], [14, 14]],
+      "removed": [[3, 7, 7], [4, 11, 11], [5, 15, 15], [10, 37, 40]],
+      "covered": 11
+    },
+    "67e1af83529c": {
+      "name": "KailuaPayLib",
+      "kind": "library",
+      "lines": 7,
+      "status": "identical",
+      "audited": { "object": "9a19be7ce3c0", "lines": [143, 151] },
+      "reports": ["veridise-kailua-2026-02"]
+    },
+    "879bf41fd784": {
+      "name": "KailuaVerifier",
+      "kind": "interface",
+      "lines": 4,
+      "status": "none"
+    },
+    "4a11931b7a86": {
+      "name": "IOwnable",
+      "kind": "interface",
+      "lines": 9,
+      "status": "differs",
+      "audited": { "object": "10bfc5e90f72", "lines": [8, 10] },
+      "reports": [
+        "trailofbits-bold-dac-rewards-updates-2024-08",
+        "trailofbits-custom-fee-erc20-bridge-upgrade-eip7702-2025-03",
+        "trailofbits-governance-actions-2023-08",
+        "trailofbits-nitro-2-of-2-2022-10",
+        "trailofbits-nitro-contracts-with-bold-2024-10"
+      ],
+      "added": [[1, 2], [4, 7]],
+      "removed": [],
+      "covered": 5
+    },
+    "2d5a290990a9": {
+      "name": "ISystemConfig",
+      "kind": "interface",
+      "lines": 99,
+      "status": "identical",
+      "audited": { "object": "8fef1c6527d0", "lines": [8, 105] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "782035a44473": {
+      "name": "IFaultDisputeGame",
+      "kind": "interface",
+      "lines": 132,
+      "status": "none"
+    },
+    "77ea6aae461b": {
+      "name": "IAnchorStateRegistry",
+      "kind": "interface",
+      "lines": 48,
+      "status": "none"
+    },
+    "8d97523d07b7": {
+      "name": "IOptimismPortal2",
+      "kind": "interface",
+      "lines": 93,
+      "status": "identical",
+      "audited": { "object": "98633d508d18", "lines": [14, 89] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "3adb033ffcfa": {
+      "name": "KailuaKZGLib",
+      "kind": "library",
+      "lines": 90,
+      "status": "identical",
+      "audited": { "object": "9a19be7ce3c0", "lines": [153, 242] },
+      "reports": ["veridise-kailua-2026-02"]
+    },
+    "de5de90b1352": {
+      "name": "KailuaTournament",
+      "kind": "abstract",
+      "lines": 638,
+      "status": "differs",
+      "audited": { "object": "e2c3c2f19a71", "lines": [22, 656] },
+      "reports": ["veridise-kailua-2026-02"],
+      "added": [[24, 24], [27, 27], [35, 35], [250, 254]],
+      "removed": [[24, 24, 24], [27, 27, 27], [35, 35, 35]],
+      "covered": 632
+    },
+    "110035ff8ea8": {
+      "name": "KailuaTreasury",
+      "kind": "contract",
+      "lines": 350,
+      "status": "differs",
+      "audited": { "object": "d4aed6739b60", "lines": [23, 381] },
+      "reports": ["veridise-kailua-2026-02"],
+      "added": [[20, 20], [249, 249]],
+      "removed": [[20, 20, 20], [249, 255, 256]],
+      "covered": 348
+    },
+    "5a0c29309f20": {
+      "name": "Proxy",
+      "kind": "contract",
+      "lines": 113,
+      "status": "differs",
+      "audited": { "object": "8259df1c162b", "lines": [10, 213] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ],
+      "added": [
+        [64, 65],
+        [67, 67],
+        [74, 75],
+        [77, 77],
+        [97, 97],
+        [99, 99],
+        [106, 106],
+        [108, 108]
+      ],
+      "removed": [
+        [1, 1, 17],
+        [67, 133, 133],
+        [77, 146, 146],
+        [99, 186, 186],
+        [108, 199, 199]
+      ],
+      "covered": 105
+    },
+    "d8d33c45c4f1": {
+      "name": "KailuaVerifier",
+      "kind": "contract",
+      "lines": 281,
+      "status": "identical",
+      "audited": { "object": "71e6b0f7adf0", "lines": [22, 300] },
+      "reports": ["veridise-kailua-2026-02"]
+    },
+    "56525b8d35ea": {
+      "name": "SystemConfig",
+      "kind": "contract",
+      "lines": 603,
+      "status": "identical",
+      "audited": { "object": "bf2312317a1a", "lines": [27, 626] },
+      "reports": ["cantina-u19-2026-05"]
+    },
+    "676728d41ce8": {
+      "name": "RiscZeroGroth16Verifier",
+      "kind": "contract",
+      "lines": 133,
+      "status": "differs",
+      "audited": { "object": "fb2397d8bcda", "lines": [2536, 2667] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[7, 7], [113, 113]],
+      "removed": [[7, 6, 6], [113, 112, 112]],
+      "covered": 131
+    },
+    "6180b8b53f35": {
+      "name": "MIPS64State",
+      "kind": "library",
+      "lines": 14,
+      "status": "identical",
+      "audited": { "object": "bce9237d9700", "lines": [7, 20] },
+      "reports": ["base-mt64cannon-2025-02"]
+    },
+    "ae124b181c4d": {
+      "name": "MIPS64Arch",
+      "kind": "library",
+      "lines": 6,
+      "status": "identical",
+      "audited": { "object": "a1d689e731db", "lines": [4, 9] },
+      "reports": ["base-mt64cannon-2025-02"]
+    },
+    "9da5a5b8c58c": {
+      "name": "MIPS64Memory",
+      "kind": "library",
+      "lines": 171,
+      "status": "identical",
+      "audited": { "object": "c6c458e0aa0c", "lines": [7, 173] },
+      "reports": ["base-mt64cannon-2025-02", "spearbit-mt-cannon-2025-02"]
+    },
+    "cea6f66bdc5c": {
+      "name": "MIPS64Syscalls",
+      "kind": "library",
+      "lines": 445,
+      "status": "identical",
+      "audited": { "object": "0b859cc51b9a", "lines": [12, 447] },
+      "reports": [
+        "spearbit-cannon-eventfd-syscall-fix-review-2025-06",
+        "spearbit-u16a-2025-09"
+      ]
+    },
+    "e88afc96f583": {
+      "name": "MIPS64Instructions",
+      "kind": "library",
+      "lines": 943,
+      "status": "identical",
+      "audited": { "object": "0ec1ecc1cc35", "lines": [10, 926] },
+      "reports": ["cantina-u17-2025-10"]
+    },
+    "0ecfe6d600e6": {
+      "name": "MIPS64",
+      "kind": "contract",
+      "lines": 964,
+      "status": "identical",
+      "audited": { "object": "c52c3b8f832b", "lines": [25, 960] },
+      "reports": ["cantina-u19-2026-05"]
+    },
+    "6b8b61778726": {
+      "name": "GnosisSafeProxy",
+      "kind": "contract",
+      "lines": 32,
+      "status": "identical",
+      "audited": { "object": "e60171eac28a", "lines": [13, 42] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "48db7077d4ee": {
+      "name": "EtherPaymentFallback",
+      "kind": "contract",
+      "lines": 8,
+      "status": "identical",
+      "audited": { "object": "8699afc9d67a", "lines": [6, 13] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "ded673ea29c4": {
+      "name": "Singleton",
+      "kind": "contract",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
+      "reports": [
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "16eb9f2e8752": {
+      "name": "SelfAuthorized",
+      "kind": "contract",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [745, 755] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "68dd4bd4433d": {
+      "name": "Executor",
+      "kind": "contract",
+      "lines": 21,
+      "status": "identical",
+      "audited": { "object": "0b8ab296c0f9", "lines": [10, 42] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "1d5fc2d9e00d": {
+      "name": "ModuleManager",
+      "kind": "contract",
+      "lines": 124,
+      "status": "identical",
+      "audited": { "object": "1a56eb43bd1e", "lines": [11, 139] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "95294331afbc": {
+      "name": "OwnerManager",
+      "kind": "contract",
+      "lines": 142,
+      "status": "identical",
+      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "2ec005ea16b3": {
+      "name": "SignatureDecoder",
+      "kind": "contract",
+      "lines": 31,
+      "status": "identical",
+      "audited": { "object": "72437bc34ce4", "lines": [7, 33] },
+      "reports": [
+        "certora-safe-allowance-v1-0-0",
+        "nethermind-safe-allowance-v1-0-0"
+      ]
+    },
+    "fd10ad67f878": {
+      "name": "SecuredTokenTransfer",
+      "kind": "contract",
+      "lines": 30,
+      "status": "identical",
+      "audited": { "object": "c8f243d15377", "lines": [8, 34] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "37dc539ed622": {
+      "name": "FallbackManager",
+      "kind": "contract",
+      "lines": 46,
+      "status": "identical",
+      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "bc18eb3148bc": {
+      "name": "StorageAccessible",
+      "kind": "contract",
+      "lines": 42,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [818, 859] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "bd90fb921f2d": {
+      "name": "GuardManager",
+      "kind": "contract",
+      "lines": 24,
+      "status": "identical",
+      "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "c067b1aa9040": {
+      "name": "GnosisSafeMath",
+      "kind": "library",
+      "lines": 45,
+      "status": "identical",
+      "audited": { "object": "763455f04af3", "lines": [10, 54] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "09399b61d7eb": {
+      "name": "Guard",
+      "kind": "interface",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "b2400038371b": {
+      "name": "ISignatureValidator",
+      "kind": "abstract",
+      "lines": 12,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [947, 958] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "3e84ad780965": {
+      "name": "GnosisSafe",
+      "kind": "contract",
+      "lines": 404,
+      "status": "identical",
+      "audited": { "object": "0045b2bbd612", "lines": [22, 434] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "0bfebde49e5b": {
+      "name": "AnchorStateRegistry",
+      "kind": "contract",
+      "lines": 345,
+      "status": "identical",
+      "audited": { "object": "6974af456c9b", "lines": [26, 367] },
+      "reports": ["cantina-u19-2026-05"]
+    },
+    "3fe88216bdc3": {
+      "name": "KailuaKZGLib",
+      "kind": "library",
+      "lines": 90,
+      "status": "identical",
+      "audited": { "object": "9a19be7ce3c0", "lines": [153, 242] },
+      "reports": ["veridise-kailua-2026-02"]
+    },
+    "a0f637521149": {
+      "name": "KailuaGame",
+      "kind": "contract",
+      "lines": 218,
+      "status": "identical",
+      "audited": { "object": "0fbc0a1a474d", "lines": [24, 244] },
+      "reports": ["veridise-kailua-2026-02"]
+    },
+    "f458cbfdf7bd": {
+      "name": "ResolvedDelegateProxy",
+      "kind": "contract",
+      "lines": 52,
+      "status": "identical",
+      "audited": { "object": "d4febfa2c0c9", "lines": [13, 62] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "4933ae177b35": {
+      "name": "CrossDomainMessengerLegacySpacer0",
+      "kind": "contract",
+      "lines": 6,
+      "status": "identical",
+      "audited": { "object": "4ccae82dfed6", "lines": [18, 23] },
+      "reports": [
+        "cantina-eip7702-2025-02",
+        "cantina-mcp-l1-2024-02",
+        "hashlock-celo-optimism-superchain-2026-02",
+        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "trust-superchainconfig-upgrade-2024-01"
+      ]
+    },
+    "2f8ca1cb8cb7": {
+      "name": "CrossDomainMessengerLegacySpacer1",
+      "kind": "contract",
+      "lines": 51,
+      "status": "identical",
+      "audited": { "object": "4ccae82dfed6", "lines": [30, 80] },
+      "reports": [
+        "cantina-eip7702-2025-02",
+        "cantina-mcp-l1-2024-02",
+        "hashlock-celo-optimism-superchain-2026-02",
+        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "trust-superchainconfig-upgrade-2024-01"
+      ]
+    },
+    "cf5fe7b9b37e": {
+      "name": "CrossDomainMessenger",
+      "kind": "abstract",
+      "lines": 354,
+      "status": "identical",
+      "audited": { "object": "4ccae82dfed6", "lines": [90, 440] },
+      "reports": [
+        "cantina-eip7702-2025-02",
+        "hashlock-celo-optimism-superchain-2026-02"
+      ]
+    },
+    "5b810932d460": {
+      "name": "L1CrossDomainMessenger",
+      "kind": "contract",
+      "lines": 80,
+      "status": "differs",
+      "audited": { "object": "cb50e3377d76", "lines": [25, 104] },
+      "reports": [
+        "cantina-u17-2025-10",
+        "hashlock-celo-optimism-superchain-2026-02"
+      ],
+      "added": [[17, 17]],
+      "removed": [[17, 17, 17]],
+      "covered": 79
+    },
+    "2317f68fa501": {
+      "name": "SuperchainConfig",
+      "kind": "contract",
+      "lines": 157,
+      "status": "differs",
+      "audited": { "object": "43212ea60fab", "lines": [15, 175] },
+      "reports": ["cantina-upgrade20-2026-08"],
+      "added": [[41, 41]],
+      "removed": [[41, 41, 41]],
+      "covered": 156
+    },
+    "4141491417f6": {
+      "name": "Groth16Verifier",
+      "kind": "contract",
+      "lines": 175,
+      "status": "identical",
+      "audited": { "object": "fb2397d8bcda", "lines": [1546, 1720] },
+      "reports": ["veridise-kailua-2025-02"]
+    },
+    "28e69f6ecee9": {
+      "name": "ReceiptClaimLib",
+      "kind": "library",
+      "lines": 57,
+      "status": "differs",
+      "audited": { "object": "fb2397d8bcda", "lines": [1797, 1843] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[8, 18]],
+      "removed": [[8, 8, 8]],
+      "covered": 49
+    },
+    "88814aa098eb": {
+      "name": "RiscZeroGroth16Verifier",
+      "kind": "contract",
+      "lines": 129,
+      "status": "differs",
+      "audited": { "object": "fb2397d8bcda", "lines": [2536, 2667] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[0, 0], [109, 109]],
+      "removed": [[0, 0, 0], [4, 4, 6], [109, 112, 112]],
+      "covered": 127
+    }
+  },
+  "flats": {
+    "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["8f7da050ddb2", 354],
+      ["727591669b8c", 392],
+      ["7d6554b6cb64", 756],
+      ["26ad7b61b37b", 780],
+      ["9b73a9b5c9f6", 1003],
+      ["433c37b5a737", 1011],
+      ["2d60ee7f3ed2", 1033],
+      ["d44c0cfb8c85", 1186],
+      ["3f3d60f9e37d", 1228]
+    ],
+    "3921f894dc2a10d7385074188c445f1f23ec2decb78add74860bae751bfb439d": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["5fe8253cda76", 353],
+      ["ed326933a23e", 371],
+      ["e2b40f3d642c", 380],
+      ["e59a41a9002d", 412],
+      ["e60933e352ce", 496],
+      ["c7852b22a645", 525],
+      ["383d0a473e13", 597],
+      ["498007571a41", 687],
+      ["34e3ca2fb900", 711],
+      ["b61f946296f1", 843],
+      ["b5dcc6adafd5", 851],
+      ["9e1f6b2ac65d", 863],
+      ["1bc80c4939df", 895],
+      ["cb9cc7f64ae0", 1014]
+    ],
+    "2e1c94db0825f51701d35d85a256302574d6366d7252d615024c6b787f8733a9": [
+      ["85cff3d52895", 11],
+      ["0d3c0f868cae", 109],
+      ["aee6957dba32", 166],
+      ["d60656a5ad24", 385],
+      ["170545296a7e", 400],
+      ["a9f53b5b08f3", 417],
+      ["b95eaa0c5979", 591],
+      ["b7be9deb7869", 613]
+    ],
+    "064e1bc6da950abea27b8d67a0cec352fdd24eadc023711d94a84bd573c76cc2": [
+      ["0c98f555c1c4", 3],
+      ["d768b8759414", 91],
+      ["3f1c67a98ffa", 104],
+      ["f98775a7d0f9", 194],
+      ["571e63d071b4", 220],
+      ["d01239fbce9a", 232],
+      ["d32b62f5fb94", 330],
+      ["afe92c65c72d", 520],
+      ["0e08fd2e4643", 649],
+      ["f191c6cbdf50", 692],
+      ["d7f570c7bad1", 707],
+      ["aee6957dba32", 749],
+      ["809d3ad2bcb8", 967],
+      ["3b4df54a2b17", 1051],
+      ["e324d5265c4d", 1138],
+      ["0aff0cb3c262", 1224]
+    ],
+    "a2cd0f7ad65c9afe5283a2852164cb8ab3ad17e8e813dc730bf7d7037d9420ac": [
+      ["bb24b365b687", 11],
+      ["ee5a26ce51e5", 28],
+      ["f98775a7d0f9", 128],
+      ["550e7ec19a1f", 152],
+      ["257d184669b9", 200],
+      ["b0148cb6d897", 367],
+      ["d1257bdb2505", 393],
+      ["f3d2f2fe12b5", 408],
+      ["881f5aa05fea", 463],
+      ["b7a6b1cb9727", 495],
+      ["eeca1d6d3ff3", 660]
+    ],
+    "78bcac044e6867b02595a275b18e7d79465a570665c210eae873b0f918315bd7": [
+      ["d768b8759414", 11],
+      ["9b385480472b", 33],
+      ["7ac9eb435da8", 106],
+      ["33c344e65c65", 162],
+      ["1bbdc9103ae0", 172],
+      ["d2fdb69068e3", 179],
+      ["a5d623f4f582", 190],
+      ["6fc12095da10", 205]
+    ],
+    "a1f7a993d21c76df117ee0ec98eac7e52ee7e0adb25a3990e1d3cc4c977f488e": [
+      ["1718b9171168", 14],
+      ["bb24b365b687", 41],
+      ["31e42eba5b0a", 67],
+      ["f748c01f5fad", 160],
+      ["b7f0088d6cad", 211],
+      ["b8b844a5b9c4", 316]
+    ],
+    "15df4e0b9581b189dbff912ef9311e60c3d4920c6a4c7c87a0c087693728b9cd": [
+      ["1718b9171168", 14],
+      ["ce960142fae6", 32],
+      ["0f1607e2e79d", 47],
+      ["e5d681466c6d", 235],
+      ["78eafa525368", 268],
+      ["9fb9a030a051", 278],
+      ["343bce563607", 345],
+      ["08be295201e9", 405],
+      ["c1d41a25750a", 1551],
+      ["d4069aa8dbd6", 1594],
+      ["9214c015d2cc", 1633]
+    ],
+    "840d05f65981db0b8bada6fb723d947045f543c14ffd83bc216beff054c65557": [
+      ["1718b9171168", 17],
+      ["ce960142fae6", 35],
+      ["0f1607e2e79d", 50],
+      ["e5d681466c6d", 238],
+      ["78eafa525368", 271],
+      ["9fb9a030a051", 281],
+      ["343bce563607", 348],
+      ["a1ed768de02b", 408],
+      ["c1d41a25750a", 1563],
+      ["d4069aa8dbd6", 1606],
+      ["f17652a078fb", 1645]
+    ],
+    "a8d4738e202314fac92a69019e0677b25cabeacc8c4f74fd5889e6afd25285cb": [
+      ["477fadda0baa", 6]
+    ],
+    "e99656f3f5e1d8106e268a1448430f4014f13897bbdf77c9845c0eefc99a03fe": [
+      ["150878a81f46", 6],
+      ["447d1057dc7c", 16],
+      ["aa97dd1bf3f1", 32],
+      ["40ce0b25499c", 45],
+      ["06a60947381e", 56],
+      ["af0af37b8cfc", 98],
+      ["f1b466f7c6f6", 282],
+      ["13e5d12afa8b", 437],
+      ["844a8fe51e4f", 471],
+      ["de59e343d914", 503],
+      ["f44a94390330", 512],
+      ["e213c56fc229", 592],
+      ["b3dc850565d8", 636],
+      ["051f4e0bd8fb", 648],
+      ["d63eef9ff914", 670],
+      ["6cd3fcc5ec00", 717],
+      ["d1308f86f627", 775],
+      ["268c431cb6b0", 805]
+    ],
+    "13e2982d84601d29e51496f0252cb02a378a2f29f101c9782f04700bdb6ea737": [
+      ["34ceb7e1b670", 4],
+      ["185b8bd0deb1", 21]
+    ],
+    "0e8360259c3c45dcd15e0533453b4de661fbf48a979445d7e5c777000319354e": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["809d3ad2bcb8", 354],
+      ["5c1b98c91663", 437],
+      ["33c1bc98e249", 494],
+      ["39694e72167f", 593],
+      ["a4a11528bc42", 636],
+      ["aeebc2fe3441", 659],
+      ["f98775a7d0f9", 832],
+      ["efa75a106aeb", 848],
+      ["e950fe694422", 865],
+      ["197395080909", 981],
+      ["c241e95f2bca", 994],
+      ["5fe8253cda76", 1463],
+      ["ed326933a23e", 1481],
+      ["e2b40f3d642c", 1490],
+      ["e59a41a9002d", 1522],
+      ["e60933e352ce", 1606],
+      ["c7852b22a645", 1635],
+      ["383d0a473e13", 1707],
+      ["498007571a41", 1797],
+      ["b61f946296f1", 1821],
+      ["b5dcc6adafd5", 1829],
+      ["9e1f6b2ac65d", 1841],
+      ["1bc80c4939df", 1873],
+      ["700c3d5545e0", 1990],
+      ["1a109846495d", 2056],
+      ["6a1ed4d6f29f", 2322]
+    ],
+    "d77d75bfcb6367d76ca819cef4a9f484b78915b61427842b4c771ef55d32386e": [
+      ["1718b9171168", 17],
+      ["512b3c05083f", 34],
+      ["e5d681466c6d", 64],
+      ["78eafa525368", 97],
+      ["9fb9a030a051", 107],
+      ["343bce563607", 174],
+      ["9dccd3e12c32", 225],
+      ["01b2aedf2844", 260],
+      ["2975043acec3", 304],
+      ["f7f1e986265a", 793]
+    ],
+    "2fa21a8d5bcbef41883cb6eb1e6db9a39cbe12e2cf94075038aa2f197ea6eeaf": [
+      ["1718b9171168", 17],
+      ["ce960142fae6", 35],
+      ["0f1607e2e79d", 50],
+      ["e5d681466c6d", 238],
+      ["78eafa525368", 271],
+      ["9fb9a030a051", 281],
+      ["343bce563607", 348],
+      ["a1ed768de02b", 408],
+      ["c1d41a25750a", 1563],
+      ["d4069aa8dbd6", 1606],
+      ["370895a58716", 1645]
+    ],
+    "b721ae97e6346956bc0a2fad1d1a15d8edadd41f2e8d62f91cef3b90b53f3a88": [
+      ["6d49c8c4c3a1", 7]
+    ],
+    "0d3d5a2e82b4f9f132389799f4d1fa93c5824d1b17d97eecfce2c7aed96ca4ee": [
+      ["5fe8253cda76", 3],
+      ["ed326933a23e", 21],
+      ["e2b40f3d642c", 30],
+      ["e59a41a9002d", 62],
+      ["e60933e352ce", 146],
+      ["c7852b22a645", 175],
+      ["383d0a473e13", 247],
+      ["b61f946296f1", 338],
+      ["ecedf963bc64", 349],
+      ["b0006e2cedea", 613],
+      ["30bf994f1153", 699],
+      ["d768b8759414", 716],
+      ["809d3ad2bcb8", 729],
+      ["5cb0721f72f0", 809],
+      ["c6d0c3b96308", 851],
+      ["5c1b98c91663", 1209],
+      ["0b07a9c1be22", 1260],
+      ["2b1640f289ea", 1334],
+      ["86ab20534f15", 1559],
+      ["e043a4dd253b", 1646],
+      ["38d1718b8fc3", 1687],
+      ["e91d703227c9", 1765],
+      ["f98775a7d0f9", 1948],
+      ["197395080909", 1966],
+      ["efa75a106aeb", 1978],
+      ["7be25136d99c", 1994],
+      ["16a3c382b82e", 2133]
+    ],
+    "4e9e14016897071759b55c6a5c03b9cc8fbd03b1964abf4c8dbadd57783d1d1a": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["39694e72167f", 351],
+      ["a4a11528bc42", 394],
+      ["0255f34a839a", 417],
+      ["5fe8253cda76", 603],
+      ["ed326933a23e", 621],
+      ["e2b40f3d642c", 630],
+      ["e59a41a9002d", 662],
+      ["e60933e352ce", 746],
+      ["c7852b22a645", 775],
+      ["383d0a473e13", 847],
+      ["498007571a41", 937],
+      ["b61f946296f1", 961],
+      ["b5dcc6adafd5", 969],
+      ["9e1f6b2ac65d", 981],
+      ["1bc80c4939df", 1013],
+      ["700c3d5545e0", 1130],
+      ["1a109846495d", 1196],
+      ["f98775a7d0f9", 1461],
+      ["6052ff08685e", 1476],
+      ["d263e4b84ecd", 1610],
+      ["bf98f394dbe3", 1655],
+      ["35b38a2e0c49", 1676]
+    ],
+    "a58ab16b135fef35451ca7bc40a4f4e9dc5430e85dad9a279c1a8f9aa296576c": [
+      ["e565cfa17434", 5],
+      ["b61f946296f1", 389],
+      ["28cc2b40fa61", 399],
+      ["043c3c292b42", 601],
+      ["401eb66867f1", 619],
+      ["3a8d9764d8a4", 658],
+      ["f596c9295bd4", 677],
+      ["50f26d5b74f2", 695],
+      ["26ad7b61b37b", 813],
+      ["4185e87640c2", 1034],
+      ["dad13f394614", 1092],
+      ["0900421b7dc4", 1474],
+      ["a8ac2aff9c48", 1566],
+      ["722461548a39", 1680],
+      ["e9aa0f101d68", 1702],
+      ["13d441dd1b0f", 1799],
+      ["4676b736bef2", 1957],
+      ["3e463bddb22c", 2296],
+      ["ee71dbd9b1d7", 2473],
+      ["6d4853d36d81", 2743],
+      ["5fe8253cda76", 2765],
+      ["ed326933a23e", 2783],
+      ["e2b40f3d642c", 2792],
+      ["b5dcc6adafd5", 2822],
+      ["28c2fba54f06", 2834],
+      ["b667763fb033", 2838],
+      ["803ad8f660e7", 2856],
+      ["7d1791449349", 2867],
+      ["c957ce169cf6", 2918],
+      ["e60933e352ce", 2990],
+      ["9e1f6b2ac65d", 3015],
+      ["1bc80c4939df", 3047],
+      ["9f38f3086c8f", 3156],
+      ["3aa811a41203", 3206],
+      ["59c1837f9107", 3268],
+      ["a2abc9923bbe", 4358],
+      ["e304276af8e0", 4376],
+      ["d8ccc083d503", 4396],
+      ["7d21aa87a014", 5659]
+    ],
+    "e403c672d6a39596963028174cffdeed1f3c443c6d83a8616a92f4215ab93846": [
+      ["b61f946296f1", 4],
+      ["0900421b7dc4", 13],
+      ["fe0a638f2551", 107],
+      ["dad13f394614", 181],
+      ["f808e23cc55e", 599]
+    ],
+    "63c25bcf4956d2add798e5dc2c5bc2bc0c937227781962418557aa69edccbd43": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["8f7da050ddb2", 354],
+      ["727591669b8c", 392],
+      ["4a4a709ef23b", 756],
+      ["26ad7b61b37b", 806],
+      ["9b73a9b5c9f6", 1029],
+      ["433c37b5a737", 1037],
+      ["7768d7b8daff", 1059],
+      ["498007571a41", 1220],
+      ["5fe8253cda76", 1243],
+      ["ed326933a23e", 1261],
+      ["e2b40f3d642c", 1270],
+      ["e59a41a9002d", 1302],
+      ["e60933e352ce", 1386],
+      ["c7852b22a645", 1415],
+      ["383d0a473e13", 1487],
+      ["b61f946296f1", 1578],
+      ["28c2fba54f06", 1586],
+      ["f596c9295bd4", 1602],
+      ["4185e87640c2", 1620],
+      ["28cc2b40fa61", 1638],
+      ["043c3c292b42", 1840],
+      ["401eb66867f1", 1858],
+      ["b667763fb033", 1895],
+      ["b5dcc6adafd5", 1913],
+      ["9e1f6b2ac65d", 1925],
+      ["1bc80c4939df", 1957],
+      ["803ad8f660e7", 2075],
+      ["7d1791449349", 2086],
+      ["c957ce169cf6", 2137],
+      ["9f38f3086c8f", 2209],
+      ["e9aa0f101d68", 2261],
+      ["beef9d9054b0", 2353],
+      ["83f950fd95a2", 2456],
+      ["198c2a4ee2f3", 2491],
+      ["13d441dd1b0f", 2549],
+      ["4676b736bef2", 2707],
+      ["3e463bddb22c", 3046],
+      ["ee71dbd9b1d7", 3217],
+      ["7eadf5cfd6c0", 3452],
+      ["6f6f5cc580d2", 3596],
+      ["1e116b431cf7", 3810],
+      ["aeebc2fe3441", 3854],
+      ["a4a11528bc42", 4020],
+      ["d0e269c9f6e8", 4041],
+      ["b97eae6408cb", 4068],
+      ["af71d034b39a", 4089]
+    ],
+    "51b1c580e9af130ac519179fefc652172709ce78eef33c3f57e7438db353c5cd": [
+      ["1718b9171168", 14],
+      ["bb24b365b687", 41],
+      ["31e42eba5b0a", 67],
+      ["f748c01f5fad", 160],
+      ["3f573efd6df3", 203]
+    ],
+    "fbe5d803548118ba4c2d150d6100a30025dd461e2a2c527961cc29b4ed2db327": [
+      ["5fe8253cda76", 3],
+      ["ed326933a23e", 21],
+      ["e2b40f3d642c", 30],
+      ["e59a41a9002d", 62],
+      ["e60933e352ce", 146],
+      ["c7852b22a645", 175],
+      ["383d0a473e13", 247],
+      ["498007571a41", 337],
+      ["21c9e76387ed", 361],
+      ["8d8dc0a58b96", 598],
+      ["9c557c702fdd", 691],
+      ["a5d693e781e6", 725],
+      ["b61f946296f1", 804],
+      ["7f6263045100", 840],
+      ["4185e87640c2", 1644],
+      ["28cc2b40fa61", 1662],
+      ["043c3c292b42", 1864],
+      ["401eb66867f1", 1882],
+      ["f596c9295bd4", 1921],
+      ["7d1791449349", 1939],
+      ["28c2fba54f06", 1990],
+      ["b667763fb033", 2004],
+      ["f6f30e301f28", 2043]
+    ],
+    "78ef29447906ddbd46d25da3cb1aa347b9f3d89a1f5c23ec94605d802b61e465": [
+      ["be4755047798", 25],
+      ["f596c9295bd4", 60],
+      ["95a653e3139b", 76],
+      ["e565cfa17434", 100],
+      ["28c2fba54f06", 483],
+      ["4185e87640c2", 503],
+      ["28cc2b40fa61", 521],
+      ["043c3c292b42", 725],
+      ["401eb66867f1", 743],
+      ["7d8185d32ebd", 786],
+      ["b61f946296f1", 808],
+      ["3a8d9764d8a4", 818],
+      ["67e1af83529c", 852],
+      ["879bf41fd784", 861],
+      ["4a11931b7a86", 870],
+      ["ed326933a23e", 884],
+      ["e2b40f3d642c", 895],
+      ["b5dcc6adafd5", 927],
+      ["50f26d5b74f2", 941],
+      ["dad13f394614", 1001],
+      ["0900421b7dc4", 1383],
+      ["a8ac2aff9c48", 1479],
+      ["6d4853d36d81", 1614],
+      ["e60933e352ce", 1636],
+      ["9e1f6b2ac65d", 1663],
+      ["2d5a290990a9", 1697],
+      ["3aa811a41203", 1799],
+      ["e9aa0f101d68", 1873],
+      ["782035a44473", 1967],
+      ["803ad8f660e7", 2102],
+      ["7d1791449349", 2113],
+      ["c957ce169cf6", 2166],
+      ["77ea6aae461b", 2249],
+      ["83f950fd95a2", 2300],
+      ["8d97523d07b7", 2333],
+      ["3adb033ffcfa", 2427],
+      ["de5de90b1352", 2580],
+      ["110035ff8ea8", 3265]
+    ],
+    "bcb7b56fdf834bfe9c1a5530c7156f58394a725b1d37bf67d95cf3167e088f9f": [
+      ["5a0c29309f20", 5]
+    ],
+    "2948852bf8899ca672a570d72052daffccca7e05fb9b7101999517332e907f56": [
+      ["b61f946296f1", 6],
+      ["1718b9171168", 46],
+      ["3a8d9764d8a4", 65],
+      ["be4755047798", 106],
+      ["f596c9295bd4", 141],
+      ["95a653e3139b", 157],
+      ["67e1af83529c", 218],
+      ["d8d33c45c4f1", 226]
+    ],
+    "0fe11c8d40520a69d4a767d3e6746d5bf7662dcdd739565053e20a118a6a00f5": [
+      ["5fe8253cda76", 3],
+      ["ed326933a23e", 21],
+      ["e2b40f3d642c", 30],
+      ["e59a41a9002d", 62],
+      ["e60933e352ce", 146],
+      ["c7852b22a645", 175],
+      ["383d0a473e13", 247],
+      ["21c9e76387ed", 338],
+      ["8d8dc0a58b96", 575],
+      ["9c557c702fdd", 668],
+      ["a5d693e781e6", 702],
+      ["498007571a41", 780],
+      ["b61f946296f1", 804],
+      ["b5dcc6adafd5", 812],
+      ["9e1f6b2ac65d", 824],
+      ["803ad8f660e7", 856],
+      ["1bc80c4939df", 865],
+      ["83f950fd95a2", 974],
+      ["28c2fba54f06", 1005],
+      ["f596c9295bd4", 1021],
+      ["4185e87640c2", 1039],
+      ["28cc2b40fa61", 1057],
+      ["043c3c292b42", 1259],
+      ["401eb66867f1", 1277],
+      ["b667763fb033", 1314],
+      ["7d1791449349", 1343],
+      ["c957ce169cf6", 1394],
+      ["9f38f3086c8f", 1466],
+      ["e9aa0f101d68", 1518],
+      ["beef9d9054b0", 1610],
+      ["b97eae6408cb", 1716],
+      ["56525b8d35ea", 1737]
+    ],
+    "96489faaf4e741cfbabcae0b716309fdd5e6cb7942d4db8ad58694ceb8d84289": [
+      ["1718b9171168", 17],
+      ["ce960142fae6", 35],
+      ["0f1607e2e79d", 50],
+      ["e5d681466c6d", 238],
+      ["78eafa525368", 271],
+      ["9fb9a030a051", 281],
+      ["343bce563607", 348],
+      ["a1ed768de02b", 408],
+      ["c1d41a25750a", 1563],
+      ["d4069aa8dbd6", 1606],
+      ["676728d41ce8", 1645]
+    ],
+    "6fb9fa5017c5006b2e99f77532059db94d7bf3da7c0f878582e8cb869e3bb46e": [
+      ["b61f946296f1", 4],
+      ["dad13f394614", 16],
+      ["0900421b7dc4", 398],
+      ["a8ac2aff9c48", 490],
+      ["6180b8b53f35", 608],
+      ["ae124b181c4d", 623],
+      ["9da5a5b8c58c", 633],
+      ["fe0a638f2551", 807],
+      ["cea6f66bdc5c", 862],
+      ["e88afc96f583", 1308],
+      ["a2abc9923bbe", 2257],
+      ["e304276af8e0", 2275],
+      ["0ecfe6d600e6", 2295]
+    ],
+    "7df86540e8491697461e4719fd93052c329d1d0565f4c7c72a9d37700802ec71": [
+      ["6b8b61778726", 4]
+    ],
+    "8d7cdf752191616e4e00fca1de6ca09bd97a59805815ae8e5131612f04aa21f6": [
+      ["48db7077d4ee", 3],
+      ["ded673ea29c4", 15],
+      ["16eb9f2e8752", 23],
+      ["40ce0b25499c", 36],
+      ["68dd4bd4433d", 45],
+      ["1d5fc2d9e00d", 70],
+      ["95294331afbc", 198],
+      ["2ec005ea16b3", 343],
+      ["fd10ad67f878", 377],
+      ["de59e343d914", 408],
+      ["37dc539ed622", 415],
+      ["bc18eb3148bc", 464],
+      ["bd90fb921f2d", 509],
+      ["c067b1aa9040", 540],
+      ["09399b61d7eb", 586],
+      ["b2400038371b", 604],
+      ["3e84ad780965", 620]
+    ],
+    "ef9eceef1fcff0c2c0905c4148dcf1669c66c59565512f0fc94f9e99b22413af": [
+      ["5fe8253cda76", 3],
+      ["ed326933a23e", 21],
+      ["e2b40f3d642c", 30],
+      ["e59a41a9002d", 62],
+      ["e60933e352ce", 146],
+      ["c7852b22a645", 175],
+      ["383d0a473e13", 247],
+      ["ecedf963bc64", 338],
+      ["b0006e2cedea", 602],
+      ["498007571a41", 687],
+      ["b61f946296f1", 711],
+      ["b5dcc6adafd5", 719],
+      ["9e1f6b2ac65d", 731],
+      ["1bc80c4939df", 763],
+      ["803ad8f660e7", 872],
+      ["4185e87640c2", 883],
+      ["f596c9295bd4", 901],
+      ["7d1791449349", 919],
+      ["28cc2b40fa61", 972],
+      ["043c3c292b42", 1174],
+      ["401eb66867f1", 1192],
+      ["28c2fba54f06", 1229],
+      ["b667763fb033", 1243],
+      ["c957ce169cf6", 1261],
+      ["0bfebde49e5b", 1348]
+    ],
+    "3205f22a27252b7594b8506789c477f0f9aeebbe29aa3660412e9f6bafb2b6ab": [
+      ["be4755047798", 25],
+      ["f596c9295bd4", 60],
+      ["95a653e3139b", 76],
+      ["e565cfa17434", 100],
+      ["28c2fba54f06", 483],
+      ["4185e87640c2", 503],
+      ["28cc2b40fa61", 521],
+      ["043c3c292b42", 725],
+      ["401eb66867f1", 743],
+      ["7d8185d32ebd", 786],
+      ["b61f946296f1", 808],
+      ["3a8d9764d8a4", 818],
+      ["67e1af83529c", 859],
+      ["879bf41fd784", 868],
+      ["4a11931b7a86", 877],
+      ["ed326933a23e", 891],
+      ["e2b40f3d642c", 902],
+      ["b5dcc6adafd5", 934],
+      ["50f26d5b74f2", 948],
+      ["dad13f394614", 1008],
+      ["0900421b7dc4", 1390],
+      ["a8ac2aff9c48", 1486],
+      ["6d4853d36d81", 1621],
+      ["e60933e352ce", 1643],
+      ["9e1f6b2ac65d", 1670],
+      ["2d5a290990a9", 1704],
+      ["3aa811a41203", 1806],
+      ["e9aa0f101d68", 1880],
+      ["782035a44473", 1974],
+      ["803ad8f660e7", 2109],
+      ["7d1791449349", 2120],
+      ["c957ce169cf6", 2173],
+      ["77ea6aae461b", 2256],
+      ["83f950fd95a2", 2307],
+      ["8d97523d07b7", 2340],
+      ["3fe88216bdc3", 2434],
+      ["de5de90b1352", 2587],
+      ["110035ff8ea8", 3272],
+      ["a0f637521149", 3654]
+    ],
+    "985893ea76af56dfa3281a6fc217a51092f0daa6916a88ddf385b39e60fe1f63": [
+      ["d768b8759414", 1],
+      ["9b385480472b", 23],
+      ["7ac9eb435da8", 96],
+      ["f458cbfdf7bd", 155]
+    ],
+    "63aa25e090c48333e87647fab1d38c9778634a01ec8b42fcc93448f70344163c": [
+      ["4933ae177b35", 6],
+      ["21c9e76387ed", 16],
+      ["8d8dc0a58b96", 253],
+      ["2f8ca1cb8cb7", 341],
+      ["e9aa0f101d68", 395],
+      ["3e463bddb22c", 489],
+      ["13d441dd1b0f", 642],
+      ["4676b736bef2", 800],
+      ["aeebc2fe3441", 1139],
+      ["e60933e352ce", 1303],
+      ["c7852b22a645", 1332],
+      ["26ad7b61b37b", 1399],
+      ["cf5fe7b9b37e", 1626],
+      ["5fe8253cda76", 1983],
+      ["ed326933a23e", 2001],
+      ["e2b40f3d642c", 2010],
+      ["e59a41a9002d", 2042],
+      ["383d0a473e13", 2134],
+      ["498007571a41", 2224],
+      ["b61f946296f1", 2248],
+      ["b5dcc6adafd5", 2256],
+      ["803ad8f660e7", 2268],
+      ["9e1f6b2ac65d", 2277],
+      ["1bc80c4939df", 2309],
+      ["83f950fd95a2", 2418],
+      ["28c2fba54f06", 2449],
+      ["f596c9295bd4", 2465],
+      ["4185e87640c2", 2483],
+      ["28cc2b40fa61", 2501],
+      ["043c3c292b42", 2703],
+      ["401eb66867f1", 2721],
+      ["b667763fb033", 2758],
+      ["7d1791449349", 2787],
+      ["c957ce169cf6", 2838],
+      ["9f38f3086c8f", 2910],
+      ["beef9d9054b0", 2960],
+      ["700c3d5545e0", 3071],
+      ["1a109846495d", 3137],
+      ["5b810932d460", 3398]
+    ],
+    "fd3ecd591e288d23f9fb49a1913360cfe9149c269cd5c78a1ca4509799112e1f": [
+      ["5fe8253cda76", 3],
+      ["ed326933a23e", 21],
+      ["e2b40f3d642c", 30],
+      ["e59a41a9002d", 62],
+      ["e60933e352ce", 146],
+      ["c7852b22a645", 175],
+      ["383d0a473e13", 247],
+      ["ecedf963bc64", 338],
+      ["b0006e2cedea", 602],
+      ["498007571a41", 687],
+      ["b61f946296f1", 711],
+      ["2317f68fa501", 723]
+    ],
+    "ea4d03626f5a0c1e9cc62fc137366e6f417ed1404a2be2e94413ded273a4d2dc": [
+      ["d768b8759414", 11],
+      ["9b385480472b", 33],
+      ["7ac9eb435da8", 106]
+    ],
+    "0d4d9dbf96ddf3d16706d2f5450a5ff26ec75a865f7f177f0e06fd8234cb122b": [
+      ["1718b9171168", 14],
+      ["4141491417f6", 31],
+      ["e5d681466c6d", 221],
+      ["78eafa525368", 254],
+      ["9fb9a030a051", 264],
+      ["28e69f6ecee9", 331],
+      ["08be295201e9", 401],
+      ["c1d41a25750a", 1547],
+      ["d4069aa8dbd6", 1590],
+      ["88814aa098eb", 1629]
+    ]
+  },
+  "contracts": {
+    "eth:0x048D0cfF3F0729117F44da6494Dbf4d78e593D95": {
+      "name": "DelayedWETH",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0xebC3681418136F7A9f6cB4B074B1B19fc85879e1": "3921f894dc2a10d7385074188c445f1f23ec2decb78add74860bae751bfb439d"
+      }
+    },
+    "eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72": {
+      "name": "L1ERC20TokenBridge",
+      "source": "2e1c94db0825f51701d35d85a256302574d6366d7252d615024c6b787f8733a9",
+      "implementations": {
+        "eth:0xB531445401926029B1647669cFAc8b4e5d8C7777": "064e1bc6da950abea27b8d67a0cec352fdd24eadc023711d94a84bd573c76cc2"
+      }
+    },
+    "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
+      "name": "TimelockController",
+      "source": "a2cd0f7ad65c9afe5283a2852164cb8ab3ad17e8e813dc730bf7d7037d9420ac",
+      "critical": { "untilTimestamp": 1789547003 }
+    },
+    "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0": {
+      "name": "ProxyAdmin",
+      "source": "78bcac044e6867b02595a275b18e7d79465a570665c210eae873b0f918315bd7",
+      "critical": true
+    },
+    "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "source": "a1f7a993d21c76df117ee0ec98eac7e52ee7e0adb25a3990e1d3cc4c977f488e",
+      "critical": { "untilTimestamp": 1789547003 }
+    },
+    "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97": {
+      "name": "RiscZeroGroth16Verifier",
+      "source": "15df4e0b9581b189dbff912ef9311e60c3d4920c6a4c7c87a0c087693728b9cd"
+    },
+    "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D": {
+      "name": "RiscZeroGroth16Verifier",
+      "source": "840d05f65981db0b8bada6fb723d947045f543c14ffd83bc216beff054c65557",
+      "critical": { "untilTimestamp": 1789547003 }
+    },
+    "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609": {
+      "name": "Safe",
+      "source": "a8d4738e202314fac92a69019e0677b25cabeacc8c4f74fd5889e6afd25285cb",
+      "implementations": {
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "e99656f3f5e1d8106e268a1448430f4014f13897bbdf77c9845c0eefc99a03fe"
+      }
+    },
+    "eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7": {
+      "name": "L1StandardBridge",
+      "source": "13e2982d84601d29e51496f0252cb02a378a2f29f101c9782f04700bdb6ea737",
+      "critical": true,
+      "implementations": {
+        "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": "0e8360259c3c45dcd15e0533453b4de661fbf48a979445d7e5c777000319354e"
+      }
+    },
+    "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7": {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "source": "a1f7a993d21c76df117ee0ec98eac7e52ee7e0adb25a3990e1d3cc4c977f488e"
+    },
+    "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": {
+      "name": "RiscZeroSetVerifier",
+      "source": "d77d75bfcb6367d76ca819cef4a9f484b78915b61427842b4c771ef55d32386e",
+      "critical": { "untilTimestamp": 1789547003 }
+    },
+    "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF": {
+      "name": "RiscZeroGroth16Verifier",
+      "source": "2fa21a8d5bcbef41883cb6eb1e6db9a39cbe12e2cf94075038aa2f197ea6eeaf"
+    },
+    "eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6": {
+      "name": "OptimismMintableERC20Factory",
+      "source": "b721ae97e6346956bc0a2fad1d1a15d8edadd41f2e8d62f91cef3b90b53f3a88",
+      "implementations": {
+        "eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12": "0d3d5a2e82b4f9f132389799f4d1fa93c5824d1b17d97eecfce2c7aed96ca4ee"
+      }
+    },
+    "eth:0x5fF93263D5181b2A826f8c51d54BC0da2d20D50a": {
+      "name": "L1ERC721Bridge",
+      "source": "b721ae97e6346956bc0a2fad1d1a15d8edadd41f2e8d62f91cef3b90b53f3a88",
+      "implementations": {
+        "eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e": "4e9e14016897071759b55c6a5c03b9cc8fbd03b1964abf4c8dbadd57783d1d1a"
+      }
+    },
+    "eth:0x642d1cc835a81c738313EBe85ED61979a44897bF": {
+      "name": "PermissionedDisputeGame",
+      "source": "a58ab16b135fef35451ca7bc40a4f4e9dc5430e85dad9a279c1a8f9aa296576c",
+      "critical": true
+    },
+    "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3": {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "source": "a1f7a993d21c76df117ee0ec98eac7e52ee7e0adb25a3990e1d3cc4c977f488e"
+    },
+    "eth:0x70A3e3112467E177585eF070B63521c9368F9aA1": {
+      "name": "PreimageOracle",
+      "source": "e403c672d6a39596963028174cffdeed1f3c443c6d83a8616a92f4215ab93846",
+      "critical": true
+    },
+    "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "source": "a1f7a993d21c76df117ee0ec98eac7e52ee7e0adb25a3990e1d3cc4c977f488e",
+      "critical": { "untilTimestamp": 1789547003 }
+    },
+    "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E": {
+      "name": "OptimismPortal2",
+      "source": "b721ae97e6346956bc0a2fad1d1a15d8edadd41f2e8d62f91cef3b90b53f3a88",
+      "critical": true,
+      "implementations": {
+        "eth:0x1FeD97C63C44f0cC6F861a9Ba2E8AedFE466485c": "63c25bcf4956d2add798e5dc2c5bc2bc0c937227781962418557aa69edccbd43"
+      }
+    },
+    "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
+      "name": "RiscZeroVerifierRouter",
+      "source": "51b1c580e9af130ac519179fefc652172709ce78eef33c3f57e7438db353c5cd",
+      "critical": { "untilTimestamp": 1789547003 }
+    },
+    "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079": {
+      "name": "DisputeGameFactory",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0x72B971717E088B59F26d4236BE222ADB6ACD393b": "fbe5d803548118ba4c2d150d6100a30025dd461e2a2c527961cc29b4ed2db327"
+      }
+    },
+    "eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53": {
+      "name": "KailuaTreasury",
+      "source": "78ef29447906ddbd46d25da3cb1aa347b9f3d89a1f5c23ec94605d802b61e465",
+      "critical": { "untilTimestamp": 1789547003 }
+    },
+    "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696": {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "source": "a1f7a993d21c76df117ee0ec98eac7e52ee7e0adb25a3990e1d3cc4c977f488e",
+      "critical": { "untilTimestamp": 1789547003 }
+    },
+    "eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d": {
+      "name": "KailuaVerifier",
+      "source": "bcb7b56fdf834bfe9c1a5530c7156f58394a725b1d37bf67d95cf3167e088f9f",
+      "critical": { "untilTimestamp": 1789547003 },
+      "implementations": {
+        "eth:0xC9934Db60031aDd319d008f8d643E3b723f28e43": "2948852bf8899ca672a570d72052daffccca7e05fb9b7101999517332e907f56"
+      }
+    },
+    "eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c": {
+      "name": "ProxyAdmin",
+      "source": "78bcac044e6867b02595a275b18e7d79465a570665c210eae873b0f918315bd7",
+      "critical": true
+    },
+    "eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393": {
+      "name": "SystemConfig",
+      "source": "b721ae97e6346956bc0a2fad1d1a15d8edadd41f2e8d62f91cef3b90b53f3a88",
+      "critical": true,
+      "implementations": {
+        "eth:0x42Ad0173051225Ac784100e9acD43349707F4db9": "0fe11c8d40520a69d4a767d3e6746d5bf7662dcdd739565053e20a118a6a00f5"
+      }
+    },
+    "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9": {
+      "name": "RiscZeroGroth16Verifier",
+      "source": "96489faaf4e741cfbabcae0b716309fdd5e6cb7942d4db8ad58694ceb8d84289",
+      "critical": { "untilTimestamp": 1789547003 }
+    },
+    "eth:0xb6B6342ff75b4213cBF101c135f1fC33695acc13": {
+      "name": "MIPS",
+      "source": "6fb9fa5017c5006b2e99f77532059db94d7bf3da7c0f878582e8cb869e3bb46e",
+      "critical": true
+    },
+    "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": {
+      "name": "Bob Multisig 1",
+      "source": "7df86540e8491697461e4719fd93052c329d1d0565f4c7c72a9d37700802ec71",
+      "implementations": {
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "8d7cdf752191616e4e00fca1de6ca09bd97a59805815ae8e5131612f04aa21f6"
+      }
+    },
+    "eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c": {
+      "name": "AnchorStateRegistry",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0x5020964201C4d65555f33FD9Bc281443d65f4C09": "ef9eceef1fcff0c2c0905c4148dcf1669c66c59565512f0fc94f9e99b22413af"
+      }
+    },
+    "eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b": {
+      "name": "KailuaGame",
+      "source": "3205f22a27252b7594b8506789c477f0f9aeebbe29aa3660412e9f6bafb2b6ab",
+      "critical": { "untilTimestamp": 1789547003 }
+    },
+    "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1": {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "source": "a1f7a993d21c76df117ee0ec98eac7e52ee7e0adb25a3990e1d3cc4c977f488e"
+    },
+    "eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA": {
+      "name": "L1CrossDomainMessenger",
+      "source": "985893ea76af56dfa3281a6fc217a51092f0daa6916a88ddf385b39e60fe1f63",
+      "critical": true,
+      "implementations": {
+        "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": "63aa25e090c48333e87647fab1d38c9778634a01ec8b42fcc93448f70344163c"
+      }
+    },
+    "eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46": {
+      "name": "SuperchainConfig",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550": "fd3ecd591e288d23f9fb49a1913360cfe9149c269cd5c78a1ca4509799112e1f"
+      }
+    },
+    "eth:0xF2dc77c697e892542cC53336178a78Bb313DFDC7": {
+      "name": "AddressManager",
+      "source": "ea4d03626f5a0c1e9cc62fc137366e6f417ed1404a2be2e94413ded273a4d2dc",
+      "critical": true
+    },
+    "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C": {
+      "name": "RiscZeroGroth16Verifier",
+      "source": "0d4d9dbf96ddf3d16706d2f5450a5ff26ec75a865f7f177f0e06fd8234cb122b"
+    }
+  }
+}

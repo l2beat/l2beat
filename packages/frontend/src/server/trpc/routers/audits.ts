@@ -7,5 +7,5 @@ import { procedure, router } from '../trpc'
 export const auditsRouter = router({
   unitDetails: procedure
     .input(AuditsUnitDetailsParams)
-    .query(({ input }) => getAuditsUnitDetails(input) ?? null),
+    .query(async ({ input }) => (await getAuditsUnitDetails(input)) ?? null),
 })

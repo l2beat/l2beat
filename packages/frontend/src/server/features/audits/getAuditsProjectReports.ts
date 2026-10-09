@@ -1,6 +1,10 @@
 import type { ProjectAuditCoverage } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { reportCollection, reportOrigin, reportUrl } from './coverage/coverageReports'
+import {
+  reportCollection,
+  reportOrigin,
+  reportUrl,
+} from './coverage/coverageReports'
 import type { AuditsProjectReport } from './types'
 
 /**

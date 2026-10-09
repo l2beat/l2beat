@@ -1,0 +1,3013 @@
+{
+  "schema_version": "1.0.0",
+  "project": "uniswapv3",
+  "dataset": {
+    "repository": "sergeyshemyakov/audit-dataset",
+    "commit": "ce069f3e6a59d6ebfeb4efb183e39608fc86d1a6"
+  },
+  "discoveredAt": 1786913047,
+  "collections": {
+    "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
+    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "_libs/solmate": { "name": "Solmate", "kind": "library" },
+    "agglayer": { "name": "Agglayer", "kind": "project" },
+    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
+    "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
+    "bob": { "name": "BOB", "kind": "project" },
+    "celo": { "name": "Celo", "kind": "project" },
+    "katana": { "name": "Katana", "kind": "project" },
+    "mantle": { "name": "Mantle", "kind": "project" },
+    "roninnetwork": { "name": "Ronin", "kind": "project" },
+    "uniswapv3": { "name": "Uniswap V3", "kind": "project" }
+  },
+  "reports": {
+    "abdk-uniswap-v3-core-2021-03": {
+      "collections": ["uniswapv3"],
+      "title": "ABDK Consulting Smart Contract Audit: Uniswap V3",
+      "auditor": "ABDK Consulting",
+      "date": "2021-03-23",
+      "document": "uniswapv3/reports/audit-2.pdf"
+    },
+    "abdk-uniswap-v3-periphery-part1-2021-04": {
+      "collections": ["uniswapv3"],
+      "title": "ABDK Consulting Smart Contract Audit: Uniswap V3 Peripheral, Part 1",
+      "auditor": "ABDK Consulting",
+      "date": "2021-05-04",
+      "document": "uniswapv3/reports/audit-3.pdf"
+    },
+    "ackee-safe-1-5-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account Security Review",
+      "auditor": "Ackee Blockchain Security",
+      "date": "2025-05-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
+    },
+    "certora-safe-1-5-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
+      "auditor": "Certora",
+      "date": "2025-01-14",
+      "document": "_libs/safe/reports/safe-verification__docs__Safe_Audit_Report_1_5_0_Certora.pdf"
+    },
+    "certora-vault-bridge-2025-05": {
+      "collections": ["katana"],
+      "title": "Vault Bridge Security Assessment (Manual Audit)",
+      "auditor": "Certora",
+      "document": "katana/reports/2025_05-certora-vault-bridge-manual-audit.pdf"
+    },
+    "certora-vault-bridge-fv-2025-06": {
+      "collections": ["katana"],
+      "title": "Vault Bridge Security Assessment (Formal Verification)",
+      "auditor": "Certora",
+      "document": "katana/reports/2025_06-certora-vault-bridge-formal-verification.pdf"
+    },
+    "certora-vault-bridge-v1-1-2025-11": {
+      "collections": ["katana"],
+      "title": "Polygon Vault Bridge V1.1 Security Assessment",
+      "auditor": "Certora",
+      "document": "katana/reports/2025_11-certora-vault-bridge-v1.1-audit.pdf"
+    },
+    "code4rena-ronin-katana-v3-2024-10": {
+      "collections": ["roninnetwork"],
+      "title": "Ronin Findings & Analysis Report (Katana V3)",
+      "auditor": "Code4rena",
+      "date": "2024-11-25",
+      "document": "roninnetwork/reports/Code4rena - Ronin Katana v3.html"
+    },
+    "consensys-arbitrum-core-token-bridge-2021-11": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Smart Contracts (ConsenSys Diligence, November 2021)",
+      "auditor": "ConsenSys Diligence",
+      "date": "2021-11-05",
+      "document": "arbitrum/reports/2021_11_05_consensys_diligence_security_audit_core_contracts_token_bridge.pdf"
+    },
+    "contracts__audits__2018-10": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Open Zeppelin v2.0 Security Audit",
+      "auditor": "Level K",
+      "date": "2018-10-21",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2018-10.pdf"
+    },
+    "contracts__audits__2023-10-v5.0": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 5.0 Release",
+      "auditor": "OpenZeppelin",
+      "date": "2023-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
+    },
+    "contracts__audits__2026-02-v5.6": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts v5.6 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2026-02-27",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
+    },
+    "hexens-polygon-zkevm-2023-02": {
+      "collections": ["agglayer"],
+      "title": "Security Review Report for Polygon zkEVM",
+      "auditor": "Hexens",
+      "date": "2023-02-27",
+      "document": "agglayer/reports/2023_02-hexens-polygon-zkevm-security-review.pdf"
+    },
+    "secure3-mantle-v1-contest-2023-07": {
+      "collections": ["mantle"],
+      "title": "Mantle Competitive Security Assessment",
+      "auditor": "Secure3",
+      "date": "2023-07-17",
+      "document": "mantle/reports/2023_07-secure3-mantle-v1-competitive-security-assessment.pdf"
+    },
+    "sigmaprime-mantle-l2-rollup-2023-07": {
+      "collections": ["mantle"],
+      "title": "Mantle L2 Rollup Security Assessment (Sigma Prime)",
+      "auditor": "Sigma Prime",
+      "document": "mantle/reports/2023_07-sigmaprime-mantle-l2-rollup-security-assessment.pdf"
+    },
+    "sigmaprime-polygon-lxly-bridge-2024-02": {
+      "collections": ["agglayer"],
+      "title": "Polygon LXLY Bridge Smart Contract Security Assessment",
+      "auditor": "Sigma Prime",
+      "document": "agglayer/reports/2024_02-sigmaprime-polygon-lxly-bridge.pdf"
+    },
+    "sigmaprime-yield-exposed-token-2025-04": {
+      "collections": ["katana"],
+      "title": "Yield Exposed Token Security Assessment Report (v2.0)",
+      "auditor": "Sigma Prime",
+      "document": "katana/reports/2025_04-sigmaprime-vault-bridge-yield-exposed-token-security-assessment.pdf"
+    },
+    "solidified-aztec-liquity-bridge-2022-06-14": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Liquity Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-06-14",
+      "document": "aztecnetwork/reports/Solidified - Aztec Liquity Bridge.pdf"
+    },
+    "solmate-v6__audits__v6-Fixed-Point-Solutions": {
+      "collections": ["_libs/solmate"],
+      "title": "solmate Smart Contract Library Assessment",
+      "auditor": "Fixed Point Solutions, LLC",
+      "date": "2021-12-31",
+      "document": "_libs/solmate/reports/solmate-v6__audits__v6-Fixed-Point-Solutions.pdf"
+    },
+    "spearbit-polygon-zkevm-contracts-2023-03": {
+      "collections": ["agglayer"],
+      "title": "Polygon zkEVM Contracts Security Review",
+      "auditor": "Spearbit",
+      "date": "2023-03-27",
+      "document": "agglayer/reports/2023_03-spearbit-polygon-zkevm-contracts-bridge.pdf"
+    },
+    "trail-of-bits-celo-l2-2024-12-19": {
+      "collections": ["celo"],
+      "title": "cLabs Celo L2 Security Assessment",
+      "auditor": "Trail of Bits",
+      "date": "2024-12-19",
+      "document": "celo/reports/Trail of Bits - Celo L2.pdf"
+    },
+    "trailofbits-uniswap-v3-core-2021-03": {
+      "collections": ["uniswapv3"],
+      "title": "Uniswap V3 Core Security Assessment",
+      "auditor": "Trail of Bits",
+      "date": "2021-03-12",
+      "document": "uniswapv3/reports/audit.pdf"
+    },
+    "veridise-kailua-2025-02": {
+      "collections": ["bob"],
+      "title": "Veridise Auditing Report for Kailua Protocol (February 2025)",
+      "auditor": "Veridise",
+      "date": "2025-02-18",
+      "document": "bob/reports/Veridise - Kailua Security Audit (Feb 2025).pdf"
+    }
+  },
+  "auditedFiles": {
+    "002c382d5cd8": {
+      "repository": "AztecProtocol/aztec-connect-bridges",
+      "commit": "5a3766115b55dd3471ca981a26c8b8381f12fae7",
+      "path": "src/bridges/liquity/interfaces/ISwapRouter.sol",
+      "blob": "002c382d5cd81788084d6c990125be869e725511"
+    },
+    "029c06a7e748": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/libraries/PoolAddress.sol",
+      "blob": "029c06a7e748917b8ecc539c28e18e3401fc2196"
+    },
+    "034ee911fe4b": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "path": "contracts/introspection/ERC165.sol",
+      "blob": "034ee911fe4bac97038477f602c6a95a240772d6"
+    },
+    "092a067f397a": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/libraries/LowGasSafeMath.sol",
+      "blob": "092a067f397a8e1cbe86333fa0e68644ac4d4875"
+    },
+    "0ba362bf2665": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/libraries/TransferHelper.sol",
+      "blob": "0ba362bf2665cce4186101a34fde87456e2fb9ab"
+    },
+    "101ca93d6e03": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolActions.sol",
+      "blob": "101ca93d6e03fc63a340933729344ca50f0832f4"
+    },
+    "1138570bc167": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/libraries/FixedPoint96.sol",
+      "blob": "1138570bc167aaf339de5de829f134b49c5497f9"
+    },
+    "1a59de42c5d0": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
+      "blob": "1a59de42c5d0983d397019c658cfc6bc55c538ad"
+    },
+    "1b88538ae1c5": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/UniswapV3Pool.sol",
+      "blob": "1b88538ae1c5406630046390843b92f38d046ad1"
+    },
+    "1eb423f63bd3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/token/ERC721/IERC721.sol",
+      "blob": "1eb423f63bd30a984c44bfba460c587c32c47a0d"
+    },
+    "1f419229f028": {
+      "repository": "celo-org/celo-monorepo",
+      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+      "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2Pair.sol",
+      "blob": "1f419229f028733e0b921efee4438ce67f265008"
+    },
+    "20c17044f667": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/interfaces/IPeripheryImmutableState.sol",
+      "blob": "20c17044f667326f19fa61375374007950fedf42"
+    },
+    "216d5ddf2e57": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/interfaces/callback/IUniswapV3SwapCallback.sol",
+      "blob": "216d5ddf2e579161ac56fabc02d845459c80d777"
+    },
+    "22c69a78be6d": {
+      "repository": "celo-org/celo-monorepo",
+      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+      "path": "packages/protocol/contracts/uniswap/test/libraries/TransferHelper.sol",
+      "blob": "22c69a78be6d79f0977a2a28014c104ccddeb8ea"
+    },
+    "272851b2f81b": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+      "path": "contracts/utils/structs/EnumerableSet.sol",
+      "blob": "272851b2f81b2c71dcf5115a063892668f38275f"
+    },
+    "2bba6afbc97f": {
+      "repository": "ronin-chain/katana-operation-contracts",
+      "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+      "path": "src/aggregate-router/modules/PaymentsImmutables.sol",
+      "blob": "2bba6afbc97fab8d25b297ab47f3b96a23ad06a2"
+    },
+    "2d517987d5b4": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/utils/Context.sol",
+      "blob": "2d517987d5b49aee1a37634c95a69dae911b9d7a"
+    },
+    "2d637eb4eb26": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/libraries/BitMath.sol",
+      "blob": "2d637eb4eb26f5c61d7a6b8ac49b915504333d28"
+    },
+    "2eeb24b7812c": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol",
+      "blob": "2eeb24b7812cef9cb98413b76691966e786031e2"
+    },
+    "3101c4f1a7b3": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/base/PoolInitializer.sol",
+      "blob": "3101c4f1a7b348a4db5f42a68bcec59ffcf12ce4"
+    },
+    "34d6e4c7e269": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/libraries/UnsafeMath.sol",
+      "blob": "34d6e4c7e2692d2edc02fa89862192e681bfb424"
+    },
+    "3d2846231b4f": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/token/ERC721/extensions/IERC721Metadata.sol",
+      "blob": "3d2846231b4ff25e2a6b2c687113e0241d970b2e"
+    },
+    "40b50a202dcd": {
+      "repository": "mantlenetworkio/mantle",
+      "commit": "3e2b6dbcac7df08353d81d53ee41405211305432",
+      "path": "packages/contracts/contracts/libraries/eigenda/lib/contracts/governance/Timelock.sol",
+      "blob": "40b50a202dcd0f439f5e82eff63d3a0ce1508776"
+    },
+    "41ede9d660b2": {
+      "repository": "OffchainLabs/arbitrum-classic",
+      "commit": "d730bc40932c24e239577d16b1737455ab75ee26",
+      "path": "packages/arb-bridge-eth/contracts/interfaces/IERC20.sol",
+      "blob": "41ede9d660b2dfee65788266a6dc867d48e0ff31"
+    },
+    "48a5beba6436": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
+      "blob": "48a5beba643694a4d10612a3a1d6809fbb4a7fe8"
+    },
+    "5130ac00df1b": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/libraries/Oracle.sol",
+      "blob": "5130ac00df1bf6ac83d926f93e6bb486e88c3a00"
+    },
+    "557352983901": {
+      "repository": "Uniswap/v3-periphery",
+      "commit": "2353765fe799b987ac5236971398fcb0be2bc5c0",
+      "path": "contracts/SwapRouter.sol",
+      "blob": "5573529839010ab090e88c3141540a1bd118b9f7"
+    },
+    "5ff67fd4d7ae": {
+      "repository": "ronin-chain/katana-operation-contracts",
+      "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+      "path": "src/aggregate-router/libraries/Commands.sol",
+      "blob": "5ff67fd4d7aeb2949120266d47df1733d80a6f57"
+    },
+    "64e8fd9b3c5e": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/libraries/TickMath.sol",
+      "blob": "64e8fd9b3c5e40e39e1ba9d3811d31c5e43decfe"
+    },
+    "6df195b77522": {
+      "repository": "celo-org/celo-monorepo",
+      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+      "path": "packages/protocol/contracts/uniswap/test/libraries/UniswapV2Library.sol",
+      "blob": "6df195b77522f686220b1809a52562a4debcd3fe"
+    },
+    "732cc02b109a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IERC165.sol",
+      "blob": "732cc02b109aec16f55b6851bbdc1aaea463a5f5"
+    },
+    "752bb196d4b9": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/UniswapV3PoolDeployer.sol",
+      "blob": "752bb196d4b9a64fdb843385dbba330197d550a7"
+    },
+    "75b04581f7a2": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/token/ERC721/extensions/IERC721Enumerable.sol",
+      "blob": "75b04581f7a2e0338a4534c8446c48f42c8bdad7"
+    },
+    "7c44280f07aa": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "7c44280f07aa184f6f7506e335c9da0db8c30469"
+    },
+    "7c781dbafd08": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/interfaces/IERC20Minimal.sol",
+      "blob": "7c781dbafd0895434bbc9e31cc8b2db1bb6318d1"
+    },
+    "7deb70c13c49": {
+      "repository": "Uniswap/v3-core",
+      "commit": "7445e61f17a7c1233bcabcdc920f0473793f6d78",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
+      "blob": "7deb70c13c499d801f30626f109f63bb2fbc9f7a"
+    },
+    "8776a081aa23": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/interfaces/IUniswapV3PoolDeployer.sol",
+      "blob": "8776a081aa2394ed25e8b7549341159ad2f87c3f"
+    },
+    "8a5e6d6166ae": {
+      "repository": "ronin-chain/katana-operation-contracts",
+      "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+      "path": "src/aggregate-router/modules/katana/v3/V3SwapRouter.sol",
+      "blob": "8a5e6d6166ae2dde6025adf12bc225974a1338d8"
+    },
+    "8aa1e5b61ce8": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/libraries/FixedPoint128.sol",
+      "blob": "8aa1e5b61ce8db63b3205555cbba846c5fa5c2b0"
+    },
+    "8b39faaee4a3": {
+      "repository": "ronin-chain/katana-operation-contracts",
+      "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+      "path": "src/aggregate-router/modules/katana/v2/V2SwapRouter.sol",
+      "blob": "8b39faaee4a30c1fc900a28be4c8443f0e561b05"
+    },
+    "8c953638d384": {
+      "repository": "Uniswap/v3-core",
+      "commit": "c3e2b3c938f50892b413422901cdac99a27c43a2",
+      "path": "contracts/interfaces/IUniswapV3Factory.sol",
+      "blob": "8c953638d3844cf9c8470f007e74fed5c8d8392d"
+    },
+    "934e726462a7": {
+      "repository": "Uniswap/v3-core",
+      "commit": "fc783807986595e33cdfc6ac82479535a42b955b",
+      "path": "contracts/libraries/FullMath.sol",
+      "blob": "934e726462a7bace5783f4991e1e4a7cc5bc3365"
+    },
+    "979554d4061c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/token/ERC20/extensions/IERC20Permit.sol",
+      "blob": "979554d4061c5a62d62524fbfda1c16307f4a7cb"
+    },
+    "9ac414611c86": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/libraries/Position.sol",
+      "blob": "9ac414611c8613a3430e195f46f8838b2f50bfa0"
+    },
+    "9b1bfc70990f": {
+      "repository": "agglayer/vault-bridge",
+      "commit": "950e64d4ead51a8ef911829ab8775a18533a8cca",
+      "path": "src/etc/IWETH9.sol",
+      "blob": "9b1bfc70990f74ba352d7e9c878b2dafa0ef1851"
+    },
+    "a3669850aee1": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/libraries/LiquidityMath.sol",
+      "blob": "a3669850aee142bbca81902f1b75c65d590e41e5"
+    },
+    "a416559a9f40": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/interfaces/callback/IUniswapV3FlashCallback.sol",
+      "blob": "a416559a9f40e972957999796bc34be11e411f40"
+    },
+    "aadec0e1605e": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/interfaces/callback/IUniswapV3MintCallback.sol",
+      "blob": "aadec0e1605e4f51d1d47514306143e638c0e215"
+    },
+    "aeda91fb5c75": {
+      "repository": "boundless-xyz/kailua",
+      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+      "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+      "blob": "aeda91fb5c75ebd4191ac8c551a1a4685cf3e115"
+    },
+    "afc86bbe5db2": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/base/PeripheryImmutableState.sol",
+      "blob": "afc86bbe5db24f35d0fe2262ceffe4d00f7feced"
+    },
+    "b6baf5b1e12f": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/libraries/SqrtPriceMath.sol",
+      "blob": "b6baf5b1e12fb5a80c1183fc95814c1072818ae8"
+    },
+    "c04f3782b240": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/libraries/Tick.sol",
+      "blob": "c04f3782b240bb43beb35f1be8793893abca03fa"
+    },
+    "c4258e6e4fa2": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/UniswapV3Factory.sol",
+      "blob": "c4258e6e4fa273438296923d72b9dd25ac6d3f28"
+    },
+    "caabda2d5aff": {
+      "repository": "Uniswap/v3-core",
+      "commit": "7445e61f17a7c1233bcabcdc920f0473793f6d78",
+      "path": "contracts/libraries/SwapMath.sol",
+      "blob": "caabda2d5aff4601bb6c255862e3ee652877ebfa"
+    },
+    "d0ef753e12b5": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/libraries/TickBitmap.sol",
+      "blob": "d0ef753e12b59b6efc94e7987639383bfa2f25c5"
+    },
+    "d15e0dd08582": {
+      "repository": "ronin-chain/katana-operation-contracts",
+      "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+      "path": "src/aggregate-router/modules/Payments.sol",
+      "blob": "d15e0dd085825f4f939e8639269cf26aa45b76a3"
+    },
+    "d84e2b059f2e": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/libraries/SafeCast.sol",
+      "blob": "d84e2b059f2e2d3936c4b07fb5db35de85eb1181"
+    },
+    "daac1671a4c7": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/NoDelegateCall.sol",
+      "blob": "daac1671a4c72a826ae7acda2acb0e879eb27be1"
+    },
+    "dfe5020b47cd": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/interfaces/IUniswapV3Pool.sol",
+      "blob": "dfe5020b47cd586697429f7957edcc77c833c16a"
+    },
+    "e1159f899dff": {
+      "repository": "agglayer/agglayer-contracts",
+      "commit": "7677b8ccf10abc13903d0aceb66daa9a8a5fb0b0",
+      "path": "contracts/mocks/Uni.sol",
+      "blob": "e1159f899dffe805cfe7bf195addd96cfdf91cc2"
+    },
+    "f486ba94eacc": {
+      "repository": "Uniswap/v3-periphery",
+      "commit": "987842552ede76d428e60116672fb0ff67fe551e",
+      "path": "contracts/NonfungiblePositionManager.sol",
+      "blob": "f486ba94eacc78e71a65227999e5f3080de4f230"
+    },
+    "f7c87028768a": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolImmutables.sol",
+      "blob": "f7c87028768ab9490b4bc281ef0179d83a1e1252"
+    },
+    "f93d219f21bd": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/token/ERC721/IERC721Receiver.sol",
+      "blob": "f93d219f21bd9c817755d1500100013ef1ca310d"
+    },
+    "fa4488edf9a3": {
+      "repository": "Rari-Capital/solmate",
+      "commit": "134f10afd9c996cee217aec6274839f56c742eac",
+      "path": "src/utils/SafeTransferLib.sol",
+      "blob": "fa4488edf9a35ab5612090e4e63efc8c79e05795"
+    }
+  },
+  "units": {
+    "021b3f775c4c": {
+      "name": "ISignatureTransfer",
+      "kind": "interface",
+      "lines": 126,
+      "status": "none"
+    },
+    "02f5dab37117": {
+      "name": "EIP712",
+      "kind": "contract",
+      "lines": 33,
+      "status": "none"
+    },
+    "bc141126526e": {
+      "name": "IERC1271",
+      "kind": "interface",
+      "lines": 7,
+      "status": "none"
+    },
+    "8ba5ffb53834": {
+      "name": "SignatureVerification",
+      "kind": "library",
+      "lines": 42,
+      "status": "none"
+    },
+    "bf1755ad67f4": {
+      "name": "ERC20",
+      "kind": "interface",
+      "lines": 1,
+      "status": "none"
+    },
+    "69c2cb66c97f": {
+      "name": "SafeTransferLib",
+      "kind": "library",
+      "lines": 119,
+      "status": "differs",
+      "audited": { "object": "fa4488edf9a3", "lines": [8, 131] },
+      "reports": ["solmate-v6__audits__v6-Fixed-Point-Solutions"],
+      "added": [
+        [6, 6],
+        [11, 11],
+        [14, 14],
+        [27, 27],
+        [35, 37],
+        [40, 40],
+        [43, 43],
+        [48, 49],
+        [52, 52],
+        [60, 60],
+        [68, 69],
+        [72, 72],
+        [75, 75],
+        [80, 81],
+        [84, 84],
+        [92, 92],
+        [100, 101],
+        [104, 104],
+        [107, 107],
+        [112, 113],
+        [116, 116]
+      ],
+      "removed": [
+        [6, 6, 6],
+        [11, 10, 10],
+        [14, 13, 13],
+        [27, 21, 21],
+        [31, 24, 26],
+        [35, 31, 33],
+        [40, 37, 37],
+        [52, 40, 40],
+        [60, 44, 44],
+        [64, 47, 49],
+        [68, 54, 55],
+        [72, 59, 59],
+        [84, 62, 62],
+        [92, 66, 66],
+        [96, 69, 71],
+        [100, 76, 77],
+        [104, 81, 81],
+        [116, 84, 84],
+        [118, 86, 122]
+      ],
+      "covered": 91
+    },
+    "c2890da6c757": {
+      "name": "IAllowanceTransfer",
+      "kind": "interface",
+      "lines": 154,
+      "status": "none"
+    },
+    "d4f1bd62acde": {
+      "name": "PermitHash",
+      "kind": "library",
+      "lines": 128,
+      "status": "none"
+    },
+    "7e6c70ae6d21": {
+      "name": "SignatureTransfer",
+      "kind": "contract",
+      "lines": 148,
+      "status": "none"
+    },
+    "808062d40b2a": {
+      "name": "Allowance",
+      "kind": "library",
+      "lines": 43,
+      "status": "none"
+    },
+    "da4a539f3d95": {
+      "name": "AllowanceTransfer",
+      "kind": "contract",
+      "lines": 131,
+      "status": "none"
+    },
+    "5013355428bd": {
+      "name": "Permit2",
+      "kind": "contract",
+      "lines": 3,
+      "status": "none"
+    },
+    "05cbf499d954": {
+      "name": "ERC20",
+      "kind": "interface",
+      "lines": 4,
+      "status": "none"
+    },
+    "34d45d344638": {
+      "name": "IResourceManager",
+      "kind": "interface",
+      "lines": 28,
+      "status": "none"
+    },
+    "e70ddd29b335": {
+      "name": "INonce",
+      "kind": "interface",
+      "lines": 7,
+      "status": "none"
+    },
+    "3496e84b22cc": {
+      "name": "greaterThan",
+      "kind": "function",
+      "lines": 3,
+      "status": "none"
+    },
+    "38890f868cc8": {
+      "name": "lessThan",
+      "kind": "function",
+      "lines": 3,
+      "status": "none"
+    },
+    "b7db2c7e9a9c": {
+      "name": "greaterThanOrEqualTo",
+      "kind": "function",
+      "lines": 3,
+      "status": "none"
+    },
+    "6385a366db1d": {
+      "name": "equals",
+      "kind": "function",
+      "lines": 3,
+      "status": "none"
+    },
+    "ae9aec7381bc": {
+      "name": "CustomRevert",
+      "kind": "library",
+      "lines": 112,
+      "status": "none"
+    },
+    "1620362836e5": {
+      "name": "IERC20Minimal",
+      "kind": "interface",
+      "lines": 43,
+      "status": "identical",
+      "audited": { "object": "7c781dbafd08", "lines": [6, 48] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "d868cebabdae": {
+      "name": "CurrencyLibrary",
+      "kind": "library",
+      "lines": 90,
+      "status": "none"
+    },
+    "0c300b137a11": {
+      "name": "ITokenJar",
+      "kind": "interface",
+      "lines": 16,
+      "status": "none"
+    },
+    "e0512e2dd648": {
+      "name": "IReleaser",
+      "kind": "interface",
+      "lines": 16,
+      "status": "none"
+    },
+    "085378ba2edf": {
+      "name": "Owned",
+      "kind": "abstract",
+      "lines": 39,
+      "status": "none"
+    },
+    "c2daa67da28d": {
+      "name": "ResourceManager",
+      "kind": "abstract",
+      "lines": 38,
+      "status": "none"
+    },
+    "acdbeb9b9b53": {
+      "name": "Nonce",
+      "kind": "abstract",
+      "lines": 19,
+      "status": "none"
+    },
+    "4c32fa5ed2a3": {
+      "name": "SafeTransferLib",
+      "kind": "library",
+      "lines": 116,
+      "status": "differs",
+      "audited": { "object": "fa4488edf9a3", "lines": [8, 131] },
+      "reports": ["solmate-v6__audits__v6-Fixed-Point-Solutions"],
+      "added": [
+        [6, 6],
+        [11, 11],
+        [14, 14],
+        [27, 27],
+        [35, 35],
+        [39, 48],
+        [51, 51],
+        [59, 59],
+        [67, 67],
+        [70, 79],
+        [82, 82],
+        [90, 90],
+        [98, 98],
+        [101, 110],
+        [113, 113]
+      ],
+      "removed": [
+        [6, 6, 6],
+        [11, 10, 10],
+        [14, 13, 13],
+        [27, 21, 21],
+        [31, 24, 26],
+        [35, 31, 31],
+        [39, 35, 37],
+        [51, 40, 40],
+        [59, 44, 44],
+        [63, 47, 49],
+        [67, 54, 54],
+        [70, 57, 59],
+        [82, 62, 62],
+        [90, 66, 66],
+        [94, 69, 71],
+        [98, 76, 76],
+        [101, 79, 81],
+        [113, 84, 84],
+        [115, 86, 122]
+      ],
+      "covered": 92
+    },
+    "1600ba6ede63": {
+      "name": "ExchangeReleaser",
+      "kind": "abstract",
+      "lines": 39,
+      "status": "none"
+    },
+    "3a1ef8b63ef1": {
+      "name": "Firepit",
+      "kind": "contract",
+      "lines": 5,
+      "status": "none"
+    },
+    "3f9d0d854d9c": {
+      "name": "SafeMath",
+      "kind": "library",
+      "lines": 168,
+      "status": "identical",
+      "audited": { "object": "e1159f899dff", "lines": [27, 194] },
+      "reports": [
+        "hexens-polygon-zkevm-2023-02",
+        "sigmaprime-polygon-lxly-bridge-2024-02",
+        "spearbit-polygon-zkevm-contracts-2023-03"
+      ]
+    },
+    "db167b498ad1": {
+      "name": "Timelock",
+      "kind": "contract",
+      "lines": 107,
+      "status": "differs",
+      "audited": { "object": "40b50a202dcd", "lines": [29, 149] },
+      "reports": [
+        "secure3-mantle-v1-contest-2023-07",
+        "sigmaprime-mantle-l2-rollup-2023-07"
+      ],
+      "added": [
+        [1, 2],
+        [21, 21],
+        [24, 24],
+        [29, 29],
+        [31, 31],
+        [40, 40],
+        [48, 48],
+        [55, 55],
+        [57, 57],
+        [66, 66],
+        [75, 75],
+        [80, 81],
+        [94, 94],
+        [101, 105]
+      ],
+      "removed": [
+        [21, 24, 24],
+        [24, 27, 27],
+        [29, 32, 35],
+        [31, 37, 37],
+        [40, 46, 46],
+        [48, 54, 54],
+        [50, 56, 56],
+        [55, 62, 65],
+        [57, 67, 69],
+        [66, 78, 80],
+        [75, 90, 94],
+        [80, 99, 100],
+        [94, 113, 113]
+      ],
+      "covered": 91
+    },
+    "855689973a11": {
+      "name": "Uni",
+      "kind": "contract",
+      "lines": 390,
+      "status": "identical",
+      "audited": { "object": "e1159f899dff", "lines": [196, 596] },
+      "reports": [
+        "hexens-polygon-zkevm-2023-02",
+        "sigmaprime-polygon-lxly-bridge-2024-02",
+        "spearbit-polygon-zkevm-contracts-2023-03"
+      ]
+    },
+    "919501e6934f": {
+      "name": "IUniswapV3Factory",
+      "kind": "interface",
+      "lines": 73,
+      "status": "identical",
+      "audited": { "object": "8c953638d384", "lines": [6, 66] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "3eeae8cd598f": {
+      "name": "IUniswapV3PoolDeployer",
+      "kind": "interface",
+      "lines": 19,
+      "status": "identical",
+      "audited": { "object": "8776a081aa23", "lines": [8, 20] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "8614d448ca1f": {
+      "name": "IUniswapV3PoolImmutables",
+      "kind": "interface",
+      "lines": 30,
+      "status": "identical",
+      "audited": { "object": "f7c87028768a", "lines": [6, 35] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "b107006c5152": {
+      "name": "IUniswapV3PoolState",
+      "kind": "interface",
+      "lines": 110,
+      "status": "differs",
+      "audited": { "object": "48a5beba6436", "lines": [7, 109] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [[65, 68], [104, 108]],
+      "removed": [[73, 66, 68], [104, 101, 101]],
+      "covered": 101
+    },
+    "e2bee84b0de1": {
+      "name": "IUniswapV3PoolDerivedState",
+      "kind": "interface",
+      "lines": 34,
+      "status": "differs",
+      "audited": { "object": "1a59de42c5d0", "lines": [7, 32] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [[14, 32]],
+      "removed": [[1, 1, 10], [14, 24, 24]],
+      "covered": 25
+    },
+    "86c679d97aab": {
+      "name": "IUniswapV3PoolActions",
+      "kind": "interface",
+      "lines": 98,
+      "status": "identical",
+      "audited": { "object": "101ca93d6e03", "lines": [6, 92] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "df7bd0675943": {
+      "name": "IUniswapV3PoolOwnerActions",
+      "kind": "interface",
+      "lines": 18,
+      "status": "identical",
+      "audited": { "object": "2eeb24b7812c", "lines": [6, 21] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "e41c74af84d8": {
+      "name": "IUniswapV3PoolEvents",
+      "kind": "interface",
+      "lines": 116,
+      "status": "differs",
+      "audited": { "object": "7deb70c13c49", "lines": [6, 118] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [[72, 72]],
+      "removed": [],
+      "covered": 115
+    },
+    "455fbfba58ac": {
+      "name": "IUniswapV3Pool",
+      "kind": "interface",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "dfe5020b47cd", "lines": [16, 23] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "5103eec0044e": {
+      "name": "NoDelegateCall",
+      "kind": "abstract",
+      "lines": 22,
+      "status": "identical",
+      "audited": { "object": "daac1671a4c7", "lines": [6, 27] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
+    },
+    "aad491890f36": {
+      "name": "LowGasSafeMath",
+      "kind": "library",
+      "lines": 41,
+      "status": "identical",
+      "audited": { "object": "092a067f397a", "lines": [6, 36] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
+    },
+    "05266917f0d5": {
+      "name": "SafeCast",
+      "kind": "library",
+      "lines": 23,
+      "status": "identical",
+      "audited": { "object": "d84e2b059f2e", "lines": [6, 25] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
+    },
+    "d4a2af7bfb0e": {
+      "name": "TickMath",
+      "kind": "library",
+      "lines": 199,
+      "status": "identical",
+      "audited": { "object": "64e8fd9b3c5e", "lines": [7, 248] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "ad44de351743": {
+      "name": "LiquidityMath",
+      "kind": "library",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "a3669850aee1", "lines": [5, 15] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
+    },
+    "93d9cc12a404": {
+      "name": "Tick",
+      "kind": "library",
+      "lines": 172,
+      "status": "differs",
+      "audited": { "object": "c04f3782b240", "lines": [12, 155] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [[14, 24], [104, 106], [120, 128], [159, 161], [166, 168]],
+      "removed": [[120, 104, 108]],
+      "covered": 151
+    },
+    "de7dd3abbbce": {
+      "name": "BitMath",
+      "kind": "library",
+      "lines": 89,
+      "status": "identical",
+      "audited": { "object": "2d637eb4eb26", "lines": [6, 98] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
+    },
+    "3f462feb886b": {
+      "name": "TickBitmap",
+      "kind": "library",
+      "lines": 70,
+      "status": "identical",
+      "audited": { "object": "d0ef753e12b5", "lines": [9, 76] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
+    },
+    "c345fa76738b": {
+      "name": "FullMath",
+      "kind": "library",
+      "lines": 118,
+      "status": "identical",
+      "audited": { "object": "934e726462a7", "lines": [7, 116] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "db4870aea40a": {
+      "name": "FixedPoint128",
+      "kind": "library",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "8aa1e5b61ce8", "lines": [6, 8] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "71939b50b567": {
+      "name": "Position",
+      "kind": "library",
+      "lines": 78,
+      "status": "identical",
+      "audited": { "object": "9ac414611c86", "lines": [11, 79] },
+      "reports": ["trailofbits-uniswap-v3-core-2021-03"]
+    },
+    "ea9e8e52b91e": {
+      "name": "Oracle",
+      "kind": "library",
+      "lines": 315,
+      "status": "differs",
+      "audited": { "object": "5130ac00df1b", "lines": [11, 311] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [
+        [7, 7],
+        [30, 31],
+        [45, 50],
+        [242, 242],
+        [246, 246],
+        [254, 275],
+        [297, 297],
+        [301, 301],
+        [303, 303],
+        [311, 311]
+      ],
+      "removed": [
+        [7, 7, 7],
+        [30, 28, 28],
+        [45, 42, 42],
+        [242, 239, 239],
+        [246, 245, 245],
+        [253, 252, 266],
+        [254, 268, 268],
+        [297, 290, 290],
+        [301, 294, 294],
+        [303, 296, 297]
+      ],
+      "covered": 281
+    },
+    "4afb833fe729": {
+      "name": "IERC20Minimal",
+      "kind": "interface",
+      "lines": 47,
+      "status": "identical",
+      "audited": { "object": "7c781dbafd08", "lines": [6, 48] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "31a8cc41b835": {
+      "name": "FixedPoint96",
+      "kind": "library",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "1138570bc167", "lines": [7, 10] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "5024ee9859f6": {
+      "name": "UnsafeMath",
+      "kind": "library",
+      "lines": 12,
+      "status": "differs",
+      "audited": { "object": "34d6e4c7e269", "lines": [6, 13] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ],
+      "added": [[7, 9]],
+      "removed": [[7, 4, 5]],
+      "covered": 9
+    },
+    "90ad2da4d98a": {
+      "name": "SqrtPriceMath",
+      "kind": "library",
+      "lines": 215,
+      "status": "differs",
+      "audited": { "object": "b6baf5b1e12f", "lines": [13, 215] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [[150, 151]],
+      "removed": [],
+      "covered": 214
+    },
+    "ce6036b55095": {
+      "name": "IUniswapV3MintCallback",
+      "kind": "interface",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "aadec0e1605e", "lines": [6, 14] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "9a01ec21b4fa": {
+      "name": "TransferHelper",
+      "kind": "library",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "0ba362bf2665", "lines": [8, 19] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ],
+      "findings": { "trailofbits-uniswap-v3-core-2021-03": ["TOB-UNI-009"] }
+    },
+    "b449550ce0af": {
+      "name": "SwapMath",
+      "kind": "library",
+      "lines": 90,
+      "status": "identical",
+      "audited": { "object": "caabda2d5aff", "lines": [9, 87] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "60015c6fa2ba": {
+      "name": "IUniswapV3SwapCallback",
+      "kind": "interface",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "216d5ddf2e57", "lines": [6, 16] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "a724e854e1b5": {
+      "name": "IUniswapV3FlashCallback",
+      "kind": "interface",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "a416559a9f40", "lines": [6, 14] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "0899f3769dd6": {
+      "name": "UniswapV3Pool",
+      "kind": "contract",
+      "lines": 840,
+      "status": "differs",
+      "audited": { "object": "1b88538ae1c5", "lines": [34, 754] },
+      "reports": ["trailofbits-uniswap-v3-core-2021-03"],
+      "findings": { "trailofbits-uniswap-v3-core-2021-03": ["TOB-UNI-005"] },
+      "added": [
+        [111, 114],
+        [121, 124],
+        [126, 203],
+        [211, 211],
+        [365, 374],
+        [382, 384],
+        [394, 396],
+        [522, 527],
+        [591, 594],
+        [609, 700],
+        [704, 717],
+        [719, 722],
+        [756, 756]
+      ],
+      "removed": [
+        [7, 7, 7],
+        [66, 69, 70],
+        [114, 114, 114],
+        [124, 119, 119],
+        [126, 121, 127],
+        [211, 135, 135],
+        [366, 267, 267],
+        [403, 284, 284],
+        [406, 288, 288],
+        [418, 301, 301],
+        [421, 305, 305],
+        [591, 473, 473],
+        [609, 487, 566],
+        [712, 570, 577],
+        [719, 579, 579],
+        [756, 623, 623]
+      ],
+      "covered": 652
+    },
+    "012c0ce9dbfd": {
+      "name": "UniswapV3PoolDeployer",
+      "kind": "contract",
+      "lines": 31,
+      "status": "identical",
+      "audited": { "object": "752bb196d4b9", "lines": [8, 30] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
+    },
+    "79a488dde187": {
+      "name": "UniswapV3Factory",
+      "kind": "contract",
+      "lines": 61,
+      "status": "identical",
+      "audited": { "object": "c4258e6e4fa2", "lines": [13, 74] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
+    },
+    "752560edce43": {
+      "name": "GovernorBravoDelegatorStorage",
+      "kind": "contract",
+      "lines": 10,
+      "status": "none"
+    },
+    "1a7a08a41f9f": {
+      "name": "GovernorBravoEvents",
+      "kind": "contract",
+      "lines": 39,
+      "status": "none"
+    },
+    "0f2a047e34f1": {
+      "name": "GovernorBravoDelegator",
+      "kind": "contract",
+      "lines": 74,
+      "status": "none"
+    },
+    "87c8ad0dab2a": {
+      "name": "TimelockInterface",
+      "kind": "interface",
+      "lines": 9,
+      "status": "none"
+    },
+    "d880642aaa86": {
+      "name": "UniInterface",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "efdedd2ccbb6": {
+      "name": "GovernorBravoDelegateStorageV1",
+      "kind": "contract",
+      "lines": 101,
+      "status": "none"
+    },
+    "c09741b22c51": {
+      "name": "GovernorBravoDelegate",
+      "kind": "contract",
+      "lines": 382,
+      "status": "none"
+    },
+    "717995f719a1": {
+      "name": "IUniversalRouter",
+      "kind": "interface",
+      "lines": 22,
+      "status": "none"
+    },
+    "e730ab060eed": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 71,
+      "status": "differs",
+      "audited": { "object": "7c44280f07aa", "lines": [7, 23] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [[23, 23]],
+      "removed": [[23, 3, 3]],
+      "covered": 70
+    },
+    "cfd9b1798641": {
+      "name": "IWETH9",
+      "kind": "interface",
+      "lines": 7,
+      "status": "identical",
+      "audited": { "object": "9b1bfc70990f", "lines": [10, 16] },
+      "reports": [
+        "certora-vault-bridge-2025-05",
+        "certora-vault-bridge-fv-2025-06",
+        "certora-vault-bridge-v1-1-2025-11",
+        "sigmaprime-yield-exposed-token-2025-04"
+      ]
+    },
+    "ef0267624314": {
+      "name": "IEIP712",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "7cf036119eef": {
+      "name": "ISignatureTransfer",
+      "kind": "interface",
+      "lines": 126,
+      "status": "none"
+    },
+    "1808a305639e": {
+      "name": "IAllowanceTransfer",
+      "kind": "interface",
+      "lines": 157,
+      "status": "none"
+    },
+    "082aef68ad3f": {
+      "name": "IPermit2",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "9c14998efdbd": {
+      "name": "PaymentsImmutables",
+      "kind": "contract",
+      "lines": 12,
+      "status": "differs",
+      "audited": { "object": "2bba6afbc97f", "lines": [12, 23] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[5, 5], [9, 9]],
+      "removed": [[5, 5, 5], [9, 9, 9]],
+      "covered": 10
+    },
+    "eeddebe4e52a": {
+      "name": "ERC20",
+      "kind": "interface",
+      "lines": 6,
+      "status": "none"
+    },
+    "e51fe52c3c9f": {
+      "name": "BipsLibrary",
+      "kind": "library",
+      "lines": 13,
+      "status": "none"
+    },
+    "6cdf180828d9": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 23,
+      "status": "none"
+    },
+    "ff4da44d17a2": {
+      "name": "ActionConstants",
+      "kind": "library",
+      "lines": 14,
+      "status": "none"
+    },
+    "6c5b39353cbf": {
+      "name": "Payments",
+      "kind": "abstract",
+      "lines": 90,
+      "status": "differs",
+      "audited": { "object": "d15e0dd08582", "lines": [12, 115] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[3, 3], [16, 16], [31, 31], [35, 35], [61, 61]],
+      "removed": [
+        [7, 6, 9],
+        [16, 19, 19],
+        [29, 32, 34],
+        [31, 37, 37],
+        [35, 41, 41],
+        [61, 75, 75]
+      ],
+      "covered": 85
+    },
+    "e7ea5a3a68e8": {
+      "name": "UniswapImmutables",
+      "kind": "contract",
+      "lines": 20,
+      "status": "none"
+    },
+    "e8029bc16123": {
+      "name": "SafeCast160",
+      "kind": "library",
+      "lines": 11,
+      "status": "none"
+    },
+    "89c7b467ce40": {
+      "name": "Permit2Payments",
+      "kind": "abstract",
+      "lines": 37,
+      "status": "none"
+    },
+    "338dd97e6505": {
+      "name": "IUniswapV2Pair",
+      "kind": "interface",
+      "lines": 50,
+      "status": "identical",
+      "audited": { "object": "1f419229f028", "lines": [3, 55] },
+      "reports": ["trail-of-bits-celo-l2-2024-12-19"]
+    },
+    "171dfeda963d": {
+      "name": "UniswapV2Library",
+      "kind": "library",
+      "lines": 142,
+      "status": "none"
+    },
+    "a3f9a421d7eb": {
+      "name": "V2SwapRouter",
+      "kind": "abstract",
+      "lines": 85,
+      "status": "differs",
+      "audited": { "object": "8b39faaee4a3", "lines": [15, 109] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [
+        [0, 0],
+        [10, 10],
+        [15, 15],
+        [19, 19],
+        [24, 25],
+        [28, 28],
+        [47, 48],
+        [78, 78]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [4, 4, 4],
+        [6, 7, 10],
+        [10, 17, 17],
+        [15, 22, 22],
+        [19, 26, 26],
+        [24, 31, 32],
+        [28, 35, 35],
+        [47, 54, 54],
+        [78, 86, 86]
+      ],
+      "covered": 75
+    },
+    "d9779b26ea7d": {
+      "name": "PoolIdLibrary",
+      "kind": "library",
+      "lines": 9,
+      "status": "none"
+    },
+    "f8d7c3cdea7f": {
+      "name": "IProtocolFees",
+      "kind": "interface",
+      "lines": 44,
+      "status": "none"
+    },
+    "f3da1b39a64b": {
+      "name": "IERC6909Claims",
+      "kind": "interface",
+      "lines": 62,
+      "status": "none"
+    },
+    "32868b9d1646": {
+      "name": "IExtsload",
+      "kind": "interface",
+      "lines": 17,
+      "status": "none"
+    },
+    "6880a34d96c3": {
+      "name": "IExttload",
+      "kind": "interface",
+      "lines": 11,
+      "status": "none"
+    },
+    "e08d1c1a2eed": {
+      "name": "SafeCast",
+      "kind": "library",
+      "lines": 53,
+      "status": "none"
+    },
+    "3653bab5b572": {
+      "name": "sub",
+      "kind": "function",
+      "lines": 13,
+      "status": "none"
+    },
+    "3ff805bb4450": {
+      "name": "toBalanceDelta",
+      "kind": "function",
+      "lines": 5,
+      "status": "none"
+    },
+    "3e6f203efb69": {
+      "name": "add",
+      "kind": "function",
+      "lines": 13,
+      "status": "none"
+    },
+    "c1f0dd571ba0": {
+      "name": "eq",
+      "kind": "function",
+      "lines": 3,
+      "status": "none"
+    },
+    "3976db5a24b9": {
+      "name": "neq",
+      "kind": "function",
+      "lines": 3,
+      "status": "none"
+    },
+    "87ab0f8757e3": {
+      "name": "BalanceDeltaLibrary",
+      "kind": "library",
+      "lines": 16,
+      "status": "none"
+    },
+    "20d1f7902155": {
+      "name": "IPoolManager",
+      "kind": "interface",
+      "lines": 221,
+      "status": "none"
+    },
+    "2838410a2c2d": {
+      "name": "IHooks",
+      "kind": "interface",
+      "lines": 141,
+      "status": "none"
+    },
+    "bf71df1a681b": {
+      "name": "IImmutableState",
+      "kind": "interface",
+      "lines": 4,
+      "status": "none"
+    },
+    "2333fc833fd1": {
+      "name": "PathKeyLibrary",
+      "kind": "library",
+      "lines": 19,
+      "status": "none"
+    },
+    "f9d502f7c84e": {
+      "name": "IV4Router",
+      "kind": "interface",
+      "lines": 40,
+      "status": "none"
+    },
+    "f9bcb55705ab": {
+      "name": "CalldataDecoder",
+      "kind": "library",
+      "lines": 383,
+      "status": "none"
+    },
+    "6b6e8555eaca": {
+      "name": "BytesLib",
+      "kind": "library",
+      "lines": 73,
+      "status": "none"
+    },
+    "a857511a6247": {
+      "name": "V3Path",
+      "kind": "library",
+      "lines": 36,
+      "status": "none"
+    },
+    "7615c17c1053": {
+      "name": "SafeCast_1",
+      "kind": "library",
+      "lines": 23,
+      "status": "identical",
+      "audited": {
+        "object": "d84e2b059f2e",
+        "lines": [6, 25],
+        "name": "SafeCast"
+      },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
+    },
+    "bb75b7252f4e": {
+      "name": "MaxInputAmount",
+      "kind": "library",
+      "lines": 16,
+      "status": "none"
+    },
+    "e246596addd0": {
+      "name": "V3SwapRouter",
+      "kind": "abstract",
+      "lines": 156,
+      "status": "differs",
+      "audited": { "object": "8a5e6d6166ae", "lines": [20, 208] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [
+        [0, 0],
+        [3, 4],
+        [17, 46],
+        [62, 62],
+        [108, 108],
+        [116, 116],
+        [129, 129],
+        [146, 146],
+        [148, 148]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [3, 3, 3],
+        [11, 10, 17],
+        [17, 24, 59],
+        [62, 75, 75],
+        [108, 123, 123],
+        [116, 133, 133],
+        [118, 135, 148],
+        [129, 160, 160],
+        [146, 179, 179],
+        [148, 181, 181]
+      ],
+      "covered": 127
+    },
+    "d65413113711": {
+      "name": "ImmutableState",
+      "kind": "contract",
+      "lines": 8,
+      "status": "none"
+    },
+    "e9845d254956": {
+      "name": "IUnlockCallback",
+      "kind": "interface",
+      "lines": 6,
+      "status": "none"
+    },
+    "ec680b890986": {
+      "name": "SafeCallback",
+      "kind": "abstract",
+      "lines": 21,
+      "status": "none"
+    },
+    "a402a28fc346": {
+      "name": "BaseActionsRouter",
+      "kind": "abstract",
+      "lines": 64,
+      "status": "none"
+    },
+    "f35e7b53d478": {
+      "name": "CurrencyReserves",
+      "kind": "library",
+      "lines": 33,
+      "status": "none"
+    },
+    "38968a362cab": {
+      "name": "NonzeroDeltaCount",
+      "kind": "library",
+      "lines": 29,
+      "status": "none"
+    },
+    "0d61da2b0589": {
+      "name": "Lock",
+      "kind": "library",
+      "lines": 23,
+      "status": "none"
+    },
+    "9fbc0d4be25f": {
+      "name": "TransientStateLibrary",
+      "kind": "library",
+      "lines": 39,
+      "status": "none"
+    },
+    "8b13b9919bdf": {
+      "name": "DeltaResolver",
+      "kind": "abstract",
+      "lines": 112,
+      "status": "none"
+    },
+    "07c990bd2f42": {
+      "name": "Actions",
+      "kind": "library",
+      "lines": 43,
+      "status": "none"
+    },
+    "98cad1a20c89": {
+      "name": "BitMath",
+      "kind": "library",
+      "lines": 43,
+      "status": "none"
+    },
+    "55a53b12b5d9": {
+      "name": "TickMath",
+      "kind": "library",
+      "lines": 229,
+      "status": "none"
+    },
+    "65a282ac4b54": {
+      "name": "V4Router",
+      "kind": "abstract",
+      "lines": 149,
+      "status": "none"
+    },
+    "3dd14e2e90fd": {
+      "name": "V4SwapRouter",
+      "kind": "abstract",
+      "lines": 7,
+      "status": "none"
+    },
+    "beaa3f82e068": {
+      "name": "IPoolInitializer",
+      "kind": "interface",
+      "lines": 15,
+      "status": "none"
+    },
+    "fcf64d744ef9": {
+      "name": "IPeripheryPayments",
+      "kind": "interface",
+      "lines": 23,
+      "status": "none"
+    },
+    "2bd97b603d69": {
+      "name": "IPeripheryImmutableState",
+      "kind": "interface",
+      "lines": 7,
+      "status": "differs",
+      "audited": { "object": "20c17044f667", "lines": [6, 15] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [],
+      "removed": [[3, 3, 5]],
+      "covered": 7
+    },
+    "f98775a7d0f9": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": [
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "6052ff08685e": {
+      "name": "IERC721",
+      "kind": "interface",
+      "lines": 133,
+      "status": "differs",
+      "audited": { "object": "1eb423f63bd3", "lines": [11, 132] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[115, 115]],
+      "removed": [[115, 104, 104]],
+      "covered": 132
+    },
+    "0f375b69efdd": {
+      "name": "IERC721Metadata",
+      "kind": "interface",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "3d2846231b4f", "lines": [12, 27] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "460b9c96c173": {
+      "name": "IERC721Enumerable",
+      "kind": "interface",
+      "lines": 18,
+      "status": "identical",
+      "audited": { "object": "75b04581f7a2", "lines": [12, 29] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "9e8c542ee11f": {
+      "name": "IERC721Permit",
+      "kind": "interface",
+      "lines": 25,
+      "status": "none"
+    },
+    "cd23b102fb09": {
+      "name": "INonfungiblePositionManager",
+      "kind": "interface",
+      "lines": 164,
+      "status": "none"
+    },
+    "e15413b9a9e5": {
+      "name": "PositionInfoLibrary",
+      "kind": "library",
+      "lines": 71,
+      "status": "none"
+    },
+    "8d85cdcb2ea7": {
+      "name": "ISubscriber",
+      "kind": "interface",
+      "lines": 30,
+      "status": "none"
+    },
+    "12a17b2f1668": {
+      "name": "INotifier",
+      "kind": "interface",
+      "lines": 47,
+      "status": "none"
+    },
+    "c607e24006d3": {
+      "name": "IERC721Permit_v4",
+      "kind": "interface",
+      "lines": 33,
+      "status": "none"
+    },
+    "728213b4631e": {
+      "name": "IEIP712_v4",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "0213f0b7e63d": {
+      "name": "IMulticall_v4",
+      "kind": "interface",
+      "lines": 8,
+      "status": "none"
+    },
+    "b2fe25f717a3": {
+      "name": "IPoolInitializer_v4",
+      "kind": "interface",
+      "lines": 8,
+      "status": "none"
+    },
+    "18053efa55e8": {
+      "name": "IUnorderedNonce",
+      "kind": "interface",
+      "lines": 12,
+      "status": "none"
+    },
+    "73d5e7c743d1": {
+      "name": "IPermit2Forwarder",
+      "kind": "interface",
+      "lines": 23,
+      "status": "none"
+    },
+    "e32bc09ce39e": {
+      "name": "IPositionManager",
+      "kind": "interface",
+      "lines": 51,
+      "status": "none"
+    },
+    "e643ceec65cf": {
+      "name": "MigratorImmutables",
+      "kind": "contract",
+      "lines": 11,
+      "status": "none"
+    },
+    "f54a78682038": {
+      "name": "V3ToV4Migrator",
+      "kind": "abstract",
+      "lines": 92,
+      "status": "none"
+    },
+    "2a0f525eed5e": {
+      "name": "Locker",
+      "kind": "library",
+      "lines": 21,
+      "status": "none"
+    },
+    "f7f74608f292": {
+      "name": "Lock_1",
+      "kind": "contract",
+      "lines": 24,
+      "status": "none"
+    },
+    "1384be80bdf1": {
+      "name": "Commands",
+      "kind": "library",
+      "lines": 40,
+      "status": "differs",
+      "audited": { "object": "5ff67fd4d7ae", "lines": [6, 38] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[16, 16], [26, 37]],
+      "removed": [[16, 15, 19], [26, 29, 30]],
+      "covered": 34
+    },
+    "1702238ec5a9": {
+      "name": "Dispatcher",
+      "kind": "abstract",
+      "lines": 279,
+      "status": "none"
+    },
+    "ea3ce8b03b3d": {
+      "name": "UniversalRouter",
+      "kind": "contract",
+      "lines": 54,
+      "status": "none"
+    },
+    "9e776d7c8a79": {
+      "name": "IV2SwapRouter",
+      "kind": "interface",
+      "lines": 29,
+      "status": "none"
+    },
+    "fa28dce21142": {
+      "name": "IV3SwapRouter",
+      "kind": "interface",
+      "lines": 61,
+      "status": "none"
+    },
+    "6220cc78f8a2": {
+      "name": "IApproveAndCall",
+      "kind": "interface",
+      "lines": 59,
+      "status": "none"
+    },
+    "d3ea30662807": {
+      "name": "IMulticall",
+      "kind": "interface",
+      "lines": 7,
+      "status": "none"
+    },
+    "804ae9f8790a": {
+      "name": "IMulticallExtended",
+      "kind": "interface",
+      "lines": 18,
+      "status": "none"
+    },
+    "ed9bc2986afc": {
+      "name": "ISelfPermit",
+      "kind": "interface",
+      "lines": 71,
+      "status": "none"
+    },
+    "62aeef498c71": {
+      "name": "ISwapRouter02",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "2d3ff1843615": {
+      "name": "IImmutableState",
+      "kind": "interface",
+      "lines": 7,
+      "status": "none"
+    },
+    "960bb881fcdb": {
+      "name": "ImmutableState",
+      "kind": "abstract",
+      "lines": 11,
+      "status": "none"
+    },
+    "22b6bc34f5ca": {
+      "name": "IPeripheryPaymentsExtended",
+      "kind": "interface",
+      "lines": 22,
+      "status": "none"
+    },
+    "9c1f332f77a3": {
+      "name": "IPeripheryPaymentsWithFee",
+      "kind": "interface",
+      "lines": 22,
+      "status": "none"
+    },
+    "6885cfb89df9": {
+      "name": "IPeripheryPaymentsWithFeeExtended",
+      "kind": "interface",
+      "lines": 20,
+      "status": "none"
+    },
+    "95ecd4eddd10": {
+      "name": "PeripheryImmutableState",
+      "kind": "abstract",
+      "lines": 11,
+      "status": "differs",
+      "audited": { "object": "afc86bbe5db2", "lines": [9, 22] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [],
+      "removed": [[3, 3, 4], [9, 11, 11]],
+      "covered": 11
+    },
+    "756a24936234": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 70,
+      "status": "identical",
+      "audited": { "object": "41ede9d660b2", "lines": [11, 80] },
+      "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
+    },
+    "87f8d353251c": {
+      "name": "TransferHelper",
+      "kind": "library",
+      "lines": 55,
+      "status": "differs",
+      "audited": { "object": "22c69a78be6d", "lines": [10, 40] },
+      "reports": ["trail-of-bits-celo-l2-2024-12-19"],
+      "added": [[13, 14], [28, 28], [42, 42], [51, 52]],
+      "removed": [[13, 19, 19], [28, 11, 11], [42, 3, 3], [51, 27, 28]],
+      "covered": 49
+    },
+    "5c7491e76d37": {
+      "name": "PeripheryPayments",
+      "kind": "abstract",
+      "lines": 58,
+      "status": "none"
+    },
+    "4a63bde82807": {
+      "name": "PeripheryPaymentsExtended",
+      "kind": "abstract",
+      "lines": 21,
+      "status": "none"
+    },
+    "4ff8e576728b": {
+      "name": "PeripheryPaymentsWithFee",
+      "kind": "abstract",
+      "lines": 43,
+      "status": "none"
+    },
+    "6a461f8ca403": {
+      "name": "PeripheryPaymentsWithFeeExtended",
+      "kind": "abstract",
+      "lines": 24,
+      "status": "none"
+    },
+    "dc9af2a56ce9": {
+      "name": "UniswapV2Library",
+      "kind": "library",
+      "lines": 84,
+      "status": "differs",
+      "audited": { "object": "6df195b77522", "lines": [7, 110] },
+      "reports": ["trail-of-bits-celo-l2-2024-12-19"],
+      "added": [
+        [1, 1],
+        [5, 5],
+        [7, 7],
+        [11, 14],
+        [20, 25],
+        [32, 35],
+        [38, 38],
+        [49, 49],
+        [63, 63],
+        [70, 73],
+        [75, 75],
+        [79, 79]
+      ],
+      "removed": [
+        [1, 1, 1],
+        [5, 49, 49],
+        [7, 51, 51],
+        [11, 55, 55],
+        [20, 64, 64],
+        [30, 69, 75],
+        [32, 4, 4],
+        [38, 12, 13],
+        [41, 16, 30],
+        [49, 84, 84],
+        [63, 98, 98],
+        [70, 33, 33],
+        [75, 38, 38],
+        [79, 42, 42]
+      ],
+      "covered": 58
+    },
+    "0441ac0ae45a": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 10,
+      "status": "none"
+    },
+    "71d1cc0b672c": {
+      "name": "V2SwapRouter",
+      "kind": "abstract",
+      "lines": 79,
+      "status": "none"
+    },
+    "1b79f24492ce": {
+      "name": "IOracleSlippage",
+      "kind": "interface",
+      "lines": 25,
+      "status": "none"
+    },
+    "7282fbe2833b": {
+      "name": "BlockTimestamp",
+      "kind": "abstract",
+      "lines": 7,
+      "status": "none"
+    },
+    "e400903a5742": {
+      "name": "BytesLib",
+      "kind": "library",
+      "lines": 91,
+      "status": "none"
+    },
+    "e8885accd552": {
+      "name": "Path",
+      "kind": "library",
+      "lines": 63,
+      "status": "none"
+    },
+    "a4124bbf80de": {
+      "name": "PoolAddress",
+      "kind": "library",
+      "lines": 44,
+      "status": "differs",
+      "audited": { "object": "029c06a7e748", "lines": [5, 47] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[1, 1], [37, 37]],
+      "removed": [[1, 1, 2], [37, 36, 36]],
+      "covered": 42
+    },
+    "ecdf747798ff": {
+      "name": "OracleLibrary",
+      "kind": "library",
+      "lines": 152,
+      "status": "none"
+    },
+    "37b0dbb1441d": {
+      "name": "OracleSlippage",
+      "kind": "abstract",
+      "lines": 158,
+      "status": "none"
+    },
+    "7e790b9034c2": {
+      "name": "CallbackValidation",
+      "kind": "library",
+      "lines": 29,
+      "status": "none"
+    },
+    "52c595b90978": {
+      "name": "V3SwapRouter",
+      "kind": "abstract",
+      "lines": 219,
+      "status": "differs",
+      "audited": {
+        "object": "557352983901",
+        "lines": [24, 226],
+        "name": "SwapRouter"
+      },
+      "reports": ["abdk-uniswap-v3-periphery-part1-2021-04"],
+      "added": [
+        [0, 0],
+        [31, 31],
+        [50, 51],
+        [63, 66],
+        [86, 86],
+        [92, 98],
+        [103, 106],
+        [113, 121],
+        [157, 160]
+      ],
+      "removed": [
+        [0, 0, 7],
+        [10, 17, 18],
+        [51, 47, 48],
+        [86, 78, 78],
+        [87, 82, 82],
+        [103, 89, 89],
+        [113, 99, 99],
+        [121, 102, 102],
+        [187, 168, 168],
+        [207, 189, 189]
+      ],
+      "covered": 195
+    },
+    "940c8fe1ca43": {
+      "name": "IERC721",
+      "kind": "interface",
+      "lines": 120,
+      "status": "differs",
+      "audited": { "object": "1eb423f63bd3", "lines": [11, 132] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[96, 96]],
+      "removed": [[96, 104, 104]],
+      "covered": 119
+    },
+    "f2e49a145e0d": {
+      "name": "IERC721Metadata",
+      "kind": "interface",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "3d2846231b4f", "lines": [12, 27] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "66b998e3b888": {
+      "name": "IERC721Enumerable",
+      "kind": "interface",
+      "lines": 19,
+      "status": "differs",
+      "audited": { "object": "75b04581f7a2", "lines": [12, 29] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[11, 11]],
+      "removed": [[11, 10, 10]],
+      "covered": 18
+    },
+    "31e62c3700db": {
+      "name": "ApproveAndCall",
+      "kind": "abstract",
+      "lines": 113,
+      "status": "none"
+    },
+    "035bd6b5e1ee": {
+      "name": "Multicall",
+      "kind": "abstract",
+      "lines": 20,
+      "status": "none"
+    },
+    "e36328dffc44": {
+      "name": "PeripheryValidation",
+      "kind": "abstract",
+      "lines": 6,
+      "status": "none"
+    },
+    "922dc01600fd": {
+      "name": "PeripheryValidationExtended",
+      "kind": "abstract",
+      "lines": 6,
+      "status": "none"
+    },
+    "9d08207c2552": {
+      "name": "MulticallExtended",
+      "kind": "abstract",
+      "lines": 23,
+      "status": "none"
+    },
+    "8bbdc5d6ef3d": {
+      "name": "IERC20Permit",
+      "kind": "interface",
+      "lines": 39,
+      "status": "identical",
+      "audited": { "object": "979554d4061c", "lines": [42, 83] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "48441324a717": {
+      "name": "IERC20PermitAllowed",
+      "kind": "interface",
+      "lines": 22,
+      "status": "none"
+    },
+    "4664291b7820": {
+      "name": "SelfPermit",
+      "kind": "abstract",
+      "lines": 50,
+      "status": "none"
+    },
+    "36ee06c092a7": {
+      "name": "SwapRouter02",
+      "kind": "contract",
+      "lines": 8,
+      "status": "none"
+    },
+    "0231771c1ce5": {
+      "name": "Multicall",
+      "kind": "abstract",
+      "lines": 20,
+      "status": "none"
+    },
+    "f04119ddc474": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 10,
+      "status": "differs",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[1, 1], [5, 6]],
+      "removed": [[1, 1, 1], [5, 5, 5]],
+      "covered": 7
+    },
+    "b0c2d6c6c5ad": {
+      "name": "ERC165",
+      "kind": "abstract",
+      "lines": 42,
+      "status": "differs",
+      "audited": { "object": "034ee911fe4b", "lines": [10, 44] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [[1, 4], [11, 11], [14, 14], [22, 22], [37, 38]],
+      "removed": [[1, 1, 5], [11, 16, 17], [22, 23, 23], [37, 30, 31]],
+      "covered": 36
+    },
+    "724791df245a": {
+      "name": "SafeMath",
+      "kind": "library",
+      "lines": 197,
+      "status": "differs",
+      "audited": { "object": "e1159f899dff", "lines": [27, 194] },
+      "reports": [
+        "hexens-polygon-zkevm-2023-02",
+        "sigmaprime-polygon-lxly-bridge-2024-02",
+        "spearbit-polygon-zkevm-contracts-2023-03"
+      ],
+      "added": [
+        [1, 56],
+        [58, 58],
+        [64, 64],
+        [74, 74],
+        [80, 80],
+        [84, 85],
+        [114, 114],
+        [118, 119],
+        [135, 136],
+        [154, 154],
+        [174, 174],
+        [193, 193]
+      ],
+      "removed": [
+        [72, 15, 29],
+        [85, 40, 40],
+        [104, 79, 100],
+        [119, 114, 114],
+        [136, 149, 149],
+        [154, 53, 55],
+        [174, 131, 134],
+        [193, 164, 164]
+      ],
+      "covered": 165
+    },
+    "9f1625bb6f8b": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 182,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[19, 26], [112, 112], [136, 136], [160, 160], [162, 180]],
+      "removed": [
+        [26, 28, 32],
+        [112, 122, 122],
+        [136, 149, 149],
+        [160, 175, 175],
+        [162, 177, 204]
+      ],
+      "covered": 162
+    },
+    "3db0a87d5ccf": {
+      "name": "EnumerableSet",
+      "kind": "library",
+      "lines": 269,
+      "status": "differs",
+      "audited": { "object": "272851b2f81b", "lines": [41, 378] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[54, 63], [102, 102], [213, 213]],
+      "removed": [
+        [54, 54, 62],
+        [105, 103, 114],
+        [159, 169, 188],
+        [213, 243, 262],
+        [268, 317, 336]
+      ],
+      "covered": 265
+    },
+    "58b33abca503": {
+      "name": "EnumerableMap",
+      "kind": "library",
+      "lines": 238,
+      "status": "none"
+    },
+    "06313a041463": {
+      "name": "Strings",
+      "kind": "library",
+      "lines": 27,
+      "status": "none"
+    },
+    "4af1c95664fc": {
+      "name": "IERC721Receiver",
+      "kind": "interface",
+      "lines": 12,
+      "status": "identical",
+      "audited": { "object": "f93d219f21bd", "lines": [11, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "d1212597348d": {
+      "name": "ERC721",
+      "kind": "contract",
+      "lines": 458,
+      "status": "none"
+    },
+    "1c61dc9bf092": {
+      "name": "ChainId",
+      "kind": "library",
+      "lines": 9,
+      "status": "none"
+    },
+    "b0a377b19c85": {
+      "name": "IERC1271",
+      "kind": "interface",
+      "lines": 10,
+      "status": "none"
+    },
+    "aaba7035c139": {
+      "name": "ERC721Permit",
+      "kind": "abstract",
+      "lines": 73,
+      "status": "none"
+    },
+    "e8895f6d2b4b": {
+      "name": "PoolInitializer",
+      "kind": "abstract",
+      "lines": 22,
+      "status": "differs",
+      "audited": { "object": "3101c4f1a7b3", "lines": [13, 36] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[9, 9], [12, 13], [15, 15], [17, 17]],
+      "removed": [
+        [8, 8, 9],
+        [9, 11, 11],
+        [12, 14, 15],
+        [15, 17, 17],
+        [17, 19, 19]
+      ],
+      "covered": 17
+    },
+    "fe33a7eef35b": {
+      "name": "PeripheryPayments",
+      "kind": "abstract",
+      "lines": 58,
+      "status": "none"
+    },
+    "e53bc1dc3e2c": {
+      "name": "LiquidityAmounts",
+      "kind": "library",
+      "lines": 129,
+      "status": "none"
+    },
+    "a6a54bdc01b1": {
+      "name": "LiquidityManagement",
+      "kind": "abstract",
+      "lines": 73,
+      "status": "none"
+    },
+    "4a8615d13939": {
+      "name": "PositionKey",
+      "kind": "library",
+      "lines": 10,
+      "status": "none"
+    },
+    "1c9e6d49832e": {
+      "name": "INonfungibleTokenPositionDescriptor",
+      "kind": "interface",
+      "lines": 16,
+      "status": "none"
+    },
+    "94298f0647be": {
+      "name": "NonfungiblePositionManager",
+      "kind": "contract",
+      "lines": 378,
+      "status": "differs",
+      "audited": { "object": "f486ba94eacc", "lines": [23, 384] },
+      "reports": ["abdk-uniswap-v3-periphery-part1-2021-04"],
+      "findings": { "abdk-uniswap-v3-periphery-part1-2021-04": ["CVF-24"] },
+      "added": [[5, 5], [294, 296], [338, 344], [350, 350]],
+      "removed": [[94, 92, 111], [338, 327, 328], [350, 334, 334]],
+      "covered": 368
+    },
+    "acbe97526d13": {
+      "name": "ISwapRouter",
+      "kind": "interface",
+      "lines": 59,
+      "status": "differs",
+      "audited": { "object": "002c382d5cd8", "lines": [6, 64] },
+      "reports": ["solidified-aztec-liquity-bridge-2022-06-14"],
+      "added": [[0, 0]],
+      "removed": [[0, 0, 0]],
+      "covered": 58
+    },
+    "68a1ec830a52": {
+      "name": "Path",
+      "kind": "library",
+      "lines": 55,
+      "status": "none"
+    },
+    "51d2bec1333b": {
+      "name": "SwapRouter",
+      "kind": "contract",
+      "lines": 223,
+      "status": "differs",
+      "audited": { "object": "557352983901", "lines": [24, 226] },
+      "reports": ["abdk-uniswap-v3-periphery-part1-2021-04"],
+      "added": [[4, 4], [40, 40], [71, 73], [153, 155]],
+      "removed": [[4, 4, 4]],
+      "covered": 219
+    },
+    "31847c866d87": {
+      "name": "IV3OpenFeeAdapter",
+      "kind": "interface",
+      "lines": 198,
+      "status": "none"
+    },
+    "063095b611fd": {
+      "name": "ArrayLib",
+      "kind": "library",
+      "lines": 14,
+      "status": "none"
+    },
+    "ab3346991935": {
+      "name": "V3OpenFeeAdapter",
+      "kind": "contract",
+      "lines": 281,
+      "status": "none"
+    },
+    "b1b74e1f9c50": {
+      "name": "TokenJar",
+      "kind": "contract",
+      "lines": 33,
+      "status": "none"
+    }
+  },
+  "flats": {
+    "0b9cfea2e127e1512df791e555a0395d7c21d800c5eb5a5e26a5e73c5812f199": [
+      ["021b3f775c4c", 4],
+      ["02f5dab37117", 134],
+      ["bc141126526e", 168],
+      ["8ba5ffb53834", 176],
+      ["bf1755ad67f4", 220],
+      ["69c2cb66c97f", 226],
+      ["c2890da6c757", 349],
+      ["d4f1bd62acde", 504],
+      ["7e6c70ae6d21", 642],
+      ["808062d40b2a", 791],
+      ["da4a539f3d95", 835],
+      ["5013355428bd", 969]
+    ],
+    "b07361ab0905729a31cc9ec4e335f348b0d4f652fb63e0f2aebda9365dfe8784": [
+      ["05cbf499d954", 2],
+      ["34d45d344638", 9],
+      ["e70ddd29b335", 39],
+      ["3496e84b22cc", 47],
+      ["38890f868cc8", 51],
+      ["b7db2c7e9a9c", 55],
+      ["6385a366db1d", 59],
+      ["ae9aec7381bc", 70],
+      ["1620362836e5", 185],
+      ["d868cebabdae", 231],
+      ["0c300b137a11", 328],
+      ["e0512e2dd648", 345],
+      ["085378ba2edf", 364],
+      ["c2daa67da28d", 407],
+      ["acdbeb9b9b53", 450],
+      ["4c32fa5ed2a3", 473],
+      ["1600ba6ede63", 602],
+      ["3a1ef8b63ef1", 644]
+    ],
+    "76cfb7ea6698e731470f40ef6b3ad9df1e8edc2860ad0b419796dea273d3209e": [
+      ["3f9d0d854d9c", 17],
+      ["db167b498ad1", 186]
+    ],
+    "aca66259b04e71a19a841c0c773e47e0765e01df86465f671e3d61211710719a": [
+      ["3f9d0d854d9c", 19],
+      ["855689973a11", 188]
+    ],
+    "b35ad4b1b1fce7156612a572fa25d4ac94398281ada134f7bd90de987d8855af": [
+      ["919501e6934f", 3],
+      ["3eeae8cd598f", 81],
+      ["8614d448ca1f", 103],
+      ["b107006c5152", 137],
+      ["e2bee84b0de1", 251],
+      ["86c679d97aab", 288],
+      ["df7bd0675943", 389],
+      ["e41c74af84d8", 410],
+      ["455fbfba58ac", 531],
+      ["5103eec0044e", 544],
+      ["aad491890f36", 569],
+      ["05266917f0d5", 613],
+      ["d4a2af7bfb0e", 640],
+      ["ad44de351743", 841],
+      ["93d9cc12a404", 857],
+      ["de7dd3abbbce", 1032],
+      ["3f462feb886b", 1125],
+      ["c345fa76738b", 1199],
+      ["db4870aea40a", 1320],
+      ["71939b50b567", 1327],
+      ["ea9e8e52b91e", 1413],
+      ["4afb833fe729", 1731],
+      ["31a8cc41b835", 1782],
+      ["5024ee9859f6", 1789],
+      ["90ad2da4d98a", 1804],
+      ["ce6036b55095", 2022],
+      ["9a01ec21b4fa", 2038],
+      ["b449550ce0af", 2057],
+      ["60015c6fa2ba", 2150],
+      ["a724e854e1b5", 2169],
+      ["0899f3769dd6", 2183],
+      ["012c0ce9dbfd", 3024],
+      ["79a488dde187", 3058]
+    ],
+    "4705ed63b3a4915ec085657f7bd1e3363236ca25d513feaa1f9c8cf73fbeeae7": [
+      ["752560edce43", 3],
+      ["1a7a08a41f9f", 14],
+      ["0f2a047e34f1", 54]
+    ],
+    "aef081f3cbce46c38475469da5e205795ed726a9852648e06b1ce904c658d26d": [
+      ["752560edce43", 3],
+      ["87c8ad0dab2a", 14],
+      ["d880642aaa86", 24],
+      ["efdedd2ccbb6", 34],
+      ["1a7a08a41f9f", 136],
+      ["c09741b22c51", 176]
+    ],
+    "70ab94d7268fdc4dd3c36416e057086cce21af42a5642bbdb3aa2e265e266346": [
+      ["717995f719a1", 3],
+      ["e730ab060eed", 29],
+      ["cfd9b1798641", 102],
+      ["ef0267624314", 110],
+      ["7cf036119eef", 117],
+      ["1808a305639e", 247],
+      ["082aef68ad3f", 407],
+      ["9c14998efdbd", 416],
+      ["eeddebe4e52a", 430],
+      ["69c2cb66c97f", 441],
+      ["e51fe52c3c9f", 562],
+      ["6cdf180828d9", 578],
+      ["ff4da44d17a2", 605],
+      ["6c5b39353cbf", 622],
+      ["e7ea5a3a68e8", 720],
+      ["e8029bc16123", 741],
+      ["89c7b467ce40", 755],
+      ["338dd97e6505", 793],
+      ["171dfeda963d", 846],
+      ["a3f9a421d7eb", 990],
+      ["60015c6fa2ba", 1078],
+      ["d9779b26ea7d", 1098],
+      ["3496e84b22cc", 1110],
+      ["38890f868cc8", 1114],
+      ["b7db2c7e9a9c", 1118],
+      ["6385a366db1d", 1122],
+      ["ae9aec7381bc", 1133],
+      ["1620362836e5", 1248],
+      ["d868cebabdae", 1294],
+      ["f8d7c3cdea7f", 1390],
+      ["f3da1b39a64b", 1436],
+      ["32868b9d1646", 1500],
+      ["6880a34d96c3", 1519],
+      ["e08d1c1a2eed", 1533],
+      ["3653bab5b572", 1589],
+      ["3ff805bb4450", 1603],
+      ["3e6f203efb69", 1609],
+      ["c1f0dd571ba0", 1623],
+      ["3976db5a24b9", 1627],
+      ["87ab0f8757e3", 1634],
+      ["20d1f7902155", 1658],
+      ["2838410a2c2d", 1890],
+      ["bf71df1a681b", 2048],
+      ["2333fc833fd1", 2055],
+      ["f9d502f7c84e", 2087],
+      ["f9bcb55705ab", 2129],
+      ["6b6e8555eaca", 2513],
+      ["a857511a6247", 2588],
+      ["7615c17c1053", 2627],
+      ["bb75b7252f4e", 2652],
+      ["8614d448ca1f", 2671],
+      ["b107006c5152", 2705],
+      ["e2bee84b0de1", 2819],
+      ["86c679d97aab", 2856],
+      ["df7bd0675943", 2957],
+      ["e41c74af84d8", 2978],
+      ["455fbfba58ac", 3099],
+      ["e246596addd0", 3111],
+      ["d65413113711", 3270],
+      ["e9845d254956", 3280],
+      ["ec680b890986", 3289],
+      ["a402a28fc346", 3313],
+      ["f35e7b53d478", 3378],
+      ["38968a362cab", 3415],
+      ["0d61da2b0589", 3447],
+      ["9fbc0d4be25f", 3472],
+      ["8b13b9919bdf", 3514],
+      ["07c990bd2f42", 3630],
+      ["98cad1a20c89", 3677],
+      ["55a53b12b5d9", 3724],
+      ["65a282ac4b54", 3958],
+      ["3dd14e2e90fd", 4109],
+      ["beaa3f82e068", 4120],
+      ["fcf64d744ef9", 4138],
+      ["2bd97b603d69", 4164],
+      ["f98775a7d0f9", 4181],
+      ["6052ff08685e", 4196],
+      ["0f375b69efdd", 4334],
+      ["460b9c96c173", 4355],
+      ["9e8c542ee11f", 4376],
+      ["cd23b102fb09", 4405],
+      ["e15413b9a9e5", 4570],
+      ["8d85cdcb2ea7", 4672],
+      ["12a17b2f1668", 4705],
+      ["c607e24006d3", 4755],
+      ["728213b4631e", 4791],
+      ["0213f0b7e63d", 4799],
+      ["b2fe25f717a3", 4810],
+      ["18053efa55e8", 4821],
+      ["73d5e7c743d1", 4836],
+      ["e32bc09ce39e", 4862],
+      ["e643ceec65cf", 4921],
+      ["f54a78682038", 4935],
+      ["2a0f525eed5e", 5031],
+      ["f7f74608f292", 5055],
+      ["1384be80bdf1", 5082],
+      ["1702238ec5a9", 5125],
+      ["ea3ce8b03b3d", 5420]
+    ],
+    "46b7a1fc25dfea99eae0f76d46ebb791acdc48012d179c26a0f284fa3f957ac6": [
+      ["9e776d7c8a79", 5],
+      ["60015c6fa2ba", 37],
+      ["fa28dce21142", 56],
+      ["6220cc78f8a2", 118],
+      ["d3ea30662807", 180],
+      ["804ae9f8790a", 190],
+      ["ed9bc2986afc", 211],
+      ["62aeef498c71", 284],
+      ["2d3ff1843615", 290],
+      ["960bb881fcdb", 300],
+      ["fcf64d744ef9", 314],
+      ["22b6bc34f5ca", 340],
+      ["9c1f332f77a3", 365],
+      ["6885cfb89df9", 390],
+      ["2bd97b603d69", 413],
+      ["95ecd4eddd10", 423],
+      ["756a24936234", 438],
+      ["cfd9b1798641", 510],
+      ["87f8d353251c", 518],
+      ["5c7491e76d37", 574],
+      ["4a63bde82807", 633],
+      ["aad491890f36", 657],
+      ["4ff8e576728b", 699],
+      ["6a461f8ca403", 743],
+      ["338dd97e6505", 768],
+      ["dc9af2a56ce9", 819],
+      ["0441ac0ae45a", 906],
+      ["71d1cc0b672c", 919],
+      ["1b79f24492ce", 1001],
+      ["7282fbe2833b", 1029],
+      ["e400903a5742", 1037],
+      ["e8885accd552", 1130],
+      ["8614d448ca1f", 1196],
+      ["b107006c5152", 1230],
+      ["e2bee84b0de1", 1344],
+      ["86c679d97aab", 1381],
+      ["df7bd0675943", 1482],
+      ["e41c74af84d8", 1503],
+      ["455fbfba58ac", 1624],
+      ["a4124bbf80de", 1636],
+      ["d4a2af7bfb0e", 1684],
+      ["c345fa76738b", 1887],
+      ["ecdf747798ff", 2008],
+      ["37b0dbb1441d", 2161],
+      ["05266917f0d5", 2322],
+      ["7e790b9034c2", 2347],
+      ["52c595b90978", 2379],
+      ["beaa3f82e068", 2602],
+      ["f98775a7d0f9", 2627],
+      ["940c8fe1ca43", 2642],
+      ["f2e49a145e0d", 2767],
+      ["66b998e3b888", 2789],
+      ["9e8c542ee11f", 2811],
+      ["cd23b102fb09", 2840],
+      ["31e62c3700db", 3008],
+      ["035bd6b5e1ee", 3124],
+      ["e36328dffc44", 3145],
+      ["922dc01600fd", 3152],
+      ["9d08207c2552", 3161],
+      ["8bbdc5d6ef3d", 3193],
+      ["48441324a717", 3235],
+      ["4664291b7820", 3262],
+      ["36ee06c092a7", 3314]
+    ],
+    "65c419ee86b05396867abd134bf22bda6536b1b74497c0aee5ae21e18c2b1679": [
+      ["8614d448ca1f", 3],
+      ["b107006c5152", 37],
+      ["e2bee84b0de1", 151],
+      ["86c679d97aab", 188],
+      ["df7bd0675943", 289],
+      ["e41c74af84d8", 310],
+      ["455fbfba58ac", 431],
+      ["5103eec0044e", 444],
+      ["aad491890f36", 469],
+      ["05266917f0d5", 513],
+      ["d4a2af7bfb0e", 540],
+      ["ad44de351743", 741],
+      ["93d9cc12a404", 757],
+      ["de7dd3abbbce", 932],
+      ["3f462feb886b", 1025],
+      ["c345fa76738b", 1099],
+      ["db4870aea40a", 1220],
+      ["71939b50b567", 1227],
+      ["ea9e8e52b91e", 1313],
+      ["919501e6934f", 1631],
+      ["3eeae8cd598f", 1709],
+      ["4afb833fe729", 1731],
+      ["31a8cc41b835", 1782],
+      ["5024ee9859f6", 1789],
+      ["90ad2da4d98a", 1804],
+      ["ce6036b55095", 2022],
+      ["9a01ec21b4fa", 2038],
+      ["b449550ce0af", 2057],
+      ["60015c6fa2ba", 2150],
+      ["a724e854e1b5", 2169],
+      ["0899f3769dd6", 2183]
+    ],
+    "9be5bb6ccecd115e052bb26ec22ced6c6d3e4fa291368f99dd7b40dac103ece4": [
+      ["beaa3f82e068", 6],
+      ["fcf64d744ef9", 24],
+      ["2bd97b603d69", 50],
+      ["f98775a7d0f9", 67],
+      ["940c8fe1ca43", 82],
+      ["f2e49a145e0d", 207],
+      ["66b998e3b888", 229],
+      ["9e8c542ee11f", 251],
+      ["cd23b102fb09", 280],
+      ["d3ea30662807", 447],
+      ["0231771c1ce5", 457],
+      ["7282fbe2833b", 480],
+      ["f04119ddc474", 498],
+      ["b0c2d6c6c5ad", 515],
+      ["724791df245a", 571],
+      ["9f1625bb6f8b", 772],
+      ["3db0a87d5ccf", 979],
+      ["58b33abca503", 1273],
+      ["06313a041463", 1515],
+      ["4af1c95664fc", 1548],
+      ["d1212597348d", 1565],
+      ["1c61dc9bf092", 2025],
+      ["b0a377b19c85", 2038],
+      ["aaba7035c139", 2051],
+      ["95ecd4eddd10", 2127],
+      ["919501e6934f", 2141],
+      ["8614d448ca1f", 2217],
+      ["b107006c5152", 2251],
+      ["e2bee84b0de1", 2365],
+      ["86c679d97aab", 2402],
+      ["df7bd0675943", 2503],
+      ["e41c74af84d8", 2524],
+      ["455fbfba58ac", 2645],
+      ["e8895f6d2b4b", 2657],
+      ["ce6036b55095", 2682],
+      ["756a24936234", 2699],
+      ["cfd9b1798641", 2771],
+      ["87f8d353251c", 2779],
+      ["fe33a7eef35b", 2835],
+      ["a4124bbf80de", 2895],
+      ["7e790b9034c2", 2941],
+      ["d4a2af7bfb0e", 2974],
+      ["c345fa76738b", 3177],
+      ["31a8cc41b835", 3299],
+      ["e53bc1dc3e2c", 3306],
+      ["a6a54bdc01b1", 3438],
+      ["e36328dffc44", 3512],
+      ["ed9bc2986afc", 3521],
+      ["8bbdc5d6ef3d", 3601],
+      ["48441324a717", 3643],
+      ["4664291b7820", 3670],
+      ["4a8615d13939", 3721],
+      ["1c9e6d49832e", 3733],
+      ["db4870aea40a", 3752],
+      ["94298f0647be", 3758]
+    ],
+    "4fcd853372d0a6c9da91d1e044cd12340966f811a996d3e1dc3cb93079cffb54": [
+      ["60015c6fa2ba", 5],
+      ["acbe97526d13", 24],
+      ["2bd97b603d69", 86],
+      ["95ecd4eddd10", 96],
+      ["7282fbe2833b", 110],
+      ["e36328dffc44", 118],
+      ["fcf64d744ef9", 127],
+      ["756a24936234", 154],
+      ["cfd9b1798641", 226],
+      ["87f8d353251c", 234],
+      ["fe33a7eef35b", 290],
+      ["9c1f332f77a3", 351],
+      ["aad491890f36", 376],
+      ["4ff8e576728b", 418],
+      ["d3ea30662807", 464],
+      ["0231771c1ce5", 474],
+      ["ed9bc2986afc", 497],
+      ["8bbdc5d6ef3d", 577],
+      ["48441324a717", 619],
+      ["4664291b7820", 646],
+      ["e400903a5742", 697],
+      ["68a1ec830a52", 790],
+      ["05266917f0d5", 848],
+      ["8614d448ca1f", 874],
+      ["b107006c5152", 908],
+      ["e2bee84b0de1", 1022],
+      ["86c679d97aab", 1059],
+      ["df7bd0675943", 1160],
+      ["e41c74af84d8", 1181],
+      ["455fbfba58ac", 1302],
+      ["a4124bbf80de", 1314],
+      ["7e790b9034c2", 1360],
+      ["d4a2af7bfb0e", 1393],
+      ["51d2bec1333b", 1595]
+    ],
+    "94f949e41b10073dec64deaf33b1414e4f0942e90772dc21f7253361f79af21a": [
+      ["919501e6934f", 3],
+      ["31847c866d87", 83],
+      ["085378ba2edf", 284],
+      ["063095b611fd", 327],
+      ["df7bd0675943", 344],
+      ["8614d448ca1f", 365],
+      ["b107006c5152", 399],
+      ["e2bee84b0de1", 513],
+      ["86c679d97aab", 550],
+      ["e41c74af84d8", 651],
+      ["455fbfba58ac", 772],
+      ["ab3346991935", 797]
+    ],
+    "7e2ed027537293c1126f44b7f804a1ef2a75cf9f3a10fc01a22bf12434af2390": [
+      ["085378ba2edf", 3],
+      ["3496e84b22cc", 43],
+      ["38890f868cc8", 47],
+      ["b7db2c7e9a9c", 51],
+      ["6385a366db1d", 55],
+      ["ae9aec7381bc", 66],
+      ["1620362836e5", 181],
+      ["d868cebabdae", 227],
+      ["0c300b137a11", 324],
+      ["b1b74e1f9c50", 346]
+    ]
+  },
+  "contracts": {
+    "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3": {
+      "name": "Permit2",
+      "source": "0b9cfea2e127e1512df791e555a0395d7c21d800c5eb5a5e26a5e73c5812f199"
+    },
+    "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": {
+      "name": "Firepit",
+      "source": "b07361ab0905729a31cc9ec4e335f348b0d4f652fb63e0f2aebda9365dfe8784"
+    },
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
+      "name": "Timelock",
+      "source": "76cfb7ea6698e731470f40ef6b3ad9df1e8edc2860ad0b419796dea273d3209e",
+      "critical": true
+    },
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": {
+      "name": "UNIToken",
+      "source": "aca66259b04e71a19a841c0c773e47e0765e01df86465f671e3d61211710719a",
+      "critical": true
+    },
+    "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": {
+      "name": "UniswapV3Factory",
+      "source": "b35ad4b1b1fce7156612a572fa25d4ac94398281ada134f7bd90de987d8855af",
+      "critical": true
+    },
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": {
+      "name": "GovernorBravo",
+      "source": "4705ed63b3a4915ec085657f7bd1e3363236ca25d513feaa1f9c8cf73fbeeae7",
+      "critical": true,
+      "implementations": {
+        "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": "aef081f3cbce46c38475469da5e205795ed726a9852648e06b1ce904c658d26d"
+      }
+    },
+    "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af": {
+      "name": "UniversalRouter",
+      "source": "70ab94d7268fdc4dd3c36416e057086cce21af42a5642bbdb3aa2e265e266346"
+    },
+    "eth:0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45": {
+      "name": "SwapRouter02",
+      "source": "46b7a1fc25dfea99eae0f76d46ebb791acdc48012d179c26a0f284fa3f957ac6"
+    },
+    "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640": {
+      "name": "UniswapV3Pool_USDC_WETH_005",
+      "source": "65c419ee86b05396867abd134bf22bda6536b1b74497c0aee5ae21e18c2b1679",
+      "critical": true
+    },
+    "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88": {
+      "name": "NonfungiblePositionManager",
+      "source": "9be5bb6ccecd115e052bb26ec22ced6c6d3e4fa291368f99dd7b40dac103ece4",
+      "critical": true
+    },
+    "eth:0xCBCdF9626bC03E24f779434178A73a0B4bad62eD": {
+      "name": "UniswapV3Pool_WBTC_WETH_03",
+      "source": "65c419ee86b05396867abd134bf22bda6536b1b74497c0aee5ae21e18c2b1679",
+      "critical": true
+    },
+    "eth:0xE592427A0AEce92De3Edee1F18E0157C05861564": {
+      "name": "SwapRouter",
+      "source": "4fcd853372d0a6c9da91d1e044cd12340966f811a996d3e1dc3cb93079cffb54"
+    },
+    "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": {
+      "name": "V3OpenFeeAdapter",
+      "source": "94f949e41b10073dec64deaf33b1414e4f0942e90772dc21f7253361f79af21a",
+      "critical": true
+    },
+    "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85": {
+      "name": "TokenJar",
+      "source": "7e2ed027537293c1126f44b7f804a1ef2a75cf9f3a10fc01a22bf12434af2390"
+    }
+  }
+}

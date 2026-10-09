@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import type { AuditsUnitDetails } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
 
@@ -7,20 +6,10 @@ type Hunk = Diff['hunks'][number]
 
 /**
  * Unified diff rendered from precomputed hunks; no diffing happens here.
- * With `hideIgnoredChanges` the ignored changed lines are dropped, together
- * with hunks that keep no significant change. Line numbers are preserved.
+ * Formatting, comment and revert message changes were already ignored when
+ * the coverage was generated, so every shown change counts.
  */
-export function UnitDiffView({
-  diff,
-  hideIgnoredChanges,
-}: {
-  diff: Diff
-  hideIgnoredChanges: boolean
-}) {
-  const hunks = useMemo(
-    () => (hideIgnoredChanges ? withoutIgnored(diff.hunks) : diff.hunks),
-    [diff.hunks, hideIgnoredChanges],
-  )
+export function UnitDiffView({ diff }: { diff: Diff }) {
   if (diff.hunks.length === 0) {
     return (
       <p className="text-secondary text-xs">
@@ -28,33 +17,17 @@ export function UnitDiffView({
       </p>
     )
   }
-  if (hunks.length === 0) {
-    return (
-      <p className="text-secondary text-xs">
-        Only ignored changes (comments, require messages). Turn off "Hide
-        ignored changes" to see them.
-      </p>
-    )
-  }
   return (
     <div className="max-h-[600px] overflow-auto rounded-md border border-divider bg-surface-primary font-mono text-xs">
       <table className="w-full border-collapse">
         <tbody>
-          {hunks.map((hunk, h) => (
+          {diff.hunks.map((hunk, h) => (
             <HunkRows key={h} hunk={hunk} />
           ))}
         </tbody>
       </table>
     </div>
   )
-}
-
-function withoutIgnored(hunks: Hunk[]): Hunk[] {
-  return hunks.flatMap((hunk) => {
-    const lines = hunk.lines.filter((l) => l.type === ' ' || !l.ignored)
-    const significant = lines.some((l) => l.type !== ' ')
-    return significant ? [{ ...hunk, lines }] : []
-  })
 }
 
 function HunkRows({ hunk }: { hunk: Hunk }) {

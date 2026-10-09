@@ -18,7 +18,7 @@ export const AUDIT_STATUS_META: Record<
   identical: {
     label: 'Identical',
     description:
-      "Deployed unit is identical to a revision covered by an audit in the dataset: the project's own audits, audits of the upstream code it forks, of its stack, or of another project that deployed the same code.",
+      "Deployed unit is identical to a revision covered by an audit in the dataset: the project's own audits, audits of its stack, or of another project that deployed the same code.",
     bg: 'bg-positive',
     text: 'text-positive',
   },
@@ -32,7 +32,7 @@ export const AUDIT_STATUS_META: Record<
   differs: {
     label: 'Differs',
     description:
-      'An audited version exists but the deployed unit differs from every audited revision. Changes in comments and require messages are ignored.',
+      'An audited version exists but the deployed unit differs from it. Changes in formatting, comments and revert messages are ignored.',
     bg: 'bg-chart-stacked-yellow',
     text: 'text-chart-stacked-yellow',
   },
@@ -55,14 +55,14 @@ export function formatShare(part: number, total: number): string {
 }
 
 /**
- * The deployed unit equals an audited revision for which the report recorded
- * major findings. Since the code is unchanged, the fix for those findings is
- * not present in the deployed unit.
+ * The deployed unit equals audited code for which a report recorded major
+ * findings that were still open there. Since the code is unchanged, the fix
+ * for those findings is not present in the deployed unit.
  */
 export function hasUnresolvedMajorFinding(unit: AuditsUnitEntry): boolean {
   return (
     (unit.status === 'identical' || unit.status === 'library') &&
-    (unit.match?.majorFindings ?? 0) > 0
+    (unit.match?.findingIds.length ?? 0) > 0
   )
 }
 
@@ -81,4 +81,4 @@ export function formatFindingIds(ids: string[] | undefined): string {
 }
 
 export const MAJOR_FINDING_DESCRIPTION =
-  'The deployed code is identical to an audited revision for which the audit report recorded major findings. Because the code is unchanged, the fix for those findings is not present in the deployed unit. Open the audit report to check the finding.'
+  'The deployed code is identical to audited code for which the audit report recorded major findings that were still open. Because the code is unchanged, the fix for those findings is not present in the deployed unit. Open the audit report to check the finding.'

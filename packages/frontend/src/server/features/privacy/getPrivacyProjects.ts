@@ -15,6 +15,7 @@ const OPTIONAL = [
   'zkCatalogInfo',
   'ossificationHistory',
   'milestones',
+  'auditCoverage',
 ] as const
 
 export async function getPrivacyProjects(): Promise<PrivacyProject[]> {

@@ -6,7 +6,6 @@ import {
   INTEGRATE_CROPS_PATH,
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
-import { auditCoverageSource } from '~/server/features/audits/AuditCoverageSource'
 import { shouldHaveNoBridgePage } from './features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from './projects'
 
@@ -83,9 +82,6 @@ export async function getPages(): Promise<Page[]> {
   if (env.CLIENT_SIDE_GARDEN_ENABLED) {
     paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)
   }
-  for (const project of auditCoverageSource.listProjects()) {
-    paths.push(`/audits/projects/${project.slug}`)
-  }
   return [...paths.map((path) => ({ path })), ...(await getDynamicPages())]
 }
 
@@ -98,6 +94,7 @@ async function getDynamicPages(): Promise<Page[]> {
     daBridges,
     privacyProjects,
     defiProjects,
+    auditedProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -112,6 +109,7 @@ async function getDynamicPages(): Promise<Page[]> {
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps.getProjects({ where: ['defiInfo'] })
       : Promise.resolve([]),
+    ps.getProjects({ where: ['auditCoverage'] }),
   ])
 
   const pages: Page[] = [
@@ -123,6 +121,7 @@ async function getDynamicPages(): Promise<Page[]> {
     ...ecosystemProjects.map(projectPage('/ecosystems')),
     ...privacyProjects.map(projectPage('/privacy/projects')),
     ...defiProjects.map(projectPage('/defi/projects')),
+    ...auditedProjects.map(projectPage('/audits/projects')),
   ]
 
   for (const layer of daLayers) {

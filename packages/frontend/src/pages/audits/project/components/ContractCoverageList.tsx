@@ -11,7 +11,6 @@ import {
   MAJOR_FINDING_DESCRIPTION,
 } from '~/components/audits/auditStatus'
 import { contractAnchorId } from '~/components/audits/contractAnchor'
-import { Switch } from '~/components/core/Switch'
 import {
   Tooltip,
   TooltipContent,
@@ -23,25 +22,22 @@ import { cn } from '~/utils/cn'
 import { UnitRow } from './UnitRow'
 
 interface Props {
+  slug: string
   contracts: AuditsContractEntry[]
 }
 
 /**
- * One collapsible row per deployed contract, expanding to its source files
- * and their units. Filtering by status and unit name is local state.
+ * One collapsible row per deployed contract, expanding to its verified
+ * sources (proxy and implementations) and their units. Filtering by unit
+ * name is local state.
  */
-function rowKey(contract: AuditsContractEntry): string {
-  return `${contract.chain}:${contract.address}`
-}
-
 function anchorOf(contract: AuditsContractEntry): string {
-  return contractAnchorId(contract.chain, contract.address)
+  return contractAnchorId(contract.chain, contract.shortAddress)
 }
 
-export function ContractCoverageList({ contracts }: Props) {
+export function ContractCoverageList({ slug, contracts }: Props) {
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState<Set<string>>(() => new Set())
-  const [hideIgnoredChanges, setHideIgnoredChanges] = useState(true)
   const needle = search.trim().toLowerCase()
   const isSearching = needle !== ''
 
@@ -51,7 +47,7 @@ export function ContractCoverageList({ contracts }: Props) {
     if (!hash) return
     const target = contracts.find((c) => anchorOf(c) === hash)
     if (!target) return
-    setOpen((prev) => new Set(prev).add(rowKey(target)))
+    setOpen((prev) => new Set(prev).add(target.address))
     requestAnimationFrame(() => {
       document.getElementById(hash)?.scrollIntoView({ block: 'start' })
     })
@@ -63,18 +59,18 @@ export function ContractCoverageList({ contracts }: Props) {
   const filtered = useMemo(() => {
     const rows = contracts.map((contract) => ({
       contract,
-      files: contract.files.map((file) => ({
-        file,
-        units: file.units.filter(
+      sources: contract.sources.map((source) => ({
+        source,
+        units: source.units.filter(
           (u) =>
             needle === '' ||
             u.name.toLowerCase().includes(needle) ||
-            u.match?.auditedName.toLowerCase().includes(needle),
+            u.match?.auditedName?.toLowerCase().includes(needle),
         ),
       })),
     }))
     return isSearching
-      ? rows.filter((r) => r.files.some((f) => f.units.length > 0))
+      ? rows.filter((r) => r.sources.some((s) => s.units.length > 0))
       : rows
   }, [contracts, needle, isSearching])
 
@@ -98,36 +94,10 @@ export function ContractCoverageList({ contracts }: Props) {
           className="min-w-[200px] rounded-md border border-divider bg-surface-secondary px-2 py-1 text-xs"
         />
         <div className="flex flex-wrap items-center gap-3 text-xs">
-          <label
-            htmlFor="hide-ignored-changes"
-            className={cn(
-              'flex cursor-pointer select-none items-center gap-2 rounded-full border px-3 py-1 font-medium transition-colors',
-              hideIgnoredChanges
-                ? 'border-brand bg-brand/10 text-brand'
-                : 'border-divider bg-surface-secondary text-primary',
-            )}
-          >
-            <Switch
-              id="hide-ignored-changes"
-              name="audits-hide-ignored-changes"
-              checked={hideIgnoredChanges}
-              onCheckedChange={setHideIgnoredChanges}
-            />
-            Hide ignored changes in diffs
-            <Tooltip>
-              <TooltipTrigger className="text-secondary">ⓘ</TooltipTrigger>
-              <TooltipContent className="max-w-[360px]">
-                Hides changed lines that do not count towards the unit status or
-                the covered lines: comments and the string messages of require /
-                revert. Only the expanded diffs are affected; the statuses, the
-                +/− counts and the coverage numbers stay the same.
-              </TooltipContent>
-            </Tooltip>
-          </label>
           <button
             type="button"
             className="text-secondary hover:text-primary"
-            onClick={() => setOpen(new Set(contracts.map(rowKey)))}
+            onClick={() => setOpen(new Set(contracts.map((c) => c.address)))}
           >
             Expand all
           </button>
@@ -148,15 +118,16 @@ export function ContractCoverageList({ contracts }: Props) {
       )}
 
       <div className="flex flex-col gap-2">
-        {filtered.map(({ contract, files }) => {
-          const key = rowKey(contract)
+        {filtered.map(({ contract, sources }) => {
+          const key = contract.address
           const isOpen = isSearching || open.has(key)
-          const visibleUnits = files.reduce((n, f) => n + f.units.length, 0)
-          const allUnits = contract.files.flatMap((f) => f.units)
+          const visibleUnits = sources.reduce((n, s) => n + s.units.length, 0)
+          const allUnits = contract.sources.flatMap((s) => s.units)
           const majorFindingUnits = allUnits.filter(
             hasUnresolvedMajorFinding,
           ).length
           const findingIds = collectFindingIds(allUnits)
+          const isProxy = contract.sources.some((s) => s.role === 'proxy')
           return (
             <div
               key={key}
@@ -182,7 +153,7 @@ export function ContractCoverageList({ contracts }: Props) {
                     <span className="truncate font-bold text-sm">
                       {contract.name}
                     </span>
-                    {contract.files.some((f) => f.role === 'proxy') && (
+                    {isProxy && (
                       <span className="rounded border border-divider px-1 font-medium text-[10px] text-secondary uppercase">
                         proxy
                       </span>
@@ -215,12 +186,7 @@ export function ContractCoverageList({ contracts }: Props) {
                     )}
                   </div>
                   <div className="truncate font-mono text-secondary text-xs">
-                    {contract.chain}:{contract.address}
-                    {contract.template && (
-                      <span className="ml-2 font-sans">
-                        template {contract.template}
-                      </span>
-                    )}
+                    {contract.address}
                   </div>
                 </div>
                 <div className="max-md:hidden">
@@ -261,18 +227,6 @@ export function ContractCoverageList({ contracts }: Props) {
               </button>
               {isOpen && (
                 <div className="border-divider border-t">
-                  <div className="flex flex-wrap items-baseline gap-x-3 px-3 py-1.5 text-xs">
-                    <span className="text-secondary">Address</span>
-                    <span className="select-all font-mono">
-                      {contract.chain}:{contract.address}
-                    </span>
-                    {contract.template && (
-                      <span className="text-secondary">
-                        template{' '}
-                        <span className="font-mono">{contract.template}</span>
-                      </span>
-                    )}
-                  </div>
                   {visibleUnits === 0 && (
                     <p className="px-3 py-2 text-secondary text-xs">
                       {contract.noSource
@@ -280,10 +234,18 @@ export function ContractCoverageList({ contracts }: Props) {
                         : 'No units match the name filter.'}
                     </p>
                   )}
-                  {files.map(({ file, units }) =>
+                  {sources.map(({ source, units }) =>
                     units.length === 0 ? null : (
-                      <div key={file.path}>
-                        <div className="hidden bg-surface-secondary px-3 py-1.5 font-medium text-2xs text-secondary uppercase tracking-wider md:grid md:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1.4fr)_minmax(0,1.5fr)_176px_240px] md:gap-x-3">
+                      <div key={source.address}>
+                        <div className="flex flex-wrap items-baseline gap-x-3 bg-surface-secondary px-3 py-1.5 text-xs">
+                          <span className="font-medium text-secondary uppercase">
+                            {source.role}
+                          </span>
+                          <span className="select-all font-mono">
+                            {source.address}
+                          </span>
+                        </div>
+                        <div className="hidden px-3 py-1.5 font-medium text-2xs text-secondary uppercase tracking-wider md:grid md:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1.4fr)_minmax(0,1.5fr)_176px_240px] md:gap-x-3">
                           <span>Type</span>
                           <span>Name</span>
                           <span>Status</span>
@@ -292,11 +254,7 @@ export function ContractCoverageList({ contracts }: Props) {
                           <span />
                         </div>
                         {units.map((unit) => (
-                          <UnitRow
-                            key={unit.id}
-                            unit={unit}
-                            hideIgnoredChanges={hideIgnoredChanges}
-                          />
+                          <UnitRow key={unit.id} slug={slug} unit={unit} />
                         ))}
                       </div>
                     ),

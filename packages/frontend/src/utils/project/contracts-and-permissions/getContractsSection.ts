@@ -1,8 +1,10 @@
 import type {
   Project,
+  ProjectAuditCoverage,
   ProjectContract,
   ProjectContracts,
   ProjectEscrow,
+  ProjectScalingStack,
   ReferenceLink,
   TvsToken,
 } from '@l2beat/config'
@@ -41,6 +43,9 @@ type ProjectParams = {
   architectureImage?: string
   contracts?: ProjectContracts
   tvsConfig?: TvsToken[]
+  /** Output of `l2b audit-coverage`, when committed for the project. */
+  auditCoverage?: ProjectAuditCoverage
+  stacks?: ProjectScalingStack[]
 }
 
 export type ContractsSection = Omit<
@@ -84,7 +89,11 @@ export function getContractsSection(
   )
   const matchedEscrows = new Set<string>()
   const getAddressAnchor = createAddressAnchors('contracts')
-  const auditInfo = getContractsAuditInfo(projectParams.slug)
+  const auditInfo = getContractsAuditInfo(
+    projectParams.auditCoverage,
+    projectParams.slug,
+    projectParams.stacks,
+  )
 
   const contracts = Object.fromEntries(
     Object.entries(projectParams.contracts.addresses ?? {}).map(

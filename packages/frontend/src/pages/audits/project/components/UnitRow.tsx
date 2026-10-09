@@ -11,7 +11,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import type { AuditsUnitEntry } from '~/server/features/audits/types'
+import type {
+  AuditReportOrigin,
+  AuditsUnitEntry,
+} from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
 import { UnitDetails } from './UnitDetails'
 
@@ -20,8 +23,14 @@ const KIND_LABEL: Record<AuditsUnitEntry['kind'], string> = {
   abstract: 'abstract',
   interface: 'interface',
   library: 'library',
-  'file-level': 'file-level',
-  program: 'program',
+  function: 'function',
+}
+
+const ORIGIN_LABEL: Record<AuditReportOrigin, string> = {
+  own: "the project's own audits",
+  stack: "the audits of the project's stack",
+  library: 'an audited standard library',
+  other: 'the audits of another project that deployed the same code',
 }
 
 type View = 'source' | 'diff' | undefined
@@ -49,16 +58,17 @@ function DisabledAction({ label, reason }: { label: string; reason: string }) {
 }
 
 export function UnitRow({
+  slug,
   unit,
-  hideIgnoredChanges,
 }: {
+  slug: string
   unit: AuditsUnitEntry
-  hideIgnoredChanges: boolean
 }) {
   const [view, setView] = useState<View>(undefined)
   const meta = AUDIT_STATUS_META[unit.status]
   const match = unit.match
   const majorFinding = hasUnresolvedMajorFinding(unit)
+  const findingReport = match?.findings[0]?.report ?? match?.report
 
   function toggle(next: Exclude<View, undefined>) {
     setView((prev) => (prev === next ? undefined : next))
@@ -96,12 +106,12 @@ export function UnitRow({
                 </TooltipTrigger>
                 <TooltipContent className="max-w-[360px]">
                   {MAJOR_FINDING_DESCRIPTION}
-                  {match && (
+                  {match && findingReport && (
                     <div className="mt-1 text-secondary">
-                      {match.majorFindings} major{' '}
-                      {match.majorFindings === 1 ? 'finding' : 'findings'}
+                      {match.findingIds.length} major{' '}
+                      {match.findingIds.length === 1 ? 'finding' : 'findings'}
                       {formatFindingIds(match.findingIds)} in{' '}
-                      {match.reportTitle} ({match.auditor}).
+                      {findingReport.title} ({findingReport.auditor}).
                     </div>
                   )}
                 </TooltipContent>
@@ -110,7 +120,7 @@ export function UnitRow({
               meta.label
             )}
             {majorFinding &&
-              match?.findingIds?.map((id) => (
+              match?.findingIds.map((id) => (
                 <span
                   key={id}
                   className="ml-1 rounded border border-negative px-1 font-mono text-[10px] text-negative"
@@ -125,29 +135,14 @@ export function UnitRow({
                   · {match.collectionName}
                 </TooltipTrigger>
                 <TooltipContent>
-                  Evidence from the {match.origin} collection{' '}
-                  {match.collectionName} ({match.relation}).
+                  Evidence from {ORIGIN_LABEL[match.origin]}:{' '}
+                  {match.collectionName}.
                 </TooltipContent>
               </Tooltip>
             )}
-            {match?.renamed && (
+            {match?.auditedName && (
               <span className="text-secondary"> · as {match.auditedName}</span>
             )}
-            {unit.diffStats?.ignoredOnly && (
-              <span className="text-secondary"> · ignored changes only</span>
-            )}
-            {unit.warnings.map((w) => (
-              <Tooltip key={w}>
-                <TooltipTrigger className="ml-1 rounded border border-divider px-1 text-[10px] text-secondary">
-                  {w}
-                </TooltipTrigger>
-                <TooltipContent>
-                  {w === 'low-similarity'
-                    ? 'The audited unit with this name is very different from the deployed one and may be unrelated.'
-                    : 'The deployed unit and the audited unit have different kinds (e.g. contract vs interface).'}
-                </TooltipContent>
-              </Tooltip>
-            ))}
           </span>
         </span>
         <span className="min-w-0 truncate text-secondary max-md:col-span-2">
@@ -165,48 +160,49 @@ export function UnitRow({
                 </a>
               </TooltipTrigger>
               <TooltipContent className="max-w-[360px] space-y-1">
-                <div className="font-medium">Matched audit</div>
-                <div className="font-medium">{match.reportTitle}</div>
-                <div className="text-secondary">
-                  {match.auditor} · commit {match.commit.slice(0, 8)}
+                <div className="font-medium">
+                  {match.reports.length === 1
+                    ? 'Audited by'
+                    : `Audited by ${match.reports.length} reports`}
                 </div>
-                <div>
-                  Matched by {match.matchedBy}, similarity{' '}
-                  {Math.round(match.similarity * 100)}%
-                </div>
+                {match.reports.map((report) => (
+                  <div key={report.id}>
+                    {report.title}{' '}
+                    <span className="text-secondary">
+                      ({report.auditor}
+                      {report.origin !== 'own' && `, ${report.collectionName}`})
+                    </span>
+                  </div>
+                ))}
               </TooltipContent>
             </Tooltip>
           )}
         </span>
         <span className="justify-self-end whitespace-nowrap font-mono">
-          {unit.diffStats && (
+          {unit.changedLines && (
             <Tooltip>
               <TooltipTrigger>
-                <span className="text-positive">+{unit.diffStats.added}</span>{' '}
-                <span className="text-negative">−{unit.diffStats.removed}</span>
-                {unit.diffStats.ignoredAdded + unit.diffStats.ignoredRemoved >
-                  0 && (
-                  <span className="text-secondary">
-                    {' '}
-                    (+{unit.diffStats.ignoredAdded} −
-                    {unit.diffStats.ignoredRemoved})
-                  </span>
-                )}
+                <span className="text-positive">
+                  +{unit.changedLines.added}
+                </span>{' '}
+                <span className="text-negative">
+                  −{unit.changedLines.removed}
+                </span>
               </TooltipTrigger>
               <TooltipContent>
-                Added and removed lines that count as differences. In
-                parentheses: ignored changes (comments, require messages) that
-                do not affect the status or the coverage.
+                Deployed lines not in the audited code, and audited lines
+                missing from the deployed code. Formatting, comments and revert
+                messages are ignored.
               </TooltipContent>
             </Tooltip>
           )}
         </span>
         <span className="flex items-center justify-end gap-1.5 whitespace-nowrap max-md:col-span-2">
-          {match?.reportUrl ? (
+          {match ? (
             <Tooltip>
               <TooltipTrigger asChild>
                 <a
-                  href={match.reportUrl}
+                  href={(findingReport ?? match.report).url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
@@ -220,10 +216,9 @@ export function UnitRow({
                 </a>
               </TooltipTrigger>
               <TooltipContent>
-                Open the audit report that covered the matched audited revision:{' '}
-                {match.reportTitle}
+                Open the audit report that covered the matched audited code:{' '}
+                {(findingReport ?? match.report).title}
                 {majorFinding &&
-                  match.findingIds &&
                   match.findingIds.length > 0 &&
                   `. Search it for ${match.findingIds.join(', ')}.`}
               </TooltipContent>
@@ -243,7 +238,7 @@ export function UnitRow({
           >
             Deployed
           </button>
-          {unit.diffStats ? (
+          {unit.changedLines ? (
             <button
               type="button"
               aria-pressed={view === 'diff'}
@@ -268,13 +263,7 @@ export function UnitRow({
           )}
         </span>
       </div>
-      {view && (
-        <UnitDetails
-          unit={unit}
-          view={view}
-          hideIgnoredChanges={hideIgnoredChanges}
-        />
-      )}
+      {view && <UnitDetails slug={slug} unit={unit} view={view} />}
     </div>
   )
 }

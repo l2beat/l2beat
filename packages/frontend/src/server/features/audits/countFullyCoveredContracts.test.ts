@@ -13,9 +13,7 @@ describe(countFullyCoveredContracts.name, () => {
   ) {
     return {
       noSource,
-      summary: {
-        contracts: 1,
-        contractsWithoutSource: noSource ? 1 : 0,
+      coverage: {
         units: {
           identical: 0,
           library: 0,
@@ -23,45 +21,45 @@ describe(countFullyCoveredContracts.name, () => {
           unaudited: 0,
           ...units,
         },
-        uniqueUnits: { identical: 0, library: 0, differs: 0, unaudited: 0 },
         lines: { total: 0, covered: 0, uncovered: 0 },
       },
     }
   }
 
-  it('counts contracts whose units are all identical or library', () => {
+  it('counts contracts whose every unit is identical or a library', () => {
     expect(
       countFullyCoveredContracts([
-        contract({ identical: 2, library: 3 }),
+        contract({ identical: 3 }),
+        contract({ identical: 1, library: 2 }),
         contract({ library: 1 }),
       ]),
-    ).toEqual(2)
+    ).toEqual(3)
   })
 
-  it('rejects a single differing or unaudited unit', () => {
+  it('rejects contracts with a differing or unaudited unit', () => {
     expect(
       countFullyCoveredContracts([
-        contract({ identical: 9, differs: 1 }),
-        contract({ identical: 9, unaudited: 1 }),
+        contract({ identical: 3, differs: 1 }),
+        contract({ identical: 3, unaudited: 1 }),
       ]),
     ).toEqual(0)
   })
 
   it('rejects contracts without source or without units', () => {
     expect(
-      countFullyCoveredContracts([contract({}, true), contract({})]),
+      countFullyCoveredContracts([
+        contract({}),
+        contract({ identical: 1 }, true),
+      ]),
     ).toEqual(0)
   })
 })
 
 describe(fullyCoveredShare.name, () => {
-  it('divides by every contract, including unverified ones', () => {
+  it('divides by the contract count, 0 without contracts', () => {
     expect(
       fullyCoveredShare({ fullyCoveredContracts: 1, contracts: 4 }),
     ).toEqual(0.25)
-  })
-
-  it('is zero without contracts', () => {
     expect(
       fullyCoveredShare({ fullyCoveredContracts: 0, contracts: 0 }),
     ).toEqual(0)

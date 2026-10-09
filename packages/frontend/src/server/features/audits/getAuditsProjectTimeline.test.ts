@@ -195,6 +195,7 @@ function audit(id: string, timestamp: number): AuditsProjectReport {
     title: id,
     auditor: 'A',
     timestamp,
+    url: '',
     origin: 'own',
     collectionName: 'Own',
     matched: true,
@@ -207,6 +208,7 @@ function other(id: string, timestamp: number) {
     title: id,
     auditor: 'A',
     timestamp,
+    url: '',
     origin: 'library' as const,
     collectionName: 'Lib',
   }

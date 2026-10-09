@@ -1,0 +1,2772 @@
+{
+  "schema_version": "1.0.0",
+  "project": "tornado-cash",
+  "dataset": {
+    "repository": "sergeyshemyakov/audit-dataset",
+    "commit": "ce069f3e6a59d6ebfeb4efb183e39608fc86d1a6"
+  },
+  "discoveredAt": 1791454331,
+  "collections": {
+    "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
+    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "agglayer": { "name": "Agglayer", "kind": "project" },
+    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
+    "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
+    "bob": { "name": "BOB", "kind": "project" },
+    "celo": { "name": "Celo", "kind": "project" },
+    "mantle": { "name": "Mantle", "kind": "project" },
+    "privacy-pools": { "name": "Privacy Pools", "kind": "project" },
+    "tornado-cash": { "name": "Tornado Cash", "kind": "project" },
+    "uniswapv3": { "name": "Uniswap V3", "kind": "project" }
+  },
+  "reports": {
+    "abdk-tornado-anonymity-mining-final-audit-2020-09-15": {
+      "collections": ["tornado-cash"],
+      "title": "Tornado Farm Smart Contracts and Circuits. Final Audit",
+      "auditor": "ABDK Consulting",
+      "date": "2020-09-15",
+      "document": "tornado-cash/reports/ABDK - Tornado Cash Anonymity Mining Final Audit.pdf"
+    },
+    "abdk-tornado-anonymity-mining-first-audit-2020-09-01": {
+      "collections": ["tornado-cash"],
+      "title": "Tornado Farm Smart Contracts and Circuits. Audit",
+      "auditor": "ABDK Consulting",
+      "date": "2020-09-01",
+      "document": "tornado-cash/reports/ABDK - Tornado Cash Anonymity Mining First Audit.pdf"
+    },
+    "abdk-tornado-anonymity-mining-recheck-2020-12-22": {
+      "collections": ["tornado-cash"],
+      "title": "Tornado Smart Contract Audit Conclusion",
+      "auditor": "ABDK Consulting",
+      "date": "2020-12-22",
+      "document": "tornado-cash/reports/ABDK - Tornado Cash Anonymity Mining Recheck.pdf"
+    },
+    "abdk-tornado-circuit-audit-2019-11-25": {
+      "collections": ["tornado-cash"],
+      "title": "Tornado Circuit Audit. Final version",
+      "auditor": "ABDK Consulting",
+      "date": "2019-11-25",
+      "document": "tornado-cash/reports/TornadoCash_circuit_audit_ABDK.pdf"
+    },
+    "abdk-tornado-cryptographic-review-2019-11-29": {
+      "collections": ["tornado-cash"],
+      "title": "Tornado Privacy Solution Cryptographic Review Version 1.1",
+      "auditor": "ABDK Consulting",
+      "date": "2019-11-29",
+      "document": "tornado-cash/reports/TornadoCash_cryptographic_review_ABDK.pdf"
+    },
+    "abdk-tornado-smart-contract-audit-2019-11-19": {
+      "collections": ["tornado-cash"],
+      "title": "Tornado Cash Smart Contracts Audit. Final Version",
+      "auditor": "ABDK Consulting",
+      "date": "2019-11-19",
+      "document": "tornado-cash/reports/TornadoCash_contract_audit_ABDK.pdf"
+    },
+    "abdk-uniswap-v3-core-2021-03": {
+      "collections": ["uniswapv3"],
+      "title": "ABDK Consulting Smart Contract Audit: Uniswap V3",
+      "auditor": "ABDK Consulting",
+      "date": "2021-03-23",
+      "document": "uniswapv3/reports/audit-2.pdf"
+    },
+    "akhunov-audit-results-note": {
+      "collections": ["_libs/safe"],
+      "title": "Gnosis Safe Audit Results",
+      "auditor": "Alexey Akhunov",
+      "document": "_libs/safe/reports/safe-early__docs__alexey_audit.md"
+    },
+    "akhunov-gnosis-safe-2018": {
+      "collections": ["_libs/safe"],
+      "title": "Gnosis Safe Audit Report",
+      "auditor": "Alexey Akhunov",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report.pdf"
+    },
+    "cantina-payload-2026-03-05": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec PR 20865 Security Review (Alpha Upgrade Payload)",
+      "auditor": "Cantina",
+      "date": "2026-03-05",
+      "document": "aztecnetwork/reports/Cantina - Payload 2025.03.05.pdf"
+    },
+    "certora-safe-1-3-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.3.0 Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-07-29",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Certora.pdf"
+    },
+    "certora-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-02-16",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-certora.pdf"
+    },
+    "consensys-arbitrum-core-token-bridge-2021-11": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Smart Contracts (ConsenSys Diligence, November 2021)",
+      "auditor": "ConsenSys Diligence",
+      "date": "2021-11-05",
+      "document": "arbitrum/reports/2021_11_05_consensys_diligence_security_audit_core_contracts_token_bridge.pdf"
+    },
+    "contracts__audits__2018-10": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Open Zeppelin v2.0 Security Audit",
+      "auditor": "Level K",
+      "date": "2018-10-21",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2018-10.pdf"
+    },
+    "contracts__audits__2023-10-v5.0": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 5.0 Release",
+      "auditor": "OpenZeppelin",
+      "date": "2023-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
+    },
+    "contracts__audits__2025-04-v5.3": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.3 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-04-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-04-v5.3.pdf"
+    },
+    "g0-safe-1-1-0": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_0.pdf"
+    },
+    "g0-safe-1-1-1": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0 and v1.1.1",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_1.pdf"
+    },
+    "g0-safe-1-3-0-final": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
+      "auditor": "G0 Group",
+      "date": "2021-05-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
+    },
+    "g0-safe-1-3-0-initial": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
+      "auditor": "G0 Group",
+      "date": "2021-04-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Initial.pdf"
+    },
+    "g0-safe-allowance-v0-1-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Review",
+      "auditor": "G0 Group",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v0.1.0__audit-report-g0.md"
+    },
+    "hacken-celo-contracts-release-8-2022": {
+      "collections": ["celo"],
+      "title": "Smart Contract Code Review and Security Analysis Report for CLABS (Celo Contracts Release 8 / ASv2)",
+      "auditor": "Hacken OÜ",
+      "date": "2022-07-29",
+      "document": "celo/reports/Hacken - Celo Contracts Release 8.pdf"
+    },
+    "hexens-polygon-zkevm-2023-02": {
+      "collections": ["agglayer"],
+      "title": "Security Review Report for Polygon zkEVM",
+      "auditor": "Hexens",
+      "date": "2023-02-27",
+      "document": "agglayer/reports/2023_02-hexens-polygon-zkevm-security-review.pdf"
+    },
+    "oxorio-privacy-pools-v1-2024-05": {
+      "collections": ["privacy-pools"],
+      "title": "Privacy Pools Smart Contracts Security Audit Report (Privacy Pools v1)",
+      "auditor": "Oxorio",
+      "date": "2024-05-24",
+      "document": "privacy-pools/reports/oxorio-privacy-pools-v1-audit-2024-05.pdf"
+    },
+    "oz-celo-contracts-mainnet-releases-1-3": {
+      "collections": ["celo"],
+      "title": "Celo Contracts Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2021-02-05",
+      "document": "celo/reports/OpenZeppelin - Celo Contracts Mainnet and Releases 1-3.html"
+    },
+    "secure3-mantle-v1-contest-2023-07": {
+      "collections": ["mantle"],
+      "title": "Mantle Competitive Security Assessment",
+      "auditor": "Secure3",
+      "date": "2023-07-17",
+      "document": "mantle/reports/2023_07-secure3-mantle-v1-competitive-security-assessment.pdf"
+    },
+    "sigmaprime-mantle-l2-rollup-2023-07": {
+      "collections": ["mantle"],
+      "title": "Mantle L2 Rollup Security Assessment (Sigma Prime)",
+      "auditor": "Sigma Prime",
+      "document": "mantle/reports/2023_07-sigmaprime-mantle-l2-rollup-security-assessment.pdf"
+    },
+    "sigmaprime-polygon-lxly-bridge-2024-02": {
+      "collections": ["agglayer"],
+      "title": "Polygon LXLY Bridge Smart Contract Security Assessment",
+      "auditor": "Sigma Prime",
+      "document": "agglayer/reports/2024_02-sigmaprime-polygon-lxly-bridge.pdf"
+    },
+    "spearbit-polygon-zkevm-contracts-2023-03": {
+      "collections": ["agglayer"],
+      "title": "Polygon zkEVM Contracts Security Review",
+      "auditor": "Spearbit",
+      "date": "2023-03-27",
+      "document": "agglayer/reports/2023_03-spearbit-polygon-zkevm-contracts-bridge.pdf"
+    },
+    "trailofbits-uniswap-v3-core-2021-03": {
+      "collections": ["uniswapv3"],
+      "title": "Uniswap V3 Core Security Assessment",
+      "auditor": "Trail of Bits",
+      "date": "2021-03-12",
+      "document": "uniswapv3/reports/audit.pdf"
+    },
+    "veridise-kailua-2025-02": {
+      "collections": ["bob"],
+      "title": "Veridise Auditing Report for Kailua Protocol (February 2025)",
+      "auditor": "Veridise",
+      "date": "2025-02-18",
+      "document": "bob/reports/Veridise - Kailua Security Audit (Feb 2025).pdf"
+    },
+    "zeropool-tornado-anonymity-mining-2020-10-15": {
+      "collections": ["tornado-cash"],
+      "title": "Tornado Cash Anonymity Mining Audit",
+      "auditor": "Igor Gulamov (ZeroPool)",
+      "date": "2020-10-15",
+      "document": "tornado-cash/reports/Zeropool - Tornado Cash Anonymity Mining.pdf"
+    }
+  },
+  "auditedFiles": {
+    "092a067f397a": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/libraries/LowGasSafeMath.sol",
+      "blob": "092a067f397a8e1cbe86333fa0e68644ac4d4875"
+    },
+    "09ab6a9bc85c": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "820bd83254f3264cebaf255869641ebc33288dc3",
+      "path": "contracts/IMiner.sol",
+      "blob": "09ab6a9bc85c54da5e7a9b2a7b4da0ac1b182d83"
+    },
+    "0b6cbdc34973": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "path": "contracts/ownership/Ownable.sol",
+      "blob": "0b6cbdc349739e1422b349d1bbbe108566550c84"
+    },
+    "0cc89cb39124": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "path": "contracts/math/Math.sol",
+      "blob": "0cc89cb3912439b8ffbd26d17f343343fdda2271"
+    },
+    "101ca93d6e03": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolActions.sol",
+      "blob": "101ca93d6e03fc63a340933729344ca50f0832f4"
+    },
+    "1233e2d195ed": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "820bd83254f3264cebaf255869641ebc33288dc3",
+      "path": "contracts/Math.sol",
+      "blob": "1233e2d195ed80a3486f7292cce5ccd702019ca0"
+    },
+    "142884219840": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/common/MasterCopy.sol",
+      "blob": "142884219840892e7b20a62df73a22a77f650c05"
+    },
+    "168354793687": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/proxies/Proxy.sol",
+      "blob": "168354793687b3e328b9d86f9da518afd4e1ffad"
+    },
+    "1a59de42c5d0": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
+      "blob": "1a59de42c5d0983d397019c658cfc6bc55c538ad"
+    },
+    "2120eda3bcb9": {
+      "repository": "peppersec/tornado-mixer",
+      "commit": "d0e312eb808797a4f20a81fda2224185a3f914b4",
+      "path": "contracts/MerkleTreeWithHistory.sol",
+      "blob": "2120eda3bcb99b4f382e82f396bbe3939f946057"
+    },
+    "2127fd7c3240": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "2127fd7c32401f9244a48e58a9370d60ca219680"
+    },
+    "2d517987d5b4": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/utils/Context.sol",
+      "blob": "2d517987d5b49aee1a37634c95a69dae911b9d7a"
+    },
+    "2eeb24b7812c": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol",
+      "blob": "2eeb24b7812cef9cb98413b76691966e786031e2"
+    },
+    "36e4feccc8ee": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "36e4feccc8eeeeebe47f58a25c6815998480784c"
+    },
+    "41ede9d660b2": {
+      "repository": "OffchainLabs/arbitrum-classic",
+      "commit": "d730bc40932c24e239577d16b1737455ab75ee26",
+      "path": "packages/arb-bridge-eth/contracts/interfaces/IERC20.sol",
+      "blob": "41ede9d660b2dfee65788266a6dc867d48e0ff31"
+    },
+    "48a5beba6436": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
+      "blob": "48a5beba643694a4d10612a3a1d6809fbb4a7fe8"
+    },
+    "55c008cdbedc": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+      "path": "contracts/utils/MerkleTreeWithHistory.sol",
+      "blob": "55c008cdbedc9e18a3121a017550191ed5a2f4e6"
+    },
+    "5b7d9d52de94": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "5b7d9d52de94d97c5f9708ab32e2dc858a25b871"
+    },
+    "5dacdc82a0e1": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+      "path": "contracts/Miner.sol",
+      "blob": "5dacdc82a0e19dc313f4e291d9846049b6acae21"
+    },
+    "643d86cf72d9": {
+      "repository": "safe-fndn/safe-modules",
+      "commit": "b531c8db9ded1fa72c8459078ebe4e88a2501bae",
+      "path": "recurring_transfers/contracts/external/SafeMath.sol",
+      "blob": "643d86cf72d9849f7e6f9aba50994aba379e63a0"
+    },
+    "64e8fd9b3c5e": {
+      "repository": "Uniswap/v3-core",
+      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
+      "path": "contracts/libraries/TickMath.sol",
+      "blob": "64e8fd9b3c5e40e39e1ba9d3811d31c5e43decfe"
+    },
+    "6d2c5c473827": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+      "path": "contracts/RewardSwap.sol",
+      "blob": "6d2c5c473827743fcb5dd305f2a01f79c581fe3c"
+    },
+    "6d8f64a1e156": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "6d8f64a1e1561a57363965df4c8c3c28c23ae085"
+    },
+    "707bab8bdb85": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "707bab8bdb85df7f1f581bc9caebc289585dc5eb"
+    },
+    "71e8b177b43b": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/base/Module.sol",
+      "blob": "71e8b177b43bec08037efb131e04b82315d5ef09"
+    },
+    "73addc71dcc0": {
+      "repository": "peppersec/tornado-mixer",
+      "commit": "d0e312eb808797a4f20a81fda2224185a3f914b4",
+      "path": "contracts/Mixer.sol",
+      "blob": "73addc71dcc02e8b9bf9cc6ce3942bb6c265e1f0"
+    },
+    "76f993430b7e": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
+      "blob": "76f993430b7e398a72a55855566dced07c82b7af"
+    },
+    "7c91266c8d06": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "path": "contracts/token/ERC20/SafeERC20.sol",
+      "blob": "7c91266c8d06f3f51c9250b57af928fd886a7f3f"
+    },
+    "7deb70c13c49": {
+      "repository": "Uniswap/v3-core",
+      "commit": "7445e61f17a7c1233bcabcdc920f0473793f6d78",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
+      "blob": "7deb70c13c499d801f30626f109f63bb2fbc9f7a"
+    },
+    "8c953638d384": {
+      "repository": "Uniswap/v3-core",
+      "commit": "c3e2b3c938f50892b413422901cdac99a27c43a2",
+      "path": "contracts/interfaces/IUniswapV3Factory.sol",
+      "blob": "8c953638d3844cf9c8470f007e74fed5c8d8392d"
+    },
+    "934e726462a7": {
+      "repository": "Uniswap/v3-core",
+      "commit": "fc783807986595e33cdfc6ac82479535a42b955b",
+      "path": "contracts/libraries/FullMath.sol",
+      "blob": "934e726462a7bace5783f4991e1e4a7cc5bc3365"
+    },
+    "962e6ad8a397": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0",
+      "path": "contracts/utils/Pausable.sol",
+      "blob": "962e6ad8a397f0efcd582b56d0cb7b7a25b95dc9"
+    },
+    "9d27686ec834": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/GnosisSafe.sol",
+      "blob": "9d27686ec834c33a0f0e3d8ade3814089709392a"
+    },
+    "9f02979f1ee6": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/proxy/Proxy.sol",
+      "blob": "9f02979f1ee66d455e547298479d143f0f7f91c7"
+    },
+    "a083d8f609b7": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+      "path": "contracts/interfaces/IRewardSwap.sol",
+      "blob": "a083d8f609b7b881d6d5a41eb51d2767eabc1ffe"
+    },
+    "a2744ccac22b": {
+      "repository": "ProofOfInnocence/privacy-pools-v1",
+      "commit": "8ab7132877325e27b22053e974b3310d70b860b5",
+      "path": "contracts/MerkleTreeWithHistory.sol",
+      "blob": "a2744ccac22b9eaa1304984d07f76668cdfcb955"
+    },
+    "a5c4e3464fec": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "dac5bccf803696d9d98d269b8c27c7aac5fa1c5c",
+      "path": "contracts/utils/ReentrancyGuard.sol",
+      "blob": "a5c4e3464fecdf45e8196314f9a9f8931cf67483"
+    },
+    "aeda91fb5c75": {
+      "repository": "boundless-xyz/kailua",
+      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+      "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+      "blob": "aeda91fb5c75ebd4191ac8c551a1a4685cf3e115"
+    },
+    "b1fca7a38536": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "dac5bccf803696d9d98d269b8c27c7aac5fa1c5c",
+      "path": "contracts/token/ERC20/ERC20.sol",
+      "blob": "b1fca7a3853608953d0f0cd4594048a1d6de4701"
+    },
+    "c198f7e10e24": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+      "path": "contracts/interfaces/IVerifier.sol",
+      "blob": "c198f7e10e242ed464ae40f3fad572be39fda2d3"
+    },
+    "c74ca2902abd": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/common/SecuredTokenTransfer.sol",
+      "blob": "c74ca2902abda3cf14a8501b27c36d040ade2fcb"
+    },
+    "c874dbd8c56f": {
+      "repository": "safe-fndn/safe-modules",
+      "commit": "252e864496d3a7659195ab5b4418985678887ece",
+      "path": "modules/allowances/contracts/SignatureDecoder.sol",
+      "blob": "c874dbd8c56f7040d942df35a0225b5b522b114b"
+    },
+    "cb57817473ea": {
+      "repository": "peppersec/tornado-mixer",
+      "commit": "d0e312eb808797a4f20a81fda2224185a3f914b4",
+      "path": "contracts/ETHMixer.sol",
+      "blob": "cb57817473eae77bd4ebae36eaf672b57d7fd0a6"
+    },
+    "ceb1087a287f": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+      "path": "contracts/utils/OwnableMerkleTree.sol",
+      "blob": "ceb1087a287f8478c471d959b61ec78613e0609f"
+    },
+    "d0603b6fcb75": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+      "path": "contracts/base/Executor.sol",
+      "blob": "d0603b6fcb75d3afba7ce21757e14dc99a580332"
+    },
+    "d713de78d874": {
+      "repository": "celo-org/celo-monorepo",
+      "commit": "c1bd057484c4601436eb35c563d431f80d5f94b6",
+      "path": "packages/protocol/contracts/common/libraries/ReentrancyGuard.sol",
+      "blob": "d713de78d87478f1b8d7c589b134e0eb40025f38"
+    },
+    "dfe5020b47cd": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/interfaces/IUniswapV3Pool.sol",
+      "blob": "dfe5020b47cd586697429f7957edcc77c833c16a"
+    },
+    "e1159f899dff": {
+      "repository": "agglayer/agglayer-contracts",
+      "commit": "7677b8ccf10abc13903d0aceb66daa9a8a5fb0b0",
+      "path": "contracts/mocks/Uni.sol",
+      "blob": "e1159f899dffe805cfe7bf195addd96cfdf91cc2"
+    },
+    "e140d6f1be6c": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+      "path": "contracts/TornadoTrees.sol",
+      "blob": "e140d6f1be6c1bdfcbd343d16e8d613eb535286a"
+    },
+    "e7ae54c6e765": {
+      "repository": "mantlenetworkio/mantle",
+      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "path": "packages/contracts/contracts/chugsplash/TransparentUpgradeableProxy.sol",
+      "blob": "e7ae54c6e765ae6500b430faeff0f50fa7d53419"
+    },
+    "eed086e731e4": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/extensions/ERC20Burnable.sol",
+      "blob": "eed086e731e44ca2eb26c0c2fdd641967815bb45"
+    },
+    "f2002b273883": {
+      "repository": "peppersec/tornado-mixer",
+      "commit": "d0e312eb808797a4f20a81fda2224185a3f914b4",
+      "path": "contracts/ERC20Mixer.sol",
+      "blob": "f2002b273883555c886c17b1c0d096c05145474c"
+    },
+    "f47bc45583a6": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+      "path": "contracts/interfaces/IHasher.sol",
+      "blob": "f47bc45583a6aecef00049df6feb9764303bd04b"
+    },
+    "f7c87028768a": {
+      "repository": "Uniswap/v3-core",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+      "path": "contracts/interfaces/pool/IUniswapV3PoolImmutables.sol",
+      "blob": "f7c87028768ab9490b4bc281ef0179d83a1e1252"
+    }
+  },
+  "units": {
+    "f2c4908fe7fd": {
+      "name": "IHasher",
+      "kind": "interface",
+      "lines": 3,
+      "status": "differs",
+      "audited": { "object": "a2744ccac22b", "lines": [4, 6] },
+      "reports": ["oxorio-privacy-pools-v1-2024-05"],
+      "findings": { "oxorio-privacy-pools-v1-2024-05": ["C-03"] },
+      "added": [[1, 1]],
+      "removed": [[1, 1, 1]],
+      "covered": 2
+    },
+    "38f84edd13b6": {
+      "name": "MerkleTreeWithHistory",
+      "kind": "contract",
+      "lines": 142,
+      "status": "differs",
+      "audited": { "object": "a2744ccac22b", "lines": [8, 180] },
+      "reports": ["oxorio-privacy-pools-v1-2024-05"],
+      "findings": { "oxorio-privacy-pools-v1-2024-05": ["C-03"] },
+      "added": [
+        [14, 14],
+        [18, 18],
+        [22, 22],
+        [28, 28],
+        [34, 38],
+        [41, 46],
+        [49, 49],
+        [52, 53],
+        [57, 57],
+        [66, 66],
+        [73, 73],
+        [108, 139]
+      ],
+      "removed": [
+        [14, 14, 14],
+        [18, 18, 18],
+        [22, 22, 22],
+        [28, 28, 28],
+        [34, 34, 34],
+        [43, 37, 40],
+        [49, 44, 44],
+        [52, 47, 48],
+        [57, 52, 52],
+        [66, 61, 61],
+        [73, 68, 68],
+        [108, 104, 170]
+      ],
+      "covered": 89
+    },
+    "a49ada592f77": {
+      "name": "ReentrancyGuard",
+      "kind": "abstract",
+      "lines": 42,
+      "status": "differs",
+      "audited": { "object": "a5c4e3464fec", "lines": [9, 27] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [[1, 15], [30, 30], [33, 33], [39, 39]],
+      "removed": [[1, 1, 2], [1, 6, 6], [30, 13, 14], [39, 16, 16]],
+      "covered": 36
+    },
+    "dfc09577523e": {
+      "name": "IVerifier",
+      "kind": "interface",
+      "lines": 3,
+      "status": "differs",
+      "audited": { "object": "76f993430b7e", "lines": [136, 138] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[1, 1]],
+      "removed": [[1, 1, 1]],
+      "covered": 2
+    },
+    "ba34a476e1c9": {
+      "name": "Tornado",
+      "kind": "abstract",
+      "lines": 102,
+      "status": "differs",
+      "audited": {
+        "object": "73addc71dcc0",
+        "lines": [21, 135],
+        "name": "Mixer"
+      },
+      "reports": ["abdk-tornado-smart-contract-audit-2019-11-19"],
+      "added": [[1, 2], [18, 23], [44, 44], [80, 85], [88, 88], [91, 100]],
+      "removed": [
+        [2, 1, 1],
+        [7, 5, 14],
+        [18, 26, 29],
+        [26, 32, 32],
+        [44, 53, 53],
+        [80, 90, 91],
+        [88, 96, 96],
+        [91, 99, 113]
+      ],
+      "covered": 78
+    },
+    "724791df245a": {
+      "name": "SafeMath",
+      "kind": "library",
+      "lines": 197,
+      "status": "differs",
+      "audited": { "object": "e1159f899dff", "lines": [27, 194] },
+      "reports": [
+        "hexens-polygon-zkevm-2023-02",
+        "sigmaprime-polygon-lxly-bridge-2024-02",
+        "spearbit-polygon-zkevm-contracts-2023-03"
+      ],
+      "added": [
+        [1, 56],
+        [58, 58],
+        [64, 64],
+        [74, 74],
+        [80, 80],
+        [84, 85],
+        [114, 114],
+        [118, 119],
+        [135, 136],
+        [154, 154],
+        [174, 174],
+        [193, 193]
+      ],
+      "removed": [
+        [72, 15, 29],
+        [85, 40, 40],
+        [104, 79, 100],
+        [119, 114, 114],
+        [136, 149, 149],
+        [154, 53, 55],
+        [174, 131, 134],
+        [193, 164, 164]
+      ],
+      "covered": 165
+    },
+    "9f1625bb6f8b": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 182,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[19, 26], [112, 112], [136, 136], [160, 160], [162, 180]],
+      "removed": [
+        [26, 28, 32],
+        [112, 122, 122],
+        [136, 149, 149],
+        [160, 175, 175],
+        [162, 177, 204]
+      ],
+      "covered": 162
+    },
+    "756a24936234": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 70,
+      "status": "identical",
+      "audited": { "object": "41ede9d660b2", "lines": [11, 80] },
+      "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
+    },
+    "bc4b0b976969": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 58,
+      "status": "differs",
+      "audited": { "object": "7c91266c8d06", "lines": [12, 40] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [[2, 2], [5, 5], [9, 9], [24, 27], [32, 32], [36, 37], [39, 56]],
+      "removed": [
+        [5, 4, 4],
+        [9, 8, 8],
+        [24, 15, 16],
+        [32, 21, 21],
+        [36, 25, 26]
+      ],
+      "covered": 42
+    },
+    "bc01ee42ee1d": {
+      "name": "ERC20Tornado",
+      "kind": "contract",
+      "lines": 41,
+      "status": "none"
+    },
+    "94fd2bd0d563": {
+      "name": "cTornado",
+      "kind": "contract",
+      "lines": 22,
+      "status": "none"
+    },
+    "5d476d3ad988": {
+      "name": "Hasher",
+      "kind": "library",
+      "lines": 3,
+      "status": "differs",
+      "audited": { "object": "2120eda3bcb9", "lines": [14, 16] },
+      "reports": ["abdk-tornado-smart-contract-audit-2019-11-19"],
+      "added": [[1, 1]],
+      "removed": [[1, 1, 1]],
+      "covered": 2
+    },
+    "f28b0830c3e4": {
+      "name": "MerkleTreeWithHistory",
+      "kind": "contract",
+      "lines": 103,
+      "status": "differs",
+      "audited": { "object": "2120eda3bcb9", "lines": [18, 120] },
+      "reports": ["abdk-tornado-smart-contract-audit-2019-11-19"],
+      "added": [[41, 41], [43, 43]],
+      "removed": [[41, 41, 41], [43, 43, 43]],
+      "covered": 101
+    },
+    "ff57702e7abb": {
+      "name": "ReentrancyGuard",
+      "kind": "contract",
+      "lines": 24,
+      "status": "identical",
+      "audited": { "object": "d713de78d874", "lines": [9, 32] },
+      "reports": [
+        "hacken-celo-contracts-release-8-2022",
+        "oz-celo-contracts-mainnet-releases-1-3"
+      ]
+    },
+    "e48efb02ef56": {
+      "name": "IVerifier",
+      "kind": "interface",
+      "lines": 3,
+      "status": "differs",
+      "audited": { "object": "76f993430b7e", "lines": [136, 138] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[1, 1]],
+      "removed": [[1, 1, 1]],
+      "covered": 2
+    },
+    "bc29437166d5": {
+      "name": "Tornado",
+      "kind": "contract",
+      "lines": 104,
+      "status": "differs",
+      "audited": {
+        "object": "73addc71dcc0",
+        "lines": [21, 135],
+        "name": "Mixer"
+      },
+      "reports": ["abdk-tornado-smart-contract-audit-2019-11-19"],
+      "added": [[10, 10], [77, 77], [80, 89]],
+      "removed": [[10, 11, 11], [77, 96, 96]],
+      "covered": 94
+    },
+    "bc05b0e48ee7": {
+      "name": "TornadoCash_erc20",
+      "kind": "contract",
+      "lines": 59,
+      "status": "differs",
+      "audited": {
+        "object": "f2002b273883",
+        "lines": [16, 74],
+        "name": "ERC20Mixer"
+      },
+      "reports": ["abdk-tornado-smart-contract-audit-2019-11-19"],
+      "added": [[0, 0], [9, 9]],
+      "removed": [[0, 0, 0], [9, 5, 6]],
+      "covered": 57
+    },
+    "db05ffa9d94b": {
+      "name": "Pairing",
+      "kind": "library",
+      "lines": 103,
+      "status": "none"
+    },
+    "75b8a74eb76f": {
+      "name": "WithdrawVerifier",
+      "kind": "contract",
+      "lines": 67,
+      "status": "none"
+    },
+    "944651b43306": {
+      "name": "ETHTornado",
+      "kind": "contract",
+      "lines": 26,
+      "status": "differs",
+      "audited": {
+        "object": "cb57817473ea",
+        "lines": [16, 40],
+        "name": "ETHMixer"
+      },
+      "reports": ["abdk-tornado-smart-contract-audit-2019-11-19"],
+      "added": [[0, 0], [6, 7]],
+      "removed": [[0, 0, 0], [6, 3, 4]],
+      "covered": 23
+    },
+    "587043eef4f9": {
+      "name": "TornadoCash_Eth_01",
+      "kind": "contract",
+      "lines": 42,
+      "status": "none"
+    },
+    "c1fb64e30b68": {
+      "name": "SafeMath",
+      "kind": "library",
+      "lines": 142,
+      "status": "differs",
+      "audited": { "object": "e1159f899dff", "lines": [27, 194] },
+      "reports": [
+        "hexens-polygon-zkevm-2023-02",
+        "sigmaprime-polygon-lxly-bridge-2024-02",
+        "spearbit-polygon-zkevm-contracts-2023-03"
+      ],
+      "added": [[19, 19], [25, 25], [29, 29], [82, 82]],
+      "removed": [[17, 15, 29], [29, 40, 40], [72, 79, 100]],
+      "covered": 141
+    },
+    "5ac09056a6c2": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 134,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[19, 26], [82, 82], [108, 108], [110, 132]],
+      "removed": [[26, 28, 32], [82, 90, 90], [108, 119, 122], [110, 124, 204]],
+      "covered": 113
+    },
+    "d4565328eab4": {
+      "name": "TornadoVault",
+      "kind": "contract",
+      "lines": 13,
+      "status": "none"
+    },
+    "7c20bed15994": {
+      "name": "ITornadoTrees",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "9bdc35ad4a0b": {
+      "name": "Resolver",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "5967822069e2": {
+      "name": "ENS",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "dd65e156fc53": {
+      "name": "EnsResolve",
+      "kind": "contract",
+      "lines": 23,
+      "status": "none"
+    },
+    "f04119ddc474": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 10,
+      "status": "differs",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[1, 1], [5, 6]],
+      "removed": [[1, 1, 1], [5, 5, 5]],
+      "covered": 7
+    },
+    "417cfc3a9ace": {
+      "name": "Ownable",
+      "kind": "contract",
+      "lines": 51,
+      "status": "differs",
+      "audited": { "object": "0b6cbdc34973", "lines": [8, 72] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [[0, 0], [9, 11], [25, 25], [30, 30], [36, 36], [45, 48]],
+      "removed": [
+        [0, 0, 0],
+        [10, 10, 11],
+        [25, 25, 25],
+        [28, 28, 34],
+        [36, 42, 42],
+        [45, 51, 52],
+        [50, 54, 63]
+      ],
+      "covered": 41
+    },
+    "a7a40b94801c": {
+      "name": "IHasher",
+      "kind": "interface",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "f47bc45583a6", "lines": [5, 9] },
+      "reports": ["abdk-tornado-anonymity-mining-recheck-2020-12-22"],
+      "findings": {
+        "abdk-tornado-anonymity-mining-recheck-2020-12-22": ["CVF-4"]
+      }
+    },
+    "19aae6b7bf2d": {
+      "name": "MerkleTreeWithHistory",
+      "kind": "contract",
+      "lines": 131,
+      "status": "differs",
+      "audited": { "object": "55c008cdbedc", "lines": [7, 137] },
+      "reports": ["abdk-tornado-anonymity-mining-recheck-2020-12-22"],
+      "added": [[70, 70], [72, 72], [78, 78], [84, 87]],
+      "removed": [[70, 70, 73], [72, 75, 75], [78, 81, 81], [84, 87, 87]],
+      "covered": 125
+    },
+    "b9385547aea2": {
+      "name": "OwnableMerkleTree",
+      "kind": "contract",
+      "lines": 11,
+      "status": "differs",
+      "audited": { "object": "ceb1087a287f", "lines": [8, 18] },
+      "reports": ["abdk-tornado-anonymity-mining-recheck-2020-12-22"],
+      "added": [[3, 4], [7, 8]],
+      "removed": [[3, 3, 4], [7, 7, 8]],
+      "covered": 7
+    },
+    "c912c24c093b": {
+      "name": "TornadoTrees",
+      "kind": "contract",
+      "lines": 122,
+      "status": "differs",
+      "audited": { "object": "e140d6f1be6c", "lines": [11, 132] },
+      "reports": ["abdk-tornado-anonymity-mining-recheck-2020-12-22"],
+      "findings": {
+        "abdk-tornado-anonymity-mining-recheck-2020-12-22": ["CVF-31", "CVF-32"]
+      },
+      "added": [[21, 21], [37, 44], [51, 51], [70, 70]],
+      "removed": [[21, 21, 21], [37, 32, 39], [51, 50, 50], [70, 69, 69]],
+      "covered": 113
+    },
+    "f7b513d31f48": {
+      "name": "TornadoCash_eth",
+      "kind": "contract",
+      "lines": 26,
+      "status": "differs",
+      "audited": {
+        "object": "cb57817473ea",
+        "lines": [16, 40],
+        "name": "ETHMixer"
+      },
+      "reports": ["abdk-tornado-smart-contract-audit-2019-11-19"],
+      "added": [[0, 0], [6, 7]],
+      "removed": [[0, 0, 0], [6, 3, 4]],
+      "covered": 23
+    },
+    "5ee6595c0908": {
+      "name": "Initializable",
+      "kind": "contract",
+      "lines": 47,
+      "status": "none"
+    },
+    "ad7ee0d6ee15": {
+      "name": "IBatchTreeUpdateVerifier",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "ab37203ba95c": {
+      "name": "ITornadoTreesV1",
+      "kind": "interface",
+      "lines": 17,
+      "status": "none"
+    },
+    "7dfb8e83f672": {
+      "name": "TornadoTrees",
+      "kind": "contract",
+      "lines": 272,
+      "status": "none"
+    },
+    "d04be6c89737": {
+      "name": "Proxy",
+      "kind": "abstract",
+      "lines": 69,
+      "status": "differs",
+      "audited": { "object": "9f02979f1ee6", "lines": [16, 74] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[6, 6], [39, 39], [48, 48], [51, 58]],
+      "removed": [[6, 6, 6], [39, 38, 38], [48, 47, 47]],
+      "covered": 63
+    },
+    "88540d98b2c6": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 158,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[19, 26], [112, 112], [136, 136], [138, 156]],
+      "removed": [
+        [26, 28, 32],
+        [112, 122, 122],
+        [136, 149, 149],
+        [138, 151, 204]
+      ],
+      "covered": 139
+    },
+    "902996423f91": {
+      "name": "UpgradeableProxy",
+      "kind": "contract",
+      "lines": 64,
+      "status": "none"
+    },
+    "ac60402eb63d": {
+      "name": "TransparentUpgradeableProxy",
+      "kind": "contract",
+      "lines": 126,
+      "status": "differs",
+      "audited": { "object": "e7ae54c6e765", "lines": [28, 120] },
+      "reports": [
+        "secure3-mantle-v1-contest-2023-07",
+        "sigmaprime-mantle-l2-rollup-2023-07"
+      ],
+      "added": [
+        [0, 0],
+        [5, 5],
+        [7, 7],
+        [9, 20],
+        [26, 26],
+        [43, 43],
+        [66, 69],
+        [78, 78],
+        [89, 92],
+        [98, 103],
+        [105, 116],
+        [122, 122]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [5, 5, 5],
+        [7, 7, 7],
+        [26, 14, 14],
+        [43, 31, 31],
+        [66, 54, 55],
+        [78, 64, 64],
+        [92, 75, 75],
+        [98, 81, 82],
+        [122, 89, 89]
+      ],
+      "covered": 99
+    },
+    "c1ccc25055ba": {
+      "name": "AdminUpgradeableProxy",
+      "kind": "contract",
+      "lines": 15,
+      "status": "none"
+    },
+    "89703fd079c2": {
+      "name": "ITornadoInstance",
+      "kind": "interface",
+      "lines": 17,
+      "status": "none"
+    },
+    "f0554d9428f6": {
+      "name": "Math",
+      "kind": "library",
+      "lines": 24,
+      "status": "identical",
+      "audited": { "object": "0cc89cb39124", "lines": [7, 31] },
+      "reports": ["contracts__audits__2018-10"]
+    },
+    "61f307eb62e4": {
+      "name": "TornadoProxy",
+      "kind": "contract",
+      "lines": 133,
+      "status": "none"
+    },
+    "eddfd1ec9e89": {
+      "name": "ITornadoProxyV1",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "c82c5e87a6bc": {
+      "name": "IMiner",
+      "kind": "interface",
+      "lines": 3,
+      "status": "differs",
+      "audited": { "object": "09ab6a9bc85c", "lines": [5, 9] },
+      "reports": ["zeropool-tornado-anonymity-mining-2020-10-15"],
+      "added": [[1, 1]],
+      "removed": [[1, 1, 3]],
+      "covered": 2
+    },
+    "70720a8f110c": {
+      "name": "Proposal",
+      "kind": "contract",
+      "lines": 121,
+      "status": "none"
+    },
+    "c2fda6873661": {
+      "name": "Proxy",
+      "kind": "abstract",
+      "lines": 69,
+      "status": "differs",
+      "audited": { "object": "9f02979f1ee6", "lines": [16, 74] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[6, 6], [39, 39], [48, 48], [51, 58]],
+      "removed": [[6, 6, 6], [39, 38, 38], [48, 47, 47]],
+      "covered": 63
+    },
+    "3022bd397900": {
+      "name": "TransparentUpgradeableProxy",
+      "kind": "contract",
+      "lines": 126,
+      "status": "differs",
+      "audited": { "object": "e7ae54c6e765", "lines": [28, 120] },
+      "reports": [
+        "secure3-mantle-v1-contest-2023-07",
+        "sigmaprime-mantle-l2-rollup-2023-07"
+      ],
+      "added": [
+        [0, 0],
+        [5, 5],
+        [7, 7],
+        [9, 20],
+        [26, 26],
+        [42, 43],
+        [55, 56],
+        [66, 69],
+        [78, 78],
+        [89, 92],
+        [98, 103],
+        [105, 116],
+        [122, 122]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [5, 5, 5],
+        [7, 7, 7],
+        [26, 14, 14],
+        [42, 30, 31],
+        [55, 43, 44],
+        [66, 54, 55],
+        [78, 64, 64],
+        [92, 75, 75],
+        [98, 81, 82],
+        [122, 89, 89]
+      ],
+      "covered": 96
+    },
+    "2ec021f20088": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 36,
+      "status": "none"
+    },
+    "b9c4d48812e2": {
+      "name": "ERC20",
+      "kind": "contract",
+      "lines": 274,
+      "status": "differs",
+      "audited": { "object": "b1fca7a38536", "lines": [13, 176] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [
+        [0, 0],
+        [4, 5],
+        [8, 11],
+        [27, 58],
+        [63, 63],
+        [70, 71],
+        [82, 83],
+        [90, 91],
+        [101, 102],
+        [119, 121],
+        [137, 138],
+        [156, 157],
+        [160, 184],
+        [186, 187],
+        [195, 198],
+        [216, 219],
+        [221, 221],
+        [225, 272]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [4, 4, 5],
+        [63, 12, 12],
+        [70, 21, 22],
+        [82, 40, 46],
+        [90, 31, 32],
+        [101, 59, 63],
+        [119, 73, 81],
+        [137, 94, 98],
+        [156, 111, 115],
+        [195, 126, 127],
+        [216, 139, 141],
+        [223, 144, 144],
+        [225, 147, 162]
+      ],
+      "covered": 219
+    },
+    "19ad75b2e8c8": {
+      "name": "ERC20Burnable",
+      "kind": "abstract",
+      "lines": 30,
+      "status": "differs",
+      "audited": { "object": "eed086e731e4", "lines": [14, 39] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[1, 2], [24, 26]],
+      "removed": [[26, 22, 22]],
+      "covered": 27
+    },
+    "f5633cff5796": {
+      "name": "ECDSA",
+      "kind": "library",
+      "lines": 81,
+      "status": "none"
+    },
+    "1eaae1c85021": {
+      "name": "ERC20Permit",
+      "kind": "abstract",
+      "lines": 89,
+      "status": "none"
+    },
+    "7c32f7a42266": {
+      "name": "Pausable",
+      "kind": "abstract",
+      "lines": 75,
+      "status": "differs",
+      "audited": { "object": "962e6ad8a397", "lines": [17, 112] },
+      "reports": ["contracts__audits__2025-04-v5.3"],
+      "added": [[35, 35], [47, 47]],
+      "removed": [[10, 12, 21], [26, 53, 70], [35, 31, 31], [47, 43, 43]],
+      "covered": 73
+    },
+    "7962e9765f3f": {
+      "name": "TORN",
+      "kind": "contract",
+      "lines": 95,
+      "status": "none"
+    },
+    "a12d0be3ff07": {
+      "name": "ENSNamehash",
+      "kind": "library",
+      "lines": 28,
+      "status": "none"
+    },
+    "cf27342cb2fb": {
+      "name": "IENS",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "539ac45068e4": {
+      "name": "ITornadoStakingRewards",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "674a8775414f": {
+      "name": "ITornadoInstance",
+      "kind": "interface",
+      "lines": 17,
+      "status": "none"
+    },
+    "5b2d2b86b68e": {
+      "name": "IFeeManager",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "4909ba064465": {
+      "name": "RelayerRegistry",
+      "kind": "contract",
+      "lines": 326,
+      "status": "none"
+    },
+    "208cacb51131": {
+      "name": "Proxy",
+      "kind": "abstract",
+      "lines": 69,
+      "status": "differs",
+      "audited": { "object": "9f02979f1ee6", "lines": [16, 74] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[51, 58]],
+      "removed": [],
+      "covered": 66
+    },
+    "991ae179185d": {
+      "name": "UpgradeableProxy",
+      "kind": "contract",
+      "lines": 62,
+      "status": "none"
+    },
+    "d56a4e0545a4": {
+      "name": "TransparentUpgradeableProxy",
+      "kind": "contract",
+      "lines": 124,
+      "status": "differs",
+      "audited": { "object": "e7ae54c6e765", "lines": [28, 120] },
+      "reports": [
+        "secure3-mantle-v1-contest-2023-07",
+        "sigmaprime-mantle-l2-rollup-2023-07"
+      ],
+      "added": [
+        [0, 0],
+        [5, 5],
+        [7, 7],
+        [9, 20],
+        [26, 26],
+        [43, 43],
+        [67, 69],
+        [77, 78],
+        [88, 90],
+        [96, 101],
+        [103, 114],
+        [120, 120]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [5, 5, 5],
+        [7, 7, 7],
+        [26, 14, 14],
+        [43, 31, 31],
+        [69, 55, 55],
+        [77, 63, 64],
+        [88, 74, 75],
+        [96, 81, 82],
+        [120, 89, 89]
+      ],
+      "covered": 97
+    },
+    "60e23f2d55b9": {
+      "name": "AdminUpgradeableProxy",
+      "kind": "contract",
+      "lines": 15,
+      "status": "none"
+    },
+    "31950cafc964": {
+      "name": "ITornadoVault",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "615f3410dd6f": {
+      "name": "ITornadoGovernance",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "7fddffd68462": {
+      "name": "TornadoStakingRewards",
+      "kind": "contract",
+      "lines": 138,
+      "status": "none"
+    },
+    "18fe55ac4e85": {
+      "name": "FloatMath",
+      "kind": "library",
+      "lines": 695,
+      "status": "identical",
+      "audited": {
+        "object": "1233e2d195ed",
+        "lines": [16, 875],
+        "name": "Math"
+      },
+      "reports": ["zeropool-tornado-anonymity-mining-2020-10-15"]
+    },
+    "5a2d1c0ee6bf": {
+      "name": "RewardSwap",
+      "kind": "contract",
+      "lines": 74,
+      "status": "differs",
+      "audited": { "object": "6d2c5c473827", "lines": [22, 88] },
+      "reports": ["abdk-tornado-anonymity-mining-recheck-2020-12-22"],
+      "added": [
+        [11, 11],
+        [26, 26],
+        [33, 33],
+        [37, 38],
+        [40, 42],
+        [48, 48],
+        [50, 50],
+        [65, 67],
+        [70, 70]
+      ],
+      "removed": [
+        [11, 11, 11],
+        [37, 31, 32],
+        [41, 34, 35],
+        [48, 41, 41],
+        [50, 43, 43],
+        [65, 58, 60],
+        [70, 63, 63]
+      ],
+      "covered": 60
+    },
+    "8a7d60c08052": {
+      "name": "LoopbackProxy",
+      "kind": "contract",
+      "lines": 15,
+      "status": "none"
+    },
+    "16dc3c9a2b75": {
+      "name": "Configuration",
+      "kind": "contract",
+      "lines": 69,
+      "status": "none"
+    },
+    "692a4a77f3ea": {
+      "name": "Core",
+      "kind": "abstract",
+      "lines": 4,
+      "status": "none"
+    },
+    "866164253f59": {
+      "name": "Delegation",
+      "kind": "abstract",
+      "lines": 53,
+      "status": "none"
+    },
+    "87717775f550": {
+      "name": "Governance",
+      "kind": "contract",
+      "lines": 270,
+      "status": "none"
+    },
+    "c944cd2e44ca": {
+      "name": "GovernanceVaultUpgrade",
+      "kind": "contract",
+      "lines": 33,
+      "status": "none"
+    },
+    "df81b1e25820": {
+      "name": "IGasCompensationVault",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "dbd761553777": {
+      "name": "GasCompensator",
+      "kind": "abstract",
+      "lines": 42,
+      "status": "none"
+    },
+    "f1137ba4a684": {
+      "name": "GovernanceGasUpgrade",
+      "kind": "contract",
+      "lines": 161,
+      "status": "none"
+    },
+    "e47626435ea0": {
+      "name": "ITornadoStakingRewards",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "4280b9014b30": {
+      "name": "GovernanceStakingUpgrade",
+      "kind": "contract",
+      "lines": 45,
+      "status": "none"
+    },
+    "7ce7fc15e0b7": {
+      "name": "GovernanceExploitPatchUpgrade",
+      "kind": "contract",
+      "lines": 65,
+      "status": "none"
+    },
+    "14f471a5c70d": {
+      "name": "GovernanceProposalStateUpgrade",
+      "kind": "contract",
+      "lines": 34,
+      "status": "none"
+    },
+    "f2cd37c21003": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 45,
+      "status": "none"
+    },
+    "84bed51ac1a4": {
+      "name": "ERC20",
+      "kind": "contract",
+      "lines": 274,
+      "status": "differs",
+      "audited": { "object": "b1fca7a38536", "lines": [13, 176] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [
+        [0, 0],
+        [2, 2],
+        [5, 6],
+        [9, 12],
+        [28, 59],
+        [64, 64],
+        [71, 72],
+        [83, 84],
+        [91, 92],
+        [102, 103],
+        [119, 121],
+        [137, 138],
+        [156, 157],
+        [160, 184],
+        [186, 187],
+        [195, 198],
+        [216, 219],
+        [221, 221],
+        [225, 272]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [5, 4, 5],
+        [64, 12, 12],
+        [71, 21, 22],
+        [83, 40, 46],
+        [91, 31, 32],
+        [102, 59, 63],
+        [119, 73, 81],
+        [137, 94, 98],
+        [156, 111, 115],
+        [195, 126, 127],
+        [216, 139, 141],
+        [223, 144, 144],
+        [225, 147, 162]
+      ],
+      "covered": 218
+    },
+    "fcf070128481": {
+      "name": "ERC20Burnable",
+      "kind": "abstract",
+      "lines": 28,
+      "status": "differs",
+      "audited": { "object": "eed086e731e4", "lines": [14, 39] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[22, 24]],
+      "removed": [[24, 22, 22]],
+      "covered": 26
+    },
+    "c75072895f89": {
+      "name": "Pausable",
+      "kind": "contract",
+      "lines": 75,
+      "status": "differs",
+      "audited": { "object": "962e6ad8a397", "lines": [17, 112] },
+      "reports": ["contracts__audits__2025-04-v5.3"],
+      "added": [[23, 23], [35, 35], [47, 47]],
+      "removed": [
+        [10, 12, 21],
+        [23, 50, 50],
+        [26, 53, 70],
+        [35, 31, 31],
+        [47, 43, 43]
+      ],
+      "covered": 72
+    },
+    "bbb21fbaaa11": {
+      "name": "ENSNamehash",
+      "kind": "library",
+      "lines": 32,
+      "status": "none"
+    },
+    "d968375f21a1": {
+      "name": "IENS",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "fe1879dd7986": {
+      "name": "ITornadoVault",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "92264b3dd15e": {
+      "name": "ITornadoGovernance",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "567bd39e0ac0": {
+      "name": "TornadoStakingRewards",
+      "kind": "contract",
+      "lines": 114,
+      "status": "none"
+    },
+    "e3e00514147a": {
+      "name": "RelayerRegistry",
+      "kind": "contract",
+      "lines": 288,
+      "status": "none"
+    },
+    "05bb4acd5583": {
+      "name": "TornadoRouter",
+      "kind": "contract",
+      "lines": 103,
+      "status": "none"
+    },
+    "27e406f5e8b3": {
+      "name": "InstanceRegistry",
+      "kind": "contract",
+      "lines": 140,
+      "status": "none"
+    },
+    "aad491890f36": {
+      "name": "LowGasSafeMath",
+      "kind": "library",
+      "lines": 41,
+      "status": "identical",
+      "audited": { "object": "092a067f397a", "lines": [6, 36] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "trailofbits-uniswap-v3-core-2021-03"
+      ]
+    },
+    "919501e6934f": {
+      "name": "IUniswapV3Factory",
+      "kind": "interface",
+      "lines": 73,
+      "status": "identical",
+      "audited": { "object": "8c953638d384", "lines": [6, 66] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "ae887499d3bd": {
+      "name": "IERC20Decimals",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "8614d448ca1f": {
+      "name": "IUniswapV3PoolImmutables",
+      "kind": "interface",
+      "lines": 30,
+      "status": "identical",
+      "audited": { "object": "f7c87028768a", "lines": [6, 35] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "b107006c5152": {
+      "name": "IUniswapV3PoolState",
+      "kind": "interface",
+      "lines": 110,
+      "status": "differs",
+      "audited": { "object": "48a5beba6436", "lines": [7, 109] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [[65, 68], [104, 108]],
+      "removed": [[73, 66, 68], [104, 101, 101]],
+      "covered": 101
+    },
+    "e2bee84b0de1": {
+      "name": "IUniswapV3PoolDerivedState",
+      "kind": "interface",
+      "lines": 34,
+      "status": "differs",
+      "audited": { "object": "1a59de42c5d0", "lines": [7, 32] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [[14, 32]],
+      "removed": [[1, 1, 10], [14, 24, 24]],
+      "covered": 25
+    },
+    "86c679d97aab": {
+      "name": "IUniswapV3PoolActions",
+      "kind": "interface",
+      "lines": 98,
+      "status": "identical",
+      "audited": { "object": "101ca93d6e03", "lines": [6, 92] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "df7bd0675943": {
+      "name": "IUniswapV3PoolOwnerActions",
+      "kind": "interface",
+      "lines": 18,
+      "status": "identical",
+      "audited": { "object": "2eeb24b7812c", "lines": [6, 21] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "e41c74af84d8": {
+      "name": "IUniswapV3PoolEvents",
+      "kind": "interface",
+      "lines": 116,
+      "status": "differs",
+      "audited": { "object": "7deb70c13c49", "lines": [6, 118] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [[72, 72]],
+      "removed": [],
+      "covered": 115
+    },
+    "455fbfba58ac": {
+      "name": "IUniswapV3Pool",
+      "kind": "interface",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "dfe5020b47cd", "lines": [16, 23] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"]
+    },
+    "ca327c6eb2b1": {
+      "name": "TickMath",
+      "kind": "library",
+      "lines": 199,
+      "status": "differs",
+      "audited": { "object": "64e8fd9b3c5e", "lines": [7, 248] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [[18, 18]],
+      "removed": [[18, 18, 18]],
+      "covered": 198
+    },
+    "201e1a63f108": {
+      "name": "FullMath",
+      "kind": "library",
+      "lines": 118,
+      "status": "differs",
+      "audited": { "object": "934e726462a7", "lines": [7, 116] },
+      "reports": ["abdk-uniswap-v3-core-2021-03"],
+      "added": [[57, 57]],
+      "removed": [[57, 53, 53]],
+      "covered": 117
+    },
+    "7ac0f677558b": {
+      "name": "OracleLibrary",
+      "kind": "library",
+      "lines": 49,
+      "status": "none"
+    },
+    "bb299519e2e1": {
+      "name": "UniswapV3OracleHelper",
+      "kind": "library",
+      "lines": 84,
+      "status": "none"
+    },
+    "fd7bd4470df9": {
+      "name": "FeeManager",
+      "kind": "contract",
+      "lines": 151,
+      "status": "none"
+    },
+    "2c183e1c16e8": {
+      "name": "TreeUpdateVerifier",
+      "kind": "contract",
+      "lines": 64,
+      "status": "none"
+    },
+    "6cee71cd198c": {
+      "name": "IVerifier",
+      "kind": "interface",
+      "lines": 7,
+      "status": "identical",
+      "audited": { "object": "c198f7e10e24", "lines": [5, 11] },
+      "reports": ["abdk-tornado-anonymity-mining-recheck-2020-12-22"]
+    },
+    "1637bd26fb89": {
+      "name": "IRewardSwap",
+      "kind": "interface",
+      "lines": 5,
+      "status": "differs",
+      "audited": { "object": "a083d8f609b7", "lines": [5, 10] },
+      "reports": ["abdk-tornado-anonymity-mining-recheck-2020-12-22"],
+      "added": [[1, 1]],
+      "removed": [[1, 2, 2]],
+      "covered": 4
+    },
+    "114736fa4e7b": {
+      "name": "MerkleTreeWithHistory",
+      "kind": "contract",
+      "lines": 131,
+      "status": "differs",
+      "audited": { "object": "55c008cdbedc", "lines": [7, 137] },
+      "reports": ["abdk-tornado-anonymity-mining-recheck-2020-12-22"],
+      "added": [[70, 70], [72, 72], [78, 78], [84, 87]],
+      "removed": [[70, 70, 73], [72, 75, 75], [78, 81, 81], [84, 87, 87]],
+      "covered": 125
+    },
+    "7d38d02bfd2e": {
+      "name": "Miner",
+      "kind": "contract",
+      "lines": 302,
+      "status": "differs",
+      "audited": { "object": "5dacdc82a0e1", "lines": [14, 299] },
+      "reports": ["abdk-tornado-anonymity-mining-recheck-2020-12-22"],
+      "added": [
+        [3, 5],
+        [20, 20],
+        [69, 69],
+        [82, 82],
+        [94, 99],
+        [121, 121],
+        [172, 172],
+        [213, 216],
+        [222, 223],
+        [231, 232],
+        [241, 246],
+        [289, 291],
+        [294, 300]
+      ],
+      "removed": [
+        [3, 3, 5],
+        [69, 68, 68],
+        [82, 81, 81],
+        [89, 88, 90],
+        [121, 117, 117],
+        [172, 170, 170],
+        [222, 226, 227],
+        [231, 235, 236],
+        [241, 245, 250],
+        [290, 217, 218]
+      ],
+      "covered": 270
+    },
+    "1aee25dd5b38": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 134,
+      "status": "differs",
+      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
+      "reports": ["veridise-kailua-2025-02"],
+      "added": [[19, 26], [82, 82], [108, 108], [110, 132]],
+      "removed": [[26, 28, 32], [82, 90, 90], [108, 119, 122], [110, 124, 204]],
+      "covered": 112
+    },
+    "5cab4be2bd95": {
+      "name": "ERC20",
+      "kind": "contract",
+      "lines": 274,
+      "status": "differs",
+      "audited": { "object": "b1fca7a38536", "lines": [13, 176] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [
+        [0, 0],
+        [2, 2],
+        [5, 6],
+        [9, 12],
+        [28, 59],
+        [64, 64],
+        [71, 72],
+        [83, 84],
+        [91, 92],
+        [102, 103],
+        [119, 121],
+        [137, 138],
+        [156, 157],
+        [160, 184],
+        [186, 187],
+        [195, 198],
+        [216, 219],
+        [221, 221],
+        [225, 272]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [5, 4, 5],
+        [64, 12, 12],
+        [71, 21, 22],
+        [83, 40, 46],
+        [91, 31, 32],
+        [102, 59, 63],
+        [119, 73, 81],
+        [137, 94, 98],
+        [156, 111, 115],
+        [195, 126, 127],
+        [216, 139, 141],
+        [223, 144, 144],
+        [225, 147, 162]
+      ],
+      "covered": 218
+    },
+    "0a545f67c576": {
+      "name": "RewardVerifier",
+      "kind": "contract",
+      "lines": 72,
+      "status": "none"
+    },
+    "bfa92aee5792": {
+      "name": "ITornadoInstance",
+      "kind": "interface",
+      "lines": 13,
+      "status": "none"
+    },
+    "c3e11e676054": {
+      "name": "TornadoProxy",
+      "kind": "contract",
+      "lines": 77,
+      "status": "none"
+    },
+    "e8010319ebd8": {
+      "name": "Proxy",
+      "kind": "contract",
+      "lines": 36,
+      "status": "identical",
+      "audited": { "object": "168354793687", "lines": [12, 41] },
+      "reports": ["g0-safe-1-1-0", "g0-safe-1-1-1"]
+    },
+    "a41e337a7fac": {
+      "name": "SelfAuthorized",
+      "kind": "contract",
+      "lines": 6,
+      "status": "identical",
+      "audited": { "object": "6d8f64a1e156", "lines": [5, 10] },
+      "reports": [
+        "akhunov-audit-results-note",
+        "akhunov-gnosis-safe-2018",
+        "g0-safe-1-1-0",
+        "g0-safe-1-1-1"
+      ]
+    },
+    "e56d6ef756e9": {
+      "name": "MasterCopy",
+      "kind": "contract",
+      "lines": 20,
+      "status": "identical",
+      "audited": { "object": "142884219840", "lines": [8, 23] },
+      "reports": ["g0-safe-1-1-1"]
+    },
+    "40ce0b25499c": {
+      "name": "Enum",
+      "kind": "interface",
+      "lines": 6,
+      "status": "none"
+    },
+    "b9eed8957aec": {
+      "name": "Executor",
+      "kind": "contract",
+      "lines": 34,
+      "status": "identical",
+      "audited": { "object": "d0603b6fcb75", "lines": [7, 34] },
+      "reports": ["g0-safe-1-1-1"]
+    },
+    "f74001a5f0f6": {
+      "name": "Module",
+      "kind": "contract",
+      "lines": 18,
+      "status": "identical",
+      "audited": { "object": "71e8b177b43b", "lines": [9, 23] },
+      "reports": ["g0-safe-1-1-0", "g0-safe-1-1-1"]
+    },
+    "2de054eabcd9": {
+      "name": "ModuleManager",
+      "kind": "contract",
+      "lines": 135,
+      "status": "identical",
+      "audited": { "object": "707bab8bdb85", "lines": [11, 139] },
+      "reports": ["g0-safe-1-1-1"]
+    },
+    "c5fc14b4d8d0": {
+      "name": "OwnerManager",
+      "kind": "contract",
+      "lines": 159,
+      "status": "identical",
+      "audited": { "object": "5b7d9d52de94", "lines": [8, 141] },
+      "reports": ["g0-safe-1-1-1"]
+    },
+    "02d4b3fb548f": {
+      "name": "SignatureDecoder",
+      "kind": "contract",
+      "lines": 48,
+      "status": "identical",
+      "audited": { "object": "c874dbd8c56f", "lines": [7, 49] },
+      "reports": [
+        "certora-safe-allowance-v1-0-0",
+        "g0-safe-1-1-0",
+        "g0-safe-1-1-1",
+        "g0-safe-allowance-v0-1-0"
+      ]
+    },
+    "bbad07bdeac7": {
+      "name": "SecuredTokenTransfer",
+      "kind": "contract",
+      "lines": 28,
+      "status": "identical",
+      "audited": { "object": "c74ca2902abd", "lines": [5, 24] },
+      "reports": ["g0-safe-1-1-0", "g0-safe-1-1-1"]
+    },
+    "0b4b9881f1e4": {
+      "name": "ISignatureValidatorConstants",
+      "kind": "contract",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "aeda91fb5c75", "lines": [942, 945] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-1-0",
+        "g0-safe-1-1-1",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "veridise-kailua-2025-02"
+      ]
+    },
+    "a926f8c7d8a3": {
+      "name": "FallbackManager",
+      "kind": "contract",
+      "lines": 51,
+      "status": "identical",
+      "audited": { "object": "36e4feccc8ee", "lines": [7, 51] },
+      "reports": ["g0-safe-1-1-0", "g0-safe-1-1-1"]
+    },
+    "c4c859859cd4": {
+      "name": "SafeMath",
+      "kind": "library",
+      "lines": 59,
+      "status": "identical",
+      "audited": { "object": "643d86cf72d9", "lines": [8, 65] },
+      "reports": ["contracts__audits__2018-10", "g0-safe-allowance-v0-1-0"]
+    },
+    "374c0687a6ae": {
+      "name": "ISignatureValidator",
+      "kind": "contract",
+      "lines": 18,
+      "status": "identical",
+      "audited": { "object": "2127fd7c3240", "lines": [8, 19] },
+      "reports": ["g0-safe-1-1-0", "g0-safe-1-1-1"]
+    },
+    "a6e47efab063": {
+      "name": "GnosisSafe",
+      "kind": "contract",
+      "lines": 402,
+      "status": "identical",
+      "audited": { "object": "9d27686ec834", "lines": [18, 421] },
+      "reports": ["g0-safe-1-1-1"]
+    },
+    "ab283de73cd7": {
+      "name": "Pairing",
+      "kind": "library",
+      "lines": 116,
+      "status": "none"
+    },
+    "96d4c4813484": {
+      "name": "Verifier",
+      "kind": "contract",
+      "lines": 78,
+      "status": "none"
+    },
+    "6ca6d3024bd6": {
+      "name": "BatchTreeUpdateVerifier",
+      "kind": "contract",
+      "lines": 61,
+      "status": "none"
+    },
+    "a64ff3ae39c7": {
+      "name": "EtherSend",
+      "kind": "library",
+      "lines": 12,
+      "status": "none"
+    },
+    "9d112b8c39bb": {
+      "name": "GasCompensationVault",
+      "kind": "contract",
+      "lines": 36,
+      "status": "none"
+    }
+  },
+  "flats": {
+    "ec84d5d144422d18e979ff6222f117536b75c950c83333113a582a24f739e5e0": [
+      ["f2c4908fe7fd", 1],
+      ["38f84edd13b6", 5],
+      ["a49ada592f77", 164],
+      ["dfc09577523e", 207],
+      ["ba34a476e1c9", 211],
+      ["724791df245a", 327],
+      ["9f1625bb6f8b", 528],
+      ["756a24936234", 714],
+      ["bc4b0b976969", 794],
+      ["bc01ee42ee1d", 853],
+      ["94fd2bd0d563", 895]
+    ],
+    "ea51e1c3885337c0d5f609a631031b26f0d93558f2cb5a767223cd60a49b57e8": [
+      ["f2c4908fe7fd", 2],
+      ["38f84edd13b6", 6],
+      ["a49ada592f77", 165],
+      ["dfc09577523e", 208],
+      ["ba34a476e1c9", 212],
+      ["724791df245a", 328],
+      ["9f1625bb6f8b", 529],
+      ["756a24936234", 715],
+      ["bc4b0b976969", 795],
+      ["bc01ee42ee1d", 854]
+    ],
+    "31d082456b3f4e435bc0d6e737583bc0d1f52f34cb21fe531b678929512c1cf8": [
+      ["5d476d3ad988", 1],
+      ["f28b0830c3e4", 5],
+      ["ff57702e7abb", 121],
+      ["e48efb02ef56", 147],
+      ["bc29437166d5", 151],
+      ["bc05b0e48ee7", 256]
+    ],
+    "8afd2993d2eafff7c70555163d4f0550510e38caac5f28b179d0139ed9e4de30": [
+      ["db05ffa9d94b", 1],
+      ["75b8a74eb76f", 105]
+    ],
+    "ae068d12a3411421aa5d747212aa816ac2f4d90fd271b281b28ede3ed153ad8b": [
+      ["5d476d3ad988", 1],
+      ["f28b0830c3e4", 5],
+      ["ff57702e7abb", 121],
+      ["e48efb02ef56", 147],
+      ["bc29437166d5", 151],
+      ["944651b43306", 256],
+      ["587043eef4f9", 283]
+    ],
+    "2ba4b09765303ac94ee541abdf7625d6e34d39a102dbe5cffda6dfd47d4171b0": [
+      ["c1fb64e30b68", 14],
+      ["5ac09056a6c2", 160],
+      ["756a24936234", 298],
+      ["bc4b0b976969", 378],
+      ["d4565328eab4", 438]
+    ],
+    "f31f1d2bfa25e469902b75d3fd97341513ce04e7a947aa15b3afea3d572b9e57": [
+      ["7c20bed15994", 3],
+      ["9bdc35ad4a0b", 9],
+      ["5967822069e2", 13],
+      ["dd65e156fc53", 17],
+      ["f04119ddc474", 51],
+      ["417cfc3a9ace", 74],
+      ["a7a40b94801c", 126],
+      ["19aae6b7bf2d", 132],
+      ["b9385547aea2", 264],
+      ["c912c24c093b", 276]
+    ],
+    "6268ced32d1f4e74b662d30e97f3b5f6d0647248a3584becff5b4cfa5f4a43f5": [
+      ["5d476d3ad988", 1],
+      ["f28b0830c3e4", 5],
+      ["ff57702e7abb", 121],
+      ["e48efb02ef56", 147],
+      ["bc29437166d5", 151],
+      ["f7b513d31f48", 256]
+    ],
+    "d51ec0fbda4bf54c6f404eaf750c9a404e80ad8ef880c4a4aeafbe20b770073d": [
+      ["9bdc35ad4a0b", 3],
+      ["5967822069e2", 7],
+      ["dd65e156fc53", 11],
+      ["5ee6595c0908", 47],
+      ["ad7ee0d6ee15", 95],
+      ["ab37203ba95c", 99],
+      ["7dfb8e83f672", 118],
+      ["d04be6c89737", 401],
+      ["88540d98b2c6", 474],
+      ["902996423f91", 642],
+      ["ac60402eb63d", 728],
+      ["c1ccc25055ba", 858],
+      ["c1fb64e30b68", 887],
+      ["756a24936234", 1033],
+      ["bc4b0b976969", 1113],
+      ["89703fd079c2", 1172],
+      ["7c20bed15994", 1190],
+      ["f0554d9428f6", 1199],
+      ["61f307eb62e4", 1224],
+      ["eddfd1ec9e89", 1358],
+      ["c82c5e87a6bc", 1362],
+      ["70720a8f110c", 1366]
+    ],
+    "df95ef7d34022933140cb7d58ea0f1f396cff1bacbab817781e049ad7ec6c9d0": [
+      ["d04be6c89737", 11],
+      ["88540d98b2c6", 84],
+      ["902996423f91", 252],
+      ["ac60402eb63d", 338],
+      ["c1ccc25055ba", 468]
+    ],
+    "2611739b83b618766dbc7ee72dd7304aeb4ef9f99e61b756797103a19dffd5c0": [
+      ["5ee6595c0908", 15],
+      ["ad7ee0d6ee15", 63],
+      ["ab37203ba95c", 67],
+      ["7dfb8e83f672", 86]
+    ],
+    "38d3f5bb3d32f8a41e535d3dee1dbe2c9c6245b80b91ae4442823a42516809fe": [
+      ["c2fda6873661", 11],
+      ["5ac09056a6c2", 84],
+      ["902996423f91", 228],
+      ["3022bd397900", 314],
+      ["c1ccc25055ba", 444]
+    ],
+    "baacee175e647e95fa8eae0101dd1e4adf986c803f2e8f49e15d0e46a05b9e15": [
+      ["9f1625bb6f8b", 6],
+      ["2ec021f20088", 201],
+      ["9bdc35ad4a0b", 238],
+      ["5967822069e2", 242],
+      ["dd65e156fc53", 246],
+      ["724791df245a", 283],
+      ["756a24936234", 484],
+      ["bc4b0b976969", 564],
+      ["f04119ddc474", 633],
+      ["b9c4d48812e2", 668],
+      ["19ad75b2e8c8", 948],
+      ["f5633cff5796", 987],
+      ["1eaae1c85021", 1077],
+      ["7c32f7a42266", 1176],
+      ["f0554d9428f6", 1255],
+      ["7962e9765f3f", 1280],
+      ["a12d0be3ff07", 1382],
+      ["cf27342cb2fb", 1411],
+      ["539ac45068e4", 1415],
+      ["674a8775414f", 1419],
+      ["5b2d2b86b68e", 1437],
+      ["4909ba064465", 1462]
+    ],
+    "1c600280d22672658319937f9e79ef5ec931a4af2639959ca454bf42a60b094e": [
+      ["208cacb51131", 11],
+      ["9f1625bb6f8b", 84],
+      ["991ae179185d", 276],
+      ["d56a4e0545a4", 360],
+      ["60e23f2d55b9", 488]
+    ],
+    "0c964e7d90736b13041dfb76fd0352f9a4e55f9608c133903e45dac9daa6b477": [
+      ["9f1625bb6f8b", 6],
+      ["2ec021f20088", 201],
+      ["9bdc35ad4a0b", 238],
+      ["5967822069e2", 242],
+      ["dd65e156fc53", 246],
+      ["724791df245a", 283],
+      ["756a24936234", 484],
+      ["bc4b0b976969", 564],
+      ["31950cafc964", 623],
+      ["615f3410dd6f", 627],
+      ["7fddffd68462", 641]
+    ],
+    "37647635b437e9c074799c9832e05f6e61a4bc04780e14e373bcc08b7098b150": [
+      ["9bdc35ad4a0b", 1],
+      ["5967822069e2", 5],
+      ["dd65e156fc53", 9],
+      ["c1fb64e30b68", 46],
+      ["756a24936234", 192],
+      ["18fe55ac4e85", 271],
+      ["5a2d1c0ee6bf", 980]
+    ],
+    "77110e894c712e72436ec8e4947017fb3ffe4811649d5aea9b5fd5430c7a8da2": [
+      ["c2fda6873661", 11],
+      ["5ac09056a6c2", 84],
+      ["902996423f91", 228],
+      ["3022bd397900", 314],
+      ["9bdc35ad4a0b", 441],
+      ["5967822069e2", 445],
+      ["dd65e156fc53", 449],
+      ["8a7d60c08052", 477]
+    ],
+    "0b7ef6722f9304be5549a9d515b3c90ed26dc8215e01d73713b2c78a61e57f2f": [
+      ["5ee6595c0908", 18],
+      ["16dc3c9a2b75", 66],
+      ["692a4a77f3ea", 136],
+      ["866164253f59", 141],
+      ["9bdc35ad4a0b", 195],
+      ["5967822069e2", 199],
+      ["dd65e156fc53", 203],
+      ["724791df245a", 240],
+      ["f04119ddc474", 448],
+      ["756a24936234", 462],
+      ["b9c4d48812e2", 557],
+      ["19ad75b2e8c8", 837],
+      ["f5633cff5796", 876],
+      ["1eaae1c85021", 966],
+      ["7c32f7a42266", 1065],
+      ["9f1625bb6f8b", 1144],
+      ["bc4b0b976969", 1336],
+      ["f0554d9428f6", 1398],
+      ["7962e9765f3f", 1423],
+      ["87717775f550", 1519],
+      ["31950cafc964", 1790],
+      ["c944cd2e44ca", 1795],
+      ["df81b1e25820", 1829],
+      ["dbd761553777", 1839],
+      ["f1137ba4a684", 1887],
+      ["e47626435ea0", 2049],
+      ["4280b9014b30", 2059],
+      ["7ce7fc15e0b7", 2105],
+      ["14f471a5c70d", 2171]
+    ],
+    "dad2cb43fe843fb61401896941b04263c182438c0bd2fb0f54d9d06c451b2b27": [
+      ["9bdc35ad4a0b", 3],
+      ["5967822069e2", 7],
+      ["dd65e156fc53", 11],
+      ["c1fb64e30b68", 48],
+      ["f2cd37c21003", 203],
+      ["5ac09056a6c2", 252],
+      ["756a24936234", 390],
+      ["bc4b0b976969", 470],
+      ["89703fd079c2", 529],
+      ["f04119ddc474", 557],
+      ["84bed51ac1a4", 592],
+      ["fcf070128481", 872],
+      ["f5633cff5796", 909],
+      ["1eaae1c85021", 999],
+      ["c75072895f89", 1098],
+      ["f0554d9428f6", 1177],
+      ["7962e9765f3f", 1202],
+      ["bbb21fbaaa11", 1304],
+      ["d968375f21a1", 1337],
+      ["fe1879dd7986", 1341],
+      ["92264b3dd15e", 1345],
+      ["567bd39e0ac0", 1358],
+      ["e3e00514147a", 1491],
+      ["05bb4acd5583", 1780],
+      ["27e406f5e8b3", 1884],
+      ["aad491890f36", 2027],
+      ["919501e6934f", 2071],
+      ["ae887499d3bd", 2145],
+      ["8614d448ca1f", 2151],
+      ["b107006c5152", 2185],
+      ["e2bee84b0de1", 2299],
+      ["86c679d97aab", 2336],
+      ["df7bd0675943", 2437],
+      ["e41c74af84d8", 2458],
+      ["455fbfba58ac", 2579],
+      ["ca327c6eb2b1", 2593],
+      ["201e1a63f108", 2796],
+      ["7ac0f677558b", 2917],
+      ["bb299519e2e1", 2967],
+      ["fd7bd4470df9", 3053]
+    ],
+    "b1e310ba9caa3d52ae6c362289db5beec4d184e5855f0333b50a0f5c6426dd07": [
+      ["f04119ddc474", 11],
+      ["417cfc3a9ace", 34],
+      ["a7a40b94801c", 86],
+      ["19aae6b7bf2d", 92],
+      ["b9385547aea2", 224]
+    ],
+    "f96cec4cac854e82d68299bb2b552f30b79a3be2f78cd3d1a692f6f22be69c8b": [
+      ["db05ffa9d94b", 1],
+      ["2c183e1c16e8", 105]
+    ],
+    "017181952257da8de0d8fcaed3320b745fd579a21a9b24ae2111524c067735df": [
+      ["c1fb64e30b68", 16],
+      ["88540d98b2c6", 162],
+      ["756a24936234", 324],
+      ["bc4b0b976969", 404],
+      ["89703fd079c2", 463],
+      ["7c20bed15994", 481],
+      ["f0554d9428f6", 490],
+      ["61f307eb62e4", 515]
+    ],
+    "37d42afec5140fe712f9085e99f048955633ba793d38c3b1a9d8b17cdae2b65c": [
+      ["9bdc35ad4a0b", 3],
+      ["5967822069e2", 7],
+      ["dd65e156fc53", 11],
+      ["c1fb64e30b68", 48],
+      ["6cee71cd198c", 191],
+      ["1637bd26fb89", 199],
+      ["7c20bed15994", 205],
+      ["f04119ddc474", 221],
+      ["417cfc3a9ace", 244],
+      ["a7a40b94801c", 296],
+      ["114736fa4e7b", 302],
+      ["b9385547aea2", 434],
+      ["c912c24c093b", 446],
+      ["7d38d02bfd2e", 569]
+    ],
+    "d1fa0c128e6f8a9fecefbf20147576075a13a4e959ebdb4f2e48bf6304515459": [
+      ["f04119ddc474", 13],
+      ["756a24936234", 27],
+      ["c1fb64e30b68", 111],
+      ["1aee25dd5b38", 257],
+      ["5cab4be2bd95", 416],
+      ["fcf070128481", 696],
+      ["f5633cff5796", 733],
+      ["1eaae1c85021", 827],
+      ["c75072895f89", 926],
+      ["9bdc35ad4a0b", 1002],
+      ["5967822069e2", 1006],
+      ["dd65e156fc53", 1010],
+      ["bc4b0b976969", 1043],
+      ["f0554d9428f6", 1105],
+      ["7962e9765f3f", 1130]
+    ],
+    "c3115e186e940b9ca4eb8ae23a202b9c162dd8aa22c5e6309fdab041662c0613": [
+      ["db05ffa9d94b", 1],
+      ["0a545f67c576", 105]
+    ],
+    "022718245199f8e4eda0ebcdcb14c36501453a42b67983785080dac3ba799f56": [
+      ["9bdc35ad4a0b", 1],
+      ["5967822069e2", 5],
+      ["dd65e156fc53", 9],
+      ["c1fb64e30b68", 46],
+      ["1aee25dd5b38", 192],
+      ["756a24936234", 330],
+      ["bc4b0b976969", 410],
+      ["7c20bed15994", 469],
+      ["bfa92aee5792", 475],
+      ["f0554d9428f6", 492],
+      ["c3e11e676054", 517]
+    ],
+    "3168651b90de256cddab557f1810c410f81e15be58ced8273037d4e2932aac47": [
+      ["e8010319ebd8", 4]
+    ],
+    "7946f23e69c802a04e312259b6adb6234a08be70d9fbab3bbfdc202e85089929": [
+      ["a41e337a7fac", 3],
+      ["e56d6ef756e9", 13],
+      ["40ce0b25499c", 35],
+      ["b9eed8957aec", 44],
+      ["f74001a5f0f6", 82],
+      ["2de054eabcd9", 104],
+      ["c5fc14b4d8d0", 243],
+      ["02d4b3fb548f", 406],
+      ["bbad07bdeac7", 457],
+      ["0b4b9881f1e4", 486],
+      ["a926f8c7d8a3", 493],
+      ["c4c859859cd4", 550],
+      ["374c0687a6ae", 610],
+      ["a6e47efab063", 633]
+    ],
+    "fa8a8099ae36d625e9692db39f71488ff330b0d1d6da5619fc464a736794359b": [
+      ["f2cd37c21003", 15],
+      ["9bdc35ad4a0b", 61],
+      ["5967822069e2", 65],
+      ["dd65e156fc53", 69],
+      ["c1fb64e30b68", 106],
+      ["5ac09056a6c2", 252],
+      ["756a24936234", 390],
+      ["bc4b0b976969", 470],
+      ["89703fd079c2", 529],
+      ["f04119ddc474", 557],
+      ["84bed51ac1a4", 592],
+      ["fcf070128481", 872],
+      ["f5633cff5796", 909],
+      ["1eaae1c85021", 999],
+      ["c75072895f89", 1098],
+      ["f0554d9428f6", 1177],
+      ["7962e9765f3f", 1202],
+      ["bbb21fbaaa11", 1304],
+      ["d968375f21a1", 1337],
+      ["fe1879dd7986", 1341],
+      ["92264b3dd15e", 1345],
+      ["567bd39e0ac0", 1358],
+      ["aad491890f36", 1475],
+      ["919501e6934f", 1519],
+      ["ae887499d3bd", 1593],
+      ["8614d448ca1f", 1599],
+      ["b107006c5152", 1633],
+      ["e2bee84b0de1", 1747],
+      ["86c679d97aab", 1784],
+      ["df7bd0675943", 1885],
+      ["e41c74af84d8", 1906],
+      ["455fbfba58ac", 2027],
+      ["ca327c6eb2b1", 2041],
+      ["201e1a63f108", 2244],
+      ["7ac0f677558b", 2365],
+      ["bb299519e2e1", 2415],
+      ["fd7bd4470df9", 2501],
+      ["e3e00514147a", 2671],
+      ["05bb4acd5583", 2960],
+      ["27e406f5e8b3", 3064]
+    ],
+    "e711e435dbe6345c2bb3025e6ca53a20e070b73bd84bc6fa2de8a9c016940192": [
+      ["ab283de73cd7", 1],
+      ["96d4c4813484", 118]
+    ],
+    "3b1495813c8b1b7bf05d22952ef127ea42cfe34354eac9c965145ad98da91db0": [
+      ["9bdc35ad4a0b", 3],
+      ["5967822069e2", 7],
+      ["dd65e156fc53", 11],
+      ["c1fb64e30b68", 48],
+      ["5ac09056a6c2", 194],
+      ["756a24936234", 332],
+      ["bc4b0b976969", 412],
+      ["f2cd37c21003", 483],
+      ["89703fd079c2", 529],
+      ["27e406f5e8b3", 547],
+      ["f04119ddc474", 698],
+      ["84bed51ac1a4", 733],
+      ["fcf070128481", 1013],
+      ["f5633cff5796", 1050],
+      ["1eaae1c85021", 1140],
+      ["c75072895f89", 1239],
+      ["f0554d9428f6", 1318],
+      ["7962e9765f3f", 1343],
+      ["bbb21fbaaa11", 1445],
+      ["d968375f21a1", 1478],
+      ["fe1879dd7986", 1482],
+      ["92264b3dd15e", 1486],
+      ["567bd39e0ac0", 1499],
+      ["aad491890f36", 1616],
+      ["919501e6934f", 1660],
+      ["ae887499d3bd", 1734],
+      ["8614d448ca1f", 1740],
+      ["b107006c5152", 1774],
+      ["e2bee84b0de1", 1888],
+      ["86c679d97aab", 1925],
+      ["df7bd0675943", 2026],
+      ["e41c74af84d8", 2047],
+      ["455fbfba58ac", 2168],
+      ["ca327c6eb2b1", 2182],
+      ["201e1a63f108", 2385],
+      ["7ac0f677558b", 2506],
+      ["bb299519e2e1", 2556],
+      ["fd7bd4470df9", 2642],
+      ["e3e00514147a", 2812],
+      ["05bb4acd5583", 3101]
+    ],
+    "151e60e5ebe2519d05b3fb65cda610a954ca7a101018d3566ecf6860cddcb8d0": [
+      ["db05ffa9d94b", 1],
+      ["6ca6d3024bd6", 105]
+    ],
+    "ef7f1b148bc538d088c722bfe25d42da47f9ccb4ec933e8c72b41d0d3acf86fd": [
+      ["a64ff3ae39c7", 2],
+      ["9d112b8c39bb", 18]
+    ]
+  },
+  "contracts": {
+    "eth:0x03893a7c7463AE47D46bc7f091665f1893656003": {
+      "name": "Pool_50K_cDAI",
+      "source": "ec84d5d144422d18e979ff6222f117536b75c950c83333113a582a24f739e5e0",
+      "critical": true
+    },
+    "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730": {
+      "name": "Pool_10K_DAI",
+      "source": "ea51e1c3885337c0d5f609a631031b26f0d93558f2cb5a767223cd60a49b57e8",
+      "critical": true
+    },
+    "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f": {
+      "name": "Pool_1000_USDT",
+      "source": "31d082456b3f4e435bc0d6e737583bc0d1f52f34cb21fe531b678929512c1cf8",
+      "critical": true
+    },
+    "eth:0x09193888b3f38C82dEdfda55259A82C0E7De875E": {
+      "name": "WithdrawVerifier",
+      "source": "8afd2993d2eafff7c70555163d4f0550510e38caac5f28b179d0139ed9e4de30"
+    },
+    "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc": {
+      "name": "Pool_0.1_ETH",
+      "source": "ae068d12a3411421aa5d747212aa816ac2f4d90fd271b281b28ede3ed153ad8b",
+      "critical": true
+    },
+    "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B": {
+      "name": "Pool_100_USDT",
+      "source": "31d082456b3f4e435bc0d6e737583bc0d1f52f34cb21fe531b678929512c1cf8",
+      "critical": true
+    },
+    "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1": {
+      "name": "Pool_0.1_WBTC",
+      "source": "ea51e1c3885337c0d5f609a631031b26f0d93558f2cb5a767223cd60a49b57e8",
+      "critical": true
+    },
+    "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b": {
+      "name": "Pool_5K_cDAI",
+      "source": "31d082456b3f4e435bc0d6e737583bc0d1f52f34cb21fe531b678929512c1cf8",
+      "critical": true
+    },
+    "eth:0x23773E65ed146A459791799d01336DB287f25334": {
+      "name": "Pool_100K_DAI",
+      "source": "ea51e1c3885337c0d5f609a631031b26f0d93558f2cb5a767223cd60a49b57e8",
+      "critical": true
+    },
+    "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701": {
+      "name": "Pool_500K_cDAI",
+      "source": "ec84d5d144422d18e979ff6222f117536b75c950c83333113a582a24f739e5e0",
+      "critical": true
+    },
+    "eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185": {
+      "name": "TornadoVault",
+      "source": "2ba4b09765303ac94ee541abdf7625d6e34d39a102dbe5cffda6dfd47d4171b0"
+    },
+    "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417": {
+      "name": "TornadoTreesV1",
+      "source": "f31f1d2bfa25e469902b75d3fd97341513ce04e7a947aa15b3afea3d572b9e57"
+    },
+    "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D": {
+      "name": "Pool_1000_USDC",
+      "source": "31d082456b3f4e435bc0d6e737583bc0d1f52f34cb21fe531b678929512c1cf8",
+      "critical": true
+    },
+    "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936": {
+      "name": "Pool_1_ETH",
+      "source": "6268ced32d1f4e74b662d30e97f3b5f6d0647248a3584becff5b4cfa5f4a43f5",
+      "critical": true
+    },
+    "eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5": {
+      "name": "Proposal",
+      "source": "d51ec0fbda4bf54c6f404eaf750c9a404e80ad8ef880c4a4aeafbe20b770073d"
+    },
+    "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce": {
+      "name": "TornadoTreesV2",
+      "source": "df95ef7d34022933140cb7d58ea0f1f396cff1bacbab817781e049ad7ec6c9d0",
+      "implementations": {
+        "eth:0x200a79068d8141924B511bC78CB55Dca89cF5C2E": "2611739b83b618766dbc7ee72dd7304aeb4ef9f99e61b756797103a19dffd5c0"
+      }
+    },
+    "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2": {
+      "name": "RelayerRegistry",
+      "source": "38d3f5bb3d32f8a41e535d3dee1dbe2c9c6245b80b91ae4442823a42516809fe",
+      "implementations": {
+        "eth:0x84b0c75c1F6211450FEC7289c32D717AdaDD702A": "baacee175e647e95fa8eae0101dd1e4adf986c803f2e8f49e15d0e46a05b9e15"
+      }
+    },
+    "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29": {
+      "name": "TornadoStakingRewards",
+      "source": "1c600280d22672658319937f9e79ef5ec931a4af2639959ca454bf42a60b094e",
+      "implementations": {
+        "eth:0x9c97be37840f0e754bb7aDB1b16fD0954A2BA248": "0c964e7d90736b13041dfb76fd0352f9a4e55f9608c133903e45dac9daa6b477"
+      }
+    },
+    "eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A": {
+      "name": "RewardSwap",
+      "source": "37647635b437e9c074799c9832e05f6e61a4bc04780e14e373bcc08b7098b150"
+    },
+    "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce": {
+      "name": "GovernanceProposalStateUpgrade",
+      "source": "77110e894c712e72436ec8e4947017fb3ffe4811649d5aea9b5fd5430c7a8da2",
+      "implementations": {
+        "eth:0xbf46f2222c0712cAF2f13B8590732DbD964ce395": "0b7ef6722f9304be5549a9d515b3c90ed26dc8215e01d73713b2c78a61e57f2f"
+      }
+    },
+    "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7": {
+      "name": "FeeManager",
+      "source": "38d3f5bb3d32f8a41e535d3dee1dbe2c9c6245b80b91ae4442823a42516809fe",
+      "implementations": {
+        "eth:0xf4B067dD14e95Bab89Be928c07Cb22E3c94E0DAA": "dad2cb43fe843fb61401896941b04263c182438c0bd2fb0f54d9d06c451b2b27"
+      }
+    },
+    "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4": {
+      "name": "Pool_1_WBTC",
+      "source": "ea51e1c3885337c0d5f609a631031b26f0d93558f2cb5a767223cd60a49b57e8",
+      "critical": true
+    },
+    "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226": {
+      "name": "DepositTree",
+      "source": "b1e310ba9caa3d52ae6c362289db5beec4d184e5855f0333b50a0f5c6426dd07"
+    },
+    "eth:0x653477c392c16b0765603074f157314Cc4f40c32": {
+      "name": "TreeUpdateVerifier",
+      "source": "f96cec4cac854e82d68299bb2b552f30b79a3be2f78cd3d1a692f6f22be69c8b"
+    },
+    "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967": {
+      "name": "TornadoProxyV2",
+      "source": "017181952257da8de0d8fcaed3320b745fd579a21a9b24ae2111524c067735df"
+    },
+    "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9": {
+      "name": "Miner",
+      "source": "37d42afec5140fe712f9085e99f048955633ba793d38c3b1a9d8b17cdae2b65c"
+    },
+    "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C": {
+      "name": "TORN",
+      "source": "d1fa0c128e6f8a9fecefbf20147576075a13a4e959ebdb4f2e48bf6304515459"
+    },
+    "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": {
+      "name": "MiMCHasher",
+      "source": "unverified",
+      "critical": true
+    },
+    "eth:0x88fd245fEdeC4A936e700f9173454D1931B4C307": {
+      "name": "RewardVerifier",
+      "source": "c3115e186e940b9ca4eb8ae23a202b9c162dd8aa22c5e6309fdab041662c0613"
+    },
+    "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601": {
+      "name": "TornadoProxyV1",
+      "source": "022718245199f8e4eda0ebcdcb14c36501453a42b67983785080dac3ba799f56"
+    },
+    "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF": {
+      "name": "Pool_10_ETH",
+      "source": "6268ced32d1f4e74b662d30e97f3b5f6d0647248a3584becff5b4cfa5f4a43f5",
+      "critical": true
+    },
+    "eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79": {
+      "name": "PoseidonHasher2",
+      "source": "unverified"
+    },
+    "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291": {
+      "name": "Pool_100_ETH",
+      "source": "6268ced32d1f4e74b662d30e97f3b5f6d0647248a3584becff5b4cfa5f4a43f5",
+      "critical": true
+    },
+    "eth:0xb04E030140b30C27bcdfaafFFA98C57d80eDa7B4": {
+      "name": "GnosisSafe",
+      "source": "3168651b90de256cddab557f1810c410f81e15be58ced8273037d4e2932aac47",
+      "implementations": {
+        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "7946f23e69c802a04e312259b6adb6234a08be70d9fbab3bbfdc202e85089929"
+      }
+    },
+    "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911": {
+      "name": "InstanceRegistry",
+      "source": "38d3f5bb3d32f8a41e535d3dee1dbe2c9c6245b80b91ae4442823a42516809fe",
+      "implementations": {
+        "eth:0x2573BAc39EBe2901B4389CD468F2872cF7767FAF": "fa8a8099ae36d625e9692db39f71488ff330b0d1d6da5619fc464a736794359b"
+      }
+    },
+    "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498": {
+      "name": "Pool_10_WBTC",
+      "source": "ea51e1c3885337c0d5f609a631031b26f0d93558f2cb5a767223cd60a49b57e8",
+      "critical": true
+    },
+    "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": {
+      "name": "WithdrawalTree",
+      "source": "b1e310ba9caa3d52ae6c362289db5beec4d184e5855f0333b50a0f5c6426dd07"
+    },
+    "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A": {
+      "name": "Verifier",
+      "source": "e711e435dbe6345c2bb3025e6ca53a20e070b73bd84bc6fa2de8a9c016940192",
+      "critical": true
+    },
+    "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af": {
+      "name": "Pool_5M_cDAI",
+      "source": "ec84d5d144422d18e979ff6222f117536b75c950c83333113a582a24f739e5e0",
+      "critical": true
+    },
+    "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3": {
+      "name": "Pool_100_DAI",
+      "source": "31d082456b3f4e435bc0d6e737583bc0d1f52f34cb21fe531b678929512c1cf8",
+      "critical": true
+    },
+    "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": {
+      "name": "PoseidonHasher",
+      "source": "unverified"
+    },
+    "eth:0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b": {
+      "name": "TornadoRouter",
+      "source": "3b1495813c8b1b7bf05d22952ef127ea42cfe34354eac9c965145ad98da91db0"
+    },
+    "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307": {
+      "name": "Pool_100_USDC",
+      "source": "31d082456b3f4e435bc0d6e737583bc0d1f52f34cb21fe531b678929512c1cf8",
+      "critical": true
+    },
+    "eth:0xEd3B00B651c4c7AF77c2fDdce4a388de84b507C6": {
+      "name": "BatchTreeUpdateVerifier",
+      "source": "151e60e5ebe2519d05b3fb65cda610a954ca7a101018d3566ecf6860cddcb8d0"
+    },
+    "eth:0xFA4C1f3f7D5dd7c12a9Adb82Cd7dDA542E3d59ef": {
+      "name": "GasCompensationVault",
+      "source": "ef7f1b148bc538d088c722bfe25d42da47f9ccb4ec933e8c72b41d0d3acf86fd"
+    },
+    "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144": {
+      "name": "Pool_1000_DAI",
+      "source": "31d082456b3f4e435bc0d6e737583bc0d1f52f34cb21fe531b678929512c1cf8",
+      "critical": true
+    }
+  }
+}

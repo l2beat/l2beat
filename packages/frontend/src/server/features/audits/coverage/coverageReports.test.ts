@@ -76,7 +76,12 @@ const coverage: ProjectAuditCoverage = {
       reports: ['arb', 'oz'],
     },
   },
-  flats: { [FLAT]: [['u1', 1], ['u2', 20]] },
+  flats: {
+    [FLAT]: [
+      ['u1', 1],
+      ['u2', 20],
+    ],
+  },
   contracts: { 'eth:0x1': { name: 'Bridge', source: FLAT } },
 }
 
@@ -127,7 +132,9 @@ describe('coverageReports', () => {
           path: 'src/A.sol',
           blob: 'b',
         }),
-      ).toEqual('https://github.com/ethereum-optimism/optimism/blob/abc/src/A.sol')
+      ).toEqual(
+        'https://github.com/ethereum-optimism/optimism/blob/abc/src/A.sol',
+      )
       expect(
         auditedFileUrl({
           repository: 'gist/owner/123',
@@ -166,7 +173,9 @@ describe('coverageReports', () => {
       if (!u1 || !u2) throw new Error('fixture')
       expect(unitOrigin(u1, coverage, 'unichain', 'optimism')).toEqual('stack')
       expect(unitOrigin(u1, coverage, 'unichain', undefined)).toEqual('library')
-      expect(unitOrigin(u2, coverage, 'unichain', 'optimism')).toEqual('library')
+      expect(unitOrigin(u2, coverage, 'unichain', 'optimism')).toEqual(
+        'library',
+      )
     })
   })
 

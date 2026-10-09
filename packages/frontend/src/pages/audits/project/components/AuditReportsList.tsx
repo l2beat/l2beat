@@ -6,60 +6,51 @@ import {
 } from '~/components/core/Collapsible'
 import { ChevronIcon } from '~/icons/Chevron'
 import type {
-  AuditMatchOrigin,
-  AuditsContextEntry,
+  AuditReportOrigin,
   AuditsReportEntry,
 } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
 
-const ORIGIN_ORDER: AuditMatchOrigin[] = [
-  'own',
-  'upstream',
-  'stack',
-  'library',
-  'other',
-]
+const ORIGIN_ORDER: AuditReportOrigin[] = ['own', 'stack', 'library', 'other']
 
-const ORIGIN_TITLE: Record<AuditMatchOrigin, string> = {
+const ORIGIN_TITLE: Record<AuditReportOrigin, string> = {
   own: 'Project audits',
-  upstream: 'Upstream audits (forked code)',
-  stack: 'Stack and shared component audits',
+  stack: 'Stack audits',
   library: 'Audited standard libraries',
   other: 'Audits of other projects with identical or similar code',
 }
 
 export function AuditReportsList({
   reports,
-  context,
+  stackCollectionName,
 }: {
   reports: AuditsReportEntry[]
-  context: AuditsContextEntry[]
+  stackCollectionName?: string
 }) {
   const [sharedOpen, setSharedOpen] = useState(false)
   const ownReports = reports.filter((r) => r.origin === 'own')
   const sharedReports = reports.filter((r) => r.origin !== 'own')
   return (
     <div className="flex flex-col gap-3">
-      {context.length > 0 && (
-        <p className="text-secondary text-xs">
-          Evidence searched with priority:{' '}
-          {context.map((c, i) => (
-            <span key={c.collection}>
-              {i > 0 && ', '}
-              <span className="font-medium text-primary">
-                {c.collectionName}
-              </span>{' '}
-              ({c.origin}, {c.relation})
-            </span>
-          ))}
-          . Identical code is accepted from any collection in the dataset.
-        </p>
-      )}
+      <p className="text-secondary text-xs">
+        Every deployed unit is compared with every audited source in the
+        dataset, whichever project or library it was audited for.
+        {stackCollectionName && (
+          <>
+            {' '}
+            Audits of{' '}
+            <span className="font-medium text-primary">
+              {stackCollectionName}
+            </span>{' '}
+            that matched deployed code count as the project's stack audits.
+          </>
+        )}
+      </p>
       <ReportGroup
         title={ORIGIN_TITLE.own}
         reports={ownReports}
         showCollection={false}
-        empty="No project audit matched a deployed unit."
+        empty="No audit of this project is in the dataset."
       />
       {sharedReports.length > 0 && (
         <Collapsible open={sharedOpen} onOpenChange={setSharedOpen}>
@@ -71,8 +62,8 @@ export function AuditReportsList({
               )}
             />
             {sharedOpen ? 'Hide' : 'Show'} {sharedReports.length} other{' '}
-            {sharedReports.length === 1 ? 'audit' : 'audits'} used as evidence
-            (upstream code, stacks, standard libraries and other projects)
+            {sharedReports.length === 1 ? 'audit' : 'audits'} that matched
+            deployed code (stack, standard libraries and other projects)
           </CollapsibleTrigger>
           <CollapsibleContent className="flex flex-col gap-3 pt-3">
             {ORIGIN_ORDER.filter((origin) => origin !== 'own').map((origin) => {
@@ -116,22 +107,21 @@ function ReportGroup({
         <ul className="flex flex-col gap-1">
           {reports.map((report) => (
             <li key={report.id} className="flex flex-wrap gap-x-2 text-sm">
-              {report.url ? (
-                <a
-                  href={report.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-link hover:underline"
-                >
-                  {report.title}
-                </a>
-              ) : (
-                <span className="font-medium">{report.title}</span>
-              )}
+              <a
+                href={report.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-link hover:underline"
+              >
+                {report.title}
+              </a>
               <span className="text-secondary">
                 {report.auditor}
                 {report.reportDate && ` · ${report.reportDate}`}
                 {showCollection && ` · ${report.collectionName}`}
+                {report.origin === 'own' &&
+                  !report.matched &&
+                  ' · no deployed unit matched'}
               </span>
             </li>
           ))}

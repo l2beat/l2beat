@@ -4,10 +4,10 @@ import {
   getTimeScale,
   getTimeTicks,
 } from '~/components/audits/auditsTimeline'
+import { Checkbox } from '~/components/core/Checkbox'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
-import { Switch } from '~/components/core/Switch'
 import {
   Tooltip,
   TooltipContent,
@@ -225,24 +225,25 @@ export function AuditsTimelineChart({ timeline }: Props) {
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Legend timeline={timeline} withOther={withOther} />
         {timeline.otherAudits.length > 0 && (
-          <label className="flex cursor-pointer items-center gap-2 font-medium text-xs">
-            <Switch
+          <div className="flex items-center gap-2">
+            <Checkbox
               name="audits-other"
               checked={withOther}
-              onCheckedChange={setWithOther}
-            />
-            Other matched audits
+              onCheckedChange={(checked) => setWithOther(checked === true)}
+            >
+              Other matched audits
+            </Checkbox>
             <Tooltip>
               <TooltipTrigger>
                 <InfoIcon className="size-3.5" />
               </TooltipTrigger>
               <TooltipContent>
-                Also show the library audits and the reports of unrelated
-                projects that matched some of the deployed code. They do not
-                count as the project's audits.
+                Also show the library audits and the reports of other projects
+                that matched some of the deployed code. They do not count as the
+                project's audits.
               </TooltipContent>
             </Tooltip>
-          </label>
+          </div>
         )}
       </div>
     </div>
