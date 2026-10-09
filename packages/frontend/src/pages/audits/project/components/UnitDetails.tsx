@@ -38,9 +38,11 @@ export function UnitDetails({
   if (data.stale) {
     return (
       <div className="px-3 py-2 text-secondary text-xs">
-        The deployed source of this contract changed since the audit coverage
-        was generated, so its code is not shown. The coverage is regenerated
-        with the next discovery update.
+        The deployed source of this contract is not the one the audit coverage
+        was generated from, so its code is not shown. Either the contract
+        changed since, and the coverage is regenerated with the next discovery
+        update, or the flat sources at hand are outdated (locally, run{' '}
+        <span className="font-mono">l2b fetch-flat-sources</span>).
       </div>
     )
   }
