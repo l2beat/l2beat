@@ -26,7 +26,7 @@ export function TopBar(props: { project: string }) {
     <div className="select-none items-center justify-between px-2 max-md:invisible md:flex md:h-10">
       <div className="hidden items-center gap-2 md:flex">
         <Link to="/ui">
-          <img className="-top-[3px] relative h-[20px]" src="/logo.svg" />
+          <img className="relative top-[-3px] h-[20px]" src="/logo.svg" />
         </Link>
         <p>{props.project}</p>
         <div className="border-coffee-400/30 border-l pl-3">
@@ -38,7 +38,7 @@ export function TopBar(props: { project: string }) {
           <div className="flex justify-center gap-1 border-coffee-400/30 border-r pr-3">
             <Button
               size="small"
-              className="gap-1 rounded-sm"
+              className="gap-1 rounded-xs"
               disabled={command.inFlight}
               onClick={() => discover(props.project, useDevMode)}
             >
@@ -48,7 +48,7 @@ export function TopBar(props: { project: string }) {
             <Button
               size="small"
               variant="destructive"
-              className="rounded-sm"
+              className="rounded-xs"
               disabled={!command.inFlight}
               onClick={killCommand}
             >
@@ -58,14 +58,14 @@ export function TopBar(props: { project: string }) {
           </div>
         )}
         <div className="flex justify-center gap-1">
-          <div className="inline-flex items-center gap-0.5 rounded-sm border border-coffee-400 bg-coffee-800/30 p-1">
+          <div className="inline-flex items-center gap-0.5 rounded-xs border border-coffee-400 bg-coffee-800/30 p-1">
             {layouts.map((_, i) => (
               <button
                 key={i}
                 className={clsx(
-                  'flex size-5 items-center justify-center rounded-sm font-medium text-xs transition-all duration-100',
+                  'flex size-5 items-center justify-center rounded-xs font-medium text-xs transition-all duration-100',
                   selectedLayout === i
-                    ? 'bg-autumn-300 text-black shadow-sm'
+                    ? 'bg-autumn-300 text-black shadow-xs'
                     : 'text-coffee-200 hover:bg-coffee-400/50 hover:text-coffee-100',
                 )}
                 onClick={() => loadLayout(i)}
@@ -77,7 +77,7 @@ export function TopBar(props: { project: string }) {
           </div>
           <Button
             size="small"
-            className="rounded-sm"
+            className="rounded-xs"
             onClick={() => addPanel()}
           >
             <IconPlus />
@@ -85,7 +85,7 @@ export function TopBar(props: { project: string }) {
           </Button>
           <Button
             size="small"
-            className="rounded-sm"
+            className="rounded-xs"
             onClick={() => resetLayout()}
             title="Reset to default layout"
           >

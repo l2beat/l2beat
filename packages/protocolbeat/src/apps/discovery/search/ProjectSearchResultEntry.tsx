@@ -25,7 +25,7 @@ export function ProjectSearchResultEntry({ entries }: { entries: string[] }) {
             setOpen(false)
           }}
         >
-          <span className="max-w-[25rem] truncate font-medium">
+          <span className="max-w-100 truncate font-medium">
             <HighlightedText text={entry} run={projectSearchTerm} />
           </span>
         </li>
