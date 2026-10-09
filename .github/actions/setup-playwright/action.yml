@@ -1,12 +1,15 @@
 name: Set up Playwright
 description: >
-  Installs the headless Chromium used by Playwright tests, cached per
-  Playwright version. Run after setup-pnpm.
+  Installs the headless Chromium used by Playwright tests, and WebKit when
+  asked, cached per Playwright version. Run after setup-pnpm.
 
 inputs:
   package-dir:
     description: Package whose Playwright version is installed
     required: true
+  webkit:
+    description: Also install WebKit, for tests that stand in for iOS Safari
+    default: 'false'
 
 runs:
   using: composite
@@ -22,7 +25,7 @@ runs:
       uses: actions/cache@v6
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-${{ steps.version.outputs.version }}-headless-shell
+        key: playwright-${{ runner.os }}-${{ steps.version.outputs.version }}-headless-shell${{ inputs.webkit == 'true' && '-webkit' || '' }}
 
     # Headless tests run on the headless shell, so the full Chrome build and
     # ffmpeg are never used. The runner image already has the system libraries.
@@ -30,4 +33,12 @@ runs:
       if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
       working-directory: ${{ inputs.package-dir }}
-      run: pnpm exec playwright install --only-shell chromium
+      run: pnpm exec playwright install --only-shell chromium ${{ inputs.webkit == 'true' && 'webkit' || '' }}
+
+    # The cache holds the browsers but not the libraries WebKit links to,
+    # which the runner image lacks
+    - name: Install WebKit's system libraries
+      if: inputs.webkit == 'true'
+      shell: bash
+      working-directory: ${{ inputs.package-dir }}
+      run: pnpm exec playwright install-deps webkit

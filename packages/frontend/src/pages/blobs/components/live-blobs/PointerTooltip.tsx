@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { type ReactNode, useLayoutEffect, useRef, useState } from 'react'
 import { cn } from '~/utils/cn'
 
 const GAP = 14
@@ -24,20 +24,34 @@ export function PointerTooltip({
   interactive?: boolean
   children: ReactNode
 }) {
-  const flip = x > containerWidth * 0.6
+  const ref = useRef<HTMLDivElement>(null)
+  const [width, setWidth] = useState(0)
+  // measured before paint, so it never shows on a side it does not fit
+  useLayoutEffect(() => {
+    if (ref.current) setWidth(ref.current.offsetWidth)
+  })
+
   return (
     <div
+      ref={ref}
       className={cn(
         'absolute z-10 w-max max-w-[260px] rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary starting:opacity-0 shadow-popover transition-opacity duration-150 ease-out dark:bg-header-secondary',
         !interactive && 'pointer-events-none',
       )}
-      style={{
-        left: flip ? undefined : x + GAP,
-        right: flip ? containerWidth - x + GAP : undefined,
-        top: y + GAP,
-      }}
+      style={{ left: besidePointer(x, width, containerWidth), top: y + GAP }}
     >
       {children}
     </div>
   )
+}
+
+/**
+ * Right of the pointer where the tooltip fits, else left of it, else as far
+ * right as it fits: on a phone the drawing can be narrower than the pointer's
+ * gap and the tooltip together on either side
+ */
+function besidePointer(x: number, width: number, containerWidth: number) {
+  if (x + GAP + width <= containerWidth) return x + GAP
+  if (x - GAP - width >= 0) return x - GAP - width
+  return Math.max(0, containerWidth - width)
 }

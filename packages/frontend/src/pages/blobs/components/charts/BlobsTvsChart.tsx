@@ -240,13 +240,17 @@ function Header({
         ) : stats === undefined ? (
           <span className="whitespace-nowrap font-bold text-xl">No data</span>
         ) : (
-          // the change drops under the total where there is no room beside it
+          // the change drops under the total where there is no room beside it,
+          // set tight there so the header grows no taller than its title
           <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
             <span className="whitespace-nowrap font-bold text-xl">
               {formatCurrency(stats.total, 'usd')}
             </span>
-            <span className="whitespace-nowrap text-xs">
-              <PercentChange value={stats.change} />
+            <span className="whitespace-nowrap text-xs leading-none">
+              <PercentChange
+                value={stats.change}
+                textClassName="leading-none"
+              />
               <span className="text-secondary">
                 {' '}
                 / {tvsRangeToReadable(range)}

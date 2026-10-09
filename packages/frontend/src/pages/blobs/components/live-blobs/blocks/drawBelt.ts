@@ -61,9 +61,9 @@ export function drawBelt(
 
   // Pass 3: what stays put, on top
   drawHoverRing(ctx, scene, frame, hovered)
-  drawArrivalLabels(ctx, scene, playback, belt, now)
+  const arrivals = drawArrivalLabels(ctx, scene, playback, belt, now)
   drawBayCaption(ctx, scene, belt)
-  drawLimitLabels(ctx, scene)
+  drawLimitLabels(ctx, scene, arrivals)
 }
 
 /** Seconds over which the bay's glow settles after a landing */

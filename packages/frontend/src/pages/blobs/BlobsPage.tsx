@@ -44,12 +44,14 @@ export function BlobsPage({
         <div className="flex flex-col md:gap-6 [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
           <EthereumSummaryCard summary={ethereumSummary} />
           {/* The cards share their rows, so both charts start level however
-              tall either header is */}
+              tall either header is. Each card's one column may shrink below
+              its chart, or a chart drawn wider holds the card at that width
+              when the window narrows */}
           <div className="grid grid-cols-2 gap-4 max-lg:hidden">
-            <PrimaryCard className="row-span-2 grid grid-rows-subgrid">
+            <PrimaryCard className="row-span-2 grid grid-cols-1 grid-rows-subgrid">
               {tvsChart}
             </PrimaryCard>
-            <PrimaryCard className="row-span-2 grid grid-rows-subgrid">
+            <PrimaryCard className="row-span-2 grid grid-cols-1 grid-rows-subgrid">
               {throughputChart}
             </PrimaryCard>
           </div>

@@ -203,10 +203,12 @@ function BlobPulse({
           />
         </svg>
       </div>
+      {/* One line, as tall as the skeleton before it: the ends stay whole,
+          and where the middle runs long it is cut short */}
       <div className="mt-1 flex items-center justify-between gap-4 font-medium text-label-value-12 text-secondary">
-        <span>24 hours ago</span>
+        <span className="shrink-0 whitespace-nowrap">24 hours ago</span>
         {view === undefined ? (
-          <span className="max-md:hidden">
+          <span className="min-w-0 truncate max-md:hidden">
             Average blobs per block every {BAR_MINUTES} minutes, against the
             target (dashed). Drag to look back
           </span>
@@ -218,12 +220,12 @@ function BlobPulse({
           </span>
         )}
         {view === undefined ? (
-          <span>Now</span>
+          <span className="shrink-0 whitespace-nowrap">Now</span>
         ) : (
           <button
             type="button"
             onClick={() => brush.onView(undefined)}
-            className="font-bold text-brand"
+            className="shrink-0 whitespace-nowrap font-bold text-brand"
           >
             Back to live
           </button>
