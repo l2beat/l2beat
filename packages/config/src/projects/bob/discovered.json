@@ -1,6 +1,6 @@
 {
   "name": "bob",
-  "timestamp": 1790944898,
+  "timestamp": 1791533460,
   "configHash": "0xdaa10f5f3b0c285bd42d95c7e6ff081bcbf3355abc170959d20b058349db6468",
   "entries": [
     {
@@ -628,15 +628,15 @@
           "eth:0x10B0589c16a8851450BD7FEE274cD349fB9d6A0E",
           "eth:0x751708D6341b36c0C258754fc2DbF96074f5BdC7",
           "eth:0xbF58b6DE2B893e7ab707edc6cf99Bb6989C173a4",
-          "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926",
+          "eth:0x9a017883e4A6BB2a6261D92D70f71107F2C39D12",
           "eth:0xDA8e7102681f9652FB8a10b70949CF7F260e0A01"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x47737e89c747e1ee0cc9da891edc10788a1f86d914aaa945fc62aa1ef3165426",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1273,7 +1273,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 26095414
+          "prevBlockNum": 26149795
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -1437,7 +1437,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 987,
+        "gameCount": 1042,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1448,7 +1448,7 @@
         "initVersion": 1,
         "owner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "permissionedGameArgs": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6b6b6342ff75b4213cbf101c135f1fc33695acc13c9ac21acd8696b64270716528bf83630ea7a293c048d0cff3f0729117f44da6494dbf4d78e593d95000000000000000000000000000000000000000000000000000000000000ed887cb1022d30b9860c36b243e7b181a1d46f618c69c91482a96e9c2a104d9298d1980eccf8c4dc764e",
-        "permissionedGamesTotal": 129,
+        "permissionedGamesTotal": 184,
         "proposerFromDGF": "eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "proxyAdmin": "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "proxyAdminOwner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
@@ -1580,6 +1580,11 @@
         "eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53": "KailuaTreasury"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
+    },
+    {
+      "address": "eth:0x9a017883e4A6BB2a6261D92D70f71107F2C39D12",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "RiscZeroVerifierEmergencyStop",
@@ -2004,13 +2009,13 @@
           ]
         ],
         "$upgradeCount": 5,
-        "anchorGame": "eth:0x383cF83b49cEcCEf60926F28A3b956f94dD7ACF5",
+        "anchorGame": "eth:0x190DF17ba2a8CE8dA2cBEFFb54073cc42cADF4F0",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
         "disputeGameFinalityDelaySeconds": 43200,
         "getAnchorRoot": [
-          "0xee55ad54be74d82305f432a8677a232e94f6f6123d4140ef3cccb183d7115e23",
-          38992594
+          "0xf3968313f8e9447a8230566c3aaeb661966b1ab646c358eb5dbe8b027446f0ae",
+          39286101
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -2117,11 +2122,6 @@
       "implementationNames": {
         "eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b": "KailuaGame"
       }
-    },
-    {
-      "address": "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xDA8e7102681f9652FB8a10b70949CF7F260e0A01",
@@ -2251,7 +2251,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660840",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660843",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -3874,8 +3874,8 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26104707 },
-  "permissionsConfigHash": "0x56f2a398d07dccd05419b1018f03b1c81663823b7d1e5d142a31ee063bdf9d18",
+  "usedBlockNumbers": { "ethereum": 26153569 },
+  "permissionsConfigHash": "0xdd26874aff85a1264b5a1a84e481a0a597299c4ab2c26c85105bf2ec576c82ac",
   "permissions": {
     "eth:0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11": {
       "receivedPermissions": [
