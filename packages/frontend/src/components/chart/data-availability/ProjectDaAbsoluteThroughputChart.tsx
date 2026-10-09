@@ -49,6 +49,11 @@ interface Props {
    * says whose data it is
    */
   hideProjectLogo?: boolean
+  /**
+   * Leaves out the "try clicking legend items" hint, whose extra row would
+   * lift this chart's baseline above a hint-less chart beside it
+   */
+  disableLegendOnboarding?: boolean
 }
 
 const hiddenDataKeys = ['projectMax'] as const
@@ -62,6 +67,7 @@ export function ProjectDaAbsoluteThroughputChart({
   resolution,
   dataGap,
   hideProjectLogo,
+  disableLegendOnboarding,
 }: Props) {
   const projectChartMeta = useMemo(
     () => getProjectChartMeta(project.id),
@@ -105,6 +111,7 @@ export function ProjectDaAbsoluteThroughputChart({
       interactiveLegend={{
         dataKeys,
         onItemClick: toggleDataKey,
+        disableOnboarding: disableLegendOnboarding,
       }}
       milestones={milestones}
     >
