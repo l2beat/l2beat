@@ -34,6 +34,11 @@ interface Props {
   customColors: Record<string, string> | undefined
   milestones: Milestone[]
   resolution: ChartResolution
+  /**
+   * Leaves out the "try clicking legend items" hint, whose extra row would
+   * lift this chart's baseline above a hint-less chart beside it
+   */
+  disableLegendOnboarding?: boolean
 }
 
 const colorsCache = new Map<string, string>()
@@ -46,6 +51,7 @@ export function DaThroughputByProjectChart({
   customColors,
   milestones,
   resolution,
+  disableLegendOnboarding,
 }: Props) {
   const allProjects = useMemo(() => {
     // We want to get latest top projects.
@@ -65,13 +71,13 @@ export function DaThroughputByProjectChart({
     return result
   }, [data])
 
-  const colors = useMemo(
-    () =>
-      generateAccessibleColors(allProjects.length).filter(
-        (color) => !colorsCache.values().toArray().includes(color),
-      ),
-    [allProjects],
-  )
+  const colors = useMemo(() => {
+    // not `.values().toArray()`: browsers before 2025 have no iterator helpers
+    const taken = new Set(colorsCache.values())
+    return generateAccessibleColors(allProjects.length).filter(
+      (color) => !taken.has(color),
+    )
+  }, [allProjects])
   const chartMeta = useMemo(() => {
     let colorIndex = 0
     return allProjects?.reduce((acc, project) => {
@@ -166,6 +172,7 @@ export function DaThroughputByProjectChart({
       interactiveLegend={{
         dataKeys,
         onItemClick: toggleDataKey,
+        disableOnboarding: disableLegendOnboarding,
       }}
       isLoading={isLoading}
       project={project}

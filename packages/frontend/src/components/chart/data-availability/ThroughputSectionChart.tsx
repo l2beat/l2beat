@@ -1,5 +1,4 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
@@ -8,21 +7,17 @@ import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { EIGENLAYER_DATA_SOURCE } from '~/components/projects/sections/sectionCopy'
 import { useIncludeL2Only } from '~/pages/data-availability/throughput/components/DaThroughputContext'
-import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
 import { useTRPC } from '~/trpc/React'
 import {
   type ChartRange,
-  type ChartResolution,
   optionToRange,
   rangeToResolution,
 } from '~/utils/range/range'
 import { ChartDataSourceInfo } from '../ChartDataSourceInfo'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
 import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
-import {
-  type ProjectChartDataWithConfiguredThroughput,
-  ProjectDaAbsoluteThroughputChart,
-} from './ProjectDaAbsoluteThroughputChart'
+import { getDataWithConfiguredThroughputs } from './getDataWithConfiguredThroughputs'
+import { ProjectDaAbsoluteThroughputChart } from './ProjectDaAbsoluteThroughputChart'
 import { DaThroughputTimeRangeValues } from './timeRangeValues'
 
 interface Props {
@@ -113,55 +108,4 @@ export function ThroughputSectionChart({
       />
     </div>
   )
-}
-
-function getDataWithConfiguredThroughputs(
-  data: ProjectDaThroughputChartPoint[] | undefined,
-  configuredThroughputs: DaLayerThroughput[],
-  resolution: ChartResolution,
-): ProjectChartDataWithConfiguredThroughput[] | undefined {
-  const processedConfigs = configuredThroughputs
-    .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
-    .map((config, i, arr) => {
-      const batchesPerDay = UnixTime.DAY / config.frequency
-      const nextConfig = arr[i + 1]
-      return {
-        ...config,
-        sinceTimestamp: UnixTime.toStartOf(config.sinceTimestamp, 'day'),
-        untilTimestamp: nextConfig
-          ? UnixTime.toStartOf(nextConfig.sinceTimestamp, 'day')
-          : Number.POSITIVE_INFINITY,
-        maxDaily: config.size === 'NO_CAP' ? null : config.size * batchesPerDay,
-        targetDaily: config.target ? config.target * batchesPerDay : null,
-      }
-    })
-
-  return data?.map(([timestamp, value]) => {
-    const config = processedConfigs.find(
-      (c) => timestamp >= c.sinceTimestamp && timestamp < c.untilTimestamp,
-    )
-
-    return [
-      timestamp,
-      value,
-      adjustThoughputToRange(resolution, config?.targetDaily),
-      adjustThoughputToRange(resolution, config?.maxDaily),
-    ]
-  })
-}
-
-function adjustThoughputToRange(
-  resolution: ChartResolution,
-  throughput: number | null | undefined,
-) {
-  if (!throughput) return null
-
-  switch (resolution) {
-    case 'hour':
-      return throughput / 24
-    case 'six hours':
-      return throughput / 4
-    default:
-      return throughput
-  }
 }

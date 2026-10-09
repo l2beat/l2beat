@@ -1,4 +1,13 @@
 import {
+  getLiveBlobsFeed,
+  LiveBlobsParams,
+  PastBlobsParams,
+} from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
+import {
+  DaPastDayUsageParams,
+  getDaPastDayUsage,
+} from '~/server/features/data-availability/throughput/getDaPastDayUsage'
+import {
   DaThroughputChartParams,
   getDaThroughputChart,
 } from '~/server/features/data-availability/throughput/getDaThroughputChart'
@@ -37,4 +46,20 @@ export const daRouter = router({
   l2ProjectChart: procedure
     .input(L2ProjectDaThroughputChartParams)
     .query(async ({ input }) => getL2ProjectDaThroughputChart(input)),
+
+  pastDayUsage: procedure
+    .input(DaPastDayUsageParams)
+    .query(async ({ input }) => getDaPastDayUsage(input)),
+
+  // null rather than undefined, which React Query takes for a missing answer
+  liveBlobs: procedure
+    .input(LiveBlobsParams)
+    .query(
+      async ({ input }) =>
+        (await getLiveBlobsFeed().latestAfter(input)) ?? null,
+    ),
+
+  pastBlobs: procedure
+    .input(PastBlobsParams)
+    .query(({ input }) => getLiveBlobsFeed().past(input)),
 })

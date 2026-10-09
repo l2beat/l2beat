@@ -261,7 +261,7 @@ function BasicTableActualHeaderRow<T>({
   )
 }
 
-function BasicTableHeaderDividerRow() {
+export function BasicTableHeaderDividerRow() {
   return (
     <TableHeaderRow>
       <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
