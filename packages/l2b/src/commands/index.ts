@@ -17,7 +17,6 @@ import { FetchDiscoveryCache } from './FetchDiscoveryCache'
 import { FetchFlatSources } from './FetchFlatSources'
 import { FetchZkStack } from './FetchZkStack'
 import { FindCelestiaNamespace } from './FindCelestiaNamespace'
-import { FindL2 } from './FindL2'
 import { FindUnusedShapes } from './FindUnusedShapes'
 import { Flatten } from './Flatten'
 import { FlattenerValidator } from './FlattenerValidator'
@@ -69,7 +68,6 @@ export function getSubcommands() {
     FetchFlatSources,
     FetchZkStack,
     FindCelestiaNamespace,
-    FindL2,
     FindUnusedShapes,
     Flatten,
     FlattenerValidator,
