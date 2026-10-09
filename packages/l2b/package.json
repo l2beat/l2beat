@@ -39,7 +39,7 @@
     "cmd-ts": "^0.13.0",
     "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
-    "express": "^4.21.1",
+    "express": "^5.0.0",
     "fflate": "^0.7.4",
     "lodash": "^4.17.21",
     "readline-sync": "^1.4.10",
