@@ -48,6 +48,7 @@ export class RateLimiter {
   private queue: QueuedFunction<any>[] = []
   private lastCalled = 0
   private readonly minTimeElapsed: number
+  private wakeUpTimer: ReturnType<typeof setTimeout> | undefined
   private labelStats = new Map<string, RateLimiterLabelStats>()
   private inFlight = 0
   private inFlightMax = 0
@@ -59,6 +60,10 @@ export class RateLimiter {
 
   clear(): void {
     this.queue = []
+    if (this.wakeUpTimer !== undefined) {
+      clearTimeout(this.wakeUpTimer)
+      this.wakeUpTimer = undefined
+    }
   }
 
   get queueLength(): number {
@@ -129,14 +134,14 @@ export class RateLimiter {
   }
 
   private execute(): void {
-    if (this.queue.length === 0) {
+    if (this.queue.length === 0 || this.wakeUpTimer !== undefined) {
       return
     }
 
     const now = Date.now()
     const elapsedTime = now - this.lastCalled
     if (elapsedTime < this.minTimeElapsed) {
-      setTimeout(() => this.execute(), this.minTimeElapsed - elapsedTime)
+      this.scheduleNextCall()
       return
     }
     this.lastCalled = now
@@ -162,5 +167,23 @@ export class RateLimiter {
         this.inFlight--
         this.execute()
       })
+
+    // Pace queued calls independently of when in-flight calls finish.
+    this.scheduleNextCall()
+  }
+
+  private scheduleNextCall(): void {
+    if (this.queue.length === 0 || this.wakeUpTimer !== undefined) {
+      return
+    }
+
+    const delay = Math.max(
+      0,
+      this.minTimeElapsed - (Date.now() - this.lastCalled),
+    )
+    this.wakeUpTimer = setTimeout(() => {
+      this.wakeUpTimer = undefined
+      this.execute()
+    }, delay)
   }
 }
