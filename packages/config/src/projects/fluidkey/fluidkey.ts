@@ -26,7 +26,7 @@ export const fluidkey: BaseProject = {
   },
   display: {
     description:
-      'A stealth-address wallet that gives you a fresh receiving address for every payment and shows them as one account.',
+      'A stealth-address wallet that receives every payment on a fresh Safe, with optional yield and bank transfers.',
     detailedDescription: readProjectMarkdown('fluidkey', 'detailedDescription'),
     links: {
       websites: ['https://app.fluidkey.com'],

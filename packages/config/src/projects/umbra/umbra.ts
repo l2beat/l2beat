@@ -90,7 +90,7 @@ export const umbra: BaseProject = {
   },
   display: {
     description:
-      'A stealth-address payment protocol that hides the recipient behind a fresh address for every transfer.',
+      'A stealth-address payment protocol for your existing wallet: you register once, and anyone can pay you at a fresh address.',
     detailedDescription: readProjectMarkdown('umbra', 'detailedDescription', {
       toll: `${Number(formatEther(discovery.getContractValue<number>('Umbra', 'toll')))} ETH`,
     }),
