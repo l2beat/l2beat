@@ -77,7 +77,7 @@
     "diff": "^7.0.0",
     "elastic-apm-node": "^4.11.2",
     "ethers": "^5.7.2",
-    "jose": "5.10.0",
+    "jose": "^6.1.0",
     "koa": "^2.14.1",
     "koa-bodyparser": "^4.4.1",
     "koa-compress": "^5.1.1",

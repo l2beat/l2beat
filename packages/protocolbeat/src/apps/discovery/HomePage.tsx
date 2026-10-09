@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { getProjects } from '../../api/api'
 import type { ApiProjectEntry } from '../../api/types'
 import { ErrorState } from '../../components/ErrorState'
@@ -187,10 +187,10 @@ function AllProjects(props: { search: string }) {
             const favoriteIndex = selectedIndex
             const otherIndex = selectedIndex - favoriteList.length
             if (favoriteList[favoriteIndex]?.name !== undefined) {
-              navigate(`/ui/p/${favoriteList[favoriteIndex].name}`)
+              void navigate(`/ui/p/${favoriteList[favoriteIndex].name}`)
             }
             if (otherList[otherIndex]?.name !== undefined) {
-              navigate(`/ui/p/${otherList[otherIndex].name}`)
+              void navigate(`/ui/p/${otherList[otherIndex].name}`)
             }
           }
           break

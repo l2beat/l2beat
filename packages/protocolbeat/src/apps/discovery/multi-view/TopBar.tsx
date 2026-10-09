@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Button } from '../../../components/Button'
 import { IS_READONLY } from '../../../config/readonly'
 import { IconClose } from '../../../icons/IconClose'
