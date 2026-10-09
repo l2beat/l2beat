@@ -2,7 +2,7 @@
 1. the closed-source app is malicious or hacked and steals the user's spending keys.
 2. Privy's code or key share is compromised, for accounts created with Google or Apple login on the web.
 3. a Fluidkey signer returns an attacker's address when a payer looks up a Fluidkey name.
-4. Fluidkey sends the app a malicious transaction and the user signs it without checking it.
+4. Fluidkey's server marks a transfer as approved, and the open app signs it without showing the user.
 <br>
 ## Funds can be lost if
 1. a user loses the login, wallet, PIN or backup needed to recover the spending key.

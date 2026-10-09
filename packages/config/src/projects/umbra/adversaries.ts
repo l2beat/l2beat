@@ -66,9 +66,9 @@ export function umbraAdversaries(registrants: number) {
         exposureShort:
           "The hosted app checks the payee's address with its Alchemy RPC seconds before each payment, so timing ties the payee to the payment.",
         exposureContinued:
-          "When the payee withdraws, the same RPC receives their wallet address and the withdrawal address in one session. The wallet's own RPC receives the wallet address together with the matched stealth addresses.",
+          "When the payee withdraws, the same RPC receives their wallet address and the withdrawal address in one session. The wallet's own RPC receives the wallet address together with the matched stealth addresses. On connect, the wallet library also sends your wallet address to Cloudflare's RPC to look up its ENS name.",
         advice:
-          'Pay and withdraw from a local build with every RPC URL set to your own node, and point your wallet at that node.',
+          'Pay and withdraw from a local build with every RPC URL set to your own node, point your wallet at that node, and block cloudflare-eth.com.',
         sources: [
           {
             title:

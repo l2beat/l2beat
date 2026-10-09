@@ -10,7 +10,7 @@ Your keys come from a wallet signature and a four-digit PIN. On the web, that wa
 
 1. **Request an address.** The app, the API or a lookup of your name asks Fluidkey for a new address. For name lookups, Fluidkey's server signs the answer, so a payer has to trust that the address is yours.
 2. **Receive.** Each address is a new Safe controlled by a one-time key that only you can derive. It can receive funds before the Safe is deployed.
-3. **Send.** Fluidkey picks Safes with enough balance and prepares the transactions, your app signs them, and Fluidkey submits them. A send that spends from several Safes shows onchain that they belong together.
+3. **Send.** Fluidkey picks Safes with enough balance and prepares the transactions, your app signs them, and Fluidkey submits them. While open, the app also signs any transfer Fluidkey's server marks as approved, without asking. A send that spends from several Safes shows onchain that they belong together.
 
 ### App
 

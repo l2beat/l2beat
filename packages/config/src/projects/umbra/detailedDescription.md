@@ -15,7 +15,7 @@ Umbra hides only who controls the stealth address, and every registrant is a can
 
 ### App
 
-The app at [app.umbra.cash](https://app.umbra.cash) is built from public source, while its indexer and relayer API are closed. It finds payments through the indexer, relays token withdrawals through the API and checks every address it handles with its mainnet RPC, Alchemy. A local build can leave the indexer out and read everything from your own node. The [privacy policy](https://app.umbra.cash/privacy) keeps IP logs for up to 90 days.
+The app at [app.umbra.cash](https://app.umbra.cash) is built from public source, while its indexer and relayer API are closed. It finds payments through the indexer, relays token withdrawals through the API and checks every address it handles with its mainnet RPC, Alchemy. A local build can leave the indexer out and read the chain from your own node. It still asks Cloudflare for your wallet's ENS name and POAP about each withdrawal address. The [privacy policy](https://app.umbra.cash/privacy) keeps IP logs for up to 90 days.
 
 ### Fees
 
