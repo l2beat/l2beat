@@ -1,6 +1,6 @@
 {
   "name": "earnm",
-  "timestamp": 1790927850,
+  "timestamp": 1791533687,
   "configHash": "0x3ee6af45d8b6675a702727894a65139042a1a96027ec2128fad05e3f668419aa",
   "entries": [
     {
@@ -78,7 +78,7 @@
         ],
         "$upgradeCount": 2,
         "anyTrustFastConfirmer": "arb1:0x0000000000000000000000000000000000000000",
-        "arbOsFromWmRoot": "ArbOS v51.1 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v61 wasmModuleRoot",
         "baseStake": 0,
         "bridge": "arb1:0xA9F4ee72439afC704db48dc049CbFb7E914aD300",
         "chainId": 32766,
@@ -90,7 +90,7 @@
         "getValidators": ["arb1:0x702a73680122D6EA59c275c6c6978811fD581B2e"],
         "inbox": "arb1:0x446626827f14F89B38D5bA1ab152B484cd7912fD",
         "isPostBoLD": true,
-        "latestConfirmed": "0x2ce4dde2f8b4e1eaf42e6cfe07bf01aa9e9ff670ddd8db6441076429670ccd77",
+        "latestConfirmed": "0x30810f5bb65457de8db2516de1a8084a5e80ca7dfde3e901c7473713ecbbac61",
         "loserStakeEscrow": "arb1:0xe5e3eEC4c5F443B04C5c883384674FD9e3eA93D9",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x39919941b42DAb335d9924Ef56dF7b9813b2D6d9",
@@ -105,7 +105,7 @@
         "validatorAfkBlocks": 201600,
         "validatorWalletCreator": "arb1:0xc8C95B8b35772Ce4bF9E602336082696C2dC0DB8",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c"
+        "wasmModuleRoot": "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
       },
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
@@ -230,7 +230,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 11105,
+        "batchCount": 11272,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0xe12128A5c958b299c7F033D1D52F90feb12De81D"],
         "bridge": "arb1:0xA9F4ee72439afC704db48dc049CbFb7E914aD300",
@@ -595,8 +595,8 @@
         "outboxHistory": ["arb1:0x39919941b42DAb335d9924Ef56dF7b9813b2D6d9"],
         "rollup": "arb1:0x2E3f48e1A9B9849e5c0e4Fe987AEa2dA1702Ddda",
         "sequencerInbox": "arb1:0x38d41Ac2fbc3f13FcA7838F6638D8FbDb189e807",
-        "sequencerMessageCount": 11105,
-        "sequencerReportedSubMessageCount": 3617420
+        "sequencerMessageCount": 11272,
+        "sequencerReportedSubMessageCount": 3645678
       },
       "fieldMeta": {
         "sequencerInbox": { "severity": "HIGH" },
@@ -1540,7 +1540,7 @@
     "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "arbitrum": 510923074 },
+  "usedBlockNumbers": { "arbitrum": 513140222 },
   "permissionsConfigHash": "0x770f267b40788d9f4df975f624e7d9d3f2d107364d5fc3e88de9de14c8a9c012",
   "permissions": {
     "arb1:0x702a73680122D6EA59c275c6c6978811fD581B2e": {
