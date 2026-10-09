@@ -135,9 +135,17 @@ function findingsOf(
   code: AuditedCode,
 ): Record<string, string[]> | undefined {
   const open = new Map<string, string[]>()
+  const directoryScoped = new Set<string>()
+  const withFindings = new Set<string>()
   for (const object of objects) {
     for (const occurrence of code.occurrences.get(object) ?? []) {
+      for (const report of occurrence.directoryScoped) {
+        directoryScoped.add(report)
+      }
       for (const [report, ids] of Object.entries(occurrence.findings)) {
+        if (ids.length > 0) {
+          withFindings.add(report)
+        }
         const previous = open.get(report)
         open.set(
           report,
@@ -147,6 +155,12 @@ function findingsOf(
         )
       }
     }
+  }
+  for (const report of withFindings) {
+    assert(
+      !directoryScoped.has(report),
+      `${report} has open findings in a copy of ${objects[0]} and scopes another copy only by directory`,
+    )
   }
   const entries = [...open]
     .filter(([, ids]) => ids.length > 0)
