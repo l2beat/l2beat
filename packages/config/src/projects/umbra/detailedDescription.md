@@ -13,7 +13,7 @@ Users trust ScopeLift, which hosts the app, runs its indexer and relays token wi
 
 Umbra hides only who controls the stealth address, and every registrant is a candidate. Withdrawals and payment timing can narrow that set. The app warns before withdrawals to registered, named or otherwise known addresses. Onchain registrations are not mandatory but remove the need for an (often centralised) offchain protocol to exchange keys/addresses. **Compliance** runs in the app only: it refuses wallets, recipients and withdrawal addresses on its blocklist or Chainalysis's sanctions oracle, and hides payments from or to listed addresses.
 
-### Hosted app
+### App
 
 The app at [app.umbra.cash](https://app.umbra.cash) is built from public source, while its indexer and relayer API are closed. It finds payments through the indexer, relays token withdrawals through the API and checks every address it handles with its mainnet RPC, Alchemy. A local build can leave the indexer out and read everything from your own node. The [privacy policy](https://app.umbra.cash/privacy) keeps IP logs for up to 90 days.
 
