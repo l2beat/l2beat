@@ -109,7 +109,7 @@ export const uniswapv2: BaseProject = {
         `UNI tokenholder governance, acting through a ${timelockDelayDays}-day timelock, holds one power over v2: choosing the recipient of the protocol fee, which the code fixes at 1/6 of LP fees.`,
         'Governance cannot block a swap, freeze liquidity, or reach LP funds.',
         CROP_NOTES.passesWalkawayTest(
-          'pairs keep working with the team, the interface and governance gone, and anyone can call them directly.',
+          'pairs keep working with the team, the interface and governance gone, and any contract can call them directly.',
         ),
       ],
       notReviewed: [
