@@ -137,7 +137,8 @@ async function openBlobs(browser: Browser, width: number, height: number) {
   await page.goto('/blobs', { waitUntil: 'load' })
   await page.addStyleTag({ content: STOP_LIVE_PING })
   await page.locator('canvas[role=img]').scrollIntoViewIfNeeded()
-  await page.getByRole('status').getByText('Live').waitFor()
+  // the status is written twice, long and short, for the one the screen shows
+  await page.getByRole('status').filter({ hasText: 'Live' }).waitFor()
   await page.evaluate(installFrameProbe)
   return { page, cdp, close: () => context.close() }
 }
