@@ -414,19 +414,6 @@ export const ethereum: BaseProject = {
         ],
       },
       {
-        // Proof aggregation blobs (AlignedProofAggregationService), not an L2
-        projectId: ProjectId('aligned'),
-        name: 'Aligned Layer',
-        daTrackingConfig: [
-          {
-            type: 'ethereum',
-            inbox: '0xd0696d3eeebffcab2d1b358805efaa005a9a8bc0',
-            sequencers: ['0x57628fe929016c30463473349dcdd592ea27c8b3'],
-            sinceBlock: 24242603,
-          },
-        ],
-      },
-      {
         // Operator unidentified; chainId from SystemConfig.l2ChainId
         projectId: ProjectId('opstack-8686'),
         name: 'OP Stack chain 8686',

@@ -3,11 +3,7 @@ import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import {
-  getKailuaTreasuryDaTracking,
-  getOpStackDaTracking,
-  opStackL2,
-} from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('bob')
 const chainStart = UnixTime(1712861989)
@@ -19,51 +15,7 @@ export const bob: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1714521600), // 2024-05-01T00:00:00Z
   discovery,
-  daTracking: [
-    getOpStackDaTracking(discovery, { sinceBlock: 19634330 }),
-    // Kailua proposals posted as Ethereum blobs, one treasury per game type
-    ...getKailuaTreasuryDaTracking([
-      {
-        address: '0x0fbc22b052f4745bc9f80760d2d47e4993f36746',
-        sinceBlock: 22940885,
-        untilBlock: 22987605,
-      },
-      {
-        address: '0x72284bbb177b13db6f7b703846eedfb24914b764',
-        sinceBlock: 22991167,
-        untilBlock: 23266673,
-      },
-      {
-        address: '0x0e4152204995877df34bd26d6dab78baf9393ae2',
-        sinceBlock: 23277312,
-        untilBlock: 23924561,
-      },
-      {
-        address: '0x220c56bcb401001e5d218604c143d38da107fc4a',
-        sinceBlock: 23929991,
-        untilBlock: 23940152,
-      },
-      {
-        address: '0x6f27a23fc28c18eb2c268bfe1d575e051ad94420',
-        sinceBlock: 23943854,
-        untilBlock: 24531025,
-      },
-      {
-        address: '0xe99af5f4c60e06beb3827f4ffdd06e88c55fb895',
-        sinceBlock: 24537231,
-        untilBlock: 24576453,
-      },
-      {
-        address: '0x9b3e1661bccaf907893b71e4016c01513ae9263c',
-        sinceBlock: 24585400,
-        untilBlock: 25021343,
-      },
-      {
-        address: '0x9937033cc967eed9d753e31c77d2f146d002ae53',
-        sinceBlock: 25029159,
-      },
-    ]),
-  ],
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19634330 })],
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
   isPartOfSuperchain: true,

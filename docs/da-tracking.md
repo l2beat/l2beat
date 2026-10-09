@@ -44,10 +44,28 @@ The array is the chain's history, oldest first:
 literal entry closed at the rotation block, followed by the helper call
 starting at the same block.
 
+### What counts as data posted
+
+Track the blobs (or namespace, appIds, customerId) that carry the chain's
+transaction data or state diffs - batches, including the ones posted only
+when a DAC or alt-DA layer falls back to Ethereum. Blobs a proof system
+posts alongside a state update are not data posted: Kailua proposals, for
+example, publish their intermediate output roots as blobs to the
+KailuaTreasury. Those transactions are already state updates in
+`trackedTxs` (liveness + l2costs), which also charges their blob fees, so
+listing them in `daTracking` as well would show Ethereum as a DA layer of an
+EigenDA chain and mix commitments into its data posted.
+
+`sovereignProjectsTrackingConfig` follows the same rule for chains that are
+not listed on L2BEAT: their batch data, not proof or settlement traffic of
+non-chain services.
+
 ### New-project checklist
 
-No test can tell a project that simply has no DA tracking from one where it
-was forgotten, so this is a deliberate step when adding a project:
+`getProjects.test.ts` fails for a live project hosted on Ethereum whose DA is
+Ethereum blobs but which has no ethereum entry. Fallback-only cases (a DAC or
+Celestia chain that falls back to Ethereum) are not visible to that test, so
+this is still a deliberate step when adding a project:
 
 1. Find what the chain posts and where (ethereum blobs/calldata, celestia
    namespace, avail appIds, eigen-da customerId).

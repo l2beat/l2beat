@@ -59,6 +59,7 @@ export const swell = opStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 25247844,
+      untilBlock: 25688844, // batcher rotation
       inbox: EthereumAddress('0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0'),
       sequencers: [
         EthereumAddress('0x37804a4f63Ab1dCf96A48B1DCE8c03492f539fE9'),
