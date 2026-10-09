@@ -3,15 +3,14 @@
   "project": "scroll",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "ce069f3e6a59d6ebfeb4efb183e39608fc86d1a6"
+    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
   },
   "discoveredAt": 1791455050,
   "collections": {
+    "_libs/agora": { "name": "Agora", "kind": "library" },
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "_libs/safe": { "name": "Safe", "kind": "library" },
-    "agglayer": { "name": "Agglayer", "kind": "project" },
     "arbitrum": { "name": "Arbitrum One", "kind": "project" },
-    "bob": { "name": "BOB", "kind": "project" },
     "celo": { "name": "Celo", "kind": "project" },
     "mantle": { "name": "Mantle", "kind": "project" },
     "morph": { "name": "Morph", "kind": "project" },
@@ -178,12 +177,11 @@
       "date": "2021-04-01",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Initial.pdf"
     },
-    "hexens-polygon-zkevm-2023-02": {
-      "collections": ["agglayer"],
-      "title": "Security Review Report for Polygon zkEVM",
-      "auditor": "Hexens",
-      "date": "2023-02-27",
-      "document": "agglayer/reports/2023_02-hexens-polygon-zkevm-security-review.pdf"
+    "g0-safe-allowance-v0-1-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Review",
+      "auditor": "G0 Group",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v0.1.0__audit-report-g0.md"
     },
     "nethermind-safe-1-3-0": {
       "collections": ["_libs/safe"],
@@ -198,6 +196,13 @@
       "auditor": "Nethermind Security",
       "date": "2026-08-17",
       "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-nethermind.pdf"
+    },
+    "openzeppelin-agora-partial-delegation-2024-06": {
+      "collections": ["_libs/agora"],
+      "title": "Agora Partial Delegation Audit (OpenZeppelin)",
+      "auditor": "OpenZeppelin",
+      "date": "2024-06-24",
+      "document": "_libs/agora/reports/OpenZeppelin - Agora Partial Delegation v1.0.0.pdf"
     },
     "openzeppelin-scroll-batch-token-bridge-audit": {
       "collections": ["scroll"],
@@ -302,19 +307,6 @@
       "title": "Mantle L2 Rollup Security Assessment (Sigma Prime)",
       "auditor": "Sigma Prime",
       "document": "mantle/reports/2023_07-sigmaprime-mantle-l2-rollup-security-assessment.pdf"
-    },
-    "sigmaprime-polygon-lxly-bridge-2024-02": {
-      "collections": ["agglayer"],
-      "title": "Polygon LXLY Bridge Smart Contract Security Assessment",
-      "auditor": "Sigma Prime",
-      "document": "agglayer/reports/2024_02-sigmaprime-polygon-lxly-bridge.pdf"
-    },
-    "spearbit-polygon-zkevm-contracts-2023-03": {
-      "collections": ["agglayer"],
-      "title": "Polygon zkEVM Contracts Security Review",
-      "auditor": "Spearbit",
-      "date": "2023-03-27",
-      "document": "agglayer/reports/2023_03-spearbit-polygon-zkevm-contracts-bridge.pdf"
     },
     "trailofbits-custom-fee-erc20-bridge-upgrade-eip7702-2025-03": {
       "collections": ["arbitrum"],
@@ -421,13 +413,6 @@
       "date": "2023-09-08",
       "document": "scroll/reports/trailofbits-scroll-zktrie-2023-07.pdf"
     },
-    "veridise-kailua-2025-02": {
-      "collections": ["bob"],
-      "title": "Veridise Auditing Report for Kailua Protocol (February 2025)",
-      "auditor": "Veridise",
-      "date": "2025-02-18",
-      "document": "bob/reports/Veridise - Kailua Security Audit (Feb 2025).pdf"
-    },
     "verilog-staked-celo-prs-72-120-2023": {
       "collections": ["celo"],
       "title": "CELO Liquid Staking (staked-celo) Report",
@@ -486,12 +471,6 @@
     }
   },
   "auditedFiles": {
-    "0030e665e2cb": {
-      "repository": "scroll-tech/scroll-contracts",
-      "commit": "1a44cc4cd5bb29067051f59c09dd4407511f1a3a",
-      "path": "src/L1/rollup/L1MessageQueueV2.sol",
-      "blob": "0030e665e2cbbf064cb3e7a6f9684ecb187dbe19"
-    },
     "0045b2bbd612": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
@@ -528,6 +507,18 @@
       "path": "contracts/governance/TimelockController.sol",
       "blob": "090311ee7288d08dc982f210346f08e996311db6"
     },
+    "09b0edfe01e4": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/IL1ScrollMessenger.sol",
+      "blob": "09b0edfe01e4d183e7bf345a84e6f338533e1599"
+    },
+    "0b26610fadd1": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/gateways/L1WETHGateway.sol",
+      "blob": "0b26610fadd1440d9a51eee559d8f5ea563648e1"
+    },
     "0b6cbdc34973": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "6d415c508be94ef8391ed6525df365452466da76",
@@ -546,12 +537,6 @@
       "path": "contracts/src/L1/gateways/L1CustomERC20Gateway.sol",
       "blob": "0b9959a6852bb3ed3b8dd0ae04417d8c82ee1643"
     },
-    "0c99b4a577f2": {
-      "repository": "scroll-tech/scroll",
-      "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
-      "path": "contracts/src/L1/gateways/IL1ETHGateway.sol",
-      "blob": "0c99b4a577f2134a814474b1247fc00cd63abebc"
-    },
     "0fa420d829d4": {
       "repository": "scroll-tech/scroll",
       "commit": "baa48b7018b2b4ca4ec39a94bbdfae82fabf74f5",
@@ -564,17 +549,17 @@
       "path": "contracts/src/libraries/IScrollMessenger.sol",
       "blob": "10c6439924c1b68a2cc4be40745e51fb63fafd05"
     },
-    "10f2c24d5052": {
-      "repository": "scroll-tech/scroll",
-      "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
-      "path": "contracts/src/L1/IL1ScrollMessenger.sol",
-      "blob": "10f2c24d50528d2c9c1991c3f3f6ff51678f422d"
-    },
     "11721c269aa1": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "ca822213f2275a14c26167bd387ac3522da67fe9",
       "path": "contracts/governance/IGovernor.sol",
       "blob": "11721c269aa1650b0daa6b88ccaab79c239c51ab"
+    },
+    "11cb5f25e5df": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L2/gateways/L2ETHGateway.sol",
+      "blob": "11cb5f25e5dfa339995a32a364ef8decf76e5a1f"
     },
     "11e93ea0eb8f": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -611,6 +596,18 @@
       "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
       "path": "contracts/src/L2/gateways/L2ERC721Gateway.sol",
       "blob": "156de2096598b98536a881fb2d487ead86ad5854"
+    },
+    "15e5dc9d0341": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/gateways/L1ERC20Gateway.sol",
+      "blob": "15e5dc9d0341ff416038fda65eb8d80433d290ef"
+    },
+    "1817ee062e56": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L2/gateways/L2WETHGateway.sol",
+      "blob": "1817ee062e56aa37f8084ecca85cf8ff836c79ee"
     },
     "197c25c2a00a": {
       "repository": "scroll-tech/scroll",
@@ -678,12 +675,6 @@
       "path": "contracts/contracts/libraries/verifier/ZkEvmVerifierV1.sol",
       "blob": "1f390dfb78879721ed6e0b161ebb8a18bc9eda4b"
     },
-    "203853527da8": {
-      "repository": "scroll-tech/scroll",
-      "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
-      "path": "contracts/src/L2/gateways/L2WETHGateway.sol",
-      "blob": "203853527da8daa3257bc326bb664a8d837fefbb"
-    },
     "221e2fd82b46": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "14f98dbb581a5365ce3f0c50bd850e499c554f72",
@@ -696,11 +687,11 @@
       "path": "contracts/src/L2/gateways/L2CustomERC20Gateway.sol",
       "blob": "2276a9d61b873e366e35fdf8b5addd0030248b7f"
     },
-    "244656403f08": {
-      "repository": "scroll-tech/scroll",
-      "commit": "888c3d26b34f217877628b1208ea3473d9836600",
-      "path": "contracts/src/L1/gateways/L1ETHGateway.sol",
-      "blob": "244656403f0800df78d14f629cfaae574aa01000"
+    "2276b593a1bc": {
+      "repository": "voteagora/ERC20VotesPartialDelegationUpgradeable",
+      "commit": "826e0d4255959f4184583f19d492acf170ec5890",
+      "path": "src/IVotesPartialDelegation.sol",
+      "blob": "2276b593a1bc23fcac9ebf2a6425d12fd5878a65"
     },
     "272851b2f81b": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -732,12 +723,6 @@
       "path": "contracts/src/L2/gateways/L2ERC1155Gateway.sol",
       "blob": "2e3e68a6525c9828308d36f57bd62a95693cd8db"
     },
-    "30e52be94913": {
-      "repository": "scroll-tech/scroll",
-      "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
-      "path": "contracts/src/libraries/constants/ScrollConstants.sol",
-      "blob": "30e52be9491321204d6ea707afaeda4e829d7244"
-    },
     "332d2a2984e9": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
@@ -756,11 +741,35 @@
       "path": "contracts/security/ReentrancyGuard.sol",
       "blob": "37a63d76363af31f888d990a34564db9cf9cda2b"
     },
+    "37ace964b51d": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "1a44cc4cd5bb29067051f59c09dd4407511f1a3a",
+      "path": "src/libraries/codec/BatchHeaderV7Codec.sol",
+      "blob": "37ace964b51d2c12d9d29810cf6e93391252f836"
+    },
     "3bcafda6d740": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
       "path": "contracts/utils/Address.sol",
       "blob": "3bcafda6d740e2879b7594c7587995b0a83cc32d"
+    },
+    "3cf11378261f": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "edf487a79143664010a179f73c8c284d3f4b7a64",
+      "path": "contracts/access/Ownable.sol",
+      "blob": "3cf11378261f0d6c9b2ce9cd7e85381902306344"
+    },
+    "3e40ec8c5f55": {
+      "repository": "scroll-tech/scroll",
+      "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+      "path": "contracts/src/libraries/token/IScrollERC1155.sol",
+      "blob": "3e40ec8c5f55cb2bc8261c1531ae1ee7f2b27324"
+    },
+    "3e8a644c45d2": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/misc/IPausable.sol",
+      "blob": "3e8a644c45d24d354be395bf9a87a0e8ffe315f0"
     },
     "40a91cf35445": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -810,17 +819,17 @@
       "path": "contracts/contracts/l2/gateways/L2ERC20Gateway.sol",
       "blob": "47bbd6bc07f1ebdf2ac677f5a54164e236e045ee"
     },
+    "489422336212": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "4894223362122f481eacda4fe1c8a53701ede349"
+    },
     "49ecd154d1c1": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
       "path": "contracts/proxy/ERC1967/ERC1967Utils.sol",
       "blob": "49ecd154d1c114744558beb142315f2c2e0084d2"
-    },
-    "4a1f21882406": {
-      "repository": "scroll-tech/scroll",
-      "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
-      "path": "contracts/src/libraries/gateway/ScrollGatewayBase.sol",
-      "blob": "4a1f21882406557b639d8ee4a84cde5c12e4a530"
     },
     "4af164685300": {
       "repository": "scroll-tech/scroll",
@@ -828,17 +837,17 @@
       "path": "contracts/src/libraries/token/IScrollERC1155Extension.sol",
       "blob": "4af164685300e9d275ecf246d13f75a97cdd796c"
     },
+    "4b62be02fffb": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/gateways/L1GatewayRouter.sol",
+      "blob": "4b62be02fffb3b6c4009d7dbbf485f748b39679d"
+    },
     "4f2b7eb85601": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "01f5abc8622981ba436be09c3515568aa0c141b9",
       "path": "contracts/governance/utils/IVotes.sol",
       "blob": "4f2b7eb856012177299e545bcbab479bc5c6f625"
-    },
-    "51cb28f30731": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
-      "path": "contracts/token/ERC20/extensions/ERC20Votes.sol",
-      "blob": "51cb28f30731edef3575b529b3b433ed19303e28"
     },
     "52925e8e44c0": {
       "repository": "morph-l2/morph",
@@ -882,35 +891,29 @@
       "path": "contracts/utils/cryptography/ECDSA.sol",
       "blob": "5bbd73283f02dfd4a88829b4fb87138698bbb237"
     },
-    "5c181a72aad9": {
-      "repository": "scroll-tech/scroll",
-      "commit": "747f35433cc5a92fb81999d395f3d14dec071854",
-      "path": "contracts/src/L1/rollup/IL1MessageQueue.sol",
-      "blob": "5c181a72aad91530faba4724eca41b9e60f0a4c5"
-    },
-    "5d7b6cbeda6f": {
-      "repository": "scroll-tech/scroll",
-      "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
-      "path": "contracts/src/L1/gateways/L1ERC1155Gateway.sol",
-      "blob": "5d7b6cbeda6ffac273589f23bd15f45a14b93a28"
-    },
     "5f0fd9ac2b57": {
       "repository": "morph-l2/morph",
       "commit": "1f623e0eaece566ef92a22615ab8ddff9bcee206",
       "path": "contracts/contracts/L2/gateways/L2GatewayRouter.sol",
       "blob": "5f0fd9ac2b57dc980157504eec6cb8bbaeef9bb2"
     },
-    "66457d868611": {
+    "62a6a034c1b7": {
       "repository": "scroll-tech/scroll",
-      "commit": "7d2484c112ea7957e1ec33004008e0e92b34f2af",
-      "path": "contracts/src/misc/ScrollOwner.sol",
-      "blob": "66457d868611ddc823d2724d7cdb073a161a1d0b"
+      "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+      "path": "contracts/src/L1/gateways/IL1ERC20Gateway.sol",
+      "blob": "62a6a034c1b70c4c8bc765e5b745a3a38ae1f5d3"
     },
-    "6752dea767f6": {
-      "repository": "scroll-tech/scroll",
-      "commit": "888c3d26b34f217877628b1208ea3473d9836600",
-      "path": "contracts/src/L2/gateways/L2ETHGateway.sol",
-      "blob": "6752dea767f678bf7a76ceb89141745a4a458d66"
+    "643d86cf72d9": {
+      "repository": "safe-fndn/safe-modules",
+      "commit": "b531c8db9ded1fa72c8459078ebe4e88a2501bae",
+      "path": "recurring_transfers/contracts/external/SafeMath.sol",
+      "blob": "643d86cf72d9849f7e6f9aba50994aba379e63a0"
+    },
+    "668700b0b04b": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "path": "contracts/Safe.sol",
+      "blob": "668700b0b04ba1a29b9777695f29c5896700bdde"
     },
     "6f29fc503a75": {
       "repository": "scroll-tech/scroll",
@@ -978,6 +981,12 @@
       "path": "contracts/token/ERC20/IERC20.sol",
       "blob": "7c44280f07aa184f6f7506e335c9da0db8c30469"
     },
+    "7c799ba292f5": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/gateways/L1ERC721Gateway.sol",
+      "blob": "7c799ba292f5abbe9fbbe9a7d0437094cace0bbe"
+    },
     "7c91266c8d06": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "6d415c508be94ef8391ed6525df365452466da76",
@@ -996,6 +1005,12 @@
       "path": "contracts/governance/TimelockController.sol",
       "blob": "7f2115c21b1c82237d98305a35883e931ec44136"
     },
+    "841bdb6c27bb": {
+      "repository": "voteagora/ERC20VotesPartialDelegationUpgradeable",
+      "commit": "c88170013fed385076def23a005b768de59cbad2",
+      "path": "src/VotesPartialDelegationUpgradeable.sol",
+      "blob": "841bdb6c27bbdb7fcecf84b621e06554daff4da5"
+    },
     "8699afc9d67a": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
@@ -1008,11 +1023,17 @@
       "path": "contracts/contracts/libraries/common/OwnableBase.sol",
       "blob": "86b7c9f1df39958e4408d1ff9452ea11eaa92378"
     },
-    "87db0e8251fe": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
-      "path": "contracts/governance/utils/IVotes.sol",
-      "blob": "87db0e8251fe39e6679ca090625e19b375235a39"
+    "86e69367fcf3": {
+      "repository": "voteagora/ERC20VotesPartialDelegationUpgradeable",
+      "commit": "826e0d4255959f4184583f19d492acf170ec5890",
+      "path": "src/ERC20VotesPartialDelegationUpgradeable.sol",
+      "blob": "86e69367fcf3dc7a2902ced1ae76fd59b2c68740"
+    },
+    "898739cbc764": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "898739cbc764ffba051eb57699b730e8950ab732"
     },
     "89a3e6314f67": {
       "repository": "OffchainLabs/token-bridge-contracts",
@@ -1031,6 +1052,12 @@
       "commit": "1f623e0eaece566ef92a22615ab8ddff9bcee206",
       "path": "contracts/contracts/L1/gateways/IL1ERC1155Gateway.sol",
       "blob": "8f25ff08a39744a0822d5bf20bc7166c27adfe82"
+    },
+    "8f487f796735": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/gateways/L1ERC1155Gateway.sol",
+      "blob": "8f487f7967355320f6371ab1a163f4128badadaf"
     },
     "931ecb7faf34": {
       "repository": "scroll-tech/scroll",
@@ -1074,6 +1101,12 @@
       "path": "contracts/src/libraries/gateway/IScrollGateway.sol",
       "blob": "9bc30d1817ddc408c43c4015f75a2ccffbcce5db"
     },
+    "9c421d7aa0fb": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "9c421d7aa0fb31e3e58b27bf827520b148963b59"
+    },
     "9e6e789b00a1": {
       "repository": "scroll-tech/scroll",
       "commit": "69224ebb935d499c055c7859c1c8ade57244249c",
@@ -1091,12 +1124,6 @@
       "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
       "path": "contracts/common/Singleton.sol",
       "blob": "9fafeba8c0589b764fe558a913411217e9420a9a"
-    },
-    "a0276435b726": {
-      "repository": "morph-l2/morph",
-      "commit": "1f623e0eaece566ef92a22615ab8ddff9bcee206",
-      "path": "contracts/contracts/L1/gateways/L1GatewayRouter.sol",
-      "blob": "a0276435b726433696ff49f778c881851399a4b2"
     },
     "a19535a30046": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1140,6 +1167,18 @@
       "path": "contracts/governance/extensions/GovernorCountingSimple.sol",
       "blob": "a80233fcb4231c97929b76614b62718c5997b200"
     },
+    "a835bb85e837": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/system-contract/SystemConfig.sol",
+      "blob": "a835bb85e8377bd60d52805ee3e07d59542e87aa"
+    },
+    "a8a5b670b4da": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/rollup/L1MessageQueueV2.sol",
+      "blob": "a8a5b670b4dac37e9f4db9ec301b1f4d069f1d60"
+    },
     "aab31696d64e": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
@@ -1151,12 +1190,6 @@
       "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
       "path": "contracts/access/extensions/AccessControlEnumerable.sol",
       "blob": "ae1d684287046c8928e7a528f441f996fa6779bb"
-    },
-    "aeda91fb5c75": {
-      "repository": "boundless-xyz/kailua",
-      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-      "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-      "blob": "aeda91fb5c75ebd4191ac8c551a1a4685cf3e115"
     },
     "b0e9189675cc": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1176,12 +1209,6 @@
       "path": "contracts/src/libraries/verifier/WithdrawTrieVerifier.sol",
       "blob": "b3c3059eb5685da4a0bc443267699038a1e34e13"
     },
-    "b994890451f3": {
-      "repository": "scroll-tech/scroll-contracts",
-      "commit": "1a44cc4cd5bb29067051f59c09dd4407511f1a3a",
-      "path": "src/L1/system-contract/SystemConfig.sol",
-      "blob": "b994890451f3dbce44ced76477db537f12c1a38d"
-    },
     "b9c7786d5a96": {
       "repository": "scroll-tech/scroll",
       "commit": "69224ebb935d499c055c7859c1c8ade57244249c",
@@ -1199,6 +1226,12 @@
       "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
       "path": "contracts/token/ERC1155/IERC1155Receiver.sol",
       "blob": "ba10c900a3dbd2339cd3eab887c3e674afe55ec4"
+    },
+    "bb3697d7e4c9": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/rollup/IL1MessageQueueV1.sol",
+      "blob": "bb3697d7e4c9ddd2ae8c00448b05b19e02e66df1"
     },
     "bbb6abc0a3d8": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1224,12 +1257,6 @@
       "path": "contracts/utils/math/Math.sol",
       "blob": "c477df6e1faa446b7cb9e184e2ed3228bf4fe79c"
     },
-    "c5943e163f47": {
-      "repository": "scroll-tech/scroll",
-      "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
-      "path": "contracts/src/L1/gateways/L1WETHGateway.sol",
-      "blob": "c5943e163f47767e0321fda1754083d6abc45278"
-    },
     "c8f243d15377": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
@@ -1248,6 +1275,12 @@
       "path": "contracts/access/Ownable.sol",
       "blob": "ca09e035054133545c505f7d1c4ca829f8b67df9"
     },
+    "cbc42c72d1a9": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/rollup/IScrollChain.sol",
+      "blob": "cbc42c72d1a97b8513862ed06b689b6b6d87362e"
+    },
     "cca84ccf519d": {
       "repository": "scroll-tech/scroll-contracts",
       "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
@@ -1259,6 +1292,18 @@
       "commit": "89814bde4c28901839b659409ed55b57af4ade23",
       "path": "contracts/src/libraries/common/AppendOnlyMerkleTree.sol",
       "blob": "ccad5a742103ac78ef3ec0a1459859bdbd3cab51"
+    },
+    "ccb979f61c95": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/utils/math/SafeCast.sol",
+      "blob": "ccb979f61c9577e6338276cff49625d5a2191eb3"
+    },
+    "ccdf1e18623c": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/misc/ScrollOwner.sol",
+      "blob": "ccdf1e18623c3c548f394e7809d439e41bdf0006"
     },
     "cd8c88f25a35": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1296,17 +1341,29 @@
       "path": "contracts/contracts/interfaces/IWETH.sol",
       "blob": "d41d46e521584f07e6c18f6066b37842e72c9b90"
     },
-    "d7428dbb0c50": {
-      "repository": "scroll-tech/scroll",
-      "commit": "f8b9da0fbabd9915b869f274aabc4d5dc0c28fa6",
-      "path": "contracts/src/L1/rollup/IL1MessageQueue.sol",
-      "blob": "d7428dbb0c50e3817524fbcec39300c49f9d0fc4"
+    "d6a86daac251": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/libraries/gateway/ScrollGatewayBase.sol",
+      "blob": "d6a86daac25173b9cb48a3e81dfeb3fdc6ea4589"
+    },
+    "d875f0a6cbe7": {
+      "repository": "voteagora/ERC20VotesPartialDelegationUpgradeable",
+      "commit": "826e0d4255959f4184583f19d492acf170ec5890",
+      "path": "src/L2GovToken.sol",
+      "blob": "d875f0a6cbe7da55dfb358b18d275e6303bbaad2"
     },
     "d934eddafe9c": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
       "path": "contracts/access/AccessControl.sol",
       "blob": "d934eddafe9cd6f9dc4955cb7994a2e298cd20ae"
+    },
+    "d997b2d94d1e": {
+      "repository": "scroll-tech/scroll",
+      "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+      "path": "contracts/src/L1/gateways/IL1ETHGateway.sol",
+      "blob": "d997b2d94d1eb7afb872c6c83f6b78acb9f61544"
     },
     "d9b7473b9a29": {
       "repository": "scroll-tech/scroll",
@@ -1326,12 +1383,6 @@
       "path": "contracts/proxy/ERC1967/ERC1967Proxy.sol",
       "blob": "df3a61369191fc619f9d499a87f341d245c97893"
     },
-    "e1159f899dff": {
-      "repository": "agglayer/agglayer-contracts",
-      "commit": "7677b8ccf10abc13903d0aceb66daa9a8a5fb0b0",
-      "path": "contracts/mocks/Uni.sol",
-      "blob": "e1159f899dffe805cfe7bf195addd96cfdf91cc2"
-    },
     "e49768ab9765": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "6982dd1bd411be75ce45144e91609c995460065f",
@@ -1350,17 +1401,17 @@
       "path": "contracts/proxies/GnosisSafeProxy.sol",
       "blob": "e60171eac28ab42852376215e7b78ec351b2e400"
     },
+    "e64795d96557": {
+      "repository": "scroll-tech/scroll-contracts",
+      "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+      "path": "src/L1/gateways/L1ETHGateway.sol",
+      "blob": "e64795d96557bec27af53a4b4018637640ddacef"
+    },
     "e6daa774e035": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
       "path": "contracts/utils/cryptography/ECDSA.sol",
       "blob": "e6daa774e0352960577121bb94483be41b286b34"
-    },
-    "e788faff3179": {
-      "repository": "scroll-tech/scroll",
-      "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
-      "path": "contracts/src/L1/gateways/L1ERC721Gateway.sol",
-      "blob": "e788faff31794c059b40d7260ecd503ccd947c23"
     },
     "e7ae54c6e765": {
       "repository": "mantlenetworkio/mantle",
@@ -1386,6 +1437,12 @@
       "path": "contracts/src/L2/gateways/IL2ETHGateway.sol",
       "blob": "eaaff71c050cd0b004e0032b22442d6db034458a"
     },
+    "eae5ef61283e": {
+      "repository": "scroll-tech/scroll",
+      "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+      "path": "contracts/src/L1/rollup/IL1MessageQueue.sol",
+      "blob": "eae5ef61283e77ca558ef2ce31ebce1208144fa7"
+    },
     "eb0b1dc1396d": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "b0c5d1e476e1d6c8a3eaa11b17c01ff5824d5950",
@@ -1403,6 +1460,12 @@
       "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
       "path": "src/L1/L1ScrollMessenger.sol",
       "blob": "eed6a0deb206c7598ad2a1e60e58977c69c1c5a7"
+    },
+    "ef32556fd052": {
+      "repository": "scroll-tech/scroll",
+      "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+      "path": "contracts/src/libraries/token/IScrollERC721.sol",
+      "blob": "ef32556fd0521857556028f3d0e304773ae3be8a"
     },
     "efbbc2e3a4a2": {
       "repository": "scroll-tech/scroll",
@@ -1458,23 +1521,17 @@
       "path": "contracts/token/ERC721/IERC721Receiver.sol",
       "blob": "f93d219f21bd9c817755d1500100013ef1ca310d"
     },
-    "f9b9c802a646": {
-      "repository": "morph-l2/morph",
-      "commit": "1f623e0eaece566ef92a22615ab8ddff9bcee206",
-      "path": "contracts/contracts/L1/gateways/IL1ERC20Gateway.sol",
-      "blob": "f9b9c802a646fc4b48992f6465ac2d8d8626da65"
+    "f9b6674650dd": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
     },
     "fa39dcb7609e": {
       "repository": "morph-l2/morph",
       "commit": "1f623e0eaece566ef92a22615ab8ddff9bcee206",
       "path": "contracts/contracts/L1/gateways/IL1ERC721Gateway.sol",
       "blob": "fa39dcb7609e990d729af3a5b0bc20bfca4c318e"
-    },
-    "fb2397d8bcda": {
-      "repository": "boundless-xyz/kailua",
-      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-      "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
-      "blob": "fb2397d8bcda844c00004d4b7ec6ec0a60406eb9"
     },
     "fba8d1c9ed4a": {
       "repository": "morph-l2/morph",
@@ -1499,6 +1556,12 @@
       "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
       "path": "contracts/src/L2/gateways/usdc/L2USDCGateway.sol",
       "blob": "ff6431a9c4a7665e06221556631f79c00d641ba8"
+    },
+    "ff80b141f8ba": {
+      "repository": "scroll-tech/scroll",
+      "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+      "path": "contracts/src/libraries/constants/ScrollConstants.sol",
+      "blob": "ff80b141f8ba0463b4b1a45ac00fdf3eb8a1b4a0"
     }
   },
   "units": {
@@ -1536,11 +1599,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "571e63d071b4": {
       "name": "ERC165",
@@ -1661,19 +1720,20 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "16eb9f2e8752": {
       "name": "SelfAuthorized",
       "kind": "contract",
       "lines": 11,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [745, 755] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "898739cbc764", "lines": [6, 16] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
     },
     "40ce0b25499c": {
       "name": "Enum",
@@ -1739,14 +1799,13 @@
       "kind": "contract",
       "lines": 4,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [942, 945] },
+      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
       "reports": [
         "certora-safe-1-3-0",
         "g0-safe-1-1-0",
         "g0-safe-1-1-1",
         "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "veridise-kailua-2025-02"
+        "g0-safe-1-3-0-initial"
       ]
     },
     "37dc539ed622": {
@@ -1766,8 +1825,13 @@
       "kind": "contract",
       "lines": 42,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [818, 859] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "489422336212", "lines": [6, 47] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
     },
     "bd90fb921f2d": {
       "name": "GuardManager",
@@ -1811,8 +1875,12 @@
       "kind": "abstract",
       "lines": 12,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [947, 958] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
     },
     "3e84ad780965": {
       "name": "GnosisSafe",
@@ -1856,11 +1924,7 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "447d1057dc7c": {
       "name": "NativeCurrencyPaymentFallback",
@@ -1868,19 +1932,20 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "aa97dd1bf3f1": {
       "name": "SelfAuthorized",
       "kind": "abstract",
       "lines": 11,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [745, 755] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "898739cbc764", "lines": [6, 16] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
     },
     "06a60947381e": {
       "name": "Executor",
@@ -1895,8 +1960,8 @@
       "kind": "abstract",
       "lines": 176,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [4897, 5076] },
-      "reports": ["nethermind-safe-1-3-0", "veridise-kailua-2025-02"],
+      "audited": { "object": "9c421d7aa0fb", "lines": [17, 196] },
+      "reports": ["nethermind-safe-1-3-0"],
       "added": [[22, 22]],
       "removed": [[22, 22, 22]],
       "covered": 175
@@ -1905,9 +1970,17 @@
       "name": "OwnerManager",
       "kind": "abstract",
       "lines": 150,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [3806, 3962] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 2]],
+      "removed": [[1, 1, 2]],
+      "covered": 148
     },
     "13e5d12afa8b": {
       "name": "SignatureDecoder",
@@ -1932,17 +2005,29 @@
       "name": "FallbackManager",
       "kind": "abstract",
       "lines": 73,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [3726, 3795] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 1], [11, 25]],
+      "removed": [[1, 1, 1]],
+      "covered": 61
     },
     "e213c56fc229": {
       "name": "StorageAccessible",
       "kind": "abstract",
       "lines": 42,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [818, 859] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "489422336212", "lines": [6, 47] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
     },
     "b3dc850565d8": {
       "name": "IERC165",
@@ -1950,27 +2035,37 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "051f4e0bd8fb": {
       "name": "Guard",
       "kind": "interface",
       "lines": 17,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [4814, 4830] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[0, 0]],
+      "removed": [[0, 0, 0]],
+      "covered": 16
     },
     "d63eef9ff914": {
       "name": "GuardManager",
       "kind": "abstract",
       "lines": 42,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [4843, 4884] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 1], [16, 18]],
+      "removed": [[1, 1, 1]],
+      "covered": 38
     },
     "6cd3fcc5ec00": {
       "name": "SafeMath",
@@ -1985,16 +2080,20 @@
       "kind": "abstract",
       "lines": 12,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [947, 958] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
     },
     "268c431cb6b0": {
       "name": "Safe",
       "kind": "contract",
       "lines": 409,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [6325, 6756] },
-      "reports": ["nethermind-safe-1-3-0", "veridise-kailua-2025-02"],
+      "audited": { "object": "668700b0b04b", "lines": [36, 467] },
+      "reports": ["nethermind-safe-1-3-0"],
       "added": [[14, 14]],
       "removed": [[14, 14, 14]],
       "covered": 408
@@ -2181,26 +2280,7 @@
       "name": "AddressUpgradeable",
       "kind": "library",
       "lines": 236,
-      "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [495, 674] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [
-        [81, 81],
-        [127, 127],
-        [152, 152],
-        [154, 202],
-        [218, 218],
-        [221, 234]
-      ],
-      "removed": [
-        [81, 77, 77],
-        [126, 119, 120],
-        [127, 122, 122],
-        [151, 146, 147],
-        [152, 149, 149],
-        [218, 166, 176]
-      ],
-      "covered": 196
+      "status": "none"
     },
     "b6997299f381": {
       "name": "Initializable",
@@ -2218,22 +2298,36 @@
       "kind": "abstract",
       "lines": 21,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [4478, 4497] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[0, 0]],
+      "audited": {
+        "object": "2d517987d5b4",
+        "lines": [16, 24],
+        "name": "Context"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 5], [13, 19]],
       "removed": [[0, 0, 0]],
-      "covered": 20
+      "covered": 15
     },
     "6dd3f0f9ae37": {
       "name": "OwnableUpgradeable",
       "kind": "abstract",
       "lines": 75,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [4736, 4810] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[0, 0]],
-      "removed": [[0, 0, 0]],
-      "covered": 74
+      "audited": {
+        "object": "ca09e0350541",
+        "lines": [20, 97],
+        "name": "Ownable"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0], [4, 14], [35, 35], [54, 54], [67, 73]],
+      "removed": [
+        [0, 0, 0],
+        [2, 2, 11],
+        [4, 14, 20],
+        [35, 41, 43],
+        [54, 62, 64]
+      ],
+      "covered": 65
     },
     "095ea0743931": {
       "name": "IL1MessageQueueV2",
@@ -2241,56 +2335,32 @@
       "lines": 112,
       "status": "differs",
       "audited": {
-        "object": "d7428dbb0c50",
-        "lines": [5, 121],
+        "object": "eae5ef61283e",
+        "lines": [5, 113],
         "name": "IL1MessageQueue"
       },
-      "reports": ["openzeppelin-scroll-diff-audit-2023-09"],
-      "added": [[20, 33], [38, 48], [53, 55], [59, 59], [81, 81], [106, 110]],
-      "removed": [
-        [20, 17, 35],
-        [38, 40, 43],
-        [59, 51, 51],
-        [76, 68, 75],
-        [76, 77, 77],
-        [76, 80, 80],
-        [106, 103, 115]
+      "reports": [
+        "openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08"
       ],
+      "added": [[20, 33], [38, 48], [53, 55], [59, 59], [106, 110]],
+      "removed": [[20, 17, 35], [38, 40, 43], [59, 51, 51], [106, 95, 107]],
       "covered": 103
     },
     "e6ea54aaa0dd": {
       "name": "IL1MessageQueueV1",
       "kind": "interface",
       "lines": 179,
-      "status": "differs",
-      "audited": {
-        "object": "5c181a72aad9",
-        "lines": [5, 140],
-        "name": "IL1MessageQueue"
-      },
-      "reports": ["openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02"],
-      "added": [[26, 33], [63, 67], [71, 71], [161, 173], [176, 176]],
-      "removed": [],
-      "covered": 174
+      "status": "identical",
+      "audited": { "object": "bb3697d7e4c9", "lines": [6, 179] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "672b83c10244": {
       "name": "SystemConfig",
       "kind": "contract",
       "lines": 122,
-      "status": "differs",
-      "audited": { "object": "b994890451f3", "lines": [6, 111] },
-      "reports": ["trailofbits-scroll-euclid-phase2-2025-04"],
-      "added": [
-        [1, 18],
-        [99, 99],
-        [101, 101],
-        [108, 108],
-        [110, 110],
-        [117, 117],
-        [119, 119]
-      ],
-      "removed": [[1, 4, 4]],
-      "covered": 113
+      "status": "identical",
+      "audited": { "object": "a835bb85e837", "lines": [6, 138] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "c3ec09ec986a": {
       "name": "AddressAliasHelper",
@@ -2310,12 +2380,9 @@
       "name": "L1MessageQueueV2",
       "kind": "contract",
       "lines": 428,
-      "status": "differs",
-      "audited": { "object": "0030e665e2cb", "lines": [22, 472] },
-      "reports": ["trailofbits-scroll-euclid-phase2-2025-04"],
-      "added": [[35, 35]],
-      "removed": [[35, 38, 38]],
-      "covered": 427
+      "status": "identical",
+      "audited": { "object": "a8a5b670b4da", "lines": [22, 473] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "136cad168991": {
       "name": "IERC721ReceiverUpgradeable",
@@ -2370,15 +2437,11 @@
       "name": "ScrollConstants",
       "kind": "library",
       "lines": 8,
-      "status": "differs",
-      "audited": { "object": "30e52be94913", "lines": [5, 8] },
+      "status": "identical",
+      "audited": { "object": "ff80b141f8ba", "lines": [5, 12] },
       "reports": [
-        "openzeppelin-scroll-layer1-audit-2023-07",
-        "zellic-scroll-bridge-rollup-audit-2023-05"
-      ],
-      "added": [[3, 6]],
-      "removed": [],
-      "covered": 7
+        "openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08"
+      ]
     },
     "5d03f3fae568": {
       "name": "IScrollGatewayCallback",
@@ -2393,8 +2456,11 @@
       "kind": "abstract",
       "lines": 103,
       "status": "identical",
-      "audited": { "object": "4a1f21882406", "lines": [16, 118] },
-      "reports": ["openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02"]
+      "audited": { "object": "d6a86daac251", "lines": [15, 117] },
+      "reports": [
+        "openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "trailofbits-scroll-feynman-upgrade"
+      ]
     },
     "a08d0531cfc1": {
       "name": "IL1ERC721Gateway",
@@ -2414,11 +2480,7 @@
         "lines": [5, 15],
         "name": "IERC165"
       },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "5db5046f9887": {
       "name": "IERC721Upgradeable",
@@ -2447,34 +2509,27 @@
       "name": "IL1ScrollMessenger",
       "kind": "interface",
       "lines": 50,
-      "status": "differs",
-      "audited": { "object": "10f2c24d5052", "lines": [7, 59] },
-      "reports": ["openzeppelin-scroll-layer1-audit-2023-07"],
-      "added": [[44, 44]],
-      "removed": [[44, 47, 47]],
-      "covered": 49
+      "status": "identical",
+      "audited": { "object": "09b0edfe01e4", "lines": [7, 59] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "6f0799a4bc1c": {
       "name": "L1ERC721Gateway",
       "kind": "contract",
       "lines": 204,
-      "status": "differs",
-      "audited": { "object": "e788faff3179", "lines": [23, 247] },
-      "reports": ["openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02"],
-      "added": [[0, 0]],
-      "removed": [[0, 0, 0], [117, 118, 139], [117, 141, 141], [117, 144, 144]],
-      "covered": 203
+      "status": "identical",
+      "audited": { "object": "7c799ba292f5", "lines": [22, 224] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "70f7c3cbe6a1": {
       "name": "IL1ERC20Gateway",
       "kind": "interface",
       "lines": 113,
-      "status": "differs",
-      "audited": { "object": "f9b9c802a646", "lines": [5, 107] },
-      "reports": ["trailofbits-morph-l2-2024-07"],
-      "added": [],
-      "removed": [[35, 33, 33]],
-      "covered": 113
+      "status": "identical",
+      "audited": { "object": "62a6a034c1b7", "lines": [5, 100] },
+      "reports": [
+        "openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08"
+      ]
     },
     "ae1268309d86": {
       "name": "IMessageDropCallback",
@@ -2565,12 +2620,11 @@
       "name": "IL1ETHGateway",
       "kind": "interface",
       "lines": 69,
-      "status": "differs",
-      "audited": { "object": "0c99b4a577f2", "lines": [5, 58] },
-      "reports": ["openzeppelin-scroll-layer2-audit-2023-07"],
-      "added": [[18, 22]],
-      "removed": [[18, 21, 21], [18, 24, 24]],
-      "covered": 68
+      "status": "identical",
+      "audited": { "object": "d997b2d94d1e", "lines": [5, 63] },
+      "reports": [
+        "openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08"
+      ]
     },
     "bd765f1e003d": {
       "name": "IL1GatewayRouter",
@@ -2728,7 +2782,9 @@
       "name": "IScrollChain",
       "kind": "interface",
       "lines": 126,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "cbc42c72d1a9", "lines": [7, 131] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "a6954ed381f0": {
       "name": "WithdrawTrieVerifier",
@@ -2860,23 +2916,17 @@
       "name": "ScrollOwner",
       "kind": "contract",
       "lines": 141,
-      "status": "differs",
-      "audited": { "object": "66457d868611", "lines": [10, 132] },
-      "reports": ["openzeppelin-scroll-owner-rate-limiter-audit-2023-09"],
-      "added": [[2, 17], [45, 45], [104, 105], [110, 111], [129, 129]],
-      "removed": [[2, 3, 3], [2, 6, 6], [45, 29, 29], [129, 111, 111]],
-      "covered": 135
+      "status": "identical",
+      "audited": { "object": "ccdf1e18623c", "lines": [10, 156] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "41add104de04": {
       "name": "L1ERC20Gateway",
       "kind": "abstract",
       "lines": 145,
-      "status": "differs",
-      "audited": { "object": "12c979ef6784", "lines": [18, 158] },
-      "reports": ["sherlock-morph-l2-contest-2024-09"],
-      "added": [[0, 0]],
-      "removed": [[0, 0, 0], [63, 56, 72], [63, 74, 74], [63, 77, 77]],
-      "covered": 144
+      "status": "identical",
+      "audited": { "object": "15e5dc9d0341", "lines": [17, 140] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "5eb38d4ef9fb": {
       "name": "IWETH",
@@ -2894,8 +2944,8 @@
       "kind": "contract",
       "lines": 138,
       "status": "identical",
-      "audited": { "object": "c5943e163f47", "lines": [20, 139] },
-      "reports": ["openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02"]
+      "audited": { "object": "0b26610fadd1", "lines": [20, 146] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "cd0333148e9f": {
       "name": "IL2ETHGateway",
@@ -2909,12 +2959,9 @@
       "name": "L1ETHGateway",
       "kind": "contract",
       "lines": 118,
-      "status": "differs",
-      "audited": { "object": "244656403f08", "lines": [19, 147] },
-      "reports": ["openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02"],
-      "added": [[0, 0]],
-      "removed": [[0, 0, 0], [83, 77, 92], [83, 94, 94], [83, 97, 97]],
-      "covered": 117
+      "status": "identical",
+      "audited": { "object": "e64795d96557", "lines": [18, 132] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "dc13e1eeae0f": {
       "name": "L1CustomERC20Gateway",
@@ -2939,7 +2986,9 @@
       "name": "BatchHeaderV7Codec",
       "kind": "library",
       "lines": 69,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "37ace964b51d", "lines": [18, 86] },
+      "reports": ["trailofbits-scroll-euclid-phase2-2025-04"]
     },
     "e9d42eed7ea8": {
       "name": "BatchHeaderV1Codec",
@@ -2994,18 +3043,17 @@
       "name": "IPausable",
       "kind": "interface",
       "lines": 8,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "3e8a644c45d2", "lines": [4, 11] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "78247db2e54f": {
       "name": "ScrollOwner",
       "kind": "contract",
       "lines": 143,
-      "status": "differs",
-      "audited": { "object": "66457d868611", "lines": [10, 132] },
-      "reports": ["openzeppelin-scroll-owner-rate-limiter-audit-2023-09"],
-      "added": [[2, 17], [45, 45], [104, 105], [110, 111], [131, 131]],
-      "removed": [[2, 3, 3], [2, 6, 6], [45, 29, 29], [131, 111, 111]],
-      "covered": 137
+      "status": "identical",
+      "audited": { "object": "ccdf1e18623c", "lines": [10, 156] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "5ac1018ae520": {
       "name": "PauseController",
@@ -3095,12 +3143,9 @@
       "name": "L1ERC1155Gateway",
       "kind": "contract",
       "lines": 215,
-      "status": "differs",
-      "audited": { "object": "5d7b6cbeda6f", "lines": [25, 265] },
-      "reports": ["openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02"],
-      "added": [[0, 0]],
-      "removed": [[0, 0, 0], [119, 124, 144], [119, 146, 146], [119, 149, 149]],
-      "covered": 214
+      "status": "identical",
+      "audited": { "object": "8f487f796735", "lines": [24, 243] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "787fbfe845bb": {
       "name": "IUSDCBurnableSourceBridge",
@@ -3178,11 +3223,8 @@
       "kind": "contract",
       "lines": 236,
       "status": "identical",
-      "audited": { "object": "a0276435b726", "lines": [18, 242] },
-      "reports": [
-        "openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
-        "trailofbits-morph-l2-2024-07"
-      ]
+      "audited": { "object": "4b62be02fffb", "lines": [18, 248] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "7e15464fa53a": {
       "name": "Proxy",
@@ -3200,11 +3242,20 @@
       "kind": "library",
       "lines": 134,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[19, 26], [82, 82], [108, 108], [110, 132]],
-      "removed": [[26, 28, 32], [82, 90, 90], [108, 119, 122], [110, 124, 204]],
-      "covered": 112
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ],
+      "added": [[19, 26], [72, 72], [82, 82], [108, 108], [110, 132]],
+      "removed": [
+        [26, 28, 32],
+        [72, 77, 77],
+        [82, 90, 90],
+        [108, 119, 120],
+        [110, 122, 226]
+      ],
+      "covered": 111
     },
     "522da5adba24": {
       "name": "UpgradeabilityProxy",
@@ -3274,15 +3325,28 @@
       "kind": "library",
       "lines": 142,
       "status": "differs",
-      "audited": { "object": "e1159f899dff", "lines": [27, 194] },
-      "reports": [
-        "hexens-polygon-zkevm-2023-02",
-        "sigmaprime-polygon-lxly-bridge-2024-02",
-        "spearbit-polygon-zkevm-contracts-2023-03"
+      "audited": { "object": "643d86cf72d9", "lines": [8, 65] },
+      "reports": ["contracts__audits__2018-10", "g0-safe-allowance-v0-1-0"],
+      "added": [
+        [13, 13],
+        [29, 29],
+        [31, 48],
+        [50, 56],
+        [68, 68],
+        [86, 86],
+        [88, 107],
+        [110, 117],
+        [122, 122],
+        [124, 140]
       ],
-      "added": [[19, 19], [25, 25], [29, 29], [82, 82]],
-      "removed": [[17, 15, 29], [29, 40, 40], [72, 79, 100]],
-      "covered": 141
+      "removed": [
+        [13, 44, 44],
+        [29, 33, 36],
+        [68, 13, 13],
+        [86, 22, 26],
+        [122, 54, 55]
+      ],
+      "covered": 123
     },
     "981e9f194428": {
       "name": "FiatTokenV1",
@@ -3424,26 +3488,7 @@
       "name": "AddressUpgradeable",
       "kind": "library",
       "lines": 211,
-      "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [495, 674] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [
-        [77, 77],
-        [127, 127],
-        [152, 152],
-        [154, 177],
-        [193, 193],
-        [196, 209]
-      ],
-      "removed": [
-        [77, 77, 77],
-        [126, 119, 120],
-        [127, 122, 122],
-        [151, 146, 147],
-        [152, 149, 149],
-        [193, 166, 176]
-      ],
-      "covered": 182
+      "status": "none"
     },
     "359c5c809a5e": {
       "name": "Initializable",
@@ -3582,7 +3627,8 @@
       },
       "reports": ["contracts__audits__2023-05-v4.9"],
       "added": [
-        [0, 11],
+        [0, 7],
+        [9, 11],
         [18, 19],
         [22, 23],
         [28, 28],
@@ -3641,7 +3687,7 @@
         [501, 523, 523],
         [521, 543, 543]
       ],
-      "covered": 512
+      "covered": 513
     },
     "6deaafe6c404": {
       "name": "GovernorCountingSimpleUpgradeableV2",
@@ -3789,7 +3835,8 @@
         ]
       },
       "added": [
-        [0, 6],
+        [0, 3],
+        [5, 6],
         [12, 25],
         [30, 30],
         [34, 37],
@@ -3809,7 +3856,7 @@
         [155, 125, 125],
         [159, 129, 129]
       ],
-      "covered": 138
+      "covered": 139
     },
     "9ec01c61cb77": {
       "name": "IProposalTypesConfigurator",
@@ -3947,7 +3994,11 @@
       "name": "IScrollERC1155",
       "kind": "interface",
       "lines": 3,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "3e40ec8c5f55", "lines": [11, 11] },
+      "reports": [
+        "openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08"
+      ]
     },
     "dc1394aff5fe": {
       "name": "IL1ERC1155Gateway",
@@ -4013,16 +4064,16 @@
       "kind": "contract",
       "lines": 113,
       "status": "identical",
-      "audited": { "object": "6752dea767f6", "lines": [16, 125] },
-      "reports": ["openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02"]
+      "audited": { "object": "11cb5f25e5df", "lines": [16, 127] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "cc3bd5818ae2": {
       "name": "L2WETHGateway",
       "kind": "contract",
       "lines": 143,
       "status": "identical",
-      "audited": { "object": "203853527da8", "lines": [21, 157] },
-      "reports": ["openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02"]
+      "audited": { "object": "1817ee062e56", "lines": [21, 159] },
+      "reports": ["trailofbits-scroll-feynman-upgrade"]
     },
     "41189f6ccf50": {
       "name": "L2ScrollMessenger",
@@ -4095,7 +4146,11 @@
       "name": "IScrollERC721",
       "kind": "interface",
       "lines": 3,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "ef32556fd052", "lines": [11, 11] },
+      "reports": [
+        "openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08"
+      ]
     },
     "64c5beb8395b": {
       "name": "IL1ERC721Gateway",
@@ -4117,9 +4172,12 @@
       "name": "Context",
       "kind": "abstract",
       "lines": 13,
-      "status": "identical",
-      "audited": { "object": "fb2397d8bcda", "lines": [1736, 1748] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 11]],
+      "removed": [],
+      "covered": 10
     },
     "b932a8b35c18": {
       "name": "L2LidoGateway",
@@ -4283,8 +4341,8 @@
       "kind": "abstract",
       "lines": 81,
       "status": "identical",
-      "audited": { "object": "fb2397d8bcda", "lines": [1974, 2054] },
-      "reports": ["contracts__audits__2023-10-v5.0", "veridise-kailua-2025-02"]
+      "audited": { "object": "3cf11378261f", "lines": [20, 100] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
     },
     "a9937907f16f": {
       "name": "ITransparentUpgradeableProxy",
@@ -4325,12 +4383,7 @@
       "name": "ContextUpgradeable",
       "kind": "abstract",
       "lines": 18,
-      "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [4478, 4497] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[0, 0], [13, 16]],
-      "removed": [[0, 0, 0], [13, 12, 18]],
-      "covered": 14
+      "status": "none"
     },
     "ee5a26ce51e5": {
       "name": "IAccessControl",
@@ -4586,16 +4639,9 @@
       "name": "IVotesPartialDelegation",
       "kind": "interface",
       "lines": 55,
-      "status": "differs",
-      "audited": {
-        "object": "87db0e8251fe",
-        "lines": [9, 60],
-        "name": "IVotes"
-      },
-      "reports": ["contracts__audits__2026-02-v5.6"],
-      "added": [[0, 0], [9, 11], [38, 43]],
-      "removed": [[0, 0, 0], [9, 9, 9], [38, 36, 40]],
-      "covered": 51
+      "status": "identical",
+      "audited": { "object": "2276b593a1bc", "lines": [20, 74] },
+      "reports": ["openzeppelin-agora-partial-delegation-2024-06"]
     },
     "e14c7add1fc6": {
       "name": "Checkpoints",
@@ -4644,9 +4690,12 @@
       "name": "SafeCast",
       "kind": "library",
       "lines": 1135,
-      "status": "identical",
-      "audited": { "object": "fb2397d8bcda", "lines": [264, 1398] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "ccb979f61c95", "lines": [19, 1162] },
+      "reports": ["contracts__audits__2026-02-v5.6"],
+      "added": [],
+      "removed": [[1134, 1134, 1142]],
+      "covered": 1135
     },
     "a34ee6372352": {
       "name": "Time",
@@ -4680,28 +4729,25 @@
       "name": "VotesPartialDelegationUpgradeable",
       "kind": "abstract",
       "lines": 537,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "841bdb6c27bb", "lines": [36, 581] },
+      "reports": ["openzeppelin-agora-partial-delegation-2024-06"]
     },
     "a523ebd0a7c1": {
       "name": "ERC20VotesPartialDelegationUpgradeable",
       "kind": "abstract",
       "lines": 76,
-      "status": "differs",
-      "audited": {
-        "object": "51cb28f30731",
-        "lines": [23, 83],
-        "name": "ERC20Votes"
-      },
-      "reports": ["contracts__audits__2026-02-v5.6"],
-      "added": [[0, 3], [9, 12], [23, 23], [68, 74]],
-      "removed": [[0, 0, 0], [9, 5, 5]],
-      "covered": 67
+      "status": "identical",
+      "audited": { "object": "86e69367fcf3", "lines": [23, 98] },
+      "reports": ["openzeppelin-agora-partial-delegation-2024-06"]
     },
     "761fdcecf364": {
       "name": "L2GovToken",
       "kind": "contract",
       "lines": 47,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "d875f0a6cbe7", "lines": [12, 58] },
+      "reports": ["openzeppelin-agora-partial-delegation-2024-06"]
     },
     "c6eb59cc0e4a": {
       "name": "L2StandardERC20Gateway",

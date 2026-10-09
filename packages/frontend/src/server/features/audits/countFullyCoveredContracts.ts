@@ -1,10 +1,11 @@
 import type { AuditsContractEntry, AuditsSummaryEntry } from './types'
 
 /**
- * Deployed contracts whose whole flattened source (every unit of every
- * source, proxy included) is identical to audited code. A contract without
- * verified source or without any unit never counts, but it stays in the
- * denominator used by `fullyCoveredShare`.
+ * Deployed contracts whose whole flattened source (every counted unit of
+ * every source, proxy included; interfaces are not counted, see
+ * `countsTowardCoverage`) is identical to audited code. A contract without
+ * verified source or without any counted unit never counts, but it stays in
+ * the denominator used by `fullyCoveredShare`.
  */
 export function countFullyCoveredContracts(
   contracts: Pick<AuditsContractEntry, 'noSource' | 'coverage'>[],

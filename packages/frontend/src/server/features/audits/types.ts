@@ -22,6 +22,10 @@ export type AuditReportOrigin = 'own' | 'stack' | 'library' | 'other'
 
 export type AuditStatusCounts = Record<AuditUnitStatus, number>
 
+/**
+ * Unit and line counts of the counted units. Interfaces are listed and
+ * diffed but never counted, see `countsTowardCoverage` in coverageModel.
+ */
 export interface AuditCoverageNumbers {
   units: AuditStatusCounts
   lines: { total: number; covered: number; uncovered: number }
@@ -84,7 +88,7 @@ export interface AuditsSummaryEntry {
   href: string
   contracts: number
   contractsWithoutSource: number
-  /** Contracts whose every unit is identical to audited code. */
+  /** Contracts whose every counted unit is identical to audited code. */
   fullyCoveredContracts: number
   coverage: AuditCoverageNumbers
   uniqueUnits: AuditStatusCounts
@@ -227,7 +231,7 @@ export interface AuditsProjectDetails {
   datasetUrl: string
   contracts: number
   contractsWithoutSource: number
-  /** Contracts whose every unit is identical to audited code. */
+  /** Contracts whose every counted unit is identical to audited code. */
   fullyCoveredContracts: number
   coverage: AuditCoverageNumbers
   uniqueUnits: AuditStatusCounts

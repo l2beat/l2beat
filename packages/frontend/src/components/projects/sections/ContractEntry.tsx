@@ -323,8 +323,8 @@ function AuditCoverageEntry({ audit }: { audit: TechnologyContractAudit }) {
       </TooltipTrigger>
       <TooltipContent className="max-w-[360px]">
         Share of this contract's source lines that are identical to code covered
-        by a public audit report. Click to see the per-unit comparison on the
-        audits dashboard.
+        by a public audit report. Interfaces are not counted. Click to see the
+        per-unit comparison on the audits dashboard.
       </TooltipContent>
     </Tooltip>
   )

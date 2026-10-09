@@ -3,13 +3,13 @@
   "project": "privacy-pools",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "ce069f3e6a59d6ebfeb4efb183e39608fc86d1a6"
+    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
   },
   "discoveredAt": 1779964040,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "_libs/safe": { "name": "Safe", "kind": "library" },
-    "bob": { "name": "BOB", "kind": "project" },
+    "_libs/zk-kit": { "name": "ZK-Kit", "kind": "library" },
     "privacy-pools": { "name": "Privacy Pools", "kind": "project" },
     "tornado-cash": { "name": "Tornado Cash", "kind": "project" }
   },
@@ -166,12 +166,11 @@
       "date": "2024-05-24",
       "document": "privacy-pools/reports/oxorio-privacy-pools-v1-audit-2024-05.pdf"
     },
-    "veridise-kailua-2025-02": {
-      "collections": ["bob"],
-      "title": "Veridise Auditing Report for Kailua Protocol (February 2025)",
-      "auditor": "Veridise",
-      "date": "2025-02-18",
-      "document": "bob/reports/Veridise - Kailua Security Audit (Feb 2025).pdf"
+    "pse-semaphore-4-0-0-audit-2024-03": {
+      "collections": ["_libs/zk-kit"],
+      "title": "Semaphore PSE audit",
+      "auditor": "PSE (Privacy & Scaling Explorations)",
+      "document": "_libs/zk-kit/reports/PSE - Semaphore 4.0.0 Audit.pdf"
     }
   },
   "auditedFiles": {
@@ -205,11 +204,23 @@
       "path": "contracts/utils/Address.sol",
       "blob": "33faab29faf65d3e8d8076f1e1ba098f833dadf4"
     },
+    "4272cb5a06c3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "4272cb5a06c3d4803df5f2861d7b6713bd9216dd"
+    },
     "428cc5ce6a43": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
       "path": "contracts/proxies/SafeProxy.sol",
       "blob": "428cc5ce6a4363c7b81e367eca0d33295cf7a241"
+    },
+    "489422336212": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "4894223362122f481eacda4fe1c8a53701ede349"
     },
     "4b8583f45cea": {
       "repository": "0xbow-io/privacy-pools-core",
@@ -228,6 +239,12 @@
       "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
       "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
       "blob": "5903ba1d7b2604d83e023273a135acf87fa78caa"
+    },
+    "668700b0b04b": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "path": "contracts/Safe.sol",
+      "blob": "668700b0b04ba1a29b9777695f29c5896700bdde"
     },
     "6f31fca7a77c": {
       "repository": "0xbow-io/privacy-pools-core",
@@ -259,6 +276,12 @@
       "path": "contracts/token/ERC20/IERC20.sol",
       "blob": "7c44280f07aa184f6f7506e335c9da0db8c30469"
     },
+    "898739cbc764": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "898739cbc764ffba051eb57699b730e8950ab732"
+    },
     "8b0478e847e6": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
@@ -270,6 +293,12 @@
       "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
       "path": "packages/contracts/src/contracts/PrivacyPool.sol",
       "blob": "98cb5009e6e8accb08a5233189300ed668182dc3"
+    },
+    "9c421d7aa0fb": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "9c421d7aa0fb31e3e58b27bf827520b148963b59"
     },
     "9fafeba8c058": {
       "repository": "safe-fndn/safe-smart-account",
@@ -283,17 +312,17 @@
       "path": "contracts/interfaces/IERC1967.sol",
       "blob": "a57f767f11326c1c9d3b662269d1a7259274269a"
     },
+    "aab31696d64e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "aab31696d64e9fbce70c6280db56b39a2a3eebac"
+    },
     "ac4aa74e9bb8": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
       "path": "contracts/utils/Errors.sol",
       "blob": "ac4aa74e9bb8989382f68934ab18e160340dbf8b"
-    },
-    "aeda91fb5c75": {
-      "repository": "boundless-xyz/kailua",
-      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-      "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-      "blob": "aeda91fb5c75ebd4191ac8c551a1a4685cf3e115"
     },
     "b0e9189675cc": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -319,11 +348,23 @@
       "path": "contracts/common/SecuredTokenTransfer.sol",
       "blob": "c8f243d15377b3066c7857e8c9e3459ec8405881"
     },
+    "c9ed9c0487ff": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "c9ed9c0487ffad8099f10a986c677a69ffa1f6f8"
+    },
     "d36f5c0586ca": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
       "path": "contracts/proxy/Proxy.sol",
       "blob": "d36f5c0586cafe3298c6fea3046a548495e03e41"
+    },
+    "d4ee1100525d": {
+      "repository": "privacy-scaling-explorations/zk-kit",
+      "commit": "4c5ceca07673e89b112e849c2689ea0b1c3bf4d9",
+      "path": "packages/imt.sol/contracts/internal/InternalLeanIMT.sol",
+      "blob": "d4ee1100525df3f16928b979ae9d09178d520f82"
     },
     "df3a61369191": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -366,6 +407,12 @@
       "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
       "path": "packages/contracts/src/contracts/lib/ProofLib.sol",
       "blob": "f7615c135657154bd62cc7751bde6af80d3db4e8"
+    },
+    "f9b6674650dd": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
     }
   },
   "units": {
@@ -435,7 +482,9 @@
       "name": "InternalLeanIMT",
       "kind": "library",
       "lines": 313,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "d4ee1100525d", "lines": [33, 342] },
+      "reports": ["pse-semaphore-4-0-0-audit-2024-03"]
     },
     "c7fa2b5f396c": {
       "name": "Constants",
@@ -486,11 +535,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "ba18d750e681": {
       "name": "IERC1363",
@@ -616,12 +661,7 @@
       "name": "ContextUpgradeable",
       "kind": "abstract",
       "lines": 18,
-      "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [4478, 4497] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[0, 0], [13, 16]],
-      "removed": [[0, 0, 0], [13, 12, 18]],
-      "covered": 14
+      "status": "none"
     },
     "667198f2dd94": {
       "name": "IAccessControl",
@@ -726,11 +766,7 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "447d1057dc7c": {
       "name": "NativeCurrencyPaymentFallback",
@@ -738,19 +774,20 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "aa97dd1bf3f1": {
       "name": "SelfAuthorized",
       "kind": "abstract",
       "lines": 11,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [745, 755] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "898739cbc764", "lines": [6, 16] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
     },
     "40ce0b25499c": {
       "name": "Enum",
@@ -771,8 +808,8 @@
       "kind": "abstract",
       "lines": 176,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [4897, 5076] },
-      "reports": ["nethermind-safe-1-3-0", "veridise-kailua-2025-02"],
+      "audited": { "object": "9c421d7aa0fb", "lines": [17, 196] },
+      "reports": ["nethermind-safe-1-3-0"],
       "added": [[22, 22]],
       "removed": [[22, 22, 22]],
       "covered": 175
@@ -781,9 +818,17 @@
       "name": "OwnerManager",
       "kind": "abstract",
       "lines": 150,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [3806, 3962] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 2]],
+      "removed": [[1, 1, 2]],
+      "covered": 148
     },
     "13e5d12afa8b": {
       "name": "SignatureDecoder",
@@ -809,31 +854,42 @@
       "kind": "contract",
       "lines": 4,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [942, 945] },
+      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
       "reports": [
         "certora-safe-1-3-0",
         "g0-safe-1-1-0",
         "g0-safe-1-1-1",
         "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "veridise-kailua-2025-02"
+        "g0-safe-1-3-0-initial"
       ]
     },
     "f44a94390330": {
       "name": "FallbackManager",
       "kind": "abstract",
       "lines": 73,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [3726, 3795] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 1], [11, 25]],
+      "removed": [[1, 1, 1]],
+      "covered": 61
     },
     "e213c56fc229": {
       "name": "StorageAccessible",
       "kind": "abstract",
       "lines": 42,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [818, 859] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "489422336212", "lines": [6, 47] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
     },
     "b3dc850565d8": {
       "name": "IERC165",
@@ -841,27 +897,37 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "051f4e0bd8fb": {
       "name": "Guard",
       "kind": "interface",
       "lines": 17,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [4814, 4830] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[0, 0]],
+      "removed": [[0, 0, 0]],
+      "covered": 16
     },
     "d63eef9ff914": {
       "name": "GuardManager",
       "kind": "abstract",
       "lines": 42,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [4843, 4884] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 1], [16, 18]],
+      "removed": [[1, 1, 1]],
+      "covered": 38
     },
     "6cd3fcc5ec00": {
       "name": "SafeMath",
@@ -876,16 +942,20 @@
       "kind": "abstract",
       "lines": 12,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [947, 958] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
     },
     "268c431cb6b0": {
       "name": "Safe",
       "kind": "contract",
       "lines": 409,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [6325, 6756] },
-      "reports": ["nethermind-safe-1-3-0", "veridise-kailua-2025-02"],
+      "audited": { "object": "668700b0b04b", "lines": [36, 467] },
+      "reports": ["nethermind-safe-1-3-0"],
       "added": [[14, 14]],
       "removed": [[14, 14, 14]],
       "covered": 408

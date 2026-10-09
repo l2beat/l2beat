@@ -1,5 +1,9 @@
 import type { ProjectAuditCoverage } from '@l2beat/config'
-import type { AuditStatusCounts, AuditUnitStatus } from '../types'
+import type {
+  AuditStatusCounts,
+  AuditUnitKind,
+  AuditUnitStatus,
+} from '../types'
 
 // Pure derivations from one project's `auditCoverage`, the output of
 // `l2b audit-coverage`. Field meanings are documented in
@@ -112,16 +116,28 @@ export function contractSources(
 
 export interface UnitSummaryInput {
   unitId: string
+  kind: AuditUnitKind
   status: AuditUnitStatus
   lines: number
   coveredLines: number
 }
 
+/**
+ * Whether a unit counts in the coverage numbers. Interfaces are listed and
+ * diffed like every other unit, but they declare no logic and OP-style
+ * reviews rarely scope them, so they are left out of the unit counts and the
+ * line coverage. A changed interface still shows as differs in its row.
+ */
+export function countsTowardCoverage(kind: AuditUnitKind): boolean {
+  return kind !== 'interface'
+}
+
 export interface UnitsSummary {
-  /** Deployed unit instances per status. */
+  /** Deployed unit instances per status, interfaces excluded. */
   units: AuditStatusCounts
   /** Same, deduplicated by unit id. */
   uniqueUnits: AuditStatusCounts
+  /** Lines of the counted units, interfaces excluded. */
   lines: { total: number; covered: number; uncovered: number }
 }
 
@@ -132,6 +148,7 @@ export function summarizeUnits(units: UnitSummaryInput[]): UnitsSummary {
   let total = 0
   let covered = 0
   for (const unit of units) {
+    if (!countsTowardCoverage(unit.kind)) continue
     counts[unit.status]++
     if (!seen.has(unit.unitId)) {
       seen.add(unit.unitId)

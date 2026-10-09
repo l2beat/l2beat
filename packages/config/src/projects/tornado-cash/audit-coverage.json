@@ -3,13 +3,12 @@
   "project": "tornado-cash",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "ce069f3e6a59d6ebfeb4efb183e39608fc86d1a6"
+    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
   },
   "discoveredAt": 1791454331,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "_libs/safe": { "name": "Safe", "kind": "library" },
-    "agglayer": { "name": "Agglayer", "kind": "project" },
     "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
     "bob": { "name": "BOB", "kind": "project" },
@@ -17,7 +16,8 @@
     "mantle": { "name": "Mantle", "kind": "project" },
     "privacy-pools": { "name": "Privacy Pools", "kind": "project" },
     "tornado-cash": { "name": "Tornado Cash", "kind": "project" },
-    "uniswapv3": { "name": "Uniswap V3", "kind": "project" }
+    "uniswapv3": { "name": "Uniswap V3", "kind": "project" },
+    "zksync2": { "name": "ZKsync Era", "kind": "project" }
   },
   "reports": {
     "abdk-tornado-anonymity-mining-final-audit-2020-09-15": {
@@ -88,6 +88,13 @@
       "date": "2026-03-05",
       "document": "aztecnetwork/reports/Cantina - Payload 2025.03.05.pdf"
     },
+    "cantina-rollup-contracts-2025-11-12": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Rollup Contracts Security Review",
+      "auditor": "Cantina",
+      "date": "2025-11-12",
+      "document": "aztecnetwork/reports/Cantina - Rollup Contracts.pdf"
+    },
     "certora-safe-1-3-0": {
       "collections": ["_libs/safe"],
       "title": "Safe Smart Account v1.3.0 Security Assessment",
@@ -101,6 +108,20 @@
       "auditor": "Certora",
       "date": "2026-02-16",
       "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-certora.pdf"
+    },
+    "code4rena-zksync-era-2023-10": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era Findings & Analysis Report",
+      "auditor": "Code4rena",
+      "date": "2024-02-29",
+      "document": "zksync2/reports/2023_10-code4rena-zksync-era.html"
+    },
+    "code4rena-zksync-era-system-contracts-2023-03": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era System Contracts contest Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2023-06-14",
+      "document": "zksync2/reports/2023_03-code4rena-zksync-era-system-contracts.html"
     },
     "consensys-arbitrum-core-token-bridge-2021-11": {
       "collections": ["arbitrum"],
@@ -123,12 +144,12 @@
       "date": "2023-10-03",
       "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
     },
-    "contracts__audits__2025-04-v5.3": {
-      "collections": ["_libs/openzeppelin"],
-      "title": "OpenZeppelin Contracts Release v5.3 Diff Audit",
-      "auditor": "OpenZeppelin",
-      "date": "2025-04-03",
-      "document": "_libs/openzeppelin/reports/contracts__audits__2025-04-v5.3.pdf"
+    "cure53-bob-usdc-bridge-library-2024-04": {
+      "collections": ["bob"],
+      "title": "Review-Report BOB modified USDC bridge library 04.2024 (BOB-02-WP1)",
+      "auditor": "Cure53",
+      "date": "2024-04-30",
+      "document": "bob/reports/Cure53 - BOB Modified USDC Bridge Library (WP1).pdf"
     },
     "g0-safe-1-1-0": {
       "collections": ["_libs/safe"],
@@ -171,13 +192,6 @@
       "date": "2022-07-29",
       "document": "celo/reports/Hacken - Celo Contracts Release 8.pdf"
     },
-    "hexens-polygon-zkevm-2023-02": {
-      "collections": ["agglayer"],
-      "title": "Security Review Report for Polygon zkEVM",
-      "auditor": "Hexens",
-      "date": "2023-02-27",
-      "document": "agglayer/reports/2023_02-hexens-polygon-zkevm-security-review.pdf"
-    },
     "oxorio-privacy-pools-v1-2024-05": {
       "collections": ["privacy-pools"],
       "title": "Privacy Pools Smart Contracts Security Audit Report (Privacy Pools v1)",
@@ -192,6 +206,13 @@
       "date": "2021-02-05",
       "document": "celo/reports/OpenZeppelin - Celo Contracts Mainnet and Releases 1-3.html"
     },
+    "pashov-bob-usdc-bridge-2024-04": {
+      "collections": ["bob"],
+      "title": "BOB USDC Bridge Security Review",
+      "auditor": "Pashov Audit Group",
+      "date": "2024-04-22",
+      "document": "bob/reports/Pashov - BOB USDC Bridge (Apr 2024).pdf"
+    },
     "secure3-mantle-v1-contest-2023-07": {
       "collections": ["mantle"],
       "title": "Mantle Competitive Security Assessment",
@@ -205,32 +226,12 @@
       "auditor": "Sigma Prime",
       "document": "mantle/reports/2023_07-sigmaprime-mantle-l2-rollup-security-assessment.pdf"
     },
-    "sigmaprime-polygon-lxly-bridge-2024-02": {
-      "collections": ["agglayer"],
-      "title": "Polygon LXLY Bridge Smart Contract Security Assessment",
-      "auditor": "Sigma Prime",
-      "document": "agglayer/reports/2024_02-sigmaprime-polygon-lxly-bridge.pdf"
-    },
-    "spearbit-polygon-zkevm-contracts-2023-03": {
-      "collections": ["agglayer"],
-      "title": "Polygon zkEVM Contracts Security Review",
-      "auditor": "Spearbit",
-      "date": "2023-03-27",
-      "document": "agglayer/reports/2023_03-spearbit-polygon-zkevm-contracts-bridge.pdf"
-    },
     "trailofbits-uniswap-v3-core-2021-03": {
       "collections": ["uniswapv3"],
       "title": "Uniswap V3 Core Security Assessment",
       "auditor": "Trail of Bits",
       "date": "2021-03-12",
       "document": "uniswapv3/reports/audit.pdf"
-    },
-    "veridise-kailua-2025-02": {
-      "collections": ["bob"],
-      "title": "Veridise Auditing Report for Kailua Protocol (February 2025)",
-      "auditor": "Veridise",
-      "date": "2025-02-18",
-      "document": "bob/reports/Veridise - Kailua Security Audit (Feb 2025).pdf"
     },
     "zeropool-tornado-anonymity-mining-2020-10-15": {
       "collections": ["tornado-cash"],
@@ -241,6 +242,12 @@
     }
   },
   "auditedFiles": {
+    "07a6de4542ee": {
+      "repository": "code-423n4/2023-10-zksync",
+      "commit": "1fb4649b612fac7b4ee613df6f6b7d921ddd6b0d",
+      "path": "code/system-contracts/contracts/openzeppelin/utils/Address.sol",
+      "blob": "07a6de4542ee31b3221052eaa6ec898744866607"
+    },
     "092a067f397a": {
       "repository": "Uniswap/v3-core",
       "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
@@ -427,12 +434,6 @@
       "path": "contracts/libraries/FullMath.sol",
       "blob": "934e726462a7bace5783f4991e1e4a7cc5bc3365"
     },
-    "962e6ad8a397": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0",
-      "path": "contracts/utils/Pausable.sol",
-      "blob": "962e6ad8a397f0efcd582b56d0cb7b7a25b95dc9"
-    },
     "9d27686ec834": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
@@ -457,17 +458,11 @@
       "path": "contracts/MerkleTreeWithHistory.sol",
       "blob": "a2744ccac22b9eaa1304984d07f76668cdfcb955"
     },
-    "a5c4e3464fec": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "dac5bccf803696d9d98d269b8c27c7aac5fa1c5c",
-      "path": "contracts/utils/ReentrancyGuard.sol",
-      "blob": "a5c4e3464fecdf45e8196314f9a9f8931cf67483"
-    },
-    "aeda91fb5c75": {
-      "repository": "boundless-xyz/kailua",
-      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-      "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-      "blob": "aeda91fb5c75ebd4191ac8c551a1a4685cf3e115"
+    "a3e17b7e2687": {
+      "repository": "bob-collective/optimism",
+      "commit": "4c27e88204aaa8dc531b3ff1fdd5b4e8ec85d056",
+      "path": "packages/contracts-bedrock/src/libraries/Pausable.sol",
+      "blob": "a3e17b7e2687b23d5f70e8bd8afabf003fa6531f"
     },
     "b1fca7a38536": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -523,12 +518,6 @@
       "path": "contracts/interfaces/IUniswapV3Pool.sol",
       "blob": "dfe5020b47cd586697429f7957edcc77c833c16a"
     },
-    "e1159f899dff": {
-      "repository": "agglayer/agglayer-contracts",
-      "commit": "7677b8ccf10abc13903d0aceb66daa9a8a5fb0b0",
-      "path": "contracts/mocks/Uni.sol",
-      "blob": "e1159f899dffe805cfe7bf195addd96cfdf91cc2"
-    },
     "e140d6f1be6c": {
       "repository": "tornadocash/tornado-anonymity-mining",
       "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
@@ -564,6 +553,12 @@
       "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
       "path": "contracts/interfaces/pool/IUniswapV3PoolImmutables.sol",
       "blob": "f7c87028768ab9490b4bc281ef0179d83a1e1252"
+    },
+    "f9b6674650dd": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
     }
   },
   "units": {
@@ -622,11 +617,14 @@
       "kind": "abstract",
       "lines": 42,
       "status": "differs",
-      "audited": { "object": "a5c4e3464fec", "lines": [9, 27] },
-      "reports": ["contracts__audits__2018-10"],
-      "added": [[1, 15], [30, 30], [33, 33], [39, 39]],
-      "removed": [[1, 1, 2], [1, 6, 6], [30, 13, 14], [39, 16, 16]],
-      "covered": 36
+      "audited": { "object": "d713de78d874", "lines": [9, 32] },
+      "reports": [
+        "hacken-celo-contracts-release-8-2022",
+        "oz-celo-contracts-mainnet-releases-1-3"
+      ],
+      "added": [[1, 15], [18, 18], [30, 30], [33, 33], [39, 39]],
+      "removed": [[1, 1, 2], [18, 7, 7], [30, 18, 19], [39, 21, 21]],
+      "covered": 35
     },
     "dfc09577523e": {
       "name": "IVerifier",
@@ -634,7 +632,10 @@
       "lines": 3,
       "status": "differs",
       "audited": { "object": "76f993430b7e", "lines": [136, 138] },
-      "reports": ["cantina-payload-2026-03-05"],
+      "reports": [
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ],
       "added": [[1, 1]],
       "removed": [[1, 1, 1]],
       "covered": 2
@@ -667,55 +668,38 @@
       "name": "SafeMath",
       "kind": "library",
       "lines": 197,
-      "status": "differs",
-      "audited": { "object": "e1159f899dff", "lines": [27, 194] },
-      "reports": [
-        "hexens-polygon-zkevm-2023-02",
-        "sigmaprime-polygon-lxly-bridge-2024-02",
-        "spearbit-polygon-zkevm-contracts-2023-03"
-      ],
-      "added": [
-        [1, 56],
-        [58, 58],
-        [64, 64],
-        [74, 74],
-        [80, 80],
-        [84, 85],
-        [114, 114],
-        [118, 119],
-        [135, 136],
-        [154, 154],
-        [174, 174],
-        [193, 193]
-      ],
-      "removed": [
-        [72, 15, 29],
-        [85, 40, 40],
-        [104, 79, 100],
-        [119, 114, 114],
-        [136, 149, 149],
-        [154, 53, 55],
-        [174, 131, 134],
-        [193, 164, 164]
-      ],
-      "covered": 165
+      "status": "none"
     },
     "9f1625bb6f8b": {
       "name": "Address",
       "kind": "library",
       "lines": 182,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[19, 26], [112, 112], [136, 136], [160, 160], [162, 180]],
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ],
+      "added": [
+        [19, 26],
+        [72, 72],
+        [108, 110],
+        [112, 112],
+        [132, 134],
+        [136, 136],
+        [156, 158],
+        [160, 160],
+        [162, 180]
+      ],
       "removed": [
         [26, 28, 32],
-        [112, 122, 122],
-        [136, 149, 149],
-        [160, 175, 175],
-        [162, 177, 204]
+        [72, 77, 77],
+        [112, 120, 120],
+        [136, 145, 145],
+        [160, 169, 169],
+        [162, 171, 226]
       ],
-      "covered": 162
+      "covered": 158
     },
     "756a24936234": {
       "name": "IERC20",
@@ -793,7 +777,10 @@
       "lines": 3,
       "status": "differs",
       "audited": { "object": "76f993430b7e", "lines": [136, 138] },
-      "reports": ["cantina-payload-2026-03-05"],
+      "reports": [
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ],
       "added": [[1, 1]],
       "removed": [[1, 1, 1]],
       "covered": 2
@@ -866,26 +853,48 @@
       "kind": "library",
       "lines": 142,
       "status": "differs",
-      "audited": { "object": "e1159f899dff", "lines": [27, 194] },
-      "reports": [
-        "hexens-polygon-zkevm-2023-02",
-        "sigmaprime-polygon-lxly-bridge-2024-02",
-        "spearbit-polygon-zkevm-contracts-2023-03"
+      "audited": { "object": "643d86cf72d9", "lines": [8, 65] },
+      "reports": ["contracts__audits__2018-10", "g0-safe-allowance-v0-1-0"],
+      "added": [
+        [13, 13],
+        [29, 29],
+        [31, 48],
+        [50, 56],
+        [68, 68],
+        [86, 86],
+        [88, 107],
+        [110, 117],
+        [122, 122],
+        [124, 140]
       ],
-      "added": [[19, 19], [25, 25], [29, 29], [82, 82]],
-      "removed": [[17, 15, 29], [29, 40, 40], [72, 79, 100]],
-      "covered": 141
+      "removed": [
+        [13, 44, 44],
+        [29, 33, 36],
+        [68, 13, 13],
+        [86, 22, 26],
+        [122, 54, 55]
+      ],
+      "covered": 123
     },
     "5ac09056a6c2": {
       "name": "Address",
       "kind": "library",
       "lines": 134,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[19, 26], [82, 82], [108, 108], [110, 132]],
-      "removed": [[26, 28, 32], [82, 90, 90], [108, 119, 122], [110, 124, 204]],
-      "covered": 113
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ],
+      "added": [[19, 26], [72, 72], [82, 82], [108, 108], [110, 132]],
+      "removed": [
+        [26, 28, 32],
+        [72, 77, 77],
+        [82, 90, 90],
+        [108, 119, 120],
+        [110, 122, 226]
+      ],
+      "covered": 112
     },
     "d4565328eab4": {
       "name": "TornadoVault",
@@ -1049,16 +1058,28 @@
       "kind": "library",
       "lines": 158,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[19, 26], [112, 112], [136, 136], [138, 156]],
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ],
+      "added": [
+        [19, 26],
+        [72, 72],
+        [108, 110],
+        [112, 112],
+        [132, 134],
+        [136, 136],
+        [138, 156]
+      ],
       "removed": [
         [26, 28, 32],
-        [112, 122, 122],
-        [136, 149, 149],
-        [138, 151, 204]
+        [72, 77, 77],
+        [112, 120, 120],
+        [136, 145, 145],
+        [138, 147, 226]
       ],
-      "covered": 139
+      "covered": 136
     },
     "902996423f91": {
       "name": "UpgradeableProxy",
@@ -1220,8 +1241,7 @@
       "added": [
         [0, 0],
         [4, 5],
-        [8, 11],
-        [27, 58],
+        [8, 58],
         [63, 63],
         [70, 71],
         [82, 83],
@@ -1253,7 +1273,7 @@
         [223, 144, 144],
         [225, 147, 162]
       ],
-      "covered": 219
+      "covered": 214
     },
     "19ad75b2e8c8": {
       "name": "ERC20Burnable",
@@ -1283,11 +1303,21 @@
       "kind": "abstract",
       "lines": 75,
       "status": "differs",
-      "audited": { "object": "962e6ad8a397", "lines": [17, 112] },
-      "reports": ["contracts__audits__2025-04-v5.3"],
-      "added": [[35, 35], [47, 47]],
-      "removed": [[10, 12, 21], [26, 53, 70], [35, 31, 31], [47, 43, 43]],
-      "covered": 73
+      "audited": { "object": "a3e17b7e2687", "lines": [17, 119] },
+      "reports": [
+        "contracts__audits__2023-10-v5.0",
+        "cure53-bob-usdc-bridge-library-2024-04",
+        "pashov-bob-usdc-bridge-2024-04"
+      ],
+      "added": [[16, 16], [35, 35], [47, 47]],
+      "removed": [
+        [10, 12, 21],
+        [16, 26, 26],
+        [26, 60, 77],
+        [35, 38, 38],
+        [47, 50, 50]
+      ],
+      "covered": 72
     },
     "7962e9765f3f": {
       "name": "TORN",
@@ -1546,8 +1576,7 @@
         [0, 0],
         [2, 2],
         [5, 6],
-        [9, 12],
-        [28, 59],
+        [9, 59],
         [64, 64],
         [71, 72],
         [83, 84],
@@ -1579,7 +1608,7 @@
         [223, 144, 144],
         [225, 147, 162]
       ],
-      "covered": 218
+      "covered": 213
     },
     "fcf070128481": {
       "name": "ERC20Burnable",
@@ -1597,17 +1626,22 @@
       "kind": "contract",
       "lines": 75,
       "status": "differs",
-      "audited": { "object": "962e6ad8a397", "lines": [17, 112] },
-      "reports": ["contracts__audits__2025-04-v5.3"],
-      "added": [[23, 23], [35, 35], [47, 47]],
+      "audited": { "object": "a3e17b7e2687", "lines": [17, 119] },
+      "reports": [
+        "contracts__audits__2023-10-v5.0",
+        "cure53-bob-usdc-bridge-library-2024-04",
+        "pashov-bob-usdc-bridge-2024-04"
+      ],
+      "added": [[16, 16], [23, 23], [35, 35], [47, 47]],
       "removed": [
         [10, 12, 21],
-        [23, 50, 50],
-        [26, 53, 70],
-        [35, 31, 31],
-        [47, 43, 43]
+        [16, 26, 26],
+        [23, 57, 57],
+        [26, 60, 77],
+        [35, 38, 38],
+        [47, 50, 50]
       ],
-      "covered": 72
+      "covered": 71
     },
     "bbb21fbaaa11": {
       "name": "ENSNamehash",
@@ -1864,11 +1898,20 @@
       "kind": "library",
       "lines": 134,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[19, 26], [82, 82], [108, 108], [110, 132]],
-      "removed": [[26, 28, 32], [82, 90, 90], [108, 119, 122], [110, 124, 204]],
-      "covered": 112
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ],
+      "added": [[19, 26], [72, 72], [82, 82], [108, 108], [110, 132]],
+      "removed": [
+        [26, 28, 32],
+        [72, 77, 77],
+        [82, 90, 90],
+        [108, 119, 120],
+        [110, 122, 226]
+      ],
+      "covered": 111
     },
     "5cab4be2bd95": {
       "name": "ERC20",
@@ -1881,8 +1924,7 @@
         [0, 0],
         [2, 2],
         [5, 6],
-        [9, 12],
-        [28, 59],
+        [9, 59],
         [64, 64],
         [71, 72],
         [83, 84],
@@ -1914,7 +1956,7 @@
         [223, 144, 144],
         [225, 147, 162]
       ],
-      "covered": 218
+      "covered": 213
     },
     "0a545f67c576": {
       "name": "RewardVerifier",
@@ -2027,14 +2069,13 @@
       "kind": "contract",
       "lines": 4,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [942, 945] },
+      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
       "reports": [
         "certora-safe-1-3-0",
         "g0-safe-1-1-0",
         "g0-safe-1-1-1",
         "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "veridise-kailua-2025-02"
+        "g0-safe-1-3-0-initial"
       ]
     },
     "a926f8c7d8a3": {

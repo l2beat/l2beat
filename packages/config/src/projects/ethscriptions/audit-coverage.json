@@ -3,7 +3,7 @@
   "project": "ethscriptions",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "ce069f3e6a59d6ebfeb4efb183e39608fc86d1a6"
+    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
   },
   "discoveredAt": 1769601454,
   "collections": {
@@ -11,7 +11,6 @@
     "_libs/safe": { "name": "Safe", "kind": "library" },
     "_libs/sp1": { "name": "SP1", "kind": "library" },
     "agglayer": { "name": "Agglayer", "kind": "project" },
-    "bob": { "name": "BOB", "kind": "project" },
     "ethscriptions": { "name": "Ethscriptions", "kind": "project" },
     "facet": { "name": "Facet", "kind": "project" },
     "mantle": { "name": "Mantle", "kind": "project" },
@@ -172,13 +171,6 @@
       "date": "2025-09-17",
       "document": "agglayer/reports/2025_09-spearbit-polygon-agglayer-v0.3.0.pdf"
     },
-    "veridise-kailua-2025-02": {
-      "collections": ["bob"],
-      "title": "Veridise Auditing Report for Kailua Protocol (February 2025)",
-      "auditor": "Veridise",
-      "date": "2025-02-18",
-      "document": "bob/reports/Veridise - Kailua Security Audit (Feb 2025).pdf"
-    },
     "veridise-sp1-recursion-and-contracts-2024": {
       "collections": ["_libs/sp1"],
       "title": "Veridise Auditing Report for SP1 (recursion circuits and sp1-contracts), V2",
@@ -263,6 +255,12 @@
       "path": "contracts/utils/Context.sol",
       "blob": "2d517987d5b49aee1a37634c95a69dae911b9d7a"
     },
+    "3cf11378261f": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "edf487a79143664010a179f73c8c284d3f4b7a64",
+      "path": "contracts/access/Ownable.sol",
+      "blob": "3cf11378261f0d6c9b2ce9cd7e85381902306344"
+    },
     "3d2846231b4f": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
@@ -274,6 +272,12 @@
       "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
       "path": "contracts/base/FallbackManager.sol",
       "blob": "4272cb5a06c3d4803df5f2861d7b6713bd9216dd"
+    },
+    "489422336212": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "4894223362122f481eacda4fe1c8a53701ede349"
     },
     "4d09ab547dbb": {
       "repository": "agglayer/agglayer-contracts",
@@ -347,6 +351,12 @@
       "path": "contracts/utils/math/Math.sol",
       "blob": "881f72a57f969b6d88c39e9f4b423084b29ab566"
     },
+    "898739cbc764": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "898739cbc764ffba051eb57699b730e8950ab732"
+    },
     "99ae5adab427": {
       "repository": "succinctlabs/sp1-contracts",
       "commit": "73c2a8df0c816bf743e9d960e7b14b8e37635578",
@@ -376,12 +386,6 @@
       "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
       "path": "contracts/base/OwnerManager.sol",
       "blob": "aab31696d64e9fbce70c6280db56b39a2a3eebac"
-    },
-    "aeda91fb5c75": {
-      "repository": "boundless-xyz/kailua",
-      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-      "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-      "blob": "aeda91fb5c75ebd4191ac8c551a1a4685cf3e115"
     },
     "b0e9189675cc": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -431,11 +435,11 @@
       "path": "contracts/interfaces/draft-IERC6093.sol",
       "blob": "e9d6249ef521e073253a8681aa8f022af7640850"
     },
-    "fb2397d8bcda": {
-      "repository": "boundless-xyz/kailua",
-      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-      "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
-      "blob": "fb2397d8bcda844c00004d4b7ec6ec0a60406eb9"
+    "f9b6674650dd": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
     }
   },
   "units": {
@@ -515,17 +519,20 @@
       "name": "Context",
       "kind": "abstract",
       "lines": 13,
-      "status": "identical",
-      "audited": { "object": "fb2397d8bcda", "lines": [1736, 1748] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 11]],
+      "removed": [],
+      "covered": 10
     },
     "31e42eba5b0a": {
       "name": "Ownable",
       "kind": "abstract",
       "lines": 81,
       "status": "identical",
-      "audited": { "object": "fb2397d8bcda", "lines": [1974, 2054] },
-      "reports": ["contracts__audits__2023-10-v5.0", "veridise-kailua-2025-02"]
+      "audited": { "object": "3cf11378261f", "lines": [20, 100] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
     },
     "89faffb9b308": {
       "name": "SP1VerifierGateway",
@@ -561,9 +568,9 @@
       "status": "differs",
       "audited": { "object": "a5c4e3464fec", "lines": [9, 27] },
       "reports": ["contracts__audits__2018-10"],
-      "added": [[1, 15], [30, 30], [33, 33], [39, 39]],
+      "added": [[1, 19], [30, 30], [33, 33], [39, 39]],
       "removed": [[1, 1, 2], [1, 6, 6], [30, 13, 14], [39, 16, 16]],
-      "covered": 36
+      "covered": 33
     },
     "33cf9705a8ce": {
       "name": "SafeCastLib",
@@ -611,19 +618,20 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "16eb9f2e8752": {
       "name": "SelfAuthorized",
       "kind": "contract",
       "lines": 11,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [745, 755] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "898739cbc764", "lines": [6, 16] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
     },
     "40ce0b25499c": {
       "name": "Enum",
@@ -689,14 +697,13 @@
       "kind": "contract",
       "lines": 4,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [942, 945] },
+      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
       "reports": [
         "certora-safe-1-3-0",
         "g0-safe-1-1-0",
         "g0-safe-1-1-1",
         "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "veridise-kailua-2025-02"
+        "g0-safe-1-3-0-initial"
       ]
     },
     "37dc539ed622": {
@@ -716,8 +723,13 @@
       "kind": "contract",
       "lines": 42,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [818, 859] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "489422336212", "lines": [6, 47] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
     },
     "bd90fb921f2d": {
       "name": "GuardManager",
@@ -761,8 +773,12 @@
       "kind": "abstract",
       "lines": 12,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [947, 958] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
     },
     "3e84ad780965": {
       "name": "GnosisSafe",
@@ -827,12 +843,7 @@
       "name": "ContextUpgradeable",
       "kind": "abstract",
       "lines": 18,
-      "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [4478, 4497] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[0, 0], [13, 16]],
-      "removed": [[0, 0, 0], [13, 12, 18]],
-      "covered": 14
+      "status": "none"
     },
     "684cb89721da": {
       "name": "IERC165",
@@ -840,11 +851,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "471cbcaf9b39": {
       "name": "ERC165Upgradeable",

@@ -3,7 +3,7 @@
   "project": "aztecnetwork",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "ce069f3e6a59d6ebfeb4efb183e39608fc86d1a6"
+    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
   },
   "discoveredAt": 1790759557,
   "collections": {
@@ -11,7 +11,6 @@
     "_libs/safe": { "name": "Safe", "kind": "library" },
     "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
     "base": { "name": "Base Chain", "kind": "project" },
-    "bob": { "name": "BOB", "kind": "project" },
     "roninnetwork": { "name": "Ronin", "kind": "project" },
     "zksync2": { "name": "ZKsync Era", "kind": "project" }
   },
@@ -366,13 +365,6 @@
       "date": "2025-10-13",
       "document": "aztecnetwork/reports/Veridise - Governance.pdf"
     },
-    "veridise-kailua-2025-02": {
-      "collections": ["bob"],
-      "title": "Veridise Auditing Report for Kailua Protocol (February 2025)",
-      "auditor": "Veridise",
-      "date": "2025-02-18",
-      "document": "bob/reports/Veridise - Kailua Security Audit (Feb 2025).pdf"
-    },
     "zellic-barretenberg-bigfield-2024-07-25": {
       "collections": ["aztecnetwork"],
       "title": "Barretenberg Bigfield Proof Circuit Security Assessment",
@@ -497,11 +489,17 @@
       "path": "l1-contracts/src/shared/libraries/TimeMath.sol",
       "blob": "2ba13dfc1b38095accc41cb92dbd16669950b6fc"
     },
-    "2d33a6da4e61": {
+    "2c5690569a8b": {
       "repository": "AztecProtocol/aztec-packages",
-      "commit": "1856c6133d4f5f5d8e465722be5d752dff3864bb",
-      "path": "l1-contracts/src/shared/libraries/BN254Lib.sol",
-      "blob": "2d33a6da4e61e35acbb0e4822878423e6d258e95"
+      "commit": "474754f58e7ce6a6e0350306f4c144d0a9ee8d14",
+      "path": "l1-contracts/src/core/libraries/SlashRoundLib.sol",
+      "blob": "2c5690569a8b60a1f2baca95eaeb15a1eda3f64b"
+    },
+    "2d517987d5b4": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/utils/Context.sol",
+      "blob": "2d517987d5b49aee1a37634c95a69dae911b9d7a"
     },
     "32eb9cc32d90": {
       "repository": "AztecProtocol/aztec-packages",
@@ -527,6 +525,18 @@
       "path": "l1-contracts/src/core/libraries/rollup/FeeLib.sol",
       "blob": "3a0a80f66dcd59be02988d8b5aacb49b17e6e4f6"
     },
+    "3cbab179881e": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/access/Ownable2Step.sol",
+      "blob": "3cbab179881ebe59ddf3c4b13bf9e412818df135"
+    },
+    "3cf11378261f": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "edf487a79143664010a179f73c8c284d3f4b7a64",
+      "path": "contracts/access/Ownable.sol",
+      "blob": "3cf11378261f0d6c9b2ce9cd7e85381902306344"
+    },
     "3d652d0ff210": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
@@ -544,6 +554,12 @@
       "commit": "a0b1e9c064be8d0746fca663799a650b8d3d7031",
       "path": "contracts/utils/structs/EnumerableSet.sol",
       "blob": "425876d19c7cc82182285c89e997caa9751a69d0"
+    },
+    "4272cb5a06c3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "4272cb5a06c3d4803df5f2861d7b6713bd9216dd"
     },
     "428cc5ce6a43": {
       "repository": "safe-fndn/safe-smart-account",
@@ -569,11 +585,23 @@
       "path": "l1-contracts/src/governance/interfaces/IGovernance.sol",
       "blob": "45b9993e244d841030de851072acbc48c60c7640"
     },
+    "489422336212": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "4894223362122f481eacda4fe1c8a53701ede349"
+    },
     "49a1e3ebfc8e": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
       "path": "l1-contracts/src/core/libraries/Errors.sol",
       "blob": "49a1e3ebfc8ed31d5203379f92957dbab9ec0b91"
+    },
+    "4a2549a7a677": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/interfaces/IInstance.sol",
+      "blob": "4a2549a7a6772afeb668f697b317f7810816e013"
     },
     "4cf531df2b0f": {
       "repository": "AztecProtocol/aztec-packages",
@@ -592,6 +620,12 @@
       "commit": "3e44eede9ab88e732b5f68be664ccc2d536febae",
       "path": "contracts/utils/math/SignedMath.sol",
       "blob": "502f4ecb03fb33c0fba39baa120f75c7915f28ee"
+    },
+    "52eeeaa4b471": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "474754f58e7ce6a6e0350306f4c144d0a9ee8d14",
+      "path": "l1-contracts/src/core/interfaces/ISlasher.sol",
+      "blob": "52eeeaa4b47112a9adcc9d317d705a4592ab6173"
     },
     "56477c92a27d": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -623,11 +657,29 @@
       "path": "contracts/utils/SlotDerivation.sol",
       "blob": "5d41be5fa7f36cf6649f49384f41b107c1fef3a9"
     },
+    "5f30940dd61c": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/interfaces/IFeeJuicePortal.sol",
+      "blob": "5f30940dd61c6d1a03787a91660946ef1a2225e4"
+    },
     "61780b7f0e84": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "93976d6357c3a2446387225e92fb2e6546386f0a",
       "path": "l1-contracts/src/governance/proposer/EmpireBase.sol",
       "blob": "61780b7f0e84bc2365a1679dd858da372a5e1448"
+    },
+    "668700b0b04b": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "path": "contracts/Safe.sol",
+      "blob": "668700b0b04ba1a29b9777695f29c5896700bdde"
+    },
+    "672c88260c4c": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/libraries/TimeLib.sol",
+      "blob": "672c88260c4c78e4d91ed77aec69c6b25dc7eb2f"
     },
     "72437bc34ce4": {
       "repository": "safe-fndn/safe-modules",
@@ -701,6 +753,24 @@
       "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
       "blob": "7fff653323f0940d7157b30007240f9e99acf128"
     },
+    "80196d8b3d81": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/libraries/crypto/Hash.sol",
+      "blob": "80196d8b3d8150e98539ed09042b9a2f5609dc99"
+    },
+    "80690a43b311": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/interfaces/IStaking.sol",
+      "blob": "80690a43b31188c6a571f54efeb9cb0536cd30eb"
+    },
+    "813210472aec": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/libraries/ConstantsGen.sol",
+      "blob": "813210472aec65ae88c3d13f07357d99ad327ab1"
+    },
     "82be180d0bed": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "3887ea20a027890a3c807c41895d74fd756f6447",
@@ -730,6 +800,12 @@
       "commit": "f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0",
       "path": "contracts/utils/math/Math.sol",
       "blob": "881f72a57f969b6d88c39e9f4b423084b29ab566"
+    },
+    "898739cbc764": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "898739cbc764ffba051eb57699b730e8950ab732"
     },
     "8a4acb9acb09": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -767,6 +843,12 @@
       "path": "contracts/token/ERC20/extensions/IERC20Permit.sol",
       "blob": "979554d4061c5a62d62524fbfda1c16307f4a7cb"
     },
+    "9c421d7aa0fb": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "9c421d7aa0fb31e3e58b27bf827520b148963b59"
+    },
     "9fafeba8c058": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
@@ -791,6 +873,12 @@
       "path": "contracts/interfaces/IERC1967.sol",
       "blob": "a57f767f11326c1c9d3b662269d1a7259274269a"
     },
+    "aab31696d64e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "aab31696d64e9fbce70c6280db56b39a2a3eebac"
+    },
     "abaf7a34e29c": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
@@ -809,23 +897,41 @@
       "path": "l1-contracts/src/core/Rollup.sol",
       "blob": "aec86ed2246bc8b50d3dea42d33e215fbb8c43bb"
     },
-    "aeda91fb5c75": {
-      "repository": "boundless-xyz/kailua",
-      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-      "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-      "blob": "aeda91fb5c75ebd4191ac8c551a1a4685cf3e115"
-    },
     "b0e9189675cc": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
       "path": "contracts/utils/StorageSlot.sol",
       "blob": "b0e9189675cc5f0b86963d29b363a9568d156dd0"
     },
+    "b3dca4d7c8c1": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/libraries/compressed-data/StakingQueueConfig.sol",
+      "blob": "b3dca4d7c8c115990885e3e9a6a3991d875cffca"
+    },
+    "b565dfffa895": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/interfaces/messagebridge/IOutbox.sol",
+      "blob": "b565dfffa895817d87c46f2a4a75f22b3e5a0f19"
+    },
+    "b6404ae0d889": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/libraries/crypto/FrontierLib.sol",
+      "blob": "b6404ae0d889d4b97a66fda4c2a742849831bb7a"
+    },
     "b6b61b90349a": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
       "path": "l1-contracts/src/governance/libraries/Errors.sol",
       "blob": "b6b61b90349a1bfbf9ed0254a7977f45053bc0ab"
+    },
+    "b7b6ad4841e0": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "474754f58e7ce6a6e0350306f4c144d0a9ee8d14",
+      "path": "l1-contracts/src/core/slashing/Slasher.sol",
+      "blob": "b7b6ad4841e0f47d9e252b5a297a8675d290cc1d"
     },
     "bb92716ec513": {
       "repository": "AztecProtocol/aztec-packages",
@@ -875,11 +981,23 @@
       "path": "contracts/common/SecuredTokenTransfer.sol",
       "blob": "c8f243d15377b3066c7857e8c9e3459ec8405881"
     },
+    "c9ed9c0487ff": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "c9ed9c0487ffad8099f10a986c677a69ffa1f6f8"
+    },
     "cbf6c6694f52": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
       "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",
       "blob": "cbf6c6694f52fbe415a81c052431ca73122589e0"
+    },
+    "cc9f67af634b": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "5cd8f416a6b4e0f0084bdfaed672b4cb42230e2f",
+      "path": "l1-contracts/src/shared/libraries/BN254Lib.sol",
+      "blob": "cc9f67af634ba0b5119f8fd6230862b7a1e28894"
     },
     "ccb979f61c95": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -899,6 +1017,12 @@
       "path": "l1-contracts/src/governance/interfaces/IEmpire.sol",
       "blob": "d45bf5daf7a3f45adf587694d82d67130d8c15da"
     },
+    "d5644bf73637": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/interfaces/messagebridge/IInbox.sol",
+      "blob": "d5644bf7363779b00b4bec6322cf715a1a04e66a"
+    },
     "d67377fb0412": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
@@ -910,6 +1034,18 @@
       "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
       "path": "l1-contracts/src/governance/libraries/ProposalLib.sol",
       "blob": "d8a4624825b82ba9a831c7add66d4d826db156b4"
+    },
+    "d8c056c72974": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "474754f58e7ce6a6e0350306f4c144d0a9ee8d14",
+      "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
+      "blob": "d8c056c72974dca1d32d91c81f88d6d512b09e7c"
+    },
+    "de894a93d668": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/reward-boost/RewardBooster.sol",
+      "blob": "de894a93d668f0e88e0c26a896b633084f686948"
     },
     "df3ecc28fd41": {
       "repository": "AztecProtocol/aztec-packages",
@@ -940,6 +1076,12 @@
       "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
       "path": "l1-contracts/src/core/interfaces/IRollup.sol",
       "blob": "e4396eb4f1b98a7085182a19215127d9a5a9405c"
+    },
+    "e5fb3e0acbbe": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "474754f58e7ce6a6e0350306f4c144d0a9ee8d14",
+      "path": "l1-contracts/src/core/libraries/rollup/RollupOperationsExtLib.sol",
+      "blob": "e5fb3e0acbbec9dd3595f51d6c217d53911453d2"
     },
     "e6304ecc3051": {
       "repository": "AztecProtocol/aztec-packages",
@@ -1013,11 +1155,11 @@
       "path": "contracts/utils/math/Math.sol",
       "blob": "f9173ae80e816c2a738ca66ce882d6fc21f4b614"
     },
-    "fb2397d8bcda": {
-      "repository": "boundless-xyz/kailua",
-      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-      "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
-      "blob": "fb2397d8bcda844c00004d4b7ec6ec0a60406eb9"
+    "f9b6674650dd": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
     },
     "fb5818e08a22": {
       "repository": "AztecProtocol/aztec-packages",
@@ -1030,6 +1172,12 @@
       "commit": "04e0df30aaf341bed5398012e3a8740bddeb6e04",
       "path": "contracts/utils/Create2.sol",
       "blob": "fe6e9a32ca92cee154eca43c40ff13527bc7bca6"
+    },
+    "ff0a90993463": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
+      "path": "l1-contracts/src/core/libraries/DataStructures.sol",
+      "blob": "ff0a909934630c297849132dcac31edf8cf1764c"
     }
   },
   "units": {
@@ -1039,7 +1187,10 @@
       "lines": 7,
       "status": "differs",
       "audited": { "object": "c366c22bb34d", "lines": [5, 9] },
-      "reports": ["veridise-governance-2025-10-13"],
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ],
       "added": [[1, 2]],
       "removed": [],
       "covered": 6
@@ -1048,17 +1199,20 @@
       "name": "Context",
       "kind": "abstract",
       "lines": 13,
-      "status": "identical",
-      "audited": { "object": "fb2397d8bcda", "lines": [1736, 1748] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 11]],
+      "removed": [],
+      "covered": 10
     },
     "31e42eba5b0a": {
       "name": "Ownable",
       "kind": "abstract",
       "lines": 81,
       "status": "identical",
-      "audited": { "object": "fb2397d8bcda", "lines": [1974, 2054] },
-      "reports": ["contracts__audits__2023-10-v5.0", "veridise-kailua-2025-02"]
+      "audited": { "object": "3cf11378261f", "lines": [20, 100] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
     },
     "e730ab060eed": {
       "name": "IERC20",
@@ -1077,7 +1231,10 @@
       "lines": 10,
       "status": "identical",
       "audited": { "object": "bded90716b0d", "lines": [7, 16] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "64fecd329377": {
       "name": "addTimestamp",
@@ -1085,7 +1242,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [11, 13] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "8d11a696cbf8": {
       "name": "subTimestamp",
@@ -1093,7 +1253,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [15, 17] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "892246b03e79": {
       "name": "ltTimestamp",
@@ -1101,7 +1264,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [19, 21] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "5238708147b3": {
       "name": "gtTimestamp",
@@ -1109,7 +1275,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [27, 29] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "7b188f7e6a79": {
       "name": "lteTimestamp",
@@ -1117,7 +1286,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [23, 25] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "8cc2a5795b58": {
       "name": "gteTimestamp",
@@ -1125,7 +1297,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [31, 33] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "eb515a898ac2": {
       "name": "neqTimestamp",
@@ -1133,7 +1308,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [35, 37] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "1fa3a0900a64": {
       "name": "eqTimestamp",
@@ -1141,7 +1319,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [39, 41] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "eb89808c392d": {
       "name": "IPayload",
@@ -1149,7 +1330,10 @@
       "lines": 18,
       "status": "identical",
       "audited": { "object": "f1eec3a0910a", "lines": [5, 22] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "2110e29aba10": {
       "name": "eqSlot",
@@ -1157,7 +1341,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [53, 55] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "263d383b45ae": {
       "name": "neqSlot",
@@ -1165,7 +1352,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [57, 59] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "d1cd285da94b": {
       "name": "gteSlot",
@@ -1173,7 +1363,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [73, 75] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "c12c1b03d1eb": {
       "name": "gtSlot",
@@ -1181,7 +1374,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [69, 71] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "ca2b9400e554": {
       "name": "lteSlot",
@@ -1189,7 +1385,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [65, 67] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "241c29092124": {
       "name": "ltSlot",
@@ -1197,7 +1396,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [61, 63] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "df4e899bb231": {
       "name": "addSlot",
@@ -1205,7 +1407,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [45, 47] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "e0b508d99109": {
       "name": "subSlot",
@@ -1213,7 +1418,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [49, 51] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "1ed59235d0fd": {
       "name": "Errors",
@@ -1231,8 +1439,8 @@
       "kind": "abstract",
       "lines": 43,
       "status": "identical",
-      "audited": { "object": "fb2397d8bcda", "lines": [2071, 2111] },
-      "reports": ["contracts__audits__2023-10-v5.0", "veridise-kailua-2025-02"]
+      "audited": { "object": "3cbab179881e", "lines": [19, 59] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
     },
     "87233ab9dd1d": {
       "name": "CoinIssuer",
@@ -1248,7 +1456,10 @@
       "lines": 13,
       "status": "identical",
       "audited": { "object": "d45bf5daf7a3", "lines": [18, 30] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "436f5cdc2d52": {
       "name": "IGovernanceProposer",
@@ -1256,7 +1467,10 @@
       "lines": 4,
       "status": "identical",
       "audited": { "object": "f87c7b201902", "lines": [8, 11] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "4f1674fb5377": {
       "name": "IERC5267",
@@ -1385,7 +1599,10 @@
       "lines": 18,
       "status": "identical",
       "audited": { "object": "d67377fb0412", "lines": [16, 33] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "f870caca1701": {
       "name": "addEpoch",
@@ -1393,7 +1610,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [91, 93] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "7e1fa856bc5f": {
       "name": "subEpoch",
@@ -1401,7 +1621,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [87, 89] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "13ba900d72e0": {
       "name": "eqEpoch",
@@ -1409,7 +1632,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [79, 81] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "eefe898dbc7d": {
       "name": "neqEpoch",
@@ -1417,7 +1643,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [83, 85] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "1991df21f4be": {
       "name": "gteEpoch",
@@ -1425,7 +1654,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [95, 97] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "7ce5410e6b9b": {
       "name": "gtEpoch",
@@ -1433,7 +1665,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [99, 101] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "9ad1495848b6": {
       "name": "lteEpoch",
@@ -1441,7 +1676,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [103, 105] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "53bd2864a5a8": {
       "name": "ltEpoch",
@@ -1449,7 +1687,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "2ba13dfc1b38", "lines": [107, 109] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "f1b786366047": {
       "name": "CompressedTimeMath",
@@ -1457,7 +1698,10 @@
       "lines": 25,
       "status": "identical",
       "audited": { "object": "7cf08e18f3df", "lines": [14, 38] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "165074b2dcaf": {
       "name": "IEmperor",
@@ -1465,7 +1709,10 @@
       "lines": 7,
       "status": "identical",
       "audited": { "object": "d45bf5daf7a3", "lines": [10, 16] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "5075e464c642": {
       "name": "EmpireBase",
@@ -1481,7 +1728,10 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "df3ecc28fd41", "lines": [7, 11] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "6d944e2ce127": {
       "name": "IGovernance",
@@ -1522,7 +1772,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "a2c10f081f48", "lines": [6, 8] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "ce361c91b22e": {
       "name": "IRewardDistributor",
@@ -1541,7 +1794,10 @@
       "lines": 25,
       "status": "identical",
       "audited": { "object": "a2c10f081f48", "lines": [10, 34] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "41efa614f0df": {
       "name": "GSEPayload",
@@ -1571,7 +1827,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "76f993430b7e", "lines": [136, 138] },
-      "reports": ["cantina-payload-2026-03-05"]
+      "reports": [
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
     },
     "22fb8ae5b1ae": {
       "name": "HonkVerifier",
@@ -1585,11 +1844,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "ba18d750e681": {
       "name": "IERC1363",
@@ -1642,7 +1897,10 @@
       "lines": 68,
       "status": "identical",
       "audited": { "object": "abaf7a34e29c", "lines": [15, 84] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "19a2a45a0c1e": {
       "name": "ConfigurationLib",
@@ -1688,6 +1946,7 @@
       "audited": { "object": "c862ab55b77c", "lines": [38, 110] },
       "reports": [
         "cantina-governance-2025-11-12",
+        "cantina-rollup-contracts-2025-11-12",
         "veridise-governance-2025-10-13"
       ]
     },
@@ -1695,23 +1954,27 @@
       "name": "IBoosterCore",
       "kind": "interface",
       "lines": 4,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "de894a93d668", "lines": [30, 33] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "42fb3a072cf5": {
       "name": "IBooster",
       "kind": "interface",
       "lines": 4,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "de894a93d668", "lines": [35, 38] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "62a1e2badf10": {
       "name": "IValidatorSelectionCore",
       "kind": "interface",
       "lines": 7,
       "status": "differs",
-      "audited": { "object": "7fff653323f0", "lines": [22, 28] },
-      "reports": ["cantina-escape-hatch-2026-02-24"],
-      "added": [[1, 1], [5, 5]],
-      "removed": [[1, 1, 1], [5, 5, 5]],
+      "audited": { "object": "d8c056c72974", "lines": [17, 20] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[1, 2], [5, 5]],
+      "removed": [],
       "covered": 5
     },
     "a06a97752192": {
@@ -1764,49 +2027,65 @@
       "name": "addSlashRound",
       "kind": "function",
       "lines": 3,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [9, 11] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "da302801fe67": {
       "name": "subSlashRound",
       "kind": "function",
       "lines": 3,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [13, 15] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "dc5a287f86ab": {
       "name": "eqSlashRound",
       "kind": "function",
       "lines": 3,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [17, 19] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "9005ac959bda": {
       "name": "neqSlashRound",
       "kind": "function",
       "lines": 3,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [21, 23] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "e996358fa881": {
       "name": "ltSlashRound",
       "kind": "function",
       "lines": 3,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [25, 27] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "951f791a4bc2": {
       "name": "lteSlashRound",
       "kind": "function",
       "lines": 3,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [29, 31] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "974d17ba61c9": {
       "name": "gtSlashRound",
       "kind": "function",
       "lines": 3,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [33, 35] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "f2933da2f16b": {
       "name": "gteSlashRound",
       "kind": "function",
       "lines": 3,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [37, 39] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "0c3db8e8788b": {
       "name": "Errors",
@@ -1855,13 +2134,23 @@
       "name": "RewardBooster",
       "kind": "contract",
       "lines": 98,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "de894a93d668", "lines": [45, 133] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[20, 30], [84, 84]],
+      "removed": [[84, 75, 75]],
+      "covered": 93
     },
     "11a266636eff": {
       "name": "TimeLib",
       "kind": "library",
       "lines": 111,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "672c88260c4c", "lines": [22, 132] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[53, 75]],
+      "removed": [[53, 53, 75]],
+      "covered": 107
     },
     "978c3451ca8d": {
       "name": "CoordinationSignatureLib",
@@ -1913,13 +2202,20 @@
       "name": "DataStructures",
       "kind": "library",
       "lines": 62,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "ff0a90993463", "lines": [10, 68] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "bfa0b41d1854": {
       "name": "IInbox",
       "kind": "interface",
       "lines": 60,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "d5644bf73637", "lines": [12, 71] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[19, 19], [52, 52]],
+      "removed": [[19, 19, 19], [52, 52, 52]],
+      "covered": 58
     },
     "ed7f1e682c82": {
       "name": "addEthValue",
@@ -1964,7 +2260,27 @@
       "name": "IOutbox",
       "kind": "interface",
       "lines": 82,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "b565dfffa895", "lines": [13, 70] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [
+        [1, 1],
+        [3, 7],
+        [24, 24],
+        [43, 44],
+        [48, 57],
+        [64, 64],
+        [69, 80]
+      ],
+      "removed": [
+        [1, 1, 1],
+        [3, 3, 3],
+        [24, 15, 15],
+        [44, 32, 32],
+        [48, 36, 45],
+        [69, 56, 56]
+      ],
+      "covered": 70
     },
     "77c91093cc8b": {
       "name": "IVerifier",
@@ -1972,7 +2288,10 @@
       "lines": 3,
       "status": "identical",
       "audited": { "object": "76f993430b7e", "lines": [136, 138] },
-      "reports": ["cantina-payload-2026-03-05"]
+      "reports": [
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
     },
     "ca9ed2069da5": {
       "name": "IRollup",
@@ -1989,13 +2308,20 @@
       "name": "IFeeJuicePortal",
       "kind": "interface",
       "lines": 18,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "5f30940dd61c", "lines": [9, 28] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "009e77a9cf32": {
       "name": "Constants",
       "kind": "library",
       "lines": 21,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "813210472aec", "lines": [11, 31] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[7, 7], [9, 10], [12, 15], [17, 18]],
+      "removed": [[7, 7, 7], [9, 9, 11], [12, 13, 14], [17, 16, 18]],
+      "covered": 12
     },
     "4c76a9ff8e4c": {
       "name": "FieldLib",
@@ -2122,7 +2448,12 @@
       "name": "StakingQueueConfigLib",
       "kind": "library",
       "lines": 32,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "b3dca4d7c8c1", "lines": [36, 65] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[2, 3], [7, 11], [24, 28]],
+      "removed": [[2, 2, 3], [8, 7, 10], [24, 23, 26]],
+      "covered": 21
     },
     "151d207ad744": {
       "name": "Errors_1",
@@ -2145,7 +2476,10 @@
       "lines": 68,
       "status": "differs",
       "audited": { "object": "abaf7a34e29c", "lines": [15, 84] },
-      "reports": ["veridise-governance-2025-10-13"],
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ],
       "added": [[37, 37], [64, 64]],
       "removed": [[37, 37, 39], [64, 66, 66]],
       "covered": 66
@@ -2167,11 +2501,11 @@
       "kind": "library",
       "lines": 272,
       "status": "differs",
-      "audited": { "object": "2d33a6da4e61", "lines": [29, 308] },
+      "audited": { "object": "cc9f67af634b", "lines": [29, 293] },
       "reports": ["veridise-governance-2025-10-13"],
-      "added": [[173, 173], [175, 178], [193, 193]],
-      "removed": [[173, 181, 181], [193, 197, 197]],
-      "covered": 267
+      "added": [[171, 171], [173, 180], [184, 201]],
+      "removed": [[170, 177, 179], [180, 182, 182], [184, 186, 190]],
+      "covered": 251
     },
     "171d5461997b": {
       "name": "Bn254LibWrapper",
@@ -2193,7 +2527,10 @@
       "lines": 270,
       "status": "differs",
       "audited": { "object": "178c0f0f95ce", "lines": [39, 309] },
-      "reports": ["veridise-governance-2025-10-13"],
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ],
       "added": [[87, 87]],
       "removed": [[87, 87, 88]],
       "covered": 269
@@ -2263,7 +2600,12 @@
       "name": "ISlasher",
       "kind": "interface",
       "lines": 9,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "52eeeaa4b471", "lines": [12, 17] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[2, 2], [6, 7]],
+      "removed": [],
+      "covered": 6
     },
     "598e0407bba6": {
       "name": "Slasher",
@@ -2275,7 +2617,12 @@
       "name": "IStakingCore",
       "kind": "interface",
       "lines": 48,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "80690a43b311", "lines": [12, 53] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[2, 4], [22, 22], [25, 28], [38, 38], [40, 40]],
+      "removed": [[22, 19, 19], [25, 22, 23], [40, 34, 34]],
+      "covered": 39
     },
     "4bcc576af38c": {
       "name": "ShortStrings",
@@ -2443,7 +2790,9 @@
       "name": "Hash",
       "kind": "library",
       "lines": 40,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "80196d8b3d81", "lines": [13, 52] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "2584d9fd6f30": {
       "name": "ProposedHeaderLib",
@@ -2605,7 +2954,28 @@
       "name": "RollupOperationsExtLib",
       "kind": "library",
       "lines": 66,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "e5fb3e0acbbe", "lines": [33, 94] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [
+        [13, 13],
+        [22, 25],
+        [32, 32],
+        [36, 36],
+        [48, 48],
+        [51, 51],
+        [59, 59],
+        [63, 63]
+      ],
+      "removed": [
+        [22, 21, 22],
+        [36, 32, 32],
+        [48, 44, 44],
+        [51, 47, 47],
+        [59, 55, 55],
+        [63, 59, 59]
+      ],
+      "covered": 55
     },
     "620ceb6953e3": {
       "name": "Errors",
@@ -2816,7 +3186,9 @@
       "name": "FrontierLib",
       "kind": "library",
       "lines": 80,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "b6404ae0d889", "lines": [12, 91] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "9186d354b480": {
       "name": "Inbox",
@@ -2833,7 +3205,9 @@
       "name": "CompressedSlashRoundMath",
       "kind": "library",
       "lines": 9,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [54, 62] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "f8cb77d09c59": {
       "name": "Errors_1",
@@ -2949,7 +3323,10 @@
       "lines": 270,
       "status": "identical",
       "audited": { "object": "178c0f0f95ce", "lines": [39, 309] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "1c8b0bed2165": {
       "name": "GSECore",
@@ -2977,7 +3354,12 @@
       "name": "IStaking",
       "kind": "interface",
       "lines": 23,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "80690a43b311", "lines": [55, 69] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[5, 9], [19, 21]],
+      "removed": [],
+      "covered": 15
     },
     "64afbceec720": {
       "name": "Errors_1",
@@ -3123,7 +3505,21 @@
       "name": "Slasher",
       "kind": "contract",
       "lines": 67,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "b7b6ad4841e0", "lines": [8, 54] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [
+        [3, 3],
+        [6, 7],
+        [17, 17],
+        [19, 19],
+        [22, 22],
+        [38, 47],
+        [51, 51],
+        [62, 65]
+      ],
+      "removed": [[19, 15, 15]],
+      "covered": 49
     },
     "c7eabe65ba33": {
       "name": "EmpireBase",
@@ -3382,7 +3778,12 @@
       "name": "RewardBooster",
       "kind": "contract",
       "lines": 98,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "de894a93d668", "lines": [45, 133] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[15, 15], [20, 30], [84, 84]],
+      "removed": [[15, 15, 15], [84, 75, 75]],
+      "covered": 92
     },
     "c1288a3781f3": {
       "name": "RewardLib",
@@ -3532,7 +3933,30 @@
       "name": "RollupOperationsExtLib",
       "kind": "library",
       "lines": 66,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "e5fb3e0acbbe", "lines": [33, 94] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [
+        [13, 13],
+        [22, 25],
+        [32, 32],
+        [36, 36],
+        [40, 40],
+        [48, 48],
+        [51, 51],
+        [59, 59],
+        [63, 63]
+      ],
+      "removed": [
+        [22, 21, 22],
+        [36, 32, 32],
+        [40, 36, 36],
+        [48, 44, 44],
+        [51, 47, 47],
+        [59, 55, 55],
+        [63, 59, 59]
+      ],
+      "covered": 54
     },
     "0a55a1c7b621": {
       "name": "Errors_2",
@@ -3779,11 +4203,11 @@
       "kind": "library",
       "lines": 276,
       "status": "differs",
-      "audited": { "object": "2d33a6da4e61", "lines": [29, 308] },
+      "audited": { "object": "cc9f67af634b", "lines": [29, 293] },
       "reports": ["veridise-governance-2025-10-13"],
-      "added": [[177, 177], [179, 182], [197, 197]],
-      "removed": [[177, 181, 181], [197, 197, 197]],
-      "covered": 271
+      "added": [[175, 175], [177, 184], [188, 205]],
+      "removed": [[174, 177, 179], [184, 182, 182], [188, 186, 190]],
+      "covered": 255
     },
     "2dc730e580cf": {
       "name": "DepositDelegationLib",
@@ -3791,7 +4215,10 @@
       "lines": 266,
       "status": "identical",
       "audited": { "object": "178c0f0f95ce", "lines": [39, 309] },
-      "reports": ["veridise-governance-2025-10-13"]
+      "reports": [
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
     },
     "d9d117abc6a5": {
       "name": "GSECore",
@@ -3832,11 +4259,7 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "447d1057dc7c": {
       "name": "NativeCurrencyPaymentFallback",
@@ -3844,19 +4267,20 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "aa97dd1bf3f1": {
       "name": "SelfAuthorized",
       "kind": "abstract",
       "lines": 11,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [745, 755] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "898739cbc764", "lines": [6, 16] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
     },
     "40ce0b25499c": {
       "name": "Enum",
@@ -3877,8 +4301,8 @@
       "kind": "abstract",
       "lines": 176,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [4897, 5076] },
-      "reports": ["nethermind-safe-1-3-0", "veridise-kailua-2025-02"],
+      "audited": { "object": "9c421d7aa0fb", "lines": [17, 196] },
+      "reports": ["nethermind-safe-1-3-0"],
       "added": [[22, 22]],
       "removed": [[22, 22, 22]],
       "covered": 175
@@ -3887,9 +4311,17 @@
       "name": "OwnerManager",
       "kind": "abstract",
       "lines": 150,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [3806, 3962] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 2]],
+      "removed": [[1, 1, 2]],
+      "covered": 148
     },
     "13e5d12afa8b": {
       "name": "SignatureDecoder",
@@ -3915,31 +4347,42 @@
       "kind": "contract",
       "lines": 4,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [942, 945] },
+      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
       "reports": [
         "certora-safe-1-3-0",
         "g0-safe-1-1-0",
         "g0-safe-1-1-1",
         "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial",
-        "veridise-kailua-2025-02"
+        "g0-safe-1-3-0-initial"
       ]
     },
     "f44a94390330": {
       "name": "FallbackManager",
       "kind": "abstract",
       "lines": 73,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [3726, 3795] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 1], [11, 25]],
+      "removed": [[1, 1, 1]],
+      "covered": 61
     },
     "e213c56fc229": {
       "name": "StorageAccessible",
       "kind": "abstract",
       "lines": 42,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [818, 859] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "489422336212", "lines": [6, 47] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
     },
     "b3dc850565d8": {
       "name": "IERC165",
@@ -3947,27 +4390,37 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "051f4e0bd8fb": {
       "name": "Guard",
       "kind": "interface",
       "lines": 17,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [4814, 4830] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[0, 0]],
+      "removed": [[0, 0, 0]],
+      "covered": 16
     },
     "d63eef9ff914": {
       "name": "GuardManager",
       "kind": "abstract",
       "lines": 42,
-      "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [4843, 4884] },
-      "reports": ["veridise-kailua-2025-02"]
+      "status": "differs",
+      "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 1], [16, 18]],
+      "removed": [[1, 1, 1]],
+      "covered": 38
     },
     "6cd3fcc5ec00": {
       "name": "SafeMath",
@@ -3982,16 +4435,20 @@
       "kind": "abstract",
       "lines": 12,
       "status": "identical",
-      "audited": { "object": "aeda91fb5c75", "lines": [947, 958] },
-      "reports": ["veridise-kailua-2025-02"]
+      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
     },
     "268c431cb6b0": {
       "name": "Safe",
       "kind": "contract",
       "lines": 409,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [6325, 6756] },
-      "reports": ["nethermind-safe-1-3-0", "veridise-kailua-2025-02"],
+      "audited": { "object": "668700b0b04b", "lines": [36, 467] },
+      "reports": ["nethermind-safe-1-3-0"],
       "added": [[14, 14]],
       "removed": [[14, 14, 14]],
       "covered": 408
@@ -4110,13 +4567,20 @@
       "name": "IStaking",
       "kind": "interface",
       "lines": 23,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "80690a43b311", "lines": [55, 69] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[5, 9], [16, 16], [19, 21]],
+      "removed": [[16, 11, 11]],
+      "covered": 14
     },
     "f76b8aaafe82": {
       "name": "IInstance",
       "kind": "interface",
       "lines": 1,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "4a2549a7a677", "lines": [9, 9] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"]
     },
     "19e90eda3f82": {
       "name": "EscapeHatch",

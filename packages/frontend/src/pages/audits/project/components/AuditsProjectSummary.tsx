@@ -1,5 +1,9 @@
 import { formatInteger } from '@l2beat/shared-pure'
-import { formatShare, totalUnits } from '~/components/audits/auditStatus'
+import {
+  formatShare,
+  INTERFACES_NOT_COUNTED,
+  totalUnits,
+} from '~/components/audits/auditStatus'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { formatContractCount } from '~/components/ossification/formatCriticalChangesPerYear'
@@ -27,7 +31,7 @@ export function AuditsProjectSummary({
       <ChartStats className="lg:grid-cols-4">
         <ChartStatsItem
           label="Fully audited contracts"
-          tooltip="Share of the critical contracts whose whole deployed source, every unit of every file, is identical to audited code. Contracts without verified source count as not covered."
+          tooltip={`Share of the critical contracts whose whole deployed source, every unit of every file, is identical to audited code. Contracts without verified source count as not covered. ${INTERFACES_NOT_COUNTED}`}
         >
           {formatShare(fullyCoveredContracts, contracts)}
           <SecondLine>
@@ -37,7 +41,7 @@ export function AuditsProjectSummary({
         </ChartStatsItem>
         <ChartStatsItem
           label="Ever audited"
-          tooltip="Share of deployed units (contracts, interfaces, libraries) that have an audited source, identical to it or not. The rest was never audited."
+          tooltip={`Share of deployed units (contracts, libraries, free functions) that have an audited source, identical to it or not. The rest was never audited. ${INTERFACES_NOT_COUNTED}`}
         >
           {formatShare(audited, units)}
           <SecondLine>
@@ -46,7 +50,7 @@ export function AuditsProjectSummary({
         </ChartStatsItem>
         <ChartStatsItem
           label="Lines identical to audited"
-          tooltip="Deployed lines identical to an audited version: every line of identical units plus the unchanged lines of differing units."
+          tooltip={`Deployed lines identical to an audited version: every line of identical units plus the unchanged lines of differing units. ${INTERFACES_NOT_COUNTED}`}
         >
           {formatShare(lines.covered, lines.total)}
           <SecondLine>

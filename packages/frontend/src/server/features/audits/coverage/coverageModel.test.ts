@@ -2,6 +2,7 @@ import type { ProjectAuditCoverage } from '@l2beat/config'
 import { expect } from 'earl'
 import {
   contractSources,
+  countsTowardCoverage,
   isFlatHash,
   selectContracts,
   summarizeUnits,
@@ -131,6 +132,16 @@ describe('coverageModel', () => {
     })
   })
 
+  describe(countsTowardCoverage.name, () => {
+    it('counts every kind but interfaces', () => {
+      expect(countsTowardCoverage('contract')).toEqual(true)
+      expect(countsTowardCoverage('abstract')).toEqual(true)
+      expect(countsTowardCoverage('library')).toEqual(true)
+      expect(countsTowardCoverage('function')).toEqual(true)
+      expect(countsTowardCoverage('interface')).toEqual(false)
+    })
+  })
+
   describe(unitCoveredLines.name, () => {
     it('counts every line of identical units and the covered lines of differing ones', () => {
       expect(unitCoveredLines(unit({ lines: 10 }), 'identical')).toEqual(10)
@@ -173,15 +184,70 @@ describe('coverageModel', () => {
   describe(summarizeUnits.name, () => {
     it('counts instances, unique units and lines', () => {
       const summary = summarizeUnits([
-        { unitId: 'x', status: 'identical', lines: 10, coveredLines: 10 },
-        { unitId: 'x', status: 'identical', lines: 10, coveredLines: 10 },
-        { unitId: 'y', status: 'differs', lines: 20, coveredLines: 15 },
-        { unitId: 'z', status: 'unaudited', lines: 5, coveredLines: 0 },
+        {
+          unitId: 'x',
+          kind: 'contract',
+          status: 'identical',
+          lines: 10,
+          coveredLines: 10,
+        },
+        {
+          unitId: 'x',
+          kind: 'contract',
+          status: 'identical',
+          lines: 10,
+          coveredLines: 10,
+        },
+        {
+          unitId: 'y',
+          kind: 'library',
+          status: 'differs',
+          lines: 20,
+          coveredLines: 15,
+        },
+        {
+          unitId: 'z',
+          kind: 'function',
+          status: 'unaudited',
+          lines: 5,
+          coveredLines: 0,
+        },
       ])
       expect(summary).toEqual({
         units: { identical: 2, library: 0, differs: 1, unaudited: 1 },
         uniqueUnits: { identical: 1, library: 0, differs: 1, unaudited: 1 },
         lines: { total: 45, covered: 35, uncovered: 10 },
+      })
+    })
+
+    it('leaves interfaces out of every count', () => {
+      const summary = summarizeUnits([
+        {
+          unitId: 'x',
+          kind: 'contract',
+          status: 'identical',
+          lines: 10,
+          coveredLines: 10,
+        },
+        {
+          unitId: 'i',
+          kind: 'interface',
+          status: 'unaudited',
+          lines: 30,
+          coveredLines: 0,
+        },
+        {
+          unitId: 'j',
+          kind: 'interface',
+          status: 'differs',
+          lines: 20,
+          coveredLines: 5,
+        },
+      ])
+      expect(summary).toEqual({
+        units: { identical: 1, library: 0, differs: 0, unaudited: 0 },
+        uniqueUnits: { identical: 1, library: 0, differs: 0, unaudited: 0 },
+        lines: { total: 10, covered: 10, uncovered: 0 },
       })
     })
   })

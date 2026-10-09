@@ -3,22 +3,21 @@
   "project": "uniswapv3",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "ce069f3e6a59d6ebfeb4efb183e39608fc86d1a6"
+    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
   },
   "discoveredAt": 1786913047,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "_libs/safe": { "name": "Safe", "kind": "library" },
     "_libs/solmate": { "name": "Solmate", "kind": "library" },
-    "agglayer": { "name": "Agglayer", "kind": "project" },
     "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
-    "bob": { "name": "BOB", "kind": "project" },
     "celo": { "name": "Celo", "kind": "project" },
+    "compound": { "name": "Compound", "kind": "project" },
     "katana": { "name": "Katana", "kind": "project" },
-    "mantle": { "name": "Mantle", "kind": "project" },
     "roninnetwork": { "name": "Ronin", "kind": "project" },
-    "uniswapv3": { "name": "Uniswap V3", "kind": "project" }
+    "uniswapv3": { "name": "Uniswap V3", "kind": "project" },
+    "zksync2": { "name": "ZKsync Era", "kind": "project" }
   },
   "reports": {
     "abdk-uniswap-v3-core-2021-03": {
@@ -74,6 +73,20 @@
       "date": "2024-11-25",
       "document": "roninnetwork/reports/Code4rena - Ronin Katana v3.html"
     },
+    "code4rena-zksync-era-2023-10": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era Findings & Analysis Report",
+      "auditor": "Code4rena",
+      "date": "2024-02-29",
+      "document": "zksync2/reports/2023_10-code4rena-zksync-era.html"
+    },
+    "code4rena-zksync-era-system-contracts-2023-03": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era System Contracts contest Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2023-06-14",
+      "document": "zksync2/reports/2023_03-code4rena-zksync-era-system-contracts.html"
+    },
     "consensys-arbitrum-core-token-bridge-2021-11": {
       "collections": ["arbitrum"],
       "title": "Arbitrum Smart Contracts (ConsenSys Diligence, November 2021)",
@@ -102,31 +115,26 @@
       "date": "2026-02-27",
       "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
     },
-    "hexens-polygon-zkevm-2023-02": {
-      "collections": ["agglayer"],
-      "title": "Security Review Report for Polygon zkEVM",
-      "auditor": "Hexens",
-      "date": "2023-02-27",
-      "document": "agglayer/reports/2023_02-hexens-polygon-zkevm-security-review.pdf"
+    "openzeppelin-compound-alpha-governance-2020-02": {
+      "collections": ["compound"],
+      "title": "Compound Alpha Governance System Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2020-02-25",
+      "document": "compound/reports/OpenZeppelin - Compound Alpha Governance System Audit.html"
     },
-    "secure3-mantle-v1-contest-2023-07": {
-      "collections": ["mantle"],
-      "title": "Mantle Competitive Security Assessment",
-      "auditor": "Secure3",
-      "date": "2023-07-17",
-      "document": "mantle/reports/2023_07-secure3-mantle-v1-competitive-security-assessment.pdf"
+    "openzeppelin-compound-governor-bravo-2021-02": {
+      "collections": ["compound"],
+      "title": "Compound Governor Bravo Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2021-02-12",
+      "document": "compound/reports/OpenZeppelin - Compound Governor Bravo Audit.html"
     },
-    "sigmaprime-mantle-l2-rollup-2023-07": {
-      "collections": ["mantle"],
-      "title": "Mantle L2 Rollup Security Assessment (Sigma Prime)",
-      "auditor": "Sigma Prime",
-      "document": "mantle/reports/2023_07-sigmaprime-mantle-l2-rollup-security-assessment.pdf"
-    },
-    "sigmaprime-polygon-lxly-bridge-2024-02": {
-      "collections": ["agglayer"],
-      "title": "Polygon LXLY Bridge Smart Contract Security Assessment",
-      "auditor": "Sigma Prime",
-      "document": "agglayer/reports/2024_02-sigmaprime-polygon-lxly-bridge.pdf"
+    "openzeppelin-compound-timelock-2019-10": {
+      "collections": ["compound"],
+      "title": "Compound Finance - Timelock Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2019-10-23",
+      "document": "compound/reports/OpenZeppelin - Compound Timelock Audit.html"
     },
     "sigmaprime-yield-exposed-token-2025-04": {
       "collections": ["katana"],
@@ -148,13 +156,6 @@
       "date": "2021-12-31",
       "document": "_libs/solmate/reports/solmate-v6__audits__v6-Fixed-Point-Solutions.pdf"
     },
-    "spearbit-polygon-zkevm-contracts-2023-03": {
-      "collections": ["agglayer"],
-      "title": "Polygon zkEVM Contracts Security Review",
-      "auditor": "Spearbit",
-      "date": "2023-03-27",
-      "document": "agglayer/reports/2023_03-spearbit-polygon-zkevm-contracts-bridge.pdf"
-    },
     "trail-of-bits-celo-l2-2024-12-19": {
       "collections": ["celo"],
       "title": "cLabs Celo L2 Security Assessment",
@@ -162,19 +163,19 @@
       "date": "2024-12-19",
       "document": "celo/reports/Trail of Bits - Celo L2.pdf"
     },
+    "trailofbits-compound-governance-2020-02": {
+      "collections": ["compound"],
+      "title": "Compound Governance Security Assessment",
+      "auditor": "Trail of Bits",
+      "date": "2020-02-28",
+      "document": "compound/reports/Trail of Bits - Compound Governance.pdf"
+    },
     "trailofbits-uniswap-v3-core-2021-03": {
       "collections": ["uniswapv3"],
       "title": "Uniswap V3 Core Security Assessment",
       "auditor": "Trail of Bits",
       "date": "2021-03-12",
       "document": "uniswapv3/reports/audit.pdf"
-    },
-    "veridise-kailua-2025-02": {
-      "collections": ["bob"],
-      "title": "Veridise Auditing Report for Kailua Protocol (February 2025)",
-      "auditor": "Veridise",
-      "date": "2025-02-18",
-      "document": "bob/reports/Veridise - Kailua Security Audit (Feb 2025).pdf"
     }
   },
   "auditedFiles": {
@@ -195,6 +196,12 @@
       "commit": "6d415c508be94ef8391ed6525df365452466da76",
       "path": "contracts/introspection/ERC165.sol",
       "blob": "034ee911fe4bac97038477f602c6a95a240772d6"
+    },
+    "07a6de4542ee": {
+      "repository": "code-423n4/2023-10-zksync",
+      "commit": "1fb4649b612fac7b4ee613df6f6b7d921ddd6b0d",
+      "path": "code/system-contracts/contracts/openzeppelin/utils/Address.sol",
+      "blob": "07a6de4542ee31b3221052eaa6ec898744866607"
     },
     "092a067f397a": {
       "repository": "Uniswap/v3-core",
@@ -226,6 +233,12 @@
       "path": "contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol",
       "blob": "1a59de42c5d0983d397019c658cfc6bc55c538ad"
     },
+    "1aefb612aefb": {
+      "repository": "compound-finance/compound-protocol",
+      "commit": "55729b31b85220ab42e26d7b6db0ff6c0eb0dd23",
+      "path": "contracts/Timelock.sol",
+      "blob": "1aefb612aefb837c0e25d4b6198e66d00a7d1bd4"
+    },
     "1b88538ae1c5": {
       "repository": "Uniswap/v3-core",
       "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
@@ -255,12 +268,6 @@
       "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
       "path": "contracts/interfaces/callback/IUniswapV3SwapCallback.sol",
       "blob": "216d5ddf2e579161ac56fabc02d845459c80d777"
-    },
-    "22c69a78be6d": {
-      "repository": "celo-org/celo-monorepo",
-      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-      "path": "packages/protocol/contracts/uniswap/test/libraries/TransferHelper.sol",
-      "blob": "22c69a78be6d79f0977a2a28014c104ccddeb8ea"
     },
     "272851b2f81b": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -304,17 +311,23 @@
       "path": "contracts/libraries/UnsafeMath.sol",
       "blob": "34d6e4c7e2692d2edc02fa89862192e681bfb424"
     },
+    "3b77ba02ba7b": {
+      "repository": "Arr00-Blurr/compound-protocol",
+      "commit": "a3f69611180ee008cffd4048ce9137271bfe1a83",
+      "path": "contracts/Governance/GovernorBravoDelegator.sol",
+      "blob": "3b77ba02ba7ba9dd38d830d37cddb7fe448a2b74"
+    },
     "3d2846231b4f": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
       "path": "contracts/token/ERC721/extensions/IERC721Metadata.sol",
       "blob": "3d2846231b4ff25e2a6b2c687113e0241d970b2e"
     },
-    "40b50a202dcd": {
-      "repository": "mantlenetworkio/mantle",
-      "commit": "3e2b6dbcac7df08353d81d53ee41405211305432",
-      "path": "packages/contracts/contracts/libraries/eigenda/lib/contracts/governance/Timelock.sol",
-      "blob": "40b50a202dcd0f439f5e82eff63d3a0ce1508776"
+    "4180878e9cc1": {
+      "repository": "Arr00-Blurr/compound-protocol",
+      "commit": "413fce0c4e3b97f80465000354ef8f4091c2de81",
+      "path": "contracts/Governance/GovernorBravoInterfaces.sol",
+      "blob": "4180878e9cc17f4954183cdf441a59d28221ad8d"
     },
     "41ede9d660b2": {
       "repository": "OffchainLabs/arbitrum-classic",
@@ -334,6 +347,12 @@
       "path": "contracts/libraries/Oracle.sol",
       "blob": "5130ac00df1bf6ac83d926f93e6bb486e88c3a00"
     },
+    "545b136a90f1": {
+      "repository": "Arr00-Blurr/compound-protocol",
+      "commit": "149849ddc9528b5675ab5937a2abd4f0b8995e68",
+      "path": "contracts/Governance/GovernorBravoDelegate.sol",
+      "blob": "545b136a90f166189b797a93283d1efbbe6f4915"
+    },
     "557352983901": {
       "repository": "Uniswap/v3-periphery",
       "commit": "2353765fe799b987ac5236971398fcb0be2bc5c0",
@@ -351,12 +370,6 @@
       "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
       "path": "contracts/libraries/TickMath.sol",
       "blob": "64e8fd9b3c5e40e39e1ba9d3811d31c5e43decfe"
-    },
-    "6df195b77522": {
-      "repository": "celo-org/celo-monorepo",
-      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-      "path": "packages/protocol/contracts/uniswap/test/libraries/UniswapV2Library.sol",
-      "blob": "6df195b77522f686220b1809a52562a4debcd3fe"
     },
     "732cc02b109a": {
       "repository": "safe-fndn/safe-smart-account",
@@ -466,12 +479,6 @@
       "path": "contracts/interfaces/callback/IUniswapV3MintCallback.sol",
       "blob": "aadec0e1605e4f51d1d47514306143e638c0e215"
     },
-    "aeda91fb5c75": {
-      "repository": "boundless-xyz/kailua",
-      "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-      "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-      "blob": "aeda91fb5c75ebd4191ac8c551a1a4685cf3e115"
-    },
     "afc86bbe5db2": {
       "repository": "ronin-chain/katana-v3-contracts",
       "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
@@ -531,12 +538,6 @@
       "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
       "path": "contracts/interfaces/IUniswapV3Pool.sol",
       "blob": "dfe5020b47cd586697429f7957edcc77c833c16a"
-    },
-    "e1159f899dff": {
-      "repository": "agglayer/agglayer-contracts",
-      "commit": "7677b8ccf10abc13903d0aceb66daa9a8a5fb0b0",
-      "path": "contracts/mocks/Uni.sol",
-      "blob": "e1159f899dffe805cfe7bf195addd96cfdf91cc2"
     },
     "f486ba94eacc": {
       "repository": "Uniswap/v3-periphery",
@@ -838,68 +839,24 @@
       "name": "SafeMath",
       "kind": "library",
       "lines": 168,
-      "status": "identical",
-      "audited": { "object": "e1159f899dff", "lines": [27, 194] },
-      "reports": [
-        "hexens-polygon-zkevm-2023-02",
-        "sigmaprime-polygon-lxly-bridge-2024-02",
-        "spearbit-polygon-zkevm-contracts-2023-03"
-      ]
+      "status": "none"
     },
     "db167b498ad1": {
       "name": "Timelock",
       "kind": "contract",
       "lines": 107,
-      "status": "differs",
-      "audited": { "object": "40b50a202dcd", "lines": [29, 149] },
+      "status": "identical",
+      "audited": { "object": "1aefb612aefb", "lines": [5, 128] },
       "reports": [
-        "secure3-mantle-v1-contest-2023-07",
-        "sigmaprime-mantle-l2-rollup-2023-07"
-      ],
-      "added": [
-        [1, 2],
-        [21, 21],
-        [24, 24],
-        [29, 29],
-        [31, 31],
-        [40, 40],
-        [48, 48],
-        [55, 55],
-        [57, 57],
-        [66, 66],
-        [75, 75],
-        [80, 81],
-        [94, 94],
-        [101, 105]
-      ],
-      "removed": [
-        [21, 24, 24],
-        [24, 27, 27],
-        [29, 32, 35],
-        [31, 37, 37],
-        [40, 46, 46],
-        [48, 54, 54],
-        [50, 56, 56],
-        [55, 62, 65],
-        [57, 67, 69],
-        [66, 78, 80],
-        [75, 90, 94],
-        [80, 99, 100],
-        [94, 113, 113]
-      ],
-      "covered": 91
+        "openzeppelin-compound-timelock-2019-10",
+        "trailofbits-compound-governance-2020-02"
+      ]
     },
     "855689973a11": {
       "name": "Uni",
       "kind": "contract",
       "lines": 390,
-      "status": "identical",
-      "audited": { "object": "e1159f899dff", "lines": [196, 596] },
-      "reports": [
-        "hexens-polygon-zkevm-2023-02",
-        "sigmaprime-polygon-lxly-bridge-2024-02",
-        "spearbit-polygon-zkevm-contracts-2023-03"
-      ]
+      "status": "none"
     },
     "919501e6934f": {
       "name": "IUniswapV3Factory",
@@ -1216,7 +1173,6 @@
       "status": "differs",
       "audited": { "object": "1b88538ae1c5", "lines": [34, 754] },
       "reports": ["trailofbits-uniswap-v3-core-2021-03"],
-      "findings": { "trailofbits-uniswap-v3-core-2021-03": ["TOB-UNI-005"] },
       "added": [
         [111, 114],
         [121, 124],
@@ -1278,25 +1234,41 @@
       "name": "GovernorBravoDelegatorStorage",
       "kind": "contract",
       "lines": 10,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "4180878e9cc1", "lines": [54, 63] },
+      "reports": ["openzeppelin-compound-governor-bravo-2021-02"]
     },
     "1a7a08a41f9f": {
       "name": "GovernorBravoEvents",
       "kind": "contract",
       "lines": 39,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "4180878e9cc1", "lines": [4, 52] },
+      "reports": ["openzeppelin-compound-governor-bravo-2021-02"]
     },
     "0f2a047e34f1": {
       "name": "GovernorBravoDelegator",
       "kind": "contract",
       "lines": 74,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "3b77ba02ba7b", "lines": [6, 80] },
+      "reports": ["openzeppelin-compound-governor-bravo-2021-02"],
+      "added": [[3, 3], [15, 15], [32, 32]],
+      "removed": [[3, 3, 3], [15, 18, 18]],
+      "covered": 71
     },
     "87c8ad0dab2a": {
       "name": "TimelockInterface",
       "kind": "interface",
       "lines": 9,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "4180878e9cc1", "lines": [155, 181] },
+      "reports": [
+        "openzeppelin-compound-alpha-governance-2020-02",
+        "openzeppelin-compound-governor-bravo-2021-02",
+        "trailofbits-compound-governance-2020-02"
+      ],
+      "findings": { "openzeppelin-compound-alpha-governance-2020-02": ["H01"] }
     },
     "d880642aaa86": {
       "name": "UniInterface",
@@ -1308,13 +1280,53 @@
       "name": "GovernorBravoDelegateStorageV1",
       "kind": "contract",
       "lines": 101,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "4180878e9cc1", "lines": [71, 153] },
+      "reports": ["openzeppelin-compound-governor-bravo-2021-02"],
+      "added": [[19, 21]],
+      "removed": [[19, 18, 20]],
+      "covered": 100
     },
     "c09741b22c51": {
       "name": "GovernorBravoDelegate",
       "kind": "contract",
       "lines": 382,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "545b136a90f1", "lines": [6, 389] },
+      "reports": ["openzeppelin-compound-governor-bravo-2021-02"],
+      "added": [
+        [3, 3],
+        [6, 21],
+        [24, 24],
+        [43, 44],
+        [46, 51],
+        [53, 53],
+        [71, 71],
+        [153, 153],
+        [255, 255],
+        [278, 278],
+        [291, 291],
+        [303, 303],
+        [305, 305],
+        [307, 307],
+        [317, 317]
+      ],
+      "removed": [
+        [3, 2, 2],
+        [6, 5, 5],
+        [24, 8, 8],
+        [43, 20, 26],
+        [53, 29, 29],
+        [71, 44, 47],
+        [153, 147, 151],
+        [255, 251, 251],
+        [303, 297, 297],
+        [305, 299, 302],
+        [307, 304, 304],
+        [317, 314, 314],
+        [320, 317, 317]
+      ],
+      "covered": 357
     },
     "717995f719a1": {
       "name": "IUniversalRouter",
@@ -1773,11 +1785,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": [
-        "ackee-safe-1-5-0",
-        "certora-safe-1-5-0",
-        "veridise-kailua-2025-02"
-      ]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "6052ff08685e": {
       "name": "IERC721",
@@ -2020,12 +2028,7 @@
       "name": "TransferHelper",
       "kind": "library",
       "lines": 55,
-      "status": "differs",
-      "audited": { "object": "22c69a78be6d", "lines": [10, 40] },
-      "reports": ["trail-of-bits-celo-l2-2024-12-19"],
-      "added": [[13, 14], [28, 28], [42, 42], [51, 52]],
-      "removed": [[13, 19, 19], [28, 11, 11], [42, 3, 3], [51, 27, 28]],
-      "covered": 49
+      "status": "none"
     },
     "5c7491e76d37": {
       "name": "PeripheryPayments",
@@ -2055,40 +2058,7 @@
       "name": "UniswapV2Library",
       "kind": "library",
       "lines": 84,
-      "status": "differs",
-      "audited": { "object": "6df195b77522", "lines": [7, 110] },
-      "reports": ["trail-of-bits-celo-l2-2024-12-19"],
-      "added": [
-        [1, 1],
-        [5, 5],
-        [7, 7],
-        [11, 14],
-        [20, 25],
-        [32, 35],
-        [38, 38],
-        [49, 49],
-        [63, 63],
-        [70, 73],
-        [75, 75],
-        [79, 79]
-      ],
-      "removed": [
-        [1, 1, 1],
-        [5, 49, 49],
-        [7, 51, 51],
-        [11, 55, 55],
-        [20, 64, 64],
-        [30, 69, 75],
-        [32, 4, 4],
-        [38, 12, 13],
-        [41, 16, 30],
-        [49, 84, 84],
-        [63, 98, 98],
-        [70, 33, 33],
-        [75, 38, 38],
-        [79, 42, 42]
-      ],
-      "covered": 58
+      "status": "none"
     },
     "0441ac0ae45a": {
       "name": "Constants",
@@ -2178,7 +2148,7 @@
         [157, 160]
       ],
       "removed": [
-        [0, 0, 7],
+        [0, 0, 6],
         [10, 17, 18],
         [51, 47, 48],
         [86, 78, 78],
@@ -2309,55 +2279,38 @@
       "name": "SafeMath",
       "kind": "library",
       "lines": 197,
-      "status": "differs",
-      "audited": { "object": "e1159f899dff", "lines": [27, 194] },
-      "reports": [
-        "hexens-polygon-zkevm-2023-02",
-        "sigmaprime-polygon-lxly-bridge-2024-02",
-        "spearbit-polygon-zkevm-contracts-2023-03"
-      ],
-      "added": [
-        [1, 56],
-        [58, 58],
-        [64, 64],
-        [74, 74],
-        [80, 80],
-        [84, 85],
-        [114, 114],
-        [118, 119],
-        [135, 136],
-        [154, 154],
-        [174, 174],
-        [193, 193]
-      ],
-      "removed": [
-        [72, 15, 29],
-        [85, 40, 40],
-        [104, 79, 100],
-        [119, 114, 114],
-        [136, 149, 149],
-        [154, 53, 55],
-        [174, 131, 134],
-        [193, 164, 164]
-      ],
-      "covered": 165
+      "status": "none"
     },
     "9f1625bb6f8b": {
       "name": "Address",
       "kind": "library",
       "lines": 182,
       "status": "differs",
-      "audited": { "object": "aeda91fb5c75", "lines": [20, 225] },
-      "reports": ["veridise-kailua-2025-02"],
-      "added": [[19, 26], [112, 112], [136, 136], [160, 160], [162, 180]],
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ],
+      "added": [
+        [19, 26],
+        [72, 72],
+        [108, 110],
+        [112, 112],
+        [132, 134],
+        [136, 136],
+        [156, 158],
+        [160, 160],
+        [162, 180]
+      ],
       "removed": [
         [26, 28, 32],
-        [112, 122, 122],
-        [136, 149, 149],
-        [160, 175, 175],
-        [162, 177, 204]
+        [72, 77, 77],
+        [112, 120, 120],
+        [136, 145, 145],
+        [160, 169, 169],
+        [162, 171, 226]
       ],
-      "covered": 162
+      "covered": 158
     },
     "3db0a87d5ccf": {
       "name": "EnumerableSet",

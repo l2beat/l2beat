@@ -8,7 +8,10 @@ import {
 import { useState } from 'react'
 import { LineCoverageTooltipContent } from '~/components/audits/AuditCoverageBar'
 import { AuditsTimelineSparkline } from '~/components/audits/AuditsTimelineSparkline'
-import { formatShare } from '~/components/audits/auditStatus'
+import {
+  formatShare,
+  INTERFACES_NOT_COUNTED,
+} from '~/components/audits/auditStatus'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
   Tooltip,
@@ -107,8 +110,7 @@ const columns = [
     },
     sortDescFirst: true,
     meta: {
-      tooltip:
-        'Share of the critical contracts whose whole deployed source, every unit of every file, is identical to audited code. Contracts without verified source count as not covered.',
+      tooltip: `Share of the critical contracts whose whole deployed source, every unit of every file, is identical to audited code. Contracts without verified source count as not covered. ${INTERFACES_NOT_COUNTED}`,
     },
   }),
   columnHelper.accessor(linesCoveredShare, {
@@ -136,8 +138,7 @@ const columns = [
     },
     sortDescFirst: true,
     meta: {
-      tooltip:
-        'Share of deployed lines identical to audited code, across the critical contracts.',
+      tooltip: `Share of deployed lines identical to audited code, across the critical contracts. ${INTERFACES_NOT_COUNTED}`,
     },
   }),
 ]

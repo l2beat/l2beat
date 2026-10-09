@@ -4,6 +4,7 @@ import {
   AUDIT_STATUS_META,
   formatFindingIds,
   hasUnresolvedMajorFinding,
+  INTERFACES_NOT_COUNTED,
   MAJOR_FINDING_DESCRIPTION,
 } from '~/components/audits/auditStatus'
 import {
@@ -83,7 +84,20 @@ export function UnitRow({
     >
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 px-3 py-1.5 text-xs md:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1.4fr)_minmax(0,1.5fr)_176px_240px]">
         <span className="text-secondary max-md:hidden">
-          {KIND_LABEL[unit.kind]}
+          {unit.kind === 'interface' ? (
+            <Tooltip>
+              <TooltipTrigger className="underline decoration-dotted underline-offset-2">
+                {KIND_LABEL[unit.kind]}
+              </TooltipTrigger>
+              <TooltipContent className="max-w-[360px]">
+                {INTERFACES_NOT_COUNTED} An interface declares no logic, so its
+                status and diff are shown here but left out of the unit counts
+                and the line coverage.
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            KIND_LABEL[unit.kind]
+          )}
         </span>
         <span className="min-w-0 truncate font-medium">
           {unit.name}
