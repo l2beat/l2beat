@@ -169,34 +169,6 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
 
-  packages/audit-diff:
-    dependencies:
-      '@l2beat/config':
-        specifier: workspace:*
-        version: link:../config
-      '@l2beat/shared-pure':
-        specifier: workspace:*
-        version: link:../shared-pure
-      '@l2beat/validate':
-        specifier: workspace:*
-        version: link:../validate
-      '@mradomski/fast-solidity-parser':
-        specifier: 0.1.6
-        version: 0.1.6
-      diff:
-        specifier: ^7.0.0
-        version: 7.0.0
-    devDependencies:
-      '@l2beat/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@types/diff':
-        specifier: ^7.0.2
-        version: 7.0.2
-      tsx:
-        specifier: ^4.9.3
-        version: 4.19.2
-
   packages/backend:
     dependencies:
       '@koa/router':
@@ -659,9 +631,6 @@ importers:
 
   packages/frontend:
     dependencies:
-      '@l2beat/audit-diff':
-        specifier: workspace:*
-        version: link:../audit-diff
       '@l2beat/backend-tools':
         specifier: workspace:*
         version: link:../backend-tools

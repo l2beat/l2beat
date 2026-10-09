@@ -1,6 +1,11 @@
 # Audit coverage data flow: audit-dataset and l2beat
 
-Date: 2026-09-14. Status: draft for review.
+Date: 2026-09-14. Status: superseded on 2026-10-09. The dataset now publishes `audit-index.json`
+and `audit-objects.json.zst` as its only interface, and `l2b audit-coverage` (see
+`packages/l2b/src/implementations/audit-coverage/README.md`) replaces the `packages/audit-diff`
+engine described in sections 5 to 7. The frontend reads `project.auditCoverage`; stack audits are
+the matched reports of the collection mapped from `scalingInfo.stacks`, and repository lineage is
+not used. Sections 1 to 4 and 8 remain the background for those decisions.
 
 This spec covers two repositories. Section 4 applies to `audit-dataset`
 (`~/Documents/repos/audit-dataset`). Sections 5 to 8 apply to the l2beat monorepo, mainly
