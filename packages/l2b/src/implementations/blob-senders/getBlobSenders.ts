@@ -1,3 +1,5 @@
+import { Logger } from '@l2beat/backend-tools'
+import { HttpClient, RpcClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { type EthereumDaTracking, matchDaTracking } from './daTracking'
 
@@ -40,7 +42,7 @@ export async function getBlobSenders(
   const latestBlock = await provider.getBlockNumber()
   const fromBlock = latestBlock - blockCount + 1
   const { topicsByTx, topicsChecked } = await getTrackedTopicsByTx(
-    provider,
+    rpcUrl,
     daTracking,
     fromBlock,
     latestBlock,
@@ -128,13 +130,12 @@ export async function getBlobSenders(
   }
 }
 
-const LOGS_CHUNK = 1000
-
 // Topic-tracked projects are matched by the events their blob txs emit, so
-// the logs for those topics are fetched once for the whole range. Configured
-// topics are event signatures, hence the topic0 filter.
+// the logs for those topics are fetched once for the whole range (RpcClient
+// splits it only if the provider reports a range limit). Configured topics
+// are event signatures, hence the topic0 filter.
 async function getTrackedTopicsByTx(
-  provider: providers.StaticJsonRpcProvider,
+  rpcUrl: string,
   daTracking: EthereumDaTracking[],
   fromBlock: number,
   toBlock: number,
@@ -144,23 +145,21 @@ async function getTrackedTopicsByTx(
   if (topics.length === 0) {
     return { topicsByTx, topicsChecked: true }
   }
+  const rpc = new RpcClient({
+    url: rpcUrl,
+    chain: 'ethereum',
+    http: new HttpClient(),
+    logger: Logger.SILENT,
+    callsPerMinute: 600,
+    retryStrategy: 'SCRIPT',
+  })
   try {
-    for (let start = fromBlock; start <= toBlock; start += LOGS_CHUNK) {
-      const end = Math.min(start + LOGS_CHUNK - 1, toBlock)
-      const logs: { transactionHash: string; topics: string[] }[] =
-        await provider.send('eth_getLogs', [
-          {
-            fromBlock: '0x' + start.toString(16),
-            toBlock: '0x' + end.toString(16),
-            topics: [topics],
-          },
-        ])
-      for (const log of logs) {
-        const hash = log.transactionHash.toLowerCase()
-        const set = topicsByTx.get(hash) ?? new Set<string>()
-        for (const topic of log.topics) set.add(topic.toLowerCase())
-        topicsByTx.set(hash, set)
-      }
+    const logs = await rpc.getLogs(fromBlock, toBlock, undefined, [topics])
+    for (const log of logs) {
+      const hash = log.transactionHash.toLowerCase()
+      const set = topicsByTx.get(hash) ?? new Set<string>()
+      for (const topic of log.topics) set.add(topic.toLowerCase())
+      topicsByTx.set(hash, set)
     }
     return { topicsByTx, topicsChecked: true }
   } catch {
