@@ -1,18 +1,10 @@
-import type { SQLiteCache } from '@l2beat/discovery'
+import { REUSABLE_CACHE_INVOCATIONS, type SQLiteCache } from '@l2beat/discovery'
 import { formatSI } from '@l2beat/shared'
 import { assert, formatSeconds } from '@l2beat/shared-pure'
 import type { CliLogger } from '../common/CliLogger'
 import { decodeStringDump } from './decodeStringDump'
 
-export const FETCHED_KINDS = [
-  'getSource-v3',
-  'getDeployment',
-  'getTransaction',
-  'getBlock',
-  'getBlobs',
-  'getDebugTrace',
-  'getBlockNumberAtOrBefore',
-]
+export const FETCHED_KINDS: string[] = Object.values(REUSABLE_CACHE_INVOCATIONS)
 
 const BATCH_SIZE = 200
 
@@ -125,6 +117,7 @@ function formatStats(label: string, stats: FetchStats): string {
   return (
     `${label}: fetched ${stats.keysFetched} of ${stats.keysScanned} keys, ` +
     `${formatSI(stats.bytesTransferred, 'B')} transferred, ` +
-    `${formatSI(stats.bytesDecoded, 'B')} decoded`
+    `${formatSI(stats.bytesDecoded, 'B')} decoded, ` +
+    `${stats.keysEvicted} evicted`
   )
 }

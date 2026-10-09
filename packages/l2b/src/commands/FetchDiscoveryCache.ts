@@ -1,6 +1,7 @@
+import { getEnv } from '@l2beat/backend-tools'
 import { getDiscoveryPaths, SQLiteCache } from '@l2beat/discovery'
 import chalk from 'chalk'
-import { command, positional, string } from 'cmd-ts'
+import { command, option, optional, string } from 'cmd-ts'
 import { createCliLogger } from '../implementations/common/CliLogger'
 import {
   FETCHED_KINDS,
@@ -14,17 +15,20 @@ export const FetchDiscoveryCache = command({
   description:
     'Copies block independent entries (sources, deployments, transactions, ...) from the update monitor cache into the local discovery cache.',
   args: {
-    redisUrl: positional({
-      type: string,
-      displayName: 'redisUrl',
+    redisUrl: option({
+      type: optional(string),
+      long: 'redis-url',
+      description:
+        'update monitor cache URL, defaults to DISCOVERY_CACHE_URI from the environment or .env',
     }),
   },
   handler: async (args) => {
     const { commandOptions, createClient } = await import('redis')
+    const redisUrl = args.redisUrl ?? getEnv().string('DISCOVERY_CACHE_URI')
     const cli = createCliLogger({ output: process.stdout, quiet: false })
     const clients = FETCHED_KINDS.map(() => {
       const client = createClient({
-        url: args.redisUrl,
+        url: redisUrl,
         socket: { reconnectStrategy: false },
       })
       client.on('error', (error) => cli.log(chalk.red(String(error))))
