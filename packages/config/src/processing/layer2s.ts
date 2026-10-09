@@ -32,6 +32,7 @@ import { dbk } from '../projects/dbk/dbk'
 import { degate } from '../projects/degate/degate'
 import { degate2 } from '../projects/degate2/degate2'
 import { degate3 } from '../projects/degate3/degate3'
+import { derivev3 } from '../projects/derivev3/derivev3'
 import { deversifi } from '../projects/deversifi/deversifi'
 import { dydx } from '../projects/dydx/dydx'
 import { ebichain } from '../projects/ebichain/ebichain'
@@ -198,6 +199,7 @@ export const layer2s: ScalingProject[] = [
   degate,
   degate2,
   degate3,
+  derivev3,
   dydx,
   ebichain,
   eclipse,
