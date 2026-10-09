@@ -35,7 +35,7 @@ export async function getPrivacySummaryData(
       metadata: getMetadata(manifest, {
         name: 'Privacy',
         description:
-          'Track live balances and daily privacy flows across tracked privacy protocols.',
+          'Live balances, flows and privacy assessments of privacy protocols on Ethereum.',
         url,
         openGraph: {
           image: '/meta-images/privacy/summary/opengraph-image.png',

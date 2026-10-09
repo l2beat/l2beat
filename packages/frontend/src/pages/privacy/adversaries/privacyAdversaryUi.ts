@@ -10,7 +10,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
-  'On public blockchains like Ethereum, all actions transparent by default. A privacy protocol can at best cut the link between addresses or offer privacy while deposited. The colour says whether a careful user can keep the link, amount or recipient private against that adversary: green yes, yellow only outside supported options or by accepting another leak, red no.'
+  "Ethereum is public by default. Each protocol is rated on its main privacy promise, like hiding who paid, who received, how much, or which deposit became which withdrawal. Against each adversary, the colour says whether it holds for a careful user with the app's own settings: green yes, yellow only with significant extra work, red no."
 
 export const PRIVACY_EXPOSURE_LABEL: Record<PrivacyExposure, string> = {
   private: 'private',
