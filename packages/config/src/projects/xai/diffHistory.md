@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x53fd5c32ea1f636f645ace0a1f573edb44dceb91
+
+# Diff at Fri, 09 Oct 2026 08:15:46 GMT:
+
+- id: cfd22eb8
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1790891941
+- current timestamp: 1791533635
+
+## Description
+
+XaiSentryMultisig2: member removed, threshold 1/3 → 1/2.
+
+## Watched changes
+
+```diff
+    contract XaiSentryMultisig2 (arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 2 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x7d8d86ff2a3d62825e8aa69ab3f48501b5c7614c
 
 # Diff at Sun, 04 Oct 2026 05:55:37 GMT:
