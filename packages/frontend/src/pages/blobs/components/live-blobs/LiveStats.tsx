@@ -169,11 +169,17 @@ function StatusText({ status }: { status: LiveStatus }) {
 
 const RING_RADIUS = 6
 const RING_LENGTH = 2 * Math.PI * RING_RADIUS
+/**
+ * Under a device pixel of arc each at 2× density, so the ring still sweeps
+ * smoothly, while it changes on an eighth of the frames: each change restyles
+ * and repaints the page around it, and on a long page that is most of a frame
+ */
+const RING_STEPS = 96
 
 /**
  * How long until the next block, as a ring that fills over the 12 seconds:
- * the wait between blocks, made visible. Drawn straight to the elements on
- * every frame it is on screen, so it renders no React
+ * the wait between blocks, made visible. Drawn straight to the elements, and
+ * only when they would look different, so it renders no React
  */
 function NextBlock() {
   const clock = useChainClock()
@@ -181,14 +187,19 @@ function NextBlock() {
   const onScreen = useIsOnScreen(rootRef)
   const ringRef = useRef<SVGCircleElement>(null)
   const textRef = useRef<HTMLSpanElement>(null)
+  const drawnStep = useRef<number>(undefined)
 
   useAnimationFrame(() => {
     const progress = clock.progressNow()
     const into = progress - Math.floor(progress)
-    ringRef.current?.setAttribute(
-      'stroke-dashoffset',
-      String(RING_LENGTH * (1 - into)),
-    )
+    const step = Math.floor(into * RING_STEPS)
+    if (step !== drawnStep.current) {
+      drawnStep.current = step
+      ringRef.current?.setAttribute(
+        'stroke-dashoffset',
+        String(RING_LENGTH * (1 - step / RING_STEPS)),
+      )
+    }
     if (textRef.current) {
       const left = Math.max(1, Math.ceil((1 - into) * SLOT_SECONDS))
       writeText(textRef.current, `Next block in ${left}s`)
