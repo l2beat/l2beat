@@ -18,7 +18,7 @@ import {
 } from '../hooks'
 import { LivePulse } from '../LivePulse'
 import { LandingsContext } from '../landings'
-import { clampView } from '../lookBack'
+import { clampView, earliestView } from '../lookBack'
 import { type BlockLimits, type LivePoster, UNKNOWN_ID } from '../model'
 import { PointerTooltip } from '../PointerTooltip'
 import { useLiveBlobs } from '../useLiveBlobs'
@@ -33,6 +33,7 @@ import { BATCH_STAGGER, LAND_AFTER } from './motion'
 import { roundIcons } from './roundIcons'
 import { RECENT_BLOCKS, useBeaconChain } from './useBeaconChain'
 import { type BeltHover, useBelt } from './useBelt'
+import { useBeltSwipe } from './useBeltSwipe'
 import { usePastBlocks, withPast } from './usePastBlocks'
 
 interface Props {
@@ -152,6 +153,13 @@ export function LiveBlocks({ posters, limits }: Props) {
     },
   })
   dropBlock.current = belt.dropBlock
+  const swipe = useBeltSwipe({
+    position: belt.position,
+    blockPitch: layout?.blockPitch,
+    earliest: look.earliest,
+    onView: look.onView,
+    onHold: belt.hold,
+  })
   const hovered = belt.hover && findBatch(blocks, belt.hover.key)
   const hoveredPoster = hovered && posters[hovered.batch.posterIndex]
 
@@ -163,8 +171,22 @@ export function LiveBlocks({ posters, limits }: Props) {
     <div className="flex flex-col gap-3">
       <div
         ref={beltRef}
-        className={cn('relative', BELT_HEIGHT)}
-        {...belt.handlers}
+        // sideways swipes are the belt's; up and down still scroll the page
+        className={cn('relative touch-pan-y', BELT_HEIGHT)}
+        onPointerDown={(event) => {
+          swipe.handlers.onPointerDown(event)
+          belt.handlers.onPointerDown(event)
+        }}
+        onPointerMove={(event) => {
+          swipe.handlers.onPointerMove(event)
+          belt.handlers.onPointerMove(event)
+        }}
+        onPointerUp={swipe.handlers.onPointerUp}
+        onPointerCancel={swipe.handlers.onPointerCancel}
+        onPointerLeave={belt.handlers.onPointerLeave}
+        onClick={(event) => {
+          if (!swipe.isSwipeEnd()) belt.handlers.onClick(event)
+        }}
       >
         <canvas
           ref={canvasRef}
@@ -212,6 +234,7 @@ function useLookBack(layout: BeltLayout | undefined) {
     view: clampView(asked, day, before),
     head: day?.head,
     oldest: day && day.head - day.slots + 1,
+    earliest: day && earliestView(day, before),
     before,
     after,
     onView: (slot: number | undefined) =>

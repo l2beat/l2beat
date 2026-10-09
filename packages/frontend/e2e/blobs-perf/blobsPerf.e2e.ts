@@ -7,6 +7,20 @@ import {
   type Page,
   test,
 } from 'playwright/test'
+import {
+  BELT_PAINT_MARK,
+  bestOf,
+  countRestyledElements,
+  lowerOf,
+  metrics,
+  openBlobs,
+  readProbes,
+  resetProbes,
+  SLOT_MS,
+  type TraceEvent,
+  traceEvents,
+  untilNextSlotMs,
+} from './blobsPage'
 
 /**
  * Ratchet for watching /blobs live: the belt, the stats and the posters
@@ -37,8 +51,6 @@ import {
  * ceilings.json from the current run plus the margins below.
  */
 const CEILINGS_FILE = join(__dirname, 'ceilings.json')
-const SLOT_MS = 12_000
-const GENESIS_MS = 1606824023_000
 /** Before the slot's block comes in, which mock mode has two seconds in */
 const START_INTO_SLOT_MS = 500
 const WATCHES = 3
@@ -124,25 +136,6 @@ test.afterAll(() => {
   writeFileSync(CEILINGS_FILE, `${JSON.stringify(next, null, 2)}\n`)
 })
 
-/** /blobs scrolled to the belt, as a visitor watches it, once it is live */
-async function openBlobs(browser: Browser, width: number, height: number) {
-  const context = await browser.newContext({
-    viewport: { width, height },
-    deviceScaleFactor: 2,
-  })
-  const page = await context.newPage()
-  await page.addInitScript(countBeltPaints)
-  const cdp = await context.newCDPSession(page)
-  await cdp.send('Performance.enable')
-  await page.goto('/blobs', { waitUntil: 'load' })
-  await page.addStyleTag({ content: STOP_LIVE_PING })
-  await page.locator('canvas[role=img]').scrollIntoViewIfNeeded()
-  // the status is written twice, long and short, for the one the screen shows
-  await page.getByRole('status').filter({ hasText: 'Live' }).waitFor()
-  await page.evaluate(installFrameProbe)
-  return { page, cdp, close: () => context.close() }
-}
-
 /** What a slot cost to watch, or undefined if its block was missed */
 async function watchOneSlot(
   page: Page,
@@ -180,35 +173,6 @@ async function watchOneSlot(
   }
 }
 
-function untilNextSlotMs() {
-  const intoSlot = (Date.now() - GENESIS_MS) % SLOT_MS
-  return SLOT_MS - intoSlot
-}
-
-interface TraceEvent {
-  name: string
-  ph: string
-  /** Microseconds */
-  ts: number
-  args?: { elementCount?: number }
-}
-
-function traceEvents(trace: Buffer): TraceEvent[] {
-  const parsed = JSON.parse(trace.toString('utf8'))
-  return Array.isArray(parsed) ? parsed : parsed.traceEvents
-}
-
-/** Elements each style recalculation went through, summed over the trace */
-function countRestyledElements(events: TraceEvent[]) {
-  let restyled = 0
-  for (const event of events) {
-    if (event.name === 'UpdateLayoutTree' && event.ph === 'X') {
-      restyled += event.args?.elementCount ?? 0
-    }
-  }
-  return restyled
-}
-
 /**
  * The longest gap from one belt paint to the next, in trace microseconds;
  * undefined if the belt painted less than twice, so held still throughout
@@ -238,74 +202,3 @@ function paintsPerSecond(
   }
   return Math.round(paints / ((to - from) / 1e6))
 }
-
-function bestOf(runs: Measurement[]): Measurement {
-  const best = { ...runs[0]! }
-  for (const key of Object.keys(best) as (keyof Measurement)[]) {
-    best[key] = Math.min(...runs.map((r) => r[key]))
-  }
-  return best
-}
-
-function lowerOf(existing: number | undefined, measured: number) {
-  return existing === undefined ? measured : Math.min(existing, measured)
-}
-
-async function metrics(cdp: CDPSession) {
-  const { metrics } = await cdp.send('Performance.getMetrics')
-  const byName = Object.fromEntries(metrics.map((m) => [m.name, m.value]))
-  return {
-    LayoutCount: byName.LayoutCount ?? 0,
-    ScriptDuration: byName.ScriptDuration ?? 0,
-  }
-}
-
-// Strings rather than closures: tsx injects a __name helper the page lacks.
-
-// Headless Chromium runs even an opacity-only CSS animation on the main
-// thread, so the LIVE dot's ping would restyle and paint every frame and hide
-// any other per-frame cost; a browser with a GPU runs it on the compositor
-const STOP_LIVE_PING = '.animate-ping { animation: none !important; }'
-
-// The belt clears its canvas once for every frame it paints; the mark puts
-// that frame on the trace's clock
-const BELT_PAINT_MARK = 'belt-paint'
-const countBeltPaints = `(() => {
-  window.__beltPaints = 0
-  const clearRect = CanvasRenderingContext2D.prototype.clearRect
-  CanvasRenderingContext2D.prototype.clearRect = function (...args) {
-    if (this.canvas.isConnected) {
-      window.__beltPaints++
-      performance.mark('${BELT_PAINT_MARK}')
-    }
-    return clearRect.apply(this, args)
-  }
-})()`
-
-const installFrameProbe = `(() => {
-  const w = window
-  w.__frameGaps = []
-  let last = performance.now()
-  const loop = (now) => {
-    w.__frameGaps.push(now - last)
-    last = now
-    requestAnimationFrame(loop)
-  }
-  requestAnimationFrame(loop)
-})()`
-
-const resetProbes = `(() => {
-  window.__frameGaps = []
-  window.__beltPaints = 0
-  performance.clearMarks('${BELT_PAINT_MARK}')
-})()`
-
-// Over budget at 60 Hz, with a little slack for timer jitter
-const readProbes = `(() => {
-  const gaps = window.__frameGaps
-  return {
-    beltPaints: window.__beltPaints,
-    framesOverBudget: gaps.filter((g) => g > 20).length,
-    maxFrameMs: Math.round(Math.max(...gaps)),
-  }
-})()`

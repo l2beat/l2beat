@@ -336,7 +336,11 @@ function gel(color: string): CSSProperties {
   }
 }
 
-/** The day's blobs as one strip, a stretch of it per poster */
+/**
+ * The day's blobs as one strip, a stretch of it per poster. Stretches do not
+ * ease to their new size: a block moves them by less than a pixel, and
+ * easing `flex-grow` lays the whole strip out again on every frame
+ */
 function ShareStrip({
   shares,
   blobs,
@@ -356,7 +360,7 @@ function ShareStrip({
         <div
           key={share.id}
           title={`${share.name} · ${formatPercent(share.share)}`}
-          className="h-full min-w-[2px] rounded-[2px] transition-[flex-grow] duration-700 ease-out"
+          className="h-full min-w-[2px] rounded-[2px]"
           style={{ flexGrow: share.share, flexBasis: 0, ...gel(share.color) }}
         />
       ))}
