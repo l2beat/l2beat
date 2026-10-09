@@ -34,7 +34,7 @@ describe(getAuditsProjectTimeline.name, () => {
       { timestamp: NOW - 50 * DAY, type: 'code' },
       { timestamp: NOW - 10 * DAY, type: 'code' },
     ],
-    resets: [],
+    deployments: [],
     observedSince: NOW - 700 * DAY,
   }
   const ossification = { history, href: '/p#ossification' }
@@ -173,7 +173,7 @@ describe(getAuditsLaunch.name, () => {
         ossificationHistory: {
           contracts: [],
           changes: [],
-          resets: [],
+          deployments: [],
           observedSince: 100,
         },
         chainConfig: { sinceTimestamp: UnixTime(50) },

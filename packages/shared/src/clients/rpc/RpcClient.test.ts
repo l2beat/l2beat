@@ -41,6 +41,7 @@ describe(RpcClient.name, () => {
         transactions: [mockTx('0'), mockTx(undefined)],
         timestamp: 100,
         hash: '0xabcdef',
+        parentHash: '0xfedcba',
         number: 100,
         logsBloom: `0x${'0'.repeat(512)}`,
         parentBeaconBlockRoot: '0x123',
@@ -81,6 +82,7 @@ describe(RpcClient.name, () => {
       expect(result).toEqual({
         timestamp: 100,
         hash: '0xabcdef',
+        parentHash: '0xfedcba',
         logsBloom: `0x${'0'.repeat(512)}`,
         number: 100,
         parentBeaconBlockRoot: '0x123',
@@ -964,6 +966,7 @@ const mockResponse = (blockNumber: number) => ({
     transactions: [mockRawTx('0'), mockRawTx(undefined)],
     timestamp: `0x${blockNumber.toString(16)}`,
     hash: '0xabcdef',
+    parentHash: '0xfedcba',
     logsBloom: `0x${'0'.repeat(512)}`,
     number: `0x${blockNumber.toString(16)}`,
     parentBeaconBlockRoot: '0x123',

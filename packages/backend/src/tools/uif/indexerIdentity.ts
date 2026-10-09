@@ -25,4 +25,5 @@ export const INDEXER_NAMES = {
   PRIVACY_RELAYER_ACTIVITY: 'privacy_relayer_activity_indexer',
   PRIVACY_BUCKET_VALUE: 'privacy_bucket_value_indexer',
   ETHEREUM_BLOB_NOTIFIER: 'ethereum_blob_notifier',
+  LIVE_BLOBS: 'live_blobs_indexer',
 }

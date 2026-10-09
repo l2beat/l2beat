@@ -1,12 +1,12 @@
 import type {
   AvailDaTrackingConfig,
   CelestiaDaTrackingConfig,
-  EthereumDaTrackingConfig,
 } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, DaBlob } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
+import { matchEthereumConfigs } from './matchEthereumConfigs'
 
 export class DaService {
   generateRecords(
@@ -67,7 +67,7 @@ export class DaService {
         }
         case 'ethereum': {
           if (blob.type === 'ethereum') {
-            if (matchEthereumProject(blob, c)) {
+            if (matchEthereumConfigs([c], blob.blockNumber, blob).length > 0) {
               records.push({
                 timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
                 daLayer: blob.daLayer,
@@ -112,33 +112,6 @@ export class DaService {
 
     return records
   }
-}
-
-export function matchEthereumProject(
-  blob: { inbox: string; sequencer: string; topics: string[] },
-  config: EthereumDaTrackingConfig,
-) {
-  if (config.topics) {
-    const hasTopicMatch = config.topics.some((topic) =>
-      blob.topics.includes(topic.toLowerCase()),
-    )
-
-    if (hasTopicMatch) {
-      return true
-    }
-  }
-
-  const hasInboxMatch = config.inbox.toLowerCase() === blob.inbox.toLowerCase()
-
-  if (!config.sequencers || config.sequencers.length === 0) {
-    return hasInboxMatch
-  }
-
-  const hasMatchingSequencer = config.sequencers.some(
-    (sequencer) => sequencer.toLowerCase() === blob.sequencer.toLowerCase(),
-  )
-
-  return hasInboxMatch && hasMatchingSequencer
 }
 
 function matchCelestiaProject(

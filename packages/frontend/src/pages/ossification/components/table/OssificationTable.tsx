@@ -65,7 +65,7 @@ const columns = [
     },
   }),
   columnHelper.accessor('score', {
-    header: 'Ossification %\nlast reset',
+    header: 'Ossification %\nsince',
     cell: (ctx) => (
       <TwoRowCell>
         <TwoRowCell.First>

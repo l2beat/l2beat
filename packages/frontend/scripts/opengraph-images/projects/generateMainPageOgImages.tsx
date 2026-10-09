@@ -153,6 +153,9 @@ const mainPages: MainPage[] = [
     title: 'Native Rollups',
   },
   {
+    title: 'Blobs',
+  },
+  {
     title: 'The Infinite Garden',
   },
   {

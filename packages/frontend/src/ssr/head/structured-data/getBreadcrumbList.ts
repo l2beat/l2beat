@@ -40,6 +40,7 @@ const SECTIONS: Record<string, Breadcrumb> = {
     name: 'Data Availability',
     path: '/data-availability/summary',
   },
+  blobs: { name: 'Blobs', path: '/blobs' },
   'zk-catalog': { name: 'ZK Catalog', path: '/zk-catalog' },
   publications: { name: 'Publications', path: '/publications' },
   governance: { name: 'Governance', path: '/governance' },

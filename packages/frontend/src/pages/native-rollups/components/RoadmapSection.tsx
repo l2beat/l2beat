@@ -26,8 +26,8 @@ export function RoadmapSection() {
   return (
     <section id="roadmap" className="mt-8 md:mt-12">
       <SectionHeading
-        title="From re-execution to native proof verification"
-        description="The research has moved from the original EXECUTE proposal to a program-agnostic proof architecture. Future dates are targets, not Ethereum fork commitments."
+        title="From re-execution to proofs Ethereum verifies"
+        description="The research has moved from the original EXECUTE proposal to proofs declared through EIP-8288 and checked against the EIP-8357 registry. What comes next depends on L1, so it has no dates."
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
         {ROADMAP_YEARS.map((group, groupIndex) => {
@@ -58,7 +58,7 @@ export function RoadmapSection() {
                   const connector = connectorClassName(item, group.items[i + 1])
                   return (
                     <li
-                      key={`${item.date}-${item.title}`}
+                      key={item.title}
                       className="relative pb-8 pl-9 last:pb-0"
                     >
                       {connector && (
@@ -76,15 +76,19 @@ export function RoadmapSection() {
                         )}
                       />
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <span className="font-medium text-label-value-14 text-secondary">
-                          {item.date}
-                        </span>
-                        <span
-                          aria-hidden
-                          className="text-label-value-14 text-secondary"
-                        >
-                          ·
-                        </span>
+                        {item.date && (
+                          <>
+                            <span className="font-medium text-label-value-14 text-secondary">
+                              {item.date}
+                            </span>
+                            <span
+                              aria-hidden
+                              className="text-label-value-14 text-secondary"
+                            >
+                              ·
+                            </span>
+                          </>
+                        )}
                         <span
                           className={cn(
                             'font-semibold text-label-value-14',
@@ -124,8 +128,9 @@ export function RoadmapSection() {
             <p className="text-paragraph-15 leading-relaxed">
               Native rollups are{' '}
               <strong>not part of any scheduled Ethereum hard fork</strong>.
-              EIP-8079 remains a draft, the EIP-8025 feature is experimental,
-              and proof-carrying transactions are still a research proposal.
+              EIP-8288 and EIP-8357 are drafts, optional execution proofs
+              (EIP-8025) are proposed for Hegotá, and the mandatory proofs
+              native rollups need are expected in K* at the earliest.
             </p>
           </div>
         </div>

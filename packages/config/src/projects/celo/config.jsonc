@@ -12,19 +12,12 @@
   ],
   "names": {
     "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112": "CeloProxyAdminOwner",
-    "celo:0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger",
-    "celo:0x4200000000000000000000000000000000000010": "L2StandardBridge",
-    "celo:0x4200000000000000000000000000000000000016": "L2ToL1MessagePasser",
-    "celo:0x4200000000000000000000000000000000000018": "ProxyAdmin",
     "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223": "CeloProxyAdminOwner - L2 Alias"
   },
   "overrides": {
     // L2 predeploys: critical from the L2 migration (chainStart). They were
     // written into state by the migration, but discovery dates them at the Celo L1
-    // genesis (2020-04-22); harmless, they are older than every other row. As of
-    // 2026-10-03 the implementations 0xC0d3...0007 and 0xC0d3...0010 are
-    // unverified on celoscan, celo.blockscout.com and sourcify, so Celo scores 0
-    // until they are verified.
+    // genesis (2020-04-22); harmless, they are older than every other row.
     "celo:0x4200000000000000000000000000000000000007": {
       "critical": { "sinceTimestamp": 1742960663 },
       "fields": {
@@ -39,26 +32,12 @@
     },
     "celo:0x4200000000000000000000000000000000000016": {
       "critical": { "sinceTimestamp": 1742960663 },
-      "manualSourcePaths": {
-        "celo:0xC0D3C0d3c0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "https://celo.blockscout.com/address/0xC0D3C0d3c0d3c0d3C0d3C0D3c0D3c0d3c0D30016"
-      },
       "fields": {
         "$admin": { "severity": "HIGH" }
       }
     },
     "celo:0x4200000000000000000000000000000000000018": {
-      "critical": { "sinceTimestamp": 1742960663 },
-      "fields": {
-        "owner": {
-          "severity": "HIGH",
-          "handler": {
-            "type": "call",
-            "method": "function owner() view returns (address)",
-            "args": []
-          },
-          "description": "L2 alias of the CeloProxyAdminOwner. It can upgrade the security-critical L2 predeploys."
-        }
-      }
+      "critical": { "sinceTimestamp": 1742960663 }
     },
     "eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753": {
       // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations

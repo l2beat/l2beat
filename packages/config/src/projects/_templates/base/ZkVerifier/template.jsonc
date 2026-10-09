@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ZkVerifier",
   "critical": true,
-  "description": "Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.",
+  "description": "Thin router that forwards SP1 ZK proof verification to the {{SP1_VERIFIER}}. Can be permanently nullified.",
   "fields": {
     "nullified": {
       "severity": "HIGH"

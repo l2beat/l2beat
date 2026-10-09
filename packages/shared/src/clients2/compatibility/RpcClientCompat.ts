@@ -380,6 +380,7 @@ export function toEVMBlock(
   }
   const base: EVMBlock = {
     hash: block.hash,
+    parentHash: block.parentHash,
     number: Number(block.number),
     timestamp: Number(block.timestamp),
     logsBloom: block.logsBloom,

@@ -150,6 +150,16 @@ export const searchBarPages = withIndex([
         },
       ]
     : []),
+  ...(env.CLIENT_SIDE_BLOBS_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Blobs',
+          href: '/blobs',
+          tags: ['pages', 'blobs', 'da', 'data', 'availability'],
+        },
+      ]
+    : []),
   {
     category: 'zkCatalog',
     name: 'ZK Catalog',
