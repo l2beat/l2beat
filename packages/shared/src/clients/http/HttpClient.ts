@@ -14,11 +14,11 @@ export class HttpClient {
     if (!res.ok) {
       // Release the socket back to the pool instead of leaving it pinned
       await res.body?.cancel()
-      throw new Error(`HTTP error: ${res.status} ${res.statusText}`, {
-        cause: {
-          url: sanitizeUrl(url),
-        },
-      })
+      throw new HttpError(
+        res.status,
+        `HTTP error: ${res.status} ${res.statusText}`,
+        { cause: { url: sanitizeUrl(url) } },
+      )
     }
 
     return (await res.json()) as json
@@ -26,5 +26,16 @@ export class HttpClient {
 
   fetchRaw(url: string, init: FetchInit): Promise<Response> {
     return fetchWithTimeout(url, init)
+  }
+}
+
+/** Lets callers tell a rejected request from one that a retry would fix */
+export class HttpError extends Error {
+  constructor(
+    readonly status: number,
+    message: string,
+    options?: ErrorOptions,
+  ) {
+    super(message, options)
   }
 }

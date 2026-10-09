@@ -8,8 +8,10 @@ import { v } from '@l2beat/validate'
 import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import { HttpError } from '../http/HttpClient'
 import type { LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
+import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
 import {
   BlockNumberResponse,
@@ -39,6 +41,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   multicallClient?: MulticallV3Client
   rpcMetrics?: RpcMetricsRecorder
   timeout?: number
+  maxBatchSize?: number
 }
 
 type Param =
@@ -50,10 +53,12 @@ type Param =
 
 export class RpcClient extends ClientCore implements IRpcClient {
   multicallClient?: MulticallV3Client
+  private readonly batcher: RpcBatcher
 
   constructor(private readonly $: Dependencies) {
     super({ ...$, sourceName: $.chain })
     this.multicallClient = $.multicallClient
+    this.batcher = new RpcBatcher($.maxBatchSize)
   }
 
   async getLatestBlockNumber() {
@@ -386,7 +391,16 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   // TODO: add multi-method support
+  /** Results in the order of `paramsBatch` */
   async batchQuery(method: string, paramsBatch: Param[][]) {
+    return await this.batcher.run(
+      paramsBatch,
+      (chunk) => this.sendBatch(method, chunk),
+      async (params) => RpcResponse.parse(await this.query(method, params)),
+    )
+  }
+
+  private async sendBatch(method: string, paramsBatch: Param[][]) {
     const queries = paramsBatch.map((params) => ({
       method: method,
       params: params,
@@ -395,13 +409,29 @@ export class RpcClient extends ClientCore implements IRpcClient {
     }))
 
     try {
-      const response = await this.fetch(this.$.url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(queries),
-        redirect: 'follow',
-        timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
-      })
+      let response: json
+      try {
+        response = await this.fetch(
+          this.$.url,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(queries),
+            redirect: 'follow',
+            timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
+          },
+          { skipValidation: true, isPermanentError: isBatchRejectedHttpError },
+        )
+      } catch (error) {
+        if (isBatchRejectedHttpError(error)) {
+          return this.onBatchRejected(method, paramsBatch, error)
+        }
+        throw error
+      }
+      // fetch has thrown for any status but 2xx
+      if (isBatchRejected(200, response)) {
+        return this.onBatchRejected(method, paramsBatch, response)
+      }
 
       const results = new Map(
         v
@@ -421,6 +451,19 @@ export class RpcClient extends ClientCore implements IRpcClient {
         method,
       })
     }
+  }
+
+  private onBatchRejected(
+    method: string,
+    paramsBatch: Param[][],
+    reason: unknown,
+  ): typeof BATCH_REJECTED {
+    this.$.logger.warn('Batch rejected, calling one by one', {
+      method,
+      size: paramsBatch.length,
+      reason: reason instanceof Error ? reason.message : JSON.stringify(reason),
+    })
+    return BATCH_REJECTED
   }
 
   override validateResponse(response: json): {
@@ -460,6 +503,10 @@ function buildCallObject(callParams: CallParameters): Record<string, string> {
     to: callParams.to.toString(),
     input: callParams.input.toString(),
   }
+}
+
+function isBatchRejectedHttpError(error: unknown) {
+  return error instanceof HttpError && isBatchRejected(error.status, undefined)
 }
 
 export function isLimitExceededError({ message }: { message: string }) {

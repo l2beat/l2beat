@@ -53,6 +53,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   multicallClient?: MulticallV3Client
   rpcMetricsAggregator?: RpcMetricsAggregator
   timeout?: number
+  maxBatchSize?: number
 }
 
 export interface IRpcClient extends BlockClient, LogsClient {
@@ -71,7 +72,7 @@ export interface IRpcClient extends BlockClient, LogsClient {
   getBlockTimestamps(blockNumbers: number[]): Promise<Map<number, number>>
   getTransaction(txHash: string): Promise<EVMTransaction>
   getTransactionReceipt(txHash: string): Promise<Receipt>
-  /** In one batch request, in the order of `txHashes` */
+  /** In batch requests, in the order of `txHashes` */
   getTransactionReceipts(txHashes: string[]): Promise<Receipt[]>
   getBalance(
     holder: EthereumAddress,
@@ -124,6 +125,7 @@ export class RpcClientCompat implements IRpcClient {
         rpcChain: deps.chain,
         rpcClient: RpcClientCompat.name,
       }),
+      deps.maxBatchSize,
     )
     const retryOptions = toRetryOptions(deps.retryStrategy)
     const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)

@@ -1,5 +1,10 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import {
+  BATCH_REJECTED,
+  isBatchRejected,
+  RpcBatcher,
+} from '../clients/rpc/RpcBatcher'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
 import type { Http } from './Http'
 
@@ -29,13 +34,18 @@ export interface FilterParameter {
 }
 
 export class EthRpcClient {
+  private readonly batcher: RpcBatcher
+
   constructor(
     private http: Http,
     private url: string,
     private nextId: () => string | number = randomId,
     private timeout?: number,
     private readonly rpcMetrics?: RpcMetricsRecorder,
-  ) {}
+    maxBatchSize?: number,
+  ) {
+    this.batcher = new RpcBatcher(maxBatchSize)
+  }
 
   async getChainId(): Promise<bigint> {
     const data = await this.rawCall('eth_chainId')
@@ -197,7 +207,7 @@ export class EthRpcClient {
     return ReceiptResponse.parse(data)
   }
 
-  /** In one batch request, in the order of `hashes` */
+  /** In batch requests, in the order of `hashes` */
   async getTransactionReceipts(
     hashes: string[],
   ): Promise<(RpcReceipt | null)[]> {
@@ -231,6 +241,17 @@ export class EthRpcClient {
     method: string,
     paramsList: unknown[],
   ): Promise<unknown[]> {
+    return await this.batcher.run(
+      paramsList,
+      (chunk) => this.sendBatch(method, chunk),
+      (params) => this.rawCall(method, params),
+    )
+  }
+
+  private async sendBatch(
+    method: string,
+    paramsList: unknown[],
+  ): Promise<unknown[] | typeof BATCH_REJECTED> {
     const ids = paramsList.map(() => this.nextId())
 
     try {
@@ -251,6 +272,9 @@ export class EthRpcClient {
       try {
         data = JSON.parse(response.body)
       } catch {}
+      if (isBatchRejected(response.status, data)) {
+        return BATCH_REJECTED
+      }
       const parsed = v.array(JsonRpcResponse).safeValidate(data)
       if (!parsed.success) {
         throw new Error(

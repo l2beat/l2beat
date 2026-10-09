@@ -84,6 +84,9 @@ export async function getDaTrackingConfig(
             'ETHEREUM_LIVE_BLOBS_RPC_CALLS_PER_MINUTE',
             1200,
           ),
+          maxBatchSize: env.optionalInteger(
+            'ETHEREUM_LIVE_BLOBS_RPC_MAX_BATCH_SIZE',
+          ),
         },
       }
     }

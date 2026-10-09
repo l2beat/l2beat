@@ -1,8 +1,9 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { FetchInit } from '../clients/http/fetchWithTimeout'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
 import { EthRpcClient } from './EthRpcClient'
-import { Http, MockHttp } from './Http'
+import { Http, type HttpResponse, MockHttp, makeHttpResponse } from './Http'
 
 describe(EthRpcClient.name, () => {
   it('correctly calls an endpoint', async () => {
@@ -101,6 +102,113 @@ describe(EthRpcClient.name, () => {
     await expect(
       client.getTransactionReceipts([HASH_A, HASH_B]),
     ).toBeRejectedWith('RPC call failed. RPC code: -32005, message: Limit')
+  })
+
+  describe('batches', () => {
+    const REJECTIONS: Record<string, (request: RpcRequest[]) => HttpResponse> =
+      {
+        // dRPC's free plan
+        'every call fails with a batch error': (request) =>
+          ok(
+            request.map((call) =>
+              rpcError(
+                call.id,
+                'Batch of more than 3 requests are not allowed',
+              ),
+            ),
+          ),
+        // publicnode
+        'one batch error for the whole batch': (request) =>
+          ok([rpcError(request[0]?.id ?? null, 'batch too large')]),
+        // Cloudflare, Flashbots
+        'one error in place of the array': () =>
+          ok(rpcError(null, 'too many RPC calls in batch request')),
+        'HTTP 413': () => makeHttpResponse(413, 'Request Entity Too Large'),
+      }
+
+    const TRANSIENT_FAILURES: Record<
+      string,
+      (request: RpcRequest | RpcRequest[]) => HttpResponse
+    > = {
+      'network error': () => {
+        throw new Error('Failed to fetch: network error.')
+      },
+      'HTTP 503': () => makeHttpResponse(503, 'Oops, our server is down'),
+      'HTTP 429 with an error in place of the array': () =>
+        makeHttpResponse(
+          429,
+          JSON.stringify(rpcError(null, 'Rate limit exceeded')),
+        ),
+    }
+
+    // Methodology: 5 receipts at 2 per batch, a node that answers every batch
+    // reversed; the requests must hold at most 2 calls (the lone fifth goes
+    // as a plain call) and the results must follow the asked order
+    it('splits calls into requests of maxBatchSize and keeps their order', async () => {
+      const node = new FakeNode(answerReversed)
+      const client = batchingClient(node, 2)
+
+      const receipts = await client.getTransactionReceipts(HASHES)
+
+      expect(receipts.map((r) => r?.transactionHash)).toEqual(HASHES)
+      expect(node.requests.map(callsIn)).toEqual([2, 2, 'single'])
+    })
+
+    // Methodology: the node drops a call from the second batch only
+    it('refuses a batch that lacks the answer to one of its calls', async () => {
+      const node = new FakeNode((request) => {
+        const answer = answerReversed(request)
+        if (Array.isArray(request) && request[0].params[0] === HASHES[2]) {
+          return ok(JSON.parse(answer.body).slice(1))
+        }
+        return answer
+      })
+      const client = batchingClient(node, 2)
+
+      await expect(client.getTransactionReceipts(HASHES)).toBeRejectedWith(
+        'RPC call failed. ID mismatch.',
+      )
+    })
+
+    // Methodology: each case is a rejection as a real RPC sends it, for any
+    // batch over 1 call; the calls must then go one by one, and the next
+    // batches must be half the rejected size
+    for (const [name, reject] of Object.entries(REJECTIONS)) {
+      it(`calls one by one when the RPC rejects the batch: ${name}`, async () => {
+        const node = new FakeNode((request) =>
+          Array.isArray(request) && request.length > 2
+            ? reject(request)
+            : answerReversed(request),
+        )
+        const client = batchingClient(node, 4)
+
+        const first = await client.getTransactionReceipts(HASHES.slice(0, 4))
+        const second = await client.getTransactionReceipts(HASHES.slice(0, 4))
+
+        expect(first.map((r) => r?.transactionHash)).toEqual(HASHES.slice(0, 4))
+        expect(second).toEqual(first)
+        expect(node.requests.map(callsIn)).toEqual([
+          4,
+          ...Array(4).fill('single'),
+          2,
+          2,
+        ])
+      })
+    }
+
+    // Methodology: failures of the request, not of its size; each must reach
+    // the caller, which retries, after one request and no single calls
+    for (const [name, fail] of Object.entries(TRANSIENT_FAILURES)) {
+      it(`does not call one by one when a retry would do: ${name}`, async () => {
+        const node = new FakeNode(fail)
+        const client = batchingClient(node, 4)
+
+        await expect(
+          client.getTransactionReceipts(HASHES.slice(0, 4)),
+        ).toBeRejected()
+        expect(node.requests.map(callsIn)).toEqual([4])
+      })
+    }
   })
 
   it('eth_call success', async () => {
@@ -447,6 +555,68 @@ for (const url of URLS) {
 
 const HASH_A = `0x${'a'.repeat(64)}`
 const HASH_B = `0x${'b'.repeat(64)}`
+const HASHES = [1, 2, 3, 4, 5].map((i) => `0x${i.toString().repeat(64)}`)
+
+interface RpcRequest {
+  id: number
+  params: [string]
+}
+
+/** Answers by the request body, so batches sent at once get their own answers */
+class FakeNode extends Http {
+  requests: (RpcRequest | RpcRequest[])[] = []
+
+  constructor(
+    private answer: (request: RpcRequest | RpcRequest[]) => HttpResponse,
+  ) {
+    super()
+  }
+
+  override fetch(_url: string, init: FetchInit) {
+    const request = JSON.parse(init.body as string)
+    this.requests.push(request)
+    try {
+      return Promise.resolve(this.answer(request))
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+}
+
+function batchingClient(http: Http, maxBatchSize: number) {
+  let id = 0
+  return new EthRpcClient(
+    http,
+    'https://rpc.url',
+    () => ++id,
+    undefined,
+    undefined,
+    maxBatchSize,
+  )
+}
+
+function answerReversed(request: RpcRequest | RpcRequest[]) {
+  const answer = (call: RpcRequest) => ({
+    jsonrpc: '2.0',
+    id: call.id,
+    result: receipt(call.params[0]),
+  })
+  return ok(
+    Array.isArray(request) ? request.map(answer).reverse() : answer(request),
+  )
+}
+
+function callsIn(request: RpcRequest | RpcRequest[]) {
+  return Array.isArray(request) ? request.length : 'single'
+}
+
+function ok(body: unknown) {
+  return makeHttpResponse(200, JSON.stringify(body))
+}
+
+function rpcError(id: number | null, message: string) {
+  return { jsonrpc: '2.0', id, error: { code: -32600, message } }
+}
 
 function receipt(transactionHash: string) {
   return {
