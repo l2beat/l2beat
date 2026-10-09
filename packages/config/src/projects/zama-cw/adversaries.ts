@@ -97,9 +97,12 @@ export function zamaCwAdversaries(
         ],
       },
       networkObserver: {
-        sentiment: 'good',
+        sentiment: 'warning',
         exposureShort:
-          'Amounts leave your device only as FHE ciphertext and come back encrypted to a key only your device holds.',
+          "Zama's app is closed source, so what it sends to third parties is up to Zama and can change at any time.",
+        exposureContinued:
+          "Through Zama's open SDK, amounts leave your device only as FHE ciphertext and come back encrypted to a key only your device holds.",
+        advice: "Use a client built on Zama's open SDK.",
         interior: INTERIOR,
         sources: [
           {

@@ -12,6 +12,6 @@
 ## Privacy can be lost if
 1. {{kmsKeyThreshold}} of {{kmsSignerCount}} KMS operators combine their key shares (see privileged insider).
 2. the token owner appoints an observer or upgrades the token (see privileged insider).
-3. Zama changes its closed-source app to leak amounts (see privileged insider).
+3. Zama changes its closed-source app to leak amounts to itself or to third parties (see privileged insider and network observer).
 4. public wraps and unwraps bound a user's balance (see chain analyst).
 5. lattice cryptography is broken or old KMS key shares leak, which decrypts every published ciphertext (see future adversary).
