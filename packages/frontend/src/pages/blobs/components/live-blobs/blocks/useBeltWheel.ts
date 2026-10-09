@@ -44,7 +44,10 @@ export function useBeltWheel(
   useEffect(() => {
     const element = ref.current
     if (!element) return
-    let under: number | undefined
+    // where the scroll has taken the belt; 'live' once it reached live, kept
+    // until the scroll ends, as the belt may still be easing there and a
+    // trailing coast must not start again from where it is
+    let under: number | 'live' | undefined
     let timer: ReturnType<typeof setTimeout> | undefined
 
     const letGo = () => {
@@ -59,9 +62,12 @@ export function useBeltWheel(
       if (!blockPitch || across === undefined) return
       event.preventDefault()
       clearTimeout(timer)
-      const next = (under ?? position()) + across / blockPitch
+      timer = setTimeout(letGo, SCROLL_ENDS_AFTER)
+      const from = under === 'live' ? live() : (under ?? position())
+      const next = from + across / blockPitch
       if (next >= live()) {
-        letGo()
+        under = 'live'
+        onHold(undefined)
         onView(undefined)
         return
       }
@@ -70,7 +76,6 @@ export function useBeltWheel(
       // the block nearest, for what goes with the view: the day's band
       // under the belt, and the pages it loads
       onView(Math.round(under))
-      timer = setTimeout(letGo, SCROLL_ENDS_AFTER)
     }
 
     element.addEventListener('wheel', onWheel, { passive: false })
