@@ -17,10 +17,16 @@ export interface Landing {
 export interface Landings {
   emit: (landing: Landing) => void
   subscribe: (listener: (landing: Landing) => void) => () => void
+  /**
+   * The head the page first had data at, taken as `head` if it has had none.
+   * The reader never saw the window without its block
+   */
+  firstHead: (head: number) => number
 }
 
 export function createLandings(): Landings {
   const listeners = new Set<(landing: Landing) => void>()
+  let first: number | undefined
   return {
     emit: (landing) => {
       for (const listener of listeners) listener(landing)
@@ -29,10 +35,24 @@ export function createLandings(): Landings {
       listeners.add(listener)
       return () => listeners.delete(listener)
     },
+    firstHead: (head) => {
+      first ??= head
+      return first
+    },
   }
 }
 
 export const LandingsContext = createContext<Landings | undefined>(undefined)
+
+/**
+ * Whether the block at `slot` came after the page loaded. The belt drops the
+ * block the page loaded with too, but no number has been seen without it, so
+ * counting it up would show an arrival the reader never missed: a "+11" by a
+ * number that was never 11 lower
+ */
+export function cameAfterLoad(landings: Landings, slot: number | undefined) {
+  return slot !== undefined && slot > landings.firstHead(slot)
+}
 
 /**
  * Longest a number waits for `blobs` of a block to land, in milliseconds. The
@@ -49,8 +69,9 @@ const HOLD_SLACK = 1
 /**
  * A total over the window, as the belt shows blobs come and go. What a new
  * block brought is counted in as the belt lands it, rather than when the data
- * comes in, and every landing it hears is an arrival to show. What left the
- * window with that block is let go of once the belt has moved on to the next
+ * comes in, and each landing is an arrival to show. The block the page loaded
+ * with is counted in from the start, and its landings show nothing. What left
+ * the window with a block is let go of once the belt has moved on to the next
  * slot: let go of at once, the number would dip just before the new blobs
  * land and climb back after, every block.
  *
@@ -71,11 +92,12 @@ export function useLandedTotal(
   // put right here, before the read below: the belt's correction comes in
   // its effect, after this render has already judged the newest block
   if (stamp !== undefined) clock.correct(stamp)
+  const toLand = landings && cameAfterLoad(landings, stamp) ? fresh : 0
   const [held, setHeld] = useState<Held>(() =>
     firstHeld(
       stamp,
       total,
-      landings ? fresh : 0,
+      toLand,
       blockBlobs,
       Math.floor(clock.progressNow()),
     ),
@@ -89,7 +111,7 @@ export function useLandedTotal(
         held,
         stamp,
         total,
-        landings ? fresh : 0,
+        toLand,
         blockBlobs,
         Math.floor(clock.progressNow()),
       ),
@@ -125,7 +147,11 @@ export function useLandedTotal(
     () =>
       landings?.subscribe((landing) => {
         // a landing from above the stamp is of a block the chain took back
-        if (!matches(landing) || isAbove(landing.slot, stampInHand.current)) {
+        if (
+          !matches(landing) ||
+          isAbove(landing.slot, stampInHand.current) ||
+          !cameAfterLoad(landings, landing.slot)
+        ) {
           return
         }
         setHeld((current) => ({
@@ -160,9 +186,8 @@ export interface Held {
 
 /**
  * What to hold back as a number starts. The belt drops the newest block if it
- * is of this slot or the last (as `arrivesNow` has it) whether the page just
- * loaded or the number just came on it, so what that block brought waits for
- * its landing either way
+ * is of this slot or the last (as `arrivesNow` has it), so a number that comes
+ * on as it does, like a poster's first row, waits for its landing
  */
 export function firstHeld(
   stamp: number | undefined,
