@@ -137,7 +137,7 @@ export const uniswapv2: BaseProject = {
       ],
       additionalConsiderations: [
         'Per-pair token and liquidity risk stays with the user.',
-        'No circuit breakers or rate limits: nothing can pause a pair or cap withdrawals. Each pair holds its own funds, so a faulty token can only affect the pairs that include it, while a bug in the shared pair code could reach every pair.',
+        'No circuit breakers or rate limits. A faulty token only affects its own pairs, but a bug in the pair code would reach all of them.',
       ],
     },
   },

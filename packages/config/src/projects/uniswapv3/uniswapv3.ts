@@ -207,7 +207,7 @@ export const uniswapv3: BaseProject = {
       ],
       additionalConsiderations: [
         'Per-pool token and liquidity risk stays with the user.',
-        'No circuit breakers or rate limits: nothing can pause a pool or cap withdrawals. Each pool holds its own funds, so a faulty token can only affect the pools that include it, while a bug in the shared pool code could reach every pool.',
+        'No circuit breakers or rate limits. A faulty token only affects its own pools, but a bug in the pool code would reach all of them.',
       ],
       notReviewed: [
         'The routers and approval contracts that sit outside the pools, which are assessed separately.',
