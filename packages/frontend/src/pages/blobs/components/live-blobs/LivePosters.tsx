@@ -77,7 +77,7 @@ const COLUMNS: {
   },
   { label: 'Share', align: 'right', tooltip: 'Of all blobs in the window' },
   {
-    label: 'Every',
+    label: 'Interval',
     align: 'right',
     tooltip: 'Time from one batch to the next, on average over the window',
   },
