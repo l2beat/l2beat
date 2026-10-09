@@ -3,7 +3,7 @@ import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { statSync } from 'fs'
 import { readFile } from 'fs/promises'
 import path from 'path'
-import { listFilesRecursively } from '../compare-flat-sources/common'
+import { listFilesRecursively } from '../common/listFilesRecursively'
 import { getCodePaths } from '../discovery/getCodePaths'
 
 export class AnalyzeSourceError extends Error {

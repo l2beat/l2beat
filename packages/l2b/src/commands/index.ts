@@ -1,13 +1,9 @@
 import { AddShape } from './AddShape'
-import { AdriansCommand } from './AdriansCommand'
 import { Analyze } from './Analyze'
 import { AuditCoverage } from './AuditCoverage'
 import { BlobSenders } from './BlobSenders'
 import { CheckRpc } from './CheckRpc'
 import { Colorize } from './Colorize'
-import { CompareFlatSources } from './CompareFlatSources'
-import { CompareOpStacks } from './CompareOpStacks'
-import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
 import { CropsAttest } from './CropsAttest'
 import { CropsVerify } from './CropsVerify'
@@ -21,9 +17,7 @@ import { FetchDiscoveryCache } from './FetchDiscoveryCache'
 import { FetchFlatSources } from './FetchFlatSources'
 import { FetchZkStack } from './FetchZkStack'
 import { FindCelestiaNamespace } from './FindCelestiaNamespace'
-import { FindL2 } from './FindL2'
 import { FindUnusedShapes } from './FindUnusedShapes'
-import { FixDiscoverySchemaPaths } from './FixDiscoverySchemaPaths'
 import { Flatten } from './Flatten'
 import { FlattenerValidator } from './FlattenerValidator'
 import { GenerateEntrypoints } from './GenerateEntrypoints'
@@ -44,7 +38,6 @@ import { RefreshDiscovery } from './RefreshDiscovery'
 import { RegenerateShapeHashes } from './RegenerateShapeHashes'
 import { ScanKintoAm } from './ScanKintoAm'
 import { ShowPermissions } from './ShowPermissions'
-import { SolFmt } from './SolFmt'
 import { StarknetAccessControl } from './StarknetAccessControl'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
@@ -55,15 +48,11 @@ import { ZkGovProposal } from './ZkGovProposal'
 export function getSubcommands() {
   return [
     AddShape,
-    AdriansCommand,
     Analyze,
     AuditCoverage,
     BlobSenders,
     CheckRpc,
     Colorize,
-    CompareFlatSources,
-    CompareOpStacks,
-    CompareOrbitStacks,
     CountUserOperations,
     CropsAttest,
     CropsVerify,
@@ -79,9 +68,7 @@ export function getSubcommands() {
     FetchFlatSources,
     FetchZkStack,
     FindCelestiaNamespace,
-    FindL2,
     FindUnusedShapes,
-    FixDiscoverySchemaPaths,
     Flatten,
     FlattenerValidator,
     GenerateEntrypoints,
@@ -101,7 +88,6 @@ export function getSubcommands() {
     RegenerateShapeHashes,
     ScanKintoAm,
     ShowPermissions,
-    SolFmt,
     StarknetAccessControl,
     StarknetProgramHashes,
     TVL,
