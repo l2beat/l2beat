@@ -13,8 +13,8 @@ export function CropsSection() {
   return (
     <section className="mt-8 md:mt-12">
       <SectionHeading
-        title="The four crops"
-        description="Each crop is judged on its own. Here are the criteria."
+        title="The four properties"
+        description="What we look for in each property. This is guidance, not a checklist: the rating is our judgment and can weigh things that are not listed here."
       />
       <div className="flex flex-col gap-4 md:gap-6">
         {CROP_COLUMNS.map((column, index) => (
@@ -69,7 +69,7 @@ function CropCard({
       )}
       <div className="mt-5 grid gap-6 md:grid-cols-2 md:gap-8">
         <div>
-          <h4 className="font-semibold text-subtitle-12 uppercase tracking-wider">
+          <h4 className="font-semibold text-paragraph-14 text-secondary">
             The minimum
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">
@@ -87,7 +87,7 @@ function CropCard({
           </ul>
         </div>
         <div>
-          <h4 className="font-semibold text-subtitle-12 uppercase tracking-wider">
+          <h4 className="font-semibold text-paragraph-14 text-secondary">
             What pulls it down
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">
@@ -122,17 +122,17 @@ function Minimum({
   if (after === undefined || !reference) {
     return before
   }
+  const isExternal = reference.href.startsWith('http')
   return (
     <>
       {before}
       <a
         href={reference.href}
-        target="_blank"
-        rel="noreferrer noopener"
+        {...(isExternal && { target: '_blank', rel: 'noreferrer noopener' })}
         className="inline-flex items-baseline gap-1 font-medium text-link"
       >
         {reference.label}
-        <CustomLinkIcon className="fill-current" />
+        {isExternal && <CustomLinkIcon className="fill-current" />}
       </a>
       {after}
     </>

@@ -6,6 +6,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { sentimentToTextColor } from '~/utils/sentiment'
+import { OSSIFICATION_SCORE_BANDS } from './ossificationScoreBands'
 
 export function OssificationScore({
   score,
@@ -25,8 +26,8 @@ export function OssificationScore({
 }
 
 function getScoreSentiment(score: number): Sentiment {
-  if (score >= 80) return 'good'
-  if (score >= 50) return 'warning'
+  if (score >= OSSIFICATION_SCORE_BANDS.good) return 'good'
+  if (score >= OSSIFICATION_SCORE_BANDS.warning) return 'warning'
   return 'bad'
 }
 

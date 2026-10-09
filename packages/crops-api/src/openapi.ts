@@ -55,7 +55,7 @@ export function describeApi(ledger: CropsAttestationsMeta): string {
   const where = ledger.isTestnet
     ? `currently lives on the ${ledger.network} testnet (chain id ${ledger.chainId}); \`attestations.isTestnet\` in every response says so`
     : `lives on ${ledger.network} (chain id ${ledger.chainId})`
-  return `CROPS is L2BEAT's review of a protocol along four crops: censorship resistance, open source, privacy and security. Each crop gets a sentiment (good, warning, bad or neutral) and a status saying how far the review went. A protocol is in the garden when no crop is bad. Separately, the set of reviewed protocols is attested onchain with the Ethereum Attestation Service.
+  return `CROPS is L2BEAT's review of a protocol along four crops: censorship resistance, open source, privacy and security. Each crop gets a sentiment (good, warning, bad or neutral) and a status saying how far the review went. A protocol is in the garden when no crop is bad and it has an ossification score. Security is capped by that score: below 80 it is at most warning, and below 50, which means a critical change in roughly the last five weeks, it is bad. Separately, the set of reviewed protocols is attested onchain with the Ethereum Attestation Service.
 
 Every response is a static file generated from the L2BEAT repository, so it is served from a CDN with no API key and no rate limit.
 
@@ -77,7 +77,7 @@ The attestation ${where}. It proves the set L2BEAT named, not that the ratings a
 2. Check \`revocationTime == 0\`. When the set changes L2BEAT revokes the old attestation and issues the next revision, so a revoked attestation is a stale claim and must not be shown.
 3. Check \`attester\` and \`schema\` against \`attestations.attester\` and \`attestations.schemaUid\`, so an attestation someone else made cannot be mistaken for L2BEAT's.
 4. Decode \`projectIds\` - these are the protocols L2BEAT has reviewed, as of \`reviewedAt\`, at revision \`revision\`.
-5. For the rating per crop, the reasoning and what was not looked at, read \`/v1/project/{id}.json\`.`
+5. For the rating per property, the reasoning and what was not looked at, read \`/v1/project/{id}.json\`.`
 }
 
 function toOperation(route: CropsApiRoute): OpenApiOperation {

@@ -1,5 +1,6 @@
 import {
   type CropEntry,
+  getCropOssificationLines,
   getCropStatusText,
   toCropEntries,
 } from '~/components/garden/crops'
@@ -10,21 +11,28 @@ import { bulletList, joinBlocks, link, subsection } from './markdown'
 
 /** The garden verdict and each crop's findings; the plants themselves are only a picture of the same. */
 export function renderGardenCropsSection(
-  { crops, inGarden }: Pick<GardenCropsSectionProps, 'crops' | 'inGarden'>,
+  {
+    crops,
+    listing,
+    ossification,
+  }: Pick<GardenCropsSectionProps, 'crops' | 'listing' | 'ossification'>,
   level: number,
 ) {
-  const entries = toCropEntries(crops)
-  const inBloom = entries.filter(
+  const entries = toCropEntries(crops, ossification)
+  const goodCount = entries.filter(
     (entry) => entry.evaluation.sentiment === 'good',
   ).length
   return joinBlocks([
-    `${gardenVerdictText(inGarden)} ${inBloom} of ${entries.length} in bloom.`,
+    `${gardenVerdictText(listing)} ${goodCount} of ${entries.length} rated good.`,
     ...entries.map((entry) => renderCrop(entry, level)),
-    `${link('See the whole garden', GARDEN_PATH)}.`,
+    `${link('See The Infinite Garden', GARDEN_PATH)}.`,
   ])
 }
 
-function renderCrop({ definition, evaluation }: CropEntry, level: number) {
+function renderCrop(
+  { definition, evaluation, ossification }: CropEntry,
+  level: number,
+) {
   const license = evaluation.license
     ? [`License: ${link(evaluation.license.name, evaluation.license.url)}`]
     : []
@@ -40,6 +48,10 @@ function renderCrop({ definition, evaluation }: CropEntry, level: number) {
         evaluation.additionalConsiderations,
       ),
       renderFindings('Not reviewed yet', evaluation.notReviewed),
+      renderFindings(
+        'Ossification',
+        ossification ? getCropOssificationLines(ossification) : [],
+      ),
       definition.note ?? '',
     ]),
   )

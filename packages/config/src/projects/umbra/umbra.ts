@@ -168,11 +168,8 @@ export const umbra: BaseProject = {
       sentiment: 'good',
       points: [
         'A small, immutable, externally audited contract set with no proof system and no trusted setup.',
-        'Umbra Cash main contract is well-ossified: it has been live for a long time without security incidents.',
       ],
-      missing: [
-        'Stealth addresses rely on elliptic-curve key derivation, so they are not quantum-resistant.',
-      ],
+      notReviewed: [CROP_NOTES.notReviewed.ossification],
     },
   },
   permissions: discovery.getDiscoveredPermissions(),

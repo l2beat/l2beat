@@ -1,14 +1,17 @@
 import type { Project } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ResolvedCrops } from '~/components/garden/crops'
+import type { CropOssification, ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiSummaryEntries'
 import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
+import { getCropOssification } from '~/server/features/garden/getCropOssification'
 import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
 import {
   qualifiesForGarden,
   resolveProjectCrops,
+  scoreOssification,
 } from '~/server/features/garden/resolveCrops'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
@@ -43,11 +46,19 @@ export interface GardenEntry {
   crops: ResolvedCrops
   /** Undefined when we track nothing for the project. */
   metric: GardenMetric | undefined
+  /** Undefined when the project is not opted in to ossification. */
+  ossification: CropOssification | undefined
 }
 
 type GardenProject = Project<
   'crops',
-  'scalingInfo' | 'privacyInfo' | 'defiInfo' | 'daLayer'
+  | 'scalingInfo'
+  | 'privacyInfo'
+  | 'defiInfo'
+  | 'daLayer'
+  | 'ossificationHistory'
+  | 'scalingRisks'
+  | 'tvsConfig'
 >
 
 export async function getGardenData(
@@ -57,10 +68,18 @@ export async function getGardenData(
   const projects = await ps.getProjects({
     where: ['crops'],
     select: ['crops'],
-    optional: ['scalingInfo', 'privacyInfo', 'defiInfo', 'daLayer'],
+    optional: [
+      'scalingInfo',
+      'privacyInfo',
+      'defiInfo',
+      'daLayer',
+      'ossificationHistory',
+      'scalingRisks',
+      'tvsConfig',
+    ],
   })
 
-  const [tvsBreakdown, depositCounts] = await Promise.all([
+  const [tvsBreakdown, depositCounts, defiTvl] = await Promise.all([
     get7dTvsBreakdown({
       type: 'projects',
       projectIds: projects.map((p) => p.id),
@@ -68,20 +87,37 @@ export async function getGardenData(
     getTotalDepositCounts(
       projects.filter((p) => p.privacyInfo).map((p) => p.id),
     ),
+    getTotalValueLockedByProject(
+      projects.flatMap((p) =>
+        p.defiInfo ? [{ id: p.id, defiInfo: p.defiInfo }] : [],
+      ),
+    ),
   ])
 
-  const entries: GardenEntry[] = projects
-    .sort(compareByCuratedOrder)
-    .map((project) => ({
-      name: project.name,
-      slug: project.slug,
-      href: getGardenProjectPath(project),
-      subtitle: getSubtitle(project),
-      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      crops: resolveProjectCrops(project.crops),
-      metric: getMetric(project, tvsBreakdown, depositCounts),
-    }))
-    .filter((entry) => qualifiesForGarden(entry.crops))
+  const now = UnixTime.now()
+  const entries: GardenEntry[] = await Promise.all(
+    projects
+      .map((project) => {
+        const score = scoreOssification(project.ossificationHistory, now)
+        return {
+          project,
+          crops: resolveProjectCrops(project.crops, score),
+          hasScore: score !== undefined,
+        }
+      })
+      .filter(({ crops, hasScore }) => qualifiesForGarden(crops, hasScore))
+      .sort((a, b) => compareByCuratedOrder(a.project, b.project))
+      .map(async ({ project, crops }) => ({
+        name: project.name,
+        slug: project.slug,
+        href: getGardenProjectPath(project),
+        subtitle: getSubtitle(project),
+        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+        crops,
+        metric: getMetric(project, tvsBreakdown, depositCounts, defiTvl),
+        ossification: await getCropOssification(project),
+      })),
+  )
 
   return {
     head: {
@@ -89,7 +125,7 @@ export async function getGardenData(
       metadata: getMetadata(manifest, {
         name: 'The Infinite Garden',
         description:
-          'A garden view of how projects grow across the CROPS framework: censorship resistance, open source, privacy, and security.',
+          'How projects rate on the four CROPS properties: censorship resistance, open source, privacy, and security.',
         url,
         openGraph: {
           image: '/meta-images/the-infinite-garden/opengraph-image.png',
@@ -140,12 +176,14 @@ async function getTotalDepositCounts(
   return counts
 }
 
-// Value secured where tracked; otherwise the deposit count, for a privacy
-// protocol whose payments are forwarded rather than escrowed.
+// Value secured where tracked, by L2BEAT or, for DeFi, the TVL source the
+// DeFi pages use; otherwise the deposit count, for a privacy protocol whose
+// payments are forwarded rather than escrowed.
 function getMetric(
   project: GardenProject,
   tvsBreakdown: SevenDayTvsBreakdown,
   depositCounts: Record<string, number>,
+  defiTvl: ReadonlyMap<string, number>,
 ): GardenMetric | undefined {
   const tvs = tvsBreakdown.projects[project.id]
   if (tvs) {
@@ -155,6 +193,10 @@ function getMetric(
       value: tvs.breakdown.total,
       change: tvs.change.total,
     }
+  }
+  const tvl = defiTvl.get(project.id)
+  if (tvl !== undefined) {
+    return { kind: 'usd', label: 'TVL', value: tvl }
   }
   const deposits = depositCounts[project.id]
   if (deposits !== undefined) {

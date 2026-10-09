@@ -1,4 +1,8 @@
-import type { ResolvedCrops } from '~/components/garden/crops'
+import type {
+  CropOssification,
+  GardenListing,
+  ResolvedCrops,
+} from '~/components/garden/crops'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { GARDEN_PATH } from '~/pages/garden/paths'
 import { CropsBed } from './crops/CropsBed'
@@ -7,12 +11,14 @@ import type { ProjectSectionProps } from './types'
 
 export interface GardenCropsSectionProps extends ProjectSectionProps {
   crops: ResolvedCrops
-  inGarden: boolean
+  listing: GardenListing
+  ossification: CropOssification | undefined
 }
 
 export function GardenCropsSection({
   crops,
-  inGarden,
+  listing,
+  ossification,
   ...sectionProps
 }: GardenCropsSectionProps) {
   return (
@@ -23,12 +29,12 @@ export function GardenCropsSection({
           href={GARDEN_PATH}
           className="inline-flex items-center gap-1 font-medium text-label-value-14 text-link"
         >
-          See the whole garden
+          See The Infinite Garden
           <CustomLinkIcon className="fill-current" />
         </a>
       }
     >
-      <CropsBed crops={crops} inGarden={inGarden} />
+      <CropsBed crops={crops} listing={listing} ossification={ossification} />
     </ProjectSection>
   )
 }

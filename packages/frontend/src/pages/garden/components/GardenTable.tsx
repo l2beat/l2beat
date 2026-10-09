@@ -1,11 +1,10 @@
 import { formatDollarValueNumber, formatInteger } from '@l2beat/shared-pure'
 import { CropBadge } from '~/components/garden/CropBadge'
 import { CropEvaluationDetails } from '~/components/garden/CropFindings'
-import type { ResolvedCropEvaluation } from '~/components/garden/crops'
 import {
-  CROP_COLUMNS,
-  type CropDefinition,
+  type CropEntry,
   getCropStatusText,
+  toCropEntries,
 } from '~/components/garden/crops'
 import { useEntranceHold } from '~/components/garden/useEntranceHold'
 import { PercentChange } from '~/components/PercentChange'
@@ -25,14 +24,15 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
             </TableCell>
             <TableCell className="py-3">
               <div className="flex gap-3.5">
-                {CROP_COLUMNS.map((column, columnIndex) => (
-                  <EvaluatedCrop
-                    key={column.key}
-                    column={column}
-                    evaluation={entry.crops[column.key]}
-                    delay={entranceDelay(rowIndex, columnIndex)}
-                  />
-                ))}
+                {toCropEntries(entry.crops, entry.ossification).map(
+                  (crop, columnIndex) => (
+                    <EvaluatedCrop
+                      key={crop.definition.key}
+                      crop={crop}
+                      delay={entranceDelay(rowIndex, columnIndex)}
+                    />
+                  ),
+                )}
               </div>
             </TableCell>
             <TableCell align="right">
@@ -51,27 +51,21 @@ function entranceDelay(rowIndex: number, columnIndex: number) {
   return columnIndex * 0.05 + Math.min(rowIndex * 0.04, MAX_ROW_DELAY)
 }
 
-function EvaluatedCrop({
-  column,
-  evaluation,
-  delay,
-}: {
-  column: CropDefinition
-  evaluation: ResolvedCropEvaluation
-  delay: number
-}) {
+function EvaluatedCrop({ crop, delay }: { crop: CropEntry; delay: number }) {
+  const { definition, evaluation, ossification } = crop
   const statusText = getCropStatusText(evaluation.status, evaluation.sentiment)
   return (
     <CropBadge
       status={evaluation.status}
       sentiment={evaluation.sentiment}
       delay={delay}
-      label={`${column.label}: ${statusText}`}
+      label={`${definition.label}: ${statusText}`}
     >
       <CropEvaluationDetails
-        label={column.label}
-        note={column.note}
+        label={definition.label}
+        note={definition.note}
         evaluation={evaluation}
+        ossification={ossification}
       />
     </CropBadge>
   )
@@ -116,7 +110,7 @@ function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
   }
   return (
     <div className="inline-flex flex-col items-end gap-px">
-      <span className="font-semibold text-[10px] text-secondary uppercase tracking-wider">
+      <span className="font-medium text-[12px] text-secondary">
         {metric.label}
       </span>
       <span className="font-semibold text-primary text-sm tabular-nums">
