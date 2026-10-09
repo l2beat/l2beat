@@ -6,7 +6,7 @@
 export interface BeltLayout {
   width: number
   height: number
-  /** A phone: smaller tiles, no icons on them */
+  /** A phone: smaller tiles, icons closer to their edges */
   compact: boolean
 
   /** Height of a row in a rack, one blob's place */
@@ -48,7 +48,8 @@ export interface BeltLayout {
 }
 
 const COMPACT_BELOW = 560
-const ICONS_FROM_TILE = 14
+/** Below this an icon is a smudge, not a logo */
+const MIN_ICON = 8
 /**
  * The belt moves a block a second, so this is also its speed: 30 px/s is one
  * device pixel per frame on a 60 Hz 2× screen, with no uneven steps
@@ -65,6 +66,7 @@ const ROOMY = {
   blobGap: 1,
   padding: 3,
   tileRadius: 3,
+  iconInset: 2,
   bayAt: 0.7,
 }
 
@@ -78,6 +80,7 @@ const COMPACT = {
   blobGap: 1,
   padding: 2,
   tileRadius: 2,
+  iconInset: 1,
   bayAt: 0.64,
 }
 
@@ -142,7 +145,7 @@ export function layoutBelt(
     slotNumberY: rackTop + rackHeight + (compact ? 29 : 33),
     fadeLeft: Math.round(width * (compact ? 0.2 : 0.17)),
     fadeRight: Math.round(Math.min(56, width * 0.07)),
-    iconSize: tileSize >= ICONS_FROM_TILE ? tileSize - 4 : 0,
+    iconSize: fitIcon(tileSize, fit.iconInset),
   }
 }
 
@@ -169,6 +172,11 @@ export function tileBounds(
     top: rowBottom - layout.rowHeight + above / 2,
     bottom: rowBottom - below / 2,
   }
+}
+
+function fitIcon(tileSize: number, inset: number) {
+  const size = tileSize - 2 * inset
+  return size >= MIN_ICON ? size : 0
 }
 
 function clamp(value: number, min: number, max: number) {
