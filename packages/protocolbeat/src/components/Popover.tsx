@@ -5,7 +5,7 @@ import { cn } from '../utils/cn'
 const Popover = PopoverPrimitive.Root
 
 const popoverTriggerClasses = cn(
-  'shrink-0 self-stretch focus:outline-none focus:ring-2 focus:ring-autumn-300/60 focus:ring-inset',
+  'shrink-0 self-stretch focus:outline-hidden focus:ring-2 focus:ring-autumn-300/60 focus:ring-inset',
   'disabled:cursor-default',
 )
 
@@ -32,8 +32,8 @@ const PopoverContent = React.forwardRef<
       sideOffset={sideOffset}
       collisionPadding={12}
       className={cn(
-        'z-[30] rounded-xl border border-coffee-500 bg-coffee-900 p-2 text-coffee-100 shadow-[0_16px_32px_-20px_#000000ee] outline-none',
-        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 origin-[var(--radix-popover-content-transform-origin)] data-[state=closed]:animate-out data-[state=open]:animate-in',
+        'z-30 rounded-xl border border-coffee-500 bg-coffee-900 p-2 text-coffee-100 shadow-[0_16px_32px_-20px_#000000ee] outline-hidden',
+        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 origin-(--radix-popover-content-transform-origin) data-[state=closed]:animate-out data-[state=open]:animate-in',
         'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
         className,
       )}

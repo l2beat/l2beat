@@ -59,7 +59,7 @@ export function RendererBenchPage() {
   return (
     <div className="relative h-screen w-screen overflow-hidden">
       <Viewport renderer={renderer} />
-      <div className="absolute top-3 left-3 z-50 flex flex-col gap-2 rounded bg-coffee-900/90 p-3 font-mono text-coffee-200 text-xs shadow-lg">
+      <div className="absolute top-3 left-3 z-50 flex flex-col gap-2 rounded-sm bg-coffee-900/90 p-3 font-mono text-coffee-200 text-xs shadow-lg">
         <div className="flex items-center gap-2">
           <span className="w-28">Renderer</span>
           <button
@@ -132,7 +132,7 @@ function NumberRow({ label, value, min, max, onChange }: NumberRowProps) {
       <span className="w-28">{label}</span>
       <input
         type="number"
-        className="w-24 rounded bg-coffee-800 px-1 py-0.5 text-coffee-200"
+        className="w-24 rounded-sm bg-coffee-800 px-1 py-0.5 text-coffee-200"
         value={value}
         min={min}
         max={max}
@@ -149,7 +149,7 @@ function NumberRow({ label, value, min, max, onChange }: NumberRowProps) {
 
 function btnClass(active: boolean): string {
   return [
-    'rounded border px-2 py-0.5',
+    'rounded-sm border px-2 py-0.5',
     active
       ? 'border-autumn-300 bg-autumn-300/20 text-autumn-300'
       : 'border-coffee-700 text-coffee-200 hover:border-coffee-500',

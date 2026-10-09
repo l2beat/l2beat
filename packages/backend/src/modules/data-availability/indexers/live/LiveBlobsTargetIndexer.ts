@@ -15,10 +15,10 @@ import {
 const FIRST_TICK_INTO_SLOT = 1
 /**
  * How soon the head is asked for again while the slot's block has not come.
- * Every quarter second sooner is that much sooner on every screen, and the
- * call costs a few hundred bytes
+ * Half of it is, on average, how long a block that came waits to be seen,
+ * on every screen; the call costs a few hundred bytes
  */
-const RETRY_SECONDS = 0.25
+const RETRY_SECONDS = 0.1
 /** Stored blocks compared with the chain, back from the newest, in search of a fork */
 const MAX_REORG_DEPTH = 32
 /** No recent stored block is on the chain */
@@ -118,7 +118,7 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
   }
 
   /**
-   * Once per new head or new slot: asked four times a second, the head
+   * Once per new head or new slot: asked ten times a second, the head
    * would otherwise be logged as often. A head that stalls still shows, by
    * its lag growing slot by slot
    */
@@ -143,7 +143,7 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
    * the chain. The child can lag behind while it backfills, so that is not
    * always the head's parent; and the head itself when a block of the same
    * height replaced it. The blocks below are read only once that one is off
-   * the chain: the check runs up to four times a second
+   * the chain: the check runs up to ten times a second
    */
   private async findFork(
     latest: EVMBlock,

@@ -89,7 +89,7 @@ function GroupNameInput({ id, name }: { id: string; name: string }) {
           event.currentTarget.blur()
         }
       }}
-      className="w-32 self-stretch rounded-lg border border-coffee-600 bg-coffee-800 px-3 text-coffee-100 text-xs outline-none focus:border-coffee-400"
+      className="w-32 self-stretch rounded-lg border border-coffee-600 bg-coffee-800 px-3 text-coffee-100 text-xs outline-hidden focus:border-coffee-400"
     />
   )
 }

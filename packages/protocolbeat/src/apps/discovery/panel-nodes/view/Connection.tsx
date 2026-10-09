@@ -37,7 +37,7 @@ function toStrokeClass(
   props: Pick<ConnectionProps, 'isHighlighted' | 'isDimmed' | 'isGrayedOut'>,
 ) {
   if (props.isHighlighted) {
-    return 'stroke-[3] stroke-autumn-300'
+    return 'stroke-3 stroke-autumn-300'
   }
 
   if (props.isGrayedOut) {

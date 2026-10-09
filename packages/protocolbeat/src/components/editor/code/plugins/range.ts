@@ -57,7 +57,7 @@ export class RangeHighlightPlugin implements EditorPlugin<ForType> {
             range.endColumn,
           ),
           options: {
-            className: 'bg-coffee-600 border-2 border-aux-amber rounded',
+            className: 'bg-coffee-600 border-2 border-aux-amber rounded-sm',
           },
         },
       ])

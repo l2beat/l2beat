@@ -35,7 +35,7 @@ export function Form(props: FormProps) {
           </label>
           <input
             className={clsx(
-              'block w-full rounded-sm bg-zinc-800 px-2 py-1 font-mono text-sm shadow-inner',
+              'block w-full rounded-xs bg-zinc-800 px-2 py-1 font-mono text-sm shadow-inner',
               state.errors.hash && 'text-red-500',
             )}
             placeholder="0x1234... on any supported chain"
@@ -62,7 +62,7 @@ export function Form(props: FormProps) {
             name="data"
             id="data"
             className={clsx(
-              'block w-full rounded-sm bg-zinc-800 px-2 py-1 font-mono text-sm shadow-inner',
+              'block w-full rounded-xs bg-zinc-800 px-2 py-1 font-mono text-sm shadow-inner',
               state.errors.data && 'text-red-500',
             )}
             rows={5}
@@ -82,7 +82,7 @@ export function Form(props: FormProps) {
           </label>
           <input
             className={clsx(
-              'block w-full rounded-sm bg-zinc-800 px-2 py-1 font-mono text-sm shadow-inner',
+              'block w-full rounded-xs bg-zinc-800 px-2 py-1 font-mono text-sm shadow-inner',
               state.errors.address && 'text-red-500',
             )}
             placeholder="0x1234..."
@@ -103,7 +103,7 @@ export function Form(props: FormProps) {
             Chain id
           </label>
           <select
-            className="rounded-sm bg-zinc-800 px-2 py-1 font-mono text-sm shadow-inner"
+            className="rounded-xs bg-zinc-800 px-2 py-1 font-mono text-sm shadow-inner"
             name="chainId"
             id="chainId"
             value={state.values.chainId}
@@ -128,7 +128,7 @@ export function Form(props: FormProps) {
           value={state.submitting ? 'Decoding' : 'Decode'}
           disabled={disabled}
           className={clsx(
-            'mb-8 rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2 py-1',
+            'mb-8 rounded-xs border-zinc-900 border-b-4 bg-zinc-800 px-2 py-1',
             disabled && 'cursor-not-allowed opacity-60',
             !disabled && 'active:mt-1 active:border-b-0',
           )}

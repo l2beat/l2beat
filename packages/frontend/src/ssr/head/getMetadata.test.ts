@@ -23,17 +23,17 @@ describe(getMetadata.name, () => {
 
     it('can say more than the name, which still names the breadcrumb', () => {
       const metadata = getMetadata(manifest, {
-        name: 'Aave',
-        title: 'Aave - DeFi - L2BEAT',
-        url: '/defi/projects/aave',
+        name: 'Railgun',
+        title: 'Railgun - Privacy - L2BEAT',
+        url: '/privacy/projects/railgun',
         openGraph,
       })
 
-      expect(metadata.title).toEqual('Aave - DeFi - L2BEAT')
+      expect(metadata.title).toEqual('Railgun - Privacy - L2BEAT')
       expect(getBreadcrumbItems(metadata)).toEqual([
         crumb(1, 'Home', 'https://l2beat.com/'),
-        crumb(2, 'DeFi', 'https://l2beat.com/defi/summary'),
-        crumb(3, 'Aave', 'https://l2beat.com/defi/projects/aave'),
+        crumb(2, 'Privacy', 'https://l2beat.com/privacy/summary'),
+        crumb(3, 'Railgun', 'https://l2beat.com/privacy/projects/railgun'),
       ])
     })
   })

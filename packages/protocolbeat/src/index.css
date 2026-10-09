@@ -1,18 +1,83 @@
-@import "./diff-editor.css";
-@import "./markdown.css";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "./diff-editor.css" layer(base);
+@import "./markdown.css" layer(base);
+@import "tailwindcss";
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #a98763 transparent;
+@config "../tailwind.config.js";
+
+@theme {
+  --font-*: initial;
+  --font-sans: system-ui, sans-serif;
+  --font-mono:
+    ui-monospace, Menlo, Monaco, Cascadia Code, Source Code Pro, Consolas,
+    DejaVu Sans Mono, monospace;
+  --font-serif: Charter, Bitstream Charter, Sitka Text, Cambria, serif;
+
+  --text-2xs: 0.625rem;
+  --text-3xs: 0.5rem;
+  --text-xs--line-height: 1rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl--line-height: 2rem;
+  --text-4xl--line-height: 2.5rem;
+
+  --animate-spin-reverse: spin-reverse 1s linear infinite;
+  --animate-breath: breath 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes spin-reverse {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  @keyframes breath {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
 }
 
-:focus-visible {
-  @apply outline outline-2 outline-autumn-300;
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-style: normal;
+  }
+
+  th,
+  td {
+    padding: 1px;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #9ca3af;
+  }
 }
 
-::selection {
-  @apply bg-coffee-700;
+@layer utilities {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #a98763 transparent;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-autumn-300 outline-solid;
+  }
+
+  ::selection {
+    @apply bg-coffee-700;
+  }
 }

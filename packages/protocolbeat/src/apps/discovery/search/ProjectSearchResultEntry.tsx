@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
 
@@ -21,11 +21,11 @@ export function ProjectSearchResultEntry({ entries }: { entries: string[] }) {
               : 'text-coffee-200 hover:bg-coffee-700',
           )}
           onClick={() => {
-            navigate(`/ui/p/${entry}`)
+            void navigate(`/ui/p/${entry}`)
             setOpen(false)
           }}
         >
-          <span className="max-w-[25rem] truncate font-medium">
+          <span className="max-w-100 truncate font-medium">
             <HighlightedText text={entry} run={projectSearchTerm} />
           </span>
         </li>

@@ -27,7 +27,7 @@ function SelectTrigger({
   return (
     <RadixSelect.Trigger
       className={clsx(
-        'inline-flex w-full leading-none outline-none focus:outline-none active:outline-none',
+        'inline-flex w-full leading-none outline-hidden focus:outline-hidden active:outline-hidden',
         className,
       )}
       {...props}
@@ -55,7 +55,7 @@ function SelectContent({
     <RadixSelect.Portal>
       <RadixSelect.Content
         className={cn(
-          'z-[1000] max-h-[50vh] border border-coffee-400 bg-coffee-600',
+          'z-1000 max-h-[50vh] border border-coffee-400 bg-coffee-600',
           className,
         )}
         position="popper"
@@ -64,7 +64,7 @@ function SelectContent({
       >
         <RadixSelect.ScrollUpButton className="flex cursor-pointer items-center justify-center py-1">
           <div className="absolute top-0 left-0 mt-3 flex h-0 w-full items-center justify-center">
-            <div className="-mt-1.5 absolute h-5 w-[calc(100%-2px)] bg-gradient-to-t from-transparent to-coffee-400" />
+            <div className="-mt-1.5 absolute h-5 w-[calc(100%-2px)] bg-linear-to-t from-transparent to-coffee-400" />
             <IconChevronDown className="rotate-180" />
           </div>
         </RadixSelect.ScrollUpButton>
@@ -75,7 +75,7 @@ function SelectContent({
 
         <RadixSelect.ScrollDownButton className="flex h-0 cursor-pointer items-center justify-center py-1">
           <div className="absolute bottom-0 left-0 mb-2 flex h-0 w-full items-center justify-center">
-            <div className="absolute h-5 w-[calc(100%-2px)] bg-gradient-to-b from-transparent to-coffee-400" />
+            <div className="absolute h-5 w-[calc(100%-2px)] bg-linear-to-b from-transparent to-coffee-400" />
             <IconChevronDown />
           </div>
         </RadixSelect.ScrollDownButton>
@@ -119,7 +119,7 @@ function SelectItem({
   return (
     <RadixSelect.Item
       className={clsx(
-        'group relative flex max-w-fit cursor-pointer select-none items-center border-coffee-400 py-1 pr-8 pl-6 text-xs leading-none hover:underline hover:outline-none focus:outline-none active:outline-none',
+        'group relative flex max-w-fit cursor-pointer select-none items-center border-coffee-400 py-1 pr-8 pl-6 text-xs leading-none hover:underline hover:outline-hidden focus:outline-hidden active:outline-hidden',
         className,
       )}
       {...props}

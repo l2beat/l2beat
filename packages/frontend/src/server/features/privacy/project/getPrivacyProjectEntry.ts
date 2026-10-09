@@ -176,6 +176,7 @@ export async function getPrivacyProjectEntry(
         defaultRange: defaultChartRange,
         rangeControls: 'privacy',
         project: chartProject,
+        milestones: details.milestones,
       },
     })
   }
@@ -188,6 +189,7 @@ export async function getPrivacyProjectEntry(
         title: 'Anonymity sets',
         defaultRange: defaultChartRange,
         project: chartProject,
+        milestones: details.milestones,
       },
     })
   }
@@ -200,6 +202,7 @@ export async function getPrivacyProjectEntry(
         title: 'Flows',
         defaultRange: defaultChartRange,
         project: chartProject,
+        milestones: details.milestones,
       },
     })
 
@@ -210,6 +213,17 @@ export async function getPrivacyProjectEntry(
         title: 'Assets Breakdown',
         assets: details.assets,
         showTvl: details.hasTvl,
+      },
+    })
+  }
+
+  if (details.milestones.length > 0) {
+    sections.push({
+      type: 'MilestonesAndIncidentsSection',
+      props: {
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
+        milestones: details.milestones,
       },
     })
   }

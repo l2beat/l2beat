@@ -95,7 +95,7 @@ export function NodesAndConnections() {
             key={container.id}
             className={clsx(
               'pointer-events-none absolute rounded-xl border-2 border-coffee-200/60 border-dashed bg-coffee-200/5',
-              isSelected && 'outline outline-4 outline-autumn-300',
+              isSelected && 'outline-4 outline-autumn-300 outline-solid',
             )}
             style={{
               left: container.box.x,
