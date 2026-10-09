@@ -41,23 +41,24 @@ jobs:
       - name: Deploy to Coolify
         if: ${{ !inputs.preview }}
         run: |
-          response="$(
-            curl --fail-with-body --silent --show-error \
-              -X POST \
-              --retry 3 \
-              --retry-delay 5 \
-              --retry-all-errors \
-              --header "Authorization: Bearer $COOLIFY_API_KEY" \
-              --header "Accept: application/json" \
-              "$COOLIFY_SERVER/api/v1/deploy?uuid=$COOLIFY_UUID"
-          )"
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            --retry 3 \
+            --retry-delay 5 \
+            --retry-all-errors \
+            --output "$RUNNER_TEMP/response.json" \
+            --header "Authorization: Bearer $COOLIFY_API_KEY" \
+            --header "Accept: application/json" \
+            "$COOLIFY_SERVER/api/v1/deploy?uuid=$COOLIFY_UUID"
 
-          echo "$response" | jq -e '.deployments | length > 0' >/dev/null
-          echo "$response"
+          jq -e '.deployments | length > 0' "$RUNNER_TEMP/response.json" >/dev/null
+          cat "$RUNNER_TEMP/response.json"
 
       # Opens the preview on the first call and redeploys it afterwards.
       # Retrying is safe: Coolify skips a deployment already queued for the
       # same commit, and curl honours Retry-After when the queue is full.
+      # The response goes to a file because curl truncates a file before each
+      # retry but appends to stdout, which would concatenate the error bodies.
       - name: Deploy preview to Coolify
         if: ${{ inputs.preview }}
         env:
@@ -68,19 +69,19 @@ jobs:
           body=$(jq -n --argjson pr "$PR_NUMBER" --arg url "$PR_URL" --arg commit "$HEAD_SHA" \
             '{pull_request_id: $pr, pull_request_html_url: $url, commit: $commit}')
 
-          response="$(
-            curl --fail-with-body --silent --show-error \
-              -X POST \
-              --retry 3 \
-              --retry-delay 5 \
-              --retry-all-errors \
-              --header "Authorization: Bearer $COOLIFY_API_KEY" \
-              --header "Accept: application/json" \
-              --header "Content-Type: application/json" \
-              --data "$body" \
-              "$COOLIFY_SERVER/api/v1/applications/$COOLIFY_UUID/previews"
-          )"
-          echo "$response"
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            --retry 3 \
+            --retry-delay 5 \
+            --retry-all-errors \
+            --output "$RUNNER_TEMP/response.json" \
+            --header "Authorization: Bearer $COOLIFY_API_KEY" \
+            --header "Accept: application/json" \
+            --header "Content-Type: application/json" \
+            --data "$body" \
+            "$COOLIFY_SERVER/api/v1/applications/$COOLIFY_UUID/previews"
+          cat "$RUNNER_TEMP/response.json"
 
-          domains=$(jq -r '.preview.domains // "unknown"' <<< "$response")
-          echo "Preview: $domains ($(jq -r .message <<< "$response"))" >> "$GITHUB_STEP_SUMMARY"
+          domains=$(jq -r '.preview.domains // "unknown"' "$RUNNER_TEMP/response.json")
+          message=$(jq -r .message "$RUNNER_TEMP/response.json")
+          echo "Preview: $domains ($message)" >> "$GITHUB_STEP_SUMMARY"
