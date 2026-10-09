@@ -101,6 +101,7 @@ export {
   type Upgrade,
 } from './discovery/output/upgradeHistory'
 export { AllProviders } from './discovery/provider/AllProviders'
+export { REUSABLE_CACHE_INVOCATIONS } from './discovery/provider/BatchingAndCachingProvider'
 export type {
   DebugTransactionCall,
   DebugTransactionCallResponse,
