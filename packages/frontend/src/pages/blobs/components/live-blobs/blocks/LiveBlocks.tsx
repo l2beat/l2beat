@@ -34,6 +34,7 @@ import { roundIcons } from './roundIcons'
 import { RECENT_BLOCKS, useBeaconChain } from './useBeaconChain'
 import { type BeltHover, useBelt } from './useBelt'
 import { useBeltSwipe } from './useBeltSwipe'
+import { useBeltWheel } from './useBeltWheel'
 import { usePastBlocks, withPast } from './usePastBlocks'
 
 interface Props {
@@ -155,6 +156,14 @@ export function LiveBlocks({ posters, limits }: Props) {
   dropBlock.current = belt.dropBlock
   const swipe = useBeltSwipe({
     position: belt.position,
+    blockPitch: layout?.blockPitch,
+    earliest: look.earliest,
+    onView: look.onView,
+    onHold: belt.hold,
+  })
+  useBeltWheel(beltRef, {
+    position: belt.position,
+    live: belt.live,
     blockPitch: layout?.blockPitch,
     earliest: look.earliest,
     onView: look.onView,

@@ -287,11 +287,15 @@ export function useBelt({
     [],
   )
 
+  /** Where the live belt stands now, as a view would put it */
+  const live = useCallback(() => livePosition(progressNow()), [progressNow])
+
   return {
     hover,
     dropBlock,
     hold,
     position,
+    live,
     handlers: {
       onPointerMove,
       onPointerDown,
