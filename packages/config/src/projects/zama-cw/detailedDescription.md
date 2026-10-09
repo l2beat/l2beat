@@ -1,4 +1,4 @@
-Zama Confidential Tokens let users hold and send tokens like USDC on Ethereum with hidden balances and transfer amounts. A user wraps a token into its confidential version, such as USDC into cUSDC, pays others with it and unwraps it back. Who pays whom and every wrap and unwrap amount stay public.
+Zama Confidential Tokens let users hold and send tokens on Ethereum with hidden balances and transfer amounts. A user wraps a token into its confidential version, such as USDC into cUSDC, pays others with it and unwraps it back. Who pays whom and every wrap and unwrap amount stay public.
 
 Users trust the {{kmsSignerCount}} operators of the key management service (KMS), who share the decryption key, Zama for the coprocessor, relayer and app, and two governance multisigs. Any {{kmsKeyThreshold}} KMS operators together can decrypt every amount, and the multisigs can upgrade every contract instantly. Each unwrap needs a decryption signed by {{kmsThreshold}} of them, so funds leave only while the KMS and the coprocessor run.
 
