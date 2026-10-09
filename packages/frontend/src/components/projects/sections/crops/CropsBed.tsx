@@ -264,7 +264,8 @@ function Sky({ inGarden }: { inGarden: boolean }) {
 
 function Sun() {
   return (
-    <span className="absolute top-3 right-4 size-14 rounded-full bg-garden-sun/70 blur-[2px] dark:hidden" />
+    // Smaller in a narrow bed, where a full-size sun would sit on the last plant.
+    <span className="absolute @max-[519.9px]:top-2 top-3 @max-[519.9px]:right-2 right-4 @max-[519.9px]:size-8 size-14 rounded-full bg-garden-sun/70 blur-[2px] dark:hidden" />
   )
 }
 
