@@ -27,11 +27,13 @@ export function TokenRelationsGraphView({
   graph,
   diagramClassName = 'h-[380px] md:h-[520px]',
   embedded = false,
+  className,
 }: {
   graph: InteropTokenRelationsGraph
   diagramClassName?: string
   /** Inside a dialog already: no expand button, details inline instead of a drawer. */
   embedded?: boolean
+  className?: string
 }) {
   const [selectedNodeId, setSelectedNodeId] = useState<string>()
   const [hideUnconnected, setHideUnconnected] = useState(true)
@@ -70,7 +72,7 @@ export function TokenRelationsGraphView({
   }
 
   return (
-    <div>
+    <div className={className}>
       <div className="mb-3 flex min-h-8 flex-wrap items-center justify-between gap-2">
         <Legend
           hasClusters={graph.nodes.some(isCluster)}
@@ -134,18 +136,17 @@ export function TokenRelationsGraphView({
       )}
 
       <Dialog open={isExpanded} onOpenChange={setIsExpanded}>
-        <DialogContent className="inset-0 flex h-dvh w-screen max-w-none translate-x-0 translate-y-0 flex-col gap-3 rounded-none border-0 bg-surface-primary p-4 md:rounded-none">
+        <DialogContent
+          className="flex flex-col gap-3 bg-surface-primary p-4"
+          fullScreen
+        >
           <DialogTitle className="pr-8">Onchain deployments</DialogTitle>
           <DialogDescription className="sr-only">
             A full-screen view of which deployments of this token back which
             others.
           </DialogDescription>
           <DialogClose />
-          <DiagramPane
-            {...paneProps}
-            className="h-full"
-            wrapperClassName="min-h-0 flex-1"
-          />
+          <DiagramPane {...paneProps} className="h-full" />
         </DialogContent>
       </Dialog>
     </div>
@@ -162,7 +163,6 @@ function DiagramPane({
   onCloseDetails,
   onExpand,
   className,
-  wrapperClassName,
 }: {
   graph: InteropTokenRelationsGraph
   visibleGraph: InteropTokenRelationsGraph
@@ -173,10 +173,10 @@ function DiagramPane({
   onCloseDetails: () => void
   onExpand?: () => void
   className: string
-  wrapperClassName?: string
 }) {
+  // Fills a flex-column parent; a no-op in block flow.
   return (
-    <div className={cn('relative', wrapperClassName)}>
+    <div className="relative min-h-0 flex-1">
       <RelationsDiagram
         graph={visibleGraph}
         unconnectedIds={unconnectedIds}
