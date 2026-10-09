@@ -69,7 +69,7 @@ function CropCard({
       )}
       <div className="mt-5 grid gap-6 md:grid-cols-2 md:gap-8">
         <div>
-          <h4 className="font-semibold text-subtitle-12 uppercase tracking-wider">
+          <h4 className="font-semibold text-paragraph-14 text-secondary">
             The minimum
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">
@@ -87,7 +87,7 @@ function CropCard({
           </ul>
         </div>
         <div>
-          <h4 className="font-semibold text-subtitle-12 uppercase tracking-wider">
+          <h4 className="font-semibold text-paragraph-14 text-secondary">
             What pulls it down
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">

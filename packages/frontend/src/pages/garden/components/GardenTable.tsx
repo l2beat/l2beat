@@ -110,7 +110,7 @@ function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
   }
   return (
     <div className="inline-flex flex-col items-end gap-px">
-      <span className="font-semibold text-[10px] text-secondary uppercase tracking-wider">
+      <span className="font-medium text-[12px] text-secondary">
         {metric.label}
       </span>
       <span className="font-semibold text-primary text-sm tabular-nums">

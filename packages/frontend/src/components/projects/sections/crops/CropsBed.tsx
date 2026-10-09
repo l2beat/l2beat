@@ -95,7 +95,8 @@ function Plant({ entry, index }: { entry: CropEntry; index: number }) {
     <div
       role="img"
       aria-label={`${definition.label}: ${getCropStatusText(evaluation.status, evaluation.sentiment)}`}
-      className="flex flex-col items-center gap-1.5 pb-2"
+      // The mound sinks a little into the soil so the plant reads as planted.
+      className="-mb-1.5 flex justify-center"
     >
       <CropPlant
         status={evaluation.status}
@@ -103,11 +104,6 @@ function Plant({ entry, index }: { entry: CropEntry; index: number }) {
         delay={index * STAGGER}
         width={80}
         className="@max-[519.9px]:[&>svg]:h-[62px] @max-[519.9px]:[&>svg]:w-[53px]"
-      />
-      <LetterChip
-        entry={entry}
-        delay={index * STAGGER}
-        className="size-7 text-[11px]"
       />
     </div>
   )
@@ -159,13 +155,14 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
         <LetterChip
           entry={entry}
           delay={index * STAGGER}
-          className={'@max-[719.9px]:grid hidden size-[22px] text-[10px]'}
+          // Wide layouts stand each plant over its column, so the badge is only needed once the columns wrap.
+          className="@max-[719.9px]:grid hidden size-[22px] text-[10px]"
         />
         {definition.label}
       </h3>
       <p
         className={cn(
-          'mt-0.5 font-semibold text-[11px] uppercase tracking-[.14em]',
+          'mt-1 font-semibold text-paragraph-14',
           CROP_INK[evaluation.sentiment],
         )}
       >
@@ -208,7 +205,7 @@ function Verdict({
         {gardenVerdictText(listing)}
       </p>
       <div className="flex items-center gap-2">
-        <span className="font-medium text-[12px] text-secondary uppercase tracking-wider">
+        <span className="text-paragraph-13 text-secondary">
           {goodCount} of 4 rated good
         </span>
         <span className="flex gap-1" aria-hidden>
