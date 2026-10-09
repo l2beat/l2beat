@@ -374,11 +374,26 @@ function pinnedCellProps(index: number, className?: string) {
   }
 }
 
+/**
+ * About as many projects as post in a day, so the page below moves little
+ * when the real rows come
+ */
+const SKELETON_ROWS = 36
+
+/** The header's height and the rows' height, under their dividers */
 function PostersSkeleton() {
   return (
-    <div className="space-y-2">
-      {Array.from({ length: 8 }, (_, i) => (
-        <Skeleton key={i} className="h-9 w-full" />
+    <div className="pb-3">
+      <div className="flex h-[42px] items-center border-b border-b-divider">
+        <Skeleton className="h-3 w-full rounded-sm" />
+      </div>
+      {Array.from({ length: SKELETON_ROWS }, (_, i) => (
+        <div
+          key={i}
+          className="flex h-10 items-center border-b border-b-divider"
+        >
+          <Skeleton className="h-5 w-full" />
+        </div>
       ))}
     </div>
   )

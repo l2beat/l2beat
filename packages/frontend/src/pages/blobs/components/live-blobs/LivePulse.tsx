@@ -7,7 +7,6 @@ import {
   useRef,
   useState,
 } from 'react'
-import { Skeleton } from '~/components/core/Skeleton'
 import type { Pulse } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import {
   PULSE_BUCKET_SLOTS,
@@ -15,6 +14,7 @@ import {
   WINDOW_SLOTS,
 } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { cn } from '~/utils/cn'
+import { PulseSkeleton } from './blocks/BeltFrame'
 import { formatClock } from './blocks/format'
 import { usePrefersReducedMotion } from './hooks'
 import { earliestView } from './lookBack'
@@ -41,7 +41,7 @@ export function LivePulse({
   brush: PulseBrush
 }) {
   const { data } = useLiveBlobs()
-  if (!data) return <Skeleton className="h-14 w-full" />
+  if (!data) return <PulseSkeleton />
   return (
     <BlobPulse
       pulse={data.window.pulse}
