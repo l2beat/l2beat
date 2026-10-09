@@ -1,4 +1,5 @@
 import { env } from '~/env'
+import { DEFI_SUMMARY_TITLE } from '~/server/features/defi/defiSummaryVisibility'
 import type { SearchBarEntry } from './types'
 
 export const searchBarPages = withIndex([
@@ -164,9 +165,9 @@ export const searchBarPages = withIndex([
     ? [
         {
           category: 'defi' as const,
-          name: 'DeFi',
+          name: DEFI_SUMMARY_TITLE,
           href: '/defi/summary',
-          tags: ['pages', 'defi'],
+          tags: ['pages', 'defi', 'liquid', 'staking'],
         },
       ]
     : []),

@@ -1043,6 +1043,8 @@ export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
   category: ProjectDefiCategory
   tvl?: ProjectDefiTvlConfig
+  /** Risk comparison shown in the liquid staking view of the DeFi summary. */
+  liquidStaking?: ProjectDefiLiquidStakingRisks
 }
 
 export type ProjectDefiTvlConfig =
@@ -1066,6 +1068,27 @@ export interface ProjectDefiTvlChain {
   chain: string
   /** Exact key used by DeFiLlama in chainTvls/currentChainTvls. */
   providerChain: string
+}
+
+export interface DefiLiquidStakingRiskValue extends TableReadyValue {
+  description: string
+}
+
+export interface ProjectDefiLiquidStakingRisks {
+  /** Token tickers shown under the protocol name, e.g. "stETH, wstETH". */
+  token: string
+  /** Who can mint, what caps apply, and who routes deposited ETH to validators. */
+  minting: DefiLiquidStakingRiskValue
+  /** Who runs validators, whether they post a bond, and who absorbs slashing. */
+  operators: DefiLiquidStakingRiskValue
+  /** Where the backing ETH sits and who controls withdrawal credentials. */
+  backing: DefiLiquidStakingRiskValue
+  /** Who writes the exchange rate, on what quorum and bounds, and what silence does. */
+  exchangeRate: DefiLiquidStakingRiskValue
+  /** The exit path, what gates it, how long it takes, and whether it can be paused. */
+  exit: DefiLiquidStakingRiskValue
+  /** Who can change code, the minimum delay, and whether holders have a veto. */
+  upgrades: DefiLiquidStakingRiskValue
 }
 
 export type ProjectExternalDependency =

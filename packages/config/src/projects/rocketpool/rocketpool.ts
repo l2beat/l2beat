@@ -52,6 +52,42 @@ const councilSeatThreshold = councilSeats
   .map((seat) => discovery.getContractValue<string>(seat, 'multisigThreshold'))
   .join(', ')
 
+// --- Liquid staking risk comparison (DeFi summary tab) ---
+const rethSymbol = value('RocketTokenRETH', 'symbol')
+const balanceCadence =
+  discovery.getContractValue<number>(
+    'RocketDAOProtocolSettingsNetwork',
+    'getSubmitBalancesFrequency',
+  ) === 86400
+    ? 'daily'
+    : `every ${duration('RocketDAOProtocolSettingsNetwork', 'getSubmitBalancesFrequency')}`
+const securityCouncil = discovery.getMultisigStats('SecurityCouncilSafe')
+const maxPenaltyEth = value('RocketMegapoolPenalties', 'maximumPenalty')
+const upgradeVetoQuorum = percent(
+  'RocketDAOProtocolSettingsSecurity',
+  'getUpgradeVetoQuorum',
+)
+const voteDelay = duration(
+  'RocketDAONodeTrustedSettingsProposals',
+  'getVoteDelayTime',
+)
+const upgradeVetoWindow = duration(
+  'RocketDAOProtocolSettingsSecurity',
+  'getUpgradeDelay',
+)
+// Vote delay plus the post-vote veto window: the shortest path from an
+// upgrade proposal to its execution, excluding the vote itself.
+const upgradePathDays =
+  (discovery.getContractValue<number>(
+    'RocketDAONodeTrustedSettingsProposals',
+    'getVoteDelayTime',
+  ) +
+    discovery.getContractValue<number>(
+      'RocketDAOProtocolSettingsSecurity',
+      'getUpgradeDelay',
+    )) /
+  86400
+
 export const rocketpool: BaseProject = {
   id: ProjectId('rocketpool'),
   slug: 'rocketpool',
@@ -144,6 +180,58 @@ export const rocketpool: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
+    liquidStaking: {
+      token: rethSymbol,
+      minting: {
+        value: 'Permissionless',
+        secondLine: 'ungated FIFO queue',
+        sentiment: 'good',
+        description: `Deposits (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) mint ${rethSymbol} at the stored rate, up to ${value('RocketDepositPool', 'maximumPoolSize')} ETH unassigned. ETH is matched to the next queued validator first-in-first-out; anyone can trigger assignment. The ${securityCouncil} security council or RPL governance can switch deposits off.`,
+      },
+      operators: {
+        value: 'Permissionless',
+        secondLine: 'ETH bond',
+        sentiment: 'good',
+        warning:
+          registrationStatus === 'disabled'
+            ? {
+                value:
+                  'Registration of new node operators is currently switched off.',
+                sentiment: 'warning',
+              }
+            : undefined,
+        description: `Registration is permissionless (currently ${registrationStatus}); operators bond part of each validator's 32 ETH and an exit shortfall hits their share first. The oracle set can fine up to ${maxPenaltyEth} ETH per penalty. No EIP-7002: stake returns only when the operator exits or is slashed.`,
+      },
+      backing: {
+        value: 'Minipools',
+        secondLine: 'creds: minipool',
+        sentiment: 'good',
+        description: `Credentials point at the validator's own minipool or megapool, fixed at funding. Returned balances split on-chain between operator bond and pool share, exits are proven against beacon-chain state, and the vault and token contracts are not upgradeable.`,
+      },
+      exchangeRate: {
+        value: `${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize}`,
+        secondLine: `${balanceCadence} · ≤${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')}`,
+        sentiment: 'warning',
+        description: `Price is reported total ETH over supply, written by ${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize} oracle DAO members ${balanceCadence}, at most ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} per report. Reports never expire, so a silent oracle leaves the stale price in force. The security council can switch submission off.`,
+      },
+      exit: {
+        value: 'Burn anytime',
+        secondLine: 'instant · no pause',
+        sentiment: 'good',
+        warning: {
+          value:
+            'Pays only from the liquid buffer and reverts when it is empty; there is no forced validator exit.',
+          sentiment: 'warning',
+        },
+        description: `Burn ${rethSymbol} for ETH at the stored rate with no queue, delay or pause switch, but only from the contract buffer plus deposit-pool surplus (target ${percent('RocketDAOProtocolSettingsNetwork', 'getTargetRethCollateralRate')} of backing). When that is empty the burn reverts.`,
+      },
+      upgrades: {
+        value: `Oracle DAO (${membersNeeded('RocketDAONodeTrusted')}/${oracleSetSize})`,
+        secondLine: `≥${upgradePathDays}d · council veto`,
+        sentiment: 'warning',
+        description: `Only the oracle DAO (${oracleSetSize} bonded operator accounts, ${value('RocketDAONodeTrusted', 'memberBond')} RPL each, ${membersNeeded('RocketDAONodeTrusted')}-of-${oracleSetSize} majority) can change code: ${voteDelay} before voting opens, then ${upgradeVetoWindow} in which the ${securityCouncil} security council can veto at ${upgradeVetoQuorum} quorum. Vault and tokens are not upgradeable; RPL governance sets parameters only.`,
+      },
+    },
   },
   // Declared empty on purpose: the protocol has no bridge, no third-party price
   // feed, and no external contract it depends on. Its only outside contract is

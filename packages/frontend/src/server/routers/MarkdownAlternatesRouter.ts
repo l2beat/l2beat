@@ -1,9 +1,9 @@
 import express from 'express'
 import {
-  DEFI_SUMMARY_DESCRIPTION,
   PRIVACY_SUMMARY_DESCRIPTION,
   ZK_CATALOG_DESCRIPTION,
 } from '~/consts/summaryPageDescriptions'
+import { DEFI_SUMMARY_PAGE_DESCRIPTION } from '~/server/features/defi/defiSummaryVisibility'
 import { getDaListSections } from '~/server/markdown/list-pages/getDaListSections'
 import { getDefiListSections } from '~/server/markdown/list-pages/getDefiListSections'
 import { getInteropListSections } from '~/server/markdown/list-pages/getInteropListSections'
@@ -113,7 +113,7 @@ const LIST_PAGE_DOCUMENTS: Record<
   '/defi/summary': {
     title: 'L2BEAT DeFi protocols',
     summary: 'DeFi protocols tracked by L2BEAT, with their category.',
-    notes: DEFI_SUMMARY_DESCRIPTION,
+    notes: DEFI_SUMMARY_PAGE_DESCRIPTION,
     getSections: getDefiListSections,
   },
 }
