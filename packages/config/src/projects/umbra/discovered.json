@@ -1,7 +1,7 @@
 {
   "name": "umbra",
-  "timestamp": 1786959877,
-  "configHash": "0x4b70632246316db56c43bd46ebd06cb57619195661881fcfb5caad50474765ce",
+  "timestamp": 1791530581,
+  "configHash": "0x38d98c9a199ce8a9669fbe03c9bdce2024fe457278ded84755b93ce119c41ad5",
   "entries": [
     {
       "address": "eth:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
@@ -12,6 +12,7 @@
       "name": "StealthKeyRegistry",
       "address": "eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3",
       "type": "Contract",
+      "template": "umbra/StealthKeyRegistry",
       "sourceHashes": [
         "0xb9c99bb5f3a66ecab2d7cf945eedf4ccc3c3d5e2ecba8cbba4afec18b84ad4a7"
       ],
@@ -25,7 +26,7 @@
       "values": {
         "$immutable": true,
         "DOMAIN_SEPARATOR": "0xbffc56f4d2a2d2f02a0a5fd845c389cb145f77af539d336fc9ec350637642194",
-        "registeredAddresses": 11573,
+        "registeredAddresses": 11983,
         "STEALTHKEYS_TYPEHASH": "0xab73c83a21fb894c20095a8f28177984b02f6284c760e4c1ac2f82c3d34b79c1"
       },
       "fieldMeta": {
@@ -35,7 +36,8 @@
       },
       "implementationNames": {
         "eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3": "StealthKeyRegistry"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
@@ -72,9 +74,41 @@
       }
     },
     {
+      "address": "eth:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UmbraBatchSend",
+      "address": "eth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+      "type": "Contract",
+      "template": "umbra/UmbraBatchSend",
+      "sourceHashes": [
+        "0x176cf3371a1b1c395e248060f6f2097e788d187f7cd9a018833094e08719481b"
+      ],
+      "proxyType": "immutable",
+      "description": "Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.",
+      "deployerAddress": "eth:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+      "sinceTimestamp": 1684272635,
+      "sinceBlock": 17274931,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4",
+        "UMBRA": "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Can approve new tokens for batch sends." }
+      },
+      "implementationNames": {
+        "eth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": "UmbraBatchSend"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "name": "Umbra",
       "address": "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
       "type": "Contract",
+      "template": "umbra/Umbra",
       "sourceHashes": [
         "0x6e3d0905ee09aa55ec4a8f64cedf4106e30ada95cf2583911ef9952695eea8d2"
       ],
@@ -95,9 +129,9 @@
         "toll": 0,
         "tollCollector": "eth:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
         "tollReceiver": "eth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
-        "totalERC20Deposits": 1651,
-        "totalERC20Withdrawals": 1623,
-        "totalTransfers": 24989
+        "totalERC20Deposits": 1717,
+        "totalERC20Withdrawals": 1688,
+        "totalTransfers": 25452
       },
       "fieldMeta": {
         "owner": { "description": "Owner of the Umbra contract." },
@@ -113,7 +147,8 @@
       },
       "implementationNames": {
         "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": "Umbra"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
   "abis": {
@@ -178,6 +213,19 @@
       "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
       "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
     ],
+    "eth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB": [
+      "constructor(address _umbra)",
+      "error NotSorted()",
+      "error TooMuchEthSent()",
+      "event BatchSendExecuted(address indexed sender)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UMBRA() view returns (address)",
+      "function approveToken(address _token)",
+      "function batchSend(uint256 _tollCommitment, tuple(address receiver, address tokenAddr, uint256 amount, bytes32 pkx, bytes32 ciphertext)[] _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
     "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": [
       "constructor(uint256 _toll, address _tollCollector, address _tollReceiver)",
       "event Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)",
@@ -202,9 +250,13 @@
       "function withdrawTokenOnBehalf(address _stealthAddr, address _acceptor, address _tokenAddr, address _sponsor, uint256 _sponsorFee, uint8 _v, bytes32 _r, bytes32 _s)"
     ]
   },
-  "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 25773986 },
-  "permissionsConfigHash": "0x1b602ce984d8bbf3cfa3803a94d6015c569a3170bb08d1e2bbbdedff53c7e13f",
+  "usedTemplates": {
+    "umbra/StealthKeyRegistry": "0xfd288853be0455bf6f03810e17277718c092eb80c15d0f480a50d29994eb8ce4",
+    "umbra/Umbra": "0xcc5da2f937a3b09e86b9c8f5f688c9cfe6421f39852a78e70e0395fe81ed21e3",
+    "umbra/UmbraBatchSend": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+  },
+  "usedBlockNumbers": { "ethereum": 26153330 },
+  "permissionsConfigHash": "0xab55eb85474eab8b6990483f1e14707c3342e450bc4a8d1af85af36fe4775e11",
   "permissions": {
     "eth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232": {
       "receivedPermissions": [
@@ -212,6 +264,16 @@
           "permission": "interact",
           "from": "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
           "description": "set an arbitrary ETH toll that must be paid on every transfer routed through the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xB7EE870E2c49B2DEEe70003519cF056247Aac3D4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB",
+          "description": "approve new tokens so that batch sends can route them to the Umbra contract.",
           "role": ".owner"
         }
       ]

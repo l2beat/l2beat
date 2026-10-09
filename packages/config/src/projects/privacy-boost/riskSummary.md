@@ -11,3 +11,4 @@
 2. an appointed auditor fetches the user's history through the Audit API.
 3. a user exits through a forced withdrawal (see public observer).
 4. a user relies on today's anonymity set, which is too small to hide in (see chain analyst).
+5. the operator changes the SDK's closed-source core to send user data elsewhere, which users cannot check (see network observer).

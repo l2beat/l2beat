@@ -26,7 +26,7 @@ export const cloaked: BaseProject = {
   },
   display: {
     description:
-      'A wallet service with a closed-source hosted frontend that keeps spending keys client-side and gives recipients a fresh stealth address for every payment through reusable ENS names.',
+      'A stealth-address wallet that receives every payment on a fresh address, with passkey login and an Incognito balance in Privacy Pools.',
     detailedDescription: readProjectMarkdown('cloaked', 'detailedDescription'),
     links: {
       websites: ['https://app.clkd.xyz'],
@@ -62,7 +62,7 @@ export const cloaked: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'Under the documented key model, existing stealth balances are held in user-controlled EOAs and can be recovered with the published client-side recovery tool. The hosted service cannot spend them without obtaining client-side key material.',
+        'Balances sit in addresses your keys control, and the open recovery tool exports their keys. Cloaked can spend them only with your key material.',
       walkawayTest: {
         passed: false,
         reason:
@@ -73,7 +73,7 @@ export const cloaked: BaseProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The production web wallet is closed source and cannot be self-hosted. The published derivation code and API schema can nevertheless be used to build a local client that creates an account, derives keys, and signs and submits payments through the hosted API. The backend implementations of the API, ENS gateway, indexer, and relay service are not published, so the complete service cannot be reproduced.',
+        'The web app and the browser extension are closed source. The open stealth library and recovery tool derive keys and recover funds without Cloaked. The API, ENS gateway, indexer and relay are closed.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.stealthAddresses,

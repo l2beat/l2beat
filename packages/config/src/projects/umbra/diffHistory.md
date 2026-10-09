@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x65d1864764a06ec2d29b0f3061380fbc51de5120
+
+# Diff at Fri, 09 Oct 2026 07:24:21 GMT:
+
+- id: f01747ad
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1b0927d8fed18f91181a53bd060342f3168684bf block: 1786959877
+- current timestamp: 1791530581
+
+## Description
+
+Added UmbraBatchSend, which the app uses for batch payments. Moved Umbra and StealthKeyRegistry from config overrides into templates, with no value changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786959877 (main branch discovery), not current.
+
+```diff
+    contract StealthKeyRegistry (eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3) [umbra/StealthKeyRegistry] {
+    +++ description: Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.
+      template:
++        "umbra/StealthKeyRegistry"
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Umbra (eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401) [umbra/Umbra] {
+    +++ description: Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.
+      template:
++        "umbra/Umbra"
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UmbraBatchSend (eth:0xDbD0f5EBAdA6632Dde7d47713ea200a7C2ff91EB) [umbra/UmbraBatchSend]
+    +++ description: Helper the app uses to send several stealth payments in one transaction. It pulls the tokens from the sender and calls the Umbra contract once per payment, so each payment emits its own Announcement. It holds no funds between transactions.
+```
+
 Generated with discovered.json: 0xe4a93141a4bcb63a265facda582e5b55a918fdbb
 
 # Diff at Fri, 18 Sep 2026 10:24:58 GMT:

@@ -26,7 +26,7 @@ export const fluidkey: BaseProject = {
   },
   display: {
     description:
-      'A wallet service with a closed-source hosted frontend that keeps spending keys client-side and gives recipients a fresh stealth Safe account for every payment through reusable ENS names.',
+      'A stealth-address wallet that receives every payment on a fresh Safe, with optional yield and bank transfers.',
     detailedDescription: readProjectMarkdown('fluidkey', 'detailedDescription'),
     links: {
       websites: ['https://app.fluidkey.com'],
@@ -68,20 +68,22 @@ export const fluidkey: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'Under the documented key model, existing stealth balances are held in user-controlled Safes and can be recovered with the published client-side recovery tool and original Safe initialization parameters. Auto-earn positions remain subject to the withdrawal conditions and risks of their underlying vaults.',
+        "Your funds sit in Safes that only your keys control. The open recovery app finds and withdraws them without Fluidkey. Money in auto-earn vaults follows the vaults' withdrawal rules.",
       walkawayTest: {
         passed: false,
         reason:
-          'New payment-address generation through the app and ENS, address indexing, transaction construction, and relaying depend on the hosted Fluidkey service.',
+          "Name lookups, new addresses in the app, finding your Safes and submitting sends all run on Fluidkey's servers.",
       },
     },
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The production web wallet is closed source and cannot be self-hosted. The published derivation code and recovery client can nevertheless be used to derive keys, verify service-generated receiving addresses, and recover funds independently. A local client can also register and authenticate through the hosted API. The backend implementations of the API, ENS gateway, indexer, and relay service are not published, so the complete service cannot be reproduced.',
+        'The web and mobile apps are closed source. The open stealth account kit and recovery app derive keys, verify addresses and recover funds without Fluidkey. The API, ENS gateway, indexer and relayer are closed.',
     },
-    adversaries: fluidkeyAdversaries,
+    adversaries: fluidkeyAdversaries(
+      discovery.getContractValue<number>('FluidkeyScore', 'holders'),
+    ),
     attributes: [
       PRIVACY_ATTRIBUTES.stealthAddresses,
       PRIVACY_ATTRIBUTES.anyAmount,

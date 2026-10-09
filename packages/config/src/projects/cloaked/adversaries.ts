@@ -3,14 +3,11 @@ import {
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 
-const STEALTH_REPO =
-  'https://github.com/cloakedxyz/clkd-stealth/blob/9eb359efdd4ea31f5504bf81e57dcfe6f966dc14/'
-const STEALTH = STEALTH_REPO + 'src/'
-const RECOVERY =
-  'https://github.com/cloakedxyz/clkd-recovery/blob/b432a33873e2cfa4769807f8c95ed20a67234eed/src/'
-const HOW_IT_WORKS = 'https://clkd.xyz/docs/how-it-works'
-const API = 'https://clkd.xyz/openapi.json'
-const PRIVACY = 'https://clkd.xyz/docs/privacy'
+const STEALTH =
+  'https://github.com/cloakedxyz/clkd-stealth/blob/9eb359efdd4ea31f5504bf81e57dcfe6f966dc14/src/'
+const DOCS = 'https://clkd.xyz/docs/'
+const HOW_IT_WORKS = DOCS + 'how-it-works'
+const PRIVACY = DOCS + 'privacy'
 
 export const cloakedAdversaries = definePrivacyAdversaries({
   promise: {
@@ -21,11 +18,11 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       exposureShort:
-        'A fresh receiving address has no public derivation linking it to the recipient account, but its funds can be followed through later sends and change outputs.',
+        'Each payment reaches a fresh address, and nothing onchain names the account behind it.',
       exposureContinued:
-        'Combining addresses exposes their joint use, and EIP-7702 delegation reveals the account implementation without proving who owns the address.',
+        'A send draws from several addresses in one transaction unless you pick one with Advanced Control. Its change goes to a fresh address in the same transaction, which links the two.',
       advice: S.freshReceive(
-        'spend address-held balances separately with Advanced Control',
+        'spend one address at a time with Advanced Control',
       ),
       sources: [
         {
@@ -33,27 +30,26 @@ export const cloakedAdversaries = definePrivacyAdversaries({
           url: STEALTH + 'shared/genStealthAddress.ts#L17-L58',
         },
         {
-          title: 'Input selection, visible change and EIP-7702 execution',
+          title: 'Input selection, Advanced Control and change',
           url: HOW_IT_WORKS + '#sending-funds',
         },
         {
-          title:
-            'Quote API: spendableAddresses and reusable singleAddress mode',
-          url: API,
+          title: 'A multi-address send links those addresses',
+          url: HOW_IT_WORKS + '#what-is-visible-onchain',
         },
       ],
     },
     chainAnalyst: {
       sentiment: 'warning',
       exposureShort:
-        'Spending through shared execution infrastructure makes service use recognizable, which narrows the anonymity set to Cloaked users.',
+        "Cloaked's relayers and fee Safe mark every spend, so an address hides only among Cloaked's users, a small set by onchain activity.",
       exposureContinued:
-        'Timing, distinctive amounts, recurring counterparties and consolidation can identify or cluster recipients. A send draws from several addresses by default and leaves a change output that links them.',
+        'Timing, distinctive amounts, recurring counterparties and change outputs cluster recipients further. Incognito withdrawals from Privacy Pools carry the same relayer and fee marks.',
       advice:
-        'Space out related payments and check whether amounts or recurring patterns identify you. Follow your own change outputs to see what a counterparty can trace.',
+        'Space out related payments, avoid distinctive amounts and follow your own change outputs to see what a counterparty can trace.',
       sources: [
         {
-          title: 'Documented transaction links and change handling',
+          title: 'Documented links and change handling',
           url: HOW_IT_WORKS + '#what-is-visible-onchain',
         },
         {
@@ -61,44 +57,26 @@ export const cloakedAdversaries = definePrivacyAdversaries({
           url: STEALTH + 'shared/deriveDeterministicEphemeralKey.ts#L35-L68',
         },
         {
-          title:
-            'API permits repeated use; receive-once/spend-once is not enforced',
-          url: API,
+          title: 'Relay fee receiver for Privacy Pools withdrawals',
+          url: 'https://api.clkd.xyz/relayer/details?chainId=1&assetAddress=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
         },
       ],
     },
     networkObserver: {
       sentiment: 'bad',
       exposureShort:
-        'Every spend from the hosted client goes to a third-party relay, with the stealth address, destination and amount.',
+        'The app is closed source with no open alternative, so what it sends to third parties is up to Cloaked and can change at any time.',
       exposureContinued:
-        'The client is closed source, so what else reaches the RPC, hosting and analytics providers named in the privacy policy cannot be verified.',
-      advice:
-        'Derive your address keys with the recovery tool, which makes no network calls, and spend them from a wallet on your own node over Tor. Fund gas for token transfers from a fresh wallet, since sponsored execution is only available through the hosted client.',
+        "Today's app sends spends, quotes and balance reads to Cloaked's own API. Linking your own ENS name reads it through Alchemy under Cloaked's key, and wallet logins go through WalletConnect. A payer who looks up your name through a third-party RPC shows it your name and the new address.",
       sources: [
         {
-          title:
-            'Client sends prepareCalls with address, recipient and amount to Porto RPC',
-          url: STEALTH_REPO + 'README.md#architecture',
+          title: 'Service providers: RPC, hosting and wallet connection',
+          url: PRIVACY,
         },
         {
           contract: 'OffchainResolver',
           title:
-            'CCIP-Read forwards the ENS query and verifies the returned answer',
-        },
-        {
-          title:
-            'Disclosed metadata, relay data and external service providers',
-          url: PRIVACY,
-        },
-        {
-          title: 'Recovery derives address keys locally without API calls',
-          url: RECOVERY + 'lib/deriveKeys.ts#L31-L68',
-        },
-        {
-          title:
-            'Recovered keys are spent from any wallet; token sends need gas',
-          url: RECOVERY + 'components/PostRecoveryGuide.tsx#L81-L106',
+            "Name lookups return the signed answer through the payer's RPC",
         },
       ],
     },
@@ -106,40 +84,23 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       exposureShort: S.operatorViewingKey('Cloaked'),
       exposureContinued:
-        'Its Incognito relay states that it retains deposit-to-withdrawal associations, and the hosted wallet code handles your spending secrets.',
-      advice: S.localClientSpendingKeys('Cloaked'),
+        'It also serves the closed-source app that handles your keys. Its relay submits both sides of every Incognito round trip through Privacy Pools and keeps the association.',
       sources: [
         {
           title: 'Viewing key and public spending key shared with the server',
           url: STEALTH + 'client/deriveServerBoundKeys.ts#L16-L53',
         },
         {
-          title: 'Account-scoped addresses, quotes, submissions and pool state',
-          url: API,
-        },
-        {
           title: 'Privacy policy: retained pool associations and account data',
           url: PRIVACY,
-        },
-        {
-          contract: 'OffchainResolver',
-          title: 'Signature and expiry checks do not prove recipient control',
-        },
-        {
-          section: 'permissions',
-          title: 'Owner can replace gateway and signer',
-        },
-        {
-          section: 'upgrades-and-governance',
-          title: 'Hosted-client trust boundary',
         },
       ],
     },
     futureAdversary: {
       sentiment: 'warning',
       exposureShort: S.noAnnouncement,
-      exposureContinued: `${S.operatorViewingKeyRegardless('Cloaked')} ${S.walletSignatureAccounts('plus a four-digit PIN')} Passkey PRF secrets do not follow from breaking the passkey.`,
-      advice: `${S.notWalletSignature('with the passkey PRF setup')} ${S.permanentlyDisclosed('the address history shared with Cloaked')}`,
+      exposureContinued: `${S.operatorViewingKeyRegardless('Cloaked')} ${S.walletSignatureAccounts('plus a four-digit PIN')} Passkey secrets do not follow from breaking the passkey.`,
+      advice: `${S.notWalletSignature('with a passkey')} ${S.permanentlyDisclosed('the address history shared with Cloaked')}`,
       sources: [
         {
           title:
@@ -152,16 +113,8 @@ export const cloakedAdversaries = definePrivacyAdversaries({
           url: STEALTH + 'client/genCloakedMessage.ts#L15-L48',
         },
         {
-          title: 'Signature components are hashed into the account keys',
-          url: STEALTH + 'client/genKeysFromSignature.ts#L23-L42',
-        },
-        {
           title: 'Independent secrets, including two WebAuthn PRF outputs',
           url: STEALTH + 'client/genKeys.ts#L7-L67',
-        },
-        {
-          title: 'FIDO hmac-secret uses a separate random credential secret',
-          url: 'https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-hmac-secret-extension',
         },
         { title: 'Operator data and retention', url: PRIVACY },
       ],
