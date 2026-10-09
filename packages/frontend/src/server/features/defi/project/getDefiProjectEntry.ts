@@ -65,6 +65,7 @@ export async function getDefiProjectEntry(
       'externalDependencies',
       'discoveryUpdates',
       'ossificationHistory',
+      'auditCoverage',
     ],
   })
 
@@ -109,6 +110,7 @@ export async function getDefiProjectEntry(
       tvsConfig: project.tvsConfig,
       isVerified: project.statuses.unverifiedContracts.length === 0,
       isUnderReview,
+      auditCoverage: project.auditCoverage,
     },
     contractUtils,
     projectsChangeReport,

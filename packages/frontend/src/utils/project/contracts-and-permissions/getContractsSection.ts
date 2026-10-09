@@ -1,8 +1,10 @@
 import type {
   Project,
+  ProjectAuditCoverage,
   ProjectContract,
   ProjectContracts,
   ProjectEscrow,
+  ProjectScalingStack,
   ReferenceLink,
   TvsToken,
 } from '@l2beat/config'
@@ -10,6 +12,11 @@ import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
+import {
+  type ContractAuditInfo,
+  contractKey,
+  getContractsAuditInfo,
+} from '~/server/features/audits/getContractsAuditInfo'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
@@ -36,6 +43,9 @@ type ProjectParams = {
   architectureImage?: string
   contracts?: ProjectContracts
   tvsConfig?: TvsToken[]
+  /** Output of `l2b audit-coverage`, when committed for the project. */
+  auditCoverage?: ProjectAuditCoverage
+  stacks?: ProjectScalingStack[]
 }
 
 export type ContractsSection = Omit<
@@ -79,6 +89,11 @@ export function getContractsSection(
   )
   const matchedEscrows = new Set<string>()
   const getAddressAnchor = createAddressAnchors('contracts')
+  const auditInfo = getContractsAuditInfo(
+    projectParams.auditCoverage,
+    projectParams.slug,
+    projectParams.stacks,
+  )
 
   const contracts = Object.fromEntries(
     Object.entries(projectParams.contracts.addresses ?? {}).map(
@@ -102,6 +117,7 @@ export function getContractsSection(
               contractUtils,
               escrow,
               getAddressAnchor(contract.address),
+              auditInfo,
             ),
           ] as const
         })
@@ -136,6 +152,7 @@ export function getContractsSection(
         contractUtils,
         escrowDetails,
         getAddressAnchor(contract.address),
+        auditInfo,
       ),
     ]
   }
@@ -169,6 +186,7 @@ function makeTechnologyContract(
   contractUtils: ContractUtils,
   escrow?: TechnologyContract['escrow'],
   anchorId?: string,
+  auditInfo?: Map<string, ContractAuditInfo>,
 ): TechnologyContract {
   const chain = item.chain
   // TODO: sz-piotr: This here is just a stepping stone. Ideally none of this
@@ -271,6 +289,9 @@ function makeTechnologyContract(
     'id',
   )
   const contractAddress = ChainSpecificAddress.address(item.address)
+  const audit = auditInfo?.get(
+    contractKey(ChainSpecificAddress.chain(item.address), contractAddress),
+  )
   const pastUpgrades = item.pastUpgrades?.map((upgrade) => ({
     ...upgrade,
     explorerUrl,
@@ -294,6 +315,7 @@ function makeTechnologyContract(
     upgradeConsiderations: item.upgradeConsiderations,
     pastUpgrades: getPastUpgradesData(pastUpgrades),
     escrow,
+    audit,
   }
 }
 

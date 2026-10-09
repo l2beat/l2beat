@@ -120,6 +120,9 @@ const mainPages: MainPage[] = [
     title: 'ZK Catalog',
   },
   {
+    title: 'Audits',
+  },
+  {
     title: 'About Us',
   },
   {

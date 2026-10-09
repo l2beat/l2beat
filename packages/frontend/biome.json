@@ -3,7 +3,13 @@
   "root": false,
   "extends": ["../../../biome.json"],
   "files": {
-    "includes": ["**", "!**/static/**", "!**/dist/**", "!**/index.html"]
+    "includes": [
+      "**",
+      "!**/static/**",
+      "!**/dist/**",
+      "!**/index.html",
+      "!**/src/content/audits/*.json"
+    ]
   },
   "linter": {
     "enabled": true,

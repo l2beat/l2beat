@@ -52,7 +52,8 @@ The definitions used by the audit coverage prototype:
 
 - **Contracts**: the entries of `contracts`. Where a project has critical contracts, show those: `critical` is `true` or has no `untilTimestamp`, the same as the ossification perimeter. Otherwise show all.
 - **Units of a contract**: the units of its `source` and of each of its `implementations`; unique units are counted by unit id.
+- **Interfaces**: units of kind `interface` are listed and diffed like every other unit, but they are left out of every number below (unit counts, covered lines, fully covered contracts). They declare no logic, and reports rarely scope them, so counting them only adds noise to both the differing and the unaudited side.
 - **Status shown**: `none` is unaudited, `differs` is differs. `identical` is shown as library when the unit's `reports` come from a collection of kind `library` and none from the project's own collection (the collection whose id is the project id), otherwise as identical.
-- **Covered lines**: `lines` for identical units, `covered` for differing ones (their lines minus added lines that hold code, not only comments), 0 for unaudited ones.
+- **Covered lines**: `lines` for identical units, `covered` for differing ones (their lines minus added lines that hold code, not only comments), 0 for unaudited ones. Interfaces contribute nothing to either side.
 - **Reports**: own reports are those whose `collections` include the project id; an own report is matched when some shown unit lists it in `reports`. Shared reports are the other reports listed by shown units. The latest audit and the audits of the past year come from the own reports' `date`.
 - **Findings**: `units[unitId].findings` maps a report to the ids of its major findings still open in the audited code; link them to the report document.

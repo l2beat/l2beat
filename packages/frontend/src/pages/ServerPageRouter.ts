@@ -7,6 +7,7 @@ import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
+import { createAuditsRouter } from './audits/AuditsRouter'
 import { createBlobsRouter } from './blobs/BlobsRouter'
 import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
@@ -76,6 +77,7 @@ export function createServerPageRouter(
     createDaRiskFrameworkRouter,
     createMultisigReportRouter,
     createPrivacyRouter,
+    createAuditsRouter,
     createDefiRouter,
     createOssificationRouter,
     createTermsOfServiceRouter,

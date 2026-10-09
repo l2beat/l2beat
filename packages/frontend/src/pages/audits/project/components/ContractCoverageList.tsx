@@ -1,0 +1,270 @@
+import { formatInteger } from '@l2beat/shared-pure'
+import { useEffect, useMemo, useState } from 'react'
+import {
+  LineCoverageBar,
+  LineCoverageTooltipContent,
+} from '~/components/audits/AuditCoverageBar'
+import {
+  collectFindingIds,
+  formatShare,
+  hasUnresolvedMajorFinding,
+  MAJOR_FINDING_DESCRIPTION,
+} from '~/components/audits/auditStatus'
+import { contractAnchorId } from '~/components/audits/contractAnchor'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
+import { ChevronIcon } from '~/icons/Chevron'
+import type { AuditsContractEntry } from '~/server/features/audits/types'
+import { cn } from '~/utils/cn'
+import { UnitRow } from './UnitRow'
+
+interface Props {
+  slug: string
+  contracts: AuditsContractEntry[]
+}
+
+/**
+ * One collapsible row per deployed contract, expanding to its verified
+ * sources (proxy and implementations) and their units. Filtering by unit
+ * name is local state.
+ */
+function anchorOf(contract: AuditsContractEntry): string {
+  return contractAnchorId(contract.chain, contract.shortAddress)
+}
+
+export function ContractCoverageList({ slug, contracts }: Props) {
+  const [search, setSearch] = useState('')
+  const [open, setOpen] = useState<Set<string>>(() => new Set())
+  const needle = search.trim().toLowerCase()
+  const isSearching = needle !== ''
+
+  // Open and scroll to the contract addressed by the URL fragment.
+  useEffect(() => {
+    const hash = window.location.hash.slice(1).toLowerCase()
+    if (!hash) return
+    const target = contracts.find((c) => anchorOf(c) === hash)
+    if (!target) return
+    setOpen((prev) => new Set(prev).add(target.address))
+    requestAnimationFrame(() => {
+      document.getElementById(hash)?.scrollIntoView({ block: 'start' })
+    })
+  }, [contracts])
+
+  // While a name filter is typed every contract is expanded and contracts
+  // without a matching unit are hidden; clearing the filter restores the
+  // manual expand state.
+  const filtered = useMemo(() => {
+    const rows = contracts.map((contract) => ({
+      contract,
+      sources: contract.sources.map((source) => ({
+        source,
+        units: source.units.filter(
+          (u) =>
+            needle === '' ||
+            u.name.toLowerCase().includes(needle) ||
+            u.match?.auditedName?.toLowerCase().includes(needle),
+        ),
+      })),
+    }))
+    return isSearching
+      ? rows.filter((r) => r.sources.some((s) => s.units.length > 0))
+      : rows
+  }, [contracts, needle, isSearching])
+
+  function toggleOpen(address: string) {
+    setOpen((prev) => {
+      const next = new Set(prev)
+      if (next.has(address)) next.delete(address)
+      else next.add(address)
+      return next
+    })
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Filter units by name"
+          className="min-w-[200px] rounded-md border border-divider bg-surface-secondary px-2 py-1 text-xs"
+        />
+        <div className="flex flex-wrap items-center gap-3 text-xs">
+          <button
+            type="button"
+            className="text-secondary hover:text-primary"
+            onClick={() => setOpen(new Set(contracts.map((c) => c.address)))}
+          >
+            Expand all
+          </button>
+          <button
+            type="button"
+            className="text-secondary hover:text-primary"
+            onClick={() => setOpen(new Set())}
+          >
+            Collapse all
+          </button>
+        </div>
+      </div>
+      {isSearching && (
+        <p className="text-secondary text-xs">
+          Showing {filtered.length} of {contracts.length} contracts with
+          matching units.
+        </p>
+      )}
+
+      <div className="flex flex-col gap-2">
+        {filtered.map(({ contract, sources }) => {
+          const key = contract.address
+          const isOpen = isSearching || open.has(key)
+          const visibleUnits = sources.reduce((n, s) => n + s.units.length, 0)
+          const allUnits = contract.sources.flatMap((s) => s.units)
+          const majorFindingUnits = allUnits.filter(
+            hasUnresolvedMajorFinding,
+          ).length
+          const findingIds = collectFindingIds(allUnits)
+          const isProxy = contract.sources.some((s) => s.role === 'proxy')
+          return (
+            <div
+              key={key}
+              id={anchorOf(contract)}
+              className={cn(
+                'scroll-mt-14 rounded-lg border md:scroll-mt-10',
+                majorFindingUnits > 0 ? 'border-negative' : 'border-divider',
+              )}
+            >
+              <button
+                type="button"
+                onClick={() => toggleOpen(key)}
+                className="grid w-full grid-cols-[16px_minmax(0,1fr)] items-center gap-3 px-3 py-2 text-left hover:bg-surface-secondary md:grid-cols-[16px_minmax(200px,1.5fr)_minmax(0,1fr)_160px]"
+              >
+                <ChevronIcon
+                  className={cn(
+                    'size-3 text-secondary transition-transform',
+                    isOpen ? 'rotate-0' : '-rotate-90',
+                  )}
+                />
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="truncate font-bold text-sm">
+                      {contract.name}
+                    </span>
+                    {isProxy && (
+                      <span className="rounded border border-divider px-1 font-medium text-[10px] text-secondary uppercase">
+                        proxy
+                      </span>
+                    )}
+                    {contract.noSource && (
+                      <span className="rounded border border-negative px-1 font-medium text-[10px] text-negative uppercase">
+                        no source
+                      </span>
+                    )}
+                    {majorFindingUnits > 0 && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="rounded border border-negative bg-negative/10 px-1 font-medium text-[10px] text-negative uppercase">
+                            major finding
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-[360px]">
+                          <div className="mb-1 font-medium">
+                            {majorFindingUnits}{' '}
+                            {majorFindingUnits === 1 ? 'unit' : 'units'} of this
+                            contract {majorFindingUnits === 1 ? 'has' : 'have'}{' '}
+                            an unresolved major finding
+                            {findingIds.length > 0 &&
+                              `: ${findingIds.join(', ')}`}
+                            .
+                          </div>
+                          {MAJOR_FINDING_DESCRIPTION}
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </div>
+                  <div className="truncate font-mono text-secondary text-xs">
+                    {contract.address}
+                  </div>
+                </div>
+                <div className="max-md:hidden">
+                  {!contract.noSource && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <LineCoverageBar lines={contract.coverage.lines} />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <LineCoverageTooltipContent
+                          lines={contract.coverage.lines}
+                        />
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                </div>
+                <div className="text-right text-xs max-md:hidden">
+                  {contract.noSource ? (
+                    <span className="text-secondary">unverified bytecode</span>
+                  ) : (
+                    <>
+                      <span className="font-medium">
+                        {formatShare(
+                          contract.coverage.lines.covered,
+                          contract.coverage.lines.total,
+                        )}{' '}
+                        covered
+                      </span>
+                      <span className="ml-2 text-secondary">
+                        {formatInteger(contract.coverage.lines.covered)}/
+                        {formatInteger(contract.coverage.lines.total)} lines
+                      </span>
+                    </>
+                  )}
+                </div>
+              </button>
+              {isOpen && (
+                <div className="border-divider border-t">
+                  {visibleUnits === 0 && (
+                    <p className="px-3 py-2 text-secondary text-xs">
+                      {contract.noSource
+                        ? 'No verified source for this contract.'
+                        : 'No units match the name filter.'}
+                    </p>
+                  )}
+                  {sources.map(({ source, units }) =>
+                    units.length === 0 ? null : (
+                      <div key={source.address}>
+                        <div className="flex flex-wrap items-baseline gap-x-3 bg-surface-secondary px-3 py-1.5 text-xs">
+                          <span className="font-medium text-secondary uppercase">
+                            {source.role}
+                          </span>
+                          <span className="select-all font-mono">
+                            {source.address}
+                          </span>
+                        </div>
+                        <div className="hidden px-3 py-1.5 font-medium text-2xs text-secondary uppercase tracking-wider md:grid md:grid-cols-[72px_minmax(0,1.1fr)_minmax(0,1.4fr)_minmax(0,1.5fr)_176px_240px] md:gap-x-3">
+                          <span>Type</span>
+                          <span>Name</span>
+                          <span>Status</span>
+                          <span>Audited source</span>
+                          <span className="text-right">Diff</span>
+                          <span />
+                        </div>
+                        {units.map((unit) => (
+                          <UnitRow key={unit.id} slug={slug} unit={unit} />
+                        ))}
+                      </div>
+                    ),
+                  )}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,2900 @@
+{
+  "schema_version": "1.0.0",
+  "project": "facet",
+  "dataset": {
+    "repository": "sergeyshemyakov/audit-dataset",
+    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
+  },
+  "discoveredAt": 1780407005,
+  "collections": {
+    "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
+    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "_libs/solady": { "name": "Solady", "kind": "library" },
+    "_libs/sp1": { "name": "SP1", "kind": "library" },
+    "agglayer": { "name": "Agglayer", "kind": "project" },
+    "bob": { "name": "BOB", "kind": "project" },
+    "celo": { "name": "Celo", "kind": "project" },
+    "ethscriptions": { "name": "Ethscriptions", "kind": "project" },
+    "facet": { "name": "Facet", "kind": "project" },
+    "mantle": { "name": "Mantle", "kind": "project" },
+    "optimism": { "name": "OP Mainnet", "kind": "project" },
+    "taiko": { "name": "Taiko Alethia", "kind": "project" },
+    "zksync2": { "name": "ZKsync Era", "kind": "project" }
+  },
+  "reports": {
+    "ackee-blockchain-solady-report": {
+      "collections": ["_libs/solady"],
+      "title": "Solady: Tokens & Utils Selection",
+      "auditor": "Ackee Blockchain",
+      "date": "2023-06-02",
+      "document": "_libs/solady/reports/solady__audits__ackee-blockchain-solady-report.pdf"
+    },
+    "ackee-safe-1-5-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account Security Review",
+      "auditor": "Ackee Blockchain Security",
+      "date": "2025-05-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
+    },
+    "cantina-eip7702-2025-02": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Review (Cantina, EIP-7702 / Pectra impact)",
+      "auditor": "Cantina",
+      "date": "2025-03-09",
+      "document": "optimism/reports/2025_02-EIP7702-Cantina.pdf"
+    },
+    "cantina-facet-zk-fault-proof-rollup-2025-08-05": {
+      "collections": ["ethscriptions", "facet"],
+      "title": "Facet ZK Fault Proof Rollup Security Review",
+      "auditor": "Cantina (Slowfi, solo review)",
+      "date": "2025-08-05",
+      "document": "ethscriptions/reports/Cantina_Facet_ZK_Fault_Proofs_Report.pdf"
+    },
+    "cantina-interop-l2-rereview-2026-06": {
+      "collections": ["optimism"],
+      "title": "Optimism L2 Interop Re-review (Cantina Managed)",
+      "auditor": "Cantina",
+      "date": "2026-06-18",
+      "document": "optimism/reports/2026_06-Interop-L2-Contracts.pdf"
+    },
+    "cantina-interop-portal-2025-04": {
+      "collections": ["optimism"],
+      "title": "Interop portal - Competition",
+      "auditor": "Cantina",
+      "date": "2025-06-04",
+      "document": "optimism/reports/2025_04-Interop-Portal-Cantina.pdf"
+    },
+    "cantina-mcp-l1-2024-02": {
+      "collections": ["optimism"],
+      "title": "Optimism Cycle 19 Security Review (Cantina, MCP L1)",
+      "auditor": "Cantina",
+      "date": "2024-02-15",
+      "document": "optimism/reports/2024_02-MCP_L1-Cantina.pdf"
+    },
+    "cantina-solady-report": {
+      "collections": ["_libs/solady"],
+      "title": "Solady Security Review (Cantina Public Goods)",
+      "auditor": "Cantina",
+      "date": "2023-09-14",
+      "document": "_libs/solady/reports/solady__audits__cantina-solady-report.pdf"
+    },
+    "cantina-spearbit-coinbase-solady-report": {
+      "collections": ["_libs/solady"],
+      "title": "Coinbase Solady Security Review",
+      "auditor": "Spearbit (via Cantina)",
+      "date": "2025-01-22",
+      "document": "_libs/solady/reports/solady__audits__cantina-spearbit-coinbase-solady-report.pdf"
+    },
+    "cantina-u18-2026-01": {
+      "collections": ["optimism"],
+      "title": "Optimism PBC U18 Security Review (Cantina)",
+      "auditor": "Cantina",
+      "date": "2026-01-12",
+      "document": "optimism/reports/2026_01-U18-Cantina.pdf"
+    },
+    "certora-safe-1-3-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.3.0 Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-07-29",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Certora.pdf"
+    },
+    "certora-safe-1-5-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
+      "auditor": "Certora",
+      "date": "2025-01-14",
+      "document": "_libs/safe/reports/safe-verification__docs__Safe_Audit_Report_1_5_0_Certora.pdf"
+    },
+    "certora-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-02-16",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-certora.pdf"
+    },
+    "code4rena-taiko-2024-04": {
+      "collections": ["taiko"],
+      "title": "Taiko Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2024-04-26",
+      "document": "taiko/reports/2024_04-code4rena-taiko.html"
+    },
+    "code4rena-zksync-era-2023-10": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era Findings & Analysis Report",
+      "auditor": "Code4rena",
+      "date": "2024-02-29",
+      "document": "zksync2/reports/2023_10-code4rena-zksync-era.html"
+    },
+    "code4rena-zksync-era-2024-03": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era Findings & Analysis Report",
+      "auditor": "Code4rena",
+      "date": "2024-05-29",
+      "document": "zksync2/reports/2024_03-code4rena-zksync-era.html"
+    },
+    "code4rena-zksync-era-system-contracts-2023-03": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era System Contracts contest Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2023-06-14",
+      "document": "zksync2/reports/2023_03-code4rena-zksync-era-system-contracts.html"
+    },
+    "contracts__audits__2018-10": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Open Zeppelin v2.0 Security Audit",
+      "auditor": "Level K",
+      "date": "2018-10-21",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2018-10.pdf"
+    },
+    "contracts__audits__2022-10-Checkpoints": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Checkpoints Library Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2022-11-15",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2022-10-Checkpoints.pdf"
+    },
+    "contracts__audits__2022-10-ERC4626": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin ERC4626 Tokenized Vault Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2022-11-15",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2022-10-ERC4626.pdf"
+    },
+    "contracts__audits__2023-05-v4.9": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 4.9 Release Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2023-05-09",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-05-v4.9.pdf"
+    },
+    "contracts__audits__2023-10-v5.0": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 5.0 Release",
+      "auditor": "OpenZeppelin",
+      "date": "2023-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
+    },
+    "contracts__audits__2024-10-v5.1": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.1 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2024-10-v5.1.pdf"
+    },
+    "contracts__audits__2026-02-v5.6": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts v5.6 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2026-02-27",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
+    },
+    "cure53-bob-usdc-bridge-library-2024-04": {
+      "collections": ["bob"],
+      "title": "Review-Report BOB modified USDC bridge library 04.2024 (BOB-02-WP1)",
+      "auditor": "Cure53",
+      "date": "2024-04-30",
+      "document": "bob/reports/Cure53 - BOB Modified USDC Bridge Library (WP1).pdf"
+    },
+    "formal-verification__fv__reports__2022-05": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Formal Verification of OpenZeppelin (May - June 2022)",
+      "auditor": "Certora",
+      "document": "_libs/openzeppelin/reports/formal-verification__fv__reports__2022-05.pdf"
+    },
+    "g0-safe-1-1-0": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_0.pdf"
+    },
+    "g0-safe-1-1-1": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0 and v1.1.1",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_1.pdf"
+    },
+    "g0-safe-1-3-0-final": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
+      "auditor": "G0 Group",
+      "date": "2021-05-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
+    },
+    "g0-safe-1-3-0-initial": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
+      "auditor": "G0 Group",
+      "date": "2021-04-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Initial.pdf"
+    },
+    "g0-safe-allowance-v0-1-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Review",
+      "auditor": "G0 Group",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v0.1.0__audit-report-g0.md"
+    },
+    "hashlock-celo-optimism-superchain-2026-02": {
+      "collections": ["celo"],
+      "title": "Celo Smart Contract Audit Report (Optimism and Superchain, 2nd audit)",
+      "auditor": "Hashlock Pty Ltd",
+      "date": "2026-02-28",
+      "document": "celo/reports/Hashlock - Celo Optimism and Superchain (2nd Audit).pdf"
+    },
+    "nethermind-nm-0561-celo-custom-gas-token-2025-07-01": {
+      "collections": ["celo"],
+      "title": "NM-0561 Celo Custom Gas Token Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2025-07-01",
+      "document": "celo/reports/Nethermind - NM-0561 Celo Custom Gas Token.pdf"
+    },
+    "nethermind-safe-1-3-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.3.0 Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2026-08-17",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Nethermind.pdf"
+    },
+    "nethermind-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2026-08-17",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-nethermind.pdf"
+    },
+    "openzeppelin-bedrock-bridge-2022-05": {
+      "collections": ["optimism"],
+      "title": "Optimism Bridge Audit (OpenZeppelin, May 2022)",
+      "auditor": "OpenZeppelin",
+      "date": "2022-05-16",
+      "document": "optimism/reports/2022_05-Bedrock_Contracts-Zeppelin.pdf"
+    },
+    "openzeppelin-bedrock-periphery-2022-09": {
+      "collections": ["optimism"],
+      "title": "Optimism Bedrock and Periphery Audit (OpenZeppelin)",
+      "auditor": "OpenZeppelin",
+      "date": "2022-09-02",
+      "document": "optimism/reports/2022_09-Bedrock_and_Periphery-Zeppelin.pdf"
+    },
+    "openzeppelin-mantle-v2-solidity-contracts-2024-03": {
+      "collections": ["mantle"],
+      "title": "Mantle V2 Solidity Contracts Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-03-15",
+      "document": "mantle/reports/2024_03-openzeppelin-mantle-v2-solidity-contracts-audit.pdf"
+    },
+    "openzeppelin-taiko-protocol-2024-06": {
+      "collections": ["taiko"],
+      "title": "Taiko Protocol Audit (OpenZeppelin)",
+      "auditor": "OpenZeppelin",
+      "date": "2024-06-19",
+      "document": "taiko/reports/2024_06-openzeppelin-taiko-protocol-audit.pdf"
+    },
+    "openzeppelin-zksync-l1-diff-2023-02": {
+      "collections": ["zksync2"],
+      "title": "zkSync | Layer 1 Diff Audit February",
+      "auditor": "OpenZeppelin",
+      "date": "2023-03-08",
+      "document": "zksync2/reports/2023_02-openzeppelin-zksync-l1-diff-audit.html"
+    },
+    "pashov-bob-usdc-bridge-2024-04": {
+      "collections": ["bob"],
+      "title": "BOB USDC Bridge Security Review",
+      "auditor": "Pashov Audit Group",
+      "date": "2024-04-22",
+      "document": "bob/reports/Pashov - BOB USDC Bridge (Apr 2024).pdf"
+    },
+    "secure3-mantle-v2-public-contest-2024-04": {
+      "collections": ["mantle"],
+      "title": "Mantle_V2_Public Competitive Security Assessment (Secure3, April 2024 edition)",
+      "auditor": "Secure3",
+      "date": "2024-04-18",
+      "document": "mantle/reports/2024_04-secure3-mantle-v2-public-audit-contest.pdf"
+    },
+    "secure3-mantle-v2-public-contest-final-2024-05": {
+      "collections": ["mantle"],
+      "title": "Mantle_V2_Public Competitive Security Assessment (Secure3, May 2024 final edition)",
+      "auditor": "Secure3",
+      "date": "2024-05-10",
+      "document": "mantle/reports/2024_05-secure3-mantle-v2-public-audit-contest-final.pdf"
+    },
+    "secure3-mantle-v2-tectonic-2024-03": {
+      "collections": ["mantle"],
+      "title": "Mantle V2 Competitive Security Assessment (Secure3, March 2024)",
+      "auditor": "Secure3",
+      "date": "2024-03-04",
+      "document": "mantle/reports/2024_03-secure3-mantle-v2-tectonic-competitive-security-assessment.pdf"
+    },
+    "sigma-prime-taiko-smart-contracts-2024-02": {
+      "collections": ["taiko"],
+      "title": "Taiko Smart Contract Security Assessment (Sigma Prime)",
+      "auditor": "Sigma Prime",
+      "document": "taiko/reports/2024_02-sigma-prime-taiko-smart-contract-security-assessment.pdf"
+    },
+    "spearbit-agglayer-v030-2025-09": {
+      "collections": ["agglayer"],
+      "title": "Polygon Agg Security Review",
+      "auditor": "Spearbit",
+      "date": "2025-09-17",
+      "document": "agglayer/reports/2025_09-spearbit-polygon-agglayer-v0.3.0.pdf"
+    },
+    "spearbit-fault-proofs-no-mips-2024-08": {
+      "collections": ["optimism"],
+      "title": "Base Fault Proofs no MIPS Security Review (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2024-08-14",
+      "document": "optimism/reports/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf"
+    },
+    "spearbit-upgrade16-2025-05": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Review - Upgrade 16 (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2025-05-20",
+      "document": "optimism/reports/2025_05-Upgrade16-Spearbit.pdf"
+    },
+    "trailofbits-invariant-testing-2022-11": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Assessment (testing strategy and invariants, November 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2022-11-10",
+      "document": "optimism/reports/2022_11-Invariant_Testing-TrailOfBits.pdf"
+    },
+    "trailofbits-opnode-fix-review-2022-07": {
+      "collections": ["optimism"],
+      "title": "Optimism: Rollup Node and Execution Engine - Fix Review",
+      "auditor": "Trail of Bits",
+      "date": "2022-07-07",
+      "document": "optimism/reports/2022_05-OpNode-TrailOfBits.pdf"
+    },
+    "trust-security-zksync-era-contracts-2024-10": {
+      "collections": ["zksync2"],
+      "title": "Trust Security ZKsync Era Contracts Audit",
+      "auditor": "Trust Security",
+      "date": "2024-10-13",
+      "document": "zksync2/reports/2024_10-trust-security-zksync-era-contracts-audit.pdf"
+    },
+    "trust-superchainconfig-upgrade-2024-01": {
+      "collections": ["optimism"],
+      "title": "Smart Contract Audit: Optimism Bedrock upgrade (Trust Security)",
+      "auditor": "Trust Security",
+      "date": "2024-01-11",
+      "document": "optimism/reports/2023_12_SuperchainConfigUpgrade_Trust.pdf"
+    },
+    "veridise-sp1-recursion-and-contracts-2024": {
+      "collections": ["_libs/sp1"],
+      "title": "Veridise Auditing Report for SP1 (recursion circuits and sp1-contracts), V2",
+      "auditor": "Veridise",
+      "date": "2024-07-18",
+      "document": "_libs/sp1/reports/sp1__audits__veridise.pdf"
+    },
+    "zellic-facet-bridge-2024-11-04": {
+      "collections": ["ethscriptions", "facet"],
+      "title": "Facet Bridge Smart Contract Security Assessment",
+      "auditor": "Zellic",
+      "date": "2024-11-04",
+      "document": "ethscriptions/reports/Zellic_Facet_Bridge_Audit_Report.pdf"
+    },
+    "zellic-facet-geth-2024-09-22": {
+      "collections": ["ethscriptions", "facet"],
+      "title": "Facet Geth Blockchain Security Assessment",
+      "auditor": "Zellic",
+      "date": "2024-09-22",
+      "document": "ethscriptions/reports/Zellic_Facet_Geth_Audit_Report.pdf"
+    },
+    "zellic-facet-node-2024-11-05": {
+      "collections": ["ethscriptions", "facet"],
+      "title": "Facet Node Comprehensive Security Assessment",
+      "auditor": "Zellic",
+      "date": "2024-11-05",
+      "document": "ethscriptions/reports/Zellic_Facet_Node_Audit_Report.pdf"
+    }
+  },
+  "auditedFiles": {
+    "0045b2bbd612": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/GnosisSafe.sol",
+      "blob": "0045b2bbd61230dbb61abbddfefb0bef6f366d84"
+    },
+    "044a1e46cc0c": {
+      "repository": "agglayer/agglayer-contracts",
+      "commit": "07b40c26ae748c47a2a51f8159990ad4163c4d43",
+      "path": "contracts/verifiers/v4.0.0-rc.3/PlonkVerifier.sol",
+      "blob": "044a1e46cc0cda7c1baa2fda3e65babb39a96650"
+    },
+    "07a6de4542ee": {
+      "repository": "code-423n4/2023-10-zksync",
+      "commit": "1fb4649b612fac7b4ee613df6f6b7d921ddd6b0d",
+      "path": "code/system-contracts/contracts/openzeppelin/utils/Address.sol",
+      "blob": "07a6de4542ee31b3221052eaa6ec898744866607"
+    },
+    "0b8ab296c0f9": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/base/Executor.sol",
+      "blob": "0b8ab296c0f951e04b18400891a007fb78620462"
+    },
+    "0e819de9f374": {
+      "repository": "succinctlabs/sp1-contracts",
+      "commit": "73c2a8df0c816bf743e9d960e7b14b8e37635578",
+      "path": "contracts/src/v1.0.7-testnet/SP1Verifier.sol",
+      "blob": "0e819de9f374f7de78e5fb9ae915d957bdf509a7"
+    },
+    "16c007f7a290": {
+      "repository": "code-423n4/2024-03-taiko",
+      "commit": "f58384f44dbf4c6535264a472322322705133b11",
+      "path": "packages/protocol/contracts/thirdparty/optimism/trie/MerkleTrie.sol",
+      "blob": "16c007f7a2902e3754fd064f43ea3f6288d8767d"
+    },
+    "1a56eb43bd1e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "1a56eb43bd1e25dff33868bade27b3a8e8f7fc4e"
+    },
+    "1cf7e0b2edfc": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "blob": "1cf7e0b2edfce1fb89d4f1ab51380cec2b9960aa"
+    },
+    "221e2fd82b46": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "14f98dbb581a5365ce3f0c50bd850e499c554f72",
+      "path": "contracts/utils/math/Math.sol",
+      "blob": "221e2fd82b462fbb96d43b2da9a19e8cc0284e53"
+    },
+    "254cf6eabe82": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+      "path": "packages/contracts-bedrock/src/libraries/EOA.sol",
+      "blob": "254cf6eabe822a91673f3ebd898a5455ecbccf5e"
+    },
+    "2a1f181562aa": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "b31d35b67755479645dd150e7cc8c6710f0b4a56",
+      "path": "packages/contracts-bedrock/contracts/libraries/Hashing.sol",
+      "blob": "2a1f181562aa9e2823498fca289b7c005a47ad0b"
+    },
+    "2a56119aa12b": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+      "path": "contracts/proxy/utils/Initializable.sol",
+      "blob": "2a56119aa12b8bf6088f9490433596450145f7bd"
+    },
+    "2d517987d5b4": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/utils/Context.sol",
+      "blob": "2d517987d5b49aee1a37634c95a69dae911b9d7a"
+    },
+    "2d531d2ea0d2": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "fa9974a2cd38d9e7633a12f9024d52f41de55f86",
+      "path": "packages/contracts-bedrock/src/libraries/Hashing.sol",
+      "blob": "2d531d2ea0d2dc88012df7fae69dc070acf03f53"
+    },
+    "33729a1da4d5": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/libraries/SafeCall.sol",
+      "blob": "33729a1da4d53e5887b4f6c7b729391b77fa3324"
+    },
+    "33faab29faf6": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "04e0df30aaf341bed5398012e3a8740bddeb6e04",
+      "path": "contracts/utils/Address.sol",
+      "blob": "33faab29faf65d3e8d8076f1e1ba098f833dadf4"
+    },
+    "3cf11378261f": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "edf487a79143664010a179f73c8c284d3f4b7a64",
+      "path": "contracts/access/Ownable.sol",
+      "blob": "3cf11378261f0d6c9b2ce9cd7e85381902306344"
+    },
+    "423248cc7d0c": {
+      "repository": "code-423n4/2024-03-taiko",
+      "commit": "f58384f44dbf4c6535264a472322322705133b11",
+      "path": "packages/protocol/contracts/thirdparty/optimism/Bytes.sol",
+      "blob": "423248cc7d0cfcc8fc058e490e3c555cc3fd3ef8"
+    },
+    "4272cb5a06c3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "4272cb5a06c3d4803df5f2861d7b6713bd9216dd"
+    },
+    "489422336212": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "4894223362122f481eacda4fe1c8a53701ede349"
+    },
+    "49100b3a7f20": {
+      "repository": "0xFacet/facet-optimism",
+      "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+      "path": "packages/contracts-bedrock/src/L2/L2ToL1MessagePasser.sol",
+      "blob": "49100b3a7f205233e40dd876a5d4ee6cffdb5acc"
+    },
+    "4a7bb73bd1ad": {
+      "repository": "Vectorized/solady",
+      "commit": "4c895b961d45c53a49ed500cfc76868b7ee1328b",
+      "path": "src/utils/EIP712.sol",
+      "blob": "4a7bb73bd1ad9b524a8d5f2fdfabd28484543f43"
+    },
+    "4d09ab547dbb": {
+      "repository": "agglayer/agglayer-contracts",
+      "commit": "07b40c26ae748c47a2a51f8159990ad4163c4d43",
+      "path": "contracts/v2/interfaces/ISP1Verifier.sol",
+      "blob": "4d09ab547dbb9726428db12ad854013c36563d8b"
+    },
+    "52d790cbee51": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "00ce7b04bef0b4866200b9fcf98633d475290792",
+      "path": "packages/contracts-bedrock/contracts/libraries/Types.sol",
+      "blob": "52d790cbee515702f832a836660f7326c38b1705"
+    },
+    "56477c92a27d": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/proxy/beacon/IBeacon.sol",
+      "blob": "56477c92a27d451ba5e72983b3b502d95a35a3a7"
+    },
+    "59229e3c5eb9": {
+      "repository": "0xFacet/facet-optimism",
+      "commit": "10d1a7971af7c066969038d20661a10474c05d72",
+      "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
+      "blob": "59229e3c5eb912859a3b6324c10b4a343a41a749"
+    },
+    "5cd1b5d94ab5": {
+      "repository": "Vectorized/solady",
+      "commit": "89101d53b7c8784cca935c1f2f6403639cee48b2",
+      "path": "src/utils/ECDSA.sol",
+      "blob": "5cd1b5d94ab596ba266e7d6833c837c047e22a66"
+    },
+    "5cfccdbaa45d": {
+      "repository": "code-423n4/2024-03-taiko",
+      "commit": "f58384f44dbf4c6535264a472322322705133b11",
+      "path": "packages/protocol/contracts/thirdparty/optimism/trie/SecureMerkleTrie.sol",
+      "blob": "5cfccdbaa45d16a794ceaa232ea56f194a904795"
+    },
+    "62846b5b8a44": {
+      "repository": "0xFacet/facet-optimism",
+      "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+      "path": "packages/contracts-bedrock/src/libraries/GasPayingToken.sol",
+      "blob": "62846b5b8a449a1f21169786d7ffdc8b786cb86c"
+    },
+    "69c9b17c731c": {
+      "repository": "celo-org/optimism",
+      "commit": "cdba802eb5e374fa3aa387deaa3243f219f821a1",
+      "path": "packages/contracts-bedrock/src/L1/SystemConfig.sol",
+      "blob": "69c9b17c731ce2b2fc664c52a34d7584843a0d9d"
+    },
+    "6d594bfa31c1": {
+      "repository": "Vectorized/solady",
+      "commit": "5da5bd872349f97ac9b197fd9402da2e8f2c98b2",
+      "path": "src/utils/SafeTransferLib.sol",
+      "blob": "6d594bfa31c15e577370b963f538996368aca3f0"
+    },
+    "72437bc34ce4": {
+      "repository": "safe-fndn/safe-modules",
+      "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+      "path": "modules/allowances/contracts/SignatureDecoder.sol",
+      "blob": "72437bc34ce4e1463c4105a513d6edca451e147c"
+    },
+    "732cc02b109a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IERC165.sol",
+      "blob": "732cc02b109aec16f55b6851bbdc1aaea463a5f5"
+    },
+    "73ef0e954577": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+      "path": "packages/contracts-bedrock/src/dispute/interfaces/IWETH.sol",
+      "blob": "73ef0e95457760c9c49854e9d7cff5c728f0a910"
+    },
+    "75b1580d7f6d": {
+      "repository": "Vectorized/solady",
+      "commit": "4c895b961d45c53a49ed500cfc76868b7ee1328b",
+      "path": "src/tokens/ERC20.sol",
+      "blob": "75b1580d7f6d9d571ff0ae0275902f1ab6321350"
+    },
+    "763455f04af3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/external/GnosisSafeMath.sol",
+      "blob": "763455f04af3b886884a3d9ee56f325ea9ffa2b1"
+    },
+    "765ac0a781f8": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/libraries/Burn.sol",
+      "blob": "765ac0a781f8cdc4cf210c88683ba190d65926e2"
+    },
+    "7cfcffafa12a": {
+      "repository": "0xFacet/zk-fault-proofs",
+      "commit": "5bdd9147ee9a11cc81b74a38fc0d1497a47a8852",
+      "path": "contracts/src/Rollup.sol",
+      "blob": "7cfcffafa12a9ecba00a6d1512a8f87db2529be2"
+    },
+    "80d020ff7c1d": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/utils/introspection/ERC165Checker.sol",
+      "blob": "80d020ff7c1d2c73623fa050892d634514c3f869"
+    },
+    "8259df1c162b": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
+      "blob": "8259df1c162bc9a04875a8591f919ca79b08e36f"
+    },
+    "8699afc9d67a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/EtherPaymentFallback.sol",
+      "blob": "8699afc9d67a512502ebf5beae4a812a28957627"
+    },
+    "882614651fa9": {
+      "repository": "0xFacet/facet-optimism",
+      "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+      "path": "packages/contracts-bedrock/src/L1/OptimismPortal.sol",
+      "blob": "882614651fa97c22b30620ed5bddd792d806a2b6"
+    },
+    "898739cbc764": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "898739cbc764ffba051eb57699b730e8950ab732"
+    },
+    "8b0478e847e6": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/proxy/ERC1967/ERC1967Utils.sol",
+      "blob": "8b0478e847e661e16a83e4882004b65f08f75988"
+    },
+    "8d475bd3daf8": {
+      "repository": "code-423n4/2023-03-zksync",
+      "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
+      "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+      "blob": "8d475bd3daf8df3bf2d086ef429b5d9f9c05aeb1"
+    },
+    "979554d4061c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/token/ERC20/extensions/IERC20Permit.sol",
+      "blob": "979554d4061c5a62d62524fbfda1c16307f4a7cb"
+    },
+    "99ae5adab427": {
+      "repository": "succinctlabs/sp1-contracts",
+      "commit": "73c2a8df0c816bf743e9d960e7b14b8e37635578",
+      "path": "contracts/src/SP1VerifierGateway.sol",
+      "blob": "99ae5adab4270560e080bd989c28b33421a20d0d"
+    },
+    "99eaf9c86862": {
+      "repository": "succinctlabs/sp1-contracts",
+      "commit": "73c2a8df0c816bf743e9d960e7b14b8e37635578",
+      "path": "contracts/src/ISP1VerifierGateway.sol",
+      "blob": "99eaf9c8686245d9a424dd75455d5a4b8bbb1440"
+    },
+    "9c28cefaad55": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/universal/OptimismMintableERC20.sol",
+      "blob": "9c28cefaad5598cc45228a1abe9024a2f1ba3a17"
+    },
+    "9de908305096": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+      "blob": "9de908305096f81098ee9326a5afc77c7b996686"
+    },
+    "9fafeba8c058": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/Singleton.sol",
+      "blob": "9fafeba8c0589b764fe558a913411217e9420a9a"
+    },
+    "a19535a30046": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "a19535a30046f312e5208ab5b2ff7eb351a0f72d"
+    },
+    "a3e17b7e2687": {
+      "repository": "bob-collective/optimism",
+      "commit": "4c27e88204aaa8dc531b3ff1fdd5b4e8ec85d056",
+      "path": "packages/contracts-bedrock/src/libraries/Pausable.sol",
+      "blob": "a3e17b7e2687b23d5f70e8bd8afabf003fa6531f"
+    },
+    "a57f767f1132": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/interfaces/IERC1967.sol",
+      "blob": "a57f767f11326c1c9d3b662269d1a7259274269a"
+    },
+    "a5c4e3464fec": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "dac5bccf803696d9d98d269b8c27c7aac5fa1c5c",
+      "path": "contracts/utils/ReentrancyGuard.sol",
+      "blob": "a5c4e3464fecdf45e8196314f9a9f8931cf67483"
+    },
+    "aab31696d64e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "aab31696d64e9fbce70c6280db56b39a2a3eebac"
+    },
+    "ac4aa74e9bb8": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+      "path": "contracts/utils/Errors.sol",
+      "blob": "ac4aa74e9bb8989382f68934ab18e160340dbf8b"
+    },
+    "af2928eaf2f4": {
+      "repository": "code-423n4/2024-03-taiko",
+      "commit": "f58384f44dbf4c6535264a472322322705133b11",
+      "path": "packages/protocol/contracts/thirdparty/optimism/rlp/RLPWriter.sol",
+      "blob": "af2928eaf2f4d08de62e260e656f63a41342fb4b"
+    },
+    "b07bdc626c62": {
+      "repository": "celo-org/optimism",
+      "commit": "cdba802eb5e374fa3aa387deaa3243f219f821a1",
+      "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+      "blob": "b07bdc626c62141f71d7e4e1a8db92abcca48c71"
+    },
+    "b0e9189675cc": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/utils/StorageSlot.sol",
+      "blob": "b0e9189675cc5f0b86963d29b363a9568d156dd0"
+    },
+    "b303f0d27597": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "b31d35b67755479645dd150e7cc8c6710f0b4a56",
+      "path": "packages/contracts-bedrock/contracts/libraries/Burn.sol",
+      "blob": "b303f0d275973c1451f6fdfcabf5b4a6fae77e5f"
+    },
+    "c0a2fcc993a0": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "81b56fee40f96c798174115c375f41c3d2ff9d40",
+      "path": "packages/contracts-bedrock/src/L1/SuperchainConfig.sol",
+      "blob": "c0a2fcc993a0f71372803c508f1907379617a213"
+    },
+    "c7c27e763d21": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/L1/ResourceMetering.sol",
+      "blob": "c7c27e763d212ca746272b05471ac2a1adea43fd"
+    },
+    "c8f243d15377": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/SecuredTokenTransfer.sol",
+      "blob": "c8f243d15377b3066c7857e8c9e3459ec8405881"
+    },
+    "c9ed9c0487ff": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "c9ed9c0487ffad8099f10a986c677a69ffa1f6f8"
+    },
+    "ca09e0350541": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/access/Ownable.sol",
+      "blob": "ca09e035054133545c505f7d1c4ca829f8b67df9"
+    },
+    "cbc5aef79df2": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/ERC20.sol",
+      "blob": "cbc5aef79df2fa45e68ad7ff4044f29c0b3b60d2"
+    },
+    "cd8c88f25a35": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+      "path": "contracts/utils/math/SignedMath.sol",
+      "blob": "cd8c88f25a356ceff4ebe27e5c7c367de196fc65"
+    },
+    "cdbc92380b25": {
+      "repository": "0xFacet/facet-optimism",
+      "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+      "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+      "blob": "cdbc92380b2528e6ac3374333fe44334ec799006"
+    },
+    "ce662c6592b6": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/universal/IOptimismMintableERC20.sol",
+      "blob": "ce662c6592b6ab79d598ed2d0d5205bde3fbc8de"
+    },
+    "d36f5c0586ca": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/proxy/Proxy.sol",
+      "blob": "d36f5c0586cafe3298c6fea3046a548495e03e41"
+    },
+    "d6889e8b5d1f": {
+      "repository": "0xFacet/facet-optimism",
+      "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+      "path": "packages/contracts-bedrock/src/libraries/LibFacet.sol",
+      "blob": "d6889e8b5d1f5d318b95dbb19ec32faec9c32f02"
+    },
+    "d69c32734c0b": {
+      "repository": "safe-fndn/safe-modules",
+      "commit": "b531c8db9ded1fa72c8459078ebe4e88a2501bae",
+      "path": "allowances/contracts/AlowanceModule.sol",
+      "blob": "d69c32734c0b3a7e44740f15c64241d991717803"
+    },
+    "d754433d3c40": {
+      "repository": "Vectorized/solady",
+      "commit": "37a79cebb0f12472cc339a726d6f385ec534d056",
+      "path": "src/utils/SafeTransferLib.sol",
+      "blob": "d754433d3c40ccfabd5c48001aa007d239342173"
+    },
+    "da0282ed88c8": {
+      "repository": "matter-labs/era-contracts",
+      "commit": "29f9ff4bbe12dc133c852f81acd70e2b4139d6b2",
+      "path": "l2-contracts/contracts/vendor/AddressAliasHelper.sol",
+      "blob": "da0282ed88c86d592b56169d27c5d8f71e4fa1e8"
+    },
+    "de4c5cecd467": {
+      "repository": "Vectorized/solady",
+      "commit": "4c895b961d45c53a49ed500cfc76868b7ee1328b",
+      "path": "src/utils/Initializable.sol",
+      "blob": "de4c5cecd467ebcbbdf70b4e34a612189015a189"
+    },
+    "df3a61369191": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/proxy/ERC1967/ERC1967Proxy.sol",
+      "blob": "df3a61369191fc619f9d499a87f341d245c97893"
+    },
+    "e60171eac28a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/proxies/GnosisSafeProxy.sol",
+      "blob": "e60171eac28ab42852376215e7b78ec351b2e400"
+    },
+    "eb0529a71f33": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
+      "blob": "eb0529a71f332a5b6cfc565133e83a00ec3866ee"
+    },
+    "eb2ea3a3e2b2": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/libraries/Arithmetic.sol",
+      "blob": "eb2ea3a3e2b27c315d9801b5f393e2cd8cf7f38c"
+    },
+    "ec004a31130c": {
+      "repository": "celo-org/optimism",
+      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
+      "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+      "blob": "ec004a31130c329b4352108d18ebe1dd486b8c49"
+    },
+    "eeb0be59a5f9": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+      "path": "packages/contracts-bedrock/src/L1/L2OutputOracle.sol",
+      "blob": "eeb0be59a5f9d170f86a02e1f9a88ca79e0f7560"
+    },
+    "f05bf3b042ab": {
+      "repository": "taikoxyz/taiko-mono",
+      "commit": "dd8725f8d27f835102fa3c5a013003090268357d",
+      "path": "packages/protocol/contracts/thirdparty/optimism/rlp/RLPReader.sol",
+      "blob": "f05bf3b042ab7554fcd603c1eaaf5a37911b00b3"
+    },
+    "f20ab01bcd2b": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/legacy/L1ChugSplashProxy.sol",
+      "blob": "f20ab01bcd2b00e53c0390c4549d7d5b53761f24"
+    },
+    "f91a9e564f29": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "b31d35b67755479645dd150e7cc8c6710f0b4a56",
+      "path": "packages/contracts-bedrock/contracts/libraries/Encoding.sol",
+      "blob": "f91a9e564f2914b60be5aca6d44b000f110bb095"
+    },
+    "f9b6674650dd": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
+    },
+    "fb656f1d7d36": {
+      "repository": "0xFacet/facet-optimism",
+      "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+      "path": "packages/contracts-bedrock/src/L1/L1StandardBridge.sol",
+      "blob": "fb656f1d7d3645a387beca92d035ee5849e64659"
+    }
+  },
+  "units": {
+    "a9647d194a4e": {
+      "name": "EIP712",
+      "kind": "abstract",
+      "lines": 194,
+      "status": "identical",
+      "audited": { "object": "4a7bb73bd1ad", "lines": [15, 208] },
+      "reports": ["cantina-spearbit-coinbase-solady-report"]
+    },
+    "ffa981fc9027": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 179,
+      "status": "identical",
+      "audited": { "object": "de4c5cecd467", "lines": [7, 184] },
+      "reports": ["cantina-spearbit-coinbase-solady-report"],
+      "findings": { "cantina-spearbit-coinbase-solady-report": ["5.2.3"] }
+    },
+    "a282bb314540": {
+      "name": "LibBytes",
+      "kind": "library",
+      "lines": 691,
+      "status": "none"
+    },
+    "e2a6482c8cc1": {
+      "name": "LibString",
+      "kind": "library",
+      "lines": 951,
+      "status": "none"
+    },
+    "620eae28fa61": {
+      "name": "SafeTransferLib",
+      "kind": "library",
+      "lines": 556,
+      "status": "differs",
+      "audited": { "object": "6d594bfa31c1", "lines": [11, 554] },
+      "reports": ["cantina-spearbit-coinbase-solady-report"],
+      "added": [[481, 481]],
+      "removed": [[481, 467, 467]],
+      "covered": 555
+    },
+    "fbb4d4609f72": {
+      "name": "ECDSA",
+      "kind": "library",
+      "lines": 417,
+      "status": "differs",
+      "audited": { "object": "5cd1b5d94ab5", "lines": [12, 345] },
+      "reports": ["cantina-solady-report"],
+      "added": [
+        [1, 11],
+        [27, 49],
+        [61, 83],
+        [151, 171],
+        [183, 203],
+        [295, 403]
+      ],
+      "removed": [[27, 24, 46], [61, 59, 80], [151, 168, 186], [183, 199, 216]],
+      "covered": 250
+    },
+    "05ca5044300c": {
+      "name": "ERC1967FactoryConstants",
+      "kind": "library",
+      "lines": 19,
+      "status": "none"
+    },
+    "2dfe32b82907": {
+      "name": "ERC20",
+      "kind": "abstract",
+      "lines": 650,
+      "status": "identical",
+      "audited": { "object": "75b1580d7f6d", "lines": [21, 665] },
+      "reports": ["cantina-spearbit-coinbase-solady-report"]
+    },
+    "c606e4894078": {
+      "name": "IFacetBuddyFactory",
+      "kind": "interface",
+      "lines": 4,
+      "status": "none"
+    },
+    "197d63452a61": {
+      "name": "FacetBuddyLib",
+      "kind": "library",
+      "lines": 13,
+      "status": "none"
+    },
+    "71c87aa92c5e": {
+      "name": "IMigrationManager",
+      "kind": "interface",
+      "lines": 17,
+      "status": "none"
+    },
+    "e6133f344239": {
+      "name": "MigrationLib",
+      "kind": "library",
+      "lines": 33,
+      "status": "none"
+    },
+    "39cd5c9407cf": {
+      "name": "FacetERC20",
+      "kind": "abstract",
+      "lines": 78,
+      "status": "none"
+    },
+    "488f210fbf82": {
+      "name": "Pausable",
+      "kind": "abstract",
+      "lines": 43,
+      "status": "none"
+    },
+    "ed25952f120e": {
+      "name": "StorageSlot",
+      "kind": "library",
+      "lines": 110,
+      "status": "differs",
+      "audited": { "object": "b0e9189675cc", "lines": [34, 138] },
+      "reports": [
+        "contracts__audits__2023-05-v4.9",
+        "contracts__audits__2023-10-v5.0"
+      ],
+      "added": [
+        [16, 19],
+        [33, 33],
+        [42, 42],
+        [51, 51],
+        [60, 60],
+        [64, 72],
+        [78, 78],
+        [87, 87],
+        [96, 96],
+        [105, 105]
+      ],
+      "removed": [
+        [33, 30, 30],
+        [42, 40, 40],
+        [51, 50, 50],
+        [60, 60, 60],
+        [78, 70, 70],
+        [87, 80, 80],
+        [96, 90, 90],
+        [105, 100, 100]
+      ],
+      "covered": 94
+    },
+    "6d1baf30b633": {
+      "name": "IERC1967",
+      "kind": "interface",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "a57f767f1132", "lines": [9, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "ddf0e3817b55": {
+      "name": "Errors",
+      "kind": "library",
+      "lines": 21,
+      "status": "identical",
+      "audited": { "object": "ac4aa74e9bb8", "lines": [12, 32] },
+      "reports": ["contracts__audits__2024-10-v5.1"]
+    },
+    "48af9c31c3b6": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 140,
+      "status": "identical",
+      "audited": { "object": "33faab29faf6", "lines": [11, 150] },
+      "reports": ["contracts__audits__2024-10-v5.1"]
+    },
+    "de902f926875": {
+      "name": "IBeacon",
+      "kind": "interface",
+      "lines": 8,
+      "status": "identical",
+      "audited": { "object": "56477c92a27d", "lines": [9, 16] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "44c01e90eaac": {
+      "name": "ERC1967Utils",
+      "kind": "library",
+      "lines": 163,
+      "status": "identical",
+      "audited": { "object": "8b0478e847e6", "lines": [15, 177] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "381b50ce8450": {
+      "name": "Upgradeable",
+      "kind": "abstract",
+      "lines": 16,
+      "status": "none"
+    },
+    "3b4949417267": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 265,
+      "status": "none"
+    },
+    "50f82e1eb7ba": {
+      "name": "FacetOwnable",
+      "kind": "abstract",
+      "lines": 9,
+      "status": "none"
+    },
+    "eb5a9c1ad9d2": {
+      "name": "ReentrancyGuard",
+      "kind": "abstract",
+      "lines": 50,
+      "status": "none"
+    },
+    "6630d23128c3": {
+      "name": "FacetBuddyV2",
+      "kind": "contract",
+      "lines": 93,
+      "status": "none"
+    },
+    "05122e9db059": {
+      "name": "Proxy",
+      "kind": "abstract",
+      "lines": 54,
+      "status": "identical",
+      "audited": { "object": "d36f5c0586ca", "lines": [16, 65] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "35f66dd92589": {
+      "name": "ERC1967Proxy",
+      "kind": "contract",
+      "lines": 36,
+      "status": "differs",
+      "audited": { "object": "df3a61369191", "lines": [15, 40] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0], [8, 34]],
+      "removed": [[0, 0, 0]],
+      "covered": 14
+    },
+    "3f4717f67f82": {
+      "name": "FacetBuddyFactoryV2",
+      "kind": "contract",
+      "lines": 81,
+      "status": "none"
+    },
+    "f02044f41a32": {
+      "name": "IL1Block",
+      "kind": "interface",
+      "lines": 4,
+      "status": "none"
+    },
+    "f041595f0449": {
+      "name": "IFacetBuddy",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "4ff692842cf8": {
+      "name": "LibZip",
+      "kind": "library",
+      "lines": 264,
+      "status": "none"
+    },
+    "75d91cb6bbac": {
+      "name": "FacetEtherBridgeMintable",
+      "kind": "contract",
+      "lines": 334,
+      "status": "none"
+    },
+    "4cfda6a42fe7": {
+      "name": "LibRLP",
+      "kind": "library",
+      "lines": 385,
+      "status": "none"
+    },
+    "2df9d66bb75f": {
+      "name": "LibFacet",
+      "kind": "library",
+      "lines": 100,
+      "status": "differs",
+      "audited": { "object": "d6889e8b5d1f", "lines": [8, 65] },
+      "reports": ["zellic-facet-bridge-2024-11-04"],
+      "added": [
+        [11, 17],
+        [25, 31],
+        [35, 35],
+        [38, 41],
+        [49, 49],
+        [52, 78],
+        [85, 85],
+        [87, 93]
+      ],
+      "removed": [
+        [11, 8, 8],
+        [25, 12, 12],
+        [38, 18, 31],
+        [47, 37, 37],
+        [49, 40, 40],
+        [83, 47, 47],
+        [87, 51, 51]
+      ],
+      "covered": 48
+    },
+    "931db67073ee": {
+      "name": "FacetEtherBridgeV6",
+      "kind": "contract",
+      "lines": 224,
+      "status": "none"
+    },
+    "d768b8759414": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "9b385480472b": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 64,
+      "status": "differs",
+      "audited": { "object": "ca09e0350541", "lines": [20, 97] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 9], [31, 31], [50, 50]],
+      "removed": [[2, 2, 11], [8, 18, 19], [31, 41, 43], [50, 62, 64]],
+      "covered": 60
+    },
+    "8ed5705ec2a1": {
+      "name": "ReentrancyGuard",
+      "kind": "abstract",
+      "lines": 42,
+      "status": "differs",
+      "audited": { "object": "a5c4e3464fec", "lines": [9, 27] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [[1, 19], [30, 30], [33, 33], [39, 39]],
+      "removed": [[1, 1, 2], [1, 6, 6], [30, 13, 14], [39, 16, 16]],
+      "covered": 33
+    },
+    "33cf9705a8ce": {
+      "name": "SafeCastLib",
+      "kind": "library",
+      "lines": 384,
+      "status": "none"
+    },
+    "5db8c510ecd8": {
+      "name": "ISP1Verifier",
+      "kind": "interface",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "4d09ab547dbb", "lines": [9, 21] },
+      "reports": ["spearbit-agglayer-v030-2025-09"]
+    },
+    "9a272655e35d": {
+      "name": "Rollup",
+      "kind": "contract",
+      "lines": 686,
+      "status": "identical",
+      "audited": { "object": "7cfcffafa12a", "lines": [19, 725] },
+      "reports": ["cantina-facet-zk-fault-proof-rollup-2025-08-05"]
+    },
+    "45e7af961463": {
+      "name": "PlonkVerifier",
+      "kind": "contract",
+      "lines": 1321,
+      "status": "differs",
+      "audited": { "object": "044a1e46cc0c", "lines": [21, 1261] },
+      "reports": ["spearbit-agglayer-v030-2025-09"],
+      "added": [[24, 33], [35, 36], [38, 39], [41, 42], [47, 48], [51, 51]],
+      "removed": [
+        [24, 29, 38],
+        [35, 40, 41],
+        [38, 43, 44],
+        [41, 46, 47],
+        [47, 51, 52],
+        [51, 54, 54]
+      ],
+      "covered": 1302
+    },
+    "7b3d981a17d2": {
+      "name": "ISP1VerifierWithHash",
+      "kind": "interface",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "4d09ab547dbb", "lines": [23, 26] },
+      "reports": [
+        "spearbit-agglayer-v030-2025-09",
+        "veridise-sp1-recursion-and-contracts-2024"
+      ]
+    },
+    "c20759adfa5c": {
+      "name": "SP1Verifier",
+      "kind": "contract",
+      "lines": 52,
+      "status": "differs",
+      "audited": { "object": "0e819de9f374", "lines": [10, 52] },
+      "reports": ["veridise-sp1-recursion-and-contracts-2024"],
+      "added": [[11, 11], [16, 16]],
+      "removed": [[11, 11, 11], [16, 16, 16]],
+      "covered": 50
+    },
+    "40ce0b25499c": {
+      "name": "Enum",
+      "kind": "interface",
+      "lines": 6,
+      "status": "none"
+    },
+    "b70a15fd7365": {
+      "name": "GnosisSafe",
+      "kind": "interface",
+      "lines": 8,
+      "status": "identical",
+      "audited": { "object": "d69c32734c0b", "lines": [7, 16] },
+      "reports": ["g0-safe-allowance-v0-1-0"]
+    },
+    "3d30aeb6971c": {
+      "name": "FacetSafeProxy",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "29f4d6669f91": {
+      "name": "FacetSafeModule",
+      "kind": "contract",
+      "lines": 26,
+      "status": "none"
+    },
+    "5fe038759833": {
+      "name": "Pausable",
+      "kind": "abstract",
+      "lines": 89,
+      "status": "differs",
+      "audited": { "object": "a3e17b7e2687", "lines": [17, 119] },
+      "reports": [
+        "contracts__audits__2023-10-v5.0",
+        "cure53-bob-usdc-bridge-library-2024-04",
+        "pashov-bob-usdc-bridge-2024-04"
+      ],
+      "added": [[55, 55], [62, 62]],
+      "removed": [[10, 12, 21], [55, 65, 67], [62, 74, 76]],
+      "covered": 87
+    },
+    "98d1274d28cc": {
+      "name": "SafeTransferLib",
+      "kind": "library",
+      "lines": 363,
+      "status": "differs",
+      "audited": { "object": "d754433d3c40", "lines": [8, 347] },
+      "reports": ["ackee-blockchain-solady-report"],
+      "added": [
+        [16, 26],
+        [31, 49],
+        [55, 55],
+        [61, 72],
+        [82, 82],
+        [86, 86],
+        [90, 102],
+        [112, 112],
+        [116, 116],
+        [120, 133],
+        [142, 142],
+        [145, 155],
+        [308, 343]
+      ],
+      "removed": [
+        [16, 16, 28],
+        [16, 35, 35],
+        [55, 40, 40],
+        [61, 50, 56],
+        [82, 68, 68],
+        [86, 74, 74],
+        [86, 76, 77],
+        [90, 82, 89],
+        [112, 103, 103],
+        [116, 109, 109],
+        [116, 111, 112],
+        [120, 118, 124],
+        [142, 129, 129]
+      ],
+      "covered": 291
+    },
+    "809d3ad2bcb8": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 74,
+      "status": "identical",
+      "audited": { "object": "a19535a30046", "lines": [9, 78] },
+      "reports": [
+        "code4rena-zksync-era-system-contracts-2023-03",
+        "contracts__audits__2023-10-v5.0"
+      ]
+    },
+    "5cb0721f72f0": {
+      "name": "IERC20Metadata",
+      "kind": "interface",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "1cf7e0b2edfc", "lines": [13, 28] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "c6d0c3b96308": {
+      "name": "ERC20",
+      "kind": "contract",
+      "lines": 349,
+      "status": "differs",
+      "audited": { "object": "cbc5aef79df2", "lines": [38, 343] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [
+        [0, 0],
+        [12, 14],
+        [166, 166],
+        [169, 169],
+        [171, 171],
+        [191, 210],
+        [217, 218],
+        [222, 231],
+        [245, 259],
+        [280, 282],
+        [302, 302],
+        [308, 347]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [9, 9, 13],
+        [166, 164, 164],
+        [169, 167, 169],
+        [171, 171, 171],
+        [191, 187, 194],
+        [212, 196, 230],
+        [212, 232, 232],
+        [222, 240, 244],
+        [245, 255, 259],
+        [280, 276, 281],
+        [302, 297, 299]
+      ],
+      "covered": 298
+    },
+    "13353d70a4e4": {
+      "name": "IL2ToL1MessagePasser",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "d0e269c9f6e8": {
+      "name": "AddressAliasHelper",
+      "kind": "library",
+      "lines": 23,
+      "status": "identical",
+      "audited": { "object": "da0282ed88c8", "lines": [21, 43] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-2024-03",
+        "openzeppelin-zksync-l1-diff-2023-02",
+        "trust-security-zksync-era-contracts-2024-10"
+      ]
+    },
+    "b21be54b9994": {
+      "name": "L2Bridge",
+      "kind": "contract",
+      "lines": 110,
+      "status": "none"
+    },
+    "c1b0f314d80f": {
+      "name": "EOA",
+      "kind": "library",
+      "lines": 24,
+      "status": "identical",
+      "audited": { "object": "254cf6eabe82", "lines": [6, 25] },
+      "reports": ["cantina-eip7702-2025-02"]
+    },
+    "17434a79a37e": {
+      "name": "Types",
+      "kind": "library",
+      "lines": 73,
+      "status": "differs",
+      "audited": { "object": "52d790cbee51", "lines": [8, 86] },
+      "reports": ["secure3-mantle-v2-tectonic-2024-03"],
+      "added": [[41, 41], [60, 60], [64, 71]],
+      "removed": [[41, 50, 50], [43, 52, 52], [60, 73, 74]],
+      "covered": 67
+    },
+    "9c690dd3c693": {
+      "name": "RLPWriter",
+      "kind": "library",
+      "lines": 155,
+      "status": "differs",
+      "audited": { "object": "af2928eaf2f4", "lines": [9, 70] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06"
+      ],
+      "added": [[11, 32], [40, 47], [91, 153]],
+      "removed": [],
+      "covered": 96
+    },
+    "3d6f7edc7627": {
+      "name": "Encoding",
+      "kind": "library",
+      "lines": 209,
+      "status": "differs",
+      "audited": { "object": "f91a9e564f29", "lines": [12, 150] },
+      "reports": ["trailofbits-invariant-testing-2022-11"],
+      "added": [[128, 207]],
+      "removed": [],
+      "covered": 151
+    },
+    "522aebe84bc6": {
+      "name": "Hashing",
+      "kind": "library",
+      "lines": 140,
+      "status": "differs",
+      "audited": { "object": "2d531d2ea0d2", "lines": [11, 140] },
+      "reports": [
+        "cantina-interop-l2-rereview-2026-06",
+        "cantina-interop-portal-2025-04",
+        "spearbit-upgrade16-2025-05"
+      ],
+      "added": [],
+      "removed": [[139, 122, 128]],
+      "covered": 140
+    },
+    "ee71dbd9b1d7": {
+      "name": "RLPReader",
+      "kind": "library",
+      "lines": 232,
+      "status": "differs",
+      "audited": { "object": "f05bf3b042ab", "lines": [9, 262] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06",
+        "sigma-prime-taiko-smart-contracts-2024-02"
+      ],
+      "added": [
+        [27, 28],
+        [43, 46],
+        [90, 93],
+        [122, 125],
+        [141, 142],
+        [148, 149],
+        [155, 156],
+        [162, 163],
+        [169, 172],
+        [179, 180],
+        [186, 187],
+        [193, 194],
+        [200, 203]
+      ],
+      "removed": [
+        [27, 27, 28],
+        [43, 43, 46],
+        [90, 90, 93],
+        [122, 122, 125],
+        [141, 141, 144],
+        [148, 150, 154],
+        [155, 160, 164],
+        [162, 170, 173],
+        [169, 179, 185],
+        [179, 192, 193],
+        [186, 199, 203],
+        [193, 209, 212],
+        [200, 218, 224]
+      ],
+      "covered": 215
+    },
+    "e4274230bf81": {
+      "name": "Bytes",
+      "kind": "library",
+      "lines": 139,
+      "status": "identical",
+      "audited": { "object": "423248cc7d0c", "lines": [6, 144] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06"
+      ]
+    },
+    "6f6f5cc580d2": {
+      "name": "MerkleTrie",
+      "kind": "library",
+      "lines": 210,
+      "status": "identical",
+      "audited": { "object": "16c007f7a290", "lines": [11, 215] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06",
+        "sigma-prime-taiko-smart-contracts-2024-02"
+      ]
+    },
+    "1e116b431cf7": {
+      "name": "SecureMerkleTrie",
+      "kind": "library",
+      "lines": 41,
+      "status": "identical",
+      "audited": { "object": "5cfccdbaa45d", "lines": [9, 44] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06",
+        "sigma-prime-taiko-smart-contracts-2024-02"
+      ]
+    },
+    "ff3e97d04bad": {
+      "name": "L1Bridge",
+      "kind": "contract",
+      "lines": 356,
+      "status": "none"
+    },
+    "8816811fd8a8": {
+      "name": "Groth16Verifier",
+      "kind": "contract",
+      "lines": 529,
+      "status": "none"
+    },
+    "77930e9dae44": {
+      "name": "SP1Verifier",
+      "kind": "contract",
+      "lines": 50,
+      "status": "differs",
+      "audited": { "object": "0e819de9f374", "lines": [10, 52] },
+      "reports": ["veridise-sp1-recursion-and-contracts-2024"],
+      "added": [[0, 0], [11, 11], [16, 16], [43, 43], [46, 47]],
+      "removed": [
+        [0, 0, 0],
+        [11, 11, 11],
+        [16, 16, 16],
+        [43, 34, 34],
+        [46, 37, 40]
+      ],
+      "covered": 44
+    },
+    "d4da06c11cbe": {
+      "name": "ISP1VerifierGatewayEvents",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "99eaf9c86862", "lines": [13, 23] },
+      "reports": ["veridise-sp1-recursion-and-contracts-2024"]
+    },
+    "9e2adff66514": {
+      "name": "ISP1VerifierGatewayErrors",
+      "kind": "interface",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "99eaf9c86862", "lines": [25, 41] },
+      "reports": ["veridise-sp1-recursion-and-contracts-2024"]
+    },
+    "cbfc01db9194": {
+      "name": "ISP1VerifierGateway",
+      "kind": "interface",
+      "lines": 27,
+      "status": "identical",
+      "audited": { "object": "99eaf9c86862", "lines": [46, 68] },
+      "reports": ["veridise-sp1-recursion-and-contracts-2024"]
+    },
+    "bb24b365b687": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 13,
+      "status": "differs",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 11]],
+      "removed": [],
+      "covered": 10
+    },
+    "31e42eba5b0a": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 81,
+      "status": "identical",
+      "audited": { "object": "3cf11378261f", "lines": [20, 100] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "89faffb9b308": {
+      "name": "SP1VerifierGateway",
+      "kind": "contract",
+      "lines": 55,
+      "status": "identical",
+      "audited": { "object": "99ae5adab427", "lines": [13, 63] },
+      "reports": ["veridise-sp1-recursion-and-contracts-2024"]
+    },
+    "34ceb7e1b670": {
+      "name": "IL1ChugSplashDeployer",
+      "kind": "interface",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "f20ab01bcd2b", "lines": [7, 9] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "185b8bd0deb1": {
+      "name": "L1ChugSplashProxy",
+      "kind": "contract",
+      "lines": 266,
+      "status": "identical",
+      "audited": { "object": "f20ab01bcd2b", "lines": [24, 284] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "ecedf963bc64": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 214,
+      "status": "differs",
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ],
+      "added": [
+        [77, 77],
+        [126, 127],
+        [129, 129],
+        [153, 154],
+        [156, 156],
+        [180, 181],
+        [183, 183],
+        [200, 210]
+      ],
+      "removed": [
+        [77, 77, 77],
+        [129, 120, 120],
+        [156, 145, 145],
+        [183, 169, 169],
+        [185, 171, 194],
+        [200, 210, 210],
+        [213, 213, 226]
+      ],
+      "covered": 199
+    },
+    "b0006e2cedea": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 82,
+      "status": "identical",
+      "audited": { "object": "2a56119aa12b", "lines": [57, 138] },
+      "reports": ["formal-verification__fv__reports__2022-05"]
+    },
+    "5c1b98c91663": {
+      "name": "IERC20Permit",
+      "kind": "interface",
+      "lines": 47,
+      "status": "identical",
+      "audited": { "object": "979554d4061c", "lines": [42, 83] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "33c1bc98e249": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 98,
+      "status": "identical",
+      "audited": { "object": "8d475bd3daf8", "lines": [19, 95] },
+      "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
+    },
+    "4933ae177b35": {
+      "name": "CrossDomainMessengerLegacySpacer0",
+      "kind": "contract",
+      "lines": 6,
+      "status": "identical",
+      "audited": { "object": "ec004a31130c", "lines": [18, 23] },
+      "reports": [
+        "cantina-eip7702-2025-02",
+        "cantina-mcp-l1-2024-02",
+        "hashlock-celo-optimism-superchain-2026-02",
+        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "trust-superchainconfig-upgrade-2024-01"
+      ]
+    },
+    "21c9e76387ed": {
+      "name": "AddressUpgradeable",
+      "kind": "library",
+      "lines": 187,
+      "status": "none"
+    },
+    "ff7fdee787b8": {
+      "name": "Initializable_1",
+      "kind": "abstract",
+      "lines": 82,
+      "status": "differs",
+      "audited": {
+        "object": "2a56119aa12b",
+        "lines": [57, 138],
+        "name": "Initializable"
+      },
+      "reports": ["formal-verification__fv__reports__2022-05"],
+      "added": [[24, 24]],
+      "removed": [[24, 24, 24]],
+      "covered": 81
+    },
+    "2f8ca1cb8cb7": {
+      "name": "CrossDomainMessengerLegacySpacer1",
+      "kind": "contract",
+      "lines": 51,
+      "status": "identical",
+      "audited": { "object": "ec004a31130c", "lines": [30, 80] },
+      "reports": [
+        "cantina-eip7702-2025-02",
+        "cantina-mcp-l1-2024-02",
+        "hashlock-celo-optimism-superchain-2026-02",
+        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "trust-superchainconfig-upgrade-2024-01"
+      ]
+    },
+    "588204d00b0f": {
+      "name": "Types",
+      "kind": "library",
+      "lines": 65,
+      "status": "differs",
+      "audited": { "object": "52d790cbee51", "lines": [8, 86] },
+      "reports": ["secure3-mantle-v2-tectonic-2024-03"],
+      "added": [[41, 41], [60, 60]],
+      "removed": [[41, 50, 50], [43, 52, 52], [60, 73, 74]],
+      "covered": 63
+    },
+    "edf1149cc59d": {
+      "name": "Hashing",
+      "kind": "library",
+      "lines": 116,
+      "status": "differs",
+      "audited": { "object": "2a1f181562aa", "lines": [11, 141] },
+      "reports": [
+        "openzeppelin-bedrock-periphery-2022-09",
+        "trailofbits-invariant-testing-2022-11"
+      ],
+      "added": [[110, 110]],
+      "removed": [[110, 125, 125]],
+      "covered": 115
+    },
+    "d8b376ab1b33": {
+      "name": "Encoding",
+      "kind": "library",
+      "lines": 241,
+      "status": "differs",
+      "audited": { "object": "f91a9e564f29", "lines": [12, 150] },
+      "reports": ["trailofbits-invariant-testing-2022-11"],
+      "added": [[126, 239]],
+      "removed": [],
+      "covered": 145
+    },
+    "91aa25745036": {
+      "name": "SafeCall",
+      "kind": "library",
+      "lines": 156,
+      "status": "differs",
+      "audited": { "object": "33729a1da4d5", "lines": [8, 150] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ],
+      "added": [[6, 18], [20, 26], [33, 37], [40, 53], [55, 62]],
+      "removed": [[6, 9, 23], [20, 26, 28], [33, 34, 48], [55, 51, 52]],
+      "covered": 118
+    },
+    "8f7da050ddb2": {
+      "name": "SignedMath",
+      "kind": "library",
+      "lines": 35,
+      "status": "differs",
+      "audited": { "object": "cd8c88f25a35", "lines": [9, 43] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[5, 5]],
+      "removed": [[5, 5, 5]],
+      "covered": 34
+    },
+    "727591669b8c": {
+      "name": "FixedPointMathLib",
+      "kind": "library",
+      "lines": 361,
+      "status": "none"
+    },
+    "7d6554b6cb64": {
+      "name": "Arithmetic",
+      "kind": "library",
+      "lines": 20,
+      "status": "identical",
+      "audited": { "object": "eb2ea3a3e2b2", "lines": [11, 38] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "26ad7b61b37b": {
+      "name": "Math",
+      "kind": "library",
+      "lines": 218,
+      "status": "differs",
+      "audited": { "object": "221e2fd82b46", "lines": [9, 337] },
+      "reports": [
+        "contracts__audits__2022-10-Checkpoints",
+        "contracts__audits__2022-10-ERC4626"
+      ],
+      "added": [[11, 11], [153, 189], [211, 215]],
+      "removed": [
+        [11, 12, 12],
+        [153, 145, 156],
+        [215, 178, 181],
+        [217, 183, 327]
+      ],
+      "covered": 183
+    },
+    "9b73a9b5c9f6": {
+      "name": "Burner",
+      "kind": "contract",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "765ac0a781f8", "lines": [38, 42] },
+      "reports": [
+        "openzeppelin-bedrock-bridge-2022-05",
+        "openzeppelin-mantle-v2-solidity-contracts-2024-03",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05",
+        "secure3-mantle-v2-tectonic-2024-03",
+        "trailofbits-invariant-testing-2022-11",
+        "trailofbits-opnode-fix-review-2022-07"
+      ]
+    },
+    "433c37b5a737": {
+      "name": "Burn",
+      "kind": "library",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "b303f0d27597", "lines": [8, 30] },
+      "reports": ["trailofbits-invariant-testing-2022-11"]
+    },
+    "7768d7b8daff": {
+      "name": "ResourceMetering",
+      "kind": "abstract",
+      "lines": 158,
+      "status": "differs",
+      "audited": { "object": "c7c27e763d21", "lines": [15, 184] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05",
+        "secure3-mantle-v2-tectonic-2024-03"
+      ],
+      "added": [[1, 2], [114, 116], [136, 142]],
+      "removed": [[1, 1, 2], [114, 127, 130], [136, 151, 153]],
+      "covered": 151
+    },
+    "b7f25900d9b4": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 45,
+      "status": "identical",
+      "audited": { "object": "cdbc92380b25", "lines": [10, 54] },
+      "reports": ["zellic-facet-bridge-2024-11-04"]
+    },
+    "81bea99f2eea": {
+      "name": "CrossDomainMessenger",
+      "kind": "abstract",
+      "lines": 332,
+      "status": "differs",
+      "audited": { "object": "b07bdc626c62", "lines": [89, 417] },
+      "reports": ["nethermind-nm-0561-celo-custom-gas-token-2025-07-01"],
+      "added": [[2, 2]],
+      "removed": [[2, 2, 2]],
+      "covered": 331
+    },
+    "5e3676c21c25": {
+      "name": "LibFacet",
+      "kind": "library",
+      "lines": 82,
+      "status": "differs",
+      "audited": { "object": "d6889e8b5d1f", "lines": [8, 65] },
+      "reports": ["zellic-facet-bridge-2024-11-04"],
+      "added": [[11, 17], [25, 31], [39, 39], [58, 58], [67, 67], [69, 75]],
+      "removed": [
+        [11, 8, 8],
+        [25, 12, 12],
+        [37, 18, 18],
+        [56, 37, 37],
+        [58, 40, 40],
+        [65, 47, 47],
+        [69, 51, 51]
+      ],
+      "covered": 58
+    },
+    "f98775a7d0f9": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "efa75a106aeb": {
+      "name": "IOptimismMintableERC20",
+      "kind": "interface",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "ce662c6592b6", "lines": [12, 20] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "197395080909": {
+      "name": "ILegacyMintableERC20",
+      "kind": "interface",
+      "lines": 7,
+      "status": "identical",
+      "audited": { "object": "ce662c6592b6", "lines": [28, 34] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "b61f946296f1": {
+      "name": "ISemver",
+      "kind": "interface",
+      "lines": 7,
+      "status": "none"
+    },
+    "379e0a60f393": {
+      "name": "OptimismMintableERC20",
+      "kind": "contract",
+      "lines": 126,
+      "status": "differs",
+      "audited": { "object": "9c28cefaad55", "lines": [17, 147] },
+      "reports": [
+        "openzeppelin-mantle-v2-solidity-contracts-2024-03",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ],
+      "added": [
+        [0, 0],
+        [6, 8],
+        [25, 28],
+        [39, 39],
+        [45, 45],
+        [83, 83],
+        [115, 124]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [6, 11, 13],
+        [25, 35, 38],
+        [42, 45, 45],
+        [83, 90, 90]
+      ],
+      "covered": 117
+    },
+    "e950fe694422": {
+      "name": "ERC165Checker",
+      "kind": "library",
+      "lines": 109,
+      "status": "differs",
+      "audited": { "object": "80d020ff7c1d", "lines": [15, 124] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[10, 12], [23, 23], [48, 48], [72, 72], [80, 107]],
+      "removed": [
+        [10, 10, 11],
+        [23, 22, 22],
+        [48, 45, 45],
+        [72, 69, 69],
+        [80, 77, 108]
+      ],
+      "covered": 91
+    },
+    "c6bd2721b551": {
+      "name": "StandardBridge",
+      "kind": "abstract",
+      "lines": 670,
+      "status": "differs",
+      "audited": { "object": "59229e3c5eb9", "lines": [24, 586] },
+      "reports": ["zellic-facet-bridge-2024-11-04"],
+      "added": [
+        [61, 70],
+        [120, 121],
+        [307, 325],
+        [327, 369],
+        [371, 378],
+        [412, 412],
+        [485, 486],
+        [500, 508],
+        [511, 511],
+        [513, 513],
+        [537, 546]
+      ],
+      "removed": [
+        [87, 77, 78],
+        [121, 112, 112],
+        [307, 283, 296],
+        [371, 299, 299],
+        [384, 308, 316],
+        [412, 338, 338],
+        [485, 404, 404],
+        [500, 418, 425],
+        [513, 427, 427],
+        [536, 450, 453],
+        [537, 455, 455]
+      ],
+      "covered": 569
+    },
+    "e59a41a9002d": {
+      "name": "Storage",
+      "kind": "library",
+      "lines": 83,
+      "status": "none"
+    },
+    "ccde465ea397": {
+      "name": "SuperchainConfig",
+      "kind": "contract",
+      "lines": 84,
+      "status": "identical",
+      "audited": { "object": "c0a2fcc993a0", "lines": [12, 95] },
+      "reports": ["trust-superchainconfig-upgrade-2024-01"]
+    },
+    "3518b46a1bb6": {
+      "name": "ContextUpgradeable",
+      "kind": "abstract",
+      "lines": 21,
+      "status": "differs",
+      "audited": {
+        "object": "2d517987d5b4",
+        "lines": [16, 24],
+        "name": "Context"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 5], [13, 19]],
+      "removed": [[0, 0, 0]],
+      "covered": 15
+    },
+    "f8fecdce2f2f": {
+      "name": "OwnableUpgradeable",
+      "kind": "abstract",
+      "lines": 75,
+      "status": "differs",
+      "audited": {
+        "object": "ca09e0350541",
+        "lines": [20, 97],
+        "name": "Ownable"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0], [4, 14], [35, 35], [54, 54], [67, 73]],
+      "removed": [
+        [0, 0, 0],
+        [2, 2, 11],
+        [4, 14, 20],
+        [35, 41, 43],
+        [54, 62, 64]
+      ],
+      "covered": 65
+    },
+    "5a099a33d617": {
+      "name": "IGasToken",
+      "kind": "interface",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "62846b5b8a44", "lines": [11, 20] },
+      "reports": ["zellic-facet-bridge-2024-11-04"]
+    },
+    "6042dafdc055": {
+      "name": "LibString",
+      "kind": "library",
+      "lines": 1182,
+      "status": "none"
+    },
+    "9edc242a0fe1": {
+      "name": "GasPayingToken",
+      "kind": "library",
+      "lines": 61,
+      "status": "identical",
+      "audited": { "object": "62846b5b8a44", "lines": [27, 87] },
+      "reports": ["zellic-facet-bridge-2024-11-04"]
+    },
+    "a88e7ce22b41": {
+      "name": "L2OutputOracle",
+      "kind": "contract",
+      "lines": 303,
+      "status": "identical",
+      "audited": { "object": "eeb0be59a5f9", "lines": [15, 310] },
+      "reports": ["cantina-mcp-l1-2024-02"]
+    },
+    "074cdb48536c": {
+      "name": "Predeploys",
+      "kind": "library",
+      "lines": 157,
+      "status": "differs",
+      "audited": { "object": "eb0529a71f33", "lines": [9, 265] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [
+        [18, 20],
+        [84, 86],
+        [101, 101],
+        [121, 121],
+        [129, 129],
+        [133, 139]
+      ],
+      "removed": [
+        [18, 18, 20],
+        [63, 63, 65],
+        [84, 87, 89],
+        [94, 96, 114],
+        [101, 128, 129],
+        [115, 170, 172],
+        [121, 191, 192],
+        [124, 200, 214],
+        [129, 220, 220],
+        [133, 224, 224],
+        [133, 227, 239]
+      ],
+      "covered": 145
+    },
+    "9c94c870c1d4": {
+      "name": "L1Block",
+      "kind": "interface",
+      "lines": 9,
+      "status": "none"
+    },
+    "711dd98c8fd4": {
+      "name": "OptimismPortal",
+      "kind": "contract",
+      "lines": 580,
+      "status": "identical",
+      "audited": { "object": "882614651fa9", "lines": [30, 611] },
+      "reports": ["zellic-facet-bridge-2024-11-04"]
+    },
+    "d218a80efdfb": {
+      "name": "SystemConfig",
+      "kind": "contract",
+      "lines": 449,
+      "status": "differs",
+      "audited": { "object": "69c9b17c731c", "lines": [25, 482] },
+      "reports": ["nethermind-nm-0561-celo-custom-gas-token-2025-07-01"],
+      "added": [
+        [9, 9],
+        [101, 101],
+        [112, 112],
+        [122, 147],
+        [169, 169],
+        [197, 197],
+        [227, 227],
+        [232, 232],
+        [237, 237],
+        [242, 242],
+        [252, 252],
+        [303, 303],
+        [360, 360],
+        [380, 380],
+        [418, 418],
+        [427, 427]
+      ],
+      "removed": [
+        [9, 9, 9],
+        [12, 12, 12],
+        [101, 102, 108],
+        [112, 119, 119],
+        [122, 127, 127],
+        [169, 149, 149],
+        [227, 203, 203],
+        [232, 208, 208],
+        [237, 213, 213],
+        [242, 218, 218],
+        [252, 228, 228],
+        [255, 231, 244],
+        [303, 293, 293],
+        [360, 350, 350],
+        [380, 370, 370],
+        [399, 389, 407],
+        [418, 427, 427],
+        [427, 436, 436]
+      ],
+      "covered": 408
+    },
+    "ee4fa780d466": {
+      "name": "Donateable",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "0b5059f86665": {
+      "name": "IWETH",
+      "kind": "interface",
+      "lines": 76,
+      "status": "identical",
+      "audited": { "object": "73ef0e954577", "lines": [6, 81] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "50edbdbd5910": {
+      "name": "PausedL1StandardBridge",
+      "kind": "contract",
+      "lines": 409,
+      "status": "differs",
+      "audited": {
+        "object": "fb656f1d7d36",
+        "lines": [23, 335],
+        "name": "L1StandardBridge"
+      },
+      "reports": ["zellic-facet-bridge-2024-11-04"],
+      "added": [[94, 118], [120, 120], [199, 245], [323, 339]],
+      "removed": [[94, 88, 92], [120, 94, 96], [199, 168, 191]],
+      "covered": 330
+    },
+    "6b8b61778726": {
+      "name": "GnosisSafeProxy",
+      "kind": "contract",
+      "lines": 32,
+      "status": "identical",
+      "audited": { "object": "e60171eac28a", "lines": [13, 42] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "48db7077d4ee": {
+      "name": "EtherPaymentFallback",
+      "kind": "contract",
+      "lines": 8,
+      "status": "identical",
+      "audited": { "object": "8699afc9d67a", "lines": [6, 13] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "ded673ea29c4": {
+      "name": "Singleton",
+      "kind": "contract",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "16eb9f2e8752": {
+      "name": "SelfAuthorized",
+      "kind": "contract",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "898739cbc764", "lines": [6, 16] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "68dd4bd4433d": {
+      "name": "Executor",
+      "kind": "contract",
+      "lines": 21,
+      "status": "identical",
+      "audited": { "object": "0b8ab296c0f9", "lines": [10, 42] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "1d5fc2d9e00d": {
+      "name": "ModuleManager",
+      "kind": "contract",
+      "lines": 124,
+      "status": "identical",
+      "audited": { "object": "1a56eb43bd1e", "lines": [11, 139] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "95294331afbc": {
+      "name": "OwnerManager",
+      "kind": "contract",
+      "lines": 142,
+      "status": "identical",
+      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "2ec005ea16b3": {
+      "name": "SignatureDecoder",
+      "kind": "contract",
+      "lines": 31,
+      "status": "identical",
+      "audited": { "object": "72437bc34ce4", "lines": [7, 33] },
+      "reports": [
+        "certora-safe-allowance-v1-0-0",
+        "nethermind-safe-allowance-v1-0-0"
+      ]
+    },
+    "fd10ad67f878": {
+      "name": "SecuredTokenTransfer",
+      "kind": "contract",
+      "lines": 30,
+      "status": "identical",
+      "audited": { "object": "c8f243d15377", "lines": [8, 34] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "de59e343d914": {
+      "name": "ISignatureValidatorConstants",
+      "kind": "contract",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-1-0",
+        "g0-safe-1-1-1",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
+    },
+    "37dc539ed622": {
+      "name": "FallbackManager",
+      "kind": "contract",
+      "lines": 46,
+      "status": "identical",
+      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "bc18eb3148bc": {
+      "name": "StorageAccessible",
+      "kind": "contract",
+      "lines": 42,
+      "status": "identical",
+      "audited": { "object": "489422336212", "lines": [6, 47] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "bd90fb921f2d": {
+      "name": "GuardManager",
+      "kind": "contract",
+      "lines": 24,
+      "status": "identical",
+      "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "c067b1aa9040": {
+      "name": "GnosisSafeMath",
+      "kind": "library",
+      "lines": 45,
+      "status": "identical",
+      "audited": { "object": "763455f04af3", "lines": [10, 54] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "09399b61d7eb": {
+      "name": "Guard",
+      "kind": "interface",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "b2400038371b": {
+      "name": "ISignatureValidator",
+      "kind": "abstract",
+      "lines": 12,
+      "status": "identical",
+      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
+    },
+    "3e84ad780965": {
+      "name": "GnosisSafe",
+      "kind": "contract",
+      "lines": 404,
+      "status": "identical",
+      "audited": { "object": "0045b2bbd612", "lines": [22, 434] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "e71751e45afb": {
+      "name": "LibRLP",
+      "kind": "library",
+      "lines": 377,
+      "status": "none"
+    },
+    "d521180fa490": {
+      "name": "FacetSafeProxy",
+      "kind": "contract",
+      "lines": 24,
+      "status": "none"
+    },
+    "e60933e352ce": {
+      "name": "IResourceMetering",
+      "kind": "interface",
+      "lines": 24,
+      "status": "none"
+    },
+    "21cff7993abc": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 46,
+      "status": "differs",
+      "audited": { "object": "9de908305096", "lines": [11, 58] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [[29, 30]],
+      "removed": [[22, 22, 25]],
+      "covered": 45
+    },
+    "7b9337a52d32": {
+      "name": "Proxy",
+      "kind": "contract",
+      "lines": 159,
+      "status": "differs",
+      "audited": { "object": "8259df1c162b", "lines": [10, 213] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ],
+      "added": [
+        [94, 94],
+        [96, 96],
+        [105, 105],
+        [107, 107],
+        [141, 141],
+        [143, 143],
+        [152, 152],
+        [154, 154]
+      ],
+      "removed": [
+        [1, 1, 15],
+        [96, 133, 133],
+        [107, 146, 146],
+        [143, 186, 186],
+        [154, 199, 199]
+      ],
+      "covered": 151
+    },
+    "88f220040f19": {
+      "name": "L2ToL1MessagePasser",
+      "kind": "contract",
+      "lines": 88,
+      "status": "identical",
+      "audited": { "object": "49100b3a7f20", "lines": [17, 104] },
+      "reports": ["zellic-facet-bridge-2024-11-04"]
+    }
+  },
+  "flats": {
+    "478571706fd2f278082b850a84639f5e6a7ddb1768ab9aea41923b8e7fcd2f3f": [
+      ["a9647d194a4e", 12],
+      ["ffa981fc9027", 210],
+      ["a282bb314540", 392],
+      ["e2a6482c8cc1", 1093],
+      ["620eae28fa61", 2052],
+      ["fbb4d4609f72", 2631],
+      ["05ca5044300c", 3072],
+      ["2dfe32b82907", 3109],
+      ["c606e4894078", 3760],
+      ["197d63452a61", 3765],
+      ["71c87aa92c5e", 3779],
+      ["e6133f344239", 3797],
+      ["39cd5c9407cf", 3831],
+      ["488f210fbf82", 3910],
+      ["ed25952f120e", 3981],
+      ["6d1baf30b633", 4095],
+      ["ddf0e3817b55", 4120],
+      ["48af9c31c3b6", 4145],
+      ["de902f926875", 4289],
+      ["44c01e90eaac", 4302],
+      ["381b50ce8450", 4466],
+      ["3b4949417267", 4493],
+      ["50f82e1eb7ba", 4759],
+      ["eb5a9c1ad9d2", 4771],
+      ["6630d23128c3", 4822],
+      ["05122e9db059", 4926],
+      ["35f66dd92589", 4981],
+      ["3f4717f67f82", 5018],
+      ["f02044f41a32", 5100],
+      ["f041595f0449", 5105],
+      ["4ff692842cf8", 5117],
+      ["75d91cb6bbac", 5382],
+      ["4cfda6a42fe7", 5720],
+      ["2df9d66bb75f", 6106],
+      ["931db67073ee", 6207]
+    ],
+    "6723a7dcceeda076193c9d09f6ca0d56c2e4c2748595531a56e73ba02748f297": [
+      ["d768b8759414", 11],
+      ["9b385480472b", 33],
+      ["8ed5705ec2a1", 114],
+      ["33cf9705a8ce", 160],
+      ["5db8c510ecd8", 548],
+      ["9a272655e35d", 572]
+    ],
+    "5892eb20038c3d897ddf12af839528166e4cb4780b0e895f8ac29d04c84c85dc": [
+      ["45e7af961463", 1],
+      ["5db8c510ecd8", 1326],
+      ["7b3d981a17d2", 1340],
+      ["c20759adfa5c", 1348]
+    ],
+    "ba4ae06589a1c276d053e5efbdb7a6a7a123d2189f58d592eaec9cb4b1e869a4": [
+      ["40ce0b25499c", 2],
+      ["b70a15fd7365", 9],
+      ["3d30aeb6971c", 19],
+      ["29f4d6669f91", 23]
+    ],
+    "d4b075b00499881278e59f775ab7906c1eb9c8fd8ab88aad1f293a98956994c0": [
+      ["d768b8759414", 11],
+      ["9b385480472b", 33],
+      ["8ed5705ec2a1", 114],
+      ["5fe038759833", 166],
+      ["98d1274d28cc", 264],
+      ["33cf9705a8ce", 631],
+      ["5db8c510ecd8", 1019],
+      ["9a272655e35d", 1043],
+      ["809d3ad2bcb8", 1733],
+      ["5cb0721f72f0", 1813],
+      ["c6d0c3b96308", 1855],
+      ["13353d70a4e4", 2205],
+      ["d0e269c9f6e8", 2209],
+      ["b21be54b9994", 2242],
+      ["4cfda6a42fe7", 2356],
+      ["2df9d66bb75f", 2742],
+      ["c1b0f314d80f", 2848],
+      ["17434a79a37e", 2875],
+      ["9c690dd3c693", 2954],
+      ["3d6f7edc7627", 3112],
+      ["522aebe84bc6", 3324],
+      ["ee71dbd9b1d7", 3488],
+      ["e4274230bf81", 3723],
+      ["6f6f5cc580d2", 3867],
+      ["1e116b431cf7", 4081],
+      ["ff3e97d04bad", 4160]
+    ],
+    "ef73b2f4266a0cb87f16a652e7880db6f3ae54a4ab48b1c518d30736b0df4def": [
+      ["8816811fd8a8", 7],
+      ["5db8c510ecd8", 540],
+      ["7b3d981a17d2", 554],
+      ["77930e9dae44", 562]
+    ],
+    "9510ae28ced1b975558f48ec251c3589fc8e0e978da90ccf73540756138264b8": [
+      ["d4da06c11cbe", 1],
+      ["9e2adff66514", 13],
+      ["5db8c510ecd8", 34],
+      ["cbfc01db9194", 51],
+      ["bb24b365b687", 89],
+      ["31e42eba5b0a", 115],
+      ["7b3d981a17d2", 204],
+      ["89faffb9b308", 214]
+    ],
+    "13e2982d84601d29e51496f0252cb02a378a2f29f101c9782f04700bdb6ea737": [
+      ["34ceb7e1b670", 4],
+      ["185b8bd0deb1", 21]
+    ],
+    "c03f6429a2829da4c429b0c28db458ad329f0ef00d21945a8cbf5f898c615fea": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["809d3ad2bcb8", 354],
+      ["5c1b98c91663", 437],
+      ["33c1bc98e249", 494],
+      ["4933ae177b35", 598],
+      ["21c9e76387ed", 608],
+      ["ff7fdee787b8", 845],
+      ["2f8ca1cb8cb7", 933],
+      ["588204d00b0f", 987],
+      ["edf1149cc59d", 1055],
+      ["9c690dd3c693", 1177],
+      ["d8b376ab1b33", 1335],
+      ["91aa25745036", 1579],
+      ["8f7da050ddb2", 1739],
+      ["727591669b8c", 1777],
+      ["7d6554b6cb64", 2141],
+      ["26ad7b61b37b", 2165],
+      ["9b73a9b5c9f6", 2388],
+      ["433c37b5a737", 2396],
+      ["7768d7b8daff", 2418],
+      ["b7f25900d9b4", 2581],
+      ["81bea99f2eea", 2635],
+      ["d0e269c9f6e8", 2968],
+      ["4cfda6a42fe7", 2995],
+      ["5e3676c21c25", 3381],
+      ["f98775a7d0f9", 3473],
+      ["efa75a106aeb", 3489],
+      ["197395080909", 3504],
+      ["d768b8759414", 3522],
+      ["5cb0721f72f0", 3537],
+      ["c6d0c3b96308", 3579],
+      ["b61f946296f1", 3932],
+      ["379e0a60f393", 3946],
+      ["e950fe694422", 4080],
+      ["c6bd2721b551", 4195],
+      ["e59a41a9002d", 4868],
+      ["ccde465ea397", 4955],
+      ["3518b46a1bb6", 5050],
+      ["f8fecdce2f2f", 5084],
+      ["5a099a33d617", 5163],
+      ["6042dafdc055", 5183],
+      ["9edc242a0fe1", 6371],
+      ["a88e7ce22b41", 6438],
+      ["ee71dbd9b1d7", 6772],
+      ["e4274230bf81", 7007],
+      ["6f6f5cc580d2", 7151],
+      ["1e116b431cf7", 7365],
+      ["074cdb48536c", 7434],
+      ["9c94c870c1d4", 7593],
+      ["711dd98c8fd4", 7608],
+      ["d218a80efdfb", 8193],
+      ["ee4fa780d466", 8643],
+      ["0b5059f86665", 8649],
+      ["50edbdbd5910", 8736]
+    ],
+    "7df86540e8491697461e4719fd93052c329d1d0565f4c7c72a9d37700802ec71": [
+      ["6b8b61778726", 4]
+    ],
+    "8d7cdf752191616e4e00fca1de6ca09bd97a59805815ae8e5131612f04aa21f6": [
+      ["48db7077d4ee", 3],
+      ["ded673ea29c4", 15],
+      ["16eb9f2e8752", 23],
+      ["40ce0b25499c", 36],
+      ["68dd4bd4433d", 45],
+      ["1d5fc2d9e00d", 70],
+      ["95294331afbc", 198],
+      ["2ec005ea16b3", 343],
+      ["fd10ad67f878", 377],
+      ["de59e343d914", 408],
+      ["37dc539ed622", 415],
+      ["bc18eb3148bc", 464],
+      ["bd90fb921f2d", 509],
+      ["c067b1aa9040", 540],
+      ["09399b61d7eb", 586],
+      ["b2400038371b", 604],
+      ["3e84ad780965", 620]
+    ],
+    "c028563f1e374fe11ba2b08de2efafc8218329cff44217f7895dd029476dfcea": [
+      ["e71751e45afb", 4],
+      ["5e3676c21c25", 382],
+      ["d521180fa490", 465]
+    ],
+    "5dadf7884cd400916a9ebc727a700dd1db3ccf6a8a8c991e081c181e35811a72": [
+      ["d768b8759414", 11],
+      ["809d3ad2bcb8", 24],
+      ["5cb0721f72f0", 104],
+      ["c6d0c3b96308", 146],
+      ["13353d70a4e4", 496],
+      ["9b385480472b", 512],
+      ["8ed5705ec2a1", 593],
+      ["5fe038759833", 645],
+      ["98d1274d28cc", 743],
+      ["33cf9705a8ce", 1110],
+      ["5db8c510ecd8", 1498],
+      ["9a272655e35d", 1522],
+      ["4cfda6a42fe7", 2212],
+      ["2df9d66bb75f", 2598],
+      ["c1b0f314d80f", 2704],
+      ["17434a79a37e", 2731],
+      ["9c690dd3c693", 2810],
+      ["3d6f7edc7627", 2968],
+      ["522aebe84bc6", 3180],
+      ["ee71dbd9b1d7", 3344],
+      ["e4274230bf81", 3579],
+      ["6f6f5cc580d2", 3723],
+      ["1e116b431cf7", 3937],
+      ["ff3e97d04bad", 4016],
+      ["d0e269c9f6e8", 4373],
+      ["b21be54b9994", 4406]
+    ],
+    "c6be1ffe070e0485bb94a09b84e3eb66e5c2f65df89ccfb218da16586e9676ae": [
+      ["e60933e352ce", 1],
+      ["21cff7993abc", 30],
+      ["7b9337a52d32", 81]
+    ],
+    "0328a76286bb94c049914d2742369b890987a701951b9b68263dd2c98a2e17e6": [
+      ["b61f946296f1", 4],
+      ["9b73a9b5c9f6", 16],
+      ["433c37b5a737", 24],
+      ["588204d00b0f", 44],
+      ["9c690dd3c693", 115],
+      ["d8b376ab1b33", 273],
+      ["edf1149cc59d", 517],
+      ["88f220040f19", 640]
+    ]
+  },
+  "contracts": {
+    "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": {
+      "name": "FastExternalBridge",
+      "source": "478571706fd2f278082b850a84639f5e6a7ddb1768ab9aea41923b8e7fcd2f3f",
+      "implementations": {
+        "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": "478571706fd2f278082b850a84639f5e6a7ddb1768ab9aea41923b8e7fcd2f3f"
+      }
+    },
+    "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE": {
+      "name": "Rollup",
+      "source": "6723a7dcceeda076193c9d09f6ca0d56c2e4c2748595531a56e73ba02748f297"
+    },
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": {
+      "name": "SP1Verifier",
+      "source": "5892eb20038c3d897ddf12af839528166e4cb4780b0e895f8ac29d04c84c85dc"
+    },
+    "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": {
+      "name": "FacetSafeModule",
+      "source": "ba4ae06589a1c276d053e5efbdb7a6a7a123d2189f58d592eaec9cb4b1e869a4"
+    },
+    "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E": {
+      "name": "L1Bridge",
+      "source": "d4b075b00499881278e59f775ab7906c1eb9c8fd8ab88aad1f293a98956994c0"
+    },
+    "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": {
+      "name": "SP1Verifier",
+      "source": "ef73b2f4266a0cb87f16a652e7880db6f3ae54a4ab48b1c518d30736b0df4def"
+    },
+    "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4": {
+      "name": "RollupDeprecated",
+      "source": "6723a7dcceeda076193c9d09f6ca0d56c2e4c2748595531a56e73ba02748f297"
+    },
+    "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": {
+      "name": "SP1VerifierGatewayDeprecated",
+      "source": "9510ae28ced1b975558f48ec251c3589fc8e0e978da90ccf73540756138264b8"
+    },
+    "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": {
+      "name": "L1ETHLockbox",
+      "source": "13e2982d84601d29e51496f0252cb02a378a2f29f101c9782f04700bdb6ea737",
+      "critical": true,
+      "implementations": {
+        "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9": "c03f6429a2829da4c429b0c28db458ad329f0ef00d21945a8cbf5f898c615fea"
+      }
+    },
+    "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": {
+      "name": "SP1VerifierGateway",
+      "source": "9510ae28ced1b975558f48ec251c3589fc8e0e978da90ccf73540756138264b8"
+    },
+    "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": {
+      "name": "Facet Multisig",
+      "source": "7df86540e8491697461e4719fd93052c329d1d0565f4c7c72a9d37700802ec71",
+      "implementations": {
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "8d7cdf752191616e4e00fca1de6ca09bd97a59805815ae8e5131612f04aa21f6"
+      }
+    },
+    "eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25": {
+      "name": "FacetSafeProxy",
+      "source": "c028563f1e374fe11ba2b08de2efafc8218329cff44217f7895dd029476dfcea"
+    },
+    "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": {
+      "name": "L2Bridge",
+      "source": "5dadf7884cd400916a9ebc727a700dd1db3ccf6a8a8c991e081c181e35811a72"
+    },
+    "facet:0x4200000000000000000000000000000000000016": {
+      "name": "L2ToL1MessagePasser",
+      "source": "c6be1ffe070e0485bb94a09b84e3eb66e5c2f65df89ccfb218da16586e9676ae",
+      "implementations": {
+        "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "0328a76286bb94c049914d2742369b890987a701951b9b68263dd2c98a2e17e6"
+      }
+    }
+  }
+}
