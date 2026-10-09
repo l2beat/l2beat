@@ -20,10 +20,14 @@ import { type Arrival, Pop, RollingNumber, writeText } from './liveMotion'
 import { type BlockLimits, type LivePoster, UNKNOWN_ID } from './model'
 import { type LiveStatus, useLiveBlobs } from './useLiveBlobs'
 
-const STATUS_TEXT: Record<LiveStatus, string> = {
-  connecting: 'Connecting to Ethereum…',
-  live: 'Live from Ethereum',
-  reconnecting: 'Reconnecting to Ethereum…',
+/**
+ * Short on a phone: the status shares a row with a number there, and the long
+ * text would wrap onto a second line
+ */
+const STATUS_TEXT: Record<LiveStatus, { long: string; short: string }> = {
+  connecting: { long: 'Connecting to Ethereum…', short: 'Connecting…' },
+  live: { long: 'Live from Ethereum', short: 'Live from Ethereum' },
+  reconnecting: { long: 'Reconnecting to Ethereum…', short: 'Reconnecting…' },
 }
 
 /** Projects named under the strip; the rest are counted */
@@ -192,10 +196,11 @@ function StatusText({ status }: { status: LiveStatus }) {
   return (
     <div
       role="status"
-      className="flex items-center gap-2 font-bold text-label-value-14 text-secondary"
+      className="flex items-center gap-2 whitespace-nowrap font-bold text-label-value-14 text-secondary"
     >
       <LiveIndicator disabled={status !== 'live'} />
-      {STATUS_TEXT[status]}
+      <span className="md:hidden">{STATUS_TEXT[status].short}</span>
+      <span className="max-md:hidden">{STATUS_TEXT[status].long}</span>
     </div>
   )
 }
