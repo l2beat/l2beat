@@ -11,7 +11,7 @@
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "generate": "tsx src/index.ts",
     "dev": "pnpm generate && pnpm wrangler dev",
-    "wrangler": "pnpm dlx --allow-build=esbuild --allow-build=workerd wrangler@4.128.0",
+    "wrangler": "pnpm dlx --config.minimum-release-age=10080 --allow-build=esbuild --allow-build=workerd wrangler@4.128.0",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
