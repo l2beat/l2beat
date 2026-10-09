@@ -239,9 +239,14 @@ function PosterRow({
       <TableCell>
         {/* the hover box stays in its own cell: reaching left under the
             pinned logo, it would be cut by the logo's fade */}
-        <TableLink href={row.poster.href} className="md:ml-0 md:pl-1.5">
-          <PosterName poster={row.poster} />
-        </TableLink>
+        {row.poster.href ? (
+          <TableLink href={row.poster.href} className="md:ml-0 md:pl-1.5">
+            <PosterName poster={row.poster} />
+          </TableLink>
+        ) : (
+          // as far in as a linked name, which its hover box pads
+          <PosterName poster={row.poster} className="md:pl-1.5" />
+        )}
       </TableCell>
       <TableCell>
         {/* to the project's long-run chart, for those who want more than a day */}
@@ -348,10 +353,18 @@ function PosterLogo({ poster }: { poster: LivePoster }) {
   )
 }
 
-function PosterName({ poster }: { poster: LivePoster }) {
+function PosterName({
+  poster,
+  className,
+}: {
+  poster: LivePoster
+  className?: string
+}) {
   return (
     // a phone has room for the name or the numbers, so long names give way
-    <span className="block truncate font-bold max-md:max-w-[7rem]">
+    <span
+      className={cn('block truncate font-bold max-md:max-w-[7rem]', className)}
+    >
       {poster.name}
     </span>
   )

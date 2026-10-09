@@ -75,14 +75,14 @@ export function LiveStats({
           {ready ? (
             <RollingNumber value={blobs} format={formatWhole} />
           ) : (
-            <NumberSkeleton />
+            <NumberSkeleton sizedAs="00,000" />
           )}
         </Stat>
         <Stat label="Data" arrival={arrival} formatArrival={formatArrivedKib}>
           {ready ? (
             <RollingNumber value={blobs * BLOB_KIB} format={formatKib} />
           ) : (
-            <NumberSkeleton />
+            <NumberSkeleton sizedAs="00.0 GiB" />
           )}
         </Stat>
         <Stat
@@ -96,12 +96,13 @@ export function LiveStats({
             />
           ) : (
             // narrow as the number it stands for, or the note wraps on a phone
-            <NumberSkeleton className="w-14" />
+            <NumberSkeleton sizedAs="00" />
           )}
         </Stat>
         <div className="col-start-2 row-start-1 flex flex-col items-end gap-1.5 md:ml-auto">
           <StatusText status={status} />
-          {status === 'live' && <NextBlock />}
+          {/* held in place until live, or the status would rise as it comes */}
+          <NextBlock hidden={status !== 'live'} />
         </div>
       </dl>
       {ready ? (
@@ -120,12 +121,17 @@ export function LiveStats({
   )
 }
 
-/** As tall as a stat's number, which sets its line */
-function NumberSkeleton({ className }: { className?: string }) {
+/**
+ * As big as the number it stands for: `sizedAs` is set unseen in the
+ * number's own font, so on a desktop, where the stats stand in a row, the
+ * labels beside it do not move when the number comes
+ */
+function NumberSkeleton({ sizedAs }: { sizedAs: string }) {
   return (
-    <Skeleton
-      className={cn('inline-block h-8 w-24 align-bottom md:h-9', className)}
-    />
+    <span className="relative inline-block">
+      <span className="invisible">{sizedAs}</span>
+      <Skeleton className="absolute inset-0" />
+    </span>
   )
 }
 
@@ -219,7 +225,7 @@ const RING_STEPS = 96
  * the wait between blocks, made visible. Drawn straight to the elements, and
  * only when they would look different, so it renders no React
  */
-function NextBlock() {
+function NextBlock({ hidden }: { hidden: boolean }) {
   const clock = useChainClock()
   const rootRef = useRef<HTMLDivElement>(null)
   const onScreen = useIsOnScreen(rootRef)
@@ -242,12 +248,16 @@ function NextBlock() {
       const left = Math.max(1, Math.ceil((1 - into) * SLOT_SECONDS))
       writeText(textRef.current, `Next block in ${left}s`)
     }
-  }, onScreen)
+  }, onScreen && !hidden)
 
   return (
     <div
       ref={rootRef}
-      className="flex items-center gap-1.5 font-medium text-label-value-14 text-secondary tabular-nums"
+      aria-hidden={hidden}
+      className={cn(
+        'flex items-center gap-1.5 font-medium text-label-value-14 text-secondary tabular-nums',
+        hidden && 'invisible',
+      )}
     >
       <svg viewBox="0 0 16 16" className="-rotate-90 size-4" aria-hidden>
         <circle

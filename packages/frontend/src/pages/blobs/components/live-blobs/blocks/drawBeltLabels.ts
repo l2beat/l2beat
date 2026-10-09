@@ -20,6 +20,20 @@ import { labelPresence, smoothstep } from './motion'
 const FONT = 'Roboto, Arial, sans-serif'
 /** Labels fade out over the end of their block's slot, from this far into it */
 const LABELS_LEAVE = 0.9
+/** Half the rim `fillTextOnSurface` draws around text, which a box takes in */
+const RIM = 1.5
+
+interface Box {
+  left: number
+  right: number
+  top: number
+  bottom: number
+}
+
+/** Where a label was drawn, and how opaque, so others can give way to it */
+export interface LabelBox extends Box {
+  alpha: number
+}
 
 /**
  * Blob counts under the blocks, a dash under missed slots, and every fifth
@@ -77,7 +91,7 @@ export function drawBlockNumbers(
  * before the block leaves the bay: left behind, it would seem to name what
  * the next block got, and riding on it would cover the next rack. A batch
  * coming too late in its slot to be read goes unnamed. A newer label at the
- * same height takes over from an older one.
+ * same height takes over from an older one. Returns where each was drawn
  */
 export function drawArrivalLabels(
   ctx: CanvasRenderingContext2D,
@@ -85,9 +99,10 @@ export function drawArrivalLabels(
   playback: Playback,
   belt: BeltPosition,
   now: number,
-) {
+): LabelBox[] {
   const { layout, blocks, posters } = scene
   const placed: { y: number; alpha: number }[] = []
+  const drawn: LabelBox[] = []
   // newest first, so the older ones know what to step aside for
   const arrivals = [...playback.arrivals].reverse()
   for (const [key, arrivedAt] of arrivals) {
@@ -113,9 +128,12 @@ export function drawArrivalLabels(
     placed.push({ y, alpha })
     if (shown > 0.02) {
       const x = rackLeft(belt, layout, slot) + layout.rackWidth + 6
-      drawArrivalLabel(ctx, scene, batch.blobs, poster.name, x, y, shown)
+      drawn.push(
+        drawArrivalLabel(ctx, scene, batch.blobs, poster.name, x, y, shown),
+      )
     }
   }
+  return drawn
 }
 
 function drawArrivalLabel(
@@ -126,7 +144,7 @@ function drawArrivalLabel(
   x: number,
   y: number,
   alpha: number,
-) {
+): LabelBox {
   const { layout, palette } = scene
   const amount = `+${blobs}`
   ctx.save()
@@ -143,7 +161,15 @@ function drawArrivalLabel(
   const nameX = x + amountWidth + 4
   const shortName = fitText(ctx, name, layout.width - nameX - 2)
   fillTextOnSurface(ctx, palette, shortName, nameX, y, palette.textSecondary)
+  const right = nameX + ctx.measureText(shortName).width
   ctx.restore()
+  return {
+    left: x - RIM,
+    right: right + RIM,
+    top: y - size / 2 - RIM,
+    bottom: y + size / 2 + RIM,
+    alpha,
+  }
 }
 
 /**
@@ -201,14 +227,31 @@ export function drawBayCaption(
   ctx.restore()
 }
 
-/** "Max 21" atop the fee band, "Target 14" on its line, and what the band means */
+/**
+ * "Max 21" atop the fee band, "Target 14" on its line, and what the band
+ * means. Each gives way to a batch's label drawn over it, for as long as that
+ * shows: on a phone the two reach the same edge of the belt, and the batch's
+ * is the news, while these are always there to read
+ */
 export function drawLimitLabels(
   ctx: CanvasRenderingContext2D,
   scene: BeltScene,
+  arrivals: LabelBox[],
 ) {
   const { layout, palette } = scene
   const right = layout.width - 2
-  drawRuleLabel(ctx, scene, 'Max', scene.maxBlobs, right, layout.maxY + 13)
+  const giveWay = (box: Box) =>
+    1 -
+    Math.max(0, ...arrivals.filter((a) => crosses(a, box)).map((a) => a.alpha))
+  drawRuleLabel(
+    ctx,
+    scene,
+    'Max',
+    scene.maxBlobs,
+    right,
+    layout.maxY + 13,
+    giveWay,
+  )
   drawRuleLabel(
     ctx,
     scene,
@@ -216,22 +259,23 @@ export function drawLimitLabels(
     scene.targetBlobs,
     right,
     layout.targetY - 5,
+    giveWay,
   )
 
   // what the hatching between them means
+  const meaning = 'Blob fee rises'
   ctx.save()
   ctx.font = `500 11px ${FONT}`
   ctx.textAlign = 'right'
   ctx.textBaseline = 'middle'
   const middle = (layout.maxY + layout.targetY) / 2
-  fillTextOnSurface(
-    ctx,
-    palette,
-    'Blob fee rises',
-    right,
-    middle,
-    palette.textFaint,
-  )
+  ctx.globalAlpha = giveWay({
+    left: right - ctx.measureText(meaning).width - RIM,
+    right: right + RIM,
+    top: middle - 5.5 - RIM,
+    bottom: middle + 5.5 + RIM,
+  })
+  fillTextOnSurface(ctx, palette, meaning, right, middle, palette.textFaint)
   ctx.restore()
 }
 
@@ -242,6 +286,7 @@ function drawRuleLabel(
   value: number,
   right: number,
   y: number,
+  giveWay: (box: Box) => number,
 ) {
   const { palette } = scene
   const valueText = String(value)
@@ -251,12 +296,27 @@ function drawRuleLabel(
 
   ctx.font = `700 11px ${FONT}`
   const valueWidth = ctx.measureText(valueText).width
-  fillTextOnSurface(ctx, palette, valueText, right, y, palette.text)
-
   ctx.font = `500 11px ${FONT}`
   const wordRight = right - valueWidth - 3
+  // from the cap height above the baseline to the descenders under it, at 11 px
+  ctx.globalAlpha = giveWay({
+    left: wordRight - ctx.measureText(word).width - RIM,
+    right: right + RIM,
+    top: y - 8 - RIM,
+    bottom: y + 3 + RIM,
+  })
+
+  ctx.font = `700 11px ${FONT}`
+  fillTextOnSurface(ctx, palette, valueText, right, y, palette.text)
+  ctx.font = `500 11px ${FONT}`
   fillTextOnSurface(ctx, palette, word, wordRight, y, palette.textSecondary)
   ctx.restore()
+}
+
+function crosses(a: Box, b: Box) {
+  return (
+    a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom
+  )
 }
 
 /** Text with a rim of the card's color, so it reads over racks and hatching */
