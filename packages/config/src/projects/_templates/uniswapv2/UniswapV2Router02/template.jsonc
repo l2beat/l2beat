@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UniswapV2Router02",
+  "description": "Stateless periphery that routes swaps and liquidity changes through Uniswap v2 pairs. Immutable, with no owner, and it holds no user funds between transactions.",
+  // WETH9 is canonical infra, not Uniswap-governed.
+  "ignoreRelatives": ["WETH"]
+}

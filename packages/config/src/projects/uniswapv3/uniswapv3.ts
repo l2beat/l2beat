@@ -172,20 +172,22 @@ export const uniswapv3: BaseProject = {
     censorshipResistance: {
       sentiment: 'good',
       points: [
-        'Pools are immutable and adminless: nothing can be paused or upgraded.',
-        'Anyone can deploy a pool for any token pair at an enabled fee tier, and swapping or withdrawing liquidity needs no permission and passes through no operator.',
-        'UNI tokenholder governance, acting through a 2d timelock, holds only two bounded powers over v3 pools: enabling new fee tiers, and setting a protocol fee capped at 1/4 of LP fees per side.',
-        'Governance cannot block a swap, freeze a position, or reach LP funds.',
+        CROP_NOTES.infiniteExitWindow,
+        'Anyone can create a pool at an enabled fee tier, swap, or withdraw liquidity, with no permission and no operator in the path.',
+        `Governance, through a ${timelockDelayDays}-day timelock, can only enable new fee tiers and set a protocol fee capped in code at 1/4 of LP fees per side. It cannot block swaps, freeze positions or touch LP funds.`,
+        CROP_NOTES.passesWalkawayTest(
+          'pools work without the team, the interface or governance, and any contract can call them directly.',
+        ),
       ],
       notReviewed: [
-        'The routers and interfaces users actually reach the pools through, which sit outside them.',
+        'The routers and interfaces users reach the pools through.',
       ],
     },
     openSource: {
       sentiment: 'good',
       license: 'GPL-2.0',
       points: [
-        'The GPL covers both the v3 core and the periphery - the business-source grant on the core expired in 2023.',
+        'The core, the periphery and the interface are published under the GPL. The core was under a Business Source License until it converted to the GPL in 2023.',
         'The contracts are verified onchain, and can be built and run locally alongside a self-hosted interface.',
       ],
     },
@@ -193,23 +195,22 @@ export const uniswapv3: BaseProject = {
       status: 'fullyTransparent',
       points: [
         'The protocol does not make privacy claims, and is fully transparent.',
-        'Swaps and positions are public onchain.',
+        'Swaps and liquidity positions are public onchain.',
       ],
     },
     security: {
       sentiment: 'good',
       points: [
-        'Every contract that holds or routes user funds is immutable, with no upgrade path.',
-        'No external dependency - no oracle, no bridge.',
-        'The core has been battle-tested at very high volume since 2021.',
+        'Every contract that holds user funds is immutable, with no upgrade path.',
+        'No external dependency: no oracle, no bridge.',
+        'The core has secured value at very high volume since 2021.',
       ],
-      missing: [
-        'A governance-set protocol fee remains: currently 1/4 of LP fees per side, 1/6 on the 0.3% tier, with proceeds burned as UNI through the Firepit.',
+      additionalConsiderations: [
         'Per-pool token and liquidity risk stays with the user.',
+        'No circuit breakers or rate limits. A faulty token only affects its own pools, but a bug in the pool code would reach all of them.',
       ],
       notReviewed: [
-        'The router and approval contracts that sit outside the pools, which are assessed separately.',
-        CROP_NOTES.notReviewed.circuitBreakers,
+        'The routers and approval contracts that sit outside the pools, which are assessed separately.',
       ],
     },
   },

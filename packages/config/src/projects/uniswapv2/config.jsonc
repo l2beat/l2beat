@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "uniswapv2",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 25,
+  // Used by the shared uniswapv3 governance templates.
+  "types": {
+    "Undecimal0": {
+      "typeCaster": "Undecimal",
+      "arg": { "decimals": 0 }
+    }
+  },
+  "initialAddresses": [
+    // Core
+    "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f", // UniswapV2Factory
+    // Representative pairs (deployed by the factory via CREATE2 with identical
+    // bytecode; hundreds of thousands exist, so two high-TVL ones stand in).
+    "eth:0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc", // USDC/WETH
+    "eth:0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852", // WETH/USDT
+    // Periphery
+    "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D" // UniswapV2Router02
+  ],
+  "names": {
+    "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": "UniswapV2Factory",
+    "eth:0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc": "UniswapV2Pair_USDC_WETH",
+    "eth:0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852": "UniswapV2Pair_WETH_USDT",
+    "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D": "UniswapV2Router02",
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": "UNIToken",
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": "GovernorBravo",
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": "Timelock"
+  },
+  "overrides": {
+    // Same governance as uniswapv3: historical proposal payloads blow up the
+    // auto array explorer and are not permission-relevant.
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": {
+      "proxyType": "call implementation proxy",
+      "ignoreMethods": ["getActions", "proposals", "state"]
+    }
+  }
+}

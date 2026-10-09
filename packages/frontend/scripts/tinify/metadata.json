@@ -296,8 +296,9 @@
   "static/icons/tusima.png": "c820f3f9d592a2d0acc72e29776a6d3d",
   "static/icons/unichain.png": "fc4e30a8da9c1580a403a6de9990fcf6",
   "static/icons/uniswap.png": "cb31b3fadc3ad54d964f95761d6e0475",
-  "static/icons/uniswapv3.png": "cb31b3fadc3ad54d964f95761d6e0475",
-  "static/icons/uniswapv4.png": "cb31b3fadc3ad54d964f95761d6e0475",
+  "static/icons/uniswapv2.png": "2e3d5f6b5badb27112f8d72c76b46def",
+  "static/icons/uniswapv3.png": "e4bb50e77730063caafff13dcd332173",
+  "static/icons/uniswapv4.png": "ebc51efc91ae9e57caebe65e20adcee7",
   "static/icons/unite.png": "aae6afd352e3ca337c12231e2ecc82eb",
   "static/icons/vector.png": "af0592ee3395c8cc13044d8da267f605",
   "static/icons/winr.png": "435fc41491bb57f9bdfa274398c2f047",
@@ -1613,10 +1614,10 @@
   "static/images/architecture/uniswapv3.png": "8828339c8ae5ad448a72e4530d42d4fd",
   "static/meta-images/defi/projects/chainlink/opengraph-image.png": "a0fe4a358f1bdf3013d242aa5198c799",
   "static/meta-images/defi/projects/liquityv2/opengraph-image.png": "8824e5cddaf5cb1d5b43dec10105d7d9",
-  "static/meta-images/defi/projects/uniswapv3/opengraph-image.png": "91d3e36146d9d5c0729c70ec25ab28f8",
+  "static/meta-images/defi/projects/uniswapv3/opengraph-image.png": "48b522cd4aa44ab5b36a1cddd1aea5a3",
   "static/meta-images/defi/summary/opengraph-image.png": "bd424fff91abdfef251690a6ad89620f",
   "static/meta-images/defi/projects/frankencoin/opengraph-image.png": "c305797856053172f14c5169150d211a",
-  "static/meta-images/defi/projects/uniswapv4/opengraph-image.png": "a2a558d00bfb67a128decc62e5c1455d",
+  "static/meta-images/defi/projects/uniswapv4/opengraph-image.png": "e67b36c7e04ff49dd4242b8595c6a811",
   "static/icons/privacy-boost.png": "556d9480cba16abc6fe7fe04a0dce9bc",
   "static/meta-images/privacy/projects/privacy-boost/opengraph-image.png": "880f6292f63b5256cae18d5737fb6582",
   "static/meta-images/zk-catalog/projects/privacy-boost/opengraph-image.png": "3846e8359ecef180a9482a573c9a69fe",
@@ -1666,5 +1667,6 @@
   "static/meta-images/privacy/projects/monero-cake-wallet/opengraph-image.png": "408c06b6fcef8db017ce810943f61114",
   "static/meta-images/ossification/opengraph-image.png": "91a3ca4a8e017d0f4d0096cdd2ecc930",
   "static/images/da-layer-technology/anytrust/architecture5.png": "a7d9b3e8dd1e614895350ee2877223cc",
-  "static/meta-images/blobs/opengraph-image.png": "1fd8fb15b0bc023a7cf0a54e4e78b2a1"
+  "static/meta-images/blobs/opengraph-image.png": "1fd8fb15b0bc023a7cf0a54e4e78b2a1",
+  "static/meta-images/defi/projects/uniswapv2/opengraph-image.png": "dc77200d6cc72338e114ea6cea5dd0bc"
 }

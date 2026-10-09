@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UniswapV2Factory",
+  "critical": true,
+  "description": "Deploys Uniswap v2 pairs: anyone can create one pair per token pair, at a CREATE2 address deterministic in the two tokens. Immutable. Its fee setter can switch a protocol fee on or off by choosing its recipient, and can hand the setter role to another address. It cannot modify, pause, or upgrade deployed pairs, or touch their funds.",
+  // The pair registry grows with every new pair and holds no permissions.
+  "ignoreMethods": ["allPairs"],
+  "ignoreInWatchMode": ["allPairsLength"],
+  "fields": {
+    "feeToSetter": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can set the protocol fee recipient, which switches on a protocol fee of 1/6 of LP swap fees on every pair, and transfer the fee setter role."
+        }
+      ],
+      "severity": "HIGH",
+      "description": "Address authorized to set the protocol fee recipient and to transfer this role."
+    },
+    "feeTo": {
+      "severity": "HIGH",
+      "description": "Recipient of the protocol fee, which pairs mint to it as LP tokens on liquidity events. The zero address means the protocol fee is off."
+    }
+  }
+}
