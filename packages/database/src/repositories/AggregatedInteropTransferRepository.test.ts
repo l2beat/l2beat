@@ -46,6 +46,20 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         expect(result).toEqualUnsorted(records)
       })
 
+      it('round-trips the carriedFrom marker', async () => {
+        const carried = record({
+          id: 'id1',
+          timestamp: UnixTime(200),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          carriedFrom: UnixTime(100),
+        })
+
+        await repository.insertMany([carried])
+
+        expect(await repository.getAll()).toEqual([carried])
+      })
+
       it('handles empty array', async () => {
         const inserted = await repository.insertMany([])
         expect(inserted).toEqual(0)
@@ -1705,11 +1719,13 @@ function record({
   count1KTo10K = 0,
   count10KTo100K = 0,
   countOver100K = 0,
+  carriedFrom,
 }: {
   id: string
   timestamp: UnixTime
   srcChain: string
   dstChain: string
+  carriedFrom?: UnixTime
   transferTypeStats?: AggregatedInteropTransferRecord['transferTypeStats']
   transferCount?: number
   transfersWithDurationCount?: number
@@ -1752,5 +1768,6 @@ function record({
     count10KTo100K,
     countOver100K,
     bridgeType,
+    carriedFrom,
   }
 }

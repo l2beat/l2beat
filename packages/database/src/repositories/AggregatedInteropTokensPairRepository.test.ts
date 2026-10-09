@@ -166,6 +166,39 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
   )
 
   describe(
+    AggregatedInteropTokensPairRepository.prototype.getByTimestamp.name,
+    () => {
+      it('returns only records at the given timestamp', async () => {
+        const at100 = record({
+          id: 'id1',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
+          transferCount: 5,
+          totalDurationSum: 1000,
+          volume: 5000,
+        })
+        const at200 = record({
+          id: 'id1',
+          timestamp: UnixTime(200),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
+          transferCount: 3,
+          totalDurationSum: 2000,
+          volume: 6000,
+        })
+        await repository.insertMany([at100, at200])
+
+        expect(await repository.getByTimestamp(UnixTime(200))).toEqual([at200])
+      })
+    },
+  )
+
+  describe(
     AggregatedInteropTokensPairRepository.prototype.deleteByTimestamp.name,
     () => {
       it('deletes records with matching timestamp and returns count', async () => {

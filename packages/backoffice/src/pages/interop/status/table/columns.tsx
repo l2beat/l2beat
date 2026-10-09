@@ -100,7 +100,7 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
   }),
   columnHelper.accessor((row) => (row.blocksAggregation ? 'yes' : 'no'), {
     id: 'blocksAggregation',
-    header: 'Blocks aggregation',
+    header: 'Carries lanes forward',
     enableGlobalFilter: false,
     cell: ({ getValue }) => {
       const value = getValue()
