@@ -313,7 +313,7 @@ export const base: ScalingProject = opStackL2({
       },
       {
         title: 'OptimismPortal2 - source code',
-        url: 'https://etherscan.io/address/0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C#code',
+        url: 'https://etherscan.io/address/0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70#code',
       },
       {
         title: 'AggregateVerifier - source code',
