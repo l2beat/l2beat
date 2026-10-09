@@ -19,6 +19,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { DAC } from '../../templates/dac-template'
 import {
   getNitroGovernance,
+  getOrbitStackDaTracking,
   orbitStackL2,
   WASMVM_OTHER_CONSIDERATIONS,
 } from '../../templates/orbitStack'
@@ -56,6 +57,9 @@ const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
 const sequencerInbox = discovery.getContract('SequencerInbox')
 const blobBatchesSinceTimestamp = UnixTime(1783036800) // 2026-07-03T00:00:00Z
+// First blob batch on the SequencerInbox (a short fallback episode on
+// 2026-07-03; all batches are blobs since 2026-08-31).
+const blobBatchesSinceBlock = 25448296
 
 const dac = discovery.getContractValue<{
   membersCount: number
@@ -129,6 +133,9 @@ export const nova: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox,
+  daTracking: [
+    getOrbitStackDaTracking(discovery, { sinceBlock: blobBatchesSinceBlock }),
+  ],
   additionalTrackedTxs: [
     {
       uses: [

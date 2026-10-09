@@ -4,7 +4,10 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import {
+  getOrbitStackDaTracking,
+  orbitStackL2,
+} from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('pepeunchained2')
 
@@ -51,6 +54,9 @@ export const pepeunchained2: ScalingProject = orbitStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   discovery,
+  // AnyTrust chain: blobs only appear when the DAC is bypassed (fallback
+  // batches, first seen 2026-09-29).
+  daTracking: [getOrbitStackDaTracking(discovery, { sinceBlock: 26086300 })],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
