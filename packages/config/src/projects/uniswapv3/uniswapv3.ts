@@ -173,15 +173,14 @@ export const uniswapv3: BaseProject = {
       sentiment: 'good',
       points: [
         CROP_NOTES.infiniteExitWindow,
-        'Anyone can deploy a pool for any token pair at an enabled fee tier, and swapping or withdrawing liquidity needs no permission and passes through no operator.',
-        `UNI tokenholder governance, acting through a ${timelockDelayDays}-day timelock, holds two bounded powers over v3: enabling new fee tiers, and setting a protocol fee that the code caps at 1/4 of LP fees per side.`,
-        'Governance cannot block a swap, freeze a position, or reach LP funds.',
+        'Anyone can create a pool at an enabled fee tier, swap, or withdraw liquidity, with no permission and no operator in the path.',
+        `Governance, through a ${timelockDelayDays}-day timelock, can only enable new fee tiers and set a protocol fee capped in code at 1/4 of LP fees per side. It cannot block swaps, freeze positions or touch LP funds.`,
         CROP_NOTES.passesWalkawayTest(
-          'pools keep working with the team, the interface and governance gone, and any contract can call them directly.',
+          'pools work without the team, the interface or governance, and any contract can call them directly.',
         ),
       ],
       notReviewed: [
-        'The routers and interfaces users reach the pools through, which sit outside them.',
+        'The routers and interfaces users reach the pools through.',
       ],
     },
     openSource: {

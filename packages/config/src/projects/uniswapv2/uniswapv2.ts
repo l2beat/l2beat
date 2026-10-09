@@ -105,16 +105,13 @@ export const uniswapv2: BaseProject = {
       sentiment: 'good',
       points: [
         CROP_NOTES.infiniteExitWindow,
-        'Anyone can create a pair for any two tokens, and swapping or withdrawing liquidity needs no permission and passes through no operator.',
-        `UNI tokenholder governance, acting through a ${timelockDelayDays}-day timelock, holds one power over v2: choosing the recipient of the protocol fee, which the code fixes at 1/6 of LP fees.`,
-        'Governance cannot block a swap, freeze liquidity, or reach LP funds.',
+        'Anyone can create a pair, swap, or withdraw liquidity, with no permission and no operator in the path.',
+        `Governance, through a ${timelockDelayDays}-day timelock, can only choose who receives the protocol fee, fixed in code at 1/6 of LP fees. It cannot block swaps, freeze liquidity or touch LP funds.`,
         CROP_NOTES.passesWalkawayTest(
-          'pairs keep working with the team, the interface and governance gone, and any contract can call them directly.',
+          'pairs work without the team, the interface or governance, and any contract can call them directly.',
         ),
       ],
-      notReviewed: [
-        'The interfaces users reach the pairs through, which sit outside them.',
-      ],
+      notReviewed: ['The interfaces users reach the pairs through.'],
     },
     openSource: {
       sentiment: 'good',
