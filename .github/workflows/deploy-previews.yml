@@ -1,0 +1,115 @@
+name: Deploy previews
+
+# Coolify's preview webhook rebuilds every preview app on every PR push, so a
+# frontend-only change also rebuilds Disco UI and token-ui. This workflow
+# deploys only the previews whose package the PR affects. Turn off "Preview
+# Deployments" for these apps in Coolify: the toggle gates only the webhook,
+# the API ignores it, and Coolify still deletes previews when the PR closes.
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: deploy-previews-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  select:
+    name: Select affected previews
+    # Fork PRs get no secrets, so they could not reach Coolify anyway.
+    if: github.event.pull_request.head.repo.fork == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      previews: ${{ steps.select.outputs.previews }}
+    steps:
+      # The default checkout is the PR merge commit; its first parent is the
+      # base branch tip, so HEAD^1..HEAD is exactly what the PR changes. Diffing
+      # the whole PR, not the last push, keeps a preview updated on every push
+      # once the PR touches its package.
+      - name: Check out code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      # turbo reads the workspace graph from package.json files and the
+      # lockfile, so no install is needed. A package counts as affected when it
+      # or any workspace package it depends on changed.
+      - name: Select previews of affected packages
+        id: select
+        env:
+          TURBO_SCM_BASE: HEAD^1
+          TURBO_SCM_HEAD: HEAD
+          PREVIEWS: |
+            [
+              { "name": "frontend-production", "package": "@l2beat/frontend", "uuidSecret": "COOLIFY_FRONTEND_PROD_PREVIEW_ID" },
+              { "name": "frontend-staging", "package": "@l2beat/frontend", "uuidSecret": "COOLIFY_FRONTEND_STAGING_PREVIEW_ID" },
+              { "name": "disco-ui", "package": "@l2beat/l2b", "uuidSecret": "COOLIFY_DISCO_UI_PREVIEW_ID" },
+              { "name": "token-ui", "package": "@l2beat/token-ui", "uuidSecret": "COOLIFY_TOKEN_UI_PREVIEW_ID" }
+            ]
+        run: |
+          turbo_version=$(jq -r .devDependencies.turbo package.json)
+          affected=$(npx --yes "turbo@$turbo_version" ls --affected --output=json | jq -c '[.packages.items[].name]')
+          echo "Affected packages: $affected"
+
+          previews=$(jq -c --argjson affected "$affected" \
+            '[.[] | select(.package as $p | $affected | index($p))]' <<< "$PREVIEWS")
+          echo "Previews to deploy: $(jq -c 'map(.name)' <<< "$previews")"
+          echo "previews=$previews" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    name: Deploy ${{ matrix.preview.name }} preview
+    needs: select
+    if: needs.select.outputs.previews != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        preview: ${{ fromJSON(needs.select.outputs.previews) }}
+    env:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      # Indexing by name exposes only this preview's secret to the job.
+      COOLIFY_UUID: ${{ secrets[matrix.preview.uuidSecret] }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      PR_URL: ${{ github.event.pull_request.html_url }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Validate COOLIFY_UUID
+        run: |
+          if [[ -z "$COOLIFY_UUID" ]]; then
+            echo "::error::Missing secret ${{ matrix.preview.uuidSecret }}"
+            exit 1
+          fi
+
+      # Opens the preview on the first call and redeploys it afterwards.
+      # Retrying is safe: Coolify skips a deployment already queued for the
+      # same commit, and curl honours Retry-After when the queue is full.
+      - name: Deploy preview
+        run: |
+          body=$(jq -n --argjson pr "$PR_NUMBER" --arg url "$PR_URL" --arg commit "$HEAD_SHA" \
+            '{pull_request_id: $pr, pull_request_html_url: $url, commit: $commit}')
+
+          response="$(
+            curl --fail-with-body --silent --show-error \
+              -X POST \
+              --retry 3 \
+              --retry-delay 5 \
+              --retry-all-errors \
+              --header "Authorization: Bearer $COOLIFY_API_KEY" \
+              --header "Accept: application/json" \
+              --header "Content-Type: application/json" \
+              --data "$body" \
+              "$COOLIFY_SERVER/api/v1/applications/$COOLIFY_UUID/previews"
+          )"
+          echo "$response"
+
+          domains=$(jq -r '.preview.domains // empty' <<< "$response")
+          echo "${{ matrix.preview.name }} preview: ${domains:-unknown} ($(jq -r .message <<< "$response"))" >> "$GITHUB_STEP_SUMMARY"
