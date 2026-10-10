@@ -118,13 +118,17 @@ export const tornadoCash: BaseProject = {
   },
   display: {
     description:
-      'A classic Ethereum mixer design based on fixed-denomination pools and zk withdrawals.',
+      'An unconditional privacy pool of fixed amounts with immutable contracts, and an app pinned on ENS by token governance.',
     detailedDescription: readProjectMarkdown(
       'tornado-cash',
       'detailedDescription',
     ),
     links: {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
+      repositories: [
+        'https://github.com/tornadocash/tornado-core',
+        'https://github.com/tornado-dao/classic-ui',
+      ],
       socialMedia: ['https://t.me/TornadoCashOfficialDAO'],
     },
     badges: [],
@@ -205,10 +209,14 @@ export const tornadoCash: BaseProject = {
       value: 'Reproducible',
       sentiment: 'good',
       description:
-        'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
+        'The circuits, contracts, app and relayer are open source. Each app release names its commit and a build recipe for its IPFS hash.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
-    adversaries: tornadoCashAdversaries,
+    adversaries: tornadoCashAdversaries(
+      formatSeconds(votingDelay + votingPeriod + executionDelay, {
+        fullUnit: true,
+      }),
+    ),
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
@@ -221,7 +229,7 @@ export const tornadoCash: BaseProject = {
           'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
           'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
           'Voting venue':
-            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the voting tab of the frontend, see the note on secure frontend above.',
+            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the governance page of the app, see the App section above.',
           'Proposal threshold': `**${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
           Quorum: `**${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
           'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,

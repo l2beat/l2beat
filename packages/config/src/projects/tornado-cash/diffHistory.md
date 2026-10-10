@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x9de4288756e9d850ac7536b4d8378e05e27105ea
+
+# Diff at Fri, 09 Oct 2026 18:34:39 GMT:
+
+- id: 52c48b32
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@22c541703ff2e8c94ffcd7f942a71969eee3e84d block: 1791454331
+- current timestamp: 1791570790
+
+## Description
+
+The RelayerRegistry description now says that the app lists registered relayers while the pools pay any relayer.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791454331 (main branch discovery), not current.
+
+```diff
+    contract RelayerRegistry (eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2) [tornado-cash/RelayerRegistry] {
+    +++ description: Upgradeable registry of relayers, their worker addresses and their staked TORN. The app lists the relayers registered here, while the pools pay any relayer a withdrawal names.
+      description:
+-        "Upgradeable registry that tracks registered relayers, their worker addresses, and their staked TORN balances used to service withdrawals. Relayers registered here could be queried by a tornadocash frontend to facilitate discovery for users, but users are free to use any (unregistered) relayer at withdrawal time."
++        "Upgradeable registry of relayers, their worker addresses and their staked TORN. The app lists the relayers registered here, while the pools pay any relayer a withdrawal names."
+    }
+```
+
 Generated with discovered.json: 0x915be121c3bde25ede63f3145adfb76ff7fc19a3
 
 # Diff at Thu, 08 Oct 2026 10:13:17 GMT:

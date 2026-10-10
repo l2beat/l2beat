@@ -1,33 +1,28 @@
-Tornado Cash is a non-custodial mixer on Ethereum built around separate fixed-denomination pools, which prevents linking deposits and withdrawals via the amount. A deposit publishes a commitment into a Merkle tree producing a secret note, and a later withdrawal uses a zk-SNARK proof and the note to send the same denomination to a different address, breaking the deposit-withdrawal link. The note represents ownership of tokens in a Tornado cash pool, and losing it will effectively mean losing the tokens.
+Tornado Cash lets you withdraw a deposit of ETH or a token to an address with no visible link to it. Each pool takes one amount, like 0.1 ETH, so amounts reveal nothing within a pool. Depositors, recipients and timing stay public.
 
-The core mixer contracts are immutable and have no admin, pause, or upgrade path, so funds can only move out with a valid proof. However Tornado cash features TORN token governance, which controls peripheral smart contracts: official pool registry, relayer registration requirement and TORN tokenomics.
+No one can pause, upgrade or block the pools. TORN token holders govern the app pinned on tornadocash.eth, the router's list of pools and the relayer registry. Leaving needs no one: anyone can prove a withdrawal directly to a pool.
 
-### Privacy considerations
+### Flow
 
-Tornado cash introduces a permissionless relayer network, which is essential for practical privacy. Relayers process withdrawals from Tornado cash pools on user's behalf for a fee, which enables withdrawals to fresh addresses without funding them before the withdrawal. Without an active relayer network, practical privacy of Tornado cash deteriorates significantly.
+1. **Deposit.** The app creates a secret note and sends its commitment to the pool through the router. Your address is public.
+2. **Withdraw.** You paste the note into the app, which proves that it belongs to an unspent deposit without revealing which. A relayer submits the proof and pays the gas for a fee from the withdrawal.
 
-Practical privacy also depends on the timing of deposits and withdrawals, underlying network and browser used to interact with Tornado cash frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research [OPSEC best practice](/publications/privacy-best-practices).
+### Keys
 
-### Fees
+Each deposit has its own note, which the app shows once for you to save. Whoever holds the note can withdraw, and losing it loses the funds. An optional note account backs notes up onchain, encrypted to a key from your wallet.
 
-The immutable Tornado Cash pools do not charge a protocol-level deposit or withdrawal fee. Withdrawals can include a relayer fee chosen offchain between the user and the relayer and passed to the pool withdrawal call.
+### App
+
+The ratings assume the classic app pinned on [tornadocash.eth](https://app.ens.domains/tornadocash.eth?tab=records). Each proposal that changes it names the [source commit](https://github.com/tornado-dao/classic-ui) and a [build recipe](https://github.com/tornado-dao/tornado-ipfs-ui) that recomputes its IPFS hash. Gateways like eth.limo serve it, and your own IPFS node takes the gateway out of the trust path. The app lists relayers from the registry, accepts your own RPC endpoint and withdraws through a relayer without a wallet. In 2024 a pinned version [sent users' notes to an attacker](https://www.coindesk.com/business/2024/02/26/tornado-cash-reportedly-suffers-backend-exploit-user-deposits-at-risk) ([code analysis here](https://github.com/sekuba/tornadocash-pwned)).
 
 ### Compliance
 
-Tornado cash does not have any protocol-level compliance features. However, it provides an optional [Compliance Tool](https://docs.tornado.cash/tornado-cash-classic/compliance-tool), which allows users to generate a proof linking a withdrawal to a specific deposit without revealing this information publicly onchain. This enables users to selectively disclose the origin of funds to third parties, such as exchanges or regulators.
+Tornado Cash has no screening or approval list. The app's [compliance page](https://github.com/tornado-dao/classic-ui/blob/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4/pages/compliance.vue) builds a report that links one of your withdrawals to its deposit, for you to share. The US sanctions on the pools were lifted in March 2025.
 
-Protocol pools were [sanctioned by OFAC in August 2022](https://home.treasury.gov/news/press-releases/jy0916), flagging funds moved through these smart contracts as illicit and resulting in broad censorship (mainly by block builders) of transactions touching the contracts. Sanctions were lifted on March 21, 2025.
+### Fees
+
+The pools charge no fee. Relayers take their fee from the withdrawal. Registered relayers also burn part of their TORN stake on each withdrawal, at a rate governance sets.
 
 ### Anonymity set
 
-A user's anonymity set consists of all previous deposits into the same bucket (i.e. deposits of the same token and amount). Deposits can be mixed only with other deposits of the same token and denomination. To maximize the anonymity set, users are advised to deposit into the buckets with the most usage.
-
-### Secure frontend
-
-For average users, the Tornado Cash frontend must be recognized as a critical part of the privacy protocol. If compromised, it can steal user assets and violate user privacy, which [was exploited in 2024](https://www.coindesk.com/business/2024/02/26/tornado-cash-reportedly-suffers-backend-exploit-user-deposits-at-risk).
-
-The frontend's root of trust is the IPFS content hash registered for [tornadocash.eth](https://app.ens.domains/tornadocash.eth?tab=records) in the ENS smart contract on Ethereum. 
-The latest hash can be fetched from a trusted ethereum node (e.g. your own or trusted light node rpc). 
-There were incidents of malicious frontend hash updates passing onchain governance proposals before, so using a publicly audited or self-audited IPFS hash is advised. 
-An example of an audit process with useful links can be found [here](https://gist.github.com/pcaversaccio/ea7f62fd21b6e22f301980007f7c767e) or [here](https://notes.ethereum.org/@GW1ZUbNKR5iRjjKYx6_dJQ/Bk8zsJ9xj).
-The frontend can then be accessed by running a local IPFS node that automatically fetches the verified frontend hash (e.g. [dapp3.eth](https://github.com/apoorvlathey/dapp3) or [kubo](https://github.com/ipfs/kubo) + [ipfs-companion](https://github.com/ipfs/ipfs-companion) and serves it in the browser locally.
+Each pool has its own set: the deposits of that token and amount not yet withdrawn. Pools differ widely in size, and the ETH pools on Ethereum are by far the largest.
