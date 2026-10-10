@@ -30,7 +30,7 @@ export function CodeSearchResultEntry({
           className="flex flex-col border-coffee-700 border-b p-2 text-sm"
         >
           <div className="flex items-center gap-2">
-            <span className="max-w-[25rem] truncate font-medium">
+            <span className="max-w-100 truncate font-medium">
               {result.name ?? 'EOA'}
             </span>
             <span className="font-mono text-coffee-400 text-xs">
@@ -46,7 +46,7 @@ export function CodeSearchResultEntry({
                   key={`${result.address}-${locIndex}`}
                   data-index={itemIndex}
                   className={clsx(
-                    'cursor-pointer rounded px-1.5 py-0.5 font-mono text-xs',
+                    'cursor-pointer rounded-sm px-1.5 py-0.5 font-mono text-xs',
                     itemIndex === selectedIndex
                       ? 'bg-coffee-600 text-autumn-300'
                       : 'bg-coffee-700 text-coffee-200 hover:bg-coffee-600 hover:text-autumn-300',

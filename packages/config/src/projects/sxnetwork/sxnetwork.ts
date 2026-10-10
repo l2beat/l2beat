@@ -22,6 +22,8 @@ export const sxnetwork: ScalingProject = orbitStackL2({
     name: 'SX Network',
     aliases: ['SX Bet'],
     slug: 'sxnetwork',
+    headerWarning:
+      'The SX token is being sunset and SX Network is planned to be deprecated. See the [announcement](https://blog.sx.bet/news/sunsetting-the-sx-token-and-new-infrastructure-plans/).',
     description:
       "SX Network is an Orbit stack Optimium, built to scale the SX team's existing sports betting platform.",
     links: {

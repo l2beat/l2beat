@@ -12,7 +12,7 @@ export function NativeProofVerificationDiagram({
       fill="none"
       className={className}
       role="img"
-      aria-label="Ethereum's proof engine verifies proofs consumed by native EVM rollups, custom VMs, and other ZK applications"
+      aria-label="EIP-8288 verifies the proofs that native EVM rollups, custom VMs, and other ZK applications depend on"
     >
       <defs>
         <linearGradient
@@ -80,7 +80,7 @@ export function NativeProofVerificationDiagram({
         fontWeight="600"
         letterSpacing="0.8"
       >
-        PROOF ENGINE
+        EIP-8288
       </text>
 
       <path

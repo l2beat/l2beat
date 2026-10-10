@@ -414,6 +414,36 @@ model Blob {
   @@index([blockNumber])
 }
 
+/// The Ethereum blocks of the last day or so, one per slot that got one. A
+/// slot with no row between the oldest and the newest was missed
+model LiveBlock {
+  slot        Int      @id
+  blockNumber Int
+  hash        String   @db.VarChar(66)
+  timestamp   DateTime @db.Timestamp(6)
+  blobCount   Int
+
+  @@index([blockNumber])
+}
+
+/// The blob transactions of the blocks in LiveBlock
+model LiveBlobBatch {
+  slot        Int
+  txIndex     Int
+  txHash      String   @db.VarChar(66)
+  blockNumber Int
+  from        String   @db.VarChar(255)
+  to          String   @db.VarChar(255)
+  blobs       Int
+  /// Of every event the transaction emitted, so batches can be attributed again when configs change
+  topics      String[] @db.VarChar(66)
+  projectId   String?  @db.VarChar(255)
+
+  @@id([slot, txIndex])
+  @@index([blockNumber])
+  @@index([projectId, slot])
+}
+
 model SyncMetadata {
   feature          String    @db.VarChar(255)
   id               String    @db.VarChar(255)

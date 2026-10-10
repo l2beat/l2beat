@@ -79,7 +79,7 @@ export function SafeHashes(props: {
   return (
     <section
       aria-label="Safe transaction hashes"
-      className="my-3 max-w-[900px] rounded border border-zinc-700 bg-zinc-900 p-4 text-sm"
+      className="my-3 max-w-[900px] rounded-sm border border-zinc-700 bg-zinc-900 p-4 text-sm"
     >
       <h3 className="mb-2 font-semibold text-zinc-200">
         Safe transaction hashes
@@ -89,7 +89,7 @@ export function SafeHashes(props: {
       </label>
       <input
         id={`${id}-safe`}
-        className="w-full rounded bg-zinc-800 px-2 py-1 font-mono"
+        className="w-full rounded-sm bg-zinc-800 px-2 py-1 font-mono"
         value={address}
         spellCheck={false}
         onChange={(e) => {
@@ -138,7 +138,7 @@ export function SafeHashes(props: {
             <label htmlFor={`${id}-nonce`}>Transaction nonce</label>
             <input
               id={`${id}-nonce`}
-              className="w-24 rounded bg-zinc-800 px-2 py-1 font-mono"
+              className="w-24 rounded-sm bg-zinc-800 px-2 py-1 font-mono"
               type="number"
               min="0"
               step="1"

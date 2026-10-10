@@ -161,7 +161,7 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
                 )}
                 <span
                   className={cn(
-                    'inline-block w-3 select-none rounded-sm text-center text-2xs text-coffee-800',
+                    'inline-block w-3 select-none rounded-xs text-center text-2xs text-coffee-800',
                     source === 'template' ? 'bg-aux-green' : 'bg-aux-cyan',
                   )}
                   title={`from ${source}`}

@@ -15,7 +15,6 @@ export {
   formatInteropChartReasons,
 } from './formatter'
 export {
-  EXTREME_VALUE_RATIO_THRESHOLD,
   MIN_BASELINE_COUNT_PER_DAY,
   MIN_BASELINE_VOLUME_USD_PER_DAY,
   MIN_VOLUME_IDENTIFICATION_RATE,

@@ -9,6 +9,7 @@ import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
@@ -175,6 +176,7 @@ export async function getPrivacyProjectEntry(
         defaultRange: defaultChartRange,
         rangeControls: 'privacy',
         project: chartProject,
+        milestones: details.milestones,
       },
     })
   }
@@ -187,6 +189,7 @@ export async function getPrivacyProjectEntry(
         title: 'Anonymity sets',
         defaultRange: defaultChartRange,
         project: chartProject,
+        milestones: details.milestones,
       },
     })
   }
@@ -199,6 +202,7 @@ export async function getPrivacyProjectEntry(
         title: 'Flows',
         defaultRange: defaultChartRange,
         project: chartProject,
+        milestones: details.milestones,
       },
     })
 
@@ -209,6 +213,17 @@ export async function getPrivacyProjectEntry(
         title: 'Assets Breakdown',
         assets: details.assets,
         showTvl: details.hasTvl,
+      },
+    })
+  }
+
+  if (details.milestones.length > 0) {
+    sections.push({
+      type: 'MilestonesAndIncidentsSection',
+      props: {
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
+        milestones: details.milestones,
       },
     })
   }
@@ -309,8 +324,9 @@ export async function getPrivacyProjectEntry(
   sections.splice(adversariesSectionIndex, 0, {
     type: 'PrivacyAdversariesSection',
     props: {
-      id: 'privacy-adversaries',
+      id: PRIVACY_ADVERSARIES_SECTION_ID,
       title: 'Privacy',
+      isUnderReview: !!details.statuses.reviewStatus,
       adversaries: resolvePrivacySources(details.adversaries, sections),
     },
   })

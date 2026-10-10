@@ -7,7 +7,7 @@ type EditorFileTabsProps = {
 
 export function EditorFileTabs(props: EditorFileTabsProps) {
   return (
-    <div className="flex flex-shrink-0 flex-grow gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
+    <div className="flex shrink-0 grow gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
       {props.files.map((file) => (
         <EditorFileTab key={file.id} {...file} />
       ))}

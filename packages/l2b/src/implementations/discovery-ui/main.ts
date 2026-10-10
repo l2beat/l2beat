@@ -428,8 +428,8 @@ export function createDiscoveryUiApp({
     })
   }
 
-  app.get('*', (_req, res) => {
-    res.sendFile(join(STATIC_ROOT, 'index.html'))
+  app.get('/{*splat}', (_req, res) => {
+    res.sendFile('index.html', { root: STATIC_ROOT })
   })
 
   return app

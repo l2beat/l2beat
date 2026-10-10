@@ -1,0 +1,43 @@
+name: List affected packages
+
+# Lists the workspace packages that the triggering commit changes, plus every
+# package that depends on them. On main it compares the commit with the previous
+# one. On a pull request it compares the merge commit with the base branch tip,
+# so the list covers the whole PR, not just the last push.
+
+on:
+  workflow_call:
+    outputs:
+      packages:
+        description: JSON array of package names, e.g. ["@l2beat/frontend"]
+        value: ${{ jobs.affected.outputs.packages }}
+
+permissions:
+  contents: read
+
+jobs:
+  affected:
+    name: List affected packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      packages: ${{ steps.affected.outputs.packages }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      # turbo reads the workspace graph from package.json files and the
+      # lockfile, so this needs no pnpm install.
+      - name: List affected packages
+        id: affected
+        env:
+          TURBO_SCM_BASE: HEAD^1
+          TURBO_SCM_HEAD: HEAD
+        run: |
+          turbo_version=$(jq -r .devDependencies.turbo package.json)
+          packages=$(npx --yes "turbo@$turbo_version" ls --affected --output=json | jq -c '[.packages.items[].name]')
+          echo "Affected packages: $packages"
+          echo "packages=$packages" >> "$GITHUB_OUTPUT"

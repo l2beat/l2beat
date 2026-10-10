@@ -15,8 +15,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      exposure:
-        'Which approved deposit a withdrawal spends is hidden. Partial withdrawals leave a change note and look like full ones.',
+      exposureShort: 'Which approved deposit a withdrawal spends is hidden.',
+      exposureContinued:
+        'Partial withdrawals leave a change note and look like full ones.',
       advice: `${S.exitViaRelayer('relayer')} Withdraw partially to fresh addresses, and ragequit only untouched deposits: ragequitting a change note reveals the withdrawal it came from.`,
       sources: [
         { contract: 'PrivacyPoolsEntrypoint' },
@@ -28,7 +29,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      exposure: `The approved set at any block is public, bounding the anonymity set. Any amount is allowed, so an unusual one pairs a deposit with its withdrawal. ${S.walletFingerprint('relayer')}`,
+      exposureShort:
+        'The approved set at any block is public, bounding the anonymity set.',
+      exposureContinued: `Any amount is allowed, so an unusual one pairs a deposit with its withdrawal. ${S.walletFingerprint('relayer')}`,
       advice: `${S.largeAnonymitySet} ${S.commonAmounts} ${S.freshExit}`,
       sources: [
         {
@@ -43,8 +46,10 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      exposure:
-        "The official frontend allows you to set your own RPC endpoint per network, scans every pool whole and matches notes locally, so a node learns only which pools you looked at. 0xbow's servers still see that a session happened, through bulk feeds that carry nothing about the notes. A relayer receives amount and asset for a quote and the recipient once you confirm.",
+      exposureShort:
+        'The official frontend allows you to set your own RPC endpoint per network, scans every pool whole and matches notes locally, so a node learns only which pools you looked at.',
+      exposureContinued:
+        "0xbow's servers still see that a session happened, through bulk feeds that carry nothing about the notes. A relayer receives amount and asset for a quote and the recipient once you confirm.",
       advice: `Set an endpoint for every network before signing in, and sign in with a recovery phrase so no wallet address is queried. Without an endpoint, every read goes through 0xbow's proxy and Alchemy under 0xbow's key. ${S.ownNodeAndTor('relayer')}`,
       sources: [
         {
@@ -93,8 +98,10 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'warning',
-      exposure:
-        'The ASP postman sets a new approved list at any time with no delay, and the pool accepts only the latest one. It can deny you a private exit or publish a list with only your deposit, which is then your whole anonymity set. The website shows the anonymity set but does not block a tiny one.',
+      exposureShort:
+        'The ASP postman sets a new approved list at any time with no delay, and the pool accepts only the latest one.',
+      exposureContinued:
+        'It can deny you a private exit or publish a list with only your deposit, which is then your whole anonymity set. The website shows the anonymity set but does not block a tiny one.',
       advice: 'Check the displayed anonymity set shown before withdrawing.',
       sources: [
         {
@@ -124,7 +131,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'good',
-      exposure: `Nothing encrypted is written onchain and commitments are plain hashes, so a quantum computer recovers nothing. ${S.walletSignatureAccounts()}`,
+      exposureShort:
+        'Nothing encrypted is written onchain and commitments are hashes, so whoever breaks public-key cryptography recovers nothing from the chain.',
+      exposureContinued: S.walletSignatureAccounts(),
       advice: S.notWalletSignature('from a seed phrase'),
       sources: [
         {

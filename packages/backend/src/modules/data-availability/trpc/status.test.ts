@@ -152,6 +152,7 @@ function mockTrackingConfig(
     timestampLayers: [],
     blockProjects: [],
     timestampProjects: [],
+    liveBlobs: false,
     ...config,
   }
 }

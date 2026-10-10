@@ -1,6 +1,5 @@
 import { celestiaTools } from '@l2beat/shared'
 import type { Transaction } from '../../../../utils/IEtherscanClient'
-import type { IProvider } from '../../../provider/IProvider'
 
 export function checkForCelestia(sequencerTxs: Transaction[]) {
   const celestiaCommitments = sequencerTxs.filter((tx) =>
@@ -20,28 +19,4 @@ export function checkForCelestia(sequencerTxs: Transaction[]) {
   const decodedCount = decodedCommitments.length
 
   return decodedCount === requiredCount
-}
-
-export async function getNamespaceFromCommitment(
-  provider: IProvider,
-  height: number,
-  commitment: string,
-) {
-  const events = await provider.getCelestiaBlockResultEvents(height)
-
-  const possibleNamespaces = celestiaTools.extractNamespacesFromEvents(events)
-
-  for (const namespace of possibleNamespaces) {
-    const blobExists = await provider.celestiaBlobExists(
-      height,
-      namespace,
-      commitment,
-    )
-
-    if (blobExists) {
-      return namespace
-    }
-  }
-
-  return undefined
 }

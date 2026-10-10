@@ -1,15 +1,17 @@
 import type { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
 import { createDaTrackingId } from '@l2beat/shared'
-import { notUndefined, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, notUndefined, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import type {
   BlockDaIndexedConfig,
   BlockLayerDaTrackingConfig,
   DataAvailabilityTrackingConfig,
+  LiveBlobsTrackingConfig,
   TimestampDaIndexedConfig,
   TimestampLayerDaTrackingConfig,
 } from '../Config'
+import type { FeatureFlags } from '../FeatureFlags'
 
 const ETHEREUM_START_BLOCK = 19426618
 const CELESTIA_START_BLOCK = 983042
@@ -21,6 +23,7 @@ const EIGEN_START_TIMESTAMP = UnixTime.fromDate(
 export async function getDaTrackingConfig(
   ps: ProjectService,
   env: Env,
+  flags: FeatureFlags,
 ): Promise<DataAvailabilityTrackingConfig> {
   // TODO: automate it
   const ethereumEnabled = !!env.optionalString('ETHEREUM_BEACON_API_URL')
@@ -37,6 +40,7 @@ export async function getDaTrackingConfig(
   const timestampProjectsForLayers: TimestampDaIndexedConfig[] = []
   const sovereignBlockProjects: BlockDaIndexedConfig[] = []
   const sovereignTimestampProjects: TimestampDaIndexedConfig[] = []
+  let liveBlobs: LiveBlobsTrackingConfig | false = false
 
   if (ethereumEnabled) {
     blockLayers.push({
@@ -64,6 +68,25 @@ export async function getDaTrackingConfig(
         ETHEREUM_START_BLOCK,
       )
     sovereignBlockProjects.push(...sovereignProjectsOnEthereum)
+
+    if (flags.isEnabled('da', 'liveBlobs')) {
+      liveBlobs = {
+        batchSize: env.integer('ETHEREUM_LIVE_BLOBS_BATCH_SIZE', 50),
+        rpc: {
+          url: env.string(
+            ['ETHEREUM_LIVE_BLOBS_RPC_URL', 'ETHEREUM_RPC_URL'],
+            await ethereumPublicRpcUrl(ps),
+          ),
+          // The head is asked for every tenth of a second until a slot's block
+          // comes, then the block and its receipts. The limiter spaces calls
+          // evenly, so the block's call waits out the gap after the head's
+          callsPerMinute: env.integer(
+            'ETHEREUM_LIVE_BLOBS_RPC_CALLS_PER_MINUTE',
+            1200,
+          ),
+        },
+      }
+    }
   }
 
   if (celestiaEnabled) {
@@ -175,6 +198,7 @@ export async function getDaTrackingConfig(
     timestampLayers,
     blockProjects: allBlockProjects,
     timestampProjects: allTimestampProjects,
+    liveBlobs,
   }
 }
 
@@ -340,6 +364,17 @@ async function getTimestampDaTrackingSovereignProjects(
   }
 
   return indexedConfigs
+}
+
+/** What the chain config falls back to without `ETHEREUM_RPC_URL`, so `da` alone keeps starting */
+async function ethereumPublicRpcUrl(ps: ProjectService): Promise<string> {
+  const ethereum = await ps.getProject({
+    id: ProjectId('ethereum'),
+    select: ['chainConfig'],
+  })
+  const rpc = ethereum?.chainConfig.apis.find((api) => api.type === 'rpc')
+  assert(rpc, 'Ethereum has no RPC in its chain config')
+  return rpc.url
 }
 
 function createDaLayerConfigId(daLayerName: string): string {

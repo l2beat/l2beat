@@ -1,3 +1,574 @@
+Generated with discovered.json: 0x90181b0ea77b5240271b4a27e91e1d4997f41b3b
+
+# Diff at Fri, 09 Oct 2026 09:39:26 GMT:
+
+- id: 6a0aeb99
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1790951049
+- current timestamp: 1791538610
+
+## Description
+
+OptimismPortal2 6.0.0 → 6.0.1: a failed withdrawal call to a 7702-delegated EOA now reverts instead of finalizing, upgraded by the Base Governance Multisig.
+https://disco.l2beat.com/diff/eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C/eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      sourceHashes.1:
+-        "0xe19e03ee1eceea55b82f2982dcbf9d11d2a194352be04181edc1b6cfe1e9dcb3"
++        "0xa3692169a2d67b0edeeee11f2dd643e4bebd7d1178b87d899f03ff7c580d5dc2"
+      values.$implementation:
+-        "eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C"
++        "eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70"
+      values.$pastUpgrades.12:
++        ["2026-10-07T17:44:47.000Z","0x12b3bf5bb0a8f921321f9a91303240ce01fde9f99ba9f97234f89d114c077bf6",["eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70"]]
+      values.$upgradeCount:
+-        12
++        13
+      values.version:
+-        "6.0.0"
++        "6.0.1"
+      implementationNames.eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C:
+-        "OptimismPortal2"
+      implementationNames.eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70:
++        "OptimismPortal2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal2/OptimismPortal2.sol            | 36 ++++++++++++++--------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
+```
+
+Generated with discovered.json: 0xbd46189f0ce0eab6de17de34d5379e787f49cfe0
+
+# Diff at Wed, 07 Oct 2026 14:46:31 GMT:
+
+- id: 51b3cdae
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1790951049
+- current timestamp: 1790951049
+
+## Description
+
+The L1 counterpart fields of the L2CrossDomainMessenger and L2StandardBridge are formatted as Ethereum addresses (opstack/Layer2 template change).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790951049 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (base:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      values.l1CrossDomainMessenger:
+-        "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
++        "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
+      values.OTHER_MESSENGER:
+-        "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
++        "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (base:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      values.l1TokenBridge:
+-        "base:0x3154Cf16ccdb4C6d922629664174b904d80F2C35"
++        "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35"
+      values.OTHER_BRIDGE:
+-        "base:0x3154Cf16ccdb4C6d922629664174b904d80F2C35"
++        "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0x5e89c1a13f382a7bfe6fdff026880685ac41f24f
+
+# Diff at Mon, 05 Oct 2026 12:06:35 GMT:
+
+- id: 71d476ea
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@57aafc8ffcefd343a09bd846b1a2ef0f63b2bae3 block: 1785226129
+- current timestamp: 1790951049
+
+## Description
+
+Base [Cobalt upgrade](https://github.com/base/contract-deployments/tree/main/archive/evm/2026-09-14-cobalt-upgrade).
+
+Version changes and implementation diffs:
+
+- OptimismPortal2 5.2.0 -> 6.0.0: https://disco.l2beat.com/diff/eth:0x66d94eE8F529b683ED6013729784e8bb44697A64/eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C
+- SystemConfig 3.13.2 -> 3.14.0: https://disco.l2beat.com/diff/eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44/eth:0x56ca4f4F5Ba9B42d360B48429e8C4a60C5A0795D
+- DisputeGameFactory 1.4.0 -> 1.5.0: https://disco.l2beat.com/diff/eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c/eth:0x94eab8f73fd83407D26C006D159923760D483029
+- TEEProverRegistry 0.5.0 -> 0.6.1: https://disco.l2beat.com/diff/eth:0xeaB9b34BDD26Ad451B381B0934a30fAa6ED5E316/eth:0x1d8728CabC8BC022005dd08D02a749B8a32Af440
+- AggregateVerifier 0.1.0 -> 0.2.0 (new game type 621 implementation): https://disco.l2beat.com/diff/eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2/eth:0xeF9eCeA15265321753047EBF7D54C858D53cB94f
+
+OptimismPortal2 and SystemConfig drop ETHLockbox support. DisputeGameFactory deploys games with CREATE2.
+
+AggregateVerifier: new TEE image hash, ZK range hash and ZK aggregation hash. Games commit to the upgrade schedule in the new ProtocolVersions contract (admin ProxyAdmin, incident responder Base Multisig 1).
+
+TEEProverRegistry: signer attestations are validated by the new NitroValidator, CertManager (owner Base Coordinator Multisig, revoker the TEEProverRegistry manager) and P384Verifier. NitroEnclaveVerifier and the RISC Zero verifier contracts with their TimelockController and Safe are removed.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0x7480Afc8D99a5c645c247dB5A1e4a4f440e6e095","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+```
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x7480Afc8D99a5c645c247dB5A1e4a4f440e6e095","description":"delay the activation of a scheduled upgrade.","role":".incidentResponder"}
+    }
+```
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses. Signer registration requires a valid AWS Nitro attestation document.
+      sourceHashes.1:
+-        "0x9831f0365a1629899a27a5e77f1445d6b78de4d90376053079da107921dda3a2"
++        "0xede8082a5b614fbd752ea8f214321a92d5c97db36aac1070675b57e45a775d5d"
+      values.$implementation:
+-        "eth:0xeaB9b34BDD26Ad451B381B0934a30fAa6ED5E316"
++        "eth:0x1d8728CabC8BC022005dd08D02a749B8a32Af440"
+      values.$pastUpgrades.1:
++        ["2026-09-28T20:38:11.000Z","0x356e1dd97cb22e3d6129ec91557b1bec8971f0c2e0b4d6c1fb54e8b014dd659b",["eth:0x1d8728CabC8BC022005dd08D02a749B8a32Af440"]]
+      values.$upgradeCount:
+-        1
++        2
++++ description: TEE image hash (PCR0) of the AggregateVerifier registered in the DisputeGameFactory for gameType. Derived, not stored in this contract.
+      values.getExpectedImageHash:
+-        "0x58557c709e93357a135041297107aecc4bc6ba616509098a4aa8dbef774d212a"
++        "0x45c538bc396fe4a01b3f9ddc999494c3b993480ecac0a917e2f1af230d78b0e0"
+      values.NITRO_VERIFIER:
+-        "eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb"
+      values.version:
+-        "0.5.0"
++        "0.6.1"
+      values.NITRO_VALIDATOR:
++        "eth:0x47C1ab20fac92c789d9e5708D06641c79b03C460"
+      implementationNames.eth:0xeaB9b34BDD26Ad451B381B0934a30fAa6ED5E316:
+-        "TEEProverRegistry"
+      implementationNames.eth:0x1d8728CabC8BC022005dd08D02a749B8a32Af440:
++        "TEEProverRegistry"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      sourceHashes.1:
+-        "0x780eaf9d8daa77c3325b79e5f3467c1bd8eec57b5d7e84651bdf2d24754d6838"
++        "0x580049b41f9d831de51dfb5920cb1d45c4c229d3eb702b5422231a00759af5a1"
+      values.$implementation:
+-        "eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c"
++        "eth:0x94eab8f73fd83407D26C006D159923760D483029"
+      values.$pastUpgrades.6:
++        ["2026-09-28T20:38:11.000Z","0x356e1dd97cb22e3d6129ec91557b1bec8971f0c2e0b4d6c1fb54e8b014dd659b",["eth:0x94eab8f73fd83407D26C006D159923760D483029"]]
+      values.$upgradeCount:
+-        6
++        7
++++ severity: HIGH
+      values.game621:
+-        "eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2"
++        "eth:0xeF9eCeA15265321753047EBF7D54C858D53cB94f"
+      values.version:
+-        "1.4.0"
++        "1.5.0"
+      implementationNames.eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x94eab8f73fd83407D26C006D159923760D483029:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      sourceHashes.1:
+-        "0x247eac30dea3a06b4a7142ac53d0b9ad882952c87406f165ec8721b0d97bd6da"
++        "0xe19e03ee1eceea55b82f2982dcbf9d11d2a194352be04181edc1b6cfe1e9dcb3"
+      values.$implementation:
+-        "eth:0x66d94eE8F529b683ED6013729784e8bb44697A64"
++        "eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C"
+      values.$pastUpgrades.11:
++        ["2026-09-28T20:38:11.000Z","0x356e1dd97cb22e3d6129ec91557b1bec8971f0c2e0b4d6c1fb54e8b014dd659b",["eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C"]]
+      values.$upgradeCount:
+-        11
++        12
++++ severity: HIGH
+      values.ethLockbox:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.version:
+-        "5.2.0"
++        "6.0.0"
+      implementationNames.eth:0x66d94eE8F529b683ED6013729784e8bb44697A64:
+-        "OptimismPortal2"
+      implementationNames.eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.3).
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x05f19560cc64e41a40dcb3e2efd7011156ab03192fcc0bfadffccd4019c99e8e"
++        "0x8ee185d15557b411e4a37287ec10583b4c685af295ff63b63c09edf12c6dbe9a"
+      values.$implementation:
+-        "eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44"
++        "eth:0x56ca4f4F5Ba9B42d360B48429e8C4a60C5A0795D"
+      values.$pastUpgrades.15:
++        ["2026-09-28T20:38:11.000Z","0x356e1dd97cb22e3d6129ec91557b1bec8971f0c2e0b4d6c1fb54e8b014dd659b",["eth:0x56ca4f4F5Ba9B42d360B48429e8C4a60C5A0795D"]]
+      values.$upgradeCount:
+-        15
++        16
+      values.version:
+-        "3.13.2"
++        "3.14.0"
+      implementationNames.eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44:
+-        "SystemConfig"
+      implementationNames.eth:0x56ca4f4F5Ba9B42d360B48429e8C4a60C5A0795D:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x7480Afc8D99a5c645c247dB5A1e4a4f440e6e095","description":"register upgrades, set their activation timestamps and the minimum protocol version, and appoint the incident responder.","role":".proxyAdminOwner"}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0x7480Afc8D99a5c645c247dB5A1e4a4f440e6e095","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract NitroEnclaveVerifier (eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb) [base/NitroEnclaveVerifier]
+    +++ description: ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter]
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+```
+
+```diff
+    contract Base Coordinator Multisig (eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x7227d8C477CD0A9EC1446A19b1FCf940Ba3Fba17","description":"revoke the root certificate, unrevoke certificates and set the revoker.","role":".owner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+```diff
+    EOA (eth:0xd87488Dbb5b6F47cc6c15Dd95Bb60c83D3031b04) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x7227d8C477CD0A9EC1446A19b1FCf940Ba3Fba17","description":"revoke non-root certificates.","role":".revoker"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
+-   Status: DELETED
+    contract AggregateVerifier (eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C) [taiko/RiscZeroGroth16VerifierLegacy]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs. This older implementation exposes control-root and selector constants but does not expose a VERSION getter.
+```
+
+```diff
++   Status: CREATED
+    contract NitroValidator (eth:0x47C1ab20fac92c789d9e5708D06641c79b03C460) [base/NitroValidator]
+    +++ description: Onchain validator of AWS Nitro Enclave attestation documents.
+```
+
+```diff
++   Status: CREATED
+    contract CertManager (eth:0x7227d8C477CD0A9EC1446A19b1FCf940Ba3Fba17) [base/CertManager]
+    +++ description: Verifies and caches AWS Nitro certificate chains against a pinned root certificate.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolVersions (eth:0x7480Afc8D99a5c645c247dB5A1e4a4f440e6e095) [base/ProtocolVersions]
+    +++ description: Registry of L2 upgrade activation timestamps. Dispute games commit to the upgrades active at their ending L2 block and proofs must match that commitment.
+```
+
+```diff
++   Status: CREATED
+    contract P384Verifier (eth:0xe0aa6868e14300355001130C6DC29f2f4467D86c) [base/P384Verifier]
+    +++ description: Stateless verifier of P-384 ECDSA signatures.
+```
+
+```diff
++   Status: CREATED
+    contract AggregateVerifier (eth:0xeF9eCeA15265321753047EBF7D54C858D53cB94f) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+## Source code changes
+
+```diff
+.../AggregateVerifier.sol                          |  156 +-
+ .../src/projects/base/.flat/CertManager.sol        | 1368 ++++++++++++
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  587 +++---
+ .../NitroEnclaveVerifier.sol => /dev/null          | 1393 -------------
+ .../src/projects/base/.flat/NitroValidator.sol     | 1045 ++++++++++
+ .../OptimismPortal2/OptimismPortal2.sol            | 2196 ++++----------------
+ .../src/projects/base/.flat/P384Verifier.sol       | 1282 ++++++++++++
+ .../.flat/ProtocolVersions/ProtocolVersions.sol    | 1116 ++++++++++
+ .../base/.flat/ProtocolVersions/Proxy.p.sol        | 1389 +++++++++++++
+ .../dev/null                                       | 1767 ----------------
+ .../dev/null                                       | 1780 ----------------
+ .../dev/null                                       | 1779 ----------------
+ .../dev/null                                       | 1780 ----------------
+ .../dev/null                                       | 1760 ----------------
+ .../RiscZeroSetVerifier.sol => /dev/null           |  900 --------
+ .../dev/null                                       |  366 ----
+ .../dev/null                                       |  366 ----
+ .../dev/null                                       |  366 ----
+ .../dev/null                                       |  366 ----
+ .../dev/null                                       |  366 ----
+ .../dev/null                                       |  366 ----
+ .../RiscZeroVerifierRouter.sol => /dev/null        |  282 ---
+ .../.flat@1785226129/Safe/Safe.sol => /dev/null    | 1216 -----------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   42 -
+ .../SystemConfig/SystemConfig.sol                  | 1647 ++-------------
+ .../TEEProverRegistry/TEEProverRegistry.sol        | 1283 ++++++------
+ .../TimelockController.sol => /dev/null            | 1111 ----------
+ 27 files changed, 7864 insertions(+), 20211 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785226129 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      critical:
+-        true
++        {"untilTimestamp":1790627891}
+    }
+```
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses. Signer registration requires a valid AWS Nitro attestation document.
+      description:
+-        "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER."
++        "Registry of authorized TEE enclave signers and proposer addresses. Signer registration requires a valid AWS Nitro attestation document."
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"untilTimestamp":1790627891}
+    }
+```
+
+```diff
+    contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier] {
+    +++ description: Stateless verifier of TEE proofs. Recovers an ECDSA signature over the journal and checks that the signer is registered in the eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA with the expected enclave image hash. Can be permanently nullified.
+      description:
+-        "Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call."
++        "Stateless verifier of TEE proofs. Recovers an ECDSA signature over the journal and checks that the signer is registered in the eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA with the expected enclave image hash. Can be permanently nullified."
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      critical:
+-        true
++        {"untilTimestamp":1790627891}
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      critical:
+-        true
++        {"untilTimestamp":1790627891}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"untilTimestamp":1790627891}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      critical:
+-        true
++        {"untilTimestamp":1790627891}
+    }
+```
+
+```diff
+    contract Base Coordinator Multisig (eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA","description":"add or remove allowlisted proposers, set the game type, and register or deregister TEE enclave signers.","role":".owner"}]
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      critical:
+-        true
++        {"untilTimestamp":1790627891}
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      critical:
+-        true
++        {"untilTimestamp":1790627891}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c) [opstack/SuperchainConfig_base] {
+    +++ description: Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. Each pause automatically expires after 3mo 1d.
+      description:
+-        "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months."
++        "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. Each pause automatically expires after 3mo 1d."
+    }
+```
+
+```diff
+    contract ZkVerifier (eth:0xB88D95bDf6972508942d184866890c1834219B75) [base/ZkVerifier] {
+    +++ description: Thin router that forwards SP1 ZK proof verification to the eth:0xdc32E228636273285Befa5F001dBB5142517C106. Can be permanently nullified.
+      description:
+-        "Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call."
++        "Thin router that forwards SP1 ZK proof verification to the eth:0xdc32E228636273285Befa5F001dBB5142517C106. Can be permanently nullified."
+    }
+```
+
+```diff
+    EOA (eth:0xd87488Dbb5b6F47cc6c15Dd95Bb60c83D3031b04) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA","description":"register and deregister TEE enclave signers and transfer the manager role.","role":".manager"}]
+    }
+```
+
 Generated with discovered.json: 0x6e6cb492472c6ba59bcfbf527d943b5d7d9cc289
 
 # Diff at Sun, 04 Oct 2026 05:55:31 GMT:

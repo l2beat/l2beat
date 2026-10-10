@@ -115,6 +115,22 @@ Verify:
 5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash. The range commitment is the \`hash_u32()\` digest converted to big-endian bytes.
 `
 
+const OP_SUCCINCT_V3141_STEPS = `
+Prepare:
+
+1. Install sp1 toolchain version \`v6.8.1\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v v6.8.1\`.
+2. Install docker https://docs.docker.com/get-started/get-docker/.
+3. Install \`clang\` / \`libclang\` and Go, required by the host-side vkey printing command.
+
+Verify:
+
+1. Checkout the correct tag in [succinctlabs/op-succinct](https://github.com/succinctlabs/op-succinct) repo: \`git checkout v3.14.1\`. Commit hash should be \`35d98244c9b4ccc2b93f016be249788c5d6d5372\`.
+2. Make sure docker is running: \`docker ps\`.
+3. Reproducibly rebuild the Ethereum DA range ELF from source: from \`programs/range/ethereum\` run \`cargo prove build --elf-name range-elf-embedded --docker --tag v6.8.1 --output-directory ../../../elf\`.
+4. Reproducibly rebuild the aggregation ELF from source: from \`programs/aggregation\` run \`cargo prove build --elf-name aggregation-elf --docker --tag v6.8.1 --output-directory ../../elf\`.
+5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash.
+`
+
 const PESSIMISTIC_PROG = (version: string) => ({
   title: `Pessimistic program of agglayer ${version}`,
   description:
@@ -496,6 +512,14 @@ Verify:
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_AGGLAYER_V3120_STEPS,
   },
+  '0x00070992a03760456403e800b0bd1a0e907a85a5c2cffca292b5994b56b5363b': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.14.1/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_V3141_STEPS,
+  },
   '0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     programUrl:
@@ -538,6 +562,14 @@ Verify:
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_AGGLAYER_V3120_STEPS,
+  },
+  '0x5ae13fed447a94f57d6ee8fc44cce8075ef994485121dcd27e75577d264f75b1': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.14.1/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_V3141_STEPS,
   },
   '0x00d9be2980d484ba29aaa1e0d27648b8182df8616a4ec85c3c2b528b29d1a085': {
     ...OP_SUCCINCT_LITE_AGG_BLOBS,
@@ -2092,6 +2124,16 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
         'common/programHashes/760308386675154762009993173725077399730170358078020153308029499928875469870.md',
       ),
     },
+  '569015423733809580615518794546253350390163920370934709723320624838312178729':
+    {
+      ...STARKNET_OS,
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.4-RC.8/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/569015423733809580615518794546253350390163920370934709723320624838312178729.md',
+      ),
+    },
   '2006389624453304912912750132846114593020263069652857561377702883656839453432':
     {
       ...STARKNET_OS,
@@ -2102,12 +2144,25 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
         'common/programHashes/2006389624453304912912750132846114593020263069652857561377702883656839453432.md',
       ),
     },
+  '805228098265968069660874977190930466751870110207234534021332896450772718372':
+    {
+      title: 'Virtual Starknet OS',
+      proverSystemProject: ProjectId('stwo'),
+      description:
+        'Proves correct execution of a single Starknet transaction against a recent finalized block, used for client-side proving (e.g. STRK-20 privacy pool actions). The Starknet OS only accepts client proof facts whose program hash is in its hardcoded allowlist, which contains this hash and the previous virtual OS hash.',
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.4-RC.8/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/805228098265968069660874977190930466751870110207234534021332896450772718372.md',
+      ),
+    },
   '2373625305120835200243020426311988160128377108314438505880592663683179928225':
     {
       title: 'Virtual Starknet OS',
       proverSystemProject: ProjectId('stwo'),
       description:
-        'Proves correct execution of a single Starknet transaction against a recent finalized block, used for client-side proving (e.g. STRK-20 privacy pool actions). The Starknet OS only accepts client proof facts whose program hash is in its hardcoded allowlist, which contains exactly this hash.',
+        'Proves correct execution of a single Starknet transaction against a recent finalized block, used for client-side proving (e.g. STRK-20 privacy pool actions). The Starknet OS only accepts client proof facts whose program hash is in its hardcoded allowlist. This hash was the only allowlisted entry in the v0.14.3 OS and remains allowlisted alongside the newer virtual OS hash in the v0.14.4 OS.',
       programUrl:
         'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os',
       verificationStatus: 'successful',
@@ -2814,6 +2869,22 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x00a147f0c69da81e3d530cca91310f9605f980dc155726bb33fbde0e493a3836.md',
     ),
   },
+  '0x00f500229b99db6a14c508c444e4527793f2f178168847acf3f755118614568a': {
+    title: 'Aggregation program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v1.4.2/crates/proof/zk/programs/succinct/aggregation',
+    description:
+      'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/base-aggregate-verifier-vkeys.md',
+      {
+        version: 'v1.4.2',
+        commitHash: '5034ef80bc90261ff6c4841fdf4baed34283abad',
+      },
+    ),
+  },
   '0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f': {
     title: 'Range program of Base AggregateVerifier',
     programUrl:
@@ -2854,6 +2925,22 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x5fd09a2f4338ca7063bc37b02f9411645d0ef2784fe644cc71ab48ae64200beb.md',
     ),
   },
+  '0x25e035df08601f4b0b862be24c4bd08b1ee0524623fe737e7e8e378458ec7c21': {
+    title: 'Range program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v1.4.2/crates/proof/zk/programs/succinct/range/ethereum',
+    description:
+      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/base-aggregate-verifier-vkeys.md',
+      {
+        version: 'v1.4.2',
+        commitHash: '5034ef80bc90261ff6c4841fdf4baed34283abad',
+      },
+    ),
+  },
   '0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c': {
     title: 'TEE enclave image hash of Base client',
     programUrl:
@@ -2877,6 +2964,21 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       {
         version: 'v1.1.1',
         commitHash: '01e732cdbae0c624d652da9e608d7d3fe0f9c74b',
+      },
+    ),
+  },
+  '0x45c538bc396fe4a01b3f9ddc999494c3b993480ecac0a917e2f1af230d78b0e0': {
+    title: 'TEE enclave image hash of Base client',
+    programUrl:
+      'https://github.com/base/base/tree/v1.4.2/crates/proof/tee/nitro-enclave',
+    description:
+      'TEE image hash of Base L2 node program. AWS Nitro Enclave attestations guarantee that exactly this program was run within a TEE.',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/base-tee-enclave-image-mold.md',
+      {
+        version: 'v1.4.2',
+        commitHash: '5034ef80bc90261ff6c4841fdf4baed34283abad',
       },
     ),
   },

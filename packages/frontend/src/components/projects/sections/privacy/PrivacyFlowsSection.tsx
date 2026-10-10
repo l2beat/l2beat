@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartScale } from '~/components/chart/types'
@@ -17,6 +18,7 @@ import type { ProjectSectionProps } from '../types'
 export interface PrivacyFlowsSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
+  milestones: Milestone[]
 }
 
 type FlowsMetric = 'count' | 'value'
@@ -24,6 +26,7 @@ type FlowsMetric = 'count' | 'value'
 export function PrivacyFlowsSection({
   defaultRange,
   project,
+  milestones,
   ...projectSectionProps
 }: PrivacyFlowsSectionProps) {
   const trpc = useTRPC()
@@ -61,6 +64,7 @@ export function PrivacyFlowsSection({
         metric={metric}
         scale={scale}
         project={project}
+        milestones={milestones}
       />
       <div className="mt-2 flex items-center justify-between gap-2">
         {isLoading ? (

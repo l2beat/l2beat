@@ -48,7 +48,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'networkObserver',
       label: 'Network observer',
       description:
-        'Sits between the user and the chain and sees web2 traffic only: RPC providers, relayers and broadcasters, indexers, ISPs. Learns IP addresses, timing, browser fingerprints, ciphertext and what becomes public. Assumes Tor to send transactions and, where the client has an RPC setting, an own node to read the blockchain.',
+        'Sits between the user and the services and sees traffic only: ISPs, VPNs, Tor exits, public RPCs and relayers. Learns IP addresses, timing, fingerprints and ciphertext. Services the operator runs count as the insider.',
       examples:
         'Infura or Alchemy, a Tornado relayer, a wallet vendor selling telemetry, Google captcha or analytics in the dapp frontend.',
     },
@@ -56,17 +56,17 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'privilegedInsider',
       label: 'Privileged insider',
       description:
-        'Holds a protocol operator role or receives keys or plaintext by design: upgrade admin, sequencer, decryption or view key holder, TEE vendor, association set provider, hosted prover, note registry.',
+        'Holds an operator role, custodies funds, receives keys or plaintext by design, or delivers the client: upgrade admin, custodian, view key holder, enclave operator, association set provider, hosted prover, registry, frontend host.',
       examples:
-        'A compliance backdoor key, a DAO with an upgrade key, a KMS committee, an ASP operator.',
+        'A compliance backdoor key, a DAO with an upgrade key, a KMS committee, an ASP operator, a custodial bridge.',
     },
     futureAdversary: {
       id: 'futureAdversary',
       label: 'Future adversary',
       description:
-        'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and future cryptanalysis such as a large quantum computer that breaks elliptic-curve key exchange and pairings, but not hashes, symmetric ciphers or lattices.',
+        'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and breaks all public-key cryptography, by quantum computer or new mathematics: elliptic curves, pairings, RSA, lattices and isogenies. Hashes, Poseidon included, and symmetric ciphers survive.',
       examples:
-        'First well-funded insiders, then everyone in a potential post-quantum future.',
+        'An intelligence agency archiving chain data today, then anyone once a break is public.',
     },
   }
 
@@ -85,7 +85,7 @@ export const PRIVACY_FIELDS: Record<PrivacyField, PrivacyFieldInfo> = {
     subject: 'Recipient',
     promiseLabel: 'Recipient privacy',
     description:
-      'The Ethereum address that funds exit to, or that receives a transfer.',
+      'Who receives the funds: the address they exit to, the receiver of a transfer, or whoever controls a one-time receiving address.',
   },
   amount: {
     id: 'amount',
@@ -262,8 +262,11 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
 
   // Future adversary
   /** Stealth addresses without onchain announcements. */
-  noAnnouncementQuantum: (operator: string) =>
-    `No announcement is published, so a quantum computer cannot replay address derivations from the chain alone. The viewing key held by ${operator} exposes the history regardless.`,
+  noAnnouncement:
+    'No announcement is published, so address derivations cannot be replayed from the chain alone.',
+  /** Follows `noAnnouncement` when the operator holds the viewing key. */
+  operatorViewingKeyRegardless: (operator: string) =>
+    `The viewing key held by ${operator} exposes the history regardless.`,
   /** Account keys derived from a wallet signature. `extra` names what else is needed, e.g. a PIN. */
   walletSignatureAccounts: (extra?: string) =>
     `Accounts created from a wallet signature reduce to that wallet's key${extra ? ` ${extra}` : ''}.`,

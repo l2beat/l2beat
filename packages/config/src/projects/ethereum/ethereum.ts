@@ -261,6 +261,14 @@ export const ethereum: BaseProject = {
             ],
             sinceBlock: 23869474,
           },
+          {
+            // Committer rotated on 2026-07-07 (same chain, 30715)
+            type: 'ethereum',
+            inbox: '0x18cc381705761aa2d2e8ea62888a4029a0fad3ab',
+            sequencers: ['0xbb2de57b06752f86a0921eb4bf56c50865abbfca'],
+            sinceBlock: 25481035,
+            untilBlock: 25952904,
+          },
         ],
       },
       {
@@ -272,6 +280,275 @@ export const ethereum: BaseProject = {
             inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
             sequencers: ['0x1c841ed065149e32e4c43e3b10ecd71f1fed1db7'],
             sinceBlock: 21712806,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('tajir'),
+        name: 'Tajir Chain',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x009afe3a07dc5eb0e3d6dcffbcec2c3c90ea20e3',
+            sequencers: ['0xec7cd2030e0510763b2c2c87fc7e7ccc2f8c7463'],
+            sinceBlock: 25780874,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('gensyn'),
+        name: 'Gensyn',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00b7cda0fa738014f2bf3b812ea08ec652452215',
+            sequencers: ['0xc4f94828b1f1c43a35783975b1c0c8703c834b15'],
+            sinceBlock: 23433987,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('alphachain'),
+        name: 'Alpha Chain',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00c2bdb995acf5a2b3db3b9340861b4d564c3c72',
+            sequencers: ['0x03e78a186ebde2c14ad9220d2605fa0a22d7bbf5'],
+            sinceBlock: 23945310,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('ethiq'),
+        name: 'Ethiq',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0065929a5da79a699cf4631480ad2739de13cad9',
+            sequencers: ['0x7d80f5908cbe1c05925e8274195b59a246e82a03'],
+            sinceBlock: 24060440,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('wannachain'),
+        name: 'WANNA Chain',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00775ef4e086ced39cfd7d62543ea95fd78ad429',
+            sequencers: ['0xbd45bdb70e45654b8a94a0f88bc00e3312a7c2cb'],
+            sinceBlock: 26067519,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('tea'),
+        name: 'Tea',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00e8008e38598eb5b33e0b67f72be074122fafcd',
+            sequencers: ['0xd24b47d373f97590a3c9b15f16f1b560ad5a617a'],
+            sinceBlock: 25181715,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('symbiosis'),
+        name: 'Symbiosis',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xa150ff19a31e1054f950098869834affe9bc6fdc',
+            sequencers: ['0xbe7f4edb6257b4d2c77293c380f19ce96a4fa41e'],
+            sinceBlock: 22824353,
+          },
+        ],
+      },
+      {
+        // OP Stack, chainId 9134 (SystemConfig.l2ChainId)
+        projectId: ProjectId('giwa'),
+        name: 'GIWA',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00b4148589a62ec7ca2c46722940e4dd79306c8d',
+            sequencers: ['0x0f3498258819bece3f47661b3e331bd36c1cf857'],
+            sinceBlock: 26063366,
+          },
+        ],
+      },
+      {
+        // Ethereum Economic Zone rollup (EEZ / EEZPostBatcher contracts)
+        projectId: ProjectId('eez'),
+        name: 'EEZ',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x4b2760f84b83d6b3829e30a7573b0172b6d6402c',
+            sequencers: ['0x4261d69f840cc550945def48e5f477737118d546'],
+            sinceBlock: 26125484,
+            untilBlock: 26135244,
+          },
+          {
+            type: 'ethereum',
+            inbox: '0x07f9e14feb43a6262141bfb598c09b678fd00163',
+            sequencers: ['0x4261d69f840cc550945def48e5f477737118d546'],
+            sinceBlock: 26135813,
+          },
+        ],
+      },
+      {
+        // OP Stack; the vanity inbox is shared, so the batcher filter matters
+        projectId: ProjectId('pegglecoin'),
+        name: 'Pegglecoin',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xff00000000000000000000000000000000042069',
+            sequencers: ['0x705623d3985cf88e5a69fc99ca7d089063449902'],
+            sinceBlock: 21937906,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SystemConfig.l2ChainId
+        projectId: ProjectId('opstack-8686'),
+        name: 'OP Stack chain 8686',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x004793cde50c3cff1f4bbe5c6ec2821ae9121df8',
+            sequencers: ['0x23920c97f74b2e41edd58d3be9964ed75883d2d8'],
+            sinceBlock: 26091305,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SystemConfig.l2ChainId
+        projectId: ProjectId('opstack-6921'),
+        name: 'OP Stack chain 6921',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0027b099f5cb5968e008c8f602900a1b62c71f9f',
+            sequencers: ['0xa5c10e93172bff1dd28af7304b461d8a494fb8e8'],
+            sinceBlock: 25731748,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SystemConfig.l2ChainId
+        projectId: ProjectId('opstack-55531'),
+        name: 'OP Stack chain 55531',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00bafeac59dd7fd22e6077ffbdcb49ce3a556e7a',
+            sequencers: ['0x90ca054bb40f0f2c2c62694c55acc61bcd101357'],
+            sinceBlock: 25897365,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SystemConfig.l2ChainId
+        projectId: ProjectId('opstack-61111001'),
+        name: 'OP Stack chain 61111001',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x00adab684e5a2732c1e2f1ca2cfb44f1b41b6e1d',
+            sequencers: ['0x1df5bc985bc174f193880e11cc691e7f598c0dd2'],
+            sinceBlock: 24454960,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SystemConfig.l2ChainId
+        projectId: ProjectId('opstack-56778039791'),
+        name: 'OP Stack chain 56778039791',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x0069e993d403330ea18e77f110243e231d8880cb',
+            sequencers: ['0xc1987cdb1fcda40abd2a7fbace3adf36841d3332'],
+            sinceBlock: 23051817,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from SequencerInbox -> Bridge -> Rollup
+        projectId: ProjectId('orbit-5816'),
+        name: 'Orbit chain 5816',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xd65a35d19910d9f4e4aeb3cb4a87c3153bfb0fc6',
+            sequencers: ['0x77b25ace2eb0bdc7b4dbb064a79ced4d9b6ef62c'],
+            sinceBlock: 26060523,
+          },
+        ],
+      },
+      {
+        // Operator unidentified. Its committer committed Creator (chain
+        // 30715) until 2026-09-11 and switched to this chain the same day -
+        // possibly Creator's migration, possibly a shared operator.
+        projectId: ProjectId('zksyncos-51703'),
+        name: 'ZKsync OS chain 51703',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xa7980e38722dbe6238f221da65e1143d22161a71',
+            sequencers: ['0xbb2de57b06752f86a0921eb4bf56c50865abbfca'],
+            sinceBlock: 25953681,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; MultisigCommitter is shared, so the committer filter matters
+        projectId: ProjectId('zksyncos-61703'),
+        name: 'ZKsync OS chain 61703',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xa7980e38722dbe6238f221da65e1143d22161a71',
+            sequencers: ['0xa5ee2f9e0cd1862f245d13fa9428a707fb942cf6'],
+            sinceBlock: 25962259,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; MultisigCommitter is shared, so the committer filter matters
+        projectId: ProjectId('zksyncos-5790'),
+        name: 'ZKsync OS chain 5790',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xa7980e38722dbe6238f221da65e1143d22161a71',
+            sequencers: ['0x16f3d92c45c2a663bc05e926322edd2281f9d7bf'],
+            sinceBlock: 26054185,
+          },
+        ],
+      },
+      {
+        // Operator unidentified; chainId from commitBatchesSharedBridge on shared ValidatorTimelocks
+        projectId: ProjectId('zkstack-1345'),
+        name: 'ZK Stack chain 1345',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x8c0bfc04ada21fd496c55b8c50331f904306f564',
+            sequencers: ['0xf916d39fc2658665953428cb895353e69e27e8f8'],
+            sinceBlock: 24826121,
+            untilBlock: 25462352,
+          },
+          {
+            type: 'ethereum',
+            inbox: '0x2e5110cf18678ec99818bfaa849b8c881744b776',
+            sequencers: ['0xf916d39fc2658665953428cb895353e69e27e8f8'],
+            sinceBlock: 25464904,
           },
         ],
       },

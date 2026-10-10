@@ -4,7 +4,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { ErrorState } from '../../../components/ErrorState'
 import { useCodeStore } from '../../../components/editor/store'
 import { Input } from '../../../components/Input'
@@ -123,7 +123,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
       }
       if (data.type === 'project') {
         const result = data.entries[selectedIndex]
-        navigate(`/ui/p/${result}`)
+        void navigate(`/ui/p/${result}`)
       } else {
         const result = data.entries[selectedIndex]
 

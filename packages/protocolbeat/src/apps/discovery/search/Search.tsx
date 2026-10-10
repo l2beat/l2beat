@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { Dialog } from '../../../components/Dialog'
 import { usePanelStore } from '../store/panel-store'
 import { ClosedSearch } from './ClosedSearch'
@@ -23,7 +23,7 @@ export function Search() {
       </Dialog.Trigger>
       <Dialog.Body
         noCloseButton
-        className="h-[400px] rounded bg-coffee-800 p-0"
+        className="h-[400px] rounded-sm bg-coffee-800 p-0"
       >
         <Dialog.Title className="sr-only">Search</Dialog.Title>
         <OpenSearch inputRef={inputRef} project={project} select={select} />

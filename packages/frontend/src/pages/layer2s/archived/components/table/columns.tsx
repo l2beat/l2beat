@@ -32,7 +32,7 @@ export const l2ArchivedColumns = [
       )
     },
     meta: {
-      cellClassName: 'justify-center',
+      align: 'center',
     },
   }),
   columnHelper.accessor('type', {

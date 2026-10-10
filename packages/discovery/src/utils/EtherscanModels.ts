@@ -1,13 +1,11 @@
 import { EthereumAddress, Hash256, type json } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
-export type EtherscanSuccessResponse = v.infer<typeof EtherscanSuccessResponse>
 const EtherscanSuccessResponse = v.object({
   message: v.literal('OK'),
   result: v.unknown(),
 })
 
-export type EtherscanErrorResponse = v.infer<typeof EtherscanErrorResponse>
 const EtherscanErrorResponse = v.object({
   message: v.literal('NOTOK'),
   result: v.string(),

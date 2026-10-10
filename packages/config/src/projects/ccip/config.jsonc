@@ -199,6 +199,15 @@
     "eth:0x266990f0f49D42ef854DB7319c1B5ebB9B347178": {
       "description": "Role-based timelock that CCIP uses as a fee aggregator, collecting fee tokens withdrawn from its ramps."
     },
+    // Circle's SeizureRegistry USDC minter, described in shared-circle. Its UUPS getter reverts when called through the proxy.
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["totalSecondaryMarketBurnedAmount"]
+    },
+    // BOB's L1UsdcBridge is an authorized caller of this lockbox; BOB's own contracts are out of scope for CCIP.
+    "eth:0x966A3BE75103C680b6A4248689630c788659d2A5": {
+      "ignoreRelatives": ["getAllAuthorizedCallers"]
+    },
     // These two contracts are not source-verified. Only fields read through their deployed runtime interface are included.
     "eth:0xa22606F055146f0eac2FBEd49253E779b781355D": {
       "fields": {
