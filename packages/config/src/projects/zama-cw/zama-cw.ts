@@ -232,7 +232,7 @@ export const zamaCw: BaseProject = {
   },
   display: {
     description:
-      'Zama Confidential Tokens is an app that wraps ERC-20 assets into confidential tokens and hides balances and transfer amounts using Zama FHEVM on Ethereum.',
+      'Confidential amounts for ERC-20 tokens on Ethereum: wrappers that encrypt balances and transfer amounts with FHE, decrypted by a committee of KMS operators.',
     detailedDescription: readProjectMarkdown('zama-cw', 'detailedDescription', {
       kmsThreshold,
       kmsSignerCount,

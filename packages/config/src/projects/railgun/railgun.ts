@@ -172,11 +172,12 @@ export const railgun: BaseProject = {
   },
   display: {
     description:
-      'An onchain privacy system for Ethereum based on encrypted UTXO-style private balances and zk-proven DeFi interactions.',
+      'A shielded ledger on Ethereum for ERC-20 tokens, with private transfers and DeFi calls, run by no operator and governed by RAIL stakers.',
     detailedDescription: readProjectMarkdown('railgun', 'detailedDescription', {
       shieldFee: formatBasisPoints(shieldFee),
       unshieldFee: formatBasisPoints(unshieldFee),
       nftFee,
+      executionDelay: formatSeconds(executionStartOffset, { fullUnit: true }),
     }),
     links: {
       websites: ['https://railgun.org'],

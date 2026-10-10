@@ -8,3 +8,4 @@
 <br>
 ## Privacy can be lost if
 1. a user sends transactions from their own public address (see public observer).
+2. elliptic-curve cryptography is broken, which decrypts every note sent to a 0zk address that was ever shared (see future adversary).

@@ -11,5 +11,5 @@
 ## Privacy can be lost if
 1. the holder of the auditor key decrypts users' viewing keys, which exposes their whole history (see privileged insider).
 2. the wallet's prover or note discovery service, which receives the viewing key with every action, leaks or keeps it (see privileged insider).
-3. a first payment to a new contact, a channel opened next to a deposit or a unique amount links a user's activity (see public observer and chain analyst).
+3. a first payment to a new contact, a channel opened beside a deposit or a unique amount links activity (see public observer, chain analyst).
 4. elliptic-curve cryptography is broken, which opens the auditor key and with it every user's history (see future adversary).

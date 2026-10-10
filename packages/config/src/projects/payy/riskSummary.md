@@ -11,5 +11,5 @@
 1. anyone with Payy's block data follows which notes fund which, from a deposit address to a withdrawal address (see public observer).
 2. a path without splits or merges reveals every amount between a deposit and a withdrawal (see chain analyst).
 3. the closed-source Payy app sends user data to third parties, which Payy can change at any time (see network observer).
-4. Payy's backend, which ties each wallet to its KYC record, deposit address and notes and holds the keys of link and ramp notes, leaks or uses this data (see privileged insider).
+4. Payy's backend, which ties each wallet to its KYC record, deposit address and notes, leaks or uses this data (see privileged insider).
 5. the public per-transaction proofs, which are not zero-knowledge, or retained registry ciphertexts are opened in the future (see future adversary).

@@ -255,7 +255,7 @@ export const zkmoney: BaseProject = {
   },
   display: {
     description:
-      'A private DAI wallet on Aztec Network, with funds escrowed on Ethereum.',
+      'A shielded ledger for DAI payments on Aztec, paid by name, with funds escrowed in an Ethereum portal that an enclave co-signs.',
     detailedDescription: readProjectMarkdown(
       'zkmoney',
       'detailedDescription',

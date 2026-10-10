@@ -21,7 +21,7 @@ export const moneroCakeWallet: BaseProject = {
   },
   display: {
     description:
-      "A round trip from Ethereum into Monero and back through the swap screen of Cake Wallet, which hands each leg to a centralized instant exchange. Monero's ledger serves as the privacy pool.",
+      "A shielded ledger round trip: Cake Wallet's swap screen moves Ethereum funds into Monero and back, handing each leg to a centralized instant exchange.",
     detailedDescription: readProjectMarkdown(
       'monero-cake-wallet',
       'detailedDescription',
