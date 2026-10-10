@@ -3,8 +3,12 @@ import {
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 
+// main at the v2.1 pool code, deployed 2026-09-23 without a release tag.
 const SNP =
-  'https://github.com/starkware-libs/starknet-privacy/blob/cc0dc408dee41f5658cd528ae59ab0794be2e298/'
+  'https://github.com/starkware-libs/starknet-privacy/blob/f9256c5e37682d37437e69a795ddd51d924c9b97/'
+// SDK release PRIVACY-0.14.3-RC.8.
+const SDK =
+  'https://github.com/starkware-libs/starknet-privacy/blob/fcc7c90f544ceb08621c32616bde29f1fdcbeb54/sdk/src/'
 const STWO =
   'https://github.com/starkware-libs/stwo-cairo/blob/2b1fb4ded5496fb2db4e8261cd5ee5ef6b710839/README.md#security-model'
 const POOL =
@@ -19,8 +23,8 @@ export const strk20Adversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'warning',
       exposureShort:
-        'Transfers inside are encrypted, but transactions to new contacts reveil the recipient.',
-      exposureContinued: `The token and amount of the fee you pay, and the target and calldata of any DeFi action are public. ${S.entryExitPublic()} Submitting from your own wallet names you. A paymaster hides the submitter but shows the fee token and amount.`,
+        "Transfers inside the pool are encrypted, but the first payment to each new contact writes the recipient's address in cleartext.",
+      exposureContinued: `${S.entryExitPublic()} The fee payment names the token you pay it in, and DeFi actions name their target contract. A new account must be funded publicly before it can receive privately.`,
       advice:
         'Submit every pool action through a paymaster and pay its fee in the most common token. Treat the first payment to a new contact, and any DeFi action, as public.',
       interior: {
@@ -43,32 +47,16 @@ export const strk20Adversaries = definePrivacyAdversaries({
           url: SNP + 'packages/privacy/src/actions.cairo#L329-L334',
         },
         {
-          title: 'DeFi actions carry target contract and calldata',
-          url: SNP + 'packages/privacy/src/actions.cairo#L360-L365',
-        },
-        {
           title:
             'Deposit and withdrawal events carry address, token and amount',
-          url: SNP + 'packages/privacy/src/events.cairo#L17-L41',
-        },
-        {
-          title: 'Paymaster fee fixes the visible fee token',
-          url: SNP + 'sdk/src/interfaces.ts#L160-L172',
-        },
-        {
-          title: 'Protocol fee is pulled in STRK from the submitter',
-          url: SNP + 'packages/privacy/src/privacy.cairo#L845-L856',
-        },
-        {
-          title: 'Without a paymaster the client submits from the user wallet',
-          url: SNP + 'demo/src/hooks/useTransactionBuilder.ts#L247-L256',
+          url: SNP + 'packages/privacy/src/events.cairo#L17-L40',
         },
       ],
     },
     chainAnalyst: {
       sentiment: 'warning',
       exposureShort:
-        'The set of registered users is small and split further by token and by fee token.',
+        'The set of active users is small and split further by token and by fee token.',
       exposureContinued: `A channel opened in the same transaction as a deposit ties the two together, and most withdrawal addresses have also deposited. ${S.walletFingerprint('paymaster')}`,
       advice: `Open channels in a transaction without a deposit, pay fees in the most common token, and withdraw uneven amounts that match no deposit. ${S.freshExit}`,
       interior: {
@@ -89,22 +77,18 @@ export const strk20Adversaries = definePrivacyAdversaries({
         {
           title:
             'Deposit and withdrawal events carry address, token and amount',
-          url: SNP + 'packages/privacy/src/events.cairo#L17-L41',
-        },
-        {
-          title: 'Fee is charged per action in a visible token',
-          url: SNP + 'packages/privacy/src/privacy.cairo#L845-L856',
+          url: SNP + 'packages/privacy/src/events.cairo#L17-L40',
         },
       ],
     },
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        'The paymaster and the sequencer receive the client proof with every action.',
+        'Ready and Xverse are closed source, so what they send to third parties is up to their makers and can change at any time.',
       exposureContinued:
-        'Stwo proofs are not zero-knowledge by default, and how much of the private execution they reveal is not established. Traffic to the proving and note-discovery services is encrypted, and both support an oblivious relay that hides your address, but it is off unless the client turns it on.',
+        'Today both wallets send each action to their own servers for proving and note discovery. The paymaster receives the finished transaction with its proof before broadcast, and how much of the private execution the proof reveals is not established.',
       advice:
-        'Turn on the oblivious relay for the proving and discovery services, or run both yourself.',
+        'Use a client built on the open SDK with your own prover and note discovery, and turn on its oblivious relay.',
       interior: {
         sender: 'unverifiable',
         recipient: 'unverifiable',
@@ -114,18 +98,21 @@ export const strk20Adversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Oblivious relay support is opt-in',
-          url: SNP + 'sdk/src/internal/ohttp-client.ts#L24-L32',
+          title: 'Ready extension (proving and discovery on Ready servers)',
+          url: 'https://chromewebstore.google.com/detail/dlcobpjiigpikoobohmabehhmhfoodbb',
         },
         {
-          title: 'Discovery service: per-request keys and oblivious relay',
-          url: SNP + 'crates/discovery-service/README.md#L14-L32',
+          title: 'Xverse extension (proving and discovery on Xverse servers)',
+          url: 'https://chromewebstore.google.com/detail/idnnbdplmphpflfnlkomgpfbpcgelopg',
         },
         {
-          title: 'Proof and proof facts travel in the submitted transaction',
-          url: SNP + 'demo/src/hooks/useTransactions.ts#L140-L160',
+          title: 'The SDK takes prover and discovery endpoints from the client',
+          url: SDK + 'factory.ts#L45-L62',
         },
-        { title: 'Stwo Cairo is not zero-knowledge by default', url: STWO },
+        {
+          title: 'Oblivious relay is an option of the proving client',
+          url: SDK + 'internal/proving-service-provider.ts#L73-L80',
+        },
       ],
     },
     privilegedInsider: {
@@ -133,9 +120,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay.",
       exposureContinued:
-        'That key decrypts everything the protocol hides. The default proving service receives your address, viewing key and actions in the clear, the note-discovery service receives the viewing key on every sync, and deposits need a fresh attestation from a screening provider that sees and can block every depositor.',
-      advice:
-        'Run the prover and note discovery yourself, or read the pool directly from chain. Nothing you do removes the auditor key.',
+        "The wallet's prover receives your viewing key with every action, and for most Ready accounts Ready's servers create that key. Ready's servers also learn every recipient the wallet checks for registration. StarkWare's sequencer alone checks the client proofs, which are not zero-knowledge by default. Every deposit needs a fresh signature from the holder of the screener key, who can block any depositor.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -144,37 +129,19 @@ export const strk20Adversaries = definePrivacyAdversaries({
         linkage: 'exposed',
       },
       sources: [
-        { title: 'Auditor and screener keys in pool storage', url: POOL },
         {
           title: 'Viewing key escrowed to the auditor key onchain',
           url: SNP + 'packages/privacy/src/events.cairo#L5-L13',
         },
         {
-          title: 'Auditor and screener keys are settable roles',
-          url: SNP + 'packages/privacy/src/events.cairo#L43-L52',
+          title: 'Proving request carries the viewing key',
+          url: SDK + 'internal/proof-invocation-factory.ts#L132-L136',
         },
         {
-          title: 'Withdrawals carry the auditor-decryptable withdrawer address',
-          url: SNP + 'packages/privacy/src/events.cairo#L17-L29',
+          title: 'Deposits require a screening attestation',
+          url: SNP + 'packages/privacy/src/interface.cairo#L530-L545',
         },
-        {
-          title: 'Proving request carries the user address and viewing key',
-          url: SNP + 'sdk/src/internal/proof-invocation-factory.ts#L128-L136',
-        },
-        {
-          title: 'Discovery request carries the viewing key',
-          url: SNP + 'sdk/src/internal/indexer-discovery.ts#L158-L165',
-        },
-        {
-          title: 'Deposits require a signed screening attestation',
-          url: SNP + 'packages/privacy/src/privacy.cairo#L784-L800',
-        },
-        {
-          title:
-            'Screening sidecar forwards the depositor to an external provider',
-          url: SNP + 'proof-interceptor/README.md#L37',
-        },
-        { section: 'upgrades-and-governance' },
+        { title: 'Stwo Cairo is not zero-knowledge by default', url: STWO },
       ],
     },
     futureAdversary: {
@@ -193,7 +160,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Stark-curve ECDH encryption of channel and note data',
-          url: SNP + 'sdk/src/utils/encryptions.ts#L120-L136',
+          url: SDK + 'utils/encryptions.ts',
         },
         {
           title: 'Viewing key escrowed under the onchain auditor public key',
