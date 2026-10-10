@@ -33,7 +33,7 @@ const PUBLIC_INTERIOR: PrivacyExposureMap = {
 export const zkApiAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'linkage',
-    text: 'Hides which deposit pays for which API request. Deposits and withdrawals are public, and the provider reads prompts.',
+    text: 'Hides which deposit pays for which API request. Deposits and withdrawals are public, and the provider can read prompts.',
   },
   fieldDescriptions: {
     linkage:
@@ -75,7 +75,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'good',
       exposureShort:
-        'The app works in Tor Browser, the daemon has a fail-closed Tor setting, and no third party sees both a deposit and a request.',
+        'The app works in Tor Browser, the daemon has a Tor setting with a kill switch, and no third party sees both a deposit and a request.',
       exposureContinued:
         "Your wallet's RPC sees the deposit, while requests go to the operator and the provider. The app sends inference through a relay at refraction.network by default, which sees its timing. The hosted app reports feature use to Fathom, a cookieless analytics service.",
       advice:
@@ -89,7 +89,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Daemon Tor route fails closed',
+          title: 'Daemon Tor route has a kill switch',
           url: `${SRC}zkapi-clientd/docs/CLI_ZKAPI.md#L81-L97`,
         },
         {
@@ -107,7 +107,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The operator sees each request's time and budget but not its note, so the candidates are all active notes, a small set.",
       exposureContinued:
-        "The daemon reveals the note id to the operator's indexer before each request. An escape dispute lets the operator publish one request's link onchain. The provider reads prompts and responses and links requests under one key.",
+        "The daemon reveals the note id to the operator's indexer before each request. An escape dispute lets the operator publish one request's link onchain. The provider can read prompts and responses and link requests under one key.",
       advice: `Use the browser app rather than the daemon, and wait a day or more between depositing and your first request. ${S.localBuild}`,
       interior: {
         sender: 'exposed',

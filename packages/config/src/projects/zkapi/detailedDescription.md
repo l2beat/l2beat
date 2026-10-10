@@ -1,4 +1,4 @@
-zkAPI lets you prepay AI usage with ETH and chat without revealing which deposit pays for which request. Deposits and withdrawals are public, and the model provider reads your prompts.
+zkAPI lets you prepay AI usage with ETH and chat without revealing which deposit pays for which request. Deposits and withdrawals are public, and the model provider can read your prompts.
 
 Users trust Open Anonymity, which runs the service and owns the vault, and the inference providers behind OpenRouter. The operator approves withdrawals and sees each request's time and budget. The owner can pause the vault, and expired deposits fall to its treasury. You can leave without the operator through a {{challengePeriod}} escape, as long as your note has not expired.
 
@@ -8,7 +8,7 @@ Users trust Open Anonymity, which runs the service and owns the vault, and the i
 2. **Request access.** The app proves locally that some active note covers the budget, at most {{requestChargeCap}} ETH per request. The operator returns a short-lived OpenRouter key.
 3. **Chat.** Prompts go to OpenRouter with that key.
 4. **Settle.** The operator charges the usage and signs a new hidden balance, which the app keeps. The next request re-blinds it, so the balance does not link your requests.
-5. **Withdraw.** With the operator's clearance, the remaining ETH goes to an address you choose and the used part to the treasury. The note id and the remaining balance become public.
+5. **Withdraw.** In a cooperative close, the operator needs to clear your note. The remaining ETH goes to an address you choose, the used part to the treasury. The note id and the remaining balance thus become public.
 
 ### Keys
 
@@ -16,7 +16,7 @@ The note secret and the latest signed balance stay on your device. Losing them l
 
 ### App
 
-The ratings assume OA Chat, a hosted browser app with public source and local build instructions. It fetches the whole note tree and proves in the browser. It relays inference through a relay at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the public main branch, including Fathom analytics. zkapi-clientd is a local daemon with an OpenAI-compatible API. It asks the operator's indexer for your note's path, reuses a key for 60 seconds by default and can route everything through Tor, failing closed.
+The ratings assume OA Chat, a hosted browser app with public source and local build instructions. It fetches the whole note tree and proves in the browser. It relays inference through a relay at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the public main branch, including Fathom analytics. zkapi-clientd is a local daemon with an OpenAI-compatible API. It asks the operator's indexer for your note's path, reuses a key for 60 seconds by default and can route everything through Tor with a kill switch, so it never connects directly.
 
 ### Vault and owner
 
@@ -28,11 +28,11 @@ Open Anonymity verifies request proofs, issues keys, signs balances and clears w
 
 ### Providers and verifier
 
-OpenRouter and the model provider read prompts and responses and can link requests under one key. Open Anonymity's key stations hold the OpenRouter accounts. A verifier running in an attestable Azure confidential container checks that a station's account has provider logging disabled. Its build reproduces from source and matches the attested measurement, see the verification steps. Both clients pin only the verifier's address, so the check holds when you verify it yourself.
+OpenRouter and the model provider can read prompts and responses and link requests under one key. Open Anonymity's key stations hold the OpenRouter accounts. A verifier running in an attestable Azure confidential container checks that a station's account has provider logging disabled. Its build reproduces from source and matches the attested measurement, see the verification steps. Both clients pin only the verifier's address, so the check holds when you verify it yourself.
 
 ### Exits
 
-**Escape.** Without the operator's clearance, you start an escape with your latest signed balance and finalize it after {{challengePeriod}}. The operator can cancel it with a request proof for that balance, which publishes that request's link. The owner can pause new escapes.
+**Escape.** Without a cooperative close, you start an escape with your latest signed balance and finalize it after {{challengePeriod}}. The operator can cancel it with a request proof for that balance, which publishes that request's link. While the owner pauses the vault, no one can start an escape, but one already started still finalizes.
 
 ### Compliance
 

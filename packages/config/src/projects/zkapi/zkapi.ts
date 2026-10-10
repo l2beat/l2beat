@@ -109,7 +109,7 @@ export const zkapi: BaseProject = {
       'ZkApiVault',
       'paused',
     )
-      ? 'The vault is paused. Cooperative withdrawals and new escape withdrawals are blocked.'
+      ? 'The vault is paused. Cooperative closes and the start of escapes are blocked.'
       : undefined,
     reviewStatus: undefined,
     unverifiedContracts: [],
@@ -223,7 +223,7 @@ export const zkapi: BaseProject = {
       value: 'None',
       sentiment: 'bad',
       orderHint: 0,
-      description: `The owner can immediately pause cooperative withdrawals and new escapes. An already pending escape can be finalized after ${values.challengePeriod}, including during a pause. An active note becomes sweepable after its deposit expiry.`,
+      description: `The owner can immediately pause cooperative closes and the start of escapes. An already pending escape can be finalized after ${values.challengePeriod}, including during a pause. An active note becomes sweepable after its deposit expiry.`,
       walkawayTest: {
         passed: false,
         reason:
