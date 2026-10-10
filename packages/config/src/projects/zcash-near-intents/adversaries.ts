@@ -61,7 +61,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'good',
       exposureShort:
-        'Payouts into the pool and later deposits to the bridge are public with amount and time, so a round trip of similar size pairs them.',
+        'Only the amount and timing of a round trip can pair a payout into the pool with a later deposit to the bridge.',
       exposureContinued:
         'Deposit addresses are fresh per quote and spent together with the bridge change address, which marks every exit as NEAR Intents.',
       advice:
