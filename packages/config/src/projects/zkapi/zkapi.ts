@@ -84,11 +84,6 @@ const values = {
   ),
   requestChargeCap: utils.formatEther(requestChargeCap),
 }
-// Note ids start at 0, so the next id counts the notes deposited since launch.
-const totalNotes = discovery.getContractValue<number>(
-  'ZkApiVault',
-  'nextNoteId',
-)
 const eth = getTokenByAddress(
   EthereumAddress('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'),
 )
@@ -121,7 +116,7 @@ export const zkapi: BaseProject = {
   },
   display: {
     description:
-      'Prepaid AI inference on Ethereum that hides which deposit pays for which request.',
+      'Anonymous access to AI models, prepaid with ETH, that hides which deposit pays for which request.',
     detailedDescription: readProjectMarkdown(
       'zkapi',
       'detailedDescription',
@@ -242,7 +237,7 @@ export const zkapi: BaseProject = {
         'The browser app and the local daemon have public source and build instructions. The verifier enclave image rebuilds from source and matches its hardware attestation. The hosted frontend, the daemon releases and the key stations remain unreproduced.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
-    adversaries: zkApiAdversaries(totalNotes),
+    adversaries: zkApiAdversaries,
     riskSummary: readProjectMarkdown('zkapi', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('zkapi', 'upgradesAndGovernance'),
