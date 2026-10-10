@@ -1,7 +1,7 @@
 ## Funds can be stolen if
 1. the zk proof system is broken, allowing invalid withdrawals.
 2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid withdrawals.
-3. the Entrypoint owner deploys a malicious [upgrade](#upgrades-and-governance) that steals new deposits or relayed withdrawals.
+3. the Entrypoint owner deploys a malicious [upgrade](#upgrades-and-governance) that steals new deposits or withdrawals relayed after it.
 <br>
 ## Funds can be lost if
 1. a user loses the recovery phrase that their notes derive from.
