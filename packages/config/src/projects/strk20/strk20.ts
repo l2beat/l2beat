@@ -122,6 +122,16 @@ export const strk20: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      title: 'Privacy live on Starknet',
+      url: 'https://www.starknet.io/blog/privacy-live-on-starknet/',
+      date: '2026-06-09T00:00:00Z',
+      description:
+        'StarkWare opens the pool to users through the Ready and Xverse wallets.',
+      type: 'general',
+    },
+  ],
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     trackedOn: ['starknet'],

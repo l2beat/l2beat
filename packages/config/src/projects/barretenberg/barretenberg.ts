@@ -47,7 +47,7 @@ export const barretenberg: BaseProject = {
       url: 'https://aztec.network/blog/critical-vulnerability-in-alpha-v4',
       date: '2026-03-27T00:00:00Z',
       description:
-        'Aztec discloses a Barretenberg vulnerability rated critical for Noir, fixed in v5.0.0-nightly.20260324.',
+        'Aztec discloses a Barretenberg bug rated critical for Noir, fixed in v5.0.0-nightly.20260324.',
       type: 'incident',
     },
     {
@@ -60,7 +60,7 @@ export const barretenberg: BaseProject = {
       url: 'https://github.com/AztecProtocol/aztec-packages/security/advisories/GHSA-2hc8-mq24-76v2',
       date: '2026-10-08T00:00:00Z',
       description:
-        'The native verifier skips the deferred pairing check of recursive proofs in some cases. Fixed in 5.2.1.',
+        'The native verifier can skip the deferred pairing check of recursive proofs. Fixed in 5.2.1.',
       type: 'incident',
     },
   ],

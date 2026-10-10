@@ -173,6 +173,57 @@ export const tornadoCash: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      // operator() on every pool reads zero from here on (1 ETH pool: block
+      // 10,091,702), after the trusted setup ceremony ended on 2020-05-10.
+      title: 'Pools become immutable',
+      url: 'https://www.coindesk.com/tech/2020/05/18/developers-of-ethereum-privacy-tool-tornado-cash-smash-their-keys',
+      date: '2020-05-18T00:00:00Z',
+      description:
+        'The developers set the operator of every pool to zero, so no one can change the pools.',
+      type: 'general',
+    },
+    {
+      title: 'Added to the OFAC sanctions list',
+      url: 'https://home.treasury.gov/news/press-releases/jy0916',
+      date: '2022-08-08T00:00:00Z',
+      description:
+        "OFAC adds Tornado Cash and the pools' addresses to its sanctions list.",
+      type: 'incident',
+    },
+    {
+      // Proposal 20, executed 2023-05-20 (tx 0x3274b609…), gave the attacker
+      // 1.2M fake votes. Proposal 21, executed 2023-05-28 (tx 0xaac00510…),
+      // reverted it. The pools were not affected.
+      title: 'Governance taken over by a malicious proposal',
+      url: 'https://www.theblock.co/post/231637/attacker-uses-malicious-proposal-to-take-over-tornado-cash-governance',
+      date: '2023-05-20T00:00:00Z',
+      description:
+        'Proposal 20 hands the attacker control of governance until proposal 21 reverts it.',
+      type: 'incident',
+    },
+    {
+      // tornadocash.eth contenthash set by proposal 44 (tx 0xd0702bce…,
+      // 2024-01-02) and replaced by proposal 52 (tx 0x4fb9cbe3…, 2024-03-14).
+      // Reports date the leaking code to January 1 and its discovery to
+      // 2024-02-26 (Gas404). Press calls the proposal 47.
+      title: 'Pinned app leaks deposit notes',
+      url: 'https://forklog.com/en/backdoor-discovered-in-ipfs-version-of-tornado-cash/',
+      date: '2024-01-02T00:00:00Z',
+      description:
+        'The app pinned by proposal 44 sends deposit notes to an outside server until proposal 52.',
+      type: 'incident',
+    },
+    {
+      title: 'Removed from the OFAC sanctions list',
+      url: 'https://home.treasury.gov/news/press-releases/sb0057',
+      date: '2025-03-21T00:00:00Z',
+      description:
+        "OFAC removes Tornado Cash and the pools' addresses from its sanctions list.",
+      type: 'general',
+    },
+  ],
   escrows: BUCKETS.map((bucket) => ({
     address: ChainSpecificAddress.address(bucket.address),
     chain: ChainSpecificAddress.longChain(bucket.address),

@@ -184,6 +184,18 @@ export const railgun: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      // ProxyUpgrade and ProxyUnpause in tx 0x2bd98cd1…, implementation
+      // RailgunLogic 0xbcfa4de7…
+      title: 'Current pool goes live on Ethereum',
+      url: 'https://etherscan.io/tx/0x2bd98cd135e2eaf7b7239bb4951a043f655629b5d0f0ca12334ce05718512361',
+      date: '2022-05-08T00:00:00Z',
+      description:
+        "The proxy that holds today's pool is unpaused with the RailgunLogic implementation.",
+      type: 'general',
+    },
+  ],
   escrows: TRACKED_TOKENS.map((token) => ({
     address: ChainSpecificAddress.address(railgunCore.address),
     chain: ChainSpecificAddress.longChain(railgunCore.address),
