@@ -13,7 +13,7 @@ Each deposit has its own note, which the app shows once for you to save. Whoever
 
 ### App
 
-The ratings assume the classic app pinned on [tornadocash.eth](https://app.ens.domains/tornadocash.eth?tab=records). Each proposal that changes it names the [source commit](https://github.com/tornado-dao/classic-ui) and a [build recipe](https://github.com/tornado-dao/tornado-ipfs-ui) that recomputes its IPFS hash. Gateways like eth.limo serve it, and your own IPFS node takes the gateway out of the trust path. The app lists relayers from the registry, accepts your own RPC endpoint and withdraws through a relayer without a wallet. In 2024 a pinned version [sent users' notes to an attacker](https://www.coindesk.com/business/2024/02/26/tornado-cash-reportedly-suffers-backend-exploit-user-deposits-at-risk) ([code analysis here](https://github.com/sekuba/tornadocash-pwned)).
+The ratings assume the classic app pinned on [tornadocash.eth](https://app.ens.domains/tornadocash.eth?tab=records). Each proposal that changes it names the [source commit](https://github.com/tornado-dao/classic-ui) and a [build recipe](https://github.com/tornado-dao/tornado-ipfs-ui) that recomputes its IPFS hash, currently `{{appCid}}`. Gateways like eth.limo serve it, and your own IPFS node takes the gateway out of the trust path. The app lists relayers from the registry, accepts your own RPC endpoint and withdraws through a relayer without a wallet. In 2024 a pinned version [sent users' notes to an attacker](https://www.coindesk.com/business/2024/02/26/tornado-cash-reportedly-suffers-backend-exploit-user-deposits-at-risk) ([code analysis here](https://github.com/sekuba/tornadocash-pwned)).
 
 ### Compliance
 

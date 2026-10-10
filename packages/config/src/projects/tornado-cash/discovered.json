@@ -1,7 +1,7 @@
 {
   "name": "tornado-cash",
-  "timestamp": 1791570790,
-  "configHash": "0xc6c164c62d05255d6bf2d09792ee5603d67bdc8c083cbba3b70977125ee3987d",
+  "timestamp": 1791619122,
+  "configHash": "0x742b7c8f230f1ee2e02867746880fddfb8a5ac3e3f17f3b5dbea142066a852c5",
   "entries": [
     {
       "name": "Pool_50K_cDAI",
@@ -126,12 +126,12 @@
       "sinceBlock": 9162012,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 14,
+        "currentRootIndex": 15,
         "denomination": 1000000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x2049cc28fb87df61bd29fce47ba979c29612f000a04b131d706706cdc738a7e1",
+        "getLastRoot": "0x0782d28f8d6db16f9d1ec5a70d843e93f2436f9f0f44cf2156c9936a1877987b",
         "levels": 20,
-        "nextIndex": 2114,
+        "nextIndex": 2115,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -200,13 +200,13 @@
       "sinceBlock": 9116966,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 98,
+        "currentRootIndex": 24,
         "denomination": "100000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1b5fe81fef6895aef3e6b022557b883eac6665421589a78fc2c89c46c8c57aca",
+        "getLastRoot": "0x154ea040ac91b6048c594abffda260a0b28cd6b763f6a889aa45c3442c8df3dc",
         "isMigrated": true,
         "levels": 20,
-        "nextIndex": 73654,
+        "nextIndex": 73680,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -520,7 +520,7 @@
       "sinceBlock": 13429786,
       "values": {
         "$immutable": true,
-        "TORNStaked": "2573438671370026792836739"
+        "TORNStaked": "2576055395417081515376538"
       },
       "fieldMeta": {
         "TORNStaked": {
@@ -645,12 +645,12 @@
       "sinceBlock": 9117609,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 30,
+        "currentRootIndex": 8,
         "denomination": "1000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x05cd535d942b2c93e3d20cdd9c6cba6cbfd846231a62a077bff7ce25a00a11ae",
+        "getLastRoot": "0x09d91c55e62593e0bc338e714a855cb3982b6511116e7a796f9f88dc14ae980b",
         "levels": 20,
-        "nextIndex": 95030,
+        "nextIndex": 95108,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -1310,6 +1310,8 @@
           ]
         ],
         "$upgradeCount": 4,
+        "appContenthash": "0xe30101701220c3a350e49a11cfc9cab672331d51ad1b723e0d3db9cd73a316ebaa7788595fe8",
+        "appEnsResolver": "eth:0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
         "CLOSING_PERIOD": 3600,
         "EXECUTION_DELAY": 172800,
         "EXECUTION_EXPIRATION": 259200,
@@ -1390,6 +1392,14 @@
         "userVault": {
           "severity": "HIGH",
           "description": "Vault that escrows users' locked TORN and serves governance withdrawals."
+        },
+        "appEnsResolver": {
+          "severity": "HIGH",
+          "description": "Resolver set for tornadocash.eth in the ENS registry."
+        },
+        "appContenthash": {
+          "severity": "HIGH",
+          "description": "IPFS contenthash of tornadocash.eth, the app that governance pins."
         }
       },
       "implementationNames": {
@@ -1425,15 +1435,15 @@
           },
           {
             "instance": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
-            "deviation": -15
+            "deviation": -7
           },
           {
             "instance": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
-            "deviation": 3
+            "deviation": -1
           },
           {
             "instance": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
-            "deviation": 6
+            "deviation": -1
           },
           {
             "instance": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
@@ -1445,11 +1455,11 @@
           },
           {
             "instance": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
-            "deviation": -59
+            "deviation": -51
           },
           {
             "instance": "eth:0x23773E65ed146A459791799d01336DB287f25334",
-            "deviation": 2
+            "deviation": 10
           },
           {
             "instance": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
@@ -1485,15 +1495,15 @@
           },
           {
             "instance": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
-            "deviation": -52
+            "deviation": -43
           },
           {
             "instance": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
-            "deviation": -347
+            "deviation": -341
           },
           {
             "instance": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
-            "deviation": 394
+            "deviation": 406
           }
         ],
         "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
@@ -1888,12 +1898,12 @@
       "sinceBlock": 9117720,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 54,
+        "currentRootIndex": 58,
         "denomination": "10000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x08f8c5c4c4518ce65bfd873a50de30ee3f9c0deddc2eb97cbbaff651792cc113",
+        "getLastRoot": "0x25649214dc9890906ca674d7f5409552c0db9e08fe5514e0cc1d4678e70f9cc3",
         "levels": 20,
-        "nextIndex": 77554,
+        "nextIndex": 77558,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -3828,7 +3838,7 @@
     "tornado-cash/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/WithdrawVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26156669 },
+  "usedBlockNumbers": { "ethereum": 26160688 },
   "permissionsConfigHash": "0xa6ec83ce4899bc6f50c195e64efd5142f116dc3606b17f15a010409e98f0bb5a",
   "permissions": {
     "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce": {

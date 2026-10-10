@@ -75,6 +75,45 @@ const stakeLockPeriod = formatSeconds(
   voteExtendTime + executionExpiration + executionDelay,
 )
 
+// The IPFS app pinned on tornadocash.eth. L2BEAT rebuilt this CID from
+// tornado-dao/classic-ui 17c54dae with the DAO's Docker recipe
+// (tornado-dao/tornado-ipfs-ui d2aa401) on 2026-10-10. Two download fixes, not
+// build inputs: apt from archive.debian.org (Debian 11 is end of life) and kubo
+// v0.29.0 from GitHub with its sha512. A new pin fails this assert until the
+// new release is rebuilt and the reproducibility text is checked.
+const REBUILT_APP_CID =
+  'bafybeigduniojgqrz7e4vntsgmovdli3oi7a2pnzzvz2gfxlvj3yqwk75a'
+const appCid = contenthashToCid(
+  discovery.getContractValue<string>(
+    'GovernanceProposalStateUpgrade',
+    'appContenthash',
+  ),
+)
+assert(
+  appCid === REBUILT_APP_CID,
+  `tornadocash.eth pins ${appCid}, rebuild it and update REBUILT_APP_CID`,
+)
+
+/** ENS contenthash (ipfs-ns, 0xe301) to a base32 CIDv1. */
+function contenthashToCid(contenthash: string): string {
+  const bytes = Buffer.from(contenthash.replace(/^0x/, ''), 'hex')
+  assert(bytes[0] === 0xe3 && bytes[1] === 0x01, 'not an IPFS contenthash')
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz234567'
+  let bits = 0
+  let value = 0
+  let out = 'b'
+  for (const byte of bytes.subarray(2)) {
+    value = (value << 8) | byte
+    bits += 8
+    while (bits >= 5) {
+      out += alphabet[(value >>> (bits - 5)) & 31]
+      bits -= 5
+    }
+  }
+  if (bits > 0) out += alphabet[(value << (5 - bits)) & 31]
+  return out
+}
+
 function formatDenomination(amount: bigint, decimals: number): string {
   return utils.formatUnits(amount, decimals).replace(/\.?0+$/, '')
 }
@@ -122,6 +161,7 @@ export const tornadoCash: BaseProject = {
     detailedDescription: readProjectMarkdown(
       'tornado-cash',
       'detailedDescription',
+      { appCid },
     ),
     links: {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
@@ -209,7 +249,7 @@ export const tornadoCash: BaseProject = {
       value: 'Reproducible',
       sentiment: 'good',
       description:
-        'The circuits, contracts, app and relayer are open source. Each app release names its commit and a build recipe for its IPFS hash.',
+        'The circuits, contracts, app and relayer are open source. Each app release names its commit and a build recipe for its IPFS hash, and rebuilding the current release reproduces it.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
     adversaries: tornadoCashAdversaries(
