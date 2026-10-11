@@ -147,15 +147,12 @@ const columns = [
       id: OPTIONAL_COLUMNS.anonymitySet,
       header: 'Anon. set',
       cell: (ctx) => (
-        <AnonymitySetCell
-          anonymitySet={ctx.row.original.anonymitySet}
-          projectName={ctx.row.original.name}
-        />
+        <AnonymitySetCell anonymitySet={ctx.row.original.anonymitySet} />
       ),
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        tooltip: `Unique depositors over the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days, in the largest tracked pool.`,
+        tooltip: `Unique depositors in the largest tracked pool, or key registrants for stealth-address protocols, over the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
       },
     },
   ),
