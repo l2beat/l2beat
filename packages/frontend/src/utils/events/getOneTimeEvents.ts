@@ -112,14 +112,16 @@ function getEndWeekOffset(
     : undefined
 
   if (startWeekOffset > 0) {
-    const clampedWeeksOffset = weeksOffset
-      ? clamp(weeksOffset - startWeekOffset, futureEventsCount)
-      : futureEventsCount
+    const clampedWeeksOffset =
+      weeksOffset !== undefined
+        ? clamp(weeksOffset - startWeekOffset, futureEventsCount)
+        : futureEventsCount
     return startWeekOffset + clampedWeeksOffset
   }
 
-  const clampedWeeksOffset = weeksOffset
-    ? clamp(weeksOffset, futureEventsCount)
-    : futureEventsCount
+  const clampedWeeksOffset =
+    weeksOffset !== undefined
+      ? clamp(weeksOffset, futureEventsCount)
+      : futureEventsCount
   return clampedWeeksOffset
 }
