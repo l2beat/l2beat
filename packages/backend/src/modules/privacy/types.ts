@@ -1,5 +1,6 @@
 import type {
   PrivacyAnonymitySetDepositSource,
+  PrivacyAnonymitySetRegistrationSource,
   PrivacyFlowExtractorConfig,
   PrivacyRelayerExtractorConfig,
   ProjectPrivacyInfo,
@@ -30,10 +31,10 @@ export interface PrivacyConfig {
  * Anonymity-set sources read from EVM logs. STRK-20 deposits come from
  * Starknet events and go through their own indexer.
  */
-export type EvmPrivacyAnonymitySetDepositSource = Exclude<
-  PrivacyAnonymitySetDepositSource,
-  { extractor: 'strk20Deposit' }
->
+export type EvmPrivacyAnonymitySetSource =
+  | Exclude<PrivacyAnonymitySetDepositSource, { extractor: 'strk20Deposit' }>
+  // The configuration id hashes params, which registrations have none of.
+  | (PrivacyAnonymitySetRegistrationSource & { params: Record<string, never> })
 
 export type PrivacyAnonymitySetIndexerConfigProperties = {
   projectId: string
@@ -42,7 +43,7 @@ export type PrivacyAnonymitySetIndexerConfigProperties = {
   address: EthereumAddress
   event: string
   sinceTimestamp: UnixTime
-} & EvmPrivacyAnonymitySetDepositSource
+} & EvmPrivacyAnonymitySetSource
 
 export type PrivacyAnonymitySetIndexerConfig = {
   id: string
