@@ -31,6 +31,14 @@ export function createLegacyPathsRouter() {
     res.redirect(301, `/layer2s/projects/${req.params.name}`)
   })
 
+  // Blobs replaced the data availability pages.
+  router.get(
+    ['/data-availability', '/data-availability/*splat', '/da-risk-framework'],
+    (_req, res) => {
+      res.redirect(301, '/blobs')
+    },
+  )
+
   router.get('/governance/publications/:id', (req, res) => {
     res.redirect(301, `/publications/${req.params.id}`)
   })

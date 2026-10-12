@@ -8,7 +8,7 @@ import { ProjectIconList } from './ProjectIconList'
 
 export interface UsedInProjectWithIcon extends UsedInProject {
   icon: string
-  url: string
+  url: string | undefined
 }
 interface Props {
   usedIn: UsedInProjectWithIcon[]

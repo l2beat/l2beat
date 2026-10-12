@@ -46,7 +46,13 @@ export function DefiProjectPage({
             data-project-page
           >
             {!isNavigationEmpty && (
-              <StickyMobileSectionNavigation sections={navigationSections} />
+              <StickyMobileSectionNavigation
+                sections={navigationSections}
+                project={{
+                  name: entry.shortName ?? entry.name,
+                  icon: entry.icon,
+                }}
+              />
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
@@ -91,7 +97,7 @@ export function DefiProjectPage({
                     <PrimaryCard
                       id="summary"
                       data-role="nav-section"
-                      className="border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
+                      className="scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
                     >
                       <div className="max-md:hidden">
                         <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">

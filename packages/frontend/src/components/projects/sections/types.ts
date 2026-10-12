@@ -1,7 +1,6 @@
 import type { ActivitySectionProps } from './ActivitySection'
 import type { ContractsSectionProps } from './contracts/ContractsSection'
 import type { CostsSectionProps } from './costs/CostsSection'
-import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { DefiTokensSectionProps } from './defi/DefiTokensSection'
@@ -37,7 +36,6 @@ import type { StateDerivationSectionProps } from './StateDerivationSection'
 import type { StateValidationSectionProps } from './state-validation/StateValidationSection'
 import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
 import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
-import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { L2TvsSectionProps } from './tvs/L2TvsSection'
 import type { TvsValueSectionProps } from './tvs/TvsValueSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
@@ -67,7 +65,6 @@ export type SectionId =
   | 'permissions'
   | 'contracts'
   | 'sequencing'
-  | 'throughput'
   | 'data-posted'
   | 'proof-system'
   | 'trusted-setups'
@@ -88,7 +85,7 @@ export type SectionId =
   | 'tokens'
   | 'crops'
 
-type GroupId = 'da-layer' | 'da-bridge'
+type GroupId = 'da-layer'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
 
@@ -107,11 +104,6 @@ interface ProjectDetailsCostsSection {
 interface ProjectDetailsLivenessSection {
   type: 'LivenessSection'
   props: ProjectDetailsProps<LivenessSectionProps>
-}
-
-interface ProjectDetailsThroughputSection {
-  type: 'ThroughputSection'
-  props: ProjectDetailsProps<ThroughputSectionProps>
 }
 
 interface ProjectDetailsL2TvsSection {
@@ -137,11 +129,6 @@ interface ProjectDetailsMilestonesAndIncidentsSection {
 interface ProjectDetailsRiskSummarySection {
   type: 'RiskSummarySection'
   props: ProjectDetailsProps<RiskSummarySectionProps>
-}
-
-interface ProjectDetailsDaRiskSummarySection {
-  type: 'DaRiskSummarySection'
-  props: ProjectDetailsProps<DaRiskSummarySectionProps>
 }
 
 interface ProjectDetailsRiskAnalysisSection {
@@ -333,7 +320,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsRiskSummarySection
-  | ProjectDetailsDaRiskSummarySection
   | ProjectDetailsRiskAnalysisSection
   | L3ProjectDetailsRiskAnalysisSection
   | ProjectDetailsStageSection
@@ -348,7 +334,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGroup
   | ProjectDetailsGardenCropsSection
   | ProjectDetailsGrissiniRiskAnalysisSection
-  | ProjectDetailsThroughputSection
   | ProjectDetailsL2TvsSection
   | ProjectDetailsActivitySection
   | ProjectDetailsTrustedSetupSection

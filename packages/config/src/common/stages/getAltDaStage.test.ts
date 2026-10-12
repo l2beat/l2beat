@@ -27,13 +27,6 @@ describe(getAltDaStage.name, () => {
           verifierContractsReproducible: true,
           programHashesReproducible: true,
         },
-        stage2: {
-          fraudProofSystemIsPermissionless: false,
-          delayWith30DExitWindow: false,
-          proofSystemOverriddenOnlyInCaseOfABug: false,
-          daVerifier30DayExitWindow: false,
-          daMechanismEconomicSecurity: false,
-        },
       },
       {
         nodeSourceLink: 'nodelink',
@@ -45,14 +38,8 @@ describe(getAltDaStage.name, () => {
       },
     )
     expect(result.stage).toEqual('Stage 1')
-    expect(result.missing?.nextStage).toEqual('Stage 2')
-    expect(result.missing?.requirements).toEqual([
-      'Fraud proof submission is open only to whitelisted actors.',
-      'Upgrades unrelated to onchain provable bugs, including upgrades to the DA verifier, provide less than 30d to exit.',
-      "The Security Council's actions are not confined to onchain provable bugs.",
-      'The DA verifier (and related contracts) is upgradeable with less than 30d independent exit window.',
-      'The DA mechanism relies on reputational security alone; no staked assets are at risk for DA misbehavior or slashable < TVS.',
-    ])
+    expect(result.missing).toEqual(undefined)
+    expect(result.summary.map((s) => s.stage)).toEqual(['Stage 0', 'Stage 1'])
     expect(result.additionalConsiderations).toEqual({
       short: 'short notice',
       long: 'long notice',
@@ -95,13 +82,6 @@ describe(getAltDaStage.name, () => {
           verifierContractsReproducible: true,
           programHashesReproducible: true,
         },
-        stage2: {
-          fraudProofSystemIsPermissionless: false,
-          delayWith30DExitWindow: false,
-          proofSystemOverriddenOnlyInCaseOfABug: false,
-          daVerifier30DayExitWindow: false,
-          daMechanismEconomicSecurity: false,
-        },
       }),
     ).toThrow('Node source link is required')
   })
@@ -130,16 +110,9 @@ describe(getAltDaStage.name, () => {
           verifierContractsReproducible: true,
           programHashesReproducible: true,
         },
-        stage2: {
-          fraudProofSystemIsPermissionless: null,
-          delayWith30DExitWindow: true,
-          proofSystemOverriddenOnlyInCaseOfABug: true,
-          daVerifier30DayExitWindow: true,
-          daMechanismEconomicSecurity: true,
-        },
       },
       { nodeSourceLink: 'nodelink' },
     )
-    expect(result.stage).toEqual('Stage 2')
+    expect(result.stage).toEqual('Stage 1')
   })
 })

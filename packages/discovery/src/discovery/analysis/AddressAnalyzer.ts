@@ -128,11 +128,6 @@ export class AddressAnalyzer {
       proxy.addresses,
       config.manualSourcePaths,
     )
-    const libraries =
-      config.discoverLibraries === true
-        ? getLibraries(provider.chain, sources)
-        : []
-
     if (extendedTemplate === undefined) {
       const matchingTemplates = this.templateService.findMatchingTemplates(
         sources,
@@ -155,6 +150,11 @@ export class AddressAnalyzer {
           `Multiple shapes matched (${matchingTemplates.join(', ')})`
       }
     }
+
+    const libraries =
+      config.discoverLibraries === true
+        ? getLibraries(provider.chain, sources)
+        : []
 
     const { results, values, errors, usedTypes } =
       await this.handlerExecutor.execute(provider, address, sources.abi, config)
