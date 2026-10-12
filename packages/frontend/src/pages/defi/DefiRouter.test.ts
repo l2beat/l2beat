@@ -86,4 +86,5 @@ const ENTRY: ProjectDefiEntry = {
   isUnderReview: false,
   warnings: {},
   sections: [],
+  tokens: [],
 }

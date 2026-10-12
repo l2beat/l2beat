@@ -6,6 +6,7 @@ import {
   type SortingState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { BasicTable } from '~/components/table/BasicTable'
 import {
   ProjectNameCell,
@@ -22,9 +23,13 @@ import {
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { DefiSummaryEntry } from '~/server/features/defi/getDefiSummaryEntries'
+import type { LiquidStakingMetrics } from '~/server/features/defi/liquidStakingCharts/liquidStakingMetrics'
+import { DefiTvlCell } from './DefiTvlCell'
 
 export type DefiLiquidStakingRiskEntry = DefiSummaryEntry & {
   liquidStaking: ProjectDefiLiquidStakingRisks
+  /** The end of the project's chart lines, when the snapshot carries it. */
+  metrics?: LiquidStakingMetrics
 }
 
 type RiskKey = Exclude<keyof ProjectDefiLiquidStakingRisks, 'token'>
@@ -79,7 +84,7 @@ const columns = [
                 <ProjectNameCell project={project} withInfoTooltip />
               </TwoRowCell.First>
               <TwoRowCell.Second>
-                {ctx.row.original.liquidStaking.token}
+                {ctx.row.original.tokens?.join(', ')}
               </TwoRowCell.Second>
             </TwoRowCell>
           </TableLink>
@@ -90,6 +95,45 @@ const columns = [
     meta: {
       cellClassName: 'pl-4',
       headClassName: 'pl-4',
+    },
+  }),
+  columnHelper.accessor('totalValueLockedUsd', {
+    header: 'TVL',
+    cell: (ctx) => (
+      <DefiTvlCell
+        value={ctx.getValue()}
+        dataSource={ctx.row.original.tvlDataSource}
+      />
+    ),
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      tooltip: 'Total USD value of assets locked in the protocol.',
+    },
+  }),
+  columnHelper.accessor((e) => e.metrics?.yield30d?.value, {
+    id: 'yield',
+    header: 'Yield',
+    cell: (ctx) => <MetricCell value={ctx.getValue()} format={formatYield} />,
+    sortDescFirst: true,
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      tooltip:
+        "Annualised drift of the token's own oracle rate over the last 30 days of the snapshot: the yield a holder received, net of protocol fees. The end of the yield chart above.",
+    },
+  }),
+  columnHelper.accessor((e) => e.metrics?.exitCostDays?.value, {
+    id: 'exitCost',
+    header: 'Cost of exit',
+    cell: (ctx) => (
+      <MetricCell value={ctx.getValue()} format={formatExitCost} />
+    ),
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      tooltip:
+        'Days of staking yield an exit cost on the last snapshot day with a known wait, by the cheaper route: waiting for a protocol withdrawal or selling at the market discount. The end of the cost of exit chart above.',
     },
   }),
   riskColumn(
@@ -125,6 +169,22 @@ const columns = [
 ]
 
 const initialSorting: SortingState = [{ id: '#', desc: false }]
+
+function MetricCell({
+  value,
+  format,
+}: {
+  value: number | undefined
+  format: (value: number) => string
+}) {
+  if (value === undefined) {
+    return <NoDataBadge />
+  }
+  return <span className="font-medium text-sm">{format(value)}</span>
+}
+
+const formatYield = (value: number) => `${(value * 100).toFixed(2)}%`
+const formatExitCost = (value: number) => `${value.toFixed(1)}d`
 
 export function DefiLiquidStakingRiskTable({
   entries,

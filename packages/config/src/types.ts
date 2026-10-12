@@ -1042,8 +1042,22 @@ export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
   category: ProjectDefiCategory
   tvl?: ProjectDefiTvlConfig
+  /**
+   * The protocol's tokens: listed under its name in the DeFi summary and in
+   * the Tokens section of its page, linked to their token pages when the
+   * token database knows the symbol.
+   */
+  tokens?: ProjectDefiToken[]
   /** Risk comparison shown in the liquid staking view of the DeFi summary. */
   liquidStaking?: ProjectDefiLiquidStakingRisks
+}
+
+export interface ProjectDefiToken {
+  /** The ticker as the contract reports it, e.g. "stETH". */
+  symbol: string
+  name: string
+  /** One or two sentences: what the token is and how its value moves. */
+  description: string
 }
 
 export type ProjectDefiTvlConfig =
@@ -1074,8 +1088,6 @@ export interface DefiLiquidStakingRiskValue extends TableReadyValue {
 }
 
 export interface ProjectDefiLiquidStakingRisks {
-  /** Token tickers shown under the protocol name, e.g. "stETH, wstETH". */
-  token: string
   /** Who can mint, what caps apply, and who routes deposited ETH to validators. */
   minting: DefiLiquidStakingRiskValue
   /** Who runs validators, whether they post a bond, and who absorbs slashing. */

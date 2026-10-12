@@ -115,7 +115,7 @@ export const etherfi: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `ether.fi is a liquid staking and restaking protocol. Deposit ETH for ${value('eETH', 'symbol')} (rebasing) or its wrapper ${value('weETH', 'symbol')}, and the pool stakes it both through ether.fi's own permissioned operators and through third-party liquid staking tokens it accepts, with restaking in EigenLayer. A ${oracleQuorum}-of-${oracleMembers} committee sets the exchange rate under hard caps of at most ${maxPositiveRebase} per report. To exit, holders burn ${value('eETH', 'symbol')} for a withdrawal NFT the oracle must finalize, or swap instantly through a buffer for a fee up to ${maxExitFee}, though only a small buffer is instantly liquid, so large exits wait for validators to unwind. Upgrades and roles sit behind a ${upgradeDelay} timelock, with multisigs for day-to-day pausing and parameters.`,
+    description: `ether.fi is a liquid staking and restaking protocol. Users deposit ETH for ${value('eETH', 'symbol')} (rebasing) or its wrapper ${value('weETH', 'symbol')}, staked through whitelisted operators and restaked in EigenLayer, with an oracle committee setting the exchange rate.`,
     detailedDescription: readProjectMarkdown('etherfi', 'detailedDescription', {
       eethSymbol: value('eETH', 'symbol'),
       weethSymbol: value('weETH', 'symbol'),
@@ -145,8 +145,27 @@ export const etherfi: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
+    tvl: {
+      source: 'defillama',
+      protocolSlug: 'ether.fi-stake',
+      sinceTimestamp: UnixTime(1704067200),
+      chains: [{ chain: 'ethereum', providerChain: 'Ethereum' }],
+    },
+    tokens: [
+      {
+        symbol: value('eETH', 'symbol'),
+        name: 'ether.fi ETH',
+        description:
+          'Rebasing receipt for pooled and restaked ETH: balances follow the oracle report.',
+      },
+      {
+        symbol: value('weETH', 'symbol'),
+        name: 'Wrapped eETH',
+        description:
+          'Non-rebasing wrapper of eETH: a fixed amount whose ETH value rises with rewards.',
+      },
+    ],
     liquidStaking: {
-      token: `${value('eETH', 'symbol')}, ${value('weETH', 'symbol')}`,
       minting: {
         value: 'Permissionless',
         secondLine: 'gated by ether.fi ops',

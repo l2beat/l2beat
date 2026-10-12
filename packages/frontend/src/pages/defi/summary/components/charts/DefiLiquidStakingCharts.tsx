@@ -11,16 +11,14 @@ import { InfoIcon } from '~/icons/Info'
 import type {
   DefiLiquidStakingChartProject,
   DefiLiquidStakingCharts as DefiLiquidStakingChartsData,
-  LiquidStakingChartSeries,
 } from '~/server/features/defi/liquidStakingCharts/getDefiLiquidStakingCharts'
-import { generateAccessibleColors } from '~/utils/generateColors'
 import {
-  type LiquidStakingChartPoint,
-  LiquidStakingLineChart,
-} from './LiquidStakingLineChart'
-
-/** The one protocol whose exit is a burn against a buffer, not a queue. */
-const BURN_BUFFER_PROJECT = 'rocketpool'
+  BURN_BUFFER_PROJECT,
+  getExitCost,
+  getLiquidStakingSeries,
+} from '~/server/features/defi/liquidStakingCharts/liquidStakingMetrics'
+import { generateAccessibleColors } from '~/utils/generateColors'
+import { LiquidStakingLineChart } from './LiquidStakingLineChart'
 
 export function DefiLiquidStakingCharts({
   charts,
@@ -40,28 +38,9 @@ export function DefiLiquidStakingCharts({
     )
   }, [charts.projects])
 
-  const series = (
-    key: LiquidStakingChartSeries,
-    transform?: (value: number) => number,
-  ) => {
-    const projects = charts.projects.filter(
-      (project) => charts.series[key][project.id] !== undefined,
-    )
-    const data = charts.timestamps.map((timestamp, index) => {
-      const point: LiquidStakingChartPoint = { timestamp }
-      for (const project of projects) {
-        const value = charts.series[key][project.id]?.[index] ?? null
-        point[project.id] =
-          value === null ? null : transform ? transform(value) : value
-      }
-      return point
-    })
-    return { projects, data }
-  }
-
-  const apr = series('apr30')
-  const premium = series('premium')
-  const exitDays = series('exitDays')
+  const apr = getLiquidStakingSeries(charts, 'apr30')
+  const premium = getLiquidStakingSeries(charts, 'premium')
+  const exitDays = getLiquidStakingSeries(charts, 'exitDays')
   const timeRange = getChartTimeRangeFromData(apr.data)
   const exitCost = getExitCost(exitDays, premium, apr)
 
@@ -154,66 +133,6 @@ function ChartBlock({
       <div>{children}</div>
     </div>
   )
-}
-
-interface ChartSeries {
-  projects: DefiLiquidStakingChartProject[]
-  data: LiquidStakingChartPoint[]
-}
-
-const DISCOUNT_WINDOW = 7
-
-/**
- * Days of staking yield a holder gives up to exit on each day, by the cheaper
- * of two routes. Withdrawing with the protocol costs the days of the wait,
- * because a queued withdrawal earns nothing. Selling on the market costs the
- * discount to the oracle rate, expressed in days of the token's own yield.
- * Rocket Pool has no queue: its burn is free while the burn buffer holds ETH
- * and impossible while it is empty, which leaves the market.
- */
-function getExitCost(
-  wait: ChartSeries,
-  premium: ChartSeries,
-  apr: ChartSeries,
-): ChartSeries {
-  const data = wait.data.map((point, index) => {
-    const cost: LiquidStakingChartPoint = { timestamp: point.timestamp }
-    for (const project of wait.projects) {
-      const noQueue = project.id === BURN_BUFFER_PROJECT
-      const waitDays =
-        point[project.id] ?? (noQueue ? Number.POSITIVE_INFINITY : null)
-      const discount = trailingMedian(premium.data, project.id, index)
-      const yearlyYield = apr.data[index]?.[project.id]
-      const marketDays =
-        discount !== null && yearlyYield !== null && yearlyYield !== undefined
-          ? yearlyYield > 0
-            ? (Math.max(0, -discount) * 365) / yearlyYield
-            : null
-          : null
-      const cheapest =
-        waitDays === null
-          ? null
-          : Math.min(waitDays, marketDays ?? Number.POSITIVE_INFINITY)
-      cost[project.id] =
-        cheapest === null || !Number.isFinite(cheapest) ? null : cheapest
-    }
-    return cost
-  })
-  return { projects: wait.projects, data }
-}
-
-/** Median of the last `DISCOUNT_WINDOW` values up to `index`, nulls skipped. */
-function trailingMedian(
-  data: LiquidStakingChartPoint[],
-  projectId: string,
-  index: number,
-) {
-  const values = data
-    .slice(Math.max(0, index - DISCOUNT_WINDOW + 1), index + 1)
-    .map((point) => point[projectId])
-    .filter((value): value is number => value !== null && value !== undefined)
-    .sort((a, b) => a - b)
-  return values[Math.floor(values.length / 2)] ?? null
 }
 
 function formatPercent(value: number, decimals: number) {

@@ -1,4 +1,3 @@
-import { formatCurrency } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -6,12 +5,6 @@ import {
   type SortingState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
-import { NoDataBadge } from '~/components/badge/NoDataBadge'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
@@ -19,6 +12,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { DefiSummaryEntry } from '~/server/features/defi/getDefiSummaryEntries'
 import { DefiDependenciesCell } from './DefiDependenciesCell'
+import { DefiTvlCell } from './DefiTvlCell'
 
 const columnHelper = createColumnHelper<DefiSummaryEntry>()
 
@@ -54,29 +48,12 @@ const columns = [
   }),
   columnHelper.accessor('totalValueLockedUsd', {
     header: 'TVL',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (value === undefined) {
-        return <NoDataBadge />
-      }
-
-      const formatted = (
-        <span className="font-medium text-sm">
-          {formatCurrency(value, 'usd')}
-        </span>
-      )
-      const dataSource = ctx.row.original.tvlDataSource
-      if (!dataSource) {
-        return formatted
-      }
-
-      return (
-        <Tooltip contentInHtml>
-          <TooltipTrigger>{formatted}</TooltipTrigger>
-          <TooltipContent>Data source: {dataSource}</TooltipContent>
-        </Tooltip>
-      )
-    },
+    cell: (ctx) => (
+      <DefiTvlCell
+        value={ctx.getValue()}
+        dataSource={ctx.row.original.tvlDataSource}
+      />
+    ),
     sortUndefined: 'last',
     meta: {
       align: 'right',

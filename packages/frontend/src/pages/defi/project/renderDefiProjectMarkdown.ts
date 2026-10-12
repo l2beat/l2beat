@@ -22,7 +22,7 @@ export function renderDefiProjectMarkdown(
         entry.warnings.red?.text,
         entry.warnings.yellow,
       ]),
-      facts: getFacts(entry.category, totalValueLockedUsd),
+      facts: getFacts(entry, totalValueLockedUsd),
       // DeFi pages have no risk rosette.
       risks: [],
       description: entry.description,
@@ -37,19 +37,55 @@ export function renderDefiProjectMarkdown(
   })
 }
 
+const RISK_LABELS = [
+  ['minting', 'Minting'],
+  ['operators', 'Operators'],
+  ['backing', 'Backing'],
+  ['exchangeRate', 'Oracle'],
+  ['exit', 'Exit'],
+  ['upgrades', 'Upgrades'],
+] as const
+
 /**
- * The project page has no stats block and its Value Locked chart is
- * interactive, so the headline numbers come from the DeFi summary table.
+ * The stats block of the page: the TVL as the DeFi summary table shows it,
+ * then, for a liquid staking protocol, the end of its chart lines and the
+ * six risk dimensions of the summary table.
  */
 function getFacts(
-  category: ProjectDefiEntry['category'],
+  entry: ProjectDefiEntry,
   totalValueLockedUsd: number | undefined,
 ) {
+  const { liquidStaking } = entry
+  const metrics = liquidStaking?.metrics
   return compact([
     totalValueLockedUsd !== undefined && {
       label: 'TVL',
       value: `${formatUsd(totalValueLockedUsd)} (total USD value of assets locked in the protocol)`,
     },
-    category && { label: 'Category', value: category },
+    entry.category && { label: 'Category', value: entry.category },
+    entry.tokens.length > 0 && {
+      label: 'Tokens',
+      value: entry.tokens.map((token) => token.symbol).join(', '),
+    },
+    metrics?.yield30d && {
+      label: 'Yield',
+      value: `${(metrics.yield30d.value * 100).toFixed(2)}% (rate-implied, 30 days to ${metrics.yield30d.date}, net of protocol fees)`,
+    },
+    metrics?.exitCostDays && {
+      label: 'Cost of exit',
+      value: `${metrics.exitCostDays.value.toFixed(1)} days of yield (on ${metrics.exitCostDays.date}, by the cheaper of waiting or selling at the market discount)`,
+    },
+    ...RISK_LABELS.map(([key, label]) => {
+      const risk = liquidStaking?.risks[key]
+      return (
+        risk && {
+          label,
+          value: risk.secondLine
+            ? `${risk.value} (${risk.secondLine})`
+            : risk.value,
+          details: [risk.description],
+        }
+      )
+    }),
   ])
 }

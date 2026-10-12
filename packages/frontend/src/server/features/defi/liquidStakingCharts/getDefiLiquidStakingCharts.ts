@@ -1,5 +1,11 @@
 import { manifest } from '~/utils/Manifest'
 import type { DefiSummaryEntry } from '../getDefiSummaryEntries'
+import {
+  getExitCost,
+  getLiquidStakingMetrics,
+  getLiquidStakingSeries,
+  type LiquidStakingMetrics,
+} from './liquidStakingMetrics'
 import snapshot from './lstChartsSnapshot.json'
 
 export const LIQUID_STAKING_CHART_SERIES = [
@@ -66,12 +72,42 @@ export function getDefiLiquidStakingCharts(
   if (projects.length === 0) {
     return undefined
   }
+  return buildCharts(projects, { withBenchmark: true })
+}
 
+/**
+ * The end of the project's chart lines, for its page: undefined for a
+ * project the snapshot does not cover.
+ */
+export function getLiquidStakingProjectMetrics(
+  projectId: string,
+): LiquidStakingMetrics | undefined {
+  if (!SNAPSHOT_PROJECT_IDS.includes(projectId)) {
+    return undefined
+  }
+  const charts = buildCharts([{ id: projectId, name: projectId, icon: '' }], {
+    withBenchmark: false,
+  })
+  const apr = getLiquidStakingSeries(charts, 'apr30')
+  const premium = getLiquidStakingSeries(charts, 'premium')
+  const exitDays = getLiquidStakingSeries(charts, 'exitDays')
+  return getLiquidStakingMetrics(
+    charts.asOf,
+    apr,
+    getExitCost(exitDays, premium, apr),
+  )[projectId]
+}
+
+function buildCharts(
+  configProjects: DefiLiquidStakingChartProject[],
+  { withBenchmark }: { withBenchmark: boolean },
+): DefiLiquidStakingCharts {
+  const projects = [...configProjects]
   const rawSeries: Record<
     string,
     Record<string, (number | null)[]>
   > = snapshot.series
-  if (rawSeries.apr30?.[NETWORK_AVERAGE_BENCHMARK_ID]) {
+  if (withBenchmark && rawSeries.apr30?.[NETWORK_AVERAGE_BENCHMARK_ID]) {
     projects.push({
       id: NETWORK_AVERAGE_BENCHMARK_ID,
       name: 'Network average',

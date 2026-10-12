@@ -196,7 +196,8 @@ export const lido: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Lido is Ethereum’s largest liquid staking protocol. Users deposit ETH and receive stETH, a rebasing token whose supply tracks the protocol’s total pooled ETH staked across four node-operator modules. Because staked ETH lives on the beacon chain, the core trust surface is the execution-layer↔consensus-layer boundary, bridged by a ${oracleQuorum}-of-${oracleMembers} oracle committee (bounded by on-chain sanity checks) and by trustless EIP-4788 beacon-root proofs. Withdrawal credentials are set by the protocol, so node operators cannot take user principal. Every protocol-critical change is controlled by the Lido DAO through Dual Governance, which gives stETH holders a veto and a rage-quit exit against DAO proposals over a ${dgSubmitDays}-day-plus timelock.`,
+    description:
+      'Lido is Ethereum’s largest liquid staking protocol. Users deposit ETH for stETH, a rebasing token backed by validators run by curated and bonded node-operator modules, priced by an oracle committee and governed by the Lido DAO under a stETH-holder veto.',
     detailedDescription: readProjectMarkdown('lido', 'detailedDescription', {
       oracleMembers,
       oracleQuorum,
@@ -222,8 +223,21 @@ export const lido: BaseProject = {
   defiInfo: {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
+    tokens: [
+      {
+        symbol: 'stETH',
+        name: 'Lido Staked Ether',
+        description:
+          'Rebasing receipt for pooled ETH: balances follow the daily oracle report.',
+      },
+      {
+        symbol: 'wstETH',
+        name: 'Wrapped liquid staked Ether 2.0',
+        description:
+          'Non-rebasing wrapper of stETH: a fixed share count whose ETH value rises with rewards; immutable.',
+      },
+    ],
     liquidStaking: {
-      token: 'stETH, wstETH',
       minting: {
         value: 'Permissionless',
         secondLine: `gated by DSM ${dsmQuorum}/${dsmGuardians}`,

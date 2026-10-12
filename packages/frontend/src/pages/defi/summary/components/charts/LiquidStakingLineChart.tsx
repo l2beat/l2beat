@@ -15,13 +15,8 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import type { DefiLiquidStakingChartProject } from '~/server/features/defi/liquidStakingCharts/getDefiLiquidStakingCharts'
+import type { LiquidStakingChartPoint } from '~/server/features/defi/liquidStakingCharts/liquidStakingMetrics'
 import { formatTimestamp } from '~/utils/dates'
-
-/** A timestamp plus one value per project id. */
-export interface LiquidStakingChartPoint {
-  timestamp: number
-  [projectId: string]: number | null
-}
 
 interface Props {
   projects: DefiLiquidStakingChartProject[]

@@ -4,6 +4,7 @@ import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
+import type { DefiTokensSectionProps } from './defi/DefiTokensSection'
 import type { DefiTvlSectionProps } from './defi/DefiTvlSection'
 import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
 import type { GardenCropsSectionProps } from './GardenCropsSection'
@@ -84,6 +85,7 @@ export type SectionId =
   | 'privacy-assets-breakdown'
   | 'privacy-adversaries'
   | 'external-dependencies'
+  | 'tokens'
   | 'crops'
 
 type GroupId = 'da-layer' | 'da-bridge'
@@ -317,6 +319,11 @@ interface ProjectDetailsExternalDependenciesSection {
   props: ProjectDetailsProps<ExternalDependenciesSectionProps>
 }
 
+interface ProjectDetailsDefiTokensSection {
+  type: 'DefiTokensSection'
+  props: ProjectDetailsProps<DefiTokensSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
@@ -365,4 +372,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsPrivacyAssetsBreakdownSection
   | ProjectDetailsPrivacyAdversariesSection
   | ProjectDetailsExternalDependenciesSection
+  | ProjectDetailsDefiTokensSection
 )

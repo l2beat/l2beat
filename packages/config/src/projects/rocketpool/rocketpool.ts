@@ -103,7 +103,7 @@ export const rocketpool: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Rocket Pool is an Ethereum liquid staking protocol. Users deposit ETH and receive ${value('RocketTokenRETH', 'symbol')}, a token whose value tracks the protocol's pooled ETH and staking rewards. Validators are run by registered node operators who combine their own ETH bond with ETH supplied by the pool. Withdrawal credentials point to protocol contracts, so operators cannot take user principal. The core trust surface is a ${membersNeeded('RocketDAONodeTrusted')}-of-${oracleSetSize} oracle set that reports the balances used to price ${value('RocketTokenRETH', 'symbol')}, with each report limited to a ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} price move and one report every ${duration('RocketDAOProtocolSettingsNetwork', 'getSubmitBalancesFrequency')}. The same oracle set can upgrade protocol contracts after a delay of ${duration('RocketDAOProtocolSettingsSecurity', 'getUpgradeDelay')}, subject to a veto by a ${councilSeatThreshold} security council Safe. On-chain redemptions cannot be paused, but depend on available protocol liquidity.`,
+    description: `Rocket Pool is a permissionless liquid staking protocol. Users deposit ETH for ${rethSymbol}, a token whose value tracks validators run by bonded node operators and is priced by an oracle set that also governs upgrades.`,
     detailedDescription: readProjectMarkdown(
       'rocketpool',
       'detailedDescription',
@@ -180,8 +180,21 @@ export const rocketpool: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
+    tvl: {
+      source: 'defillama',
+      protocolSlug: 'rocket-pool',
+      sinceTimestamp: UnixTime(1704067200),
+      chains: [{ chain: 'ethereum', providerChain: 'Ethereum' }],
+    },
+    tokens: [
+      {
+        symbol: rethSymbol,
+        name: 'Rocket Pool ETH',
+        description:
+          'Appreciating token: its ETH rate, written by the oracle DAO, rises with rewards.',
+      },
+    ],
     liquidStaking: {
-      token: rethSymbol,
       minting: {
         value: 'Permissionless',
         secondLine: 'ungated FIFO queue',
