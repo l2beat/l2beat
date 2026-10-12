@@ -75,7 +75,8 @@ export function useBeaconChain({
   const live = query.data
   useEffect(() => {
     if (!live) return
-    clock.correct(live.head)
+    // a head that is not live is an old one, which would pull the clock back
+    if (live.live) clock.correct(live.head)
     const headMoved = live.head !== head.current
     head.current = live.head
     const current = Math.floor(chain.progressNow())

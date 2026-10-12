@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { Database, LiveSlotRange } from '@l2beat/database'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -36,6 +36,11 @@ const MAX_RETRY_DELAY = 30
 const IDLE_AFTER = 3 * LONG_POLL
 /** How long the first answer after a quiet spell waits for the rows */
 const FIRST_ANSWER_TIMEOUT = 10
+/**
+ * A read the database has not answered in this long counts as failed, so the
+ * feed goes on: the pool waits for a free connection with no limit
+ */
+const READ_TIMEOUT = 5
 
 export const LiveBlobsParams = v.object({
   /** The newest slot the page has: the answer waits for the head to move off it */
@@ -187,12 +192,16 @@ export function getLiveBlobsFeed(): LiveBlobsFeed {
  */
 export class LiveBlobsFeed {
   private snapshot: LiveBlobs | undefined
+  /** How far back the database reached when the snapshot was read */
+  private stored: LiveSlotRange | undefined
   /** The head block the snapshot was read at; another hash is a new head, or the head replaced in its slot */
   private headHash: string | undefined
   private failures = 0
   private lastAskedAt = 0
   /** The first read of the current run; unset while nobody asks */
   private warmup: Promise<void> | undefined
+  /** The read under way, which a poll after one that timed out waits on rather than starting another */
+  private reading: Promise<void> | undefined
   /** Pages waiting for a new snapshot */
   private readonly waiting = new Set<() => void>()
   private timer: ReturnType<typeof setTimeout> | undefined
@@ -210,7 +219,7 @@ export class LiveBlobsFeed {
   async latest(): Promise<LiveBlobs | undefined> {
     this.lastAskedAt = this.now()
     this.warmup ??= this.poll()
-    await withTimeout(this.warmup, FIRST_ANSWER_TIMEOUT)
+    await settlesWithin(this.warmup, FIRST_ANSWER_TIMEOUT)
     return this.snapshot
   }
 
@@ -248,20 +257,21 @@ export class LiveBlobsFeed {
   }
 
   /**
-   * One page of the day, read straight from the database: pages looking
-   * back are few, and a complete one is never asked for again
+   * One page of the day, its rows read straight from the database: pages
+   * looking back are few, and a complete one is never asked for again. The
+   * head and how far back the database reaches come from the snapshot
    */
   async past({ page }: PastBlobsParams): Promise<PastBlobs> {
+    const live = await this.latest()
+    if (!live) return { blocks: [], complete: false }
+    const stored = this.stored
     const first = page * PAST_PAGE_SLOTS
     const last = first + PAST_PAGE_SLOTS - 1
-    const [head, stored, blocks, batches] = await Promise.all([
-      this.source.liveBlock.findHead(),
-      this.source.liveBlock.getSlotRange(),
+    const [blocks, batches] = await Promise.all([
       this.source.liveBlock.getBySlotRange(first, last),
       this.source.liveBlobBatch.getBySlotRange(first, last),
     ])
-    if (!head) return { blocks: [], complete: false }
-    return buildPastBlobs({ stored, blocks, batches }, head.slot, first, last)
+    return buildPastBlobs({ stored, blocks, batches }, live.head, first, last)
   }
 
   stop() {
@@ -272,7 +282,7 @@ export class LiveBlobsFeed {
   private async poll() {
     const before = this.snapshot
     try {
-      await this.read()
+      await this.readInTime()
       this.failures = 0
     } catch (error) {
       // logged once per outage, not on every retry
@@ -287,12 +297,26 @@ export class LiveBlobsFeed {
     this.scheduleNext()
   }
 
+  /**
+   * Fails a read that takes too long, but lets it run on: the next poll waits
+   * on it rather than starting another, which could also land after a newer one
+   */
+  private async readInTime() {
+    this.reading ??= this.read().finally(() => {
+      this.reading = undefined
+    })
+    if (!(await settlesWithin(this.reading, READ_TIMEOUT))) {
+      throw new Error(`Live blobs read took over ${READ_TIMEOUT} s`)
+    }
+  }
+
   private async read() {
     const head = await this.source.liveBlock.findHead()
     if (!head) return
     if (head.hash !== this.headHash) {
       const rows = await readRows(this.source, head.slot)
       this.snapshot = buildLiveBlobs(rows, head.slot, this.now())
+      this.stored = rows.stored
       this.headHash = head.hash
       return
     }
@@ -346,12 +370,15 @@ async function readRows(
   return { stored, inWindow, blocks, batches, posted, buckets, pulse }
 }
 
-/** Waits for `promise`, but no longer than `seconds` */
-async function withTimeout(promise: Promise<void>, seconds: number) {
+/** Waits for `promise`, but no longer than `seconds`. Says whether it settled */
+async function settlesWithin(promise: Promise<void>, seconds: number) {
   let timer: ReturnType<typeof setTimeout> | undefined
-  const timeout = new Promise<void>((resolve) => {
-    timer = setTimeout(resolve, 1000 * seconds)
+  const timeout = new Promise<false>((resolve) => {
+    timer = setTimeout(() => resolve(false), 1000 * seconds)
   })
-  await Promise.race([promise, timeout])
-  clearTimeout(timer)
+  try {
+    return await Promise.race([promise.then(() => true), timeout])
+  } finally {
+    clearTimeout(timer)
+  }
 }

@@ -89,10 +89,8 @@ export function useLandedTotal(
   matches: (landing: Landing) => boolean,
 ) {
   const landings = useContext(LandingsContext)
+  // put right by `useLiveBlobs`, which the callers read `stamp` from
   const clock = useChainClock()
-  // put right here, before the read below: the belt's correction comes in
-  // its effect, after this render has already judged the newest block
-  if (stamp !== undefined) clock.correct(stamp)
   const toLand = landings && cameAfterLoad(landings, stamp) ? fresh : 0
   const [held, setHeld] = useState<Held>(() =>
     firstHeld(
