@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1787834236,
+  "timestamp": 1791537732,
   "configHash": "0x0c5352058982822b68d9c047dcbefb6a95049530e9d5935baa65530ff25b8c6c",
   "entries": [
     {
@@ -191,7 +191,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 14842800,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x58aFD2A0934c9b29779DfF24C62F76b0AA5bdB78",
+        "lastResolved": "eth:0x85Be92bae2eE287078DDb421D277DfC83Ab8a04F",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -342,31 +342,24 @@
           "0x9451e780b7a82699a8a5345caf25822345920da114581a31b412b59694f13adc",
           "0xf4d2e74aefcf9a4201e7fcd300f93faf1628fdf83397a950dd49c48cc5113aaf",
           "0x74e99d8b01a4e92c6c37961c04d1956cab258a9dd036696515961e751101b7db",
-          "0x2770a27e7c93d6eb0ae83ec2cae237cd4252ed2a3ad766be30783570d3195240",
           "0xb8da985da602277762b88bf534754cde59fc01f1dbbb780c76a2725d4e63e83d",
           "0x9e9ac054de136666faca763435497280f286223f6d412e4ca844a7916d7d3fc2",
           "0x2c785bd766946121479e4b017d543dcb3834c895b0aba4eb06c4d005ac0c598a",
           "0xed3e75b0d95c82ef333aa13929a00b8e6c4e04c812006b21f3743c78f774992a",
           "0x7bd201d192cd84f224b5fc8fd8b3ce7ce8009021d4253d57dc44e7276fc20ae0",
-          "0x527dcc8a9eac6bd0fc0312f8c20b76a57c962ba6ee6f23e3fdc5e6462542f7da",
           "0xb0c2ad4df99ac14cc0859092c6391b88036a8d9940adfa1e091367999c50543b",
           "0xfdaa0fe4307b2e9f18c1211f08ba2613a2ec3002eaad3e2d61f87b9cb25e305d",
-          "0xf5cb5ed8b9977a41406e89704eb1e0d06cad740a6cde74857036f17e0a01b4a9",
-          "0x4e69818bbb7112a75a417a8da67ba346b541bc18a4fcd78897cf0d20d5573f14",
-          "0xb1466ebd795b92cdd28a91fda29fc81ddbb10d46e2a29c1bec4be99431dbcf1d",
           "0x0496a1c5a3f9d2350177e1d3fc810b61acfcfd24e1d40e1d716524fd379e858a",
           "0x475ca3b08b5861bb0f8e49ebc14775847cf531c6c16a1473d4610d6f609f179c",
           "0xaa2854f59d446537e7b349ca80646985c4bc296ee0a6ef4ae2e7ce2cfc6476e2",
           "0x0058fc08ccd6efbfa1b28be52f2f97a34e2168217f144bbb680a537d2ca18111",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
-          "0xd0ee55b8e193f2dc21c140d4212079a5b78c3df1ac953f7d4f0dd7ed3c7316d6",
           "0xd1bfc317efb9f0d3ae5a0bd8c3a6c1948d10e63cebd06250aa7d2d20fec2f851",
           "0x3b874990e71ab573e41e7807e8c884700858af957cb72c728369aaf7b1b7ef94",
           "0x4104842f50e49ad930345cd0c3620b615730315b983118d55ddb256fb97ab0d8",
           "0x2e8be17a9566a25a30c37aaaa57a870a922d9713833cd401a0d59d9e67fa9dcc",
           "0x6b9d91f76e2c7d4fa17b0c498144cc857b43c1488f6f7a0cc7ed4a5f4c1fed5a",
           "0x832c0fae231eb044c5f7ceb2f72a77caef174f46e60c8c257aab5160603b05b3",
-          "0xfcc1afb1aadb7986d6482feb6cf5542fcca50d8bc92bf5e481a94d27374d24e2",
           "0x442a057849f7fa68f8c34dc8b9475c6f8e50ee48b1f7e83e0229833761a7d6e3",
           "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
           "0xe8f5cbf6ef8179b14b6378206d1006a38d9f749351955d4738cd515aa8559e5e",
@@ -375,7 +368,6 @@
           "0x3bada6b94153d886dd48ea93946e83779a9e338cdd138b81106584a94ef6b247",
           "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269",
           "0x3278d7a1fc5f9f6a342007f6efd5fba9f8713169ed4c448f39884925422552f7",
-          "0xf3879d1954d75c69f17b02216d7495d82be50c7ab0be425c2a6dc94a74a7cf06",
           "0x043b00fe2b0b7af45acf2778eaf4fcd396c8549cb0876cc257f6c11e54ec6635",
           "0x6da56349059cb0ec5c810d0eb2ef43e048f7713dccbd786247f47bd65fc9039f",
           "0x1c9b842872d119a38569314f96152c019f31f97f4f11b9b8f20331c7ff693e40",
@@ -383,9 +375,6 @@
           "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3",
           "0x57309111be2293fbcfd77e8479a4f2570f8956aae8cd2ba3bcc0c58d65823fcb",
           "0xe53ff57b72c0ea3dc215523a33d43340a5d1aadb25f8395de0bce768f17a84c5",
-          "0x43dda608c71270a62bb2ef064f4866902da95538e2d98d20be1a9b2a8142f2dd",
-          "0x32293d3ad6447b8c67a1f02ff0bfae0e73ec4d442842cd816e9395b0e370858c",
-          "0x12bbc1398d50485699592d0d1c05bc358714095a1d4d9971becfa9f1b48806b2",
           "0xc07a06bef2237cb01b3714510ea2d7e2b0f056081e8fe0ace4c8f3e00f1c2697",
           "0x4237db2359e8736fb9987c4c34707454ab3b0089c8ae1bd363decfa693d66c15",
           "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
@@ -402,11 +391,12 @@
           "0x2a5ccd8075a6e252f1448cd3fdbcde296d2f56aaf2d757c5863db608ae41b02e",
           "0x42162fbd59503a09b5709d0e612b824cd12f92fa577ea993fd67e797df19415c",
           "0x62fd7709add808809511fe2d3a230cd9cb7321cc2f47e2c35fd959d0449be8ee",
-          "0x05532d1781804b53a8614009f79ced98a4474294984d19e793780a3b8c286a98",
           "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
           "0x2520bd4e689b56254392f79be8265dd92d712b27807a32214f9917aab329f466",
           "0xa2322c7ee765f262424419e095e6480da07962654f0f50d211b828f82283a3b2",
-          "0x1575fdaf8270ce19550bb9e152c9bcf36434cbc40d88ac9cfca2bb3825dc8427"
+          "0x1575fdaf8270ce19550bb9e152c9bcf36434cbc40d88ac9cfca2bb3825dc8427",
+          "0x01defd21b9897f2c050db9be32a3c9fb4b042664f3ac7d08a3c2a963079d6e67",
+          "0x6245d2422e29dfb07d512c0a3017be9fd23c86dc7234650dfc328ab5dd56a8d0"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -517,11 +507,6 @@
     },
     {
       "address": "eth:0x0f4aDAD56724966285240D1b17Ee54e207786Dc6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x12130aF2fd6E23Cb4EFD396146bE064e893Fc694",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -848,6 +833,11 @@
     },
     {
       "address": "eth:0x22D54E4eED77F86aB0F19E7586f099DDeEe1fE73",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x23BB78620bd7cC7A7870c47A0058484c6263D48B",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1182,7 +1172,7 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0xEd71403a0cC46ED68E57997A225a9620b5Cf0872",
-          "eth:0x12130aF2fd6E23Cb4EFD396146bE064e893Fc694",
+          "eth:0x23BB78620bd7cC7A7870c47A0058484c6263D48B",
           "eth:0xeCf89ebA03B54ab9C606d436b32875B6947C68E8",
           "eth:0xa4C9190ca82c4056FF9CDe6a070424E563BF1D95",
           "eth:0xa4BB3AdFA1bDc0f609eCae7A39eC58e9b2A373e0"
@@ -1192,7 +1182,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1241,7 +1231,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292670344",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292671151",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1342,8 +1332,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516470,
-          "prevBlockNum": 25846564
+          "prevBoughtGas": 514422,
+          "prevBlockNum": 26153912
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1437,7 +1427,7 @@
         "game1337": "eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 7124,
+        "gameCount": 8153,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -4090,8 +4080,8 @@
     "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 25846603 },
-  "permissionsConfigHash": "0x9ab1b4581981885c2a74be7de00d7e66a298f06c4dfc4a82b77536f7696a71df",
+  "usedBlockNumbers": { "ethereum": 26153924 },
+  "permissionsConfigHash": "0x93fa551c164ddb3e2f358b5a171061edf3e07cf62d0dac997d26d644cdb16802",
   "modelledAgainst": {
     "shared-eigenlayer": "0x7d4dc86bbe2849d7de33af96e2466d994b8f5133949b99100967a503dd0d98a7"
   },

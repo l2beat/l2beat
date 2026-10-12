@@ -33,7 +33,7 @@ test('shows every section, logging no errors', async ({ blobs, page }) => {
   await expect(blobs.shareStrip).toBeVisible()
   await expect(blobs.belt).toBeVisible()
   await expect(blobs.pulse).toBeVisible()
-  await blobs.posters.scrollIntoViewIfNeeded()
+  await blobs.showPosters()
   await expect(blobs.posterRows).not.toHaveCount(0)
   expect(logged).toEqual([])
 })
@@ -42,7 +42,7 @@ test('fits the screen, with nothing wrapped or run together', async ({
   blobs,
 }) => {
   await blobs.openLive()
-  await blobs.posters.scrollIntoViewIfNeeded()
+  await blobs.showPosters()
   await expect(blobs.posterRows.first()).toBeVisible()
   expect(await findLayoutFaults(blobs.page)).toEqual([])
 })

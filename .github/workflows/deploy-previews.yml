@@ -5,22 +5,34 @@ name: Deploy previews
 # deploys only the previews whose package the PR affects. Turn off "Preview
 # Deployments" for these apps in Coolify: the toggle gates only the webhook,
 # the API ignores it, and Coolify still deletes previews when the PR closes.
+#
+# Stacked PRs get previews too. Their diff is taken against their own base, so
+# each layer deploys only what it changes.
 
+# Title and description edits skip every job; their own group keeps them from
+# cancelling a deploy that is still running for the same PR.
 concurrency:
-  group: deploy-previews-${{ github.event.pull_request.number }}
+  group: >-
+    deploy-previews-${{ github.event.pull_request.number }}${{
+    github.event.action == 'edited' && github.event.changes.base == null &&
+    format('-edit-{0}', github.run_id) || '' }}
   cancel-in-progress: true
 permissions:
   contents: read
 
 on:
   pull_request:
-    branches:
-      - main
+    # `edited` lets a retargeted PR deploy, e.g. a stacked PR moving onto main
+    # after its parent merges, which GitHub may do without a push.
+    types: [opened, synchronize, reopened, edited]
 
 jobs:
   affected:
-    # Fork PRs get no secrets, so they could not reach Coolify anyway.
-    if: github.event.pull_request.head.repo.fork == false
+    # Fork PRs get no secrets, so they could not reach Coolify anyway. Edits
+    # other than a base change (title, description) need no redeploy.
+    if: >-
+      github.event.pull_request.head.repo.fork == false &&
+      (github.event.action != 'edited' || github.event.changes.base != null)
     uses: ./.github/workflows/affected-packages.yml
 
   deploy-frontend:
