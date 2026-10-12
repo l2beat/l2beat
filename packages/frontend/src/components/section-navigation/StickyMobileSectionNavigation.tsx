@@ -72,7 +72,7 @@ function ProjectStrip({ project }: { project: Project }) {
         />
         <span className="truncate font-bold text-xs">{project.name}</span>
       </div>
-      <Logo animated={false} className="mt-0 h-3.5 w-auto shrink-0" />
+      <Logo animated={false} className="mt-0 h-4.5 w-auto shrink-0" />
     </div>
   )
 }
