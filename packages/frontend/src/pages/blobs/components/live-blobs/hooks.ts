@@ -12,7 +12,6 @@ export function usePrefersReducedMotion(): boolean {
   return reduced
 }
 
-/** Whether any of the element is on screen. Animations stop when it is not */
 export function useIsOnScreen(ref: RefObject<Element | null>): boolean {
   const [onScreen, setOnScreen] = useState(false)
   useEffect(() => {
@@ -27,11 +26,7 @@ export function useIsOnScreen(ref: RefObject<Element | null>): boolean {
   return onScreen
 }
 
-/**
- * Calls `onFrame` once a frame while `running`, with the seconds since the
- * last frame. The first frame after a long pause, as when the tab was hidden,
- * counts as a short one, so nothing jumps ahead.
- */
+/** The first frame after a long pause (hidden tab) counts as a short one, so nothing jumps ahead */
 export function useAnimationFrame(
   onFrame: (dt: number, now: number) => void,
   running: boolean,
@@ -56,7 +51,7 @@ export interface ElementSize {
   height: number
 }
 
-/** The content box of the element, 0 × 0 until it is measured */
+/** 0 × 0 until measured */
 export function useElementSize(ref: RefObject<Element | null>): ElementSize {
   const [size, setSize] = useState<ElementSize>({ width: 0, height: 0 })
   useEffect(() => {
@@ -78,9 +73,8 @@ export function useElementSize(ref: RefObject<Element | null>): ElementSize {
 }
 
 /**
- * Sizes the canvas to `width` × `height` CSS pixels at the screen's density,
- * and returns a context that draws in CSS pixels. Density is capped at 2: past
- * it, a full-card canvas costs more to fill than the eye can tell apart.
+ * Returns a context that draws in CSS pixels. Density is capped at 2: past it,
+ * a full-card canvas costs more to fill than the eye can tell apart.
  */
 export function prepareCanvas(
   canvas: HTMLCanvasElement,
@@ -99,17 +93,13 @@ export function prepareCanvas(
   return context
 }
 
-/** The site's colors, read where canvas drawing cannot use CSS variables */
+/** Canvas drawing cannot use CSS variables */
 export interface ThemeTokens {
   isDark: boolean
-  /** Text and strong ink */
   primary: string
-  /** Quiet text */
   secondary: string
   brand: string
-  /** The card the belt sits on */
   surface: string
-  /** A step off the card */
   surfaceSecondary: string
   divider: string
 }
@@ -154,10 +144,7 @@ export function useThemeTokens(): ThemeTokens {
   return tokens
 }
 
-/**
- * Loads the icons to draw on a canvas, keyed by URL. Each one shows up once it
- * has loaded; until then it is simply left out.
- */
+/** Keyed by URL; an icon is left out until it has loaded */
 export function useImages(urls: (string | undefined)[]) {
   const [images, setImages] = useState<Map<string, HTMLImageElement>>(
     () => new Map(),

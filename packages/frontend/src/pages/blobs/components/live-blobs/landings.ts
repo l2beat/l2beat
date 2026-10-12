@@ -6,22 +6,17 @@ import { BATCH_STAGGER, LAND_AFTER } from './blocks/motion'
 import { useChainClock } from './chainClock'
 import type { Arrival } from './liveMotion'
 
-/** A batch coming to rest on the belt */
 export interface Landing {
   posterId: string
   blobs: number
   slot: number
 }
 
-/** Where the belt tells of its landings, and the numbers around it hear */
+/** The belt emits its landings; the numbers around it subscribe */
 export interface Landings {
   emit: (landing: Landing) => void
   subscribe: (listener: (landing: Landing) => void) => () => void
-  /**
-   * The newest block the reader has had from the start, given `head`: the
-   * head the page loaded with, or a lower one once the chain takes that back,
-   * as a block in its slot then comes in front of the reader
-   */
+  /** The head the page loaded with, or lower once the chain takes that back */
   loadedHead: (head: number) => number
 }
 
@@ -45,41 +40,33 @@ export function createLandings(): Landings {
 
 export const LandingsContext = createContext<Landings | undefined>(undefined)
 
+export const anyLanding = (_: Landing) => true
+
 /**
- * Whether the block at `slot` came after the page loaded. The belt drops the
- * block the page loaded with too, but no number has been seen without it, so
- * counting it up would show an arrival the reader never missed: a "+11" by a
- * number that was never 11 lower
+ * The belt drops the block the page loaded with too, but no number was ever
+ * shown without it, so counting it up would show a "+11" the reader never missed
  */
 export function cameAfterLoad(landings: Landings, slot: number | undefined) {
   return slot !== undefined && slot > landings.loadedHead(slot)
 }
 
 /**
- * Longest a number waits for `blobs` of a block to land, in milliseconds. The
- * belt may be scrolled away, still loading, or failed, and the number must
- * not wait for it forever; but a working belt lands a block's batches one
- * after another, and the last of as many batches as blobs lands last
+ * The belt may be scrolled away, loading or failed, so a number must not wait
+ * for it forever; a working belt lands at most `blobs` batches, one after another
  */
 export function holdLimitMs(blobs: number) {
   return 1000 * (blobs * BATCH_STAGGER + LAND_AFTER + HOLD_SLACK)
 }
-/** Seconds past the last landing before a number stops waiting for it */
+/** Seconds */
 const HOLD_SLACK = 1
 
 /**
- * A total over the window, as the belt shows blobs come and go. What a new
- * block brought is counted in as the belt lands it, rather than when the data
- * comes in, and each landing is an arrival to show. The block the page loaded
- * with is counted in from the start, and its landings show nothing. What left
- * the window with a block is let go of once the belt has moved on to the next
- * slot: let go of at once, the number would dip just before the new blobs
- * land and climb back after, every block.
+ * A window total that counts a new block in as the belt lands it, not when the
+ * data comes. What left the window is let go of only after the belt's next
+ * slide, or the number would dip and climb back every block.
  *
- * `total` is the window's at `stamp` (the head), `fresh` what the block at
- * `stamp` brought to it, `blockBlobs` all that block brought (its last batch
- * lands last, whoever's it is), and `matches` picks the landings that count
- * toward it. Keep `matches` stable.
+ * `fresh` is what the block at `stamp` brought to `total`; `blockBlobs` all it
+ * brought (its last batch lands last, whoever's it is). Keep `matches` stable.
  */
 export function useLandedTotal(
   stamp: number | undefined,
@@ -89,10 +76,8 @@ export function useLandedTotal(
   matches: (landing: Landing) => boolean,
 ) {
   const landings = useContext(LandingsContext)
+  // put right by `useLiveBlobs`, which the callers read `stamp` from
   const clock = useChainClock()
-  // put right here, before the read below: the belt's correction comes in
-  // its effect, after this render has already judged the newest block
-  if (stamp !== undefined) clock.correct(stamp)
   const toLand = landings && cameAfterLoad(landings, stamp) ? fresh : 0
   const [held, setHeld] = useState<Held>(() =>
     firstHeld(
@@ -170,25 +155,27 @@ export function useLandedTotal(
     [landings, matches],
   )
 
-  return { value: total - held.arriving + held.departed, arrival }
+  return {
+    value: total - held.arriving + held.departed,
+    arrival,
+    landing: held.arriving > 0,
+  }
 }
 
-/** A total over the window, with what is held back from it for now */
 export interface Held {
   stamp: number | undefined
   total: number
-  /** All the newest block brought, for how long its landings take */
+  /** For how long the newest block's landings take */
   blockBlobs: number
-  /** What the newest block brought to this total, until the belt lands it */
+  /** Held back until the belt lands it */
   arriving: number
-  /** What left the window as blocks came, until the belt moves on a slot */
+  /** Held in until the belt moves on a slot */
   departed: number
 }
 
 /**
- * What to hold back as a number starts. The belt drops the newest block if it
- * is of this slot or the last (as `arrivesNow` has it), so a number that comes
- * on as it does, like a poster's first row, waits for its landing
+ * The belt drops the newest block if `arrivesNow`, so a number that appears
+ * with it, like a poster's first row, waits for its landing
  */
 export function firstHeld(
   stamp: number | undefined,
@@ -197,8 +184,7 @@ export function firstHeld(
   blockBlobs: number,
   currentSlot: number,
 ): Held {
-  const landing =
-    stamp !== undefined && arrivesNow(stamp, stamp, true, currentSlot)
+  const landing = landsNow(stamp, currentSlot)
   return {
     stamp,
     total,
@@ -208,7 +194,6 @@ export function firstHeld(
   }
 }
 
-/** What to hold back once the total is `total` at `stamp` */
 export function holdBack(
   held: Held,
   stamp: number | undefined,
@@ -227,22 +212,27 @@ export function holdBack(
     return { stamp, total, blockBlobs: 0, arriving: 0, departed: 0 }
   }
   if (!isAbove(stamp, held.stamp)) return { ...held, stamp, total }
-  // what left the window: the old total and the new blobs, less the new total
   const departed = Math.max(0, held.total + fresh - total)
+  const landing = landsNow(stamp, currentSlot)
   return {
     stamp,
     total,
-    blockBlobs,
-    arriving: fresh,
+    blockBlobs: landing ? blockBlobs : 0,
+    arriving: landing ? fresh : 0,
     departed: held.departed + departed,
   }
 }
 
-/** Seconds until the belt's slide under way at `progress` ends, or the next one's once this slot's is over */
+/** The slide under way, or the next one's once this slot's is over */
 export function secondsUntilSlideEnds(progress: number) {
   const slideStartedAt = progress - SLIDE_TIME / SLOT_SECONDS
   const slideEnds = Math.floor(slideStartedAt) + 1
   return (slideEnds - progress) * SLOT_SECONDS + SLIDE_TIME
+}
+
+/** Whether the belt drops, and so lands, the newest block: one stored late is placed quietly */
+function landsNow(stamp: number | undefined, currentSlot: number) {
+  return stamp !== undefined && arrivesNow(stamp, stamp, true, currentSlot)
 }
 
 function isAbove(slot: number | undefined, than: number | undefined) {

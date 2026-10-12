@@ -3,7 +3,6 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 
-/** A project that posts blobs to Ethereum, as the live view draws it */
 export interface BlobPoster {
   id: string
   name: string
@@ -13,10 +12,7 @@ export interface BlobPoster {
   href: string | undefined
 }
 
-/**
- * Every active rollup that posts its data to Ethereum, and the sovereign
- * chains Ethereum's own config tracks, which have no project of their own
- */
+/** Includes the sovereign chains Ethereum's own config tracks, which have no project of their own */
 export async function getBlobPosters(): Promise<BlobPoster[]> {
   const [projects, sovereign] = await Promise.all([
     ps.getProjects({
@@ -50,7 +46,7 @@ export async function getBlobPosters(): Promise<BlobPoster[]> {
   ]
 }
 
-/** Chains posting to Ethereum that are not projects of their own, as the backend's DA indexer tracks them */
+/** As the backend's DA indexer tracks them */
 async function getSovereignProjects() {
   const ethereum = await ps.getProject({
     id: ProjectId.ETHEREUM,
@@ -63,10 +59,7 @@ async function getSovereignProjects() {
   }))
 }
 
-/**
- * Projects have no color of their own unless they are an interop chain or
- * set one for their page, so the rest take one from this list by their id.
- */
+/** For projects that are not an interop chain and set no color for their page; picked by id */
 const FALLBACK_COLORS = [
   '#7C8CF8',
   '#36B5A0',

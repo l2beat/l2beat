@@ -1,15 +1,12 @@
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getBlobPosters } from '~/server/features/data-availability/live-blobs/getBlobPosters'
-import { getDaProjectValidators } from '~/server/features/data-availability/project/utils/getDaProjectValidators'
 import { getDaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
-import { getThroughputInForce } from '~/server/features/data-availability/throughput/utils/getThroughputInForce'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { toChartProject } from '~/utils/project/toChartProject'
-import type { EthereumSummary } from './components/EthereumSummaryCard'
 
 export async function getBlobsPageData(
   manifest: Manifest,
@@ -40,23 +37,10 @@ export async function getBlobsPageData(
   ])
   assert(ethereum, 'Ethereum DA layer not found')
 
-  const currentThroughput = getThroughputInForce(
-    ethereum.daLayer.throughput ?? [],
-    UnixTime.now(),
+  const ethereumBridge = daBridges.find(
+    (bridge) => bridge.daBridge.daLayer === ethereum.id,
   )
-  const ethereumSummary: EthereumSummary = {
-    name: ethereum.name,
-    iconUrl: manifest.getUrl(`/icons/${ethereum.slug}.png`),
-    validators: await getDaProjectValidators(
-      ethereum.id,
-      ethereum.daLayer.validators,
-    ),
-    durationStorage: ethereum.daLayer.pruningWindow,
-    maxThroughputPerSecond:
-      currentThroughput && currentThroughput.size !== 'NO_CAP'
-        ? currentThroughput.size / currentThroughput.frequency
-        : undefined,
-  }
+  assert(ethereumBridge, 'Ethereum DA bridge not found')
 
   return {
     head: {
@@ -75,7 +59,10 @@ export async function getBlobsPageData(
       page: 'BlobsPage',
       props: {
         ...appLayoutProps,
-        ethereumSummary,
+        ethereum: {
+          href: `/data-availability/projects/${ethereum.slug}/${ethereumBridge.slug}`,
+          iconUrl: manifest.getUrl(`/icons/${ethereum.slug}.png`),
+        },
         tvsProjectIds: getDaTvsProjectIds(
           daLayers,
           daBridges,

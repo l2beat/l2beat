@@ -2,7 +2,7 @@ type Rgb = [number, number, number]
 
 const FALLBACK: Rgb = [138, 143, 156]
 
-/** Reads #rgb, #rrggbb and rgb(…) colors, the forms project colors and CSS variables come in */
+/** #rgb, #rrggbb and rgb(…): the forms project colors and CSS variables come in */
 function parseColor(color: string): Rgb {
   const value = color.trim()
   if (value.startsWith('#')) {
@@ -30,7 +30,6 @@ export function toRgba(color: string, alpha: number): string {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-/** `t` of the way from `from` to `to` */
 export function mixColors(from: string, to: string, t: number): string {
   const a = parseColor(from)
   const b = parseColor(to)
@@ -44,11 +43,7 @@ function contrastRatio(a: string, b: string): number {
   return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05)
 }
 
-/**
- * The project's color, lightened or darkened just enough to stand out from
- * `background`. Brand colors are picked for a project's own site: a black
- * logo color disappears on the dark theme, a pale one on the light theme.
- */
+/** Brand colors are picked for a project's own site: a black one disappears on the dark theme */
 export function readableColor(
   color: string,
   background: string,

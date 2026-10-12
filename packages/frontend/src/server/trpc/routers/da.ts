@@ -1,3 +1,5 @@
+import { TRPCError } from '@trpc/server'
+import { env } from '~/env'
 import {
   getLiveBlobsFeed,
   LiveBlobsParams,
@@ -22,6 +24,12 @@ import {
 import { getProjectDaThroughputCharts } from '~/server/features/data-availability/throughput/getProjectDaThroughputCharts'
 import { procedure, router } from '../trpc'
 
+/** For the blobs page alone, so with the page off nobody keeps the live feed reading */
+const blobsPageProcedure = procedure.use(({ next }) => {
+  if (!env.CLIENT_SIDE_BLOBS_PAGE) throw new TRPCError({ code: 'NOT_FOUND' })
+  return next()
+})
+
 export const daRouter = router({
   detailedChartWithProjectsRanges: procedure
     .input(DataPostedChartWithProjectsRangesDataParams)
@@ -39,19 +47,19 @@ export const daRouter = router({
     .input(L2ProjectDaThroughputChartParams)
     .query(async ({ input }) => getL2ProjectDaThroughputChart(input)),
 
-  pastDayUsage: procedure
+  pastDayUsage: blobsPageProcedure
     .input(DaPastDayUsageParams)
     .query(async ({ input }) => getDaPastDayUsage(input)),
 
   // null rather than undefined, which React Query takes for a missing answer
-  liveBlobs: procedure
+  liveBlobs: blobsPageProcedure
     .input(LiveBlobsParams)
     .query(
       async ({ input }) =>
         (await getLiveBlobsFeed().latestAfter(input)) ?? null,
     ),
 
-  pastBlobs: procedure
+  pastBlobs: blobsPageProcedure
     .input(PastBlobsParams)
     .query(({ input }) => getLiveBlobsFeed().past(input)),
 })

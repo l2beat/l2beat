@@ -3,32 +3,26 @@ import type { BeltLayout } from './beltLayout'
 import type { Playback } from './beltScene'
 import { easeInOutCubic, smoothstep } from './motion'
 
-/**
- * Seconds the belt takes to bring the next block into the bay. The belt
- * stands still the rest of the slot: moving a rack's width in 12 seconds,
- * it would crawl a pixel at a time
- */
+/** Seconds. The belt stands still the rest of the slot: spread over 12 s it would crawl a pixel at a time */
 export const SLIDE_TIME = 0.7
 
-/** Where the belt stands at a moment: which block is in the bay, and where every rack goes */
 export interface BeltPosition {
   /** The block in the bay: the one being made, or one looked back at */
   current: number
   /** The slot being made, live or not. Racks from it on are still empty */
   made: number
-  /** Seconds into the slot being made */
+  /** Seconds */
   intoSlot: number
-  /** 0–1 while the bay takes its new block and lets go of the last */
+  /** 0–1 */
   handover: number
-  /** 0–1 while the rack of the slot being made seals, at the start of its slot */
+  /** 0–1 */
   sealing: number
-  /** The bay holds a block from the past rather than the one being made */
   lookingBack: boolean
   first: number
   last: number
-  /** Left edge of the rack in the bay, on a whole device pixel */
+  /** On a whole device pixel */
   bayRackLeft: number
-  /** Left edge of the bay itself, which stays put as racks slide through it */
+  /** Stays put as racks slide through the bay */
   bayLeft: number
 }
 
@@ -68,17 +62,14 @@ export function beltAt(
   }
 }
 
-/**
- * Where a live belt stands, as a view would put it: the slot in the bay less
- * how far the next one has yet to come. A view headed back to live goes here
- */
+/** The slot in the bay less how far the next one has yet to come */
 export function livePosition(progress: number): number {
   const made = Math.floor(progress)
   const intoSlot = (progress - made) * SLOT_SECONDS
   return made - 1 + easeInOutCubic(Math.min(1, intoSlot / SLIDE_TIME))
 }
 
-/** How sealed a rack looks: 1 for a made block, 0 for one still to come */
+/** 1 for a made block, 0 for one still to come */
 export function sealedness(belt: BeltPosition, slot: number) {
   if (slot < belt.made) return 1
   if (slot > belt.made) return 0
@@ -89,14 +80,12 @@ export function rackLeft(belt: BeltPosition, layout: BeltLayout, slot: number) {
   return belt.bayRackLeft + (slot - belt.current) * layout.blockPitch
 }
 
-/** How lit a block is by the bay: fully while made, easing in and out at handover */
 export function bayLight(belt: BeltPosition, slot: number) {
   if (slot === belt.current) return belt.handover
   if (slot === belt.current - 1) return 1 - belt.handover
   return 0
 }
 
-/** How visible something spanning `left`–`right` is, as the belt fades out at its ends */
 export function presenceAtEnds(
   layout: BeltLayout,
   left: number,
