@@ -1,7 +1,6 @@
-import { getEnv } from '@l2beat/backend-tools'
 import { getDiscoveryPaths, SQLiteCache } from '@l2beat/discovery'
 import chalk from 'chalk'
-import { command, option, optional, string } from 'cmd-ts'
+import { command, option, string } from 'cmd-ts'
 import { createCliLogger } from '../implementations/common/CliLogger'
 import {
   FETCHED_KINDS,
