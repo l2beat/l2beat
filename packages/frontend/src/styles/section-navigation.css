@@ -37,30 +37,27 @@
 
 /*
   The project strip rests behind the tabs (see `StickyMobileSectionNavigation`)
-  and the tabs uncover it by moving down a strip's height, but only once the
-  page title, which already names the project, has gone under them.
+  and the tabs uncover it by moving down a strip's height while the page title
+  slides under them. The tabs cover the big title as the small one in the
+  strip comes out, so the title seems to move from the page into the strip.
 
-  Where scroll-driven animations work, the move follows the scroll 1:1 as the
-  title's last 30px pass under the tabs. The component always marks the tabs
-  `data-strip-shown` once the title is covered; elsewhere (Firefox, Safari
-  before 26) or with reduced motion, that mark moves them over a fixed time
-  instead: those browsers hand scroll positions to scripts too rarely to
+  Where scroll-driven animations work, the move follows the scroll 1:1 over
+  the scroll that takes the title under the tabs. The component marks the tabs
+  `data-strip-shown` once the title starts going under; elsewhere (Firefox,
+  Safari before 26) or with reduced motion, that mark moves them over a fixed
+  time instead: those browsers hand scroll positions to scripts too rarely to
   follow the scroll.
 
-  Either way the tabs are at the top whenever the title is in view. The timed
-  move uses `top`, which has no effect once the tabs come unstuck, so a fast
-  scroll to the top can't catch them mid-move out of place.
+  Either way the tabs are at the top whenever the whole title is in view. The
+  timed move uses `top`, which has no effect once the tabs come unstuck, so a
+  fast scroll to the top can't catch them mid-move out of place.
 */
 
-/* The page title, whose last 30px under the tabs drive the scroll-linked move. */
+/* The page title, whose way under the tabs drives the scroll-linked move. */
 @utility project-title-timeline {
   view-timeline: --project-title block;
-  /* Ends the timeline once the title's bottom is a strip's height below the top. */
-  view-timeline-inset: calc(
-      var(--section-nav-tabs-height) -
-      var(--project-strip-height)
-    )
-    0px;
+  /* Puts the timeline's edge at the bottom of the tabs before they move. */
+  view-timeline-inset: var(--section-nav-tabs-height) 0px;
 }
 
 :root {
@@ -93,8 +90,7 @@
     @media (prefers-reduced-motion: no-preference) {
       animation: uncover-project-strip linear both;
       animation-timeline: --project-title;
-      animation-range: exit-crossing calc(100% - var(--project-strip-height))
-        exit-crossing 100%;
+      animation-range: exit-crossing 0% exit-crossing 100%;
 
       /* The scroll does the moving here; the timed mark is ignored. */
       &[data-strip-shown] {
