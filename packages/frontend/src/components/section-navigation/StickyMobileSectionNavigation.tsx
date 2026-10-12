@@ -29,7 +29,7 @@ export function StickyMobileSectionNavigation({
   const tabsRef = useCallback(
     (tabs: HTMLDivElement | null) => {
       const stopRevealing =
-        tabs && hasProject ? revealStripOnceTitleCovered(tabs) : undefined
+        tabs && hasProject ? revealStripAsTitleGoesUnder(tabs) : undefined
       const stopPublishing = stickyTopBarRef(tabs)
       return () => {
         stopRevealing?.()
@@ -57,12 +57,12 @@ export function StickyMobileSectionNavigation({
 }
 
 /**
- * Marks the tabs once the page title has gone under them. Where their move
+ * Marks the tabs once the page title starts going under them. Where their move
  * can't follow the scroll, CSS moves them on that mark over a fixed time;
  * where it can, CSS ignores the mark (see `section-navigation.css`). CSS
  * picks, so it keeps up when reduced motion is switched on or off.
  */
-function revealStripOnceTitleCovered(tabs: HTMLElement) {
+function revealStripAsTitleGoesUnder(tabs: HTMLElement) {
   const title = tabs.parentElement?.querySelector('h1')
   if (!title) return
   // Declared rather than measured: the tabs are hidden from `lg` up, so a
@@ -73,11 +73,11 @@ function revealStripOnceTitleCovered(tabs: HTMLElement) {
   const observer = new IntersectionObserver(
     ([entry]) => {
       if (!entry) return
-      const isCovered =
-        !entry.isIntersecting && entry.boundingClientRect.top < tabsHeight
-      tabs.toggleAttribute('data-strip-shown', isCovered)
+      const isGoingUnder =
+        entry.intersectionRatio < 1 && entry.boundingClientRect.top < tabsHeight
+      tabs.toggleAttribute('data-strip-shown', isGoingUnder)
     },
-    { rootMargin: `-${tabsHeight}px 0px 0px 0px` },
+    { rootMargin: `-${tabsHeight}px 0px 0px 0px`, threshold: 1 },
   )
   observer.observe(title)
   return () => {
@@ -87,11 +87,11 @@ function revealStripOnceTitleCovered(tabs: HTMLElement) {
 }
 
 /**
- * Rests behind the tabs until they slide down to uncover it once the page
- * title has scrolled away; the slide follows the scroll, not a clock (see
- * `section-navigation.css`). It shows the project only after the title, which
- * names it already, is gone, and the tabs are back in place whenever the title
- * is in view, so a fast scroll to the top can't catch them mid-slide.
+ * Rests behind the tabs until they slide down to uncover it while the page
+ * title slides under them, so the title seems to move into the strip; the
+ * slide follows the scroll, not a clock (see `section-navigation.css`). The
+ * tabs are back in place whenever the whole title is in view, so a fast scroll
+ * to the top can't catch them mid-slide.
  *
  * It sits below the tabs' z-index, which pages may lower (interop uses 40).
  * Its height, `--project-strip-height`, is part of the `--section-nav-height`
