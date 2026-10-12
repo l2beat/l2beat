@@ -60,9 +60,10 @@
 }
 
 /*
-  Without scroll-driven animations (Firefox, Safari before 26), or with
-  reduced motion, the tabs simply stick a strip's height lower, uncovering
-  the strip as soon as the site header scrolls away.
+  Without scroll-driven animations (Firefox, Safari before 26),
+  `StickyMobileSectionNavigation` runs the same slide from a scroll listener
+  once it hydrates. Until then, or with reduced motion, the tabs simply stick
+  a strip's height lower, uncovering the strip as the site header leaves.
 */
 @utility section-nav-tabs-under-strip {
   top: var(--project-strip-height);
@@ -72,6 +73,7 @@
     through `timeline-scope`; a browser with timelines but without that would
     leave the tabs stuck over the strip.
   */
+  /* Mirrored by `SCROLL_DRIVEN_SLIDE` in `StickyMobileSectionNavigation`. */
   @supports (animation-timeline: view()) and (timeline-scope: --x) {
     @media (prefers-reduced-motion: no-preference) {
       top: 0;

@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { Logo } from '~/components/Logo'
 import { stickyTopBarRef } from '~/components/table/stickyTopBar'
 import { cn } from '~/utils/cn'
@@ -24,11 +25,26 @@ export function StickyMobileSectionNavigation({
   project,
   className,
 }: Props) {
+  const hasProject = !!project
+  const tabsRef = useCallback(
+    (tabs: HTMLDivElement | null) => {
+      // Before publishing, so the slide it declares counts.
+      const stopSliding =
+        tabs && hasProject ? slideTabsWithTitle(tabs) : undefined
+      const stopPublishing = stickyTopBarRef(tabs)
+      return () => {
+        stopSliding?.()
+        stopPublishing?.()
+      }
+    },
+    [hasProject],
+  )
+
   return (
     <>
       {project && <ProjectStrip project={project} />}
       <div
-        ref={stickyTopBarRef}
+        ref={tabsRef}
         className={cn(
           'md:-mx-5 sticky z-100 lg:hidden',
           project ? 'section-nav-tabs-under-strip' : 'top-0',
@@ -40,6 +56,53 @@ export function StickyMobileSectionNavigation({
     </>
   )
 }
+
+/**
+ * Stands in for the scroll-driven slide in `section-navigation.css` where the
+ * browser lacks it (Firefox): the same 30px slide, set from a scroll listener.
+ * Firefox scrolls off the main thread, so this can trail by a frame, but only
+ * while the title crosses those 30px; elsewhere the slide is pinned.
+ */
+function slideTabsWithTitle(tabs: HTMLElement) {
+  const strip = tabs.previousElementSibling
+  const title = tabs.parentElement?.querySelector('h1')
+  if (
+    !(strip instanceof HTMLElement) ||
+    !title ||
+    CSS.supports(SCROLL_DRIVEN_SLIDE) ||
+    matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    return
+  }
+
+  const update = () => {
+    // Hidden from `lg` up.
+    if (tabs.offsetHeight === 0) return
+    const overlap = tabs.offsetHeight - title.getBoundingClientRect().bottom
+    const slide = Math.min(Math.max(overlap, 0), strip.offsetHeight)
+    tabs.style.translate = `0 ${slide}px`
+  }
+
+  tabs.style.top = '0px'
+  tabs.style.setProperty(
+    '--sticky-top-bar-slide',
+    'var(--project-strip-height)',
+  )
+  update()
+  window.addEventListener('scroll', update, { passive: true })
+  window.addEventListener('resize', update)
+  return () => {
+    window.removeEventListener('scroll', update)
+    window.removeEventListener('resize', update)
+    tabs.style.removeProperty('top')
+    tabs.style.removeProperty('translate')
+    tabs.style.removeProperty('--sticky-top-bar-slide')
+  }
+}
+
+// Mirrors the `@supports` condition in `section-navigation.css`.
+const SCROLL_DRIVEN_SLIDE =
+  '(animation-timeline: view()) and (timeline-scope: --x)'
 
 /**
  * Rests behind the tabs until they slide down to uncover it once the page
