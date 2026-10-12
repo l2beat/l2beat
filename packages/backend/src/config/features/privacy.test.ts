@@ -4,6 +4,7 @@ import {
   type ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
+import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import {
   ChainSpecificAddress,
   EthereumAddress,
@@ -296,8 +297,73 @@ describe(getPrivacyConfig.name, () => {
 
     if (config === false) throw new Error('Privacy config should be enabled')
     expect(config.anonymitySetConfigs.length).toBeGreaterThan(0)
-    for (const anonymitySetConfig of config.anonymitySetConfigs) {
+    expect(config.starknetAnonymitySetConfigs.length).toBeGreaterThan(0)
+    for (const anonymitySetConfig of [
+      ...config.anonymitySetConfigs,
+      ...config.starknetAnonymitySetConfigs,
+    ]) {
       expect(anonymitySetConfig.sinceTimestamp).toEqual(minTimestamp)
     }
+  })
+
+  it('routes STRK-20 anonymity sets to the Starknet indexer', async () => {
+    const project = await ps.getProject({
+      slug: 'strk20',
+      select: ['privacyInfo'],
+    })
+    if (!project) throw new Error('STRK-20 project not found')
+    const strkBucket = project.privacyInfo.tokens
+      .flatMap((token) => token.buckets)
+      .find((bucket) => bucket.id === 'strk20-STRK')
+    if (!strkBucket?.anonymitySet) throw new Error('STRK bucket not tracked')
+    if (typeof strkBucket.address === 'string') {
+      throw new Error('STRK-20 pool should use an explicit chain address')
+    }
+    const deposit = strkBucket.deposit
+    if (deposit.extractor !== 'strk20Deposit') {
+      throw new Error('STRK-20 deposits should use the strk20Deposit extractor')
+    }
+
+    const projectService = mockObject<ProjectService>({
+      getProjects: mockFn().resolvesToOnce([project]),
+    })
+
+    const config = await getPrivacyConfig(
+      projectService,
+      env,
+      new FeatureFlags('privacy'),
+      [],
+    )
+
+    if (config === false) throw new Error('Privacy config should be enabled')
+    expect(config.anonymitySetConfigs).toEqual([])
+    expect(config.starknetAnonymitySetConfigs.map((c) => c.bucketId)).toEqual(
+      project.privacyInfo.tokens
+        .filter((token) => token.buckets[0]?.anonymitySet !== undefined)
+        .map((token) => `strk20-${token.token.symbol}`),
+    )
+    const strkConfig = config.starknetAnonymitySetConfigs.find(
+      (c) => c.bucketId === 'strk20-STRK',
+    )
+    expect(strkConfig).toEqual({
+      id: createPrivacyAnonymitySetConfigurationId({
+        projectId: 'strk20',
+        bucketId: 'strk20-STRK',
+        chain: 'starknet',
+        address: strkBucket.address.address,
+        event: deposit.event,
+        extractor: 'strk20Deposit',
+        params: deposit.params,
+      }),
+      projectId: 'strk20',
+      bucketId: 'strk20-STRK',
+      chain: 'starknet',
+      address: strkBucket.address.address,
+      event: deposit.event,
+      sinceTimestamp: strkBucket.sinceTimestamp,
+      extractor: 'strk20Deposit',
+      params: deposit.params,
+    })
+    expect(config.chains).toEqual(['starknet'])
   })
 })
