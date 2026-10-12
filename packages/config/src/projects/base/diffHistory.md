@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x90181b0ea77b5240271b4a27e91e1d4997f41b3b
+
+# Diff at Fri, 09 Oct 2026 09:39:26 GMT:
+
+- id: 6a0aeb99
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1790951049
+- current timestamp: 1791538610
+
+## Description
+
+OptimismPortal2 6.0.0 → 6.0.1: a failed withdrawal call to a 7702-delegated EOA now reverts instead of finalizing, upgraded by the Base Governance Multisig.
+https://disco.l2beat.com/diff/eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C/eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      sourceHashes.1:
+-        "0xe19e03ee1eceea55b82f2982dcbf9d11d2a194352be04181edc1b6cfe1e9dcb3"
++        "0xa3692169a2d67b0edeeee11f2dd643e4bebd7d1178b87d899f03ff7c580d5dc2"
+      values.$implementation:
+-        "eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C"
++        "eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70"
+      values.$pastUpgrades.12:
++        ["2026-10-07T17:44:47.000Z","0x12b3bf5bb0a8f921321f9a91303240ce01fde9f99ba9f97234f89d114c077bf6",["eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70"]]
+      values.$upgradeCount:
+-        12
++        13
+      values.version:
+-        "6.0.0"
++        "6.0.1"
+      implementationNames.eth:0xcA5ca23502eFf4254bc11Ac0bEC4Dbb7495Bd06C:
+-        "OptimismPortal2"
+      implementationNames.eth:0x03863Ab7F64B733cFF85C8fF44a86601C568Ca70:
++        "OptimismPortal2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal2/OptimismPortal2.sol            | 36 ++++++++++++++--------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
+```
+
 Generated with discovered.json: 0xbd46189f0ce0eab6de17de34d5379e787f49cfe0
 
 # Diff at Wed, 07 Oct 2026 14:46:31 GMT:

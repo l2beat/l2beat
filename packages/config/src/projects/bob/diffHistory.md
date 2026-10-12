@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xefe96c0f5c9e50b01bddbe6972916b9b7b9d59c2
+
+# Diff at Fri, 09 Oct 2026 08:12:45 GMT:
+
+- id: 99b796ec
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1790944898
+- current timestamp: 1791533460
+
+## Description
+
+RISC Zero verifier owner Safe: member rotated, threshold 3/5 → 2/5.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926"
++        "eth:0x9a017883e4A6BB2a6261D92D70f71107F2C39D12"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0xfac4e7b19ffa5f8299f402dc9b7173d3bbce8932
 
 # Diff at Sun, 04 Oct 2026 05:55:31 GMT:

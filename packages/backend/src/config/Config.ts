@@ -364,6 +364,8 @@ export interface LiveBlobsTrackingConfig {
   readonly rpc: {
     readonly url: string
     readonly callsPerMinute: number
+    /** Calls per HTTP request, the RPC rejects bigger batches */
+    readonly maxBatchSize?: number
   }
 }
 

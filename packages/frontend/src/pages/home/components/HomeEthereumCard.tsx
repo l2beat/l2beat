@@ -58,10 +58,7 @@ export function HomeEthereumCard({ charts, economicSecurity }: Props) {
   return (
     <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
       <div className="flex flex-col gap-2.5">
-        <HomeCardHeader
-          title="Ethereum"
-          href="/data-availability/projects/ethereum/ethereum"
-        />
+        <HomeCardHeader title="Ethereum" />
         <EconomicSecurityLine value={economicSecurity} />
       </div>
       <HorizontalSeparator className="my-3" />
