@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { ChevronIcon } from '~/icons/Chevron'
+import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import {
@@ -14,11 +15,11 @@ import {
 import { mixColors, readableColor } from './color'
 import { useThemeTokens } from './hooks'
 import { LIVE_POSTERS_ID } from './LivePosters'
-import { type Landing, useLandedTotal } from './landings'
+import { anyLanding, useLandedTotal } from './landings'
 import { type Arrival, Pop, RollingNumber } from './liveMotion'
-import { type BlockLimits, type LivePoster, UNKNOWN_ID } from './model'
+import { type BlockLimits, type PosterTotals, UNKNOWN_ID } from './model'
 import { NextBlock } from './NextBlock'
-import { type LiveStatus, useLiveBlobs } from './useLiveBlobs'
+import type { LiveStatus } from './useLiveBlobs'
 
 const STATUS_TEXT: Record<LiveStatus, string> = {
   connecting: 'Connecting to Ethereum…',
@@ -36,7 +37,6 @@ export interface EthereumLink {
 const NAMED_POSTERS = 4
 
 const formatArrivedKib = (blobs: number) => formatKib(blobs * BLOB_KIB)
-const anyLanding = (_: Landing) => true
 
 /**
  * Ethereum's blob market over the last 24 hours, above the belt: whether it is
@@ -44,27 +44,29 @@ const anyLanding = (_: Landing) => true
  * posted them, in the colors the belt uses
  */
 export function LiveStats({
+  live: data,
+  totals,
+  status,
   limits,
-  posters,
   ethereum,
 }: {
+  live: LiveBlobs | undefined
+  totals: PosterTotals | undefined
+  status: LiveStatus
   limits: BlockLimits
   ethereum: EthereumLink
-  /** Every project that may post, with the stand-in for unknown senders last */
-  posters: LivePoster[]
 }) {
-  const { data, status } = useLiveBlobs()
   const postedWindow = data?.window
   // the newest block's blobs are counted in as the belt lands them
   const newest = postedWindow?.newestBlobs ?? 0
   const { value: blobs, arrival } = useLandedTotal(
     data?.head,
-    postedWindow?.posted.reduce((sum, posted) => sum + posted.blobs, 0) ?? 0,
+    totals?.blobs ?? 0,
     newest,
     newest,
     anyLanding,
   )
-  const shares = useShares(postedWindow?.posted ?? [], posters)
+  const shares = useShares(totals)
   const ready = postedWindow !== undefined && postedWindow.slots > 0
   const projects = shares.filter((share) => share.id !== UNKNOWN_ID).length
 
@@ -245,37 +247,17 @@ interface PosterShare {
   color: string
 }
 
-/** Each poster's share of the day, most blobs first, as the window has them */
-function useShares(
-  posted: { projectId?: string; blobs: number }[],
-  posters: LivePoster[],
-): PosterShare[] {
+/** Each poster's share of the day, most blobs first */
+function useShares(totals: PosterTotals | undefined): PosterShare[] {
   const { surface } = useThemeTokens()
-  const byId = new Map(posters.map((poster) => [poster.id, poster]))
-  const total = Math.max(
-    1,
-    posted.reduce((sum, p) => sum + p.blobs, 0),
-  )
-  // blobs no listed project claims, an archived one's included, go to the
-  // stand-in, as on the belt
-  const unknown = byId.get(UNKNOWN_ID)
-  const shares = new Map<string, PosterShare>()
-  for (const p of posted) {
-    const poster = byId.get(p.projectId ?? UNKNOWN_ID) ?? unknown
-    if (!poster) continue
-    const share = shares.get(poster.id)
-    if (share) {
-      share.share += p.blobs / total
-      continue
-    }
-    shares.set(poster.id, {
-      id: poster.id,
-      name: poster.name,
-      share: p.blobs / total,
-      color: readableColor(poster.color, surface),
-    })
-  }
-  return [...shares.values()].sort((a, b) => b.share - a.share)
+  if (!totals) return []
+  const all = Math.max(1, totals.blobs)
+  return totals.posters.map(({ poster, blobs }) => ({
+    id: poster.id,
+    name: poster.name,
+    share: blobs / all,
+    color: readableColor(poster.color, surface),
+  }))
 }
 
 /** A tile like the belt's: its color, lit along the top edge like a gel */

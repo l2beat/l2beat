@@ -45,6 +45,8 @@ export function createLandings(): Landings {
 
 export const LandingsContext = createContext<Landings | undefined>(undefined)
 
+export const anyLanding = (_: Landing) => true
+
 /**
  * Whether the block at `slot` came after the page loaded. The belt drops the
  * block the page loaded with too, but no number has been seen without it, so
@@ -168,7 +170,12 @@ export function useLandedTotal(
     [landings, matches],
   )
 
-  return { value: total - held.arriving + held.departed, arrival }
+  return {
+    value: total - held.arriving + held.departed,
+    arrival,
+    /** Some of the newest block is still to land */
+    landing: held.arriving > 0,
+  }
 }
 
 /** A total over the window, with what is held back from it for now */

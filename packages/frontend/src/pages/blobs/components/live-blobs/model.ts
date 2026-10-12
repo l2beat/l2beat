@@ -1,6 +1,7 @@
 import type { DaLayerThroughput } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
+import type { Posted } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { getThroughputInForce } from '~/server/features/data-availability/throughput/utils/getThroughputInForce'
 
 const BLOB_BYTES = 128 * 1024
@@ -33,6 +34,54 @@ export function toLivePosters(projects: BlobPoster[]): LivePoster[] {
     },
   ]
 }
+
+/** A poster's blobs over the window */
+export interface PosterTotal {
+  poster: LivePoster
+  blobs: number
+  batches: number
+  lastSlot: number
+  lastBlobs: number
+  buckets: number[]
+}
+
+/**
+ * The window's blobs by poster, most first, and all of them. Blobs of a
+ * project the page does not know of, an archived one's included, go to the
+ * unknown poster, as the belt draws them
+ */
+export function totalByPoster(posted: Posted[], posters: LivePoster[]) {
+  const byId = new Map(posters.map((poster) => [poster.id, poster]))
+  const totals = new Map<string, PosterTotal>()
+  let blobs = 0
+  for (const p of posted) {
+    blobs += p.blobs
+    const poster = byId.get(p.projectId ?? UNKNOWN_ID) ?? byId.get(UNKNOWN_ID)
+    if (!poster) continue
+    const total = totals.get(poster.id)
+    if (!total) {
+      totals.set(poster.id, { poster, ...p, buckets: [...p.buckets] })
+      continue
+    }
+    total.blobs += p.blobs
+    total.batches += p.batches
+    p.buckets.forEach((bucket, i) => {
+      total.buckets[i] = (total.buckets[i] ?? 0) + bucket
+    })
+    if (p.lastSlot > total.lastSlot) {
+      total.lastSlot = p.lastSlot
+      total.lastBlobs = p.lastBlobs
+    } else if (p.lastSlot === total.lastSlot) {
+      total.lastBlobs += p.lastBlobs
+    }
+  }
+  return {
+    posters: [...totals.values()].sort((a, b) => b.blobs - a.blobs),
+    blobs,
+  }
+}
+
+export type PosterTotals = ReturnType<typeof totalByPoster>
 
 export interface BlockLimits {
   targetBlobsPerBlock: number

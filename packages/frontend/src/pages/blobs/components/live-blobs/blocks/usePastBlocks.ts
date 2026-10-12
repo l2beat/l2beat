@@ -80,12 +80,9 @@ function answersOf<T>(results: { data: T; isPending: boolean }[]) {
   }
 }
 
-/**
- * The live blocks with the past's behind them. The same map while there is
- * no past, as the live one changes in place and the belt follows it
- */
+/** The live blocks with the past's behind them */
 export function withPast(
-  live: Map<number, ChainBlock>,
+  live: ReadonlyMap<number, ChainBlock>,
   past: ReadonlyMap<number, ChainBlock>,
   head: number | undefined,
 ): ReadonlyMap<number, ChainBlock> {

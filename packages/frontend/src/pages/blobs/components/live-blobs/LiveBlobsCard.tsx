@@ -4,6 +4,7 @@ import {
   type ReactNode,
   Suspense,
   useMemo,
+  useRef,
   useState,
 } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -12,12 +13,13 @@ import { useIsClient } from '~/hooks/useIsClient'
 import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
 import { cn } from '~/utils/cn'
 import { BELT_HEIGHT, BeltLegend, PulseSkeleton } from './blocks/BeltFrame'
-import { useBeaconChain } from './blocks/useBeaconChain'
 import { ChainClockContext, createChainClock } from './chainClock'
+import { useIsOnScreen } from './hooks'
 import { LivePosters } from './LivePosters'
 import { type EthereumLink, LiveStats } from './LiveStats'
 import { createLandings, LandingsContext } from './landings'
-import { type BlockLimits, toLivePosters } from './model'
+import { type BlockLimits, toLivePosters, totalByPoster } from './model'
+import { useLiveBlobs } from './useLiveBlobs'
 
 // Loaded on its own: it draws only in the browser
 const LiveBlocks = lazy(() =>
@@ -37,24 +39,44 @@ export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
   // the belt draws on a canvas sized to the screen, which the server has not got
   const isClient = useIsClient()
   const [landings] = useState(createLandings)
-  // corrected by the belt as blocks come in, and read by every number
   const [clock] = useState(createChainClock)
+  const cardRef = useRef<HTMLDivElement>(null)
+  const { data, status } = useLiveBlobs(useIsOnScreen(cardRef))
+  // in render, so every number below judges the newest block by the corrected
+  // clock; a head that is not live is an old one, which would pull it back
+  if (data?.live) clock.correct(data.head)
+  const postedWindow = data?.window
+  const totals = useMemo(
+    () => postedWindow && totalByPoster(postedWindow.posted, posters),
+    [postedWindow, posters],
+  )
 
   return (
     <ChainClockContext value={clock}>
       <LandingsContext value={landings}>
-        <PrimaryCard className="space-y-5">
-          <LiveStats limits={limits} posters={posters} ethereum={ethereum} />
+        <PrimaryCard ref={cardRef} className="space-y-5">
+          <LiveStats
+            live={data}
+            totals={totals}
+            status={status}
+            limits={limits}
+            ethereum={ethereum}
+          />
           {isClient ? (
             <LiveBoundary>
               <Suspense fallback={<LiveSkeleton />}>
-                <LiveBlocks posters={posters} limits={limits} />
+                <LiveBlocks
+                  live={data}
+                  status={status}
+                  posters={posters}
+                  limits={limits}
+                />
               </Suspense>
             </LiveBoundary>
           ) : (
             <LiveSkeleton />
           )}
-          <LivePosters posters={posters} />
+          <LivePosters live={data} totals={totals} />
         </PrimaryCard>
       </LandingsContext>
     </ChainClockContext>
@@ -90,7 +112,6 @@ class LiveBoundary extends ReactComponent<
     if (this.state.error === undefined) return this.props.children
     return (
       <div className="flex h-[30rem] w-full flex-col items-center justify-center gap-2 rounded-lg bg-surface-secondary p-6 text-center md:h-[40rem]">
-        <FollowChainWithoutBelt />
         <div className="font-bold text-heading-18">
           The blocks could not be drawn
         </div>
@@ -100,16 +121,4 @@ class LiveBoundary extends ReactComponent<
       </div>
     )
   }
-}
-
-const noPoster = () => 0
-const noop = () => {}
-
-/**
- * The belt alone asks the server for blocks, and the stats and the table only
- * read what it brings. Without a belt, this asks in its stead
- */
-function FollowChainWithoutBelt() {
-  useBeaconChain({ posterIndexOf: noPoster, enabled: true, onFreshBlock: noop })
-  return null
 }

@@ -1,10 +1,4 @@
-import {
-  type RefObject,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import { type RefObject, useEffect, useLayoutEffect, useRef } from 'react'
 import { PINNED_CELL_ATTRIBUTE } from '~/components/table/utils/commonPinningStyles'
 import { cn } from '~/utils/cn'
 import { toRgba } from './color'
@@ -251,13 +245,4 @@ export function useReorder(
     }
     tops.current = next
   }, [containerRef, order, reducedMotion])
-}
-
-/** Renders again every `everyMs`, for what counts up between blocks */
-export function useTick(everyMs: number) {
-  const [, setTick] = useState(0)
-  useEffect(() => {
-    const timer = setInterval(() => setTick((tick) => tick + 1), everyMs)
-    return () => clearInterval(timer)
-  }, [everyMs])
 }

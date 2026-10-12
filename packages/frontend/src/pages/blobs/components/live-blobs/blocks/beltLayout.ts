@@ -1,3 +1,4 @@
+import { clamp } from '@l2beat/shared-pure'
 /**
  * Where everything on the belt goes, in CSS pixels. Tiles are sized from the
  * height there is: a rack has to hold a full block, 21 blobs, and still leave
@@ -177,8 +178,4 @@ export function tileBounds(
 function fitIcon(tileSize: number, inset: number) {
   const size = tileSize - 2 * inset
   return size >= MIN_ICON ? size : 0
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max)
 }

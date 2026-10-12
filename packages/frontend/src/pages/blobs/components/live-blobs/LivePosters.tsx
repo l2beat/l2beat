@@ -1,5 +1,5 @@
 import { formatSeconds, SLOT_SECONDS } from '@l2beat/shared-pure'
-import { memo, useCallback, useMemo, useRef } from 'react'
+import { memo, useCallback, useRef, useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { BasicTableHeaderDividerRow } from '~/components/table/BasicTable'
 import {
@@ -17,7 +17,8 @@ import {
   PINNED_CELL_ATTRIBUTE,
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
-import type { PostedWindow } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
+import { useInterval } from '~/hooks/useInterval'
+import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { BUCKET_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -31,21 +32,19 @@ import {
 import { useChainClock } from './chainClock'
 import { readableColor } from './color'
 import { useThemeTokens } from './hooks'
-import { type Landing, useLandedTotal } from './landings'
+import { anyLanding, type Landing, useLandedTotal } from './landings'
 import {
   FLASH_CLASS_NAME,
   Pop,
   RollingNumber,
   useFlash,
   useReorder,
-  useTick,
 } from './liveMotion'
-import { type LivePoster, UNKNOWN_ID } from './model'
-import { useLiveBlobs } from './useLiveBlobs'
+import type { LivePoster, PosterTotal, PosterTotals } from './model'
 
 interface Props {
-  /** Every project that may post, with the stand-in for unknown senders last */
-  posters: LivePoster[]
+  live: LiveBlobs | undefined
+  totals: PosterTotals | undefined
 }
 
 /**
@@ -100,23 +99,26 @@ export const LIVE_POSTERS_ID = 'live-posters'
  * It moves with the belt: a project's row lights up as its batch lands, its
  * numbers count up, and rows slide past each other as the ranking changes.
  */
-export function LivePosters({ posters }: Props) {
-  const { data } = useLiveBlobs()
+export function LivePosters({ live: data, totals }: Props) {
   const postedWindow = data?.window
-  const rows = useMemo(
-    () => postedWindow && toRows(postedWindow, posters),
-    [postedWindow, posters],
-  )
+  const rows = totals?.posters
   const head = data?.head
   // the belt's colors, so a project reads the same here as on the belt
   const { surface } = useThemeTokens()
+  const newest = postedWindow?.newestBlobs ?? 0
+  const { value: totalBlobs } = useLandedTotal(
+    head,
+    totals?.blobs ?? 0,
+    newest,
+    newest,
+    anyLanding,
+  )
 
   const tableRef = useRef<HTMLDivElement>(null)
   useReorder(tableRef, rows?.map((row) => row.poster.id).join() ?? '')
 
   if (!postedWindow || !rows) return <PostersSkeleton />
   const seconds = postedWindow.slots * SLOT_SECONDS
-  const totalBlobs = rows.reduce((sum, row) => sum + row.blobs, 0)
 
   return (
     <section
@@ -188,11 +190,12 @@ const PosterRow = memo(function PosterRow({
   firstBucket,
   newestBlobs,
 }: {
-  row: Row
+  row: PosterTotal
   /** The poster's color, made to stand out from the card */
   color: string
   rank: number
   seconds: number
+  /** Of all posters, as landed so far */
   totalBlobs: number
   /** The newest slot, whose batches are counted in as the belt lands them */
   head: number | undefined
@@ -206,13 +209,19 @@ const PosterRow = memo(function PosterRow({
     (landing: Landing) => landing.posterId === posterId,
     [posterId],
   )
-  const { value: blobs, arrival } = useLandedTotal(
+  const {
+    value: blobs,
+    arrival,
+    landing,
+  } = useLandedTotal(
     head,
     row.blobs,
     row.lastSlot === head ? row.lastBlobs : 0,
     newestBlobs,
     isPosters,
   )
+  // the batches wait with the blobs, so no column runs ahead of the belt
+  const batches = useHeldWhile(landing, row.batches)
   useFlash(ref, arrival, color)
 
   return (
@@ -280,17 +289,20 @@ const PosterRow = memo(function PosterRow({
         <RollingNumber value={blobs * BLOB_KIB} format={formatKib} />
       </TableCell>
       <TableCell align="right">
-        <RollingNumber value={row.batches} format={formatWhole} />
+        <RollingNumber value={batches} format={formatWhole} />
       </TableCell>
       <TableCell align="right">
-        <RollingNumber value={row.blobs / row.batches} format={formatAverage} />
+        <RollingNumber value={blobs / batches} format={formatAverage} />
       </TableCell>
       <TableCell align="right">
-        <RollingNumber value={row.blobs / totalBlobs} format={formatPercent} />
+        <RollingNumber
+          value={blobs / Math.max(1, totalBlobs)}
+          format={formatPercent}
+        />
       </TableCell>
       <TableCell align="right" className="tabular-nums">
         {/* one batch tells nothing of how often they come */}
-        {row.batches > 1 ? formatSeconds(seconds / row.batches) : '–'}
+        {batches > 1 ? formatSeconds(seconds / batches) : '–'}
       </TableCell>
       <TableCell align="right" className="tabular-nums">
         <LastBatchAgo lastSlot={row.lastSlot} />
@@ -307,48 +319,16 @@ const PosterRow = memo(function PosterRow({
  */
 function LastBatchAgo({ lastSlot }: { lastSlot: number }) {
   const clock = useChainClock()
-  useTick(1000)
+  const [, rerender] = useState(0)
+  useInterval(() => rerender((tick) => tick + 1), 1000)
   return describeAgo((clock.progressNow() - lastSlot) * SLOT_SECONDS)
 }
 
-interface Row {
-  poster: LivePoster
-  blobs: number
-  batches: number
-  lastSlot: number
-  lastBlobs: number
-  buckets: number[]
-}
-
-/**
- * One row per poster, most blobs first. A project the page does not know of
- * is counted as unknown, as the belt draws it
- */
-function toRows(postedWindow: PostedWindow, posters: LivePoster[]): Row[] {
-  const byId = new Map(posters.map((poster) => [poster.id, poster]))
-  const rows = new Map<string, Row>()
-  for (const posted of postedWindow.posted) {
-    const poster =
-      byId.get(posted.projectId ?? UNKNOWN_ID) ?? byId.get(UNKNOWN_ID)
-    if (!poster) continue
-    const row = rows.get(poster.id)
-    if (!row) {
-      rows.set(poster.id, { poster, ...posted, buckets: [...posted.buckets] })
-      continue
-    }
-    row.blobs += posted.blobs
-    row.batches += posted.batches
-    posted.buckets.forEach((blobs, i) => {
-      row.buckets[i] = (row.buckets[i] ?? 0) + blobs
-    })
-    if (posted.lastSlot > row.lastSlot) {
-      row.lastSlot = posted.lastSlot
-      row.lastBlobs = posted.lastBlobs
-    } else if (posted.lastSlot === row.lastSlot) {
-      row.lastBlobs += posted.lastBlobs
-    }
-  }
-  return [...rows.values()].sort((a, b) => b.blobs - a.blobs)
+/** `value` as it was before `holding` began, while it lasts */
+function useHeldWhile<T>(holding: boolean, value: T) {
+  const held = useRef(value)
+  if (!holding) held.current = value
+  return held.current
 }
 
 function PosterLogo({ poster }: { poster: LivePoster }) {

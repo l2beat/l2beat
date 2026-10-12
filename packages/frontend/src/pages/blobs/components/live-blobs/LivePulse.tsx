@@ -7,7 +7,10 @@ import {
   useRef,
   useState,
 } from 'react'
-import type { Pulse } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
+import type {
+  LiveBlobs,
+  Pulse,
+} from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import {
   PULSE_BUCKET_SLOTS,
   PULSE_BUCKETS,
@@ -19,7 +22,6 @@ import { formatClock } from './blocks/format'
 import { usePrefersReducedMotion } from './hooks'
 import { earliestView } from './lookBack'
 import type { BlockLimits } from './model'
-import { useLiveBlobs } from './useLiveBlobs'
 
 /** What of the day the belt shows, for the pulse to show where that is */
 export interface PulseBrush {
@@ -34,13 +36,14 @@ export interface PulseBrush {
 
 /** The day behind the belt, under it, with what of it the belt shows */
 export function LivePulse({
+  live: data,
   limits,
   brush,
 }: {
+  live: LiveBlobs | undefined
   limits: BlockLimits
   brush: PulseBrush
 }) {
-  const { data } = useLiveBlobs()
   if (!data) return <PulseSkeleton />
   return (
     <BlobPulse

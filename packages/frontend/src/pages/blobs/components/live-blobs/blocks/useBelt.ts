@@ -117,7 +117,7 @@ export function useBelt({
     [canvasRef, progressNow],
   )
 
-  const findHover = useCallback(() => {
+  const findHover = () => {
     if (pinned.current) return
     const at = pointer.current
     const hit = at
@@ -131,7 +131,7 @@ export function useBelt({
     setHover(
       key === undefined || !at ? undefined : { key, ...at, pinned: false },
     )
-  }, [canvasRef])
+  }
 
   /** Pins the tooltip to `hit`'s batch, or lets it go */
   const pin = useCallback((hit: BatchHit | undefined) => {
@@ -142,14 +142,14 @@ export function useBelt({
   }, [])
 
   /** Keeps a pinned tooltip on its batch as the belt slides, until it leaves */
-  const followPinned = useCallback(() => {
+  const followPinned = () => {
     const anchor = pinned.current
     if (!anchor) return
     const hit = frame.current.hits.find((h) => h.key === anchor.key)
     if (!hit) return pin(undefined)
     const { x, y } = topMiddle(hit)
     if (x !== anchor.x || y !== anchor.y) pin(hit)
-  }, [pin])
+  }
 
   const running = onScreen && scene !== undefined
   useAnimationFrame((dt, now) => {
@@ -210,7 +210,7 @@ export function useBelt({
   }, [running, paint, scene, hoveredNow, view])
 
   /** A new block came in: its batches drop into their rack one after another */
-  const dropBlock = useCallback((block: ChainBlock) => {
+  const dropBlock = (block: ChainBlock) => {
     if (block.status !== 'proposed' || playback.current.still) return
     const now = performance.now() / 1000
     block.batches.forEach((_, index) => {
@@ -219,76 +219,62 @@ export function useBelt({
         now + index * BATCH_STAGGER,
       )
     })
-  }, [])
+  }
 
   // A finger shows nothing on the way down, as that may be the start of a
   // scroll, and has no hover to follow: only a finished tap does anything
-  const onPointerMove = useCallback(
-    (event: PointerEvent<HTMLElement>) => {
-      if (event.pointerType === 'touch') return
-      if (pinned.current) pin(undefined)
-      const at = pointInBox(event)
-      pointer.current = at
-      findHover()
-      // the tooltip follows the pointer across the batch
-      if (hoveredKey.current !== undefined) {
-        setHover((current) => current && { ...current, ...at })
-      }
-    },
-    [findHover, pin],
-  )
-  const onPointerDown = useCallback(
-    (event: PointerEvent<HTMLElement>) => {
-      tapped.current = event.pointerType === 'touch'
-      onPointerMove(event)
-    },
-    [onPointerMove],
-  )
-  const onPointerLeave = useCallback(
-    (event: PointerEvent<HTMLElement>) => {
-      if (event.pointerType === 'touch') return
-      pointer.current = undefined
-      findHover()
-    },
-    [findHover],
-  )
+  const onPointerMove = (event: PointerEvent<HTMLElement>) => {
+    if (event.pointerType === 'touch') return
+    if (pinned.current) pin(undefined)
+    const at = pointInBox(event)
+    pointer.current = at
+    findHover()
+    // the tooltip follows the pointer across the batch
+    if (hoveredKey.current !== undefined) {
+      setHover((current) => current && { ...current, ...at })
+    }
+  }
+  const onPointerDown = (event: PointerEvent<HTMLElement>) => {
+    tapped.current = event.pointerType === 'touch'
+    onPointerMove(event)
+  }
+  const onPointerLeave = (event: PointerEvent<HTMLElement>) => {
+    if (event.pointerType === 'touch') return
+    pointer.current = undefined
+    findHover()
+  }
   // A tap pins the batch's tooltip, as a finger cannot read it before it
   // lands; a second tap on the same batch acts on it
-  const onClick = useCallback(
-    (event: MouseEvent<HTMLElement>) => {
-      if (!tapped.current) {
-        const key = hoveredKey.current
-        if (key !== undefined) onClickBatch(key)
-        return
-      }
-      const hit = findBatchAt(
-        frame.current.hits,
-        sceneRef.current,
-        pointInBox(event),
-      )
-      if (hit && hit.key === pinned.current?.key) onClickBatch(hit.key)
-      else pin(hit)
-    },
-    [onClickBatch, pin],
-  )
+  const onClick = (event: MouseEvent<HTMLElement>) => {
+    if (!tapped.current) {
+      const key = hoveredKey.current
+      if (key !== undefined) onClickBatch(key)
+      return
+    }
+    const hit = findBatchAt(
+      frame.current.hits,
+      sceneRef.current,
+      pointInBox(event),
+    )
+    if (hit && hit.key === pinned.current?.key) onClickBatch(hit.key)
+    else pin(hit)
+  }
 
   /**
    * A finger holds the belt at `slot`, which may fall between two: it goes
    * there on the next frame, without easing, so it stays under the finger.
    * Let go, it eases to `view` as before
    */
-  const hold = useCallback((slot: number | undefined) => {
+  const hold = (slot: number | undefined) => {
     held.current = slot
-  }, [])
+  }
 
   /** Where the belt stands now, as a view would put it */
-  const position = useCallback(
-    () => playback.current.view ?? livePosition(playback.current.progress),
-    [],
-  )
+  const position = () =>
+    playback.current.view ?? livePosition(playback.current.progress)
 
   /** Where the live belt stands now, as a view would put it */
-  const live = useCallback(() => livePosition(progressNow()), [progressNow])
+  const live = () => livePosition(progressNow())
 
   return {
     hover,
