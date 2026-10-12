@@ -23,7 +23,7 @@ Apps integrate the Privacy Boost SDK, whose core ships as closed-source WebAssem
 
 ### Exits
 
-**Forced withdrawal.** A user can prove a forced withdrawal of up to {{maxForcedInputs}} notes locally. The contract checks the authorization at request time, and anyone can execute the withdrawal {{forcedWithdrawalDelay}} later if the notes are still unspent. The account owner can cancel it. It publishes the spent notes and the linked account.
+**Forced withdrawal.** If operator turns malicious or stops processing withdrawals, a user can prove a forced withdrawal of up to {{maxForcedInputs}} notes locally. The contract checks the authorization at request time, and anyone can execute the withdrawal {{forcedWithdrawalDelay}} later if the notes are still unspent. The account owner can cancel it. It publishes the spent notes and exposes the linked account.
 
 ### Compliance
 
