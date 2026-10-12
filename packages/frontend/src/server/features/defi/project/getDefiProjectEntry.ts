@@ -32,6 +32,7 @@ import {
   type DefiProjectToken,
   getDefiProjectTokens,
 } from './getDefiProjectTokens'
+import { hasDefiProjectPage } from './hasDefiProjectPage'
 
 export interface ProjectDefiEntry {
   id: ProjectId
@@ -84,7 +85,7 @@ export async function getDefiProjectEntry(
     ],
   })
 
-  if (!project) {
+  if (!project || !hasDefiProjectPage(project)) {
     return undefined
   }
 

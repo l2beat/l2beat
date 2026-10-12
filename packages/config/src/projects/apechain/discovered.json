@@ -1,13 +1,8 @@
 {
   "name": "apechain",
-  "timestamp": 1790891964,
+  "timestamp": 1791533574,
   "configHash": "0xdc9b6ccd1ec4d8d8cbb3806d748898f87af902fc2a51bb92951184c5c81ca120",
   "entries": [
-    {
-      "address": "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "NitroEnclaveVerifier",
       "address": "arb1:0x1b467761E7a125381c4f654e11B397023Fc53DD8",
@@ -138,7 +133,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -194,13 +189,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 17827,
+        "firstUnresolvedNode": 18004,
         "inbox": "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20628667,
-        "latestConfirmed": 17826,
-        "latestNodeCreated": 17978,
+        "latestConfirmed": 18003,
+        "latestNodeCreated": 18155,
         "loserStakeEscrow": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
@@ -432,7 +427,7 @@
         "allowedOutboxList": [
           "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"
         ],
-        "delayedMessageCount": 1271,
+        "delayedMessageCount": 1279,
         "inboxHistory": [
           "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
           "arb1:0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F",
@@ -443,8 +438,8 @@
         "outboxHistory": ["arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 96131,
-        "sequencerReportedSubMessageCount": 50871806
+        "sequencerMessageCount": 97771,
+        "sequencerReportedSubMessageCount": 51543053
       },
       "fieldMeta": {
         "sequencerInbox": { "severity": "HIGH" },
@@ -497,14 +492,14 @@
         "$members": [
           "arb1:0xb9e40b6E60CcD5361774cf4D36d1fCe66B649b63",
           "arb1:0x5E768dd03BD821703ef825e057434De85913EEAC",
-          "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f"
+          "arb1:0xd16384742f34511ade0555bC6312A284Ab1339bA"
         ],
         "$threshold": 2,
         "domainSeparator": "0xe9d88a0c16a72a228eb14e40bc8da2e839d32257df5479740ffc147dcb6a414c",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 28,
+        "nonce": 29,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -775,6 +770,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0xd16384742f34511ade0555bC6312A284Ab1339bA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SP1Verifier",
       "address": "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D",
       "type": "Contract",
@@ -898,7 +898,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 96131,
+        "batchCount": 97771,
         "batchPosterManager": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
         "batchPosters": ["arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"],
         "bridge": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -935,7 +935,7 @@
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1271,
+        "totalDelayedMessagesRead": 1279,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1803,8 +1803,8 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 510791290 },
-  "permissionsConfigHash": "0xc900aa279d43192ebaadc56d8a389e7e546f37a1847b267ddb17c209466fa36c",
+  "usedBlockNumbers": { "arbitrum": 513139811 },
+  "permissionsConfigHash": "0xe576c192407d226bd726b98001f11762d3ee994edf8ca99eeac9e43d38de15e2",
   "permissions": {
     "arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507": {
       "directlyReceivedPermissions": [

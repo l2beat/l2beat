@@ -3009,11 +3009,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "AgglayerBridgeL2",
       "address": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "type": "Contract",
@@ -3171,14 +3166,14 @@
         "$upgradeCount": 2,
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
-        "l1CrossDomainMessenger": "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+        "l1CrossDomainMessenger": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619776",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
-        "otherMessenger": "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+        "OTHER_MESSENGER": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+        "otherMessenger": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
         "paused": false,
         "proxyAdmin": "katana:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -3193,7 +3188,8 @@
       "implementationNames": {
         "katana:0x4200000000000000000000000000000000000007": "Proxy",
         "katana:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96": "L2CrossDomainMessenger"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "GasPriceOracle",
@@ -3281,11 +3277,11 @@
           ]
         ],
         "$upgradeCount": 2,
-        "l1TokenBridge": "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+        "l1TokenBridge": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
         "messenger": "katana:0x4200000000000000000000000000000000000007",
         "MESSENGER": "katana:0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
-        "otherBridge": "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+        "OTHER_BRIDGE": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+        "otherBridge": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
         "paused": false,
         "proxyAdmin": "katana:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -3296,6 +3292,9 @@
         "katana:0x4200000000000000000000000000000000000010": "Proxy",
         "katana:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1": "L2StandardBridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -3989,11 +3988,6 @@
     },
     {
       "address": "katana:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -7033,10 +7027,10 @@
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xd82fdc4cca4e4480df42ce9cc0c0bf9b71ade8dbc73dd8c46519a0d37c93735c",
+    "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L2ProxyAdmin_karst": "0x70d00d08dd524425b6612b13b16781498c13da3b7e3fac0a5ccd63078eeb5644",
-    "opstack/Layer2/L2StandardBridge": "0x43f9de36085fd31eaccaa3249b87da157440022278c664ab18e5a9d4fa8174af",
+    "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
     "opstack/Layer2/OperatorFeeVault": "0x044085f5049dce846d88feaa0007d7805521906a1025bb3acc0ee57c09befe47",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -7053,7 +7047,7 @@
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 26127306, "katana": 44474230 },
-  "permissionsConfigHash": "0xd782bcd62737ca4fe56dd05893c75127648968bda06193aa7e5833972f47e2a0",
+  "permissionsConfigHash": "0xcc637fde2141a7abd8cef846f626cff427f61af038694bfc1fb6178a98085c4c",
   "modelledAgainst": {
     "shared-polygon-cdk": "0x2b01a21f2facb60eb34137e255be78fc4ff5ad7f156454e2886c4290de5b9ddf"
   },

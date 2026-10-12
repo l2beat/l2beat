@@ -219,7 +219,7 @@ export function UpdateCard({
       <summary
         className={cn(
           'flex w-full cursor-pointer list-none flex-col gap-2 px-4 py-3 text-left text-sm marker:hidden',
-          'hover:bg-surface-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand',
+          'hover:bg-surface-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
         )}
       >
         <div className="flex items-start justify-between gap-3">
@@ -233,7 +233,7 @@ export function UpdateCard({
                   `${window.location.origin}${copyLinkPath ?? window.location.pathname}?update=${update.id}`
                 }
                 copyText="Copy link to update"
-                className="rounded-sm text-secondary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                className="rounded-sm text-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 iconClassName="size-3.5"
               />
             </div>

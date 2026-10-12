@@ -1,5 +1,5 @@
 import type { BackendRouterInputs } from '@l2beat/backend/trpc'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 
 export type InteropTransferDataRange = NonNullable<
   NonNullable<BackendRouterInputs['interop']['transfers']['stats']>['range']

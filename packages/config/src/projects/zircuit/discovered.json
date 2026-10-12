@@ -2906,8 +2906,7 @@
           "from": "zircuit:0x4200000000000000000000000000000000000018",
           "role": ".owner"
         }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
     }
   }
 }

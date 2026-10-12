@@ -1,5 +1,7 @@
 import { formatInteger } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { ChevronIcon } from '~/icons/Chevron'
+import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
@@ -54,13 +56,21 @@ export function HomeStatsStrip({
       icon: <PrivacyIcon className="size-5 stroke-green-450" />,
       iconBgClassName: 'bg-green-450/10',
     },
-    {
-      label: 'Data Availability',
-      metric: { count: counts.dataAvailability, unit: 'projects' },
-      href: '/data-availability/summary',
-      icon: <DataAvailabilityIcon className="size-5 fill-blue-500" />,
-      iconBgClassName: 'bg-blue-500/10',
-    },
+    env.CLIENT_SIDE_BLOBS_PAGE
+      ? {
+          label: 'Blobs',
+          metric: { count: counts.blobs, unit: 'projects' },
+          href: '/blobs',
+          icon: <BlobsIcon className="size-5 fill-blue-500" />,
+          iconBgClassName: 'bg-blue-500/10',
+        }
+      : {
+          label: 'Data Availability',
+          metric: { count: counts.dataAvailability, unit: 'projects' },
+          href: '/data-availability/summary',
+          icon: <DataAvailabilityIcon className="size-5 fill-blue-500" />,
+          iconBgClassName: 'bg-blue-500/10',
+        },
     {
       label: 'ZK Catalog',
       metric: { count: counts.zkCatalog, unit: 'projects' },

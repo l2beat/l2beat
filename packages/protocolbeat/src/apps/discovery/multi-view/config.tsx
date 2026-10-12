@@ -116,7 +116,7 @@ function PanelHeader(props: { api: LeafApi }) {
         <RadixSelect.Trigger
           aria-label="Panel"
           className={clsx(
-            'group/sel inline-flex h-[26px] items-center gap-1.5 border-b px-3 font-bold text-xs uppercase outline-none transition-colors focus-visible:outline-none',
+            'group/sel inline-flex h-[26px] items-center gap-1.5 border-b px-3 font-bold text-xs uppercase outline-hidden transition-colors focus-visible:outline-hidden',
             props.api.isActive
               ? 'border-coffee-200 text-coffee-100'
               : 'border-transparent text-coffee-200 hover:text-coffee-100',
@@ -129,14 +129,14 @@ function PanelHeader(props: { api: LeafApi }) {
           <RadixSelect.Content
             position="popper"
             sideOffset={4}
-            className="z-[1000] cursor-default select-none border border-coffee-500 bg-coffee-800 font-bold text-coffee-200 text-xs uppercase shadow-lg"
+            className="z-1000 cursor-default select-none border border-coffee-500 bg-coffee-800 font-bold text-coffee-200 text-xs uppercase shadow-lg"
           >
             <RadixSelect.Viewport>
               {PANEL_IDS.filter(isAllowedPanel).map((panelId) => (
                 <RadixSelect.Item
                   key={panelId}
                   value={panelId}
-                  className="relative flex cursor-pointer items-center gap-2.5 py-2 pr-9 pl-2.5 outline-none focus-visible:outline-none data-[highlighted]:bg-coffee-600 data-[highlighted]:text-coffee-100"
+                  className="relative flex cursor-pointer items-center gap-2.5 py-2 pr-9 pl-2.5 outline-hidden focus-visible:outline-hidden data-highlighted:bg-coffee-600 data-[highlighted]:text-coffee-100"
                 >
                   <PanelLabel id={panelId} />
                   <RadixSelect.ItemIndicator className="absolute right-2.5">

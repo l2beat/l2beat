@@ -86,6 +86,7 @@ export const pageLoaders = {
   DataAvailabilityArchivedPage: async () =>
     (await import('./data-availability/archived/DataAvailabilityArchivedPage'))
       .DataAvailabilityArchivedPage,
+  BlobsPage: async () => (await import('./blobs/BlobsPage')).BlobsPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
   PrivacyProjectPage: async () =>

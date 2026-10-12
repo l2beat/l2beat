@@ -1,5 +1,5 @@
 import { SparklesIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/Tooltip'
 
 export function AutoFillIndicator({

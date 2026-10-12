@@ -1,3 +1,169 @@
+Generated with discovered.json: 0x25ee23bdc352f41c0962f0bf76886577243ebd3d
+
+# Diff at Wed, 07 Oct 2026 14:45:55 GMT:
+
+- id: 50f3fa3d
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1791217058
+- current timestamp: 1791383565
+
+## Description
+
+The L2 predeploy implementations (L2CrossDomainMessenger, L2StandardBridge, L2ToL1MessagePasser, ProxyAdmin) are now verified. Each is templatized with the opstack/Layer2 templates: same logic as the existing shapes, differences are interface-typed calls (ProxyAdmin, L2CrossDomainMessenger), Celo's fee-currency OptimismMintableERC20 import (L2StandardBridge) and unused library functions (L2ToL1MessagePasser, identical bytecode). The L2 ProxyAdmin is renamed to L2ProxyAdmin and its owner, the CeloProxyAdminOwner L2 alias, now receives the predeploy upgrade permissions. The L1 counterpart fields of the L2 messenger and bridge are formatted as Ethereum addresses.
+
+this also lists celo on the ossification page!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791217058 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (celo:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      unverified:
+-        true
+      values.l1CrossDomainMessenger:
++        "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95"
+      values.MESSAGE_VERSION:
++        1
+      values.MIN_GAS_CALLDATA_OVERHEAD:
++        16
+      values.MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR:
++        63
+      values.MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR:
++        64
+      values.OTHER_MESSENGER:
++        "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95"
+      values.otherMessenger:
++        "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95"
++++ severity: MEDIUM
+      values.paused:
++        false
+      values.RELAY_CALL_OVERHEAD:
++        40000
+      values.RELAY_CONSTANT_OVERHEAD:
++        200000
+      values.RELAY_GAS_CHECK_BUFFER:
++        5000
+      values.RELAY_RESERVED_GAS:
++        40000
+      values.version:
++        "2.1.1-beta.4"
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+      implementationNames.celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007:
+-        ""
++        "L2CrossDomainMessenger"
+      template:
++        "opstack/Layer2/L2CrossDomainMessenger"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0xfb9b6038f92aab239c0d4ae0e732ef9ba91590fee841a84ed2aea05732414997"]
+      description:
++        "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (celo:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      unverified:
+-        true
+      values.l1TokenBridge:
++        "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe"
+      values.messenger:
++        "celo:0x4200000000000000000000000000000000000007"
+      values.MESSENGER:
++        "celo:0x4200000000000000000000000000000000000007"
+      values.OTHER_BRIDGE:
++        "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe"
+      values.otherBridge:
++        "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe"
++++ severity: MEDIUM
+      values.paused:
++        false
+      values.version:
++        "1.11.1-beta.3"
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+      implementationNames.celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010:
+-        ""
++        "L2StandardBridge"
+      template:
++        "opstack/Layer2/L2StandardBridge"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x1d5e294663c579fbf93ce17a16e1ea24409366a02df03e17d4e64c499376ac68"]
+      description:
++        "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (celo:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      unverified:
+-        true
+      values.MESSAGE_VERSION:
++        1
+      values.version:
++        "1.1.1-beta.1"
+      implementationNames.celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016:
+-        ""
++        "L2ToL1MessagePasser"
+      template:
++        "opstack/Layer2/L2ToL1MessagePasser"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x139a7bcf87ffc29f97c88feb9de39cb420dd36a61aeddf64c01af03d5b91b4ef"]
+      description:
++        "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface."
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (celo:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin] {
+    +++ description: Administration contract for other contract proxies.
+      name:
+-        "ProxyAdmin"
++        "L2ProxyAdmin"
+      unverified:
+-        true
+      values.addressManager:
++        "celo:0x0000000000000000000000000000000000000000"
+      values.isUpgrading:
++        false
+      fieldMeta.owner.description:
+-        "L2 alias of the CeloProxyAdminOwner. It can upgrade the security-critical L2 predeploys."
+      implementationNames.celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018:
+-        ""
++        "ProxyAdmin"
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000007","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000010","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000016","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000018","role":"admin"}]
+      template:
++        "opstack/Layer2/L2ProxyAdmin"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x7f6864f2ed905cae4ebf163729df004c7b19520740e00ee1710427ec016e60ce"]
+      description:
++        "Administration contract for other contract proxies."
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000007","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000010","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000016","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000018","role":"admin"}]
+    }
+```
+
+```diff
+    EOA CeloProxyAdminOwner - L2 Alias (celo:0x51a3a77baF58fef0309452CeaCB09221e556f223) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"celo:0x4200000000000000000000000000000000000018","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0x43ce620514556140ba954b139283d96fa42c5c47
 
 # Diff at Mon, 05 Oct 2026 16:18:47 GMT:

@@ -171,7 +171,7 @@ const PAGE_SECTIONS: LinkListSection[] = [
         name: 'Native rollups',
         path: staticPagePath('/native-rollups'),
         description:
-          'Explainer and tracker for native rollups, which verify state transitions with an Ethereum precompile.',
+          "Explainer and tracker for native rollups, which prove their state transitions with Ethereum's own EVM program.",
       },
     ],
   },

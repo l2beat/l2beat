@@ -2,8 +2,12 @@
   "critical": true,
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
-  "ignoreRelatives": ["l1TokenBridge", "OTHER_BRIDGE"],
+  "ignoreRelatives": ["l1TokenBridge", "OTHER_BRIDGE", "otherBridge"],
   "fields": {
+    // L1 counterparts, which discovery would prefix with the L2 chain
+    "l1TokenBridge": { "edit": ["format", "EthereumAddress"] },
+    "OTHER_BRIDGE": { "edit": ["format", "EthereumAddress"] },
+    "otherBridge": { "edit": ["format", "EthereumAddress"] },
     "paused": {
       "severity": "MEDIUM"
     }

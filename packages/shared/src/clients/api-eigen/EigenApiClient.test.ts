@@ -1,10 +1,27 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
+import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { EigenApiClient } from './EigenApiClient'
 
+const NO_SUCH_KEY_RESPONSE = `<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+  <Code>NoSuchKey</Code>
+  <Message>The specified key does not exist.</Message>
+</Error>`
+
 describe(EigenApiClient.name, () => {
+  let time: InstalledClock
+
+  beforeEach(() => {
+    time = install({ now: new Date('2022-01-03T02:00:00Z'), toFake: ['Date'] })
+  })
+
+  afterEach(() => {
+    time.uninstall()
+  })
+
   describe(EigenApiClient.prototype.getMetrics.name, () => {
     it('should get metrics with successful response', async () => {
       const mockResponse = {
@@ -77,24 +94,63 @@ describe(EigenApiClient.name, () => {
       )
     })
 
-    it('should throw error when response contains "The specified key does not exist"', async () => {
-      const mockErrorResponse = `<?xml version="1.0" encoding="UTF-8"?>
-<Error>
-  <Code>NoSuchKey</Code>
-  <Message>The specified key does not exist.</Message>
-</Error>`
+    it('should read a missing day from the next published file', async () => {
+      const http = mockObject<HttpClient>({
+        fetchRaw: mockFn()
+          .resolvesToOnce({ text: async () => NO_SUCH_KEY_RESPONSE })
+          .resolvesToOnce({ text: async () => NO_SUCH_KEY_RESPONSE })
+          .resolvesToOnce({
+            text: async () =>
+              '{"datetime":"2021-12-31T12:00:00","customer_id":"project1","total_size_mb":100.5}',
+          }),
+      })
 
+      const client = mockClient({ http })
+      const until = 1640995200 // 2022-01-01 00:00:00 UTC
+
+      const result = await client.getByProjectData(until)
+
+      expect(result).toEqual([
+        {
+          datetime: UnixTime.fromDate(new Date('2021-12-31T12:00:00Z')),
+          customer_id: 'project1',
+          total_size_mb: 100.5,
+        },
+      ])
+      expect(http.fetchRaw).toHaveBeenCalledTimes(3)
+      expect(http.fetchRaw).toHaveBeenNthCalledWith(
+        1,
+        'https://project.test.com/v2/stats/2022-01-01.json',
+        {},
+      )
+      expect(http.fetchRaw).toHaveBeenNthCalledWith(
+        2,
+        'https://project.test.com/v2/stats/2022-01-02.json',
+        {},
+      )
+      expect(http.fetchRaw).toHaveBeenNthCalledWith(
+        3,
+        'https://project.test.com/v2/stats/2022-01-03.json',
+        {},
+      )
+    })
+
+    it("should throw when today's file is not published yet", async () => {
       const http = mockObject<HttpClient>({
         fetchRaw: mockFn().resolvesTo({
-          text: async () => mockErrorResponse,
+          text: async () => NO_SUCH_KEY_RESPONSE,
         }),
       })
 
       const client = mockClient({ http })
-      const until = 1640995200
+      const until = 1641168000 // 2022-01-03 00:00:00 UTC, same day as `now`
 
       await expect(client.getByProjectData(until)).toBeRejectedWith(
-        'Assertion Error: No EigenDA data for projects for 2022-01-01T00:00:00.000Z',
+        'No EigenDA data for projects for 2022-01-03T00:00:00.000Z',
+      )
+      expect(http.fetchRaw).toHaveBeenOnlyCalledWith(
+        'https://project.test.com/v2/stats/2022-01-03.json',
+        {},
       )
     })
 

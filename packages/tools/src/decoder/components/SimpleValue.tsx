@@ -13,7 +13,7 @@ export function SimpleValue({ type, value, transform }: SimpleValueProps) {
   }
   if (type === 'string') {
     return (
-      <div className="w-full break-words">
+      <div className="wrap-break-word w-full">
         <span className="select-none text-zinc-600">{'\u201C'}</span>
         <span className="font-serif text-lg">{value.toString()}</span>
         <span className="select-none text-zinc-600">{'\u201D'}</span>

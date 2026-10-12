@@ -164,7 +164,7 @@ export const privacyBoost: BaseProject = {
   },
   display: {
     description:
-      'A shielded pool for ERC-20 tokens on Base, designed for institutional users. Provides TEE-backed privacy, balancing better UX with worse privacy trust assumptions.',
+      "A shielded ledger for ERC-20 tokens on Base, aimed at institutional users, whose privacy rests on the operator's TEE.",
     detailedDescription: readProjectMarkdown(
       'privacy-boost',
       'detailedDescription',
@@ -178,6 +178,10 @@ export const privacyBoost: BaseProject = {
         withdrawFee: formatBasisPoints(withdrawFeeBps),
         portalSweepFee: formatBasisPoints(portalSweepFeeBps),
         maxForcedInputs: String(maxForcedInputs),
+        auditorCount: discovery.getContractValue<string[]>(
+          'AuditGateway',
+          'getAllAuditors',
+        ).length,
       },
     ),
     links: {
@@ -332,18 +336,18 @@ export const privacyBoost: BaseProject = {
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The pool and both registries sit behind transparent proxies whose ProxyAdmins are owned by the admin multisig, which can upgrade them with no delay. Users get no window to exit before a change takes effect.',
+        'The admin multisig upgrades the pool and both registries instantly through their ProxyAdmins.',
       walkawayTest: {
         passed: false,
         reason:
-          'If the TEE operators disappear, no new deposits or private transfers can be processed and the system enters exit-only mode.',
+          'Without the TEE operator, deposits and private transfers stop and only forced withdrawals remain.',
       },
     },
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'ZK circuits guaranteeing user fund security are published, but the epoch, forced withdrawal and gift claim verification keys deployed in September 2026 have not yet been reproduced by L2BEAT. The TEE sources guaranteeing privacy are not yet published. TEE logic could not be verified for correctness.',
+        'The circuits are published. The epoch, forced withdrawal and gift claim verification keys deployed in September 2026 remain unreproduced, and the TEE source code is unpublished.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

@@ -2,6 +2,7 @@ import compact from 'lodash/compact'
 import type { NavGroup, NavLink } from '~/components/nav/types'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
+import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { DefiIcon } from '~/icons/pages/Defi'
@@ -95,15 +96,6 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       ],
     ]),
   },
-  env.CLIENT_SIDE_OSSIFICATION_ENABLED && {
-    type: 'single',
-    title: 'Ossification',
-    match: 'ossification',
-    href: '/ossification',
-    icon: (
-      <OssificationIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-  },
   {
     type: 'multiple',
     title: 'Interop',
@@ -146,6 +138,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
+  env.CLIENT_SIDE_OSSIFICATION_ENABLED && {
+    type: 'single',
+    title: 'Ossification',
+    match: 'ossification',
+    href: '/ossification',
+    icon: (
+      <OssificationIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+  },
   env.CLIENT_SIDE_DEFI_ENABLED && {
     type: 'single',
     title: DEFI_SUMMARY_TITLE,
@@ -153,6 +154,24 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/defi',
     icon: (
       <DefiIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+  },
+  env.CLIENT_SIDE_BLOBS_PAGE && {
+    type: 'single',
+    title: 'Blobs',
+    match: 'blobs',
+    href: '/blobs',
+    icon: (
+      <BlobsIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
+    ),
+  },
+  {
+    type: 'single',
+    title: 'ZK Catalog',
+    match: 'zk-catalog',
+    href: '/zk-catalog',
+    icon: (
+      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
   {
@@ -191,15 +210,6 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         },
       ],
     ],
-  },
-  {
-    type: 'single',
-    title: 'ZK Catalog',
-    match: 'zk-catalog',
-    href: '/zk-catalog',
-    icon: (
-      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
   },
   {
     type: 'multiple',

@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OwnableMerkleTree",
+  "description": "Anonymity Mining - Legacy Poseidon merkle tree that stores deposit or withdrawal leaves for TornadoTreesV1. Only its owner can insert leaves.",
+  "category": "bridge-external",
+  "ignoreMethods": [
+    "FIELD_SIZE",
+    "ZERO_VALUE",
+    "ROOT_HISTORY_SIZE",
+    "filledSubtrees",
+    "roots",
+    "zeros"
+  ],
+  "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
+  "fields": {
+    "owner": {
+      "description": "Only this address can insert leaves into the tree.",
+      "severity": "HIGH"
+    },
+    "hasher": {
+      "description": "Poseidon hasher used to compute the tree nodes."
+    },
+    "levels": {
+      "description": "Height of the merkle tree.",
+      "severity": "LOW"
+    }
+  }
+}

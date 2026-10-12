@@ -55,8 +55,6 @@ export const PROJECT_PAGES_WITH_MARKDOWN = [
 ] as const
 
 export type ListPageWithMarkdown = (typeof LIST_PAGES_WITH_MARKDOWN)[number]
-export type ProjectPageWithMarkdown =
-  (typeof PROJECT_PAGES_WITH_MARKDOWN)[number]
 
 /** Static pages plus the flagged ones `STATIC_PAGE_PATHS` cannot list unconditionally. */
 type ListPagePath = (typeof STATIC_PAGE_PATHS)[number] | '/defi/summary'

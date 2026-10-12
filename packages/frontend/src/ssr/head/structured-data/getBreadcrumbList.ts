@@ -1,5 +1,6 @@
 import compact from 'lodash/compact'
 import { toProductionUrl } from '~/consts/productionOrigin'
+import { env } from '~/env'
 import type { StructuredData } from './StructuredData'
 
 export function getBreadcrumbList(
@@ -40,6 +41,7 @@ const SECTIONS: Record<string, Breadcrumb> = {
     name: 'Data Availability',
     path: '/data-availability/summary',
   },
+  blobs: { name: 'Blobs', path: '/blobs' },
   'zk-catalog': { name: 'ZK Catalog', path: '/zk-catalog' },
   publications: { name: 'Publications', path: '/publications' },
   governance: { name: 'Governance', path: '/governance' },
@@ -52,10 +54,17 @@ function getTrail(
 ): Breadcrumb[] | undefined {
   if (path === HOME.path) return undefined
 
-  const section = SECTIONS[path.split('/')[1] ?? '']
+  const section = getSection(path)
   if (section?.path === path) return [HOME, section]
   // Without a name the last crumb could not say which page it is.
   if (!name) return undefined
 
   return compact([HOME, section, ...parents, { name, path }])
+}
+
+function getSection(path: string): Breadcrumb | undefined {
+  const segment = path.split('/')[1] ?? ''
+  // Ossification-tracked DeFi project pages outlive the disabled summary.
+  if (segment === 'defi' && !env.CLIENT_SIDE_DEFI_ENABLED) return undefined
+  return SECTIONS[segment]
 }

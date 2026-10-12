@@ -73,11 +73,11 @@
 }
 
 .mdc code {
-  @apply rounded bg-coffee-700 px-1 font-mono break-words;
+  @apply rounded-sm bg-coffee-700 px-1 font-mono wrap-break-word;
 }
 
 .mdc pre {
-  @apply rounded bg-coffee-600 px-4 py-2 font-mono;
+  @apply rounded-sm bg-coffee-600 px-4 py-2 font-mono;
   /* Wrap long lines instead of producing a huge horizontal scroll. */
   white-space: pre-wrap;
   overflow-wrap: anywhere;

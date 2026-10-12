@@ -59,6 +59,41 @@ describe(createDefiRouter.name, () => {
   })
 })
 
+// Method: as above, but with the flags production runs: DeFi off and
+// Ossification on. Unmatched routes fall through to Express' default 404.
+describe(`${createDefiRouter.name} with only Ossification enabled`, () => {
+  const original = {
+    defi: env.CLIENT_SIDE_DEFI_ENABLED,
+    ossification: env.CLIENT_SIDE_OSSIFICATION_ENABLED,
+  }
+
+  before(() => {
+    env.CLIENT_SIDE_DEFI_ENABLED = false
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED = true
+  })
+
+  after(() => {
+    env.CLIENT_SIDE_DEFI_ENABLED = original.defi
+    env.CLIENT_SIDE_OSSIFICATION_ENABLED = original.ossification
+  })
+
+  it('serves project pages, so Ossification can link to them', async () => {
+    const response = await fetchFromRouter(
+      createRouter(),
+      '/defi/projects/uniswapv3',
+    )
+
+    expect(await response.text()).toEqual('<html />')
+  })
+
+  it('does not serve the DeFi summary', async () => {
+    const router = createRouter()
+
+    expect((await fetchFromRouter(router, '/defi/summary')).status).toEqual(404)
+    expect((await fetchFromRouter(router, '/defi')).status).toEqual(404)
+  })
+})
+
 function createRouter() {
   const manifest = mockObject<Manifest>({})
   const cachedPage = { head: {}, props: { entry: ENTRY } }

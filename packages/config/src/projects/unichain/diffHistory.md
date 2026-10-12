@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x0cdbd65d54558271cb2fa3a22595a02a7a5028e8
+
+# Diff at Wed, 07 Oct 2026 14:48:17 GMT:
+
+- id: 173ec68a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1790862365
+- current timestamp: 1790862365
+
+## Description
+
+The L1 counterpart fields of the L2CrossDomainMessenger and L2StandardBridge are formatted as Ethereum addresses (opstack/Layer2 template change), which removes the L1 addresses previously indexed as L2 EOAs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862365 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (unichain:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      values.l1CrossDomainMessenger:
+-        "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
++        "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
+      values.OTHER_MESSENGER:
+-        "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
++        "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
+      values.otherMessenger:
+-        "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
++        "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (unichain:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      values.l1TokenBridge:
+-        "unichain:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
++        "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
+      values.OTHER_BRIDGE:
+-        "unichain:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
++        "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
+      values.otherBridge:
+-        "unichain:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
++        "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
 Generated with discovered.json: 0xa80d74d1d53bae1c1a814dce071ddc463d72da2e
 
 # Diff at Sun, 04 Oct 2026 05:55:37 GMT:

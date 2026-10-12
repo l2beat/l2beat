@@ -2,12 +2,6 @@ import { hashJson } from '@l2beat/shared'
 import type { Hash256 } from '@l2beat/shared-pure'
 import isArray from 'lodash/isArray'
 import isObject from 'lodash/isObject'
-import type { StructureConfig } from './StructureConfig'
-
-export function getDiscoveryConfigEntries(rawConfig: StructureConfig): string {
-  const sorted = deepSortByKeys(rawConfig)
-  return JSON.stringify(sorted)
-}
 
 export function hashJsonStable(value: Record<string, unknown>): Hash256 {
   const sorted = deepSortByKeys(value)
