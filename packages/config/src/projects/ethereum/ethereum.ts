@@ -65,10 +65,7 @@ export const ethereum: BaseProject = {
         'https://eth.blockscout.com/',
         'https://beaconcha.in/',
       ],
-      socialMedia: [
-        'https://x.com/ethereum',
-        'https://discord.gg/MWpjbnsfNE',
-      ],
+      socialMedia: ['https://x.com/ethereum', 'https://discord.gg/MWpjbnsfNE'],
     },
     badges: [],
   },
