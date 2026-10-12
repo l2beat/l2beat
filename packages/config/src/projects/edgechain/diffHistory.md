@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x53bcf164f26638797508929128f3100d64d49e77
+Generated with discovered.json: 0xbf40959c2c5205bdff907fc4d57c63c492cdb2ae
 
-# Diff at Fri, 09 Oct 2026 08:16:22 GMT:
+# Diff at Fri, 09 Oct 2026 13:19:39 GMT:
 
 - id: 1902ee54
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -10,6 +10,7 @@ Generated with discovered.json: 0x53bcf164f26638797508929128f3100d64d49e77
 ## Description
 
 RollupProxy: ArbOS v51.1 → v61 wasm module root, set by an executor EOA through the UpgradeExecutor.
+ArbFilteredTransactionsManager: transaction-filtering precompile live with ArbOS 61, no filterers set.
 
 ## Watched changes
 
@@ -25,6 +26,41 @@ RollupProxy: ArbOS v51.1 → v61 wasm module root, set by an executor EOA throug
       values.wasmModuleRoot:
 -        "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c"
 +        "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
+    }
+```
+
+```diff
+    contract ArbFilteredTransactionsManager (edge:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      values.transactionFilterers:
+-        "EXPECT_REVERT"
++        []
+      values.$immutable:
++        true
+      sourceHashes:
++        ["0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"]
+      implementationNames:
++        {"edge:0x0000000000000000000000000000000000000074":""}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790927856 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.transactionFilteringPrecompile:
++        "edge:0x0000000000000000000000000000000000000074"
     }
 ```
 

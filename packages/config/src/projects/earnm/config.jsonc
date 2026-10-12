@@ -8,5 +8,48 @@
     "arb1:0x2E3f48e1A9B9849e5c0e4Fe987AEa2dA1702Ddda"
   ],
   "names": {},
-  "overrides": {}
+  "overrides": {
+    "arb1:0xcD3D1CFE5e0cDa77D0a2D1ac1c0268C77115f89D": {
+      "fields": {
+        // Seeds the L3's ArbOS 61 transaction-filtering precompile (0x..74) as a
+        // relative. Hosted on the UpgradeExecutor because it owns the L3 chain
+        // (through retryables) and so controls who can filter.
+        "transactionFilteringPrecompile": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "earnm:0x0000000000000000000000000000000000000074"
+          }
+        }
+      }
+    },
+    "earnm:0x0000000000000000000000000000000000000074": {
+      // Not on the shared orbitstack/ArbFilteredTransactionsManager template: its
+      // event counts need full-range eth_getLogs, which the earnm RPC caps at
+      // 100 blocks. Only the filterer set is read; it shows any activation.
+      "displayName": "ArbFilteredTransactionsManager",
+      "description": "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
+      "fields": {
+        "transactionFilterers": {
+          "handler": {
+            "type": "call",
+            "method": "function getAllTransactionFilterers() view returns (address[])",
+            "args": [],
+            "address": "0x000000000000000000000000000000000000006b",
+            "expectRevert": true
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Can register/remove transaction hashes in the ArbFilteredTransactionsManager precompile, causing the state transition function to forcibly fail those transactions, including force-included ones, without delay."
+            }
+          ]
+        }
+      },
+      // Precompile with a 0xfe stub as code; point at the Nitro implementation.
+      // Its integrity is covered by the RollupProxy wasmModuleRoot.
+      "manualSourcePaths": {
+        "earnm:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+      }
+    }
+  }
 }

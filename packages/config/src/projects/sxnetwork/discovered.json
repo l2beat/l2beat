@@ -1,7 +1,7 @@
 {
   "name": "sxnetwork",
   "timestamp": 1791533547,
-  "configHash": "0x2ae5e769c63e66dca846544b388d3ecdc436c5fbf2b1d7984a923e160f81d0d0",
+  "configHash": "0x6aabb49f1fa4cf86a0417af49369eef99a6043493c01e76ef3b348f63c3014c3",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -303,7 +303,8 @@
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": ["eth:0xa4C325e25215C1fB2405EB28d81d2dFdbfC8D24C"]
+        "executors": ["eth:0xa4C325e25215C1fB2405EB28d81d2dFdbfC8D24C"],
+        "transactionFilteringPrecompile": "sxr:0x0000000000000000000000000000000000000074"
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
@@ -958,6 +959,32 @@
         "eth:0x6C051397fee2d79ccf92d1f3c5c6547fEBD838F4": "ERC20Inbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "ArbFilteredTransactionsManager",
+      "address": "sxr:0x0000000000000000000000000000000000000074",
+      "type": "Contract",
+      "template": "orbitstack/ArbFilteredTransactionsManager",
+      "sourceHashes": [
+        "0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"
+      ],
+      "proxyType": "immutable",
+      "description": "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.",
+      "values": {
+        "$immutable": true,
+        "filteredTransactionsAdded": 0,
+        "filteredTransactionsDeleted": 0,
+        "transactionFilterers": []
+      },
+      "implementationNames": {
+        "sxr:0x0000000000000000000000000000000000000074": ""
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1699,6 +1726,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "orbitstack/ArbFilteredTransactionsManager": "0xd7b28d473b33601181ef2584f528fc110014a0b547c299eb5f3371658188d6c3",
     "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
     "orbitstack/ERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1716,8 +1744,8 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26153576 },
-  "permissionsConfigHash": "0x5c435608c0f9df4cce8526d4650b0c1ef03cfdf5462fe7d6d4c37feda3b288b5",
+  "usedBlockNumbers": { "ethereum": 26153576, "sxnetwork": 10405468 },
+  "permissionsConfigHash": "0x9e99d16c78822a7dd5cfcce1ac52e9f4932643be6274de60dab75962affb91d2",
   "permissions": {
     "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715": {
       "receivedPermissions": [

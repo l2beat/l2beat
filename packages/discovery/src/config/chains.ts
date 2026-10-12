@@ -389,4 +389,31 @@ export const chains: ChainConfig[] = [
     },
     coingeckoPlatform: 'ronin',
   },
+  {
+    name: 'sxnetwork',
+    chainId: 4162,
+    shortName: 'sxr',
+    multicall: getMulticall3Config(7208281),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorerl2.sx.technology/api',
+    },
+  },
+  {
+    name: 'earnm',
+    chainId: 32766,
+    shortName: 'earnm',
+    multicall: getMulticall3Config(10461),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://earnm-mainnet.explorer.alchemy.com/api',
+    },
+  },
+  {
+    name: 'edgechain',
+    chainId: 3343,
+    shortName: 'edge',
+    multicall: getMulticall3Config(2121),
+    explorer: { type: 'sourcify' },
+  },
 ] as const satisfies ChainConfig[]

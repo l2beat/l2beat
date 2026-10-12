@@ -5,5 +5,29 @@
   "initialAddresses": [
     "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
     "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20"
-  ]
+  ],
+  "overrides": {
+    "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf": {
+      "fields": {
+        // Seeds the L3's ArbOS 61 transaction-filtering precompile (0x..74) as a
+        // relative and applies the shared orbitstack/ArbFilteredTransactionsManager
+        // template. Hosted on the UpgradeExecutor because it owns the L3 chain
+        // (through retryables) and so controls who can filter.
+        "transactionFilteringPrecompile": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "edge:0x0000000000000000000000000000000000000074"
+          },
+          "template": "orbitstack/ArbFilteredTransactionsManager"
+        }
+      }
+    },
+    "edge:0x0000000000000000000000000000000000000074": {
+      // Precompile with a 0xfe stub as code; point at the Nitro implementation.
+      // Its integrity is covered by the RollupProxy wasmModuleRoot.
+      "manualSourcePaths": {
+        "edge:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+      }
+    }
+  }
 }

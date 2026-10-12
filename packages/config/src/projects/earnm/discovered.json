@@ -1,7 +1,7 @@
 {
   "name": "earnm",
   "timestamp": 1791533687,
-  "configHash": "0x3ee6af45d8b6675a702727894a65139042a1a96027ec2128fad05e3f668419aa",
+  "configHash": "0x886caefb6e97f7c76e72021c258b7c3009884c190f181f4883eb5e846eacdb15",
   "entries": [
     {
       "address": "arb1:0x001271c57AeC639952B5201D052767c316755512",
@@ -741,7 +741,8 @@
         "executors": [
           "arb1:0xe5e3eEC4c5F443B04C5c883384674FD9e3eA93D9",
           "arb1:0x871e290d5447b958131F6d44f915F10032436ee6"
-        ]
+        ],
+        "transactionFilteringPrecompile": "earnm:0x0000000000000000000000000000000000000074"
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
@@ -829,6 +830,26 @@
       "address": "arb1:0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ArbFilteredTransactionsManager",
+      "address": "earnm:0x0000000000000000000000000000000000000074",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"
+      ],
+      "proxyType": "immutable",
+      "description": "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
+      "values": { "$immutable": true, "transactionFilterers": [] },
+      "implementationNames": {
+        "earnm:0x0000000000000000000000000000000000000074": ""
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1540,8 +1561,8 @@
     "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
-  "usedBlockNumbers": { "arbitrum": 513140222 },
-  "permissionsConfigHash": "0x770f267b40788d9f4df975f624e7d9d3f2d107364d5fc3e88de9de14c8a9c012",
+  "usedBlockNumbers": { "arbitrum": 513140222, "earnm": 3645718 },
+  "permissionsConfigHash": "0x6b8b3ae24121629b9cc360c9b452e64eeb6af0f191a982a284a3a116f562796c",
   "permissions": {
     "arb1:0x702a73680122D6EA59c275c6c6978811fD581B2e": {
       "receivedPermissions": [
