@@ -289,11 +289,11 @@ describe(InteropSyncersManager.name, () => {
     })
   })
 
-  describe(InteropSyncersManager.prototype.areSyncersFreshEnough.name, () => {
+  describe(InteropSyncersManager.prototype.getAggregationBlockers.name, () => {
     const target = UnixTime(10_000)
     const tolerance = 30 * UnixTime.MINUTE
 
-    it('returns true when every syncer is synced past the threshold', async () => {
+    it('returns no blockers when every syncer is synced past the threshold', async () => {
       const db = mockDb({
         syncedRanges: [
           makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
@@ -306,8 +306,8 @@ describe(InteropSyncersManager.name, () => {
         db,
       })
 
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        true,
+      expect(await manager.getAggregationBlockers(target, tolerance)).toEqual(
+        [],
       )
     })
 
@@ -333,12 +333,12 @@ describe(InteropSyncersManager.name, () => {
       }
       syncer.hasError = true
 
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        true,
+      expect(await manager.getAggregationBlockers(target, tolerance)).toEqual(
+        [],
       )
     })
 
-    it('returns false and warns when any syncer is synced before the threshold', async () => {
+    it('returns the syncer and warns when it is synced before the threshold', async () => {
       const db = mockDb({
         syncedRanges: [
           makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
@@ -357,9 +357,9 @@ describe(InteropSyncersManager.name, () => {
         logger,
       })
 
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        false,
-      )
+      expect(await manager.getAggregationBlockers(target, tolerance)).toEqual([
+        { cluster: 'cluster-a', chain: 'arbitrum' },
+      ])
       expect(warn).toHaveBeenCalledWith(
         'Syncers are behind the aggregation threshold',
         {
@@ -376,7 +376,7 @@ describe(InteropSyncersManager.name, () => {
       expect(error).not.toHaveBeenCalled()
     })
 
-    it('returns false and logs an error when a syncer has no synced range yet', async () => {
+    it('returns the syncer and logs an error when it has no synced range yet', async () => {
       const db = mockDb({
         syncedRanges: [
           makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
@@ -391,16 +391,16 @@ describe(InteropSyncersManager.name, () => {
       })
 
       // arbitrum has never produced a synced range
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        false,
-      )
+      expect(await manager.getAggregationBlockers(target, tolerance)).toEqual([
+        { cluster: 'cluster-a', chain: 'arbitrum' },
+      ])
       expect(error).toHaveBeenCalledWith('Syncers have no synced range', {
         target,
         missing: ['cluster-a:arbitrum'],
       })
     })
 
-    it('returns false and warns when a syncer has a pending wipe despite a fresh range', async () => {
+    it('returns the syncer and warns when it has a pending wipe despite a fresh range', async () => {
       const db = mockDb({
         // range still looks fresh, but a wipe is pending
         syncedRanges: [
@@ -424,9 +424,9 @@ describe(InteropSyncersManager.name, () => {
         logger,
       })
 
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        false,
-      )
+      expect(await manager.getAggregationBlockers(target, tolerance)).toEqual([
+        { cluster: 'cluster-a', chain: 'ethereum' },
+      ])
       expect(warn).toHaveBeenCalledWith(
         'Syncers have a pending wipe or resync',
         {
@@ -437,7 +437,7 @@ describe(InteropSyncersManager.name, () => {
       expect(error).not.toHaveBeenCalled()
     })
 
-    it('returns false when a syncer has a pending resync despite a fresh range', async () => {
+    it('returns the syncer when it has a pending resync despite a fresh range', async () => {
       const db = mockDb({
         syncedRanges: [
           makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
@@ -458,9 +458,9 @@ describe(InteropSyncersManager.name, () => {
         db,
       })
 
-      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
-        false,
-      )
+      expect(await manager.getAggregationBlockers(target, tolerance)).toEqual([
+        { cluster: 'cluster-a', chain: 'ethereum' },
+      ])
     })
   })
 
