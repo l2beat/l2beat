@@ -1,4 +1,3 @@
-import { slotStart } from '@l2beat/shared-pure'
 import {
   type ReactNode,
   useContext,
@@ -390,10 +389,6 @@ function BatchTooltipContent({
     ['Slot', formatWhole(slot)],
     ['Block', formatWhole(blockNumber)],
   ]
-  if (batch.waited) {
-    const waited = Math.max(0, slotStart(slot) - batch.waited.since)
-    rows.push(['Waited', formatWaited(waited)])
-  }
   // an inbox nobody claims is the one clue to who sent it
   if (poster.id === UNKNOWN_ID) rows.push(['Sent to', shortAddress(batch.to)])
   return (
@@ -439,13 +434,6 @@ function openOnEtherscan(txHash: string) {
 
 function etherscanTxUrl(txHash: string) {
   return `https://etherscan.io/tx/${txHash}`
-}
-
-/** How long a batch waited in the mempool for its slot, to the tenth of a second while short */
-function formatWaited(seconds: number) {
-  if (seconds < 10) return `${seconds.toFixed(1)} s`
-  if (seconds < 60) return `${Math.round(seconds)} s`
-  return `${Math.floor(seconds / 60)} min ${Math.round(seconds % 60)} s`
 }
 
 function shortAddress(address: string) {
