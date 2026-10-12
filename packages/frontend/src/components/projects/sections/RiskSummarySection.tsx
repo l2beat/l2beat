@@ -88,7 +88,7 @@ export function RiskSummarySection({
   )
 }
 
-export function EnumeratedRisks({ risks }: { risks: RiskGroup[] }) {
+function EnumeratedRisks({ risks }: { risks: RiskGroup[] }) {
   return risks.map((group, i) => (
     <div
       className={cn(
