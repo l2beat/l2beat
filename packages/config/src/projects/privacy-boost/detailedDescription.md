@@ -15,7 +15,7 @@ Deposits become notes whose Poseidon2 commitments enter an onchain Merkle tree, 
 
 ### Keys
 
-The SDK can derive the private account's keys from a wallet signature, which ties that wallet to the account. Accounts approve spends with registered keys or with onchain spend approvals, which also serve smart-wallet accounts. Both are leaves of an auth Merkle tree in the AuthRegistry. Epoch proofs may use a tree root up to {{epochAuthStaleness}} old, so a revoked key or approval stays usable that long.
+The closed SDK can derive the private account's keys from a wallet signature, which links that wallet to the account. The hosted wallet can upload a backup of the private keys to the operator. Accounts approve spends with registered keys or with onchain spend approvals. Both are leaves of an auth Merkle tree in the AuthRegistry contract. Epoch proofs may use a tree root up to {{epochAuthStaleness}} old, so a revoked key or approval stays usable that long.
 
 ### App
 
