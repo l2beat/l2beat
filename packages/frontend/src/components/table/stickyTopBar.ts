@@ -14,8 +14,13 @@ export function stickyTopBarRef(bar: HTMLElement | null) {
   if (!bar || !parent) return
 
   const publish = () => {
-    const top = Number.parseFloat(getComputedStyle(bar).top) || 0
-    const bottom = top + bar.getBoundingClientRect().height
+    const style = getComputedStyle(bar)
+    const top = Number.parseFloat(style.top) || 0
+    // A bar that slides further down as the page scrolls (the project strip's
+    // tabs) declares how far; headers stick below where it ends up.
+    const slide =
+      Number.parseFloat(style.getPropertyValue('--sticky-top-bar-slide')) || 0
+    const bottom = top + slide + bar.getBoundingClientRect().height
     parent.style.setProperty(TOP_VARIABLE, `${bottom}px`)
   }
   const resizeObserver = new ResizeObserver(publish)

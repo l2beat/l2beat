@@ -21,3 +21,51 @@
 @utility scroll-mt-section-nav {
   scroll-margin-top: calc(var(--section-nav-height) + --spacing(4));
 }
+
+/*
+  The project strip rests behind the tabs (see `StickyMobileSectionNavigation`)
+  and the tabs uncover it by sliding down. The slide is tied to the page title
+  scrolling away, not to time, so the strip only shows once the title, which
+  already names the project, has gone under the tabs, and the slide is back at
+  zero whenever the title is in view, however fast the page scrolls.
+*/
+
+/* The page title, whose last 30px under the tabs drive the slide. */
+@utility project-title-timeline {
+  view-timeline: --project-title block;
+  /* Ends the timeline once the title's bottom is a strip's height below the top. */
+  view-timeline-inset: calc(
+      var(--section-nav-tabs-height) -
+      var(--project-strip-height)
+    )
+    0px;
+}
+
+:root {
+  /* Lets the tabs, which don't contain the title, follow its timeline. */
+  timeline-scope: --project-title;
+}
+
+/*
+  Without scroll-driven animations the tabs simply stick a strip's height
+  lower, uncovering the strip as soon as the site header scrolls away.
+*/
+@utility section-nav-tabs-under-strip {
+  top: var(--project-strip-height);
+
+  @supports (animation-timeline: view()) {
+    top: 0;
+    /* How far down the tabs end up, for sticky table headers below them. */
+    --sticky-top-bar-slide: var(--project-strip-height);
+    animation: uncover-project-strip linear both;
+    animation-timeline: --project-title;
+    animation-range: exit-crossing calc(100% - var(--project-strip-height))
+      exit-crossing 100%;
+  }
+}
+
+@keyframes uncover-project-strip {
+  to {
+    translate: 0 var(--project-strip-height);
+  }
+}
