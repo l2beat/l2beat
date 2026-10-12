@@ -69,35 +69,44 @@ function slideTabsWithTitle(tabs: HTMLElement) {
   if (
     !(strip instanceof HTMLElement) ||
     !title ||
-    CSS.supports(SCROLL_DRIVEN_SLIDE) ||
-    matchMedia('(prefers-reduced-motion: reduce)').matches
+    CSS.supports(SCROLL_DRIVEN_SLIDE)
   ) {
     return
   }
 
+  // Followed live, like the `@media` gate on the CSS slide.
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)')
   const update = () => {
+    if (reducedMotion.matches) return restoreStaticLayout(tabs)
     // Hidden from `lg` up.
     if (tabs.offsetHeight === 0) return
     const overlap = tabs.offsetHeight - title.getBoundingClientRect().bottom
     const slide = Math.min(Math.max(overlap, 0), strip.offsetHeight)
+    tabs.style.top = '0px'
+    tabs.style.setProperty(
+      '--sticky-top-bar-slide',
+      'var(--project-strip-height)',
+    )
     tabs.style.translate = `0 ${slide}px`
   }
 
-  tabs.style.top = '0px'
-  tabs.style.setProperty(
-    '--sticky-top-bar-slide',
-    'var(--project-strip-height)',
-  )
   update()
   window.addEventListener('scroll', update, { passive: true })
   window.addEventListener('resize', update)
+  reducedMotion.addEventListener('change', update)
   return () => {
     window.removeEventListener('scroll', update)
     window.removeEventListener('resize', update)
-    tabs.style.removeProperty('top')
-    tabs.style.removeProperty('translate')
-    tabs.style.removeProperty('--sticky-top-bar-slide')
+    reducedMotion.removeEventListener('change', update)
+    restoreStaticLayout(tabs)
   }
+}
+
+/** Back to `section-nav-tabs-under-strip`'s static `top`. */
+function restoreStaticLayout(tabs: HTMLElement) {
+  tabs.style.removeProperty('top')
+  tabs.style.removeProperty('translate')
+  tabs.style.removeProperty('--sticky-top-bar-slide')
 }
 
 // Mirrors the `@supports` condition in `section-navigation.css`.
