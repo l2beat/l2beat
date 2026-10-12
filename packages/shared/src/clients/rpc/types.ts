@@ -56,6 +56,7 @@ export const EVMTransaction = z
       .transform((value) => value ?? undefined)
       .optional(),
     from: z.string(),
+    nonce: Quantity.decode.transform((n) => Number(n)).optional(),
     /** Address of the receiver, null when it's a contract creation transaction. */
     to: z
       .union([z.string(), z.null()])
@@ -80,6 +81,8 @@ export const EVMTransaction = z
     hash: raw.hash,
     value: raw.value,
     from: raw.from,
+    // left out when missing, rather than undefined, as few callers read it
+    ...(raw.nonce !== undefined && { nonce: raw.nonce }),
     to: raw.to,
     data: raw.input,
     type: raw.type,

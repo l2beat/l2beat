@@ -329,6 +329,7 @@ function toTx(tx: RpcTransaction): EVMTransaction {
   return {
     hash: tx.hash,
     from: tx.from,
+    ...(tx.nonce !== undefined && { nonce: Number(tx.nonce) }),
     to: tx.to ?? undefined,
     data: tx.input,
     type: tx.type?.toString(),

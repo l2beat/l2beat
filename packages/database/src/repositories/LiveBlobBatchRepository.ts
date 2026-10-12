@@ -11,12 +11,19 @@ export interface LiveBlobBatchRecord {
   txHash: string
   blockNumber: number
   from: string
+  /** Missing on batches stored before nonces were */
+  nonce: number | undefined
   to: string
   blobs: number
   /** Of every event the transaction emitted */
   topics: string[]
   /** Missing when no project claims the batch */
   projectId: ProjectId | undefined
+  /**
+   * Unix seconds, with the fraction, the batch was first heard of in the
+   * mempool. Missing if it was not heard of before its block
+   */
+  pendingSince: number | undefined
 }
 
 /** What a project posted since some slot; without `projectId`, the batches no project claims */
@@ -37,11 +44,26 @@ export interface LiveBucketRecord {
 }
 
 export function toRecord(row: Selectable<LiveBlobBatch>): LiveBlobBatchRecord {
-  return { ...row, projectId: toProjectId(row.projectId) }
+  return {
+    ...row,
+    nonce: row.nonce ?? undefined,
+    projectId: toProjectId(row.projectId),
+    pendingSince: row.pendingSince
+      ? row.pendingSince.getTime() / 1000
+      : undefined,
+  }
 }
 
 export function toRow(record: LiveBlobBatchRecord): Insertable<LiveBlobBatch> {
-  return { ...record, projectId: record.projectId ?? null }
+  return {
+    ...record,
+    nonce: record.nonce ?? null,
+    projectId: record.projectId ?? null,
+    pendingSince:
+      record.pendingSince === undefined
+        ? null
+        : new Date(record.pendingSince * 1000),
+  }
 }
 
 export class LiveBlobBatchRepository extends BaseRepository {
@@ -57,10 +79,12 @@ export class LiveBlobBatchRepository extends BaseRepository {
             txHash: eb.ref('excluded.txHash'),
             blockNumber: eb.ref('excluded.blockNumber'),
             from: eb.ref('excluded.from'),
+            nonce: eb.ref('excluded.nonce'),
             to: eb.ref('excluded.to'),
             blobs: eb.ref('excluded.blobs'),
             topics: eb.ref('excluded.topics'),
             projectId: eb.ref('excluded.projectId'),
+            pendingSince: eb.ref('excluded.pendingSince'),
           })),
         )
         .execute()

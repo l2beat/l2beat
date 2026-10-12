@@ -89,6 +89,35 @@ describe(LiveBlobsFeed.name, () => {
     expect(answer.value?.head).toEqual(HEAD)
   })
 
+  it('holds a page that is up to date until the mempool changes', async () => {
+    const db = fakeDb()
+    feed = new LiveBlobsFeed(db.source, Logger.SILENT)
+    const first = await feed.latest()
+
+    const answer = answerOf(
+      feed.latestAfter({ after: HEAD, pendingAfter: first?.pendingMark }),
+    )
+    await clock.tickAsync(1000)
+    expect(answer.value).toEqual(undefined)
+
+    db.pending = ['0xa:1']
+    await clock.tickAsync(250)
+    expect(answer.value?.pending.map((p) => p.key)).toEqual(['0xa:1'])
+    expect(db.loads).toEqual(1)
+  })
+
+  it('holds a page that does not follow the mempool until the head moves', async () => {
+    const db = fakeDb()
+    feed = new LiveBlobsFeed(db.source, Logger.SILENT)
+    await feed.latest()
+
+    const answer = answerOf(feed.latestAfter({ after: HEAD }))
+    db.pending = ['0xa:1']
+    await clock.tickAsync(1000)
+
+    expect(answer.value).toEqual(undefined)
+  })
+
   it('answers a page that is behind at once', async () => {
     feed = new LiveBlobsFeed(fakeDb().source, Logger.SILENT)
 
@@ -248,6 +277,8 @@ describe(LiveBlobsFeed.name, () => {
       headReads: 0,
       /** Times the rows were read, counted by the posters */
       loads: 0,
+      /** Keys of the batches waiting in the mempool */
+      pending: [] as string[],
       source: {} as LiveBlobsSource,
     }
     const fail = () => {
@@ -297,6 +328,28 @@ describe(LiveBlobsFeed.name, () => {
         getBucketsSince: async () => {
           fail()
           return []
+        },
+      },
+      livePendingBlobTx: {
+        getWaiting: async () => {
+          fail()
+          return db.pending.map((key) => {
+            const [from = '', nonce = '0'] = key.split(':')
+            return {
+              from,
+              nonce: Number(nonce),
+              txHash: '0xtx',
+              to: '0xinbox',
+              blobs: 1,
+              projectId: undefined,
+              firstSeenAt: 0,
+              lastSeenAt: 0,
+            }
+          })
+        },
+        getChangeMark: async () => {
+          fail()
+          return db.pending.join()
         },
       },
     }

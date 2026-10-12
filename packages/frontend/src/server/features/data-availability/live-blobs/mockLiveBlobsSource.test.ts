@@ -51,4 +51,27 @@ describe(createMockLiveBlobsSource.name, () => {
       posted.reduce((sum, p) => sum + p.blobs, 0),
     )
   })
+
+  it('has the next blocks wait in the mempool, and land saying since when', async () => {
+    let time = slotStart(HEAD) + 5
+    const now = () => time
+    const source = createMockLiveBlobsSource(Promise.resolve(['base']), now)
+    const feed = new LiveBlobsFeed(source, Logger.SILENT, now)
+
+    const before = await feed.latest()
+    feed.stop()
+    time = slotStart(HEAD + 1) + 5
+    const after = await feed.latest()
+    feed.stop()
+
+    const pending = before?.pending ?? []
+    expect(pending.length).toBeGreaterThan(0)
+    const landed = after?.blocks[0]
+    const waited =
+      landed?.status === 'proposed' ? landed.batches.map((b) => b.waited) : []
+    // and some heard of in between
+    expect(waited).toInclude(
+      ...pending.map((p) => ({ key: p.key, since: p.firstSeenAt })),
+    )
+  })
 })

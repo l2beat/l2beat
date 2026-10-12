@@ -1,27 +1,23 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { EthereumDaTrackingConfig } from '@l2beat/config'
-import type {
-  Database,
-  LiveBlobBatchRecord,
-  LiveBlockRecord,
+import {
+  type Database,
+  type LiveBlobBatchRecord,
+  type LiveBlockRecord,
+  pendingKey,
 } from '@l2beat/database'
 import type { EthereumBlobBlock, EthereumDaProvider } from '@l2beat/shared'
-import {
-  assert,
-  type ProjectId,
-  slotAt,
-  type UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, slotAt, type UnixTime } from '@l2beat/shared-pure'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../../tools/uif/indexerIdentity'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
-import { matchEthereumConfigs } from '../../services/matchEthereumConfigs'
 import {
+  attributeBatch,
   getLiveRetryStrategy,
   LIVE_METRICS_CONTEXT,
+  type LiveBlobsConfig,
   liveWindowStart,
   nowSeconds,
   secondsSince,
@@ -29,10 +25,6 @@ import {
 
 /** Blocks whose stored batches are read at once, to keep a window's worth out of memory */
 const BLOCKS_PER_READ = 1000
-
-export type LiveBlobsConfig = EthereumDaTrackingConfig & {
-  projectId: ProjectId
-}
 
 export interface LiveBlobsIndexerDependencies
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -96,7 +88,12 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
           )
         await this.assertBuildsOnStored(start, blocks)
         const liveBlocks = blocks.map(toLiveBlock)
-        const liveBatches = blocks.flatMap((b) => this.toLiveBatches(b))
+        const pendingSince = await this.$.db.livePendingBlobTx.getFirstSeen(
+          blocks.flatMap((b) => b.batches),
+        )
+        const liveBatches = blocks.flatMap((b) =>
+          this.toLiveBatches(b, pendingSince),
+        )
 
         await this.$.db.transaction(async () => {
           // Rows above the safe height may be from a chain since reorganized:
@@ -162,7 +159,11 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
         Math.min(from + BLOCKS_PER_READ - 1, head),
       )
       for (const batch of stored) {
-        const projectId = this.attribute(batch.blockNumber, batch)
+        const projectId = attributeBatch(
+          this.$.configurations,
+          batch.blockNumber,
+          batch,
+        )
         if (projectId !== batch.projectId) {
           changed.push({ ...batch, projectId })
         }
@@ -184,43 +185,25 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
     })
   }
 
-  private toLiveBatches(block: EthereumBlobBlock): LiveBlobBatchRecord[] {
+  /** `pendingSince` tells, by `pendingKey`, when the batches heard of in the mempool were first heard of */
+  private toLiveBatches(
+    block: EthereumBlobBlock,
+    pendingSince: Map<string, number>,
+  ): LiveBlobBatchRecord[] {
     return block.batches.map((batch) => ({
       slot: slotAt(block.timestamp),
       txIndex: batch.txIndex,
       txHash: batch.txHash,
       blockNumber: block.number,
       from: batch.from,
+      nonce: batch.nonce,
       to: batch.to,
       blobs: batch.blobs,
       topics: batch.topics,
-      projectId: this.attribute(block.number, batch),
+      projectId: attributeBatch(this.$.configurations, block.number, batch),
+      pendingSince: pendingSince.get(pendingKey(batch)),
     }))
   }
-
-  private attribute(
-    blockNumber: number,
-    batch: Pick<LiveBlobBatchRecord, 'from' | 'to' | 'topics'>,
-  ): ProjectId | undefined {
-    const configs = matchEthereumConfigs(this.$.configurations, blockNumber, {
-      inbox: batch.to,
-      sequencer: batch.from,
-      topics: batch.topics,
-    })
-    return closestMatch(configs, batch.from)?.projectId
-  }
-}
-
-/**
- * A config naming the sender is a closer match than an inbox open to anyone,
- * whichever comes first: on a shared inbox both claim the batch
- */
-function closestMatch(configs: LiveBlobsConfig[], sender: string) {
-  return (
-    configs.find((c) =>
-      c.sequencers?.some((s) => s.toLowerCase() === sender.toLowerCase()),
-    ) ?? configs[0]
-  )
 }
 
 function toLiveBlock(block: EthereumBlobBlock): LiveBlockRecord {

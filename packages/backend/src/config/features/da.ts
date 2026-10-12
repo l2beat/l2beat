@@ -85,6 +85,13 @@ export async function getDaTrackingConfig(
             1200,
           ),
         },
+        mempool: flags.isEnabled('da', 'liveBlobs', 'mempool') && {
+          // A public node: few RPC providers stream whole pending transactions
+          url: env.string(
+            'ETHEREUM_LIVE_MEMPOOL_WS_URL',
+            'wss://ethereum-rpc.publicnode.com',
+          ),
+        },
       }
     }
   }

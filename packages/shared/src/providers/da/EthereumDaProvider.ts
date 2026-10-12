@@ -195,10 +195,12 @@ function toBlobBlock(
     if (!isBlobTx(tx)) {
       return
     }
+    assert(tx.nonce !== undefined, `Transaction ${tx.hash} has no nonce`)
     batches.push({
       txIndex,
       txHash: tx.hash,
       from: tx.from,
+      nonce: tx.nonce,
       to: tx.to ?? '',
       topics: topicsOf(tx.hash),
       blobs: tx.blobVersionedHashes.length,

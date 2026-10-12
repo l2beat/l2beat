@@ -21,6 +21,7 @@ export class MockWebSocket {
         return this.mock
       }),
       send: mockFn(() => {}),
+      terminate: mockFn(() => this.emit('close')),
     })
   }
 
@@ -38,5 +39,9 @@ export class MockWebSocket {
 
   simulateMessage(data: Buffer) {
     this.emit('message', data)
+  }
+
+  simulateClose() {
+    this.emit('close')
   }
 }

@@ -116,6 +116,11 @@ export type {
   LiveSlotRange,
 } from './repositories/LiveBlockRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
+export {
+  type LivePendingBlobTxKey,
+  type LivePendingBlobTxRecord,
+  pendingKey,
+} from './repositories/LivePendingBlobTxRepository'
 export type { NotificationRecord } from './repositories/NotificationsRepository'
 export type {
   PrivacyAnonymitySetEventRecord,

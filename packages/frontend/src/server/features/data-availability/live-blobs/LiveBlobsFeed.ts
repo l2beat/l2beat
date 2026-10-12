@@ -9,6 +9,7 @@ import {
   buildPastBlobs,
   isLive,
   type LiveBlobsRows,
+  toPendingBatch,
 } from './buildLiveBlobs'
 import { getBlobPosters } from './getBlobPosters'
 import {
@@ -36,10 +37,17 @@ const MAX_RETRY_DELAY = 30
 const IDLE_AFTER = 3 * LONG_POLL
 /** How long the first answer after a quiet spell waits for the rows */
 const FIRST_ANSWER_TIMEOUT = 10
+/** Bounds what one spammer can put into every answer */
+const MAX_PENDING = 64
 
 export const LiveBlobsParams = v.object({
   /** The newest slot the page has: the answer waits for the head to move off it */
   after: v.number().optional(),
+  /**
+   * The `pendingMark` the page has: the answer waits for the batches in the
+   * mempool to change too. A page that leaves it out hears only of new heads
+   */
+  pendingAfter: v.string().optional(),
 })
 export type LiveBlobsParams = v.infer<typeof LiveBlobsParams>
 
@@ -69,6 +77,10 @@ export interface LiveBlobs {
   /** Known blocks of the last `BELT_SLOTS` slots up to the head, newest first */
   blocks: LiveBlock[]
   window: PostedWindow
+  /** Batches waiting in the mempool for a block, oldest first */
+  pending: PendingBatch[]
+  /** Moves on whenever the stored mempool does */
+  pendingMark: string
 }
 
 export type LiveBlock =
@@ -104,6 +116,30 @@ export interface LiveBatch {
   to: string
   /** For the page to link the transaction to an explorer */
   txHash: string
+  /** Set if the batch was heard of in the mempool before its block */
+  waited?: Waited
+}
+
+export interface Waited {
+  /** The batch's `PendingBatch.key` while it waited */
+  key: string
+  /** Unix seconds it was first heard of */
+  since: number
+}
+
+/** A blob transaction heard of in the mempool and not yet in a block */
+export interface PendingBatch {
+  /** Sender and nonce: the same across fee-bump resends, and once in its block */
+  key: string
+  /** Missing when no project claims it */
+  projectId?: string
+  blobs: number
+  /** Where it was sent */
+  to: string
+  /** Of the newest version heard of */
+  txHash: string
+  /** Unix seconds it was first heard of */
+  firstSeenAt: number
 }
 
 /**
@@ -161,6 +197,10 @@ export interface LiveBlobsSource {
     Database['liveBlobBatch'],
     'getBySlotRange' | 'getPostedSince' | 'getBucketsSince'
   >
+  livePendingBlobTx: Pick<
+    Database['livePendingBlobTx'],
+    'getWaiting' | 'getChangeMark'
+  >
 }
 
 let feed: LiveBlobsFeed | undefined
@@ -193,8 +233,8 @@ export class LiveBlobsFeed {
   private lastAskedAt = 0
   /** The first read of the current run; unset while nobody asks */
   private warmup: Promise<void> | undefined
-  /** Pages waiting for a new snapshot */
-  private readonly waiting = new Set<() => void>()
+  /** Pages waiting for a new snapshot, with what each asked */
+  private readonly waiting = new Map<() => void, LiveBlobsParams>()
   private timer: ReturnType<typeof setTimeout> | undefined
   private readonly logger: Logger
 
@@ -215,16 +255,16 @@ export class LiveBlobsFeed {
   }
 
   /**
-   * The recent blocks once the head is not `after` any more, or as they are
-   * after `LONG_POLL` seconds. Held open, a page hears of a block the moment
-   * the server has it, rather than at its next ask. A page with no head yet
-   * is held the same way until there is one, rather than answered with
-   * nothing and asked again at once
+   * The recent blocks once the head is not `after` any more, or the mempool
+   * not `pendingAfter`, or as they are after `LONG_POLL` seconds. Held open, a
+   * page hears of a block the moment the server has it, rather than at its
+   * next ask. A page with no head yet is held the same way until there is
+   * one, rather than answered with nothing and asked again at once
    */
-  async latestAfter({ after }: LiveBlobsParams) {
+  async latestAfter(page: LiveBlobsParams) {
     const askedAt = this.now()
     await this.latest()
-    if (this.isBehind(after)) return this.snapshot
+    if (this.isBehind(page)) return this.snapshot
     const left = Math.max(0, LONG_POLL - (this.now() - askedAt))
     await new Promise<void>((resolve) => {
       const done = () => {
@@ -233,18 +273,25 @@ export class LiveBlobsFeed {
         resolve()
       }
       const timer = setTimeout(done, left * 1000)
-      this.waiting.add(done)
+      this.waiting.set(done, page)
       // looked at again only once waiting, or a head that moved between the
       // look and the wait would be missed: pages are answered as they wait
-      if (this.isBehind(after)) done()
+      if (this.isBehind(page)) done()
     })
     // not `latest`, which would wait for a first answer all over again
     return this.snapshot
   }
 
-  /** Whether a page holding `after` has a head to hear of: any other, as one moved back has blocks to take off the page */
-  private isBehind(after: number | undefined) {
-    return this.snapshot !== undefined && this.snapshot.head !== after
+  /**
+   * Whether the page has news to hear of: any other head, as one moved back
+   * has blocks to take off the page, or other batches in the mempool
+   */
+  private isBehind({ after, pendingAfter }: LiveBlobsParams) {
+    if (this.snapshot === undefined) return false
+    return (
+      this.snapshot.head !== after ||
+      (pendingAfter !== undefined && this.snapshot.pendingMark !== pendingAfter)
+    )
   }
 
   /**
@@ -283,18 +330,33 @@ export class LiveBlobsFeed {
       if (this.snapshot?.live) this.snapshot = { ...this.snapshot, live: false }
     }
     // replaced only when a page would see a difference
-    if (this.snapshot !== before) this.answerWaiting()
+    if (this.snapshot !== before) this.answerWaiting(before)
     this.scheduleNext()
   }
 
   private async read() {
-    const head = await this.source.liveBlock.findHead()
+    const [head, pendingMark] = await Promise.all([
+      this.source.liveBlock.findHead(),
+      this.source.livePendingBlobTx.getChangeMark(),
+    ])
     if (!head) return
     if (head.hash !== this.headHash) {
-      const rows = await readRows(this.source, head.slot)
-      this.snapshot = buildLiveBlobs(rows, head.slot, this.now())
+      // the pending ones too: a new block may have taken some
+      const [rows, pending] = await Promise.all([
+        readRows(this.source, head.slot),
+        this.readPending(),
+      ])
+      this.snapshot = {
+        ...buildLiveBlobs(rows, head.slot, this.now()),
+        pending,
+        pendingMark,
+      }
       this.headHash = head.hash
       return
+    }
+    if (this.snapshot && pendingMark !== this.snapshot.pendingMark) {
+      const pending = await this.readPending()
+      this.snapshot = { ...this.snapshot, pending, pendingMark }
     }
     // the head stays put, but the clock does not: it may fall behind it
     if (this.snapshot) {
@@ -304,8 +366,20 @@ export class LiveBlobsFeed {
     }
   }
 
-  private answerWaiting() {
-    for (const done of [...this.waiting]) done()
+  private async readPending() {
+    const waiting = await this.source.livePendingBlobTx.getWaiting(MAX_PENDING)
+    return waiting.map(toPendingBatch)
+  }
+
+  /** Every page waiting, but those that do not follow the mempool when only it changed */
+  private answerWaiting(before: LiveBlobs | undefined) {
+    const onlyPendingChanged =
+      before !== undefined &&
+      this.snapshot?.blocks === before.blocks &&
+      this.snapshot.live === before.live
+    for (const [done, page] of [...this.waiting]) {
+      if (!onlyPendingChanged || page.pendingAfter !== undefined) done()
+    }
   }
 
   private scheduleNext() {

@@ -30,6 +30,8 @@ export interface EthereumBlobBatch {
   txIndex: number
   txHash: string
   from: string
+  /** With `from`, names the batch before it is in a block, across fee-bump resends */
+  nonce: number
   to: string
   /** Of every log the transaction emitted, internal calls included */
   topics: string[]

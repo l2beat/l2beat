@@ -1,16 +1,20 @@
-import type {
-  LiveBlobBatchRecord,
-  LiveBlockBucketRecord,
-  LiveBlockRecord,
-  LiveBucketRecord,
-  LivePostedRecord,
-  LiveSlotRange,
+import {
+  type LiveBlobBatchRecord,
+  type LiveBlockBucketRecord,
+  type LiveBlockRecord,
+  type LiveBucketRecord,
+  type LivePendingBlobTxRecord,
+  type LivePostedRecord,
+  type LiveSlotRange,
+  pendingKey,
 } from '@l2beat/database'
 import { slotAt } from '@l2beat/shared-pure'
 import type {
+  LiveBatch,
   LiveBlobs,
   LiveBlock,
   PastBlobs,
+  PendingBatch,
   Posted,
   PostedWindow,
   Pulse,
@@ -59,7 +63,7 @@ export function buildLiveBlobs(
   rows: LiveBlobsRows,
   head: number,
   now: number,
-): LiveBlobs {
+): Omit<LiveBlobs, 'pending' | 'pendingMark'> {
   // the oldest stored at all, not in the window: a window whose first slot was
   // missed is still whole
   const oldest = Math.max(rows.stored?.from ?? head, head - WINDOW_SLOTS + 1)
@@ -129,12 +133,34 @@ function toLiveBlock(
     status: 'proposed',
     blockNumber: block.blockNumber,
     hash: block.hash,
-    batches: batches.map((batch) => ({
-      projectId: batch.projectId,
-      blobs: batch.blobs,
-      to: batch.to,
-      txHash: batch.txHash,
-    })),
+    batches: batches.map(toLiveBatch),
+  }
+}
+
+function toLiveBatch(batch: LiveBlobBatchRecord): LiveBatch {
+  const live: LiveBatch = {
+    projectId: batch.projectId,
+    blobs: batch.blobs,
+    to: batch.to,
+    txHash: batch.txHash,
+  }
+  if (batch.pendingSince !== undefined && batch.nonce !== undefined) {
+    live.waited = {
+      key: pendingKey({ from: batch.from, nonce: batch.nonce }),
+      since: batch.pendingSince,
+    }
+  }
+  return live
+}
+
+export function toPendingBatch(tx: LivePendingBlobTxRecord): PendingBatch {
+  return {
+    key: pendingKey(tx),
+    projectId: tx.projectId,
+    blobs: tx.blobs,
+    to: tx.to,
+    txHash: tx.txHash,
+    firstSeenAt: tx.firstSeenAt,
   }
 }
 

@@ -77,6 +77,24 @@ describe(buildLiveBlobs.name, () => {
     expect(blobs.window.blocks).toEqual(9)
   })
 
+  it('tells which batches waited in the mempool, by the key they waited under', () => {
+    const blobs = buildLiveBlobs(
+      rows({
+        batches: [
+          batch(HEAD, 0, 'base', 1),
+          { ...batch(HEAD, 1, 'base', 1), pendingSince: NOW - 9.5 },
+        ],
+      }),
+      HEAD,
+      NOW,
+    )
+
+    const head = blobs.blocks[0]
+    expect(
+      head?.status === 'proposed' ? head.batches.map((b) => b.waited) : [],
+    ).toEqual([undefined, { key: '0xfrom:1', since: NOW - 9.5 }])
+  })
+
   it('caps the window at a day', () => {
     const blobs = buildLiveBlobs(rows(), HEAD, NOW)
 
@@ -299,10 +317,12 @@ describe(buildLiveBlobs.name, () => {
       txHash: `0x${txIndex}`,
       blockNumber: slot + 1000,
       from: '0xfrom',
+      nonce: txIndex,
       to: '0xto',
       blobs,
       topics: [],
       projectId: projectId === undefined ? undefined : ProjectId(projectId),
+      pendingSince: undefined,
     }
   }
 

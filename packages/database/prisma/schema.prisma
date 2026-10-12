@@ -428,20 +428,43 @@ model LiveBlock {
 
 /// The blob transactions of the blocks in LiveBlock
 model LiveBlobBatch {
-  slot        Int
-  txIndex     Int
-  txHash      String   @db.VarChar(66)
-  blockNumber Int
-  from        String   @db.VarChar(255)
-  to          String   @db.VarChar(255)
-  blobs       Int
+  slot         Int
+  txIndex      Int
+  txHash       String    @db.VarChar(66)
+  blockNumber  Int
+  from         String    @db.VarChar(255)
+  /// Missing on batches stored before nonces were
+  nonce        Int?
+  to           String    @db.VarChar(255)
+  blobs        Int
   /// Of every event the transaction emitted, so batches can be attributed again when configs change
-  topics      String[] @db.VarChar(66)
-  projectId   String?  @db.VarChar(255)
+  topics       String[]  @db.VarChar(66)
+  projectId    String?   @db.VarChar(255)
+  /// When the batch was first heard of in the mempool, if it was before its block
+  pendingSince DateTime? @db.Timestamp(6)
 
   @@id([slot, txIndex])
   @@index([blockNumber])
   @@index([projectId, slot])
+  @@index([from, nonce])
+}
+
+/// Blob transactions heard of in the mempool over the last few minutes. One
+/// already in a block stays until it expires, so that it waits again if the
+/// chain drops that block
+model LivePendingBlobTx {
+  from        String   @db.VarChar(255)
+  /// With the sender, names the batch across fee-bump resends
+  nonce       Int
+  /// Of the newest version heard of
+  txHash      String   @db.VarChar(66)
+  to          String   @db.VarChar(255)
+  blobs       Int
+  projectId   String?  @db.VarChar(255)
+  firstSeenAt DateTime @db.Timestamp(6)
+  lastSeenAt  DateTime @db.Timestamp(6)
+
+  @@id([from, nonce])
 }
 
 model SyncMetadata {

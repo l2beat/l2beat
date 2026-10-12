@@ -3,6 +3,7 @@ import type {
   LiveBlockBucketRecord,
   LiveBlockRecord,
   LiveBucketRecord,
+  LivePendingBlobTxRecord,
   LivePostedRecord,
 } from '@l2beat/database'
 import {
@@ -25,6 +26,10 @@ const MISSED_ONE_IN = 40
 const UNATTRIBUTED_ONE_IN = 10
 /** Each poster posts this much less than the one before, so a few post most, as on mainnet */
 const POSTER_FALLOFF = 0.75
+/** Batches sent to builders privately, never heard of in the mempool */
+const PRIVATE_ONE_IN = 6
+/** A batch is heard of in the mempool up to this many seconds before its slot */
+const MAX_HEARD_BEFORE = 10
 
 interface MockSlot {
   block: LiveBlockRecord
@@ -65,6 +70,31 @@ export function createMockLiveBlobsSource(
   const storedBatches = async (from: number, to = Number.POSITIVE_INFINITY) =>
     (await storedSlots(from, to)).flatMap((s) => s.batches)
 
+  /** The batches of the next blocks heard of by now, oldest first */
+  async function waiting(): Promise<LivePendingBlobTxRecord[]> {
+    const pick = await pickPoster
+    const newest = newestStoredSlot()
+    const heard: LivePendingBlobTxRecord[] = []
+    for (let slot = newest + 1; slot <= newest + 2; slot++) {
+      for (const batch of mockSlot(slot, pick)?.batches ?? []) {
+        if (batch.pendingSince === undefined || batch.pendingSince > now()) {
+          continue
+        }
+        heard.push({
+          from: batch.from,
+          nonce: batch.nonce ?? 0,
+          txHash: batch.txHash,
+          to: batch.to,
+          blobs: batch.blobs,
+          projectId: batch.projectId,
+          firstSeenAt: batch.pendingSince,
+          lastSeenAt: batch.pendingSince,
+        })
+      }
+    }
+    return heard.sort((a, b) => a.firstSeenAt - b.firstSeenAt)
+  }
+
   return {
     liveBlock: {
       findHead: async () => {
@@ -101,6 +131,11 @@ export function createMockLiveBlobsSource(
         sumPosted(await storedBatches(fromSlot)),
       getBucketsSince: async (fromSlot, bucketSlots) =>
         sumBuckets(await storedBatches(fromSlot), bucketSlots),
+    },
+    livePendingBlobTx: {
+      getWaiting: async (limit) => (await waiting()).slice(-limit),
+      getChangeMark: async () =>
+        (await waiting()).map((tx) => tx.txHash).join(),
     },
   }
 }
@@ -189,10 +224,13 @@ function mockSlot(
       txHash: `0x${(slot * 7919 + i).toString(16).padStart(64, '0')}`,
       blockNumber,
       from: `0x${(slot * 31 + i).toString(16).padStart(40, '0')}`,
+      // every batch from a sender of its own
+      nonce: 0,
       to: `0x${(slot * 7919 + i).toString(16).padStart(40, '0')}`,
       blobs: size,
       topics: [],
       projectId: projectId === undefined ? undefined : ProjectId(projectId),
+      pendingSince: heardAt(slot, i),
     })
     blobs += size
   }
@@ -206,6 +244,16 @@ function mockSlot(
     },
     batches,
   }
+}
+
+/**
+ * When batch `i` of `slot` was heard of in the mempool, or undefined if it
+ * was sent privately. Rolled apart from the block, so blocks stay as they were
+ */
+function heardAt(slot: number, i: number) {
+  const random = seededRandom(slot * MAX_BATCHES + i + 0x5eed)
+  if (Math.floor(random() * PRIVATE_ONE_IN) === 0) return undefined
+  return slotStart(slot) - 1 - random() * (MAX_HEARD_BEFORE - 1)
 }
 
 function createPosterPicker(posterIds: string[]) {

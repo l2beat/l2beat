@@ -98,6 +98,27 @@ describe(LiveBlobsIndexer.name, () => {
       ])
     })
 
+    it('stores since when each batch waited in the mempool, for the ones heard of there', async () => {
+      const { indexer, db } = setup({
+        batches: {
+          [HEAD - 9]: [
+            batch({ blockNumber: HEAD - 9, txIndex: 0, to: INBOX, blobs: 1 }),
+            batch({ blockNumber: HEAD - 9, txIndex: 1, to: INBOX, blobs: 1 }),
+          ],
+        },
+        pendingSince: new Map([
+          [`0xsequencer:${nonceOf(HEAD - 9, 1)}`, 1234.5],
+        ]),
+      })
+
+      await indexer.update(HEAD - 9, HEAD - 9)
+
+      expect(db.liveBlobBatch.upsertMany).toHaveBeenOnlyCalledWith([
+        liveBatch(HEAD - 9, 0, INBOX, 1, undefined),
+        liveBatch(HEAD - 9, 1, INBOX, 1, undefined, 1234.5),
+      ])
+    })
+
     it('logs how long after its slot started the newest block was stored', async () => {
       // The view can show a block no sooner than this
       const info = mockFn().returns(undefined)
@@ -242,6 +263,8 @@ describe(LiveBlobsIndexer.name, () => {
     stored?: LiveBlockRecord[]
     storedBatches?: LiveBlobBatchRecord[]
     brokenLinkAt?: number
+    /** By `from:nonce` */
+    pendingSince?: Map<string, number>
     now?: number
     logger?: Logger
   }) {
@@ -264,10 +287,15 @@ describe(LiveBlobsIndexer.name, () => {
       deleteBeforeBlock: mockFn().resolvesTo(0),
       deleteAfterBlock: mockFn().resolvesTo(0),
     })
+    const pendingSince = options.pendingSince ?? new Map<string, number>()
+    const livePendingBlobTx = mockObject<Database['livePendingBlobTx']>({
+      getFirstSeen: mockFn(async () => pendingSince),
+    })
     const db = mockObject<Database>({
       transaction: async <T>(fn: () => Promise<T>) => await fn(),
       liveBlock,
       liveBlobBatch,
+      livePendingBlobTx,
     })
     const daProvider = mockObject<EthereumDaProvider>({
       getBlocksWithBlobBatchesFromReceipts: mockFn(
@@ -324,18 +352,25 @@ function liveBatch(
   to: string,
   blobs: number,
   projectId: ProjectId | undefined,
-) {
+  pendingSince?: number,
+): LiveBlobBatchRecord {
   return {
     slot: blockNumber + SLOT_OFFSET,
     txIndex,
     txHash: txHashOf(blockNumber, txIndex),
     blockNumber,
     from: '0xsequencer',
+    nonce: nonceOf(blockNumber, txIndex),
     to,
     blobs,
     topics: [],
     projectId,
+    pendingSince,
   }
+}
+
+function nonceOf(blockNumber: number, txIndex: number) {
+  return blockNumber * 10 + txIndex
 }
 
 function txHashOf(blockNumber: number, txIndex: number) {
@@ -351,6 +386,7 @@ function batch(
   return {
     txHash: txHashOf(blockNumber, fields.txIndex),
     from: '0xsequencer',
+    nonce: nonceOf(blockNumber, fields.txIndex),
     topics: [],
     ...rest,
   }

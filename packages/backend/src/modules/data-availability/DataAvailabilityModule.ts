@@ -23,6 +23,7 @@ import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
 import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
 import { LiveBlobsIndexer } from './indexers/live/LiveBlobsIndexer'
 import { LiveBlobsTargetIndexer } from './indexers/live/LiveBlobsTargetIndexer'
+import { LiveMempoolListener } from './indexers/live/LiveMempoolListener'
 import { BlobService } from './services/BlobService'
 import { DaService } from './services/DaService'
 import { createDataAvailabilityTrpcRouter } from './trpc/router'
@@ -50,6 +51,7 @@ export function initDataAvailabilityModule({
     eigenIndexers,
     notificationIndexers,
     liveIndexers,
+    liveMempoolListener,
   } = createIndexers(
     config.da,
     config.notifications,
@@ -116,6 +118,8 @@ export function initDataAvailabilityModule({
         }
         logger.info('Live blobs indexers started')
       }
+
+      liveMempoolListener?.start()
     },
   }
 }
@@ -141,6 +145,7 @@ function createIndexers(
   const notificationIndexers: (HourlyIndexer | EthereumBlobNotifierIndexer)[] =
     []
   const liveIndexers: (LiveBlobsTargetIndexer | LiveBlobsIndexer)[] = []
+  let liveMempoolListener: LiveMempoolListener | undefined
 
   for (const daLayer of config.blockLayers) {
     const configurations = config.blockProjects.filter(
@@ -217,6 +222,16 @@ function createIndexers(
             indexerService,
           ),
         )
+        if (config.liveBlobs.mempool) {
+          liveMempoolListener = new LiveMempoolListener(
+            {
+              url: config.liveBlobs.mempool.url,
+              db: database,
+              configurations: configurations.filter(isEthereumConfig),
+            },
+            logger,
+          )
+        }
       }
     }
 
@@ -324,6 +339,7 @@ function createIndexers(
     eigenIndexers,
     notificationIndexers,
     liveIndexers,
+    liveMempoolListener,
   }
 }
 

@@ -365,6 +365,13 @@ export interface LiveBlobsTrackingConfig {
     readonly url: string
     readonly callsPerMinute: number
   }
+  /** Where batches are heard of before their block, to show them waiting */
+  readonly mempool:
+    | {
+        /** A node's WebSocket that streams whole pending transactions */
+        readonly url: string
+      }
+    | false
 }
 
 export interface BlockSyncModuleConfig {

@@ -1,5 +1,11 @@
-import { SLOT_SECONDS } from '@l2beat/shared-pure'
+import type { EthereumDaTrackingConfig } from '@l2beat/config'
+import { type ProjectId, SLOT_SECONDS } from '@l2beat/shared-pure'
 import { Retries } from '@l2beat/uif'
+import { matchEthereumConfigs } from '../../services/matchEthereumConfigs'
+
+export type LiveBlobsConfig = EthereumDaTrackingConfig & {
+  projectId: ProjectId
+}
 
 /**
  * Blocks kept back from the head: about 25 hours, so that a whole day back
@@ -36,4 +42,30 @@ export function secondsSince(timestamp: number, now: number) {
 /** Unix seconds with the fraction, which `UnixTime.now` drops */
 export function nowSeconds() {
   return Date.now() / 1000
+}
+
+/** The project a blob transaction of `blockNumber` is posted for, if any */
+export function attributeBatch(
+  configs: LiveBlobsConfig[],
+  blockNumber: number,
+  batch: { from: string; to: string; topics: string[] },
+): ProjectId | undefined {
+  const matching = matchEthereumConfigs(configs, blockNumber, {
+    inbox: batch.to,
+    sequencer: batch.from,
+    topics: batch.topics,
+  })
+  return closestMatch(matching, batch.from)?.projectId
+}
+
+/**
+ * A config naming the sender is a closer match than an inbox open to anyone,
+ * whichever comes first: on a shared inbox both claim the batch
+ */
+function closestMatch(configs: LiveBlobsConfig[], sender: string) {
+  return (
+    configs.find((c) =>
+      c.sequencers?.some((s) => s.toLowerCase() === sender.toLowerCase()),
+    ) ?? configs[0]
+  )
 }

@@ -12,7 +12,7 @@ describeDatabase(LiveBlobBatchRepository.name, (db) => {
   const A = ProjectId('a')
   const B = ProjectId('b')
   const BATCHES = [
-    batch({ slot: 100, txIndex: 0, blobs: 2, projectId: A }),
+    batch({ slot: 100, txIndex: 0, blobs: 2, projectId: A, pendingSince: 1.5 }),
     batch({ slot: 100, txIndex: 1, blobs: 1 }),
     batch({ slot: 101, txIndex: 0, blobs: 3, projectId: A }),
     batch({ slot: 101, txIndex: 2, blobs: 1, projectId: A }),
@@ -143,9 +143,11 @@ function batch(
     txHash: `0x${fields.slot}${fields.txIndex}`,
     blockNumber: blockOf(fields.slot),
     from: '0xfrom',
+    nonce: fields.slot * 10 + fields.txIndex,
     to: '0xto',
     topics: ['0xtopic'],
     projectId: undefined,
+    pendingSince: undefined,
     ...fields,
   }
 }
