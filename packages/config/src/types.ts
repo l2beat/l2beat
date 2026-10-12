@@ -1446,7 +1446,6 @@ export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
            */
           minimumAmounts: string[]
         }
-        address: ChainSpecificAddress
         deposit: PrivacyAnonymitySetDepositSource
       }
     | {
@@ -1477,6 +1476,7 @@ export type PrivacyAnonymitySetDepositSource = {
       | 'fixedAmount'
       | 'privacyPoolsValue'
       | 'railgunShield'
+      | 'strk20Deposit'
       | 'zkMoneyDeposit'
   }
 >

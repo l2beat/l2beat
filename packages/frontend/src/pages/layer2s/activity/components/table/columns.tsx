@@ -61,7 +61,7 @@ export const getL2ActivityColumns = (
       columnHelper,
       (row) =>
         row.id === ProjectId.ETHEREUM
-          ? '/data-availability/projects/ethereum/ethereum#activity'
+          ? undefined
           : `/layer2s/projects/${row.slug}#activity`,
       opts,
     ),

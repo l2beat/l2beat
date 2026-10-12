@@ -22,16 +22,12 @@ describe(getSearchBarEntries.name, () => {
       [
         l2Project('ethereal', 'Ethereal', 'Other', 'layer3'),
         l2Project('jetstreamchain', 'Jetstream'),
-        daLayerProject('ethereum', 'Ethereum'),
-        daBridgeProject('enshrined-bridge', 'Enshrined Bridge', 'ethereum'),
+        l2Project('etherex', 'Etherex'),
       ] as never
 
     const result = await getSearchBarEntries('ethere')
 
-    expect(result.map((entry) => entry.name)).toEqual([
-      'Ethereal',
-      'Ethereum with Enshrined Bridge',
-    ])
+    expect(result.map((entry) => entry.name)).toEqual(['Etherex', 'Ethereal'])
     expect(result.map((entry) => entry.searchMatchKind)).toEqual([
       'direct',
       'direct',
@@ -93,29 +89,6 @@ function l2Project(
     scalingInfo: {
       layer,
       type: l2Category,
-    },
-  }
-}
-
-function daLayerProject(slug: string, name: string) {
-  return {
-    id: ProjectId(slug),
-    slug,
-    name,
-    daLayer: {
-      usedWithoutBridgeIn: [],
-    },
-  }
-}
-
-function daBridgeProject(slug: string, name: string, daLayerSlug: string) {
-  return {
-    id: ProjectId(slug),
-    slug,
-    name,
-    daBridge: {
-      name,
-      daLayer: ProjectId(daLayerSlug),
     },
   }
 }

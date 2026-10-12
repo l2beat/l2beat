@@ -23,26 +23,12 @@ import { useDevice } from '~/hooks/useDevice'
 import { ChevronIcon } from '~/icons/Chevron'
 import type {
   OngoingAnomaliesOverview,
-  OngoingAnomalyCategory,
   OngoingAnomalyItem,
 } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
 
 const TITLE = 'Ongoing anomalies'
 const DESCRIPTION =
   'Projects that are currently not posting to Ethereum as expected'
-
-const CATEGORIES: {
-  category: OngoingAnomalyCategory
-  label: string
-  livenessHref: string
-}[] = [
-  { category: 'layer2s', label: 'Layer 2s', livenessHref: '/layer2s/liveness' },
-  {
-    category: 'data-availability',
-    label: 'Data Availability',
-    livenessHref: '/data-availability/liveness',
-  },
-]
 
 interface Props {
   ongoingAnomalies: OngoingAnomaliesOverview
@@ -90,12 +76,7 @@ export function OngoingAnomaliesDialog({ ongoingAnomalies, trigger }: Props) {
 }
 
 function OngoingAnomaliesBody({ items }: { items: OngoingAnomalyItem[] }) {
-  const groups = CATEGORIES.map((c) => ({
-    ...c,
-    items: items.filter((item) => item.category === c.category),
-  })).filter((group) => group.items.length > 0)
-
-  if (groups.length === 0) {
+  if (items.length === 0) {
     return (
       <div className="py-10 text-center text-secondary">
         All tracked projects are posting as expected.
@@ -104,29 +85,25 @@ function OngoingAnomaliesBody({ items }: { items: OngoingAnomalyItem[] }) {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      {groups.map((group) => (
-        <section key={group.category} className="flex flex-col gap-3">
-          <a
-            href={group.livenessHref}
-            className="group flex items-center justify-between gap-2 border-divider border-b pb-2"
-          >
-            <h3 className="font-bold text-base text-primary leading-tight">
-              {group.label}
-            </h3>
-            <span className="flex shrink-0 items-center gap-1 font-medium text-link text-xs">
-              View liveness
-              <ChevronIcon className="-rotate-90 size-2.5 fill-link" />
-            </span>
-          </a>
-          <div className="flex flex-col gap-2">
-            {group.items.map((item) => (
-              <OngoingAnomalyRow key={item.slug} item={item} />
-            ))}
-          </div>
-        </section>
-      ))}
-    </div>
+    <section className="flex flex-col gap-3">
+      <a
+        href="/layer2s/liveness"
+        className="group flex items-center justify-between gap-2 border-divider border-b pb-2"
+      >
+        <h3 className="font-bold text-base text-primary leading-tight">
+          Layer 2s
+        </h3>
+        <span className="flex shrink-0 items-center gap-1 font-medium text-link text-xs">
+          View liveness
+          <ChevronIcon className="-rotate-90 size-2.5 fill-link" />
+        </span>
+      </a>
+      <div className="flex flex-col gap-2">
+        {items.map((item) => (
+          <OngoingAnomalyRow key={item.slug} item={item} />
+        ))}
+      </div>
+    </section>
   )
 }
 

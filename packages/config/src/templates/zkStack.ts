@@ -124,10 +124,7 @@ export interface ZkStackConfigCommon {
   daAttestedByIndependentParty?: boolean
   daVerifierSecureOnL1?: boolean
   daVerifier7DayExitWindow?: boolean
-  daVerifier30DayExitWindow?: boolean
   daCommitteeDecentralized?: boolean
-  /** Override for the static economic-security check derived from the DA layer. */
-  daMechanismEconomicSecurity?: boolean
   daVerifierLink?: string
   proverSourceLink?: string
   securityCouncilReference?: string
@@ -426,15 +423,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                   templateVars.zkVerifierContractsReproducible ?? null,
                 programHashesReproducible:
                   programHashesReproducible(l2BootloaderHash),
-              },
-              stage2: {
-                fraudProofSystemIsPermissionless: null,
-                delayWith30DExitWindow: false,
-                proofSystemOverriddenOnlyInCaseOfABug: null,
-                daVerifier30DayExitWindow:
-                  templateVars.daVerifier30DayExitWindow ?? null,
-                daMechanismEconomicSecurity:
-                  templateVars.daMechanismEconomicSecurity ?? null,
               },
             },
             {

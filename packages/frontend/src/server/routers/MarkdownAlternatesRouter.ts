@@ -4,7 +4,6 @@ import {
   PRIVACY_SUMMARY_DESCRIPTION,
   ZK_CATALOG_DESCRIPTION,
 } from '~/consts/summaryPageDescriptions'
-import { getDaListSections } from '~/server/markdown/list-pages/getDaListSections'
 import { getDefiListSections } from '~/server/markdown/list-pages/getDefiListSections'
 import { getInteropListSections } from '~/server/markdown/list-pages/getInteropListSections'
 import { getPrivacyListSections } from '~/server/markdown/list-pages/getPrivacyListSections'
@@ -77,12 +76,6 @@ const LIST_PAGE_DOCUMENTS: Record<
     summary:
       'Every layer 2 and layer 3 tracked by L2BEAT, with category, stage, stack and host chain. Each link is the project page; its last path segment is the {slug} for the public API.',
     getSections: getScalingListSections,
-  },
-  '/data-availability/summary': {
-    title: 'L2BEAT data availability layers',
-    summary:
-      'Every data availability layer tracked by L2BEAT with its type and risks: public layers one entry per bridge to Ethereum plus one for use without a bridge, and custom solutions built for a single project.',
-    getSections: getDaListSections,
   },
   '/zk-catalog': {
     title: 'L2BEAT ZK catalog',

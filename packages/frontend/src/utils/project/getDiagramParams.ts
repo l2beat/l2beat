@@ -7,7 +7,6 @@ type DiagramType =
   | 'upgrades-and-governance'
   | 'state-validation'
   | 'da-layer-technology'
-  | 'da-bridge-technology'
   | 'sequencing'
 
 const diagramTypeToCaption: Record<DiagramType, string> = {
@@ -15,7 +14,6 @@ const diagramTypeToCaption: Record<DiagramType, string> = {
   'upgrades-and-governance': 'A diagram of the upgrades and governance',
   'state-validation': 'A diagram of the state validation',
   'da-layer-technology': 'A diagram of the DA layer technology',
-  'da-bridge-technology': 'A diagram of the DA bridge technology',
   sequencing: 'A diagram of the sequencing technology',
 }
 

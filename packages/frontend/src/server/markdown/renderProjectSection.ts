@@ -6,10 +6,8 @@ import type {
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { RiskGroup } from '~/components/projects/sections/RiskSummarySection'
 import {
-  BRIDGE_UNVERIFIED_CONTRACTS_WARNING,
   L3_RISKS_DESCRIPTION,
   NO_EXTERNAL_DEPENDENCIES,
-  PROJECT_UNVERIFIED_CONTRACTS_WARNING,
 } from '~/components/projects/sections/sectionCopy'
 import type {
   ProjectDetailsSection,
@@ -48,7 +46,6 @@ import {
   renderL2TvsSection,
   renderLivenessSection,
   renderPrivacyAnonymitySetSection,
-  renderThroughputSection,
 } from './renderSectionCharts'
 import { renderGardenCropsSection } from './renderSectionCrops'
 import { renderUpgradesAndGovernance } from './renderSectionGovernance'
@@ -171,38 +168,6 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
       ),
       renderRiskGroups(props.riskGroups, level),
     ]),
-  DaRiskSummarySection: (props, level) => {
-    const { layer, bridge } = props
-    const bridgeTitle = `${bridge.name}${bridge.name === layer.name ? ' bridge' : ''} risks`
-    return joinBlocks([
-      renderWarnings(
-        props.isVerified === false
-          ? critical(PROJECT_UNVERIFIED_CONTRACTS_WARNING)
-          : undefined,
-        props.redWarning?.text,
-        props.warning,
-      ),
-      subsection(
-        level,
-        `${layer.name} risks`,
-        renderRiskGroups(layer.risks, level + 1),
-      ),
-      bridge.risks.length > 0
-        ? subsection(
-            level,
-            bridgeTitle,
-            joinBlocks([
-              renderWarnings(
-                bridge.isVerified
-                  ? undefined
-                  : critical(BRIDGE_UNVERIFIED_CONTRACTS_WARNING),
-              ),
-              renderRiskGroups(bridge.risks, level + 1),
-            ]),
-          )
-        : '',
-    ])
-  },
   RiskAnalysisSection: (props, level) =>
     joinBlocks([
       renderUnverifiedContracts(props.unverifiedContracts),
@@ -316,7 +281,6 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   PrivacyAssetsBreakdownSection: renderPrivacyAssetsBreakdown,
   PrivacyFlowsSection: pointToHtmlPage('The interactive flows chart is shown'),
   ProgramHashesSection: renderProgramHashes,
-  ThroughputSection: renderThroughputSection,
   TrustedSetupSection: renderTrustedSetups,
   TvsValueSection: pointToHtmlPage('The interactive value chart is shown'),
   UpdatesSection: renderUpdatesSection,
