@@ -145,7 +145,6 @@ FEATURES=*,!interop.relay
   60
 - `<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
 - `<CHAIN>_RPC_MAX_BATCH_SIZE` - Optional. The RPC's limit of calls per batch request, bigger batches are split. A batch it still rejects throws. Unset, batches of 50 shrink for 5 minutes when the RPC rejects them.
-  Defaults to 50. A batch the RPC rejects is called one by one, and later batches get smaller
 
 You can also append the feature name to the environment variables if you'd like a specific feature
 to use a different endpoint. For example:

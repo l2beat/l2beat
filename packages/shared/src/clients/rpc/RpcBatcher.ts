@@ -18,6 +18,9 @@ const LEARNED_SIZE_TTL_MS = 5 * 60_000
 
 export const BATCH_REJECTED = Symbol('BATCH_REJECTED')
 
+type SendBatch<P, R> = (chunk: P[]) => Promise<R[] | typeof BATCH_REJECTED>
+type SendOne<P, R> = (params: P) => Promise<R>
+
 export interface RpcBatcherOptions {
   /** The RPC's known limit; a batch it rejects then throws, nothing is learned */
   maxBatchSize?: number
@@ -37,6 +40,8 @@ export class RpcBatcher {
   private readonly logger: Logger
   private readonly now: () => number
   private learned?: { size: number; until: number }
+  /** Set while one rejected batch searches for the size the RPC takes */
+  private sizeSearch?: Promise<void>
 
   constructor(options: RpcBatcherOptions = {}) {
     this.maxBatchSize = options.maxBatchSize ?? DEFAULT_MAX_BATCH_SIZE
@@ -50,9 +55,10 @@ export class RpcBatcher {
   async run<P, R>(
     method: string,
     paramsList: P[],
-    sendBatch: (chunk: P[]) => Promise<R[] | typeof BATCH_REJECTED>,
-    sendOne: (params: P) => Promise<R>,
+    sendBatch: SendBatch<P, R>,
+    sendOne: SendOne<P, R>,
   ): Promise<R[]> {
+    await this.sizeSearch
     const chunks = toBatches(paramsList, this.batchSize())
     const results = await Promise.all(
       chunks.map(async (chunk) => {
@@ -63,11 +69,61 @@ export class RpcBatcher {
         if (result !== BATCH_REJECTED) {
           return result
         }
-        this.shrinkBelow(method, chunk.length)
-        return await this.run(method, chunk, sendBatch, sendOne)
+        return await this.resend(method, chunk, sendBatch, sendOne)
       }),
     )
     return results.flat()
+  }
+
+  /**
+   * Chunks sent together are rejected together. Only the first searches for
+   * the size, the rest wait for it, so the RPC sees about log2(size)
+   * rejections instead of each chunk halving on its own.
+   */
+  private async resend<P, R>(
+    method: string,
+    rejected: P[],
+    sendBatch: SendBatch<P, R>,
+    sendOne: SendOne<P, R>,
+  ): Promise<R[]> {
+    if (this.sizeSearch) {
+      return await this.run(method, rejected, sendBatch, sendOne)
+    }
+    const search = this.searchSize(method, rejected, sendBatch, sendOne)
+    this.sizeSearch = search.then(
+      () => {},
+      () => {},
+    )
+    let head: R[]
+    try {
+      head = await search
+    } finally {
+      this.sizeSearch = undefined
+    }
+    const rest = rejected.slice(head.length)
+    return [...head, ...(await this.run(method, rest, sendBatch, sendOne))]
+  }
+
+  /** Sends ever smaller heads of the rejected batch until one passes */
+  private async searchSize<P, R>(
+    method: string,
+    rejected: P[],
+    sendBatch: SendBatch<P, R>,
+    sendOne: SendOne<P, R>,
+  ): Promise<R[]> {
+    let rejectedSize = rejected.length
+    while (true) {
+      this.shrinkBelow(method, rejectedSize)
+      const head = rejected.slice(0, this.batchSize())
+      if (head.length === 1) {
+        return [await sendOne(head[0] as P)]
+      }
+      const result = await sendBatch(head)
+      if (result !== BATCH_REJECTED) {
+        return result
+      }
+      rejectedSize = head.length
+    }
   }
 
   private batchSize(): number {
@@ -107,6 +163,10 @@ export class RpcBatcher {
 export function isBatchRejected(status: number, body: unknown): boolean {
   if (status === 413) {
     return true
+  }
+  // A 429 or 5xx mentioning the batch is about load, a retry handles it
+  if (status !== 200 && status !== 400) {
+    return false
   }
   const errors = errorsOfWholeBatch(body)
   return (

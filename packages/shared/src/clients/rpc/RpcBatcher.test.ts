@@ -3,15 +3,30 @@ import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
 
 describe(RpcBatcher.name, () => {
   // Methodology: an RPC that takes at most 2 calls per batch, 8 calls at the
-  // default size; each rejection must halve the rejected size and send the
-  // rejected calls again at it, with the results in the asked order
+  // default size; the head of the rejected batch is halved until it passes,
+  // then the rest goes at that size, with the results in the asked order
   it('halves a rejected batch until the RPC takes it', async () => {
     const rpc = new FakeRpc(2)
 
     const results = await rpc.run(new RpcBatcher(), CALLS)
 
     expect(results).toEqual(CALLS)
-    expect(rpc.sent).toEqual([8, 4, 4, 2, 2, 2, 2])
+    expect(rpc.sent).toEqual([8, 4, 2, 2, 2, 2])
+  })
+
+  // Methodology: 150 calls go out as 3 batches of 50 at once to an RPC that
+  // takes 3; only the first rejection may search for the size, so after the
+  // 3 unavoidable rejections only 25, 12 and 6 are rejected
+  it('searches for the size with one request at a time', async () => {
+    const rpc = new FakeRpc(3)
+    const calls = Array.from({ length: 150 }, (_, i) => `${i}`)
+
+    const results = await rpc.run(new RpcBatcher(), calls)
+
+    expect(results).toEqual(calls)
+    expect(rpc.sent.filter((size) => size !== 'single' && size > 3)).toEqual([
+      50, 50, 50, 25, 12, 6,
+    ])
   })
 
   // Methodology: an RPC that rejects every batch
@@ -21,7 +36,7 @@ describe(RpcBatcher.name, () => {
     const results = await rpc.run(new RpcBatcher(), CALLS.slice(0, 4))
 
     expect(results).toEqual(CALLS.slice(0, 4))
-    expect(rpc.sent).toEqual([4, 2, 2, ...Array(4).fill('single')])
+    expect(rpc.sent).toEqual([4, 2, ...Array(4).fill('single')])
   })
 
   // Methodology: a clock moved by hand; the learned size must be used for the
@@ -90,6 +105,10 @@ describe(isBatchRejected.name, () => {
     'HTTP 403': [403, undefined],
     'HTTP 429': [429, rpcError('Rate limit exceeded')],
     'HTTP 503': [503, undefined],
+    'HTTP 429 with a batch rate limit': [
+      429,
+      rpcError('batch request rate limit exceeded'),
+    ],
     'a rate limit in place of the array': [200, rpcError('Rate limit hit')],
     'an internal error in place of the array': [
       200,
