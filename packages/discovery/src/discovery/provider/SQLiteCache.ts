@@ -7,6 +7,7 @@ const DEFAULT_DATABASE_DIR = 'cache'
 const DEFAULT_DATABASE_FILENAME = 'discovery.sqlite'
 
 export class SQLiteCache implements DiscoveryCache {
+  private readonly db: DatabaseSync
   private readonly getStatement: StatementSync
   private readonly setStatement: StatementSync
 
@@ -18,15 +19,15 @@ export class SQLiteCache implements DiscoveryCache {
       mkdirSync(databaseDir, { recursive: true })
     }
 
-    const db = new DatabaseSync(databaseUrl, { timeout: 1000 })
-    db.exec(`
+    this.db = new DatabaseSync(databaseUrl, { timeout: 1000 })
+    this.db.exec(`
       CREATE TABLE IF NOT EXISTS cache (
         key TEXT PRIMARY KEY,
         value TEXT
       )
     `)
-    this.getStatement = db.prepare('SELECT value FROM cache WHERE key = ?')
-    this.setStatement = db.prepare(`
+    this.getStatement = this.db.prepare('SELECT value FROM cache WHERE key = ?')
+    this.setStatement = this.db.prepare(`
       INSERT INTO cache(key, value)
       VALUES(?1, ?2)
       ON CONFLICT(key) DO UPDATE SET value = ?2`)
@@ -49,5 +50,38 @@ export class SQLiteCache implements DiscoveryCache {
       console.error('Error writing to cache', error)
     }
     return Promise.resolve()
+  }
+
+  findMissingKeys(keys: string[]): Promise<string[]> {
+    return new Promise((resolve) => {
+      const placeholders = keys.map(() => '?').join(', ')
+      const rows = this.db
+        .prepare(`SELECT key FROM cache WHERE key IN (${placeholders})`)
+        .all(...keys) as { key: string }[]
+      const presentKeys = new Set(rows.map((row) => row.key))
+      resolve(keys.filter((key) => !presentKeys.has(key)))
+    })
+  }
+
+  setMany(entries: { key: string; value: string }[]): Promise<void> {
+    return new Promise((resolve) => {
+      if (entries.length > 0) {
+        const placeholders = entries.map(() => '(?, ?)').join(', ')
+        this.db
+          .prepare(`
+            INSERT INTO cache(key, value)
+            VALUES ${placeholders}
+            ON CONFLICT(key) DO UPDATE SET value = excluded.value`)
+          .run(...entries.flatMap((entry) => [entry.key, entry.value]))
+      }
+      resolve()
+    })
+  }
+
+  close(): Promise<void> {
+    return new Promise((resolve) => {
+      this.db.close()
+      resolve()
+    })
   }
 }
