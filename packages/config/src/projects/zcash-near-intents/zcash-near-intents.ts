@@ -25,7 +25,7 @@ export const zcashNearIntents: BaseProject = {
   },
   display: {
     description:
-      "A round trip from Ethereum into shielded ZEC and back through NEAR Intents, so that Zcash's shielded pool serves as the privacy pool.",
+      'A shielded ledger round trip: Zodl swaps Ethereum funds into shielded ZEC and back through NEAR Intents, which custodies the Ethereum side.',
     detailedDescription: readProjectMarkdown(
       'zcash-near-intents',
       'detailedDescription',
@@ -76,7 +76,7 @@ export const zcashNearIntents: BaseProject = {
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The NEAR Intents multisig (3/5) upgrades the Verifier and the Rainbow Bridge multisig (3/5) the Zcash bridge, both instantly. The Ethereum funds sit in an EOA the operator controls.',
+        'The NEAR Intents multisig upgrades the Verifier and the Rainbow Bridge multisig the Zcash bridge, both instantly. The Ethereum funds sit in an EOA the operator controls.',
       walkawayTest: {
         passed: false,
         reason:

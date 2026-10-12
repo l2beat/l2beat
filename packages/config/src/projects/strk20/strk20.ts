@@ -104,7 +104,7 @@ export const strk20: BaseProject = {
   },
   display: {
     description:
-      'A privacy pool on Starknet for arbitrary-amount private transfers and DeFi actions, using Cairo execution proofs and auditor-accessible compliance data.',
+      "A shielded ledger on Starknet for any ERC-20 token, with private transfers and DeFi, where one auditor key can decrypt every user's history.",
     detailedDescription: readProjectMarkdown('strk20', 'detailedDescription'),
     links: {
       documentation: [
@@ -122,6 +122,16 @@ export const strk20: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      title: 'Privacy live on Starknet',
+      url: 'https://www.starknet.io/blog/privacy-live-on-starknet/',
+      date: '2026-06-09T00:00:00Z',
+      description:
+        'StarkWare opens the pool to users through the Ready and Xverse wallets.',
+      type: 'general',
+    },
+  ],
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     trackedOn: ['starknet'],
@@ -140,10 +150,10 @@ export const strk20: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Reproducible',
-      sentiment: 'good',
+      value: 'Partially reproducible',
+      sentiment: 'warning',
       description:
-        'The pool contract, TypeScript SDK, discovery service, and proving stack are publicly available and can be run locally, so users can audit what is actually proven and generate the required ZK proofs without revealing private data to a third-party prover.',
+        'The pool contract, SDK, discovery service and prover are open source. The deployed pool runs a version without a release tag, which has not been rebuilt from source, and the wallets are closed.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
