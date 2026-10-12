@@ -3,6 +3,7 @@ import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMet
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getCropsBadgeAssets } from './badges'
 import { CROPS_API_ENDPOINTS } from './content'
 import { getIntegrateExamples } from './getIntegrateExamples'
 
@@ -34,6 +35,7 @@ export async function getIntegrateCropsData(
       props: {
         ...appLayoutProps,
         attestations,
+        badges: getCropsBadgeAssets(manifest),
         endpoints: CROPS_API_ENDPOINTS,
         examples,
       },
