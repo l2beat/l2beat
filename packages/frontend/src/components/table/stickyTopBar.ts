@@ -14,14 +14,14 @@ export function stickyTopBarRef(bar: HTMLElement | null) {
   if (!bar || !parent) return
 
   const publish = () => {
-    const top = Number.parseFloat(getComputedStyle(bar).top) || 0
-    const bottom = top + bar.getBoundingClientRect().height
+    const style = getComputedStyle(bar)
+    const top = Number.parseFloat(style.top) || 0
+    const bottom = top + slideY(style) + bar.getBoundingClientRect().height
     parent.style.setProperty(TOP_VARIABLE, `${bottom}px`)
   }
   const resizeObserver = new ResizeObserver(publish)
   resizeObserver.observe(bar)
-  // A bar can also slide by changing its `top` through a class, with or
-  // without a transition.
+  // A bar can also slide down through a class, with or without a transition.
   const classObserver = new MutationObserver(publish)
   classObserver.observe(bar, { attributeFilter: ['class'] })
   const publishAfterSlide = (event: TransitionEvent) => {
@@ -35,4 +35,10 @@ export function stickyTopBarRef(bar: HTMLElement | null) {
     bar.removeEventListener('transitionend', publishAfterSlide)
     parent.style.removeProperty(TOP_VARIABLE)
   }
+}
+
+// Tailwind's `translate-y-*` sets the `translate` property, not `transform`.
+function slideY(style: CSSStyleDeclaration) {
+  const [, y = '0'] = style.translate.split(' ')
+  return Number.parseFloat(y) || 0
 }

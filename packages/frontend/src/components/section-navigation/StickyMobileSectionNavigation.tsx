@@ -52,8 +52,11 @@ export function StickyMobileSectionNavigation({
     <div
       ref={barRef}
       className={cn(
-        'md:-mx-5 sticky top-0 z-100 transition-[top] duration-200 ease-out motion-reduce:transition-none lg:hidden',
-        isStripShown && 'top-7.5',
+        'md:-mx-5 sticky top-0 z-100 transition-[translate] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none lg:hidden',
+        // Leaving is quicker than arriving: a fling back to the top un-sticks
+        // the bar soon after the title shows, and a bar still sliding up
+        // would then sit below its place.
+        isStripShown ? 'translate-y-7.5 duration-[280ms]' : 'duration-[140ms]',
         className,
       )}
     >
@@ -88,9 +91,10 @@ function watchTitleCovered(
   return () => observer.disconnect()
 }
 
-// Hangs above the bar instead of taking space in it, so showing it moves the
-// bar's `top` rather than the page content. It is 30px tall: section scroll
-// margins on project pages count on it.
+// Hangs above the bar instead of taking space in it, and the bar slides down
+// with `translate` to show it, so neither the page content nor the layout
+// moves; the slide stays on the compositor even during momentum scrolling.
+// It is 30px tall: section scroll margins on project pages count on it.
 function ProjectStrip({
   project,
   isShown,
@@ -101,24 +105,31 @@ function ProjectStrip({
   return (
     <div
       className={cn(
-        'absolute inset-x-0 bottom-full flex h-7.5 items-center justify-between gap-4 border-divider border-b bg-header-primary px-4',
-        // Before the bar sticks, the hidden strip would cover what sits above
-        // it; delaying `visibility` keeps it painted while it slides out.
-        'transition-[visibility] duration-200 motion-reduce:transition-none',
-        !isShown && 'invisible',
+        'absolute inset-x-0 bottom-full flex h-7.5 items-center border-divider/60 border-b bg-header-primary px-4',
+        // Hidden, it would cover what sits above the bar before the bar
+        // sticks. `visibility` waits for the slide out to finish.
+        'transition-[visibility]',
+        isShown ? 'duration-0' : 'invisible duration-[140ms]',
       )}
     >
-      <div className="flex min-w-0 items-center gap-1.5">
-        <img
-          width={16}
-          height={16}
-          src={project.icon}
-          alt=""
-          className="size-4 shrink-0 rounded-full"
-        />
-        <span className="truncate font-bold text-xs">{project.name}</span>
+      <div
+        className={cn(
+          'flex min-w-0 flex-1 items-center justify-between gap-4 transition-opacity ease-out',
+          isShown ? 'duration-[280ms]' : 'opacity-0 duration-100',
+        )}
+      >
+        <div className="flex min-w-0 items-center gap-1.5">
+          <img
+            width={16}
+            height={16}
+            src={project.icon}
+            alt=""
+            className="size-4 shrink-0 rounded-full"
+          />
+          <span className="truncate font-bold text-xs">{project.name}</span>
+        </div>
+        <Logo animated={false} className="mt-0 h-3.5 w-auto shrink-0" />
       </div>
-      <Logo animated={false} className="mt-0 h-3.5 w-auto shrink-0" />
     </div>
   )
 }
