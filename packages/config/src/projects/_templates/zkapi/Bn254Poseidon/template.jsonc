@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Bn254Poseidon",
+  "category": "core",
+  "description": "Linked Poseidon hash library used by the vault for active-note leaves and Merkle updates. Its BN254 parameters must agree with the request and withdrawal circuits."
+}
