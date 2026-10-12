@@ -6,7 +6,7 @@ import type { SectionNavigationItem } from './SectionNavigation'
 
 interface Props {
   sections: SectionNavigationItem[]
-  /** Named in the bar once the page's own header scrolls away. */
+  /** Its logo shows in the bar once the page's own header scrolls away. */
   project?: ProjectChipProps['project']
   className?: string
 }

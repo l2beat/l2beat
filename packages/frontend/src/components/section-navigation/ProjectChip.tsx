@@ -10,9 +10,12 @@ export interface ProjectChipProps {
 const STICKY_BAR_HEIGHT = 40
 
 /**
- * Names the project in the sticky bar, so a screenshot of any section shows
- * whose page it is. Hidden while the page's own header is on screen, where it
- * would only repeat it.
+ * Shows the project's logo in the sticky bar, so a screenshot of any section
+ * shows whose page it is. Hidden while the page's own header is on screen,
+ * where it would only repeat it.
+ *
+ * The slot animates an exact width, not a max-width, so it opens in step with
+ * the logo growing into it rather than snapping open and leaving a gap.
  */
 export function ProjectChip({ project }: ProjectChipProps) {
   const isRevealed = useIsProjectHeaderScrolledPast()
@@ -24,23 +27,24 @@ export function ProjectChip({ project }: ProjectChipProps) {
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       inert={!isRevealed}
       className={cn(
-        'relative z-20 flex h-10 shrink-0 items-center overflow-hidden border-divider border-b bg-header-primary shadow-[8px_0_8px_-6px_rgba(0,0,0,0.15)] transition-[max-width,opacity] duration-300 ease-out after:absolute after:inset-y-2.5 after:right-0 after:w-px after:bg-divider motion-reduce:transition-none dark:shadow-[8px_0_8px_-6px_rgba(0,0,0,0.5)]',
-        isRevealed ? 'max-w-48 opacity-100' : 'max-w-0 opacity-0',
+        'relative z-20 flex h-10 shrink-0 items-center justify-center overflow-hidden border-divider border-b bg-header-primary shadow-[8px_0_8px_-6px_rgba(0,0,0,0.15)] transition-[width] after:absolute after:inset-y-2.5 after:right-0 after:w-px after:bg-divider motion-reduce:transition-none dark:shadow-[8px_0_8px_-6px_rgba(0,0,0,0.5)]',
+        isRevealed
+          ? 'w-11 duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]'
+          : 'w-0 duration-150 ease-out',
       )}
     >
-      {/* Keeps its width, so the reveal clips the name instead of truncating it. */}
-      <span className="flex shrink-0 items-center gap-1.5 pr-2.5 pl-3">
-        <img
-          src={project.icon}
-          width={20}
-          height={20}
-          alt=""
-          className="size-5 rounded-full"
-        />
-        <span className="max-w-28 truncate font-bold text-xs">
-          {project.name}
-        </span>
-      </span>
+      <img
+        src={project.icon}
+        width={20}
+        height={20}
+        alt={project.name}
+        className={cn(
+          'size-5 shrink-0 rounded-full transition-[scale,opacity] motion-reduce:scale-100',
+          isRevealed
+            ? 'scale-100 opacity-100 duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]'
+            : 'scale-75 opacity-0 duration-100 ease-out',
+        )}
+      />
     </button>
   )
 }
