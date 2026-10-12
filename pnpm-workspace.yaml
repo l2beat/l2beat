@@ -19,4 +19,3 @@ allowBuilds:
   esbuild: true
   prisma: true
   sharp: true
-  sqlite3: true
