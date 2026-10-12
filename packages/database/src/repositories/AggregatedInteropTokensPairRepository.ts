@@ -146,6 +146,18 @@ export class AggregatedInteropTokensPairRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async getByTimestamp(
+    timestamp: UnixTime,
+  ): Promise<AggregatedInteropTokensPairRecord[]> {
+    const rows = await this.db
+      .selectFrom('AggregatedInteropTokensPair')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async deleteByTimestamp(timestamp: UnixTime): Promise<number> {
     const result = await this.db
       .deleteFrom('AggregatedInteropTokensPair')

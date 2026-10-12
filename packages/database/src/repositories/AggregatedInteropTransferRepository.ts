@@ -27,6 +27,8 @@ export interface AggregatedInteropTransferRecord {
   count1KTo10K: number
   count10KTo100K: number
   countOver100K: number
+  /** Snapshot this lane was copied from because its syncers lagged; unset when freshly computed. */
+  carriedFrom?: UnixTime
 }
 
 export interface AggregatedInteropTransferSeriesRecord {
@@ -98,6 +100,9 @@ export function toRecord(
     count1KTo10K: row.count1KTo10K ?? 0,
     count10KTo100K: row.count10KTo100K ?? 0,
     countOver100K: row.countOver100K ?? 0,
+    carriedFrom: row.carriedFrom
+      ? UnixTime.fromDate(row.carriedFrom)
+      : undefined,
   }
 }
 
@@ -127,6 +132,9 @@ export function toRow(
     count1KTo10K: record.count1KTo10K,
     count10KTo100K: record.count10KTo100K,
     countOver100K: record.countOver100K,
+    carriedFrom: record.carriedFrom
+      ? UnixTime.toDate(record.carriedFrom)
+      : undefined,
   }
 }
 
