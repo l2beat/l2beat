@@ -32,7 +32,3 @@ Auditors appointed by the admin multisig can query the TEE's Audit API for the b
 ### Fees
 
 Standard deposits pay no protocol fee. Portal deposits pay a sweeper fee of {{portalSweepFee}}, capped at 10%, and have token-specific minimum sweep amounts. Withdrawals, forced withdrawals and public gift exits pay {{withdrawFee}} to the treasury. A forced withdrawal fixes its fee at request time.
-
-### Deposit and withdrawal statistics
-
-The statistics count every ERC-20 transfer into the pool as a deposit and every transfer out as a withdrawal, since pool events omit per-transfer amounts. This includes portal sweeps, refunds of cancelled deposit requests, withdrawal fees sent to the treasury and both legs of gateway DeFi calls.
