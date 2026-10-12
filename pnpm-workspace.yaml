@@ -13,10 +13,7 @@ overrides:
 allowBuilds:
   '@prisma/engines': true
   '@scarf/scarf': false
-  '@swc/core': true
   '@tailwindcss/oxide': true
   cbor-extract: true
   esbuild: true
   prisma: true
-  sharp: true
-  sqlite3: true
