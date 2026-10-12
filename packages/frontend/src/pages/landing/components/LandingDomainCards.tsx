@@ -8,7 +8,6 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { L2Icon } from '~/icons/pages/L2'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
-import type { SvgIconProps } from '~/icons/SvgIcon'
 import { GARDEN_PATH } from '~/pages/garden/paths'
 import { cn } from '~/utils/cn'
 import type { LandingCounts } from '../getLandingData'
@@ -23,7 +22,8 @@ interface DomainCard {
   unit: string
   /** Stands in for the count where there is none. */
   subtitle?: string
-  icon: React.ReactNode
+  /** None on the garden card: the sun stands in for it. */
+  icon?: React.ReactNode
   /** Drawn as a corner of the garden, like the CROPS banner on Home. */
   garden?: boolean
 }
@@ -84,7 +84,6 @@ export function LandingDomainCards({ counts }: { counts: LandingCounts }) {
       count: counts.crops > 0 ? counts.crops : undefined,
       unit: 'projects',
       subtitle: 'The Infinite Garden',
-      icon: <CropsIcon className={ICON_CLASS} />,
       garden: true,
     },
   ]
@@ -112,7 +111,9 @@ export function LandingDomainCards({ counts }: { counts: LandingCounts }) {
                 </GardenLandscape>
               )}
               <div className="relative flex grow flex-col gap-4">
-                <div className="transition-transform duration-200 group-hover:scale-110">
+                {/* Without an icon the row stays, empty, so the titles
+                    line up across the cards. */}
+                <div className="size-6 transition-transform duration-200 group-hover:scale-110">
                   {card.icon}
                 </div>
                 <h2 className="text-balance font-normal text-heading-20 text-secondary leading-snug tracking-[-0.015em]">
@@ -145,32 +146,5 @@ export function LandingDomainCards({ counts }: { counts: LandingCounts }) {
         ))}
       </ul>
     </section>
-  )
-}
-
-/** A sprout, in the line weight of the other section icons. */
-function CropsIcon({ className, ...props }: SvgIconProps) {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      aria-label="CROPS icon"
-      className={cn('stroke-primary', className)}
-      {...props}
-    >
-      <path d="M10 18.5v-7" strokeWidth="1.7" strokeLinecap="round" />
-      <path
-        d="M10 11.5c0-3.3 2.5-5.8 5.8-5.8 0 3.3-2.5 5.8-5.8 5.8z"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M10 11.5c0-2.5-2-4.5-4.6-4.5 0 2.5 2 4.5 4.6 4.5z"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-    </svg>
   )
 }
