@@ -74,7 +74,7 @@ export const lyra: ScalingProject = opStackL2({
       url: 'https://x.com/DeriveXYZ/status/2108069298673758548',
       date: '2026-10-06T00:00:00Z',
       description:
-        'Derive Chain state is snapshotted into Derive V3 on Ethereum and the chain begins winding down.',
+        'Derive V2 balances and positions migrated to Derive V3; Derive Chain began winding down.',
       type: 'general',
     },
     {

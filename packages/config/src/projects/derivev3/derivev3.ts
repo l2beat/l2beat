@@ -157,13 +157,6 @@ export const derivev3: ScalingProject = {
       verifierContractsReproducible: true,
       programHashesReproducible: false,
     },
-    stage2: {
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      daVerifier30DayExitWindow: false,
-      daMechanismEconomicSecurity: false,
-    },
   }),
   technology: {
     dataAvailability: {
