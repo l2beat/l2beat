@@ -4,10 +4,8 @@ import { cn } from '~/utils/cn'
 const GAP = 14
 
 /**
- * A tooltip that follows the pointer over a drawing, where there is no
- * element per mark to hang the site's own tooltip on. It sits beside the
- * pointer, on whichever side has room. It fades in when it shows up, then
- * follows the pointer and changes at once: easing there would only lag.
+ * For drawings with no element per mark to hang the site's tooltip on. Fades
+ * in, then follows the pointer without easing, which would only lag.
  */
 export function PointerTooltip({
   x,
@@ -16,11 +14,10 @@ export function PointerTooltip({
   interactive = false,
   children,
 }: {
-  /** Pointer position inside the drawing's box */
+  /** Inside the drawing's box */
   x: number
   y: number
   containerWidth: number
-  /** Takes taps and clicks, rather than letting them through to the drawing */
   interactive?: boolean
   children: ReactNode
 }) {
@@ -45,11 +42,7 @@ export function PointerTooltip({
   )
 }
 
-/**
- * Right of the pointer where the tooltip fits, else left of it, else as far
- * right as it fits: on a phone the drawing can be narrower than the pointer's
- * gap and the tooltip together on either side
- */
+/** Right, else left, else as far right as fits: on a phone neither side may have room */
 function besidePointer(x: number, width: number, containerWidth: number) {
   if (x + GAP + width <= containerWidth) return x + GAP
   if (x - GAP - width >= 0) return x - GAP - width

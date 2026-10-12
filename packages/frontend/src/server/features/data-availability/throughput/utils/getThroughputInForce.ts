@@ -1,9 +1,6 @@
 import type { DaLayerThroughput } from '@l2beat/config'
 
-/**
- * The limits a DA layer runs under at the given time. A limit change is added
- * to the config ahead of its fork, so the newest entry is not always live yet.
- */
+/** A limit change is added to the config ahead of its fork, so the newest entry may not be live yet */
 export function getThroughputInForce(
   throughput: DaLayerThroughput[],
   at: number,

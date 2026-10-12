@@ -18,7 +18,7 @@ import { formatWhole } from './format'
 import { labelPresence, smoothstep } from './motion'
 
 const FONT = 'Roboto, Arial, sans-serif'
-/** Labels fade out over the end of their block's slot, from this far into it */
+/** Fraction of the slot after which labels fade out */
 const LABELS_LEAVE = 0.9
 /** Half the rim `fillTextOnSurface` draws around text, which a box takes in */
 const RIM = 1.5
@@ -30,16 +30,14 @@ interface Box {
   bottom: number
 }
 
-/** Where a label was drawn, and how opaque, so others can give way to it */
+/** So other labels can give way to it */
 export interface LabelBox extends Box {
   alpha: number
 }
 
 /**
- * Blob counts under the blocks, a dash under missed slots, and every fifth
- * slot's number. Each fades whole near the belt's ends, by its outer edge: a
- * number with its last digits faded out would read as a different number.
- * Counts fade in with the first blocks, by `reveal`.
+ * Each label fades whole near the belt's ends, by its outer edge: a number with
+ * its last digits faded out would read as a different number.
  */
 export function drawBlockNumbers(
   ctx: CanvasRenderingContext2D,
@@ -85,11 +83,7 @@ export function drawBlockNumbers(
   ctx.restore()
 }
 
-/**
- * "Missed" up a rack whose slot got no block, from its floor: with no blobs
- * either way, only this tells a slot nobody proposed a block in from a block
- * nobody posted to
- */
+/** With no blobs either way, only this tells a missed slot from an empty block */
 export function drawMissedLabels(
   ctx: CanvasRenderingContext2D,
   scene: BeltScene,
@@ -119,12 +113,9 @@ export function drawMissedLabels(
 }
 
 /**
- * "+5 Base Chain" where a batch is about to land in the bay, as its tiles
- * start to drop, rising as it fades. A label rides with its block and is gone
- * before the block leaves the bay: left behind, it would seem to name what
- * the next block got, and riding on it would cover the next rack. A batch
- * coming too late in its slot to be read goes unnamed. A newer label at the
- * same height takes over from an older one. Returns where each was drawn
+ * "+5 Base Chain" as a batch drops into the bay. Gone before its block leaves
+ * the bay: left behind it would seem to name the next block, and riding on it
+ * would cover the next rack. Too late in its slot to be read, a batch goes unnamed
  */
 export function drawArrivalLabels(
   ctx: CanvasRenderingContext2D,
@@ -205,11 +196,7 @@ function drawArrivalLabel(
   }
 }
 
-/**
- * "Building slot 15,354,012" above the bay, or "Slot 15,354,012" for a block
- * looked back at. Changed digits roll up like an odometer, in step with the
- * belt bringing that slot's rack in
- */
+/** Changed digits roll up like an odometer, in step with the belt bringing that rack in */
 export function drawBayCaption(
   ctx: CanvasRenderingContext2D,
   scene: BeltScene,
@@ -261,10 +248,8 @@ export function drawBayCaption(
 }
 
 /**
- * "Max 21" atop the fee band, "Target 14" on its line, and what the band
- * means. Each gives way to a batch's label drawn over it, for as long as that
- * shows: on a phone the two reach the same edge of the belt, and the batch's
- * is the news, while these are always there to read
+ * Each gives way to an arrival label over it: on a phone they reach the same
+ * edge, and the arrival is the news while these are always there
  */
 export function drawLimitLabels(
   ctx: CanvasRenderingContext2D,
@@ -352,7 +337,7 @@ function crosses(a: Box, b: Box) {
   )
 }
 
-/** Text with a rim of the card's color, so it reads over racks and hatching */
+/** The rim keeps text readable over racks and hatching */
 function fillTextOnSurface(
   ctx: CanvasRenderingContext2D,
   palette: BeltPalette,
@@ -369,7 +354,6 @@ function fillTextOnSurface(
   ctx.fillText(text, x, y)
 }
 
-/** `text`, cut short with an ellipsis where it would run past `room` */
 function fitText(ctx: CanvasRenderingContext2D, text: string, room: number) {
   if (ctx.measureText(text).width <= room) return text
   let end = text.length

@@ -3,13 +3,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useEffect, useState } from 'react'
 import { type BlockLimits, getBlockLimits, nextLimitsIn } from './model'
 
-/** Longest a timer runs; told to wait longer, it would fire at once */
+/** Told to wait longer, a timer fires at once */
 const MAX_TIMEOUT_MS = 2 ** 31 - 1
 
-/**
- * The limits in force now, moving on with the chain: a page left open across
- * a fork takes up its limits the moment it activates, rather than on reload
- */
+/** A page left open across a fork takes up its limits as it activates, not on reload */
 export function useBlockLimits(throughputs: DaLayerThroughput[]): BlockLimits {
   const [limits, setLimits] = useState(() => getBlockLimits(throughputs))
   useEffect(() => {

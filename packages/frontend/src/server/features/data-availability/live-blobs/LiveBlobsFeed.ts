@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { Database, LiveSlotRange } from '@l2beat/database'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -20,22 +20,16 @@ import {
 } from './liveBlobsSlots'
 import { createMockLiveBlobsSource } from './mockLiveBlobsSource'
 
-/**
- * How often the head is read while pages wait, in seconds. It is a
- * primary-key lookup, and half of it is, on average, how long a stored block
- * waits to be served to every screen
- */
+/** Seconds. A cheap primary-key lookup; half of it is the average wait before a stored block is served */
 const POLL_INTERVAL = 0.1
-/**
- * How long a page's ask takes at most when there is nothing new, the wait for
- * the first answer included; within the server's 25 s request timeout
- */
+/** Must stay within the server's 25 s request timeout */
 const LONG_POLL = 20
 const MAX_RETRY_DELAY = 30
-/** Nobody asked for this long: the database is left alone until someone does. A page asks at least every `LONG_POLL` */
+/** A page asks at least every `LONG_POLL`, so this long without an ask means nobody is watching */
 const IDLE_AFTER = 3 * LONG_POLL
-/** How long the first answer after a quiet spell waits for the rows */
 const FIRST_ANSWER_TIMEOUT = 10
+/** The pool waits for a free connection with no limit, so a stuck read must be cut off */
+const READ_TIMEOUT = 5
 
 export const LiveBlobsParams = v.object({
   /** The newest slot the page has: the answer waits for the head to move off it */
@@ -44,7 +38,7 @@ export const LiveBlobsParams = v.object({
 export type LiveBlobsParams = v.infer<typeof LiveBlobsParams>
 
 export const PastBlobsParams = v.object({
-  /** Which `PAST_PAGE_SLOTS` slots, counted from genesis */
+  /** In `PAST_PAGE_SLOTS` from genesis */
   page: v
     .number()
     .check(
@@ -57,16 +51,11 @@ export const PastBlobsParams = v.object({
 })
 export type PastBlobsParams = v.infer<typeof PastBlobsParams>
 
-/** The recent blocks, as served to the page */
 export interface LiveBlobs {
-  /** The newest stored slot at the last read */
   head: number
-  /**
-   * Whether the last read reached the database and found the head no older
-   * than the chain allows. If not, the blocks may lag
-   */
+  /** False when the last read failed or found the head older than the chain allows */
   live: boolean
-  /** Known blocks of the last `BELT_SLOTS` slots up to the head, newest first */
+  /** Newest first */
   blocks: LiveBlock[]
   window: PostedWindow
 }
@@ -76,82 +65,61 @@ export type LiveBlock =
       slot: number
       status: 'proposed'
       blockNumber: number
-      /** Tells the block from another the chain put in its slot, at the same height */
+      /** Tells apart a block that replaced another in the same slot */
       hash: string
-      /** In the block's order */
       batches: LiveBatch[]
     }
   | { slot: number; status: 'missed' }
 
-/** The blocks of one page of the day, for a page looking back through it */
 export interface PastBlobs {
-  /** Known blocks of the page, newest first */
+  /** Newest first */
   blocks: LiveBlock[]
-  /**
-   * Every slot of the page that is still in the day is known, and the page
-   * ends behind the slots the backend may still rewrite, so looking again
-   * would bring nothing more
-   */
+  /** Every slot still in the day is known and none may be rewritten, so asking again brings nothing new */
   complete: boolean
 }
 
-/** One blob transaction: a project's batch in a block */
+/** One blob transaction */
 export interface LiveBatch {
   /** Missing when no project claims it */
   projectId?: string
   blobs: number
-  /** Where it was sent, lowercase. Says the most about an unattributed batch */
+  /** Lowercase */
   to: string
-  /** For the page to link the transaction to an explorer */
   txHash: string
 }
 
-/**
- * Who posted over the stored slots back from the head. Short of
- * `WINDOW_SLOTS` while the backend has not stored a whole day yet
- */
 export interface PostedWindow {
+  /** Short of `WINDOW_SLOTS` while the backend has not stored a whole day yet */
   slots: number
-  /** Of those slots, the ones that got a block */
   blocks: number
-  /** Blobs the head's block brought */
   newestBlobs: number
   pulse: Pulse
-  /**
-   * The oldest of the steps in `Posted.buckets`, counted in `BUCKET_SLOTS`
-   * from genesis. Moves on by one as each new step starts
-   */
+  /** Of `Posted.buckets`, in `BUCKET_SLOTS` from genesis */
   firstBucket: number
   /** Most blobs first */
   posted: Posted[]
 }
 
 export interface Posted {
-  /** Missing for the batches no project claims */
   projectId?: string
   blobs: number
   batches: number
-  /** Slot of the newest batch */
   lastSlot: number
-  /** Blobs that slot brought from the project */
   lastBlobs: number
   /**
-   * Blobs in each step from `PostedWindow.firstBucket`, the last
-   * being the one under way. Steps are fixed in time, not counted back from
-   * the head, so a new block adds to the last step and leaves the rest be
+   * Steps are fixed in time, not counted back from the head, so a new block
+   * adds to the last (under way) step and leaves the rest be
    */
   buckets: number[]
 }
 
-/** Blocks and their blobs over the window, a step per `PULSE_BUCKET_SLOTS` */
 export interface Pulse {
-  /** The oldest step, counted in `PULSE_BUCKET_SLOTS` from genesis */
+  /** In `PULSE_BUCKET_SLOTS` from genesis */
   firstBucket: number
-  /** Each step from `firstBucket`, the last being the one under way */
   buckets: { blocks: number; blobs: number }[]
 }
 
-/** Where the rows come from: the database, or made up in mock mode */
+/** The database, or made-up rows in mock mode */
 export interface LiveBlobsSource {
   liveBlock: Pick<
     Database['liveBlock'],
@@ -165,7 +133,7 @@ export interface LiveBlobsSource {
 
 let feed: LiveBlobsFeed | undefined
 
-/** The one feed of this server, shared by every visitor */
+/** Shared by every visitor of this server */
 export function getLiveBlobsFeed(): LiveBlobsFeed {
   feed ??= new LiveBlobsFeed(
     env.MOCK
@@ -179,21 +147,22 @@ export function getLiveBlobsFeed(): LiveBlobsFeed {
 }
 
 /**
- * Reads the blocks the backend stores as Ethereum makes them, for every
- * visitor at once: the head is read a few times a second while anyone asks,
- * and the rows behind it once per new head, however many are watching. It
- * keeps nothing but the last snapshot, so reorgs and pruning in the database
- * show up on their own.
+ * Reads for every visitor at once: the head a few times a second while anyone
+ * asks, the rows behind it once per new head. Keeping only the last snapshot
+ * lets reorgs and pruning show up on their own.
  */
 export class LiveBlobsFeed {
   private snapshot: LiveBlobs | undefined
-  /** The head block the snapshot was read at; another hash is a new head, or the head replaced in its slot */
+  /** How far back the database reached at the snapshot */
+  private stored: LiveSlotRange | undefined
+  /** Another hash is a new head, or the head replaced in its slot */
   private headHash: string | undefined
   private failures = 0
   private lastAskedAt = 0
   /** The first read of the current run; unset while nobody asks */
   private warmup: Promise<void> | undefined
-  /** Pages waiting for a new snapshot */
+  /** A poll after a timed-out read waits on it rather than starting another */
+  private reading: Promise<void> | undefined
   private readonly waiting = new Set<() => void>()
   private timer: ReturnType<typeof setTimeout> | undefined
   private readonly logger: Logger
@@ -206,20 +175,17 @@ export class LiveBlobsFeed {
     this.logger = logger.for(this)
   }
 
-  /** The recent blocks, or undefined while no head has ever been read */
+  /** Undefined while no head has ever been read */
   async latest(): Promise<LiveBlobs | undefined> {
     this.lastAskedAt = this.now()
     this.warmup ??= this.poll()
-    await withTimeout(this.warmup, FIRST_ANSWER_TIMEOUT)
+    await settlesWithin(this.warmup, FIRST_ANSWER_TIMEOUT)
     return this.snapshot
   }
 
   /**
-   * The recent blocks once the head is not `after` any more, or as they are
-   * after `LONG_POLL` seconds. Held open, a page hears of a block the moment
-   * the server has it, rather than at its next ask. A page with no head yet
-   * is held the same way until there is one, rather than answered with
-   * nothing and asked again at once
+   * Long poll: answers once the head moves off `after`, or after `LONG_POLL`,
+   * so a page hears of a block the moment the server has it
    */
   async latestAfter({ after }: LiveBlobsParams) {
     const askedAt = this.now()
@@ -242,26 +208,23 @@ export class LiveBlobsFeed {
     return this.snapshot
   }
 
-  /** Whether a page holding `after` has a head to hear of: any other, as one moved back has blocks to take off the page */
+  /** Any other head counts: one that moved back has blocks to take off the page */
   private isBehind(after: number | undefined) {
     return this.snapshot !== undefined && this.snapshot.head !== after
   }
 
-  /**
-   * One page of the day, read straight from the database: pages looking
-   * back are few, and a complete one is never asked for again
-   */
+  /** Read straight from the database: pages looking back are few, and a complete one is never asked for again */
   async past({ page }: PastBlobsParams): Promise<PastBlobs> {
+    const live = await this.latest()
+    if (!live) return { blocks: [], complete: false }
+    const stored = this.stored
     const first = page * PAST_PAGE_SLOTS
     const last = first + PAST_PAGE_SLOTS - 1
-    const [head, stored, blocks, batches] = await Promise.all([
-      this.source.liveBlock.findHead(),
-      this.source.liveBlock.getSlotRange(),
+    const [blocks, batches] = await Promise.all([
       this.source.liveBlock.getBySlotRange(first, last),
       this.source.liveBlobBatch.getBySlotRange(first, last),
     ])
-    if (!head) return { blocks: [], complete: false }
-    return buildPastBlobs({ stored, blocks, batches }, head.slot, first, last)
+    return buildPastBlobs({ stored, blocks, batches }, live.head, first, last)
   }
 
   stop() {
@@ -272,7 +235,7 @@ export class LiveBlobsFeed {
   private async poll() {
     const before = this.snapshot
     try {
-      await this.read()
+      await this.readInTime()
       this.failures = 0
     } catch (error) {
       // logged once per outage, not on every retry
@@ -287,12 +250,26 @@ export class LiveBlobsFeed {
     this.scheduleNext()
   }
 
+  /**
+   * Fails a read that takes too long, but lets it run on: the next poll waits
+   * on it rather than starting another, which could also land after a newer one
+   */
+  private async readInTime() {
+    this.reading ??= this.read().finally(() => {
+      this.reading = undefined
+    })
+    if (!(await settlesWithin(this.reading, READ_TIMEOUT))) {
+      throw new Error(`Live blobs read took over ${READ_TIMEOUT} s`)
+    }
+  }
+
   private async read() {
     const head = await this.source.liveBlock.findHead()
     if (!head) return
     if (head.hash !== this.headHash) {
       const rows = await readRows(this.source, head.slot)
       this.snapshot = buildLiveBlobs(rows, head.slot, this.now())
+      this.stored = rows.stored
       this.headHash = head.hash
       return
     }
@@ -323,10 +300,7 @@ export class LiveBlobsFeed {
   }
 }
 
-/**
- * Everything a snapshot at `head` is made of. A block stored between the reads
- * may slip into the sums; the next head read finds it and reads again.
- */
+/** A block stored between the reads may slip into the sums; the next head read finds it and reads again */
 async function readRows(
   source: LiveBlobsSource,
   head: number,
@@ -346,12 +320,15 @@ async function readRows(
   return { stored, inWindow, blocks, batches, posted, buckets, pulse }
 }
 
-/** Waits for `promise`, but no longer than `seconds` */
-async function withTimeout(promise: Promise<void>, seconds: number) {
+/** Waits for `promise`, but no longer than `seconds`. Says whether it settled */
+async function settlesWithin(promise: Promise<void>, seconds: number) {
   let timer: ReturnType<typeof setTimeout> | undefined
-  const timeout = new Promise<void>((resolve) => {
-    timer = setTimeout(resolve, 1000 * seconds)
+  const timeout = new Promise<false>((resolve) => {
+    timer = setTimeout(() => resolve(false), 1000 * seconds)
   })
-  await Promise.race([promise, timeout])
-  clearTimeout(timer)
+  try {
+    return await Promise.race([promise.then(() => true), timeout])
+  } finally {
+    clearTimeout(timer)
+  }
 }

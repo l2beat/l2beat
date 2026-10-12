@@ -29,7 +29,7 @@ import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PercentChange } from '~/components/PercentChange'
-import { ViewDetailsLink } from '~/components/ViewDetailsLink'
+import { ChevronIcon } from '~/icons/Chevron'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
@@ -228,15 +228,26 @@ function Header({
 }) {
   return (
     <div className="flex items-start justify-between gap-2">
-      <div className="flex flex-col gap-1">
-        <span className="whitespace-nowrap font-bold text-xl">
+      <a
+        href="/layer2s/tvs"
+        className="group flex items-center gap-1.5 whitespace-nowrap font-bold text-xl"
+      >
+        <span className="underline-offset-4 group-hover:underline">
           L2s Value Secured
         </span>
-        <ViewDetailsLink href="/layer2s/tvs" />
-      </div>
+        <ChevronIcon
+          aria-hidden
+          className="-rotate-90 size-3 fill-current transition-transform group-hover:translate-x-0.5"
+        />
+      </a>
       <div className="flex flex-col items-end">
         {isLoading ? (
-          <Skeleton className="my-[5px] h-5 w-40" />
+          // the total and its change, wrapping where the real ones would, so
+          // the header is as tall before the numbers come as after
+          <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
+            <Skeleton className="my-1 h-5 w-20" />
+            <Skeleton className="h-3 w-24" />
+          </div>
         ) : stats === undefined ? (
           <span className="whitespace-nowrap font-bold text-xl">No data</span>
         ) : (

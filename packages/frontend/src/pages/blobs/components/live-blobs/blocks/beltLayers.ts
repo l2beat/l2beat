@@ -2,25 +2,17 @@ import { type BeltLayout, tileBounds } from './beltLayout'
 import type { BeltPalette } from './beltPalette'
 
 /**
- * What the belt draws the same on every frame, painted once per size and
- * theme and then only copied: stroking the fee band's hatching and blurring
- * the bay's glow anew each frame cost more than the rest of the belt.
+ * Painted once per size and theme, then only copied: stroking the hatching and
+ * blurring the glow each frame cost more than the rest of the belt.
  */
 export interface BeltLayers {
-  /** A sealed rack: faint body, the room it had up to the target, outline */
   sealedRack: HTMLCanvasElement
-  /**
-   * A slot with no block: the outline alone, as there was no block to have
-   * room in, so it never reads as a block nobody posted to
-   */
+  /** Outline alone, so it never reads as a block nobody posted to */
   missedRack: HTMLCanvasElement
-  /** A rack still to come: only a dashed outline */
   futureRack: HTMLCanvasElement
-  /** The fee band's hatching and the dashed target line, at screen density */
+  /** At screen density */
   rules: HTMLCanvasElement
-  /** The bay's outline with its glow, reaching `GLOW_REACH` past the rack */
   litRack: HTMLCanvasElement
-  /** The bay's outline alone, laid over the tiles sliding through it */
   bayRing: HTMLCanvasElement
 }
 
@@ -28,7 +20,6 @@ const HATCH_SPACING = 6
 const TARGET_DASH = [4, 3]
 const FUTURE_DASH = [3, 3]
 const GLOW_BLUR = 14
-/** How far the bay's glow reaches past its rack on every side */
 export const GLOW_REACH = 24
 
 export function paintLayers(
@@ -90,7 +81,6 @@ export function paintLayers(
   return { sealedRack, missedRack, futureRack, rules, litRack, bayRing }
 }
 
-/** A rack on a canvas of its own size, plus `margin` around it */
 function paintRack(
   layout: BeltLayout,
   density: number,
@@ -138,10 +128,7 @@ function traceRackOutline(
   )
 }
 
-/**
- * The room a block has up to its target, row by row. Above the target the
- * fee band's hatching shows the rest, so the two never draw over each other
- */
+/** Stops at the target, so it never draws over the fee band's hatching */
 function traceRoomToTarget(
   ctx: CanvasRenderingContext2D,
   layout: BeltLayout,
@@ -159,7 +146,6 @@ function traceRoomToTarget(
   }
 }
 
-/** The band where the blob fee rises, hatched, and the target line under it */
 function paintRules(layout: BeltLayout, palette: BeltPalette, density: number) {
   const canvas = document.createElement('canvas')
   canvas.width = Math.round(layout.width * density)

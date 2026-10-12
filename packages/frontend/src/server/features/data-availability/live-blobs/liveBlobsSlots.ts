@@ -1,18 +1,11 @@
 import { assert } from '@l2beat/shared-pure'
 
-/**
- * How far back each part of the live view reaches, in slots. Free of server
- * imports, so the page can word its copy from the same numbers.
- */
+/** Free of server imports, so the page can word its copy from the same numbers */
 
-/**
- * Slots the head may trail the clock and still be live: the slot under way,
- * whose block has not come yet, and two missed in a row
- */
+/** The slot under way, whose block has not come yet, and two missed in a row */
 export const LIVE_LAG_SLOTS = 3
 /** Enough to fill the belt left of the bay */
 export const BELT_SLOTS = 32
-/** Slots in one page of the day, served to a page looking back through it */
 export const PAST_PAGE_SLOTS = 32
 /** Who posted: 24 hours */
 export const WINDOW_SLOTS = 7200

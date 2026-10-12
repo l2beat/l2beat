@@ -84,6 +84,17 @@ describe(holdBack.name, () => {
     })
   })
 
+  it('holds back nothing of a block stored too late for the belt to drop it', () => {
+    // two slots late: the belt places it quietly, so no landing will come
+    expect(holdBack(held, 1001, 103, 5, 7, 1003)).toEqual({
+      stamp: 1001,
+      total: 103,
+      blockBlobs: 0,
+      arriving: 0,
+      departed: 2,
+    })
+  })
+
   it('lets go of all it held when the chain takes its newest block back', () => {
     const arriving = holdBack(held, 1001, 103, 5, 7, 1001)
 
