@@ -17,9 +17,22 @@
   }
 }
 
-/* The gap keeps the target from touching the bar's bottom edge. */
+/* For anchors inside sections: the gap keeps them off the bar's bottom edge. */
 @utility scroll-mt-section-nav {
   scroll-margin-top: calc(var(--section-nav-height) + --spacing(4));
+}
+
+/*
+  For section cards. On phones they run edge to edge and carry their own top
+  padding, so they land flush, tucked 2px under the bar to hide the divider
+  above them. From `md` they are spaced, rounded cards and get the gap.
+*/
+@utility scroll-mt-section-nav-card {
+  scroll-margin-top: calc(var(--section-nav-height) - 2px);
+
+  @variant md {
+    scroll-margin-top: calc(var(--section-nav-height) + --spacing(4));
+  }
 }
 
 /*
