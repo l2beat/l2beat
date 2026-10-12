@@ -1,7 +1,7 @@
+import { clamp } from '@l2beat/shared-pure'
 /**
- * Where everything on the belt goes, in CSS pixels. Tiles are sized from the
- * height there is: a rack has to hold a full block, 21 blobs, and still leave
- * room for the caption above it and the numbers under it.
+ * CSS pixels. Tiles are sized from the height: a rack must hold a full block
+ * and leave room for the caption above and the numbers under it.
  */
 export interface BeltLayout {
   width: number
@@ -9,14 +9,12 @@ export interface BeltLayout {
   /** A phone: smaller tiles, icons closer to their edges */
   compact: boolean
 
-  /** Height of a row in a rack, one blob's place */
+  /** One blob's place */
   rowHeight: number
-  /** A lone blob's tile is a square this wide */
   tileSize: number
   tileRadius: number
-  /** Where blobs of one batch meet, their corners are tighter */
+  /** Tighter corners where blobs of one batch meet */
   seamRadius: number
-  /** Batches sit this far apart in a rack, the blobs of one batch closer */
   batchGap: number
   blobGap: number
 
@@ -25,15 +23,11 @@ export interface BeltLayout {
   rackPadding: number
   rackRadius: number
   rackTop: number
-  /** Bottom edge of the lowest tile in a rack */
   floorY: number
-  /** From one block to the next, along the belt */
   blockPitch: number
 
-  /** The middle of the loading bay, where the block being built passes */
   bayX: number
   bayCaptionY: number
-  /** Tiles appear here and fall into the rack */
   dropFromY: number
   /**
    * The waiting lane: a row of tiles above the racks right of the bay, where
@@ -48,7 +42,6 @@ export interface BeltLayout {
   maxY: number
   countY: number
   slotNumberY: number
-  /** How far in from each end blocks fade out: into the past, out of the future */
   fadeLeft: number
   fadeRight: number
   /** 0 when tiles are too small to carry an icon */
@@ -165,7 +158,7 @@ export function layoutBelt(
   }
 }
 
-/** Racks the belt shows whole or for the most part, left of the bay and right of it */
+/** Racks shown whole or for the most part, each side of the bay */
 export function racksAroundBay(layout: BeltLayout) {
   return {
     before: Math.floor(layout.bayX / layout.blockPitch),
@@ -173,7 +166,7 @@ export function racksAroundBay(layout: BeltLayout) {
   }
 }
 
-/** Top and bottom of the tile in `row` (0 at the bottom), by where it sits in its batch */
+/** `row` 0 is at the bottom */
 export function tileBounds(
   layout: BeltLayout,
   row: number,
@@ -193,8 +186,4 @@ export function tileBounds(
 function fitIcon(tileSize: number, inset: number) {
   const size = tileSize - 2 * inset
   return size >= MIN_ICON ? size : 0
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max)
 }

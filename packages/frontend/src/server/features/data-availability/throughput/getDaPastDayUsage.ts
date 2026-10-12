@@ -13,12 +13,9 @@ export const DaPastDayUsageParams = v.object({
 export type DaPastDayUsageParams = v.infer<typeof DaPastDayUsageParams>
 
 export interface DaPastDayUsage {
-  /**
-   * Bytes anyone posted to the DA layer over the day, tracked project or not.
-   * Undefined when the indexer is too far behind to tell
-   */
+  /** Bytes, tracked project or not. Undefined when the indexer is too far behind */
   used: number | undefined
-  /** Bytes the DA layer has room for over the day. Undefined when it has no cap */
+  /** Bytes. Undefined when the layer has no cap */
   capacity: number | undefined
 }
 
@@ -58,11 +55,9 @@ export async function getDaPastDayUsage({
 }
 
 /**
- * Yesterday, or when the indexer lags, the newest 24 whole hours it has
- * written, as [from, to). Records are hourly and the newest one is still
- * being written: the indexer adds blobs to it batch by batch, so it is only
- * complete once the next hour has started. Undefined when the records do not
- * reach a whole day back from there.
+ * The newest 24 complete hours, as [from, to). The newest hourly record is
+ * still being written batch by batch, so it is complete only once the next
+ * hour has started.
  */
 export function getSyncedDay(
   records: PostedRecord[],
@@ -86,10 +81,8 @@ export function sumUsed(
 }
 
 /**
- * Room the DA layer had over the range, by the limits in force when the
- * range started. Ethereum is measured against its blob target rather than
- * its maximum: posting above the target cannot be sustained, since the blob
- * fee keeps rising for as long as it lasts.
+ * Ethereum is measured against its blob target, not its maximum: posting above
+ * the target cannot be sustained, as the blob fee keeps rising while it lasts.
  */
 export function getCapacity(
   daLayerId: string,

@@ -1,5 +1,5 @@
 import { formatSeconds, SLOT_SECONDS } from '@l2beat/shared-pure'
-import { memo, useCallback, useMemo, useRef } from 'react'
+import { memo, useCallback, useRef, useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { BasicTableHeaderDividerRow } from '~/components/table/BasicTable'
 import {
@@ -17,7 +17,8 @@ import {
   PINNED_CELL_ATTRIBUTE,
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
-import type { PostedWindow } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
+import { useInterval } from '~/hooks/useInterval'
+import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { BUCKET_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -31,32 +32,31 @@ import {
 import { useChainClock } from './chainClock'
 import { readableColor } from './color'
 import { useThemeTokens } from './hooks'
-import { type Landing, useLandedTotal } from './landings'
+import { anyLanding, type Landing, useLandedTotal } from './landings'
 import {
   FLASH_CLASS_NAME,
   Pop,
   RollingNumber,
   useFlash,
   useReorder,
-  useTick,
 } from './liveMotion'
-import { type LivePoster, UNKNOWN_ID } from './model'
-import { useLiveBlobs } from './useLiveBlobs'
+import {
+  inRanking,
+  type LivePoster,
+  type PosterTotal,
+  type PosterTotals,
+} from './model'
 
 interface Props {
-  /** Every project that may post, with the stand-in for unknown senders last */
-  posters: LivePoster[]
+  live: LiveBlobs | undefined
+  totals: PosterTotals | undefined
 }
 
-/**
- * # and the logo stay in view on a phone, as the name and numbers scroll
- * under them; the name would take most of a narrow screen
- */
+/** # and the logo stay in view on a phone; the name would take most of a narrow screen */
 const PINNED_COLUMNS = 2
 /** Where the logo sticks until the sticky header measures the # column */
 const RANK_WIDTH = 32
 
-/** In the order `PosterRow` renders its cells */
 const COLUMNS: {
   label: string
   align?: 'right'
@@ -91,32 +91,35 @@ const COLUMNS: {
   { label: 'Last batch', align: 'right' },
 ]
 
-/** The legend's "+N more" links here, to the projects it leaves out */
+/** The legend's "+N more" links here */
 export const LIVE_POSTERS_ID = 'live-posters'
 
-/**
- * Who posted over the last 24 hours: the exact numbers behind
- * the colored squares, which nobody can count off a belt that keeps moving.
- * It moves with the belt: a project's row lights up as its batch lands, its
- * numbers count up, and rows slide past each other as the ranking changes.
- */
-export function LivePosters({ posters }: Props) {
-  const { data } = useLiveBlobs()
+/** The exact numbers behind the belt's squares, moving in step with its landings */
+export function LivePosters({ live: data, totals }: Props) {
   const postedWindow = data?.window
-  const rows = useMemo(
-    () => postedWindow && toRows(postedWindow, posters),
-    [postedWindow, posters],
-  )
   const head = data?.head
   // the belt's colors, so a project reads the same here as on the belt
   const { surface } = useThemeTokens()
+  const newest = postedWindow?.newestBlobs ?? 0
+  const { value: totalBlobs, landing } = useLandedTotal(
+    head,
+    totals?.blobs ?? 0,
+    newest,
+    newest,
+    anyLanding,
+  )
+  // ranked as the blobs shown, which wait for the landing too
+  const ranking = useHeldWhile(
+    landing,
+    totals?.posters.map((row) => row.poster.id),
+  )
+  const rows = totals && inRanking(totals.posters, ranking)
 
   const tableRef = useRef<HTMLDivElement>(null)
   useReorder(tableRef, rows?.map((row) => row.poster.id).join() ?? '')
 
   if (!postedWindow || !rows) return <PostersSkeleton />
   const seconds = postedWindow.slots * SLOT_SECONDS
-  const totalBlobs = rows.reduce((sum, row) => sum + row.blobs, 0)
 
   return (
     <section
@@ -174,10 +177,7 @@ export function LivePosters({ posters }: Props) {
   )
 }
 
-/**
- * Rendered again only when what it shows changes, not with the clock: the
- * ages tick in cells of their own
- */
+/** Memoized: the ages tick in cells of their own, not with the row */
 const PosterRow = memo(function PosterRow({
   row,
   color,
@@ -188,16 +188,14 @@ const PosterRow = memo(function PosterRow({
   firstBucket,
   newestBlobs,
 }: {
-  row: Row
-  /** The poster's color, made to stand out from the card */
+  row: PosterTotal
   color: string
   rank: number
   seconds: number
+  /** As landed so far */
   totalBlobs: number
-  /** The newest slot, whose batches are counted in as the belt lands them */
   head: number | undefined
   firstBucket: number
-  /** All the newest block brought, which the belt is landing */
   newestBlobs: number
 }) {
   const ref = useRef<HTMLTableRowElement>(null)
@@ -206,13 +204,19 @@ const PosterRow = memo(function PosterRow({
     (landing: Landing) => landing.posterId === posterId,
     [posterId],
   )
-  const { value: blobs, arrival } = useLandedTotal(
+  const {
+    value: blobs,
+    arrival,
+    landing,
+  } = useLandedTotal(
     head,
     row.blobs,
     row.lastSlot === head ? row.lastBlobs : 0,
     newestBlobs,
     isPosters,
   )
+  // the batches wait with the blobs, so no column runs ahead of the belt
+  const batches = useHeldWhile(landing, row.batches)
   useFlash(ref, arrival, color)
 
   return (
@@ -228,7 +232,6 @@ const PosterRow = memo(function PosterRow({
       <TableCell {...pinnedCellProps(0, 'text-secondary tabular-nums')}>
         {rank}
       </TableCell>
-      {/* sovereign chains and unknown senders have no page, so no link */}
       <TableCell {...pinnedCellProps(1, 'w-0 pr-1.5')}>
         {/* a bare link, as in other tables: the cell hugs the logo, so a
             hover box would not fit it */}
@@ -253,7 +256,6 @@ const PosterRow = memo(function PosterRow({
         )}
       </TableCell>
       <TableCell>
-        {/* to the project's long-run chart, for those who want more than a day */}
         <TableLink
           href={row.poster.href && `${row.poster.href}#data-posted`}
           aria-label={`${row.poster.name} data posted`}
@@ -280,17 +282,19 @@ const PosterRow = memo(function PosterRow({
         <RollingNumber value={blobs * BLOB_KIB} format={formatKib} />
       </TableCell>
       <TableCell align="right">
-        <RollingNumber value={row.batches} format={formatWhole} />
+        <RollingNumber value={batches} format={formatWhole} />
       </TableCell>
       <TableCell align="right">
-        <RollingNumber value={row.blobs / row.batches} format={formatAverage} />
+        <RollingNumber value={blobs / batches} format={formatAverage} />
       </TableCell>
       <TableCell align="right">
-        <RollingNumber value={row.blobs / totalBlobs} format={formatPercent} />
+        <RollingNumber
+          value={blobs / Math.max(1, totalBlobs)}
+          format={formatPercent}
+        />
       </TableCell>
       <TableCell align="right" className="tabular-nums">
-        {/* one batch tells nothing of how often they come */}
-        {row.batches > 1 ? formatSeconds(seconds / row.batches) : '–'}
+        {batches > 1 ? formatSeconds(seconds / batches) : '–'}
       </TableCell>
       <TableCell align="right" className="tabular-nums">
         <LastBatchAgo lastSlot={row.lastSlot} />
@@ -300,55 +304,21 @@ const PosterRow = memo(function PosterRow({
 })
 
 /**
- * How long since a poster's last batch, counting up between blocks, not only
- * when they come, and alone in the row to render every second. On the
- * chain's clock, as the belt is: a device clock a minute off would age every
- * batch a minute, or make the newest "just now"
+ * Alone in the row to render every second. On the chain's clock, as a device
+ * clock a minute off would age every batch a minute
  */
 function LastBatchAgo({ lastSlot }: { lastSlot: number }) {
   const clock = useChainClock()
-  useTick(1000)
+  const [, rerender] = useState(0)
+  useInterval(() => rerender((tick) => tick + 1), 1000)
   return describeAgo((clock.progressNow() - lastSlot) * SLOT_SECONDS)
 }
 
-interface Row {
-  poster: LivePoster
-  blobs: number
-  batches: number
-  lastSlot: number
-  lastBlobs: number
-  buckets: number[]
-}
-
-/**
- * One row per poster, most blobs first. A project the page does not know of
- * is counted as unknown, as the belt draws it
- */
-function toRows(postedWindow: PostedWindow, posters: LivePoster[]): Row[] {
-  const byId = new Map(posters.map((poster) => [poster.id, poster]))
-  const rows = new Map<string, Row>()
-  for (const posted of postedWindow.posted) {
-    const poster =
-      byId.get(posted.projectId ?? UNKNOWN_ID) ?? byId.get(UNKNOWN_ID)
-    if (!poster) continue
-    const row = rows.get(poster.id)
-    if (!row) {
-      rows.set(poster.id, { poster, ...posted, buckets: [...posted.buckets] })
-      continue
-    }
-    row.blobs += posted.blobs
-    row.batches += posted.batches
-    posted.buckets.forEach((blobs, i) => {
-      row.buckets[i] = (row.buckets[i] ?? 0) + blobs
-    })
-    if (posted.lastSlot > row.lastSlot) {
-      row.lastSlot = posted.lastSlot
-      row.lastBlobs = posted.lastBlobs
-    } else if (posted.lastSlot === row.lastSlot) {
-      row.lastBlobs += posted.lastBlobs
-    }
-  }
-  return [...rows.values()].sort((a, b) => b.blobs - a.blobs)
+/** `value` as it was before `holding` began, while it lasts */
+function useHeldWhile<T>(holding: boolean, value: T) {
+  const held = useRef(value)
+  if (!holding) held.current = value
+  return held.current
 }
 
 function PosterLogo({ poster }: { poster: LivePoster }) {
@@ -386,10 +356,6 @@ function PosterName({
   )
 }
 
-/**
- * Sticks a cell of the first `PINNED_COLUMNS` to the left, on the card's color
- * so what scrolls under it does not show through
- */
 function pinnedCellProps(index: number, className?: string) {
   if (index >= PINNED_COLUMNS) return { className }
   return {
@@ -407,13 +373,9 @@ function pinnedCellProps(index: number, className?: string) {
   }
 }
 
-/**
- * About as many projects as post in a day, so the page below moves little
- * when the real rows come
- */
+/** About as many projects as post in a day, so the page moves little when real rows come */
 const SKELETON_ROWS = 36
 
-/** The header's height and the rows' height, under their dividers */
 function PostersSkeleton() {
   return (
     <div className="pb-3">
@@ -432,7 +394,6 @@ function PostersSkeleton() {
   )
 }
 
-/** 36s ago, or "just now" */
 function describeAgo(seconds: number) {
   const whole = Math.floor(seconds)
   if (whole <= 1) return 'just now'

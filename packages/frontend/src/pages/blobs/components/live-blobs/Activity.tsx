@@ -8,12 +8,9 @@ const BAR_STEP = BAR_WIDTH + 1
 const SLIDE_MS = 700
 
 /**
- * Blobs in each step of the day, the step under way on the right.
- * The steps are fixed in time, so the bars move only two ways: the last one
- * grows as batches land in it, and when a new step starts the whole row
- * slides one bar to the left, the oldest sliding out past the left edge.
- * Scaled to the row's own busiest step, rounded up to 1, 2 or 5 of a power
- * of ten so the scale, and with it every bar, seldom changes.
+ * Steps are fixed in time: the last bar grows as batches land, and a new step
+ * slides the row one bar left. The scale is rounded up to 1, 2 or 5 of a power
+ * of ten so it, and with it every bar, seldom changes.
  */
 export function Activity({
   buckets,
@@ -21,7 +18,7 @@ export function Activity({
   color,
 }: {
   buckets: number[]
-  /** Which step the first bar is, so a bar keeps its element as it moves */
+  /** So a bar keeps its element as it moves */
   firstBucket: number
   color: string
 }) {
@@ -77,7 +74,6 @@ export function Activity({
               width: BAR_WIDTH,
               transform: `scaleY(${blobs === 0 ? 0.08 : 0.2 + (0.8 * blobs) / scale})`,
               backgroundColor: blobs === 0 ? 'var(--divider)' : color,
-              // the step under way stands out from the finished ones
               opacity: blobs === 0 || step === current ? 1 : 0.6,
             }}
           />
@@ -97,10 +93,8 @@ function toBars(buckets: number[], firstBucket: number): Bar[] {
 }
 
 /**
- * The bar that fell off the left when a new step started, kept until the
- * slide that carries it out is done. Set before paint, so the row is never
- * drawn without it first. A jump of several steps, as after a hidden tab,
- * keeps nothing: the row is just redrawn.
+ * Kept until the slide carrying it out is done; set before paint, so the row
+ * is never drawn without it first. A jump of several steps keeps nothing.
  */
 function useLeavingBar(
   buckets: number[],
@@ -123,7 +117,7 @@ function useLeavingBar(
   return { bar: leavingBar, pending, drop }
 }
 
-/** The smallest of 1, 2, 5, 10, 20, 50… at least `value` */
+/** 1, 2, 5, 10, 20, 50… */
 function niceCeil(value: number) {
   const power = 10 ** Math.floor(Math.log10(value))
   const step = [1, 2, 5, 10].find((s) => s * power >= value) ?? 10

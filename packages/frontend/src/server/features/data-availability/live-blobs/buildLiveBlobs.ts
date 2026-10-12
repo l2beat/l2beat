@@ -30,34 +30,25 @@ import {
 } from './liveBlobsSlots'
 
 /**
- * Slots behind the head the backend may still rewrite: on a reorg a slot that
- * had a block may lose it, and one that was missed may get one. The backend
- * follows reorgs 32 blocks deep; two epochs on, the chain is final
+ * Slots behind the head a reorg may still rewrite. The backend follows reorgs
+ * 32 blocks deep; two epochs on, the chain is final
  */
 const UNSETTLED_SLOTS = 64
 
-/** The rows a snapshot is made of, read back from one head */
 export interface LiveBlobsRows {
-  /** Every stored slot: how far back the database reaches */
   stored: LiveSlotRange | undefined
-  /** The stored slots of the window */
   inWindow: LiveSlotRange | undefined
-  /** Of the last `BELT_SLOTS` slots */
   blocks: LiveBlockRecord[]
-  /** Of the last `BELT_SLOTS` slots, in block order */
+  /** In block order */
   batches: LiveBlobBatchRecord[]
-  /** Over the window */
   posted: LivePostedRecord[]
-  /** Over the window, `BUCKET_SLOTS` wide */
   buckets: LiveBucketRecord[]
-  /** Over the window, `PULSE_BUCKET_SLOTS` wide */
   pulse: LiveBlockBucketRecord[]
 }
 
 /**
- * What the page is served, made from the rows alone. The backend stores
- * blocks without a gap in block number, so a slot with no block between the
- * oldest stored one and the head was missed.
+ * The backend stores blocks without a gap in block number, so a slot with no
+ * block between the oldest stored one and the head was missed.
  */
 export function buildLiveBlobs(
   rows: LiveBlobsRows,
@@ -67,7 +58,6 @@ export function buildLiveBlobs(
   // the oldest stored at all, not in the window: a window whose first slot was
   // missed is still whole
   const oldest = Math.max(rows.stored?.from ?? head, head - WINDOW_SLOTS + 1)
-  /** The last `count` slots, newest first, as far back as the database reaches */
   const recentSlots = (count: number) =>
     slotsBack(head, Math.max(oldest, head - count + 1))
   const blocks = new Map(rows.blocks.map((block) => [block.slot, block]))
@@ -91,19 +81,16 @@ export function buildLiveBlobs(
   }
 }
 
-/** The rows of one page of the day, read back from one head */
 export interface PastBlobsRows {
   stored: LiveSlotRange | undefined
-  /** Of the page's slots */
   blocks: LiveBlockRecord[]
-  /** Of the page's slots, in block order */
+  /** In block order */
   batches: LiveBlobBatchRecord[]
 }
 
 /**
- * The page's slots that are still in the day and not past the head, newest
- * first. The backend stores without a gap, so every such slot is known: the
- * page is complete once the backend can no longer rewrite any of them.
+ * The backend stores without a gap, so every slot in the day up to the head is
+ * known: the page is complete once none of them can be rewritten.
  */
 export function buildPastBlobs(
   rows: PastBlobsRows,
@@ -164,15 +151,14 @@ export function toPendingBatch(tx: LivePendingBlobTxRecord): PendingBatch {
   }
 }
 
-/** Whether a head is as new as the chain can be at `now`, give or take a few missed slots */
+/** Give or take a few missed slots */
 export function isLive(head: number, now: number) {
   return slotAt(now) - head <= LIVE_LAG_SLOTS
 }
 
 /**
- * Each poster, most blobs first, with the bucket under way and the ones
- * before it. Buckets are counted from genesis, so they stay put as the head
- * moves on; the oldest, cut by the window's edge, is left out.
+ * Buckets are counted from genesis, so they stay put as the head moves on; the
+ * oldest, cut by the window's edge, is left out.
  */
 function postedWithBuckets(
   rows: LiveBlobsRows,
@@ -193,10 +179,7 @@ function postedWithBuckets(
   return { firstBucket, posted }
 }
 
-/**
- * The day under the belt in steps fixed from genesis, as the posters' buckets
- * are, so a new block changes only the last step and the rest stay put
- */
+/** Steps are fixed from genesis, so a new block changes only the last one */
 function pulseOf(records: LiveBlockBucketRecord[], head: number): Pulse {
   const firstBucket = Math.floor(head / PULSE_BUCKET_SLOTS) - PULSE_BUCKETS + 1
   const buckets = Array.from({ length: PULSE_BUCKETS }, () => ({
@@ -210,7 +193,7 @@ function pulseOf(records: LiveBlockBucketRecord[], head: number): Pulse {
   return { firstBucket, buckets }
 }
 
-/** From `from` down to `downTo`, both included */
+/** Both ends included */
 function slotsBack(from: number, downTo: number) {
   return Array.from(
     { length: Math.max(0, from - downTo + 1) },

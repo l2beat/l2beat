@@ -4,13 +4,13 @@ import type {
   Waited,
 } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 
-/** One blob transaction: a project's batch in a block */
+/** One blob transaction */
 export interface BlobBatch {
   posterIndex: number
   blobs: number
   /** Blobs of the block's earlier batches, which this one sits on */
   blobsBelow: number
-  /** Where it was sent, lowercase. Says the most about a batch from an unknown sender */
+  /** Lowercase */
   to: string
   txHash: string
   /** Set if it waited in the mempool before its block */
@@ -33,19 +33,16 @@ export type ChainBlock =
       status: 'proposed'
       blockNumber: number
       hash: string
-      /** In the block's order, so bottom up */
+      /** Bottom up */
       batches: BlobBatch[]
     }
   | { slot: number; status: 'missed' }
 
-/** The poster index of a project, or of the stand-in for unknown senders */
 export type PosterIndexOf = (projectId: string | undefined) => number
 
 /**
- * Whether the block held for a slot is still the one the server has there.
- * The chain can drop a block shortly after it came, and its slot then holds
- * none, or another one. Another one built on the same parent has the same
- * number, so only the hash tells them apart
+ * A reorg can leave a slot empty or holding another block; one built on the
+ * same parent has the same number, so only the hash tells them apart
  */
 export function isSameBlock(
   held: ChainBlock | undefined,
@@ -59,12 +56,9 @@ export function isSameBlock(
 }
 
 /**
- * Whether a block the page has not had is arriving now, for the belt to drop
- * and the numbers to count up with, rather than one from the past to put in
- * place quietly: the newest the server has, come with a head the page had
- * not seen (not fetched late under one it had), and of this slot or the one
- * before, as a block reaches the page a second or two into its slot and the
- * clock may run a little ahead
+ * Arriving now (to drop and count up with) rather than past (to place quietly):
+ * the newest, under a head the page had not seen, and of this slot or the one
+ * before, as a block reaches the page a second or two into its slot
  */
 export function arrivesNow(
   slot: number,

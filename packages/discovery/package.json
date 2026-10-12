@@ -32,8 +32,7 @@
     "cmd-ts": "^0.13.0",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
-    "lru_map": "0.4.1",
-    "sqlite3": "5.1.7"
+    "lru_map": "0.4.1"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

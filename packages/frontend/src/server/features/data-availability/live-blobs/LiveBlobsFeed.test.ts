@@ -226,6 +226,37 @@ describe(LiveBlobsFeed.name, () => {
     expect(answer.value?.head).toEqual(HEAD)
   })
 
+  it('goes on past a read the database never answers, without piling more onto it', async () => {
+    const db = fakeDb()
+    feed = new LiveBlobsFeed(db.source, Logger.SILENT)
+    await feed.latest()
+    // as when every pooled connection is taken and the wait has no limit
+    let answerHead: (() => void) | undefined
+    const findHead = db.source.liveBlock.findHead
+    db.source.liveBlock.findHead = () => {
+      db.headReads++
+      return new Promise((resolve) => {
+        answerHead = () => resolve(findHead())
+      })
+    }
+
+    const answer = answerOf(feed.latestAfter({ after: HEAD }))
+    await clock.tickAsync(5500)
+    expect(answer.value?.live).toEqual(false)
+    // the polls after go on waiting for the read that hung
+    const reads = db.headReads
+    await clock.tickAsync(10_000)
+    expect(db.headReads).toEqual(reads)
+
+    db.source.liveBlock.findHead = findHead
+    db.head = HEAD + 1
+    answerHead?.()
+    await clock.tickAsync(2000)
+    const blobs = await feed.latest()
+    expect(blobs?.head).toEqual(HEAD + 1)
+    expect(blobs?.live).toEqual(true)
+  })
+
   it('has no answer while the database has no blocks, or has never been read', async () => {
     const empty = fakeDb()
     empty.head = undefined
@@ -249,6 +280,17 @@ describe(LiveBlobsFeed.name, () => {
       Array.from({ length: 32 }, (_, i) => 927 - i),
     )
     expect(page.complete).toEqual(true)
+  })
+
+  it('takes the head of a page of the day from the snapshot, not another read', async () => {
+    const db = fakeDb()
+    feed = new LiveBlobsFeed(db.source, Logger.SILENT)
+    await feed.latest()
+
+    const reads = db.headReads
+    await Promise.all([feed.past({ page: 28 }), feed.past({ page: 29 })])
+
+    expect(db.headReads).toEqual(reads)
   })
 
   it('takes only whole pages counted from genesis', () => {

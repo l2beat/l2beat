@@ -26,7 +26,7 @@ const WIDTHS = [
 test('lays out well at every width', async ({ blobs, page }) => {
   test.setTimeout(120_000)
   await blobs.openLive()
-  await blobs.posters.scrollIntoViewIfNeeded()
+  await blobs.showPosters()
   await expect(blobs.posterRows.first()).toBeVisible()
 
   const faults = new Map<string, number[]>()

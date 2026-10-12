@@ -1,9 +1,6 @@
 import type { LivePoster } from '../model'
 
-/**
- * Every poster's icon cut to a circle at the size a tile shows it, by poster
- * index. Cut once, not clipped again for every tile on every frame.
- */
+/** Cut once, not clipped again for every tile on every frame */
 export function roundIcons(
   posters: LivePoster[],
   images: Map<string, HTMLImageElement>,
