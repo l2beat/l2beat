@@ -26,7 +26,7 @@ pnpm db:restore <FEATURE> [SINCE]
 ```
 
 Run without arguments to list the available features. Currently:
-`da`, `liveness`, `tvs`, `activity`, `shared`, `interop`, `interop-aggregates`, `token-db`, `tracked-txs`, `privacy`.
+`da`, `live-blobs`, `liveness`, `tvs`, `activity`, `shared`, `interop`, `interop-aggregates`, `token-db`, `tracked-txs`, `privacy`.
 
 `SINCE` is an optional cutoff (any Postgres-parseable timestamp, e.g. `2026-07-01`). Tables with a `timestamp` column only get rows where `timestamp >= SINCE`; tables without one (e.g. `IndexerState`, `IndexerConfiguration`) are still copied in full.
 

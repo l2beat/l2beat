@@ -18,6 +18,14 @@ const FEATURES: Record<string, string[]> = {
     'Blob',
     'SyncMetadata',
   ],
+  // The live indexer resumes from the remote's height, so a local backend
+  // starts near the head instead of fetching the whole day again
+  'live-blobs': [
+    'IndexerState',
+    'IndexerConfiguration',
+    'LiveBlock',
+    'LiveBlobBatch',
+  ],
   liveness: [
     'IndexerState',
     'IndexerConfiguration',
