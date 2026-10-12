@@ -111,6 +111,7 @@ export type {
   LivePostedRecord,
 } from './repositories/LiveBlobBatchRepository'
 export type {
+  LiveBlockBucketRecord,
   LiveBlockRecord,
   LiveSlotRange,
 } from './repositories/LiveBlockRepository'

@@ -44,6 +44,10 @@ interface Props {
   syncedUntil: UnixTime | undefined
   resolution: ChartResolution
   dataGap: [number, number] | undefined
+  /** For when the page already says whose data it is */
+  hideProjectLogo?: boolean
+  /** The hint's extra row would lift this chart's baseline above a hint-less chart beside it */
+  disableLegendOnboarding?: boolean
 }
 
 const hiddenDataKeys = ['projectMax'] as const
@@ -56,6 +60,8 @@ export function ProjectDaAbsoluteThroughputChart({
   syncedUntil,
   resolution,
   dataGap,
+  hideProjectLogo,
+  disableLegendOnboarding,
 }: Props) {
   const projectChartMeta = useMemo(
     () => getProjectChartMeta(project.id),
@@ -94,11 +100,12 @@ export function ProjectDaAbsoluteThroughputChart({
     <ChartContainer
       meta={projectChartMeta}
       data={chartData}
-      project={project}
+      project={hideProjectLogo ? undefined : project}
       isLoading={isLoading}
       interactiveLegend={{
         dataKeys,
         onItemClick: toggleDataKey,
+        disableOnboarding: disableLegendOnboarding,
       }}
       milestones={milestones}
     >
