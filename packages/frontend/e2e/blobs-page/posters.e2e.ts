@@ -9,15 +9,23 @@ import { type BlobsPage, expect, test } from './blobsPage'
  */
 test.describe.configure({ mode: 'parallel' })
 
+/** The most blobs a block of the mock beacon node holds */
+const MOCK_BLOCK_BLOBS = 21
+
 test('ranks the posters by blobs, with shares that add up', async ({
   blobs,
 }) => {
   await blobs.openLive()
   await blobs.showPosters()
-  // Rows are ranked by their counts, but a count rolls up to a new value over
-  // frames, so a slow renderer can be read with a row still climbing
+  // Rows are ranked by their totals, but a shown count takes in the newest
+  // block's blobs only as the belt lands them, and lets go of the oldest's
+  // once it has slid on. So neighbours can show swapped by up to two blocks'
+  // worth, and on a slow renderer a count can still be rolling to a new one
   const isRanked = (rows: Row[]) =>
-    rows.every((row, i) => i === 0 || rows[i - 1]!.blobs >= row.blobs)
+    rows.every(
+      (row, i) =>
+        i === 0 || rows[i - 1]!.blobs + 2 * MOCK_BLOCK_BLOBS >= row.blobs,
+    )
   await expect
     .poll(async () => isRanked(await readRows(blobs)), {
       message: 'ranked by blobs, once the counts settle',
