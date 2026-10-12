@@ -49,6 +49,7 @@ import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { rocketpool } from '../projects/rocketpool/rocketpool'
+import { safe } from '../projects/safe/safe'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
 import { stargate } from '../projects/stargate/stargate'
@@ -140,6 +141,7 @@ export const refactored: BaseProject[] = [
   wbeth,
   polymarket,
   rocketpool,
+  safe,
   // privacy
   cloaked,
   fluidkey,

@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Library that Safe accounts delegatecall to mark a message as signed for EIP-1271 checks."
+}
