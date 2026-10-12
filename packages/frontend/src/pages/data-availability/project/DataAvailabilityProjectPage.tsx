@@ -52,7 +52,10 @@ export function DataAvailabilityProjectPage({
             <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
 
             {!isNavigationEmpty && (
-              <StickyMobileSectionNavigation sections={navigationSections} />
+              <StickyMobileSectionNavigation
+                sections={navigationSections}
+                project={{ name: entry.name, icon: entry.icon }}
+              />
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
