@@ -1,4 +1,4 @@
-Privacy Pools lets the user withdraw ETH or tokens in full or in parts, to an address with no visible link to their deposit. Only deposits that 0xbow's association set provider (ASP) currently approves can leave privately. Depositors, recipients, amounts and timing stay public.
+Privacy Pools lets the user withdraw ETH or ERC-20 tokens in full or in parts, to an address with no visible link to their deposit. Only deposits that 0xbow's association set provider (ASP) currently approves can leave privately. Depositors, recipients, amounts and timing stay public.
 
 Users trust 0xbow, which runs the ASP and hosts the website, and the {{multisigStats}} multisig that can upgrade the Entrypoint without delay. The ASP can withhold approval for any deposit or remove it at any time. Exiting is permissionless: the depositing address can always ragequit its funds from the immutable pools, in public.
 
