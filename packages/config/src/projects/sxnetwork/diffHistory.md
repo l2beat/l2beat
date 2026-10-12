@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2cf2c17de9913c33d1cbbff50afa99789a4bbef1
+Generated with discovered.json: 0x2693379e4f0646cdc12b4672c7693da0dac0a831
 
-# Diff at Fri, 09 Oct 2026 13:08:15 GMT:
+# Diff at Mon, 12 Oct 2026 12:12:04 GMT:
 
 - id: da86a7d5
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -31,7 +31,7 @@ ArbFilteredTransactionsManager: transaction-filtering precompile live with ArbOS
 
 ```diff
     contract ArbFilteredTransactionsManager (sxr:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
-    +++ description: ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.
+    +++ description: ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.
       type:
 -        "EOA"
 +        "Contract"
