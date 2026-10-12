@@ -15,14 +15,17 @@ export function stickyTopBarRef(bar: HTMLElement | null) {
 
   const publish = () => {
     const style = getComputedStyle(bar)
-    const top = Number.parseFloat(style.top) || 0
-    // A bar that slides further down as the page scrolls (the project strip's
-    // tabs) declares how far; headers stick below where it ends up.
-    const slide =
-      Number.parseFloat(style.getPropertyValue('--sticky-top-bar-slide')) || 0
+    // A bar that moves as the page scrolls (the project strip's tabs) declares
+    // where it settles; headers stick below that, not below where it is now.
+    const settledTop = Number.parseFloat(
+      style.getPropertyValue('--sticky-top-bar-top'),
+    )
+    const top = Number.isNaN(settledTop)
+      ? Number.parseFloat(style.top) || 0
+      : settledTop
     const height = bar.getBoundingClientRect().height
     // A bar hidden at this width covers nothing, whatever its offsets say.
-    const bottom = height === 0 ? 0 : top + slide + height
+    const bottom = height === 0 ? 0 : top + height
     parent.style.setProperty(TOP_VARIABLE, `${bottom}px`)
   }
   const resizeObserver = new ResizeObserver(publish)

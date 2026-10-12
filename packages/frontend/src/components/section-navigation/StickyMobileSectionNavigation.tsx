@@ -28,12 +28,11 @@ export function StickyMobileSectionNavigation({
   const hasProject = !!project
   const tabsRef = useCallback(
     (tabs: HTMLDivElement | null) => {
-      // Before publishing, so the slide it declares counts.
-      const stopSliding =
-        tabs && hasProject ? slideTabsWithTitle(tabs) : undefined
+      const stopRevealing =
+        tabs && hasProject ? revealStripOnceTitleCovered(tabs) : undefined
       const stopPublishing = stickyTopBarRef(tabs)
       return () => {
-        stopSliding?.()
+        stopRevealing?.()
         stopPublishing?.()
       }
     },
@@ -58,60 +57,30 @@ export function StickyMobileSectionNavigation({
 }
 
 /**
- * Stands in for the scroll-driven slide in `section-navigation.css` where the
- * browser lacks it (Firefox): the same 30px slide, set from a scroll listener.
- * Firefox scrolls off the main thread, so this can trail by a frame, but only
- * while the title crosses those 30px; elsewhere the slide is pinned.
+ * Marks the tabs once the page title has gone under them. Where their move
+ * can't follow the scroll, CSS moves them on that mark over a fixed time;
+ * where it can, CSS ignores the mark (see `section-navigation.css`). CSS
+ * picks, so it keeps up when reduced motion is switched on or off.
  */
-function slideTabsWithTitle(tabs: HTMLElement) {
-  const strip = tabs.previousElementSibling
+function revealStripOnceTitleCovered(tabs: HTMLElement) {
   const title = tabs.parentElement?.querySelector('h1')
-  if (
-    !(strip instanceof HTMLElement) ||
-    !title ||
-    CSS.supports(SCROLL_DRIVEN_SLIDE)
-  ) {
-    return
-  }
-
-  // Followed live, like the `@media` gate on the CSS slide.
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)')
-  const update = () => {
-    if (reducedMotion.matches) return restoreStaticLayout(tabs)
-    // Hidden from `lg` up.
-    if (tabs.offsetHeight === 0) return
-    const overlap = tabs.offsetHeight - title.getBoundingClientRect().bottom
-    const slide = Math.min(Math.max(overlap, 0), strip.offsetHeight)
-    tabs.style.top = '0px'
-    tabs.style.setProperty(
-      '--sticky-top-bar-slide',
-      'var(--project-strip-height)',
-    )
-    tabs.style.translate = `0 ${slide}px`
-  }
-
-  update()
-  window.addEventListener('scroll', update, { passive: true })
-  window.addEventListener('resize', update)
-  reducedMotion.addEventListener('change', update)
+  if (!title) return
+  const tabsHeight = tabs.offsetHeight
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry) return
+      const isCovered =
+        !entry.isIntersecting && entry.boundingClientRect.top < tabsHeight
+      tabs.toggleAttribute('data-strip-shown', isCovered)
+    },
+    { rootMargin: `-${tabsHeight}px 0px 0px 0px` },
+  )
+  observer.observe(title)
   return () => {
-    window.removeEventListener('scroll', update)
-    window.removeEventListener('resize', update)
-    reducedMotion.removeEventListener('change', update)
-    restoreStaticLayout(tabs)
+    observer.disconnect()
+    tabs.removeAttribute('data-strip-shown')
   }
 }
-
-/** Back to `section-nav-tabs-under-strip`'s static `top`. */
-function restoreStaticLayout(tabs: HTMLElement) {
-  tabs.style.removeProperty('top')
-  tabs.style.removeProperty('translate')
-  tabs.style.removeProperty('--sticky-top-bar-slide')
-}
-
-// Mirrors the `@supports` condition in `section-navigation.css`.
-const SCROLL_DRIVEN_SLIDE =
-  '(animation-timeline: view()) and (timeline-scope: --x)'
 
 /**
  * Rests behind the tabs until they slide down to uncover it once the page

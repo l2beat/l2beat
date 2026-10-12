@@ -37,13 +37,22 @@
 
 /*
   The project strip rests behind the tabs (see `StickyMobileSectionNavigation`)
-  and the tabs uncover it by sliding down. The slide is tied to the page title
-  scrolling away, not to time, so the strip only shows once the title, which
-  already names the project, has gone under the tabs, and the slide is back at
-  zero whenever the title is in view, however fast the page scrolls.
+  and the tabs uncover it by moving down a strip's height, but only once the
+  page title, which already names the project, has gone under them.
+
+  Where scroll-driven animations work, the move follows the scroll 1:1 as the
+  title's last 30px pass under the tabs. The component always marks the tabs
+  `data-strip-shown` once the title is covered; elsewhere (Firefox, Safari
+  before 26) or with reduced motion, that mark moves them over a fixed time
+  instead: those browsers hand scroll positions to scripts too rarely to
+  follow the scroll.
+
+  Either way the tabs are at the top whenever the title is in view. The timed
+  move uses `top`, which has no effect once the tabs come unstuck, so a fast
+  scroll to the top can't catch them mid-move out of place.
 */
 
-/* The page title, whose last 30px under the tabs drive the slide. */
+/* The page title, whose last 30px under the tabs drive the scroll-linked move. */
 @utility project-title-timeline {
   view-timeline: --project-title block;
   /* Ends the timeline once the title's bottom is a strip's height below the top. */
@@ -59,34 +68,46 @@
   timeline-scope: --project-title;
 }
 
-/*
-  Without scroll-driven animations (Firefox, Safari before 26),
-  `StickyMobileSectionNavigation` runs the same slide from a scroll listener
-  once it hydrates. Until then, or with reduced motion, the tabs simply stick
-  a strip's height lower, uncovering the strip as the site header leaves.
-*/
 @utility section-nav-tabs-under-strip {
-  top: var(--project-strip-height);
+  top: 0;
+  /* Where the tabs settle, for sticky table headers below them. */
+  --sticky-top-bar-top: var(--project-strip-height);
+  /* Leaving is quicker than arriving. */
+  transition: top 180ms cubic-bezier(0.23, 1, 0.32, 1);
+
+  &[data-strip-shown] {
+    top: var(--project-strip-height);
+    transition-duration: 260ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 
   /*
     The tabs aren't inside the title, so its timeline only reaches them
     through `timeline-scope`; a browser with timelines but without that would
     leave the tabs stuck over the strip.
   */
-  /* Mirrored by `SCROLL_DRIVEN_SLIDE` in `StickyMobileSectionNavigation`. */
   @supports (animation-timeline: view()) and (timeline-scope: --x) {
     @media (prefers-reduced-motion: no-preference) {
-      top: 0;
-      /* How far down the tabs end up, for sticky table headers below them. */
-      --sticky-top-bar-slide: var(--project-strip-height);
       animation: uncover-project-strip linear both;
       animation-timeline: --project-title;
       animation-range: exit-crossing calc(100% - var(--project-strip-height))
         exit-crossing 100%;
+
+      /* The scroll does the moving here; the timed mark is ignored. */
+      &[data-strip-shown] {
+        top: 0;
+      }
     }
   }
 }
 
+/*
+  The scroll-linked move uses `translate`, which the compositor applies in
+  step with the scroll; it is zero whenever the title is in view anyway.
+*/
 @keyframes uncover-project-strip {
   to {
     translate: 0 var(--project-strip-height);
