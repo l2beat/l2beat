@@ -17,16 +17,29 @@ export function useLiveBlobs(enabled: boolean) {
   const trpcClient = useTRPCClient()
   // the newest slot in hand, which the server waits to pass before it answers
   const head = useRef<number>(undefined)
+  // counted here, as React Query resets `fetchFailureCount` at every fetch
+  const failures = useRef(0)
   const query = useQuery({
     ...trpc.da.liveBlobs.queryOptions({}),
-    queryFn: ({ signal }) =>
-      trpcClient.da.liveBlobs.query({ after: head.current }, { signal }),
+    queryFn: async ({ signal }) => {
+      try {
+        const answer = await trpcClient.da.liveBlobs.query(
+          { after: head.current },
+          { signal },
+        )
+        failures.current = 0
+        return answer
+      } catch (error) {
+        failures.current++
+        throw error
+      }
+    },
     enabled,
     // a poll that fails backs off by itself, rather than retrying at once
     retry: false,
     // what was fetched before the card left the screen is old on its return
     staleTime: 0,
-    refetchInterval: (q) => 1000 * askAgainIn(q.state.fetchFailureCount),
+    refetchInterval: () => 1000 * askAgainIn(failures.current),
   })
   const data = query.data ?? undefined
   head.current = data?.head

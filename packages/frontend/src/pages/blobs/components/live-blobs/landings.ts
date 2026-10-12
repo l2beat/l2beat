@@ -184,8 +184,7 @@ export function firstHeld(
   blockBlobs: number,
   currentSlot: number,
 ): Held {
-  const landing =
-    stamp !== undefined && arrivesNow(stamp, stamp, true, currentSlot)
+  const landing = landsNow(stamp, currentSlot)
   return {
     stamp,
     total,
@@ -214,11 +213,12 @@ export function holdBack(
   }
   if (!isAbove(stamp, held.stamp)) return { ...held, stamp, total }
   const departed = Math.max(0, held.total + fresh - total)
+  const landing = landsNow(stamp, currentSlot)
   return {
     stamp,
     total,
-    blockBlobs,
-    arriving: fresh,
+    blockBlobs: landing ? blockBlobs : 0,
+    arriving: landing ? fresh : 0,
     departed: held.departed + departed,
   }
 }
@@ -228,6 +228,11 @@ export function secondsUntilSlideEnds(progress: number) {
   const slideStartedAt = progress - SLIDE_TIME / SLOT_SECONDS
   const slideEnds = Math.floor(slideStartedAt) + 1
   return (slideEnds - progress) * SLOT_SECONDS + SLIDE_TIME
+}
+
+/** Whether the belt drops, and so lands, the newest block: one stored late is placed quietly */
+function landsNow(stamp: number | undefined, currentSlot: number) {
+  return stamp !== undefined && arrivesNow(stamp, stamp, true, currentSlot)
 }
 
 function isAbove(slot: number | undefined, than: number | undefined) {

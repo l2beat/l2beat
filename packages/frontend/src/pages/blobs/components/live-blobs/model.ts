@@ -78,6 +78,15 @@ export function totalByPoster(posted: Posted[], posters: LivePoster[]) {
 
 export type PosterTotals = ReturnType<typeof totalByPoster>
 
+/** Posters new to the ranking go last, as they have yet to land */
+export function inRanking(rows: PosterTotal[], ranking: string[] = []) {
+  const rank = (row: PosterTotal) => {
+    const index = ranking.indexOf(row.poster.id)
+    return index === -1 ? ranking.length : index
+  }
+  return rows.toSorted((a, b) => rank(a) - rank(b))
+}
+
 export interface BlockLimits {
   targetBlobsPerBlock: number
   maxBlobsPerBlock: number

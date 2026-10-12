@@ -2,6 +2,7 @@ import type { DaLayerThroughput } from '@l2beat/config'
 import { expect } from 'earl'
 import {
   getBlockLimits,
+  inRanking,
   type LivePoster,
   nextLimitsIn,
   totalByPoster,
@@ -81,5 +82,32 @@ describe(totalByPoster.name, () => {
       ['arbitrum', 5, 1, 5],
       ['base', 3, 1, 3],
     ])
+  })
+})
+
+// Methodology: three posters ranked a block ago, now in another order by their
+// raw totals, one of them new to the window.
+describe(inRanking.name, () => {
+  const row = (id: string, blobs: number) => ({
+    poster: {
+      id,
+      name: id,
+      iconUrl: undefined,
+      href: undefined,
+      color: '#000000',
+    },
+    blobs,
+    batches: 1,
+    lastSlot: 0,
+    lastBlobs: 0,
+    buckets: [],
+  })
+
+  it('keeps the ranking held, with posters new to it last', () => {
+    const rows = [row('new', 9), row('arbitrum', 8), row('base', 7)]
+
+    expect(
+      inRanking(rows, ['base', 'arbitrum']).map((r) => r.poster.id),
+    ).toEqual(['base', 'arbitrum', 'new'])
   })
 })

@@ -40,7 +40,12 @@ import {
   useFlash,
   useReorder,
 } from './liveMotion'
-import type { LivePoster, PosterTotal, PosterTotals } from './model'
+import {
+  inRanking,
+  type LivePoster,
+  type PosterTotal,
+  type PosterTotals,
+} from './model'
 
 interface Props {
   live: LiveBlobs | undefined
@@ -92,18 +97,23 @@ export const LIVE_POSTERS_ID = 'live-posters'
 /** The exact numbers behind the belt's squares, moving in step with its landings */
 export function LivePosters({ live: data, totals }: Props) {
   const postedWindow = data?.window
-  const rows = totals?.posters
   const head = data?.head
   // the belt's colors, so a project reads the same here as on the belt
   const { surface } = useThemeTokens()
   const newest = postedWindow?.newestBlobs ?? 0
-  const { value: totalBlobs } = useLandedTotal(
+  const { value: totalBlobs, landing } = useLandedTotal(
     head,
     totals?.blobs ?? 0,
     newest,
     newest,
     anyLanding,
   )
+  // ranked as the blobs shown, which wait for the landing too
+  const ranking = useHeldWhile(
+    landing,
+    totals?.posters.map((row) => row.poster.id),
+  )
+  const rows = totals && inRanking(totals.posters, ranking)
 
   const tableRef = useRef<HTMLDivElement>(null)
   useReorder(tableRef, rows?.map((row) => row.poster.id).join() ?? '')
