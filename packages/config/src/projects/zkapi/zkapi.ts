@@ -78,10 +78,6 @@ const values = {
     discovery.getContractValue<number>('ZkApiVault', 'noteTtl'),
     { fullUnit: true },
   ),
-  expiryBucket: formatSeconds(
-    discovery.getContractValue<number>('ZkApiVault', 'EXPIRY_BUCKET'),
-    { fullUnit: true },
-  ),
   requestChargeCap: utils.formatEther(requestChargeCap),
 }
 const eth = getTokenByAddress(

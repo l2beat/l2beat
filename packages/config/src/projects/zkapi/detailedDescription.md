@@ -4,7 +4,7 @@ Users trust Open Anonymity, which runs the service and owns the vault, and the i
 
 ### Flow
 
-1. **Deposit** ETH from your wallet. The vault records a public note with amount and expiry, {{noteTtl}} rounded up to {{expiryBucket}}.
+1. **Deposit** ETH from your wallet. The vault records a public note with the amount and a fixed expiry about {{noteTtl}} after the deposit.
 2. **Request access.** The app proves locally that some active note covers the budget, at most {{requestChargeCap}} ETH per request. The operator returns a short-lived OpenRouter key.
 3. **Chat.** Prompts go to OpenRouter with that key.
 4. **Settle.** The operator charges the usage and signs a new hidden balance, which the app keeps. The next request re-blinds it, so the balance does not link your requests.
