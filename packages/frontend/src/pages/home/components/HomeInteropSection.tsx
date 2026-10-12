@@ -35,12 +35,18 @@ export function HomeInteropSection({
   defaultSelectedChains,
   protocols,
   className,
+  bodyClassName,
+  showTopRoutes = true,
 }: {
   /** Every active chain, ordered by volume. */
   chains: InteropChainWithIcon[]
   defaultSelectedChains: string[]
   protocols: InteropFlowsProtocol[]
   className?: string
+  /** E.g. a taller minimum, where the column beside it is short. */
+  bodyClassName?: string
+  /** Off where the section is only as tall as the graph and figures need. */
+  showTopRoutes?: boolean
 }) {
   return (
     <InteropFlowsProvider
@@ -48,7 +54,12 @@ export function HomeInteropSection({
       protocols={protocols}
       defaultSelectedChains={defaultSelectedChains}
     >
-      <Content chains={chains} className={className} />
+      <Content
+        chains={chains}
+        className={className}
+        bodyClassName={bodyClassName}
+        showTopRoutes={showTopRoutes}
+      />
     </InteropFlowsProvider>
   )
 }
@@ -56,9 +67,13 @@ export function HomeInteropSection({
 function Content({
   chains,
   className,
+  bodyClassName,
+  showTopRoutes,
 }: {
   chains: InteropChainWithIcon[]
   className?: string
+  bodyClassName?: string
+  showTopRoutes: boolean
 }) {
   const trpc = useTRPC()
   const { selectedChains, selectedProtocols } = useInteropFlows()
@@ -98,7 +113,12 @@ function Content({
           figures, the graph as a square (smaller when the height runs out, so
           nothing spills), then as many top routes as the height left holds. Below lg it stacks too, the graph a fixed-size
           square. */}
-      <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0 lg:[container:interop-body/size]">
+      <div
+        className={cn(
+          'relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0 lg:[container:interop-body/size]',
+          bodyClassName,
+        )}
+      >
         {data && (
           <Stats
             data={data}
@@ -120,11 +140,13 @@ function Content({
         </div>
         {data && (
           <>
-            <TopRoutes
-              flows={data.flows}
-              chains={chains}
-              className="interop-corners:hidden interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden"
-            />
+            {showTopRoutes && (
+              <TopRoutes
+                flows={data.flows}
+                chains={chains}
+                className="interop-corners:hidden interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden"
+              />
+            )}
             <CornerStats data={data} chains={chains} />
           </>
         )}

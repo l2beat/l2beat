@@ -4,17 +4,29 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { getHomeCropsProjects } from '../home/getHomeCropsProjects'
 import {
   getCachedHomeData,
   getRecentProjectsForHome,
+  type HomeData,
 } from '../home/getHomeData'
 import { getHomeProjectCounts } from '../home/getHomeProjectCounts'
 import { getHomeResearch } from '../home/getHomeResearch'
+import {
+  MIN_SELECTED_CHAINS,
+  MIN_SELECTED_PROTOCOLS,
+} from '../interop/components/flows/consts'
 
 /** Enough for the marquee to read as a stream. */
 const RECENT_PROJECTS_COUNT = 12
+
+/**
+ * Fewer chains than the home page's 15: in the landing page's narrower
+ * column the ring fits ten bubbles without them running into each other.
+ */
+const INTEROP_CHAINS_COUNT = 10
 
 export interface LandingCounts {
   l2: number
@@ -29,7 +41,7 @@ export async function getLandingData(
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const [appLayoutProps, data, home] = await Promise.all([
+  const [appLayoutProps, data, { home, interop }] = await Promise.all([
     getAppLayoutProps(),
     cache.get(
       {
@@ -39,9 +51,7 @@ export async function getLandingData(
       },
       () => getCachedData(manifest),
     ),
-    // The home page's charts, under the landing page's own sections. One
-    // cache entry for both pages, so neither computes them twice.
-    getCachedHomeData(manifest, cache),
+    getChartsData(manifest, cache),
   ])
 
   return {
@@ -62,7 +72,7 @@ export async function getLandingData(
       props: {
         ...appLayoutProps,
         ...data,
-        queryState: home.queryState,
+        queryState: interop.queryState,
         charts: {
           projectCounts: home.projectCounts,
           l2Charts: home.l2Charts,
@@ -70,12 +80,51 @@ export async function getLandingData(
           privacy: home.privacy,
           ethereumCharts: home.ethereumCharts,
           interopFlowChains: home.interopFlowChains,
-          interopDefaultFlowChains: home.interopDefaultFlowChains,
+          interopDefaultFlowChains: interop.defaultSelectedChains,
           flowProtocols: home.flowProtocols,
         },
       },
     },
   }
+}
+
+/**
+ * The home page's charts, under the landing page's own sections. One cache
+ * entry for both pages, so neither computes them twice; only the interop
+ * graph's smaller selection is fetched here, ahead, so it hydrates.
+ */
+async function getChartsData(manifest: Manifest, cache: InMemoryCache) {
+  const home = await getCachedHomeData(manifest, cache)
+  const interop = await cache.get(
+    {
+      key: ['landing', 'interop'],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () => getInteropData(home),
+  )
+  return { home, interop }
+}
+
+async function getInteropData(home: HomeData) {
+  const helpers = getSsrHelpers()
+  const defaultSelectedChains = home.interopDefaultFlowChains.slice(
+    0,
+    INTEROP_CHAINS_COUNT,
+  )
+  // Mirrors the query HomeInteropSection makes on the client.
+  if (
+    defaultSelectedChains.length >= MIN_SELECTED_CHAINS &&
+    home.flowProtocols.length >= MIN_SELECTED_PROTOCOLS
+  ) {
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.interop.flows.queryOptions({
+        chains: defaultSelectedChains,
+        protocolIds: home.flowProtocols.map((protocol) => protocol.id),
+      }),
+    )
+  }
+  return { defaultSelectedChains, queryState: helpers.dehydrate() }
 }
 
 async function getCachedData(manifest: Manifest) {

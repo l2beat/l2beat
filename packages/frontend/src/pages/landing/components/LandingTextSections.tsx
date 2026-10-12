@@ -1,4 +1,6 @@
+import { useWhatsNewItem } from '~/components/whats-new/WhatsNewItemContext'
 import { externalLinks } from '~/consts/externalLinks'
+import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import type { HomeResearchItem } from '~/pages/home/getHomeResearch'
 import { HOME_THUMBNAIL_CLASS } from '~/pages/home/homeStyles'
@@ -10,8 +12,9 @@ import {
 import { LandingSectionHeader } from './LandingSectionHeader'
 
 /**
- * The written half of the page: our latest research as a plain list, and
- * where to talk to us. Two columns from md, stacked below.
+ * The written half of the page: our latest research as a plain list; then
+ * where to talk to us and our latest announcement. Two columns from md,
+ * stacked below.
  */
 export function LandingTextSections({
   research,
@@ -30,27 +33,19 @@ export function LandingTextSections({
         />
         <Research items={research} />
       </div>
-      <div className="min-w-0">
-        <LandingSectionHeader
-          title="Community"
-          labelClassName={LANDING_SECTION_LABEL_CLASS}
-        />
-        <ul className="flex flex-col gap-3">
-          <li>
-            <CommunityBox
-              title="Have a question?"
-              description="Ask about our data, give feedback on our frameworks, or request research into a new project on the forum."
-              href={externalLinks.forum}
-            />
-          </li>
-          <li>
-            <CommunityBox
-              title="Governance newsletter"
-              description="Weekly, on Substack."
-              href={externalLinks.substackSubscribe}
-            />
-          </li>
-        </ul>
+      <div className="flex min-w-0 flex-col gap-10">
+        <div>
+          <LandingSectionHeader
+            title="Community"
+            labelClassName={LANDING_SECTION_LABEL_CLASS}
+          />
+          <CommunityBox
+            title="Have a question?"
+            description="Ask about our data, give feedback on our frameworks, or request research into a new project on the forum."
+            href={externalLinks.forum}
+          />
+        </div>
+        <WhatsNew />
       </div>
     </section>
   )
@@ -120,5 +115,50 @@ function CommunityBox({
       </span>
       <CustomLinkIcon className="size-3.5 shrink-0 fill-secondary transition-colors group-hover:fill-primary" />
     </a>
+  )
+}
+
+/** Our latest announcement, the one the app's nav shows, as one row. */
+function WhatsNew() {
+  const item = useWhatsNewItem()
+  // Opening it counts as seeing it, as from the nav, which also retires the
+  // floating what's new widget for it.
+  const [, setSeen] = useLocalStorage(
+    item ? `whats-new-${item.id}` : 'whats-new-none',
+    false,
+  )
+  if (!item) {
+    return null
+  }
+  return (
+    <div>
+      <LandingSectionHeader
+        title="What's new"
+        link={{ title: 'Changelog', href: '/changelog' }}
+        labelClassName={LANDING_SECTION_LABEL_CLASS}
+      />
+      <a
+        href={item.href}
+        onClick={() => setSeen(true)}
+        className="group flex items-center gap-4 rounded-xl border border-divider p-3 pr-5 transition-colors hover:border-link-stroke"
+      >
+        <img
+          src={item.imageSrc}
+          alt={item.imageAlt}
+          loading="lazy"
+          className="aspect-video w-28 shrink-0 rounded-md object-cover object-top-left"
+        />
+        <span className="flex min-w-0 flex-col gap-1">
+          <span className="font-semibold text-label-value-16 leading-tight underline-offset-4 group-hover:underline">
+            {item.title}
+          </span>
+          {item.description && (
+            <span className="line-clamp-2 text-pretty text-label-value-13 text-secondary leading-snug">
+              {item.description}
+            </span>
+          )}
+        </span>
+      </a>
+    </div>
   )
 }

@@ -1,5 +1,9 @@
 import { formatInteger } from '@l2beat/shared-pure'
-import { env } from '~/env'
+import {
+  type GardenFlower,
+  GardenFlowers,
+  GardenLandscape,
+} from '~/components/garden/GardenSky'
 import { ChevronIcon } from '~/icons/Chevron'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { L2Icon } from '~/icons/pages/L2'
@@ -20,7 +24,15 @@ interface DomainCard {
   /** Stands in for the count where there is none. */
   subtitle?: string
   icon: React.ReactNode
+  /** Drawn as a corner of the garden, like the CROPS banner on Home. */
+  garden?: boolean
 }
+
+/** Two flowers on the nearest ridge, bottom right, clear of the count. */
+const GARDEN_FLOWERS: GardenFlower[] = [
+  { left: '60%', bottom: '3%', width: 22 },
+  { left: '74%', bottom: '6%', width: 26 },
+]
 
 /** The charts' pink, as the nav's selected items use. */
 const ICON_CLASS = 'size-6 stroke-chart-pink'
@@ -66,65 +78,67 @@ export function LandingDomainCards({ counts }: { counts: LandingCounts }) {
       unit: 'protocols',
       icon: <BridgesIcon className={ICON_CLASS} />,
     },
-  ]
-  if (env.CLIENT_SIDE_GARDEN_ENABLED) {
-    cards.push({
-      title: {
-        before: 'We tend the',
-        category: 'CROPS',
-        after: 'of Ethereum',
-      },
+    {
+      title: { before: 'We tend the', category: 'CROPS', after: '' },
       href: GARDEN_PATH,
       count: counts.crops > 0 ? counts.crops : undefined,
       unit: 'projects',
       subtitle: 'The Infinite Garden',
       icon: <CropsIcon className={ICON_CLASS} />,
-    })
-  }
+      garden: true,
+    },
+  ]
 
   return (
     <section className={LANDING_CONTAINER_CLASS}>
-      <ul
-        className={cn(
-          'grid grid-cols-1 gap-4',
-          // Columns the cards fill: no card ends up alone in a row.
-          cards.length === 4
-            ? 'sm:grid-cols-2 lg:grid-cols-4'
-            : 'md:grid-cols-3',
-        )}
-      >
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map((card) => (
           <li key={card.href}>
             <a
               href={card.href}
-              className="group flex h-full min-h-[190px] flex-col gap-4 rounded-xl border border-divider p-5 transition-colors duration-200 hover:border-link-stroke"
+              className={cn(
+                'group relative flex h-full min-h-[190px] flex-col overflow-hidden rounded-xl border p-5 transition-colors duration-200',
+                card.garden
+                  ? 'border-garden-border hover:border-garden-accent/50 dark:border-[#1d2a36]'
+                  : 'border-divider hover:border-link-stroke',
+              )}
             >
-              <div className="transition-transform duration-200 group-hover:scale-110">
-                {card.icon}
-              </div>
-              <h2 className="text-balance font-normal text-heading-20 text-secondary leading-snug tracking-[-0.015em]">
-                {card.title.before}{' '}
-                <span className="font-semibold text-heading-24 text-primary underline decoration-2 decoration-chart-pink underline-offset-[6px]">
-                  {card.title.category}
-                </span>{' '}
-                {card.title.after}
-              </h2>
-              <div className="mt-auto flex items-baseline justify-between gap-2">
-                {card.count !== undefined ? (
-                  <span className="whitespace-nowrap">
-                    <span className="font-semibold text-heading-24 tabular-nums leading-tight tracking-[-0.02em]">
-                      {formatInteger(card.count)}
-                    </span>{' '}
-                    <span className="font-normal text-label-value-12 text-secondary">
-                      {card.unit}
+              {card.garden && (
+                <GardenLandscape
+                  lightClassName="top-[22%] left-[82%] size-28"
+                  ridgesClassName="h-[45%]"
+                >
+                  <GardenFlowers flowers={GARDEN_FLOWERS} />
+                </GardenLandscape>
+              )}
+              <div className="relative flex grow flex-col gap-4">
+                <div className="transition-transform duration-200 group-hover:scale-110">
+                  {card.icon}
+                </div>
+                <h2 className="text-balance font-normal text-heading-20 text-secondary leading-snug tracking-[-0.015em]">
+                  {card.title.before}{' '}
+                  <span className="font-semibold text-heading-24 text-primary underline decoration-2 decoration-chart-pink underline-offset-[6px]">
+                    {card.title.category}
+                  </span>
+                  {card.title.after && ` ${card.title.after}`}
+                </h2>
+                <div className="mt-auto flex items-baseline justify-between gap-2">
+                  {card.count !== undefined ? (
+                    <span className="whitespace-nowrap">
+                      <span className="font-semibold text-heading-24 tabular-nums leading-tight tracking-[-0.02em]">
+                        {formatInteger(card.count)}
+                      </span>{' '}
+                      <span className="font-normal text-label-value-12 text-secondary">
+                        {card.unit}
+                      </span>
                     </span>
-                  </span>
-                ) : (
-                  <span className="font-light font-roboto-serif text-[17px] text-secondary leading-tight tracking-[-0.01em]">
-                    {card.subtitle}
-                  </span>
-                )}
-                <ChevronIcon className="-rotate-90 size-3 shrink-0 self-center fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
+                  ) : (
+                    <span className="font-light font-roboto-serif text-[17px] text-secondary leading-tight tracking-[-0.01em]">
+                      {card.subtitle}
+                    </span>
+                  )}
+                  <ChevronIcon className="-rotate-90 size-3 shrink-0 self-center fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
+                </div>
               </div>
             </a>
           </li>

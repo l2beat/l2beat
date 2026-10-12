@@ -1,5 +1,5 @@
 import { formatActivityCount, formatBytes, UnixTime } from '@l2beat/shared-pure'
-import { useMemo } from 'react'
+import { type ReactNode, useMemo } from 'react'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -17,9 +17,12 @@ const ETHEREUM_HREF = '/data-availability/projects/ethereum/ethereum'
 export function HomeEthereumCard({
   charts,
   className,
+  children,
 }: {
   charts: HomeEthereumCharts
   className?: string
+  /** More of Ethereum, under the chart pair. */
+  children?: ReactNode
 }) {
   const activityChartData = useMemo<HomeSparklineDataPoint[]>(
     () =>
@@ -90,6 +93,7 @@ export function HomeEthereumCard({
           }
         />
       </HomeKpiRow>
+      {children}
     </HomeCard>
   )
 }

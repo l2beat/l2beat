@@ -14,6 +14,7 @@ import {
   LANDING_CONTAINER_CLASS,
   LANDING_SECTION_LABEL_CLASS,
 } from '../landingStyles'
+import { LandingBlobsPlaceholder } from './LandingBlobsPlaceholder'
 import { LandingSectionHeader } from './LandingSectionHeader'
 
 export interface LandingChartsData {
@@ -29,7 +30,8 @@ export interface LandingChartsData {
 
 /**
  * The home page's charts, under everything else and in the landing page's
- * width: Privacy | Layer 2s, then Ethereum | Interop. No CROPS banner, stats
+ * width: Privacy | Layer 2s, then Ethereum, with Blobs, | Interop. No CROPS
+ * banner, stats
  * or What's new; the sections above already say that. The home cards pad by
  * the page gutter, which is zero here: the container pads instead, and the
  * columns keep 24px either side of the line between them.
@@ -39,7 +41,7 @@ export function LandingCharts({ data }: { data: LandingChartsData }) {
     <section className={`${LANDING_CONTAINER_CLASS} pb-14 md:pb-20`}>
       <LandingSectionHeader
         title="At a glance"
-        link={{ title: 'Open the app', href: HOME_PATH }}
+        link={{ title: 'Open dashboard', href: HOME_PATH }}
         labelClassName={LANDING_SECTION_LABEL_CLASS}
       />
       <div className="@container/home grid grid-cols-1 border-divider border-b [--home-gutter:0px] lg:grid-cols-2 lg:grid-rows-[auto_auto_auto_auto_1fr]">
@@ -58,15 +60,25 @@ export function LandingCharts({ data }: { data: LandingChartsData }) {
             className="@min-[880px]/home:border-l @min-[880px]/home:pl-6"
           />
         </div>
+        {/* Blobs, under Ethereum's charts, takes the height the interop
+            graph needs beyond them. */}
         <HomeEthereumCard
           charts={data.ethereumCharts}
-          className="lg:col-start-1 lg:row-start-4 lg:pr-6"
-        />
+          className="lg:col-start-1 lg:row-span-2 lg:row-start-4 lg:pr-6"
+        >
+          <LandingBlobsPlaceholder />
+        </HomeEthereumCard>
+        {/* Tall enough that the graph, stacked under the figures, gets the
+            column's whole width: at about 550px the ring of ten chains has
+            room between its bubbles and their labels. No top routes: there
+            is no height left for them, and the figures name the top chain. */}
         <HomeInteropSection
           chains={data.interopFlowChains}
           defaultSelectedChains={data.interopDefaultFlowChains}
           protocols={data.flowProtocols}
           className="lg:col-start-2 lg:row-span-2 lg:row-start-4 lg:border-l lg:pl-6"
+          bodyClassName="lg:min-h-[740px]"
+          showTopRoutes={false}
         />
       </div>
     </section>
