@@ -74,7 +74,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The SDK's core is closed source with no open alternative, so what it sends, and where, is up to the operator and can change with any release.",
       exposureContinued:
-        "Today, anyone on your network path sees when your wallet deposits and when the app contacts the operator, and can match both to the chain. The SDK has no Tor or proxy setting, and the operator's server tells it which endpoints to use.",
+        "Today, anyone on the user's network path sees their wallet deposits and app contacts with the operator, and can match both to the chain. The SDK has no Tor or proxy setting, and the operator's server tells it which endpoints to use.",
       interior: {
         ...INTERIOR,
         linkage: {

@@ -1,4 +1,4 @@
-Umbra Cash is a stealth-address protocol that lets anyone pay you at a fresh address, so the payment does not show you as its recipient. You register once, and payers find your keys in a public registry. Payer, amount and token stay public, and so does where the funds go next.
+Umbra Cash is a stealth-address protocol that lets anyone pay the user at a fresh address, so the payment does not identify them as its recipient. The user registers once, and payers find their keys in a public registry. Payer, amount and token stay public, and so does where the funds go next.
 
 Users trust ScopeLift, which hosts the app, runs its indexer and relays token withdrawals. The contracts are immutable, and their owner can only set a fee on new payments. Leaving needs no one: ETH lands at the stealth address itself, and any account can relay a token withdrawal.
 
@@ -11,7 +11,7 @@ Users trust ScopeLift, which hosts the app, runs its indexer and relays token wi
 
 ### App
 
-The app at [app.umbra.cash](https://app.umbra.cash) is built from public source, while its indexer and relayer API are closed. It finds payments through the indexer, relays token withdrawals through the API and checks every address it handles with its mainnet RPC, Alchemy. The app warns before withdrawals to registered, named or otherwise known addresses. A local build can leave the indexer out and read the chain from your own node. It still asks Cloudflare for your wallet's ENS name and POAP about each withdrawal address. The [privacy policy](https://app.umbra.cash/privacy) keeps IP logs for up to 90 days.
+The app at [app.umbra.cash](https://app.umbra.cash) is built from public source, while its indexer and relayer API are closed. It finds payments through the indexer, relays token withdrawals through the API and checks every address it handles with its mainnet RPC, Alchemy. The app warns before withdrawals to registered, named or otherwise known addresses. A local build can leave the indexer out and read the chain from the user's own node. It still asks Cloudflare for the ENS name of the user's wallet and POAP about each withdrawal address. The [privacy policy](https://app.umbra.cash/privacy) keeps IP logs for up to 90 days.
 
 ### Compliance
 

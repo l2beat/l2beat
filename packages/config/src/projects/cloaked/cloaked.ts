@@ -62,7 +62,7 @@ export const cloaked: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'Balances sit in addresses your keys control, and the open recovery tool exports their keys. Cloaked can spend them only with your key material.',
+        "Balances sit in addresses the user's keys control, and the open recovery tool exports their keys. Cloaked can spend them only with the user's key material.",
       walkawayTest: {
         passed: false,
         reason:

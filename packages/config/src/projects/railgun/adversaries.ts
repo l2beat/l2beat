@@ -61,16 +61,16 @@ export function railgunAdversaries(upgradeDelay: string) {
       networkObserver: {
         sentiment: 'good',
         exposureShort:
-          'RailOxide sends all traffic over built-in Tor, broadcaster messages included, and finds your notes by decrypting every note locally.',
+          "RailOxide sends all traffic over built-in Tor, broadcaster messages included, and finds the user's notes by decrypting every note locally.",
         exposureContinued:
-          'All traffic shares one Tor session, so the public RPCs it picks at random see your public addresses, your shields and the gas estimate of each private transaction from one exit. Your own node as its RPC keeps these from third parties.',
+          "All traffic shares one Tor session, so the public RPCs it picks at random see the user's public addresses, shields and the gas estimate of each private transaction from one exit. The user's own node as its RPC keeps these from third parties.",
         advice:
-          'Use RailOxide, the wallet these ratings assume, and set your own node as its Ethereum RPC.',
+          "Use RailOxide, the wallet these ratings assume, and set the user's own node as its Ethereum RPC.",
         interior: {
           ...INTERIOR,
           linkage: {
             verdict: 'atRisk',
-            note: 'Private only with your own node as RPC, over the default Tor.',
+            note: "Private only with the user's own node as RPC, over the default Tor.",
           },
         },
         sources: [
@@ -94,7 +94,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         exposureContinued:
           "PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists. After each transaction it sends the PPoI node only that transaction's new notes with their proofs.",
         advice:
-          'Watch governance proposals and unshield before an upgrade you reject executes.',
+          'Watch governance proposals and unshield before an upgrade the user rejects executes.',
         interior: {
           ...INTERIOR,
           linkage: {
@@ -116,7 +116,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         exposureContinued:
           'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address that was ever shared, broadcaster fee notes included.',
         advice:
-          'Share your 0zk address privately, with a fresh one per counterparty where you can.',
+          "Share the user's 0zk address privately, with a fresh one per counterparty where possible.",
         interior: {
           sender: 'atRisk',
           recipient: 'atRisk',
@@ -124,7 +124,7 @@ export function railgunAdversaries(upgradeDelay: string) {
           asset: 'atRisk',
           linkage: {
             verdict: 'atRisk',
-            note: 'Private only while your 0zk address stays unshared.',
+            note: "Private only while the user's 0zk address stays unshared.",
           },
         },
         sources: [

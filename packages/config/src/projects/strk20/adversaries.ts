@@ -24,7 +24,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       exposureShort:
         "Transfers inside the pool are encrypted, but the first payment to each new contact writes the recipient's address in cleartext.",
-      exposureContinued: `${S.entryExitPublic()} The fee payment names the token you pay it in, and DeFi actions name their target contract. A new account must be funded publicly before it can receive privately.`,
+      exposureContinued: `${S.entryExitPublic()} The fee payment names the token the user pays it in, and DeFi actions name their target contract. A new account must be funded publicly before it can receive privately.`,
       advice:
         'Submit every pool action through a paymaster and pay its fee in the most common token. Treat the first payment to a new contact, and any DeFi action, as public.',
       interior: {
@@ -88,7 +88,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureContinued:
         'Today both wallets send each action to their own servers for proving and note discovery. The paymaster receives the finished transaction with its proof before broadcast, and how much of the private execution the proof reveals is not established.',
       advice:
-        'Use a client built on the open SDK with your own prover and note discovery, and turn on its oblivious relay.',
+        "Use a client built on the open SDK with the user's own prover and note discovery, and turn on its oblivious relay.",
       interior: {
         sender: 'unverifiable',
         recipient: 'unverifiable',
@@ -120,7 +120,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay.",
       exposureContinued:
-        "The wallet's prover receives your viewing key with every action, and for most Ready accounts Ready's servers create that key. Ready's servers also learn every recipient the wallet checks for registration. StarkWare's sequencer alone checks the client proofs, which are not zero-knowledge by default. Every deposit needs a fresh signature from the holder of the screener key, who can block any depositor.",
+        "The wallet's prover receives the user's viewing key with every action, and for most Ready accounts Ready's servers create that key. Ready's servers also learn every recipient the wallet checks for registration. StarkWare's sequencer alone checks the client proofs, which are not zero-knowledge by default. Every deposit needs a fresh signature from the holder of the screener key, who can block any depositor.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

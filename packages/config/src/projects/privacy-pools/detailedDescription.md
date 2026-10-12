@@ -1,4 +1,4 @@
-Privacy Pools lets you withdraw ETH or a token to an address with no visible link to your deposit, in one go or in parts. Only deposits that 0xbow's association set provider (ASP) currently approves can leave privately. Depositors, recipients, amounts and timing stay public.
+Privacy Pools lets the user withdraw ETH or tokens in full or in parts, to an address with no visible link to their deposit. Only deposits that 0xbow's association set provider (ASP) currently approves can leave privately. Depositors, recipients, amounts and timing stay public.
 
 Users trust 0xbow, which runs the ASP and hosts the website, and the {{multisigStats}} multisig that can upgrade the Entrypoint without delay. The ASP can withhold approval for any deposit or remove it at any time. Exiting is permissionless: the depositing address can always ragequit its funds from the immutable pools, in public.
 
@@ -10,11 +10,11 @@ Users trust 0xbow, which runs the ASP and hosts the website, and the {{multisigS
 
 ### Keys
 
-All notes derive from one recovery phrase. The website creates a random one or derives it from a signature of your wallet. Losing it loses the funds.
+All notes derive from one recovery phrase. The website creates a random one or derives it from a signature of the user's wallet. Losing it loses the funds.
 
 ### App
 
-The ratings assume the website at [privacypools.com](https://privacypools.com), built from [public source](https://github.com/0xbow-io/privacy-pools-website) and hosted by 0xbow. It accepts your own RPC endpoint and a sign-in with the recovery phrase alone. It offers two relayers, Fast Relay and Cloaked Relay, while anyone can relay onchain. Over Tor, Fast Relay often refuses the connection and the website switches to Cloaked Relay. Accounts from the older 12-word key method send their deposit labels to 0xbow while they migrate.
+The ratings assume the website at [privacypools.com](https://privacypools.com), built from [public source](https://github.com/0xbow-io/privacy-pools-website) and hosted by 0xbow. It accepts the user's own RPC endpoint and a sign-in with the recovery phrase alone. It offers two relayers, Fast Relay and Cloaked Relay, while anyone can relay onchain. Over Tor, Fast Relay often refuses the connection and the website switches to Cloaked Relay. Accounts from the older 12-word key method send their deposit labels to 0xbow while they migrate.
 
 ### Exits
 
@@ -29,7 +29,7 @@ The ASP screens each depositing address before approving its deposit, under 0xbo
 Deposits pay a vetting fee, which the Entrypoint owner can withdraw. Relayers set their own fee per withdrawal, within a cap per asset:
 {{feeSummary}}
 
-A withdrawal you submit yourself pays no relayer fee.
+A withdrawal the user submits directly pays no relayer fee.
 
 ### Anonymity set
 

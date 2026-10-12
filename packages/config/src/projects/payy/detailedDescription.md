@@ -1,4 +1,4 @@
-Payy is a mobile app for USDC payments. You deposit USDC, send it to other users or as a payment link, and withdraw it to Ethereum or top up the Payy card. Note amounts and owners stay hidden. Which notes fund which, and every deposit and withdrawal with its address and amount, are public.
+Payy is a mobile app for USDC payments. The user deposits USDC, sends it to other users or as a payment link, and withdraws it to Ethereum or tops up the Payy card. Note amounts and owners stay hidden. Which notes fund which, and every deposit and withdrawal with its address and amount, are public.
 
 Users trust Payy, which runs the only validator, prover and node, delivers notes between users and holds the keys of link and ramp notes. The {{multisigStats}} multisig can upgrade the RollupV1 contract and overwrite its state root without delay. Leaving needs Payy: withdrawals settle only in its proven state updates, and transaction data lives only on its servers.
 

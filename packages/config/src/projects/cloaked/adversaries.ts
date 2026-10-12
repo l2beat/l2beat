@@ -20,7 +20,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       exposureShort:
         'Each payment reaches a fresh address, and nothing onchain names the account behind it.',
       exposureContinued:
-        'A send draws from several addresses in one transaction unless you pick one with Advanced Control. Its change goes to a fresh address in the same transaction, which links the two.',
+        'A send draws from several addresses in one transaction unless the user picks one with Advanced Control. Its change goes to a fresh address in the same transaction, which links the two.',
       advice: S.freshReceive(
         'spend one address at a time with Advanced Control',
       ),
@@ -46,7 +46,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       exposureContinued:
         'Timing, distinctive amounts, recurring counterparties and change outputs cluster recipients further. Incognito withdrawals from Privacy Pools carry the same relayer and fee marks.',
       advice:
-        'Space out related payments, avoid distinctive amounts and follow your own change outputs to see what a counterparty can trace.',
+        "Space out related payments, avoid distinctive amounts and follow the user's own change outputs to see what a counterparty can trace.",
       sources: [
         {
           title: 'Documented links and change handling',
@@ -67,7 +67,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       exposureShort:
         'The app is closed source with no open alternative, so what it sends to third parties is up to Cloaked and can change at any time.',
       exposureContinued:
-        "Today's app sends spends, quotes and balance reads to Cloaked's own API. Linking your own ENS name reads it through Alchemy under Cloaked's key, and wallet logins go through WalletConnect. A payer who looks up your name through a third-party RPC shows it your name and the new address.",
+        "Today's app sends spends, quotes and balance reads to Cloaked's own API. Linking the user's own ENS name reads it through Alchemy under Cloaked's key, and wallet logins go through WalletConnect. A payer who looks up the user's name through a third-party RPC shows it that name and the new address.",
       sources: [
         {
           title: 'Service providers: RPC, hosting and wallet connection',
@@ -84,7 +84,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       exposureShort: S.operatorViewingKey('Cloaked'),
       exposureContinued:
-        'It also serves the closed-source app that handles your keys. Its relay submits both sides of every Incognito round trip through Privacy Pools and keeps the association.',
+        "It also serves the closed-source app that handles the user's keys. Its relay submits both sides of every Incognito round trip through Privacy Pools and keeps the association.",
       sources: [
         {
           title: 'Viewing key and public spending key shared with the server',

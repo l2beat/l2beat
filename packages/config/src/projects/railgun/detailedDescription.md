@@ -1,6 +1,6 @@
-Railgun lets you shield tokens on Ethereum, send them privately to other Railgun users, use them in DeFi and unshield them to any address. Sender, recipient, token and amount stay hidden inside the pool, including which shield funds which unshield. Shields and unshields are public.
+Railgun lets the user shield tokens on Ethereum, send them privately to other Railgun users, use them in DeFi and unshield them to any address. Sender, recipient, token and amount stay hidden inside the pool, including which shield funds which unshield. Shields and unshields are public.
 
-No operator holds a key into the pool. RAIL stakers govern the core contract through a DAO, whose upgrades wait {{executionDelay}}. Leaving is permissionless: you can submit your own unshield at any time.
+No operator holds a key into the pool. RAIL stakers govern the core contract through a DAO, whose upgrades wait {{executionDelay}}. Leaving is permissionless: the user can submit their own unshield at any time.
 
 ### Architecture
 
@@ -15,7 +15,7 @@ Balances are encrypted notes in a public tree of commitments. Spending a note pu
 
 ### Keys
 
-Your wallet derives spending and viewing keys from a recovery phrase. You can share a read-only viewing key, which discloses all your private transactions.
+The user's wallet derives spending and viewing keys from a recovery phrase. The user can share a read-only viewing key, which discloses all their private transactions.
 
 ### App
 
@@ -23,7 +23,7 @@ Railgun names no reference wallet, so the ratings assume [RailOxide](https://git
 
 ### Compliance
 
-Screening happens offchain. A [PPoI](https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence) proves that a note descends only from shields a list provider accepted. The default list screens shields with Chainalysis's sanctions API. Broadcasters on Ethereum require a PPoI, and a transaction you submit yourself skips the check.
+Screening happens offchain. A [PPoI](https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence) proves that a note descends only from shields a list provider accepted. The default list screens shields with Chainalysis's sanctions API. Broadcasters on Ethereum require a PPoI, and a transaction the user submits directly skips the check.
 
 ### Fees
 

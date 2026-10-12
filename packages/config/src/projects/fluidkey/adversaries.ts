@@ -25,7 +25,7 @@ export function fluidkeyAdversaries(accounts: number) {
         exposureShort:
           'Each payment reaches a fresh Safe, and nothing onchain names the account behind it.',
         exposureContinued:
-          'A send that draws from several of your Safes shows onchain that they belong together.',
+          "A send that draws from several of the user's Safes shows onchain that they belong together.",
         advice: S.freshReceive(
           'label payments by payer and send from one label at a time',
         ),
@@ -86,7 +86,7 @@ export function fluidkeyAdversaries(accounts: number) {
         exposureShort:
           'The app is closed source with no open alternative, so what it sends to third parties is up to Fluidkey and can change at any time.',
         exposureContinued:
-          "Today, the web app reads the chain only through Fluidkey's servers and gives outside services just your login and username. A payer who looks up your name through a third-party RPC shows it your name and the new address.",
+          "Today, the web app reads the chain only through Fluidkey's servers and gives outside services just the user's login and username. A payer who looks up the user's name through a third-party RPC shows it that name and the new address.",
         sources: [
           {
             title:
@@ -104,7 +104,7 @@ export function fluidkeyAdversaries(accounts: number) {
         sentiment: 'bad',
         exposureShort: S.operatorViewingKey('Fluidkey'),
         exposureContinued:
-          "It also runs the closed-source app that handles your keys. With Google or Apple login on the web, Privy's code creates the signature your keys come from. Bank transfers add your verified identity, and Hide Trail shows your route to Houdini and two exchanges.",
+          "It also runs the closed-source app that handles the user's keys. With Google or Apple login on the web, Privy's code creates the signature the user's keys come from. Bank transfers add the user's verified identity, and Hide Trail shows the user's route to Houdini and two exchanges.",
         sources: [
           {
             title: 'Private viewing key shared with the service',
@@ -128,7 +128,7 @@ export function fluidkeyAdversaries(accounts: number) {
         sentiment: 'warning',
         exposureShort: S.noAnnouncement,
         exposureContinued: `${S.operatorViewingKeyRegardless('Fluidkey')} ${S.walletSignatureAccounts('plus a four-digit PIN')}`,
-        advice: `Create your account in the mobile app, with Google or Apple login, or with a new wallet that has never sent a transaction. ${S.permanentlyDisclosed('the viewing key shared with Fluidkey')}`,
+        advice: `Create the user's account in the mobile app, with Google or Apple login, or with a new wallet that has never sent a transaction. ${S.permanentlyDisclosed('the viewing key shared with Fluidkey')}`,
         sources: [
           {
             title: 'Stealth signer depends on a hashed shared secret',

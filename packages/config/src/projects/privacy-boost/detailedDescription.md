@@ -1,4 +1,4 @@
-Privacy Boost lets apps on Base give their users a private ERC-20 balance. You deposit tokens, send them privately to other users, use them in DeFi through approved gateways and withdraw to any address. Everything inside stays hidden from the chain, while the operator's enclave sees every transfer in plaintext.
+Privacy Boost lets apps on Base give their users a private ERC-20 balance. The user deposits tokens, sends them privately to other users, uses them in DeFi through approved gateways and withdraws to any address. Everything inside stays hidden from the chain, while the operator's enclave sees every transfer in plaintext.
 
 Users trust the operator, Sunnyside Labs, whose TEE processes and whose relay submits every transaction. They also trust the admin multisig, which can upgrade every contract instantly. If the operator stops, a forced withdrawal takes funds out after {{forcedWithdrawalDelay}}, in public.
 

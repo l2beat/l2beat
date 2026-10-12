@@ -22,7 +22,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
         'A zero-knowledge proof hides which approved deposit a withdrawal spends.',
       exposureContinued:
         'Partial withdrawals leave a change note and look like full ones.',
-      advice: `${S.exitViaRelayer('relayer')} Ragequit only deposits you never withdrew from, since ragequitting a change note reveals the withdrawal that left it.`,
+      advice: `${S.exitViaRelayer('relayer')} Ragequit only deposits the user never withdrew from, since ragequitting a change note reveals the withdrawal that left it.`,
       sources: [
         { contract: 'PrivacyPoolsEntrypoint' },
         { title: 'Withdrawal circuit', url: CIRCUITS + 'withdraw.circom' },
@@ -56,11 +56,11 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'good',
       exposureShort:
-        'The website works in Tor Browser and scans every pool whole, matching your notes locally, so no third party learns which deposits are yours.',
+        "The website works in Tor Browser and scans every pool whole, matching notes locally without revealing the user's deposits to third parties.",
       exposureContinued:
-        'The relayer receives amount and asset for a quote and the recipient once you confirm. With a wallet sign-in on the default RPC, Alchemy sees the wallet and then the polling for your withdrawal, tying the two by timing.',
+        "The relayer receives amount and asset for a quote and the recipient once the user confirms. With a wallet sign-in on the default RPC, Alchemy sees the wallet and then the polling for the user's withdrawal, tying the two by timing.",
       advice:
-        'Withdraw in a new Tor Browser session, signed in with your recovery phrase so no wallet address is queried. Before signing in, set your own node as the Ethereum endpoint.',
+        "Withdraw in a new Tor Browser session, signed in with the user's recovery phrase so no wallet address is queried. Before signing in, set the user's own node as the Ethereum endpoint.",
       sources: [
         {
           title: 'Sign-in with a recovery phrase needs no wallet',
@@ -85,7 +85,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         'The ASP postman can publish a new approved list at any time with no delay, and withdrawals must prove against the latest one.',
       exposureContinued:
-        "It can deny you a private exit or publish a list with only your deposit, which is then your whole anonymity set. The website counts the anonymity set it shows from 0xbow's own feed, not from the list your withdrawal proves against. 0xbow can also change the hosted website at any time.",
+        "It can deny the user a private exit or publish a list containing only their deposit, reducing their anonymity set to one. The website counts the anonymity set it shows from 0xbow's own feed, not from the list the user's withdrawal proves against. 0xbow can also change the hosted website at any time.",
       advice: `Before withdrawing, check the size of the approved list behind the latest root, which its RootUpdated event links on IPFS. ${S.localBuild}`,
       sources: [
         {

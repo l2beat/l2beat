@@ -1,4 +1,4 @@
-STRK-20 lets you shield any ERC-20 token on Starknet, send it privately to other users, use it in DeFi and withdraw it to any address. Senders, amounts and which deposit funds which withdrawal stay hidden inside the pool. Deposits, withdrawals, the first payment to each new contact and DeFi calls are public.
+STRK-20 lets the user shield any ERC-20 token on Starknet, send it privately to other users, use it in DeFi and withdraw it to any address. Senders, amounts and which deposit funds which withdrawal stay hidden inside the pool. Deposits, withdrawals, the first payment to each new contact and DeFi calls are public.
 
 Users trust the holder of the auditor key, which can decrypt every user's history, and the holder of the screener key, which must approve every deposit. A multisig can upgrade the [pool](https://voyager.online/contract/0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a) without delay. Leaving needs StarkWare's sequencer, which alone checks proofs and includes pool transactions.
 
@@ -15,11 +15,11 @@ Each user registers a viewing key, which the pool stores encrypted to the audito
 
 ### Keys
 
-Your Starknet account signs every action, and your viewing key decrypts your notes. Ready's servers create the viewing key for most accounts, while Xverse derives it from a wallet signature. Registration cannot be changed, so a leaked viewing key exposes your history for good.
+The user's Starknet account signs every action, and their viewing key decrypts their notes. Ready's servers create the viewing key for most accounts, while Xverse derives it from a wallet signature. Registration cannot be changed, so a leaked viewing key exposes the user's history for good.
 
 ### App
 
-StarkWare lists Ready and Xverse as wallets, and both are closed source. Both send each action, with your viewing key, to their own servers for proving and note discovery. The [SDK](https://github.com/starkware-libs/starknet-privacy) is open, and a custom client on it can use its own [prover](https://github.com/starkware-libs/sequencer/tree/main/crates/starknet_transaction_prover)(high hardware requirements), its own note discovery and an oblivious relay. Deposits still need the screening signature.
+StarkWare lists Ready and Xverse as wallets, and both are closed source. Both send each action, with the user's viewing key, to their own servers for proving and note discovery. The [SDK](https://github.com/starkware-libs/starknet-privacy) is open, and a custom client on it can use its own [prover](https://github.com/starkware-libs/sequencer/tree/main/crates/starknet_transaction_prover)(high hardware requirements), its own note discovery and an oblivious relay. Deposits still need the screening signature.
 
 ### Compliance
 

@@ -51,7 +51,7 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
       networkObserver: {
         sentiment: 'good',
         exposureShort:
-          'The app works in Tor Browser and downloads every deposit of a pool, so its services learn the pool but never your note.',
+          "The app works in Tor Browser and downloads every deposit of a pool, so its services learn the pool but never the user's note.",
         exposureContinued:
           'Every listed relayer gets a status request, and the chosen one receives the finished withdrawal.',
         advice: `${S.ownNodeAndTor('relayer')} Withdraw without connecting a wallet.`,
@@ -79,7 +79,7 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
         exposureShort:
           'The pools cannot be paused, upgraded or made to reveal anything.',
         exposureContinued: `Token governance controls the app pinned on tornadocash.eth, the router's pool list and the relayer list. Every change waits at least ${upgradeDelay} from proposal to execution.`,
-        advice: `Load the app from the IPFS hash on tornadocash.eth through your own IPFS node. ${S.localBuild}`,
+        advice: `Load the app from the IPFS hash on tornadocash.eth through the user's own IPFS node. ${S.localBuild}`,
         sources: [
           { contract: 'Pool_0.1_ETH', title: '0.1 ETH pool (no operator)' },
           { section: 'upgrades-and-governance' },
@@ -95,7 +95,7 @@ export function tornadoCashAdversaries(upgradeDelay: string) {
         exposureContinued:
           'Whoever breaks elliptic-curve cryptography could test whether a given deposit can fund a withdrawal, shrinking the candidate set without singling out one deposit. Notes backed up onchain are encrypted with elliptic-curve keys and become readable.',
         advice:
-          'Keep the note on your device and leave the onchain backup off.',
+          "Keep the note on the user's device and leave the onchain backup off.",
         sources: [
           {
             title: 'Pedersen hash circuit (pinned circomlib fork)',

@@ -1,4 +1,4 @@
-zk.money is a wallet for private DAI payments on Aztec. You deposit DAI, USDC or USDT on Ethereum, pay other users by name and withdraw to any Ethereum address. Payments inside are hidden, while names, deposits and withdrawals are public.
+zk.money is a wallet for private DAI payments on Aztec. The user deposits DAI, USDC or USDT on Ethereum, pays other users by name and withdraws to any Ethereum address. Payments inside are hidden, while names, deposits and withdrawals are public.
 
 Funds stay escrowed in an Ethereum portal. Every withdrawal and refund needs a zk proof and a signature from a live AWS Nitro enclave (TEE). The enclave decrypts and reads the operations it handles. Aztec Labs controls zk.money names and the contract lists the released wallets use.
 
@@ -18,10 +18,10 @@ Accounts sign with a passkey. The released wallet requires a registered name to 
 
 ### App
 
-The ratings assume [zk.money Desktop v0.1.0](https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.1.0). There also is a hosted wallet without published source and the potential to build your independent wallet:
+The ratings assume [zk.money Desktop v0.1.0](https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.1.0). There also is a hosted wallet without published source and the potential for the user to build an independent wallet:
 - **Desktop:** runs local code but fetches contract addresses from two unsigned Aztec Labs lists. The wallet checks the [profile](https://github.com/aztec-labs-eng/zkmoney-public/blob/f04743f5d57d1b89f9190cad0f6affd28b0793f2/packages/config-client/src/toContractServiceConfig.ts#L41-L68) against the [manifest](https://github.com/aztec-labs-eng/zkmoney-public/blob/f04743f5d57d1b89f9190cad0f6affd28b0793f2/packages/core/src/oxide/index.ts#L108-L170), and both come from Aztec Labs. Substituting them can redirect future deposits and payments.
 - **Hosted:** loads code from zk.money on every visit, which makes its owner an insider. It can read viewing keys and request harmful passkey signatures behind prompts that hide the operation.
-- **[CLI](https://github.com/aztec-labs-eng/zkmoney-cli/releases/tag/zkmoney-cli-v0.4.0):** skips XMTP, screens only when configured and accepts your own Aztec node and Ethereum RPC. It derives deposit addresses the same way.
+- **[CLI](https://github.com/aztec-labs-eng/zkmoney-cli/releases/tag/zkmoney-cli-v0.4.0):** skips XMTP, screens only when configured and accepts the user's own Aztec node and Ethereum RPC. It derives deposit addresses the same way.
 - **Independent operation:** would allow a desktop build modified to pin verified addresses, remove screening and serve it under auth.zk.money. Users could submit Ethereum transactions themselves and run the approved enclave on AWS. New names still require Aztec Labs' signature. This setup is untested.
 
 ### Names
