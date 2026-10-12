@@ -257,7 +257,7 @@ export const derivev3: ScalingProject = {
           },
           {
             category: 'Funds can be stolen if',
-            text: 'the zkVM program does not check that admin actions, which anyone can queue on L1, come from an authorized sender.',
+            text: 'the zkVM program does not restrict admin actions, which anyone can queue on L1, to authorized senders, and those actions can move user funds.',
           },
         ],
         references: [
@@ -270,7 +270,7 @@ export const derivev3: ScalingProject = {
     ],
   },
   upgradesAndGovernance: {
-    content: `All contracts are upgradeable and owned by a multisig with two members: a timelock with a ${formatSeconds(timelockDelay)} delay, whose transactions are proposed by the Derive Multisig, and the Derive Bypass Multisig, which can act without delay. The owner can replace the state root, the program verification key, the verifier and the trusted Celestia anchor, set the batch submitter and the stall timeout, register or re-point the vaults of assets, and move funds held in forwarded-withdrawal escrows. The Derive Guardian Multisig can refill the withdrawal rate limits and pause withdrawals, and each of a set of individual pausers can pause withdrawals as well.`,
+    content: `All contracts are upgradeable. Upgrades and other owner actions take effect either through a timelock with a ${formatSeconds(timelockDelay)} delay or immediately through a path that bypasses it. The owner can replace the state root, the program verification key, the verifier and the trusted Celestia anchor, set the batch submitter and the stall timeout, register or re-point asset vaults, and move funds held in forwarded-withdrawal escrows. A guardian can refill the withdrawal rate limits and, like a set of individual pausers, pause withdrawals.`,
   },
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
