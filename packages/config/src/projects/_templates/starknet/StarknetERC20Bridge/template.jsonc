@@ -53,8 +53,9 @@
         "remove": { "event": "WithdrawalLimitDisabled" }
       }
     },
+    // a deposit cap: it cannot freeze or move locked funds
     "maxTotalBalance": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "The maximum total balance that can be locked in the bridge.",
       "handler": {
         "type": "call",

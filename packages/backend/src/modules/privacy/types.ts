@@ -1,10 +1,12 @@
 import type {
   PrivacyAnonymitySetDepositSource,
   PrivacyFlowExtractorConfig,
+  PrivacyRelayerExtractorConfig,
   ProjectPrivacyInfo,
-  ProjectPrivacyOnchainRelayerSource,
 } from '@l2beat/config'
+import type { IRpcClient } from '@l2beat/shared'
 import type { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import type { ReceiptLogCache } from './utils/ReceiptLogCache'
 
 export interface PrivacyProjectConfig {
   projectId: string
@@ -87,13 +89,15 @@ export interface StarknetPrivacyEvent {
 
 export type PrivacyRelayerActivityIndexerConfig = {
   id: string
+} & PrivacyRelayerActivityIndexerConfigProperties
+
+export type PrivacyRelayerActivityIndexerConfigProperties = {
   projectId: string
   chain: string
   address: EthereumAddress
   sinceTimestamp: UnixTime
   event: string
-  extractor: ProjectPrivacyOnchainRelayerSource['extractor']
-}
+} & PrivacyRelayerExtractorConfig
 
 export type PrivacyRelayerSampleConfig = {
   id: string
@@ -128,4 +132,10 @@ export interface PrivacyFlowExtractResult {
 
 export interface PrivacyRelayerActivityExtractResult {
   relayerAddress: EthereumAddress
+}
+
+/** Lets extractors read beyond the matched log. Create one per indexer update. */
+export interface PrivacyRpcContext {
+  rpc: IRpcClient
+  receipts: ReceiptLogCache
 }

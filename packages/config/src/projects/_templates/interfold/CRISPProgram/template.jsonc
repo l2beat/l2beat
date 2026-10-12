@@ -7,6 +7,7 @@
     "ballotDigest",
     "censusModeOf",
     "decodeTally",
+    "earliestVotingStart",
     "getParamsHash",
     "getRoundData",
     "getSlotIndex",

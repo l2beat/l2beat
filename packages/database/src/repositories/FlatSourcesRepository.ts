@@ -1,5 +1,6 @@
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { FlatSources } from '../kysely/generated/types'
 
@@ -8,6 +9,13 @@ export interface FlatSourcesRecord {
   timestamp: number
   contentHash: Hash256
   flat: Record<string, string>
+}
+
+export interface FlatSourcesJsonRecord {
+  projectId: string
+  timestamp: number
+  contentHash: Hash256
+  flatJson: string
 }
 
 export function toRow(
@@ -63,10 +71,14 @@ export class FlatSourcesRepository extends BaseRepository {
     })
   }
 
-  async getAll(): Promise<FlatSourcesRecord[]> {
-    const rows = await this.db.selectFrom('FlatSources').selectAll().execute()
+  async getProjectIds(): Promise<string[]> {
+    const rows = await this.db
+      .selectFrom('FlatSources')
+      .select('projectId')
+      .orderBy('projectId')
+      .execute()
 
-    return rows.map(toRecord)
+    return rows.map((row) => row.projectId)
   }
 
   async get(projectId: string): Promise<FlatSourcesRecord | undefined> {
@@ -77,6 +89,29 @@ export class FlatSourcesRepository extends BaseRepository {
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined
+  }
+
+  async getJson(projectId: string): Promise<FlatSourcesJsonRecord | undefined> {
+    const row = await this.db
+      .selectFrom('FlatSources')
+      .select([
+        'projectId',
+        'timestamp',
+        'contentHash',
+        sql<string>`flat::text`.as('flatJson'),
+      ])
+      .where('projectId', '=', projectId)
+      .executeTakeFirst()
+
+    if (row === undefined) {
+      return undefined
+    }
+    return {
+      projectId: row.projectId,
+      timestamp: UnixTime.fromDate(row.timestamp),
+      contentHash: Hash256(row.contentHash),
+      flatJson: row.flatJson,
+    }
   }
 
   async deleteAll(): Promise<number> {

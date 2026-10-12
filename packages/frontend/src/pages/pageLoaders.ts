@@ -87,6 +87,7 @@ export const pageLoaders = {
   DataAvailabilityArchivedPage: async () =>
     (await import('./data-availability/archived/DataAvailabilityArchivedPage'))
       .DataAvailabilityArchivedPage,
+  BlobsPage: async () => (await import('./blobs/BlobsPage')).BlobsPage,
   PrivacySummaryPage: async () =>
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
   PrivacyProjectPage: async () =>
@@ -96,6 +97,8 @@ export const pageLoaders = {
     (await import('./defi/summary/DefiSummaryPage')).DefiSummaryPage,
   DefiProjectPage: async () =>
     (await import('./defi/project/DefiProjectPage')).DefiProjectPage,
+  OssificationPage: async () =>
+    (await import('./ossification/OssificationPage')).OssificationPage,
   ZkCatalogPage: async () =>
     (await import('./zk-catalog/v2/ZkCatalogPage')).ZkCatalogPage,
   ZkCatalogProjectPage: async () =>

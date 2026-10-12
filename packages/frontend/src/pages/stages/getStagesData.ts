@@ -19,7 +19,7 @@ export async function getStagesData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Stages - L2BEAT',
+        name: 'Stages',
         description:
           'Discover the latest updates on L2BEAT’s Stages framework - the go-to system for assessing the maturity of rollups on Ethereum.',
         url,

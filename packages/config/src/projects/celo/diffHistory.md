@@ -1,4 +1,285 @@
-Generated with discovered.json: 0xf997adf896e5dce89fa284d871eebbeb12626783
+Generated with discovered.json: 0x25ee23bdc352f41c0962f0bf76886577243ebd3d
+
+# Diff at Wed, 07 Oct 2026 14:45:55 GMT:
+
+- id: 50f3fa3d
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1791217058
+- current timestamp: 1791383565
+
+## Description
+
+The L2 predeploy implementations (L2CrossDomainMessenger, L2StandardBridge, L2ToL1MessagePasser, ProxyAdmin) are now verified. Each is templatized with the opstack/Layer2 templates: same logic as the existing shapes, differences are interface-typed calls (ProxyAdmin, L2CrossDomainMessenger), Celo's fee-currency OptimismMintableERC20 import (L2StandardBridge) and unused library functions (L2ToL1MessagePasser, identical bytecode). The L2 ProxyAdmin is renamed to L2ProxyAdmin and its owner, the CeloProxyAdminOwner L2 alias, now receives the predeploy upgrade permissions. The L1 counterpart fields of the L2 messenger and bridge are formatted as Ethereum addresses.
+
+this also lists celo on the ossification page!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791217058 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (celo:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      unverified:
+-        true
+      values.l1CrossDomainMessenger:
++        "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95"
+      values.MESSAGE_VERSION:
++        1
+      values.MIN_GAS_CALLDATA_OVERHEAD:
++        16
+      values.MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR:
++        63
+      values.MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR:
++        64
+      values.OTHER_MESSENGER:
++        "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95"
+      values.otherMessenger:
++        "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95"
++++ severity: MEDIUM
+      values.paused:
++        false
+      values.RELAY_CALL_OVERHEAD:
++        40000
+      values.RELAY_CONSTANT_OVERHEAD:
++        200000
+      values.RELAY_GAS_CHECK_BUFFER:
++        5000
+      values.RELAY_RESERVED_GAS:
++        40000
+      values.version:
++        "2.1.1-beta.4"
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+      implementationNames.celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007:
+-        ""
++        "L2CrossDomainMessenger"
+      template:
++        "opstack/Layer2/L2CrossDomainMessenger"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0xfb9b6038f92aab239c0d4ae0e732ef9ba91590fee841a84ed2aea05732414997"]
+      description:
++        "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (celo:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      unverified:
+-        true
+      values.l1TokenBridge:
++        "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe"
+      values.messenger:
++        "celo:0x4200000000000000000000000000000000000007"
+      values.MESSENGER:
++        "celo:0x4200000000000000000000000000000000000007"
+      values.OTHER_BRIDGE:
++        "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe"
+      values.otherBridge:
++        "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe"
++++ severity: MEDIUM
+      values.paused:
++        false
+      values.version:
++        "1.11.1-beta.3"
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+      implementationNames.celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010:
+-        ""
++        "L2StandardBridge"
+      template:
++        "opstack/Layer2/L2StandardBridge"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x1d5e294663c579fbf93ce17a16e1ea24409366a02df03e17d4e64c499376ac68"]
+      description:
++        "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token."
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (celo:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      unverified:
+-        true
+      values.MESSAGE_VERSION:
++        1
+      values.version:
++        "1.1.1-beta.1"
+      implementationNames.celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016:
+-        ""
++        "L2ToL1MessagePasser"
+      template:
++        "opstack/Layer2/L2ToL1MessagePasser"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x139a7bcf87ffc29f97c88feb9de39cb420dd36a61aeddf64c01af03d5b91b4ef"]
+      description:
++        "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface."
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (celo:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin] {
+    +++ description: Administration contract for other contract proxies.
+      name:
+-        "ProxyAdmin"
++        "L2ProxyAdmin"
+      unverified:
+-        true
+      values.addressManager:
++        "celo:0x0000000000000000000000000000000000000000"
+      values.isUpgrading:
++        false
+      fieldMeta.owner.description:
+-        "L2 alias of the CeloProxyAdminOwner. It can upgrade the security-critical L2 predeploys."
+      implementationNames.celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018:
+-        ""
++        "ProxyAdmin"
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000007","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000010","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000016","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000018","role":"admin"}]
+      template:
++        "opstack/Layer2/L2ProxyAdmin"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x7f6864f2ed905cae4ebf163729df004c7b19520740e00ee1710427ec016e60ce"]
+      description:
++        "Administration contract for other contract proxies."
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000007","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000010","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000016","role":"admin"},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000018","role":"admin"}]
+    }
+```
+
+```diff
+    EOA CeloProxyAdminOwner - L2 Alias (celo:0x51a3a77baF58fef0309452CeaCB09221e556f223) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"celo:0x4200000000000000000000000000000000000018","role":".owner"}]
+    }
+```
+
+Generated with discovered.json: 0x43ce620514556140ba954b139283d96fa42c5c47
+
+# Diff at Mon, 05 Oct 2026 16:18:47 GMT:
+
+- id: 85ba7009
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fd1ddb46d7e6cc7af90a258f28b6624761350a24 block: 1789044398
+- current timestamp: 1791217058
+
+## Description
+
+OP Contracts Upgrade 20 (op-contracts/v8.0.0-rc.3): the shared SuperchainConfig implementation was upgraded v2.4.2 → v2.4.3 on 2026-09-24. Version bump only; no chain-specific contract changed. ([diff](https://disco.l2beat.com/diff/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550/eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504))
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
++        "0xb74ed3aa109bd981b095c02d6e3bda2b2467d40e9d1060b4c89b01de32ebad3a"
+      values.$implementation:
+-        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
++        "eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504"
+      values.$pastUpgrades.8:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.9:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504"]]
+      values.$pastUpgrades.10:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.11:
++        ["2026-09-24T16:51:23.000Z","0x0a0fe86f7b1a3d3d2d0be990e3f8b15628b885363ae527fa9548cb2c2375741a",["eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504"]]
+      values.$upgradeCount:
+-        8
++        12
+      values.version:
+-        "2.4.2"
++        "2.4.3"
+      implementationNames.eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550:
+-        "SuperchainConfig"
+      implementationNames.eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol                         | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789044398 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0xdb90ccbcd889e7c03abf54097d86902b12a1a7e4
+
+# Diff at Sun, 04 Oct 2026 05:55:31 GMT:
+
+- id: d90f147f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789044398
+- current timestamp: 1789044398
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789044398 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x39da7f5242fffee845563d76265e08bae2ec24b6
 
 # Diff at Tue, 29 Sep 2026 17:46:51 GMT:
 

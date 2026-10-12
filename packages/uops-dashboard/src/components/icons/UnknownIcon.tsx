@@ -1,4 +1,4 @@
-import { Tooltip } from 'flowbite-react'
+import { Tooltip } from '../Tooltip'
 
 export function UnknownIcon({ tooltipContent }: { tooltipContent: string }) {
   return (

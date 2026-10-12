@@ -1,7 +1,8 @@
-import { createCallerFactory, router } from '~/server/trpc/trpc'
+import { router } from '~/server/trpc/trpc'
 import { activityRouter } from './routers/activity'
 import { costsRouter } from './routers/costs'
 import { daRouter } from './routers/da'
+import { defiRouter } from './routers/defi'
 import { interopRouter } from './routers/interop'
 import { livenessRouter } from './routers/liveness'
 import { privacyRouter } from './routers/privacy'
@@ -20,6 +21,7 @@ export const appRouter = router({
   costs: costsRouter,
   tvs: tvsRouter,
   da: daRouter,
+  defi: defiRouter,
   liveness: livenessRouter,
   projects: projectsRouter,
   searchBar: searchBarRouter,
@@ -30,12 +32,3 @@ export const appRouter = router({
 
 // export type definition of API
 export type AppRouter = typeof appRouter
-
-/**
- * Create a server-side caller for the tRPC API.
- * @example
- * const trpc = createCaller(createContext);
- * const res = await trpc.example.hello({ text: "world" });
- *       ^? string = "Hello world"
- */
-export const createCaller = createCallerFactory(appRouter)

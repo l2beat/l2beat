@@ -82,6 +82,7 @@
       }
     },
     "isPermanentRollupString": {
+      "severity": "HIGH",
       "handler": {
         "type": "storage",
         "slot": 57,
@@ -100,8 +101,9 @@
       "severity": "HIGH"
     },
     "getProtocolVersion": {
+      // a version label: it only changes with a diamondCut, which counts
       "description": "Protocol version, increments with each protocol upgrade.",
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "getVerifierParams": {
       "description": "Verifier parameters used for proving batches.",

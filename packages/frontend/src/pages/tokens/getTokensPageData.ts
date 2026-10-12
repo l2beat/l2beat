@@ -23,7 +23,7 @@ export async function getTokensPageData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Tokens - L2BEAT',
+        name: 'Tokens',
         description:
           'How every token exists across chains: which deployments are backed by another, and which are in a burn-and-mint relation.',
         url,

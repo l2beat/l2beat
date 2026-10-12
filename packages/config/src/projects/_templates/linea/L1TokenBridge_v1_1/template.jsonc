@@ -141,8 +141,10 @@
         "args": [13]
       }
     },
+    // Which role may pause / unpause each pause type: pause routing, MEDIUM like
+    // pause state and pause-role holders (spec). It cannot move funds or change validation.
     "pauseTypeToRole": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": ["role"],
@@ -153,7 +155,7 @@
       }
     },
     "unpauseTypeToRole": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": ["role"],

@@ -1,7 +1,7 @@
 {
   "name": "shared-circle",
-  "timestamp": 1788793431,
-  "configHash": "0x1bec5e176090ed64ad060381de07cb71e5799dc0bff25d7eb8f38ee0b8cfbac8",
+  "timestamp": 1791379304,
+  "configHash": "0x41ccb47d87eec2fcb1fb061442e9ea7b956ab182df44a601b53a34d8aad214cb",
   "entries": [
     {
       "address": "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5",
@@ -15,6 +15,11 @@
     },
     {
       "address": "eth:0x070B2a0c255C148ae7b98B4BB9560Ff147C36f2A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x0837EDBb99E3e8Fc740337014f690F92102a0038",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -57,7 +62,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 496564,
+        "nextAvailableNonce": 503447,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -82,6 +87,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B",
       "type": "EOA",
       "proxyType": "EOA"
@@ -98,6 +108,11 @@
     },
     {
       "address": "eth:0x14b1bc91cb99aad649b36341d5abEB50DF775a3e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -636,6 +651,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x96cc15F1920E700c2fDC06546071BC44c6D62Ae2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41",
       "type": "EOA",
       "proxyType": "EOA"
@@ -723,7 +743,8 @@
           "eth:0x89661a593106fF15B24B8DD25ab8Efad63cFEEA7",
           "eth:0xe898a5C06C1166178495e0faf27dae8dd4C97096",
           "eth:0x93Cb3290185Be000AfAeAd63c47C40EBcE86Bf7E",
-          "eth:0x7BdDBa3607517a3a06B75C1Fad1744D571De9A2D"
+          "eth:0x7BdDBa3607517a3a06B75C1Fad1744D571De9A2D",
+          "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd"
         ],
         "name": "USD Coin",
         "owner": "eth:0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
@@ -733,7 +754,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "50590012200656665",
+        "totalSupply": "49146201168163474",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -759,6 +780,56 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SeizureRegistry",
+      "address": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf66f390c3291bc5b8725bf8fa36d64494b91e8cfb2b717b52e85adcc68dcdd50",
+        "0x69d58c583f7c1689f33f52112c458212177cc01844f86873c742231206d49e50"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "USDC minter that re-mints seized balances. When the balance of a blocklisted address on any CCTP domain is written off, the secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The written-off balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.",
+      "deployerAddress": "eth:0xe4b567Ac531c217EEfE01Db45fac7F60ED77F94b",
+      "sinceTimestamp": 1790610479,
+      "sinceBlock": 26076948,
+      "values": {
+        "$admin": "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5",
+        "$implementation": "eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC",
+        "$pastUpgrades": [
+          [
+            "2026-09-28T15:47:59.000Z",
+            "0xb69d91adcc3e14284f29914f985df72c01fbcd59774fb94d1cc513cda81ff191",
+            ["eth:0xCCb78B2d0720401AF60026EE33EC469110C9d694"]
+          ],
+          [
+            "2026-09-28T15:47:59.000Z",
+            "0x690834ba932489cfe2c7e15046b02ee5b8f4e7e81a4c882ed100224e82903967",
+            ["eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "addressManager": "eth:0xD8192E257630394aBf289fb350482264aa700cB2",
+        "allowedRecipients": ["eth:0xb3E33c0375E4BD50A5255B8292bA08EbFa759933"],
+        "hashUpdater": "eth:0x96cc15F1920E700c2fDC06546071BC44c6D62Ae2",
+        "owner": "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "rescuer": "eth:0xEAc54284b1Eb10132c7204cF6265ae1ae122BC86",
+        "secondaryMarketBurner": "eth:0x0837EDBb99E3e8Fc740337014f690F92102a0038",
+        "TOKEN": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "totalSecondaryMarketBurnedAmount": 381235000000,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "allowedRecipients": {
+          "description": "Recipients that re-minted USDC can be sent to, managed by the address manager."
+        }
+      },
+      "implementationNames": {
+        "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": "ERC1967Proxy",
+        "eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC": "SeizureRegistry"
+      }
+    },
+    {
       "address": "eth:0xa820A620F638114F3Eb45df87382383322dDBC49",
       "type": "EOA",
       "proxyType": "EOA"
@@ -780,6 +851,11 @@
     },
     {
       "address": "eth:0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xb3E33c0375E4BD50A5255B8292bA08EbFa759933",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -898,6 +974,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xD8192E257630394aBf289fb350482264aa700cB2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xdBEbB37e94984A249f8a514bE9e3120E13C18B85",
       "type": "EOA",
       "proxyType": "EOA"
@@ -992,7 +1073,9 @@
           "eth:0xFe1e61E23698d619235B88936eF670AcF9FB398B",
           "eth:0x162Bd3604c3bAfF49F91bA845ad79c6B2Cc7682E",
           "eth:0x3F1d9e1b241C918eFd1564018eE0e1Dc3C429d2f",
-          "eth:0x6e1965bA05D34E0772754779B9e8Fb5EF7e73F2D"
+          "eth:0x6e1965bA05D34E0772754779B9e8Fb5EF7e73F2D",
+          "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c",
+          "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3"
         ],
         "getMinterManager": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "owner": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
@@ -1006,6 +1089,11 @@
       "implementationNames": {
         "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17": "MasterMinter"
       }
+    },
+    {
+      "address": "eth:0xEAc54284b1Eb10132c7204cF6265ae1ae122BC86",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xeb10024C7761e78cbbE78773aC6F6E98f3ED8314",
@@ -1024,6 +1112,11 @@
     },
     {
       "address": "eth:0xF0f3ef1340530A3983E1c510e49319D9Bfa8A74F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1265,6 +1358,76 @@
       "function updateDenylister(address newDenylister)",
       "function updateRescuer(address newRescuer)"
     ],
+    "eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC": [
+      "constructor(address tokenContract_)",
+      "error AddressEmptyCode(address target)",
+      "error AlreadySecondaryMarketBurned(bytes secondaryMarketBurnedAddress, uint32 domain)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EmptyAddress()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error InvalidRescueRecipient(address recipient)",
+      "error MintFailed()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RecipientNotAllowed(address recipient)",
+      "error RecordNotFound()",
+      "error RenounceOwnershipDisabled()",
+      "error SafeERC20FailedOperation(address token)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnauthorizedCaller()",
+      "error ZeroAddress()",
+      "error ZeroBalance()",
+      "error ZeroHash()",
+      "event AddressManagerChanged(address indexed oldAddressManager, address indexed newAddressManager)",
+      "event AllowedRecipientAdded(address indexed recipient)",
+      "event AllowedRecipientRemoved(address indexed recipient)",
+      "event HashUpdaterChanged(address indexed oldHashUpdater, address indexed newHashUpdater)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemintTxHashUpdated(bytes secondaryMarketBurnedAddress, uint32 indexed domain, bytes32 txHash)",
+      "event RescueERC20(address indexed token, address indexed to, uint256 amount)",
+      "event RescuerChanged(address indexed oldRescuer, address indexed newRescuer)",
+      "event SecondaryMarketBurnRecorded(bytes secondaryMarketBurnedAddress, uint32 indexed domain, uint256 balance, address indexed remintRecipient)",
+      "event SecondaryMarketBurnerChanged(address indexed oldSecondaryMarketBurner, address indexed newSecondaryMarketBurner)",
+      "event Upgraded(address indexed implementation)",
+      "function TOKEN() view returns (address)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function addAllowedRecipient(address recipient)",
+      "function addressManager() view returns (address)",
+      "function getSecondaryMarketBurnRecord(bytes secondaryMarketBurnedAddress, uint32 domain) view returns (bytes burnedAddress, uint32 domain_, uint256 balance, address remintRecipient, bytes32 remintTxHash)",
+      "function getSecondaryMarketBurnRecord(address secondaryMarketBurnedAddress, uint32 domain) view returns (address burnedAddress, uint32 domain_, uint256 balance, address remintRecipient, bytes32 remintTxHash)",
+      "function hashUpdater() view returns (address)",
+      "function initialize(address secondaryMarketBurner_, address hashUpdater_, address rescuer_, address addressManager_)",
+      "function isAllowedRecipient(address recipient) view returns (bool)",
+      "function isSecondaryMarketBurned(bytes secondaryMarketBurnedAddress, uint32 domain) view returns (bool)",
+      "function isSecondaryMarketBurned(address secondaryMarketBurnedAddress, uint32 domain) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function removeAllowedRecipient(address recipient)",
+      "function renounceOwnership()",
+      "function rescueERC20(address token, address to, uint256 amount)",
+      "function rescuer() view returns (address)",
+      "function secondaryMarketBurnAndRemint(bytes secondaryMarketBurnedAddress, uint32 domain, uint256 balance, address remintRecipient)",
+      "function secondaryMarketBurnedBalance(bytes secondaryMarketBurnedAddress, uint32 domain) view returns (uint256)",
+      "function secondaryMarketBurnedBalance(address secondaryMarketBurnedAddress, uint32 domain) view returns (uint256)",
+      "function secondaryMarketBurner() view returns (address)",
+      "function setRemintTxHash(bytes secondaryMarketBurnedAddress, uint32 domain, bytes32 txHash)",
+      "function totalSecondaryMarketBurnedAmount(uint32 domain) view returns (uint256)",
+      "function totalSecondaryMarketBurnedAmount() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateAddressManager(address newAddressManager)",
+      "function updateHashUpdater(address newHashUpdater)",
+      "function updateRescuer(address newRescuer)",
+      "function updateSecondaryMarketBurner(address newSecondaryMarketBurner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -1340,6 +1503,14 @@
       "function updateRescuer(address newRescuer)",
       "function usedNonces(bytes32) view returns (uint256)",
       "function version() view returns (uint32)"
+    ],
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155": [
       "constructor(address _messageTransmitter, uint32 _messageBodyVersion)",
@@ -1751,8 +1922,8 @@
     "tokens/circle/TokenMinter": "0x8126e2d0f134d23c8f836039f7a31a69fe93eda8e4dbe6db0060fc7f96e06a3f",
     "tokens/circle/USDC": "0xc2ce8a8cab32d9d960c30279a87e8c3ed9354274306b76a5d27063e74b928ec6"
   },
-  "usedBlockNumbers": { "ethereum": 25926250 },
-  "permissionsConfigHash": "0xee49e331d9ff7038a19270765aa66ebeaba77b34beb4505357689ab9a900c39e",
+  "usedBlockNumbers": { "ethereum": 26140775 },
+  "permissionsConfigHash": "0x3fee09a2366760c6b67bf25c2d19cf5396192bb1ef62bac59c5a0667fd6f5c40",
   "permissions": {
     "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5": {
       "receivedPermissions": [
@@ -1781,6 +1952,16 @@
           "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
           "description": "transfer any ERC-20 tokens out of the contract.",
           "role": ".rescuer"
+        }
+      ]
+    },
+    "eth:0x0837EDBb99E3e8Fc740337014f690F92102a0038": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
+          "description": "record the written-off balance of a blocklisted address and mint the same amount of USDC to an allowlisted recipient, within the minter allowance.",
+          "role": ".secondaryMarketBurner"
         }
       ]
     },
@@ -1864,6 +2045,26 @@
         }
       ]
     },
+    "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
     "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B": {
       "receivedPermissions": [
         {
@@ -1943,6 +2144,23 @@
           "role": ".controllers"
         }
       ]
+    },
+    "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
+          "description": "replace the secondary market burner, hash updater, rescuer and address manager.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
+          "description": "upgrade the implementation.",
+          "role": ".owner"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
     },
     "eth:0x1971773285A553C2100C97a3A3Ad04519F4e2186": {
       "receivedPermissions": [
@@ -2860,6 +3078,16 @@
         }
       ]
     },
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
     "eth:0xAF60Becd8f8042C1FcDE81D0FEcFC720099d24dF": {
       "receivedPermissions": [
         {
@@ -3057,6 +3285,16 @@
           "permission": "act",
           "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
           "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xD8192E257630394aBf289fb350482264aa700cB2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
+          "description": "add or remove the recipients that re-minted USDC can be sent to.",
+          "role": ".addressManager"
         }
       ]
     },
@@ -3386,6 +3624,26 @@
       ]
     },
     "eth:0xeb10024C7761e78cbbE78773aC6F6E98f3ED8314": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c": {
       "receivedPermissions": [
         {
           "permission": "interact",

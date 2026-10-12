@@ -15,6 +15,7 @@ import {
 import { useTRPC } from '~/trpc/React'
 import { optionToRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
+import { THROUGHPUT_DESCRIPTION } from '../sectionCopy'
 import type { ProjectSectionProps } from '../types'
 
 export interface ThroughputSectionProps extends ProjectSectionProps {
@@ -48,9 +49,7 @@ export function ThroughputSection({
           </div>
         )}
         <p className="text-paragraph-15 md:text-paragraph-16">
-          The chart shows the actual size of data posted to the DA Layer per day
-          for the selected time period, as well as the maximum possible
-          throughput per day.
+          {THROUGHPUT_DESCRIPTION}
         </p>
         <HorizontalSeparator className="my-4" />
         <ThroughputSectionChart

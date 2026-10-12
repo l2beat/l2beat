@@ -9,6 +9,8 @@ import {
   unionStrings,
 } from './mergeUtils'
 import {
+  HANDLER_AND_COPY_EXCLUSIVE_MESSAGE,
+  handlerAndCopyAreExclusive,
   type StructureConfig,
   StructureContract,
   type StructureContractField,
@@ -58,10 +60,7 @@ export const structureFieldPolicy: MergePolicy<StructureContractField> = {
 }
 
 export function assertHandlerOrCopy(field: StructureContractField): void {
-  assert(
-    field.handler === undefined || field.copy === undefined,
-    'handler and copy cannot both be defined at the same time. They are mutually exclusive.',
-  )
+  assert(handlerAndCopyAreExclusive(field), HANDLER_AND_COPY_EXCLUSIVE_MESSAGE)
 }
 
 function mergeStructureField(

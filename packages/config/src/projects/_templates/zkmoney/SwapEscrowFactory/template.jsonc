@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SwapEscrowFactory",
+  "category": "core",
+  "description": "Swap-on-withdraw: a withdrawal can pay DAI to a SwapEscrow clone whose route, recipient and tip are fixed in its address. Anyone can deploy and execute a funded clone to swap the DAI for USDC, USDT or ETH to the recipient.",
+  "ignoreRelatives": ["DAI"]
+}

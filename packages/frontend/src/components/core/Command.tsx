@@ -56,7 +56,15 @@ const CommandDialog = ({
         onEscapeKeyDown={onEscapeKeyDown}
         fullScreenMobile={fullScreenMobile}
       >
-        <Slot className="border-none! [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
+        {/* The full-screen input row is sticky because iOS Safari only re-tints
+            its status bar from a sticky or fixed bar at the top. */}
+        <Slot
+          className={cn(
+            fullScreenMobile &&
+              'max-md:[&_[cmdk-input-wrapper]]:sticky max-md:[&_[cmdk-input-wrapper]]:top-0 max-md:[&_[cmdk-input-wrapper]]:bg-surface-primary',
+            'border-none! [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5',
+          )}
+        >
           {children}
         </Slot>
       </DialogContent>

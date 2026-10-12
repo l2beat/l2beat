@@ -14,5 +14,11 @@
     "address": "ink:0x27E51B2254433A3284D9ba73Ea551C397DB2a124",
     "chain": "ink",
     "blockNumber": 50094988
+  },
+  "L2ToL1MessagePasser_v1_1_1beta_1_celo": {
+    "hash": "0x139a7bcf87ffc29f97c88feb9de39cb420dd36a61aeddf64c01af03d5b91b4ef",
+    "address": "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
+    "chain": "celo",
+    "blockNumber": 79482303
   }
 }

@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x00a23137b21c922d6107e4ec510750c516892648
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 6bc2c791
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1786913047
+- current timestamp: 1786913047
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786913047 (main branch discovery), not current.
+
+```diff
+    contract Timelock (eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC) [uniswapv3/Timelock] {
+    +++ description: Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after 2d and remains executable for a 14d grace period. The delay can be changed only through the timelock itself and must remain between 2d and 1mo. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.
+      fieldMeta.delayFormatted:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract GovernorBravo (eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3) [uniswapv3/GovernorBravoDelegate] {
+    +++ description: Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of 1,000,000 UNI can create proposals. Voting begins 13,140 blocks after proposal creation and lasts 40,320 blocks; success requires more for-votes than against-votes and at least 40,000,000 UNI voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.
+      fieldMeta.implementation:
+-        {"severity":"HIGH"}
+      fieldMeta.quorumVotes.severity:
+-        "HIGH"
+      fieldMeta.proposalThresholdFmt:
++        {"severity":"HIGH"}
+      fieldMeta.votingDelayFmt:
++        {"severity":"HIGH"}
+      fieldMeta.votingPeriodFmt:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xc64018c4dfe0074dd021a9b7f81b1c9f421c5415
 
 # Diff at Wed, 23 Sep 2026 05:56:13 GMT:

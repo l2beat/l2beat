@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HonkVerifier",
+  "critical": true,
+  "category": "core",
+  "description": "UltraHonk verifier for a zk.money refund circuit with a hardcoded verification key."
+}

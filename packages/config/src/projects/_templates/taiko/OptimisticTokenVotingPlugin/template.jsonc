@@ -1,5 +1,8 @@
 {
-  "critical": true,
+  // ossification: the DAO governance stack controls Taiko contracts only since the TaikoDAOController accepted
+  // ownership of the Taiko Token from the Taiko Multisig (tx 0xa4dfb666..., 2025-06-06); earlier set-up
+  // changes (e.g. the 2025-06-04 test signer removal) could not affect Taiko. Template used only by taiko.
+  "critical": { "sinceTimestamp": 1749196415 },
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "An optimistic governance module. Standard proposals pass and can be executed unless {{minVetoPercent}}% of votable TAIKO veto them within {{governanceSettings_timelockPeriod_fmt}}. Emergency proposals can be executed without delay.",
   "ignoreMethods": [

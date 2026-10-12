@@ -6,6 +6,7 @@ import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import { EIGENLAYER_DATA_SOURCE } from '~/components/projects/sections/sectionCopy'
 import { useIncludeL2Only } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
 import { useTRPC } from '~/trpc/React'
@@ -69,7 +70,7 @@ export function ThroughputSectionChart({
   return (
     <div>
       {project.id === 'eigenda' && (
-        <ChartDataSourceInfo dataSource="API provided by EigenLayer" />
+        <ChartDataSourceInfo dataSource={EIGENLAYER_DATA_SOURCE} />
       )}
       <div className="mt-2 space-y-1">
         <EthereumProjectsOnlyCheckbox

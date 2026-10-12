@@ -34,6 +34,11 @@
   },
   "overrides": {
     // Active default SHARP verification path used by Starknet. The helpers are immutable but executable parts of the verifier.
+    // The set is exactly the CallProxy, the default SHARPVerifier and what its constructor pins: bootloader, memory-page
+    // registry, the 8 CPU verifiers and their constructorArgs (OODS, constraint polys, periodic columns, Merkle/FRI
+    // statement contracts). Older verifier sets are not critical: the referral of the default to SHARPVerifier_2026_13_3
+    // expired at 1785589607, so isValid no longer reaches them, and each switch of the default is already a
+    // $pastUpgrades code change of the CallProxy. When the default changes, move the overrides to the new set.
     "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": { "critical": true },
     "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6": { "critical": true },
     "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47": { "critical": true },

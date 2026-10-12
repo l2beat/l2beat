@@ -4,6 +4,11 @@ import type { DashboardProject } from '../props/getDashboardProjects'
 
 export type GroupVariant = 'single'
 
+export type GroupingProjectConfig = Project<
+  never,
+  'scalingInfo' | 'daLayer' | 'privacyInfo' | 'defiInfo'
+>
+
 export interface Group {
   name: string
   assignees: readonly string[]
@@ -13,7 +18,7 @@ export interface Group {
 
 export function groupProjects(
   projects: DashboardProject[],
-  projectConfigs: Project<never, 'scalingInfo' | 'daLayer'>[],
+  projectConfigs: GroupingProjectConfig[],
 ): Group[] {
   const projectMap = new Map(
     projectConfigs.map((c) => [
@@ -21,6 +26,8 @@ export function groupProjects(
       {
         stacks: c.scalingInfo?.stacks ?? [],
         isDaLayer: !!c.daLayer,
+        isPrivacy: !!c.privacyInfo,
+        isDefi: !!c.defiInfo,
       },
     ]),
   )
@@ -85,6 +92,16 @@ export function groupProjects(
         p.name === 'blobstream' ||
         p.name === 'vector' ||
         p.name === 'shared-eigenlayer',
+    },
+    {
+      name: 'DeFi',
+      assignees: ['🐱', '🐿'],
+      predicate: (p) => projectMap.get(p.name)?.isDefi ?? false,
+    },
+    {
+      name: 'Privacy',
+      assignees: ['🐝', '🐻'],
+      predicate: (p) => projectMap.get(p.name)?.isPrivacy ?? false,
     },
     // Finally individual projects so they can show inline labels
     {

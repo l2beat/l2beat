@@ -279,7 +279,7 @@ export const morph: ScalingProject = {
       },
     ],
   },
-  ossification: discovery.getOssification(chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart),
   stateValidation: {
     categories: [
       {

@@ -1,4 +1,7 @@
 {
+  // ossification: proof verifier of the Shasta MainnetInbox from activation (2026-04-02) until the ZkRequiredVerifier
+  // replaced it (2026-08-03); both instances are retired and immutable, kept for the perimeter history
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Immutable verifier policy contract for Taiko mainnet. Each accepted proof must contain exactly two ordered sub-proofs: either SGX-GETH plus SGX-RETH/RISC0-RETH/SP1-RETH, or SGX-RETH plus SGX-GETH/RISC0-RETH/SP1-RETH. It routes each sub-proof to the corresponding downstream verifier.",
   "category": "core",

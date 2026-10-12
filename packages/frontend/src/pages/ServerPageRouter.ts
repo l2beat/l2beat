@@ -7,6 +7,7 @@ import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
+import { createBlobsRouter } from './blobs/BlobsRouter'
 import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
@@ -26,6 +27,7 @@ import { createL2Router } from './layer2s/L2Router'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
 import { NotFoundHandler } from './not-found/NotFoundHandler'
+import { createOssificationRouter } from './ossification/OssificationRouter'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createStagesRouter } from './stages/StagesRouter'
@@ -61,6 +63,7 @@ export function createServerPageRouter(
     createInteropRouter,
     createTokensRouter,
     createDataAvailabilityRouter,
+    createBlobsRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,
     createGovernanceRouter,
@@ -76,6 +79,7 @@ export function createServerPageRouter(
     createMultisigReportRouter,
     createPrivacyRouter,
     createDefiRouter,
+    createOssificationRouter,
     createTermsOfServiceRouter,
     createStagesRouter,
     createPublicationsRouter,

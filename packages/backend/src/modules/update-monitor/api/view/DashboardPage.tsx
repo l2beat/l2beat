@@ -1,4 +1,3 @@
-import type { Project } from '@l2beat/config'
 import { sortBySeverity } from '@l2beat/discovery'
 import React, { type ReactNode } from 'react'
 import { getQuickAccess } from '../../utils/getQuickAccess'
@@ -6,7 +5,11 @@ import type { DashboardProject } from '../props/getDashboardProjects'
 import { Diff } from './components/Diff'
 import { Page } from './components/Page'
 import { reactToHtml } from './components/reactToHtml'
-import { type Group, groupProjects } from './groupProjects'
+import {
+  type Group,
+  type GroupingProjectConfig,
+  groupProjects,
+} from './groupProjects'
 
 const DASHBOARD_PATH = '/status/discovery'
 
@@ -640,7 +643,7 @@ function ChangedDetectedDropdown({
 
 export function renderDashboardPage(
   projects: DashboardProject[],
-  projectConfigs: Project<never, 'scalingInfo' | 'daLayer'>[],
+  projectConfigs: GroupingProjectConfig[],
   projectsWithHighSeverityChanges: Set<string>,
   deployment: DashboardDeployment,
   selectedEmoji?: string,

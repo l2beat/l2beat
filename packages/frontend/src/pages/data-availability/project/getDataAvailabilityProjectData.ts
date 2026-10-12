@@ -80,7 +80,7 @@ async function loadDaProjectPage(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${projectEntry.name} - L2BEAT`,
+        name: projectEntry.name,
         description: getDaMetadataDescription({
           name: projectEntry.name,
           bridge:

@@ -17,7 +17,7 @@ export async function getDataAvailabilityLivenessData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Data Availability Liveness - L2BEAT',
+        name: 'Data Availability Liveness',
         description:
           'Monitor liveness metrics of data availability solutions and recent anomalies.',
         url,

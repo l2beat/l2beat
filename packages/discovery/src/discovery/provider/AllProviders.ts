@@ -102,6 +102,7 @@ export class AllProviders {
 
       const coingeckoClient = new CoingeckoClient({
         apiKey: config.coingeckoApiKey,
+        apiUrl: config.coingeckoApiUrl,
         logger,
         sourceName: 'coingecko',
         http,

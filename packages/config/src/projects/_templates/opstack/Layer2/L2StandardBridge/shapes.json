@@ -19,5 +19,11 @@
     "address": "ink:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1",
     "chain": "ink",
     "blockNumber": 50178011
+  },
+  "L2StandardBridge_celo": {
+    "hash": "0x1d5e294663c579fbf93ce17a16e1ea24409366a02df03e17d4e64c499376ac68",
+    "address": "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
+    "chain": "celo",
+    "blockNumber": 79482303
   }
 }

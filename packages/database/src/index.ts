@@ -52,7 +52,10 @@ export type {
   DeployedTokenUpdateable,
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
-export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'
+export type {
+  FlatSourcesJsonRecord,
+  FlatSourcesRecord,
+} from './repositories/FlatSourcesRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
 export type {
@@ -102,6 +105,15 @@ export type {
 } from './repositories/InteropTransferTypeStats'
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
+export type {
+  LiveBlobBatchRecord,
+  LiveBucketRecord,
+  LivePostedRecord,
+} from './repositories/LiveBlobBatchRepository'
+export type {
+  LiveBlockRecord,
+  LiveSlotRange,
+} from './repositories/LiveBlockRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
 export type { NotificationRecord } from './repositories/NotificationsRepository'
 export type {

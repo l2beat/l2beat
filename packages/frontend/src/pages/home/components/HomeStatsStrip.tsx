@@ -1,5 +1,6 @@
 import { formatInteger } from '@l2beat/shared-pure'
 import { CropsMiniBanner } from '~/components/garden/CropsMiniBanner'
+import { env } from '~/env'
 import { ChevronIcon } from '~/icons/Chevron'
 import { L2Icon } from '~/icons/pages/L2'
 import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
@@ -64,7 +65,13 @@ export function HomeStatsStrip({
     // ZK Catalog is the only Security page out so far.
     { label: 'Security', href: '/zk-catalog' },
     { label: 'Interop', href: '/interop/summary' },
-    { label: 'Blobs', href: '/data-availability/summary' },
+    {
+      label: 'Blobs',
+      // The new blobs page, where its flag is on.
+      href: env.CLIENT_SIDE_BLOBS_PAGE
+        ? '/blobs'
+        : '/data-availability/summary',
+    },
   ]
 
   return (

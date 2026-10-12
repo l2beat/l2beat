@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { getCode } from '../../../api/api'
 import type { ApiAbi, Field } from '../../../api/types'
 import { IconChatbot } from '../../../icons/IconChatbot'

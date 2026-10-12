@@ -6,6 +6,7 @@ import {
 import { Callout } from '~/components/Callout'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { StageOneRequirementsChangeTooltipContent } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeTooltipContent'
+import { WALKAWAY_TEST } from '~/components/projects/sections/sectionCopy'
 import { WarningBar } from '~/components/WarningBar'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { InfoIcon } from '~/icons/Info'
@@ -72,9 +73,8 @@ export function StageTooltip({
           color="green"
           body={
             <>
-              <strong>The project passes the walkaway test</strong>: users can
-              exit in the presence of malicious operators even if the Security
-              Council disappears.
+              <strong>{WALKAWAY_TEST.passed.verdict}</strong>:{' '}
+              {WALKAWAY_TEST.passed.explanation}
             </>
           }
           icon={<WalkAwayPassedIcon className="size-4 fill-positive" />}
@@ -86,9 +86,8 @@ export function StageTooltip({
           color="red"
           body={
             <>
-              <strong>The project does not pass the walkaway test</strong>:{' '}
-              users are not able to exit in the presence of malicious operators
-              if the Security Council disappears.
+              <strong>{WALKAWAY_TEST['not-passed'].verdict}</strong>:{' '}
+              {WALKAWAY_TEST['not-passed'].explanation}
             </>
           }
           icon={<WalkAwayNotPassedIcon className="size-4 fill-negative" />}

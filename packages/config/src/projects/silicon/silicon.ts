@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
-import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { agglayer } from '../../templates/agglayer'
@@ -12,46 +11,11 @@ export const silicon: ScalingProject = agglayer({
   addedAt: UnixTime(1725027256), // 2024-08-30T14:14:16Z
   additionalBadges: [BADGES.RaaS.Nodeinfra],
   discovery,
-  stage: getAltDaStage(
-    {
-      stage0: {
-        callsItselfValidiumOrOptimium: true,
-        stateRootsPostedToL1: true,
-        stateVerificationOnL1: true,
-        daAttestedByIndependentParty: true,
-        nodeSourceAvailable: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-      },
-      stage1: {
-        principle: false,
-        usersCanExitWithoutCooperation: 'UnderReview',
-        usersHave7DaysToExit: 'UnderReview',
-        securityCouncilProperlySetUp: false,
-        daVerifierSecureOnL1: true,
-        daVerifier7DayExitWindow: 'UnderReview',
-        daCommitteeDecentralized: false,
-        noRedTrustedSetups: 'UnderReview',
-        proverSourcePublished: 'UnderReview',
-        verifierContractsReproducible: 'UnderReview',
-        programHashesReproducible: 'UnderReview',
-      },
-      stage2: {
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow: 'UnderReview',
-        daMechanismEconomicSecurity: false,
-      },
-    },
-    {
-      nodeSourceLink: 'https://github.com/0xPolygonHermez/cdk-erigon',
-    },
-  ),
   display: {
     name: 'Silicon',
     slug: 'silicon',
     description:
-      'Silicon is a Validium built on the Polygon CDK Stack, aiming to become the social network of the future.',
+      'Silicon is a sovereign Agglayer chain built on the Polygon CDK, aiming to become the social network of the future.',
     links: {
       websites: ['https://silicon.network/'],
       bridges: ['https://bridge.silicon.network/'],
@@ -87,6 +51,14 @@ export const silicon: ScalingProject = agglayer({
     }),
   ],
   milestones: [
+    {
+      title: 'Migration to Pessimistic Proofs',
+      url: 'https://etherscan.io/tx/0xa5a1c5e3c627e972e6c3656017e900007567f9e8b7ecbd9cebd15d317c3c173d#eventlog',
+      date: '2026-09-23',
+      description:
+        'Silicon stops validating the full L2 state and moves to bridge accounting proofs.',
+      type: 'general',
+    },
     {
       title: 'Silicon Mainnet Launch',
       url: 'https://x.com/0xSilicon/status/1828704079687917908',

@@ -31,6 +31,8 @@ import { InteropRecentPricesRepository } from './repositories/InteropRecentPrice
 import { InteropTransferRepository } from './repositories/InteropTransferRepository'
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
+import { LiveBlobBatchRepository } from './repositories/LiveBlobBatchRepository'
+import { LiveBlockRepository } from './repositories/LiveBlockRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
 import { NotificationsRepository } from './repositories/NotificationsRepository'
 import { PrivacyAnonymitySetEventRepository } from './repositories/PrivacyAnonymitySetEventRepository'
@@ -90,6 +92,8 @@ export function createDatabase(
     daBeatStats: new DaBeatStatsRepository(db),
     dataAvailability: new DataAvailabilityRepository(db),
     blobs: new BlobsRepository(db),
+    liveBlock: new LiveBlockRepository(db),
+    liveBlobBatch: new LiveBlobBatchRepository(db),
     // #endregion
 
     // #region Discovery

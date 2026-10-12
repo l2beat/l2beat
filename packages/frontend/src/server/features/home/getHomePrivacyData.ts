@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ChartRange } from '~/utils/range/range'
+import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import { getPrivacyFlowsChart } from '../privacy/getPrivacyFlowsChart'
 import { getPrivacyProjects } from '../privacy/getPrivacyProjects'
 import {
@@ -11,9 +12,9 @@ import { computeSeriesChange } from './computeSeriesChange'
 
 const TOP_PROTOCOLS_COUNT = 5
 
-/** Carries what the privacy dot needs, so the card can show it per row. */
+/** Carries what the privacy verdict needs, so the card can show it per row. */
 export interface HomePrivacyTopProtocol
-  extends Pick<PrivacySummaryEntry, 'adversaries'> {
+  extends Pick<PrivacySummaryEntry, 'adversaries' | 'isUnderReview'> {
   id: string
   name: string
   href: string
@@ -65,8 +66,11 @@ export async function getHomePrivacyData(
   const previousFrom =
     from !== null ? from - (UnixTime.toStartOf(to, 'day') - from) : null
 
-  const [entries, tvlChart, flowsChart] = await Promise.all([
+  const [entries, tvlBreakdown, tvlChart, flowsChart] = await Promise.all([
     getPrivacySummaryEntries(projects),
+    // The summary entries carry value locked but not its change; the
+    // ranking shows both, from the same 7d breakdown.
+    get7dTvsBreakdown({ type: 'projects', projectIds: tvlProjectIds }),
     getTvsChartByProjects({ projectIds: tvlProjectIds, range }),
     getPrivacyFlowsChart({
       projectIds: flowProjectIds,
@@ -126,9 +130,12 @@ export async function getHomePrivacyData(
       href: entry.href,
       iconUrl: entry.icon,
       tvl: entry.hasTvl ? entry.totalValueLockedUsd : undefined,
-      tvlChange: entry.hasTvl ? entry.totalValueLockedChange7d : undefined,
+      tvlChange: entry.hasTvl
+        ? tvlBreakdown.projects[entry.id]?.change.total
+        : undefined,
       deposited30d: entry.totalValueDeposited30dUsd,
       adversaries: entry.adversaries,
+      isUnderReview: entry.isUnderReview,
     })),
   }
 }

@@ -1,9 +1,9 @@
 import { formatSeconds } from '@l2beat/shared-pure'
+import { anomalySubtypeToLabel } from '~/components/projects/sections/liveness/anomalySubtypeToLabel'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
-import { anomalySubtypeToLabel } from './AnomalyIndicator'
 import { getDurationColorClassName } from './LivenessDurationCell'
 
 export function AnomalyText({

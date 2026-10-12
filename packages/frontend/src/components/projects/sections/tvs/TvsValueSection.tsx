@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
@@ -15,12 +16,14 @@ import type { ProjectSectionProps } from '../types'
 export interface TvsValueSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
+  milestones: Milestone[]
   rangeControls: 'tvs' | 'privacy'
 }
 
 export function TvsValueSection({
   defaultRange,
   project,
+  milestones,
   rangeControls,
   ...projectSectionProps
 }: TvsValueSectionProps) {
@@ -37,7 +40,7 @@ export function TvsValueSection({
     () =>
       data?.chart.map(([timestamp, valuesByProject]) => ({
         timestamp,
-        value: valuesByProject[project.id] ?? 0,
+        value: valuesByProject[project.id] ?? null,
       })),
     [data, project.id],
   )
@@ -63,6 +66,7 @@ export function TvsValueSection({
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         project={project}
+        milestones={milestones}
       />
     </ProjectSection>
   )

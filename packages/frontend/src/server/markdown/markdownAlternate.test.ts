@@ -1,10 +1,11 @@
 import { expect } from 'earl'
 import express from 'express'
+import { LlmsLinkHeaderMiddleware } from '~/server/middlewares/LlmsLinkHeaderMiddleware'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import { serveMarkdown, serveMarkdownIfPreferred } from './markdownAlternate'
 
 // Method: mount both handlers the way a page router does (`:slug.md` next to
-// the HTML route) over a fake markdown source, then make real HTTP requests
+// the HTML route, behind the Link header middleware) over a fake markdown source, then make real HTTP requests
 // with the Accept headers browsers and agents send and check what comes back.
 describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
   it('serves the .md suffix as markdown', async () => {
@@ -57,11 +58,31 @@ describe(`${serveMarkdown.name} and ${serveMarkdownIfPreferred.name}`, () => {
       )
 
       expect(response.status).toEqual(200)
+      // Agents check for the type they asked for; the .md URL stays text/plain.
       expect(response.headers.get('content-type')).toEqual(
-        'text/plain; charset=utf-8',
+        'text/markdown; charset=utf-8',
       )
       expect(await response.text()).toEqual('# arbitrum\n')
     }
+  })
+
+  it('advertises the markdown alternate only of a page that exists', async () => {
+    const found = await fetchFromRouter(
+      createRouter(),
+      '/layer2s/projects/arbitrum',
+      { headers: { Accept: 'text/markdown' } },
+    )
+    const missing = await fetchFromRouter(
+      createRouter(),
+      '/layer2s/projects/unknown',
+      { headers: { Accept: 'text/markdown' } },
+    )
+
+    expect(found.headers.get('link') ?? '').toInclude('rel="alternate"')
+    expect(missing.status).toEqual(404)
+    expect(missing.headers.get('link')).toEqual(
+      '<https://l2beat.com/llms.txt>; rel="describedby"',
+    )
   })
 
   it('keeps negotiated markdown out of shared caches', async () => {
@@ -100,6 +121,7 @@ function createRouter() {
     req.params.slug === 'unknown' ? undefined : `# ${req.params.slug}\n`
 
   const router = express.Router()
+  router.use(LlmsLinkHeaderMiddleware())
   router.get('/layer2s/projects/:slug.md', serveMarkdown(getMarkdown))
   router.get(
     '/layer2s/projects/:slug',

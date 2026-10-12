@@ -1,22 +1,34 @@
+import type { ProjectScalingInfo } from '@l2beat/config'
 import { expect } from 'earl'
 import { getPrivacyTrackedChains } from './getPrivacyTrackedChains'
 
 describe(getPrivacyTrackedChains.name, () => {
+  const NO_PAGE = {
+    daBridge: undefined,
+    scalingInfo: undefined,
+    daLayer: undefined,
+    privacyInfo: undefined,
+    defiInfo: undefined,
+    interopConfig: undefined,
+  }
   const ethereum = {
     slug: 'ethereum',
     name: 'Ethereum',
     chainConfig: { name: 'ethereum' },
+    ...NO_PAGE,
   }
   const polygon = {
     slug: 'polygon-pos',
     name: 'Polygon PoS',
     chainConfig: { name: 'polygonpos' },
+    ...NO_PAGE,
   }
   const arbitrum = {
     slug: 'arbitrum',
     name: 'Arbitrum One',
     chainConfig: { name: 'arbitrum' },
-    scalingInfo: {},
+    ...NO_PAGE,
+    scalingInfo: {} as ProjectScalingInfo,
   }
   const projects = [ethereum, polygon, arbitrum]
 

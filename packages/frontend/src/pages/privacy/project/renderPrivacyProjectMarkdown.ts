@@ -1,7 +1,6 @@
 import type { PrivacySummaryValue, PrivacyWalkawayTest } from '@l2beat/config'
 import compact from 'lodash/compact'
 import type { RosetteValue } from '~/components/rosette/types'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import { getPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
@@ -9,6 +8,7 @@ import {
   formatChange,
   formatCount,
   formatUsd,
+  NO_DATA,
   withSentiment,
 } from '~/server/markdown/markdown'
 import {
@@ -28,9 +28,7 @@ export function renderPrivacyProjectMarkdown(
 ): string {
   return renderProjectMarkdown({
     name: entry.name,
-    // Production URLs, like the canonical link: the document is meant to be
-    // cited, whichever deployment rendered it.
-    pageUrl: `${PRODUCTION_ORIGIN}/privacy/projects/${entry.slug}`,
+    pagePath: `/privacy/projects/${entry.slug}`,
     summary: {
       warnings: [
         ...getProjectStatusWarnings({
@@ -45,6 +43,11 @@ export function renderPrivacyProjectMarkdown(
       facts: getFacts(entry),
       risks: getRiskProfile(entry),
       description: entry.description,
+    },
+    header: {
+      links: entry.projectLinks,
+      badges: entry.badges,
+      discoUiHref: entry.discoveryHref,
     },
     sections: entry.sections,
     apiLinks: {},
@@ -104,7 +107,7 @@ function getFacts(entry: ProjectPrivacyEntry) {
 /** The text of the badges the HTML shows in place of the value. */
 function formatTotalValueLocked({ summary, hasTvl }: ProjectPrivacyEntry) {
   if (!hasTvl) return 'N/A'
-  if (summary.totalValueLockedUsd === undefined) return 'No data'
+  if (summary.totalValueLockedUsd === undefined) return NO_DATA
   return compact([
     formatUsd(summary.totalValueLockedUsd),
     summary.totalValueLockedChange7d !== undefined &&
@@ -126,13 +129,13 @@ function notTrackedFact(copy: { title: string; description: string }) {
  */
 function getRiskProfile(entry: ProjectPrivacyEntry): RosetteValue[] {
   return [
+    privacyRisk(getPrivacyAdversariesSummary(entry.sections)),
     explainedRisk('Trusted setup', entry.trustedSetup),
     explainedRisk(
       'Exit window',
       entry.exitWindow,
       describeWalkawayTest(entry.exitWindow.walkawayTest),
     ),
-    privacyRisk(getPrivacyAdversariesSummary(entry.sections)),
     explainedRisk('Reproducibility', entry.reproducibility),
   ]
 }
@@ -148,13 +151,16 @@ function explainedRisk(
       `${withSentiment(risk.value, risk.sentiment)}.`,
       risk.description,
       ...explanations,
-    ].join(' '),
+    ]
+      .filter((part) => part !== '')
+      .join(' '),
   }
 }
 
 /**
- * The promise, then the grade against each adversary the HTML dots stand for.
- * No overall grade: the page gives none, only the summary table sorts by one.
+ * The promise, then the grade against each adversary, one per slice of the
+ * HTML rosette. No overall grade: the page gives none, only the summary table
+ * sorts by one.
  */
 function privacyRisk(adversaries: PrivacyAdversariesSummary): RosetteValue {
   const perAdversary = adversaries.cells.map(

@@ -1,7 +1,10 @@
 import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { InteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
-import { MARKDOWN_CONTENT_TYPE } from '~/server/markdown/markdownAlternate'
+import {
+  MARKDOWN_CONTENT_TYPE,
+  NEGOTIATED_MARKDOWN_CONTENT_TYPE,
+} from '~/server/markdown/markdownAlternate'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import type { Manifest } from '~/utils/Manifest'
 import { createInteropRouter } from './InteropRouter'
@@ -37,7 +40,7 @@ describe(createInteropRouter.name, () => {
       )
 
       expect(response.headers.get('content-type')).toEqual(
-        MARKDOWN_CONTENT_TYPE,
+        NEGOTIATED_MARKDOWN_CONTENT_TYPE,
       )
       expect(await response.text()).toMatchRegex(/^# Across\n/)
     })
@@ -103,7 +106,7 @@ describe(createInteropRouter.name, () => {
       )
 
       expect(response.headers.get('content-type')).toEqual(
-        MARKDOWN_CONTENT_TYPE,
+        NEGOTIATED_MARKDOWN_CONTENT_TYPE,
       )
       expect(await response.text()).toMatchRegex(/^# USDC\n/)
     })

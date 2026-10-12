@@ -119,7 +119,6 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
 
     const config = new ConfigRegistry({
       name: CONSUMER,
-      chain: 'ethereum',
       initialAddresses: [],
       entrypoints,
     })

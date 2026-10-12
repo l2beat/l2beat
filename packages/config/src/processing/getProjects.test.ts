@@ -489,11 +489,14 @@ describe('getProjects', () => {
           }
         }
 
-        if (
-          privacyInfo.anonymitySet?.type === 'not-applicable' &&
-          configuredBuckets !== 0
-        ) {
-          problems.push(`${project.id}: not-applicable with buckets`)
+        // Every state but partially-attributed means the set is not tracked.
+        const state = privacyInfo.anonymitySet?.type
+        if (state === 'partially-attributed') {
+          if (configuredBuckets === 0) {
+            problems.push(`${project.id}: ${state} without buckets`)
+          }
+        } else if (state !== undefined && configuredBuckets !== 0) {
+          problems.push(`${project.id}: ${state} with buckets`)
         }
       }
       expect(problems).toEqual([])
@@ -526,6 +529,20 @@ describe('getProjects', () => {
                 `${project.id} ${adversaryId}: unknown contract ${source.contract}`,
               )
             }
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    // The tooltip shows the short description alone, so a second sentence would read as cut off.
+    it('every adversary short description is one sentence', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const cells = Object.entries(privacyInfo.adversaries?.cells ?? {})
+        for (const [adversaryId, cell] of cells) {
+          if (/[.!?]\s/.test(cell.exposureShort)) {
+            problems.push(`${project.id} ${adversaryId}`)
           }
         }
       }
@@ -896,6 +913,31 @@ describe('getProjects', () => {
         }
       }
       expect(duplicates).toEqual([])
+    })
+
+    // A project that posts blobs without an ethereum tracking config shows up
+    // as an unknown blob sender on the Ethereum DA page (e.g. Nova after its
+    // switch to blobs, Fluent since launch).
+    it('every live project with Ethereum blobs DA has ethereum tracking', () => {
+      const missing = projects
+        // L3s inherit the label from their host chain, which posts for them
+        .filter(
+          (p) =>
+            p.archivedAt === undefined &&
+            p.scalingInfo?.hostChain.id === 'ethereum',
+        )
+        .filter((p) =>
+          (p.scalingDa ?? []).some(
+            (da) =>
+              da.layer.value === 'Ethereum' &&
+              da.layer.secondLine?.includes('Blobs'),
+          ),
+        )
+        .filter(
+          (p) => !(p.daTrackingConfig ?? []).some((c) => c.type === 'ethereum'),
+        )
+        .map((p) => p.id)
+      expect(missing).toEqual([])
     })
 
     it('every namespace is unique for Celestia projects', () => {

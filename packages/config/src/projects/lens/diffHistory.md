@@ -1,3 +1,130 @@
+Generated with discovered.json: 0xa0f9ef28596d550621777251e801ce0b139be38e
+
+# Diff at Mon, 05 Oct 2026 08:44:00 GMT:
+
+- id: 10f2762c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@50466fc671947969db5d8bc59484f0d565783dfc block: 1790944827
+- current timestamp: 1790944827
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790944827 (main branch discovery), not current.
+
+```diff
+    contract LensZkEvmAdmin (eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x4968A0E4b025eD7d095753E54058377969b41abC act through it.
+      fieldMeta.tokenMultiplierSetter:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Diamond (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getProtocolVersion.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPermanentRollupString:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x39be88f7e38c881deedb3a9a17f297f62b000568
+
+# Diff at Fri, 02 Oct 2026 12:42:24 GMT:
+
+- id: 9c72ded5
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@11a44108bd8b596f3d406b83540ae9f7826e9817 block: 1789917638
+- current timestamp: 1790944827
+
+## Description
+
+Executed this proposal: https://www.tally.xyz/gov/zksync/proposal/49883493212277767948924829453899549013679463473253620701602979414799679547598?govId=eip155%3A324%3A0x76705327e682F2d96943280D99464Ab61219e34f. Now each chain admin can increase the execution delay of its chain (`increaseChainExecutionDelay`), the owner can set it freely (`setChainExecutionDelay`). The effective delay for Lens is tracked in `executionDelayLens` (still 3h).
+
+Also adds a new `UPGRADER_ROLE` that can call `upgradeChainFromVersion()` through the VTL (forwarded to the diamond). Currently nobody holds the role for Lens yet (tracked in `upgraderVTL`).
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      template:
+-        "shared-zk-stack/ValidatorTimelock_post29"
++        "shared-zk-stack/ValidatorTimelock_v31"
+      sourceHashes.1:
+-        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
++        "0x51d6000b0e4437a2b99d13d332658fffb3da867cd56b05cbcb4bf4f954ff12ff"
+      description:
+-        "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h."
++        "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days."
+      values.$implementation:
+-        "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8"
++        "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35"
+      values.$pastUpgrades.1:
++        ["2026-10-01T12:28:47.000Z","0xdc4278c8b23d99f974a206dcaa1c1e20272c49095fa31eac842210ae97b435a8",["eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35"]]
+      values.$upgradeCount:
+-        1
++        2
++++ severity: HIGH
+      values.executionDelayLens:
++        10800
++++ severity: HIGH
+      values.executionDelayLens_fmt:
++        "3h"
+      values.MAX_EXECUTION_DELAY:
++        2592000
+      values.OPTIONAL_UPGRADER_ADMIN_ROLE:
++        "0xa1426e789273bde4307f3302768d8e4eb615f0f4dea304f29cccd58ff644d640"
+      values.UPGRADER_ROLE:
++        "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3"
+      errors:
+-        {"executionDelayLens":"Processing error occurred.","executionDelayLens_fmt":"Processing error occurred."}
+      fieldMeta.executionDelay.description:
++        "Ecosystem-wide minimum execution delay (in seconds), set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
+      fieldMeta.executionDelay_fmt.description:
++        "Ecosystem-wide minimum execution delay, set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
+      implementationNames.eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8:
+-        "ValidatorTimelock"
+      implementationNames.eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35:
++        "ValidatorTimelock"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ValidatorTimelock/ValidatorTimelock.sol        | 6126 ++++++++++----------
+ 1 file changed, 3210 insertions(+), 2916 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917638 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.upgraderVTL:
++        {}
+      fieldMeta.executionDelayLens:
++        {"severity":"HIGH"}
+      fieldMeta.executionDelayLens_fmt:
++        {"severity":"HIGH"}
+      errors:
++        {"executionDelayLens":"Processing error occurred.","executionDelayLens_fmt":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x6223e0ba7b9e4cb214a61820c208694acb268ec2
 
 # Diff at Wed, 23 Sep 2026 05:47:38 GMT:

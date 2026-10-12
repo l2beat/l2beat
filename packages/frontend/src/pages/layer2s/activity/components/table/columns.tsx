@@ -128,7 +128,9 @@ export const getL2ActivityColumns = (
         period: row.data?.pastDayCount.changePeriod,
       }),
     ),
-    columnHelper.accessor('data.maxCount.value', {
+    columnHelper.accessor((row) => row.data?.maxCount.value, {
+      // Ids match the former 'data.x' accessor keys; column visibility is persisted by id.
+      id: 'data_maxCount_value',
       header: `Max ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
       sortUndefined: 'last',
       cell: (ctx) => {
@@ -153,7 +155,7 @@ export const getL2ActivityColumns = (
     }),
     ...withChangeSort(
       columnHelper,
-      columnHelper.accessor('data.summedCount.value', {
+      columnHelper.accessor((row) => row.data?.summedCount.value, {
         id: 'summedCount',
         header: '30D Count',
         cell: (ctx) => {
@@ -186,7 +188,8 @@ export const getL2ActivityColumns = (
       }),
     ),
     metric === 'tps' &&
-      columnHelper.accessor('data.totalCount.value', {
+      columnHelper.accessor((row) => row.data?.totalCount?.value, {
+        id: 'data_totalCount_value',
         header: 'Total count',
         cell: (ctx) => {
           const totalCount = ctx.row.original.data?.totalCount
@@ -211,7 +214,8 @@ export const getL2ActivityColumns = (
             'All-time transaction count since the first available TPS data point.',
         },
       }),
-    columnHelper.accessor('data.ratio', {
+    columnHelper.accessor((row) => row.data?.ratio, {
+      id: 'data_ratio',
       header: 'UOPS/TPS RATIO',
       sortUndefined: 'last',
       cell: (ctx) => {

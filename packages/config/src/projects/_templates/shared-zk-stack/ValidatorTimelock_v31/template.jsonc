@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "category": "shared",
+  "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least {{executionDelay_fmt}}. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.",
+  "ignoreRelatives": ["accessControl"],
+  "fields": {
+    "executionDelay": {
+      "description": "Ecosystem-wide minimum execution delay (in seconds), set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay.",
+      "severity": "HIGH"
+    },
+    // the DEFAULT_ADMIN_ROLE is always the chainAdmin (defined by the bridgehub) and is not controlled by accesscontrol
+    // not fetching accessControl here but in the respective projects instead
+    // "accessControl": {
+    //   "handler": { "type": "crossChainAccessControl" }
+    // },
+    // chain-specific delays (`getExecutionDelay(chain)`) and UPGRADER_ROLE members are configured per project,
+    // since the template cannot know the chain address
+    "executionDelay_fmt": {
+      "severity": "HIGH",
+      "description": "Ecosystem-wide minimum execution delay, set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay.",
+      "handler": { "type": "call", "method": "executionDelay", "args": [] },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "revertedBlocks": {
+      "handler": {
+        "type": "event",
+        "select": [
+          "totalBatchesCommitted",
+          "totalBatchesVerified",
+          "totalBatchesExecuted"
+        ],
+        "add": { "event": "BlocksRevert" }
+      }
+    }
+  }
+}

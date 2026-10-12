@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xf7e796b0fd44ba9c462fb06edba8391159d47e2e
+
+# Diff at Wed, 07 Oct 2026 14:48:13 GMT:
+
+- id: aba9af87
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1767796662
+- current timestamp: 1767796662
+
+## Description
+
+The L1 counterpart fields of the L2CrossDomainMessenger and L2StandardBridge are formatted as Ethereum addresses (opstack/Layer2 template change).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767796662 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (metis-andromeda:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      values.l1CrossDomainMessenger:
+-        "metis-andromeda:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
++        "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (metis-andromeda:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      values.l1TokenBridge:
+-        "metis-andromeda:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
 Generated with discovered.json: 0xdd72fa908f97c7600a102ab18eb58120ba83f855
 
 # Diff at Wed, 23 Sep 2026 05:47:53 GMT:

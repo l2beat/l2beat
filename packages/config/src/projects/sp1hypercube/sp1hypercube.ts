@@ -92,6 +92,18 @@ export const sp1hypercube: BaseProject = {
         sinceTimestamp: UnixTime(1781600877),
       },
       {
+        projectId: ProjectId('haust'),
+        sinceTimestamp: UnixTime(1781600877),
+      },
+      {
+        projectId: ProjectId('polygonzkevm'),
+        sinceTimestamp: UnixTime(1781600877),
+      },
+      {
+        projectId: ProjectId('silicon'),
+        sinceTimestamp: UnixTime(1790152247), // migrated to AggchainECDSAMultisig 2026-09-23
+      },
+      {
         projectId: ProjectId('celo'),
         sinceTimestamp: UnixTime(1771445567),
       },

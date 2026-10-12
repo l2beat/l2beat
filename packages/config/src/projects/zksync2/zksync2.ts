@@ -223,7 +223,10 @@ export const zksync2: ScalingProject = zkStackL2({
       },
     ],
   },
-  ossification: discovery.getOssification(chainStart),
+  ossificationHistory: discovery.getOssificationHistory(chainStart, {
+    // v24 upgrade set the Era Diamond's BridgeHub (tx 0x71a3b924)
+    'shared-zk-stack': UnixTime(1717674923),
+  }),
   associatedTokens: ['ZK'],
   governanceInfo: {
     securityCouncil: {

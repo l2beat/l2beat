@@ -33,6 +33,11 @@
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
       "ignoreDiscovery": true
     },
+    // OPContractsManager 8.0.1: Ignored so discovery doesn't follow it into
+    // bare implementations; authority is the SuperchainProxyAdminOwner.
+    "eth:0x1951828Ce913DC4383a8A1695695D537a11D896a": {
+      "ignoreDiscovery": true
+    },
     // SuperchainProxyAdmin: can upgrade every core superchain contract (portal, bridges, DGF, SystemConfig, SuperchainConfig).
     "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
       "critical": true,

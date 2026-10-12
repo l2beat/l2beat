@@ -89,6 +89,7 @@
       "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
     },
     "confirmPeriodBlocks": {
+      "severity": "HIGH",
       "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
     },
     "wasmModuleRoot": {

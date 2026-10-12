@@ -16,6 +16,43 @@
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
   },
   "overrides": {
+    "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
+      // shared ValidatorTimelock
+      "fields": {
+        "upgraderVTL": {
+          // `pick` instead of `get` / `pickRoleMembers` so that the field does not fail while the role has no members
+          "handler": {
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+          },
+          "edit": ["pick", "UPGRADER_ROLE"],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Permissioned to call `upgradeChainFromVersion()` through the ValidatorTimelock, executing the protocol upgrade (diamond cut) of the main Diamond contract that is pre-approved for its current protocol version in the ChainTypeManager."
+            }
+          ]
+        },
+        "executionDelayGRVT": {
+          // effective delay for GRVT: max(executionDelay, chainExecutionDelay(GRVT diamond))
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutionDelay",
+            "args": ["0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"]
+          }
+        },
+        "executionDelayGRVT_fmt": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutionDelay",
+            "args": ["0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"]
+          },
+          "edit": ["format", "FormatSeconds"]
+        }
+      }
+    },
     "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
       "displayName": "ValidatorTimelock",
       "fields": {

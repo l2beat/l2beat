@@ -1,4 +1,5 @@
 import type {
+  Milestone,
   PrivacyAttribute,
   PrivacyCategory,
   PrivacyExitWindow,
@@ -23,8 +24,13 @@ import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import {
+  getProjectOssification,
+  type ProjectOssificationView,
+} from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { hasPrivacyAnonymitySet } from './anonymity-set/getPrivacyAnonymitySetSeries'
 import { getPrivacyProject } from './getPrivacyProjects'
@@ -51,6 +57,7 @@ export interface PrivacyProjectDetails {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   discoveryUpdates?: ProjectDiscoveryUpdate[]
+  ossification?: ProjectOssificationView
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
   crops?: ProjectCrops
@@ -65,6 +72,7 @@ export interface PrivacyProjectDetails {
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
+  milestones: Milestone[]
   trackedOn: ProjectIconListItem[]
   assets: PrivacyAsset[]
   summary: {
@@ -99,12 +107,17 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 7 * UnixTime.DAY
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
-  const [{ totals, daily30d, tokenValues }, relayerStat, trackedOn] =
-    await Promise.all([
-      getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
-      getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
-      getTrackedOn(project),
-    ])
+  const [
+    { totals, daily30d, tokenValues },
+    relayerStat,
+    trackedOn,
+    ossification,
+  ] = await Promise.all([
+    getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
+    getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
+    getTrackedOn(project),
+    getProjectOssification(project),
+  ])
 
   const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
@@ -266,6 +279,7 @@ export async function getPrivacyProjectDetails(
     contracts: project.contracts,
     permissions: project.permissions,
     discoveryUpdates: project.discoveryUpdates,
+    ossification,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
     crops: project.crops,
@@ -282,6 +296,9 @@ export async function getPrivacyProjectDetails(
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],
+    milestones: [...(project.milestones ?? [])].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ),
     trackedOn,
     assets: orderedAssets,
     summary: {
@@ -317,13 +334,7 @@ async function getTrackedOn(
   const [chainProjects, daLayers] = await Promise.all([
     ps.getProjects({
       select: ['chainConfig'],
-      optional: [
-        'scalingInfo',
-        'daBridge',
-        'daLayer',
-        'privacyInfo',
-        'defiInfo',
-      ],
+      optional: [...PROJECT_PAGE_METADATA_FIELDS],
     }),
     ps.getProjects({ where: ['daLayer'] }),
   ])

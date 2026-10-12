@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1790078329,
+  "timestamp": 1790850875,
   "configHash": "0xb1741232f1c84386b3e934df28b605dc74c1852640cb673be0fcb7a4509e1376",
   "entries": [
     {
@@ -74,7 +74,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 3d.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1772638115 },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1718237363,
       "sinceBlock": 20079231,
@@ -136,7 +136,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1749196415 },
       "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
@@ -313,7 +313,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1790078327,
+        "clock": 1790850875,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -361,7 +361,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1772638115 },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1751494343,
       "sinceBlock": 22834443,
@@ -419,7 +419,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1772638115 },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283775,
       "sinceBlock": 23148334,
@@ -447,7 +447,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1749196415 },
       "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
@@ -530,6 +530,11 @@
       }
     },
     {
+      "address": "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Taiko Foundation Treasury Multisig",
       "address": "eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da",
       "type": "Contract",
@@ -558,7 +563,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 188,
+        "nonce": 190,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -694,7 +699,7 @@
       ],
       "proxyType": "immutable",
       "description": "Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1772638115 },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1756842743,
       "sinceBlock": 23277627,
@@ -842,12 +847,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 37092,
-          "lastProposalBlockId": 26032876,
-          "lastFinalizedProposalId": 37086,
-          "lastFinalizedTimestamp": 1790077223,
-          "lastCheckpointTimestamp": 1790077223,
-          "lastFinalizedBlockHash": "0x38b2529ceb354ba45f1b1fe085cf0f24af1e87dbb3b279e1a1a97f1cd22737e7"
+          "nextProposalId": 39099,
+          "lastProposalBlockId": 26096876,
+          "lastFinalizedProposalId": 39096,
+          "lastFinalizedTimestamp": 1790850731,
+          "lastCheckpointTimestamp": 1790850731,
+          "lastFinalizedBlockHash": "0xeb6c154a37fc4669b667aeb84075445351906de804fe94abeb890151021bbf05"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 3, "tail_": 3 },
@@ -978,7 +983,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1749196415 },
       "deployerAddress": "eth:0xe36C0F16d5fB473CC5181f5fb86b6Eb3299aD9cb",
       "sinceTimestamp": 1748146475,
       "sinceBlock": 22557392,
@@ -1029,7 +1034,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1772638115 },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1756842755,
       "sinceBlock": 23277628,
@@ -1146,7 +1151,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1772638115 },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1718237375,
       "sinceBlock": 20079232,
@@ -1302,7 +1307,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1749196415 },
       "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
@@ -1332,7 +1337,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 40,
+        "proposalCount": 42,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -1373,7 +1378,9 @@
           "607065748551507217783827454409519139164457533476",
           "608325339122031231284005618251537221674155900965",
           "608479335948875503511285097395089134668700712998",
-          "609097156697645562436844254022738698161067393063"
+          "609097156697645562436844254022738698161067393063",
+          "609192021977025249345447570106396801273767657512",
+          "609381197194961808191081799941267350559458852905"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -1538,7 +1545,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1749196415 },
       "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
@@ -1915,7 +1922,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1772638115 },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283787,
       "sinceBlock": 23148335,
@@ -1957,7 +1964,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1772638115 },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1751494331,
       "sinceBlock": 22834442,
@@ -2086,11 +2093,11 @@
           "description": "ERC20 vault allowed to consume token withdrawal quota."
         },
         "quotaPeriod": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Time in seconds for consumed quota to fully refill."
         },
         "tokenQuotas": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Configured withdrawal quotas per refill period. Missing or zero quotas are treated as unlimited."
         }
       },
@@ -2219,7 +2226,7 @@
         "GAS_RESERVE": 800000,
         "impl": "eth:0x1c94D798CFA08F396E5BA9F81697289c53273381",
         "inNonReentrant": false,
-        "nextMessageId": 40523,
+        "nextMessageId": 40540,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pauser": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -2257,7 +2264,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1749196415 },
       "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
@@ -2284,7 +2291,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 25,
+        "proposalCount": 27,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -2454,7 +2461,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 63,
+        "nonce": 64,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2594,14 +2601,17 @@
           "eth:0x45D4403351Bc34283CE6450D91c099f40D06dA4e",
           "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
         ],
-        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForCurrentEpoch": "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06",
         "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
-        "latestActivationEpoch": 1786964951,
+        "latestActivationEpoch": 1790238935,
         "OPERATOR_CHANGE_DELAY": 2,
-        "operatorCount": 1,
-        "operatorMapping": ["eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"],
+        "operatorCount": 2,
+        "operatorMapping": [
+          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+          "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06"
+        ],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2990,8 +3000,8 @@
         "ANCHOR_GAS_LIMIT": 1000000,
         "checkpointStore": "taiko:0x1670000000000000000000000000000000000005",
         "getBlockState": {
-          "anchorBlockNumber": 26032871,
-          "ancestorsHash": "0x5cdfdf70ca0a6a406a3de0c5f8aeaf8c3b8bd0be21d7f2ba36892a817b29d6d4"
+          "anchorBlockNumber": 26096870,
+          "ancestorsHash": "0xb443d5b47606b4a05e28d5afe37e8b6a2b6c685c64ad287d7845300d7c4051b9"
         },
         "GOLDEN_TOUCH_ADDRESS": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
         "impl": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
@@ -3027,7 +3037,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.",
-      "critical": true,
+      "critical": { "sinceTimestamp": 1749710483 },
       "deployerAddress": "taiko:0xe36C0F16d5fB473CC5181f5fb86b6Eb3299aD9cb",
       "sinceTimestamp": 1748151239,
       "sinceBlock": 1173134,
@@ -5019,8 +5029,8 @@
     "taiko/TaikoToken": "0x52aec439734375bb11faae757d7e4f01e6de793894f59ec542bf6350be8593aa",
     "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
-  "usedBlockNumbers": { "ethereum": 26032880, "taiko": 11724281 },
-  "permissionsConfigHash": "0xe4e962c7975da68d7f9d87679ad8801f0236c59aa499e44ac7db3db9ae21d38a",
+  "usedBlockNumbers": { "ethereum": 26096902, "taiko": 12104441 },
+  "permissionsConfigHash": "0x850de692fc8cb15d5b19b9ac2d6ce054bb278f1e05e74ad1fea8e7e37a7057a4",
   "modelledAgainst": {
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
@@ -5672,6 +5682,16 @@
           "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
           "delay": 259200,
           "role": ".Executor"
+        }
+      ]
+    },
+    "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "description": "eligible to propose batches on L1; only the selected current-epoch operator can successfully propose.",
+          "role": ".operatorMapping"
         }
       ]
     },

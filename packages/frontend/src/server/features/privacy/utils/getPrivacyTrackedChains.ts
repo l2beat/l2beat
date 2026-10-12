@@ -1,23 +1,14 @@
-import type {
-  ProjectDaBridge,
-  ProjectDaLayer,
-  ProjectDefiInfo,
-  ProjectPrivacyInfo,
-} from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { manifest } from '~/utils/Manifest'
-import { getProjectUrl } from '~/utils/project/getProjectUrl'
+import {
+  getProjectUrl,
+  type ProjectPageMetadata,
+} from '~/utils/project/getProjectUrl'
 
-interface ChainProject {
-  slug: string
+interface ChainProject extends ProjectPageMetadata {
   name: string
   chainConfig: { name: string }
-  scalingInfo?: unknown
-  daBridge?: ProjectDaBridge | undefined
-  daLayer?: ProjectDaLayer | undefined
-  privacyInfo?: ProjectPrivacyInfo | undefined
-  defiInfo?: ProjectDefiInfo | undefined
 }
 
 export function getPrivacyTrackedChains(

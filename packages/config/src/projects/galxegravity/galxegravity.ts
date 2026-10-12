@@ -20,6 +20,8 @@ export const galxegravity: ScalingProject = orbitStackL2({
     name: 'Gravity',
     aliases: ['Galxe'],
     slug: 'galxegravity',
+    headerWarning:
+      'Gravity Alpha Mainnet is shutting down on November 1, 2026 as Gravity moves to its L1. See the [announcement](https://x.com/GravityChain/status/2098079560138977516) and make sure to bridge off your funds and unstake your G before the deadline.',
     description:
       'Gravity is an Optimium built on the Orbit stack. It features onchain questing and has its own gas token - G. Other Galxe products are aiming to integrate with the L2 and a future migration to an L1 of the same name is planned.',
     links: {

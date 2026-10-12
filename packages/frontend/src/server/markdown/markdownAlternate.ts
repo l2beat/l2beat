@@ -26,11 +26,11 @@ export function serveMarkdownIfPreferred<P>(getMarkdown: MarkdownSource<P>) {
     const markdown = await getMarkdown(req)
     // The page cache is keyed by URL alone (Cloudflare ignores Vary), so a
     // cached markdown response would be served to browsers. The Link header
-    // is left as LlmsLinkHeaderMiddleware set it for the page URL.
+    // is left to LlmsLinkHeaderMiddleware, which set it for the page URL.
     res
       .status(markdown === undefined ? 404 : 200)
       .header('Cache-Control', 'private, no-store')
-      .header('Content-Type', MARKDOWN_CONTENT_TYPE)
+      .header('Content-Type', NEGOTIATED_MARKDOWN_CONTENT_TYPE)
       .send(markdown ?? NOT_FOUND_MARKDOWN)
   }
 }
@@ -59,6 +59,9 @@ export function sendMarkdownDocument(
 
 // Not text/markdown: ChatGPT's fetcher answers 400 Unsupported content-type to ours.
 export const MARKDOWN_CONTENT_TYPE = 'text/plain; charset=utf-8'
+
+// A client that asked for text/markdown by name must get it back under that name.
+export const NEGOTIATED_MARKDOWN_CONTENT_TYPE = 'text/markdown; charset=utf-8'
 
 /** The link relation the llms.txt spec recommends for pointing at it. */
 export const LLMS_TXT_LINK = `<${PRODUCTION_ORIGIN}/llms.txt>; rel="describedby"`

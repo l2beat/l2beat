@@ -1,7 +1,7 @@
 {
   "name": "ccip",
-  "timestamp": 1790609268,
-  "configHash": "0x7f9d35aabbd22c8f253335b6d17706196adbc4b68ce347645e231efd82d20dad",
+  "timestamp": 1791379312,
+  "configHash": "0x39210235cbb676c5e225b4b5ee2689cc883c739d1dffd52604f1cbf03f68835e",
   "entries": [
     {
       "name": "ArbitrumOffRamp_v1_6",
@@ -1847,6 +1847,10 @@
             "config": { "usdCentsFee": 0, "enabled": true }
           },
           {
+            "destChainSelector": "gravity",
+            "config": { "usdCentsFee": 0, "enabled": true }
+          },
+          {
             "destChainSelector": "hashkey",
             "config": { "usdCentsFee": 0, "enabled": true }
           },
@@ -1872,6 +1876,10 @@
           },
           {
             "destChainSelector": "jovay",
+            "config": { "usdCentsFee": 0, "enabled": true }
+          },
+          {
+            "destChainSelector": "kaia",
             "config": { "usdCentsFee": 0, "enabled": true }
           },
           {
@@ -1908,6 +1916,10 @@
           },
           {
             "destChainSelector": "morph",
+            "config": { "usdCentsFee": 0, "enabled": true }
+          },
+          {
+            "destChainSelector": "mova",
             "config": { "usdCentsFee": 0, "enabled": true }
           },
           {
@@ -1968,6 +1980,10 @@
           },
           {
             "destChainSelector": "stable",
+            "config": { "usdCentsFee": 0, "enabled": true }
+          },
+          {
+            "destChainSelector": "tac",
             "config": { "usdCentsFee": 0, "enabled": true }
           },
           {
@@ -2189,7 +2205,7 @@
         "getAllowListEnabled": false,
         "getBridgeLimit": "200000000000000000000000000",
         "getBridgeLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
-        "getCurrentBridgedAmount": "127475393484393373538095317",
+        "getCurrentBridgedAmount": "122240420077176375470200908",
         "getRateLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
         "getRebalancer": "eth:0x0000000000000000000000000000000000000000",
         "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
@@ -2260,6 +2276,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x0837EDBb99E3e8Fc740337014f690F92102a0038",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x08966c2561ef3AC77Ac479dF4590886B4Bfe869a",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2303,7 +2324,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 501534,
+        "nextAvailableNonce": 503447,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -2773,7 +2794,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1180,
+        "getExpectedNextSequenceNumber": 1181,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -3519,6 +3540,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60",
       "type": "EOA",
       "proxyType": "EOA"
@@ -3596,6 +3622,11 @@
     },
     {
       "address": "eth:0x1620E85235C124303d03671b5de5ca12249a16BF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3880,10 +3911,32 @@
           {
             "remoteChainConfig": {
               "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+              "remoteChainSelector": "monad",
+              "allowlistEnabled": false,
+              "feeUSDCents": 0,
+              "gasForVerification": 220000,
+              "payloadSizeBytes": 1024
+            },
+            "allowedSendersList": []
+          },
+          {
+            "remoteChainConfig": {
+              "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
               "remoteChainSelector": "optimism",
               "allowlistEnabled": false,
               "feeUSDCents": 0,
               "gasForVerification": 200000,
+              "payloadSizeBytes": 1024
+            },
+            "allowedSendersList": []
+          },
+          {
+            "remoteChainConfig": {
+              "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+              "remoteChainSelector": "pharos",
+              "allowlistEnabled": false,
+              "feeUSDCents": 0,
+              "gasForVerification": 220000,
               "payloadSizeBytes": 1024
             },
             "allowedSendersList": []
@@ -3906,7 +3959,9 @@
           "3734403246176062136",
           "4051577828743386545",
           "4949039107694359620",
-          "6433500567565415381"
+          "6433500567565415381",
+          "7801139999541420232",
+          "8481857512324358265"
         ],
         "routeRouters": [
           {
@@ -3926,7 +3981,15 @@
             "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
           },
           {
+            "remoteChainSelector": "monad",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+          },
+          {
             "remoteChainSelector": "optimism",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+          },
+          {
+            "remoteChainSelector": "pharos",
             "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
           },
           {
@@ -5439,6 +5502,10 @@
             "verifier": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"
           },
           {
+            "destChainSelector": "gravity",
+            "verifier": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"
+          },
+          {
             "destChainSelector": "hashkey",
             "verifier": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"
           },
@@ -5464,6 +5531,10 @@
           },
           {
             "destChainSelector": "jovay",
+            "verifier": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"
+          },
+          {
+            "destChainSelector": "kaia",
             "verifier": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"
           },
           {
@@ -5500,6 +5571,10 @@
           },
           {
             "destChainSelector": "morph",
+            "verifier": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"
+          },
+          {
+            "destChainSelector": "mova",
             "verifier": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"
           },
           {
@@ -5560,6 +5635,10 @@
           },
           {
             "destChainSelector": "stable",
+            "verifier": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"
+          },
+          {
+            "destChainSelector": "tac",
             "verifier": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"
           },
           {
@@ -6043,6 +6122,22 @@
           {
             "sourceChainSelector": "15971525489660198786",
             "offRamp": "eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"
+          },
+          {
+            "sourceChainSelector": "5936861837188149645",
+            "offRamp": "eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"
+          },
+          {
+            "sourceChainSelector": "9813823125703490621",
+            "offRamp": "eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"
+          },
+          {
+            "sourceChainSelector": "2988178761202034333",
+            "offRamp": "eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"
+          },
+          {
+            "sourceChainSelector": "4215185756725900654",
+            "offRamp": "eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"
           }
         ],
         "getWrappedNative": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -6112,7 +6207,11 @@
           "etherlink": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "megaeth": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "stable": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "berachain": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+          "berachain": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "tac": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "kaia": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "gravity": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "mova": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
         },
         "owner": "eth:0x062f05CD6c835677B05a8658A351969476861316",
         "typeAndVersion": "Router 1.2.0"
@@ -6231,11 +6330,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "USDCTokenPoolCCTPV2",
       "address": "eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574",
       "type": "Contract",
@@ -6259,7 +6353,7 @@
         "getRateLimitAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
         "getRouter": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-        "getSupportedChains": [],
+        "getSupportedChains": ["monad", "pharos"],
         "getToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "getTokenDecimals": 6,
         "i_localDomainIdentifier": 0,
@@ -6268,7 +6362,7 @@
         "i_tokenMessenger": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
         "MAX_FEE": 0,
         "MIN_USDC_MESSAGE_LENGTH": 280,
-        "owner": "eth:0x062f05CD6c835677B05a8658A351969476861316",
+        "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "USDCTokenPoolCCTPV2 1.6.5"
       },
       "fieldMeta": {
@@ -6290,7 +6384,106 @@
       },
       "implementationNames": {
         "eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574": "USDCTokenPoolCCTPV2"
-      }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "4426351306075016396": "0g",
+            "4829375610284793157": "ab",
+            "3577778157919314504": "abstract",
+            "4059281736450291836": "adi",
+            "14894068710063348487": "apechain",
+            "4741433654826277614": "aptos",
+            "6433500567565415381": "avalanche",
+            "1294465214383781161": "berachain",
+            "465944652040885897": "opbnb",
+            "7937294810946806131": "bitlayer",
+            "3849287863852499584": "bob",
+            "4560701533377838164": "botanix",
+            "5406759801798337480": "bsquared",
+            "241851231317828981": "bitcoin-merlin",
+            "2135107236357186872": "bittensor",
+            "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
+            "1346049177634351622": "celo",
+            "1224752112135636129": "core",
+            "9043146809313071210": "corn",
+            "18240105181246962294": "creditcoin",
+            "1456215246176062136": "cronos",
+            "8788096068760390840": "cronos-zkevm",
+            "6325494908023253251": "edge",
+            "8805746078405598895": "andromeda",
+            "4949039107694359620": "arbitrum",
+            "15971525489660198786": "base",
+            "7613811247471741961": "hashkey",
+            "3461204551265785888": "ink",
+            "4627098889531055414": "linea",
+            "1556008542357238666": "mantle",
+            "7264351850409363825": "mode",
+            "3734403246176062136": "optimism",
+            "13204309965629103672": "scroll",
+            "16468599424800719238": "taiko",
+            "1923510103922296319": "unichain",
+            "2049429975587534727": "worldchain",
+            "3016212468291539606": "xlayer",
+            "17198166215261833993": "zircuit",
+            "1562403441176082196": "zksync",
+            "13624601974233774587": "etherlink",
+            "1462016016387883143": "fraxtal",
+            "3229138320728879060": "hedera",
+            "1804312132722180201": "hemi",
+            "2442541497099098535": "hyperliquid",
+            "1523760397290643893": "jovay",
+            "9813823125703490621": "kaia",
+            "5608378062013572713": "lens",
+            "15293031020466096408": "lisk",
+            "5009297550715157269": "ethereum",
+            "4051577828743386545": "matic",
+            "6093540873831549674": "megaeth",
+            "13447077090413146373": "metal",
+            "11690709103138290329": "mind",
+            "17164792800244661392": "mint",
+            "8481857512324358265": "monad",
+            "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
+            "12657445206920369324": "henesys",
+            "7801139999541420232": "pharos",
+            "9335212494177455608": "plasma",
+            "17912061998839310979": "plume",
+            "6422105447186081193": "astar",
+            "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
+            "6370580034781731079": "arc",
+            "2988178761202034333": "gravity",
+            "6916147374840168594": "ronin",
+            "11964252391146578476": "rootstock",
+            "9027416829622342829": "sei",
+            "3993510008929295315": "shibarium",
+            "124615329519749607": "solana",
+            "12505351618335765396": "soneium",
+            "1673871237479749969": "sonic",
+            "16978377838628290997": "stable",
+            "470401360549526817": "superseed",
+            "5936861837188149645": "tac",
+            "7281642695469137430": "tempo",
+            "16448340667252469081": "ton",
+            "5142893604156789321": "wemix",
+            "465200170687744372": "xdai",
+            "17673274061779414707": "xdc",
+            "3555797439612589184": "zora",
+            "17529533435026248318": "sui",
+            "9762610643973837292": "sui-testnet",
+            "6473245816409426016": "memento",
+            "9723842205701363942": "everclear",
+            "1546563616611573946": "tron",
+            "4348158687435793198": "polygonzkevm",
+            "4411394078118774322": "blast",
+            "5214452172935136222": "treasure",
+            "7222032299962346917": "neox"
+          }
+        }
+      ]
     },
     {
       "address": "eth:0x355fa241a4848dec8dCf453a5cCb16ec9207bcad",
@@ -6774,7 +6967,7 @@
             "laneMandatedCCVs": []
           },
           "arc": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x000000000000000000000000ecff67559c0583027a5fbd85136e33bc4d66eea0",
@@ -6877,7 +7070,7 @@
             "laneMandatedCCVs": []
           },
           "bsquared": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x0000000000000000000000008e2f5e915687919691c591c552f3ea37ede499aa"
@@ -6958,7 +7151,7 @@
             "laneMandatedCCVs": []
           },
           "taiko": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x00000000000000000000000027da8ab83ec4d72fd744748b273f6bf9b5bdb121"
@@ -7012,7 +7205,7 @@
             "laneMandatedCCVs": []
           },
           "lens": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x000000000000000000000000422ed094571374d656a7d8b5397724166acd6630"
@@ -7021,7 +7214,7 @@
             "laneMandatedCCVs": []
           },
           "morph": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x0000000000000000000000009d830c485364b714030406e0f7e11791ee13378f"
@@ -7030,7 +7223,7 @@
             "laneMandatedCCVs": []
           },
           "henesys": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x000000000000000000000000985fb0821eef0056ec26dd8b33dc61b9415b7f4b"
@@ -7039,7 +7232,7 @@
             "laneMandatedCCVs": []
           },
           "astar": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x00000000000000000000000091d1fb5a397947b7418ae78d3fbf789eb6556dca"
@@ -7048,7 +7241,7 @@
             "laneMandatedCCVs": []
           },
           "rootstock": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x0000000000000000000000000198f9087ced2d60c08caa711917141964e32a96"
@@ -7084,7 +7277,7 @@
             "laneMandatedCCVs": []
           },
           "zksync": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x000000000000000000000000f9410a08fd57e629c66e1f37a5ae8f0a757d9ad9"
@@ -7093,7 +7286,7 @@
             "laneMandatedCCVs": []
           },
           "xdc": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x000000000000000000000000e01d7893fb01a512e6ee980bff15cdd91ce4c5cb"
@@ -7111,7 +7304,7 @@
             "laneMandatedCCVs": []
           },
           "jovay": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x0000000000000000000000005aa05e14ac7faf23f1757d46429e6ca7e3fc1274"
@@ -7219,7 +7412,7 @@
             "laneMandatedCCVs": []
           },
           "bitlayer": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x000000000000000000000000b7feabf544d8ee041645148c8fbae782b2557aef"
@@ -7228,7 +7421,7 @@
             "laneMandatedCCVs": []
           },
           "sonic": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x0000000000000000000000000dd6b1ff9bd60b596094c44260d45d2d3f318332"
@@ -7237,7 +7430,7 @@
             "laneMandatedCCVs": []
           },
           "katana": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x00000000000000000000000039029575a666aa543d43274e48feff9773203108"
@@ -7273,7 +7466,7 @@
             "laneMandatedCCVs": []
           },
           "etherlink": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x000000000000000000000000402430ca607c52a99aa82ab4c726001d4203c9e7"
@@ -7282,7 +7475,7 @@
             "laneMandatedCCVs": []
           },
           "megaeth": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x00000000000000000000000069439715ec6a4d79d2d793bbcc88513a575ab808"
@@ -7291,7 +7484,7 @@
             "laneMandatedCCVs": []
           },
           "stable": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x0000000000000000000000008c761ffc81a86edeb218e2e11e51996ce092fa00"
@@ -7300,7 +7493,7 @@
             "laneMandatedCCVs": []
           },
           "berachain": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "onRamps": [
               "0x000000000000000000000000073d9cb00585f94c343fa306d3afd8dee7c00e98"
@@ -7322,6 +7515,42 @@
             "isEnabled": true,
             "onRamps": [
               "0x00000000000000000000000087ed1cdc9de0063e4714398f8f1951d7339c5997"
+            ],
+            "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
+            "laneMandatedCCVs": []
+          },
+          "tac": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "onRamps": [
+              "0x000000000000000000000000172f94f347c6762c9bf21abb90ea6683cb90fc96"
+            ],
+            "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
+            "laneMandatedCCVs": []
+          },
+          "kaia": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "onRamps": [
+              "0x0000000000000000000000002d5d6b0e3160a54c3cb84c64b7d320789fb747db"
+            ],
+            "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
+            "laneMandatedCCVs": []
+          },
+          "gravity": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "onRamps": [
+              "0x0000000000000000000000000a3d8ed619ecf1e984488710eb2cece4fdbd83ca"
+            ],
+            "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
+            "laneMandatedCCVs": []
+          },
+          "mova": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "onRamps": [
+              "0x0000000000000000000000000a3d8ed619ecf1e984488710eb2cece4fdbd83ca"
             ],
             "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
             "laneMandatedCCVs": []
@@ -7734,31 +7963,6 @@
         "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": "RBACTimelock"
       },
       "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "name": "",
-      "address": "eth:0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "deployerAddress": "eth:0xe4E5e395E9efb3C1bB37D9c53Ad2F115c6f91FfB",
-      "sinceTimestamp": 1714403615,
-      "sinceBlock": 19761785,
-      "values": {
-        "$admin": "eth:0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
-        "$implementation": "eth:0x8815623E1a3829Ce0994d183ab1aF99E9308538D",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0
-      },
-      "implementationNames": {
-        "eth:0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb": "L1ChugSplashProxy",
-        "eth:0x8815623E1a3829Ce0994d183ab1aF99E9308538D": ""
-      }
-    },
-    {
-      "address": "eth:0x45894CeBad0a1298D44aF2B528490693E58B322E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "CommitStore",
@@ -8751,7 +8955,9 @@
       "name": "CCTPMessageTransmitterProxy_v2_0",
       "address": "eth:0x65E0c4AB4Da5d22E824879DEB43123D23217DEdD",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x457f2d4685becb8d5607a70f182c299b687f6fca895a5f5e63a7f84238606902"
+      ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1780588055,
@@ -8768,7 +8974,7 @@
         "typeAndVersion": "CCTPMessageTransmitterProxy 2.0.0"
       },
       "implementationNames": {
-        "eth:0x65E0c4AB4Da5d22E824879DEB43123D23217DEdD": ""
+        "eth:0x65E0c4AB4Da5d22E824879DEB43123D23217DEdD": "CCTPMessageTransmitterProxy"
       }
     },
     {
@@ -9630,7 +9836,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 521,
+        "getExpectedNextSequenceNumber": 526,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -34117,37 +34323,6 @@
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
-      "name": "GnosisSafe",
-      "address": "eth:0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7",
-      "sinceTimestamp": 1714474115,
-      "sinceBlock": 19767630,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": ["eth:0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7"],
-        "$threshold": 1,
-        "domainSeparator": "0xb76cab5c2b8dca84c9980d870f76aed8dcce8911ff6f09cd26561a996e89b7e2",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 2,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
       "address": "eth:0x77C923526ec8B93fb8C645cC49a623ADe521377E",
       "type": "EOA",
       "proxyType": "EOA"
@@ -34848,6 +35023,17 @@
           {
             "remoteChainConfig": {
               "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+              "remoteChainSelector": "gravity",
+              "allowlistEnabled": false,
+              "feeUSDCents": 0,
+              "gasForVerification": 75000,
+              "payloadSizeBytes": 582
+            },
+            "allowedSendersList": []
+          },
+          {
+            "remoteChainConfig": {
+              "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
               "remoteChainSelector": "hashkey",
               "allowlistEnabled": false,
               "feeUSDCents": 0,
@@ -34915,6 +35101,17 @@
             "remoteChainConfig": {
               "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
               "remoteChainSelector": "jovay",
+              "allowlistEnabled": false,
+              "feeUSDCents": 0,
+              "gasForVerification": 75000,
+              "payloadSizeBytes": 582
+            },
+            "allowedSendersList": []
+          },
+          {
+            "remoteChainConfig": {
+              "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+              "remoteChainSelector": "kaia",
               "allowlistEnabled": false,
               "feeUSDCents": 0,
               "gasForVerification": 75000,
@@ -35014,6 +35211,17 @@
             "remoteChainConfig": {
               "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
               "remoteChainSelector": "morph",
+              "allowlistEnabled": false,
+              "feeUSDCents": 0,
+              "gasForVerification": 75000,
+              "payloadSizeBytes": 582
+            },
+            "allowedSendersList": []
+          },
+          {
+            "remoteChainConfig": {
+              "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+              "remoteChainSelector": "mova",
               "allowlistEnabled": false,
               "feeUSDCents": 0,
               "gasForVerification": 75000,
@@ -35133,7 +35341,7 @@
           },
           {
             "remoteChainConfig": {
-              "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+              "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
               "remoteChainSelector": "sei",
               "allowlistEnabled": false,
               "feeUSDCents": 0,
@@ -35179,6 +35387,17 @@
             "remoteChainConfig": {
               "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
               "remoteChainSelector": "stable",
+              "allowlistEnabled": false,
+              "feeUSDCents": 0,
+              "gasForVerification": 75000,
+              "payloadSizeBytes": 582
+            },
+            "allowedSendersList": []
+          },
+          {
+            "remoteChainConfig": {
+              "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+              "remoteChainSelector": "tac",
               "allowlistEnabled": false,
               "feeUSDCents": 0,
               "gasForVerification": 75000,
@@ -35362,7 +35581,11 @@
           "15971525489660198786",
           "13624601974233774587",
           "1294465214383781161",
-          "2442541497099098535"
+          "2442541497099098535",
+          "5936861837188149645",
+          "9813823125703490621",
+          "2988178761202034333",
+          "4215185756725900654"
         ],
         "routeRouters": [
           {
@@ -35462,6 +35685,10 @@
             "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
           },
           {
+            "remoteChainSelector": "gravity",
+            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+          },
+          {
             "remoteChainSelector": "hashkey",
             "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
           },
@@ -35487,6 +35714,10 @@
           },
           {
             "remoteChainSelector": "jovay",
+            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+          },
+          {
+            "remoteChainSelector": "kaia",
             "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
           },
           {
@@ -35523,6 +35754,10 @@
           },
           {
             "remoteChainSelector": "morph",
+            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+          },
+          {
+            "remoteChainSelector": "mova",
             "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
           },
           {
@@ -35567,7 +35802,7 @@
           },
           {
             "remoteChainSelector": "sei",
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
           },
           {
             "remoteChainSelector": "shibarium",
@@ -35583,6 +35818,10 @@
           },
           {
             "remoteChainSelector": "stable",
+            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
+          },
+          {
+            "remoteChainSelector": "tac",
             "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
           },
           {
@@ -36987,6 +37226,90 @@
               "eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473",
               "eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"
             ]
+          },
+          "tac": {
+            "threshold": 9,
+            "signers": [
+              "eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E",
+              "eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7",
+              "eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac",
+              "eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46",
+              "eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb",
+              "eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83",
+              "eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858",
+              "eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0",
+              "eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD",
+              "eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D",
+              "eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655",
+              "eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2",
+              "eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD",
+              "eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00",
+              "eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473",
+              "eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"
+            ]
+          },
+          "kaia": {
+            "threshold": 9,
+            "signers": [
+              "eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E",
+              "eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A",
+              "eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46",
+              "eth:0x40774A7501e25B93e19d0022da355f25CED63F1A",
+              "eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE",
+              "eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83",
+              "eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858",
+              "eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0",
+              "eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd",
+              "eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD",
+              "eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D",
+              "eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655",
+              "eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD",
+              "eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00",
+              "eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473",
+              "eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"
+            ]
+          },
+          "gravity": {
+            "threshold": 9,
+            "signers": [
+              "eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A",
+              "eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7",
+              "eth:0x40774A7501e25B93e19d0022da355f25CED63F1A",
+              "eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb",
+              "eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE",
+              "eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83",
+              "eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858",
+              "eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0",
+              "eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd",
+              "eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD",
+              "eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D",
+              "eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655",
+              "eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2",
+              "eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD",
+              "eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473",
+              "eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"
+            ]
+          },
+          "mova": {
+            "threshold": 9,
+            "signers": [
+              "eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E",
+              "eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A",
+              "eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7",
+              "eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac",
+              "eth:0x40774A7501e25B93e19d0022da355f25CED63F1A",
+              "eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb",
+              "eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE",
+              "eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858",
+              "eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0",
+              "eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd",
+              "eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD",
+              "eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D",
+              "eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655",
+              "eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2",
+              "eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD",
+              "eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473"
+            ]
           }
         },
         "typeAndVersion": "CommitteeVerifier 2.0.0",
@@ -37199,29 +37522,29 @@
           "mode": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "blast": "eth:0x0000000000000000000000000000000000000000",
           "andromeda": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "zksync": "eth:0x9B14AE850653dD0E30fBC93ab7f77D0d638a365B",
+          "zksync": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "linea": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "scroll": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "xlayer": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "polygonzkevm": "eth:0x33417f13DFBC2FfB9e1B43051c3737370F3691a4",
-          "astar": "eth:0xD8E8720709a3d9A18a9B281E6148E94149B2E252",
+          "astar": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "zircuit": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "mantle": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "ronin": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "bsquared": "eth:0xddF4b4aF7A9603869C90189EFa8826683D0D234b",
+          "bsquared": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "worldchain": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "bob": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "shibarium": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "bitlayer": "eth:0x4FB5407d6911DaA0B8bde58A754E7D01CB8b05c5",
+          "bitlayer": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "corn": "eth:0x7B78f8D16C4ae6E51c29295D58f05dCC67180A2b",
           "soneium": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "sonic": "eth:0x4fdAaDe22bd05537EeaB204cF7319589CE595D6a",
+          "sonic": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "ink": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "hashkey": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "sei": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "treasure": "eth:0x0000000000000000000000000000000000000000",
           "bitcoin-merlin": "eth:0x20fD5ab74D519df395f41c958D982BecB6b64432",
-          "berachain": "eth:0xBeFfEF56Cd6FA063d2e04E126cF1b93269886c42",
+          "berachain": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "fraxtal": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "unichain": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "core": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
@@ -37230,7 +37553,7 @@
           "cronos": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "cronos-zkevm": "eth:0x8b858ED23502611aB86109717C8842A7A8f117ec",
           "apechain": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "lens": "eth:0x6715EA73EcAf1CaE1c736731129637B2E94a6B49",
+          "lens": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "hyperliquid": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "hemi": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "abstract": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
@@ -37240,31 +37563,31 @@
           "plume": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "superseed": "eth:0x486170Bca7fE5126AFeaF171d3a60A211bF2C44C",
           "zora": "eth:0xc46e2F17c04f2C880Ea56a0c69c4520AdB4aBF88",
-          "taiko": "eth:0x5F6e7707DE5019E13BaFbD2f4569B2453F16eB3e",
-          "rootstock": "eth:0x34748FbeD8fD8468eD66D53A7D102ce793cB4094",
+          "taiko": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "rootstock": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "tron": "eth:0x57da0fAD1CC3B98a8f04545A45Ba156e944db4DE",
           "opbnb": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "solana": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "botanix": "eth:0x86768e4e4B2E3C1CF812D5C8A7c7becFA4c8D486",
           "neox": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "katana": "eth:0xc5Dbe2055Fa233ece44c99432526F3Fc46cA3FC2",
-          "etherlink": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "kaia": "eth:0x8469b5AbD81987F9347c0bAbd47b9eB11dA7d0dF",
-          "morph": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "katana": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "etherlink": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "kaia": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "morph": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "aptos": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "monad": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "xdc": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "tac": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "xdc": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "tac": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "memento": "eth:0x0000000000000000000000000000000000000000",
           "plasma": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "0g": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "bittensor": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "everclear": "eth:0x0000000000000000000000000000000000000000",
           "ab": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "henesys": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "jovay": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "stable": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "megaeth": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "henesys": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "jovay": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "stable": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "megaeth": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "sui": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "pharos": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "edge": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
@@ -37274,9 +37597,9 @@
           "creditcoin": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "robinhood": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
           "canton": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "arc": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "mova": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "gravity": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+          "arc": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "mova": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+          "gravity": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
         },
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "Router 1.2.0"
@@ -37443,7 +37766,9 @@
           "avalanche",
           "base",
           "matic",
+          "monad",
           "optimism",
+          "pharos",
           "unichain"
         ],
         "getToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -39084,7 +39409,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 69,
+        "nonce": 70,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -39679,12 +40004,12 @@
           },
           "megaeth": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 400000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -39692,12 +40017,12 @@
           },
           "henesys": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -39705,12 +40030,12 @@
           },
           "tac": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -39744,12 +40069,12 @@
           },
           "etherlink": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -39783,12 +40108,12 @@
           },
           "morph": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -39809,12 +40134,12 @@
           },
           "xdc": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -39939,12 +40264,12 @@
           },
           "stable": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -39965,12 +40290,12 @@
           },
           "jovay": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40043,12 +40368,12 @@
           },
           "kaia": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40056,12 +40381,12 @@
           },
           "rootstock": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40069,12 +40394,12 @@
           },
           "zksync": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
-            "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
+            "destGasOverhead": 0,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40160,12 +40485,12 @@
           },
           "bitlayer": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40173,12 +40498,12 @@
           },
           "berachain": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40251,12 +40576,12 @@
           },
           "bsquared": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40316,12 +40641,12 @@
           },
           "lens": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
-            "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
+            "destGasOverhead": 0,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40433,12 +40758,12 @@
           },
           "taiko": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40602,12 +40927,12 @@
           },
           "astar": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40654,12 +40979,12 @@
           },
           "sonic": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40706,12 +41031,12 @@
           },
           "katana": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40758,12 +41083,12 @@
           },
           "arc": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40771,12 +41096,12 @@
           },
           "mova": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -40784,12 +41109,12 @@
           },
           "gravity": {
             "isEnabled": true,
-            "maxDataBytes": 30000,
-            "maxPerMsgGasLimit": 3000000,
+            "maxDataBytes": 32000,
+            "maxPerMsgGasLimit": 8000000,
             "destGasOverhead": 300000,
-            "destGasPerPayloadByteBase": 16,
+            "destGasPerPayloadByteBase": 20,
             "chainFamilySelector": "EVM",
-            "defaultTokenFeeUSDCents": 50,
+            "defaultTokenFeeUSDCents": 0,
             "defaultTokenDestGasOverhead": 90000,
             "defaultTxGasLimit": 200000,
             "networkFeeUSDCents": 50,
@@ -41140,6 +41465,15 @@
               "tokenTransferFeeConfig": {
                 "feeUSDCents": 50,
                 "destGasOverhead": 350000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "tokenTransferFeeConfig": {
+                "feeUSDCents": 0,
+                "destGasOverhead": 90000,
                 "destBytesOverhead": 32,
                 "isEnabled": true
               }
@@ -42064,7 +42398,7 @@
             {
               "token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
               "tokenTransferFeeConfig": {
-                "feeUSDCents": 50,
+                "feeUSDCents": 4500,
                 "destGasOverhead": 120000,
                 "destBytesOverhead": 32,
                 "isEnabled": true
@@ -42910,7 +43244,7 @@
             {
               "token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
               "tokenTransferFeeConfig": {
-                "feeUSDCents": 50,
+                "feeUSDCents": 4500,
                 "destGasOverhead": 120000,
                 "destBytesOverhead": 32,
                 "isEnabled": true
@@ -43664,7 +43998,7 @@
             {
               "token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
               "tokenTransferFeeConfig": {
-                "feeUSDCents": 4250,
+                "feeUSDCents": 4500,
                 "destGasOverhead": 120000,
                 "destBytesOverhead": 32,
                 "isEnabled": true
@@ -44833,7 +45167,7 @@
             {
               "token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
               "tokenTransferFeeConfig": {
-                "feeUSDCents": 4250,
+                "feeUSDCents": 4500,
                 "destGasOverhead": 120000,
                 "destBytesOverhead": 32,
                 "isEnabled": true
@@ -45484,6 +45818,17 @@
                 "isEnabled": true
               }
             }
+          ],
+          "pharos": [
+            {
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "tokenTransferFeeConfig": {
+                "feeUSDCents": 0,
+                "destGasOverhead": 90000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
           ]
         },
         "typeAndVersion": "FeeQuoter 2.0.0"
@@ -45914,6 +46259,11 @@
       "implementationNames": {
         "eth:0x966A3BE75103C680b6A4248689630c788659d2A5": "ERC20LockBox"
       }
+    },
+    {
+      "address": "eth:0x96cc15F1920E700c2fDC06546071BC44c6D62Ae2",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41",
@@ -46475,7 +46825,8 @@
           "eth:0x89661a593106fF15B24B8DD25ab8Efad63cFEEA7",
           "eth:0xe898a5C06C1166178495e0faf27dae8dd4C97096",
           "eth:0x93Cb3290185Be000AfAeAd63c47C40EBcE86Bf7E",
-          "eth:0x7BdDBa3607517a3a06B75C1Fad1744D571De9A2D"
+          "eth:0x7BdDBa3607517a3a06B75C1Fad1744D571De9A2D",
+          "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd"
         ],
         "name": "USD Coin",
         "owner": "eth:0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
@@ -46485,7 +46836,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "49897864593906386",
+        "totalSupply": "49146201168163474",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -46509,7 +46860,9 @@
       "name": "CCTPVerifier_v2_0",
       "address": "eth:0xa22606F055146f0eac2FBEd49253E779b781355D",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x252889c4536e72c917f51682b15ce22e99b0090de3bb519a36ce505710b81c02"
+      ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1780588079,
@@ -46617,7 +46970,7 @@
         "versionTag": "0x35a25838"
       },
       "implementationNames": {
-        "eth:0xa22606F055146f0eac2FBEd49253E779b781355D": ""
+        "eth:0xa22606F055146f0eac2FBEd49253E779b781355D": "CCTPVerifier"
       },
       "usedTypes": [
         {
@@ -46718,11 +47071,6 @@
           }
         }
       ]
-    },
-    {
-      "address": "eth:0xa23366C4bDD05d6Ac5ae66503fb5AC2827eD5051",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xA2B7C82d2B90A4e94F0C3027c0999e4f44f4Cc9F",
@@ -47085,6 +47433,50 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SeizureRegistry",
+      "address": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf66f390c3291bc5b8725bf8fa36d64494b91e8cfb2b717b52e85adcc68dcdd50",
+        "0x69d58c583f7c1689f33f52112c458212177cc01844f86873c742231206d49e50"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["totalSecondaryMarketBurnedAmount"],
+      "deployerAddress": "eth:0xe4b567Ac531c217EEfE01Db45fac7F60ED77F94b",
+      "sinceTimestamp": 1790610479,
+      "sinceBlock": 26076948,
+      "values": {
+        "$admin": "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5",
+        "$implementation": "eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC",
+        "$pastUpgrades": [
+          [
+            "2026-09-28T15:47:59.000Z",
+            "0xb69d91adcc3e14284f29914f985df72c01fbcd59774fb94d1cc513cda81ff191",
+            ["eth:0xCCb78B2d0720401AF60026EE33EC469110C9d694"]
+          ],
+          [
+            "2026-09-28T15:47:59.000Z",
+            "0x690834ba932489cfe2c7e15046b02ee5b8f4e7e81a4c882ed100224e82903967",
+            ["eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "addressManager": "eth:0xD8192E257630394aBf289fb350482264aa700cB2",
+        "hashUpdater": "eth:0x96cc15F1920E700c2fDC06546071BC44c6D62Ae2",
+        "owner": "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "rescuer": "eth:0xEAc54284b1Eb10132c7204cF6265ae1ae122BC86",
+        "secondaryMarketBurner": "eth:0x0837EDBb99E3e8Fc740337014f690F92102a0038",
+        "TOKEN": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "totalSecondaryMarketBurnedAmount": 381235000000,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": "ERC1967Proxy",
+        "eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC": "SeizureRegistry"
+      }
+    },
+    {
       "address": "eth:0xA69d606205419F67a46d772c66cf685971d5ceed",
       "type": "EOA",
       "proxyType": "EOA"
@@ -47242,7 +47634,7 @@
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 7625,
-        "getLatestPriceEpochAndRound": 57959425,
+        "getLatestPriceEpochAndRound": 58688001,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
           "sourceChainSelector": "6433500567565415381",
@@ -47992,7 +48384,7 @@
           "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
           "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-          "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": "eth:0xb9577E83a6d9A6DE35047aa066E3758221FE0DA2",
+          "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d",
           "eth:0x24eCd41CE6646ADa857995A682e1a5c42732cAbc": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
           "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
           "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
@@ -48039,7 +48431,7 @@
           "eth:0x9469470C9878bf3d6d0604831d9A3A366156f7EE": "eth:0xd4d23209aaE8630bf386b7393763a5b7865e57cb",
           "eth:0xDA06eE2dACF9245Aa80072a4407deBDea0D7e341": "eth:0xd4d23209aaE8630bf386b7393763a5b7865e57cb",
           "eth:0xBD4CaeE14EFDE2888F167130AF84D613D64618Da": "eth:0xa9A782FE5c4683556FB76e9cF1cb02D22978c22d",
-          "eth:0x319053B625e598994Dd1179948771a4C2f66b873": "eth:0x1936Bb3B9C72e609149eB2FB65AdE52CBB7A76C5",
+          "eth:0x319053B625e598994Dd1179948771a4C2f66b873": "eth:0x18A82c968b992D28D4D812920eB7b4305306f8F1",
           "eth:0x9b13b86eeb48Ec9cA1A72FaE969d7daA60870100": "eth:0x1dEE90df6cDd8a7dA3510FB5b0305EFE57239641",
           "eth:0x2E8b7190eE84E7AC757Ddff42Ba14d4EAe24B865": "eth:0xd4d23209aaE8630bf386b7393763a5b7865e57cb",
           "eth:0xf0DB65D17e30a966C2ae6A21f6BBA71cea6e9754": "eth:0x629692bBcA65a94DEeBd98de93bd74531561140d",
@@ -48365,7 +48757,15 @@
           "eth:0x03c69A6B12bd7310087075DEc81a9d42300994F8": "eth:0xb1294D014a49c1Cb9Dd6de92d3A69D8a05A3e1B6",
           "eth:0x0d9e0916eA60D5439F1535BEA4cB83b25780Eb36": "eth:0x11e422578aD6517CEe36e0eda36089Ce9022761f",
           "eth:0xC98a910eDE52E7d5308525845F19e17470DbCCF7": "eth:0x365EEc11cd58e124e7437aDf068935806E3e6AA2",
-          "eth:0x44087D96E61dBa4674048fea6E4DC0D805C8c0EA": "eth:0x337bfDBAc41b46b28359C0d4484F1F4ed25FFE8a"
+          "eth:0x44087D96E61dBa4674048fea6E4DC0D805C8c0EA": "eth:0x337bfDBAc41b46b28359C0d4484F1F4ed25FFE8a",
+          "eth:0xB122f4A154f84708407213D6A715181180012f45": "eth:0xf27de84F11E089B838769EDFcFf9872BC45c84Fe",
+          "eth:0x6a547b25534234bb79CE6961a23Db13DE154b6F4": "eth:0x698c6d3726846C4AD4Dc9331862b92Cd80D2fb99",
+          "eth:0x8d301801d899dC81fEabBDE69407A53b82bdBF19": "eth:0x698c6d3726846C4AD4Dc9331862b92Cd80D2fb99",
+          "eth:0x8d015aFcb6F437010653352EB1E58152c4e23734": "eth:0x698c6d3726846C4AD4Dc9331862b92Cd80D2fb99",
+          "eth:0x8BDf6A2DFda084bD242Cd285CF75E80de3eB00ba": "eth:0x698c6d3726846C4AD4Dc9331862b92Cd80D2fb99",
+          "eth:0xDA187eB6F4D7eE3a0b8f5cd81eED8d347f5693aD": "eth:0x9bABfC1A1952a6ed2caC1922BFfE80c0506364a2",
+          "eth:0x58412AE274F2764B71c66315D97662d47d930d94": "eth:0x3645a56aD01642C2ee7fA8ab301ceA09f107E2F2",
+          "eth:0x48D7D152Cb996610773CB8be14CD0913172895B1": "eth:0x9ACc0132c6FA178760404Cb3bF5c0a876db3B627"
         },
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "poolsMap": {
@@ -48830,7 +49230,7 @@
           "eth:0x38153Bf073ffff9808da5A06857231382c150370": "eth:0x16b01E51b8B684174b01139fA2b06FB9D91E2e30",
           "eth:0x0520930F21b14Cafac7a27b102487beE7138a017": "eth:0xa1f0cAF824D5bbF103b33172A711E58c6CaB2a04",
           "eth:0x20c7d791BD8b91A791D7EE067213bC857e2aC7c3": "eth:0x3a9Da34DcA82fbA0E805b1408dEbB8cd0576c2b2",
-          "eth:0x22aE3D9a738471f405169Af055d31c687087d4c7": "eth:0xBE776C85FE1f35BE8341167A6305230075F30D3d",
+          "eth:0x22aE3D9a738471f405169Af055d31c687087d4c7": "eth:0xFD34e1866092F2d422aE77ACd242a88Bacb123a8",
           "eth:0x5c4652fCd79878F7949FA0D264216ce0dfA8E3a6": "eth:0xE6f0abed9816c60580837FF19bf83221d78505ba",
           "eth:0xC6fbE4779F33Ce09A38029403101fc5B9fA70421": "eth:0xeA72227ec708305f81B7B0FA7BAC8CCAfBEfDE47",
           "eth:0x726795eeb1AE5D6F2F969bc4db451B426dfA6b68": "eth:0x686ac397Fe3F9fa01891a84FE06df2B6d3A4111d",
@@ -48899,7 +49299,7 @@
           "eth:0x3D1213e0Fc5A54604D377fD7f07Aa91446206844": "eth:0xCF3194C6696A0990d32C856dC604dF4b7B683b61",
           "eth:0x5C70914f338803aac24dB249e087DACCd6E5602f": "eth:0xf84823822E55CA7Ca087adf188A7B3Fc60e1b3bd",
           "eth:0x4C1b46adb8877E389171EC6Ef67b385094C0afaD": "eth:0x4B6522e6C6E169e3f95903756eB3C3Ea43272698",
-          "eth:0xDaB276F6E19CCC54cA5aaA2645A94087ca776a3f": "eth:0x382cc1c652271d98447fa1a3202AB53B3c67c937",
+          "eth:0xDaB276F6E19CCC54cA5aaA2645A94087ca776a3f": "eth:0x76ea7aA064D0bf3529c1e6b4e920aC50d1a0d72c",
           "eth:0x2d0E643448C4641B36117695782e2f47322c5F01": "eth:0xd6698c82d143d0e1177382663D996C825edfBdD1",
           "eth:0x4f9fA7eC4bB1E456E595E0B7661B390Ebb98590f": "eth:0x5FFd8BE8D1c985Cb8D952AAf38Ed1326672D1D00",
           "eth:0xd0580192E98eA6CEB9c7b6191Ed2E27560911697": "eth:0x558d77ff4B6C760c1034536E379feB69dB5a96e2",
@@ -48912,7 +49312,14 @@
           "eth:0x7cEef2A3a331235989e1f66030bCB61534D825D1": "eth:0xa63e6bD884C3a4EACa105ABE666Bc303059D93C1",
           "eth:0x03c69A6B12bd7310087075DEc81a9d42300994F8": "eth:0xa41c5dA96B4758362Ed5bc076903a80d70f4c943",
           "eth:0x0d9e0916eA60D5439F1535BEA4cB83b25780Eb36": "eth:0xdE61BAE56E79306B0b42Bf3297F3c138347099B7",
-          "eth:0xC98a910eDE52E7d5308525845F19e17470DbCCF7": "eth:0xbDF22Fb592DD6637Effe760b8c09aB8c0A087FcE"
+          "eth:0xC98a910eDE52E7d5308525845F19e17470DbCCF7": "eth:0xbDF22Fb592DD6637Effe760b8c09aB8c0A087FcE",
+          "eth:0x6a547b25534234bb79CE6961a23Db13DE154b6F4": "eth:0x9564594A96740251bA59d28E968C60D616d49d70",
+          "eth:0x8d301801d899dC81fEabBDE69407A53b82bdBF19": "eth:0xD6A2AFEc1485c70a6E145F79bDb1A69F93078986",
+          "eth:0x8d015aFcb6F437010653352EB1E58152c4e23734": "eth:0x2003cB30389b40fF0078FfE56f07890829003Cf4",
+          "eth:0x8BDf6A2DFda084bD242Cd285CF75E80de3eB00ba": "eth:0xF2a4855Cd0b9F4c32a129ce9Ed7628D789d65699",
+          "eth:0xDA187eB6F4D7eE3a0b8f5cd81eED8d347f5693aD": "eth:0x76E053c171c10d1070f9E7819B6933A837c3A3BB",
+          "eth:0x58412AE274F2764B71c66315D97662d47d930d94": "eth:0x1cCE471F5f18f410dDbe4AAc0f499ECb6557dd93",
+          "eth:0x48D7D152Cb996610773CB8be14CD0913172895B1": "eth:0xba7e110830b5E50165B087AA7b3CcF5daCBCD8FE"
         },
         "registryModules": [
           "eth:0x13022e3e6C77524308BD56AEd716E88311b2E533",
@@ -49366,7 +49773,15 @@
             "verifier": "eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af"
           },
           {
+            "destChainSelector": "monad",
+            "verifier": "eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af"
+          },
+          {
             "destChainSelector": "optimism",
+            "verifier": "eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af"
+          },
+          {
+            "destChainSelector": "pharos",
             "verifier": "eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af"
           },
           {
@@ -49622,7 +50037,7 @@
             "offRamp": "eth:0x102423a5371944ab99Aad7185052f969904C6D65"
           },
           "arc": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -49754,7 +50169,7 @@
             "offRamp": "eth:0x26adFa2F46F5efDD5dFDF5b2f9849fD97b8390cc"
           },
           "bsquared": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -49862,7 +50277,7 @@
             "offRamp": "eth:0x5Ad69372a0DFA94188191aB13dF0034cb4454ee1"
           },
           "taiko": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -49934,19 +50349,19 @@
             "offRamp": "eth:0xd4B3957f026e28BF39b2B27810780980cD6f01C4"
           },
           "lens": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
             "tokenNetworkFeeUSDCents": 50,
-            "baseExecutionGasCost": 200000,
+            "baseExecutionGasCost": 5000000,
             "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
             "laneMandatedCCVs": [],
             "defaultExecutor": "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3",
             "offRamp": "eth:0x4156883C9aaAdBF08ff7C50138af72dbeAd73d0a"
           },
           "morph": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -49958,7 +50373,7 @@
             "offRamp": "eth:0x35D59e7Bd6e607F28a62bf93524663F504B04A3C"
           },
           "henesys": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -49970,19 +50385,19 @@
             "offRamp": "eth:0x4D3457B8Cf083113F7d4BeC82DE6F44A8c5A1535"
           },
           "astar": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
             "tokenNetworkFeeUSDCents": 50,
-            "baseExecutionGasCost": 200000,
+            "baseExecutionGasCost": 1000000,
             "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
             "laneMandatedCCVs": [],
             "defaultExecutor": "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3",
             "offRamp": "eth:0x8d8Aab1Ef7047C1bBc6D17202CB39EcA43263CFC"
           },
           "rootstock": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -49999,7 +50414,7 @@
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
             "tokenNetworkFeeUSDCents": 50,
-            "baseExecutionGasCost": 200000,
+            "baseExecutionGasCost": 300000,
             "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
             "laneMandatedCCVs": [],
             "defaultExecutor": "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3",
@@ -50030,19 +50445,19 @@
             "offRamp": "eth:0x197b356FfC1abda68f38AF6Ad28aaEBA5f089419"
           },
           "zksync": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
             "tokenNetworkFeeUSDCents": 50,
-            "baseExecutionGasCost": 200000,
+            "baseExecutionGasCost": 5000000,
             "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
             "laneMandatedCCVs": [],
             "defaultExecutor": "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3",
             "offRamp": "eth:0xd072940492b5cbE546EedDb17481b256E0B6A21a"
           },
           "xdc": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -50066,7 +50481,7 @@
             "offRamp": "eth:0xD7f1eB70a6A471548a2fab5e0Af5Eb8CB289D547"
           },
           "jovay": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -50210,7 +50625,7 @@
             "offRamp": "eth:0x3f160A0c4A2Fd54855B62E7501FadfE1c03B567e"
           },
           "bitlayer": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -50222,7 +50637,7 @@
             "offRamp": "eth:0xECFF67559c0583027A5fbd85136E33bC4D66eeA0"
           },
           "sonic": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -50234,7 +50649,7 @@
             "offRamp": "eth:0x5A07E1CdaBF6e1b5a917f5b67a1Fe9a42c130F4B"
           },
           "katana": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -50282,7 +50697,7 @@
             "offRamp": "eth:0x4914044f8d787bd5DC7528f00775D850dC54477e"
           },
           "etherlink": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -50294,7 +50709,7 @@
             "offRamp": "eth:0xCEC185eB182c47d1bA1EFc84e6959e18cd620Be4"
           },
           "megaeth": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -50306,7 +50721,7 @@
             "offRamp": "eth:0x5A07E1CdaBF6e1b5a917f5b67a1Fe9a42c130F4B"
           },
           "stable": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -50318,7 +50733,7 @@
             "offRamp": "eth:0x4eA35565147A7A6BfDAF7e605BDCdA4BD039A540"
           },
           "berachain": {
-            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "addressBytesLength": 20,
             "tokenReceiverAllowed": false,
             "messageNetworkFeeUSDCents": 50,
@@ -50352,6 +50767,54 @@
             "laneMandatedCCVs": [],
             "defaultExecutor": "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3",
             "offRamp": "eth:0x99bF17A320a981710F9b53C0c0b27219c1121d8d"
+          },
+          "tac": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "addressBytesLength": 20,
+            "tokenReceiverAllowed": false,
+            "messageNetworkFeeUSDCents": 50,
+            "tokenNetworkFeeUSDCents": 50,
+            "baseExecutionGasCost": 200000,
+            "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
+            "laneMandatedCCVs": [],
+            "defaultExecutor": "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3",
+            "offRamp": "eth:0xDB4E8291304DAc89caec9D0D000d2ddF258C7872"
+          },
+          "kaia": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "addressBytesLength": 20,
+            "tokenReceiverAllowed": false,
+            "messageNetworkFeeUSDCents": 50,
+            "tokenNetworkFeeUSDCents": 50,
+            "baseExecutionGasCost": 200000,
+            "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
+            "laneMandatedCCVs": [],
+            "defaultExecutor": "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3",
+            "offRamp": "eth:0x626779f062fcdE0949ca93Dc5fB14d9F68C6A48D"
+          },
+          "gravity": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "addressBytesLength": 20,
+            "tokenReceiverAllowed": false,
+            "messageNetworkFeeUSDCents": 50,
+            "tokenNetworkFeeUSDCents": 50,
+            "baseExecutionGasCost": 200000,
+            "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
+            "laneMandatedCCVs": [],
+            "defaultExecutor": "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3",
+            "offRamp": "eth:0x27Da8AB83eC4d72fd744748b273F6bf9B5BDB121"
+          },
+          "mova": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "addressBytesLength": 20,
+            "tokenReceiverAllowed": false,
+            "messageNetworkFeeUSDCents": 50,
+            "tokenNetworkFeeUSDCents": 50,
+            "baseExecutionGasCost": 200000,
+            "defaultCCVs": ["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],
+            "laneMandatedCCVs": [],
+            "defaultExecutor": "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3",
+            "offRamp": "eth:0x27Da8AB83eC4d72fd744748b273F6bf9B5BDB121"
           }
         },
         "getDynamicConfig": {
@@ -50365,7 +50828,7 @@
           "ink": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "canton": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "plume": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-          "arc": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "arc": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "cronos": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "ab": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "abstract": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -50376,7 +50839,7 @@
           "matic": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "apechain": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "opbnb": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-          "bsquared": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "bsquared": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "celo": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "core": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "creditcoin": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -50385,24 +50848,24 @@
           "andromeda": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "mode": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "scroll": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-          "taiko": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "taiko": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "worldchain": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "zircuit": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "fraxtal": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "hedera": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "hemi": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-          "lens": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
-          "morph": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
-          "henesys": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
-          "astar": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
-          "rootstock": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "lens": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "morph": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "henesys": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "astar": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "rootstock": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "sei": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "shibarium": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "soneium": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-          "zksync": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
-          "xdc": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "zksync": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "xdc": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "tempo": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-          "jovay": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "jovay": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "bittensor": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "0g": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "unichain": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -50414,18 +50877,22 @@
           "bob": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "wemix": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "neox": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-          "bitlayer": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
-          "sonic": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
-          "katana": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "bitlayer": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "sonic": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "katana": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "avalanche": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "monad": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "bsc": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-          "etherlink": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
-          "megaeth": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
-          "stable": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
-          "berachain": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+          "etherlink": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "megaeth": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "stable": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "berachain": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
           "base": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-          "hyperliquid": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+          "hyperliquid": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "tac": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "kaia": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "gravity": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "mova": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
         },
         "staticConfig": {
           "chainSelector": "ethereum",
@@ -50858,44 +51325,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Bob Multisig 2",
-      "address": "eth:0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7",
-      "sinceTimestamp": 1713770711,
-      "sinceBlock": 19709429,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0xfB7Cf35d123BcE8bc91DC7bEccDC8ab81853007c",
-          "eth:0x45894CeBad0a1298D44aF2B528490693E58B322E",
-          "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-          "eth:0xCa1B0866CCcfcFf6dbb7B8a0eD57EA663070c50c",
-          "eth:0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff",
-          "eth:0xa23366C4bDD05d6Ac5ae66503fb5AC2827eD5051"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x6a6f2d16d9d51330c9986dfc10b608ddfb077dbe96293eb4056d0c94f94d325f",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 9,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
       "address": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
       "type": "EOA",
       "proxyType": "EOA"
@@ -50907,11 +51336,6 @@
     },
     {
       "address": "eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xCa1B0866CCcfcFf6dbb7B8a0eD57EA663070c50c",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -51331,6 +51755,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xD8192E257630394aBf289fb350482264aa700cB2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CommitStore",
       "address": "eth:0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802",
       "type": "Contract",
@@ -51624,17 +52053,17 @@
             }
           }
         },
-        "getOpCount": 1715,
+        "getOpCount": 1757,
         "getRoot": {
-          "root": "0xe13979753fc3e5c50df7564ed5c03ff85e7b15890729c4ca29aa33e1bbc19b2f",
-          "validUntil": 1790862602
+          "root": "0xf8181b112360447268e48db863023c805baf62d4caac27884699225723cc0a68",
+          "validUntil": 1791936000
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e",
-          "preOpCount": 1714,
-          "postOpCount": 1715,
-          "overridePreviousRoot": true
+          "preOpCount": 1756,
+          "postOpCount": 1757,
+          "overridePreviousRoot": false
         },
         "memberCount": 42,
         "minSigs": 4,
@@ -52782,7 +53211,9 @@
           "eth:0xFe1e61E23698d619235B88936eF670AcF9FB398B",
           "eth:0x162Bd3604c3bAfF49F91bA845ad79c6B2Cc7682E",
           "eth:0x3F1d9e1b241C918eFd1564018eE0e1Dc3C429d2f",
-          "eth:0x6e1965bA05D34E0772754779B9e8Fb5EF7e73F2D"
+          "eth:0x6e1965bA05D34E0772754779B9e8Fb5EF7e73F2D",
+          "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c",
+          "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3"
         ],
         "getMinterManager": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "owner": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
@@ -52799,6 +53230,11 @@
     },
     {
       "address": "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xEAc54284b1Eb10132c7204cF6265ae1ae122BC86",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -53043,11 +53479,6 @@
     },
     {
       "address": "eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -53608,9 +54039,10 @@
           "avalanche": "CCV",
           "adi": "LOCK_RELEASE",
           "ronin": "LOCK_RELEASE",
-          "pharos": "LOCK_RELEASE",
+          "pharos": "CCV",
           "base": "CCV",
-          "neox": "LOCK_RELEASE"
+          "neox": "LOCK_RELEASE",
+          "monad": "CCV"
         },
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -53985,7 +54417,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 624,
+        "getExpectedNextSequenceNumber": 626,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -54174,7 +54606,7 @@
       }
     },
     {
-      "address": "eth:0xfB7Cf35d123BcE8bc91DC7bEccDC8ab81853007c",
+      "address": "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -57392,14 +57824,6 @@
       "function unblockFunctionSelector(bytes4 selector)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "eth:0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb": [
-      "constructor(address _owner)",
-      "function getImplementation() returns (address)",
-      "function getOwner() returns (address)",
-      "function setCode(bytes _code)",
-      "function setOwner(address _owner)",
-      "function setStorage(bytes32 _key, bytes32 _value)"
-    ],
     "eth:0x459154447d3BD41392Ea3f49738a887dD3f1e5d0": [
       "constructor(tuple(uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address rmnProxy) staticConfig)",
       "error ConfigDigestMismatch(bytes32 expected, bytes32 actual)",
@@ -57757,6 +58181,76 @@
       "function unpause()",
       "function verify(bytes32[] hashedLeaves, bytes32[] proofs, uint256 proofFlagBits) view returns (uint256 timestamp)"
     ],
+    "eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC": [
+      "constructor(address tokenContract_)",
+      "error AddressEmptyCode(address target)",
+      "error AlreadySecondaryMarketBurned(bytes secondaryMarketBurnedAddress, uint32 domain)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EmptyAddress()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error InvalidRescueRecipient(address recipient)",
+      "error MintFailed()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RecipientNotAllowed(address recipient)",
+      "error RecordNotFound()",
+      "error RenounceOwnershipDisabled()",
+      "error SafeERC20FailedOperation(address token)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnauthorizedCaller()",
+      "error ZeroAddress()",
+      "error ZeroBalance()",
+      "error ZeroHash()",
+      "event AddressManagerChanged(address indexed oldAddressManager, address indexed newAddressManager)",
+      "event AllowedRecipientAdded(address indexed recipient)",
+      "event AllowedRecipientRemoved(address indexed recipient)",
+      "event HashUpdaterChanged(address indexed oldHashUpdater, address indexed newHashUpdater)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemintTxHashUpdated(bytes secondaryMarketBurnedAddress, uint32 indexed domain, bytes32 txHash)",
+      "event RescueERC20(address indexed token, address indexed to, uint256 amount)",
+      "event RescuerChanged(address indexed oldRescuer, address indexed newRescuer)",
+      "event SecondaryMarketBurnRecorded(bytes secondaryMarketBurnedAddress, uint32 indexed domain, uint256 balance, address indexed remintRecipient)",
+      "event SecondaryMarketBurnerChanged(address indexed oldSecondaryMarketBurner, address indexed newSecondaryMarketBurner)",
+      "event Upgraded(address indexed implementation)",
+      "function TOKEN() view returns (address)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function addAllowedRecipient(address recipient)",
+      "function addressManager() view returns (address)",
+      "function getSecondaryMarketBurnRecord(bytes secondaryMarketBurnedAddress, uint32 domain) view returns (bytes burnedAddress, uint32 domain_, uint256 balance, address remintRecipient, bytes32 remintTxHash)",
+      "function getSecondaryMarketBurnRecord(address secondaryMarketBurnedAddress, uint32 domain) view returns (address burnedAddress, uint32 domain_, uint256 balance, address remintRecipient, bytes32 remintTxHash)",
+      "function hashUpdater() view returns (address)",
+      "function initialize(address secondaryMarketBurner_, address hashUpdater_, address rescuer_, address addressManager_)",
+      "function isAllowedRecipient(address recipient) view returns (bool)",
+      "function isSecondaryMarketBurned(bytes secondaryMarketBurnedAddress, uint32 domain) view returns (bool)",
+      "function isSecondaryMarketBurned(address secondaryMarketBurnedAddress, uint32 domain) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function removeAllowedRecipient(address recipient)",
+      "function renounceOwnership()",
+      "function rescueERC20(address token, address to, uint256 amount)",
+      "function rescuer() view returns (address)",
+      "function secondaryMarketBurnAndRemint(bytes secondaryMarketBurnedAddress, uint32 domain, uint256 balance, address remintRecipient)",
+      "function secondaryMarketBurnedBalance(bytes secondaryMarketBurnedAddress, uint32 domain) view returns (uint256)",
+      "function secondaryMarketBurnedBalance(address secondaryMarketBurnedAddress, uint32 domain) view returns (uint256)",
+      "function secondaryMarketBurner() view returns (address)",
+      "function setRemintTxHash(bytes secondaryMarketBurnedAddress, uint32 domain, bytes32 txHash)",
+      "function totalSecondaryMarketBurnedAmount(uint32 domain) view returns (uint256)",
+      "function totalSecondaryMarketBurnedAmount() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateAddressManager(address newAddressManager)",
+      "function updateHashUpdater(address newHashUpdater)",
+      "function updateRescuer(address newRescuer)",
+      "function updateSecondaryMarketBurner(address newSecondaryMarketBurner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0x5Fd81cF5734498467634Ed9432aad298022e15Ff": [
       "constructor(tuple(uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address rmnProxy) staticConfig)",
       "error ConfigDigestMismatch(bytes32 expected, bytes32 actual)",
@@ -57920,6 +58414,28 @@
       "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
       "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
       "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
+    "eth:0x65E0c4AB4Da5d22E824879DEB43123D23217DEdD": [
+      "constructor(address tokenMessenger)",
+      "error CannotTransferToSelf()",
+      "error MustBeProposedOwner()",
+      "error OnlyCallableByOwner()",
+      "error OwnerCannotBeZero()",
+      "error TransmitterCannotBeZero()",
+      "error UnauthorizedCaller(address caller)",
+      "error ZeroAddressNotAllowed()",
+      "event AuthorizedCallerAdded(address caller)",
+      "event AuthorizedCallerRemoved(address caller)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function applyAuthorizedCallerUpdates(tuple(address[] addedCallers, address[] removedCallers) authorizedCallerArgs)",
+      "function getAllAuthorizedCallers() view returns (address[])",
+      "function i_cctpTransmitter() view returns (address)",
+      "function owner() view returns (address)",
+      "function receiveMessage(bytes message, bytes attestation) returns (bool success)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)"
     ],
     "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A": [
       "constructor(uint256 minDelay, address admin, address[] proposers, address[] executors, address[] cancellers, address[] bypassers)",
@@ -58488,9 +59004,6 @@
       "error ERC1967NonPayable()",
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff": [
-      "constructor(address _singleton)"
     ],
     "eth:0x79bC82F3931A7d017719146A822e4AD8152b157e": [
       "error CallReverted(bytes error)",
@@ -59810,6 +60323,78 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address implementation)"
     ],
+    "eth:0xa22606F055146f0eac2FBEd49253E779b781355D": [
+      "constructor(address tokenMessenger, address messageTransmitterProxy, address usdcToken, tuple(address feeAggregator, address allowlistAdmin, uint16 fastFinalityBps) dynamicConfig, tuple(string[] storageLocations, address rmn, bytes4 versionTag) baseVerifierArgs)",
+      "error CallerIsNotARampOnRouter(address caller)",
+      "error CannotTransferToSelf()",
+      "error CursedByRMN(uint64 destChainSelector)",
+      "error DestGasCannotBeZero(uint64 destChainSelector)",
+      "error Invalid32ByteAddress(bytes encodedAddress)",
+      "error InvalidAllowListRequest(uint64 destChainSelector)",
+      "error InvalidCCVVersion(bytes4 expected, bytes4 got)",
+      "error InvalidFastFinalityBps(uint16 fastFinalityBps)",
+      "error InvalidMessageId(bytes32 expected, bytes32 got)",
+      "error InvalidMessageSender(bytes32 expected, bytes32 got)",
+      "error InvalidMessageTransmitterOnProxy(address expected, address got)",
+      "error InvalidMessageTransmitterVersion(uint32 expected, uint32 got)",
+      "error InvalidReceiver(bytes receiver)",
+      "error InvalidRemoteChainConfig(uint64 remoteChainSelector)",
+      "error InvalidRequestedFinality(bytes4 requestedFinality, bytes4 allowedFinality)",
+      "error InvalidSetDomainArgs(tuple(bytes32 allowedCallerOnDest, bytes32 allowedCallerOnSource, bytes32 mintRecipientOnDest, uint64 chainSelector, uint32 domainIdentifier, bool enabled) args)",
+      "error InvalidSourceDomain(uint32 expected, uint32 got)",
+      "error InvalidToken(bytes token)",
+      "error InvalidTokenMessengerVersion(uint32 expected, uint32 got)",
+      "error InvalidTokenTransferLength(uint256 length)",
+      "error InvalidVerifierArgsLength(uint256 length)",
+      "error InvalidVerifierResults()",
+      "error MustBeProposedOwner()",
+      "error OnlyCallableByOwner()",
+      "error OnlyCallableByOwnerOrAllowlistAdmin()",
+      "error OwnerCannotBeZero()",
+      "error ReceiveMessageCallFailed()",
+      "error RemoteChainNotSupported(uint64 remoteChainSelector)",
+      "error RequestedFinalityCanOnlyHaveOneMode(bytes4 encodedFinality)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SenderNotAllowed(address sender)",
+      "error UnknownDomain(uint64 chainSelector)",
+      "error VersionTagCannotBeZero()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroAddressNotAllowed()",
+      "event AllowListSendersAdded(uint64 indexed destChainSelector, address senders)",
+      "event AllowListSendersRemoved(uint64 indexed destChainSelector, address senders)",
+      "event AllowListStateChanged(uint64 indexed destChainSelector, bool allowlistEnabled)",
+      "event DomainsSet(tuple(bytes32 allowedCallerOnDest, bytes32 allowedCallerOnSource, bytes32 mintRecipientOnDest, uint64 chainSelector, uint32 domainIdentifier, bool enabled)[] domains)",
+      "event DynamicConfigSet(tuple(address feeAggregator, address allowlistAdmin, uint16 fastFinalityBps) dynamicConfig)",
+      "event FeeTokenWithdrawn(address indexed receiver, address indexed feeToken, uint256 amount)",
+      "event FinalityConfigSet(bytes4 allowedFinality)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event RemoteChainConfigSet(uint64 indexed remoteChainSelector, address router, bool allowlistEnabled)",
+      "event StaticConfigSet(address tokenMessenger, address messageTransmitterProxy, address usdcToken, uint32 localDomainIdentifier)",
+      "event StorageLocationsUpdated(string[] oldLocations, string[] newLocations)",
+      "function acceptOwnership()",
+      "function applyAllowlistUpdates(tuple(uint64 destChainSelector, bool allowlistEnabled, address[] addedAllowlistedSenders, address[] removedAllowlistedSenders)[] allowlistConfigArgsItems)",
+      "function applyRemoteChainConfigUpdates(tuple(address router, uint64 remoteChainSelector, bool allowlistEnabled, uint16 feeUSDCents, uint32 gasForVerification, uint16 payloadSizeBytes)[] remoteChainConfigArgs)",
+      "function forwardToVerifier(tuple(uint64 sourceChainSelector, uint64 destChainSelector, uint64 messageNumber, uint32 executionGasLimit, uint32 ccipReceiveGasLimit, bytes4 finality, bytes32 ccvAndExecutorHash, bytes onRampAddress, bytes offRampAddress, bytes sender, bytes receiver, bytes destBlob, tuple(uint256 amount, bytes sourcePoolAddress, bytes sourceTokenAddress, bytes destTokenAddress, bytes tokenReceiver, bytes extraData)[] tokenTransfer, bytes data) message, bytes32 messageId, address, uint256, bytes verifierArgs) returns (bytes verifierReturnData)",
+      "function getAllowedFinalityConfig() view returns (bytes4 allowedFinality)",
+      "function getDomain(uint64 chainSelector) view returns (tuple(bytes32 allowedCallerOnDest, bytes32 allowedCallerOnSource, bytes32 mintRecipientOnDest, uint32 domainIdentifier, bool enabled))",
+      "function getDynamicConfig() view returns (tuple(address feeAggregator, address allowlistAdmin, uint16 fastFinalityBps) dynamicConfig)",
+      "function getFee(uint64 destChainSelector, tuple(bytes receiver, bytes data, tuple(address token, uint256 amount)[] tokenAmounts, address feeToken, bytes extraArgs), bytes, bytes4 requestedFinality) view returns (uint16 feeUSDCents, uint32 gasForVerification, uint32 payloadSizeBytes)",
+      "function getRemoteChainConfig(uint64 remoteChainSelector) view returns (tuple(address router, uint64 remoteChainSelector, bool allowlistEnabled, uint16 feeUSDCents, uint32 gasForVerification, uint16 payloadSizeBytes) remoteChainConfig, address[] allowedSendersList)",
+      "function getStaticConfig() view returns (address tokenMessenger, address messageTransmitterProxy, address usdcToken, uint32 localDomainIdentifier)",
+      "function getStorageLocations() view returns (string[])",
+      "function owner() view returns (address)",
+      "function setAllowedFinalityConfig(bytes4 allowedFinality)",
+      "function setDomains(tuple(bytes32 allowedCallerOnDest, bytes32 allowedCallerOnSource, bytes32 mintRecipientOnDest, uint64 chainSelector, uint32 domainIdentifier, bool enabled)[] domains)",
+      "function setDynamicConfig(tuple(address feeAggregator, address allowlistAdmin, uint16 fastFinalityBps) dynamicConfig)",
+      "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)",
+      "function updateStorageLocations(string[] newLocations)",
+      "function verifyMessage(tuple(uint64 sourceChainSelector, uint64 destChainSelector, uint64 messageNumber, uint32 executionGasLimit, uint32 ccipReceiveGasLimit, bytes4 finality, bytes32 ccvAndExecutorHash, bytes onRampAddress, bytes offRampAddress, bytes sender, bytes receiver, bytes destBlob, tuple(uint256 amount, bytes sourcePoolAddress, bytes sourceTokenAddress, bytes destTokenAddress, bytes tokenReceiver, bytes extraData)[] tokenTransfer, bytes data) message, bytes32 messageHash, bytes verifierResults)",
+      "function versionTag() view returns (bytes4 tag)",
+      "function withdrawFeeTokens(address[] feeTokens)"
+    ],
     "eth:0xa30C41865729C248067704d4DB9F38385Cbe1186": [
       "constructor(uint32 _localDomain, uint32 _version)",
       "event AttesterDisabled(address indexed attester)",
@@ -60025,6 +60610,14 @@
       "function typeAndVersion() view returns (string)",
       "function unpause()",
       "function verify(bytes32[] hashedLeaves, bytes32[] proofs, uint256 proofFlagBits) view returns (uint256 timestamp)"
+    ],
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0xA7E77BD47e2fDeE61df271E8b9206F3F1E804427": [
       "constructor(tuple(uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address rmnProxy) staticConfig)",
@@ -60888,9 +61481,6 @@
       "function typeAndVersion() view returns (string)",
       "function unpause()",
       "function verify(bytes32[] hashedLeaves, bytes32[] proofs, uint256 proofFlagBits) view returns (uint256 timestamp)"
-    ],
-    "eth:0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194": [
-      "constructor(address _singleton)"
     ],
     "eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D": [
       "constructor(address token)",
@@ -62829,14 +63419,14 @@
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
   "usedBlockNumbers": {
-    "arbitrum": 509747175,
-    "base": 51909960,
-    "bsc": 124548673,
-    "ethereum": 26076847,
-    "optimism": 157505245,
-    "polygonpos": 94602752
+    "arbitrum": 512575969,
+    "base": 52294982,
+    "bsc": 126259159,
+    "ethereum": 26140776,
+    "optimism": 157890267,
+    "polygonpos": 95116081
   },
-  "permissionsConfigHash": "0x291ef373da102412fe43c5e4ff164589278c8e575a16942f9c9b3019cd6cc5f6",
+  "permissionsConfigHash": "0xb0b74838fdeecfc7e7b786ae4d550ba28da8aeb8e74c87f8f9ee9ef137298700",
   "permissions": {
     "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5": {
       "receivedPermissions": [
@@ -62928,12 +63518,6 @@
           "permission": "interact",
           "from": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
           "description": "change the wrapped native token used for native-fee payments.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574",
-          "description": "configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.",
           "role": ".owner"
         },
         {
@@ -63859,6 +64443,15 @@
           "permission": "interact",
           "from": "eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b",
           "description": "change the fee aggregator that receives fee-token balances withdrawn from this resolver.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574",
+          "description": "configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
@@ -64912,6 +65505,26 @@
         }
       ]
     },
+    "eth:0x1238060eedfF5cBc9929f53DFee5C986F52b27f3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
     "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B": {
       "receivedPermissions": [
         {
@@ -65027,6 +65640,16 @@
           "role": ".controllers"
         }
       ]
+    },
+    "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd",
+          "role": "admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
     },
     "eth:0x17D8a409fE2ceF2d3808bcB61F14aBEFfc28876e": {
       "receivedPermissions": [
@@ -66247,12 +66870,6 @@
           "permission": "interact",
           "from": "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F",
           "description": "select the OnRamp and OffRamp addresses authorized to invoke this verifier for each configured remote chain.",
-          "role": ".routeRouters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
-          "description": "invoke forwardFromRouter and submit messages to this OnRamp for the configured destination route.",
           "role": ".routeRouters"
         }
       ]
@@ -67568,6 +68185,12 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574",
+          "description": "configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6",
           "description": "add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.",
           "role": ".owner"
@@ -68243,16 +68866,6 @@
           "from": "eth:0xFE73BccC5b88D22969099EBb4E2eb5e19eFb0165",
           "description": "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.",
           "role": ".owner"
-        }
-      ]
-    },
-    "eth:0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x966A3BE75103C680b6A4248689630c788659d2A5",
-          "description": "deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.",
-          "role": ".getAllAuthorizedCallers"
         }
       ]
     },
@@ -74287,6 +74900,16 @@
         }
       ]
     },
+    "eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
     "eth:0xA69d606205419F67a46d772c66cf685971d5ceed": {
       "receivedPermissions": [
         {
@@ -74884,15 +75507,6 @@
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "execute already-committed CCIP messages on this OffRamp.",
           "role": ".ocrExecutionTransmitters"
-        }
-      ]
-    },
-    "eth:0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194": {
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb",
-          "role": "admin"
         }
       ]
     },
@@ -76493,6 +77107,18 @@
           "permission": "interact",
           "from": "eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b",
           "description": "change the fee aggregator that receives fee-token balances withdrawn from this resolver.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574",
+          "description": "configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.",
           "role": ".owner",
           "via": [
             {
@@ -78233,6 +78859,18 @@
           "permission": "interact",
           "from": "eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b",
           "description": "change the fee aggregator that receives fee-token balances withdrawn from this resolver.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574",
+          "description": "configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.",
           "role": ".owner",
           "via": [
             {
@@ -80486,6 +81124,18 @@
           "permission": "interact",
           "from": "eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b",
           "description": "change the fee aggregator that receives fee-token balances withdrawn from this resolver.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574",
+          "description": "configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.",
           "role": ".owner",
           "via": [
             {
@@ -86955,6 +87605,26 @@
           "permission": "act",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "role": ".ocrCommitSigners"
+        }
+      ]
+    },
+    "eth:0xfB9a1Af976e70113b6879a70144cDECe1EA8C42c": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
         }
       ]
     },

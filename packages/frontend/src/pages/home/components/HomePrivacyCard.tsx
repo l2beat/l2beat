@@ -98,6 +98,7 @@ export function HomePrivacyCard({
               <HomePrivacyDot
                 adversaries={protocol.adversaries}
                 href={protocol.href}
+                isUnderReview={protocol.isUnderReview}
               />
             ),
           },

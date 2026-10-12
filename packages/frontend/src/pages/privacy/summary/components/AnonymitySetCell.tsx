@@ -8,7 +8,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { anonymitySetCoverageNote } from '~/components/projects/sections/sectionCopy'
 import { UserIcon } from '~/icons/User'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSummaries'
 import {
   getAnonymitySetDescription,
@@ -44,10 +46,31 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
       </Tooltip>
     )
   }
+  if (anonymitySet.status === 'too-small') {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            className="font-medium text-secondary text-xs leading-[15px] md:text-sm md:leading-[1.2]"
+          >
+            Too small
+          </button>
+        </TooltipTrigger>
+        <TooltipContent className="max-w-[320px]">
+          Too few users to track exactly.
+        </TooltipContent>
+      </Tooltip>
+    )
+  }
 
   const displayValue = formatInteger(anonymitySet.value)
   const steps = getAnonymitySetSteps(anonymitySet, projectName)
   const syncingNote = getAnonymitySetSyncingNote(anonymitySet)
+  const coverageNote = anonymitySetCoverageNote(
+    anonymitySet.coverage,
+    ANONYMITY_SET_WINDOW_DAYS,
+  )
 
   return (
     <Tooltip>
@@ -73,6 +96,9 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
         {syncingNote !== undefined && (
           <p className="mt-2 text-secondary">{syncingNote}</p>
         )}
+        {coverageNote !== undefined && (
+          <p className="mt-2 text-secondary">{coverageNote}</p>
+        )}
         <Callout
           className="mt-2 px-3 py-2"
           color="purple"
@@ -90,11 +116,8 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
                 </ol>
               </div>
               <p className="border-purple-450/30 border-t pt-2">
-                Practical privacy also depends on the timing of deposits and
-                withdrawals, the underlying network and browser used to interact
-                with the frontend (if used), and the RPC providers used to send
-                transactions and query public blockchain state. Users are
-                advised to research OPSEC best practices.
+                Network, browser and RPC choices matter too. See the onchain
+                privacy best practices.
               </p>
             </div>
           }

@@ -28,6 +28,7 @@ import {
   TableRow,
 } from './Table'
 import { TableEmptyState } from './TableEmptyState'
+import { stickyTableColumnRowProps } from './useStickyTableHeader'
 import { applyBasicTableRowSorting } from './utils/applyBasicTableRowSorting'
 import {
   getBasicTableBodyCellClassName,
@@ -35,7 +36,10 @@ import {
   getBasicTableGroupedHeaderCellClassName,
   getBasicTableHeaderCellClassName,
 } from './utils/classNames'
-import { getCommonPinningStyles } from './utils/commonPinningStyles'
+import {
+  getCommonPinningStyles,
+  getPinnedHeaderCellProps,
+} from './utils/commonPinningStyles'
 import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditionalRowIndex'
 import { getBasicTableGroupParams } from './utils/getBasicTableGroupParams'
 import { getBasicTableHeaderSections } from './utils/getBasicTableHeaderSections'
@@ -73,6 +77,12 @@ export interface BasicTableProps<T extends BasicTableRow> {
   getHighlightId?: (ctx: T) => string
   tableWrapperClassName?: string
   /**
+   * Keeps the header in view while the table scrolls under the top of its
+   * scroll area. On by default; turn it off for small tables shown as part of
+   * a card or list, where a moving header adds nothing.
+   */
+  stickyHeader?: boolean
+  /**
    * Trims the row and header heights. For tables shown alongside other content
    * rather than as a page's main subject.
    */
@@ -109,6 +119,21 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   )
 
   const persistedColumns = props.table.options.meta?.persistedColumns
+  const header = (
+    <>
+      <ColGroup groupedHeader={groupedHeader} actualHeader={actualHeader} />
+      <TableHeader>
+        {groupedHeader && (
+          <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
+        )}
+        <BasicTableActualHeaderRow
+          actualHeader={actualHeader}
+          compact={props.compact}
+        />
+        <BasicTableHeaderDividerRow />
+      </TableHeader>
+    </>
+  )
 
   return (
     <>
@@ -121,19 +146,10 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
       )}
       <Table
         tableWrapperClassName={props.tableWrapperClassName}
+        header={header}
+        stickyHeader={props.stickyHeader ?? true}
         {...getPersistedTableAttributes(props.table)}
       >
-        {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
-        <TableHeader>
-          {groupedHeader && (
-            <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
-          )}
-          <BasicTableActualHeaderRow
-            actualHeader={actualHeader}
-            compact={props.compact}
-          />
-          <BasicTableHeaderDividerRow />
-        </TableHeader>
         <TableBody>
           {rows.map((row) => (
             <BasicTableRow row={row} key={row.id} {...props} />
@@ -182,7 +198,7 @@ function BasicTableGroupedHeaderRow<T>({
                   hasHeader: !!header.column.columnDef.header,
                   isPinned: header.column.getIsPinned() !== false,
                 })}
-                style={getCommonPinningStyles(header.column)}
+                {...getPinnedHeaderCellProps(header.column)}
               >
                 {!header.isPlaceholder &&
                   !!header.column.columnDef.header &&
@@ -210,7 +226,7 @@ function BasicTableActualHeaderRow<T>({
   compact: boolean | undefined
 }) {
   return (
-    <TableHeaderRow>
+    <TableHeaderRow {...stickyTableColumnRowProps}>
       {getRenderedHeaders(actualHeader.headers).map(
         (header, index, headers) => {
           const isLast = index === headers.length - 1
@@ -227,7 +243,7 @@ function BasicTableActualHeaderRow<T>({
                 })}
                 align={header.column.columnDef.meta?.align}
                 tooltip={header.column.columnDef.meta?.tooltip}
-                style={getCommonPinningStyles(header.column)}
+                {...getPinnedHeaderCellProps(header.column)}
                 {...getPersistedColumnAttributes(header.column)}
               >
                 {header.isPlaceholder ? null : (
@@ -442,29 +458,54 @@ function prepareBasicTableVisibleCells<T extends BasicTableRow>(
   }
 }
 
-function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
-  return getRenderedHeaders(props.headers).map((header, index, headers) => {
-    const isLast = index === headers.length - 1
+/**
+ * One `col` per rendered column, fillers included. Grouped columns get their
+ * tint from the column groups, and the sticky header copy sizes its fixed
+ * layout through the `col`s.
+ */
+function ColGroup<T>({
+  groupedHeader,
+  actualHeader,
+}: {
+  groupedHeader: HeaderGroup<T> | undefined
+  actualHeader: HeaderGroup<T>
+}) {
+  if (!groupedHeader) {
     return (
-      <React.Fragment key={header.id}>
-        <colgroup
-          className={cn(!header.isPlaceholder && 'bg-header-secondary')}
-        >
-          {range(getRenderedColSpan(header)).map((i) => (
-            <col key={`${header.id}-${i}`} />
-          ))}
-        </colgroup>
-        {!header.isPlaceholder && !isLast && (
-          <BasicTableColumnFiller as="colgroup" />
-        )}
-      </React.Fragment>
+      <colgroup>
+        {getRenderedHeaders(actualHeader.headers).map((header) => (
+          <col key={header.id} />
+        ))}
+      </colgroup>
     )
-  })
+  }
+
+  return getRenderedHeaders(groupedHeader.headers).map(
+    (header, index, headers) => {
+      const isLast = index === headers.length - 1
+      return (
+        <React.Fragment key={header.id}>
+          <colgroup
+            className={cn(!header.isPlaceholder && 'bg-header-secondary')}
+          >
+            {range(getRenderedColSpan(header)).map((i) => (
+              <col key={`${header.id}-${i}`} />
+            ))}
+          </colgroup>
+          {!header.isPlaceholder && !isLast && (
+            <colgroup className={getBasicTableColumnFillerClassName()}>
+              <col />
+            </colgroup>
+          )}
+        </React.Fragment>
+      )
+    },
+  )
 }
 
 function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
   return (
-    <tr>
+    <tr aria-hidden>
       {getRenderedHeaders(props.headers).map((header, index, headers) => {
         const isLast = index === headers.length - 1
         return (
@@ -494,7 +535,7 @@ function BasicTableColumnFiller({
   rowSpan,
   colSpan,
 }: {
-  as: 'th' | 'colgroup' | 'td'
+  as: 'th' | 'td'
   rowSpan?: number
   colSpan?: number
 }) {

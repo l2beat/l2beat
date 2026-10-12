@@ -16,9 +16,11 @@ import { Markdown } from '~/components/markdown/Markdown'
 import {
   ProjectTooltipContent,
   type ProjectTooltipSectionData,
+} from '~/components/projects/ProjectTooltipContent'
+import {
   QUANTUM_RESISTANCE_TOOLTIPS,
   type QuantumResistanceType,
-} from '~/components/projects/ProjectTooltipContent'
+} from '~/components/projects/quantumResistanceTooltips'
 import { ClockIcon } from '~/icons/Clock'
 import { Layer3Icon } from '~/icons/Layer3'
 import { SuperchainIcon } from '~/icons/providers/SuperchainIcon'

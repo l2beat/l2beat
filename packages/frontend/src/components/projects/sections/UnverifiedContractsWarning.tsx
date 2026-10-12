@@ -25,7 +25,7 @@ export function UnverifiedContractsWarning({ entries, className }: Props) {
     >
       <UnverifiedIcon className="size-5 shrink-0 fill-red-300" />
       <Collapsible className="min-w-0 flex-1">
-        <CollapsibleTrigger className="flex w-full cursor-pointer items-start justify-between gap-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand">
+        <CollapsibleTrigger className="flex w-full cursor-pointer items-start justify-between gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand">
           <span className="leading-snug">
             {entries.length}{' '}
             {entries.length === 1 ? 'address has' : 'addresses have'} unverified

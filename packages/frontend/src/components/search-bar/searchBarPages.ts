@@ -145,6 +145,16 @@ export const searchBarPages = withIndex([
         },
       ]
     : []),
+  ...(env.CLIENT_SIDE_BLOBS_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Blobs',
+          href: '/blobs',
+          tags: ['pages', 'blobs', 'da', 'data', 'availability'],
+        },
+      ]
+    : []),
   {
     category: 'zkCatalog',
     name: 'ZK Catalog',
@@ -158,6 +168,16 @@ export const searchBarPages = withIndex([
           name: 'DeFi',
           href: '/defi/summary',
           tags: ['pages', 'defi'],
+        },
+      ]
+    : []),
+  ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Ossification',
+          href: '/ossification',
+          tags: ['pages', 'ossification', 'upgrades', 'security'],
         },
       ]
     : []),

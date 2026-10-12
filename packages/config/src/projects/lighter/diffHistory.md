@@ -1,3 +1,253 @@
+Generated with discovered.json: 0xcc1f45ba10d9b1ef318fd5f388dcab97286d5148
+
+# Diff at Mon, 05 Oct 2026 08:49:21 GMT:
+
+- id: 47bbc214
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@50466fc671947969db5d8bc59484f0d565783dfc block: 1790947397
+- current timestamp: 1790947397
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790947397 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      fieldMeta.approvedUpgradeNoticePeriod.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.approvedUpgradeNoticePeriodFmt.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) [lighter/GovernancePausable] {
+    +++ description: Manages the list of validators, the network governor and the emergency pause guardians.
+      fieldMeta.pauseGuardian.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.emergencyGuardian.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.pauseGuardianPaused.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.emergencyGuardianPaused.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x2dfa250ff0c7296f1144a7d594786c70a9c35003
+
+# Diff at Fri, 02 Oct 2026 13:29:44 GMT:
+
+- id: 104a582f
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@11a44108bd8b596f3d406b83540ae9f7826e9817 block: 1790600976
+- current timestamp: 1790947397
+
+## Description
+
+Governance has added a pause guardian and emergency guardian logic. Both could pause batch commit/verify/execute and withdrawals (Pause Guardian for 2h-24h with 24h cooldown, Emergency Guardian for 24h-72h with 7d cooldown). They are currently set to 0x adderess. Governor could always lift the pause.
+
+New verifier deployed (no sources published yet).
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) [lighter/ZkLighterWithSpot] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      sourceHashes.1:
+-        "0x41c035cf563a98a2dd11b60eb884c9bdc6c8db0b6edd02e2fa546f5711cfea4d"
++        "0x2342f78a8cb132fb471dd913415e6f66e931c65f6daf8455b37b341c722bf51f"
+      values.$implementation.0:
+-        "eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E"
++        "eth:0xE16c893252616dD49913969f145e733b96a3E5A7"
+      values.$implementation.1:
+-        "eth:0x1b2Fd2341cdC9d4F00CE5488A0db172d8C8a98E4"
++        "eth:0xE1A19e35320218E41526ad619cf55985cfF20810"
+      values.additionalZkLighter:
+-        "eth:0x1b2Fd2341cdC9d4F00CE5488A0db172d8C8a98E4"
++        "eth:0xE1A19e35320218E41526ad619cf55985cfF20810"
+      values.getTarget:
+-        "eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E"
++        "eth:0xE16c893252616dD49913969f145e733b96a3E5A7"
+      implementationNames.eth:0x6e1433585b320880f488D0A7c1d2077D43B6Ca4E:
+-        "ZkLighter"
+      implementationNames.eth:0x1b2Fd2341cdC9d4F00CE5488A0db172d8C8a98E4:
+-        "AdditionalZkLighter"
+      implementationNames.eth:0xE16c893252616dD49913969f145e733b96a3E5A7:
++        "ZkLighter"
+      implementationNames.eth:0xE1A19e35320218E41526ad619cf55985cfF20810:
++        "AdditionalZkLighter"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      values.versionId:
+-        72
++        74
+    }
+```
+
+```diff
+    contract Lighter Multisig 2 (eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets."
++        "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets, appoint the Pause and Emergency Guardians and lift their pauses early."
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) [lighter/GovernancePausable] {
+    +++ description: Manages the list of validators, the network governor and the emergency pause guardians.
+      template:
+-        "lighter/Governance"
++        "lighter/GovernancePausable"
+      sourceHashes.1:
+-        "0x0033a032557a6a464645acc1901ac15e72d841e4d56cc8b94c64a55cae92b122"
++        "0x87a6efe7d369db405cf65a6d33bb772aae12a632406fb4533c845a4b4a2e8869"
+      description:
+-        "Manages the list of validators and the network governor."
++        "Manages the list of validators, the network governor and the emergency pause guardians."
+      values.$implementation:
+-        "eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08"
++        "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43"
+      values.getTarget:
+-        "eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08"
++        "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43"
+      values.MAX_DEPOSIT_AMOUNT:
+-        1000000000000000
+      values.MAX_EXCHANGE_USDC_AMOUNT:
+-        "1152921504606846975"
+      values.MAX_MARKET_INDEX:
+-        254
+      values.MAX_POSITION_AMOUNT:
+-        "72057594037927935"
+      values.MAX_POSITION_QUOTE_AMOUNT:
+-        "72057594037927935"
+      values.MIN_ORDER_BASE_AMOUNT:
+-        1
+      values.PRIORITY_EXPIRATION:
+-        1555200
++        1209600
+      values.EMERGENCY_GUARDIAN_COOLDOWN:
++        604800
+      values.EMERGENCY_GUARDIAN_MAX_DURATION:
++        259200
+      values.EMERGENCY_GUARDIAN_MIN_DURATION:
++        86400
++++ description: Can halt batch processing and withdrawals for up to 72h, with a 7d cooldown between pauses.
++++ severity: HIGH
+      values.emergencyGuardian:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: True while an Emergency Guardian pause is active (batch processing and withdrawals halted).
++++ severity: HIGH
+      values.emergencyGuardianPaused:
++        false
+      values.emergencyGuardianState:
++        {"startedAt":0,"expiresAt":0,"cooldownEndsAt":0}
+      values.MAX_ASSET_INDEX:
++        62
+      values.MAX_BATCH_DEPOSIT_LENGTH:
++        1000
+      values.MAX_DEPOSIT_CAP_TICKS:
++        "1152921504606846975"
+      values.MAX_ORDER_QUOTE_AMOUNT:
++        281474976710655
+      values.MAX_PERPS_MARKET_INDEX:
++        254
+      values.MAX_POOL_SHARES_TO_MINT_OR_BURN:
++        "1152921504606846975"
+      values.MAX_PUBLIC_MARKET_INDEX:
++        281474976710655
+      values.MAX_SPOT_MARKET_INDEX:
++        4094
+      values.MAX_STAKING_SHARES_TO_MINT_OR_BURN:
++        "1152921504606846975"
+      values.MAX_TICK_SIZE:
++        "340282366920938463463374607431768211455"
+      values.MIN_ASSET_INDEX:
++        1
+      values.MIN_POOL_SHARES_TO_MINT_OR_BURN:
++        1
+      values.MIN_SPOT_MARKET_INDEX:
++        2048
+      values.MIN_STAKING_SHARES_TO_MINT_OR_BURN:
++        1
+      values.NATIVE_ASSET_INDEX:
++        1
+      values.NIL_PUBLIC_MARKET_INDEX:
++        255
+      values.PAUSE_GUARDIAN_COOLDOWN:
++        86400
+      values.PAUSE_GUARDIAN_MAX_DURATION:
++        86400
+      values.PAUSE_GUARDIAN_MIN_DURATION:
++        7200
++++ description: Can halt batch processing and withdrawals for up to 24h, with a 24h cooldown between pauses.
++++ severity: HIGH
+      values.pauseGuardian:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: True while a Pause Guardian pause is active (batch processing and withdrawals halted).
++++ severity: HIGH
+      values.pauseGuardianPaused:
++        false
+      values.pauseGuardianState:
++        {"startedAt":0,"expiresAt":0,"cooldownEndsAt":0}
+      values.USDC_ASSET_INDEX:
++        3
+      implementationNames.eth:0x46D3C0c01D5DAae4FE8e3f54f32901d9Fbde1f08:
+-        "Governance"
+      implementationNames.eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43:
++        "Governance"
+      fieldMeta:
++        {"pauseGuardian":{"severity":"HIGH","description":"Can halt batch processing and withdrawals for up to 24h, with a 24h cooldown between pauses."},"emergencyGuardian":{"severity":"HIGH","description":"Can halt batch processing and withdrawals for up to 72h, with a 7d cooldown between pauses."},"pauseGuardianPaused":{"severity":"HIGH","description":"True while a Pause Guardian pause is active (batch processing and withdrawals halted)."},"emergencyGuardianPaused":{"severity":"HIGH","description":"True while an Emergency Guardian pause is active (batch processing and withdrawals halted)."}}
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0xead67b34c39541947e19fe58d5e31758b4495fe958df8ee8580885c8db169ed5"
++        "0x4dc54ffb4008a4ca0179446fed46565fbd602cc3963270f555f70ed93eea7cbe"
+      values.$implementation:
+-        "eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046"
++        "eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11"
+      values.getTarget:
+-        "eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046"
++        "eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11"
+      implementationNames.eth:0xd3E043d6E17Cb28d73BAa469Aa632411e1dE8046:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Governance/Governance.sol                      | 387 +++++++++++++++++++--
+ .../Lighter/AdditionalZkLighter.2.sol              |  48 ++-
+ .../Lighter/ZkLighter.1.sol                        |  73 +++-
+ .../ZkLighterVerifier/ZkLighterVerifier.sol        |   8 +-
+ 4 files changed, 451 insertions(+), 65 deletions(-)
+```
+
 Generated with discovered.json: 0xaaaa6d8e75c52c9565b375f6a061af0caea4aa26
 
 # Diff at Mon, 28 Sep 2026 13:34:29 GMT:

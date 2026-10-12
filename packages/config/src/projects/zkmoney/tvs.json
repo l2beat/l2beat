@@ -1,0 +1,25 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "zkmoney",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "zkmoney-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xdf410ad448A0f7165181FBdB32f8896f4a0d9449",
+        "decimals": 18,
+        "sinceTimestamp": 1790298635
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "name": "scroll",
-  "timestamp": 1790601073,
-  "configHash": "0x9eb0f601f14f5d635b4f35b47aca66bff7ba80a84d6fbb818f9f315b71b082cc",
+  "timestamp": 1791455050,
+  "configHash": "0xae8e37d1db659a2ee7e6b44d49157b96d435a21c8a5af8c9b13962ba5264df44",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -282,7 +282,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "untilTimestamp": 1780317383 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
       "sinceTimestamp": 1732607939,
@@ -311,10 +310,6 @@
         "multisigThreshold": "9 of 12 (75%)",
         "nonce": 14,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "SafeProxy",
@@ -524,7 +519,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "untilTimestamp": 1780920587 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
       "sinceTimestamp": 1752663515,
@@ -553,10 +547,6 @@
         "multisigThreshold": "3 of 12 (25%)",
         "nonce": 0,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE": "SafeProxy",
@@ -776,11 +766,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1790596091,
+        "getFirstUnfinalizedMessageEnqueueTime": 1791447599,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 999032,
-        "nextUnfinalizedQueueIndex": 999031,
+        "nextCrossDomainMessageIndex": 999091,
+        "nextUnfinalizedQueueIndex": 999089,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1599,7 +1589,7 @@
       },
       "fieldMeta": {
         "enforcedBatchParameters": { "severity": "HIGH" },
-        "messageQueueParameters": { "severity": "HIGH" }
+        "messageQueueParameters": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D": "TransparentUpgradeableProxy",
@@ -1907,14 +1897,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 520076,
+        "lastFinalizedBatchIndex": 520247,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 520076,
-          "lastFinalizedBatchIndex": 520076,
-          "lastFinalizeTimestamp": 1790599691,
+          "lastCommittedBatchIndex": 520247,
+          "lastFinalizedBatchIndex": 520247,
+          "lastFinalizeTimestamp": 1791451727,
           "flags": 1,
           "reserved": 0
         },
@@ -1943,7 +1933,7 @@
       },
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
-        "isEnforcedModeEnabled": { "severity": "HIGH" }
+        "isEnforcedModeEnabled": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "TransparentUpgradeableProxy",
@@ -2186,7 +2176,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
       "sinceTimestamp": 1696661411,
@@ -2207,10 +2196,6 @@
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 162,
         "VERSION": "1.3.0"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "GnosisSafeProxy",
@@ -2313,7 +2298,6 @@
       ],
       "proxyType": "gnosis safe",
       "description": "Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
-      "critical": { "sinceTimestamp": 1780317383 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x4721cf824b6750B58d781fD1336D92a082704C7A",
       "sinceTimestamp": 1774419707,
@@ -2335,10 +2319,6 @@
         "nonce": 3,
         "VERSION": "1.4.1"
       },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
-      },
       "implementationNames": {
         "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
@@ -2358,14 +2338,16 @@
       "name": "PlonkVerifierPostEuclid",
       "address": "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0xf1304144e7e31f4b3006633baf6786a35f34e00eec7b2a387c4bb9cb35164fce"
+      ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e",
       "sinceTimestamp": 1743130487,
       "sinceBlock": 22142558,
       "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": ""
+        "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": "Halo2Verifier"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
@@ -2488,7 +2470,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
       "sinceTimestamp": 1696660175,
@@ -2509,10 +2490,6 @@
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 30,
         "VERSION": "1.3.0"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "GnosisSafeProxy",
@@ -2558,7 +2535,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 5118660631979,
+        "totalBridgedUSDC": 4892343672312,
         "withdrawPaused": false
       },
       "fieldMeta": {
@@ -2617,7 +2594,7 @@
       "fieldMeta": {
         "ethGateway": { "severity": "HIGH" },
         "defaultERC20Gateway": { "severity": "HIGH" },
-        "gateways": { "severity": "HIGH" }
+        "gateways": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": "TransparentUpgradeableProxy",
@@ -2926,7 +2903,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "untilTimestamp": 1780317750 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
       "sinceTimestamp": 1732607988,
@@ -2955,10 +2931,6 @@
         "multisigThreshold": "9 of 12 (75%)",
         "nonce": 8,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "SafeProxy",
@@ -3323,7 +3295,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "untilTimestamp": 1780920632 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
       "sinceTimestamp": 1752663598,
@@ -3352,10 +3323,6 @@
         "multisigThreshold": "3 of 12 (25%)",
         "nonce": 0,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE": "SafeProxy",
@@ -3421,9 +3388,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x5b39bff8d05e8c506386b8abed47c4058bcebcec6f996fa17266f5c295514eb2",
+        "messageRoot": "0x1e548ca2690260942785bf416ec0ed0a1ed6ae1f8bd7b7b6868c10fa315441e4",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 323698,
+        "nextMessageIndex": 323829,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -4261,7 +4228,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696921130,
@@ -4282,10 +4248,6 @@
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 35,
         "VERSION": "1.3.0"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "GnosisSafeProxy",
@@ -4381,7 +4343,6 @@
       ],
       "proxyType": "gnosis safe",
       "description": "L2 counterpart of ScrollAdminMultisig.",
-      "critical": { "sinceTimestamp": 1780317750 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "scr:0x4721cf824b6750B58d781fD1336D92a082704C7A",
       "sinceTimestamp": 1774419711,
@@ -4402,10 +4363,6 @@
         "multisigThreshold": "3 of 4 (75%)",
         "nonce": 1,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": "SafeProxy",
@@ -4574,7 +4531,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696921121,
@@ -4595,10 +4551,6 @@
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 36,
         "VERSION": "1.3.0"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "GnosisSafeProxy",
@@ -7125,7 +7077,7 @@
     "scroll/SystemConfig": "0x4445e6ed56e720f7012a666fd191c15d7509665193dbd3a87a2df9eb740cb4c9",
     "tokens/circle/MasterMinter": "0x4ecc241fb1c41dc92b97207ddd89fc61a51d7a6fc2dc5b29fe727faadea66a2a"
   },
-  "usedBlockNumbers": { "ethereum": 26076168, "scroll": 35204777 },
+  "usedBlockNumbers": { "ethereum": 26147062, "scroll": 35310392 },
   "permissionsConfigHash": "0xb3a78d73709a995be82f4c6283061dc10100cf94b7d8cfcb83e107de4f642f87",
   "permissions": {
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": {

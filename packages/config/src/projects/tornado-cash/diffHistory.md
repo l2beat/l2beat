@@ -1,3 +1,171 @@
+Generated with discovered.json: 0x915be121c3bde25ede63f3145adfb76ff7fc19a3
+
+# Diff at Thu, 08 Oct 2026 10:13:17 GMT:
+
+- id: ce95ad25
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ea0f844d485c4192528096e99c5cace57e234c4c block: 1790851757
+- current timestamp: 1791454331
+
+## Description
+
+Created two new proposals. Both deploy new pools.
+
+- Proposal 71: deploy five new classic ETH pools (0.01, 0.03, 0.3, 3, 30 ETH) with protocol fee 0 for the three small pools and 0.3% for 3 and 30 ETH.
+- Proposal 72: deploy one 0.01 ETH pool of a new type, `FeeEnforcedTornado_eth` (https://github.com/frogheadtornado/tc-new-pool-design-proposal). It has a 0.3% withdrawal fee. Direct withdrwals (not by registered routers) pay additional fee, governance can raise withdrawal fees up to 5% total.
+
+Also, several anonymity mining legacy contract sources are verified now, they were templatized.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        70
++        72
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790851757 (main branch discovery), not current.
+
+```diff
+    contract DepositTree (eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226) [tornado-cash/OwnableMerkleTree] {
+    +++ description: Anonymity Mining - Legacy Poseidon merkle tree that stores deposit or withdrawal leaves for TornadoTreesV1. Only its owner can insert leaves.
+      unverified:
+-        true
+      description:
+-        "Unverified merkle tree instance that stores legacy Tornado deposit leaves for TornadoTreesV1."
++        "Anonymity Mining - Legacy Poseidon merkle tree that stores deposit or withdrawal leaves for TornadoTreesV1. Only its owner can insert leaves."
++++ description: Poseidon hasher used to compute the tree nodes.
+      values.hasher:
++        "eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79"
++++ description: Height of the merkle tree.
++++ severity: LOW
+      values.levels:
++        20
++++ description: Only this address can insert leaves into the tree.
++++ severity: HIGH
+      values.owner:
++        "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417"
+      implementationNames.eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226:
+-        ""
++        "OwnableMerkleTree"
+      template:
++        "tornado-cash/OwnableMerkleTree"
+      sourceHashes:
++        ["0x218d9a152ab9d469cf4baf2591677b19bb64e6885452ccc071bfbf6eca60c9aa"]
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Only this address can insert leaves into the tree."},"hasher":{"description":"Poseidon hasher used to compute the tree nodes."},"levels":{"severity":"LOW","description":"Height of the merkle tree."}}
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract WithdrawalTree (eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd) [tornado-cash/OwnableMerkleTree] {
+    +++ description: Anonymity Mining - Legacy Poseidon merkle tree that stores deposit or withdrawal leaves for TornadoTreesV1. Only its owner can insert leaves.
+      unverified:
+-        true
+      description:
+-        "Unverified merkle tree instance that stores legacy Tornado withdrawal leaves for TornadoTreesV1."
++        "Anonymity Mining - Legacy Poseidon merkle tree that stores deposit or withdrawal leaves for TornadoTreesV1. Only its owner can insert leaves."
++++ description: Poseidon hasher used to compute the tree nodes.
+      values.hasher:
++        "eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79"
++++ description: Height of the merkle tree.
++++ severity: LOW
+      values.levels:
++        20
++++ description: Only this address can insert leaves into the tree.
++++ severity: HIGH
+      values.owner:
++        "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417"
+      implementationNames.eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd:
+-        ""
++        "OwnableMerkleTree"
+      template:
++        "tornado-cash/OwnableMerkleTree"
+      sourceHashes:
++        ["0x218d9a152ab9d469cf4baf2591677b19bb64e6885452ccc071bfbf6eca60c9aa"]
+      fieldMeta:
++        {"owner":{"severity":"HIGH","description":"Only this address can insert leaves into the tree."},"hasher":{"description":"Poseidon hasher used to compute the tree nodes."},"levels":{"severity":"LOW","description":"Height of the merkle tree."}}
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract PoseidonHasher (eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2) [N/A] {
+    +++ description: Anonymity Mining - Unverified Poseidon hasher used by TornadoTreesV1 to hash deposit and withdrawal leaves.
+      description:
+-        "Anonymity Mining - Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees."
++        "Anonymity Mining - Unverified Poseidon hasher used by TornadoTreesV1 to hash deposit and withdrawal leaves."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonHasher2 (eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79) [N/A]
+    +++ description: Anonymity Mining - Unverified Poseidon hasher used by the legacy DepositTree and WithdrawalTree to hash tree nodes.
+```
+
+Generated with discovered.json: 0x5cf00481296f5f8e04dd452a5210148459815e1a
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 1259a7ec
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790851757
+- current timestamp: 1790851757
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790851757 (main branch discovery), not current.
+
+```diff
+    contract MiMCHasher (eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe) [N/A] {
+    +++ description: MiMC hasher used by every Tornado pool for commitment-tree operations (linked library in the 2019 pools, constructor argument in the 2021 pools), manually verified against the pinned Tornado circomlib generator.
+      description:
+-        "MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator."
++        "MiMC hasher used by every Tornado pool for commitment-tree operations (linked library in the 2019 pools, constructor argument in the 2021 pools), manually verified against the pinned Tornado circomlib generator."
+    }
+```
+
+Generated with discovered.json: 0xf755477ff1fe7222cad81e3cd93f56dbc2396c2b
+
+# Diff at Thu, 01 Oct 2026 11:11:05 GMT:
+
+- id: 6b9ec1ab
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1790592851
+- current timestamp: 1790851757
+
+## Description
+
+Proposal 69 (1,000 TORN to Mr Anon) was defeated (~163k for vs ~458k TORN against). The same proposer resubmitted it as proposal 70 (voting active, ends 2026-10-06) with a new verified Proposal contract (eth:0x04C2eb6Df3bF6032b8e07a03Fc9a5Ca424414483): 1,000 TORN split into 500 TORN to abusedotch and 500 TORN to JJ (Mr Anon's share, redirected as repayment). It only transfers TORN from governance, no protocol parameters or contracts are changed.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        69
++        70
+    }
+```
+
 Generated with discovered.json: 0x2e16fadd112013d339429f6094c9434c899a3237
 
 # Diff at Mon, 28 Sep 2026 13:34:46 GMT:

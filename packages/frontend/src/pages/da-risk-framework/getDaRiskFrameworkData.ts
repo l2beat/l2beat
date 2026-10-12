@@ -10,7 +10,7 @@ export function getDaRiskFrameworkData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Data Availability Risk Framework - L2BEAT',
+        name: 'Data Availability Risk Framework',
         description: 'Discover how L2BEAT evaluates data availability risks.',
         url,
         openGraph: {

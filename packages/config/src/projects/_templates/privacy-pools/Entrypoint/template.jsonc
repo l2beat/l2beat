@@ -30,7 +30,12 @@
     },
     "registeredPools": {
       "description": "Current set of pool contracts registered in the Entrypoint, derived from PoolRegistered and PoolRemoved events.",
-      "severity": "HIGH",
+      // Ossification: registering a pool adopts a new custody contract for a new
+      // asset (registerPool reverts for an asset or scope that already has one),
+      // so it is a perimeter reset at the pool's deployment, not a change of an
+      // existing pool. Removal only stops deposits and relayed withdrawals for one
+      // asset (direct withdrawals and ragequits keep working): review, no reset.
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": "_pool",

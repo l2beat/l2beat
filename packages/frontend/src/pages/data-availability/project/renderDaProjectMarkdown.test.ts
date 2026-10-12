@@ -34,24 +34,73 @@ describe(renderDaProjectMarkdown.name, () => {
       '- Duration of storage: 30 days',
       '- Max throughput: 2 MiB/s',
       '- DA Bridge: Blobstream (TVS $1.20 B)',
-      '- Used by: Eclipse, Manta Pacific',
     )
   })
 
-  it('links the other bridges of the layer to their markdown pages', () => {
+  it('tells the users of the selected bridge apart from the users of the whole layer', () => {
+    const summary = getSection(
+      renderDaProjectMarkdown({
+        ...ENTRY,
+        bridges: ENTRY.bridges.map((bridge) =>
+          bridge.slug === 'blobstream'
+            ? { ...bridge, usedIn: USED_IN.slice(0, 1) }
+            : bridge,
+        ),
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Used by (Celestia with any DA bridge): Eclipse, Manta Pacific',
+      '- Used by (Celestia with Blobstream): Eclipse\n',
+    )
+  })
+
+  it('links the other bridges of the layer to their markdown pages, with their users and risks', () => {
     const summary = getSection(renderDaProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- Other DA bridges: [No DA Bridge](https://l2beat.com/data-availability/projects/celestia/no-bridge.md) (TVS $300.00 M)',
+      '- Other DA bridge: [No DA Bridge](https://l2beat.com/data-availability/projects/celestia/no-bridge.md) (TVS $300.00 M; used by none (there are no scaling projects listed on L2BEAT that use this solution); risks: DA Bridge: No bridge (sentiment: neutral))',
     )
     expect(summary).not.toInclude('[Blobstream]')
   })
 
-  it('lists layer and selected bridge risks with their sentiment', () => {
+  it('labels each summary risk as a layer or a bridge risk, as the HTML groups them', () => {
     const summary = getSection(renderDaProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '### Risks\n\n- Economic security: Onchain (sentiment: good)\n- Fraud detection: None (sentiment: bad)\n- Committee security: 2/3 of validators (sentiment: warning)',
+      '### Risks\n\n- Economic security (DA layer Celestia): Onchain (sentiment: good)\n- Fraud detection (DA layer Celestia): None (sentiment: bad)\n- Committee security (DA bridge Blobstream): 2/3 of validators (sentiment: warning)',
+    )
+  })
+
+  it('states zero economic security as $0.00 and keeps the public blockchain wording to public blockchains', () => {
+    const summary = getSection(
+      renderDaProjectMarkdown({
+        ...ENTRY,
+        kind: 'DA Service',
+        type: 'DA Service',
+        header: { ...ENTRY.header, economicSecurity: 0 },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Economic security: $0.00 (The assets that are slashable in case of a data withholding attack.)\n',
+    )
+  })
+
+  it('lists the project links and the contracts explorer of the selected bridge', () => {
+    const markdown = renderDaProjectMarkdown({
+      ...ENTRY,
+      header: {
+        ...ENTRY.header,
+        links: [{ name: 'Website', links: ['https://celestia.org'] }],
+      },
+      discoUiHref: 'https://disco.l2beat.com/ui/p/blobstream',
+    })
+
+    expect(markdown).toInclude(
+      '### Links\n\n- Website: https://celestia.org\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/blobstream',
     )
   })
 
@@ -60,7 +109,7 @@ describe(renderDaProjectMarkdown.name, () => {
 
     expect(getSection(markdown, 'Summary')).toInclude(
       '- DA Bridge: No DA Bridge',
-      '- Fraud detection: None (sentiment: bad)\n- DA Bridge: No bridge (sentiment: neutral)',
+      '- Fraud detection (DA layer Celestia): None (sentiment: bad)\n- DA Bridge: No bridge (sentiment: neutral)',
     )
     expect(getSection(markdown, 'No DA Bridge')).toInclude(
       '### Risk analysis\n\n#### DA Bridge\n\nNo bridge (sentiment: neutral)\n\nWithout a DA Bridge, Ethereum has no proof of data availability for this project.',
@@ -79,7 +128,7 @@ describe(renderDaProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      '**Warning:** Ongoing anomaly in the DA bridge liveness, see [the HTML page](https://l2beat.com/data-availability/projects/celestia/blobstream#da-bridge-liveness).',
+      '**Warning:** Ongoing anomaly in the DA bridge liveness, described in the Liveness section below.',
       '**Warning:** This project is archived and no longer maintained.',
       '**Warning:** This project is under review.',
     )
@@ -264,13 +313,29 @@ const BRIDGE_RISKS = [
   rosetteValue('Committee security', '2/3 of validators', 'warning'),
 ]
 
-/** Chart sections carry only chart inputs, which the markdown does not read. */
+/** Chart sections with no facts around the chart; the chart data itself loads in the browser. */
 function chartSection(
   type: 'ThroughputSection' | 'LivenessSection' | 'ActivitySection',
   id: 'throughput' | 'da-bridge-liveness' | 'activity',
   title: string,
 ) {
-  return { type, props: { id, title } } as ProjectDetailsSection
+  return {
+    type,
+    props: { id, title, ...NO_CHART_FACTS },
+  } as unknown as ProjectDetailsSection
+}
+
+const NO_CHART_FACTS = {
+  syncStatus: { warning: undefined, isSynced: true },
+  anomalies: [],
+  hasTrackedContractsChanged: false,
+  trackedTransactions: {
+    batchSubmissions: undefined,
+    proofSubmissions: undefined,
+    stateUpdates: undefined,
+  },
+  isArchived: false,
+  dataSource: undefined,
 }
 
 function riskSummarySection(

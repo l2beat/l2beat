@@ -15,8 +15,9 @@
     "enforcedBatchParameters": {
       "severity": "HIGH"
     },
+    // max gas limit and L1->L2 fee calibration: recalibrations are operations
     "messageQueueParameters": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

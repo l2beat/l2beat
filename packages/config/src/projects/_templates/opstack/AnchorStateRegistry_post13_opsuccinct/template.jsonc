@@ -11,6 +11,8 @@
       "arg": {
         "0": "FaultDisputeGame",
         "1": "PermissionedDisputeGame",
+        "9": "SuperFaultDisputeGame",
+        "5": "SuperPermissionedDisputeGame",
         "1337": "KailuaGame",
         "42": "OPSuccinctFaultDisputeGame"
       }
@@ -21,7 +23,8 @@
       "severity": "HIGH"
     },
     "retirementTimestamp": {
-      "severity": "HIGH"
+      // guardian emergency action that does not change the rules, like a pause
+      "severity": "MEDIUM"
     },
     "disputeGameFactory": {
       "severity": "HIGH"

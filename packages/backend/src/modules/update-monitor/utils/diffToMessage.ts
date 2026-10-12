@@ -49,17 +49,6 @@ function getTrackedTxsMessage(): string {
   return '\n' + wrapItalic('Tracked transactions might be affected.')
 }
 
-export function formatNonce(nonce: number): string {
-  const length = 4
-  if (nonce.toString().length > length) {
-    return `#${nonce}`
-  }
-
-  const zerosToAdd = length - nonce.toString().length
-  const zeros = '0'.repeat(zerosToAdd)
-  return `#${zeros}${nonce}`
-}
-
 export function wrapItalic(content: string) {
   const affix = '*'
   return `${affix}${content}${affix}`
@@ -68,11 +57,4 @@ export function wrapItalic(content: string) {
 export function wrapBoldAndItalic(content: string) {
   const affix = '***'
   return `${affix}${content}${affix}`
-}
-
-export function wrapDiffCodeBlock(content: string) {
-  const prefix = '```diff\n'
-  const postfix = '```'
-
-  return `${prefix}${content}${postfix}`
 }

@@ -3,15 +3,15 @@ import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { Markdown } from '../../markdown/Markdown'
+import { GOVERNANCE_INFO_SECTIONS } from './governanceInfoSections'
 import {
   type PastUpgradesData,
   PastUpgradesDialog,
   PastUpgradesStats,
 } from './PastUpgradesDialog'
 import { ProjectSection } from './ProjectSection'
+import { PAST_UPGRADES_DESCRIPTION } from './sectionCopy'
 import type { ProjectSectionProps } from './types'
-
-type GovernanceInfoSectionKey = keyof ProjectGovernanceInfo
 
 export interface UpgradesAndGovernanceSectionProps extends ProjectSectionProps {
   diagram?: DiagramParams
@@ -53,8 +53,7 @@ export function UpgradesAndGovernanceSection({
         <div className="mt-8">
           <h3 className="font-bold text-heading-20">Past upgrades</h3>
           <p className="mt-2 text-paragraph-14 md:text-paragraph-15">
-            The metrics include upgrades on the currently used proxy contracts.
-            Historical proxy contracts and changes of such are not included.
+            {PAST_UPGRADES_DESCRIPTION}
           </p>
           <PastUpgradesDialog
             pastUpgrades={pastUpgrades}
@@ -66,16 +65,6 @@ export function UpgradesAndGovernanceSection({
     </ProjectSection>
   )
 }
-
-const GOVERNANCE_INFO_SECTIONS: {
-  key: GovernanceInfoSectionKey
-  title: string
-}[] = [
-  { key: 'securityCouncil', title: 'Security Council' },
-  { key: 'guardians', title: 'Guardians' },
-  { key: 'upgrades', title: 'Upgrades' },
-  { key: 'tokenGovernance', title: 'Token governance' },
-]
 
 function GovernanceInfoTable({
   governanceInfo,

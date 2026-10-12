@@ -25,6 +25,7 @@ export interface DiscoveryChainConfig {
   reorgSafeDepth?: number
   beaconApiUrl?: string
   coingeckoApiKey?: string
+  coingeckoApiUrl?: string
   celestiaApiUrl?: string
   multicall: MulticallConfig | undefined
   explorer: ExplorerConfig[]

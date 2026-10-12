@@ -110,8 +110,12 @@
       "description:": "default multisig signers that are used in some pessimistic proofs for state transition signing"
     },
     "aggchainMultisigHash": {
+      // hash of the default signer set and threshold: it changes with every signer swap
+      // (identity), so it only needs review. A threshold change of the default signers is
+      // mechanism: record it in ossification.json until a dedicated HIGH threshold field
+      // is added (adding a field key needs a rediscovery).
       "description:": "changes if anything in the aggchainSigners multisig changes",
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

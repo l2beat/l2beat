@@ -13,7 +13,7 @@ export async function getAboutUsData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'About Us - L2BEAT',
+        name: 'About Us',
         description: 'Learn about L2BEAT’s mission.',
         url,
         openGraph: {

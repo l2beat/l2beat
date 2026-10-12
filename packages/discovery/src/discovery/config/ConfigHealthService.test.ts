@@ -11,12 +11,10 @@ const TEMPLATE_ID = 'NestedTemplate'
 
 const CONFIG = new ConfigRegistry({
   name: 'nested-health',
-  chain: 'ethereum',
   initialAddresses: [ADDRESS],
 })
 const MISCONFIGURED_CONFIG = new ConfigRegistry({
   name: 'nested-health',
-  chain: 'ethereum',
   initialAddresses: [ADDRESS],
   overrides: {
     [ADDRESS]: {

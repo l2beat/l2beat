@@ -5,7 +5,7 @@
   "chain": "arbitrum",
   "initialAddresses": [
     "arb1:0xA9F4ee72439afC704db48dc049CbFb7E914aD300",
-    "arb1:0xc930fd48846e956b308f28524dA2d5E14c832e33"
+    "arb1:0x2E3f48e1A9B9849e5c0e4Fe987AEa2dA1702Ddda"
   ],
   "names": {},
   "overrides": {}

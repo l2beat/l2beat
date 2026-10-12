@@ -132,7 +132,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
     ),
     ...withChangeSort(
       columnHelper,
-      columnHelper.accessor('activity.pastDayUops', {
+      columnHelper.accessor((row) => row.activity?.pastDayUops, {
         id: 'pastDayUops',
         header: 'Past day UOPS',
         cell: (ctx) => {
@@ -151,7 +151,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
                   changePeriod={data.changePeriod}
                   disabledOnMobile
                 >
-                  {formatActivityCount(ctx.getValue())}
+                  {formatActivityCount(data.pastDayUops)}
                 </ValueWithPercentageChange>
               </SyncStatusWrapper>
             </TableLink>

@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x75b6dc8482f8446b3874bd75db4ce13e60de6e78
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 7303d981
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790892129
+- current timestamp: 1790892129
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790892129 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.isUsingFeeToken:
+-        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
+-        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0xd100711d872023742304a6690ed775057e58e4f0
+
+# Diff at Thu, 01 Oct 2026 22:03:42 GMT:
+
+- id: 756ef11b
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b5f330a01ef3aa93e43410554711e807e6a63b92 block: 1787669021
+- current timestamp: 1790892129
+
+## Description
+
+SequencerInbox: since 2026-09-28 batches are posted as AnyTrust DAC certificates (`1 of 1` keyset) instead of calldata on Ethereum.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x00"
++        "0x88"
+    }
+```
+
 Generated with discovered.json: 0x1510d6f496f6766dfa4c1a728fbc15d3db705617
 
 # Diff at Wed, 23 Sep 2026 05:50:01 GMT:

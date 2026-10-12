@@ -132,11 +132,14 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
           href: '/security/audits',
           disabled: true,
         },
-        {
-          title: 'Ossification',
-          href: '/security/ossification',
-          disabled: true,
-        },
+        // A page behind its flag; listed, not a link, without it.
+        env.CLIENT_SIDE_OSSIFICATION_ENABLED
+          ? { title: 'Ossification', href: '/ossification' }
+          : {
+              title: 'Ossification',
+              href: '/security/ossification',
+              disabled: true,
+            },
       ],
     ],
   },
@@ -184,7 +187,12 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-chart-pink" />
     ),
     links: [
-      [
+      compact<NavLink>([
+        // The new blobs page, behind its flag, ahead of the DA pages.
+        env.CLIENT_SIDE_BLOBS_PAGE && {
+          title: 'Overview',
+          href: '/blobs',
+        },
         {
           title: 'Summary',
           href: '/data-availability/summary',
@@ -204,7 +212,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
           shortTitle: 'Liveness',
           href: '/data-availability/liveness',
         },
-      ],
+      ]),
       [
         {
           title: 'Archived',

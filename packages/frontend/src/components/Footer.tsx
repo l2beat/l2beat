@@ -24,7 +24,12 @@ export function Footer({ className, innerContainerClassName }: Props) {
 
   return (
     <footer
-      className={cn('px-4 py-6 md:px-12 md:pt-4 md:pb-10 lg:pb-5', className)}
+      className={cn(
+        'px-4 py-6 md:px-12 md:pt-4 md:pb-10 lg:pb-5',
+        // Matches the mobile root background, so bottom overscroll continues the footer.
+        'max-lg:border-divider max-lg:border-t max-lg:bg-header-primary',
+        className,
+      )}
     >
       <div
         className={cn(

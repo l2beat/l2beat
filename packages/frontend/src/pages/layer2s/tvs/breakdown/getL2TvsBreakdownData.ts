@@ -27,7 +27,7 @@ export async function getL2TvsBreakdownData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Global TVS Breakdown - L2BEAT',
+        name: 'Global TVS Breakdown',
         description:
           'Track total value secured across Ethereum scaling solutions.',
         url: req.originalUrl,

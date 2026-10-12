@@ -16,6 +16,7 @@ import {
   CLIENT_TEMPLATE_PATH,
 } from '../paths.mjs'
 import type { RenderData, ServerRenderFunction } from '../ssr/types'
+import { jsonForInlineScript } from '../utils/jsonForInlineScript'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { getTokenGraphs } from './features/tokens/getTokenGraphs'
 import { ErrorHandler } from './middlewares/ErrorHandler'
@@ -64,8 +65,6 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   // These routers are explicitly added before the express.static to avoid being overwritten by the static files
   app.use('/', createRobotsRouter(env.DEPLOYMENT_ENV))
   app.use('/', createSitemapRouter())
-  app.use('/', createLlmsTxtRouter())
-  app.use('/', createMarkdownAlternatesRouter())
   app.use(LlmsLinkHeaderMiddleware())
 
   if (options.dev) {
@@ -104,6 +103,9 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   app.use(RequestIdMiddleware())
   app.use(MetricsMiddleware())
 
+  // After the metrics middleware, so requests for markdown are logged like page requests.
+  app.use('/', createLlmsTxtRouter())
+  app.use('/', createMarkdownAlternatesRouter())
   app.use('/', createMigratedProjectsRouter())
   app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())
@@ -208,11 +210,6 @@ async function getTemplate(
   }
 
   return productionTemplate
-}
-
-/** Safe to embed in `<script>`: avoids `</script>` in JSON closing the tag early. */
-function jsonForInlineScript(value: unknown): string {
-  return JSON.stringify(value).replace(/</g, '\\u003c')
 }
 
 function getClientEnvData() {

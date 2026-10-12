@@ -22,6 +22,13 @@
       "reason": "First recorded upgrade of L1ERC20Gateway replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
     },
     {
+      "timestamp": 1624716075,
+      "type": "code",
+      "contract": "eth:0xcEe284F754E854890e311e3280b767F80797180d",
+      "transaction": "0xd0f181f40b470dbd3d2c44474725ea0babcc54c6a035b33e090229e133b40456",
+      "reason": "First recorded upgrade of L1CustomGateway replaced an already initialized implementation (0x9d3371d2, counterpartGateway and inbox set before this tx): a real code change, not an initialization."
+    },
+    {
       "timestamp": 1624918777,
       "type": "code",
       "contract": "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
@@ -34,13 +41,6 @@
       "contract": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
       "transaction": "0xabf717d1d61d4349c500a23706c81521bdbc74aceba0e9aea2c7a135fe352eae",
       "reason": "First recorded upgrade of L1WethGateway replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
-    },
-    {
-      "timestamp": 1625161764,
-      "type": "state",
-      "contract": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
-      "transaction": "0x14dfea275cee9c497684fa5451122b70baf429b6d6e4e31550ae03fa579789b7",
-      "reason": "Transferred control of the canonical gateway ProxyAdmin."
     },
     {
       "timestamp": 1625173656,
@@ -78,25 +78,11 @@
       "reason": "Changed the implementation used by canonical L2 ERC20 beacon proxies."
     },
     {
-      "timestamp": 1630440192,
-      "type": "state",
-      "contract": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
-      "transaction": "0x9d9cce4650eeb1c697fbf5bbf505731952251027a2b65ccc53190869ed1f0cd9",
-      "reason": "Transferred control of the L2 canonical gateway ProxyAdmin."
-    },
-    {
-      "timestamp": 1630441179,
-      "type": "state",
-      "contract": "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
-      "transaction": "0x59f3cf16761d257e93283509eca192203c2aba913bed1286670f5a45c42884f4",
-      "reason": "Transferred control of the canonical L2 ERC20 beacon."
-    },
-    {
       "timestamp": 1631675264,
       "type": "state",
       "contract": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
       "transaction": "0x9716fbeced4d93573daf0fc0025d1354bf07ab0f9b8e8a0bcf83ef1d425de5c6",
-      "reason": "Transferred control of the canonical gateway ProxyAdmin."
+      "reason": "Transferred the canonical gateway ProxyAdmin from an EOA (0x6c26d7f7) to the Arbitrum multisig 0xC234e41A: single signer to multisig."
     },
     {
       "timestamp": 1634923280,
@@ -110,14 +96,14 @@
       "type": "state",
       "contract": "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
       "transaction": "0xac5764d1fa468eeea00a287173aa1d696dcaa7941771b57e126bc337a03fd662",
-      "reason": "Transferred control of the canonical L2 ERC20 beacon."
+      "reason": "Transferred the canonical L2 ERC20 beacon from an EOA (0x6c26d7f7) to the L2 multisig 0x98e4db7e: single signer to multisig."
     },
     {
       "timestamp": 1646671628,
       "type": "state",
       "contract": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
       "transaction": "0xefe80801f13381b5ebc9c5f3aade5bb91ac3ac9ebb4ee2906c094145343619a0",
-      "reason": "Transferred control of the L2 canonical gateway ProxyAdmin."
+      "reason": "Transferred the L2 canonical gateway ProxyAdmin from an EOA (0x6c26d7f7) to the L2 multisig 0x98e4db7e: single signer to multisig."
     },
     {
       "timestamp": 1661457944,
@@ -131,7 +117,7 @@
       "type": "state",
       "contract": "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
       "transaction": "0xa6fc31fdb9a171535386ba7fa91a35547002dbdc927631a60b134cebd3de7d49",
-      "reason": "Transferred control of the core-system ProxyAdmin."
+      "reason": "Transferred the core-system ProxyAdmin from the Nitro deployer EOA (0x80420B32) to the Arbitrum multisig 0xC234e41A: single signer to multisig."
     },
     {
       "timestamp": 1661532655,
@@ -152,42 +138,42 @@
       "type": "state",
       "contract": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
       "transaction": "0xb7bb5fd0f458ccf69b0d55371f5570426d9006e1caf238b0e1929c97d506042e",
-      "reason": "Transferred the canonical gateway ProxyAdmin to the UpgradeExecutor."
+      "reason": "Transferred the canonical gateway ProxyAdmin from the Arbitrum multisig 0xC234e41A to the UpgradeExecutor (DAO governance + Security Council)."
     },
     {
       "timestamp": 1679004215,
       "type": "state",
       "contract": "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
       "transaction": "0xb6d3293707b4e60207dd5d79f615dc165154002b825f766d49e6cea3ed3af2e0",
-      "reason": "Transferred the core-system ProxyAdmin to the UpgradeExecutor."
+      "reason": "Transferred the core-system ProxyAdmin from the Arbitrum multisig 0xC234e41A to the UpgradeExecutor (DAO governance + Security Council)."
     },
     {
       "timestamp": 1679004671,
       "type": "state",
       "contract": "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
       "transaction": "0xa9ad62284dfb9c611279b73bbcdffdc4e6514d0facfc23c5ca021602f2a24320",
-      "reason": "Transferred the canonical L2 ERC20 beacon to the L2 UpgradeExecutor."
+      "reason": "Transferred the canonical L2 ERC20 beacon from the L2 multisig 0x98e4db7e to the L2 UpgradeExecutor (DAO governance + Security Council)."
     },
     {
       "timestamp": 1679004671,
       "type": "state",
       "contract": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
       "transaction": "0xa9ad62284dfb9c611279b73bbcdffdc4e6514d0facfc23c5ca021602f2a24320",
-      "reason": "Transferred the L2 canonical gateway ProxyAdmin to the L2 UpgradeExecutor."
+      "reason": "Transferred the L2 canonical gateway ProxyAdmin from the L2 multisig 0x98e4db7e to the L2 UpgradeExecutor (DAO governance + Security Council)."
     },
     {
       "timestamp": 1694993963,
       "type": "state",
       "contract": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
       "transaction": "0x7165ad22cc2bbca36019963ba1adff21c1d48444a3cfecf980f752aaa9594d94",
-      "reason": "Migrated the L1 UpgradeExecutor authorization roles to the DAO governance path."
+      "reason": "Security Council election activation: EXECUTOR_ROLE moved from the appointed Security Council (0x3666a60f) to the new Security Council Safe 0xF06E95eF whose membership is managed onchain by the SecurityCouncilManager (elections), and the L1Timelock CANCELLER_ROLE moved from the Security Council to the UpgradeExecutor."
     },
     {
       "timestamp": 1694994573,
       "type": "state",
       "contract": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
       "transaction": "0xc8736e5b178590a3a2f3292b84795a17a4ef423710a9b1360608ca3c51e451b6",
-      "reason": "Migrated the L2 UpgradeExecutor authorization roles to the DAO governance path."
+      "reason": "Security Council election activation: EXECUTOR_ROLE moved from the appointed L2 Security Council (0x3568a44b) to the new L2SecurityCouncilEmergency Safe 0x423552c0 (membership managed by the SecurityCouncilManager), and the L2Timelock PROPOSER_ROLE moved from the old 7/12 council to L2SecurityCouncilPropose plus the new SecurityCouncilManager."
     },
     {
       "timestamp": 1706212139,
@@ -205,18 +191,18 @@
     },
     {
       "timestamp": 1710423719,
-      "type": "state",
+      "type": "code",
       "contract": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
       "transaction": "0x51b492ac498a88565639cfe3df77be8729d61f1c413d00b66530d4022a13c36a",
       "updateId": "5edc278c",
-      "reason": "Upgraded SequencerInbox and set its batch-poster manager as part of the ArbOS 20 / EIP-4844 governance execution."
+      "reason": "ArbOS 20 / EIP-4844 governance execution upgraded the SequencerInbox (blob support, batch-poster manager). Replaces both the $pastUpgrades entry of this tx and the interval-dated field changes of the same diff (batchPosterManager, maxTimeVariation, isUsingFeeToken)."
     },
     {
       "timestamp": 1719023040,
       "type": "state",
-      "contract": "arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
+      "contract": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
       "transaction": "0x90afa16b3c0c8009e6854fce49e52bc6ecfb0508f5c6ba96202abe9c79916872",
-      "reason": "Changed the Security Council proposal Safe threshold; the Safe shell itself is outside the contract perimeter (Safe is the owner of SecurityCouncilMemberElectionGovernor; the Safe itself is outside the perimeter)."
+      "reason": "Raised the threshold of the non-emergency Security Council Safe L2SecurityCouncilPropose (0xADd68bCb, a PROPOSER on this L2Timelock; the Safe itself is outside the perimeter) from 7/12 to 9/12 without a membership change (AIPIncreaseNonEmergencySCThresholdAction), crossing the 75% Security Council bar."
     },
     {
       "timestamp": 1720582885,
@@ -224,7 +210,7 @@
       "contract": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
       "transaction": "0xf2929a5ee3c2a073de95293f91f163b4d743fdec38e4dceaa7c4796e090783c3",
       "updateId": "7ec2eb8d",
-      "reason": "Changed SecurityCouncilManager role assignments and its authority path."
+      "reason": "SwitchManagerRolesAction: moved MEMBER_ADDER, MEMBER_REPLACER, MEMBER_ROTATOR and MEMBER_REMOVER roles on the SecurityCouncilManager from the emergency Security Council (0x423552c0) to the non-emergency Security Council (0xADd68bCb)."
     },
     {
       "timestamp": 1724809031,
@@ -246,7 +232,7 @@
       "contract": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
       "transaction": "0x196d67adfc0e64b2a583870512fb268aa457fbdbe79c2a6bdc7fdb26b9c4d3d1",
       "updateId": "3b2790a0",
-      "reason": "Changed the L2 governance timelock delay."
+      "reason": "Raised the L2 core governance timelock minimum delay from 3 days to 8 days."
     },
     {
       "timestamp": 1750200983,
@@ -262,7 +248,7 @@
       "contract": "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
       "transaction": "0xcd74670cb1dfcb3d9025ee5fae025f1493e952c909b50d2697af854a44b37a23",
       "updateId": "ca7c961e",
-      "reason": "Changed the CoreGovernor quorum numerator."
+      "reason": "Lowered the CoreGovernor (constitutional proposal) quorum numerator from 500 to 450 (5% to 4.5%)."
     },
     {
       "timestamp": 1767622835,
@@ -280,6 +266,5 @@
       "updateId": "b0f8c079",
       "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 61."
     }
-  ],
-  "ignoredUpdates": ["5399d8f1"]
+  ]
 }

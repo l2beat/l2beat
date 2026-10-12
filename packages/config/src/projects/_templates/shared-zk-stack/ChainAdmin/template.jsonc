@@ -8,8 +8,8 @@
       "severity": "HIGH",
       "permissions": [{ "type": "act" }]
     },
+    // fee role holder identity
     "tokenMultiplierSetter": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

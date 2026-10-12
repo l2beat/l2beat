@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x9ca10e35f96940fccb4c22f77477041a1fdea0da
+
+# Diff at Sun, 04 Oct 2026 05:55:32 GMT:
+
+- id: 04efca9c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1783426843
+- current timestamp: 1783426843
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783426843 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.isUsingFeeToken:
+-        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
+-        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x75c070fe237817Bd027d402327069e9cd07De078) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.confirmPeriodBlocks.severity:
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x349cca1acea6f5e073b65021aae2fd0f740ea52f
 
 # Diff at Tue, 29 Sep 2026 17:49:56 GMT:

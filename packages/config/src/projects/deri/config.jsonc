@@ -6,5 +6,22 @@
     "arb1:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
     "arb1:0xB155C77a440DA7c282993a89FeA609598293017A",
     "arb1:0xa8f6bB820eaD521cf834B7b371cFe025bdacEE99"
-  ]
+  ],
+  "overrides": {
+    // modified Outbox (the recipient of one withdrawal is hardcoded): kept out of the orbitstack/Outbox template
+    "arb1:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83": {
+      "critical": true,
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "ignoreMethods": ["spent", "isSpent"],
+      "category": "bridge-canonical",
+      "fields": {
+        "bridge": {
+          "severity": "HIGH"
+        },
+        "$admin": {
+          "severity": "HIGH"
+        }
+      }
+    }
+  }
 }

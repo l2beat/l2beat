@@ -15,6 +15,8 @@
     "arb1:0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5": "PoolFactory",
     "arb1:0x599C8489256Fb17b66d499d907F30b8022a29443": "StakingPool",
     "arb1:0xFCF7248C495d6fd3641eE43F861c48Ebe402c878": "XaiFundsReiceiverMultisig",
+    "arb1:0x754286508D57Fae1256bC288461E075552175CBa": "XaiSentryMultisig",
+    "arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705": "XaiSentryMultisig2",
     "arb1:0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD": "PoolProxyDeployer"
   },
   "overrides": {

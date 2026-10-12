@@ -2,12 +2,9 @@ import type { Project } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
-import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { type ChartResolution, rangeToResolution } from '~/utils/range/range'
-import { rangeToDays } from '~/utils/range/rangeToDays'
-import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import type { ProjectDaThroughputChartParams } from './getProjectDaThroughputChart'
 import { isThroughputSynced } from './isThroughputSynced'
@@ -18,44 +15,6 @@ export type DaThroughputChartDataPoint = [
   timestamp: number,
   values: Record<string, number> | null,
 ]
-
-export type DaThroughputChartDataByChart = {
-  chart: DaThroughputChartDataPoint[]
-  syncedUntil: number
-  sovereignProjects: string[]
-}
-
-export async function getDaThroughputChartByProject(
-  params: ProjectDaThroughputChartParams,
-) {
-  if (env.MOCK) {
-    return getMockDaThroughputChartByProject(params)
-  }
-
-  const data = await getDaThroughputChartByProjectData(params)
-  if (!data) {
-    return undefined
-  }
-  const resolution = rangeToResolution(params.range)
-
-  const { grouped, from, to, syncedUntil, daLayer } = data
-
-  const timestamps = generateTimestamps([from, to], resolution)
-
-  const chart: DaThroughputChartDataPoint[] = []
-  for (const timestamp of timestamps) {
-    const values = grouped[timestamp] ?? null
-    chart.push([timestamp, values])
-  }
-
-  return {
-    chart,
-    syncedUntil,
-    sovereignProjects:
-      daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => p.name) ??
-      [],
-  }
-}
 
 export async function getDaThroughputChartByProjectData({
   range,
@@ -224,29 +183,5 @@ function groupByTimestampAndProjectId(
     ),
     minTimestamp: UnixTime(minTimestamp),
     maxTimestamp: UnixTime(maxTimestamp),
-  }
-}
-
-async function getMockDaThroughputChartByProject({
-  range,
-}: ProjectDaThroughputChartParams): Promise<DaThroughputChartDataByChart> {
-  const days = rangeToDays(range) ?? 730
-  const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = range[0] ?? to - days * UnixTime.DAY
-
-  const timestamps = generateTimestamps([from, to], 'day')
-  const value = () => Math.random() * 900_000_000 + 90_000_000
-
-  const projects = (await ps.getProjects({ where: ['scalingInfo'] }))
-    .map((p) => p.name)
-    .slice(0, 50)
-
-  return {
-    chart: timestamps.map((timestamp) => [
-      timestamp,
-      Object.fromEntries(projects.map((p) => [p, value()])),
-    ]),
-    syncedUntil: to,
-    sovereignProjects: [],
   }
 }

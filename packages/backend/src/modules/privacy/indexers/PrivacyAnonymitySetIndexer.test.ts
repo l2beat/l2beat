@@ -15,6 +15,15 @@ import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type { PrivacyAnonymitySetIndexerConfig } from '../types'
+import { DEPOSIT_TOPIC } from '../zkmoney/abi'
+import {
+  FUNDED,
+  FUNDING_PARAMS,
+  mockZkMoneyRpc,
+  PORTAL,
+  portalDeposit,
+  transfer,
+} from '../zkmoney/test/fixtures'
 import { PrivacyAnonymitySetIndexer } from './PrivacyAnonymitySetIndexer'
 
 const POOL = EthereumAddress('0x1111111111111111111111111111111111111111')
@@ -236,6 +245,80 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
     expect(upsertMany.calls[0]?.args[0]).toHaveLength(26)
   })
 
+  // Two zk.money deposits batched in one transaction, served by an RPC mock
+  // that plays the SIPA factory. The first is funded directly by FUNDER; the
+  // second has no funding transfer in its part of the receipt, so its funder
+  // cannot be traced.
+  it('stores traced zk.money funders and drops deposits without one', async () => {
+    const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
+    const to = from + UnixTime.DAY
+    const timestamp = from + UnixTime.HOUR
+    const FUNDER = EthereumAddress('0x71C7656EC7ab88b098defB751B7401B5f6d8976F')
+    const traced = portalDeposit(1, { logIndex: 4 })
+    const untraced = portalDeposit(2, { logIndex: 5 })
+    const configuration = baseConfiguration(
+      {
+        event: DEPOSIT_TOPIC,
+        extractor: 'zkMoneyDeposit',
+        params: FUNDING_PARAMS,
+      },
+      PORTAL,
+    )
+    const upsertMany =
+      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(1)
+    const indexer = new PrivacyAnonymitySetIndexer(
+      {
+        chain: 'ethereum',
+        configurations: [configuration],
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+        blockTimestampProvider: mockObject<BlockTimestampProvider>({
+          getBlockNumberAtOrBefore: mockFn().returnsOnce(10).returnsOnce(30),
+        }),
+        blockProvider: mockObject<BlockProvider>({
+          getBlockTimestamps: mockFn().returnsOnce(
+            new Map([[traced.blockNumber, timestamp]]),
+          ),
+        }),
+        logsProvider: mockObject<LogsProvider>({
+          getLogs: mockFn().returnsOnce([traced, untraced]),
+        }),
+        rpcClient: mockZkMoneyRpc({
+          receipt: [
+            transfer(FUNDER, PORTAL, FUNDED, { logIndex: 3 }),
+            traced,
+            untraced,
+          ],
+          implementation: EthereumAddress.ZERO,
+        }),
+        db: mockDatabase({
+          privacyAnonymitySetEvent: mockObject<
+            Database['privacyAnonymitySetEvent']
+          >({ upsertMany }),
+        }),
+      },
+      Logger.SILENT,
+    )
+
+    const save = await indexer.multiUpdate(from, to, [configuration])
+    await save()
+
+    expect(upsertMany).toHaveBeenOnlyCalledWith([
+      {
+        configurationId: 'config-1',
+        projectId: 'project-1',
+        bucketId: 'bucket-1',
+        chain: 'ethereum',
+        timestamp,
+        blockNumber: traced.blockNumber,
+        txHash: traced.transactionHash,
+        logIndex: 4,
+        sender: FUNDER.toString(),
+        amount: FUNDED - BigInt(FUNDING_PARAMS.fundingCut),
+      },
+    ])
+  })
+
   describe(PrivacyAnonymitySetIndexer.prototype.wipeData.name, () => {
     it('deletes all records for the given configurations', async () => {
       const deleteByConfigIds =
@@ -379,13 +462,14 @@ function privacyPoolsConfiguration(
 
 function baseConfiguration(
   source: PrivacyAnonymitySetDepositSource,
+  address = POOL,
 ): Configuration<PrivacyAnonymitySetIndexerConfig> {
   const properties = {
     id: 'config-1',
     projectId: 'project-1',
     bucketId: 'bucket-1',
     chain: 'ethereum',
-    address: POOL,
+    address,
     sinceTimestamp: UnixTime(0),
     ...source,
   } satisfies PrivacyAnonymitySetIndexerConfig

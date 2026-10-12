@@ -8,6 +8,10 @@
       "proxyType": "zkLighter proxy"
     },
     "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": {
+      // Ossification: approvedUpgradeNoticePeriod is reset to the hardcoded 3 weeks after every finished or
+      // canceled upgrade and can only be cut to zero by the immutable security council while an upgrade is
+      // pending. The cut/restore pairs are part of executing each upgrade, so ossification.json records only
+      // the code upgrades (per UpgradeComplete newTargets) and Safe mechanism changes, not the toggles.
       // set here instead of the lighter/UpgradeGatekeeper template so that lighter-robinhood (explorer unreachable) needs no rediscovery
       "fields": {
         "managedContracts": {

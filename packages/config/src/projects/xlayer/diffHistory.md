@@ -1,3 +1,111 @@
+Generated with discovered.json: 0xbc928c2a124ec060947669e00a7c3f314ba7ccaf
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 0a3fd9ed
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789554702
+- current timestamp: 1789554702
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789554702 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract AccessManager (eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.challengers.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.proposers.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x95b5683fb6a110c4f137dc221b7291f57f1b83b7
+
+# Diff at Fri, 02 Oct 2026 08:08:47 GMT:
+
+- id: 741e8e51
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f6e34290bf6b81eca442b61515c2bb91f5fe65e8 block: 1789554702
+- current timestamp: 1789554702
+
+## Description
+
+Config-only rerun on the same block number. The OP Stack templates now label the Upgrade 20 super dispute game types, 9 and 5, in the respected game type mapping. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789554702 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x879f683cfe4e97b3476385e13066ef9cc8c25b2d
+
+# Diff at Thu, 01 Oct 2026 12:51:55 GMT:
+
+- id: 9b0ec090
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1789554702
+- current timestamp: 1789554702
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes: the aggchainManager permission was added to the AggchainECDSAMultisig template and its CONSENSUS_TYPE field description was clarified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789554702 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0xa90B4C8B8807569980F6cC958c8905383136B5eA) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507","description":"replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role.","role":".aggchainManager"}
+    }
+```
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) [polygon-cdk/AggchainECDSAMultisig] {
+    +++ description: System contract defining the X Layer Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      fieldMeta.CONSENSUS_TYPE.description:
+-        "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
++        "Read by the pessimistic program. 0 - legacy single ECDSA signature, 1 - aggchain hash consisting of the multisig hash (aggchainSigners and threshold), plus an optional aggchain proof vkey and params. This contract sets the vkey and params to zero, so the pessimistic program only verifies the aggchainSigners' ECDSA signatures (multisig-only)."
+    }
+```
+
 Generated with discovered.json: 0x99969f6c26a9f1d41754c4428bb0dd52ad77a875
 
 # Diff at Wed, 30 Sep 2026 07:45:43 GMT:

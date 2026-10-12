@@ -13,8 +13,11 @@
     "$admin": {
       "severity": "HIGH"
     },
+    // Role holders (remover: Katana Foundation Engineering Safe, updater: aggoracle
+    // operator EOA): identity changes need review, mechanism changes are recorded in
+    // katana/ossification.json.
     "globalExitRootRemover": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -28,7 +31,7 @@
       ]
     },
     "globalExitRootUpdater": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

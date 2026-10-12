@@ -1,4 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
+import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -43,7 +44,6 @@ import type {
   ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectGovernanceInfo,
-  ProjectOssification,
   ProjectPermissions,
   ProjectScalingCapability,
   ProjectScalingProofSystem,
@@ -51,7 +51,6 @@ import type {
   ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectTechnologyChoice,
-  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -97,7 +96,7 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  ossification?: ProjectOssification
+  ossificationHistory?: OssificationHistory
   chainId: number
   isUnderReview?: boolean
   stage?: ProjectScalingStage
@@ -138,10 +137,6 @@ export interface ZkStackConfigCommon {
   stage1Principle?: boolean | 'UnderReview'
   /** Stage 1: is the chain's own Security Council / ChainAdmin properly set up? */
   hasProperSecurityCouncil?: boolean
-}
-
-export type Upgradeability = {
-  upgradableBy?: ProjectUpgradeableActor[]
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
@@ -366,7 +361,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
-    ossification: templateVars.ossification,
+    ossificationHistory: templateVars.ossificationHistory,
     ecosystemInfo: templateVars.ecosystemInfo,
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

@@ -33,6 +33,8 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
         projectsUsedIn: UsedInProjectWithIcon[]
         url?: string
         address: string
+        /** Display name; the address alone does not say which chain it is on. */
+        chain: string
       }[]
       projectsUsedIn: UsedInProjectWithIcon[]
       verificationSteps?: string

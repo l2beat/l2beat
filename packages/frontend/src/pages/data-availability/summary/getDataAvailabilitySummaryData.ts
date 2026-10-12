@@ -23,7 +23,7 @@ export async function getDataAvailabilitySummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Data Availability Summary - L2BEAT',
+        name: 'Data Availability Summary',
         description:
           'Get an overview of the data availability solutions powering Ethereum scaling projects.',
         url,

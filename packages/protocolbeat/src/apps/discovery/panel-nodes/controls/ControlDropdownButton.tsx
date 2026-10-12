@@ -52,7 +52,7 @@ export function ControlDropdownButton(props: {
         side="top"
         align="start"
         sideOffset={8}
-        className="min-w-[var(--radix-popover-trigger-width)] overflow-hidden p-0"
+        className="min-w-(--radix-popover-trigger-width) overflow-hidden p-0"
       >
         {props.options.map((option, i) => (
           <button
