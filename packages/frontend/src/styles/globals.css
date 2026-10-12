@@ -55,6 +55,20 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* The home interop section's body, a size container from lg (see
+   HomeInteropSection): stacked like on phones when it is clearly taller than
+   wide or too narrow for the corners, otherwise the figures in the corners. */
+@custom-variant interop-stacked {
+  @container interop-body (max-aspect-ratio: 4 / 5) or (max-width: 640px) {
+    @slot;
+  }
+}
+@custom-variant interop-corners {
+  @container interop-body (min-aspect-ratio: 4 / 5) and (min-width: 641px) {
+    @slot;
+  }
+}
+
 :root {
   /* Prevent horizontal overscroll on mobile to avoid unwanted scrolling when swiping on charts.
      Not applied on desktop to preserve MacOS swipe-back gesture. */
@@ -70,8 +84,8 @@
   --warning: #ab8000;
   --negative: #d70000;
   --brand: #9621bf;
-  --background: #e6e7ec;
-  --surface-primary: #fafafa;
+  --background: #f4f5f7;
+  --surface-primary: #ffffff;
   --surface-primary-hover: #e6ecef;
   --surface-secondary: #e6e7ec;
   --surface-tertiary: #ccd0da;
@@ -83,6 +97,8 @@
   --icon-secondary: #5f6470;
   --overlay: #181b2d99;
   --divider: #ccd0da;
+  /* The home page's hairlines: nearer the nav's grey, still clear on white. */
+  --home-divider: #e2e4ea;
   --link-stroke: #badaff;
   --link: #2a5bd8;
   --scrollbar: #8a909d;
@@ -141,7 +157,7 @@
   --warning: #ffc107;
   --negative: #ff3d3d;
   --brand: #db8bf7;
-  --background: #07080c;
+  --background: #111114;
   --surface-primary: #1b1e2a;
   --surface-primary-hover: #272b3a;
   --surface-secondary: #33384b;
@@ -154,6 +170,7 @@
   --icon-secondary: #80869a;
   --overlay: #04050acc;
   --divider: #3d4358;
+  --home-divider: #262833;
   --link-stroke: #24406b;
   --link: #66b2ff;
   --scrollbar: #565d76;
@@ -493,6 +510,7 @@
   --color-link: var(--link);
   --color-link-stroke: var(--link-stroke);
   --color-chart-ethereum: var(--chart-ethereum);
+  --color-chart-pink: var(--chart-pink);
   --color-chart-fuchsia: var(--chart-fuchsia);
   --color-chart-lime: var(--chart-lime);
   --color-chart-sky: var(--chart-sky);
@@ -538,6 +556,14 @@
   --animate-row-highlight: row-highlight 2.5s ease-in-out;
   --animate-row-highlight-no-opacity: row-highlight-no-opacity 2.5s ease-in-out;
   --animate-badge-dialog-loading: badge-dialog-loading 1.2s linear infinite;
+  --animate-marquee: marquee 60s linear infinite;
+
+  /* The track holds the list twice; half a track is one full list. */
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 
   @keyframes badge-dialog-loading {
     0% {
@@ -1010,15 +1036,6 @@
   }
   50% {
     opacity: 0.82;
-  }
-}
-
-@keyframes garden-spin {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
   }
 }
 

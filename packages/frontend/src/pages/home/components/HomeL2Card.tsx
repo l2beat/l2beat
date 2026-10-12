@@ -1,160 +1,162 @@
 import {
   formatActivityCount,
   formatCurrency,
-  formatInteger,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
-import { cn } from '~/utils/cn'
-import type { HomeChartDataPoint } from './charts/HomeChart'
-import { HomeChart } from './charts/HomeChart'
-import { HomeCard } from './HomeCard'
-import { HomeCardHeader } from './HomeCardHeader'
+import type { HomeTopL2Project } from '../getHomeData'
+import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
+import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
+import { HomeSparkline } from './charts/HomeSparkline'
+import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
+import { HomeKpiTile } from './HomeKpiTile'
 import {
-  HOME_CHART_SECTION_GRID_CLASS,
-  HomeChartSection,
-} from './HomeChartSection'
-import { HomeStatValue } from './HomeStatValue'
-
-export interface HomeL2CategoryCounts {
-  rollups: number
-  validiumsAndOptimiums: number
-}
+  HomeRankedTable,
+  HomeRankedValue,
+  HomeRankedValueWithChange,
+  VALUE_WITH_CHANGE_HEADER_CLASS,
+} from './HomeRankedTable'
+import { HomeRiskRosette } from './HomeRiskRosette'
+import { HomeStageBadge } from './HomeStageBadge'
 
 interface Props {
   charts: HomeL2Charts
-  l2CategoryCounts: HomeL2CategoryCounts
+  topProjects: HomeTopL2Project[]
+  /** Every Layer 2 we track, for the link under the ranking. */
+  projectCount: number
+  className?: string
 }
 
-export function HomeL2Card({ charts, l2CategoryCounts }: Props) {
-  const tvsChartData = useMemo<HomeChartDataPoint[]>(
+export function HomeL2Card({
+  charts,
+  topProjects,
+  projectCount,
+  className,
+}: Props) {
+  const tvsChartData = useMemo<HomeSparklineDataPoint[]>(
     () =>
       charts.tvs.chart.map(([timestamp, rollups, validiumsAndOptimiums]) => {
         const hasAny = rollups !== null || validiumsAndOptimiums !== null
-        const total = (rollups ?? 0) + (validiumsAndOptimiums ?? 0)
         return {
           timestamp,
-          value: hasAny ? total : null,
-          tvsBreakdown: {
-            rollups,
-            validiumsAndOptimiums,
-          },
+          value: hasAny ? (rollups ?? 0) + (validiumsAndOptimiums ?? 0) : null,
+          tvsBreakdown: { rollups, validiumsAndOptimiums },
         }
       }),
     [charts.tvs.chart],
   )
 
-  const latestTvs = useMemo(
-    () => tvsChartData.findLast((d) => d.value !== null)?.value ?? undefined,
-    [tvsChartData],
-  )
-
-  const activityChartData = useMemo<HomeChartDataPoint[]>(
+  const activityChartData = useMemo<HomeSparklineDataPoint[]>(
     () =>
-      charts.activity.chart.map(
-        ([timestamp, rollupsUops, vAndOUops, ethereumUops]) => {
-          const hasAny = rollupsUops !== null || vAndOUops !== null
-          const sum = (rollupsUops ?? 0) + (vAndOUops ?? 0)
-          return {
-            timestamp,
-            value: hasAny ? sum / UnixTime.DAY : null,
-            ethereum:
-              ethereumUops !== null ? ethereumUops / UnixTime.DAY : null,
-          }
-        },
-      ),
+      charts.activity.chart.map(([timestamp, rollupsUops, vAndOUops]) => {
+        const hasAny = rollupsUops !== null || vAndOUops !== null
+        return {
+          timestamp,
+          value: hasAny
+            ? ((rollupsUops ?? 0) + (vAndOUops ?? 0)) / UnixTime.DAY
+            : null,
+        }
+      }),
     [charts.activity.chart],
   )
 
-  const pastDayActivityUops = useMemo(
-    () =>
-      activityChartData.findLast((d) => d.value !== null)?.value ?? undefined,
-    [activityChartData],
-  )
+  const latestTvs = tvsChartData.findLast((d) => d.value !== null)?.value
+  const latestUops = activityChartData.findLast((d) => d.value !== null)?.value
 
   return (
-    <HomeCard className="flex h-full flex-col pb-4 xl:py-4">
-      <div className="flex flex-col gap-2.5">
-        <HomeCardHeader title="Layer 2s" href="/layer2s/summary" />
-        <CountsLine counts={l2CategoryCounts} />
-      </div>
-      <HorizontalSeparator className="my-3" />
-      <div className={HOME_CHART_SECTION_GRID_CLASS}>
-        <HomeChartSection
-          label="Total value secured"
-          stat={
-            <HomeStatValue
-              isLoading={false}
-              value={
-                latestTvs !== undefined
-                  ? formatCurrency(latestTvs, 'usd')
-                  : undefined
-              }
-              change={charts.tvs.change}
+    <HomeDomainCard
+      title="Layer 2s"
+      href="/layer2s/summary"
+      viewAll={{
+        href: '/layer2s/summary',
+        label: `View all ${projectCount} Layer 2s`,
+      }}
+      className={className}
+    >
+      <HomeKpiRow>
+        <HomeKpiTile
+          label="Value secured"
+          value={
+            latestTvs != null ? formatCurrency(latestTvs, 'usd') : undefined
+          }
+          change={charts.tvs.change}
+          chart={
+            <HomeSparkline
+              className={HOME_CHART_HEIGHT_CLASS}
+              data={tvsChartData}
+              tooltipLabel="Value secured"
+              formatValue={(value) => formatCurrency(value, 'usd')}
             />
           }
-        >
-          <HomeChart
-            data={tvsChartData}
-            isLoading={false}
-            color="pink"
-            tooltipLabel="Total value secured"
-            formatValue={(value) => formatCurrency(value, 'usd')}
-            syncedUntil={charts.tvs.syncedUntil}
-          />
-        </HomeChartSection>
-        <HomeChartSection
-          label="Activity"
-          stat={
-            <HomeStatValue
-              isLoading={false}
-              value={
-                pastDayActivityUops !== undefined
-                  ? `${formatActivityCount(pastDayActivityUops)} UOPS`
-                  : undefined
-              }
-              change={charts.activity.change}
+        />
+        <HomeKpiTile
+          label="Activity/UOPS"
+          value={
+            latestUops != null ? formatActivityCount(latestUops) : undefined
+          }
+          change={charts.activity.change}
+          chart={
+            <HomeSparkline
+              className={HOME_CHART_HEIGHT_CLASS}
+              data={activityChartData}
+              tooltipLabel="UOPS"
+              formatValue={(value) => `${formatActivityCount(value)} UOPS`}
+              weeklyAverage
             />
           }
-        >
-          <HomeChart
-            data={activityChartData}
-            isLoading={false}
-            color="pink"
-            tooltipLabel="Layer 2s"
-            formatValue={(value) => formatActivityCount(value)}
-            yAxisUnit=" UOPS"
-            syncedUntil={charts.activity.syncedUntil}
-            tooltipDayRange
-            withEthereum
-          />
-        </HomeChartSection>
-      </div>
-    </HomeCard>
-  )
-}
-
-function CountsLine({ counts }: { counts: HomeL2CategoryCounts }) {
-  const items = [
-    { label: 'Rollups', value: counts.rollups, dot: 'bg-pink-100' },
-    {
-      label: 'Validiums & Optimiums',
-      value: counts.validiumsAndOptimiums,
-      dot: 'bg-blue-500',
-    },
-  ]
-
-  return (
-    <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 font-medium text-label-value-12">
-      {items.map((item) => (
-        <li key={item.label} className="flex items-center gap-1.5">
-          <span className={cn('size-2 rounded-full', item.dot)} />
-          <span className="tabular-nums">{formatInteger(item.value)}</span>
-          <span className="text-secondary">{item.label}</span>
-        </li>
-      ))}
-    </ul>
+        />
+      </HomeKpiRow>
+      <HomeRankedTable
+        title="Top rollups"
+        rows={topProjects}
+        columns={[
+          {
+            id: 'risks',
+            header: 'Risks',
+            align: 'center',
+            middle: true,
+            minTableWidth: 640,
+            cell: (project) => (
+              <HomeRiskRosette
+                values={project.risks}
+                href={project.risksHref}
+                isUnderReview={project.risksUnderReview}
+              />
+            ),
+          },
+          {
+            id: 'stage',
+            header: 'Stage',
+            middle: true,
+            cell: (project) => <HomeStageBadge stage={project.stage} />,
+          },
+          {
+            id: 'tvs',
+            header: 'TVS',
+            headerClassName: VALUE_WITH_CHANGE_HEADER_CLASS,
+            align: 'right',
+            cell: (project) => (
+              <HomeRankedValueWithChange
+                value={project.tvs}
+                change={project.tvsChange}
+              />
+            ),
+          },
+          {
+            id: 'uops',
+            header: 'UOPS',
+            align: 'right',
+            minTableWidth: 480,
+            cell: (project) => (
+              <HomeRankedValue
+                value={project.uops}
+                format={formatActivityCount}
+              />
+            ),
+          },
+        ]}
+      />
+    </HomeDomainCard>
   )
 }

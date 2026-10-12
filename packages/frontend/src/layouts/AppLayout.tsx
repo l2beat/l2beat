@@ -9,6 +9,10 @@ import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import { SearchBarContextProvider } from '~/components/search-bar/SearchBarContext'
 import { WhatsNewContextProvider } from '~/components/whats-new/WhatsNewContext'
+import {
+  type WhatsNewItem,
+  WhatsNewItemProvider,
+} from '~/components/whats-new/WhatsNewItemContext'
 import type { WhatsNewWidget } from '~/components/whats-new/WhatsNewWidget'
 import { env } from '~/env'
 import type { SearchBarProject } from '~/server/features/search-bar/types'
@@ -19,6 +23,8 @@ export interface AppLayoutProps {
   recentlyAddedProjects: SearchBarProject[]
   recentChangelogEntriesIds: string[]
   whatsNew: WhatsNewWidget | undefined
+  /** The announcement at the end of the nav. */
+  whatsNewItem: WhatsNewItem | undefined
   countdowns: typeof PROJECT_COUNTDOWNS
 }
 
@@ -28,6 +34,7 @@ export function AppLayout({
   recentlyAddedProjects,
   recentChangelogEntriesIds,
   whatsNew,
+  whatsNewItem,
   countdowns,
 }: AppLayoutProps & {
   children: React.ReactNode
@@ -47,13 +54,15 @@ export function AppLayout({
                 recentChangelogEntriesIds={recentChangelogEntriesIds}
               >
                 <WhatsNewContextProvider whatsNew={whatsNew}>
-                  <SearchBarContextProvider
-                    recentlyAddedProjects={recentlyAddedProjects}
-                  >
-                    <ChartLegendOnboardingProvider>
-                      {children}
-                    </ChartLegendOnboardingProvider>
-                  </SearchBarContextProvider>
+                  <WhatsNewItemProvider item={whatsNewItem}>
+                    <SearchBarContextProvider
+                      recentlyAddedProjects={recentlyAddedProjects}
+                    >
+                      <ChartLegendOnboardingProvider>
+                        {children}
+                      </ChartLegendOnboardingProvider>
+                    </SearchBarContextProvider>
+                  </WhatsNewItemProvider>
                 </WhatsNewContextProvider>
               </ChangelogEntriesContextProvider>
             </GlossaryContextProvider>

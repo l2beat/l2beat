@@ -7,6 +7,7 @@ export const pageLoaders = {
     }
     throw new Error('IconPreviewPage is available only in development')
   },
+  LandingPage: async () => (await import('./landing/LandingPage')).LandingPage,
   HomePage: async () => (await import('./home/HomePage')).HomePage,
   L2SummaryPage: async () =>
     (await import('./layer2s/summary/L2SummaryPage')).L2SummaryPage,

@@ -92,15 +92,6 @@ function makeNameColumn(opts?: {
 
 const commonColumns = [logoColumn, makeNameColumn()]
 
-const homeCommonColumns = [
-  logoColumn,
-  makeNameColumn({
-    nameMaxWidthClass: 'max-w-[112px]',
-    headClassName: 'min-w-[7.5rem] lg:pl-2.5',
-    cellClassName: 'lg:pl-2.5',
-  }),
-]
-
 const categoryColumn = columnHelper.accessor('type', {
   header: 'Category',
   cell: (ctx) => (
@@ -370,12 +361,4 @@ export function getAllProtocolsColumns(
     !hideTokensColumn &&
       makeTokensColumn({ type, apiSelection, showNetMintedValueColumn }),
   ])
-}
-
-export function getHomeTopInteropProtocolsColumns() {
-  return [
-    ...homeCommonColumns,
-    categoryColumn,
-    { ...last24hVolumeColumn, header: 'Last 24h volume' },
-  ]
 }

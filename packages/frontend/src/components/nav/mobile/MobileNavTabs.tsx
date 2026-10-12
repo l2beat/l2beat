@@ -84,7 +84,7 @@ function NavTabRow({
                 data-state={isSelected ? 'selected' : undefined}
                 className={cn(
                   'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b bg-header-primary px-4 font-medium text-xs leading-none',
-                  'data-[state=selected]:border-brand data-[state=selected]:text-brand',
+                  'data-[state=selected]:border-chart-pink data-[state=selected]:text-chart-pink',
                   tabClassName,
                 )}
               >

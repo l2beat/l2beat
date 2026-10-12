@@ -3,6 +3,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getHomeData } from './getHomeData'
+import { HOME_PATH } from './paths'
 
 export function createHomeRouter(
   manifest: Manifest,
@@ -11,7 +12,7 @@ export function createHomeRouter(
 ) {
   const router = express.Router()
 
-  router.get('/', async (req, res) => {
+  router.get(HOME_PATH, async (req, res) => {
     const data = await getHomeData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
