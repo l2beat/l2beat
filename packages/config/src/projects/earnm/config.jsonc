@@ -11,9 +11,9 @@
   "overrides": {
     "arb1:0xcD3D1CFE5e0cDa77D0a2D1ac1c0268C77115f89D": {
       "fields": {
-        // Seeds the L3's ArbOS 61 transaction-filtering precompile (0x..74) as a
-        // relative. Hosted on the UpgradeExecutor because it owns the L3 chain
-        // (through retryables) and so controls who can filter.
+        // Seeds the L3's transaction-filtering precompile (0x..74, ArbOS 60+) as
+        // a relative. This contract only hosts the seed: it is not an L3 chain
+        // owner (see chainOwners on the precompile).
         "transactionFilteringPrecompile": {
           "handler": {
             "type": "hardcoded",
@@ -27,8 +27,27 @@
       // event counts need full-range eth_getLogs, which the earnm RPC caps at
       // 100 blocks. Only the filterer set is read; it shows any activation.
       "displayName": "ArbFilteredTransactionsManager",
-      "description": "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
+      "description": "ArbOS transaction-filtering precompile (0x..74, ArbOS 60+). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
       "fields": {
+        // ArbOS chain owners of the L3, read off ArbOwnerPublic (0x..6b, on this
+        // contract's chain). A chain owner can call every ArbOwner (0x..70) method,
+        // including adding transaction filterers, directly on the L3 without any
+        // parent-chain step. The parent-chain UpgradeExecutor is not one of them.
+        "chainOwners": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getAllChainOwners() view returns (address[])",
+            "args": [],
+            "address": "0x000000000000000000000000000000000000006b"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "ArbOS chain owner: can change any ArbOS chain parameter, add chain owners and add transaction filterers, which can forcibly fail any transaction, including force-included ones."
+            }
+          ]
+        },
         "transactionFilterers": {
           "handler": {
             "type": "call",

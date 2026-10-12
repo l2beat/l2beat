@@ -1,7 +1,7 @@
 {
   "name": "edgechain",
   "timestamp": 1791533705,
-  "configHash": "0xda1ffc89966375c3a8b768c2de40d21192b2ea438cf027f93f1efd1c816b1a60",
+  "configHash": "0x2780c5d06615788113c5a323ad4ef6df557fed7b8a7bed7cf234a924b6fc247e",
   "entries": [
     {
       "address": "arb1:0x001271c57AeC639952B5201D052767c316755512",
@@ -973,10 +973,12 @@
       "description": "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.",
       "values": {
         "$immutable": true,
+        "chainOwners": ["edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"],
         "filteredTransactionsAdded": 0,
         "filteredTransactionsDeleted": 0,
         "transactionFilterers": []
       },
+      "fieldMeta": { "chainOwners": { "severity": "HIGH" } },
       "implementationNames": {
         "edge:0x0000000000000000000000000000000000000074": ""
       },
@@ -986,6 +988,11 @@
           "href": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
         }
       ]
+    },
+    {
+      "address": "edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1822,7 +1829,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "arbitrum": 513140286, "edgechain": 829819 },
-  "permissionsConfigHash": "0xd1d0d532019771d0cff3e3c2a0c2e0bfb385a621d3a01ebe5c76c4c72d34adca",
+  "permissionsConfigHash": "0xce0c67dab1680c92df5715f7f700ee20c3fa7f1dd415a132807fd7da14dcdd2f",
   "permissions": {
     "arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8": {
       "receivedPermissions": [
@@ -2150,6 +2157,16 @@
         }
       ],
       "eoaWithUpgradePermissions": true
+    },
+    "edge:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "edge:0x0000000000000000000000000000000000000074",
+          "description": "ArbOS chain owner: can change any ArbOS chain parameter, add chain owners and add transaction filterers, which can forcibly fail any transaction, including force-included ones.",
+          "role": ".chainOwners"
+        }
+      ]
     }
   }
 }

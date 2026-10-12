@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xbf40959c2c5205bdff907fc4d57c63c492cdb2ae
+Generated with discovered.json: 0xcb10032956e0b628c2bf63cfbfd36918b549531b
 
-# Diff at Fri, 09 Oct 2026 13:19:39 GMT:
+# Diff at Mon, 12 Oct 2026 09:59:52 GMT:
 
 - id: 1902ee54
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -10,7 +10,7 @@ Generated with discovered.json: 0xbf40959c2c5205bdff907fc4d57c63c492cdb2ae
 ## Description
 
 RollupProxy: ArbOS v51.1 → v61 wasm module root, set by an executor EOA through the UpgradeExecutor.
-ArbFilteredTransactionsManager: transaction-filtering precompile live with ArbOS 61, no filterers set.
+ArbFilteredTransactionsManager: transaction-filtering precompile live with ArbOS 61, no filterers set; the L3 chain owner (an EOA) is now tracked.
 
 ## Watched changes
 

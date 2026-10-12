@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb05303bc0b1e629976b37929a5270d7b43ac91d4
+Generated with discovered.json: 0x87b8598ba308bac8fdc2548248c1155e6690e60e
 
-# Diff at Fri, 09 Oct 2026 13:31:42 GMT:
+# Diff at Mon, 12 Oct 2026 09:59:50 GMT:
 
 - id: 81f799c7
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -10,7 +10,7 @@ Generated with discovered.json: 0xb05303bc0b1e629976b37929a5270d7b43ac91d4
 ## Description
 
 RollupProxy: ArbOS v51.1 → v61 wasm module root, set by an executor EOA through the UpgradeExecutor.
-ArbFilteredTransactionsManager: transaction-filtering precompile live with ArbOS 61, no filterers set.
+ArbFilteredTransactionsManager: transaction-filtering precompile live with ArbOS 61, no filterers set; the L3 chain owner (an EOA) is now tracked.
 
 ## Watched changes
 
@@ -31,7 +31,7 @@ ArbFilteredTransactionsManager: transaction-filtering precompile live with ArbOS
 
 ```diff
     contract ArbFilteredTransactionsManager (earnm:0x0000000000000000000000000000000000000074) [N/A] {
-    +++ description: ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+    +++ description: ArbOS transaction-filtering precompile (0x..74, ArbOS 60+). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
       type:
 -        "EOA"
 +        "Contract"

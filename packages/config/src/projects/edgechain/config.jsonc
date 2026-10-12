@@ -9,10 +9,10 @@
   "overrides": {
     "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf": {
       "fields": {
-        // Seeds the L3's ArbOS 61 transaction-filtering precompile (0x..74) as a
-        // relative and applies the shared orbitstack/ArbFilteredTransactionsManager
-        // template. Hosted on the UpgradeExecutor because it owns the L3 chain
-        // (through retryables) and so controls who can filter.
+        // Seeds the L3's transaction-filtering precompile (0x..74, ArbOS 60+) as
+        // a relative and applies the shared orbitstack/ArbFilteredTransactionsManager
+        // template. This contract only hosts the seed: it is not an L3 chain
+        // owner (see chainOwners on the precompile).
         "transactionFilteringPrecompile": {
           "handler": {
             "type": "hardcoded",
@@ -23,6 +23,27 @@
       }
     },
     "edge:0x0000000000000000000000000000000000000074": {
+      "fields": {
+        // ArbOS chain owners of the L3, read off ArbOwnerPublic (0x..6b, on this
+        // contract's chain). A chain owner can call every ArbOwner (0x..70) method,
+        // including adding transaction filterers, directly on the L3 without any
+        // parent-chain step. The parent-chain UpgradeExecutor is not one of them.
+        "chainOwners": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getAllChainOwners() view returns (address[])",
+            "args": [],
+            "address": "0x000000000000000000000000000000000000006b"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "ArbOS chain owner: can change any ArbOS chain parameter, add chain owners and add transaction filterers, which can forcibly fail any transaction, including force-included ones."
+            }
+          ]
+        }
+      },
       // Precompile with a 0xfe stub as code; point at the Nitro implementation.
       // Its integrity is covered by the RollupProxy wasmModuleRoot.
       "manualSourcePaths": {

@@ -13,10 +13,10 @@
   "overrides": {
     "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a": {
       "fields": {
-        // Seeds the L2's ArbOS 61 transaction-filtering precompile (0x..74) as a
-        // relative and applies the shared orbitstack/ArbFilteredTransactionsManager
-        // template. Hosted on the UpgradeExecutor because it owns the L2 chain
-        // (through retryables) and so controls who can filter.
+        // Seeds the L2's transaction-filtering precompile (0x..74, ArbOS 60+) as
+        // a relative and applies the shared orbitstack/ArbFilteredTransactionsManager
+        // template. Hosted here because this UpgradeExecutor, through retryables,
+        // holds the executor role on the L2 UpgradeExecutor, the L2 chain owner.
         "transactionFilteringPrecompile": {
           "handler": {
             "type": "hardcoded",
