@@ -47,14 +47,19 @@
 }
 
 /*
-  Without scroll-driven animations, or with reduced motion, the tabs simply
-  stick a strip's height lower, uncovering the strip as soon as the site
-  header scrolls away.
+  Without scroll-driven animations (Firefox, Safari before 26), or with
+  reduced motion, the tabs simply stick a strip's height lower, uncovering
+  the strip as soon as the site header scrolls away.
 */
 @utility section-nav-tabs-under-strip {
   top: var(--project-strip-height);
 
-  @supports (animation-timeline: view()) {
+  /*
+    The tabs aren't inside the title, so its timeline only reaches them
+    through `timeline-scope`; a browser with timelines but without that would
+    leave the tabs stuck over the strip.
+  */
+  @supports (animation-timeline: view()) and (timeline-scope: --x) {
     @media (prefers-reduced-motion: no-preference) {
       top: 0;
       /* How far down the tabs end up, for sticky table headers below them. */
