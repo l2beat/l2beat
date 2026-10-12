@@ -81,7 +81,10 @@ export class RpcBatcher {
   private shrinkBelow(method: string, rejectedSize: number) {
     if (this.isConfigured) {
       throw new Error(
-        `RPC rejected a batch of ${rejectedSize} ${method} calls, within the configured maxBatchSize of ${this.maxBatchSize}`,
+        'RPC rejected a batch within the configured maxBatchSize',
+        {
+          cause: { method, rejectedSize, maxBatchSize: this.maxBatchSize },
+        },
       )
     }
     const size = Math.min(

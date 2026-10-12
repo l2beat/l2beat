@@ -202,7 +202,7 @@ describe(EthRpcClient.name, () => {
       await expect(
         client.getTransactionReceipts(HASHES.slice(0, 4)),
       ).toBeRejectedWith(
-        'RPC rejected a batch of 4 eth_getTransactionReceipt calls, within the configured maxBatchSize of 4',
+        'RPC rejected a batch within the configured maxBatchSize',
       )
       expect(node.requests.map(callsIn)).toEqual([4])
     })

@@ -45,11 +45,18 @@ describe(RpcBatcher.name, () => {
   it('throws when the RPC rejects a batch of the configured size', async () => {
     const rpc = new FakeRpc(2)
 
-    await expect(
-      rpc.run(new RpcBatcher({ maxBatchSize: 4 }), CALLS.slice(0, 4)),
-    ).toBeRejectedWith(
-      'RPC rejected a batch of 4 eth_call calls, within the configured maxBatchSize of 4',
+    const error = await rpc
+      .run(new RpcBatcher({ maxBatchSize: 4 }), CALLS.slice(0, 4))
+      .catch((e: Error) => e)
+
+    expect(error).toEqual(
+      new Error('RPC rejected a batch within the configured maxBatchSize'),
     )
+    expect((error as Error).cause).toEqual({
+      method: 'eth_call',
+      rejectedSize: 4,
+      maxBatchSize: 4,
+    })
     expect(rpc.sent).toEqual([4])
   })
 })

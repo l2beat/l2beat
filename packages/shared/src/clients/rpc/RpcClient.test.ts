@@ -1008,7 +1008,7 @@ describe(RpcClient.name, () => {
       await expect(
         rpc.batchQuery('rpc_method', PARAMS.slice(0, 4)),
       ).toBeRejectedWith(
-        'RPC rejected a batch of 4 rpc_method calls, within the configured maxBatchSize of 4',
+        'RPC rejected a batch within the configured maxBatchSize',
       )
       expect(node.requests.map(callsIn)).toEqual([4])
     })

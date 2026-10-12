@@ -482,10 +482,14 @@ export class RpcClient extends ClientCore implements IRpcClient {
       return BATCH_REJECTED
     }
     if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status} ${response.statusText}`)
+      throw new Error('HTTP error', {
+        cause: { status: response.status, statusText: response.statusText },
+      })
     }
     if (!Array.isArray(body)) {
-      throw new Error(`Batch not answered with an array: ${text}`)
+      throw new Error('Batch not answered with an array', {
+        cause: { body: text },
+      })
     }
     return body
   }
