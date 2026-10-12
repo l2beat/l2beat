@@ -1,5 +1,5 @@
 import type { InteropPluginName } from '@l2beat/config'
-import type { AbstractTokenRecord, InteropEventContext } from '@l2beat/database'
+import type { InteropEventContext } from '@l2beat/database'
 import {
   type Address32,
   assert,
@@ -250,11 +250,6 @@ export function txFromEvent<TArgs extends Record<string, unknown>>(
     ...request,
   }
 }
-
-export type DeployedToAbstractMap = Map<
-  ChainSpecificAddress,
-  AbstractTokenRecord
->
 
 export interface InteropPlugin {
   readonly name: InteropPluginName

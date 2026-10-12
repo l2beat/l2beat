@@ -13,7 +13,6 @@ import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
 import type { DefiTvlConfig } from '../modules/defi-tvl/types'
 import type { PrivacyConfig } from '../modules/privacy/types'
-import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
   BlockTimestampConfig,
@@ -127,35 +126,6 @@ export interface TrackedTxsConfig {
         }
       | false
   }
-}
-
-export interface BlockscoutChainConfig {
-  readonly type: 'blockscout'
-  readonly url: string
-}
-
-export interface EtherscanChainConfig {
-  readonly type: 'etherscan'
-  readonly apiKey: string
-  readonly url: string
-}
-
-export interface RoutescanChainConfig {
-  readonly type: 'routescan'
-  readonly url: string
-}
-
-export interface ChainTvlConfig {
-  readonly name: string
-  readonly providerUrl: string
-  readonly providerCallsPerMinute: number
-  readonly minBlockTimestamp: UnixTime
-  readonly blockExplorerConfig:
-    | EtherscanChainConfig
-    | BlockscoutChainConfig
-    | RoutescanChainConfig
-    | undefined
-  readonly multicallConfig: MulticallConfigEntry[]
 }
 
 export interface HealthConfig {
@@ -360,6 +330,8 @@ export interface LiveBlobsTrackingConfig {
   readonly rpc: {
     readonly url: string
     readonly callsPerMinute: number
+    /** Calls per HTTP request, the RPC rejects bigger batches */
+    readonly maxBatchSize?: number
   }
 }
 

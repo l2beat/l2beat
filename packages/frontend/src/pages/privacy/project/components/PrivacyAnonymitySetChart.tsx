@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { formatInteger } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Line, LineChart } from 'recharts'
@@ -45,6 +46,8 @@ interface Props {
   isLoading: boolean
   project: ChartProject
   type: 'history' | 'holding-duration'
+  /** Only meaningful on the date-based history chart. */
+  milestones?: Milestone[]
 }
 
 export function PrivacyAnonymitySetChart({
@@ -54,6 +57,7 @@ export function PrivacyAnonymitySetChart({
   isLoading,
   project,
   type,
+  milestones,
 }: Props) {
   const meta = useMemo(() => getChartMeta(series), [series])
   const chartData = useMemo(
@@ -75,6 +79,7 @@ export function PrivacyAnonymitySetChart({
       meta={meta}
       isLoading={isLoading}
       project={project}
+      milestones={milestones}
       interactiveLegend={{ dataKeys, onItemClick: toggleDataKey }}
     >
       <LineChart responsive data={chartData} margin={{ top: 20, right: 1 }}>

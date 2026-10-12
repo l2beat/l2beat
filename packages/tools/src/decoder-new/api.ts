@@ -1,9 +1,5 @@
 import type { ApiQuery, DecodedResult } from '@l2beat/tools-api/types'
 
-export function decode(query: ApiQuery): Promise<DecodedResult> {
-  return callDecode(getFullQueryUrl(getQueryParams(query)))
-}
-
 export function getQueryParams(query: ApiQuery) {
   const params: Record<string, string> = {}
   if (query.hash) params.hash = query.hash

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { findSelected } from '../../../utils/findSelected'
 import { usePanelStore } from '../store/panel-store'
 import { useProjectQueryOptions } from './projectQuery'

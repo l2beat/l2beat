@@ -14,19 +14,16 @@ export const ExpectedEvent = v.union([
   v.string(),
   v.record(v.string(), v.unknown()), // Any object shape - validated at runtime
 ])
-export type ExpectedEventType = v.infer<typeof ExpectedEvent>
 
 export const ExpectedMessage = v.union([
   v.string(),
   v.record(v.string(), v.unknown()), // Any object shape - validated at runtime
 ])
-export type ExpectedMessageType = v.infer<typeof ExpectedMessage>
 
 export const ExpectedTransfer = v.union([
   v.string(),
   v.record(v.string(), v.unknown()), // Any object shape - validated at runtime
 ])
-export type ExpectedTransferType = v.infer<typeof ExpectedTransfer>
 
 export const Expects = v.object({
   events: v.array(ExpectedEvent).optional(),
@@ -43,11 +40,6 @@ export interface CoreResult {
 }
 
 export type RunResult = Awaited<ReturnType<ExampleRunner['run']>>
-
-export interface TransactionSpec {
-  chain: string
-  tx: string
-}
 
 const TxEntry = v.object({
   chain: v.string(),

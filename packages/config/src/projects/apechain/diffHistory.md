@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x74e047e3042359549ee22afb58d8d6e730bbd122
+
+# Diff at Fri, 09 Oct 2026 08:14:24 GMT:
+
+- id: 3155cbda
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1790891964
+- current timestamp: 1791533574
+
+## Description
+
+EspressoTEEVerifier owner Safe: member rotated.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f"
++        "arb1:0xd16384742f34511ade0555bC6312A284Ab1339bA"
+    }
+```
+
 Generated with discovered.json: 0x0b8324367e7d79a45dd61cc4f403123f834b3599
 
 # Diff at Thu, 01 Oct 2026 22:02:56 GMT:

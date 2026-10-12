@@ -73,7 +73,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       exposureShort: 'Commitments use a Pedersen hash on an elliptic curve.',
       exposureContinued:
-        'A quantum computer could test whether a given deposit can fund a withdrawal, shrinking the candidate set without singling out one deposit. Notes backed up onchain are encrypted with elliptic-curve keys and become readable.',
+        'Whoever breaks elliptic-curve cryptography can test whether a given deposit can fund a withdrawal, shrinking the candidate set without singling out one deposit. Notes backed up onchain are encrypted with elliptic-curve keys and become readable.',
       advice: `${S.largeAnonymitySet} Keep the note on your device and skip the onchain backup.`,
       sources: [
         {

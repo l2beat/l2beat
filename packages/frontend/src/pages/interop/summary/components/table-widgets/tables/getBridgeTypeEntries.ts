@@ -26,12 +26,6 @@ export type LockAndMintProtocolEntry = BridgeTypeProtocolEntryCommon &
 export type BurnAndMintProtocolEntry = BridgeTypeProtocolEntryCommon &
   BurnAndMintProtocolData
 
-export type GroupedBridgeTypeProtocolEntries = {
-  lockAndMint: LockAndMintProtocolEntry[]
-  nonMinting: NonMintingProtocolEntry[]
-  burnAndMint: BurnAndMintProtocolEntry[]
-}
-
 export function getBridgeTypeEntries(entries: ProtocolEntry[]): {
   lockAndMint: LockAndMintProtocolEntry[]
   nonMinting: NonMintingProtocolEntry[]

@@ -5,7 +5,7 @@ export function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false)
   const currentPath = window.location.pathname
   return (
-    <nav className="rounded bg-gray-800 px-2 py-2.5 sm:px-4">
+    <nav className="rounded-sm bg-gray-800 px-2 py-2.5 sm:px-4">
       <div className="mx-auto flex flex-wrap items-center justify-between">
         <a className="flex items-center" href="https://l2beat.com">
           <Logo />
@@ -18,7 +18,7 @@ export function MainNavbar() {
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen}
           aria-controls="navbar-menu"
-          className="inline-flex items-center rounded-lg p-2 text-gray-400 text-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 md:hidden"
+          className="inline-flex items-center rounded-lg p-2 text-gray-400 text-sm hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-gray-600 md:hidden"
         >
           <span className="sr-only">Main menu</span>
           <svg

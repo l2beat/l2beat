@@ -1,27 +1,69 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #f97315 transparent;
+@theme {
+  --font-*: initial;
+  --font-sans: system-ui, sans-serif;
+  --font-mono:
+    ui-monospace, Menlo, Monaco, Cascadia Code, Source Code Pro, Consolas,
+    DejaVu Sans Mono, monospace;
+  --font-serif: Charter, Bitstream Charter, Sitka Text, Cambria, serif;
+
+  --animate-blink: blink 1s step-start infinite;
+  --animate-pixelate: pixelate 10s step-start infinite;
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes pixelate {
+    0%,
+    100% {
+      background-color: #4b5563;
+    }
+    50% {
+      background-color: #f97316;
+    }
+  }
 }
 
-:focus-visible {
-  @apply outline outline-orange-500;
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
 }
 
-::selection {
-  @apply bg-orange-900;
+@utility pixelated {
+  image-rendering: pixelated;
+}
+
+@utility pixel-animate {
+  @apply animate-pixelate transition-none;
+  animation-delay: calc(var(--pixel-index) * 0.05s);
 }
 
 @layer utilities {
-  .pixelated {
-    image-rendering: pixelated;
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #f97315 transparent;
   }
 
-  .pixel-animate {
-    @apply animate-pixelate transition-none;
-    animation-delay: calc(var(--pixel-index) * 0.05s);
+  :focus-visible {
+    @apply outline-solid outline-orange-500;
+  }
+
+  ::selection {
+    @apply bg-orange-900;
   }
 }

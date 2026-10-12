@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { Title } from '../../components/Title'
 import { findSelected } from '../../utils/findSelected'
 import { useProjectQueryOptions } from './hooks/projectQuery'

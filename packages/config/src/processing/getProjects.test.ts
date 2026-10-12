@@ -870,6 +870,29 @@ describe('getProjects', () => {
       )
       expect(invalid).toEqual([])
     })
+
+    // A project that posts blobs without a tracking config shows up as an
+    // unknown blob sender on the blobs page (e.g. Nova after its switch to
+    // blobs, Fluent since launch).
+    it('every live project with Ethereum blobs DA has ethereum tracking', () => {
+      const missing = projects
+        // L3s inherit the label from their host chain, which posts for them
+        .filter(
+          (p) =>
+            p.archivedAt === undefined &&
+            p.scalingInfo?.hostChain.id === 'ethereum',
+        )
+        .filter((p) =>
+          (p.scalingDa ?? []).some(
+            (da) =>
+              da.layer.value === 'Ethereum' &&
+              da.layer.secondLine?.includes('Blobs'),
+          ),
+        )
+        .filter((p) => (p.daTrackingConfig ?? []).length === 0)
+        .map((p) => p.id)
+      expect(missing).toEqual([])
+    })
   })
 
   // New projects are expected to be discovery driven. Read the comment in constants.ts

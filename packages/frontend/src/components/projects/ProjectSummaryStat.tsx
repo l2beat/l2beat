@@ -18,7 +18,7 @@ type ProjectSummaryStatTitleProps =
       titleAsChild: true
     }
 
-type ProjectSummaryStatProps = ProjectSummaryStatTitleProps & {
+export type ProjectSummaryStatProps = ProjectSummaryStatTitleProps & {
   value: ReactNode
   tooltip?: string
   className?: string

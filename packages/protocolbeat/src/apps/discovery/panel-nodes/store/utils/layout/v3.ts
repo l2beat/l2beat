@@ -28,6 +28,4 @@ export const LayoutV3 = v.object({
   hiddenNodes: HiddenNodes.optional(),
 })
 
-export type LayoutMetadataV3 = v.infer<typeof LayoutMetadata>
 export type LayoutV3 = v.infer<typeof LayoutV3>
-export type NodeLocationsV3 = v.infer<typeof NodeLocations>

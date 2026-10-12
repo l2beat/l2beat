@@ -37,6 +37,7 @@ export function getCommonPinningStyles<T>(
       : undefined
 
   return {
+    ...getStickyStyles(isLastPinned),
     left:
       isPinned === 'left'
         ? `var(${getPinnedLeftVariable(column.getPinnedIndex())}, ${
@@ -47,13 +48,34 @@ export function getCommonPinningStyles<T>(
       isPinned === 'right'
         ? `${column.getAfter('right') - STICKY_OVERLAP_PX}px`
         : undefined,
+    width: column.getSize(),
+  }
+}
+
+/**
+ * For tables that lay out their own cells rather than through TanStack. The
+ * cell sits `start` px in until the sticky header measures the real offset.
+ */
+export function getLeftPinnedCellStyles(
+  pinnedIndex: number,
+  start: number,
+  isLast: boolean,
+): CSSProperties {
+  return {
+    ...getStickyStyles(isLast ? 'left' : undefined),
+    left: `var(${getPinnedLeftVariable(pinnedIndex)}, ${start - STICKY_OVERLAP_PX}px)`,
+  }
+}
+
+/** The last pinned column fades where the rest scroll under */
+function getStickyStyles(lastPinned: 'left' | 'right' | undefined) {
+  return {
     position:
       `var(${PINNED_POSITION_VARIABLE}, sticky)` as CSSProperties['position'],
-    width: column.getSize(),
     maskImage:
-      isLastPinned &&
+      lastPinned &&
       `linear-gradient(to ${
-        isLastPinned === 'left' ? 'right' : 'left'
+        lastPinned === 'left' ? 'right' : 'left'
       }, transparent 0, black 0px, black calc(100% - ${EDGE_FADE_WIDTH_PX}px), transparent 100%)`,
     zIndex: 10,
   }
