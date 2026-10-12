@@ -27,17 +27,21 @@ jobs:
       packages: ${{ steps.affected.outputs.packages }}
     steps:
       # turbo needs the branch point in the clone to diff against it, so fetch
-      # just enough history to reach it.
+      # just enough history to reach it. The base branch is read from the API, not
+      # the event: a push right before a retarget fires an event that still
+      # names the old base.
       - name: Find where the PR branched off
         id: pr
         if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
-          COMPARE: ${{ github.event.pull_request.base.ref }}...${{ github.event.pull_request.head.sha }}
-        run: >-
-          gh api "repos/$GITHUB_REPOSITORY/compare/$COMPARE"
-          --jq '"base=\(.merge_base_commit.sha)\ndepth=\(.ahead_by + 1)"'
-          >> "$GITHUB_OUTPUT"
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          base_ref=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq .base.ref)
+          gh api "repos/$GITHUB_REPOSITORY/compare/$base_ref...$HEAD_SHA" \
+            --jq '"base=\(.merge_base_commit.sha)\ndepth=\(.ahead_by + 1)"' \
+            >> "$GITHUB_OUTPUT"
 
       - name: Check out code
         uses: actions/checkout@v6
