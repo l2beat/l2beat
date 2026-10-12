@@ -35,10 +35,7 @@ export function OssificationDetails({
   ossification: ProjectOssificationView
 }) {
   return (
-    <div
-      id="ossification"
-      className="scroll-mt-[68px] md:scroll-mt-[86px] lg:scroll-mt-4"
-    >
+    <div id="ossification" className="scroll-mt-section-nav">
       <SubsectionHeading className="mb-3 font-bold text-heading-20">
         Ossification
       </SubsectionHeading>

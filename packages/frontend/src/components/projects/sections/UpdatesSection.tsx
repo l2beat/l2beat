@@ -214,7 +214,7 @@ export function UpdateCard({
           node.scrollIntoView({ block: 'start' })
         }
       }}
-      className="group w-full min-w-0 scroll-mt-[68px] overflow-hidden rounded-lg border border-divider bg-surface-primary md:scroll-mt-[86px] lg:scroll-mt-4"
+      className="group w-full min-w-0 scroll-mt-section-nav overflow-hidden rounded-lg border border-divider bg-surface-primary"
     >
       <summary
         className={cn(

@@ -1,0 +1,23 @@
+/*
+  The sticky section navigation shown below `lg`: the project strip on top of
+  the tabs. Anchored content on those pages clears its height, so jumping to a
+  section or an address lands just below the bar instead of under it.
+*/
+:root {
+  --project-strip-height: 30px;
+  --section-nav-tabs-height: 40px;
+  --section-nav-height: calc(
+    var(--project-strip-height) +
+    var(--section-nav-tabs-height)
+  );
+
+  /* The bar is hidden from `lg` up. */
+  @variant lg {
+    --section-nav-height: 0px;
+  }
+}
+
+/* The gap keeps the target from touching the bar's bottom edge. */
+@utility scroll-mt-section-nav {
+  scroll-margin-top: calc(var(--section-nav-height) + --spacing(4));
+}

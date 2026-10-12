@@ -36,7 +36,7 @@ export function StickyMobileSectionNavigation({
         ref={stickyTopBarRef}
         className={cn(
           'md:-mx-5 sticky z-100 lg:hidden',
-          project ? 'top-7.5' : 'top-0',
+          project ? 'top-(--project-strip-height)' : 'top-0',
           className,
         )}
       >
@@ -47,20 +47,21 @@ export function StickyMobileSectionNavigation({
 }
 
 /**
- * Rests behind the tabs, which stick 30px lower than it does. Once the page
- * scrolls the tabs past that point, they stop and the strip carries on,
- * sliding out from behind them until it sticks at the top; scrolling back
+ * Rests behind the tabs, which stick its height lower than it does. Once
+ * the page scrolls the tabs past that point, they stop and the strip carries
+ * on, sliding out from behind them until it sticks at the top; scrolling back
  * slides it back in. Both are sticky, so the browser moves them together on
  * every frame: nothing to time, and nothing that depends on the site header
  * painting over the strip, which iOS can skip for a few frames when flinging
  * back to the top.
  *
  * It sits below the tabs' z-index, which pages may lower (interop uses 40).
- * Section scroll margins on project pages count on its 30px.
+ * Its height, `--project-strip-height`, is part of the `--section-nav-height`
+ * that anchored content clears (see `section-navigation.css`).
  */
 function ProjectStrip({ project }: { project: Project }) {
   return (
-    <div className="md:-mx-5 -mb-7.5 sticky top-0 z-30 flex h-7.5 items-center justify-between gap-4 border-divider/60 border-b bg-header-primary px-4 lg:hidden">
+    <div className="md:-mx-5 -mb-(--project-strip-height) sticky top-0 z-30 flex h-(--project-strip-height) items-center justify-between gap-4 border-divider/60 border-b bg-header-primary px-4 lg:hidden">
       <div className="flex min-w-0 items-center gap-1.5">
         <img
           width={16}

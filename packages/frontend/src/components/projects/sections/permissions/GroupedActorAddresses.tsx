@@ -31,7 +31,7 @@ export function GroupedActorAddresses({
           }
           href={entry.href}
           address={entry.address}
-          className="inline-flex scroll-mt-[86px] items-center gap-0.5 md:scroll-mt-[70px] lg:scroll-mt-10"
+          className="inline-flex scroll-mt-section-nav items-center gap-0.5"
         >
           {entry.verificationStatus === 'unverified' && (
             <Tooltip>
