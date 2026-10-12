@@ -52,7 +52,7 @@ export function zamaCwAdversaries(
         exposureContinued:
           'Either party to a transfer can disclose its amount onchain at any time.',
         advice:
-          'Pay and get paid inside the confidential token, and unwrap only what you need.',
+          'Pay and get paid inside the confidential token, and unwrap only what the user needs.',
         interior: INTERIOR,
         sources: [
           {
@@ -101,7 +101,7 @@ export function zamaCwAdversaries(
         exposureShort:
           "Zama's app is closed source, so what it sends to third parties is up to Zama and can change at any time.",
         exposureContinued:
-          "Through Zama's open SDK, amounts leave your device only as FHE ciphertext and come back encrypted to a key only your device holds. Today the app sends your address, chain reads and decryption requests to Zama's own servers, which forward chain reads to an RPC provider Zama does not name. Analytics wait for your consent.",
+          "Through Zama's open SDK, amounts leave the user's device only as FHE ciphertext and return encrypted to a key held only by that device. Today the app sends the user's address, chain reads and decryption requests to Zama's own servers, which forward chain reads to an RPC provider Zama does not name. Analytics wait for the user's consent.",
         advice: "Use a client built on Zama's open SDK.",
         interior: INTERIOR,
         sources: [

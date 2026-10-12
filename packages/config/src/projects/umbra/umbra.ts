@@ -90,7 +90,7 @@ export const umbra: BaseProject = {
   },
   display: {
     description:
-      'A stealth-address payment protocol for your existing wallet: you register once, and anyone can pay you at a fresh address.',
+      'A stealth-address payment protocol for an existing wallet: the user registers once, and anyone can pay them at a fresh address.',
     detailedDescription: readProjectMarkdown('umbra', 'detailedDescription', {
       toll: `${Number(formatEther(discovery.getContractValue<number>('Umbra', 'toll')))} ETH`,
     }),
@@ -169,7 +169,7 @@ export const umbra: BaseProject = {
       ],
       missing: [
         'Only who controls the receiving address is hidden - the sender, the amount and the stealth address stay public.',
-        'The hosted app sends the operator your wallet address and your withdrawal addresses in one session.',
+        "The hosted app sends the operator the user's wallet address and withdrawal addresses in one session.",
       ],
     },
     security: {

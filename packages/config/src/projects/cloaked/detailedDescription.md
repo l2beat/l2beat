@@ -1,10 +1,10 @@
-Cloaked is a wallet that gives you a fresh receiving address for every payment and shows them all as one account. Payers use your name, like ltwobeat.clkd.eth, and each lookup returns a new address. Outsiders see separate payments, while Cloaked sees all of them.
+Cloaked is a wallet that gives the user a fresh receiving address for every payment and shows them all as one account. Payers use the user's name, like ltwobeat.clkd.eth, and each lookup returns a new address. Outsiders see separate payments, while Cloaked sees all of them.
 
-Users trust Cloaked, which holds a key that sees all your addresses, runs the closed-source app and submits every send. Your funds sit in addresses that only you control, and an open recovery tool exports their keys without Cloaked.
+The user trusts Cloaked, which holds a key that sees all their addresses, runs the closed-source app and submits every send. The user's funds sit in addresses that only they control, and an open recovery tool exports their keys without Cloaked.
 
 ### Keys
 
-Your keys come from a passkey, or from a wallet signature and a four-digit PIN, and the app creates them in your browser. Cloaked gets a viewing key that shows all your addresses, while only you can spend.
+The app creates the user's keys in their browser, from a passkey or a wallet signature and a four-digit PIN. Cloaked gets a viewing key that shows all the user's addresses, while only the user can spend.
 
 ### Flow
 
@@ -14,7 +14,7 @@ Your keys come from a passkey, or from a wallet signature and a four-digit PIN, 
 
 ### App
 
-The web app at [app.clkd.xyz](https://app.clkd.xyz) and the browser extension are closed source. They read balances through Cloaked's servers, and wallet logins use WalletConnect. The open [recovery tool](https://github.com/cloakedxyz/clkd-recovery) recreates your address keys offline.
+The web app at [app.clkd.xyz](https://app.clkd.xyz) and the browser extension are closed source. They read balances through Cloaked's servers, and wallet logins use WalletConnect. The open [recovery tool](https://github.com/cloakedxyz/clkd-recovery) recreates the user's address keys offline.
 
 ### Incognito
 
@@ -22,7 +22,7 @@ The Incognito balance moves funds through [Privacy Pools](/privacy/projects/priv
 
 ### Compliance
 
-Cloaked uses your IP address for sanctions and geographic checks and can refuse quotes or relays, for example for tokenized stocks.
+Cloaked uses the user's IP address for sanctions and geographic checks and can refuse quotes or relays, for example for tokenized stocks.
 
 ### Fees
 

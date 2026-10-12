@@ -21,7 +21,7 @@ export function umbraAdversaries(registrants: number) {
         exposureContinued:
           'The registry lists every recipient who could be behind it, with their key history.',
         advice:
-          'Withdraw to a fresh address that is not registered and has no public link to you.',
+          'Withdraw to a fresh address that is not registered and has no public link to the user.',
         sources: [
           {
             contract: 'Umbra',
@@ -43,7 +43,7 @@ export function umbraAdversaries(registrants: number) {
         exposureShort: `Any of the ${registrants.toLocaleString('en-US')} registered recipients could be behind a stealth address.`,
         exposureContinued:
           'Registrations are rare and public, so a payment that lands minutes after one points to that registrant. Several payments withdrawn to one address share a recipient.',
-        advice: `Register long before anyone pays you, and withdraw each payment to its own address. ${S.exitViaRelayer('relayer for tokens')}`,
+        advice: `Register long before anyone pays the user, and withdraw each payment to its own address. ${S.exitViaRelayer('relayer for tokens')}`,
         sources: [
           {
             contract: 'StealthKeyRegistry',
@@ -56,7 +56,7 @@ export function umbraAdversaries(registrants: number) {
           },
           {
             title:
-              'The app warns about registered, named and sender destinations, and lets you proceed',
+              'The app warns about registered, named and sender destinations, and lets the user proceed',
             url: UMBRA + 'frontend/src/utils/address.ts#L146-L241',
           },
         ],
@@ -66,9 +66,9 @@ export function umbraAdversaries(registrants: number) {
         exposureShort:
           "The hosted app checks the payee's address with its Alchemy RPC seconds before each payment, so timing ties the payee to the payment.",
         exposureContinued:
-          "When the payee withdraws, the same RPC receives their wallet address and the withdrawal address in one session. The wallet's own RPC receives the wallet address together with the matched stealth addresses. On connect, the wallet library also sends your wallet address to Cloudflare's RPC to look up its ENS name.",
+          "When the payee withdraws, the same RPC receives their wallet address and the withdrawal address in one session. The wallet's own RPC receives the wallet address together with the matched stealth addresses. On connect, the wallet library also sends the user's wallet address to Cloudflare's RPC to look up its ENS name.",
         advice:
-          'Pay and withdraw from a local build with every RPC URL set to your own node, point your wallet at that node, and block cloudflare-eth.com.',
+          "Pay and withdraw from a local build with all RPC URLs and the user's wallet pointed at their own node, and block cloudflare-eth.com.",
         sources: [
           {
             title:
@@ -95,10 +95,10 @@ export function umbraAdversaries(registrants: number) {
       privilegedInsider: {
         sentiment: 'warning',
         exposureShort:
-          'The hosted app gives the operator your wallet address on every scan and your withdrawal address in the same session.',
+          "The hosted app gives the operator the user's wallet address on every scan and withdrawal address in the same session.",
         exposureContinued:
-          'Token withdrawals also hand its relayer the stealth address. The operator serves the app and can change it at any time. The contracts are immutable, and only you hold your viewing key.',
-        advice: `${S.localBuild} Leave its indexer URL empty, so it reads payments from your node.`,
+          'Token withdrawals also hand its relayer the stealth address. The operator serves the app and can change it at any time. The contracts are immutable, and only the user holds their viewing key.',
+        advice: `${S.localBuild} Leave its indexer URL empty, so it reads payments from the user's node.`,
         sources: [
           {
             title:

@@ -68,11 +68,11 @@ export const fluidkey: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        "Your funds sit in Safes that only your keys control. The open recovery app finds and withdraws them without Fluidkey. Money in auto-earn vaults follows the vaults' withdrawal rules.",
+        "The user's funds sit in Safes controlled only by their keys. The open recovery app finds and withdraws them without Fluidkey. Money in auto-earn vaults follows the vaults' withdrawal rules.",
       walkawayTest: {
         passed: false,
         reason:
-          "Name lookups, new addresses in the app, finding your Safes and submitting sends all run on Fluidkey's servers.",
+          "Name lookups, new addresses in the app, finding the user's Safes and submitting sends all run on Fluidkey's servers.",
       },
     },
     reproducibility: {
