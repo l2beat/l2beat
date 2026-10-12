@@ -47,20 +47,23 @@
 }
 
 /*
-  Without scroll-driven animations the tabs simply stick a strip's height
-  lower, uncovering the strip as soon as the site header scrolls away.
+  Without scroll-driven animations, or with reduced motion, the tabs simply
+  stick a strip's height lower, uncovering the strip as soon as the site
+  header scrolls away.
 */
 @utility section-nav-tabs-under-strip {
   top: var(--project-strip-height);
 
   @supports (animation-timeline: view()) {
-    top: 0;
-    /* How far down the tabs end up, for sticky table headers below them. */
-    --sticky-top-bar-slide: var(--project-strip-height);
-    animation: uncover-project-strip linear both;
-    animation-timeline: --project-title;
-    animation-range: exit-crossing calc(100% - var(--project-strip-height))
-      exit-crossing 100%;
+    @media (prefers-reduced-motion: no-preference) {
+      top: 0;
+      /* How far down the tabs end up, for sticky table headers below them. */
+      --sticky-top-bar-slide: var(--project-strip-height);
+      animation: uncover-project-strip linear both;
+      animation-timeline: --project-title;
+      animation-range: exit-crossing calc(100% - var(--project-strip-height))
+        exit-crossing 100%;
+    }
   }
 }
 

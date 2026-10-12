@@ -6,11 +6,6 @@ import type { SectionNavigationItem } from './SectionNavigation'
 
 interface Props {
   sections: SectionNavigationItem[]
-  /**
-   * Named in a strip above the tabs once the site header scrolls away, so a
-   * screenshot of any section still says which project it shows and that it
-   * comes from L2BEAT.
-   */
   project?: Project
   className?: string
 }
@@ -59,7 +54,11 @@ export function StickyMobileSectionNavigation({
  */
 function ProjectStrip({ project }: { project: Project }) {
   return (
-    <div className="md:-mx-5 -mb-(--project-strip-height) sticky top-0 z-30 flex h-(--project-strip-height) items-center justify-between gap-4 border-divider/60 border-b bg-header-primary px-4 lg:hidden">
+    <div
+      // Shown for screenshots; the page title already names the project.
+      aria-hidden
+      className="md:-mx-5 -mb-(--project-strip-height) sticky top-0 z-30 flex h-(--project-strip-height) items-center justify-between gap-4 border-divider/60 border-b bg-header-primary px-4 lg:hidden"
+    >
       <div className="flex min-w-0 items-center gap-1.5">
         <img
           width={16}

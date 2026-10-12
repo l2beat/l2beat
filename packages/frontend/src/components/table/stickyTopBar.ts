@@ -20,7 +20,9 @@ export function stickyTopBarRef(bar: HTMLElement | null) {
     // tabs) declares how far; headers stick below where it ends up.
     const slide =
       Number.parseFloat(style.getPropertyValue('--sticky-top-bar-slide')) || 0
-    const bottom = top + slide + bar.getBoundingClientRect().height
+    const height = bar.getBoundingClientRect().height
+    // A bar hidden at this width covers nothing, whatever its offsets say.
+    const bottom = height === 0 ? 0 : top + slide + height
     parent.style.setProperty(TOP_VARIABLE, `${bottom}px`)
   }
   const resizeObserver = new ResizeObserver(publish)
