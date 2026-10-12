@@ -22,7 +22,7 @@ export function InteropCollapsibleSubsection({
     <Collapsible
       id={id}
       defaultOpen={defaultOpen}
-      className="scroll-mt-14 rounded-lg border border-divider p-4"
+      className="scroll-mt-[86px] rounded-lg border border-divider p-4 lg:scroll-mt-14"
     >
       <Subsection
         title={

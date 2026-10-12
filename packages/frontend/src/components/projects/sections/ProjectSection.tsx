@@ -47,7 +47,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       data-role="nav-section"
       nested={props.nested}
       className={cn(
-        'scroll-mt-[38px] px-4 py-8 md:mt-4 md:scroll-mt-14 md:p-6 lg:scroll-mt-4',
+        'scroll-mt-[68px] px-4 py-8 md:mt-4 md:scroll-mt-[86px] md:p-6 lg:scroll-mt-4',
         'md:rounded-lg',
         !props.nested &&
           'border-t-branding-primary md:group-data-[has-colors=true]/section-wrapper:border-t-4',

@@ -37,7 +37,7 @@ export function OssificationDetails({
   return (
     <div
       id="ossification"
-      className="scroll-mt-[38px] md:scroll-mt-14 lg:scroll-mt-4"
+      className="scroll-mt-[68px] md:scroll-mt-[86px] lg:scroll-mt-4"
     >
       <SubsectionHeading className="mb-3 font-bold text-heading-20">
         Ossification
