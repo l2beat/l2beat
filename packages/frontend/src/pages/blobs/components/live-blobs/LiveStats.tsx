@@ -1,7 +1,7 @@
-import { SLOT_SECONDS } from '@l2beat/shared-pure'
-import { type CSSProperties, type ReactNode, useRef } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { LiveIndicator } from '~/components/LiveIndicator'
+import { ChevronIcon } from '~/icons/Chevron'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import {
@@ -11,23 +11,25 @@ import {
   formatKib,
   formatWhole,
 } from './blocks/format'
-import { useChainClock } from './chainClock'
 import { mixColors, readableColor } from './color'
-import { useAnimationFrame, useIsOnScreen, useThemeTokens } from './hooks'
+import { useThemeTokens } from './hooks'
 import { LIVE_POSTERS_ID } from './LivePosters'
 import { type Landing, useLandedTotal } from './landings'
-import { type Arrival, Pop, RollingNumber, writeText } from './liveMotion'
+import { type Arrival, Pop, RollingNumber } from './liveMotion'
 import { type BlockLimits, type LivePoster, UNKNOWN_ID } from './model'
+import { NextBlock } from './NextBlock'
 import { type LiveStatus, useLiveBlobs } from './useLiveBlobs'
 
-/**
- * Short on a phone: the status shares a row with a number there, and the long
- * text would wrap onto a second line
- */
-const STATUS_TEXT: Record<LiveStatus, { long: string; short: string }> = {
-  connecting: { long: 'Connecting to Ethereum…', short: 'Connecting…' },
-  live: { long: 'Live from Ethereum', short: 'Live from Ethereum' },
-  reconnecting: { long: 'Reconnecting to Ethereum…', short: 'Reconnecting…' },
+const STATUS_TEXT: Record<LiveStatus, string> = {
+  connecting: 'Connecting to Ethereum…',
+  live: 'Live from Ethereum',
+  reconnecting: 'Reconnecting to Ethereum…',
+}
+
+/** Ethereum's own DA page, which the card's heading leads to */
+export interface EthereumLink {
+  href: string
+  iconUrl: string
 }
 
 /** Projects named under the strip; the rest are counted */
@@ -37,15 +39,17 @@ const formatArrivedKib = (blobs: number) => formatKib(blobs * BLOB_KIB)
 const anyLanding = (_: Landing) => true
 
 /**
- * Ethereum's blob market over the last 24 hours, above the belt: the headline
- * numbers with whether they are live level with them, then the day's blobs
- * as one strip split by who posted them, in the colors the belt uses
+ * Ethereum's blob market over the last 24 hours, above the belt: whether it is
+ * live, the headline numbers, then the day's blobs as one strip split by who
+ * posted them, in the colors the belt uses
  */
 export function LiveStats({
   limits,
   posters,
+  ethereum,
 }: {
   limits: BlockLimits
+  ethereum: EthereumLink
   /** Every project that may post, with the stand-in for unknown senders last */
   posters: LivePoster[]
 }) {
@@ -66,45 +70,50 @@ export function LiveStats({
 
   return (
     <div>
-      {/* On a phone the status takes the corner beside the first number, so
-          it never sits on a line of its own above them */}
-      <dl className="grid grid-cols-2 gap-x-6 gap-y-3 md:flex md:items-end md:gap-x-8">
-        {/* The labels stand from the first paint and only the numbers wait,
-            so nothing shifts as they come */}
-        <Stat label="Blobs posted" arrival={arrival}>
-          {ready ? (
-            <RollingNumber value={blobs} format={formatWhole} />
-          ) : (
-            <NumberSkeleton sizedAs="00,000" />
-          )}
-        </Stat>
-        <Stat label="Data" arrival={arrival} formatArrival={formatArrivedKib}>
-          {ready ? (
-            <RollingNumber value={blobs * BLOB_KIB} format={formatKib} />
-          ) : (
-            <NumberSkeleton sizedAs="00.0 GiB" />
-          )}
-        </Stat>
-        <Stat
-          label="Per block"
-          note={`of ${limits.targetBlobsPerBlock} target`}
-        >
-          {ready ? (
-            <RollingNumber
-              value={blobs / Math.max(1, postedWindow.blocks)}
-              format={formatAverage}
-            />
-          ) : (
-            // narrow as the number it stands for, or the note wraps on a phone
-            <NumberSkeleton sizedAs="00" />
-          )}
-        </Stat>
-        <div className="col-start-2 row-start-1 flex flex-col items-end gap-1.5 md:ml-auto">
-          <StatusText status={status} />
-          {/* held in place until live, or the status would rise as it comes */}
-          <NextBlock hidden={status !== 'live'} />
+      {/* The heading comes first to be read first, and stands right of the
+          numbers where there is room */}
+      <div className="flex flex-col gap-4 md:flex-row-reverse md:items-start md:justify-between">
+        {/* The countdown sits under the heading whatever the status says, so
+            the numbers below do not move when it changes */}
+        <div className="flex flex-col gap-2">
+          <LiveHeading status={status} ethereum={ethereum} />
+          {/* Where there is room it stands over the belt instead. Held in
+              place until live, or the heading would shift as it comes */}
+          <NextBlock hidden={status !== 'live'} className="md:hidden" />
         </div>
-      </dl>
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-3 md:flex md:items-end md:gap-x-8">
+          {/* The labels stand from the first paint and only the numbers wait,
+              so nothing shifts as they come */}
+          <Stat label="Blobs posted" arrival={arrival}>
+            {ready ? (
+              <RollingNumber value={blobs} format={formatWhole} />
+            ) : (
+              <NumberSkeleton sizedAs="00,000" />
+            )}
+          </Stat>
+          <Stat label="Data" arrival={arrival} formatArrival={formatArrivedKib}>
+            {ready ? (
+              <RollingNumber value={blobs * BLOB_KIB} format={formatKib} />
+            ) : (
+              <NumberSkeleton sizedAs="00.0 GiB" />
+            )}
+          </Stat>
+          <Stat
+            label="Per block"
+            note={`of ${limits.targetBlobsPerBlock} target`}
+          >
+            {ready ? (
+              <RollingNumber
+                value={blobs / Math.max(1, postedWindow.blocks)}
+                format={formatAverage}
+              />
+            ) : (
+              // narrow as the number it stands for, or the note wraps on a phone
+              <NumberSkeleton sizedAs="00" />
+            )}
+          </Stat>
+        </dl>
+      </div>
       {ready ? (
         <>
           <ShareStrip shares={shares} blobs={blobs} projects={projects} />
@@ -198,90 +207,31 @@ function Stat({
   )
 }
 
-function StatusText({ status }: { status: LiveStatus }) {
+function LiveHeading({
+  status,
+  ethereum,
+}: {
+  status: LiveStatus
+  ethereum: EthereumLink
+}) {
   return (
-    <div
-      role="status"
-      className="flex items-center gap-2 whitespace-nowrap font-bold text-label-value-14 text-secondary"
-    >
-      <LiveIndicator disabled={status !== 'live'} />
-      <span className="md:hidden">{STATUS_TEXT[status].short}</span>
-      <span className="max-md:hidden">{STATUS_TEXT[status].long}</span>
-    </div>
-  )
-}
-
-const RING_RADIUS = 6
-const RING_LENGTH = 2 * Math.PI * RING_RADIUS
-/**
- * Under a device pixel of arc each at 2× density, so the ring still sweeps
- * smoothly, while it changes on an eighth of the frames: each change restyles
- * and repaints the page around it, and on a long page that is most of a frame
- */
-const RING_STEPS = 96
-
-/**
- * How long until the next block, as a ring that fills over the 12 seconds:
- * the wait between blocks, made visible. Drawn straight to the elements, and
- * only when they would look different, so it renders no React
- */
-function NextBlock({ hidden }: { hidden: boolean }) {
-  const clock = useChainClock()
-  const rootRef = useRef<HTMLDivElement>(null)
-  const onScreen = useIsOnScreen(rootRef)
-  const ringRef = useRef<SVGCircleElement>(null)
-  const textRef = useRef<HTMLSpanElement>(null)
-  const drawnStep = useRef<number>(undefined)
-
-  useAnimationFrame(() => {
-    const progress = clock.progressNow()
-    const into = progress - Math.floor(progress)
-    const step = Math.floor(into * RING_STEPS)
-    if (step !== drawnStep.current) {
-      drawnStep.current = step
-      ringRef.current?.setAttribute(
-        'stroke-dashoffset',
-        String(RING_LENGTH * (1 - step / RING_STEPS)),
-      )
-    }
-    if (textRef.current) {
-      const left = Math.max(1, Math.ceil((1 - into) * SLOT_SECONDS))
-      writeText(textRef.current, `Next block in ${left}s`)
-    }
-  }, onScreen && !hidden)
-
-  return (
-    <div
-      ref={rootRef}
-      aria-hidden={hidden}
-      className={cn(
-        'flex items-center gap-1.5 font-medium text-label-value-14 text-secondary tabular-nums',
-        hidden && 'invisible',
-      )}
-    >
-      <svg viewBox="0 0 16 16" className="-rotate-90 size-4" aria-hidden>
-        <circle
-          cx={8}
-          cy={8}
-          r={RING_RADIUS}
-          fill="none"
-          strokeWidth={2}
-          className="stroke-divider"
-        />
-        <circle
-          ref={ringRef}
-          cx={8}
-          cy={8}
-          r={RING_RADIUS}
-          fill="none"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeDasharray={RING_LENGTH}
-          strokeDashoffset={RING_LENGTH}
-          className="stroke-brand"
-        />
-      </svg>
-      <span ref={textRef} />
+    <div role="status">
+      <h2>
+        <a
+          href={ethereum.href}
+          className="group flex items-center gap-2 whitespace-nowrap font-bold text-heading-16"
+        >
+          <LiveIndicator disabled={status !== 'live'} />
+          <img src={ethereum.iconUrl} alt="" className="size-5" />
+          <span className="underline-offset-2 group-hover:underline">
+            {STATUS_TEXT[status]}
+          </span>
+          <ChevronIcon
+            aria-hidden
+            className="-rotate-90 size-2.5 fill-current transition-transform group-hover:translate-x-0.5"
+          />
+        </a>
+      </h2>
     </div>
   )
 }

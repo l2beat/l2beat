@@ -65,7 +65,6 @@ export function BlobsThroughputChart({
     <div className="flex flex-col gap-4 lg:contents">
       <Header
         used={pastDay.data?.used}
-        capacity={pastDay.data?.capacity}
         isLoading={pastDay.isLoading}
         view={view}
         setView={setView}
@@ -99,13 +98,11 @@ export function BlobsThroughputChart({
 
 function Header({
   used,
-  capacity,
   isLoading,
   view,
   setView,
 }: {
   used: number | undefined
-  capacity: number | undefined
   isLoading: boolean
   view: View
   setView: (view: View) => void
@@ -124,26 +121,21 @@ function Header({
           <RadioGroupItem value="per-project">Per project</RadioGroupItem>
         </RadioGroup>
       </div>
-      <div className="flex flex-col items-end">
-        <div className="whitespace-nowrap text-right font-bold text-xl">
-          {isLoading ? (
-            <Skeleton className="my-[5px] h-5 w-32" />
-          ) : used === undefined ? (
-            'No data'
-          ) : (
-            formatBytes(used)
-          )}
+      {isLoading ? (
+        <Skeleton className="my-[5px] h-5 w-40" />
+      ) : used === undefined ? (
+        <span className="whitespace-nowrap font-bold text-xl">No data</span>
+      ) : (
+        // laid out as the TVS header is, so the two read alike
+        <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
+          <span className="whitespace-nowrap font-bold text-xl">
+            {formatBytes(used)}
+          </span>
+          <span className="whitespace-nowrap text-secondary text-xs leading-none">
+            / past day
+          </span>
         </div>
-        {isLoading ? (
-          <Skeleton className="my-0.5 h-4 w-40" />
-        ) : (
-          <p className="whitespace-nowrap text-right text-secondary text-xs">
-            {used === undefined || capacity === undefined
-              ? 'past day'
-              : `${((used / capacity) * 100).toFixed(1)}% of target / past day`}
-          </p>
-        )}
-      </div>
+      )}
     </div>
   )
 }

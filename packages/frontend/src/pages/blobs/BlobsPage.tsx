@@ -10,15 +10,12 @@ import {
   type BlobsThroughputChartProps,
 } from './components/charts/BlobsThroughputChart'
 import { BlobsTvsChart } from './components/charts/BlobsTvsChart'
-import {
-  type EthereumSummary,
-  EthereumSummaryCard,
-} from './components/EthereumSummaryCard'
 import { LiveBlobsCard } from './components/live-blobs/LiveBlobsCard'
+import type { EthereumLink } from './components/live-blobs/LiveStats'
 import { useBlockLimits } from './components/live-blobs/useBlockLimits'
 
 interface Props extends AppLayoutProps {
-  ethereumSummary: EthereumSummary
+  ethereum: EthereumLink
   tvsProjectIds: DaTvsProjectIds
   throughput: BlobsThroughputChartProps
   /** The projects whose batches the live blocks tell apart */
@@ -26,7 +23,7 @@ interface Props extends AppLayoutProps {
 }
 
 export function BlobsPage({
-  ethereumSummary,
+  ethereum,
   tvsProjectIds,
   throughput,
   blobPosters,
@@ -41,8 +38,7 @@ export function BlobsPage({
       <SideNavLayout>
         <MainPageHeader>Blobs</MainPageHeader>
         {/* On mobile the sections run edge to edge, split by a line */}
-        <div className="flex flex-col md:gap-6 [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
-          <EthereumSummaryCard summary={ethereumSummary} />
+        <div className="flex flex-col md:gap-4 [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
           {/* The cards share their rows, so both charts start level however
               tall either header is. Each card's one column may shrink below
               its chart, or a chart drawn wider holds the card at that width
@@ -59,7 +55,11 @@ export function BlobsPage({
             className="lg:hidden"
             charts={[tvsChart, throughputChart]}
           />
-          <LiveBlobsCard projects={blobPosters} limits={limits} />
+          <LiveBlobsCard
+            projects={blobPosters}
+            limits={limits}
+            ethereum={ethereum}
+          />
         </div>
       </SideNavLayout>
     </AppLayout>

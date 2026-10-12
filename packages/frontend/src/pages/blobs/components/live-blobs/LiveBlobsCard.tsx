@@ -15,11 +15,11 @@ import { BELT_HEIGHT, BeltLegend, PulseSkeleton } from './blocks/BeltFrame'
 import { useBeaconChain } from './blocks/useBeaconChain'
 import { ChainClockContext, createChainClock } from './chainClock'
 import { LivePosters } from './LivePosters'
-import { LiveStats } from './LiveStats'
+import { type EthereumLink, LiveStats } from './LiveStats'
 import { createLandings, LandingsContext } from './landings'
 import { type BlockLimits, toLivePosters } from './model'
 
-// Loaded on its own: it sits below the fold and draws only in the browser
+// Loaded on its own: it draws only in the browser
 const LiveBlocks = lazy(() =>
   import('./blocks/LiveBlocks').then((m) => ({ default: m.LiveBlocks })),
 )
@@ -28,10 +28,11 @@ interface Props {
   /** Every project that posts blobs to Ethereum */
   projects: BlobPoster[]
   limits: BlockLimits
+  ethereum: EthereumLink
 }
 
 /** Ethereum's blobs, block by block, as they are made, above who posted them */
-export function LiveBlobsCard({ projects, limits }: Props) {
+export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
   const posters = useMemo(() => toLivePosters(projects), [projects])
   // the belt draws on a canvas sized to the screen, which the server has not got
   const isClient = useIsClient()
@@ -43,7 +44,7 @@ export function LiveBlobsCard({ projects, limits }: Props) {
     <ChainClockContext value={clock}>
       <LandingsContext value={landings}>
         <PrimaryCard className="space-y-5">
-          <LiveStats limits={limits} posters={posters} />
+          <LiveStats limits={limits} posters={posters} ethereum={ethereum} />
           {isClient ? (
             <LiveBoundary>
               <Suspense fallback={<LiveSkeleton />}>

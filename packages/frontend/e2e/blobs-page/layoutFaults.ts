@@ -59,7 +59,7 @@ export function findLayoutFaults(page: Page) {
       ...[
         ...document.querySelectorAll('.primary-card span, .primary-card h2'),
       ].filter((e) =>
-        /^(L2s Value Secured|Data Posted|Ethereum)$/.test(e.textContent ?? ''),
+        /^(L2s Value Secured|Data Posted)$/.test(e.textContent ?? ''),
       ),
       ...document.querySelectorAll('.primary-card ul > li > *'),
     ]

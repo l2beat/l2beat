@@ -20,6 +20,7 @@ import { LivePulse } from '../LivePulse'
 import { LandingsContext } from '../landings'
 import { clampView, earliestView } from '../lookBack'
 import { type BlockLimits, type LivePoster, UNKNOWN_ID } from '../model'
+import { NextBlock } from '../NextBlock'
 import { PointerTooltip } from '../PointerTooltip'
 import { useLiveBlobs } from '../useLiveBlobs'
 import { BELT_HEIGHT, BeltLegend } from './BeltFrame'
@@ -36,6 +37,9 @@ import { type BeltHover, useBelt } from './useBelt'
 import { useBeltSwipe } from './useBeltSwipe'
 import { useBeltWheel } from './useBeltWheel'
 import { usePastBlocks, withPast } from './usePastBlocks'
+
+/** From the caption's baseline to the top of the ring, centring the two */
+const NEXT_BLOCK_ABOVE_BASELINE = 12
 
 interface Props {
   /** Every project that may post, with the stand-in for unknown senders last */
@@ -86,6 +90,7 @@ export function LiveBlocks({ posters, limits }: Props) {
     [size, maxBlobsPerBlock, targetBlobsPerBlock],
   )
   const look = useLookBack(layout)
+  const { status } = useLiveBlobs()
   const past = usePastBlocks({
     view: look.view,
     head: look.head,
@@ -204,6 +209,14 @@ export function LiveBlocks({ posters, limits }: Props) {
           // fades in where the skeleton was, rather than swapping for it
           className="absolute inset-0 size-full starting:opacity-0 transition-opacity duration-300 ease-out"
         />
+        {layout && !layout.compact && (
+          // level with the bay's caption, at the belt's free right end
+          <NextBlock
+            hidden={status !== 'live'}
+            className="pointer-events-none absolute right-0 max-md:hidden"
+            style={{ top: layout.bayCaptionY - NEXT_BLOCK_ABOVE_BASELINE }}
+          />
+        )}
         {belt.hover && hovered && hoveredPoster && (
           <BatchTooltip
             hover={belt.hover}
