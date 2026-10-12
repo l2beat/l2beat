@@ -65,7 +65,11 @@ export function StickyMobileSectionNavigation({
 function revealStripOnceTitleCovered(tabs: HTMLElement) {
   const title = tabs.parentElement?.querySelector('h1')
   if (!title) return
-  const tabsHeight = tabs.offsetHeight
+  // Declared rather than measured: the tabs are hidden from `lg` up, so a
+  // measurement taken there would stay 0 after the viewport narrows.
+  const tabsHeight = Number.parseFloat(
+    getComputedStyle(tabs).getPropertyValue('--section-nav-tabs-height'),
+  )
   const observer = new IntersectionObserver(
     ([entry]) => {
       if (!entry) return
