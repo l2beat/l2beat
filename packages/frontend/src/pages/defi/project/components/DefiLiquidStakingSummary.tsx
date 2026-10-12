@@ -67,7 +67,7 @@ export function DefiLiquidStakingSummary({
         title: 'Cost of exit',
         value: formatOrNoData(
           metrics?.exitCostDays,
-          (value) => `${value.toFixed(1)} days of yield`,
+          (value) => `${value.toFixed(1)} days`,
         ),
         tooltip: metricTooltip(
           metrics?.exitCostDays,

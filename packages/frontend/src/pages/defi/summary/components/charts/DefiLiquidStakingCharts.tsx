@@ -53,16 +53,26 @@ export function DefiLiquidStakingCharts({
     (point) => point[BURN_BUFFER_PROJECT] === null,
   ).length
   const benchmarkCharted = apr.projects.some((project) => project.benchmark)
+  const stake = charts.stake && {
+    key: 'stake',
+    label: 'ETH staked',
+    values: charts.stake,
+    color: 'var(--chart-ethereum-secondary)',
+    formatAxisLabel: (value: number) => `${value.toFixed(0)}M`,
+    formatTooltipValue: (value: number) => `${value.toFixed(1)}M ETH`,
+  }
   const snapshot = `Static snapshot up to ${charts.asOf}.`
 
   return (
     <div className="grid gap-x-6 gap-y-8 lg:grid-cols-2">
       <ChartBlock
-        title="Rate-implied yield, 30-day trailing"
+        title="Rate-implied yield"
         info={[
-          "Annualised drift of each token's own oracle rate over the previous 30 days: the yield a holder received, net of protocol fees.",
+          "What a holder earned, net of protocol fees: the annualised change of each token's exchange rate over the previous 30 days.",
           benchmarkCharted &&
             'Network average is the return of all Ethereum validators before any protocol fee: consensus issuance plus MEV-boost payments and tips, over the active stake, for the same 30 days.',
+          stake &&
+            'The shaded area is the ETH staked network-wide (right axis): rewards per validator shrink as the square root of the total stake, so the yield falls as the stake grows.',
           snapshot,
         ]
           .filter(Boolean)
@@ -75,12 +85,13 @@ export function DefiLiquidStakingCharts({
           data={apr.data}
           formatYAxisLabel={(value) => formatPercent(value, 1)}
           formatTooltipValue={(value) => formatPercent(value, 2)}
+          background={stake}
         />
       </ChartBlock>
       <ChartBlock
-        title="Cost of exit, in days of yield"
+        title="Cost of exit"
         info={[
-          'Days of staking yield a holder gives up to exit, by the cheaper route: waiting for a protocol withdrawal, which earns nothing while queued, or selling at the market discount.',
+          'How many days of staking yield a holder gives up to exit, by the cheaper route: waiting for a protocol withdrawal, which earns nothing while queued, or selling at the market discount.',
           'The discount is a 7-day median of quoted prices, before swap fees and price impact. For wBETH the wait is the operator-set lock time.',
           bufferCharted &&
             `Rocket Pool has no queue: burning is free while its burn buffer holds ETH, which it did not on ${bufferEmptyDays} of ${exitDays.data.length} days.`,
@@ -95,7 +106,7 @@ export function DefiLiquidStakingCharts({
           colors={colors}
           data={exitCost.data}
           formatYAxisLabel={(value) => `${value.toFixed(0)}d`}
-          formatTooltipValue={(value) => `${value.toFixed(1)} days of yield`}
+          formatTooltipValue={(value) => `${value.toFixed(1)} days`}
         />
       </ChartBlock>
     </div>

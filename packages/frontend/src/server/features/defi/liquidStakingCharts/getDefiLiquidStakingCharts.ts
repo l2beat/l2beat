@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
 import type { DefiSummaryEntry } from '../getDefiSummaryEntries'
 import {
@@ -33,6 +34,12 @@ export interface DefiLiquidStakingCharts {
   timestamps: number[]
   /** series -> project id -> one value per timestamp (null = no data). */
   series: Record<LiquidStakingChartSeries, Record<string, (number | null)[]>>
+  /**
+   * ETH staked network-wide, in millions, one value per timestamp: the
+   * background of the yield chart, since rewards per validator fall as the
+   * square root of the total stake.
+   */
+  stake?: (number | null)[]
 }
 
 // Order of the rows in the charts' legends.
@@ -131,7 +138,12 @@ function buildCharts(
   return {
     asOf: snapshot.asOf,
     projects,
-    timestamps: snapshot.timestamps,
+    // Samples are block times; the charts' time axis places its date ticks
+    // on midnights, so each sample is dated by its UTC day.
+    timestamps: snapshot.timestamps.map((timestamp) =>
+      UnixTime.toStartOf(UnixTime(timestamp), 'day'),
+    ),
     series,
+    stake: snapshot.stake,
   }
 }

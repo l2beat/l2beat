@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Line, LineChart, type YAxisProps } from 'recharts'
+import { Area, ComposedChart, Line, YAxis, type YAxisProps } from 'recharts'
 import type {
   ChartMeta,
   CustomChartTooltipProps,
@@ -11,12 +11,26 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import {
+  ChartDataIndicator,
+  type ChartDataIndicatorType,
+} from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import type { DefiLiquidStakingChartProject } from '~/server/features/defi/liquidStakingCharts/getDefiLiquidStakingCharts'
 import type { LiquidStakingChartPoint } from '~/server/features/defi/liquidStakingCharts/liquidStakingMetrics'
 import { formatTimestamp } from '~/utils/dates'
+
+/** A context series drawn as a shaded area behind the lines, on its own right axis. */
+export interface LiquidStakingChartBackground {
+  key: string
+  label: string
+  /** One value per data point, in million ETH. */
+  values: (number | null)[]
+  color: string
+  formatAxisLabel: (value: number) => string
+  formatTooltipValue: (value: number) => string
+}
 
 interface Props {
   projects: DefiLiquidStakingChartProject[]
@@ -25,6 +39,7 @@ interface Props {
   formatYAxisLabel: (value: number) => string
   formatTooltipValue: (value: number) => string
   yAxis?: Pick<YAxisProps, 'scale' | 'domain' | 'allowDataOverflow' | 'ticks'>
+  background?: LiquidStakingChartBackground
 }
 
 /**
@@ -38,40 +53,59 @@ export function LiquidStakingLineChart({
   formatYAxisLabel,
   formatTooltipValue,
   yAxis,
+  background,
 }: Props) {
-  const chartMeta = useMemo<ChartMeta>(
+  const points = useMemo(
     () =>
-      projects.reduce<ChartMeta>((acc, project) => {
-        acc[project.id] = {
-          label: (
-            <span className="inline-flex items-center gap-1">
-              <img
-                src={project.icon}
-                alt=""
-                width={14}
-                height={14}
-                className="size-3.5 rounded-full"
-              />
-              {project.name}
-            </span>
-          ),
-          color: colors[project.id] ?? 'var(--secondary)',
-          indicatorType: {
-            shape: 'line',
-            strokeDasharray: project.benchmark ? '5 5' : undefined,
-          },
-        }
-        return acc
-      }, {}),
-    [projects, colors],
+      background
+        ? data.map((point, index) => ({
+            ...point,
+            [background.key]: background.values[index] ?? null,
+            [`${background.key}Daily`]: background.values[index] ?? null,
+          }))
+        : data,
+    [data, background],
   )
+  const chartMeta = useMemo<ChartMeta>(() => {
+    const meta = projects.reduce<ChartMeta>((acc, project) => {
+      acc[project.id] = {
+        label: (
+          <span className="inline-flex items-center gap-1">
+            <img
+              src={project.icon}
+              alt=""
+              width={14}
+              height={14}
+              className="size-3.5 rounded-full"
+            />
+            {project.name}
+          </span>
+        ),
+        color: colors[project.id] ?? 'var(--secondary)',
+        indicatorType: {
+          shape: 'line',
+          strokeDasharray: project.benchmark ? '5 5' : undefined,
+        },
+      }
+      return acc
+    }, {})
+    if (background) {
+      meta[background.key] = {
+        label: background.label,
+        color: background.color,
+        indicatorType: { shape: 'square' },
+      }
+    }
+    return meta
+  }, [projects, colors, background])
 
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(chartMeta)
+  const stakeShown = !!background && dataKeys.includes(background.key)
 
   return (
     <ChartContainer
-      data={data}
+      data={points}
       meta={chartMeta}
       isLoading={false}
       interactiveLegend={{
@@ -81,14 +115,45 @@ export function LiquidStakingLineChart({
       }}
     >
       {/* Without right:1 the chart last point is not hoverable for some reason */}
-      <LineChart responsive data={data} margin={{ top: 20, right: 1 }}>
+      <ComposedChart responsive data={points} margin={{ top: 20, right: 1 }}>
         <ChartLegendToggleAll
           showAllSelected={showAllSelected}
           onToggleAll={toggleAllDataKeys}
         />
+        {background && (
+          <>
+            <Area
+              yAxisId="right"
+              dataKey={background.key}
+              hide={!dataKeys.includes(background.key)}
+              stroke="none"
+              fill={background.color}
+              fillOpacity={0.15}
+              isAnimationActive={false}
+            />
+            <YAxis
+              yAxisId="right"
+              orientation="right"
+              domain={[
+                (min: number) => Math.floor(min / 5) * 5 - 5,
+                (max: number) => Math.ceil(max / 5) * 5,
+              ]}
+              tickFormatter={(value: number) =>
+                background.formatAxisLabel(value)
+              }
+              tickLine={false}
+              axisLine={false}
+              mirror
+              tickCount={3}
+              dy={-10}
+              tick={{ width: 100 }}
+            />
+          </>
+        )}
         {projects.map((project) => (
           <Line
             key={project.id}
+            yAxisId="left"
             dataKey={project.id}
             hide={!dataKeys.includes(project.id)}
             stroke={chartMeta[project.id]?.color}
@@ -98,9 +163,10 @@ export function LiquidStakingLineChart({
           />
         ))}
         <ChartCommonComponents
-          data={data}
+          data={points}
           isLoading={false}
           yAxis={{
+            yAxisId: 'left',
             tickCount: 4,
             tickFormatter: (value) => formatYAxisLabel(Number(value)),
             ...yAxis,
@@ -108,9 +174,14 @@ export function LiquidStakingLineChart({
           syncedUntil={undefined}
         />
         <ChartTooltip
-          content={<CustomTooltip formatValue={formatTooltipValue} />}
+          content={
+            <CustomTooltip
+              formatValue={formatTooltipValue}
+              background={stakeShown ? background : undefined}
+            />
+          }
         />
-      </LineChart>
+      </ComposedChart>
     </ChartContainer>
   )
 }
@@ -119,8 +190,10 @@ function CustomTooltip({
   payload,
   label,
   formatValue,
+  background,
 }: CustomChartTooltipProps & {
   formatValue: (value: number) => string
+  background?: LiquidStakingChartBackground
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -132,7 +205,16 @@ function CustomTooltip({
       entry.value !== null &&
       entry.value !== undefined,
   )
-  if (visible.length === 0) return null
+  const lines = visible.filter((entry) => entry.name !== background?.key)
+  const daily = background
+    ? (payload[0]?.payload?.[`${background.key}Daily`] as
+        | number
+        | null
+        | undefined)
+    : null
+  if (lines.length === 0 && (daily === null || daily === undefined)) {
+    return null
+  }
 
   return (
     <ChartTooltipWrapper>
@@ -141,35 +223,59 @@ function CustomTooltip({
           {formatTimestamp(label, { mode: 'date', longMonthName: true })}
         </div>
         <div className="mt-2 flex flex-col gap-2">
-          {[...visible]
+          {[...lines]
             .sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
             .map((entry) => {
               const config = entry.name ? meta[entry.name] : undefined
               if (!config) return null
               return (
-                <div
+                <TooltipRow
                   key={entry.name}
-                  className="flex items-center justify-between gap-x-3"
-                >
-                  <div className="flex items-center gap-1">
-                    <ChartDataIndicator
-                      backgroundColor={config.color}
-                      type={config.indicatorType}
-                    />
-                    <span className="font-medium text-label-value-14">
-                      {config.label}
-                    </span>
-                  </div>
-                  <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
-                    {entry.value !== null && entry.value !== undefined
+                  color={config.color}
+                  indicator={config.indicatorType}
+                  label={config.label}
+                  value={
+                    entry.value !== null && entry.value !== undefined
                       ? formatValue(entry.value)
-                      : 'No data'}
-                  </span>
-                </div>
+                      : 'No data'
+                  }
+                />
               )
             })}
+          {background && daily !== null && daily !== undefined && (
+            <TooltipRow
+              color={background.color}
+              indicator={{ shape: 'square' }}
+              label={background.label}
+              value={background.formatTooltipValue(daily)}
+            />
+          )}
         </div>
       </div>
     </ChartTooltipWrapper>
+  )
+}
+
+function TooltipRow({
+  color,
+  indicator,
+  label,
+  value,
+}: {
+  color: string | undefined
+  indicator: ChartDataIndicatorType
+  label: React.ReactNode
+  value: string
+}) {
+  return (
+    <div className="flex items-center justify-between gap-x-3">
+      <div className="flex items-center gap-1">
+        <ChartDataIndicator backgroundColor={color} type={indicator} />
+        <span className="font-medium text-label-value-14">{label}</span>
+      </div>
+      <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
+        {value}
+      </span>
+    </div>
   )
 }
