@@ -27,7 +27,7 @@ export function ProjectChip({ project }: ProjectChipProps) {
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       inert={!isRevealed}
       className={cn(
-        'relative z-20 flex h-10 shrink-0 items-center justify-center overflow-hidden border-divider border-b bg-header-primary shadow-[8px_0_8px_-6px_rgba(0,0,0,0.15)] transition-[width] after:absolute after:inset-y-2.5 after:right-0 after:w-px after:bg-divider motion-reduce:transition-none dark:shadow-[8px_0_8px_-6px_rgba(0,0,0,0.5)]',
+        'relative flex h-10 shrink-0 items-center justify-center overflow-hidden border-divider border-b bg-header-primary transition-[width] after:absolute after:inset-y-2.5 after:right-0 after:w-px after:bg-divider motion-reduce:transition-none',
         isRevealed
           ? 'w-11 duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]'
           : 'w-0 duration-150 ease-out',
