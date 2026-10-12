@@ -17,7 +17,7 @@ export function PulseSkeleton() {
   return <Skeleton className="h-14 w-full" />
 }
 
-/** What a square, a column and a missed slot are, under the belt */
+/** What a square, a column, a missed slot and the lane above are, under the belt */
 export function BeltLegend() {
   return (
     <Legend
@@ -30,6 +30,9 @@ export function BeltLegend() {
         </>,
         <>
           Missed = <LegendValue>no block in the slot</LegendValue>
+        </>,
+        <>
+          Above the belt = <LegendValue>waiting in the mempool</LegendValue>
         </>,
       ]}
     />

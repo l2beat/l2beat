@@ -1,4 +1,8 @@
-import type { LiveBlock } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
+import type {
+  LiveBlock,
+  PendingBatch,
+  Waited,
+} from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 
 /** One blob transaction: a project's batch in a block */
 export interface BlobBatch {
@@ -9,6 +13,18 @@ export interface BlobBatch {
   /** Where it was sent, lowercase. Says the most about a batch from an unknown sender */
   to: string
   txHash: string
+  /** Set if it waited in the mempool before its block */
+  waited?: Waited
+}
+
+/** A batch waiting in the mempool for a block */
+export interface PendingBlobBatch {
+  /** The same as its `BlobBatch.waited.key` once in its block */
+  key: string
+  posterIndex: number
+  blobs: number
+  /** Unix seconds */
+  firstSeenAt: number
 }
 
 export type ChainBlock =
@@ -59,6 +75,17 @@ export function arrivesNow(
   return headMoved && slot === head && head >= currentSlot - 1
 }
 
+/**
+ * Whether a batch the page has not had was heard of just now, for the belt
+ * to show joining the lane, rather than one heard of while the belt was not
+ * followed (a hidden tab, or scrolled away) to put in place quietly
+ */
+export function heardNow(firstSeenAt: number, now: number): boolean {
+  return now - firstSeenAt < HEARD_NOW_FOR
+}
+/** Seconds after it was heard of that a batch still counts as heard of now; the server takes a fraction of one to pass it on */
+const HEARD_NOW_FOR = 3
+
 export function toChainBlock(
   block: LiveBlock,
   posterIndexOf: PosterIndexOf,
@@ -74,9 +101,22 @@ export function toChainBlock(
         blobsBelow,
         to: batch.to,
         txHash: batch.txHash,
+        waited: batch.waited,
       }
       blobsBelow += batch.blobs
       return placed
     }),
+  }
+}
+
+export function toPendingBlobBatch(
+  batch: PendingBatch,
+  posterIndexOf: PosterIndexOf,
+): PendingBlobBatch {
+  return {
+    key: batch.key,
+    posterIndex: posterIndexOf(batch.projectId),
+    blobs: batch.blobs,
+    firstSeenAt: batch.firstSeenAt,
   }
 }

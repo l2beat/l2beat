@@ -1,3 +1,4 @@
+import { slotStart } from '@l2beat/shared-pure'
 import {
   type ReactNode,
   useContext,
@@ -23,13 +24,17 @@ import { type BlockLimits, type LivePoster, UNKNOWN_ID } from '../model'
 import { PointerTooltip } from '../PointerTooltip'
 import { useLiveBlobs } from '../useLiveBlobs'
 import { BELT_HEIGHT, BeltLegend } from './BeltFrame'
-import type { BlobBatch, ChainBlock, PosterIndexOf } from './beaconChain'
+import type {
+  BlobBatch,
+  ChainBlock,
+  PendingBlobBatch,
+  PosterIndexOf,
+} from './beaconChain'
 import { paintLayers } from './beltLayers'
 import { type BeltLayout, layoutBelt, racksAroundBay } from './beltLayout'
 import { paletteFor } from './beltPalette'
 import { type BeltScene, findBatch } from './beltScene'
 import { formatAverage, formatBlobCount, formatWhole } from './format'
-import { BATCH_STAGGER, LAND_AFTER } from './motion'
 import { roundIcons } from './roundIcons'
 import { RECENT_BLOCKS, useBeaconChain } from './useBeaconChain'
 import { type BeltHover, useBelt } from './useBelt'
@@ -62,15 +67,18 @@ export function LiveBlocks({ posters, limits }: Props) {
   const posterIndexOf = useMemo(() => createPosterIndexOf(posters), [posters])
   // the belt drops what the chain brings in, and the chain is followed only
   // while the belt is seen, so each needs the other: a ref breaks the circle
-  const dropBlock = useRef<(block: ChainBlock) => void>(() => {})
-  const announceLandings = useAnnounceLandings(posters, reducedMotion)
+  const beltControls = useRef<{
+    dropBlock: (block: ChainBlock) => number[]
+    showPending: (batch: PendingBlobBatch) => void
+  }>({ dropBlock: () => [], showPending: () => {} })
+  const announceLandings = useAnnounceLandings(posters)
   const { chain, version } = useBeaconChain({
     posterIndexOf,
     enabled: onScreen,
     onFreshBlock: (block) => {
-      dropBlock.current(block)
-      announceLandings(block)
+      announceLandings(block, beltControls.current.dropBlock(block))
     },
+    onFreshPending: (batch) => beltControls.current.showPending(batch),
   })
 
   const layout = useMemo(
@@ -124,6 +132,7 @@ export function LiveBlocks({ posters, limits }: Props) {
         layers,
         posters,
         blocks,
+        pending: chain.pending,
         icons,
         targetBlobs: targetBlobsPerBlock,
         maxBlobs: maxBlobsPerBlock,
@@ -134,6 +143,7 @@ export function LiveBlocks({ posters, limits }: Props) {
       layers,
       posters,
       blocks,
+      chain.pending,
       icons,
       targetBlobsPerBlock,
       maxBlobsPerBlock,
@@ -153,7 +163,7 @@ export function LiveBlocks({ posters, limits }: Props) {
       if (found) openOnEtherscan(found.batch.txHash)
     },
   })
-  dropBlock.current = belt.dropBlock
+  beltControls.current = belt
   const swipe = useBeltSwipe({
     position: belt.position,
     blockPitch: layout?.blockPitch,
@@ -263,9 +273,10 @@ function useViewOnceLoaded(view: number | undefined, loaded: boolean) {
 
 /**
  * Tells the numbers around the belt when each batch of a new block comes to
- * rest, so they count up with it rather than ahead of it
+ * rest, `landsIn` seconds from now, so they count up with it rather than
+ * ahead of it
  */
-function useAnnounceLandings(posters: LivePoster[], still: boolean) {
+function useAnnounceLandings(posters: LivePoster[]) {
   const landings = useContext(LandingsContext)
   const timers = useRef(new Set<ReturnType<typeof setTimeout>>())
   useEffect(() => {
@@ -274,20 +285,22 @@ function useAnnounceLandings(posters: LivePoster[], still: boolean) {
       for (const timer of pending) clearTimeout(timer)
     }
   }, [])
-  return (block: ChainBlock) => {
+  return (block: ChainBlock, landsIn: number[]) => {
     if (!landings || block.status !== 'proposed') return
     block.batches.forEach((batch, index) => {
       const poster = posters[batch.posterIndex]
       if (!poster) return
-      const landsIn = still ? 0 : index * BATCH_STAGGER + LAND_AFTER
-      const timer = setTimeout(() => {
-        timers.current.delete(timer)
-        landings.emit({
-          posterId: poster.id,
-          blobs: batch.blobs,
-          slot: block.slot,
-        })
-      }, landsIn * 1000)
+      const timer = setTimeout(
+        () => {
+          timers.current.delete(timer)
+          landings.emit({
+            posterId: poster.id,
+            blobs: batch.blobs,
+            slot: block.slot,
+          })
+        },
+        (landsIn[index] ?? 0) * 1000,
+      )
       timers.current.add(timer)
     })
   }
@@ -377,6 +390,10 @@ function BatchTooltipContent({
     ['Slot', formatWhole(slot)],
     ['Block', formatWhole(blockNumber)],
   ]
+  if (batch.waited) {
+    const waited = Math.max(0, slotStart(slot) - batch.waited.since)
+    rows.push(['Waited', formatWaited(waited)])
+  }
   // an inbox nobody claims is the one clue to who sent it
   if (poster.id === UNKNOWN_ID) rows.push(['Sent to', shortAddress(batch.to)])
   return (
@@ -422,6 +439,13 @@ function openOnEtherscan(txHash: string) {
 
 function etherscanTxUrl(txHash: string) {
   return `https://etherscan.io/tx/${txHash}`
+}
+
+/** How long a batch waited in the mempool for its slot, to the tenth of a second while short */
+function formatWaited(seconds: number) {
+  if (seconds < 10) return `${seconds.toFixed(1)} s`
+  if (seconds < 60) return `${Math.round(seconds)} s`
+  return `${Math.floor(seconds / 60)} min ${Math.round(seconds % 60)} s`
 }
 
 function shortAddress(address: string) {

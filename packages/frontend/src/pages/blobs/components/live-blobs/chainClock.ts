@@ -13,6 +13,8 @@ const MAX_HEAD_LAG = (LIVE_LAG_SLOTS + 1) * SLOT_SECONDS
 const HEAD_SEEN_INTO_SLOT = 2
 
 export interface ChainClock {
+  /** Unix seconds, with the fraction */
+  now: () => number
   /** Slots since genesis, with how far into the current one */
   progressNow: () => number
   /** Moves the clock to fit `head`, the newest slot the node has */
@@ -39,6 +41,7 @@ export function createChainClock(): ChainClock {
   let offset = 0
   const now = () => Date.now() / 1000 + offset
   return {
+    now,
     progressNow: () => slotProgressAt(now()),
     correct: (head) => {
       const start = slotStart(head)

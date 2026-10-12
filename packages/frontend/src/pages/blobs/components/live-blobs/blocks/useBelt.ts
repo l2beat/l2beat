@@ -10,7 +10,7 @@ import {
 } from 'react'
 import { prepareCanvas, useAnimationFrame } from '../hooks'
 import { GLIDE_SLOTS } from '../lookBack'
-import type { ChainBlock } from './beaconChain'
+import type { ChainBlock, PendingBlobBatch } from './beaconChain'
 import { livePosition, SLIDE_TIME } from './beltPosition'
 import {
   type BatchHit,
@@ -19,7 +19,8 @@ import {
   batchKey,
   type Playback,
 } from './beltScene'
-import { drawBelt } from './drawBelt'
+import { batchLandsAfter, drawBelt } from './drawBelt'
+import { pendingSpot, updateLane } from './lane'
 import {
   BATCH_MOTION_TIME,
   BATCH_STAGGER,
@@ -57,7 +58,8 @@ interface Options {
 
 /**
  * Runs the belt: keeps it on the chain's clock, or takes it back through the
- * day, drops a block's batches in as it comes, paints each frame and finds
+ * day, keeps the lane of batches waiting in the mempool, drops a block's
+ * batches in as it comes, from where they waited, paints each frame and finds
  * the batch under the pointer.
  *
  * Nothing here sets state per frame; only a change of hovered batch renders,
@@ -76,6 +78,10 @@ export function useBelt({
   const playback = useRef<Playback>({
     progress: progressNow(),
     arrivals: new Map(),
+    lane: new Map(),
+    laneAt: performance.now() / 1000,
+    laneMoving: false,
+    flights: new Map(),
     still,
     revealedAt: undefined,
     view,
@@ -161,6 +167,7 @@ export function useBelt({
       play.revealedAt = now
     }
     play.progress = progressNow()
+    moveLane(play, current, now)
     const viewWas = play.view
     play.view =
       held.current === undefined
@@ -200,6 +207,7 @@ export function useBelt({
     const play = playback.current
     if (scene.blocks.size > 0) play.revealedAt ??= Number.NEGATIVE_INFINITY
     play.view = view
+    moveLane(play, scene, performance.now() / 1000)
     paint(scene, performance.now() / 1000, hoveredNow)
     void document.fonts?.ready.then(() => {
       if (!cancelled) paint(scene, performance.now() / 1000, hoveredNow)
@@ -209,16 +217,42 @@ export function useBelt({
     }
   }, [running, paint, scene, hoveredNow, view])
 
-  /** A new block came in: its batches drop into their rack one after another */
-  const dropBlock = useCallback((block: ChainBlock) => {
-    if (block.status !== 'proposed' || playback.current.still) return
+  /**
+   * A new block came in: its batches drop into their rack one after another,
+   * those that waited in the lane leaving it for the bay. Says in how many
+   * seconds each batch lands, so what counts it can count it then
+   */
+  const dropBlock = useCallback((block: ChainBlock): number[] => {
+    if (block.status !== 'proposed') return []
+    const layout = sceneRef.current?.layout
+    const play = playback.current
+    if (play.still || !layout) return block.batches.map(() => 0)
     const now = performance.now() / 1000
-    block.batches.forEach((_, index) => {
-      playback.current.arrivals.set(
-        batchKey(block.slot, index),
-        now + index * BATCH_STAGGER,
+    const rackX = layout.bayX - layout.rackWidth / 2 + layout.rackPadding
+    return block.batches.map((batch, index) => {
+      const key = batchKey(block.slot, index)
+      const startsIn = index * BATCH_STAGGER
+      play.arrivals.set(key, now + startsIn)
+      const spot = batch.waited && play.lane.get(batch.waited.key)
+      // looking back, the lane is not shown, and the bay holds another slot
+      const boards = play.view === undefined && spot
+      if (boards && spot.boardsAt === undefined && !Number.isNaN(spot.x)) {
+        spot.boardsAt = now + startsIn
+        play.flights.set(key, { x: spot.x, pitch: spot.pitch })
+      }
+      return (
+        startsIn + batchLandsAfter(layout, batch, play.flights.get(key), rackX)
       )
     })
+  }, [])
+
+  /** A batch was heard of in the mempool: it joins the lane with its name on it */
+  const showPending = useCallback((batch: PendingBlobBatch) => {
+    if (playback.current.still) return
+    playback.current.lane.set(
+      batch.key,
+      pendingSpot(batch, performance.now() / 1000),
+    )
   }, [])
 
   // A finger shows nothing on the way down, as that may be the start of a
@@ -293,6 +327,7 @@ export function useBelt({
   return {
     hover,
     dropBlock,
+    showPending,
     hold,
     position,
     live,
@@ -352,12 +387,13 @@ function heldView(slot: number, progress: number) {
 }
 
 /**
- * The belt slides at the start of a slot and batches drop as they come; tiles
- * fade in when the first blocks come
+ * The belt slides at the start of a slot, batches drop as they come, and the
+ * lane changes as batches join and leave it; tiles fade in when the first
+ * blocks come
  */
 function isMoving(playback: Playback, now: number) {
   const intoSlot = (playback.progress % 1) * SLOT_SECONDS
-  if (intoSlot < SLIDE_TIME) return true
+  if (intoSlot < SLIDE_TIME || playback.laneMoving) return true
   if (revealed(playback.revealedAt, now) < 1) return true
   for (const arrivedAt of playback.arrivals.values()) {
     if (now - arrivedAt < BATCH_MOTION_TIME) return true
@@ -381,8 +417,24 @@ function isPainted(
 
 function forgetSettled(playback: Playback, now: number) {
   for (const [key, arrivedAt] of playback.arrivals) {
-    if (now - arrivedAt > SETTLE_TIME) playback.arrivals.delete(key)
+    if (now - arrivedAt > SETTLE_TIME) {
+      playback.arrivals.delete(key)
+      playback.flights.delete(key)
+    }
   }
+}
+
+function moveLane(playback: Playback, scene: BeltScene, now: number) {
+  const dt = Math.max(0, now - playback.laneAt)
+  playback.laneAt = now
+  playback.laneMoving = updateLane(
+    playback.lane,
+    scene.pending,
+    scene.layout,
+    now,
+    dt,
+    playback.still,
+  )
 }
 
 function pointInBox(event: MouseEvent<HTMLElement>) {
