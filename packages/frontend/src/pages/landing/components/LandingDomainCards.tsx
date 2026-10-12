@@ -11,7 +11,8 @@ import type { LandingCounts } from '../getLandingData'
 import { LANDING_CONTAINER_CLASS } from '../landingStyles'
 
 interface DomainCard {
-  title: string
+  /** A sentence around the section's name, which it sets apart. */
+  title: { before: string; category: string; after: string }
   href: string
   /** How many the dashboard watches; none where there is nothing to count yet. */
   count?: number
@@ -26,26 +27,40 @@ const ICON_CLASS = 'size-6 stroke-chart-pink'
 
 /**
  * One card per dashboard: a sentence for a title, the section's icon, and
- * how many projects it watches. White, a hairline, nothing else.
+ * how many projects it watches. White, a hairline, nothing else. The sentence
+ * is quiet and the section's name in it is not, so the names are what a quick
+ * look across the cards picks up.
  */
 export function LandingDomainCards({ counts }: { counts: LandingCounts }) {
   const cards: DomainCard[] = [
     {
-      title: 'We keep an eye on the L2s of Ethereum',
+      title: {
+        before: 'We keep an eye on the',
+        category: 'Layer 2s',
+        after: 'of Ethereum',
+      },
       href: '/layer2s/summary',
       count: counts.l2,
       unit: 'projects',
       icon: <L2Icon className={ICON_CLASS} />,
     },
     {
-      title: 'We research privacy on Ethereum',
+      title: {
+        before: 'We research',
+        category: 'Privacy',
+        after: 'on Ethereum',
+      },
       href: '/privacy',
       count: counts.privacy,
       unit: 'projects',
       icon: <PrivacyIcon className={ICON_CLASS} />,
     },
     {
-      title: 'We analyze interop on Ethereum',
+      title: {
+        before: 'We analyze',
+        category: 'Interop',
+        after: 'on Ethereum',
+      },
       href: '/interop/summary',
       count: counts.interop,
       unit: 'protocols',
@@ -54,7 +69,11 @@ export function LandingDomainCards({ counts }: { counts: LandingCounts }) {
   ]
   if (env.CLIENT_SIDE_GARDEN_ENABLED) {
     cards.push({
-      title: 'We tend the CROPS of Ethereum',
+      title: {
+        before: 'We tend the',
+        category: 'CROPS',
+        after: 'of Ethereum',
+      },
       href: GARDEN_PATH,
       count: counts.crops > 0 ? counts.crops : undefined,
       unit: 'projects',
@@ -83,8 +102,12 @@ export function LandingDomainCards({ counts }: { counts: LandingCounts }) {
               <div className="transition-transform duration-200 group-hover:scale-110">
                 {card.icon}
               </div>
-              <h2 className="text-balance font-semibold text-heading-20 leading-tight tracking-[-0.015em]">
-                {card.title}
+              <h2 className="text-balance font-normal text-heading-20 text-secondary leading-snug tracking-[-0.015em]">
+                {card.title.before}{' '}
+                <span className="font-semibold text-heading-24 text-primary underline decoration-2 decoration-chart-pink underline-offset-[6px]">
+                  {card.title.category}
+                </span>{' '}
+                {card.title.after}
               </h2>
               <div className="mt-auto flex items-baseline justify-between gap-2">
                 {card.count !== undefined ? (

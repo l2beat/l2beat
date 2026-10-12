@@ -13,9 +13,9 @@ const MANDATE_HREF = '/about-us'
 export function LandingHero() {
   return (
     <section
-      className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center gap-6 pt-16 pb-14 text-center md:pt-24 md:pb-20`}
+      className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center gap-4 pt-12 pb-10 text-center md:pt-16 md:pb-14`}
     >
-      <h1 className="max-w-[900px] text-balance font-light font-roboto-serif text-[40px] leading-[1.1] tracking-[-0.02em] md:text-[56px] lg:text-[64px]">
+      <h1 className="max-w-[720px] text-balance font-light font-roboto-serif text-[30px] leading-[1.15] tracking-[-0.02em] md:text-[36px] lg:text-[40px]">
         Placeholder for the L2BEAT tagline
       </h1>
       <p className="max-w-[560px] text-pretty text-base text-secondary leading-snug md:text-lg">

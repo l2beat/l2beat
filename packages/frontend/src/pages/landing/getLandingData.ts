@@ -6,7 +6,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getHomeCropsProjects } from '../home/getHomeCropsProjects'
-import { getRecentProjectsForHome } from '../home/getHomeData'
+import { getCachedHomeData, getRecentProjectsForHome } from '../home/getHomeData'
 import { getHomeProjectCounts } from '../home/getHomeProjectCounts'
 import { getHomeResearch } from '../home/getHomeResearch'
 
@@ -26,7 +26,7 @@ export async function getLandingData(
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const [appLayoutProps, data] = await Promise.all([
+  const [appLayoutProps, data, home] = await Promise.all([
     getAppLayoutProps(),
     cache.get(
       {
@@ -36,6 +36,9 @@ export async function getLandingData(
       },
       () => getCachedData(manifest),
     ),
+    // The home page's charts, under the landing page's own sections. One
+    // cache entry for both pages, so neither computes them twice.
+    getCachedHomeData(manifest, cache),
   ])
 
   return {
@@ -56,6 +59,17 @@ export async function getLandingData(
       props: {
         ...appLayoutProps,
         ...data,
+        queryState: home.queryState,
+        charts: {
+          projectCounts: home.projectCounts,
+          l2Charts: home.l2Charts,
+          topL2Projects: home.topL2Projects,
+          privacy: home.privacy,
+          ethereumCharts: home.ethereumCharts,
+          interopFlowChains: home.interopFlowChains,
+          interopDefaultFlowChains: home.interopDefaultFlowChains,
+          flowProtocols: home.flowProtocols,
+        },
       },
     },
   }

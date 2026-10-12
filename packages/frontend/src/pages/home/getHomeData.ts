@@ -42,14 +42,7 @@ export async function getHomeData(
 ): Promise<RenderData> {
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps(),
-    cache.get(
-      {
-        key: ['home', 'data'],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getCachedData(manifest),
-    ),
+    getCachedHomeData(manifest, cache),
   ])
 
   return {
@@ -73,6 +66,20 @@ export async function getHomeData(
       },
     },
   }
+}
+
+export type HomeData = Awaited<ReturnType<typeof getCachedData>>
+
+/** The home page's data, cached once for it and the landing page's charts. */
+export function getCachedHomeData(manifest: Manifest, cache: InMemoryCache) {
+  return cache.get(
+    {
+      key: ['home', 'data'],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () => getCachedData(manifest),
+  )
 }
 
 async function getCachedData(manifest: Manifest) {
