@@ -13,8 +13,9 @@ import type { LiveBlobsConfig } from './liveBlobs'
  * opened again. Timers are faked where the backoff is under test
  */
 describe(LiveMempoolListener.name, () => {
-  const SENDER = EthereumAddress.random()
-  const INBOX = EthereumAddress.random()
+  // lowercase, as the stored blocks have them; the node is sent checksummed
+  const SENDER = EthereumAddress.random().toLowerCase()
+  const INBOX = EthereumAddress.random().toLowerCase()
 
   it('subscribes to whole pending transactions once connected', () => {
     const { sockets } = setup()
@@ -131,9 +132,8 @@ describe(LiveMempoolListener.name, () => {
         subscription: '0xsub',
         result: {
           hash: '0xtx',
-          // lowercase, as nodes send them
-          from: SENDER.toLowerCase(),
-          to: INBOX.toLowerCase(),
+          from: EthereumAddress(SENDER),
+          to: EthereumAddress(INBOX),
           nonce: fields.nonce ?? '0x1',
           type: fields.type,
           blobVersionedHashes:

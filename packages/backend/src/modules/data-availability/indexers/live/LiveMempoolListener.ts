@@ -1,6 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, LivePendingBlobTxRecord } from '@l2beat/database'
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { type RawData, WebSocket } from 'ws'
 import { attributeBatch, type LiveBlobsConfig, nowSeconds } from './liveBlobs'
 
@@ -162,7 +161,7 @@ export interface PendingTold {
 /**
  * What a message from the node tells: a pending transaction, or nothing of
  * the kind (the subscription's acknowledgement, an error). Addresses are
- * checksummed, as the stored blocks' are, so that the two can be matched
+ * lowercase, as the stored blocks' are, so that the two can be matched
  */
 export function readPendingTx(message: string): PendingTold | undefined {
   let parsed: {
@@ -189,10 +188,10 @@ export function readPendingTx(message: string): PendingTold | undefined {
   if (tx?.type !== '0x3' || !tx.to || blobs === 0) return { blobTx: undefined }
   return {
     blobTx: {
-      from: EthereumAddress(tx.from),
+      from: tx.from.toLowerCase(),
       nonce: Number(tx.nonce),
       txHash: tx.hash,
-      to: EthereumAddress(tx.to),
+      to: tx.to.toLowerCase(),
       blobs,
     },
   }
