@@ -74,6 +74,18 @@ function createBlobsPage(page: Page, hasTouch: boolean) {
       await this.waitForLive()
     },
 
+    /**
+     * Brings the posters table on screen. Not by its locator's
+     * scrollIntoViewIfNeeded, which waits for the table to hold still: its
+     * numbers roll and its rows slide as blocks land, which a slow renderer
+     * can keep doing past the test's timeout
+     */
+    async showPosters() {
+      await posters.evaluate((section) =>
+        section.scrollIntoView({ block: 'nearest' }),
+      )
+    },
+
     async waitForLive() {
       await belt.scrollIntoViewIfNeeded()
       await expect(this.status).toContainText('Live', { timeout: 20_000 })
