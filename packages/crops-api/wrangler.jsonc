@@ -1,5 +1,4 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "crops-api",
   "compatibility_date": "2026-09-01",
   // No `main` on purpose: the whole site is pre-generated, so a script would only add latency.

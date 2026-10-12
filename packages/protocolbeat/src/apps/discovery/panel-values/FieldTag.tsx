@@ -8,13 +8,13 @@ export function FieldTag(props: {
   onRemoveClick?: () => void
 }) {
   return (
-    <span className="flex max-w-fit items-center justify-center gap-1 rounded-sm bg-aux-blue text-coffee-800">
+    <span className="flex max-w-fit items-center justify-center gap-1 rounded-xs bg-aux-blue text-coffee-800">
       <div className="py-0.5 pl-1 font-bold font-mono text-[10px]">
         {props.children}
       </div>
       <span
         className={clsx(
-          'w-4 select-none px-1 py-0.5 font-normal last:rounded-r-sm',
+          'w-4 select-none px-1 py-0.5 font-normal last:rounded-r-xs',
           toTagColor(props.source),
         )}
       >

@@ -2,6 +2,7 @@ import { formatBpsToMbps, formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
+import { getDaDataParams } from '~/components/chart/data-availability/getDaDataParams'
 import type {
   ChartMeta,
   CustomChartTooltipProps,
@@ -24,7 +25,6 @@ import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/c
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
 import { type ChartResolution, rangeToResolution } from '~/utils/range/range'
-import { getDaDataParams } from './getDaDataParams'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateThroughputChart({

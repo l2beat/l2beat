@@ -168,5 +168,3 @@ export const TRUSTED_SETUPS = {
     longDescription: readMarkdown('common/trustedSetups/Railgun.md'),
   },
 } as const satisfies Record<string, TrustedSetup>
-
-export type TrustedSetupId = keyof typeof TRUSTED_SETUPS

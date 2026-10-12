@@ -25,6 +25,7 @@ import {
   type EVMLog,
   EVMLogsResponse,
   EVMTransactionReceiptResponse,
+  EVMTransactionReceiptsResponse,
   EVMTransactionResponse,
   Quantity,
   RPCError,
@@ -147,6 +148,26 @@ export class RpcClient extends ClientCore implements IRpcClient {
     }
 
     return { ...receipt.data.result }
+  }
+
+  async getTransactionReceipts(txHashes: string[]) {
+    const responses = await this.batchQuery(
+      'eth_getTransactionReceipt',
+      txHashes.map((txHash) => [txHash]),
+    )
+
+    const receipts = EVMTransactionReceiptsResponse.safeParse(responses)
+    if (!receipts.success) {
+      this.$.logger.warn('Invalid response', {
+        txHashes,
+        response: JSON.stringify(responses),
+      })
+      throw new Error(
+        `Receipts of ${txHashes.length} txs: Error during parsing`,
+      )
+    }
+
+    return receipts.data.map((receipt) => ({ ...receipt.result }))
   }
 
   async getBalance(

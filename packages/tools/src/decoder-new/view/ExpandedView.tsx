@@ -416,7 +416,7 @@ function functionName(abi: string) {
 
 function Badge({ children }: { children: ReactNode }) {
   return (
-    <span className="rounded-sm bg-pink-400 px-1 font-bold font-mono text-black text-xs">
+    <span className="rounded-xs bg-pink-400 px-1 font-bold font-mono text-black text-xs">
       {children}
     </span>
   )

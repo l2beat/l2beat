@@ -31,7 +31,7 @@ export function TooltipContent({
     <RadixTooltip.Content
       sideOffset={sideOffset}
       className={cn(
-        'z-[100] h-fit max-h-80 w-fit max-w-80 origin-(--radix-tooltip-content-transform-origin) overflow-y-auto whitespace-pre-wrap border border-coffee-400 bg-coffee-900 px-3 py-1.5 text-coffee-400 text-xs',
+        'z-100 h-fit max-h-80 w-fit max-w-80 origin-(--radix-tooltip-content-transform-origin) overflow-y-auto whitespace-pre-wrap border border-coffee-400 bg-coffee-900 px-3 py-1.5 text-coffee-400 text-xs',
         className,
       )}
       {...props}

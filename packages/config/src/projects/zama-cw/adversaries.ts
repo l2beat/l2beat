@@ -1,4 +1,8 @@
-import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
+import {
+  definePrivacyAdversaries,
+  PRIVACY_ADVERSARY_SNIPPETS as S,
+} from '../../common/privacyAdversaries'
+import type { PrivacyExposureMap } from '../../types'
 
 const OZ =
   'https://github.com/OpenZeppelin/openzeppelin-confidential-contracts/blob/23ba15402346027f2416667acbb1e741179f8485/contracts/token/ERC7984/'
@@ -11,184 +15,146 @@ const KMS =
 const RELAYER_SDK =
   'https://github.com/zama-ai/relayer-sdk/blob/d06f1e585a78181135cb602109e5fa3da523b48d/src/'
 
-export const zamaCwAdversaries = definePrivacyAdversaries({
-  promise: {
-    protects: 'amount',
-    text: 'Hides transfer amounts. Who pays whom, and every wrap and unwrap amount, is public.',
-  },
-  cells: {
-    publicObserver: {
-      sentiment: 'warning',
-      exposureShort: 'Only the amount of a confidential transfer is hidden.',
-      exposureContinued:
-        'Sender, recipient, every wrap and unwrap amount and the ciphertext handles are public, and either party can later disclose a transfer amount onchain.',
-      advice:
-        'Keep funds wrapped and transfer often, even zero amounts. Unwrap only after a while, and never an amount that matches a recent wrap or a known payment.',
-      interior: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'private',
-        asset: 'exposed',
-        linkage: 'exposed',
-      },
-      sources: [
-        { contract: 'ConfidentialUSDCWrapper' },
-        {
-          title: 'Failed transfer moves an encrypted zero',
-          url: OZ + 'ERC7984.sol#L336-L352',
-        },
-        {
-          title: 'Unwrap makes the burned amount publicly decryptable',
-          url: OZ + 'extensions/ERC7984ERC20Wrapper.sol#L262-L268',
-        },
-        {
-          title: 'Either party can request disclosure of a transfer amount',
-          url: OZ + 'ERC7984.sol#L202-L209',
-        },
-      ],
+const INTERIOR: PrivacyExposureMap = {
+  sender: 'exposed',
+  recipient: 'exposed',
+  amount: 'private',
+  asset: 'exposed',
+  linkage: 'exposed',
+}
+
+const ALL_EXPOSED: PrivacyExposureMap = {
+  sender: 'exposed',
+  recipient: 'exposed',
+  amount: 'exposed',
+  asset: 'exposed',
+  linkage: 'exposed',
+}
+
+/**
+ * @param kmsKeyThreshold KMS operators that can reconstruct the FHE key, from discovery
+ * @param kmsOperatorCount KMS operators in the current context, from discovery
+ */
+export function zamaCwAdversaries(
+  kmsKeyThreshold: number,
+  kmsOperatorCount: number,
+) {
+  return definePrivacyAdversaries({
+    promise: {
+      protects: 'amount',
+      text: 'Hides balances and transfer amounts. Senders, recipients and every wrap and unwrap amount are public.',
     },
-    chainAnalyst: {
-      sentiment: 'warning',
-      exposureShort:
-        "All wraps and unwraps are public, so an account's balance is bounded by what went in and out, and exact for any account that never made a confidential transfer.",
-      exposureContinued:
-        'Transfer partners and timing are public, so a wrap, a transfer and an unwrap in a row pair up by amount.',
-      advice:
-        'Keep funds wrapped and transfer often, even zero amounts. Unwrap only after a while, and never an amount that matches a recent wrap or a known payment.',
-      interior: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: {
-          verdict: 'atRisk',
-          note: 'Bounded by public wrap and unwrap totals; exact for accounts without confidential transfers.',
-        },
-        asset: 'exposed',
-        linkage: 'exposed',
+    cells: {
+      publicObserver: {
+        sentiment: 'warning',
+        exposureShort:
+          'Wraps and unwraps publish their amounts, while confidential transfers keep theirs encrypted.',
+        exposureContinued:
+          'Either party to a transfer can disclose its amount onchain at any time.',
+        advice:
+          'Pay and get paid inside the confidential token, and unwrap only what you need.',
+        interior: INTERIOR,
+        sources: [
+          {
+            title: 'Wrap event carries the clear amount',
+            url: `${OZ}extensions/ERC7984ERC20Wrapper.sol#L256`,
+          },
+          {
+            title: 'Unwrap makes the burned amount publicly decryptable',
+            url: `${OZ}extensions/ERC7984ERC20Wrapper.sol#L262-L268`,
+          },
+          {
+            title: 'Either party can disclose a transfer amount',
+            url: `${OZ}ERC7984.sol#L202-L209`,
+          },
+        ],
       },
-      sources: [
-        { contract: 'ConfidentialUSDCWrapper' },
-        {
-          title: 'Wrap event carries the clear rounded amount',
-          url: OZ + 'extensions/ERC7984ERC20Wrapper.sol#L256',
+      chainAnalyst: {
+        sentiment: 'warning',
+        exposureShort:
+          "An account's balance is bounded by its public wraps and unwraps, and exact if it never took part in a confidential transfer.",
+        exposureContinued:
+          'Transfer partners and timing are public, so a wrap, a transfer and an unwrap in a row pair up by amount. In October 2026, 95% of unwraps could be linked to a single wrap.',
+        advice: `Transfer often, even zero amounts, and unwrap only after a while. ${S.commonAmounts}`,
+        interior: {
+          ...INTERIOR,
+          amount: {
+            verdict: 'atRisk',
+            note: "Hidden only within an account's confidential transfers.",
+          },
         },
-        {
-          title: 'ERC-7984: public sender, recipient and handle per transfer',
-          url: 'https://eips.ethereum.org/EIPS/eip-7984',
-        },
-      ],
-    },
-    networkObserver: {
-      sentiment: 'good',
-      exposureShort:
-        'Amounts are encrypted on your device and never leave it in clear.',
-      exposureContinued:
-        'The default hosted relayer receives your address and the token contract with every encrypted input and balance view, so it learns who transacts and when, plus your IP.',
-      advice: 'Route relayer requests through Tor, or self-host the relayer.',
-      interior: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'private',
-        asset: 'exposed',
-        linkage: 'exposed',
+        sources: [
+          {
+            title:
+              'ERC-7984: public sender, recipient and encrypted amount per transfer',
+            url: 'https://eips.ethereum.org/EIPS/eip-7984',
+          },
+          {
+            title:
+              'Explorer linking unwraps to their wraps, searchable by address, handle and transaction',
+            url: 'https://sekuba.github.io/zama-graph/',
+          },
+        ],
       },
-      sources: [
-        { title: 'Hosted relayer URL', url: RELAYER_SDK + 'configs.ts#L7' },
-        {
-          title: 'Encrypted input bound to user and contract address',
-          url: RELAYER_SDK + 'relayer/sendEncryption.ts#L136-L145',
-        },
-        {
-          title: 'Balance view request carries user address and handles',
-          url: RELAYER_SDK + 'relayer/userDecrypt.ts#L288-L297',
-        },
-        {
-          title: 'Mainnet relayer needs an API key',
-          url: 'https://docs.zama.org/protocol/sdk/guides/relayer-api-keys',
-        },
-        {
-          title: 'Self-hosting a relayer',
-          url: FHEVM + 'relayer/docs/SELF_HOSTING.md',
-        },
-      ],
-    },
-    privilegedInsider: {
-      sentiment: 'bad',
-      exposureShort:
-        'KMS operators share one FHE key under a threshold and can collude to decrypt every balance and transfer ever made.',
-      exposureContinued:
-        'The token owner can appoint an observer with a never-expiring view of all balances and amounts, and can upgrade the token and the ACL, all with no delay.',
-      advice:
-        'Watch for ObserverAdded events and upgrades on your token; there is no delay to react. Nothing you do prevents KMS collusion.',
-      interior: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: {
-          verdict: 'exposed',
-          note: 'To colluding KMS operators, any owner-appointed observer, or the owner via upgrade.',
-        },
-        asset: 'exposed',
-        linkage: 'exposed',
+      networkObserver: {
+        sentiment: 'good',
+        exposureShort:
+          'Amounts leave your device only as FHE ciphertext and come back encrypted to a key only your device holds.',
+        interior: INTERIOR,
+        sources: [
+          {
+            title: 'Inputs are encrypted on the device',
+            url: `${RELAYER_SDK}relayer/sendEncryption.ts#L133-L146`,
+          },
+          {
+            title: 'Balance reads use a device ML-KEM key pair',
+            url: `${RELAYER_SDK}relayer/userDecrypt.ts#L85-L89`,
+          },
+        ],
       },
-      sources: [
-        {
-          contract: 'ConfidentialUSDCWrapper',
-          title: 'Wrapper (addObserver, blockUser, upgrade)',
-        },
-        { contract: 'ProtocolConfig', title: 'KMS signers and thresholds' },
-        { contract: 'ACL', title: 'Access control the KMS honors' },
-        { section: 'permissions' },
-        {
-          title: 'Observer gets a wildcard delegation without expiration',
-          url: WRAPPER + '#L395-L403',
-        },
-        {
-          title: 'Wrapper upgrade authorized by the owner alone',
-          url: WRAPPER + '#L497',
-        },
-        {
-          title: 'ACL upgrade authorized by the owner alone',
-          url: FHEVM + 'host-contracts/contracts/ACL.sol#L654',
-        },
-        {
-          title: '13 KMS parties with threshold t = 4',
-          url: KMS + 'ai-docs/ARCHITECTURE.md#L22-L23',
-        },
-        {
-          title: 'Shamir sharing with t < n/3 (TKMS announcement)',
-          url: 'https://www.zama.ai/post/introducing-zama-threshold-key-management-system-tkms',
-        },
-      ],
-    },
-    futureAdversary: {
-      sentiment: 'warning',
-      exposureShort:
-        'The encryption is lattice-based and survives quantum computers, but every ciphertext is publicly downloadable and one long-lived key protects them all.',
-      exposureContinued:
-        'If enough key shares ever leak, the entire history is exposed.',
-      interior: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: {
-          verdict: 'atRisk',
-          note: 'Lattice cryptography, but one long-lived key.',
-        },
-        asset: 'exposed',
-        linkage: 'exposed',
+      privilegedInsider: {
+        sentiment: 'bad',
+        exposureShort: `Any ${kmsKeyThreshold} of the ${kmsOperatorCount} KMS operators can combine their key shares and decrypt every balance and transfer ever made.`,
+        exposureContinued:
+          'The token owner can instantly appoint an observer that sees all amounts forever, or upgrade the token and the ACL. Zama serves its closed-source app, so it can read amounts before they are encrypted.',
+        interior: ALL_EXPOSED,
+        sources: [
+          {
+            title: 'KMS parties and key-share threshold',
+            url: `${KMS}ai-docs/ARCHITECTURE.md#L22-L25`,
+          },
+          {
+            title: 'Observer gets a wildcard delegation without expiration',
+            url: `${WRAPPER}#L395-L403`,
+          },
+          {
+            title: "Zama's official app",
+            url: 'https://docs.zama.org/protocol/protocol-apps/apps',
+          },
+        ],
       },
-      sources: [
-        {
-          title: 'Coprocessor ciphertext store (public listing)',
-          url: 'https://coprocessor-1.mainnet.zama.org/?max-keys=3',
-        },
-        {
-          title: 'ML-KEM hybrid encryption of decryption shares',
-          url: KMS + 'core/service/src/cryptography/hybrid_ml_kem.rs',
-        },
-        {
-          title: 'Key resharing and key switching in the KMS',
-          url: 'https://docs.zama.org/protocol/protocol/overview/kms',
-        },
-      ],
+      futureAdversary: {
+        sentiment: 'bad',
+        exposureShort:
+          'One long-lived lattice key protects every balance and transfer amount, and anyone can download the ciphertexts today.',
+        exposureContinued:
+          'Balance reads also publish decryption shares on the Zama Gateway chain, encrypted to each user with ML-KEM, also lattice-based. Whoever breaks lattice cryptography, or later obtains enough KMS key shares, decrypts the entire history.',
+        interior: ALL_EXPOSED,
+        sources: [
+          {
+            title: 'Coprocessor ciphertext store (public listing)',
+            url: 'https://coprocessor-1.mainnet.zama.org/',
+          },
+          {
+            title: 'Gateway publishes encrypted decryption shares',
+            url: `${FHEVM}gateway-contracts/contracts/Decryption.sol#L808-L817`,
+          },
+          {
+            title: 'ML-KEM-512 encryption of decryption shares',
+            url: `${KMS}core/service/src/cryptography/hybrid_ml_kem.rs`,
+          },
+        ],
+      },
     },
-  },
-})
+  })
+}

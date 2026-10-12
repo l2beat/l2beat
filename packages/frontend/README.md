@@ -34,6 +34,7 @@ pnpm build:dependencies
 - `pnpm test-all-pages` - test all pages
 - `pnpm perf:resize` - build and check a drag-resize of each page in `e2e/resize-perf/ceilings.json` against its ceiling (also runs as part of `test:e2e`)
 - `pnpm perf:resize:ratchet` - build, measure, and lower the resize ceilings to the current source
+- `pnpm test:e2e:blobs` - build and check the blobs page on a desktop, an Android phone (Chromium), an iPhone and an iPad (WebKit; install it once with `pnpm exec playwright install webkit`)
 
 ### Environment variables
 If you are running `pnpm dev:mock` you do not need any environment variables.

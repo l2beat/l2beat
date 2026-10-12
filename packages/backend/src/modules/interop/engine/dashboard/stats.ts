@@ -136,10 +136,6 @@ export function explore(rows: DataRow[]): DataRowResult[] {
   return results
 }
 
-export function interpret(result: DataRowResult): string {
-  return result.interpretation
-}
-
 function computeBridgeTotals(rows: DataRow[]): Map<string, BridgeTotal> {
   const totals = new Map<string, BridgeTotal>()
 

@@ -20,4 +20,4 @@
 2. the resolver operator derives the wallets' deposit addresses and links L1 deposits to L2 recipients (see privileged insider).
 3. an enclave or AWS Nitro is compromised (see privileged insider).
 4. the portal freezes and users exit through refunds, which publish note or deposit amounts on Ethereum.
-5. a quantum computer breaks the elliptic-curve encryption of data published to Ethereum (see future adversary).
+5. elliptic-curve cryptography is broken, which decrypts data published to Ethereum (see future adversary).

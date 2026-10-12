@@ -198,7 +198,7 @@ export const payyAdversaries = definePrivacyAdversaries({
       exposureShort:
         'Every per-transaction proof is public forever and not zero-knowledge, so whatever it leaks stays available to future compute, and a discrete-log break opens the commitments inside it.',
       exposureContinued:
-        'Registry ciphertexts use elliptic-curve key exchange. If the operator retains them, a quantum computer opens every note delivered through it.',
+        'Registry ciphertexts use elliptic-curve key exchange. If the operator retains them, whoever breaks elliptic-curve cryptography opens every note delivered through it.',
       interior: {
         sender: {
           verdict: 'atRisk',

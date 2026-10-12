@@ -26,7 +26,7 @@ export function DragOverlay() {
     <>
       {hoverRect && (
         <div
-          className="pointer-events-none fixed z-[999] border-2 border-coffee-200 bg-coffee-200/20"
+          className="pointer-events-none fixed z-999 border-2 border-coffee-200 bg-coffee-200/20"
           style={{
             left: hoverRect.left,
             top: hoverRect.top,
@@ -36,7 +36,7 @@ export function DragOverlay() {
         />
       )}
       <div
-        className="pointer-events-none fixed z-[1000] flex h-[28px] items-center gap-1.5 border border-coffee-400 bg-coffee-800 px-3 font-bold text-coffee-100 text-xs uppercase opacity-90 shadow-lg"
+        className="pointer-events-none fixed z-1000 flex h-[28px] items-center gap-1.5 border border-coffee-400 bg-coffee-800 px-3 font-bold text-coffee-100 text-xs uppercase opacity-90 shadow-lg"
         style={{ left: mouse.x + 8, top: mouse.y + 8 }}
       >
         {config.renderDragPreview?.(pickedUpLeaf) ?? pickedUpLeaf}

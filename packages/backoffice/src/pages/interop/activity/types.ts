@@ -15,7 +15,3 @@ export type AggregateDetailsInput =
 export type AggregateDetailsResponse =
   BackendRouterOutputs['interop']['activity']['aggregateDetails']
 export type AggregateSeriesPoint = AggregateDetailsResponse['items'][number]
-export type ChainMetadata =
-  BackendRouterOutputs['interop']['chains']['metadata'][number]
-export type TransferStatsRow =
-  BackendRouterOutputs['interop']['transfers']['stats'][number]

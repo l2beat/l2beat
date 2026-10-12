@@ -16,7 +16,7 @@ import {
 } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { useFieldArray } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { toast } from 'sonner'
 import { Button, buttonVariants } from '~/components/core/Button'
 import {

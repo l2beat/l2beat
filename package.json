@@ -51,7 +51,6 @@
     "test:exclude-backend": "turbo run test --filter=!@l2beat/backend --filter=!@l2beat/database",
     "typecheck": "turbo run typecheck",
     "ci:check": "turbo run ci:check",
-    "heroku-postbuild": "pnpm build:backend && pnpm install --production",
     "checkout": "pnpm clean && pnpm && pnpm build",
     "coolify:check-env": "tsx scripts/coolify/check-env.ts"
   },

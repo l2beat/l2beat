@@ -7,7 +7,6 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { OSSIFICATION_VALUE_LABELS } from '~/components/ossification/ossificationValueLabels'
 import type { OssificationStats } from '~/server/features/projects/ossification/getOssificationStats'
-import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 
 const WIDTH = 132
@@ -26,11 +25,7 @@ const CRISP = { shapeRendering: 'crispEdges' } as const
 
 type Props = Pick<OssificationStats, 'timeline' | 'valueSource'>
 
-export function OssificationTimelineChart({
-  timeline,
-  valueSource,
-  className,
-}: Props & { className?: string }) {
+export function OssificationTimelineChart({ timeline, valueSource }: Props) {
   const id = useId()
   const { from, to, clockStart, genesis, criticalChanges, values } = timeline
   const toX = (timestamp: number) => ((timestamp - from) / (to - from)) * WIDTH
@@ -47,7 +42,7 @@ export function OssificationTimelineChart({
 
   return (
     <Tooltip>
-      <TooltipTrigger className={cn('block', className)}>
+      <TooltipTrigger className="block">
         <svg
           width={WIDTH}
           height={HEIGHT}

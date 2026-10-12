@@ -58,8 +58,7 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
           </button>
         </TooltipTrigger>
         <TooltipContent className="max-w-[320px]">
-          The anonymity set is too small and exact data fetching is not enabled
-          yet.
+          Too few users to track exactly.
         </TooltipContent>
       </Tooltip>
     )
@@ -117,11 +116,8 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
                 </ol>
               </div>
               <p className="border-purple-450/30 border-t pt-2">
-                Practical privacy also depends on the timing of deposits and
-                withdrawals, the underlying network and browser used to interact
-                with the frontend (if used), and the RPC providers used to send
-                transactions and query public blockchain state. Users are
-                advised to research OPSEC best practices.
+                Network, browser and RPC choices matter too. See the onchain
+                privacy best practices.
               </p>
             </div>
           }
