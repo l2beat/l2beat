@@ -50,6 +50,49 @@ export class SQLiteCache implements DiscoveryCache {
     }
   }
 
+  async findMissingKeys(keys: string[]): Promise<string[]> {
+    await this.init()
+    if (keys.length === 0) {
+      return []
+    }
+
+    const placeholders = keys.map(() => '?').join(', ')
+    const rows = (await this.query(
+      `SELECT key FROM cache WHERE key IN (${placeholders})`,
+      keys,
+    )) as { key: string }[]
+    const presentKeys = new Set(rows.map((row) => row.key))
+    return keys.filter((key) => !presentKeys.has(key))
+  }
+
+  async setMany(entries: { key: string; value: string }[]): Promise<void> {
+    await this.init()
+    if (entries.length === 0) {
+      return
+    }
+
+    const placeholders = entries.map(() => '(?, ?)').join(', ')
+    await this.query(
+      `
+      INSERT INTO cache(key, value)
+      VALUES ${placeholders}
+      ON CONFLICT(key) DO UPDATE SET value=excluded.value`,
+      entries.flatMap((entry) => [entry.key, entry.value]),
+    )
+  }
+
+  close(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.db.close((error: Error | null) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve()
+      })
+    })
+  }
+
   private async init(): Promise<void> {
     if (this.initialized) {
       return
