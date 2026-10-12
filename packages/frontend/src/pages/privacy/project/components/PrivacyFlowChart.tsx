@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
@@ -31,6 +32,7 @@ interface Props {
   metric: 'count' | 'value'
   scale?: ChartScale
   project?: ChartProject
+  milestones?: Milestone[]
 }
 
 const chartMeta = {
@@ -53,6 +55,7 @@ export function PrivacyFlowChart({
   metric,
   scale = 'linear',
   project,
+  milestones,
 }: Props) {
   const chartData = useMemo(
     () =>
@@ -81,6 +84,7 @@ export function PrivacyFlowChart({
       meta={chartMeta}
       isLoading={isLoading}
       project={project}
+      milestones={milestones}
       interactiveLegend={{
         dataKeys,
         onItemClick: toggleDataKey,

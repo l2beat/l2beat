@@ -58,17 +58,17 @@ export function Decoded(props: DecodedProps) {
           <div className="mb-2 flex gap-2">
             <input
               ref={inputRef}
-              className="block w-full rounded-sm bg-zinc-800 px-2.5 py-1 font-mono text-sm shadow-inner"
+              className="block w-full rounded-xs bg-zinc-800 px-2.5 py-1 font-mono text-sm shadow-inner"
               placeholder="Input custom ABI"
             />
             <button
-              className="rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
+              className="rounded-xs border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
               onClick={() => setCustomAbi(inputRef.current?.value)}
             >
               Decode
             </button>
             <select
-              className="rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
+              className="rounded-xs border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
               value={customAbi}
               onChange={(e) => setCustomAbi(e.target.value)}
             >
@@ -141,7 +141,7 @@ function DecodedValue({ value }: DecodedValueProps) {
         onSelect={setSelected}
       />
       {selected === 'decoded' && (
-        <div className="my-1 rounded-sm border-zinc-700 border-l-[8px] px-5 py-1">
+        <div className="my-1 rounded-xs border-zinc-700 border-l-8 px-5 py-1">
           <Decoded encoded={value.value as `0x${string}`} />
         </div>
       )}
@@ -153,7 +153,7 @@ function DecodedValue({ value }: DecodedValueProps) {
         />
       )}
       {Array.isArray(value.value) && selected !== 'decoded' && (
-        <ol className="my-1 rounded-sm border-zinc-700 border-l px-5 py-1">
+        <ol className="my-1 rounded-xs border-zinc-700 border-l px-5 py-1">
           {value.value.map((v, i) => (
             <DecodedValue key={i} value={v} />
           ))}

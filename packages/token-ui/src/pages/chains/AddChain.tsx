@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Card, CardContent } from '~/components/core/Card'
@@ -44,7 +44,7 @@ export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
           queryClient.invalidateQueries(
             trpc.deployedTokens.checks.queryFilter(),
           )
-          navigate(
+          void navigate(
             buildUrlWithParams('/tokens/new', {
               tab: redirectTo,
               chain: vars.name,

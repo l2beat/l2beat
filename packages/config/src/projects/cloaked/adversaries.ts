@@ -137,7 +137,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
-      exposureShort: S.noAnnouncementQuantum,
+      exposureShort: S.noAnnouncement,
       exposureContinued: `${S.operatorViewingKeyRegardless('Cloaked')} ${S.walletSignatureAccounts('plus a four-digit PIN')} Passkey PRF secrets do not follow from breaking the passkey.`,
       advice: `${S.notWalletSignature('with the passkey PRF setup')} ${S.permanentlyDisclosed('the address history shared with Cloaked')}`,
       sources: [

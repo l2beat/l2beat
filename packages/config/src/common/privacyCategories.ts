@@ -10,13 +10,13 @@ export const PRIVACY_CATEGORIES = {
     id: 'pool',
     label: 'Pool',
     description:
-      'Funds enter a shared pool and leave it later, with no actions inside. Hides which deposit funds which withdrawal.',
+      'Funds enter a shared pool and leave it later, with no actions inside. Hides which deposit became which withdrawal.',
   },
   shieldedLedger: {
     id: 'shieldedLedger',
     label: 'Shielded ledger',
     description:
-      'A pool with transfers or DeFi inside. Hides who pays whom and which deposit funds which withdrawal.',
+      'A pool with transfers or DeFi inside. Hides who pays whom and which deposit became which withdrawal.',
   },
   stealthAddress: {
     id: 'stealthAddress',

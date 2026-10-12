@@ -26,6 +26,7 @@ import {
   type RpcBlock,
   type RpcBlockWithTransactions,
   type RpcLog,
+  type RpcReceipt,
   type RpcTransaction,
 } from '../EthRpcClient'
 import { Http } from '../Http'
@@ -70,6 +71,8 @@ export interface IRpcClient extends BlockClient, LogsClient {
   getBlockTimestamps(blockNumbers: number[]): Promise<Map<number, number>>
   getTransaction(txHash: string): Promise<EVMTransaction>
   getTransactionReceipt(txHash: string): Promise<Receipt>
+  /** In one batch request, in the order of `txHashes` */
+  getTransactionReceipts(txHashes: string[]): Promise<Receipt[]>
   getBalance(
     holder: EthereumAddress,
     blockNumber: number | 'latest',
@@ -217,19 +220,17 @@ export class RpcClientCompat implements IRpcClient {
     if (receipt === null) {
       throw new Error(`Transaction ${txHash} not found`)
     }
-    return {
-      blockHash: receipt.blockHash,
-      logs: receipt.logs.map((log) => {
-        // Only pending logs lack an index, and a receipt implies a mined transaction.
-        assert(log.logIndex !== null, `Receipt ${txHash} has a pending log`)
-        return {
-          address: log.address.toString(),
-          topics: log.topics,
-          data: log.data,
-          logIndex: Number(log.logIndex),
-        }
-      }),
-    }
+    return toReceipt(receipt)
+  }
+
+  async getTransactionReceipts(txHashes: string[]): Promise<Receipt[]> {
+    const receipts = await this.ethRpcClient.getTransactionReceipts(txHashes)
+    return receipts.map((receipt, i) => {
+      if (receipt === null) {
+        throw new Error(`Transaction ${txHashes[i]} not found`)
+      }
+      return toReceipt(receipt)
+    })
   }
 
   async getBalance(
@@ -396,4 +397,23 @@ export function toEVMBlock(
     } satisfies EVMBlockWithTransactions
   }
   return base
+}
+
+function toReceipt(receipt: RpcReceipt): Receipt {
+  return {
+    blockHash: receipt.blockHash,
+    logs: receipt.logs.map((log) => {
+      // Only pending logs lack an index, and a receipt implies a mined transaction.
+      assert(
+        log.logIndex !== null,
+        `Receipt ${receipt.transactionHash} has a pending log`,
+      )
+      return {
+        address: log.address.toString(),
+        topics: log.topics,
+        data: log.data,
+        logIndex: Number(log.logIndex),
+      }
+    }),
+  }
 }

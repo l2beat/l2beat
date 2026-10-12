@@ -138,7 +138,7 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
-      exposureShort: S.noAnnouncementQuantum,
+      exposureShort: S.noAnnouncement,
       exposureContinued: `${S.operatorViewingKeyRegardless('Fluidkey')} ${S.walletSignatureAccounts('plus a four-digit PIN')}`,
       advice: `${S.notWalletSignature('with independently generated keys')} ${S.permanentlyDisclosed('the viewing key shared with Fluidkey')}`,
       sources: [

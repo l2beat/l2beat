@@ -141,6 +141,12 @@ export {
   type FieldConfigSchema,
 } from './schemas/schemas'
 export {
+  diffSolidity,
+  type SolidityDiff,
+} from './solidityDiff/diffSolidity'
+export { type LineChange } from './solidityDiff/render'
+export { ALL_RULES, type Rule } from './solidityDiff/rules'
+export {
   type ContractSource,
   type ExplorerConfig,
   getExplorerClient,

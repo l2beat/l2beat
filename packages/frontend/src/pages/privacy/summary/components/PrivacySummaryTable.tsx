@@ -132,8 +132,7 @@ const columns = [
     sortUndefined: 'last',
     meta: {
       align: 'right',
-      tooltip:
-        'Total USD value of all deposits over the last 30 days, based on configured token prices.',
+      tooltip: 'Total USD value deposited over the last 30 days.',
     },
   }),
   columnHelper.accessor(
@@ -156,7 +155,7 @@ const columns = [
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        tooltip: `Largest configured anonymity set: unique deposit senders during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
+        tooltip: `Unique depositors over the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days, in the largest tracked pool.`,
       },
     },
   ),
@@ -194,7 +193,7 @@ const columns = [
         meta: {
           align: 'center',
           tooltip:
-            'Time users have to withdraw before a malicious upgrade can take effect. The walkaway test says whether users can still use the protocol if every centralized participant disappears.',
+            'Time users have to withdraw before a malicious upgrade can take effect. The walkaway test says whether users can still fully use the protocol if every centralized participant disappears.',
         },
       }),
       columnHelper.accessor(

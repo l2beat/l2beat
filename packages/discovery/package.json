@@ -33,8 +33,6 @@
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
     "lru_map": "0.4.1",
-    "mkdirp": "^3.0.0",
-    "rimraf": "^5.0.0",
     "sqlite3": "5.1.7"
   },
   "devDependencies": {

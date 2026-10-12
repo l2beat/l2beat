@@ -12,7 +12,7 @@ export function RedoButton({ className }: { className?: string }) {
       onClick={redo}
       className={className}
     >
-      <IconUndo className="-scale-x-[1]" />
+      <IconUndo className="scale-x-[-1]" />
     </ControlButton>
   )
 }

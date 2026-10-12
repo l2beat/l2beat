@@ -50,6 +50,59 @@ describe(EthRpcClient.name, () => {
     )
   })
 
+  // Methodology: a batch answered out of order, with one receipt the node has
+  // not got; the results must follow the asked order, the missing one null
+  it('asks for receipts in one batch and answers in the asked order', async () => {
+    const http = new MockHttp()
+    let id = 0
+    const client = new EthRpcClient(http, 'https://rpc.url', () => ++id)
+    http.queueResponse(
+      200,
+      JSON.stringify([
+        { jsonrpc: '2.0', id: 2, result: null },
+        { jsonrpc: '2.0', id: 1, result: receipt(HASH_A) },
+      ]),
+    )
+
+    const receipts = await client.getTransactionReceipts([HASH_A, HASH_B])
+
+    expect(receipts.map((r) => r?.transactionHash ?? null)).toEqual([
+      HASH_A,
+      null,
+    ])
+    expect(JSON.parse(http.lastFetch?.init.body as string)).toEqual([
+      {
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'eth_getTransactionReceipt',
+        params: [HASH_A],
+      },
+      {
+        jsonrpc: '2.0',
+        id: 2,
+        method: 'eth_getTransactionReceipt',
+        params: [HASH_B],
+      },
+    ])
+  })
+
+  it('refuses a batch with an error for any of its calls', async () => {
+    const http = new MockHttp()
+    let id = 0
+    const client = new EthRpcClient(http, 'https://rpc.url', () => ++id)
+    http.queueResponse(
+      200,
+      JSON.stringify([
+        { jsonrpc: '2.0', id: 1, result: receipt(HASH_A) },
+        { jsonrpc: '2.0', id: 2, error: { code: -32005, message: 'Limit' } },
+      ]),
+    )
+
+    await expect(
+      client.getTransactionReceipts([HASH_A, HASH_B]),
+    ).toBeRejectedWith('RPC call failed. RPC code: -32005, message: Limit')
+  })
+
   it('eth_call success', async () => {
     const http = new MockHttp()
     const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
@@ -390,4 +443,26 @@ for (const url of URLS) {
       })
     })
   })
+}
+
+const HASH_A = `0x${'a'.repeat(64)}`
+const HASH_B = `0x${'b'.repeat(64)}`
+
+function receipt(transactionHash: string) {
+  return {
+    transactionHash,
+    transactionIndex: '0x0',
+    blockHash: `0x${'c'.repeat(64)}`,
+    blockNumber: '0x1',
+    from: `0x${'1'.repeat(40)}`,
+    to: `0x${'2'.repeat(40)}`,
+    cumulativeGasUsed: '0x1',
+    effectiveGasPrice: '0x1',
+    gasUsed: '0x1',
+    contractAddress: null,
+    logs: [],
+    logsBloom: `0x${'0'.repeat(512)}`,
+    type: '0x3',
+    status: '0x1',
+  }
 }

@@ -76,7 +76,6 @@ export const CropsApiAttestationSchema = v.strictObject({
   reviewedAt: unixSeconds(),
   explorerUrl: v.string(),
 })
-export type CropsApiAttestation = v.infer<typeof CropsApiAttestationSchema>
 
 const projectFields = {
   id: v.string(),

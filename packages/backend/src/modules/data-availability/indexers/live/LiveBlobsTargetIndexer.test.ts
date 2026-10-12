@@ -92,7 +92,7 @@ describe(LiveBlobsTargetIndexer.name, () => {
       chain.head = HEAD - 2
       expect(await indexer.tick()).toEqual(HEAD)
       // A stale answer says nothing of the slot under way: ask again soon
-      expect(secondsToNextTick(time)).toEqual(0.25)
+      expect(secondsToNextTick(time)).toEqual(0.1)
     })
 
     it('ignores a head lower than the newest stored block after a restart', async () => {
@@ -116,7 +116,7 @@ describe(LiveBlobsTargetIndexer.name, () => {
       // The child drops the blocks above the fork, then the head is followed
       // again without waiting for the next slot. Not at once: until the child
       // is done, every tick would find the same fork
-      expect(secondsToNextTick(time)).toEqual(0.25)
+      expect(secondsToNextTick(time)).toEqual(0.1)
     })
 
     it('returns the fork height when a block of the same height replaced the head', async () => {
@@ -168,7 +168,7 @@ describe(LiveBlobsTargetIndexer.name, () => {
       expect(await indexer.tick()).toEqual(0)
     })
 
-    it('keeps asking every quarter second while the slot has no block yet', async () => {
+    it('keeps asking every tenth of a second while the slot has no block yet', async () => {
       const { indexer } = setup(time, {
         head: HEAD,
         stored: [],
@@ -178,7 +178,7 @@ describe(LiveBlobsTargetIndexer.name, () => {
 
       await indexer.tick()
 
-      expect(secondsToNextTick(time)).toEqual(0.25)
+      expect(secondsToNextTick(time)).toEqual(0.1)
     })
 
     it('logs the head once per new head or new slot', async () => {
@@ -199,7 +199,7 @@ describe(LiveBlobsTargetIndexer.name, () => {
       // Moving the clock without running the timers keeps the scheduled
       // ticks, and their logs, out of it
       await indexer.tick()
-      time.setSystemTime((start + 0.25) * 1000)
+      time.setSystemTime((start + 0.1) * 1000)
       await indexer.tick()
       time.setSystemTime((start + 12.25) * 1000)
       await indexer.tick()
