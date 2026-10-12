@@ -37,11 +37,7 @@ import {
   type TileMotion,
 } from './motion'
 
-/**
- * Paints one frame. The block in the loading bay is the one Ethereum is
- * making now and takes its batches once the block is out; the ones left of
- * it are sealed and the ones right of it are still to come.
- */
+/** The bay holds the block being made; racks left of it are sealed, right of it still to come */
 export function drawBelt(
   ctx: CanvasRenderingContext2D,
   scene: BeltScene,
@@ -58,8 +54,7 @@ export function drawBelt(
   // Pass 1: the rules every block keeps to, under the belt
   drawRules(ctx, layout, scene.layers)
 
-  // Pass 2: the belt, each block fading out towards the ends, and the bay's
-  // light between the racks and the tiles in them
+  // Pass 2: the belt, with the bay's light between the racks and their tiles
   drawRacks(ctx, scene, belt)
   drawMissedLabels(ctx, scene, belt, reveal)
   drawBay(ctx, scene, belt, landingPulse(scene, playback, belt, now))
@@ -106,13 +101,10 @@ function glideTime(distance: number) {
   return GLIDE_BASE + Math.abs(distance) / GLIDE_SPEED
 }
 
-/** Seconds over which the bay's glow settles after a landing */
+/** Seconds */
 const PULSE_DECAY = 0.18
 
-/**
- * 1 the moment a batch lands in the bay, fading within a few tenths of a
- * second: the bay's glow swells with it, so every delivery is acknowledged
- */
+/** 1 as a batch lands in the bay, then fading: the glow acknowledges every delivery */
 function landingPulse(
   scene: BeltScene,
   playback: Playback,
@@ -165,11 +157,7 @@ function drawRacks(
   ctx.globalAlpha = 1
 }
 
-/**
- * The loading bay: its light, its tint and its lit outline. The bay is a
- * place, so it stays under the caption as the belt slides one rack out of it
- * and the next in, and there is only ever one of it on screen.
- */
+/** The bay is a place: it stays under the caption as racks slide through it */
 function drawBay(
   ctx: CanvasRenderingContext2D,
   scene: BeltScene,
@@ -192,10 +180,7 @@ function drawBay(
   }
 }
 
-/**
- * Light falling from the caption into the rack being built: where tiles come
- * from, and what ties the slot number above to its rack
- */
+/** Ties the caption's slot number to its rack, and shows where tiles come from */
 function drawChute(
   ctx: CanvasRenderingContext2D,
   scene: BeltScene,
@@ -216,9 +201,8 @@ function drawChute(
 }
 
 /**
- * The bay's outline again, over the tiles: at rest they sit inside it, but
- * racks sliding through the bay would cover it with theirs. The glow stays
- * under them, where it lights the gaps rather than tinting the tiles
+ * The outline again, over the tiles, as racks sliding through would cover it.
+ * The glow stays under, lighting the gaps rather than tinting the tiles
  */
 function drawBayRing(
   ctx: CanvasRenderingContext2D,
@@ -445,10 +429,7 @@ function drawTileIcon(
   ctx.globalAlpha = alpha
 }
 
-/**
- * The target line and, above it, the band where the blob fee rises, across
- * the whole width. They show through the empty racks and go under the tiles.
- */
+/** The target line and the fee band above it, under the tiles */
 function drawRules(
   ctx: CanvasRenderingContext2D,
   layout: BeltLayout,

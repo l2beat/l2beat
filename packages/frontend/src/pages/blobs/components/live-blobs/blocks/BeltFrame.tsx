@@ -1,23 +1,14 @@
 import { Fragment, type ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 
-/**
- * Just tall enough for a full rack with its caption and numbers: at its
- * largest, 21 rows of 21 px, so nothing is left empty above it. The skeleton
- * that stands in for the belt keeps it too
- */
+/** Just tall enough for a full rack (at most 21 rows of 21 px) with its caption and numbers */
 export const BELT_HEIGHT = 'h-[24rem] md:h-[34rem]'
 
-/**
- * As tall as the day under the belt, its bars with their labels. Here rather
- * than beside LivePulse, so the skeleton the page paints first does not wait
- * for the belt's code
- */
+/** Here rather than beside LivePulse, so the first-paint skeleton does not wait for the belt's code */
 export function PulseSkeleton() {
   return <Skeleton className="h-14 w-full" />
 }
 
-/** What a square, a column, a missed slot and the lane above are, under the belt */
 export function BeltLegend() {
   return (
     <Legend
@@ -39,10 +30,7 @@ export function BeltLegend() {
   )
 }
 
-/**
- * One line where it fits; on a phone, one item per line, as wrapped
- * separators would start lines
- */
+/** One item per line on a phone, as wrapped separators would start lines */
 function Legend({ items }: { items: ReactNode[] }) {
   return (
     <>
@@ -63,7 +51,6 @@ function Legend({ items }: { items: ReactNode[] }) {
   )
 }
 
-/** A value in the legend, in the brand color like the hub's legend */
 function LegendValue({ children }: { children: ReactNode }) {
   return <span className="font-bold text-brand">{children}</span>
 }

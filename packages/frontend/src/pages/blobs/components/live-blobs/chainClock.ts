@@ -2,40 +2,33 @@ import { SLOT_SECONDS, slotProgressAt, slotStart } from '@l2beat/shared-pure'
 import { createContext, useContext, useState } from 'react'
 import { LIVE_LAG_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 
-/**
- * The device's clock may be off, and a minute off would park the bay away
- * from the blocks coming in, so the head's slot corrects it. A head the
- * server calls live is not taken for a clock that runs ahead: its own slot
- * and the ones the server lets it trail by
- */
+/** A head the server still calls live is no sign of a clock running ahead */
 const MAX_HEAD_LAG = (LIVE_LAG_SLOTS + 1) * SLOT_SECONDS
-/** Where a corrected clock is put: about when a block reaches us */
+/** Seconds into the slot: about when a block reaches us */
 const HEAD_SEEN_INTO_SLOT = 2
 
 export interface ChainClock {
   /** Unix seconds, with the fraction */
   now: () => number
-  /** Slots since genesis, with how far into the current one */
+  /** Fractional slots since genesis */
   progressNow: () => number
-  /** Moves the clock to fit `head`, the newest slot the node has */
   correct: (head: number) => void
 }
 
-/** The one clock of the live view, so a correction from the belt reaches every number and the bay alike */
+/** Shared, so a correction from the belt reaches every number and the bay alike */
 export const ChainClockContext = createContext<ChainClock | undefined>(
   undefined,
 )
 
-/** The view's clock, or one that lives as long as the component outside a view */
 export function useChainClock(): ChainClock {
   const [own] = useState(createChainClock)
   return useContext(ChainClockContext) ?? own
 }
 
 /**
- * The chain's time, as the device tells it, put right by the head where the
- * device is far off: the head is never ahead of the true time, and rarely
- * far behind it
+ * The device's clock may be off, and a minute off would park the bay away from
+ * the blocks coming in. The head is never ahead of true time and rarely far
+ * behind, so it corrects the clock
  */
 export function createChainClock(): ChainClock {
   let offset = 0

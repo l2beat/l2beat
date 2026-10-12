@@ -6,7 +6,7 @@ export const BLOB_KIB = 128
 // formatInteger shortens to "15.35 M"; slot and block numbers are read whole
 const WHOLE = new Intl.NumberFormat('en-US')
 
-/** 15,354,012, rounded, as a number counting toward its value passes through fractions */
+/** Rounded, as a number counting toward its value passes through fractions */
 export function formatWhole(value: number): string {
   return WHOLE.format(Math.round(value))
 }
@@ -30,7 +30,6 @@ export function formatRate(value: number): string {
   return value.toPrecision(2)
 }
 
-/** "Last 24 h", or how far back it reaches while the backend fills the day */
 export function describeWindow(slots: number) {
   const minutes = Math.floor((slots * SLOT_SECONDS) / 60)
   if (minutes < 60) return `Last ${Math.max(1, minutes)} min`
@@ -51,14 +50,13 @@ export function formatKib(kib: number): string {
   return `${value.toFixed(decimals)} ${SIZE_UNITS[unit]}`
 }
 
-// In the reader's own zone and way of writing the time
 const CLOCK = new Intl.DateTimeFormat(undefined, {
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
 })
 
-/** 14:32:11, at `unixSeconds`: slots are 12 seconds, so minutes alone repeat */
+/** With seconds: slots are 12 s, so minutes alone repeat */
 export function formatClock(unixSeconds: number): string {
   return CLOCK.format(unixSeconds * 1000)
 }

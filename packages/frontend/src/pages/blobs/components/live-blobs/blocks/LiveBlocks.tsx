@@ -1,3 +1,4 @@
+import { formatAddress } from '@l2beat/shared-pure'
 import {
   type ReactNode,
   useContext,
@@ -8,7 +9,9 @@ import {
   useState,
 } from 'react'
 import { CustomLinkIcon } from '~/icons/Outlink'
+import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { cn } from '~/utils/cn'
+import { useChainClock } from '../chainClock'
 import {
   useElementSize,
   useImages,
@@ -20,8 +23,9 @@ import { LivePulse } from '../LivePulse'
 import { LandingsContext } from '../landings'
 import { clampView, earliestView } from '../lookBack'
 import { type BlockLimits, type LivePoster, UNKNOWN_ID } from '../model'
+import { NextBlock } from '../NextBlock'
 import { PointerTooltip } from '../PointerTooltip'
-import { useLiveBlobs } from '../useLiveBlobs'
+import type { LiveStatus } from '../useLiveBlobs'
 import { BELT_HEIGHT, BeltLegend } from './BeltFrame'
 import type {
   BlobBatch,
@@ -37,11 +41,15 @@ import { formatAverage, formatBlobCount, formatWhole } from './format'
 import { roundIcons } from './roundIcons'
 import { RECENT_BLOCKS, useBeaconChain } from './useBeaconChain'
 import { type BeltHover, useBelt } from './useBelt'
-import { useBeltSwipe } from './useBeltSwipe'
-import { useBeltWheel } from './useBeltWheel'
+import { useBeltScroll } from './useBeltScroll'
 import { usePastBlocks, withPast } from './usePastBlocks'
 
+/** From the caption's baseline to the top of the ring, centring the two */
+const NEXT_BLOCK_ABOVE_BASELINE = 12
+
 interface Props {
+  live: LiveBlobs | undefined
+  status: LiveStatus
   /** Every project that may post, with the stand-in for unknown senders last */
   posters: LivePoster[]
   limits: BlockLimits
@@ -54,26 +62,27 @@ interface Props {
  * target and the maximum. Under it, the day behind it takes the belt back
  * to any of its blocks.
  */
-export function LiveBlocks({ posters, limits }: Props) {
+export function LiveBlocks({ live, status, posters, limits }: Props) {
   const beltRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const size = useElementSize(beltRef)
+  const clock = useChainClock()
   const tokens = useThemeTokens()
   const onScreen = useIsOnScreen(beltRef)
   const reducedMotion = usePrefersReducedMotion()
   const { maxBlobsPerBlock, targetBlobsPerBlock } = limits
 
   const posterIndexOf = useMemo(() => createPosterIndexOf(posters), [posters])
-  // the belt drops what the chain brings in, and the chain is followed only
-  // while the belt is seen, so each needs the other: a ref breaks the circle
+  // the belt drops what the chain brings in, and the belt needs the chain's
+  // blocks to be made: a ref breaks the circle
   const beltControls = useRef<{
     dropBlock: (block: ChainBlock) => number[]
     showPending: (batch: PendingBlobBatch) => void
   }>({ dropBlock: () => [], showPending: () => {} })
   const announceLandings = useAnnounceLandings(posters)
-  const { chain, version } = useBeaconChain({
+  const chain = useBeaconChain({
+    live,
     posterIndexOf,
-    enabled: onScreen,
     onFreshBlock: (block) => {
       announceLandings(block, beltControls.current.dropBlock(block))
     },
@@ -92,7 +101,7 @@ export function LiveBlocks({ posters, limits }: Props) {
         : undefined,
     [size, maxBlobsPerBlock, targetBlobsPerBlock],
   )
-  const look = useLookBack(layout)
+  const look = useLookBack(layout, live)
   const past = usePastBlocks({
     view: look.view,
     head: look.head,
@@ -102,10 +111,9 @@ export function LiveBlocks({ posters, limits }: Props) {
     posterIndexOf,
   })
   const beltView = useViewOnceLoaded(look.view, past.loaded)
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `version` counts the blocks
   const blocks = useMemo(
     () => withPast(chain.blocks, past.blocks, look.head),
-    [chain.blocks, past.blocks, look.head, version],
+    [chain.blocks, past.blocks, look.head],
   )
 
   const palette = useMemo(() => paletteFor(tokens, posters), [tokens, posters])
@@ -120,8 +128,6 @@ export function LiveBlocks({ posters, limits }: Props) {
     [posters, images, iconSize],
   )
 
-  // a new scene for every block that comes, as blocks change in place
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `version` counts the blocks
   const scene = useMemo<BeltScene | undefined>(
     () =>
       layout &&
@@ -146,14 +152,13 @@ export function LiveBlocks({ posters, limits }: Props) {
       icons,
       targetBlobsPerBlock,
       maxBlobsPerBlock,
-      version,
     ],
   )
 
   const belt = useBelt({
     canvasRef,
     scene,
-    progressNow: chain.progressNow,
+    progressNow: clock.progressNow,
     still: reducedMotion,
     view: beltView,
     onScreen,
@@ -163,14 +168,7 @@ export function LiveBlocks({ posters, limits }: Props) {
     },
   })
   beltControls.current = belt
-  const swipe = useBeltSwipe({
-    position: belt.position,
-    blockPitch: layout?.blockPitch,
-    earliest: look.earliest,
-    onView: look.onView,
-    onHold: belt.hold,
-  })
-  useBeltWheel(beltRef, {
+  const swipe = useBeltScroll(beltRef, {
     position: belt.position,
     live: belt.live,
     blockPitch: layout?.blockPitch,
@@ -181,9 +179,7 @@ export function LiveBlocks({ posters, limits }: Props) {
   const hovered = belt.hover && findBatch(blocks, belt.hover.key)
   const hoveredPoster = hovered && posters[hovered.batch.posterIndex]
 
-  // for screen readers; recomputed as blocks come in, which `version` counts
-  // biome-ignore lint/correctness/useExhaustiveDependencies: blocks change in place
-  const average = useMemo(() => averageBlobs(chain.blocks), [chain, version])
+  const average = useMemo(() => averageBlobs(chain.blocks), [chain.blocks])
 
   return (
     <div className="flex flex-col gap-3">
@@ -213,6 +209,14 @@ export function LiveBlocks({ posters, limits }: Props) {
           // fades in where the skeleton was, rather than swapping for it
           className="absolute inset-0 size-full starting:opacity-0 transition-opacity duration-300 ease-out"
         />
+        {layout && !layout.compact && (
+          // level with the bay's caption, at the belt's free right end
+          <NextBlock
+            hidden={status !== 'live'}
+            className="pointer-events-none absolute right-0 max-md:hidden"
+            style={{ top: layout.bayCaptionY - NEXT_BLOCK_ABOVE_BASELINE }}
+          />
+        )}
         {belt.hover && hovered && hoveredPoster && (
           <BatchTooltip
             hover={belt.hover}
@@ -230,7 +234,7 @@ export function LiveBlocks({ posters, limits }: Props) {
         )}
       </div>
 
-      <LivePulse limits={limits} brush={look} />
+      <LivePulse live={live} limits={limits} brush={look} />
 
       <BeltLegend />
     </div>
@@ -241,8 +245,10 @@ export function LiveBlocks({ posters, limits }: Props) {
  * Where on the day the belt is taken, if anywhere: undefined while live. Held
  * as asked and kept within the day on every render, as the day moves on
  */
-function useLookBack(layout: BeltLayout | undefined) {
-  const { data } = useLiveBlobs()
+function useLookBack(
+  layout: BeltLayout | undefined,
+  data: LiveBlobs | undefined,
+) {
   const [asked, setAsked] = useState<number>()
   const { before, after } = layout
     ? racksAroundBay(layout)
@@ -390,7 +396,7 @@ function BatchTooltipContent({
     ['Block', formatWhole(blockNumber)],
   ]
   // an inbox nobody claims is the one clue to who sent it
-  if (poster.id === UNKNOWN_ID) rows.push(['Sent to', shortAddress(batch.to)])
+  if (poster.id === UNKNOWN_ID) rows.push(['Sent to', formatAddress(batch.to)])
   return (
     <div className="space-y-1.5">
       <div className="flex items-center gap-1.5 font-bold text-label-value-14">
@@ -434,10 +440,6 @@ function openOnEtherscan(txHash: string) {
 
 function etherscanTxUrl(txHash: string) {
   return `https://etherscan.io/tx/${txHash}`
-}
-
-function shortAddress(address: string) {
-  return `${address.slice(0, 6)}…${address.slice(-4)}`
 }
 
 function describeForScreenReaders(limits: BlockLimits, average: Average) {

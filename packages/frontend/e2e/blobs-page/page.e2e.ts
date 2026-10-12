@@ -19,21 +19,17 @@ test('shows every section, logging no errors', async ({ blobs, page }) => {
   await blobs.openLive()
   await expect(page).toHaveTitle(/^Blobs/)
 
-  const summary = page
-    .locator('.primary-card')
-    .filter({ has: page.getByRole('heading', { name: 'Ethereum' }) })
-  for (const title of ['Secured by', 'Duration of storage', 'Max throughput']) {
-    const stat = summary.getByRole('listitem').filter({ hasText: title })
-    await expect(stat).toBeVisible()
-    await expect(stat, `${title} has a value`).not.toContainText('—')
-  }
+  await expect(blobs.status.getByRole('link')).toHaveAttribute(
+    'href',
+    '/data-availability/projects/ethereum/ethereum',
+  )
   await expect(
     page.getByText('L2s Value Secured').filter({ visible: true }),
   ).toBeVisible()
   await expect(blobs.shareStrip).toBeVisible()
   await expect(blobs.belt).toBeVisible()
   await expect(blobs.pulse).toBeVisible()
-  await blobs.posters.scrollIntoViewIfNeeded()
+  await blobs.showPosters()
   await expect(blobs.posterRows).not.toHaveCount(0)
   expect(logged).toEqual([])
 })
@@ -42,7 +38,7 @@ test('fits the screen, with nothing wrapped or run together', async ({
   blobs,
 }) => {
   await blobs.openLive()
-  await blobs.posters.scrollIntoViewIfNeeded()
+  await blobs.showPosters()
   await expect(blobs.posterRows.first()).toBeVisible()
   expect(await findLayoutFaults(blobs.page)).toEqual([])
 })
@@ -63,7 +59,7 @@ test('fills the charts in without resizing their cards', async ({
     },
   )
   await blobs.open()
-  // the summary and the charts; the live card waits for the belt instead
+  // the charts; the live card waits for the belt instead
   const cards = page
     .locator('.primary-card')
     .filter({ visible: true })

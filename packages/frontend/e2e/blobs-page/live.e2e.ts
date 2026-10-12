@@ -159,7 +159,9 @@ test("names a batch's poster, keeping its card on the screen", async ({
   if (blobs.hasTouch) {
     const link = card.getByRole('link', { name: 'Open on Etherscan' })
     await expect(link).toHaveAttribute('target', '_blank')
-    await link.tap()
+    // where it is now: a pinned card rides its tile along the moving belt, so
+    // it never holds still for as long as tap() waits for on a slow renderer
+    await link.tap({ force: true })
   } else {
     await expect(card).toContainText('Click to open on Etherscan')
     await page.mouse.click(x, y)

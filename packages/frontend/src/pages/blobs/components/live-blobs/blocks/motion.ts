@@ -1,39 +1,31 @@
-/** Pull on a falling tile, in px/s². A fall through a whole rack takes under 0.4 s */
+/** px/s². A fall through a whole rack takes under 0.4 s */
 const GRAVITY = 4200
 /** Tiles leave the chute already moving, so their first frames do not crawl */
 const LAUNCH_SPEED = 220
-/** The blobs of one batch drop one after another, this many seconds apart */
+/** Seconds between the blobs of one batch */
 export const DROP_STAGGER = 0.03
-/**
- * A block comes in whole, but its batches drop one after another, this many
- * seconds apart, so each can be seen landing and named
- */
+/** Seconds between batches, so each can be seen landing and named */
 export const BATCH_STAGGER = 0.18
-/** About how long a tile takes from the chute to the rack */
+/** Seconds, roughly, from the chute to the rack */
 export const LAND_AFTER = 0.35
 const APPEAR_TIME = 0.06
 const SQUASH_TIME = 0.12
 const SQUASH = 0.15
 
-/** How long a batch's "+5 Base Chain" stays up, from when it starts to drop */
 const LABEL_LIFE = 3.5
 const LABEL_IN = 0.16
 const LABEL_OUT = 0.5
 const LABEL_RISE = 10
 
-/**
- * How long a batch moves from when it starts to drop: its tiles land and the
- * bay's glow settles well within the life of its label
- */
+/** Its tiles land and the bay's glow settles well within the life of its label */
 export const BATCH_MOTION_TIME = LABEL_LIFE
 
 /** Long enough for any batch to drop, land and have its label fade */
 export const SETTLE_TIME = 8
 
-/** Seconds the first blocks take to fade in, rather than pop up */
 const REVEAL_TIME = 0.4
 
-/** Where a tile is in its drop, relative to where it comes to rest */
+/** Relative to where the tile comes to rest */
 export interface TileMotion {
   visible: boolean
   landed: boolean
@@ -54,11 +46,7 @@ export function restingMotion(): TileMotion {
   }
 }
 
-/**
- * Fills `motion` for a tile `age` seconds after it was let go `fall` px above
- * its place: it falls under gravity, then lands with a small squash. Written
- * into a reused object, as this runs for every moving tile on every frame.
- */
+/** Writes into a reused object, as this runs for every moving tile on every frame */
 export function moveTile(motion: TileMotion, age: number, fall: number) {
   motion.visible = age >= 0
   const landsAt = fallDuration(fall)
@@ -81,7 +69,6 @@ export function moveTile(motion: TileMotion, age: number, fall: number) {
   motion.alpha = 1
 }
 
-/** Seconds a tile takes to fall `distance` px from the chute */
 export function fallDuration(distance: number): number {
   const d = Math.max(0, distance)
   return (
@@ -89,7 +76,6 @@ export function fallDuration(distance: number): number {
   )
 }
 
-/** How a batch's label shows `age` seconds after it came: opacity and rise */
 export function labelPresence(age: number): { alpha: number; rise: number } {
   if (age < 0 || age > LABEL_LIFE) return { alpha: 0, rise: 0 }
   const fadeIn = easeOutCubic(Math.min(1, age / LABEL_IN))
@@ -100,7 +86,7 @@ export function labelPresence(age: number): { alpha: number; rise: number } {
   }
 }
 
-/** How far the first blocks have faded in, at `now`; all the way before any come */
+/** 1 (fully in) before any blocks come */
 export function revealed(revealedAt: number | undefined, now: number) {
   if (revealedAt === undefined) return 1
   return easeOutCubic(Math.min(1, Math.max(0, now - revealedAt) / REVEAL_TIME))

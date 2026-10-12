@@ -19,11 +19,9 @@ type ScalingProject = Pick<Project, 'id'> & {
 }
 
 /**
- * Splits the L2s by where their data goes. A project that uses Ethereum
- * next to another DA layer counts as full data, so nobody is counted twice.
- * A project with its own DA system (a DAC and the like) keeps its data off
- * Ethereum just the same, so it counts as settlement only. L3s are left out:
- * they settle on an L2, not on Ethereum, so neither series describes them.
+ * Ethereum next to another DA layer counts as full data, so nobody is counted
+ * twice; a DAC or the like counts as settlement only. L3s settle on an L2, so
+ * neither series describes them.
  */
 export function getDaTvsProjectIds(
   layers: Layer[],

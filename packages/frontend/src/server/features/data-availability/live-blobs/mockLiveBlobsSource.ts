@@ -15,7 +15,7 @@ import {
 } from '@l2beat/shared-pure'
 import type { LiveBlobsSource } from './LiveBlobsFeed'
 
-/** About when a real block is stored, into its slot */
+/** Seconds into its slot: about when a real block is stored */
 const STORED_INTO_SLOT = 2
 /** As the backend keeps them: a little over a day */
 const KEPT_SLOTS = 7500
@@ -24,7 +24,7 @@ const MAX_BATCHES = 7
 const MAX_BATCH_BLOBS = 6
 const MISSED_ONE_IN = 40
 const UNATTRIBUTED_ONE_IN = 10
-/** Each poster posts this much less than the one before, so a few post most, as on mainnet */
+/** So a few posters post most, as on mainnet */
 const POSTER_FALLOFF = 0.75
 /** Batches sent to builders privately, never heard of in the mempool */
 const PRIVATE_ONE_IN = 6
@@ -37,21 +37,18 @@ interface MockSlot {
 }
 
 /**
- * The live blob tables for mock mode: blocks are stored on the real
- * 12-second clock, but what each holds follows from its slot alone. Every
- * run, and every performance benchmark, then sees the same blocks without a
- * database. Reads answer as the repositories do, so the feed cannot tell.
+ * Blocks are stored on the real clock, but what each holds follows from its
+ * slot alone, so every run and benchmark sees the same blocks without a database.
  */
 export function createMockLiveBlobsSource(
   posterIds: Promise<string[]>,
   now = () => Date.now() / 1000,
 ): LiveBlobsSource {
   const pickPoster = posterIds.then(createPosterPicker)
-  /** The newest slot whose block, if it got one, is stored by now */
   const newestStoredSlot = () =>
     Math.floor(slotProgressAt(now()) - STORED_INTO_SLOT / SLOT_SECONDS)
 
-  /** The stored slots from `from` to `to`, both included, that got a block */
+  /** Both ends included */
   async function storedSlots(from: number, to: number) {
     const pick = await pickPoster
     const newest = newestStoredSlot()
@@ -200,7 +197,7 @@ function sumBlockBuckets(
   return [...byBucket.values()]
 }
 
-/** The block of `slot` and its blob transactions, or undefined where it was missed */
+/** Undefined where the slot was missed */
 function mockSlot(
   slot: number,
   pickPoster: (roll: number) => string | undefined,

@@ -9,10 +9,8 @@ export interface TvsSeriesStats {
 }
 
 /**
- * The headline total of the selected series and its change over the chart.
- * Both are read where every selected series has a value: the series sync
- * apart, and the newest point of the one ahead would otherwise count the
- * lagging one as zero.
+ * Read where every selected series has a value: they sync apart, and the newest
+ * point of the one ahead would otherwise count the lagging one as zero.
  */
 export function getTvsSeriesStats(
   data: TvsSeriesPoint[] | undefined,

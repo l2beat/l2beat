@@ -26,10 +26,15 @@ const BLOBS_SCREENS = {
  * them push up, so they run once the rest are done, one at a time
  */
 const PERF = '**/*-perf/**'
+/**
+ * Off in CI for now, as the blobs suites take most of the e2e job. Run them
+ * locally with `pnpm test:e2e:blobs`
+ */
+const RUN_BLOBS = !process.env.CI
 
 const functional = [
   { name: 'chromium', testIgnore: [BLOBS_PAGE, PERF] },
-  ...Object.entries(BLOBS_SCREENS).map(([screen, use]) => ({
+  ...(RUN_BLOBS ? Object.entries(BLOBS_SCREENS) : []).map(([screen, use]) => ({
     name: `blobs ${screen}`,
     testMatch: `${BLOBS_PAGE}/*.e2e.ts`,
     use,
@@ -48,6 +53,7 @@ export default defineConfig({
     {
       name: 'perf',
       testMatch: `${PERF}/*.e2e.ts`,
+      testIgnore: RUN_BLOBS ? [] : ['**/blobs-perf/**'],
       dependencies: functional.map((project) => project.name),
       workers: 1,
     },

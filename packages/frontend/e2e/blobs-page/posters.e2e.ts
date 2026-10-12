@@ -9,16 +9,32 @@ import { type BlobsPage, expect, test } from './blobsPage'
  */
 test.describe.configure({ mode: 'parallel' })
 
+/** The most blobs a block of the mock beacon node holds */
+const MOCK_BLOCK_BLOBS = 21
+
 test('ranks the posters by blobs, with shares that add up', async ({
   blobs,
 }) => {
   await blobs.openLive()
-  await blobs.posters.scrollIntoViewIfNeeded()
+  await blobs.showPosters()
+  // Rows are ranked by their totals, but a shown count takes in the newest
+  // block's blobs only as the belt lands them, and lets go of the oldest's
+  // once it has slid on. So neighbours can show swapped by up to two blocks'
+  // worth, and on a slow renderer a count can still be rolling to a new one
+  const isRanked = (rows: Row[]) =>
+    rows.every(
+      (row, i) =>
+        i === 0 || rows[i - 1]!.blobs + 2 * MOCK_BLOCK_BLOBS >= row.blobs,
+    )
+  await expect
+    .poll(async () => isRanked(await readRows(blobs)), {
+      message: 'ranked by blobs, once the counts settle',
+      timeout: 15_000,
+    })
+    .toBe(true)
   const rows = await readRows(blobs)
   expect(rows.length).toBeGreaterThan(4)
   expect(rows.map((row) => row.rank)).toEqual(rows.map((_, i) => i + 1))
-  const blobCounts = rows.map((row) => row.blobs)
-  expect(blobCounts).toEqual([...blobCounts].sort((a, b) => b - a))
   // each share is rounded, so they sum to about a whole
   const shares = rows.reduce((sum, row) => sum + row.share, 0)
   expect(shares).toBeGreaterThan(98.5)
@@ -42,7 +58,7 @@ test('lines up its names and its rows, with the header over its columns', async 
   page,
 }) => {
   await blobs.openLive()
-  await blobs.posters.scrollIntoViewIfNeeded()
+  await blobs.showPosters()
 
   const lines = await blobs.posterRows.evaluateAll((rows) =>
     rows.map((row) => {
@@ -82,7 +98,7 @@ test('slides sideways under its rank and logo where it does not fit', async ({
   page,
 }) => {
   await blobs.openLive()
-  await blobs.posters.scrollIntoViewIfNeeded()
+  await blobs.showPosters()
   const scroller = blobs.posters.locator('.sticky-table-scroller')
   const fits = await scroller.evaluate((e) => e.scrollWidth <= e.clientWidth)
   test.skip(fits, 'The table fits this screen')
@@ -98,7 +114,11 @@ test('slides sideways under its rank and logo where it does not fit', async ({
   expect(Math.abs(after.rank - before.rank), 'rank').toBeLessThanOrEqual(1)
   expect(Math.abs(after.logo - before.logo), 'logo').toBeLessThanOrEqual(1)
   expect(before.name - after.name, 'name').toBeCloseTo(200, 0)
-  expect(await headerOffsets(page), 'header over its columns').toEqual([])
+  // the header's track follows the scroll by a scroll-driven animation, which
+  // a renderer may apply frames after the table has moved
+  await expect
+    .poll(() => headerOffsets(page), { message: 'header over its columns' })
+    .toEqual([])
 })
 
 interface Row {

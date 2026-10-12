@@ -11,23 +11,19 @@ import {
 } from './beaconChain'
 
 interface Options {
-  /** The slot in the bay, looking back; undefined while live */
+  /** Undefined while live */
   view: number | undefined
   head: number | undefined
-  /** Racks the belt shows left of the bay, and right of it */
   before: number
   after: number
-  /** The day's oldest slot: blocks before it are let go of */
+  /** Blocks before it are let go of */
   oldest: number | undefined
   posterIndexOf: PosterIndexOf
 }
 
 /**
- * The blocks of the day the live answers no longer carry, for the belt to
- * show while looking back: a page at a time, around the view and on the way
- * back to live, so the belt passes no empty racks. Each page is kept once the
- * server says nothing more will come of it. `loaded` says every page asked
- * for has answered, or failed to
+ * Loads pages around the view and on the way back to live, so the belt passes
+ * no empty racks. `loaded` says every page asked for has answered, or failed to
  */
 export function usePastBlocks({
   view,
@@ -52,9 +48,8 @@ export function usePastBlocks({
     combine: answersOf,
   })
 
-  // Pages the belt has left are kept, as it glides on from them: to a later
-  // slot, or back to live. Fresher answers replace what was kept, and what
-  // left the day goes
+  // Pages the belt has left are kept, as it glides on from them; fresher
+  // answers replace them, and what left the day goes
   const kept = useRef<ReadonlyMap<number, ChainBlock>>(new Map())
   const blocks = useMemo(() => {
     const found = new Map<number, ChainBlock>()
@@ -80,12 +75,8 @@ function answersOf<T>(results: { data: T; isPending: boolean }[]) {
   }
 }
 
-/**
- * The live blocks with the past's behind them. The same map while there is
- * no past, as the live one changes in place and the belt follows it
- */
 export function withPast(
-  live: Map<number, ChainBlock>,
+  live: ReadonlyMap<number, ChainBlock>,
   past: ReadonlyMap<number, ChainBlock>,
   head: number | undefined,
 ): ReadonlyMap<number, ChainBlock> {
