@@ -12,7 +12,6 @@ const ASK_AGAIN_AFTER = 0.25
 const RETRY_DELAY = 2
 const MAX_RETRY_DELAY = 30
 
-/** Follows the recent blocks through our server while `enabled`, for the whole card */
 export function useLiveBlobs(enabled: boolean) {
   const trpc = useTRPC()
   const trpcClient = useTRPCClient()
@@ -40,7 +39,6 @@ export function useLiveBlobs(enabled: boolean) {
   return { data, status }
 }
 
-/** Seconds until the server is asked again */
 function askAgainIn(failures: number) {
   if (failures === 0) return ASK_AGAIN_AFTER
   return Math.min(MAX_RETRY_DELAY, RETRY_DELAY * 2 ** failures)

@@ -13,18 +13,13 @@ import {
 export const RECENT_BLOCKS = 32
 
 interface Options {
-  /** The server's latest answer */
   live: LiveBlobs | undefined
   posterIndexOf: PosterIndexOf
-  /** A block came in while it is still the newest, rather than from the past */
+  /** Not called for blocks from the past */
   onFreshBlock: (block: ChainBlock) => void
 }
 
-/**
- * The recent blocks by slot, as the server's answers bring them: every new
- * one, and any the chain has since dropped or swapped. Paused, as in a hidden
- * tab, it catches up on return, as far back as the server keeps.
- */
+/** Takes in reorgs too. Paused (hidden tab), it catches up on return, as far back as the server keeps */
 export function useBeaconChain({ live, posterIndexOf, onFreshBlock }: Options) {
   const clock = useChainClock()
   const [blocks, setBlocks] = useState<ReadonlyMap<number, ChainBlock>>(
@@ -60,10 +55,7 @@ export function useBeaconChain({ live, posterIndexOf, onFreshBlock }: Options) {
   return blocks
 }
 
-/**
- * The blocks still worth showing: none too old, and none above the head,
- * which the chain dropped as it moved its head back
- */
+/** Blocks above the head were dropped as the chain moved its head back */
 function keepRecent(blocks: ReadonlyMap<number, ChainBlock>, head: number) {
   const kept = new Map<number, ChainBlock>()
   for (const [slot, block] of blocks) {

@@ -15,16 +15,12 @@ export interface BlobsThroughputChartProps {
   project: ChartProject
   configuredThroughputs: DaLayerThroughput[]
   milestones: Milestone[]
-  /** Project colors by name, for the per-project breakdown */
+  /** By project name */
   customColors: Record<string, string>
 }
 
 type View = 'total' | 'per-project'
 
-/**
- * What was posted to the DA layer per day against the target and the maximum
- * it allows, or who posted it.
- */
 export function BlobsThroughputChart({
   project,
   configuredThroughputs,

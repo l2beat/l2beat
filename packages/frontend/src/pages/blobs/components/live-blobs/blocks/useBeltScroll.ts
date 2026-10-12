@@ -1,41 +1,26 @@
 import { type PointerEvent, type RefObject, useEffect, useRef } from 'react'
 
-/**
- * Pixels a finger moves sideways before it swipes the belt, rather than taps
- * a batch or scrolls the page
- */
+/** Pixels, so a tap or a page scroll does not swipe */
 const SWIPE_FROM = 8
-/**
- * Milliseconds without a wheel event after which the scroll has ended. A
- * trackpad keeps sending events while it coasts after the fingers lift, so
- * this lets go only once the belt has stopped
- */
+/** A trackpad keeps sending wheel events while it coasts after the fingers lift */
 const SCROLL_ENDS_AFTER = 150
-/** Pixels in a line, for a wheel that counts in lines, as Firefox's mouse does */
+/** For a wheel that counts in lines, as Firefox's mouse does */
 const LINE_PX = 16
 
 interface Options {
-  /** Where the belt stands now, as a view would put it, which a scroll starts from */
   position: () => number
-  /** Where the live belt stands; a scroll that reaches it is live again */
+  /** A scroll that reaches it is live again */
   live: () => number
-  /** Pixels from one block to the next along the belt */
   blockPitch: number | undefined
-  /** The furthest back the bay can go */
   earliest: number | undefined
-  /** Takes the belt to `slot`, or back to live for undefined */
   onView: (slot: number | undefined) => void
-  /** Holds the belt at `slot`, between two or on one, or lets it go for undefined */
+  /** `slot` may fall between two blocks */
   onHold: (slot: number | undefined) => void
 }
 
 /**
- * Scrolls the belt through the day by a finger's swipe, a trackpad's
- * two-finger swipe, a mouse's sideways wheel, or shift with its wheel: the
- * belt follows, and once let go, settles on the block nearest where it was
- * left. A move more up and down than sideways is the page's; the belt is
- * `touch-action: pan-y`. A mouse is not dragged here, as it has the day
- * under the belt to drag.
+ * Swipe, trackpad and sideways (or shift) wheel scroll the belt; vertical moves
+ * are the page's (`touch-action: pan-y`). A mouse drags the pulse instead.
  */
 export function useBeltScroll(
   ref: RefObject<HTMLElement | null>,
@@ -79,7 +64,6 @@ export function useBeltScroll(
     pointerId: number
     startX: number
     startY: number
-    /** Where the belt stood when the finger went down */
     from: number
     moved: boolean
   }>(undefined)
@@ -125,7 +109,7 @@ export function useBeltScroll(
     swipe.current = undefined
   }
 
-  /** Whether a click is a swipe's end, to be ignored; asked once per click */
+  /** Asked once per click */
   const isSwipeEnd = () => {
     const ended = swiped.current
     swiped.current = false
@@ -143,7 +127,7 @@ export function useBeltScroll(
   }
 }
 
-/** Holds the belt at `slot`, or lets it be live past where live is; says which */
+/** Past where live is, the belt is live again */
 function holdAt(options: Options, slot: number): number | 'live' {
   const { live, earliest, onView, onHold } = options
   if (slot >= live()) {
@@ -153,16 +137,14 @@ function holdAt(options: Options, slot: number): number | 'live' {
   }
   const held = Math.max(slot, earliest ?? Number.NEGATIVE_INFINITY)
   onHold(held)
-  // the block nearest, for what goes with the view: the day's band under the
-  // belt, and the pages it loads
+  // the pulse's band and the pages loaded go by whole blocks
   onView(Math.round(held))
   return held
 }
 
 /**
- * Pixels the wheel moves sideways, positive towards live, or undefined for a
- * scroll more up and down than sideways. Shift turns a mouse's wheel
- * sideways; most browsers do that themselves, Firefox only flags it
+ * Positive towards live; undefined for a mostly vertical scroll. Most browsers
+ * turn a shifted wheel sideways themselves, Firefox only flags it
  */
 function sidewaysPx(event: WheelEvent, beltWidth: number) {
   const shifted = event.shiftKey && event.deltaX === 0

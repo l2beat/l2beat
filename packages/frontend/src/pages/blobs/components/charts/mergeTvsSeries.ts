@@ -6,11 +6,7 @@ export interface TvsSeriesPoint {
   settlementOnly: number | null
 }
 
-/**
- * Lines two value series up on one time axis. They are fetched apart and one
- * can start later than the other, so a timestamp only one of them has keeps
- * the other as missing rather than as zero.
- */
+/** A timestamp only one series has keeps the other as missing rather than zero, as one can start later */
 export function mergeTvsSeries(
   fullData: TvsChartDataPoint[],
   settlementOnly: TvsChartDataPoint[],

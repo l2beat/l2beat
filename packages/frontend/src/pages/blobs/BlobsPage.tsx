@@ -18,7 +18,6 @@ interface Props extends AppLayoutProps {
   ethereum: EthereumLink
   tvsProjectIds: DaTvsProjectIds
   throughput: BlobsThroughputChartProps
-  /** The projects whose batches the live blocks tell apart */
   blobPosters: BlobPoster[]
 }
 

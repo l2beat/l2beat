@@ -53,9 +53,8 @@ export function getCommonPinningStyles<T>(
 }
 
 /**
- * For tables that lay out their own cells rather than through TanStack: sticks
- * a cell of the `pinnedIndex`th column pinned left. It sits `start` px in until
- * the sticky header measures where the column really starts.
+ * For tables that lay out their own cells rather than through TanStack. The
+ * cell sits `start` px in until the sticky header measures the real offset.
  */
 export function getLeftPinnedCellStyles(
   pinnedIndex: number,
@@ -68,7 +67,7 @@ export function getLeftPinnedCellStyles(
   }
 }
 
-/** What every pinned cell shares; the last pinned column fades where the rest scroll under */
+/** The last pinned column fades where the rest scroll under */
 function getStickyStyles(lastPinned: 'left' | 'right' | undefined) {
   return {
     position:

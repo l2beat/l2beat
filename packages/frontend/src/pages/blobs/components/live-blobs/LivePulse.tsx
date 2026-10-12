@@ -23,18 +23,17 @@ import { usePrefersReducedMotion } from './hooks'
 import { earliestView } from './lookBack'
 import type { BlockLimits } from './model'
 
-/** What of the day the belt shows, for the pulse to show where that is */
+/** What of the day the belt shows */
 export interface PulseBrush {
-  /** The slot in the bay, looking back; undefined while live */
+  /** Undefined while live */
   view: number | undefined
   /** Racks the belt shows left of the bay, and right of it */
   before: number
   after: number
-  /** Takes the belt to `slot`, or back to live for undefined */
+  /** Undefined goes back to live */
   onView: (slot: number | undefined) => void
 }
 
-/** The day behind the belt, under it, with what of it the belt shows */
 export function LivePulse({
   live: data,
   limits,
@@ -60,24 +59,17 @@ const PULSE_HEIGHT = 48
 const BAR_STEP = 4
 const BAR_WIDTH = 3
 const BAR_MINUTES = (PULSE_BUCKET_SLOTS * SLOT_SECONDS) / 60
-/** Slots a Page Up or Page Down moves the belt: an hour */
+/** An hour */
 const PAGE_SLOTS = 300
-/**
- * The band is at least this wide, in bars: true to scale, the few blocks the
- * belt shows would be a sliver of the day
- */
+/** True to scale, the few blocks the belt shows would be a sliver of the day */
 const MIN_BAND_BARS = 2
-/** Pixels a finger moves sideways before it drags, rather than taps or scrolls */
+/** Pixels, so a tap or a scroll does not drag */
 const DRAG_FROM = 4
 
 /**
- * The day as a bar per five minutes of its blobs per block, newest on the
- * right. The bars are fixed in time: the last fills in as blocks come, and
- * each new five minutes slides the day along by one bar and grows in at the
- * end, so the day reads as passing.
- *
- * It works as a brush over the belt: the band is what the belt shows, and
- * dragging it, or pressing anywhere on the day, takes the belt back there.
+ * Bars are fixed in time: the last fills in as blocks come, and each new bucket
+ * slides the day along by one bar, so the day reads as passing. The band is a
+ * brush over the belt: dragging it, or pressing on the day, takes the belt there.
  */
 function BlobPulse({
   pulse,
@@ -87,7 +79,6 @@ function BlobPulse({
   brush,
 }: {
   pulse: Pulse
-  /** Slots of the day the server has, back from the head */
   slots: number
   head: number
   limits: BlockLimits
@@ -113,7 +104,6 @@ function BlobPulse({
   const bandWidth = Math.max(shownRight - shownLeft, MIN_BAND_BARS * BAR_STEP)
   const bayX = xOf(bay + 0.5)
 
-  // The bars, the band and the bay slide together as a new bucket starts
   // biome-ignore lint/correctness/useExhaustiveDependencies: a new bucket is what slides them
   useLayoutEffect(() => {
     if (reducedMotion) return
@@ -123,7 +113,7 @@ function BlobPulse({
     )
   }, [pulse.firstBucket, reducedMotion])
 
-  // as far back as the belt can be taken, or live while the day is too short
+  // live while the day is too short to look back
   const earliest = Math.min(earliestView({ head, slots }, before), head)
   // the belt's caption has the slot's number, so this says when it was
   const viewTime = view === undefined ? '' : formatClock(slotStart(view))
@@ -183,7 +173,6 @@ function BlobPulse({
                 )
               })}
             </g>
-            {/* the bay, as on the belt: where the block looked at sits */}
             <line
               x1={bayX}
               x2={bayX}
@@ -239,10 +228,9 @@ function BlobPulse({
 }
 
 /**
- * Drags the brush. A mouse takes the belt to where it is pressed at once,
- * unless pressed on the band, which it then carries. A finger does nothing
- * on the way down, as that may start a scroll: a tap takes the belt there,
- * and a sideways drag carries the band.
+ * A mouse jumps to where it is pressed, unless on the band, which it carries.
+ * A finger does nothing on the way down, as that may start a scroll: a tap
+ * jumps, and a sideways drag carries the band.
  */
 function useBrushDrag(head: number, firstSlot: number, brush: PulseBrush) {
   const [dragging, setDragging] = useState(false)
@@ -321,7 +309,6 @@ function useBrushDrag(head: number, firstSlot: number, brush: PulseBrush) {
   }
 }
 
-/** Arrows step a block, Page Up and Down an hour; End or Escape is live */
 function onBrushKey(
   event: KeyboardEvent<HTMLElement>,
   head: number,
@@ -347,10 +334,7 @@ function onBrushKey(
   brush.onView(to[event.key])
 }
 
-/**
- * "4 min ago" or "3 h 20 min ago", counted in slots back from the head rather
- * than by the device's clock, which may be off
- */
+/** Counted in slots back from the head, not by the device's clock, which may be off */
 function ago(slot: number, head: number) {
   const minutes = Math.floor(((head - slot) * SLOT_SECONDS) / 60)
   if (minutes < 1) return 'under a minute ago'
@@ -370,7 +354,6 @@ const PulseBar = memo(function PulseBar({
   x: number
   height: number
   aboveTarget: boolean
-  /** Only the bar a new bucket brings grows in; the others were there already */
   grow: boolean
 }) {
   const ref = useRef<SVGRectElement>(null)

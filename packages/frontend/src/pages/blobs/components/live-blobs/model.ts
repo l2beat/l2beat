@@ -6,22 +6,19 @@ import { getThroughputInForce } from '~/server/features/data-availability/throug
 
 const BLOB_BYTES = 128 * 1024
 
-/** A project that may post blobs, or the stand-in for blobs nobody claims */
+/** Or the stand-in for blobs nobody claims */
 export interface LivePoster {
   id: string
   name: string
   iconUrl: string | undefined
   href: string | undefined
-  /** Brand color, as given. Run it through `readableColor` before drawing */
+  /** As given. Run it through `readableColor` before drawing */
   color: string
 }
 
 export const UNKNOWN_ID = 'unknown'
 
-/**
- * Every project that posts to the DA layer, with blobs that match none of
- * them last. Batches point into this list by index.
- */
+/** The unknown stand-in goes last. Batches point into this list by index */
 export function toLivePosters(projects: BlobPoster[]): LivePoster[] {
   return [
     ...projects,
@@ -35,7 +32,6 @@ export function toLivePosters(projects: BlobPoster[]): LivePoster[] {
   ]
 }
 
-/** A poster's blobs over the window */
 export interface PosterTotal {
   poster: LivePoster
   blobs: number
@@ -46,9 +42,8 @@ export interface PosterTotal {
 }
 
 /**
- * The window's blobs by poster, most first, and all of them. Blobs of a
- * project the page does not know of, an archived one's included, go to the
- * unknown poster, as the belt draws them
+ * Blobs of a project the page does not know of, an archived one's included,
+ * go to the unknown poster, as the belt draws them
  */
 export function totalByPoster(posted: Posted[], posters: LivePoster[]) {
   const byId = new Map(posters.map((poster) => [poster.id, poster]))
@@ -88,7 +83,7 @@ export interface BlockLimits {
   maxBlobsPerBlock: number
 }
 
-/** The limits in force at `now`, in blobs per block */
+/** In blobs per block */
 export function getBlockLimits(
   throughputs: DaLayerThroughput[],
   now = UnixTime.now(),
@@ -103,7 +98,6 @@ export function getBlockLimits(
   }
 }
 
-/** Seconds from `now` until other limits come into force, if any are to */
 export function nextLimitsIn(
   throughputs: DaLayerThroughput[],
   now: number,

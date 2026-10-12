@@ -6,7 +6,6 @@ import { usePrefersReducedMotion } from './hooks'
 
 /** Long enough to read as counting, short enough to be done before the next block */
 const ROLL_MS = 900
-/** A "+5" is in within its first tenth, read until four fifths in, then gone */
 const POP_MS = 1400
 const POP_IN = 0.1
 const POP_OUT = 0.8
@@ -14,15 +13,14 @@ const POP_IN_MS = POP_IN * POP_MS
 const POP_OUT_MS = POP_OUT * POP_MS
 const FLASH_MS = 1800
 const REORDER_MS = 600
-/** A row new to the table, which has nowhere to slide from, fades in this fast */
+/** A new row has nowhere to slide from, so it fades in */
 const ENTER_MS = 300
 const EASE_OUT = 'cubic-bezier(0.22, 1, 0.36, 1)'
 
 /**
- * A number that counts its way to every new value instead of jumping, and
- * glows while it climbs, as long as what it shows climbs too: a share that
- * stays 36.2% must not light up. The text is written straight to the element,
- * so a frame of counting does not render React.
+ * Counts up to each new value and glows only if the formatted text climbs too:
+ * a share that stays 36.2% must not light up. Text is written straight to the
+ * element, so counting does not render React.
  */
 export function RollingNumber({
   value,
@@ -67,9 +65,8 @@ export function RollingNumber({
 }
 
 /**
- * Puts `text` in the element's own text node, and only when it changes.
  * `textContent` swaps in a new node, and an inserted node makes the page
- * check its `:has()` rules and lay out again, on every frame of a count.
+ * recheck its `:has()` rules and lay out again, on every frame of a count.
  */
 export function writeText(element: HTMLElement, text: string) {
   const node = element.firstChild
@@ -80,11 +77,7 @@ export function writeText(element: HTMLElement, text: string) {
   element.textContent = text
 }
 
-/**
- * "+5" rising off a number when something new lands in it, one per block: a
- * later batch of the block on show adds to it and keeps it up, rather than
- * popping it again.
- */
+/** One "+5" per block: a later batch of the block on show adds to it rather than popping again */
 export function Pop({
   arrival,
   format = String,
@@ -156,35 +149,26 @@ export function Pop({
   )
 }
 
-/** What a number got as a batch landed. A new one each landing, to show it */
+/** A new object each landing, so effects keyed on it fire */
 export interface Arrival {
   /** All that landed of the block so far */
   amount: number
-  /** The block it came in */
   slot: number
 }
 
-/** How strongly a row takes its project's color as a batch lands */
 const FLASH_STRENGTH = 0.22
 /** Spelled out again in `FLASH_CLASS_NAME`, for Tailwind to find */
 const FLASH_COLOR_VARIABLE = '--live-flash'
 
-/**
- * For a row and each of its pinned cells: the wash `useFlash` fades, laid
- * over it. Pinned cells are opaque and stacked over the row, to hide what
- * scrolls under them, so each takes a wash of its own
- */
+/** Pinned cells are opaque and stacked over the row, so each needs a wash of its own */
 export const FLASH_CLASS_NAME =
   "after:pointer-events-none after:absolute after:inset-0 after:bg-(--live-flash) after:opacity-0 after:content-['']"
 
 /**
- * Washes row `ref` in `color` and lets it fade, each time a new arrival
- * comes. Only the wash's opacity moves, which the compositor runs without
- * painting the row again: easing the row's own shadow or background repaints
- * it, and its masked pinned cells, on every frame, which in Safari stalls a
- * swipe on the belt. One wash over the whole row, as a row's background is
- * painted cell by cell and shows seams where cells meet on a fraction of a
- * pixel
+ * Only the wash's opacity moves, which the compositor runs without repainting:
+ * easing the row's shadow or background repaints it and its masked pinned
+ * cells every frame, which in Safari stalls a swipe on the belt. One wash per
+ * row, as a row background painted cell by cell shows seams on fractional pixels
  */
 export function useFlash(
   ref: RefObject<HTMLElement | null>,
@@ -206,11 +190,7 @@ export function useFlash(
   }, [ref, arrival, color])
 }
 
-/**
- * Slides rows to their new places when the order changes, instead of letting
- * them jump (FLIP: each row is drawn where it was and eased to where it is).
- * Rows are found by `data-flip-key`.
- */
+/** FLIP-animates rows marked with `data-flip-key` when `order` changes */
 export function useReorder(
   containerRef: RefObject<HTMLElement | null>,
   order: string,

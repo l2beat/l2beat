@@ -47,15 +47,11 @@ interface Props {
   totals: PosterTotals | undefined
 }
 
-/**
- * # and the logo stay in view on a phone, as the name and numbers scroll
- * under them; the name would take most of a narrow screen
- */
+/** # and the logo stay in view on a phone; the name would take most of a narrow screen */
 const PINNED_COLUMNS = 2
 /** Where the logo sticks until the sticky header measures the # column */
 const RANK_WIDTH = 32
 
-/** In the order `PosterRow` renders its cells */
 const COLUMNS: {
   label: string
   align?: 'right'
@@ -90,15 +86,10 @@ const COLUMNS: {
   { label: 'Last batch', align: 'right' },
 ]
 
-/** The legend's "+N more" links here, to the projects it leaves out */
+/** The legend's "+N more" links here */
 export const LIVE_POSTERS_ID = 'live-posters'
 
-/**
- * Who posted over the last 24 hours: the exact numbers behind
- * the colored squares, which nobody can count off a belt that keeps moving.
- * It moves with the belt: a project's row lights up as its batch lands, its
- * numbers count up, and rows slide past each other as the ranking changes.
- */
+/** The exact numbers behind the belt's squares, moving in step with its landings */
 export function LivePosters({ live: data, totals }: Props) {
   const postedWindow = data?.window
   const rows = totals?.posters
@@ -176,10 +167,7 @@ export function LivePosters({ live: data, totals }: Props) {
   )
 }
 
-/**
- * Rendered again only when what it shows changes, not with the clock: the
- * ages tick in cells of their own
- */
+/** Memoized: the ages tick in cells of their own, not with the row */
 const PosterRow = memo(function PosterRow({
   row,
   color,
@@ -191,16 +179,13 @@ const PosterRow = memo(function PosterRow({
   newestBlobs,
 }: {
   row: PosterTotal
-  /** The poster's color, made to stand out from the card */
   color: string
   rank: number
   seconds: number
-  /** Of all posters, as landed so far */
+  /** As landed so far */
   totalBlobs: number
-  /** The newest slot, whose batches are counted in as the belt lands them */
   head: number | undefined
   firstBucket: number
-  /** All the newest block brought, which the belt is landing */
   newestBlobs: number
 }) {
   const ref = useRef<HTMLTableRowElement>(null)
@@ -237,7 +222,6 @@ const PosterRow = memo(function PosterRow({
       <TableCell {...pinnedCellProps(0, 'text-secondary tabular-nums')}>
         {rank}
       </TableCell>
-      {/* sovereign chains and unknown senders have no page, so no link */}
       <TableCell {...pinnedCellProps(1, 'w-0 pr-1.5')}>
         {/* a bare link, as in other tables: the cell hugs the logo, so a
             hover box would not fit it */}
@@ -262,7 +246,6 @@ const PosterRow = memo(function PosterRow({
         )}
       </TableCell>
       <TableCell>
-        {/* to the project's long-run chart, for those who want more than a day */}
         <TableLink
           href={row.poster.href && `${row.poster.href}#data-posted`}
           aria-label={`${row.poster.name} data posted`}
@@ -301,7 +284,6 @@ const PosterRow = memo(function PosterRow({
         />
       </TableCell>
       <TableCell align="right" className="tabular-nums">
-        {/* one batch tells nothing of how often they come */}
         {batches > 1 ? formatSeconds(seconds / batches) : '–'}
       </TableCell>
       <TableCell align="right" className="tabular-nums">
@@ -312,10 +294,8 @@ const PosterRow = memo(function PosterRow({
 })
 
 /**
- * How long since a poster's last batch, counting up between blocks, not only
- * when they come, and alone in the row to render every second. On the
- * chain's clock, as the belt is: a device clock a minute off would age every
- * batch a minute, or make the newest "just now"
+ * Alone in the row to render every second. On the chain's clock, as a device
+ * clock a minute off would age every batch a minute
  */
 function LastBatchAgo({ lastSlot }: { lastSlot: number }) {
   const clock = useChainClock()
@@ -366,10 +346,6 @@ function PosterName({
   )
 }
 
-/**
- * Sticks a cell of the first `PINNED_COLUMNS` to the left, on the card's color
- * so what scrolls under it does not show through
- */
 function pinnedCellProps(index: number, className?: string) {
   if (index >= PINNED_COLUMNS) return { className }
   return {
@@ -387,13 +363,9 @@ function pinnedCellProps(index: number, className?: string) {
   }
 }
 
-/**
- * About as many projects as post in a day, so the page below moves little
- * when the real rows come
- */
+/** About as many projects as post in a day, so the page moves little when real rows come */
 const SKELETON_ROWS = 36
 
-/** The header's height and the rows' height, under their dividers */
 function PostersSkeleton() {
   return (
     <div className="pb-3">
@@ -412,7 +384,6 @@ function PostersSkeleton() {
   )
 }
 
-/** 36s ago, or "just now" */
 function describeAgo(seconds: number) {
   const whole = Math.floor(seconds)
   if (whole <= 1) return 'just now'
