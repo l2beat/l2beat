@@ -4,6 +4,7 @@ import type { EVMBlock, IRpcClient } from '@l2beat/shared'
 import { slotAt, slotStart } from '@l2beat/shared-pure'
 import { RootIndexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
+import type { EthSubscription } from '../../../../tools/EthSubscription'
 import {
   getLiveRetryStrategy,
   LIVE_METRICS_CONTEXT,
@@ -19,6 +20,11 @@ const FIRST_TICK_INTO_SLOT = 1
  * on every screen; the call costs a few hundred bytes
  */
 const RETRY_SECONDS = 0.1
+/**
+ * As often while the node pushes its heads: the push brings the block, and
+ * this only covers a head the stream missed
+ */
+const PUSHED_RETRY_SECONDS = 1
 /** Stored blocks compared with the chain, back from the newest, in search of a fork */
 const MAX_REORG_DEPTH = 32
 /** No recent stored block is on the chain */
@@ -26,9 +32,19 @@ const REFETCH_WINDOW = 'refetch-window'
 /** Below every stored block, so they all go and the window is fetched again */
 const REFETCH_WINDOW_HEIGHT = 0
 
+/** Of `eth_subscribe`: each new head the node imports, reorgs included */
+export const NEW_HEADS = ['newHeads']
+/** A slot or two can be missed, so heads may be a minute apart at worst */
+export const HEADS_SILENT_FOR = 60
+
 export interface LiveBlobsTargetIndexerDependencies {
   rpc: IRpcClient
   db: Database
+  /**
+   * To `NEW_HEADS`, from the node behind `rpc`: each head asks at once, so
+   * the head is asked for rarely while they come. Without it, it is polled
+   */
+  heads?: Pick<EthSubscription, 'start' | 'isFlowing'>
 }
 
 interface Head {
@@ -48,6 +64,8 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
   private headLoaded = false
   private lastLogged: { head: number; slot: number } | undefined
   private timer: ReturnType<typeof setTimeout> | undefined
+  /** The slot of the newest head the node pushed */
+  private pushedSlot = 0
 
   constructor(
     private readonly $: LiveBlobsTargetIndexerDependencies,
@@ -59,6 +77,10 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
   }
 
   override initialize() {
+    this.$.heads?.start((result) => {
+      this.pushedSlot = Math.max(this.pushedSlot, readHeadSlot(result))
+      this.requestTick()
+    })
     this.requestTick()
     return Promise.resolve(undefined)
   }
@@ -198,8 +220,20 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
    */
   private secondsUntilNextBlock(answered: Head): number {
     const now = nowSeconds()
-    if (answered.slot < slotAt(now)) return RETRY_SECONDS
+    if (answered.slot < slotAt(now)) return this.retrySeconds(answered)
     return slotStart(answered.slot + 1) + FIRST_TICK_INTO_SLOT - now
+  }
+
+  /**
+   * While heads are pushed, the next one asks by itself: the head is asked
+   * for rarely. Unless the node pushed a newer head than the RPC answered, as
+   * a load-balanced RPC can answer from a node a block behind
+   */
+  private retrySeconds(answered: Head) {
+    const pushedNewer = this.pushedSlot > answered.slot
+    return this.$.heads?.isFlowing() && !pushedNewer
+      ? PUSHED_RETRY_SECONDS
+      : RETRY_SECONDS
   }
 
   private scheduleTick(seconds: number) {
@@ -209,6 +243,12 @@ export class LiveBlobsTargetIndexer extends RootIndexer {
       Math.round(seconds * 1000),
     )
   }
+}
+
+/** The slot of a pushed head; 0 for an event that is not one */
+function readHeadSlot(result: unknown): number {
+  const timestamp = (result as { timestamp?: unknown } | undefined)?.timestamp
+  return typeof timestamp === 'string' ? slotAt(Number(timestamp)) : 0
 }
 
 function toHead(block: EVMBlock): Head {

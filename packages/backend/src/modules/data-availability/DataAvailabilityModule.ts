@@ -12,6 +12,7 @@ import type {
 } from '../../config/Config'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
+import { EthSubscription } from '../../tools/EthSubscription'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -22,8 +23,16 @@ import { EthereumBlobNotifierIndexer } from './indexers/EthereumBlobNotifierInde
 import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
 import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
 import { LiveBlobsIndexer } from './indexers/live/LiveBlobsIndexer'
-import { LiveBlobsTargetIndexer } from './indexers/live/LiveBlobsTargetIndexer'
-import { LiveMempoolListener } from './indexers/live/LiveMempoolListener'
+import {
+  HEADS_SILENT_FOR,
+  LiveBlobsTargetIndexer,
+  NEW_HEADS,
+} from './indexers/live/LiveBlobsTargetIndexer'
+import {
+  LiveMempoolListener,
+  PENDING_SILENT_FOR,
+  PENDING_TXS,
+} from './indexers/live/LiveMempoolListener'
 import { BlobService } from './services/BlobService'
 import { DaService } from './services/DaService'
 import { createDataAvailabilityTrpcRouter } from './trpc/router'
@@ -225,7 +234,15 @@ function createIndexers(
         if (config.liveBlobs.mempool) {
           liveMempoolListener = new LiveMempoolListener(
             {
-              url: config.liveBlobs.mempool.url,
+              pendingTxs: new EthSubscription(
+                {
+                  url: config.liveBlobs.mempool.url,
+                  params: PENDING_TXS,
+                  silentFor: PENDING_SILENT_FOR,
+                  name: 'mempool',
+                },
+                logger,
+              ),
               db: database,
               configurations: configurations.filter(isEthereumConfig),
             },
@@ -355,8 +372,19 @@ function createLiveBlobsIndexers(
   assert(rpc, 'Live blobs RPC client is required')
   assert(providers.liveBlobsDa, 'Live blobs DA provider is required')
 
+  const heads = config.heads
+    ? new EthSubscription(
+        {
+          url: config.heads.url,
+          params: NEW_HEADS,
+          silentFor: HEADS_SILENT_FOR,
+          name: 'heads',
+        },
+        logger,
+      )
+    : undefined
   const targetIndexer = new LiveBlobsTargetIndexer(
-    { rpc, db: database },
+    { rpc, db: database, heads },
     logger,
   )
   const indexer = new LiveBlobsIndexer(

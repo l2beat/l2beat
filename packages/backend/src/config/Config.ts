@@ -372,6 +372,13 @@ export interface LiveBlobsTrackingConfig {
         readonly url: string
       }
     | false
+  /** Where new heads are pushed from, so the head is not polled for */
+  readonly heads:
+    | {
+        /** A node's WebSocket, best the one behind `rpc` */
+        readonly url: string
+      }
+    | false
 }
 
 export interface BlockSyncModuleConfig {

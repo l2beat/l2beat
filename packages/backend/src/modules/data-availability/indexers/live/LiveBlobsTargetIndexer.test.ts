@@ -4,7 +4,10 @@ import type { IRpcClient } from '@l2beat/shared'
 import { slotStart, UnixTime } from '@l2beat/shared-pure'
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
-import { LiveBlobsTargetIndexer } from './LiveBlobsTargetIndexer'
+import {
+  LiveBlobsTargetIndexer,
+  type LiveBlobsTargetIndexerDependencies,
+} from './LiveBlobsTargetIndexer'
 
 /**
  * Methodology: a fake chain answers the RPC and a fake table holds the stored
@@ -181,6 +184,52 @@ describe(LiveBlobsTargetIndexer.name, () => {
       expect(secondsToNextTick(time)).toEqual(0.1)
     })
 
+    it('asks for the head as soon as the node pushes one', async () => {
+      const { indexer, rpc, push } = setup(time, {
+        head: HEAD,
+        stored: [],
+        now: slotStart(slotOf(HEAD) + 1) + 2,
+        heads: { flowing: true },
+      })
+      await indexer.start()
+      await time.tickAsync(0)
+      const asked = rpc.getBlock.calls.length
+
+      push(slotOf(HEAD) + 1)
+      await time.tickAsync(0)
+
+      expect(rpc.getBlock.calls.length).toBeGreaterThan(asked)
+    })
+
+    it('asks every second while the node pushes its heads', async () => {
+      const { indexer } = setup(time, {
+        head: HEAD,
+        stored: [],
+        now: slotStart(slotOf(HEAD) + 1) + 2,
+        heads: { flowing: true },
+      })
+      await indexer.initialize()
+
+      await indexer.tick()
+
+      expect(secondsToNextTick(time)).toEqual(1)
+    })
+
+    it('keeps asking every tenth of a second while the RPC lags a pushed head', async () => {
+      const { indexer, push } = setup(time, {
+        head: HEAD,
+        stored: [],
+        now: slotStart(slotOf(HEAD) + 1) + 2,
+        heads: { flowing: true },
+      })
+      await indexer.initialize()
+      push(slotOf(HEAD) + 1)
+
+      await indexer.tick()
+
+      expect(secondsToNextTick(time)).toEqual(0.1)
+    })
+
     it('logs the head once per new head or new slot', async () => {
       const info = mockFn().returns(undefined)
       const logger: Logger = mockObject<Logger>({
@@ -273,6 +322,8 @@ function setup(
     /** Unix seconds */
     now?: number
     logger?: Logger
+    /** Pushed heads, flowing or not; none when missing */
+    heads?: { flowing: boolean }
   },
 ) {
   const chain = options.chain ?? {
@@ -299,9 +350,21 @@ function setup(
   // A second into the head's slot, when its block has just landed
   const now = options.now ?? slotStart(slotOf(chain.head)) + 1
   time.setSystemTime(now * 1000)
+  let onHead: (result: unknown) => void = () => {}
+  const heads =
+    options.heads &&
+    mockObject<NonNullable<LiveBlobsTargetIndexerDependencies['heads']>>({
+      start: mockFn((onEvent: (result: unknown) => void) => {
+        onHead = onEvent
+      }),
+      isFlowing: () => options.heads?.flowing ?? false,
+    })
   const indexer = new LiveBlobsTargetIndexer(
-    { rpc, db },
+    { rpc, db, heads },
     options.logger ?? Logger.SILENT,
   )
-  return { indexer, rpc, liveBlock }
+  /** The node pushes the head of `slot` */
+  const push = (slot: number) =>
+    onHead({ timestamp: `0x${slotStart(slot).toString(16)}` })
+  return { indexer, rpc, liveBlock, heads, push }
 }

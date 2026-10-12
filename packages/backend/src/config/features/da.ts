@@ -92,6 +92,12 @@ export async function getDaTrackingConfig(
             'wss://ethereum-rpc.publicnode.com',
           ),
         },
+        heads: flags.isEnabled('da', 'liveBlobs', 'heads') && {
+          url: env.string(
+            'ETHEREUM_LIVE_BLOBS_WS_URL',
+            'wss://ethereum-rpc.publicnode.com',
+          ),
+        },
       }
     }
   }

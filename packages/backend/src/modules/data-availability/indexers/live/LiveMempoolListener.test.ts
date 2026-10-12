@@ -1,44 +1,24 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
-import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
-import { MockWebSocket } from '../../../../tools/test/MockWebSocket'
-import { LiveMempoolListener, readPendingTx } from './LiveMempoolListener'
+import { LiveMempoolListener, readBlobTx } from './LiveMempoolListener'
 import type { LiveBlobsConfig } from './liveBlobs'
 
 /**
- * Methodology: the node is a mock WebSocket fed the messages a node sends,
- * the database a mock; tests assert what is stored and when the line is
- * opened again. Timers are faked where the backoff is under test
+ * Methodology: the subscription is a fake that hands the listener events as
+ * the node sends them, the database a mock; tests assert what is stored
  */
 describe(LiveMempoolListener.name, () => {
-  // lowercase, as the stored blocks have them; the node is sent checksummed
+  // lowercase, as the stored blocks have them; the node sends checksummed
   const SENDER = EthereumAddress.random().toLowerCase()
   const INBOX = EthereumAddress.random().toLowerCase()
 
-  it('subscribes to whole pending transactions once connected', () => {
-    const { sockets } = setup()
-
-    sockets[0]?.simulateOpen()
-
-    const sent = sockets[0]?.mockObject.send.calls.map((call) => call.args[0])
-    expect(sent).toEqual([
-      JSON.stringify({
-        jsonrpc: '2.0',
-        id: 1,
-        method: 'eth_subscribe',
-        params: ['newPendingTransactions', true],
-      }),
-    ])
-  })
-
   it('stores the blob transactions, attributed by sender and inbox, and nothing else', async () => {
-    const { sockets, db } = setup({ now: 1000.5 })
+    const { tell, db } = setup({ now: 1000.5 })
 
-    sockets[0]?.simulateMessage(message({ id: 1, result: '0xsub' }))
-    sockets[0]?.simulateMessage(pending({ type: '0x2' }))
-    sockets[0]?.simulateMessage(pending({ type: '0x3', nonce: '0x2a' }))
+    tell(pendingTx({ type: '0x2' }))
+    tell(pendingTx({ type: '0x3', nonce: '0x2a' }))
     await flush()
 
     expect(db.livePendingBlobTx.upsert).toHaveBeenOnlyCalledWith({
@@ -53,120 +33,60 @@ describe(LiveMempoolListener.name, () => {
     })
   })
 
-  describe('when the line drops', () => {
-    let time: InstalledClock
-
-    beforeEach(() => {
-      time = install()
-    })
-
-    afterEach(() => {
-      time.uninstall()
-    })
-
-    it('opens it again, waiting longer after each try that brings nothing', () => {
-      const { sockets } = setup()
-
-      sockets[0]?.simulateClose()
-      time.tick(999)
-      expect(sockets.length).toEqual(1)
-      time.tick(1)
-      expect(sockets.length).toEqual(2)
-
-      sockets[1]?.simulateClose()
-      time.tick(1999)
-      expect(sockets.length).toEqual(2)
-      time.tick(1)
-      expect(sockets.length).toEqual(3)
-    })
-
-    it('waits as little as at first once transactions flow again', () => {
-      const { sockets } = setup()
-
-      sockets[0]?.simulateClose()
-      time.tick(1000)
-      sockets[1]?.simulateMessage(pending({ type: '0x2' }))
-      sockets[1]?.simulateClose()
-      time.tick(1000)
-
-      expect(sockets.length).toEqual(3)
-    })
-
-    it('drops a line that went silent', () => {
-      const { sockets } = setup()
-
-      time.tick(30_000)
-
-      expect(sockets[0]?.mockObject.terminate).toHaveBeenCalled()
-    })
-  })
-
-  function setup(options: { now?: number } = {}) {
-    const sockets: MockWebSocket[] = []
+  function setup(options: { now: number }) {
+    let tell: (result: unknown) => void = () => {}
     const livePendingBlobTx = mockObject<Database['livePendingBlobTx']>({
       upsert: mockFn().resolvesTo(undefined),
       deleteSeenBefore: mockFn().resolvesTo(0),
     })
     const listener = new LiveMempoolListener(
       {
-        url: 'wss://node',
+        pendingTxs: {
+          start: (onEvent) => {
+            tell = onEvent
+          },
+        },
         db: mockObject<Database>({ livePendingBlobTx }),
         configurations: [rollupConfig(SENDER, INBOX)],
-        now: () => options.now ?? 0,
-        openSocket: () => {
-          const socket = new MockWebSocket()
-          sockets.push(socket)
-          return socket.mockObject
-        },
+        now: () => options.now,
       },
       Logger.SILENT,
     )
     listener.start()
-    return { sockets, db: { livePendingBlobTx } }
+    return {
+      tell: (result: unknown) => tell(result),
+      db: { livePendingBlobTx },
+    }
   }
 
-  function pending(fields: { type: string; nonce?: string }) {
-    return message({
-      method: 'eth_subscription',
-      params: {
-        subscription: '0xsub',
-        result: {
-          hash: '0xtx',
-          from: EthereumAddress(SENDER),
-          to: EthereumAddress(INBOX),
-          nonce: fields.nonce ?? '0x1',
-          type: fields.type,
-          blobVersionedHashes:
-            fields.type === '0x3' ? ['0x01', '0x02'] : undefined,
-        },
-      },
-    })
+  function pendingTx(fields: { type: string; nonce?: string }) {
+    return {
+      hash: '0xtx',
+      from: EthereumAddress(SENDER),
+      to: EthereumAddress(INBOX),
+      nonce: fields.nonce ?? '0x1',
+      type: fields.type,
+      blobVersionedHashes: fields.type === '0x3' ? ['0x01', '0x02'] : undefined,
+    }
   }
 })
 
-describe(readPendingTx.name, () => {
-  it('tells nothing of a message that is not a pending transaction', () => {
-    expect(readPendingTx('{"jsonrpc":"2.0","id":1,"result":"0xsub"}')).toEqual(
-      undefined,
-    )
-    expect(readPendingTx('not json')).toEqual(undefined)
-  })
-
-  it('tells of a pending transaction with no blobs, without it', () => {
-    const told = readPendingTx(
-      JSON.stringify({
-        method: 'eth_subscription',
-        params: { result: { type: '0x3', hash: '0x', from: '0x', to: null } },
+describe(readBlobTx.name, () => {
+  it('tells nothing of a transaction with no blobs or no receiver', () => {
+    expect(
+      readBlobTx({ type: '0x2', hash: '0x', from: '0x', to: '0x' }),
+    ).toEqual(undefined)
+    expect(
+      readBlobTx({
+        type: '0x3',
+        hash: '0x',
+        from: '0x',
+        to: null,
+        blobVersionedHashes: ['0x01'],
       }),
-    )
-
-    expect(told).toEqual({ blobTx: undefined })
+    ).toEqual(undefined)
   })
 })
-
-function message(body: object) {
-  return Buffer.from(JSON.stringify({ jsonrpc: '2.0', ...body }))
-}
 
 function rollupConfig(sender: string, inbox: string): LiveBlobsConfig {
   return {
