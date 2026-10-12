@@ -9,6 +9,11 @@ import type { BeltPalette } from './beltPalette'
 export interface BeltLayers {
   /** A sealed rack: faint body, the room it had up to the target, outline */
   sealedRack: HTMLCanvasElement
+  /**
+   * A slot with no block: the outline alone, as there was no block to have
+   * room in, so it never reads as a block nobody posted to
+   */
+  missedRack: HTMLCanvasElement
   /** A rack still to come: only a dashed outline */
   futureRack: HTMLCanvasElement
   /** The fee band's hatching and the dashed target line, at screen density */
@@ -33,6 +38,12 @@ export function paintLayers(
 ): BeltLayers | undefined {
   // as prepareCanvas: past 2 the eye cannot tell
   const density = Math.min(window.devicePixelRatio || 1, 2)
+  const strokeOutline = (ctx: CanvasRenderingContext2D) => {
+    ctx.beginPath()
+    traceRackOutline(ctx, layout, 0)
+    ctx.strokeStyle = palette.rackStroke
+    ctx.stroke()
+  }
   const sealedRack = paintRack(layout, density, 0, (ctx) => {
     ctx.beginPath()
     traceRackBody(ctx, layout, 0)
@@ -42,11 +53,9 @@ export function paintLayers(
     traceRoomToTarget(ctx, layout, targetBlobs)
     ctx.fillStyle = palette.emptySlot
     ctx.fill()
-    ctx.beginPath()
-    traceRackOutline(ctx, layout, 0)
-    ctx.strokeStyle = palette.rackStroke
-    ctx.stroke()
+    strokeOutline(ctx)
   })
+  const missedRack = paintRack(layout, density, 0, strokeOutline)
   const futureRack = paintRack(layout, density, 0, (ctx) => {
     ctx.setLineDash(FUTURE_DASH)
     ctx.beginPath()
@@ -68,10 +77,17 @@ export function paintLayers(
   })
   const bayRing = paintRack(layout, density, 0, strokeBay)
   const rules = paintRules(layout, palette, density)
-  if (!sealedRack || !futureRack || !litRack || !bayRing || !rules) {
+  if (
+    !sealedRack ||
+    !missedRack ||
+    !futureRack ||
+    !litRack ||
+    !bayRing ||
+    !rules
+  ) {
     return undefined
   }
-  return { sealedRack, futureRack, rules, litRack, bayRing }
+  return { sealedRack, missedRack, futureRack, rules, litRack, bayRing }
 }
 
 /** A rack on a canvas of its own size, plus `margin` around it */
