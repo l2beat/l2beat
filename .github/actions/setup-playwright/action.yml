@@ -36,9 +36,31 @@ runs:
       run: pnpm exec playwright install --only-shell chromium ${{ inputs.webkit == 'true' && 'webkit' || '' }}
 
     # The cache holds the browsers but not the libraries WebKit links to,
-    # which the runner image lacks
+    # which the runner image lacks. Their packages are cached too, as apt
+    # spent up to half of its 30 to 45 s downloading them
+    - name: Restore WebKit's system packages
+      id: webkit-packages
+      if: inputs.webkit == 'true'
+      uses: actions/cache@v6
+      with:
+        path: ~/.cache/webkit-packages
+        key: webkit-packages-${{ runner.os }}-${{ steps.version.outputs.version }}
+
+    # apt checks a cached package against its index before installing it, and
+    # downloads any that changed since
     - name: Install WebKit's system libraries
       if: inputs.webkit == 'true'
       shell: bash
       working-directory: ${{ inputs.package-dir }}
-      run: pnpm exec playwright install-deps webkit
+      env:
+        CACHED: ${{ steps.webkit-packages.outputs.cache-hit }}
+      run: |
+        packages=~/.cache/webkit-packages
+        if [ "$CACHED" = true ]; then
+          sudo cp "$packages"/*.deb /var/cache/apt/archives/
+        fi
+        pnpm exec playwright install-deps webkit
+        if [ "$CACHED" != true ]; then
+          mkdir -p "$packages"
+          cp /var/cache/apt/archives/*.deb "$packages"/
+        fi
