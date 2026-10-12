@@ -11,15 +11,14 @@ process.env.CLIENT_SIDE_BLOBS_PAGE = 'true'
 
 /**
  * The blobs page draws and lays itself out per screen, so its suite runs on
- * each kind of screen it is read on: iOS through WebKit, Android and desktop
- * through Chromium. The other suites set their own viewports and run once.
+ * a desktop through Chromium and on an iPhone through WebKit. An Android
+ * phone found nothing the iPhone did not, and the desktop suite sweeps every
+ * width a tablet has. The other suites set their own viewports and run once.
  */
 const BLOBS_PAGE = '**/blobs-page/**'
 const BLOBS_SCREENS = {
   desktop: { viewport: { width: 1440, height: 1000 } },
-  android: devices['Pixel 7'],
   iphone: devices['iPhone 15'],
-  ipad: devices['iPad Mini'],
 }
 /**
  * The ratchets count the work a page does, which other tests running beside
