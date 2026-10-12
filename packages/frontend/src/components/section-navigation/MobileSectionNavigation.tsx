@@ -36,11 +36,9 @@ export function MobileSectionNavigation({ sections }: Props) {
     if (!item || !container) return
     // Delivered after the browser's own layout, so the offsets read while
     // scrolling are free. Reading them here forced a layout of the whole
-    // page inside the commit that mounted this navigation.
-    const afterLayout = new ResizeObserver(() => {
-      afterLayout.disconnect()
-      scrollToItem(item, container)
-    })
+    // page inside the commit that mounted this navigation. Kept observing,
+    // because the list narrows when the project chip slides in next to it.
+    const afterLayout = new ResizeObserver(() => scrollToItem(item, container))
     afterLayout.observe(container)
     return () => afterLayout.disconnect()
   }, [scrollToItem, firstSelectedIndex, isDesktop])
@@ -50,7 +48,7 @@ export function MobileSectionNavigation({ sections }: Props) {
   return (
     <OverflowWrapper
       ref={overflowContainer}
-      className="flex justify-center bg-header-primary"
+      className="flex min-w-0 flex-1 justify-center bg-header-primary"
       childrenClassName="w-full"
     >
       <div className="flex items-center justify-between">

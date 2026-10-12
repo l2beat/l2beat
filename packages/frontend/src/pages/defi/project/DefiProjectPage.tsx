@@ -42,7 +42,13 @@ export function DefiProjectPage({
             data-project-page
           >
             {!isNavigationEmpty && (
-              <StickyMobileSectionNavigation sections={navigationSections} />
+              <StickyMobileSectionNavigation
+                sections={navigationSections}
+                project={{
+                  name: entry.shortName ?? entry.name,
+                  icon: entry.icon,
+                }}
+              />
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
