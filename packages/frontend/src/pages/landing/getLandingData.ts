@@ -6,7 +6,10 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getHomeCropsProjects } from '../home/getHomeCropsProjects'
-import { getCachedHomeData, getRecentProjectsForHome } from '../home/getHomeData'
+import {
+  getCachedHomeData,
+  getRecentProjectsForHome,
+} from '../home/getHomeData'
 import { getHomeProjectCounts } from '../home/getHomeProjectCounts'
 import { getHomeResearch } from '../home/getHomeResearch'
 

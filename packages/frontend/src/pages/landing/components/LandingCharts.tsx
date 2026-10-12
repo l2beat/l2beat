@@ -1,8 +1,3 @@
-import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
-import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
-import type { HomePrivacyData } from '~/server/features/home/getHomePrivacyData'
-import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
-import type { InteropFlowsProtocol } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import { HomeEthereumCard } from '~/pages/home/components/HomeEthereumCard'
 import { HomeInteropSection } from '~/pages/home/components/HomeInteropSection'
 import { HomeL2Card } from '~/pages/home/components/HomeL2Card'
@@ -10,6 +5,11 @@ import { HomePrivacyCard } from '~/pages/home/components/HomePrivacyCard'
 import type { HomeTopL2Project } from '~/pages/home/getHomeData'
 import type { HomeProjectCounts } from '~/pages/home/getHomeProjectCounts'
 import { HOME_PATH } from '~/pages/home/paths'
+import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
+import type { InteropFlowsProtocol } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
+import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
+import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
+import type { HomePrivacyData } from '~/server/features/home/getHomePrivacyData'
 import {
   LANDING_CONTAINER_CLASS,
   LANDING_SECTION_LABEL_CLASS,
