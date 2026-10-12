@@ -223,7 +223,7 @@ export const zkapi: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'Starting an escape needs an unpaused vault and your latest signed balance. The operator can cancel it with any request proof it holds for that balance, and only a new operator signature restores normal use.',
+          "Starting an escape needs an unpaused vault and the user's latest signed balance. The operator can cancel it with any request proof it holds for that balance, and only a new operator signature restores normal use.",
       },
     },
     reproducibility: {

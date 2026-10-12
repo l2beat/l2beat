@@ -77,14 +77,14 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       exposureShort:
         'The app works in Tor Browser, the daemon has a Tor setting with a kill switch, and no third party sees both a deposit and a request.',
       exposureContinued:
-        "Your wallet's RPC sees the deposit, while requests go to the operator and the provider. The app sends inference through a relay at refraction.network by default, which sees its timing. The hosted app reports feature use to Fathom, a cookieless analytics service.",
+        "The RPC serving the user's wallet sees the deposit, while requests go to the operator and the provider. The app sends inference through a relay at refraction.network by default, which sees its timing. The hosted app reports feature use to Fathom, a cookieless analytics service.",
       advice:
         'Use the app in Tor Browser, or the daemon with its Tor setting, and send the deposit through a public RPC over Tor.',
       interior: {
         ...PUBLIC_INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only over Tor, which keeps your IP off both sides.',
+          note: "Private only over Tor, which keeps the user's IP off both sides.",
         },
       },
       sources: [
@@ -108,7 +108,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         "The operator sees each request's time and budget but not its note, so the candidates are all active notes, a small set.",
       exposureContinued:
         "The daemon reveals the note id to the operator's indexer before each request. An escape dispute lets the operator publish one request's link onchain. The provider can read prompts and responses and link requests under one key.",
-      advice: `Use the browser app rather than the daemon, and wait a day or more between depositing and your first request. ${S.localBuild}`,
+      advice: `Use the browser app rather than the daemon, and wait a day or more between depositing and the user's first request. ${S.localBuild}`,
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -147,7 +147,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         'Onchain data stays hashed, but retained operator transcripts and indexer logs would tie requests to deposits.',
       exposureContinued:
         'Note leaves and nullifiers are Poseidon hashes. Whoever breaks elliptic-curve cryptography opens only the balance commitment that a published dispute carries.',
-      advice: 'Assume the operator and provider keep what you send.',
+      advice: 'Assume the operator and provider keep what the user sends.',
       interior: {
         ...PUBLIC_INTERIOR,
         amount: {

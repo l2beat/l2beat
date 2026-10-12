@@ -1,12 +1,12 @@
-zkAPI lets you prepay AI usage with ETH and chat without revealing which deposit pays for which request. Deposits and withdrawals are public, and the model provider can read your prompts.
+zkAPI lets the user prepay AI usage with ETH and chat without revealing which deposit pays for which request. Deposits and withdrawals are public, and the model provider can read the user's prompts.
 
-Users trust Open Anonymity, which runs the service and owns the vault, and the inference providers behind OpenRouter. The operator approves withdrawals and sees each request's time and budget. The owner can pause the vault, and expired deposits fall to its treasury. You can leave without the operator through a {{challengePeriod}} escape, as long as your note has not expired.
+Users trust Open Anonymity, which runs the service and owns the vault, and the inference providers behind OpenRouter. The operator approves withdrawals and sees each request's time and budget. The owner can pause the vault, and expired deposits fall to its treasury. The user can leave without the operator through a {{challengePeriod}} escape, as long as their note has not expired.
 
 ### Architecture
 
-Open Anonymity verifies request proofs before issuing API keys. Its signing keys are fixed in the vault. A new key requires proof that your balance covers a budget of at least {{requestChargeCap}} ETH.
+Open Anonymity verifies request proofs before issuing API keys. Its signing keys are fixed in the vault. A new key requires proof that the user's balance covers a budget of at least {{requestChargeCap}} ETH.
 
-Your app keeps the exact balance locally. The operator receives a commitment to your deposit. Initially, the balance equals the deposit.
+The user's app keeps the exact balance locally. The operator receives a commitment to the user's deposit. Initially, the balance equals the deposit.
 
 The commitment is homomorphic: the operator can subtract a known charge without reading the balance. It signs the updated commitment. The local app checks the subtraction and signature, then stores the updated state.
 
@@ -26,15 +26,15 @@ Losing the note secret and latest signed balance that are saved by the app loses
 
 ### App
 
-The ratings assume OA Chat, a hosted browser app with public source and local build instructions. It fetches the whole note tree and proves in the browser. It relays inference through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the public main branch, including analytics. zkapi-clientd is a local daemon with an OpenAI-compatible API. It asks the operator's indexer for your note's path, and reuses keys across requests which can both harm your privacy.
+The ratings assume OA Chat, a hosted browser app with public source and local build instructions. It fetches the whole note tree and proves in the browser. It relays inference through a proxy at refraction.network by default, with a fallback to direct connections. The hosted build runs code beyond the public main branch, including analytics. zkapi-clientd is a local daemon with an OpenAI-compatible API. It asks the operator's indexer for the user's note path and reuses keys across requests, both of which can harm privacy.
 
 ### Providers and verifier
 
-OpenRouter and the model provider can read prompts and responses and link requests under one key. Open Anonymity holds the OpenRouter accounts. A verifier running in an attestable Azure confidential container checks that OA's account has provider logging disabled. Its build reproduces from source and matches the attested measurement, see the verification steps. Both clients pin only the verifier's address, so the check only holds when you verify it yourself.
+OpenRouter and the model provider can read prompts and responses and link requests under one key. Open Anonymity holds the OpenRouter accounts. A verifier running in an attestable Azure confidential container checks that OA's account has provider logging disabled. Its build reproduces from source and matches the attested measurement, see the verification steps. Both clients pin only the verifier's address, so the check only holds when the user verifies it personally.
 
 ### Exits
 
-**Escape.** Without a cooperative close, you start an escape with your latest signed balance and finalize it after {{challengePeriod}}. The operator can cancel it with a request proof for that balance, which publishes that request's link. While the owner pauses the vault, no one can start an escape, but one already started still finalizes.
+**Escape.** Without a cooperative close, the user starts an escape with their latest signed balance and finalizes it after {{challengePeriod}}. The operator can cancel it with a request proof for that balance, which publishes that request's link. While the owner pauses the vault, no one can start an escape, but one already started still finalizes.
 
 ### Compliance
 
