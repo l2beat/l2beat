@@ -16,15 +16,16 @@ export const FetchDiscoveryCache = command({
     'Copies block independent entries (sources, deployments, transactions, ...) from the update monitor cache into the local discovery cache.',
   args: {
     redisUrl: option({
-      type: optional(string),
+      type: string,
       long: 'redis-url',
+      env: 'DISCOVERY_CACHE_URI',
       description:
         'update monitor cache URL, defaults to DISCOVERY_CACHE_URI from the environment or .env',
     }),
   },
   handler: async (args) => {
     const { commandOptions, createClient } = await import('redis')
-    const redisUrl = args.redisUrl ?? getEnv().string('DISCOVERY_CACHE_URI')
+    const redisUrl = args.redisUrl
     const cli = createCliLogger({ output: process.stdout, quiet: false })
     const clients = FETCHED_KINDS.map(() => {
       const client = createClient({
