@@ -2,8 +2,11 @@ name: List affected packages
 
 # Lists the workspace packages that the triggering commit changes, plus every
 # package that depends on them. On main it compares the commit with the previous
-# one. On a pull request it compares the merge commit with the base branch tip,
-# so the list covers the whole PR, not just the last push.
+# one. On a pull request it compares the PR head with the commit it branched
+# from, like the PR's "Files changed" tab, so the list covers the whole PR, not
+# just the last push. Not the merge commit: when a PR is retargeted, e.g. a
+# stacked PR onto its parent's branch, GitHub fires the event before it rebuilds
+# refs/pull/N/merge, which then still diffs against the old base.
 
 on:
   workflow_call:
@@ -23,10 +26,24 @@ jobs:
     outputs:
       packages: ${{ steps.affected.outputs.packages }}
     steps:
+      # turbo needs the branch point in the clone to diff against it, so fetch
+      # just enough history to reach it.
+      - name: Find where the PR branched off
+        id: pr
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMPARE: ${{ github.event.pull_request.base.ref }}...${{ github.event.pull_request.head.sha }}
+        run: >-
+          gh api "repos/$GITHUB_REPOSITORY/compare/$COMPARE"
+          --jq '"base=\(.merge_base_commit.sha)\ndepth=\(.ahead_by + 1)"'
+          >> "$GITHUB_OUTPUT"
+
       - name: Check out code
         uses: actions/checkout@v6
         with:
-          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: ${{ steps.pr.outputs.depth || 2 }}
           persist-credentials: false
 
       # turbo reads the workspace graph from package.json files and the
@@ -34,7 +51,7 @@ jobs:
       - name: List affected packages
         id: affected
         env:
-          TURBO_SCM_BASE: HEAD^1
+          TURBO_SCM_BASE: ${{ steps.pr.outputs.base || 'HEAD^1' }}
           TURBO_SCM_HEAD: HEAD
         run: |
           turbo_version=$(jq -r .devDependencies.turbo package.json)
