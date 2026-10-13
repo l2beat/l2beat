@@ -447,7 +447,7 @@
       }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "BlobstreamMultisig",
       "address": "arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -803,7 +803,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SP1Blobstream",
+      "name": "ArbitrumBlobstream",
       "address": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
       "type": "Contract",
       "template": "succinct/SP1Blobstream",

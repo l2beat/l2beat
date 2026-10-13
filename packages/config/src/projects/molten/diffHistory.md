@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe9ae9c629ac68b1a84e36126904e51fba094b369
+Generated with discovered.json: 0x9144f1b4b58cbf2c267451c98fab7447eec7761c
 
-# Diff at Mon, 05 Oct 2026 10:59:03 GMT:
+# Diff at Tue, 13 Oct 2026 07:13:27 GMT:
 
 - id: 9409cf5f
 - author: torztomasz (<tomasz.torz@l2beat.com>)
-- comparing to: main@a75295231feb8dffb1ce44d0210944af7687f7e0 block: 1782746641
+- comparing to: main@cbcd0741ccee2bf199600c1599188b5fc95b8508 block: 1782746641
 - current timestamp: 1782746641
 
 ## Description
@@ -18,11 +18,8 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1782746641 (main branch discovery), not current.
 
 ```diff
-    contract SP1Blobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) [succinct/SP1Blobstream] {
+    contract ArbitrumBlobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) [succinct/SP1Blobstream] {
     +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
-      name:
--        "ArbitrumBlobstream"
-+        "SP1Blobstream"
       type:
 -        "Reference"
 +        "Contract"
@@ -57,7 +54,7 @@ discovery. Values are for block 1782746641 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) [GnosisSafe]
+    contract BlobstreamMultisig (arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) [GnosisSafe]
     +++ description: None
 ```
 

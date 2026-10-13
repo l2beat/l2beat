@@ -120,7 +120,7 @@ function getProgramHashes(): string[] {
   const result = []
   result.push(
     discovery.getContractValue<string>(
-      'SP1Blobstream',
+      'ArbitrumBlobstream',
       'blobstreamProgramVkey',
     ),
   )
