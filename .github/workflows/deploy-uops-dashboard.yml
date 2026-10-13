@@ -27,7 +27,7 @@ jobs:
   # Coolify builds the app from source, so there is no image to build here.
   deploy:
     needs: affected
-    if: ${{ always() && (needs.affected.result != 'success' || contains(fromJSON(needs.affected.outputs.packages || '[]'), '@l2beat/uops-dashboard')) }}
+    if: ${{ !cancelled() && (needs.affected.result != 'success' || contains(fromJSON(needs.affected.outputs.packages || '[]'), '@l2beat/uops-dashboard')) }}
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
