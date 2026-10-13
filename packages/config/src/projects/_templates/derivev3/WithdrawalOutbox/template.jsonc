@@ -7,7 +7,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits."
+          "description": "register assets and their vaults, set rate limits, static prices and the minimum time between guardian refills, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits."
         }
       ]
     },

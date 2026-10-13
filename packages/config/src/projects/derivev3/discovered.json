@@ -1,6 +1,6 @@
 {
   "name": "derivev3",
-  "timestamp": 1791882836,
+  "timestamp": 1791902928,
   "configHash": "0x993852e23cac6bc68424f957003b985b217afe4ac83ab038e2b735a18c6d1e54",
   "entries": [
     {
@@ -507,22 +507,22 @@
         "$upgradeCount": 2,
         "ACTION_MANAGER": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
         "batchSubmitter": "eth:0x000000c88C2C8A7F8317783f2268eB2B9b41257E",
-        "celestiaLastCommitment": "0x1f7d12849c6890f9fe754f45291e326486362ef593ac54969af5150ee2e85de1",
-        "celestiaTrustedHash": "0x386f1de1c8f4e0b794e44f06d91d925747f0ca924792f7308cd2ab3afedf1387",
-        "celestiaTrustedHeight": 14912589,
+        "celestiaLastCommitment": "0xa105724829eef345e8189b78d03ae1c52bc7fddcba50fbda30bdc2332e8637d6",
+        "celestiaTrustedHash": "0x6eb15e28be5d37a3e52c8b428dd058b72a83d32a48530a4ba39fa37599bd3d93",
+        "celestiaTrustedHeight": 14919516,
         "consumedAdminAccIndex": 2,
-        "consumedPublicAccIndex": 1657,
+        "consumedPublicAccIndex": 1687,
         "getCelestiaAnchor": {
-          "height": 14912589,
-          "headerHash": "0x386f1de1c8f4e0b794e44f06d91d925747f0ca924792f7308cd2ab3afedf1387",
-          "lastCommitment": "0x1f7d12849c6890f9fe754f45291e326486362ef593ac54969af5150ee2e85de1"
+          "height": 14919516,
+          "headerHash": "0x6eb15e28be5d37a3e52c8b428dd058b72a83d32a48530a4ba39fa37599bd3d93",
+          "lastCommitment": "0xa105724829eef345e8189b78d03ae1c52bc7fddcba50fbda30bdc2332e8637d6"
         },
-        "lastOpTimestamp": 1791882224,
+        "lastOpTimestamp": 1791902078,
         "MAX_DA_HEADER_AGE": 172800,
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "programVKey": "0x008dcff8e9d15e87916a63645d1075cb1d545b5bd1f40a3ba05b407f2ffa543b",
-        "stateRoot": "0xb98b469dfb297845302db6b120e596df65e6558acc3e97ca50d0d199d1d5c5b1",
+        "stateRoot": "0x975783cbe0be8428ddc3190d749c59f20d3b02fa247241079a2b3137a52bbaf8",
         "submitterStallTimeout": 2419200,
         "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "WITHDRAWAL_OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63"
@@ -612,8 +612,8 @@
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "PUBLIC_ACTION_DOMAIN": "0xe40f88659781022c735f391b4acc350fa0730948845bed98f660e46c61c3a256",
-        "publicActionsAcc": "0xc98576728ef81e37488e71a0260e0352fa01098a727931d84b06bf94c2421837",
-        "publicHeadIndex": 1659,
+        "publicActionsAcc": "0x3d8dcb1ff639b5541d04c59ad3775541112eddae0b4859ef2c11c03b2ea12d6b",
+        "publicHeadIndex": 1687,
         "WITHDRAWAL_FEE": 2000000000000000,
         "WITHDRAWAL_OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
         "WITHDRAWAL_TYPE": 3
@@ -1219,8 +1219,8 @@
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 26182599 },
-  "permissionsConfigHash": "0xa9520bb9bb68519d69f3edf2105255aaf8eebf74b3d67de1ea443287ad0e31e6",
+  "usedBlockNumbers": { "ethereum": 26184270 },
+  "permissionsConfigHash": "0x1851285ae950f7488ff0eb5e8d4b6639a308eb5519ab0fd6e788859f4acc2e22",
   "modelledAgainst": {
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
@@ -1309,7 +1309,7 @@
         {
           "permission": "interact",
           "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
-          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits.",
+          "description": "register assets and their vaults, set rate limits, static prices and the minimum time between guardian refills, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
@@ -1348,7 +1348,7 @@
         {
           "permission": "interact",
           "from": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
-          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to itself.",
+          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to the owner.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
@@ -1494,7 +1494,7 @@
         {
           "permission": "interact",
           "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
-          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits.",
+          "description": "register assets and their vaults, set rate limits, static prices and the minimum time between guardian refills, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
@@ -1521,7 +1521,7 @@
         {
           "permission": "interact",
           "from": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
-          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to itself.",
+          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to the owner.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
@@ -1622,7 +1622,7 @@
         {
           "permission": "interact",
           "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
-          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits.",
+          "description": "register assets and their vaults, set rate limits, static prices and the minimum time between guardian refills, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits.",
           "role": ".owner"
         },
         {
@@ -1640,7 +1640,7 @@
         {
           "permission": "interact",
           "from": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
-          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to itself.",
+          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to the owner.",
           "role": ".owner"
         }
       ]

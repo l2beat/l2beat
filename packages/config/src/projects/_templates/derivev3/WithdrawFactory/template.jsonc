@@ -6,7 +6,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to itself."
+          "description": "set the bridge route per token and chain, appoint keepers, and move funds held in any withdraw escrow or in the factory to the owner."
         }
       ]
     },
