@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StealthKeyRegistry",
+  "description": "Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.",
+  "category": "core",
+  "critical": true,
+  "ignoreInWatchMode": ["registeredAddresses"],
+  "fields": {
+    "registeredAddresses": {
+      "description": "Total number of unique addresses that have registered stealth keys.",
+      "handler": {
+        "type": "event",
+        "add": {
+          "event": "StealthKeyChanged"
+        },
+        "select": "registrant",
+        "dedupBy": "registrant"
+      },
+      "edit": ["length"]
+    }
+  }
+}

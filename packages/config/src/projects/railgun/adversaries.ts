@@ -61,24 +61,30 @@ export function railgunAdversaries(upgradeDelay: string) {
       networkObserver: {
         sentiment: 'good',
         exposureShort:
-          'RailOxide sends all traffic over built-in Tor, broadcaster messages included, and finds your notes by decrypting every note locally.',
+          "RailOxide sends all traffic over built-in Tor, broadcaster messages included, and finds the user's notes by decrypting every note locally.",
+        exposureContinued:
+          "All traffic shares one Tor session, so the public RPCs it picks at random see the user's public addresses, shields and the gas estimate of each private transaction from one exit. The user's own node as its RPC keeps these from third parties.",
         advice:
-          'Use RailOxide, the wallet these ratings assume, and read the chain from your own node.',
+          "Use RailOxide, the wallet these ratings assume, and set the user's own node as its Ethereum RPC.",
         interior: {
           ...INTERIOR,
           linkage: {
             verdict: 'atRisk',
-            note: 'Private only over Tor, which RailOxide uses by default.',
+            note: "Private only with the user's own node as RPC, over the default Tor.",
           },
         },
         sources: [
           {
-            title: 'RailOxide privacy model',
-            url: `${RAILOXIDE}docs/privacy-model.md`,
-          },
-          {
             title: 'Built-in Tor is the default',
             url: `${RAILOXIDE}crates/wallet-ops/src/settings/network_chains.rs#L10-L15`,
+          },
+          {
+            title: 'Every stream uses one Tor session',
+            url: `${RAILOXIDE}crates/wallet-ops/src/http.rs#L1549-L1559`,
+          },
+          {
+            title: 'A custom RPC list replaces the public pool',
+            url: `${RAILOXIDE}crates/wallet-ops/src/settings/effective.rs#L263-L277`,
           },
         ],
       },
@@ -86,9 +92,9 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'good',
         exposureShort: `Only the user holds viewing keys, and DAO upgrades wait ${upgradeDelay}.`,
         exposureContinued:
-          'PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists, so the notes you spend stay on your device.',
+          "PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists. After each transaction it sends the PPoI node only that transaction's new notes with their proofs.",
         advice:
-          'Watch governance proposals and unshield before an upgrade you reject executes.',
+          'Watch governance proposals and unshield before an upgrade the user rejects executes.',
         interior: {
           ...INTERIOR,
           linkage: {
@@ -110,7 +116,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         exposureContinued:
           'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address that was ever shared, broadcaster fee notes included.',
         advice:
-          'Share your 0zk address privately, with a fresh one per counterparty where you can.',
+          "Share the user's 0zk address privately, with a fresh one per counterparty where possible.",
         interior: {
           sender: 'atRisk',
           recipient: 'atRisk',
@@ -118,7 +124,7 @@ export function railgunAdversaries(upgradeDelay: string) {
           asset: 'atRisk',
           linkage: {
             verdict: 'atRisk',
-            note: 'Private only while your 0zk address stays unshared.',
+            note: "Private only while the user's 0zk address stays unshared.",
           },
         },
         sources: [

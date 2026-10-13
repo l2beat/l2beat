@@ -240,7 +240,7 @@ export const zamaCw: BaseProject = {
   },
   display: {
     description:
-      'Zama Confidential Tokens is an app that wraps ERC-20 assets into confidential tokens and hides balances and transfer amounts using Zama FHEVM on Ethereum.',
+      'Confidential amounts for ERC-20 tokens on Ethereum: wrappers that encrypt balances and transfer amounts with FHE, decrypted by a committee of KMS operators.',
     detailedDescription: readProjectMarkdown('zama-cw', 'detailedDescription', {
       kmsThreshold,
       kmsSignerCount,
@@ -260,6 +260,42 @@ export const zamaCw: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      title: 'Zama Protocol live on Ethereum',
+      url: 'https://cryptoast.fr/?p=199633',
+      date: '2025-12-30T00:00:00Z',
+      description:
+        'Zama launches its mainnet with a first confidential stablecoin transfer, in cUSDT.',
+      type: 'general',
+    },
+    {
+      // ACL 0xcA2E…ffb6: Paused by 0x9436…d827 at 14:17:59 UTC (tx
+      // 0x1fe5bf2c…), Unpaused by 0xb6d6…1ef3 at 15:41:47 UTC (tx
+      // 0x2a4de4df…). No public explanation found.
+      title: 'ACL paused, every token halted',
+      url: 'https://etherscan.io/tx/0x1fe5bf2c4c59b4c0034167e8eea979e3a8fa700d590c73ca7587712bb43359b2',
+      date: '2026-01-06T00:00:00Z',
+      description:
+        'A pauser halts the ACL, and with it every confidential token, for 84 minutes.',
+      type: 'incident',
+    },
+    {
+      // USDC Blacklisted(ConfidentialUSDCWrapper 0xe978…72B2) at 2026-05-30
+      // 01:08 UTC, UnBlacklisted 2026-06-01 18:58 UTC. Zama: a temporary
+      // restraining order (N.D. Cal., Overnight Finance dispute, Zama not a
+      // party) targeted one deposit of about $12.5M, over 99% of the wrapper.
+      // The deposit had passed Zama's sanctions screening. The court lifted
+      // the order at its June 1 review. Press names the case Newton AC/DC Fund
+      // v. Ermilov.
+      title: 'Circle freezes the cUSDC escrow',
+      url: 'https://www.zama.org/post/the-freeze-on-zamas-cusdc-contract-has-been-lifted-and-all-systems-are-back-to-normal',
+      date: '2026-05-30T00:00:00Z',
+      description:
+        'A court order makes Circle blacklist the cUSDC wrapper for almost three days, blocking every unwrap.',
+      type: 'incident',
+    },
+  ],
   escrows: trackedWrappers.map(
     ({ wrapper, wrapperSinceTimestamp, underlyingToken }) => ({
       address: ChainSpecificAddress.address(wrapper.address),
