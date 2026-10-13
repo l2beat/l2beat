@@ -6,7 +6,7 @@ export type GroupVariant = 'single'
 
 export type GroupingProjectConfig = Project<
   never,
-  'scalingInfo' | 'daLayer' | 'privacyInfo' | 'defiInfo'
+  'scalingInfo' | 'daLayer' | 'privacyInfo' | 'defiInfo' | 'interopConfig'
 >
 
 export interface Group {
@@ -28,6 +28,7 @@ export function groupProjects(
         isDaLayer: !!c.daLayer,
         isPrivacy: !!c.privacyInfo,
         isDefi: !!c.defiInfo,
+        isInterop: !!c.interopConfig && c.interopConfig.type !== 'canonical',
       },
     ]),
   )
@@ -102,6 +103,15 @@ export function groupProjects(
       name: 'Privacy',
       assignees: ['🐝', '🐻'],
       predicate: (p) => projectMap.get(p.name)?.isPrivacy ?? false,
+    },
+    {
+      name: 'Interop',
+      assignees: ['🐱', '🐿'],
+      predicate: (p) =>
+        projectMap.get(p.name)?.isInterop ||
+        p.name === 'wormhole' ||
+        p.name === 'shared-circle' ||
+        p.name === 'hop',
     },
     // Finally individual projects so they can show inline labels
     {
