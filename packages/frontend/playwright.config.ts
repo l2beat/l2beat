@@ -1,4 +1,4 @@
-import { defineConfig, devices } from 'playwright/test'
+import { defineConfig } from 'playwright/test'
 
 // Socket Firewall (sfw) wraps npx/pnpm and injects HTTP_PROXY, which breaks
 // Playwright's webServer readiness probe against localhost. Exempt local hosts.
@@ -10,36 +10,17 @@ process.env.CLIENT_SIDE_DEFI_ENABLED = 'true'
 process.env.CLIENT_SIDE_BLOBS_PAGE = 'true'
 
 /**
- * The blobs page draws and lays itself out per screen, so its suite runs on
- * each kind of screen it is read on: iOS through WebKit, Android and desktop
- * through Chromium. The other suites set their own viewports and run once.
- */
-const BLOBS_PAGE = '**/blobs-page/**'
-const BLOBS_SCREENS = {
-  desktop: { viewport: { width: 1440, height: 1000 } },
-  android: devices['Pixel 7'],
-  iphone: devices['iPhone 15'],
-  ipad: devices['iPad Mini'],
-}
-/**
  * The ratchets count the work a page does, which other tests running beside
- * them push up, so they run once the rest are done, one at a time
+ * them push up, so they run once the rest are done, one at a time. CI gives
+ * them runners of their own instead, with --no-deps
  */
 const PERF = '**/*-perf/**'
 /**
- * Off in CI for now, as the blobs suites take most of the e2e job. Run them
- * locally with `pnpm test:e2e:blobs`
+ * The blobs ratchets each watch or swipe through a few of the chain's slots,
+ * 12 seconds apiece, so they take about as long as each other and far longer
+ * than the rest. CI shards them, one to a runner
  */
-const RUN_BLOBS = !process.env.CI
-
-const functional = [
-  { name: 'chromium', testIgnore: [BLOBS_PAGE, PERF] },
-  ...(RUN_BLOBS ? Object.entries(BLOBS_SCREENS) : []).map(([screen, use]) => ({
-    name: `blobs ${screen}`,
-    testMatch: `${BLOBS_PAGE}/*.e2e.ts`,
-    use,
-  })),
-]
+const BLOBS_PERF = '**/blobs-perf/**'
 
 // biome-ignore lint/style/noDefaultExport: Playwright config uses a default export.
 export default defineConfig({
@@ -49,12 +30,21 @@ export default defineConfig({
     baseURL: process.env.BASE_URL ?? 'http://localhost:7357',
   },
   projects: [
-    ...functional,
+    { name: 'chromium', testIgnore: PERF },
     {
       name: 'perf',
       testMatch: `${PERF}/*.e2e.ts`,
-      testIgnore: RUN_BLOBS ? [] : ['**/blobs-perf/**'],
-      dependencies: functional.map((project) => project.name),
+      testIgnore: BLOBS_PERF,
+      dependencies: ['chromium'],
+      workers: 1,
+    },
+    {
+      name: 'blobs perf',
+      testMatch: `${BLOBS_PERF}/*.e2e.ts`,
+      // so that a shard can take one test of a file, not the whole file
+      fullyParallel: true,
+      // one ratchet at a time, these after the rest
+      dependencies: ['perf'],
       workers: 1,
     },
   ],
