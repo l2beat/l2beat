@@ -3,5 +3,11 @@
     "hash": "0x5edc2612f51fb0b366a81e9fb32f2d3d7ddd72672b75a40d414112840293d7cd",
     "address": "eth:0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D",
     "blockNumber": 22565516
+  },
+  "DefaultResolver_transient": {
+    "hash": "0xdda7675e240da9730dca24c7f71344494dc5f845776699c4481be7b6a7aeaff4",
+    "address": "taiko:0x8Af4669E3068Bae96b92cD73603f5D86beD07a9a",
+    "chain": "taiko",
+    "blockNumber": 12573109
   }
 }

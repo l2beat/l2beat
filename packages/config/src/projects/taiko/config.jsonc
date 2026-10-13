@@ -6,6 +6,8 @@
   "initialAddresses": [
     "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
     "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+    "eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa",
+    "eth:0xaf145913EA4a56BE22E120ED9C24589659881702",
     "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
     "eth:0x2affadeb2ef5e1f2a7f58964ee191f1e88317ecd", // SC: emrgMultisig
     "eth:0xd7da1c25e915438720692bc55eb3a7170ca90321", // SC: standardMultisig
@@ -14,7 +16,9 @@
     "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
     "taiko:0x1670000000000000000000000000000000000001",
     "taiko:0x1670000000000000000000000000000000010001",
-    "taiko:0x1670000000000000000000000000000000000002"
+    "taiko:0x1670000000000000000000000000000000000002",
+    "taiko:0x1670000000000000000000000000000000000003",
+    "taiko:0x1670000000000000000000000000000000000004"
   ],
   "names": {},
   "overrides": {
@@ -66,7 +70,7 @@
       }
     },
     "taiko:0x1670000000000000000000000000000000000001": {
-      "description": "Bridge escrow holding preminted ETH on Taiko."
+      "description": "Bridge escrow holding preminted ETH on Taiko. Failed messages remain retryable, but message failure and source-chain refunds are disabled."
     },
     // --- ossification criticality overrides (shared or untemplated contracts) ---
     "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a": {
@@ -152,14 +156,23 @@
       // PreconfRouter: exclusive proposal route for whitelisted preconf operators
       "critical": { "untilTimestamp": 1775747881 }
     },
-    // shared-era resolver (deleted in diffHistory 423dca4a, 2026-06-30)
+    // Legacy shared resolver, dropped from discovery before its NFT dependencies retired.
     "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": {
-      // L1SharedAddressManager: resolved the Bridge's trusted SignalService/vault addresses (remapping acted as an upgrade)
-      "critical": { "untilTimestamp": 1782824701 }
+      // The L1 NFT vaults still used it after the ETH bridge and ERC20 vault migrated.
+      "critical": { "untilTimestamp": 1791767075 }
     },
     "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a": {
       // pre-Shasta DefaultResolver: remapped trusted bridge and preconfirmation components; retired at the Shasta discovery boundary
       "critical": { "untilTimestamp": 1775747881 }
+    },
+    "taiko:0x1670000000000000000000000000000000000006": {
+      // The NFT vaults still used this resolver after the bridge and ERC20 vault migrated.
+      // It left the critical perimeter when the NFT vaults migrated too.
+      "critical": { "untilTimestamp": 1791767237 }
+    },
+    "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984": {
+      // Deployed earlier, became critical when the live bridge and vault started resolving through it.
+      "critical": { "sinceTimestamp": 1791444621 }
     }
   }
 }

@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x8bc0ff2799e6113495ae76087e150dd9bc1050e1
+
+# Diff at Mon, 12 Oct 2026 07:12:12 GMT:
+
+- id: 6eb37dd3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1791217041
+- current timestamp: 1791788974
+
+## Description
+
+The Steakhouse/Morpho Safe rotated all seven signers, added two more and raised its threshold from 2/7 to 3/9.
+
+## Watched changes
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (eth:0x827e86072B06674a077f592A531dcE4590aDeCdB) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x1710932cf538F38E7bcFC30AAae389B24dD004f6"
+      values.$members.1:
++        "eth:0x44e6E4152a60D594c175BFeD42E68ad62FFB5871"
+      values.$members.0:
+-        "eth:0xfc615395336aADe67fd853a0157001a215Ea1279"
++        "eth:0xfB3e98B5d59505Ceb259E9874b4553fD27FCCe3c"
+      values.$members.1:
+-        "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6"
++        "eth:0x7307Bf07641a794fdBc2391d0983a7f1cFa36E4B"
+      values.$members.2:
+-        "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b"
++        "eth:0x1936552B58Be97fFD9c7c1DD28E675b7B022F16d"
+      values.$members.3:
+-        "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b"
++        "eth:0xd824031D4A115590e6Ff26e4e23fC346ab4cB2Db"
+      values.$members.4:
+-        "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f"
++        "eth:0x4c23E86A9D8506a43046C15Be1b7fA0B6F3427DE"
+      values.$members.5:
+-        "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
++        "eth:0x5868aaa8d66023137365ADAe9634A9D8834d488d"
+      values.$members.6:
+-        "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120"
++        "eth:0x1Dc4354B39554251d4a2C4b571906e7EbAe535A3"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 7 (29%)"
++        "3 of 9 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x48c73b80ebd60653d03e3fe758ffbc8cd65003c0
 
 # Diff at Wed, 07 Oct 2026 14:48:12 GMT:
