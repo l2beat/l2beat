@@ -7,24 +7,22 @@ import { getProjectUrl } from './getProjectUrl'
 describe(getProjectUrl.name, () => {
   it('links an interop-only protocol to its interop page', () => {
     expect(
-      getProjectUrl(
-        { ...NO_PAGE, slug: 'ccip', interopConfig: INTEROP_CONFIG },
-        [],
-      ),
+      getProjectUrl({
+        ...NO_PAGE,
+        slug: 'ccip',
+        interopConfig: INTEROP_CONFIG,
+      }),
     ).toEqual('/interop/protocols/ccip')
   })
 
   it('links a scaling project with a canonical bridge to its scaling page, which carries the bridge data', () => {
     expect(
-      getProjectUrl(
-        {
-          ...NO_PAGE,
-          slug: 'gnosis',
-          scalingInfo: {} as ProjectScalingInfo,
-          interopConfig: INTEROP_CONFIG,
-        },
-        [],
-      ),
+      getProjectUrl({
+        ...NO_PAGE,
+        slug: 'gnosis',
+        scalingInfo: {} as ProjectScalingInfo,
+        interopConfig: INTEROP_CONFIG,
+      }),
     ).toEqual('/layer2s/projects/gnosis')
   })
 })

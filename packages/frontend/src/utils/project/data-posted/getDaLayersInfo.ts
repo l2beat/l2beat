@@ -41,7 +41,6 @@ export function getDaLayersInfo(
 interface DaLayerInfo {
   name: string
   logo: string
-  href: string
 }
 
 function getDaLayer(
@@ -54,6 +53,5 @@ function getDaLayer(
   return {
     name: daLayer.name,
     logo: manifest.getUrl(`/icons/${daLayer.slug}.png`),
-    href: `/data-availability/projects/${daLayer.slug}/${daLayer.slug === 'ethereum' ? 'ethereum' : 'no-bridge'}`,
   }
 }

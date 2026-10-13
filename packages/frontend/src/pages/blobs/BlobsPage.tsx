@@ -50,9 +50,11 @@ export function BlobsPage({
               {throughputChart}
             </PrimaryCard>
           </div>
+          {/* Phones open on what the page is about, the value it secures
+              one swipe away */}
           <ChartTabs
             className="lg:hidden"
-            charts={[tvsChart, throughputChart]}
+            charts={[throughputChart, tvsChart]}
           />
           <LiveBlobsCard
             projects={blobPosters}
