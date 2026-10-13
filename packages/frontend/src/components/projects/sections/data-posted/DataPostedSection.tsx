@@ -33,12 +33,19 @@ export function DataPostedSection({
   return (
     <ProjectSection {...sectionProps}>
       <p className="text-paragraph-15 md:text-paragraph-16">
-        {DATA_POSTED_DESCRIPTION} The project currently posts data to
-        <span>
-          {currentDaLayers.map((daLayer) => (
-            <DaLayerName key={daLayer.name} daLayer={daLayer} />
-          ))}
-        </span>
+        {DATA_POSTED_DESCRIPTION}{' '}
+        {currentDaLayers.length > 0 ? (
+          <>
+            The project currently posts data to
+            <span>
+              {currentDaLayers.map((daLayer) => (
+                <DaLayerName key={daLayer.name} daLayer={daLayer} />
+              ))}
+            </span>
+          </>
+        ) : (
+          'We no longer track where the project posts data'
+        )}
         {pastDaLayers.length > 0 && (
           <span>
             ; previously it posted to
