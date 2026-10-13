@@ -476,7 +476,7 @@ describe(renderProjectSection.name, () => {
       })
 
     expect(dataPosted([ETHEREUM])).toInclude(
-      'The project currently posts data to [Ethereum](https://l2beat.com/blobs); previously it posted to Celestia.',
+      'The project currently posts data to [Ethereum](https://l2beat.com/projects/ethereum); previously it posted to Celestia.',
     )
     expect(dataPosted([])).toInclude(
       'We no longer track where the project posts data; previously it posted to Celestia.',
@@ -667,7 +667,7 @@ const GROTH16 = {
 const ETHEREUM = {
   name: 'Ethereum',
   logo: '/icons/ethereum.png',
-  href: '/blobs',
+  href: '/projects/ethereum',
 }
 
 const CELESTIA = {

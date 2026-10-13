@@ -1,6 +1,7 @@
 import type { Project, ProjectDaTrackingConfig } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { manifest } from '~/utils/Manifest'
 
 export function getDaLayersInfo(
@@ -38,9 +39,10 @@ export function getDaLayersInfo(
   }
 }
 
-export interface DaLayerInfo {
+interface DaLayerInfo {
   name: string
   logo: string
+  /** Only Ethereum has a page of its own among DA layers. */
   href: string | undefined
 }
 
@@ -54,11 +56,6 @@ function getDaLayer(
   return {
     name: daLayer.name,
     logo: manifest.getUrl(`/icons/${daLayer.slug}.png`),
-    href: getDaLayerHref(daLayer),
+    href: daLayer.id === ProjectId.ETHEREUM ? ETHEREUM_PROJECT_PATH : undefined,
   }
-}
-
-// DA layer pages were removed; only Ethereum's lives on, as /blobs.
-function getDaLayerHref(daLayer: Project<'daLayer'>) {
-  return daLayer.id === ProjectId.ETHEREUM ? '/blobs' : undefined
 }

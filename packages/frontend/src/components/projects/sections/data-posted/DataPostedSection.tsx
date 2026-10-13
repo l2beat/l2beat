@@ -4,7 +4,6 @@ import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDa
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
-import type { DaLayerInfo } from '~/utils/project/data-posted/getDaLayersInfo'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import { DATA_POSTED_DESCRIPTION, EIGENLAYER_DATA_SOURCE } from '../sectionCopy'
@@ -13,8 +12,8 @@ import { DataPostedTrackedTransactions } from './DataPostedTrackedTransactions'
 
 export interface DataPostedSectionProps extends ProjectSectionProps {
   project: ChartProject
-  currentDaLayers: DaLayerInfo[]
-  pastDaLayers: DaLayerInfo[]
+  currentDaLayers: DaLayer[]
+  pastDaLayers: DaLayer[]
   milestones: Milestone[]
   defaultRange: ChartRange
   daTrackingConfig: (ProjectDaTrackingConfig & {
@@ -72,7 +71,13 @@ export function DataPostedSection({
   )
 }
 
-function DaLayerName({ daLayer }: { daLayer: DaLayerInfo }) {
+interface DaLayer {
+  name: string
+  logo: string
+  href: string | undefined
+}
+
+function DaLayerName({ daLayer }: { daLayer: DaLayer }) {
   const content = (
     <>
       <img

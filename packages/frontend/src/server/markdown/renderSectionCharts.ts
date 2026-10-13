@@ -16,9 +16,11 @@ import {
   EIGENLAYER_DATA_SOURCE,
   LAST_30_DAY_ANOMALIES_DESCRIPTION,
   LIVENESS_DESCRIPTION,
+  THROUGHPUT_DESCRIPTION,
   TRACKED_CONTRACTS_CHANGED_WARNING,
   trackedTxsOutageText,
 } from '~/components/projects/sections/sectionCopy'
+import type { ThroughputSectionProps } from '~/components/projects/sections/throughput/ThroughputSection'
 import type { L2TvsSectionProps } from '~/components/projects/sections/tvs/L2TvsSection'
 import type { ProjectSectionId } from '~/components/projects/sections/types'
 import { env } from '~/env'
@@ -138,6 +140,19 @@ export function renderLivenessSection(
           props.hasTrackedContractsChanged,
           level,
         ),
+  ])
+}
+
+export function renderThroughputSection(
+  props: Pick<ThroughputSectionProps, 'id' | 'syncStatus'>,
+) {
+  return joinBlocks([
+    props.syncStatus.warning ? warning(props.syncStatus.warning) : '',
+    THROUGHPUT_DESCRIPTION,
+    htmlPagePointer(
+      'The interactive throughput chart and its past day stats are shown',
+      props.id,
+    ),
   ])
 }
 

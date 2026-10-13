@@ -3,8 +3,13 @@ import type {
   ProjectContracts,
   ProjectPermissions,
 } from '@l2beat/config'
-import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  type EthereumAddress,
+  ProjectId,
+} from '@l2beat/shared-pure'
 import { env } from '~/env'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { manifest } from '~/utils/Manifest'
 import type { SearchBarProjectEntry } from '../types'
 
@@ -44,7 +49,9 @@ export function getSearchBarProjectEntries<
   >,
 >(project: T): SearchBarProjectEntry[] {
   const results: SearchBarProjectEntry[] = []
+  const isEthereum = project.id === ProjectId.ETHEREUM
   if (
+    !isEthereum &&
     !project.scalingInfo &&
     !project.ecosystemConfig &&
     !project.interopConfig &&
@@ -73,6 +80,15 @@ export function getSearchBarProjectEntries<
     ),
     tags: commonTags,
   } satisfies Partial<SearchBarProjectEntry>
+
+  if (isEthereum) {
+    results.push({
+      ...common,
+      href: ETHEREUM_PROJECT_PATH,
+      category: 'other',
+      kind: 'ethereum',
+    })
+  }
 
   if (project.scalingInfo) {
     results.push({
