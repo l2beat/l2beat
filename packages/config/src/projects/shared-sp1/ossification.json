@@ -155,6 +155,22 @@
       "updateId": "13fde891",
       "transaction": "0xc3a2e684bea302a0f8bd11ab21ad8e7feb49e0f4453d4341f4688081e79a927b",
       "reason": "Registered SP1Verifier v6.1 Plonk (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) under selector 0x5a093a2f in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1791526391,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x7f2b454a4beb7868a2bf134d1972d1ec6de547cbc7539b59dbcfc79db7e860a6",
+      "updateId": "7808de1e",
+      "reason": "Permanently froze SP1 route 0xd4e8ecd2 to verifier 0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459 (RouteFrozen), removing it from gateway proof verification."
+    },
+    {
+      "timestamp": 1791526499,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x1d0bdeba4c4de08476702c7c244847cf538d84e8b56a576ae56721d111494962",
+      "updateId": "7808de1e",
+      "reason": "Permanently froze SP1 route 0xbb1a6f29 to verifier 0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C (RouteFrozen), removing it from gateway proof verification."
     }
   ]
 }

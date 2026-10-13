@@ -24,7 +24,7 @@ The [KMS operators](https://docs.zama.org/protocol/protocol-apps/addresses/mainn
 
 ### Coprocessor
 
-Zama's coprocessor runs the FHE computation offchain and checks every encrypted input. Ethereum accepts an input signed by {{coprocessorThreshold}} of {{coprocessorSignerCount}} coprocessor signers, so the coprocessor is trusted for validity. Priority mode is {{priorityCoprocessorMode}}: while on, one coprocessor finalizes inputs and ciphertext commits alone, whatever the signer set. It stores all ciphertexts in a [public bucket](https://coprocessor-1.mainnet.zama.org/). The Zama Gateway, an L3 on Arbitrum, relays decryption requests and publishes who reads which balance and when. Ethereum verifies the KMS signatures itself, while inputs and unwraps depend on the Gateway running.
+Zama's coprocessor runs the FHE computation offchain and checks every encrypted input. Ethereum accepts an input signed by {{coprocessorThreshold}} of {{coprocessorSignerCount}} coprocessor signers, so the coprocessor is trusted for validity. The Gateway requires {{gatewayCoprocessorThreshold}} matching responses from {{gatewayCoprocessorCount}} registered coprocessor senders for ACL updates. Priority mode is {{priorityCoprocessorMode}}: while on, one coprocessor finalizes inputs and ciphertext commits alone, whatever the signer set. It stores all ciphertexts in a [public bucket](https://coprocessor-1.mainnet.zama.org/). The Zama Gateway, an L3 on Arbitrum, relays decryption requests and publishes who reads which balance and when. Ethereum verifies the KMS signatures itself, while inputs and unwraps depend on the Gateway running.
 
 ### Compliance
 

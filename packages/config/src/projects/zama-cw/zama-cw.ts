@@ -121,6 +121,14 @@ const coprocessorSignerCount = discovery.getContractValue<string[]>(
   'InputVerifier',
   'getCoprocessorSigners',
 ).length
+const gatewayCoprocessorThreshold = discovery.getContractValue<number>(
+  'GatewayConfig',
+  'getCoprocessorMajorityThreshold',
+)
+const gatewayCoprocessorCount = discovery.getContractValue<string[]>(
+  'GatewayConfig',
+  'getCoprocessorTxSenders',
+).length
 const priorityCoprocessorTxSender =
   discovery.getContractValue<ChainSpecificAddress>(
     'GatewayConfig',
@@ -239,6 +247,8 @@ export const zamaCw: BaseProject = {
       kmsKeyThreshold,
       coprocessorThreshold,
       coprocessorSignerCount,
+      gatewayCoprocessorThreshold,
+      gatewayCoprocessorCount,
       priorityCoprocessorMode,
       inputPrice,
       decryptionPrice,

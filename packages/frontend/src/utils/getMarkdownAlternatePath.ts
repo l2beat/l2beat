@@ -30,7 +30,6 @@ function hasMarkdownVersion(path: string) {
 
 export const LIST_PAGES_WITH_MARKDOWN = [
   '/layer2s/summary',
-  '/data-availability/summary',
   '/zk-catalog',
   '/privacy/summary',
   '/interop/summary',
@@ -46,7 +45,7 @@ export const LIST_PAGES_WITH_MARKDOWN = [
  */
 export const PROJECT_PAGES_WITH_MARKDOWN = [
   '/layer2s/projects/:slug',
-  '/data-availability/projects/:layer/:bridge',
+  '/projects/ethereum',
   '/privacy/projects/:slug',
   '/interop/protocols/:slug',
   '/zk-catalog/:slug',

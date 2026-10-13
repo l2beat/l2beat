@@ -3,7 +3,6 @@ import { env } from '~/env'
 import { ChevronIcon } from '~/icons/Chevron'
 import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
-import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { L2Icon } from '~/icons/pages/L2'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
@@ -19,7 +18,8 @@ interface TileMetric {
 
 interface Tile {
   label: string
-  metric: TileMetric
+  /** Absent when no single number matches what the linked page lists */
+  metric?: TileMetric
   secondaryMetric?: TileMetric
   href: string
   icon: React.ReactNode
@@ -56,21 +56,16 @@ export function HomeStatsStrip({
       icon: <PrivacyIcon className="size-5 stroke-green-450" />,
       iconBgClassName: 'bg-green-450/10',
     },
-    env.CLIENT_SIDE_BLOBS_PAGE
-      ? {
-          label: 'Blobs',
-          metric: { count: counts.blobs, unit: 'projects' },
-          href: '/blobs',
-          icon: <BlobsIcon className="size-5 fill-blue-500" />,
-          iconBgClassName: 'bg-blue-500/10',
-        }
-      : {
-          label: 'Data Availability',
-          metric: { count: counts.dataAvailability, unit: 'projects' },
-          href: '/data-availability/summary',
-          icon: <DataAvailabilityIcon className="size-5 fill-blue-500" />,
-          iconBgClassName: 'bg-blue-500/10',
-        },
+    ...(env.CLIENT_SIDE_BLOBS_PAGE
+      ? [
+          {
+            label: 'Blobs',
+            href: '/blobs',
+            icon: <BlobsIcon className="size-5 fill-blue-500" />,
+            iconBgClassName: 'bg-blue-500/10',
+          },
+        ]
+      : []),
     {
       label: 'ZK Catalog',
       metric: { count: counts.zkCatalog, unit: 'projects' },
@@ -124,20 +119,22 @@ function StatTile({ tile }: { tile: Tile }) {
         <span className="truncate font-medium text-label-value-12 text-secondary leading-tight transition-colors group-hover:text-link xl:flex-1 xl:text-label-value-14 xl:text-primary xl:group-hover:text-link">
           {tile.label}
         </span>
-        <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight xl:text-label-value-14">
-          <TileMetricValue
-            metric={tile.metric}
-            className={tile.secondaryMetric ? 'hidden sm:inline' : undefined}
-          />
-          {tile.secondaryMetric && (
-            <>
-              <span className="hidden font-medium text-label-value-12 text-secondary sm:inline">
-                ·
-              </span>
-              <TileMetricValue metric={tile.secondaryMetric} />
-            </>
-          )}
-        </span>
+        {tile.metric && (
+          <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight xl:text-label-value-14">
+            <TileMetricValue
+              metric={tile.metric}
+              className={tile.secondaryMetric ? 'hidden sm:inline' : undefined}
+            />
+            {tile.secondaryMetric && (
+              <>
+                <span className="hidden font-medium text-label-value-12 text-secondary sm:inline">
+                  ·
+                </span>
+                <TileMetricValue metric={tile.secondaryMetric} />
+              </>
+            )}
+          </span>
+        )}
       </div>
       <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
     </a>

@@ -7,13 +7,13 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 import { getActivityForProjectAndRange } from '../../layer2s/activity/getActivityForProjectAndRange'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
-import {
-  groupByTimestampAndDaLayerId,
-  sumGroupedDataPosted,
-} from './getDaThroughputChart'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
+import {
+  groupByTimestampAndDaLayerId,
+  sumGroupedDataPosted,
+} from './utils/groupByTimestampAndDaLayerId'
 
 export type L2ProjectDaThroughputChart = {
   chart: L2ProjectDaThroughputChartPoint[]
