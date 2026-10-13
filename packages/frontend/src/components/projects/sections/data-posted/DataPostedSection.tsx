@@ -44,7 +44,7 @@ export function DataPostedSection({
             </span>
           </>
         ) : (
-          'The project no longer posts data'
+          'We no longer track where the project posts data'
         )}
         {pastDaLayers.length > 0 && (
           <span>

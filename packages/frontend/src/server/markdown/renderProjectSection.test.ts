@@ -479,7 +479,7 @@ describe(renderProjectSection.name, () => {
       'The project currently posts data to Ethereum; previously it posted to Celestia.',
     )
     expect(dataPosted([])).toInclude(
-      'The project no longer posts data; previously it posted to Celestia.',
+      'We no longer track where the project posts data; previously it posted to Celestia.',
     )
   })
 
