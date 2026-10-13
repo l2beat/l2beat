@@ -97,10 +97,12 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('blobstream'),
         sinceTimestamp: UnixTime(1717608107),
+        untilTimestamp: UnixTime(1791526391), // v5 routes permanently frozen on the Ethereum, Arbitrum and Base SP1 gateways
       },
       {
         projectId: ProjectId('vector'),
         sinceTimestamp: UnixTime(1720128227),
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('sophon'),
@@ -125,14 +127,17 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('rari'),
         sinceTimestamp: UnixTime(1734562800),
+        untilTimestamp: UnixTime(1791526391), // uses Blobstream, whose v5 route was permanently frozen on the Arbitrum SP1 gateway
       },
       {
         projectId: ProjectId('winr'),
         sinceTimestamp: UnixTime(1747088280),
+        untilTimestamp: UnixTime(1791526391), // uses Blobstream, whose v5 route was permanently frozen on the Arbitrum SP1 gateway
       },
       {
         projectId: ProjectId('molten'),
         sinceTimestamp: UnixTime(1731480840),
+        untilTimestamp: UnixTime(1779997282), // NitroEnclaveVerifier switched to a direct SP1 v6.1.0 verifier (setZkConfiguration, 2026-05-28)
       },
       {
         projectId: ProjectId('taiko'),
@@ -150,6 +155,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('xlayer'),
         sinceTimestamp: UnixTime(1753882500),
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('silicon'),
@@ -215,6 +221,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('kroma'),
         sinceTimestamp: UnixTime(1739228400),
+        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
         projectId: ProjectId('haust'),
