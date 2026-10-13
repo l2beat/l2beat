@@ -5,8 +5,18 @@ import type {
   LiveBlobBatchRecord,
   LiveBlockRecord,
 } from '@l2beat/database'
-import type { EthereumBlobBatch, EthereumDaProvider } from '@l2beat/shared'
-import { ProjectId, slotStart, UnixTime } from '@l2beat/shared-pure'
+import {
+  type EthereumBlobBatch,
+  type EthereumDaProvider,
+  NotFoundOnRpcError,
+} from '@l2beat/shared'
+import {
+  ProjectId,
+  SLOT_SECONDS,
+  slotStart,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
@@ -178,6 +188,73 @@ describe(LiveBlobsIndexer.name, () => {
         `Block ${HEAD - 5} does not build on the block before it`,
       )
     })
+  })
+
+  // Methodology: the provider answers that the RPC has not got the block for
+  // a number of calls, and fake timers stand in for the waits between them
+  describe('a block the RPC has not got yet', () => {
+    let time: InstalledClock
+
+    beforeEach(() => {
+      time = install()
+    })
+
+    afterEach(() => {
+      time.uninstall()
+    })
+
+    it('is waited for without failing the update', async () => {
+      // The target saw the head on a node ahead of the one answering here
+      const { indexer, db, daProvider } = setup({})
+      daProvider.getBlocksWithBlobBatchesFromReceipts
+        .rejectsWithOnce(notOnRpc())
+        .rejectsWithOnce(notOnRpc())
+
+      const update = indexer.update(HEAD, HEAD)
+      await time.tickAsync(400)
+
+      expect(await update).toEqual(HEAD)
+      expect(
+        daProvider.getBlocksWithBlobBatchesFromReceipts,
+      ).toHaveBeenCalledTimes(3)
+      expect(db.liveBlock.upsertMany).toHaveBeenOnlyCalledWith([
+        liveBlock(HEAD, 0),
+      ])
+    })
+
+    it('fails the update once missing for a whole slot', async () => {
+      // A node that far behind is not catching up within the slot
+      const { indexer, db, daProvider } = setup({})
+      daProvider.getBlocksWithBlobBatchesFromReceipts.rejectsWith(notOnRpc())
+
+      const update = expect(indexer.update(HEAD, HEAD)).toBeRejectedWith(
+        NotFoundOnRpcError,
+      )
+      await time.tickAsync(SLOT_SECONDS * 1000)
+
+      await update
+      expect(db.liveBlock.upsertMany).not.toHaveBeenCalled()
+    })
+
+    it('is not waited for when the update fails for another reason', async () => {
+      const { indexer, daProvider } = setup({})
+      daProvider.getBlocksWithBlobBatchesFromReceipts.rejectsWithOnce(
+        new Error('Error during parsing'),
+      )
+
+      await expect(indexer.update(HEAD, HEAD)).toBeRejectedWith(
+        'Error during parsing',
+      )
+      expect(
+        daProvider.getBlocksWithBlobBatchesFromReceipts,
+      ).toHaveBeenCalledTimes(1)
+    })
+
+    function notOnRpc() {
+      return new NotFoundOnRpcError('Block not found', {
+        cause: { blockNumber: HEAD },
+      })
+    }
   })
 
   describe('reattributing the stored batches', () => {

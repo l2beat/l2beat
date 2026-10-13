@@ -52,6 +52,15 @@ type Param =
   | Record<string, string | string[] | LogsTopicFilter>
   | number[]
 
+/**
+ * The RPC answered `null`: it has not got the block or transaction. A node
+ * behind a load balancer can trail the chain by a block, so a caller at the
+ * head may wait for it, where any other parsing failure is a real one
+ */
+export class NotFoundOnRpcError extends Error {
+  override name = 'NotFoundOnRpcError'
+}
+
 export class RpcClient extends ClientCore implements IRpcClient {
   multicallClient?: MulticallV3Client
   private readonly batcher: RpcBatcher
@@ -113,6 +122,11 @@ export class RpcClient extends ClientCore implements IRpcClient {
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
     const blockResponse = await this.query(method, [encodedNumber, includeTxs])
+    if (isNullResult(blockResponse)) {
+      throw new NotFoundOnRpcError('Block not found', {
+        cause: { blockNumber },
+      })
+    }
 
     const block = includeTxs
       ? EVMBlockWithTransactionsResponse.safeParse(blockResponse)
@@ -164,6 +178,12 @@ export class RpcClient extends ClientCore implements IRpcClient {
       'eth_getTransactionReceipt',
       txHashes.map((txHash) => [txHash]),
     )
+    const missing = txHashes.filter((_, i) => isNullResult(responses[i]))
+    if (missing.length > 0) {
+      throw new NotFoundOnRpcError('Receipts not found', {
+        cause: { txHashes: missing },
+      })
+    }
 
     const receipts = EVMTransactionReceiptsResponse.safeParse(responses)
     if (!receipts.success) {
@@ -539,5 +559,14 @@ export function isLimitExceededError({ message }: { message: string }) {
     message.includes('query exceeds max block range 100000') ||
     message.includes('eth_getLogs is limited to a 10,000 range') ||
     message.includes('returned more than 10000')
+  )
+}
+
+function isNullResult(response: unknown): boolean {
+  return (
+    typeof response === 'object' &&
+    response !== null &&
+    'result' in response &&
+    response.result === null
   )
 }
