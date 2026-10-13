@@ -62,11 +62,6 @@ const balanceCadence =
     ? 'daily'
     : `every ${duration('RocketDAOProtocolSettingsNetwork', 'getSubmitBalancesFrequency')}`
 const securityCouncil = discovery.getMultisigStats('SecurityCouncilSafe')
-const maxPenaltyEth = value('RocketMegapoolPenalties', 'maximumPenalty')
-const upgradeVetoQuorum = percent(
-  'RocketDAOProtocolSettingsSecurity',
-  'getUpgradeVetoQuorum',
-)
 const voteDelay = duration(
   'RocketDAONodeTrustedSettingsProposals',
   'getVoteDelayTime',
@@ -199,7 +194,7 @@ export const rocketpool: BaseProject = {
         value: 'Permissionless',
         secondLine: 'ungated FIFO queue',
         sentiment: 'good',
-        description: `Deposits (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) mint ${rethSymbol} at the stored rate, up to ${value('RocketDepositPool', 'maximumPoolSize')} ETH unassigned. ETH is matched to the next queued validator first-in-first-out; anyone can trigger assignment. The ${securityCouncil} security council or RPL governance can switch deposits off.`,
+        description: `Anyone can deposit ETH (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) for ${rethSymbol}. Deposits go to queued validators in order. The ${securityCouncil} security council or RPL governance can switch deposits off.`,
       },
       operators: {
         value: 'Permissionless',
@@ -213,19 +208,20 @@ export const rocketpool: BaseProject = {
                 sentiment: 'warning',
               }
             : undefined,
-        description: `Registration is permissionless (currently ${registrationStatus}); operators bond part of each validator's 32 ETH and an exit shortfall hits their share first. The oracle set can fine up to ${maxPenaltyEth} ETH per penalty. No EIP-7002: stake returns only when the operator exits or is slashed.`,
+        description: `Anyone can register as an operator (currently ${registrationStatus}). Operators bond part of each validator's ETH, which absorbs losses before holders. The protocol cannot force an operator to exit.`,
       },
       backing: {
         value: 'Minipools',
         secondLine: 'creds: minipool',
         sentiment: 'good',
-        description: `Credentials point at the validator's own minipool or megapool, fixed at funding. Returned balances split on-chain between operator bond and pool share, exits are proven against beacon-chain state, and the vault and token contracts are not upgradeable.`,
+        description:
+          'Each validator withdraws to its own Rocket Pool contract, fixed when it is funded. Returned ETH is split on-chain between the operator and the pool, and the vault and token contracts cannot be upgraded.',
       },
       exchangeRate: {
         value: `${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize}`,
         secondLine: `${balanceCadence} · ≤${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')}`,
         sentiment: 'warning',
-        description: `Price is reported total ETH over supply, written by ${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize} oracle DAO members ${balanceCadence}, at most ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} per report. Reports never expire, so a silent oracle leaves the stale price in force. The security council can switch submission off.`,
+        description: `${membersNeeded('RocketDAONodeTrusted')} of ${oracleSetSize} oracle DAO members report the rate ${balanceCadence}, moving it at most ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} per report. If they stop, the last rate stays in force. The security council can switch reporting off.`,
       },
       exit: {
         value: 'Burn anytime',
@@ -236,13 +232,13 @@ export const rocketpool: BaseProject = {
             'Pays only from the liquid buffer and reverts when it is empty; there is no forced validator exit.',
           sentiment: 'warning',
         },
-        description: `Burn ${rethSymbol} for ETH at the stored rate with no queue, delay or pause switch, but only from the contract buffer plus deposit-pool surplus (target ${percent('RocketDAOProtocolSettingsNetwork', 'getTargetRethCollateralRate')} of backing). When that is empty the burn reverts.`,
+        description: `Anyone can burn ${rethSymbol} for ETH instantly, with no queue or pause. ETH comes only from a liquid buffer (target ${percent('RocketDAOProtocolSettingsNetwork', 'getTargetRethCollateralRate')} of backing); when it is empty, the burn fails.`,
       },
       upgrades: {
         value: `Oracle DAO (${membersNeeded('RocketDAONodeTrusted')}/${oracleSetSize})`,
         secondLine: `≥${upgradePathDays}d · council veto`,
         sentiment: 'warning',
-        description: `Only the oracle DAO (${oracleSetSize} bonded operator accounts, ${value('RocketDAONodeTrusted', 'memberBond')} RPL each, ${membersNeeded('RocketDAONodeTrusted')}-of-${oracleSetSize} majority) can change code: ${voteDelay} before voting opens, then ${upgradeVetoWindow} in which the ${securityCouncil} security council can veto at ${upgradeVetoQuorum} quorum. Vault and tokens are not upgradeable; RPL governance sets parameters only.`,
+        description: `Only the oracle DAO (${membersNeeded('RocketDAONodeTrusted')}-of-${oracleSetSize} majority) can change the code: ${voteDelay} before voting, then ${upgradeVetoWindow} in which the ${securityCouncil} security council can veto. The vault and token contracts cannot be upgraded.`,
       },
     },
   },

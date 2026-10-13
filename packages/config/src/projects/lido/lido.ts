@@ -95,8 +95,6 @@ const stakeLimitEth = (
   BigInt(stakeLimit.maxStakeLimit) /
   10n ** 18n
 ).toLocaleString('en-US')
-const stakeLimitGrowthBlocks =
-  stakeLimit.maxStakeLimitGrowthBlocks.toLocaleString('en-US')
 const oracleFrameDays =
   (discovery.getContractValue<{ epochsPerFrame: number }>(
     ACCOUNTING_HASH_CONSENSUS,
@@ -111,15 +109,6 @@ const maxPositiveRebasePercent =
     'OracleReportSanityChecker',
     'getMaxPositiveTokenRebase',
   ) / 1e7
-const annualIncreasePercent =
-  discovery.getContractValue<{ annualBalanceIncreaseBPLimit: number }>(
-    'OracleReportSanityChecker',
-    'getOracleReportLimits',
-  ).annualBalanceIncreaseBPLimit / 100
-const maxClDecreaseBp = discovery.getContractValue<number>(
-  'OracleReportSanityChecker',
-  'getMaxCLBalanceDecreaseBP',
-)
 const stakingModules = discovery.getContractValue<
   {
     nodeOperatorsCount: number
@@ -134,52 +123,20 @@ const stakingModule = (name: string) => {
     sharePercent: module.state.stakeShareLimit / 100,
   }
 }
-const nor = stakingModule('curated-onchain-v1')
-const sdvt = stakingModule('SimpleDVT')
 const csm = stakingModule('Community Staking')
-const cmv2 = stakingModule('curated-onchain-v2')
 const externalLivePercent = (
   Number(
     (discovery.getContractValueBigInt(STETH, 'getExternalEther') * 10000n) /
       discovery.getContractValueBigInt(STETH, 'getTotalPooledEther'),
   ) / 100
 ).toFixed(2)
-const wqMinWei = discovery.getContractValue<number>(
-  'WithdrawalQueueERC721',
-  'MIN_STETH_WITHDRAWAL_AMOUNT',
-)
-const wqMaxEth = (
-  discovery.getContractValueBigInt(
-    'WithdrawalQueueERC721',
-    'MAX_STETH_WITHDRAWAL_AMOUNT',
-  ) /
-  10n ** 18n
-).toLocaleString('en-US')
 const circuitBreakerPauseDays =
   discovery.getContractValue<number>('CircuitBreaker', 'pauseDuration') / 86400
 const circuitBreakerCommittee = discovery.getMultisigStats(
   'CircuitBreakerCommittee',
 )
-const resealCommittee = discovery.getMultisigStats('ResealCommittee')
-const emergencyActivation = discovery.getMultisigStats(
-  'DualGovernanceEmergencyActivationCommittee',
-)
-const emergencyExecution = discovery.getMultisigStats(
-  'DualGovernanceEmergencyExecutionCommittee',
-)
-const dgConfig = discovery.getContractValue<{
-  vetoSignallingMinDuration: number
-  vetoSignallingMaxDuration: number
-}>('ImmutableDualGovernanceConfigProvider', 'getDualGovernanceConfig')
 const oracleCadence =
   oracleFrameDays === 1 ? 'daily' : `every ${days(oracleFrameDays)}`
-const vetoMinDays = dgConfig.vetoSignallingMinDuration / 86400
-const vetoMaxDays = dgConfig.vetoSignallingMaxDuration / 86400
-const emergencyModeDays =
-  discovery.getContractValue<{ emergencyModeDuration: number }>(
-    'EmergencyProtectedTimelock',
-    'getEmergencyProtectionDetails',
-  ).emergencyModeDuration / 86400
 
 export const lido: BaseProject = {
   id: ProjectId('lido'),
@@ -242,37 +199,37 @@ export const lido: BaseProject = {
         value: 'Permissionless',
         secondLine: `gated by DSM ${dsmQuorum}/${dsmGuardians}`,
         sentiment: 'good',
-        description: `Anyone can submit ETH for stETH under a rolling ${stakeLimitEth} ETH limit (refills over ${stakeLimitGrowthBlocks} blocks). Validator deposits need ${dsmQuorum} of ${dsmGuardians} DSM guardian signatures; any guardian can pause them. The StakingRouter sets withdrawal credentials. wstETH is an immutable non-rebasing wrapper.`,
+        description: `Anyone can stake ETH for stETH, up to ${stakeLimitEth} ETH at a time. Sending it to new validators needs ${dsmQuorum} of ${dsmGuardians} guardian signatures, and any one guardian can pause that.`,
       },
       operators: {
         value: 'Hybrid',
         secondLine: 'no bond; CSM bonded',
         sentiment: 'neutral',
-        description: `Curated modules (${nor.operators} operators in the registry, ${sdvt.operators} in SimpleDVT) post no bond, so their slashing shrinks every holder's rebase; the permissionless CSM (${csm.operators} operators, ${csm.sharePercent}% share) and the curated MaxEB module (${cmv2.operators}) post a stETH bond burned on penalties. Anyone can force a requested exit via EIP-7002.`,
+        description: `Most operators are curated and post no bond, so their slashing losses are shared by all holders. ${csm.operators} permissionless operators (${csm.sharePercent}% of stake) post a bond that covers their penalties.`,
       },
       backing: {
         value: 'Protocol vault',
         secondLine: 'creds: protocol',
         sentiment: 'good',
-        description: `Credentials point at the WithdrawalVault, set by the StakingRouter. Balances come from the oracle committee, validator facts from EIP-4788 proofs. stVaults may mint stETH against their own collateral, capped at ${externalRatioCap}% of supply (${externalLivePercent}% today).`,
+        description: `Validators withdraw to a Lido contract set by the protocol, not by operators. Vaults can also mint stETH against their own collateral, capped at ${externalRatioCap}% of supply (${externalLivePercent}% today).`,
       },
       exchangeRate: {
         value: `${oracleQuorum} of ${oracleMembers}`,
         secondLine: `${oracleCadence} · ≤${maxPositiveRebasePercent}%`,
         sentiment: 'warning',
-        description: `Rebases ${oracleCadence} on a ${oracleQuorum}-of-${oracleMembers} report, capped at +${maxPositiveRebasePercent}% per report, ${annualIncreasePercent}% a year and ${maxClDecreaseBp} bp down over 36 days. A silent committee stops rebases and finalization.`,
+        description: `A ${oracleQuorum}-of-${oracleMembers} oracle committee reports balances ${oracleCadence}, and each report can raise the rate by at most ${maxPositiveRebasePercent}%. If the committee stops, the rate and withdrawals freeze.`,
       },
       exit: {
         value: 'Oracle-gated',
         secondLine: '≤1 day · pausable',
         sentiment: 'warning',
-        description: `Requests (${wqMinWei} wei to ${wqMaxEth} stETH) mint an unstETH NFT finalized only in the ${oracleCadence} report, at the lower of request and report rate. A ${circuitBreakerCommittee} committee can pause the queue for ${days(circuitBreakerPauseDays)}; the ${resealCommittee} Reseal Committee can make that indefinite.`,
+        description: `Withdrawal requests are finalized in a later oracle report, at the lower of the request and report rate. A ${circuitBreakerCommittee} committee can pause the queue for ${days(circuitBreakerPauseDays)}, and another can extend that indefinitely.`,
       },
       upgrades: {
         value: 'Lido DAO',
         secondLine: `${dgSubmitDays + dgScheduleDays}d min · stETH veto`,
         sentiment: 'neutral',
-        description: `The Aragon Agent, proxy admin of every core contract, acts only through Dual Governance: ${days(dgSubmitDays)} plus ${days(dgScheduleDays)}. ${vetoPercent}% of stETH locked blocks scheduling for ${vetoMinDays} to ${vetoMaxDays} days; ${rageQuitPercent}% triggers a rage quit. Until ${emergencyEnd}, ${emergencyActivation} and ${emergencyExecution} committees can freeze execution for ${days(emergencyModeDays)} or reset to a no-veto fallback.`,
+        description: `Code changes go through Dual Governance and take at least ${days(dgSubmitDays + dgScheduleDays)}. Holders locking ${vetoPercent}% of stETH delay a change; at ${rageQuitPercent}% they can exit before it applies. Until ${emergencyEnd}, emergency committees can freeze execution.`,
       },
     },
   },

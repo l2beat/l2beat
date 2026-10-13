@@ -110,32 +110,32 @@ const columns = [
   riskColumn(
     'minting',
     'Minting',
-    "Who can mint the token, what caps apply, and who routes deposited ETH to validators. Green: permissionless minting with ETH held by protocol contracts until a validator is funded. Red: minted or custodied off-chain at a counterparty's discretion. Second line: who moves deposited ETH into validators.",
+    'Who can mint the token, and who decides where deposited ETH is staked?',
   ),
   riskColumn(
     'operators',
     'Operators',
-    'Who runs the validators, whether they post a loss-absorbing bond, and who bears slashing. Green: permissionless and bonded. Yellow: curated or whitelisted, with losses socialised to holders. Red: not verifiable on-chain. Second line: whether operators post a loss-absorbing bond.',
+    'Who runs the validators, and who bears the loss if they are slashed?',
   ),
   riskColumn(
     'backing',
     'Backing',
-    'Where the staked ETH sits and who controls withdrawal credentials. Green: protocol-controlled credentials pointing at protocol contracts. Yellow: routed through an external protocol. Red: off-chain custody. Second line: who controls the withdrawal credentials.',
+    'Where is the staked ETH held, and who controls its withdrawal keys?',
   ),
   riskColumn(
     'exchangeRate',
     'Oracle',
-    'Who writes the exchange rate, on what quorum, with what per-report bound, and what happens if they stop. Green: derived on-chain without a trusted party. Yellow: a bounded committee. Red: a single party or an unbounded one. Second line: update cadence and the cap per update.',
+    'Who reports the exchange rate, and how far can one report move it?',
   ),
   riskColumn(
     'exit',
     'Exit',
-    "The path from token to ETH, what gates it, how long it takes, and whether it can be paused. Green: permissionless and unpausable. Yellow: depends on an oracle report or can be paused by a committee. Red: depends on a counterparty's discretion. Second line: the typical delay and whether the exit can be paused.",
+    'How do holders get their ETH back, and can anyone stop them?',
   ),
   riskColumn(
     'upgrades',
     'Upgrades',
-    'Who can change the code, the minimum delay before a change takes effect, and whether token holders can veto it. Green: at least 30 days and a holder veto. Yellow: at least 7 days, or a holder veto. Red: no delay. Second line: the minimum delay and whether holders have a veto.',
+    'Who can change the code, and how much notice do holders get?',
   ),
 ]
 

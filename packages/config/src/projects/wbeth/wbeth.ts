@@ -35,14 +35,9 @@ const rateCapIntervalShort =
   rateCap.interval === 365 * 86400 ? 'yr' : rateCapInterval
 // --- Liquid staking risk comparison (DeFi summary tab) ---
 const symbol = value('wBETH', 'symbol')
-const minLockTime = duration('UnwrapTokenV1ETH', 'MIN_LOCK_TIME')
 const lockTimeDays =
   discovery.getContractValue<number>('UnwrapTokenV1ETH', 'lockTimeSeconds') /
   86400
-const supply = (
-  BigInt(value('wBETH', 'totalSupply')) /
-  10n ** 18n
-).toLocaleString('en-US')
 
 export const wbeth: BaseProject = {
   id: ProjectId('wbeth'),
@@ -113,39 +108,39 @@ export const wbeth: BaseProject = {
           value: `About 99% of ${symbol} was minted by Binance against exchange balances, with no ETH deposited on-chain.`,
           sentiment: 'bad',
         },
-        description: `Anyone can deposit ETH for ${symbol} at Binance's rate, no cap or fee. Binance's OperatorWallet, the only minter, issues ${symbol} against exchange balances with no ETH: about 99% of supply. An operator key sweeps deposited ETH to Binance at will.`,
+        description: `Anyone can deposit ETH for ${symbol}, but about 99% of supply was minted by Binance against exchange balances, with no ETH deposited on-chain. A Binance key can move deposited ETH to Binance at will.`,
       },
       operators: {
         value: 'Binance',
         secondLine: 'no bond',
         sentiment: 'bad',
-        description: `No contract tracks validators, balances or slashing. Binance says ${symbol} is backed by BETH and its validators; the only on-chain trace is a withdrawal-credential account sweeping to a Binance wallet. Passing losses to holders is Binance's policy, not code.`,
+        description: `No contract tracks validators, balances or slashing. Binance says its validators back ${symbol}; whether losses pass to holders is Binance's policy, not code.`,
       },
       backing: {
         value: 'Off-chain custody',
         secondLine: 'creds: Binance',
         sentiment: 'bad',
         description:
-          'The operator key moves deposited ETH to an externally owned account that forwards to a Binance wallet. The token contract holds about 0.04% of the ETH the supply represents; the rest is an unverifiable exchange balance.',
+          'Deposited ETH moves to a Binance wallet. The token contract holds about 0.04% of the ETH its supply represents; the rest is an exchange balance that cannot be checked on-chain.',
       },
       exchangeRate: {
         value: `${callerLimits.length} of ${callerLimits.length}`,
         secondLine: `daily · ≤${rateCapPercent}/${rateCapIntervalShort}`,
         sentiment: 'bad',
-        description: `One Binance key writes the rate through a relay capped at ${rateCapPercent} over ${rateCapInterval} with no per-update cap; the token only checks it is at least 1. The owner can repoint the oracle and set any rate at once. Nothing on-chain ties the rate to validators.`,
+        description: `One Binance key writes the rate, with no cap per update and at most ${rateCapPercent} over ${rateCapInterval}. The owner can switch the oracle and set any rate at once.`,
       },
       exit: {
         value: 'Binance-funded',
         secondLine: `${lockTimeDays} days · pausable`,
         sentiment: 'bad',
-        description: `Burning ${symbol} records a claim paid after a ${lockTimeDays}-day lock (operator-set, minimum ${minLockTime}) and only once Binance funds the queue, at its discretion. Binance keys can pause or blacklist. About 11,500 ETH paid since 2023 against ${supply} ${symbol}.`,
+        description: `Burned ${symbol} is paid after a ${lockTimeDays}-day lock, only once Binance funds the queue. Binance keys can pause withdrawals or blacklist holders.`,
       },
       upgrades: {
         value: 'Single EOA',
         secondLine: 'no delay · no veto',
         sentiment: 'bad',
         description:
-          'One externally owned key is proxy admin of both contracts and can replace their code instantly; a second holds owner, master-minter, pauser and blacklister and owns the rate relay. No multisig, timelock or governance contract exists.',
+          'A single key can replace the code of both contracts instantly. There is no multisig, timelock or governance.',
       },
     },
   },

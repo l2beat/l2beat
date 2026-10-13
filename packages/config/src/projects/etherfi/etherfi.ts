@@ -82,23 +82,10 @@ const stethSharePct = `${(
     (BigInt(value('EtherFiRestaker', 'getTotalPooledEther')) * 10000n) / pooled,
   ) / 100
 ).toFixed(1)}%`
-const whitelistEnabled = discovery.getContractValue<boolean>(
-  'AuctionManager',
-  'whitelistEnabled',
-)
-const minBidEth = Number(BigInt(value('AuctionManager', 'minBidAmount'))) / 1e18
-const maxBidEth = Number(BigInt(value('AuctionManager', 'maxBidAmount'))) / 1e18
 const upgradeDelayDays =
   discovery.getContractValue<number>(UPGRADE_TIMELOCK, 'getMinDelay') / 86400
 const operatingDelayDays =
   discovery.getContractValue<number>(OPERATING_TIMELOCK, 'getMinDelay') / 86400
-const eigenLayerDelayDays =
-  (discovery.getContractValue<number>(
-    'EtherFiNode',
-    'EIGENLAYER_WITHDRAWAL_DELAY_BLOCKS',
-  ) *
-    12) /
-  86400
 
 export const etherfi: BaseProject = {
   id: ProjectId('etherfi'),
@@ -170,37 +157,37 @@ export const etherfi: BaseProject = {
         value: 'Permissionless',
         secondLine: 'gated by ether.fi ops',
         sentiment: 'good',
-        description: `Anyone can deposit ETH for ${value('eETH', 'symbol')} with no cap or fee; the Liquifier also mints against stETH. Staking needs ether.fi's operations roles: a spawner registered via the ${operatingDelayDays}-day timelock registers keys for a whitelisted operator and the oracle-operations role (an EOA and the ${operationsSafe} Safe) funds each validator, with credentials hard-coded to a protocol EigenPod. ${value('weETH', 'symbol')} wraps ${value('eETH', 'symbol')} shares.`,
+        description: `Anyone can deposit ETH for ${value('eETH', 'symbol')} with no cap or fee; ${value('weETH', 'symbol')} wraps it. Only ether.fi's operations team can send that ETH to validators, which withdraw to protocol EigenPods.`,
       },
       operators: {
         value: 'Whitelisted',
         secondLine: 'no bond',
         sentiment: 'warning',
-        description: `Operators are whitelisted by the ${operationsSafe} Safe (whitelist ${whitelistEnabled ? 'on' : 'off'}); bids (${minBidEth} to ${maxBidEth} ETH) go to the treasury, not a loss bond. Slashing is socialised via the rebase, capped at ${maxNegativeRebaseBps} bps per report; native stake is also restaked in EigenLayer, where AVS slashing can cut principal.`,
+        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Stake is also restaked in EigenLayer, where extra slashing can cut principal.`,
       },
       backing: {
         value: 'EigenPods, stETH',
         secondLine: 'creds: EigenPod',
         sentiment: 'warning',
-        description: `0x02 credentials point at EigenPods owned by EtherFiNode contracts, so the ETH sits in EigenLayer (upgradeable by its governance, ${eigenLayerDelayDays}-day withdrawal delay). ${stethSharePct} of backing is stETH in EtherFiRestaker; ${bufferPct} is in the liquid buffer.`,
+        description: `Validators withdraw to EigenPods, so most ETH sits in EigenLayer, which its own governance can upgrade. ${stethSharePct} of backing is stETH and ${bufferPct} is a liquid buffer.`,
       },
       exchangeRate: {
         value: `${oracleQuorum} of ${oracleMembers}`,
         secondLine: `~4h · ≤${maxPositiveRebase}`,
         sentiment: 'warning',
-        description: `All ${oracleMembers} members must submit an identical report every ${reportPeriod}; EtherFiAdmin applies it after ${reportWaitDelay} (cancellable by the operating multisig) within caps of +${maxPositiveRebase} per report, ${acceptableRebaseApr} APR and −${maxNegativeRebaseBps} bps. A permissionless fallback opens after ${staleOracleWindow} of silence.`,
+        description: `All ${oracleMembers} oracle members must agree on each report, every ${reportPeriod}. A report can raise the rate by at most ${maxPositiveRebase}. After ${staleOracleWindow} of silence, anyone can submit a report.`,
       },
       exit: {
         value: 'Oracle-gated',
         secondLine: '~1 day · pausable',
         sentiment: 'warning',
-        description: `Burn ${value('eETH', 'symbol')} for a WithdrawRequestNFT finalized from oracle reports (at most ${maxFinalizedPerDay} ETH a day), claimed at the lower of request and finalization rate; a committee finalizing nothing stalls the queue until ${staleOracleWindow} of silence. Instant redemption pays from the buffer for up to ${maxExitFee}; the ${operationsSafe} Safe can pause everything.`,
+        description: `Withdrawal requests are finalized from oracle reports, at most ${maxFinalizedPerDay} ETH a day. Instant redemption from the buffer costs up to ${maxExitFee}. The ${operationsSafe} Safe can pause all exits.`,
       },
       upgrades: {
         value: '6/10 Safe',
         secondLine: `${upgradeDelayDays}d · no veto`,
         sentiment: 'warning',
-        description: `Upgrades go only through the ${upgradeDelayDays}-day Upgrade Timelock, proposed by a 6-of-10 Safe, which also owns the RoleRegistry (role grants take ${upgradeDelayDays} days). A ${operatingDelayDays}-day Operating Timelock (${operationsSafe} Safe) tunes parameters within immutable ceilings. Holders have no veto.`,
+        description: `A 6-of-10 Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock tunes parameters within fixed limits. Holders have no veto.`,
       },
     },
   },
