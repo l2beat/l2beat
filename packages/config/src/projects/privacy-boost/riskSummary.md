@@ -1,12 +1,13 @@
 ## Funds can be stolen if
 1. the zk proof system is broken, allowing invalid spends or withdrawals.
-2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid spends or withdrawals.
+2. all [trusted setup](#trusted-setups) participants collude or leak their secrets, allowing forged proofs.
 3. the admin multisig deploys a malicious [upgrade](#upgrades-and-governance) or registers a malicious verifying key.
 <br>
 ## Funds can be lost if
-1. a user loses their note secrets, or loses access to both the account-owner wallet and any usable authorization keys.
+1. a user loses their note secrets, or both the account-owner wallet and every usable authorization key.
 <br>
 ## Privacy can be lost if
-1. the TEE is compromised.
-2. a registered auditor fetches the user's balance and transaction history through the Audit API.
-3. a user exits through a forced withdrawal, which publicly links the spent notes and the withdrawal address to the account that registered the approval key.
+1. the TEE or its hardware vendor is compromised (see privileged insider).
+2. an appointed auditor fetches the user's history through the Audit API.
+3. a user exits through a forced withdrawal (see public observer).
+4. a user relies on today's anonymity set, which is too small to hide in (see chain analyst).

@@ -182,6 +182,22 @@
       "transaction": "0xdc33ac095940c214c81adf08eda36e0a14d97f397597f4d8e5d2fbbc4cd20033",
       "updateId": "60da3e8b",
       "reason": "Upgraded the implementation of L1StandardBridge (EIP-1967 slot, impl 61525eaacddb97d9184afc205827e6a4fd0bf62a -> b37a11aadf167b2f0b8dd85372de4bc66cd4a891)."
+    },
+    {
+      "timestamp": 1790192243,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0xf1dea2aacb7b085300d536c14b59bc0634eea1a25f475c140523b513a5595036",
+      "updateId": "45c9bef9",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1790789243,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x73591482b487de3657af697203d4d66a2d61418920e0d0db1c0ee36a3909eb2a",
+      "updateId": "45c9bef9",
+      "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
     }
   ],
   "ignoredTransactions": [

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'

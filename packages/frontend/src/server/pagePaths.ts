@@ -6,7 +6,6 @@ import {
   INTEGRATE_CROPS_PATH,
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
-import { shouldHaveNoBridgePage } from './features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from './projects'
 
 type PagePath = `/${string}`
@@ -41,12 +40,8 @@ export const STATIC_PAGE_PATHS = [
   '/interop/burn-and-mint',
   '/interop/token-frameworks',
   '/interop/intent-bridges',
-  '/data-availability/summary',
-  '/data-availability/risk',
-  '/data-availability/throughput',
-  '/data-availability/liveness',
-  '/data-availability/archived',
   '/privacy/summary',
+  '/projects/ethereum',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
@@ -57,7 +52,6 @@ export const STATIC_PAGE_PATHS = [
   '/changelog',
   '/donate',
   '/glossary',
-  '/da-risk-framework',
   '/multisig-report',
   '/terms-of-service',
   '/stages',
@@ -71,6 +65,9 @@ export async function getPages(): Promise<Page[]> {
   }
   if (env.CLIENT_SIDE_TOKENS_PAGE) {
     paths.push('/tokens')
+  }
+  if (env.CLIENT_SIDE_BLOBS_PAGE) {
+    paths.push('/blobs')
   }
   if (env.CLIENT_SIDE_OSSIFICATION_ENABLED) {
     paths.push('/ossification')
@@ -86,8 +83,6 @@ async function getDynamicPages(): Promise<Page[]> {
     l2Projects,
     zkCatalogProjects,
     ecosystemProjects,
-    daLayers,
-    daBridges,
     privacyProjects,
     defiProjects,
   ] = await Promise.all([
@@ -98,8 +93,6 @@ async function getDynamicPages(): Promise<Page[]> {
     }),
     ps.getProjects({ select: ['zkCatalogInfo'] }),
     ps.getProjects({ where: ['ecosystemConfig'] }),
-    ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
-    ps.getProjects({ select: ['daBridge'] }),
     ps.getProjects({ where: ['privacyInfo'] }),
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps.getProjects({ where: ['defiInfo'] })
@@ -116,22 +109,6 @@ async function getDynamicPages(): Promise<Page[]> {
     ...privacyProjects.map(projectPage('/privacy/projects')),
     ...defiProjects.map(projectPage('/defi/projects')),
   ]
-
-  for (const layer of daLayers) {
-    const layerBridges = daBridges.filter(
-      (b) => b.daBridge.daLayer === layer.id,
-    )
-    for (const bridge of layerBridges) {
-      pages.push({
-        path: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
-      })
-    }
-    if (shouldHaveNoBridgePage(layer.daLayer, layerBridges.length)) {
-      pages.push({
-        path: `/data-availability/projects/${layer.slug}/no-bridge`,
-      })
-    }
-  }
 
   const publications = [
     ...getCollection('governance-publications'),

@@ -33,7 +33,7 @@ export function ConfigHealthReportPage() {
 
   if (IS_READONLY) {
     return (
-      <div className="mx-auto max-w-screen-md p-4">
+      <div className="mx-auto max-w-(--breakpoint-md) p-4">
         <Title title="DiscoUI - Config health report" />
         <div className="border border-coffee-600 bg-coffee-800 p-4 text-sm">
           This page is only available in write-mode.
@@ -43,7 +43,7 @@ export function ConfigHealthReportPage() {
   }
 
   return (
-    <div className="mx-auto max-w-screen-md p-4">
+    <div className="mx-auto max-w-(--breakpoint-md) p-4">
       <Title title="DiscoUI - Config health report" />
 
       <div className="mb-4 flex gap-4">

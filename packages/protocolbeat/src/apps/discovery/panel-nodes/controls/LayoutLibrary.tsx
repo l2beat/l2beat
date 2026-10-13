@@ -469,7 +469,7 @@ function CollapsedDescription({
   return (
     <div
       className={cn(
-        'overflow-hidden whitespace-pre-wrap break-words',
+        'wrap-break-word overflow-hidden whitespace-pre-wrap',
         className,
       )}
       style={DESCRIPTION_CLAMP_STYLE[lines]}

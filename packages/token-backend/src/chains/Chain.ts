@@ -3,13 +3,6 @@ import { BlockscoutClient } from './clients/blockscout/BlockscoutClient'
 import { EtherscanClient } from './clients/etherscan/EtherscanClient'
 import { RpcClient } from './clients/rpc/RpcClient'
 
-export interface ChainConfig {
-  name: string
-  chainId: number
-  apis?: Array<{ type: string; url?: string }>
-  etherscanApiKey?: string
-}
-
 export class Chain {
   public readonly rpc?: RpcClient
   public readonly etherscan?: EtherscanClient

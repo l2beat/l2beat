@@ -4,12 +4,8 @@ import type {
   ProjectScalingProofSystem,
   ProjectScalingStack,
 } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import type { RosetteValue } from '~/components/rosette/types'
-import {
-  mapBridgeRisksToRosetteValues,
-  mapLayerRisksToRosetteValues,
-} from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { groupByL2Tabs } from '~/pages/layer2s/utils/groupByL2Tabs'
 import {
   getProjectsDataPosted,
@@ -17,6 +13,10 @@ import {
 } from '~/server/features/data-availability/throughput/getProjectsDataPosted'
 import { ps } from '~/server/projects'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
+import {
+  mapBridgeRisksToRosetteValues,
+  mapLayerRisksToRosetteValues,
+} from '~/utils/project/mapDaRisksToRosetteValues'
 import { getDaLayerRisks } from '../../../data-availability/utils/getDaLayerRisks'
 import type { ProjectsEconomicSecurity } from '../../../data-availability/utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsEconomicSecurity } from '../../../data-availability/utils/getDaProjectsEconomicSecurity'
@@ -87,7 +87,6 @@ export async function getL2RiskDaEntries() {
       return getL2RiskDaEntry(
         project,
         risks,
-        daLayers,
         projectsChangeReport.getChanges(project.id),
         tvs.projects[project.id]?.breakdown.total,
         zkCatalogProjects,
@@ -102,17 +101,11 @@ export async function getL2RiskDaEntries() {
 
 export interface L2RiskDaEntry extends CommonL2Entry {
   proofSystem: ProjectScalingProofSystem | undefined
-  dataAvailability: (ProjectScalingDa & {
-    daHref?: L2RiskDaEntryHref
-  })[]
+  dataAvailability: ProjectScalingDa[]
   stacks: ProjectScalingStack[] | undefined
   tvsOrder: number
   dataPosted: ProjectDataPosted | undefined
-  risks:
-    | (EntryRisks & {
-        daHref?: L2RiskDaEntryHref
-      })[]
-    | undefined
+  risks: EntryRisks[] | undefined
 }
 
 function getL2RiskDaEntry(
@@ -121,7 +114,6 @@ function getL2RiskDaEntry(
     'customDa' | 'contracts'
   >,
   risks: L2RiskDaEntry['risks'] | undefined,
-  daLayers: Project<'daLayer'>[],
   changes: ProjectChanges,
   tvs: number | undefined,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
@@ -129,10 +121,7 @@ function getL2RiskDaEntry(
 ): L2RiskDaEntry {
   return {
     ...getCommonL2Entry({ project, changes }),
-    dataAvailability: project.scalingDa.map((da) => ({
-      ...da,
-      daHref: getDaHref(project, da, daLayers),
-    })),
+    dataAvailability: project.scalingDa,
     proofSystem: getProofSystemWithName(
       project.scalingInfo.proofSystem,
       zkCatalogProjects,
@@ -169,15 +158,6 @@ function getRisks(
             getDaLayerRisks(project.customDa),
           ),
           daBridge: mapBridgeRisksToRosetteValues(project.customDa.risks),
-          daHref: getDaHref(
-            project,
-            {
-              layer: {
-                value: 'DAC',
-              },
-            } as ProjectScalingDa,
-            daLayers,
-          ),
         }
       }
       const daLayerProject =
@@ -209,38 +189,7 @@ function getRisks(
         daBridge: daBridgeProject
           ? mapBridgeRisksToRosetteValues(daBridgeProject.daBridge.risks)
           : mapBridgeRisksToRosetteValues({ isNoBridge: true }),
-        daHref: getDaHref(project, da, daLayers),
       }
     })
     .filter((da) => da !== undefined)
-}
-
-interface L2RiskDaEntryHref {
-  summary: string
-  risk: string | undefined
-}
-function getDaHref(
-  project: Project,
-  scalingDa: ProjectScalingDa,
-  daLayers: Project<'daLayer'>[],
-): L2RiskDaEntryHref | undefined {
-  if (scalingDa.layer.value === 'DAC') {
-    return {
-      summary: `/data-availability/summary?tab=custom&highlight=${project.slug}`,
-      risk: `/data-availability/risk?tab=custom&highlight=${project.slug}`,
-    }
-  }
-
-  const daLayer = daLayers.find((l) => l.id === scalingDa.layer.projectId)
-  if (!daLayer) {
-    return undefined
-  }
-
-  return {
-    summary: `/data-availability/summary?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`,
-    risk:
-      daLayer.id === ProjectId.ETHEREUM
-        ? undefined
-        : `/data-availability/risk?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`,
-  }
 }

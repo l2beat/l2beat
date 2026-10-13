@@ -2,6 +2,12 @@ name: Deploy to Coolify
 
 on:
   workflow_call:
+    inputs:
+      preview:
+        description: "Deploy the pull request's preview of the app instead of the app"
+        required: false
+        type: boolean
+        default: false
     secrets:
       COOLIFY_SERVER:
         required: true
@@ -23,21 +29,59 @@ jobs:
       COOLIFY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
       COOLIFY_UUID: ${{ secrets.COOLIFY_UUID }}
     steps:
-      - name: Check out code
-        uses: actions/checkout@v6
+      # A missing repo secret arrives as an empty string and would otherwise
+      # surface as a confusing 404.
+      - name: Validate COOLIFY_UUID
+        run: |
+          if [[ -z "$COOLIFY_UUID" ]]; then
+            echo "::error::COOLIFY_UUID is empty; is the repo secret set?"
+            exit 1
+          fi
 
       - name: Deploy to Coolify
+        if: ${{ !inputs.preview }}
         run: |
-          response="$(
-            curl --fail-with-body --silent --show-error \
-              -X POST \
-              --retry 3 \
-              --retry-delay 5 \
-              --retry-all-errors \
-              --header "Authorization: Bearer $COOLIFY_API_KEY" \
-              --header "Accept: application/json" \
-              "$COOLIFY_SERVER/api/v1/deploy?uuid=$COOLIFY_UUID"
-          )"
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            --retry 3 \
+            --retry-delay 5 \
+            --retry-all-errors \
+            --output "$RUNNER_TEMP/response.json" \
+            --header "Authorization: Bearer $COOLIFY_API_KEY" \
+            --header "Accept: application/json" \
+            "$COOLIFY_SERVER/api/v1/deploy?uuid=$COOLIFY_UUID"
 
-          echo "$response" | jq -e '.deployments | length > 0' >/dev/null
-          echo "$response"
+          jq -e '.deployments | length > 0' "$RUNNER_TEMP/response.json" >/dev/null
+          cat "$RUNNER_TEMP/response.json"
+
+      # Opens the preview on the first call and redeploys it afterwards.
+      # Retrying is safe: Coolify skips a deployment already queued for the
+      # same commit, and curl honours Retry-After when the queue is full.
+      # The response goes to a file because curl truncates a file before each
+      # retry but appends to stdout, which would concatenate the error bodies.
+      - name: Deploy preview to Coolify
+        if: ${{ inputs.preview }}
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          body=$(jq -n --argjson pr "$PR_NUMBER" --arg url "$PR_URL" --arg commit "$HEAD_SHA" \
+            '{pull_request_id: $pr, pull_request_html_url: $url, commit: $commit}')
+
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            --retry 3 \
+            --retry-delay 5 \
+            --retry-all-errors \
+            --output "$RUNNER_TEMP/response.json" \
+            --header "Authorization: Bearer $COOLIFY_API_KEY" \
+            --header "Accept: application/json" \
+            --header "Content-Type: application/json" \
+            --data "$body" \
+            "$COOLIFY_SERVER/api/v1/applications/$COOLIFY_UUID/previews"
+          cat "$RUNNER_TEMP/response.json"
+
+          domains=$(jq -r '.preview.domains // "unknown"' "$RUNNER_TEMP/response.json")
+          message=$(jq -r .message "$RUNNER_TEMP/response.json")
+          echo "Preview: $domains ($message)" >> "$GITHUB_STEP_SUMMARY"

@@ -8,7 +8,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import { matchEthereumProject } from '../services/DaService'
+import { matchEthereumProject } from '../services/matchEthereumConfigs'
 
 interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database

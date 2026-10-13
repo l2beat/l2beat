@@ -171,53 +171,7 @@ const PAGE_SECTIONS: LinkListSection[] = [
         name: 'Native rollups',
         path: staticPagePath('/native-rollups'),
         description:
-          'Explainer and tracker for native rollups, which verify state transitions with an Ethereum precompile.',
-      },
-    ],
-  },
-  {
-    heading: 'Data availability',
-    links: [
-      {
-        name: 'All data availability layers',
-        path: markdownAlternate('/data-availability/summary.md'),
-        description:
-          'Markdown list of every tracked data availability layer and bridge, public and custom, with type, risks and page URL.',
-      },
-      {
-        name: 'Summary',
-        path: staticPagePath('/data-availability/summary'),
-        description:
-          'Data availability layers and their bridges to Ethereum, with economic security, throughput and the projects using each.',
-      },
-      {
-        name: 'Risk analysis',
-        path: staticPagePath('/data-availability/risk'),
-        description:
-          'Per-layer and per-bridge risks: economic security, fraud detection, committee security, upgradeability and relayer failure.',
-      },
-      {
-        name: 'Throughput',
-        path: staticPagePath('/data-availability/throughput'),
-        description:
-          'Data posted per day to each layer, its maximum capacity and which projects post the most.',
-      },
-      {
-        name: 'Liveness',
-        path: staticPagePath('/data-availability/liveness'),
-        description:
-          'How regularly data is posted to each layer and whether its bridge keeps up.',
-      },
-      {
-        name: 'Archived layers',
-        path: staticPagePath('/data-availability/archived'),
-        description: 'Data availability layers no longer tracked.',
-      },
-      {
-        name: 'Data availability risk framework',
-        path: staticPagePath('/da-risk-framework'),
-        description:
-          'How L2BEAT evaluates the risks of data availability layers and their bridges.',
+          "Explainer and tracker for native rollups, which prove their state transitions with Ethereum's own EVM program.",
       },
     ],
   },
@@ -360,10 +314,10 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts.',
     },
     {
-      name: 'Data availability project',
-      path: '/data-availability/projects/{layer}/{bridge}.md',
+      name: 'Ethereum',
+      path: '/projects/ethereum.md',
       description:
-        'One data availability layer with one of its bridges as markdown: economic security, risks with sentiments, technology, committee, permissions and contracts. The {layer}/{bridge} pairs of active layers are listed in /data-availability/summary.md; archived layers keep their pages but are not listed.',
+        'Ethereum as the data availability layer of the scaling projects: economic security, validators, blob throughput, risks and technology.',
     },
     {
       name: 'Privacy protocol',

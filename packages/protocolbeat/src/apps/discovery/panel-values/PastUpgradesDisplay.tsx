@@ -100,7 +100,7 @@ export function PastUpgradesDisplay({ value }: PastUpgradesDisplayProps) {
                       <span className="inline-flex items-baseline gap-1.5">
                         <button
                           type="button"
-                          className={`rounded-sm px-1 ${
+                          className={`rounded-xs px-1 ${
                             isSelected
                               ? 'bg-aux-blue/20 text-aux-blue'
                               : 'hover:text-aux-blue'

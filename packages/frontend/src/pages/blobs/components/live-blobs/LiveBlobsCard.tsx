@@ -1,0 +1,124 @@
+import {
+  lazy,
+  Component as ReactComponent,
+  type ReactNode,
+  Suspense,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { Skeleton } from '~/components/core/Skeleton'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { useIsClient } from '~/hooks/useIsClient'
+import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
+import { cn } from '~/utils/cn'
+import { BELT_HEIGHT, BeltLegend, PulseSkeleton } from './blocks/BeltFrame'
+import { ChainClockContext, createChainClock } from './chainClock'
+import { useIsOnScreen } from './hooks'
+import { LivePosters } from './LivePosters'
+import { type EthereumLink, LiveStats } from './LiveStats'
+import { createLandings, LandingsContext } from './landings'
+import { type BlockLimits, toLivePosters, totalByPoster } from './model'
+import { useLiveBlobs } from './useLiveBlobs'
+
+// Loaded on its own: it draws only in the browser
+const LiveBlocks = lazy(() =>
+  import('./blocks/LiveBlocks').then((m) => ({ default: m.LiveBlocks })),
+)
+
+interface Props {
+  /** Every project that posts blobs to Ethereum */
+  projects: BlobPoster[]
+  limits: BlockLimits
+  ethereum: EthereumLink
+}
+
+/** Ethereum's blobs, block by block, as they are made, above who posted them */
+export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
+  const posters = useMemo(() => toLivePosters(projects), [projects])
+  // the belt draws on a canvas sized to the screen, which the server has not got
+  const isClient = useIsClient()
+  const [landings] = useState(createLandings)
+  const [clock] = useState(createChainClock)
+  const cardRef = useRef<HTMLDivElement>(null)
+  const { data, status } = useLiveBlobs(useIsOnScreen(cardRef))
+  // in render, so every number below judges the newest block by the corrected
+  // clock; a head that is not live is an old one, which would pull it back
+  if (data?.live) clock.correct(data.head)
+  const postedWindow = data?.window
+  const totals = useMemo(
+    () => postedWindow && totalByPoster(postedWindow.posted, posters),
+    [postedWindow, posters],
+  )
+
+  return (
+    <ChainClockContext value={clock}>
+      <LandingsContext value={landings}>
+        <PrimaryCard ref={cardRef} className="space-y-5">
+          <LiveStats
+            live={data}
+            totals={totals}
+            status={status}
+            limits={limits}
+            ethereum={ethereum}
+          />
+          {isClient ? (
+            <LiveBoundary>
+              <Suspense fallback={<LiveSkeleton />}>
+                <LiveBlocks
+                  live={data}
+                  status={status}
+                  posters={posters}
+                  limits={limits}
+                />
+              </Suspense>
+            </LiveBoundary>
+          ) : (
+            <LiveSkeleton />
+          )}
+          <LivePosters live={data} totals={totals} />
+        </PrimaryCard>
+      </LandingsContext>
+    </ChainClockContext>
+  )
+}
+
+/** The belt, the day under it and their legend, laid out as LiveBlocks lays them */
+function LiveSkeleton() {
+  return (
+    <div className="flex flex-col gap-3">
+      <Skeleton className={cn('w-full rounded-lg', BELT_HEIGHT)} />
+      <PulseSkeleton />
+      <BeltLegend />
+    </div>
+  )
+}
+
+/**
+ * Keeps a belt that fails to draw, or to load after a deploy, from taking the
+ * page down with it: the stats and the table go on without it
+ */
+class LiveBoundary extends ReactComponent<
+  { children: ReactNode },
+  { error: Error | undefined }
+> {
+  state = { error: undefined }
+
+  static getDerivedStateFromError(error: Error) {
+    return { error }
+  }
+
+  render() {
+    if (this.state.error === undefined) return this.props.children
+    return (
+      <div className="flex h-[30rem] w-full flex-col items-center justify-center gap-2 rounded-lg bg-surface-secondary p-6 text-center md:h-[40rem]">
+        <div className="font-bold text-heading-18">
+          The blocks could not be drawn
+        </div>
+        <div className="max-w-[48ch] font-mono text-label-value-12 text-secondary">
+          {String(this.state.error)}
+        </div>
+      </div>
+    )
+  }
+}

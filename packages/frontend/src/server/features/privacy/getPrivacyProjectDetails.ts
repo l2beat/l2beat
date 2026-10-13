@@ -1,4 +1,5 @@
 import type {
+  Milestone,
   PrivacyAttribute,
   PrivacyCategory,
   PrivacyExitWindow,
@@ -71,6 +72,7 @@ export interface PrivacyProjectDetails {
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
+  milestones: Milestone[]
   trackedOn: ProjectIconListItem[]
   assets: PrivacyAsset[]
   summary: {
@@ -294,6 +296,9 @@ export async function getPrivacyProjectDetails(
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],
+    milestones: [...(project.milestones ?? [])].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ),
     trackedOn,
     assets: orderedAssets,
     summary: {
@@ -326,18 +331,11 @@ export async function getPrivacyProjectDetails(
 async function getTrackedOn(
   project: PrivacyProject,
 ): Promise<ProjectIconListItem[]> {
-  const [chainProjects, daLayers] = await Promise.all([
-    ps.getProjects({
-      select: ['chainConfig'],
-      optional: [...PROJECT_PAGE_METADATA_FIELDS],
-    }),
-    ps.getProjects({ where: ['daLayer'] }),
-  ])
-  return getPrivacyTrackedChains(
-    project.privacyInfo.trackedOn,
-    chainProjects,
-    daLayers,
-  )
+  const chainProjects = await ps.getProjects({
+    select: ['chainConfig'],
+    optional: [...PROJECT_PAGE_METADATA_FIELDS],
+  })
+  return getPrivacyTrackedChains(project.privacyInfo.trackedOn, chainProjects)
 }
 
 const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7

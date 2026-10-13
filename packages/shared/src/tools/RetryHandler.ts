@@ -15,6 +15,7 @@ export type RetryHandlerVariant =
   | 'SCRIPT'
   | 'TEST'
   | 'RELIABLE_BIGGER_DELAY'
+  | 'FAST'
 
 export class RetryHandler {
   constructor(private readonly $: Deps) {
@@ -109,6 +110,14 @@ export function toRetryOptions(variant: RetryHandlerVariant): {
       return {
         initialRetryDelayMs: 5000,
         maxRetries: 2, // 5 10
+        maxRetryDelayMs: Number.POSITIVE_INFINITY,
+      }
+    // For failures that pass within a second, as from a load-balanced node
+    // yet to get the newest block
+    case 'FAST':
+      return {
+        initialRetryDelayMs: 250,
+        maxRetries: 3, // 0.25 0.5 1
         maxRetryDelayMs: Number.POSITIVE_INFINITY,
       }
   }
