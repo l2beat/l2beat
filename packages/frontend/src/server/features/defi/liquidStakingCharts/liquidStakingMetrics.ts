@@ -1,3 +1,4 @@
+import { pluralize } from '@l2beat/shared-pure'
 import type {
   DefiLiquidStakingChartProject,
   DefiLiquidStakingCharts,
@@ -146,4 +147,10 @@ function lastValue(
     }
   }
   return undefined
+}
+
+/** A cost of exit as shown: one decimal, "day" when it rounds to 1. */
+export function formatDays(value: number) {
+  const rounded = value.toFixed(1)
+  return `${rounded} ${pluralize(Number(rounded), 'day')}`
 }

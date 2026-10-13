@@ -1,4 +1,5 @@
 import compact from 'lodash/compact'
+import { formatDays } from '~/server/features/defi/liquidStakingCharts/liquidStakingMetrics'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
@@ -39,7 +40,7 @@ export function renderDefiProjectMarkdown(
 
 const RISK_LABELS = [
   ['minting', 'Minting'],
-  ['operators', 'Operators'],
+  ['operators', 'Node operators'],
   ['backing', 'Backing'],
   ['exchangeRate', 'Oracle'],
   ['exit', 'Exit'],
@@ -73,7 +74,7 @@ function getFacts(
     },
     metrics?.exitCostDays && {
       label: 'Cost of exit',
-      value: `${metrics.exitCostDays.value.toFixed(1)} days of yield (on ${metrics.exitCostDays.date}, by the cheaper of waiting or selling at the market discount)`,
+      value: `${formatDays(metrics.exitCostDays.value)} of yield (on ${metrics.exitCostDays.date}, by the cheaper of waiting or selling at the market discount)`,
     },
     ...RISK_LABELS.map(([key, label]) => {
       const risk = liquidStaking?.risks[key]

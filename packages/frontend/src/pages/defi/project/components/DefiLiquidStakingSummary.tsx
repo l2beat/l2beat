@@ -8,7 +8,10 @@ import {
   type ProjectSummaryStatProps,
 } from '~/components/projects/ProjectSummaryStat'
 import { SentimentText } from '~/components/SentimentText'
-import type { LiquidStakingMetric } from '~/server/features/defi/liquidStakingCharts/liquidStakingMetrics'
+import {
+  formatDays,
+  type LiquidStakingMetric,
+} from '~/server/features/defi/liquidStakingCharts/liquidStakingMetrics'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { cn } from '~/utils/cn'
 
@@ -17,7 +20,7 @@ type RiskKey = keyof ProjectDefiLiquidStakingRisks
 /** The summary table's columns for this protocol, in the same order. */
 const RISK_STATS: [RiskKey, string][] = [
   ['minting', 'Minting'],
-  ['operators', 'Operators'],
+  ['operators', 'Node operators'],
   ['backing', 'Backing'],
   ['exchangeRate', 'Oracle'],
   ['exit', 'Exit'],
@@ -65,9 +68,8 @@ export function DefiLiquidStakingSummary({
       {
         key: 'exit-cost',
         title: 'Cost of exit',
-        value: formatOrNoData(
-          metrics?.exitCostDays,
-          (value) => `${value.toFixed(1)} days`,
+        value: formatOrNoData(metrics?.exitCostDays, (value) =>
+          formatDays(value),
         ),
         tooltip: metricTooltip(
           metrics?.exitCostDays,

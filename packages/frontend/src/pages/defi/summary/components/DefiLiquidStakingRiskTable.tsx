@@ -114,7 +114,7 @@ const columns = [
   ),
   riskColumn(
     'operators',
-    'Operators',
+    'Node\noperators',
     'Who runs the validators, and who bears the loss if they are slashed?',
   ),
   riskColumn(
@@ -125,7 +125,7 @@ const columns = [
   riskColumn(
     'exchangeRate',
     'Oracle',
-    'Who reports the exchange rate, and how far can one report move it?',
+    "Who reports the validators' balances and accrued rewards that set the exchange rate, and how far can one report move it?",
   ),
   riskColumn(
     'exit',

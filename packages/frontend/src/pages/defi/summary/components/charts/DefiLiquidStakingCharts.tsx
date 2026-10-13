@@ -14,6 +14,7 @@ import type {
 } from '~/server/features/defi/liquidStakingCharts/getDefiLiquidStakingCharts'
 import {
   BURN_BUFFER_PROJECT,
+  formatDays,
   getExitCost,
   getLiquidStakingSeries,
 } from '~/server/features/defi/liquidStakingCharts/liquidStakingMetrics'
@@ -106,7 +107,7 @@ export function DefiLiquidStakingCharts({
           colors={colors}
           data={exitCost.data}
           formatYAxisLabel={(value) => `${value.toFixed(0)}d`}
-          formatTooltipValue={(value) => `${value.toFixed(1)} days`}
+          formatTooltipValue={(value) => formatDays(value)}
         />
       </ChartBlock>
     </div>
