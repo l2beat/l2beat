@@ -75,36 +75,6 @@ export const searchBarPages = withIndex([
     href: '/layer2s/archived',
   },
   {
-    category: 'da',
-    name: 'Summary',
-    tags: ['pages', 'da', 'data', 'availability'],
-    href: '/data-availability/summary',
-  },
-  {
-    category: 'da',
-    name: 'Risk Analysis',
-    tags: ['pages', 'da', 'data', 'availability', 'risks'],
-    href: '/data-availability/risk',
-  },
-  {
-    category: 'da',
-    name: 'Throughput',
-    tags: ['pages', 'da', 'data', 'availability', 'throughput'],
-    href: '/data-availability/throughput',
-  },
-  {
-    category: 'da',
-    name: 'Liveness',
-    tags: ['pages', 'da', 'data', 'availability', 'liveness'],
-    href: '/data-availability/liveness',
-  },
-  {
-    category: 'da',
-    name: 'Archived',
-    tags: ['pages', 'da', 'data', 'availability', 'archived'],
-    href: '/data-availability/archived',
-  },
-  {
     category: 'interop',
     name: 'Summary',
     tags: ['pages', 'interop', 'interoperability'],
@@ -141,6 +111,16 @@ export const searchBarPages = withIndex([
           name: 'Tokens',
           tags: ['pages', 'tokens', 'interop'],
           href: '/tokens',
+        },
+      ]
+    : []),
+  ...(env.CLIENT_SIDE_BLOBS_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Blobs',
+          href: '/blobs',
+          tags: ['pages', 'blobs', 'da', 'data', 'availability'],
         },
       ]
     : []),

@@ -8,9 +8,12 @@ import { v } from '@l2beat/validate'
 import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import type { FetchInit } from '../http/fetchWithTimeout'
 import type { LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
+import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
+import { getRpcMetricsLabel } from './RpcMetricsContext'
 import {
   BlockNumberResponse,
   type CallParameters,
@@ -25,6 +28,7 @@ import {
   type EVMLog,
   EVMLogsResponse,
   EVMTransactionReceiptResponse,
+  EVMTransactionReceiptsResponse,
   EVMTransactionResponse,
   Quantity,
   RPCError,
@@ -38,6 +42,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   multicallClient?: MulticallV3Client
   rpcMetrics?: RpcMetricsRecorder
   timeout?: number
+  maxBatchSize?: number
 }
 
 type Param =
@@ -47,12 +52,26 @@ type Param =
   | Record<string, string | string[] | LogsTopicFilter>
   | number[]
 
+/**
+ * The RPC answered `null`: it has not got the block or transaction. A node
+ * behind a load balancer can trail the chain by a block, so a caller at the
+ * head may wait for it, where any other parsing failure is a real one
+ */
+export class NotFoundOnRpcError extends Error {
+  override name = 'NotFoundOnRpcError'
+}
+
 export class RpcClient extends ClientCore implements IRpcClient {
   multicallClient?: MulticallV3Client
+  private readonly batcher: RpcBatcher
 
   constructor(private readonly $: Dependencies) {
     super({ ...$, sourceName: $.chain })
     this.multicallClient = $.multicallClient
+    this.batcher = new RpcBatcher({
+      maxBatchSize: $.maxBatchSize,
+      logger: $.logger.for(this).tag({ source: $.chain }),
+    })
   }
 
   async getLatestBlockNumber() {
@@ -103,6 +122,11 @@ export class RpcClient extends ClientCore implements IRpcClient {
     const encodedNumber =
       blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
     const blockResponse = await this.query(method, [encodedNumber, includeTxs])
+    if (isNullResult(blockResponse)) {
+      throw new NotFoundOnRpcError('Block not found', {
+        cause: { blockNumber },
+      })
+    }
 
     const block = includeTxs
       ? EVMBlockWithTransactionsResponse.safeParse(blockResponse)
@@ -147,6 +171,32 @@ export class RpcClient extends ClientCore implements IRpcClient {
     }
 
     return { ...receipt.data.result }
+  }
+
+  async getTransactionReceipts(txHashes: string[]) {
+    const responses = await this.batchQuery(
+      'eth_getTransactionReceipt',
+      txHashes.map((txHash) => [txHash]),
+    )
+    const missing = txHashes.filter((_, i) => isNullResult(responses[i]))
+    if (missing.length > 0) {
+      throw new NotFoundOnRpcError('Receipts not found', {
+        cause: { txHashes: missing },
+      })
+    }
+
+    const receipts = EVMTransactionReceiptsResponse.safeParse(responses)
+    if (!receipts.success) {
+      this.$.logger.warn('Invalid response', {
+        txHashes,
+        response: JSON.stringify(responses),
+      })
+      throw new Error(
+        `Receipts of ${txHashes.length} txs: Error during parsing`,
+      )
+    }
+
+    return receipts.data.map((receipt) => ({ ...receipt.result }))
   }
 
   async getBalance(
@@ -365,22 +415,44 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   // TODO: add multi-method support
+  /** Results in the order of `paramsBatch` */
   async batchQuery(method: string, paramsBatch: Param[][]) {
+    return await this.batcher.run(
+      method,
+      paramsBatch,
+      (chunk) => this.sendBatch(method, chunk),
+      async (params) => RpcResponse.parse(await this.query(method, params)),
+    )
+  }
+
+  private async sendBatch(method: string, paramsBatch: Param[][]) {
     const queries = paramsBatch.map((params) => ({
       method: method,
       params: params,
       id: this.$.generateId ? this.$.generateId() : generateId(),
       jsonrpc: '2.0',
     }))
+    const init: FetchInit = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(queries),
+      redirect: 'follow',
+      timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
+    }
+    // Read before the rate limiter, which loses the async context
+    const label = getRpcMetricsLabel()
+    const attempt = () =>
+      this.rateLimiter.call(() => this.fetchBatch(init, label), label)
 
+    let rejected = false
     try {
-      const response = await this.fetch(this.$.url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(queries),
-        redirect: 'follow',
-        timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
-      })
+      const response = await attempt().catch((error) =>
+        this.retryHandler.retry(attempt, { error, url: this.$.url, init }),
+      )
+      if (response === BATCH_REJECTED) {
+        rejected = true
+        return BATCH_REJECTED
+      }
 
       const results = new Map(
         v
@@ -395,11 +467,51 @@ export class RpcClient extends ClientCore implements IRpcClient {
         return r
       })
     } finally {
-      this.$.rpcMetrics?.record({
-        count: paramsBatch.length,
-        method,
+      // The calls of a rejected batch are recorded when sent again
+      if (!rejected) {
+        this.$.rpcMetrics?.record({
+          count: paramsBatch.length,
+          method,
+        })
+      }
+    }
+  }
+
+  /**
+   * Unlike ClientCore.fetch, reads the body of a failed request and returns a
+   * rejection instead of throwing it, so no retry repeats it
+   */
+  private async fetchBatch(
+    init: FetchInit,
+    label: string,
+  ): Promise<unknown[] | typeof BATCH_REJECTED> {
+    const start = Date.now()
+    const response = await this.$.http.fetchRaw(this.$.url, init)
+    const text = await response.text()
+    this.metricsAggregator.push({
+      duration: Date.now() - start,
+      size: Buffer.byteLength(text, 'utf8'),
+      label,
+    })
+
+    let body: unknown
+    try {
+      body = JSON.parse(text)
+    } catch {}
+    if (isBatchRejected(response.status, body)) {
+      return BATCH_REJECTED
+    }
+    if (!response.ok) {
+      throw new Error('HTTP error', {
+        cause: { status: response.status, statusText: response.statusText },
       })
     }
+    if (!Array.isArray(body)) {
+      throw new Error('Batch not answered with an array', {
+        cause: { body: text },
+      })
+    }
+    return body
   }
 
   override validateResponse(response: json): {
@@ -447,5 +559,14 @@ export function isLimitExceededError({ message }: { message: string }) {
     message.includes('query exceeds max block range 100000') ||
     message.includes('eth_getLogs is limited to a 10,000 range') ||
     message.includes('returned more than 10000')
+  )
+}
+
+function isNullResult(response: unknown): boolean {
+  return (
+    typeof response === 'object' &&
+    response !== null &&
+    'result' in response &&
+    response.result === null
   )
 }

@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x7e7a0c98e032cfcd6c0e4488e1e55c2d08759802
+
+# Diff at Wed, 07 Oct 2026 13:25:53 GMT:
+
+- id: 84ae3c9d
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@55f4b3477e6346921fce4e816d219b472a5aacf0 block: 1790852086
+- current timestamp: 1791379304
+
+## Description
+
+The USDC minter added on Sep 28 (0xA669) is now verified as SeizureRegistry and named and described accordingly. It lets a secondary market burner role record the written-off USDC balance of a blocklisted address on any CCTP domain and mint the same amount on Ethereum to an allowlisted recipient; the written-off balance is not verified onchain. Its first re-mint, on Oct 5, minted 381,235 USDC for the blocklisted Ethereum address 0x3f77 to the only allowed recipient, the EOA 0xb3E3. The owner (an EOA, which can also upgrade it) and the role holders are now modelled as permissions.
+
+## Watched changes
+
+```diff
+    contract SeizureRegistry (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A] {
+    +++ description: USDC minter that re-mints seized balances. When the balance of a blocklisted address on any CCTP domain is written off, the secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The written-off balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.
++++ description: Recipients that re-minted USDC can be sent to, managed by the address manager.
+      values.allowedRecipients.0:
++        "eth:0xb3E33c0375E4BD50A5255B8292bA08EbFa759933"
+      values.totalSecondaryMarketBurnedAmount:
+-        0
++        381235000000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790852086 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x162aB6063C172013F03F55D10e8531F3436E31B5) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd","description":"replace the secondary market burner, hash updater, rescuer and address manager.","role":".owner"}
+      receivedPermissions.0.description:
++        "upgrade the implementation."
+      receivedPermissions.0.role:
+-        "admin"
++        ".owner"
+    }
+```
+
+```diff
+    contract SeizureRegistry (eth:0xA669f564133A1612dbd6f5E579863aA0a34448Bd) [N/A] {
+    +++ description: USDC minter that re-mints seized balances. When the balance of a blocklisted address on any CCTP domain is written off, the secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The written-off balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract.
+      name:
+-        "UnverifiedUSDCMinter"
++        "SeizureRegistry"
+      unverified:
+-        true
+      description:
+-        "Upgradeable contract with an unverified implementation that is registered as a USDC minter in the USDC token contract. Its minting allowance is set by its MasterMinter controllers."
++        "USDC minter that re-mints seized balances. When the balance of a blocklisted address on any CCTP domain is written off, the secondary market burner records it once per address and domain and mints the same amount of USDC on Ethereum to an allowlisted recipient. The written-off balance is not verified onchain, so minting is bounded only by the allowance the MasterMinter controllers grant this contract."
+      values.addressManager:
++        "eth:0xD8192E257630394aBf289fb350482264aa700cB2"
++++ description: Recipients that re-minted USDC can be sent to, managed by the address manager.
+      values.allowedRecipients:
++        []
+      values.hashUpdater:
++        "eth:0x96cc15F1920E700c2fDC06546071BC44c6D62Ae2"
+      values.owner:
++        "eth:0x162aB6063C172013F03F55D10e8531F3436E31B5"
+      values.pendingOwner:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rescuer:
++        "eth:0xEAc54284b1Eb10132c7204cF6265ae1ae122BC86"
+      values.secondaryMarketBurner:
++        "eth:0x0837EDBb99E3e8Fc740337014f690F92102a0038"
+      values.TOKEN:
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.totalSecondaryMarketBurnedAmount:
++        0
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0x58bAC990b6BAaB92140bC0eFA849e7A0c50237bC:
+-        ""
++        "SeizureRegistry"
+      sourceHashes:
++        ["0xf66f390c3291bc5b8725bf8fa36d64494b91e8cfb2b717b52e85adcc68dcdd50","0x69d58c583f7c1689f33f52112c458212177cc01844f86873c742231206d49e50"]
+      fieldMeta:
++        {"allowedRecipients":{"description":"Recipients that re-minted USDC can be sent to, managed by the address manager."}}
+    }
+```
+
 Generated with discovered.json: 0x46218e18424428617ce5cde598a2c9ec3f36973b
 
 # Diff at Thu, 01 Oct 2026 11:10:44 GMT:

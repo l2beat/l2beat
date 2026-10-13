@@ -30,6 +30,10 @@ export function InteropEntityPageLayout({
       {!isNavigationEmpty && (
         <StickyMobileSectionNavigation
           sections={navigationSections}
+          project={{
+            name: navigationProject.title,
+            icon: navigationProject.icon,
+          }}
           className="z-40"
         />
       )}

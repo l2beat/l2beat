@@ -29,14 +29,5 @@ function getMockedApprovedOngoingAnomalies(): GroupedAnomalies {
         isApproved: true,
       },
     ],
-    blobstream: [
-      {
-        projectId: 'blobstream',
-        subtype: 'proofSubmissions',
-        start: now - 6 * UnixTime.HOUR,
-        status: 'ongoing',
-        isApproved: true,
-      },
-    ],
   }
 }

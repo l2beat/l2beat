@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import type { Insertable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { PrivacyBlockTimestamp } from '../kysely/generated/types'
 
@@ -8,15 +8,6 @@ export interface PrivacyBlockTimestampRecord {
   configurationId: string
   chain: string
   blockNumber: number
-}
-
-export function toRecord(
-  row: Selectable<PrivacyBlockTimestamp>,
-): PrivacyBlockTimestampRecord {
-  return {
-    ...row,
-    timestamp: UnixTime.fromDate(row.timestamp),
-  }
 }
 
 export function toRow(

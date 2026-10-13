@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProtocolVersions",
+  "critical": true,
+  "description": "Registry of L2 upgrade activation timestamps. Dispute games commit to the upgrades active at their ending L2 block and proofs must match that commitment.",
+  "fields": {
+    "getSchedule": {
+      "severity": "HIGH"
+    },
+    "incidentResponder": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "delay the activation of a scheduled upgrade."
+        }
+      ]
+    },
+    "proxyAdminOwner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register upgrades, set their activation timestamps and the minimum protocol version, and appoint the incident responder."
+        }
+      ]
+    }
+  }
+}

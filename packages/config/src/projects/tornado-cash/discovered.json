@@ -1,7 +1,7 @@
 {
   "name": "tornado-cash",
-  "timestamp": 1790851757,
-  "configHash": "0xa455191b8982e9f5baebbb9eb949c24c0ce2518de60383233b853586b14259f6",
+  "timestamp": 1791454331,
+  "configHash": "0xc6c164c62d05255d6bf2d09792ee5603d67bdc8c083cbba3b70977125ee3987d",
   "entries": [
     {
       "name": "Pool_50K_cDAI",
@@ -126,12 +126,12 @@
       "sinceBlock": 9162012,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 80,
+        "currentRootIndex": 13,
         "denomination": 1000000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x24a8e96f51c992d42a8b463602ddaecd43181f416964a8ebde9e8d658b2ca9cf",
+        "getLastRoot": "0x27a37287974d726b43e84cddd4651fb83310e4a4730733f61cd1385848bfc79d",
         "levels": 20,
-        "nextIndex": 1980,
+        "nextIndex": 2113,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -200,13 +200,13 @@
       "sinceBlock": 9116966,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 62,
+        "currentRootIndex": 88,
         "denomination": "100000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x2a0d5119503ceebd16e2111a989686a830535d83d580fb9e5e1d77b793af001a",
+        "getLastRoot": "0x016244477c422222b86c5cab14316ffe3c2dda655daa3e3cf893af97af072631",
         "isMigrated": true,
         "levels": 20,
-        "nextIndex": 72218,
+        "nextIndex": 73444,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -256,12 +256,12 @@
       "sinceBlock": 9162005,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 65,
+        "currentRootIndex": 76,
         "denomination": 100000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1f65e2e2ea56f91b0b11b35379bcbc919d48690b620ad318f620ccd3929a6b4b",
+        "getLastRoot": "0x0f7ea251d4e72892fe05afe5167ab13a51dce1f475c537739fae6dc7e7c70d19",
         "levels": 20,
-        "nextIndex": 965,
+        "nextIndex": 976,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -520,7 +520,7 @@
       "sinceBlock": 13429786,
       "values": {
         "$immutable": true,
-        "TORNStaked": "2579228247073510505328309"
+        "TORNStaked": "2576416495425791643785587"
       },
       "fieldMeta": {
         "TORNStaked": {
@@ -590,12 +590,12 @@
       "sinceBlock": 9161965,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 33,
+        "currentRootIndex": 34,
         "denomination": 1000000000,
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x20604f0ea55c341aa655a264555b955ae17fc2ebd5c47253302faef96f9e5345",
+        "getLastRoot": "0x00125d170cda5c9751341ded7609966f93e6ab156ed977b9b8cbdd4a3928a25c",
         "levels": 20,
-        "nextIndex": 933,
+        "nextIndex": 934,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -645,12 +645,12 @@
       "sinceBlock": 9117609,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 73,
+        "currentRootIndex": 4,
         "denomination": "1000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x1d0d120fe8fe8f344cdfffdd43cc1233249e01b8b6353f2ff447886b86bf13be",
+        "getLastRoot": "0x224005e8508b460dd3a677513fad66dd34c3d854e7dc468a95bb757751c4cf34",
         "levels": 20,
-        "nextIndex": 94373,
+        "nextIndex": 94804,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -1315,13 +1315,13 @@
         "EXECUTION_EXPIRATION": 259200,
         "gasCompensationVault": "eth:0xFA4C1f3f7D5dd7c12a9Adb82Cd7dDA542E3d59ef",
         "PROPOSAL_THRESHOLD": "1000000000000000000000",
-        "proposalCount": 70,
+        "proposalCount": 72,
         "QUORUM_VOTES": "100000000000000000000000",
         "returnMultisigAddress": "eth:0xb04E030140b30C27bcdfaafFFA98C57d80eDa7B4",
         "Staking": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
         "state": [5, 2, 2, 5],
         "torn": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
-        "TORNTreasury": "4732021906308401820714848",
+        "TORNTreasury": "4731021906308401820714848",
         "userVault": "eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185",
         "version": "5.proposal-state-patch",
         "VOTE_EXTEND_TIME": 21600,
@@ -1425,15 +1425,15 @@
           },
           {
             "instance": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
-            "deviation": 6
+            "deviation": -13
           },
           {
             "instance": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
-            "deviation": 4
+            "deviation": -13
           },
           {
             "instance": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
-            "deviation": 5
+            "deviation": -13
           },
           {
             "instance": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
@@ -1445,11 +1445,11 @@
           },
           {
             "instance": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
-            "deviation": 209
+            "deviation": -22
           },
           {
             "instance": "eth:0x23773E65ed146A459791799d01336DB287f25334",
-            "deviation": 79
+            "deviation": 41
           },
           {
             "instance": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
@@ -1485,15 +1485,15 @@
           },
           {
             "instance": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
-            "deviation": 11
+            "deviation": -16
           },
           {
             "instance": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
-            "deviation": -304
+            "deviation": -323
           },
           {
             "instance": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
-            "deviation": 486
+            "deviation": 447
           }
         ],
         "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
@@ -1602,16 +1602,42 @@
       "name": "DepositTree",
       "address": "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226",
       "type": "Contract",
-      "unverified": true,
+      "template": "tornado-cash/OwnableMerkleTree",
+      "sourceHashes": [
+        "0x218d9a152ab9d469cf4baf2591677b19bb64e6885452ccc071bfbf6eca60c9aa"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified merkle tree instance that stores legacy Tornado deposit leaves for TornadoTreesV1.",
+      "description": "Anonymity Mining - Legacy Poseidon merkle tree that stores deposit or withdrawal leaves for TornadoTreesV1. Only its owner can insert leaves.",
+      "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608262112,
       "sinceBlock": 11474714,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 7,
+        "getLastRoot": "0x1f4316c2ae0e374ddda53ccea8d6ba623a99aec06e805f20daa5e7a9914fb1bd",
+        "hasher": "eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79",
+        "levels": 20,
+        "nextIndex": 6144,
+        "owner": "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417"
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "HIGH",
+          "description": "Only this address can insert leaves into the tree."
+        },
+        "hasher": {
+          "description": "Poseidon hasher used to compute the tree nodes."
+        },
+        "levels": {
+          "severity": "LOW",
+          "description": "Height of the merkle tree."
+        }
+      },
       "implementationNames": {
-        "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226": ""
-      }
+        "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226": "OwnableMerkleTree"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "TreeUpdateVerifier",
@@ -1862,12 +1888,12 @@
       "sinceBlock": 9117720,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 84,
+        "currentRootIndex": 66,
         "denomination": "10000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x060ee06ba0f4a1accc854d281e542470360fa01d171b710ec0575d4ae49eb353",
+        "getLastRoot": "0x1aff8bf0c18e0b9d534a5dd3aa3f56a4a2ffb4ccb2c926c10ffe0afcd42752e1",
         "levels": 20,
-        "nextIndex": 77284,
+        "nextIndex": 77466,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -1897,6 +1923,22 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "PoseidonHasher2",
+      "address": "eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "description": "Anonymity Mining - Unverified Poseidon hasher used by the legacy DepositTree and WithdrawalTree to hash tree nodes.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608262087,
+      "sinceBlock": 11474711,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79": ""
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
       "name": "Pool_100_ETH",
       "address": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
       "type": "Contract",
@@ -1913,12 +1955,12 @@
       "sinceBlock": 9161895,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 27,
+        "currentRootIndex": 59,
         "denomination": "100000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x06346ac4999bf6d14a153cd41b7a69d688800199120b938e54b5d60f651510a1",
+        "getLastRoot": "0x0a3a1764f5315358d782bd3ffe7621f6cc07fb719a848fafbcdd94809e683b0a",
         "levels": 20,
-        "nextIndex": 48527,
+        "nextIndex": 48559,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -2296,16 +2338,42 @@
       "name": "WithdrawalTree",
       "address": "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd",
       "type": "Contract",
-      "unverified": true,
+      "template": "tornado-cash/OwnableMerkleTree",
+      "sourceHashes": [
+        "0x218d9a152ab9d469cf4baf2591677b19bb64e6885452ccc071bfbf6eca60c9aa"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified merkle tree instance that stores legacy Tornado withdrawal leaves for TornadoTreesV1.",
+      "description": "Anonymity Mining - Legacy Poseidon merkle tree that stores deposit or withdrawal leaves for TornadoTreesV1. Only its owner can insert leaves.",
+      "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"],
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608262112,
       "sinceBlock": 11474714,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 9,
+        "getLastRoot": "0x03e0f40772e1d8a3972de5434e0987db86b409e16f61cf995ef6f290ac935022",
+        "hasher": "eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79",
+        "levels": 20,
+        "nextIndex": 5632,
+        "owner": "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417"
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "HIGH",
+          "description": "Only this address can insert leaves into the tree."
+        },
+        "hasher": {
+          "description": "Poseidon hasher used to compute the tree nodes."
+        },
+        "levels": {
+          "severity": "LOW",
+          "description": "Height of the merkle tree."
+        }
+      },
       "implementationNames": {
-        "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": ""
-      }
+        "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": "OwnableMerkleTree"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Verifier",
@@ -2400,12 +2468,12 @@
       "sinceBlock": 9117612,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 60,
+        "currentRootIndex": 62,
         "denomination": "100000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x137e21328ad6067a7009b0e586623c60079a0be9f9e6223c7c3203aa01ca7a9b",
+        "getLastRoot": "0x23f7aed9da3a3e1ed6b716f1134e1a054f6784d29222e21993367b3153866368",
         "levels": 20,
-        "nextIndex": 460,
+        "nextIndex": 462,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -2444,7 +2512,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "description": "Anonymity Mining - Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees.",
+      "description": "Anonymity Mining - Unverified Poseidon hasher used by TornadoTreesV1 to hash deposit and withdrawal leaves.",
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608262097,
       "sinceBlock": 11474712,
@@ -2601,12 +2669,12 @@
       "sinceBlock": 9161917,
       "values": {
         "$immutable": true,
-        "currentRootIndex": 59,
+        "currentRootIndex": 62,
         "denomination": "1000000000000000000000",
         "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-        "getLastRoot": "0x102025d876585cb810f06d36726e81109acda9a5c057d768eecaf6d2758f8a33",
+        "getLastRoot": "0x251ede337ae2bcd54ba5b7dc350018906424aeb63aa93bd2697c8c0bef758ee4",
         "levels": 20,
-        "nextIndex": 1359,
+        "nextIndex": 1362,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "operatorRenounced": true,
         "ROOT_HISTORY_SIZE": 100,
@@ -3204,6 +3272,28 @@
       "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
       "function zeros(uint256 i) pure returns (bytes32)"
     ],
+    "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226": [
+      "constructor(uint32 _treeLevels, address _hasher)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function bulkInsert(bytes32[] _leaves)",
+      "function currentRootIndex() view returns (uint32)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) view returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function insert(bytes32 _leaf) returns (uint32 index)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function roots(uint256) view returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
     "eth:0x653477c392c16b0765603074f157314Cc4f40c32": [
       "function verifyProof(bytes proof, uint256[4] input) view returns (bool)"
     ],
@@ -3519,6 +3609,28 @@
       "function version() pure returns (string)",
       "function withdrawFromHelper(uint256 amount)"
     ],
+    "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": [
+      "constructor(uint32 _treeLevels, address _hasher)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function bulkInsert(bytes32[] _leaves)",
+      "function currentRootIndex() view returns (uint32)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) view returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function insert(bytes32 _leaf) returns (uint32 index)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function roots(uint256) view returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
     "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A": [
       "function verifyProof(bytes proof, uint256[6] input) view returns (bool)"
     ],
@@ -3696,6 +3808,7 @@
     "tornado-cash/GovernanceProposalStateUpgrade": "0xfe4376ccbb98b25676799aca19bec472ef351193d9ce4700bd2911cbc43a6d78",
     "tornado-cash/InstanceRegistry": "0xe4adfe1b395d68b67ff6c83a2964386a9813cf4c8739d2b6e65f5c1f5756a160",
     "tornado-cash/Miner": "0xe77c3ae97ad6368c8457e5442f79fefa5211b0e0528233a22f9f9710750b957d",
+    "tornado-cash/OwnableMerkleTree": "0x23e3107811bb8d57872d7a0b997d80ab3b6871ce2bc416d9910b49b0ced2cc36",
     "tornado-cash/Proposal": "0x21857196f327a8eadf42591631adb24d788318246f12110fe95bbc8b3821338f",
     "tornado-cash/RelayerRegistry": "0xc40b94bab076de47092f25dac3d0d5fef608fbb1fd70b70212a58f6d0bd54c70",
     "tornado-cash/RewardSwap": "0xcc6aee41984fae78ee9c1aa1b37ad1f6664922687dbbdd7cc90ad4dfee1b624f",
@@ -3715,8 +3828,8 @@
     "tornado-cash/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tornado-cash/WithdrawVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26096975 },
-  "permissionsConfigHash": "0xa9362150c006f3c0efd6c4edc373d92da1a5b6a8b47e91b6db4d61bbda9ae2a6",
+  "usedBlockNumbers": { "ethereum": 26147003 },
+  "permissionsConfigHash": "0xa6ec83ce4899bc6f50c195e64efd5142f116dc3606b17f15a010409e98f0bb5a",
   "permissions": {
     "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce": {
       "receivedPermissions": [

@@ -146,6 +146,10 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     throw new ReplayError(key)
   }
 
+  getTransactionReceipts(txHashes: string[]): Promise<Receipt[]> {
+    return Promise.all(txHashes.map((h) => this.getTransactionReceipt(h)))
+  }
+
   getBalance(
     holder: EthereumAddress,
     blockNumber: number | 'latest',

@@ -534,6 +534,20 @@ describe('getProjects', () => {
       }
       expect(problems).toEqual([])
     })
+
+    // The tooltip shows the short description alone, so a second sentence would read as cut off.
+    it('every adversary short description is one sentence', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const cells = Object.entries(privacyInfo.adversaries?.cells ?? {})
+        for (const [adversaryId, cell] of cells) {
+          if (/[.!?]\s/.test(cell.exposureShort)) {
+            problems.push(`${project.id} ${adversaryId}`)
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
   })
 
   describe('contracts', () => {
@@ -899,6 +913,31 @@ describe('getProjects', () => {
         }
       }
       expect(duplicates).toEqual([])
+    })
+
+    // A project that posts blobs without an ethereum tracking config shows up
+    // as an unknown blob sender on the Ethereum DA page (e.g. Nova after its
+    // switch to blobs, Fluent since launch).
+    it('every live project with Ethereum blobs DA has ethereum tracking', () => {
+      const missing = projects
+        // L3s inherit the label from their host chain, which posts for them
+        .filter(
+          (p) =>
+            p.archivedAt === undefined &&
+            p.scalingInfo?.hostChain.id === 'ethereum',
+        )
+        .filter((p) =>
+          (p.scalingDa ?? []).some(
+            (da) =>
+              da.layer.value === 'Ethereum' &&
+              da.layer.secondLine?.includes('Blobs'),
+          ),
+        )
+        .filter(
+          (p) => !(p.daTrackingConfig ?? []).some((c) => c.type === 'ethereum'),
+        )
+        .map((p) => p.id)
+      expect(missing).toEqual([])
     })
 
     it('every namespace is unique for Celestia projects', () => {

@@ -12,16 +12,8 @@ import { DataPostedTrackedTransactions } from './DataPostedTrackedTransactions'
 
 export interface DataPostedSectionProps extends ProjectSectionProps {
   project: ChartProject
-  currentDaLayers: {
-    name: string
-    logo: string
-    href: string
-  }[]
-  pastDaLayers: {
-    name: string
-    logo: string
-    href: string
-  }[]
+  currentDaLayers: DaLayer[]
+  pastDaLayers: DaLayer[]
   milestones: Milestone[]
   defaultRange: ChartRange
   daTrackingConfig: (ProjectDaTrackingConfig & {
@@ -41,35 +33,24 @@ export function DataPostedSection({
   return (
     <ProjectSection {...sectionProps}>
       <p className="text-paragraph-15 md:text-paragraph-16">
-        {DATA_POSTED_DESCRIPTION} The project currently posts data to
-        <span>
-          {currentDaLayers.map((daLayer) => (
-            <CustomLink key={daLayer.href} href={daLayer.href} className="ml-1">
-              <img
-                src={daLayer.logo}
-                alt={daLayer.name}
-                className="mr-1 inline-block size-5"
-              />
-              <span>{daLayer.name}</span>
-            </CustomLink>
-          ))}
-        </span>
+        {DATA_POSTED_DESCRIPTION}{' '}
+        {currentDaLayers.length > 0 ? (
+          <>
+            The project currently posts data to
+            <span>
+              {currentDaLayers.map((daLayer) => (
+                <DaLayerName key={daLayer.name} daLayer={daLayer} />
+              ))}
+            </span>
+          </>
+        ) : (
+          'We no longer track where the project posts data'
+        )}
         {pastDaLayers.length > 0 && (
           <span>
             ; previously it posted to
             {pastDaLayers.map((daLayer) => (
-              <CustomLink
-                key={daLayer.href}
-                href={daLayer.href}
-                className="ml-1"
-              >
-                <img
-                  src={daLayer.logo}
-                  alt={daLayer.name}
-                  className="mr-1 inline-block size-5"
-                />
-                <span>{daLayer.name}</span>
-              </CustomLink>
+              <DaLayerName key={daLayer.name} daLayer={daLayer} />
             ))}
           </span>
         )}
@@ -87,5 +68,31 @@ export function DataPostedSection({
       <HorizontalSeparator className="my-4" />
       <DataPostedTrackedTransactions daTrackingConfig={daTrackingConfig} />
     </ProjectSection>
+  )
+}
+
+interface DaLayer {
+  name: string
+  logo: string
+  href: string | undefined
+}
+
+function DaLayerName({ daLayer }: { daLayer: DaLayer }) {
+  const content = (
+    <>
+      <img
+        src={daLayer.logo}
+        alt={daLayer.name}
+        className="mr-1 inline-block size-5"
+      />
+      {daLayer.name}
+    </>
+  )
+  return daLayer.href ? (
+    <CustomLink href={daLayer.href} className="ml-1">
+      {content}
+    </CustomLink>
+  ) : (
+    <span className="ml-1 font-medium">{content}</span>
   )
 }

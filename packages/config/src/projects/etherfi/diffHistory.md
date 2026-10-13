@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xf4af50fdb3e4403cd6d8ea8c1ec9d5317d106f47
+
+# Diff at Wed, 07 Oct 2026 13:54:24 GMT:
+
+- id: 33e3ca7c
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1790850991
+- current timestamp: 1791381140
+
+## Description
+
+Liquifier: 24h timed pause by a guardian, lifted early by the operating multisig.
+
+## Watched changes
+
+```diff
+    contract Liquifier (eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F) [etherfi/Liquifier] {
+    +++ description: Accepts whitelisted liquid staking tokens and restaked positions in exchange for eETH, later unwinding them to ETH.
+      values.pausedUntil:
+-        1790894891
++        0
+    }
+```
+
 Generated with discovered.json: 0x2fbe4952c5f4bf0aef668ba8f04ae06432e1948d
 
 # Diff at Thu, 01 Oct 2026 11:10:31 GMT:

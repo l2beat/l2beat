@@ -28,7 +28,7 @@ export function Message({
 
   return (
     <div
-      className={`group flex rounded-sm px-4 py-2 transition-colors hover:bg-gray-800 ${className} w-full flex-col ${isExpanded && 'bg-gray-800'}`}
+      className={`group flex rounded-xs px-4 py-2 transition-colors hover:bg-gray-800 ${className} w-full flex-col ${isExpanded && 'bg-gray-800'}`}
     >
       <div
         className="flex w-full cursor-pointer justify-between"
@@ -71,7 +71,7 @@ export function Message({
 
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="mt-0.5 rounded p-1 text-gray-400 hover:bg-gray-700 hover:text-gray-200"
+          className="mt-0.5 rounded-sm p-1 text-gray-400 hover:bg-gray-700 hover:text-gray-200"
         >
           {isExpanded ? '▼' : '▶'}
         </button>

@@ -6,8 +6,8 @@ import {
   getChainConfigs,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { readFileSync } from 'fs'
-import { rimraf } from 'rimraf'
+import { readdirSync, readFileSync, rmSync } from 'fs'
+import { join } from 'path'
 
 export type Timing =
   | { blockNumber: number; timing?: undefined }
@@ -29,8 +29,11 @@ export async function rediscoverStructureOnBlock(
   const discoveryFolder = configReader.getProjectPath(projectName)
 
   // Remove any old sources we fetched before, so that their count doesn't grow
-  await rimraf(`${discoveryFolder}/.code@*`, { glob: true })
-  await rimraf(`${discoveryFolder}/.flat@*`, { glob: true })
+  for (const entry of readdirSync(discoveryFolder)) {
+    if (entry.startsWith('.code@') || entry.startsWith('.flat@')) {
+      rmSync(join(discoveryFolder, entry), { recursive: true, force: true })
+    }
+  }
 
   await discover(
     {
@@ -52,6 +55,6 @@ export async function rediscoverStructureOnBlock(
   const prevDiscovery = JSON.parse(prevDiscoveryFile) as DiscoveryOutput
 
   // Remove discovered@... file, we don't need it
-  await rimraf(`${discoveryFolder}/discovered@${timePoint}.json`)
+  rmSync(`${discoveryFolder}/discovered@${timePoint}.json`, { force: true })
   return prevDiscovery
 }

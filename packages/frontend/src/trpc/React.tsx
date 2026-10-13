@@ -3,7 +3,7 @@ import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { createTRPCClient, httpBatchStreamLink, loggerLink } from '@trpc/client'
-import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import type { inferRouterOutputs } from '@trpc/server'
 import { createTRPCContext } from '@trpc/tanstack-react-query'
 import type React from 'react'
 import { useState } from 'react'
@@ -24,13 +24,6 @@ const getQueryClient = () => {
 
 export const { TRPCProvider, useTRPC, useTRPCClient } =
   createTRPCContext<AppRouter>()
-
-/**
- * Inference helper for inputs.
- *
- * @example type HelloInput = RouterInputs['example']['hello']
- */
-export type RouterInputs = inferRouterInputs<AppRouter>
 
 /**
  * Inference helper for outputs.

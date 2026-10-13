@@ -12,6 +12,7 @@ import type { PrivacyAssetsBreakdownSectionProps } from '~/components/projects/s
 import {
   getExposure,
   getExposureNote,
+  getPrivacyAdversaryDescription,
   PRIVACY_ADVERSARIES_TOOLTIP,
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
@@ -69,7 +70,7 @@ function renderAdversary(
     heading(level, adversary.label),
     withSentiment(cell.value, cell.sentiment),
     `**Who:** ${adversary.description} Examples: ${adversary.examples}`,
-    cell.exposure,
+    getPrivacyAdversaryDescription(cell),
     cell.advice ? `**Advice:** ${cell.advice}` : '',
     cell.interior
       ? baseline?.interior

@@ -22,20 +22,31 @@ describe(getSearchBarEntries.name, () => {
       [
         l2Project('ethereal', 'Ethereal', 'Other', 'layer3'),
         l2Project('jetstreamchain', 'Jetstream'),
-        daLayerProject('ethereum', 'Ethereum'),
-        daBridgeProject('enshrined-bridge', 'Enshrined Bridge', 'ethereum'),
+        l2Project('etherex', 'Etherex'),
       ] as never
 
     const result = await getSearchBarEntries('ethere')
 
-    expect(result.map((entry) => entry.name)).toEqual([
-      'Ethereal',
-      'Ethereum with Enshrined Bridge',
-    ])
+    expect(result.map((entry) => entry.name)).toEqual(['Etherex', 'Ethereal'])
     expect(result.map((entry) => entry.searchMatchKind)).toEqual([
       'direct',
       'direct',
     ])
+  })
+
+  // Ethereum is a DA layer, not a scaling project, yet has its own page.
+  it('finds Ethereum and links its page', async () => {
+    ps.getProjects = async () =>
+      [
+        { id: ProjectId.ETHEREUM, slug: 'ethereum', name: 'Ethereum' },
+        l2Project('etherex', 'Etherex'),
+      ] as never
+
+    const result = await getSearchBarEntries('ethereum')
+
+    expect(result.find((entry) => entry.name === 'Ethereum')?.href).toEqual(
+      '/projects/ethereum',
+    )
   })
 
   it('falls back to fuzzy project matches when there are no direct matches', async () => {
@@ -93,29 +104,6 @@ function l2Project(
     scalingInfo: {
       layer,
       type: l2Category,
-    },
-  }
-}
-
-function daLayerProject(slug: string, name: string) {
-  return {
-    id: ProjectId(slug),
-    slug,
-    name,
-    daLayer: {
-      usedWithoutBridgeIn: [],
-    },
-  }
-}
-
-function daBridgeProject(slug: string, name: string, daLayerSlug: string) {
-  return {
-    id: ProjectId(slug),
-    slug,
-    name,
-    daBridge: {
-      name,
-      daLayer: ProjectId(daLayerSlug),
     },
   }
 }

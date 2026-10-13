@@ -72,26 +72,27 @@ export function getOssificationHistory(
   if (members.size === 0) return undefined
 
   const events = getEvents(sources, members)
-  const perimeteredChanges = events.filter((event) =>
-    isPerimetered(event, members, sources),
+  const countedChanges = events.filter((event) =>
+    isCounted(event, members, sources),
   )
   const contracts = [...members.values()]
     .filter((member) => member.until === undefined)
-    .map((member) => toRow(member, events, perimeteredChanges))
+    .map((member) => toRow(member, sources.projectStart, countedChanges))
 
   return {
     contracts,
-    changes: perimeteredChanges.map(toChange),
-    resets: [...members.values()]
-      .flatMap((m) => [m.deployedAt, m.since])
-      .filter(notUndefined),
+    changes: countedChanges.map(toChange),
+    deployments: [...members.values()]
+      .map((member) => member.deployedAt)
+      .filter(notUndefined)
+      .sort((a, b) => a - b),
     observedSince: getObservedSince(members, events, sources.projectStart),
   }
 }
 
 // Reviewed changes have the same bounds: a review dates a change, it does not
 // make an earlier change the project's own.
-function isPerimetered(
+function isCounted(
   event: MemberEvent,
   members: Map<string, Member>,
   sources: OssificationSources,
@@ -102,21 +103,26 @@ function isPerimetered(
   )
 }
 
+// Before the project start or the moment it became critical, a contract's
+// history is not the project's own.
 function toRow(
   member: Member,
-  events: MemberEvent[],
-  perimetered: MemberEvent[],
+  projectStart: number | undefined,
+  changes: MemberEvent[],
 ): OssificationContract {
-  const own = (event: MemberEvent) => event.contract === key(member.address)
+  const counted = changes.filter(
+    (event) => event.contract === key(member.address),
+  )
   const ossifyingSince = latest(
     member.deployedAt,
-    ...events.filter(own).map((event) => event.timestamp),
+    member.since,
+    projectStart,
+    ...counted.map((event) => event.timestamp),
   )
   assert(
     ossifyingSince !== undefined,
     `${member.address} is critical but has no known age`,
   )
-  const counted = perimetered.filter(own)
   return {
     name: member.name,
     address: member.address,
