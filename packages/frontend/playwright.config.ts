@@ -22,8 +22,6 @@ const PERF = '**/*-perf/**'
  */
 const BLOBS_PERF = '**/blobs-perf/**'
 
-const functional = [{ name: 'chromium', testIgnore: [PERF] }]
-
 // biome-ignore lint/style/noDefaultExport: Playwright config uses a default export.
 export default defineConfig({
   testDir: './e2e',
@@ -32,12 +30,12 @@ export default defineConfig({
     baseURL: process.env.BASE_URL ?? 'http://localhost:7357',
   },
   projects: [
-    ...functional,
+    { name: 'chromium', testIgnore: PERF },
     {
       name: 'perf',
       testMatch: `${PERF}/*.e2e.ts`,
       testIgnore: BLOBS_PERF,
-      dependencies: functional.map((project) => project.name),
+      dependencies: ['chromium'],
       workers: 1,
     },
     {
