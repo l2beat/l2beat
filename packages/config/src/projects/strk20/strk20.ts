@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
@@ -160,26 +161,32 @@ export const strk20: BaseProject = {
 }
 
 function getPrivacyTokens(): ProjectPrivacyToken[] {
-  return STRK20_TOKENS.map((token) => ({
-    token,
-    buckets: [
-      {
-        id: `strk20-${token.symbol}`,
-        type: 'pool',
-        label: `${token.symbol} pool`,
-        address: STRK20_POOL,
-        sinceTimestamp: token.sinceTimestamp,
-        deposit: {
-          event: STRK20_DEPOSIT_EVENT,
-          extractor: 'strk20Deposit',
-          params: { tokenAddress: token.address },
+  return STRK20_TOKENS.map((token) => {
+    const minimumAmounts = PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[token.symbol]
+
+    return {
+      token,
+      buckets: [
+        {
+          id: `strk20-${token.symbol}`,
+          type: 'pool',
+          label: `${token.symbol} pool`,
+          address: STRK20_POOL,
+          sinceTimestamp: token.sinceTimestamp,
+          anonymitySet:
+            minimumAmounts === undefined ? undefined : { minimumAmounts },
+          deposit: {
+            event: STRK20_DEPOSIT_EVENT,
+            extractor: 'strk20Deposit',
+            params: { tokenAddress: token.address },
+          },
+          withdrawal: {
+            event: STRK20_WITHDRAWAL_EVENT,
+            extractor: 'strk20Withdrawal',
+            params: { tokenAddress: token.address },
+          },
         },
-        withdrawal: {
-          event: STRK20_WITHDRAWAL_EVENT,
-          extractor: 'strk20Withdrawal',
-          params: { tokenAddress: token.address },
-        },
-      },
-    ],
-  }))
+      ],
+    }
+  })
 }

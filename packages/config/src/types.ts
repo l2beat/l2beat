@@ -1203,6 +1203,7 @@ export interface PrivacyAttribute {
 }
 
 export type PrivacyCategoryId =
+  | 'anonymousAccess'
   | 'pool'
   | 'shieldedLedger'
   | 'stealthAddress'
@@ -1360,6 +1361,8 @@ export interface PrivacyPromise {
 
 export interface PrivacyAdversariesConfig {
   promise: PrivacyPromise
+  /** Overrides the default field description for this project, e.g. when linkage means something other than a transfer link. */
+  fieldDescriptions?: Partial<Record<PrivacyField, string>>
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
 }
 
@@ -1415,6 +1418,8 @@ interface ProjectPrivacyBucketBase {
   sinceTimestamp: UnixTime
   denomination?: string
   withdrawal: PrivacyFlowSource
+  /** Other payout events of this bucket, tracked without a second bucket that would double-count deposits. */
+  additionalWithdrawals?: PrivacyFlowSource[]
 }
 
 export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
@@ -1428,7 +1433,6 @@ export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
            */
           minimumAmounts: string[]
         }
-        address: ChainSpecificAddress
         deposit: PrivacyAnonymitySetDepositSource
       }
     | {
@@ -1459,11 +1463,22 @@ export type PrivacyAnonymitySetDepositSource = {
       | 'fixedAmount'
       | 'privacyPoolsValue'
       | 'railgunShield'
+      | 'strk20Deposit'
       | 'zkMoneyDeposit'
   }
 >
 
 export type PrivacyFlowExtractorConfig =
+  | {
+      /** Deposited note amount, in whole `weiPerUnit` units (e.g. gwei). */
+      extractor: 'zkApiDeposit'
+      params: { weiPerUnit: string }
+    }
+  | {
+      /** User payout (final balance) of a cooperative close or finalized escape, in whole `weiPerUnit` units (e.g. gwei). */
+      extractor: 'zkApiWithdrawal'
+      params: { weiPerUnit: string }
+    }
   | {
       extractor: 'fixedAmount'
       params: {

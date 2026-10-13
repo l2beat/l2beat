@@ -78,8 +78,6 @@ export const celo: ScalingProject = opStackL2({
   daVerifierSecureOnL1: true,
   daVerifier7DayExitWindow: false,
   daCommitteeDecentralized: true,
-  daVerifier30DayExitWindow: false,
-  daMechanismEconomicSecurity: false,
   zkVerifierContractsReproducible: true,
   nodeSourceLink: 'https://github.com/celo-org/op-geth',
   proverSourceLink: 'https://github.com/succinctlabs/sp1',

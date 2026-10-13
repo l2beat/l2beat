@@ -1,9 +1,12 @@
 import { Env } from '@l2beat/backend-tools'
 import {
   type ChainConfig,
+  type PrivacyFlowSource,
+  type ProjectPrivacyBucket,
   type ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
+import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import {
   ChainSpecificAddress,
   EthereumAddress,
@@ -17,8 +20,43 @@ import { getPrivacyConfig } from './privacy'
 
 const ps = new ProjectService()
 const env = new Env({})
+const POOL = EthereumAddress('0x1111111111111111111111111111111111111111')
+const TOKEN = EthereumAddress('0x2222222222222222222222222222222222222222')
 
 describe(getPrivacyConfig.name, () => {
+  it('indexes additional withdrawals of a bucket next to its single deposit', async () => {
+    const configs = await getFlowConfigs({
+      deposit: {
+        event: '0xdeposit',
+        extractor: 'fixedAmount',
+        params: { amount: '1' },
+      },
+      withdrawal: {
+        event: '0xclose',
+        extractor: 'fixedAmount',
+        params: { amount: '1' },
+      },
+      additionalWithdrawals: [
+        {
+          event: '0xescape',
+          extractor: 'fixedAmount',
+          params: { amount: '1' },
+        },
+      ],
+    })
+
+    const deposits = configs.filter((c) => c.direction === 'deposit')
+    const withdrawals = configs.filter((c) => c.direction === 'withdrawal')
+    expect(deposits).toHaveLength(1)
+    expect(withdrawals.map((c) => c.event)).toEqual(['0xclose', '0xescape'])
+    expect(configs.map((c) => c.bucketId)).toEqual([
+      'bucket',
+      'bucket',
+      'bucket',
+    ])
+    expect(new Set(configs.map((c) => c.id)).size).toEqual(3)
+  })
+
   it('returns false if enabled privacy projects have no tracked buckets', async () => {
     const project = await ps.getProject({
       slug: 'privacy-pools',
@@ -140,75 +178,21 @@ describe(getPrivacyConfig.name, () => {
   })
 
   describe('erc20Transfer sources', () => {
-    const POOL = EthereumAddress('0x1111111111111111111111111111111111111111')
-    const TOKEN = EthereumAddress('0x2222222222222222222222222222222222222222')
     const POOL_TOPIC = `0x${'00'.repeat(12)}${POOL.slice(2).toLowerCase()}`
-    type FlowSource = ProjectPrivacyToken['buckets'][number]['withdrawal']
-
-    async function getFlowConfigs(deposit: FlowSource, withdrawal: FlowSource) {
-      const project = await ps.getProject({
-        slug: 'privacy-pools',
-        select: ['privacyInfo'],
-      })
-      if (!project) throw new Error('Privacy Pools project not found')
-
-      const token: ProjectPrivacyToken = {
-        token: {
-          address: TOKEN,
-          iconUrl: undefined,
-          symbol: 'TKN',
-          decimals: 18,
-          priceId: 'tkn',
-          sinceTimestamp: UnixTime(1000),
-        },
-        buckets: [
-          {
-            id: 'bucket',
-            type: 'pool',
-            label: 'TKN',
-            address: ChainSpecificAddress.fromLong('ethereum', POOL),
-            sinceTimestamp: UnixTime(1000),
-            deposit,
-            withdrawal,
-          },
-        ],
-      }
-      const projectService = mockObject<ProjectService>({
-        getProjects: mockFn().resolvesToOnce([
-          {
-            ...project,
-            privacyInfo: {
-              ...project.privacyInfo,
-              relayerTracking: undefined,
-              tokens: [token],
-            },
-          },
-        ]),
-      })
-
-      const config = await getPrivacyConfig(
-        projectService,
-        env,
-        new FeatureFlags('privacy'),
-        [],
-      )
-      if (!config) throw new Error('Privacy config not created')
-      return config.flowConfigs
-    }
 
     it('queries the token contract filtered by the pool as receiver or sender', async () => {
-      const [deposit, withdrawal] = await getFlowConfigs(
-        {
+      const [deposit, withdrawal] = await getFlowConfigs({
+        deposit: {
           event: ERC20_TRANSFER_TOPIC,
           extractor: 'erc20Transfer',
           params: { to: POOL },
         },
-        {
+        withdrawal: {
           event: ERC20_TRANSFER_TOPIC,
           extractor: 'erc20Transfer',
           params: { from: POOL },
         },
-      )
+      })
 
       expect(deposit).toEqual(
         expect.subset({
@@ -232,18 +216,18 @@ describe(getPrivacyConfig.name, () => {
     })
 
     it('filters both ends when from and to are set', async () => {
-      const [deposit] = await getFlowConfigs(
-        {
+      const [deposit] = await getFlowConfigs({
+        deposit: {
           event: ERC20_TRANSFER_TOPIC,
           extractor: 'erc20Transfer',
           params: { from: TOKEN, to: POOL },
         },
-        {
+        withdrawal: {
           event: ERC20_TRANSFER_TOPIC,
           extractor: 'erc20Transfer',
           params: { from: POOL },
         },
-      )
+      })
 
       expect(deposit.topics).toEqual([
         `0x${'00'.repeat(12)}${TOKEN.slice(2).toLowerCase()}`,
@@ -253,19 +237,19 @@ describe(getPrivacyConfig.name, () => {
 
     it('rejects a source without any filter', async () => {
       await expect(
-        getFlowConfigs(
-          {
+        getFlowConfigs({
+          deposit: {
             event: ERC20_TRANSFER_TOPIC,
             extractor: 'erc20Transfer',
             // The type forbids this, so bypass it to exercise the runtime guard.
             params: {} as { from: typeof POOL },
           },
-          {
+          withdrawal: {
             event: ERC20_TRANSFER_TOPIC,
             extractor: 'erc20Transfer',
             params: { from: POOL },
           },
-        ),
+        }),
       ).toBeRejectedWith('erc20Transfer source needs a from or to filter')
     })
   })
@@ -296,8 +280,130 @@ describe(getPrivacyConfig.name, () => {
 
     if (config === false) throw new Error('Privacy config should be enabled')
     expect(config.anonymitySetConfigs.length).toBeGreaterThan(0)
-    for (const anonymitySetConfig of config.anonymitySetConfigs) {
+    expect(config.starknetAnonymitySetConfigs.length).toBeGreaterThan(0)
+    for (const anonymitySetConfig of [
+      ...config.anonymitySetConfigs,
+      ...config.starknetAnonymitySetConfigs,
+    ]) {
       expect(anonymitySetConfig.sinceTimestamp).toEqual(minTimestamp)
     }
   })
+
+  it('routes STRK-20 anonymity sets to the Starknet indexer', async () => {
+    const project = await ps.getProject({
+      slug: 'strk20',
+      select: ['privacyInfo'],
+    })
+    if (!project) throw new Error('STRK-20 project not found')
+    const strkBucket = project.privacyInfo.tokens
+      .flatMap((token) => token.buckets)
+      .find((bucket) => bucket.id === 'strk20-STRK')
+    if (!strkBucket?.anonymitySet) throw new Error('STRK bucket not tracked')
+    if (typeof strkBucket.address === 'string') {
+      throw new Error('STRK-20 pool should use an explicit chain address')
+    }
+    const deposit = strkBucket.deposit
+    if (deposit.extractor !== 'strk20Deposit') {
+      throw new Error('STRK-20 deposits should use the strk20Deposit extractor')
+    }
+
+    const projectService = mockObject<ProjectService>({
+      getProjects: mockFn().resolvesToOnce([project]),
+    })
+
+    const config = await getPrivacyConfig(
+      projectService,
+      env,
+      new FeatureFlags('privacy'),
+      [],
+    )
+
+    if (config === false) throw new Error('Privacy config should be enabled')
+    expect(config.anonymitySetConfigs).toEqual([])
+    expect(config.starknetAnonymitySetConfigs.map((c) => c.bucketId)).toEqual(
+      project.privacyInfo.tokens
+        .filter((token) => token.buckets[0]?.anonymitySet !== undefined)
+        .map((token) => `strk20-${token.token.symbol}`),
+    )
+    const strkConfig = config.starknetAnonymitySetConfigs.find(
+      (c) => c.bucketId === 'strk20-STRK',
+    )
+    expect(strkConfig).toEqual({
+      id: createPrivacyAnonymitySetConfigurationId({
+        projectId: 'strk20',
+        bucketId: 'strk20-STRK',
+        chain: 'starknet',
+        address: strkBucket.address.address,
+        event: deposit.event,
+        extractor: 'strk20Deposit',
+        params: deposit.params,
+      }),
+      projectId: 'strk20',
+      bucketId: 'strk20-STRK',
+      chain: 'starknet',
+      address: strkBucket.address.address,
+      event: deposit.event,
+      sinceTimestamp: strkBucket.sinceTimestamp,
+      extractor: 'strk20Deposit',
+      params: deposit.params,
+    })
+    expect(config.chains).toEqual(['starknet'])
+  })
 })
+
+type BucketFlows = Pick<
+  ProjectPrivacyBucket,
+  'withdrawal' | 'additionalWithdrawals'
+> & { deposit: PrivacyFlowSource }
+
+// Swaps the real buckets of an existing project for one synthetic bucket, so
+// the test controls exactly which flow sources reach getPrivacyConfig.
+async function getFlowConfigs(flows: BucketFlows) {
+  const project = await ps.getProject({
+    slug: 'privacy-pools',
+    select: ['privacyInfo'],
+  })
+  if (!project) throw new Error('Privacy Pools project not found')
+
+  const token: ProjectPrivacyToken = {
+    token: {
+      address: TOKEN,
+      iconUrl: undefined,
+      symbol: 'TKN',
+      decimals: 18,
+      priceId: 'tkn',
+      sinceTimestamp: UnixTime(1000),
+    },
+    buckets: [
+      {
+        id: 'bucket',
+        type: 'pool',
+        label: 'TKN',
+        address: ChainSpecificAddress.fromLong('ethereum', POOL),
+        sinceTimestamp: UnixTime(1000),
+        ...flows,
+      },
+    ],
+  }
+  const projectService = mockObject<ProjectService>({
+    getProjects: mockFn().resolvesToOnce([
+      {
+        ...project,
+        privacyInfo: {
+          ...project.privacyInfo,
+          relayerTracking: undefined,
+          tokens: [token],
+        },
+      },
+    ]),
+  })
+
+  const config = await getPrivacyConfig(
+    projectService,
+    env,
+    new FeatureFlags('privacy'),
+    [],
+  )
+  if (!config) throw new Error('Privacy config not created')
+  return config.flowConfigs
+}
