@@ -906,14 +906,6 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
-  relayerType?: TableReadyValue<'Permissioned' | 'SelfRelay'>
-  validationType?: DaBridgeValidationType
-}
-
-type DaBridgeValidationType = TableReadyValue<
-  'Validity Proof' | 'BLS Signature'
-> & {
-  zkCatalogId?: ProjectId
 }
 
 export interface DaBridgeRisks {

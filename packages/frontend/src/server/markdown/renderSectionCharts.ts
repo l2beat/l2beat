@@ -11,7 +11,6 @@ import {
   anonymitySetByHoldingDurationDescription,
   anonymitySetHistoricDescription,
   COSTS_DESCRIPTION,
-  DA_BRIDGE_LIVENESS_DESCRIPTION,
   DATA_POSTED_DESCRIPTION,
   LAST_30_DAY_ANOMALIES_DESCRIPTION,
   LIVENESS_DESCRIPTION,
@@ -107,13 +106,12 @@ export function renderLivenessSection(
     | 'hasTrackedContractsChanged'
     | 'trackedTransactions'
     | 'isArchived'
-    | 'isForDaBridge'
   >,
   level: number,
 ) {
   const ongoing = props.anomalies.filter(isAnomalyOngoing)
   return joinBlocks([
-    props.isForDaBridge ? DA_BRIDGE_LIVENESS_DESCRIPTION : LIVENESS_DESCRIPTION,
+    LIVENESS_DESCRIPTION,
     renderTrackedTxsOutage(),
     props.isArchived
       ? ''
