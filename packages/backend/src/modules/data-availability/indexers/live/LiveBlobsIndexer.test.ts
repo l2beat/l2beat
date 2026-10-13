@@ -236,6 +236,23 @@ describe(LiveBlobsIndexer.name, () => {
       expect(db.liveBlock.upsertMany).not.toHaveBeenCalled()
     })
 
+    it('fails the update after a slot even when each ask is slow', async () => {
+      // Each ask takes a second, so a cap on the number of asks would wait
+      // six times longer than a slot
+      const { indexer, daProvider } = setup({})
+      daProvider.getBlocksWithBlobBatchesFromReceipts.executes(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        throw notOnRpc()
+      })
+
+      const update = expect(indexer.update(HEAD, HEAD)).toBeRejectedWith(
+        NotFoundOnRpcError,
+      )
+      await time.tickAsync(SLOT_SECONDS * 1000 + 1000)
+
+      await update
+    })
+
     it('is not waited for when the update fails for another reason', async () => {
       const { indexer, daProvider } = setup({})
       daProvider.getBlocksWithBlobBatchesFromReceipts.rejectsWithOnce(

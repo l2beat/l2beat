@@ -39,8 +39,11 @@ const BLOCKS_PER_READ = 1000
  * within a second; the call carries the whole block, so not more often
  */
 const NOT_ON_RPC_RETRY_MS = 200
-/** A block still missing after a slot is a failure, not a node trailing the head */
-const NOT_ON_RPC_MAX_RETRIES = (SLOT_SECONDS * 1000) / NOT_ON_RPC_RETRY_MS
+/**
+ * A block still missing after a slot is a failure, not a node trailing the
+ * head. Wall-clock, since each ask can itself take a while on a slow RPC
+ */
+const NOT_ON_RPC_MAX_WAIT_MS = SLOT_SECONDS * 1000
 
 export type LiveBlobsConfig = EthereumDaTrackingConfig & {
   projectId: ProjectId
@@ -133,7 +136,8 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
     start: number,
     end: number,
   ): Promise<EthereumBlobBlock[]> {
-    for (let retries = 0; ; retries++) {
+    const deadline = Date.now() + NOT_ON_RPC_MAX_WAIT_MS
+    for (;;) {
       try {
         return await this.$.daProvider.getBlocksWithBlobBatchesFromReceipts(
           start,
@@ -141,8 +145,7 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
         )
       } catch (error) {
         const notYet =
-          error instanceof NotFoundOnRpcError &&
-          retries < NOT_ON_RPC_MAX_RETRIES
+          error instanceof NotFoundOnRpcError && Date.now() < deadline
         if (!notYet) throw error
         await sleep(NOT_ON_RPC_RETRY_MS)
       }
