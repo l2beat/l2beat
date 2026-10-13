@@ -150,6 +150,7 @@ export function LiveBlocks({ live, status, posters, limits }: Props) {
     canvasRef,
     scene,
     progressNow: clock.progressNow,
+    liveHead: status === 'live' ? live?.head : undefined,
     still: reducedMotion,
     view: beltView,
     onScreen,
