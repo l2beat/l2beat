@@ -15,7 +15,10 @@ import {
   toProjectRanges,
 } from '~/server/features/utils/projectSeriesChart'
 import type { ChartRange } from '~/utils/range/range'
-import { withoutDeprecatedDaLayers } from './utils/consts'
+import {
+  THROUGHPUT_ENABLED_DA_LAYERS,
+  withoutDeprecatedDaLayers,
+} from './utils/consts'
 
 export const DataPostedChartWithProjectsRangesDataParams = ProjectsChartParams
 
@@ -25,7 +28,7 @@ export type DataPostedChartWithProjectsRangesDataParams = v.infer<
 
 export type DetailedDataPostedChartWithProjectsRangesDataPoint = [
   timestamp: number,
-  /** Bytes posted per day per project, summed across DA layers. */
+  /** Bytes posted to Ethereum per day per project. */
   projects: Record<string, number | null>,
 ]
 
@@ -38,8 +41,7 @@ export type DetailedDataPostedChartWithProjectsRangesData = {
 /**
  * @returns data-posted chart data split by project id and timestamp,
  * mirroring the shape of `getDetailedActivityChartWithProjectsRanges`.
- * Each series sums the project's bytes across every DA layer it posts to,
- * so projects on different layers are comparable on one chart.
+ * Each series counts only bytes posted to Ethereum.
  */
 export async function getDetailedDataPostedChartWithProjectsRanges({
   range,
@@ -82,7 +84,10 @@ export async function getDataPostedChartData(
 ): Promise<DetailedDataPostedChartWithProjectsRangesData> {
   const [allRecords, firstTimestamps] = await Promise.all([
     repository.getByProjectIdsAndTimeRange(projectIds, range),
-    repository.getFirstTimestampsByProjectIds(projectIds),
+    repository.getFirstTimestampsByProjectIds(
+      projectIds,
+      THROUGHPUT_ENABLED_DA_LAYERS,
+    ),
   ])
   const records = withoutDeprecatedDaLayers(allRecords)
 

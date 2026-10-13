@@ -8,7 +8,10 @@ import { getActivityForProjectAndRange } from '../../layer2s/activity/getActivit
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isThroughputSynced } from './isThroughputSynced'
-import { withoutDeprecatedDaLayers } from './utils/consts'
+import {
+  THROUGHPUT_ENABLED_DA_LAYERS,
+  withoutDeprecatedDaLayers,
+} from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 import {
   groupByTimestampAndDaLayerId,
@@ -51,7 +54,10 @@ export async function getL2ProjectDaThroughputChart({
   const [records, activityRecords, firstTimestamp] = await Promise.all([
     db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range),
     getActivityForProjectAndRange(projectId, range),
-    db.dataAvailability.getFirstTimestampByProjectIds([projectId]),
+    db.dataAvailability.getFirstTimestampByProjectIds(
+      [projectId],
+      THROUGHPUT_ENABLED_DA_LAYERS,
+    ),
   ])
 
   const throughput = withoutDeprecatedDaLayers(records)

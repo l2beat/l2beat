@@ -54,7 +54,7 @@ export const COSTS_DESCRIPTION =
 
 /** The page continues the sentence with the DA layers the project posts to. */
 export const DATA_POSTED_DESCRIPTION =
-  'This section shows how much data the project publishes to its data-availability (DA) layer over time.'
+  'This section shows how much data the project publishes to Ethereum over time. It leaves out data posted to other data-availability (DA) layers.'
 
 export const L3_RISKS_DESCRIPTION =
   'The L3 risks depend on the individual properties of L3 and those of the host chain combined.'

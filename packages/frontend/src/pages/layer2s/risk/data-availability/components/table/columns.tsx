@@ -49,7 +49,7 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
         meta: {
           align: 'right',
           tooltip:
-            'The data posted by the project to the DA layer over the past day, together with a % change compared to 7D ago.',
+            'The data posted by the project to Ethereum over the past day, together with a % change compared to 7D ago. It leaves out data posted to other DA layers.',
         },
       }),
       (row) => ({

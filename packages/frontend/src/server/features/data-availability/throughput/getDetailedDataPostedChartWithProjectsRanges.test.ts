@@ -49,7 +49,6 @@ describe(getDataPostedChartData.name, () => {
         record(ARBITRUM, 'ethereum', T, 100n),
         record(ARBITRUM, 'eigenda', T + 3 * HOUR, 25n),
         record(ARBITRUM, 'ethereum', T + DAY, 200n),
-        record(BASE, 'celestia', T + DAY, 20n),
       ],
       { [ARBITRUM]: T },
     )

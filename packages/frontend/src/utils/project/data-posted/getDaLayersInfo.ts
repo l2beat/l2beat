@@ -10,30 +10,25 @@ export function getDaLayersInfo(
   currentDaLayers: DaLayerInfo[]
   pastDaLayers: DaLayerInfo[]
 } {
-  const daLayersMap = new Map<ProjectId, DaLayerInfo & { isActive: boolean }>()
-
+  // One ended config (e.g. a rotated batcher) must not make the layer past
+  // while another config on it is still open.
+  const isCurrentByDaLayer = new Map<ProjectId, boolean>()
   for (const config of configs) {
-    const isActive = !config.untilBlock
-
-    const existingEntry = daLayersMap.get(config.daLayer)
-    if (!existingEntry) {
-      daLayersMap.set(config.daLayer, {
-        ...getDaLayer(config, daLayers),
-        isActive: !isActive,
-      })
-    } else {
-      existingEntry.isActive = existingEntry.isActive || !isActive
-    }
+    const isCurrent = config.untilBlock === undefined
+    isCurrentByDaLayer.set(
+      config.daLayer,
+      (isCurrentByDaLayer.get(config.daLayer) ?? false) || isCurrent,
+    )
   }
 
-  const [pastDaLayers, currentDaLayers] = partition(
-    Array.from(daLayersMap.values()),
-    (d) => d.isActive,
+  const [current, past] = partition(
+    Array.from(isCurrentByDaLayer),
+    ([, isCurrent]) => isCurrent,
   )
 
   return {
-    currentDaLayers,
-    pastDaLayers,
+    currentDaLayers: current.map(([id]) => getDaLayer(id, daLayers)),
+    pastDaLayers: past.map(([id]) => getDaLayer(id, daLayers)),
   }
 }
 
@@ -43,10 +38,10 @@ interface DaLayerInfo {
 }
 
 function getDaLayer(
-  config: ProjectDaTrackingConfig,
+  daLayerId: ProjectId,
   daLayers: Project<'daLayer'>[],
 ): DaLayerInfo {
-  const daLayer = daLayers.find((d) => d.id === config.daLayer)
+  const daLayer = daLayers.find((d) => d.id === daLayerId)
   assert(daLayer, 'Da layer not found')
 
   return {

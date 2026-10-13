@@ -87,24 +87,43 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id', START, 100n),
       ])
-      expect(await repository.checkIfExists('project-a')).toEqual(true)
+      expect(await repository.checkIfExists('project-a', ['layer-a'])).toEqual(
+        true,
+      )
     })
 
     it('is scoped to the project', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id', START, 100n),
       ])
-      expect(await repository.checkIfExists('project-b')).toEqual(false)
+      expect(await repository.checkIfExists('project-b', ['layer-a'])).toEqual(
+        false,
+      )
     })
 
     it('only counts records at or after fromInclusive', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id', START - UnixTime.DAY, 1n),
       ])
-      expect(await repository.checkIfExists('project-a', START)).toEqual(false)
       expect(
-        await repository.checkIfExists('project-a', START - UnixTime.DAY),
+        await repository.checkIfExists('project-a', ['layer-a'], START),
+      ).toEqual(false)
+      expect(
+        await repository.checkIfExists(
+          'project-a',
+          ['layer-a'],
+          START - UnixTime.DAY,
+        ),
       ).toEqual(true)
+    })
+
+    it('ignores records of other DA layers', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-b', 'config-id', START, 100n),
+      ])
+      expect(await repository.checkIfExists('project-a', ['layer-a'])).toEqual(
+        false,
+      )
     })
   })
 
@@ -843,10 +862,10 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           ),
         ])
 
-        const result = await repository.getFirstTimestampByProjectIds([
-          'project-a',
-          'project-b',
-        ])
+        const result = await repository.getFirstTimestampByProjectIds(
+          ['project-a', 'project-b'],
+          ['layer-a'],
+        )
 
         expect(result).toEqual(START - 5 * UnixTime.DAY)
       })
@@ -863,17 +882,39 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           ),
         ])
 
-        const result = await repository.getFirstTimestampByProjectIds([
-          'project-a',
+        const result = await repository.getFirstTimestampByProjectIds(
+          ['project-a'],
+          ['layer-a'],
+        )
+
+        expect(result).toEqual(START)
+      })
+
+      it('ignores records of other DA layers', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record(
+            'project-a',
+            'layer-b',
+            'config-id-2',
+            START - 5 * UnixTime.DAY,
+            100n,
+          ),
         ])
+
+        const result = await repository.getFirstTimestampByProjectIds(
+          ['project-a'],
+          ['layer-a'],
+        )
 
         expect(result).toEqual(START)
       })
 
       it('returns undefined when there are no matching records', async () => {
-        const result = await repository.getFirstTimestampByProjectIds([
-          'missing',
-        ])
+        const result = await repository.getFirstTimestampByProjectIds(
+          ['missing'],
+          ['layer-a'],
+        )
 
         expect(result).toEqual(undefined)
       })
@@ -883,7 +924,10 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           record('project-a', 'layer-a', 'config-id-1', START, 100n),
         ])
 
-        const result = await repository.getFirstTimestampByProjectIds([])
+        const result = await repository.getFirstTimestampByProjectIds(
+          [],
+          ['layer-a'],
+        )
 
         expect(result).toEqual(undefined)
       })
@@ -913,11 +957,10 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           record('project-c', 'layer-a', 'config-id-4', START, 100n),
         ])
 
-        const result = await repository.getFirstTimestampsByProjectIds([
-          'project-a',
-          'project-b',
-          'missing',
-        ])
+        const result = await repository.getFirstTimestampsByProjectIds(
+          ['project-a', 'project-b', 'missing'],
+          ['layer-a', 'layer-b'],
+        )
 
         expect(result).toEqual({
           'project-a': START - 2 * UnixTime.DAY,
@@ -925,12 +968,36 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         })
       })
 
+      it('ignores records of other DA layers', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record(
+            'project-a',
+            'layer-b',
+            'config-id-2',
+            START - 2 * UnixTime.DAY,
+            100n,
+          ),
+          record('project-b', 'layer-b', 'config-id-3', START, 100n),
+        ])
+
+        const result = await repository.getFirstTimestampsByProjectIds(
+          ['project-a', 'project-b'],
+          ['layer-a'],
+        )
+
+        expect(result).toEqual({ 'project-a': START })
+      })
+
       it('returns an empty object for an empty project list', async () => {
         await repository.upsertMany([
           record('project-a', 'layer-a', 'config-id-1', START, 100n),
         ])
 
-        const result = await repository.getFirstTimestampsByProjectIds([])
+        const result = await repository.getFirstTimestampsByProjectIds(
+          [],
+          ['layer-a'],
+        )
 
         expect(result).toEqual({})
       })
