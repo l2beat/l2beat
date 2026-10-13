@@ -1,7 +1,7 @@
 {
   "name": "derivev3",
-  "timestamp": 1791549055,
-  "configHash": "0xbb427ce18999a749cda2adc7039424c29dade07ab8068290b20c4351ffd90c2d",
+  "timestamp": 1791882836,
+  "configHash": "0x993852e23cac6bc68424f957003b985b217afe4ac83ab038e2b735a18c6d1e54",
   "entries": [
     {
       "address": "eth:0x000000c88C2C8A7F8317783f2268eB2B9b41257E",
@@ -123,7 +123,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 113,
+        "nonce": 132,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -161,12 +161,13 @@
       "name": "SpotVault",
       "address": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
       "type": "Contract",
+      "template": "derivev3/SpotVault",
       "sourceHashes": [
         "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
         "0xf1d666784891a92db2f7311793ade4b7b76d00deecd0cca4c675b3f28317d64e"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Escrow for the collateral deposited to Derive. It grants the WithdrawalOutbox unlimited allowance for approved tokens.",
+      "description": "Escrow for the collateral deposited to Derive. It grants eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63 unlimited allowance for approved tokens.",
       "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
       "sinceTimestamp": 1790859047,
       "sinceBlock": 26097579,
@@ -178,9 +179,29 @@
             "2026-10-01T12:50:47.000Z",
             "0x6abdad8e2eca4f6ec25940d2b5141f0b8202131858896f3f9619386fb1ed3829",
             ["eth:0x5D6d9D01a79625d5175D68A4B7Eb1fF390438245"]
+          ],
+          [
+            "2026-10-09T20:13:11.000Z",
+            "0x6a38727dc6bec3088ff530ddb9eee53a40c5f0e4af4506b663cebcbbb6a07e6d",
+            ["eth:0x6D484a11d2dCdE2daa7625e1619c140D8d1D854e"]
+          ],
+          [
+            "2026-10-09T20:13:11.000Z",
+            "0x6a38727dc6bec3088ff530ddb9eee53a40c5f0e4af4506b663cebcbbb6a07e6d",
+            ["eth:0x5D6d9D01a79625d5175D68A4B7Eb1fF390438245"]
+          ],
+          [
+            "2026-10-12T08:48:23.000Z",
+            "0xd202b2108e09f6755717aac2bfcda88d1e1109f35964aca0ce848047515d2d31",
+            ["eth:0x6D484a11d2dCdE2daa7625e1619c140D8d1D854e"]
+          ],
+          [
+            "2026-10-12T08:48:23.000Z",
+            "0xd202b2108e09f6755717aac2bfcda88d1e1109f35964aca0ce848047515d2d31",
+            ["eth:0x5D6d9D01a79625d5175D68A4B7Eb1fF390438245"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 5,
         "OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
@@ -302,7 +323,7 @@
         "domainSeparator": "0x2e9eb6561e5ec36b90ce48d58041a29bf70627c027020f7a28e1fc75865b3aa4",
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 3,
+        "nonce": 7,
         "VERSION": "1.5.0"
       },
       "implementationNames": {
@@ -340,7 +361,7 @@
         "domainSeparator": "0xfcd64e1db27f7d6e5172795dbedb048153220dc0ea32a4cdab13069538fe03c1",
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 7,
+        "nonce": 10,
         "VERSION": "1.5.0"
       },
       "implementationNames": {
@@ -352,12 +373,13 @@
       "name": "WithdrawalOutbox",
       "address": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
       "type": "Contract",
+      "template": "derivev3/WithdrawalOutbox",
       "sourceHashes": [
         "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
         "0x183b8ad317f163052674979c2518b6395f60a8502032d8b36cb4e0e546953db2"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Pays out withdrawals committed to by proven batches from the SpotVault, subject to USD-denominated per-recipient and global rate limits.",
+      "description": "Pays out withdrawals committed to by batches proven in eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB from the registered asset vaults, subject to USD-denominated per-recipient and global rate limits.",
       "deployerAddress": "eth:0xde71be8feEF1fc3fF409398C056fABc9F1dEd1F6",
       "sinceTimestamp": 1790859023,
       "sinceBlock": 26097577,
@@ -377,9 +399,9 @@
           ]
         ],
         "$upgradeCount": 2,
-        "deferredWithdrawalId": 4,
+        "deferredWithdrawalId": 5,
         "guardian": "eth:0x682CD085aC63739a9F44E069E91BB6AA09a312E8",
-        "minGuardianRefill": 180,
+        "minGuardianRefill": 7200,
         "NATIVE_ETH": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "NATIVE_TRANSFER_GAS": 50000,
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
@@ -446,12 +468,13 @@
       "name": "VerifiableApp",
       "address": "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB",
       "type": "Contract",
+      "template": "derivev3/VerifiableApp",
       "sourceHashes": [
         "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
         "0x6e3b1ac1cc102f46bc3fae01faa62cbca8b39d3c889648ad4beef337bd86e439"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Holds the state root and verifies SP1 validity proofs for each batch. Each proof also commits to a Celestia header range and blob hash-chain, which this contract chains from a stored Celestia anchor and checks for freshness.",
+      "description": "Holds the state root and verifies SP1 validity proofs for each batch through eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e. Each proof also commits to a Celestia header range and blob hash-chain, which this contract chains from a stored Celestia anchor and checks for freshness.",
       "critical": true,
       "ignoreInWatchMode": [
         "stateRoot",
@@ -484,22 +507,22 @@
         "$upgradeCount": 2,
         "ACTION_MANAGER": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
         "batchSubmitter": "eth:0x000000c88C2C8A7F8317783f2268eB2B9b41257E",
-        "celestiaLastCommitment": "0xac078bbd35eb9cf2ab53d3bea1aed4659e731235a6fa12c80fb5d19265e71cc6",
-        "celestiaTrustedHash": "0x434ea46ad9a313fdd375fd82a6d5fbaa901751b218e3748e44ba2c200f984333",
-        "celestiaTrustedHeight": 14796247,
+        "celestiaLastCommitment": "0x1f7d12849c6890f9fe754f45291e326486362ef593ac54969af5150ee2e85de1",
+        "celestiaTrustedHash": "0x386f1de1c8f4e0b794e44f06d91d925747f0ca924792f7308cd2ab3afedf1387",
+        "celestiaTrustedHeight": 14912589,
         "consumedAdminAccIndex": 2,
-        "consumedPublicAccIndex": 723,
+        "consumedPublicAccIndex": 1657,
         "getCelestiaAnchor": {
-          "height": 14796247,
-          "headerHash": "0x434ea46ad9a313fdd375fd82a6d5fbaa901751b218e3748e44ba2c200f984333",
-          "lastCommitment": "0xac078bbd35eb9cf2ab53d3bea1aed4659e731235a6fa12c80fb5d19265e71cc6"
+          "height": 14912589,
+          "headerHash": "0x386f1de1c8f4e0b794e44f06d91d925747f0ca924792f7308cd2ab3afedf1387",
+          "lastCommitment": "0x1f7d12849c6890f9fe754f45291e326486362ef593ac54969af5150ee2e85de1"
         },
-        "lastOpTimestamp": 1791548522,
+        "lastOpTimestamp": 1791882224,
         "MAX_DA_HEADER_AGE": 172800,
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "programVKey": "0x008dcff8e9d15e87916a63645d1075cb1d545b5bd1f40a3ba05b407f2ffa543b",
-        "stateRoot": "0xe7988a71400595135c07ca97cea91997a55aebe5ccf114565b657fdd2b0217a1",
+        "stateRoot": "0xb98b469dfb297845302db6b120e596df65e6558acc3e97ca50d0d199d1d5c5b1",
         "submitterStallTimeout": 2419200,
         "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "WITHDRAWAL_OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63"
@@ -547,12 +570,13 @@
       "name": "OnchainActionManager",
       "address": "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3",
       "type": "Contract",
+      "template": "derivev3/OnchainActionManager",
       "sourceHashes": [
         "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
         "0x96546882f573a4752f008c8b4d63a4a296075b20009679749baea2cbb09b6ef2"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Entry point for L1 deposits and withdrawal requests. Every action is appended to an accumulator that each proven batch must consume in order.",
+      "description": "Entry point for L1 deposits and withdrawal requests. Every action is appended to an accumulator that batches consume in order.",
       "ignoreInWatchMode": [
         "publicActionsAcc",
         "adminActionsAcc",
@@ -588,8 +612,8 @@
         "owner": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "PUBLIC_ACTION_DOMAIN": "0xe40f88659781022c735f391b4acc350fa0730948845bed98f660e46c61c3a256",
-        "publicActionsAcc": "0xf39bab552826fe1c983d0f1809dcbe79e257efffa5f7e81e039c2988e6e9a10b",
-        "publicHeadIndex": 727,
+        "publicActionsAcc": "0xc98576728ef81e37488e71a0260e0352fa01098a727931d84b06bf94c2421837",
+        "publicHeadIndex": 1659,
         "WITHDRAWAL_FEE": 2000000000000000,
         "WITHDRAWAL_OUTBOX": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
         "WITHDRAWAL_TYPE": 3
@@ -629,6 +653,7 @@
       "name": "WithdrawFactory",
       "address": "eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e",
       "type": "Contract",
+      "template": "derivev3/WithdrawFactory",
       "sourceHashes": [
         "0x01547708714ce8bb28bd69c406667cf549e6008063c5f5d0b1676a89581715fc"
       ],
@@ -1185,12 +1210,17 @@
     ]
   },
   "usedTemplates": {
+    "derivev3/OnchainActionManager": "0x436a9f8b87934b7c48df28440556cbf698e251dc6ee0b9dded16b687283c95bb",
+    "derivev3/SpotVault": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "derivev3/VerifiableApp": "0x350f4f14186fabde8739fc79fc1e50c0780434b36c2e2531af32bbde19871196",
+    "derivev3/WithdrawalOutbox": "0xda4133e459e06b319492b5b251ba1d4c50bd57be4113737e28b4112ac13ba1f5",
+    "derivev3/WithdrawFactory": "0xf7474a0dcf4d2056c8f88d0618023b230c3595d5f052035d07b7630045256f1e",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 26154865 },
-  "permissionsConfigHash": "0x774fa297fa8b47799ca895c1c868b71daf26979de3d041b304580f0f4ec4d9d9",
+  "usedBlockNumbers": { "ethereum": 26182599 },
+  "permissionsConfigHash": "0xa9520bb9bb68519d69f3edf2105255aaf8eebf74b3d67de1ea443287ad0e31e6",
   "modelledAgainst": {
     "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
   },
@@ -1266,7 +1296,7 @@
         {
           "permission": "interact",
           "from": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
-          "description": "approve or revoke the WithdrawalOutbox's allowance for any token.",
+          "description": "approve or revoke the withdrawal outbox's allowance for any token.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
@@ -1279,7 +1309,7 @@
         {
           "permission": "interact",
           "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
-          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, unpause, and pay out deferred withdrawals without rate limits.",
+          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" },
@@ -1455,7 +1485,7 @@
         {
           "permission": "interact",
           "from": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
-          "description": "approve or revoke the WithdrawalOutbox's allowance for any token.",
+          "description": "approve or revoke the withdrawal outbox's allowance for any token.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
@@ -1464,7 +1494,7 @@
         {
           "permission": "interact",
           "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
-          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, unpause, and pay out deferred withdrawals without rate limits.",
+          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7" }
@@ -1586,13 +1616,13 @@
         {
           "permission": "interact",
           "from": "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42",
-          "description": "approve or revoke the WithdrawalOutbox's allowance for any token.",
+          "description": "approve or revoke the withdrawal outbox's allowance for any token.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63",
-          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, unpause, and pay out deferred withdrawals without rate limits.",
+          "description": "register assets and their vaults, set rate limits and static prices, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits.",
           "role": ".owner"
         },
         {

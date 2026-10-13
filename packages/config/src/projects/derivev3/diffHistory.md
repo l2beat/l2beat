@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x351cb46248ffff4b8b1891f0feac72c6592528d0
+Generated with discovered.json: 0x1afe8350518148f02d2efc5b24e23a03c766dcb6
 
-# Diff at Fri, 09 Oct 2026 12:31:58 GMT:
+# Diff at Tue, 13 Oct 2026 09:15:02 GMT:
 
 - id: 710bc3f5
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1791549055
+- current timestamp: 1791882836
 
 ## Description
 
@@ -32,8 +32,8 @@ Initial discovery of Derive V3: VerifiableApp, OnchainActionManager, WithdrawalO
 
 ```diff
 +   Status: CREATED
-    contract SpotVault (eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42) [N/A]
-    +++ description: Escrow for the collateral deposited to Derive. It grants the WithdrawalOutbox unlimited allowance for approved tokens.
+    contract SpotVault (eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42) [derivev3/SpotVault]
+    +++ description: Escrow for the collateral deposited to Derive. It grants eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63 unlimited allowance for approved tokens.
 ```
 
 ```diff
@@ -68,8 +68,8 @@ Initial discovery of Derive V3: VerifiableApp, OnchainActionManager, WithdrawalO
 
 ```diff
 +   Status: CREATED
-    contract WithdrawalOutbox (eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63) [N/A]
-    +++ description: Pays out withdrawals committed to by proven batches from the SpotVault, subject to USD-denominated per-recipient and global rate limits.
+    contract WithdrawalOutbox (eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63) [derivev3/WithdrawalOutbox]
+    +++ description: Pays out withdrawals committed to by batches proven in eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB from the registered asset vaults, subject to USD-denominated per-recipient and global rate limits.
 ```
 
 ```diff
@@ -80,8 +80,8 @@ Initial discovery of Derive V3: VerifiableApp, OnchainActionManager, WithdrawalO
 
 ```diff
 +   Status: CREATED
-    contract VerifiableApp (eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB) [N/A]
-    +++ description: Holds the state root and verifies SP1 validity proofs for each batch. Each proof also commits to a Celestia header range and blob hash-chain, which this contract chains from a stored Celestia anchor and checks for freshness.
+    contract VerifiableApp (eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB) [derivev3/VerifiableApp]
+    +++ description: Holds the state root and verifies SP1 validity proofs for each batch through eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e. Each proof also commits to a Celestia header range and blob hash-chain, which this contract chains from a stored Celestia anchor and checks for freshness.
 ```
 
 ```diff
@@ -92,8 +92,8 @@ Initial discovery of Derive V3: VerifiableApp, OnchainActionManager, WithdrawalO
 
 ```diff
 +   Status: CREATED
-    contract OnchainActionManager (eth:0xE366CcA474968e33b777E13905829A3b800CFAD3) [N/A]
-    +++ description: Entry point for L1 deposits and withdrawal requests. Every action is appended to an accumulator that each proven batch must consume in order.
+    contract OnchainActionManager (eth:0xE366CcA474968e33b777E13905829A3b800CFAD3) [derivev3/OnchainActionManager]
+    +++ description: Entry point for L1 deposits and withdrawal requests. Every action is appended to an accumulator that batches consume in order.
 ```
 
 ```diff
@@ -104,7 +104,7 @@ Initial discovery of Derive V3: VerifiableApp, OnchainActionManager, WithdrawalO
 
 ```diff
 +   Status: CREATED
-    contract WithdrawFactory (eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e) [N/A]
+    contract WithdrawFactory (eth:0xFec48bBC648bd2284520d862Ec67fc68F709915e) [derivev3/WithdrawFactory]
     +++ description: Deploys a deterministic escrow per recipient and destination chain. Withdrawals paid to such an escrow are bridged onward by keepers via LayerZero OFT or CCIP.
 ```
 
