@@ -39,17 +39,13 @@ export function createLegacyPathsRouter() {
   })
 
   // Before the catch-all below: Ethereum's page outlived the other DA pages.
+  router.get('/data-availability/projects/ethereum/ethereum', (_req, res) => {
+    res.redirect(301, ETHEREUM_PROJECT_PATH)
+  })
   router.get(
-    [
-      '/data-availability/projects/ethereum',
-      '/data-availability/projects/ethereum/*splat',
-    ],
-    (req, res) => {
-      const isMarkdown = req.path.toLowerCase().endsWith('.md')
-      res.redirect(
-        301,
-        isMarkdown ? `${ETHEREUM_PROJECT_PATH}.md` : ETHEREUM_PROJECT_PATH,
-      )
+    '/data-availability/projects/ethereum/ethereum.md',
+    (_req, res) => {
+      res.redirect(301, `${ETHEREUM_PROJECT_PATH}.md`)
     },
   )
 
