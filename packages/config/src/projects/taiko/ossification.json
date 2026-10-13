@@ -1100,6 +1100,46 @@
       "updateId": "1c35c2f8",
       "transaction": "0x4a761524f4fe9377a63233971eb3ce7b2101832371f19e1f5e0cf126bae0bf7d",
       "reason": "DAO proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract backing the SGX Reth verifier (Raiko2 v0.8.0-rc1)."
+    },
+    {
+      "timestamp": 1791444527,
+      "type": "state",
+      "contract": "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+      "transaction": "0x17c27b257bb1445a512d4426c962de5c5f4b282f459c7e851c413702ad11d10c",
+      "updateId": "659e0548",
+      "reason": "Changed default bridged token implementation registrations in DefaultResolver (AddressRegistered). Registrations affect newly deployed token proxies."
+    },
+    {
+      "timestamp": 1791767075,
+      "type": "state",
+      "contract": "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+      "transaction": "0x935e4a93cf26e7bef2ac3c445815e253496d82d51e4205e7073a3d511a9111f4",
+      "updateId": "659e0548",
+      "reason": "Changed default bridged token implementation registrations in DefaultResolver (AddressRegistered). Registrations affect newly deployed token proxies."
+    },
+    {
+      "timestamp": 1791444621,
+      "type": "state",
+      "contract": "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984",
+      "transaction": "0xc61c925bbc9b815715c6bc009cfcb50c16e93904dc07e799c913953a2b6be095",
+      "updateId": "659e0548",
+      "reason": "Registered trusted bridge/vault counterparties and default bridged token implementations in the live L2 DefaultResolver (AddressRegistered)."
+    },
+    {
+      "timestamp": 1791767237,
+      "type": "state",
+      "contract": "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984",
+      "transaction": "0xe8c9d02693ed235dce16a36685a7d07f2929b6927054e07be41293cec00d194d",
+      "updateId": "659e0548",
+      "reason": "Registered trusted bridge/vault counterparties and default bridged token implementations in the live L2 DefaultResolver (AddressRegistered)."
+    },
+    {
+      "timestamp": 1791395339,
+      "type": "state",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "transaction": "0xb826a86b502d702872ea69472f2b62108271fa7f1b27a0052eee494ae83ff7bc",
+      "updateId": "659e0548",
+      "reason": "Mechanism change: the Safe proposing, cancelling and executing shared RISC Zero verifier route changes lowered its threshold from 3/5 to 2/5 (ChangedThreshold)."
     }
   ]
 }

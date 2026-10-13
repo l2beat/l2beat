@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DeBridgeAllowanceHolder",
+  "description": "Upgradeable approval holder for deBridge intents. Authorized spenders can transfer any approved token from any user to any recipient, through direct allowances or Permit2. Transfers carry no intent-level checks.",
+  "ignoreRelatives": ["permit2"],
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "allowedSpenderAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "ALLOWED_SPENDER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer approved tokens from any user to any recipient through direct allowances or Permit2."
+        }
+      ]
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "authorize spenders of all user approvals, replace Permit2 and rescue held funds."
+        }
+      ]
+    }
+  }
+}

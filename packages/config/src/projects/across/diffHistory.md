@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x50b68af0225714258a73d481a36ce6bfb99c0dbf
+
+# Diff at Mon, 12 Oct 2026 07:57:23 GMT:
+
+- id: 879a6192
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1789471699
+- current timestamp: 1791789448
+
+## Description
+
+Gateway now forwards only the execution's msg.value, preventing executors from sweeping residual ETH. One authorized EOA also removed its EIP-7702 delegation.
+
+[Gateway diff](https://disco.l2beat.com/diff/eth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e/eth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0).
+
+## Watched changes
+
+```diff
+    contract Gateway (eth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707) [acrossv3/Gateway] {
+    +++ description: Entry point for Across V5 intent executions. Anyone can submit a user-signed execution path: the Gateway pulls the depositor's funds via standing token approvals or signed permits (Permit2 witness permits, EIP-3009, ERC-2612, EIP-712 transfer authorizations), then calls the committed executor. While executing, it exposes the execution context (submitter, executor, step commitment) that the SpokePool trusts to authenticate V5 fills.
+      sourceHashes.1:
+-        "0xf2ee0aa25d03ecbb1796a6eac55e023884760df22fda47dedfaed361c1ec6c35"
++        "0x758d7b789b8c7d62dd988d0b7d796f9811d75afa480252b92492fe28259d538f"
+      values.$implementation:
+-        "eth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e"
++        "eth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0"
+      values.$pastUpgrades.2:
++        ["2026-10-09T18:50:23.000Z","0x5a6a80fbc687552b0200c7830e52a3e4d216cab337b65e456d50771b6f009651",["eth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e:
+-        "Gateway"
+      implementationNames.eth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0:
++        "Gateway"
+    }
+```
+
+```diff
+    EOA (eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D) {
+    +++ description: None
+      sourceHashes:
+-        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x3818b9766109877e09a9c427e7b310cde355550731129529095a7e6b02cf55ab","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../Gateway.sol                                                   | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+```
+
 Generated with discovered.json: 0x78c47139c2cca61291f00dba163146655f661f70
 
 # Diff at Tue, 15 Sep 2026 11:29:53 GMT:
