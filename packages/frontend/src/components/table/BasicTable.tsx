@@ -37,7 +37,7 @@ import {
   getBasicTableHeaderCellClassName,
 } from './utils/classNames'
 import {
-  getCommonPinningStyles,
+  getPinnedCellProps,
   getPinnedHeaderCellProps,
 } from './utils/commonPinningStyles'
 import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditionalRowIndex'
@@ -308,7 +308,7 @@ export function BasicTableRow<T extends BasicTableRow>({
         cellClassName: cellData.meta?.cellClassName,
         compact: props.compact,
       }),
-      style: getCommonPinningStyles(cellData.cell.column),
+      ...getPinnedCellProps(cellData.cell.column),
       ...getPersistedColumnAttributes(cellData.cell.column),
     }
 
@@ -518,7 +518,7 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
                 header.column.getIsPinned() &&
                   getRowClassNamesWithoutOpacity(null),
               )}
-              style={getCommonPinningStyles(header.column)}
+              {...getPinnedCellProps(header.column)}
             />
             {!header.isPlaceholder && !isLast && (
               <BasicTableColumnFiller as="td" />
