@@ -339,6 +339,24 @@ describe(Templatizer.name, () => {
     expect(failure.message).toInclude('This is a bug in the templatizer')
   })
 
+  it('leaves the contract untemplatized for the benchmark, but still stops when the model does not answer', async () => {
+    const invalid = INVALID
+    const leaving = (model: FakeModelClient) =>
+      templatizer(model, {}, { onFailure: 'leave-untemplatized' })
+
+    const templateId = await leaving(
+      new FakeModelClient([invalid, invalid, invalid]),
+    ).templateFor(request([bundle('Registry', ADDRESS, BODY)]))
+    const unavailable = await failureOf(
+      leaving(new FakeModelClient([new Error('connection reset')])).templateFor(
+        request([bundle('Registry', ADDRESS, BODY)]),
+      ),
+    )
+
+    expect(templateId).toEqual(undefined)
+    expect(unavailable.failure).toEqual('model-unavailable')
+  })
+
   it('refuses unverified code, code known only by a manual source link, and EIP-2535 diamonds', () => {
     const instance = templatizer(new FakeModelClient([]))
     const sources = contractSources([bundle('Registry', ADDRESS, BODY)])
