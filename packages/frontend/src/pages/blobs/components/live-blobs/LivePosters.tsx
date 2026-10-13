@@ -14,6 +14,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { stickyTableColumnRowProps } from '~/components/table/useStickyTableHeader'
 import {
   getLeftPinnedCellStyles,
+  NOT_A_FOOTER_PROPS,
   PINNED_CELL_ATTRIBUTE,
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
@@ -370,6 +371,7 @@ function pinnedCellProps(index: number, className?: string) {
       className,
     ),
     [PINNED_CELL_ATTRIBUTE]: '',
+    ...NOT_A_FOOTER_PROPS,
   }
 }
 
