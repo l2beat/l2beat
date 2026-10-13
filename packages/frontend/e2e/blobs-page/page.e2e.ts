@@ -24,7 +24,7 @@ test('shows every section, logging no errors', async ({ blobs, page }) => {
     '/data-availability/projects/ethereum/ethereum',
   )
   await expect(
-    page.getByText('L2s Value Secured').filter({ visible: true }),
+    page.getByText('Data Posted', { exact: true }).filter({ visible: true }),
   ).toBeVisible()
   await expect(blobs.shareStrip).toBeVisible()
   await expect(blobs.belt).toBeVisible()
@@ -101,12 +101,12 @@ test('shows both charts, level beside each other where there is room', async ({
   // one at a time, a tab each
   const tabs = page.getByRole('tab')
   await expect(tabs).toHaveCount(2)
-  await expect(title('L2s Value Secured')).toBeVisible()
-  await expect(title('Data Posted')).toBeHidden()
-  if (blobs.hasTouch) await tabs.nth(1).tap()
-  else await tabs.nth(1).click()
   await expect(title('Data Posted')).toBeVisible()
   await expect(title('L2s Value Secured')).toBeHidden()
+  if (blobs.hasTouch) await tabs.nth(1).tap()
+  else await tabs.nth(1).click()
+  await expect(title('L2s Value Secured')).toBeVisible()
+  await expect(title('Data Posted')).toBeHidden()
   await expect(plots).toHaveCount(1)
 })
 
@@ -119,9 +119,6 @@ test('asks for the year of every poster only once Per project is chosen', async 
     if (request.url().includes('da.projectCharts')) asked.push(request.url())
   })
   await blobs.open()
-  if (page.viewportSize()!.width < SIDE_BY_SIDE_FROM) {
-    await page.getByRole('tab').nth(1).click()
-  }
   const view = (name: string) =>
     page.getByRole('radio', { name }).filter({ visible: true })
   await expect(view('Total')).toBeChecked()
