@@ -78,6 +78,108 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
     },
   )
 
+  describe(
+    AggregatedInteropTransferRepository.prototype.getDailyDurationSums.name,
+    () => {
+      const DAY = UnixTime.DAY
+
+      it('sums the earliest snapshot of each day per project', async () => {
+        await repository.insertMany([
+          // day 1 earliest snapshot: two bridge types summed
+          record({
+            id: 'gnosis',
+            timestamp: UnixTime(DAY + 3600),
+            srcChain: 'ethereum',
+            dstChain: 'gnosis',
+            bridgeType: 'lockAndMint',
+            transfersWithDurationCount: 2,
+            totalDurationSum: 100,
+          }),
+          record({
+            id: 'gnosis',
+            timestamp: UnixTime(DAY + 3600),
+            srcChain: 'ethereum',
+            dstChain: 'gnosis',
+            bridgeType: 'burnAndMint',
+            transfersWithDurationCount: 1,
+            totalDurationSum: 50,
+          }),
+          record({
+            id: 'relay',
+            timestamp: UnixTime(DAY + 3600),
+            srcChain: 'ethereum',
+            dstChain: 'gnosis',
+            transfersWithDurationCount: 4,
+            totalDurationSum: 20,
+          }),
+          // later snapshot that day: ignored
+          record({
+            id: 'gnosis',
+            timestamp: UnixTime(DAY + 7200),
+            srcChain: 'ethereum',
+            dstChain: 'gnosis',
+            transfersWithDurationCount: 9,
+            totalDurationSum: 900,
+          }),
+          // day 2: only its earliest snapshot, on another route too
+          record({
+            id: 'gnosis',
+            timestamp: UnixTime(2 * DAY),
+            srcChain: 'ethereum',
+            dstChain: 'gnosis',
+            transfersWithDurationCount: 1,
+            totalDurationSum: 30,
+          }),
+          record({
+            id: 'gnosis',
+            timestamp: UnixTime(2 * DAY),
+            srcChain: 'gnosis',
+            dstChain: 'ethereum',
+            transfersWithDurationCount: 1,
+            totalDurationSum: 600,
+          }),
+          // outside the range
+          record({
+            id: 'gnosis',
+            timestamp: UnixTime(3 * DAY),
+            srcChain: 'ethereum',
+            dstChain: 'gnosis',
+            transfersWithDurationCount: 1,
+            totalDurationSum: 1,
+          }),
+        ])
+
+        const result = await repository.getDailyDurationSums({
+          srcChain: 'ethereum',
+          dstChain: 'gnosis',
+          from: UnixTime(DAY),
+          to: UnixTime(2 * DAY + 1),
+        })
+
+        expect(result).toEqualUnsorted([
+          {
+            timestamp: UnixTime(DAY + 3600),
+            id: 'gnosis',
+            transfersWithDurationCount: 3,
+            totalDurationSum: 150,
+          },
+          {
+            timestamp: UnixTime(DAY + 3600),
+            id: 'relay',
+            transfersWithDurationCount: 4,
+            totalDurationSum: 20,
+          },
+          {
+            timestamp: UnixTime(2 * DAY),
+            id: 'gnosis',
+            transfersWithDurationCount: 1,
+            totalDurationSum: 30,
+          },
+        ])
+      })
+    },
+  )
+
   describe(AggregatedInteropTransferRepository.prototype.getAll.name, () => {
     it('returns empty array when no records exist', async () => {
       const result = await repository.getAll()

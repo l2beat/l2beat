@@ -26,6 +26,8 @@ import type { ProjectSectionProps } from '../types'
 import { ExploreInteropButton } from './ExploreInteropButton'
 import { FlowsStatsPanel } from './FlowsStatsPanel'
 import { InteropBridgeSubsections } from './InteropBridgeSubsections'
+import { InteropCollapsibleSubsection } from './InteropCollapsibleSubsection'
+import { InteropTransferTimeView } from './InteropTransferTimeView'
 
 export interface InteropFlowsSectionProps extends ProjectSectionProps {
   interopChains: InteropChainWithIcon[]
@@ -190,6 +192,16 @@ function Content({
         chains={detailChains}
         anchorChain={statsChainA}
       />
+      <InteropCollapsibleSubsection
+        id="interop-transfer-time"
+        title="Transfer times"
+      >
+        <InteropTransferTimeView
+          chainId={defaultStatsChainId}
+          interopChains={interopChains}
+          highlightedProtocolId={canonicalProtocolId}
+        />
+      </InteropCollapsibleSubsection>
     </div>
   )
 }

@@ -311,6 +311,21 @@ export interface InteropTransfersDetailedStatsRecord {
   dstValueSum: number
 }
 
+export interface InteropTransferDailyDurationRecord {
+  day: UnixTime
+  /** Id of the group the transfers were attributed to. */
+  series: string
+  count: number
+  medianDuration: number
+  p90Duration: number
+}
+
+export interface InteropTransferDurationRouteRecord {
+  srcChain: string
+  dstChain: string
+  count: number
+}
+
 export interface InteropSuspiciousTransferRecord extends InteropTransferRecord {
   valueDifferencePercent: number
 }
@@ -994,6 +1009,98 @@ export class InteropTransferRepository extends BaseRepository {
         dstValueSum: Number(chain.dstValueSum),
       }
     })
+  }
+
+  /**
+   * Daily median and p90 duration of transfers from one chain to another,
+   * bucketed by the UTC day the transfer completed. Transfers are attributed to
+   * the first group listing their plugin, so a project with several plugins
+   * gets one median; transfers of plugins in no group are left out.
+   */
+  async getDailyDurationPercentiles(options: {
+    srcChain: string
+    dstChain: string
+    from: UnixTime
+    groups: { id: string; plugins: string[] }[]
+  }): Promise<InteropTransferDailyDurationRecord[]> {
+    const groups = options.groups.filter((group) => group.plugins.length > 0)
+    if (groups.length === 0) return []
+    const series = sql<string | null>`case ${sql.join(
+      groups.map(
+        (group) =>
+          sql`when "plugin" in (${sql.join(group.plugins)}) then ${group.id}::text`,
+      ),
+      sql` `,
+    )} end`
+
+    const rows = await this.db
+      .with('transfers', (db) =>
+        db
+          .selectFrom('InteropTransfer')
+          .select([
+            series.as('series'),
+            sql<Date>`date_trunc('day', "timestamp")`.as('day'),
+            'duration',
+          ])
+          .where('srcChain', '=', options.srcChain)
+          .where('dstChain', '=', options.dstChain)
+          .where('duration', 'is not', null)
+          .where('timestamp', '>=', UnixTime.toDate(options.from)),
+      )
+      .selectFrom('transfers')
+      .select((eb) => [
+        'day',
+        'series',
+        eb.fn.countAll().as('count'),
+        sql<number>`percentile_cont(0.5) within group (order by "duration")`.as(
+          'medianDuration',
+        ),
+        sql<number>`percentile_cont(0.9) within group (order by "duration")`.as(
+          'p90Duration',
+        ),
+      ])
+      .where('series', 'is not', null)
+      .groupBy(['day', 'series'])
+      .orderBy('day', 'asc')
+      .execute()
+
+    return rows.map((row) => {
+      assert(row.series)
+      return {
+        day: UnixTime.fromDate(row.day),
+        series: row.series,
+        count: Number(row.count),
+        medianDuration: Number(row.medianDuration),
+        p90Duration: Number(row.p90Duration),
+      }
+    })
+  }
+
+  /** Routes to or from `chain` with at least one timed transfer since `from`. */
+  async getDurationRoutes(options: {
+    chain: string
+    from: UnixTime
+  }): Promise<InteropTransferDurationRouteRecord[]> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => ['srcChain', 'dstChain', eb.fn.countAll().as('count')])
+      .where((eb) =>
+        eb.or([
+          eb('srcChain', '=', options.chain),
+          eb('dstChain', '=', options.chain),
+        ]),
+      )
+      .where((eb) => eb('srcChain', '!=', eb.ref('dstChain')))
+      .where('duration', 'is not', null)
+      .where('timestamp', '>=', UnixTime.toDate(options.from))
+      .groupBy(['srcChain', 'dstChain'])
+      .execute()
+
+    return rows.map((row) => ({
+      srcChain: row.srcChain,
+      dstChain: row.dstChain,
+      count: Number(row.count),
+    }))
   }
 
   /**

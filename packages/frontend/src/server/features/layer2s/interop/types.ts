@@ -7,6 +7,7 @@ import type {
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
+import { ChartRange } from '~/utils/range/range'
 import type { InteropFlowData } from './utils/getFlows'
 import type { TopItems } from './utils/getTopItems'
 
@@ -371,3 +372,27 @@ export type AverageDuration =
   | SingleAverageDuration
   | SplitAverageDuration
   | UnknownAverageDuration
+
+export type InteropTransferTimeParams = v.infer<
+  typeof InteropTransferTimeParams
+>
+export const InteropTransferTimeParams = v.object({
+  srcChain: v.string(),
+  dstChain: v.string(),
+})
+
+export type InteropTransferTimeRoutesParams = v.infer<
+  typeof InteropTransferTimeRoutesParams
+>
+export const InteropTransferTimeRoutesParams = v.object({
+  chain: v.string(),
+})
+
+export type InteropTransferTimeAveragesParams = v.infer<
+  typeof InteropTransferTimeAveragesParams
+>
+export const InteropTransferTimeAveragesParams = v.object({
+  srcChain: v.string(),
+  dstChain: v.string(),
+  range: ChartRange,
+})

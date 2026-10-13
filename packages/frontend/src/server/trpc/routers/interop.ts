@@ -8,6 +8,11 @@ import { getInteropTokenData } from '~/server/features/layer2s/interop/getIntero
 import { getInteropTokensInfinite } from '~/server/features/layer2s/interop/getInteropTokens'
 import { getInteropTokensPairsInfinite } from '~/server/features/layer2s/interop/getInteropTokensPairs'
 import { getInteropTokenTransfers } from '~/server/features/layer2s/interop/getInteropTokenTransfers'
+import {
+  getInteropTransferTime,
+  getInteropTransferTimeAverages,
+  getInteropTransferTimeRoutes,
+} from '~/server/features/layer2s/interop/getInteropTransferTime'
 import { getTokenFrameworksData } from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import {
   InteropBridgeSelectionParams,
@@ -19,6 +24,9 @@ import {
   InteropTokenParams,
   InteropTokenTransfersParams,
   InteropTopItemsInfiniteParams,
+  InteropTransferTimeAveragesParams,
+  InteropTransferTimeParams,
+  InteropTransferTimeRoutesParams,
 } from '~/server/features/layer2s/interop/types'
 import { procedure, router } from '../trpc'
 
@@ -53,6 +61,15 @@ export const interopRouter = router({
   flows: procedure
     .input(InteropFlowsParams)
     .query(({ input }) => getInteropFlows(input)),
+  transferTime: procedure
+    .input(InteropTransferTimeParams)
+    .query(({ input }) => getInteropTransferTime(input)),
+  transferTimeAverages: procedure
+    .input(InteropTransferTimeAveragesParams)
+    .query(({ input }) => getInteropTransferTimeAverages(input)),
+  transferTimeRoutes: procedure
+    .input(InteropTransferTimeRoutesParams)
+    .query(({ input }) => getInteropTransferTimeRoutes(input)),
   protocolsByVolume: procedure
     .input(InteropProtocolsByVolumeParams)
     .query(({ input }) => getInteropProtocolsByVolume(input)),

@@ -18,6 +18,7 @@ export type { AggregatedInteropDeployedTokenRecord } from './repositories/Aggreg
 export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
 export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {
+  AggregatedInteropTransferDurationRecord,
   AggregatedInteropTransferRecord,
   AggregatedInteropTransferSeriesRecord,
 } from './repositories/AggregatedInteropTransferRepository'
@@ -89,8 +90,10 @@ export {
   INTEROP_TRANSFER_RETENTION,
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
+  type InteropTransferDailyDurationRecord,
   type InteropTransferDeployedTokenPairStats,
   type InteropTransferDeployedTokenPairStatsByToken,
+  type InteropTransferDurationRouteRecord,
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
   type InteropTransferRecord,

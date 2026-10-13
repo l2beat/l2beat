@@ -564,6 +564,209 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     },
   )
 
+  describe(
+    InteropTransferRepository.prototype.getDailyDurationPercentiles.name,
+    () => {
+      const DAY = UnixTime.DAY
+
+      it('returns daily percentiles per group for one direction', async () => {
+        await repository.insertMany([
+          // day 1: both plugins merged into the `gnosis` group
+          transfer(
+            'bridgeA',
+            't1',
+            'a.L1ToL2',
+            UnixTime(DAY + 1),
+            'ethereum',
+            'gnosis',
+            10,
+          ),
+          transfer(
+            'bridgeA',
+            't2',
+            'a.L1ToL2',
+            UnixTime(DAY + 2),
+            'ethereum',
+            'gnosis',
+            20,
+          ),
+          transfer(
+            'bridgeB',
+            't3',
+            'b.L1ToL2',
+            UnixTime(DAY + 3),
+            'ethereum',
+            'gnosis',
+            30,
+          ),
+          // day 2: another group
+          transfer(
+            'relay',
+            't4',
+            'relay.Transfer',
+            UnixTime(2 * DAY + 1),
+            'ethereum',
+            'gnosis',
+            5,
+          ),
+          // excluded: opposite direction, before `from`, plugin in no group
+          transfer(
+            'bridgeA',
+            't5',
+            'a.L2ToL1',
+            UnixTime(DAY + 4),
+            'gnosis',
+            'ethereum',
+            600,
+          ),
+          transfer(
+            'bridgeA',
+            't6',
+            'a.L1ToL2',
+            UnixTime(DAY - 1),
+            'ethereum',
+            'gnosis',
+            1,
+          ),
+          transfer(
+            'unknown',
+            't7',
+            'u.Transfer',
+            UnixTime(DAY + 5),
+            'ethereum',
+            'gnosis',
+            7,
+          ),
+        ])
+
+        const result = await repository.getDailyDurationPercentiles({
+          srcChain: 'ethereum',
+          dstChain: 'gnosis',
+          from: UnixTime(DAY),
+          groups: [
+            { id: 'gnosis', plugins: ['bridgeA', 'bridgeB'] },
+            { id: 'relay', plugins: ['relay'] },
+          ],
+        })
+
+        expect(result).toEqualUnsorted([
+          {
+            day: UnixTime(DAY),
+            series: 'gnosis',
+            count: 3,
+            medianDuration: 20,
+            p90Duration: 28,
+          },
+          {
+            day: UnixTime(2 * DAY),
+            series: 'relay',
+            count: 1,
+            medianDuration: 5,
+            p90Duration: 5,
+          },
+        ])
+      })
+
+      it('attributes a plugin to the first group listing it', async () => {
+        await repository.insertMany([
+          transfer(
+            'shared',
+            't1',
+            's.Transfer',
+            UnixTime(DAY + 1),
+            'ethereum',
+            'gnosis',
+            10,
+          ),
+        ])
+
+        const result = await repository.getDailyDurationPercentiles({
+          srcChain: 'ethereum',
+          dstChain: 'gnosis',
+          from: UnixTime(DAY),
+          groups: [
+            { id: 'parent', plugins: ['shared'] },
+            { id: 'child', plugins: ['shared'] },
+          ],
+        })
+
+        expect(result.map((r) => r.series)).toEqual(['parent'])
+      })
+    },
+  )
+
+  describe(InteropTransferRepository.prototype.getDurationRoutes.name, () => {
+    it('returns routes touching the chain with timed transfers', async () => {
+      await repository.insertMany([
+        transfer(
+          'relay',
+          't1',
+          'relay.Transfer',
+          UnixTime(200),
+          'ethereum',
+          'gnosis',
+          10,
+        ),
+        transfer(
+          'relay',
+          't2',
+          'relay.Transfer',
+          UnixTime(201),
+          'ethereum',
+          'gnosis',
+          10,
+        ),
+        transfer(
+          'relay',
+          't3',
+          'relay.Transfer',
+          UnixTime(202),
+          'gnosis',
+          'base',
+          10,
+        ),
+        // excluded: other chains, same-chain, too old
+        transfer(
+          'relay',
+          't4',
+          'relay.Transfer',
+          UnixTime(203),
+          'ethereum',
+          'base',
+          10,
+        ),
+        transfer(
+          'relay',
+          't5',
+          'relay.Transfer',
+          UnixTime(204),
+          'gnosis',
+          'gnosis',
+          10,
+        ),
+        transfer(
+          'relay',
+          't6',
+          'relay.Transfer',
+          UnixTime(99),
+          'base',
+          'gnosis',
+          10,
+        ),
+      ])
+
+      const result = await repository.getDurationRoutes({
+        chain: 'gnosis',
+        from: UnixTime(100),
+      })
+
+      expect(result).toEqualUnsorted([
+        { srcChain: 'ethereum', dstChain: 'gnosis', count: 2 },
+        { srcChain: 'gnosis', dstChain: 'base', count: 1 },
+      ])
+    })
+  })
+
   describe(InteropTransferRepository.prototype.deleteBefore.name, () => {
     it('deletes transfers before specified timestamp', async () => {
       await repository.insertMany([

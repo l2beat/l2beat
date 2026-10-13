@@ -29,6 +29,14 @@ export interface AggregatedInteropTransferRecord {
   countOver100K: number
 }
 
+export interface AggregatedInteropTransferDurationRecord {
+  /** Snapshot time; each snapshot covers the 24 hours before it. */
+  timestamp: UnixTime
+  id: string
+  transfersWithDurationCount: number
+  totalDurationSum: number
+}
+
 export interface AggregatedInteropTransferSeriesRecord {
   day: UnixTime
   id: string
@@ -551,6 +559,50 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       identifiedCount: Number(row.identified_count ?? 0),
       srcVolumeUsd: Number(row.src_volume_usd ?? 0),
       dstVolumeUsd: Number(row.dst_volume_usd ?? 0),
+    }))
+  }
+
+  /**
+   * Duration sums from one chain to another, per project, at the earliest
+   * snapshot of each day: the one retention keeps once a day is older than
+   * two weeks, so recent and old days are measured the same way.
+   */
+  async getDailyDurationSums(options: {
+    srcChain: string
+    dstChain: string
+    from: UnixTime
+    to: UnixTime
+  }): Promise<AggregatedInteropTransferDurationRecord[]> {
+    const rows = await this.db
+      .with('daily', (db) =>
+        db
+          .selectFrom('AggregatedInteropTransfer')
+          .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+          .where('timestamp', '>=', UnixTime.toDate(options.from))
+          .where('timestamp', '<=', UnixTime.toDate(options.to))
+          .groupBy(sql`date_trunc('day', timestamp)`),
+      )
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => [
+        'AggregatedInteropTransfer.timestamp',
+        'id',
+        eb.fn.sum<number>('transfersWithDurationCount').as('count'),
+        eb.fn.sum<number>('totalDurationSum').as('durationSum'),
+      ])
+      .where('srcChain', '=', options.srcChain)
+      .where('dstChain', '=', options.dstChain)
+      .where('AggregatedInteropTransfer.timestamp', 'in', (eb) =>
+        eb.selectFrom('daily').select('daily.timestamp'),
+      )
+      .groupBy(['AggregatedInteropTransfer.timestamp', 'id'])
+      .orderBy('AggregatedInteropTransfer.timestamp', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      id: row.id,
+      transfersWithDurationCount: Number(row.count),
+      totalDurationSum: Number(row.durationSum),
     }))
   }
 
