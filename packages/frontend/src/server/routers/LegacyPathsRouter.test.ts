@@ -12,6 +12,8 @@ describe(createLegacyPathsRouter.name, () => {
     ['/data-availability/summary.md', '/blobs'],
     ['/da-risk-framework', '/blobs'],
     ['/data-availability/projects/xai/dac', '/layer2s/projects/xai'],
+    ['/data-availability/projects/ethereum', '/projects/ethereum'],
+    ['/data-availability/projects/ethereum/no-bridge', '/projects/ethereum'],
     ['/data-availability/projects/ethereum/ethereum', '/projects/ethereum'],
     [
       '/data-availability/projects/ethereum/ethereum.md',
