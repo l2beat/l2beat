@@ -75,6 +75,9 @@ const SERVER_CONFIG = {
     .check((v) => !!new URL(v))
     .optional(),
   ES_API_KEY: z.string().optional(),
+
+  /** Lifts GitHub's unauthenticated rate limit when reading audited sources. */
+  GITHUB_TOKEN: z.string().optional(),
   ES_INDEX_PREFIX: z.string().optional(),
   ES_BUFFER_ALERT_BYTES: z
     .unknown()
@@ -141,6 +144,7 @@ function getRawEnv(): Record<
     ES_ENABLED: process.env.ES_ENABLED,
     ES_NODE: process.env.ES_NODE,
     ES_API_KEY: process.env.ES_API_KEY,
+    GITHUB_TOKEN: process.env.GITHUB_TOKEN,
     ES_INDEX_PREFIX: process.env.ES_INDEX_PREFIX,
     ES_BUFFER_ALERT_BYTES: process.env.ES_BUFFER_ALERT_BYTES,
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,

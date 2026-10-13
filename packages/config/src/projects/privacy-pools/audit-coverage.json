@@ -1,0 +1,1231 @@
+{
+  "schema_version": "1.0.0",
+  "project": "privacy-pools",
+  "dataset": {
+    "repository": "sergeyshemyakov/audit-dataset",
+    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
+  },
+  "discoveredAt": 1779964040,
+  "collections": {
+    "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
+    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "_libs/zk-kit": { "name": "ZK-Kit", "kind": "library" },
+    "privacy-pools": { "name": "Privacy Pools", "kind": "project" },
+    "tornado-cash": { "name": "Tornado Cash", "kind": "project" }
+  },
+  "reports": {
+    "abdk-tornado-anonymity-mining-recheck-2020-12-22": {
+      "collections": ["tornado-cash"],
+      "title": "Tornado Smart Contract Audit Conclusion",
+      "auditor": "ABDK Consulting",
+      "date": "2020-12-22",
+      "document": "tornado-cash/reports/ABDK - Tornado Cash Anonymity Mining Recheck.pdf"
+    },
+    "ackee-safe-1-5-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account Security Review",
+      "auditor": "Ackee Blockchain Security",
+      "date": "2025-05-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
+    },
+    "auditware-privacy-pools-batch-relayer-2025": {
+      "collections": ["privacy-pools"],
+      "title": "Privacy Pools Batch Relayer Audit Report",
+      "auditor": "Auditware",
+      "document": "privacy-pools/reports/auditware-privacy-pools-batch-relayer-audit.pdf"
+    },
+    "auditware-privacy-pools-core-2025": {
+      "collections": ["privacy-pools"],
+      "title": "Privacy Pools Core Audit Report",
+      "auditor": "Auditware",
+      "document": "privacy-pools/reports/auditware-privacy-pools-core-audit.pdf"
+    },
+    "certora-safe-1-3-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.3.0 Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-07-29",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Certora.pdf"
+    },
+    "certora-safe-1-5-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
+      "auditor": "Certora",
+      "date": "2025-01-14",
+      "document": "_libs/safe/reports/safe-verification__docs__Safe_Audit_Report_1_5_0_Certora.pdf"
+    },
+    "certora-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-02-16",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-certora.pdf"
+    },
+    "contracts__audits__2018-10": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Open Zeppelin v2.0 Security Audit",
+      "auditor": "Level K",
+      "date": "2018-10-21",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2018-10.pdf"
+    },
+    "contracts__audits__2023-05-v4.9": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 4.9 Release Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2023-05-09",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-05-v4.9.pdf"
+    },
+    "contracts__audits__2023-10-v5.0": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 5.0 Release",
+      "auditor": "OpenZeppelin",
+      "date": "2023-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
+    },
+    "contracts__audits__2024-10-v5.1": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.1 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2024-10-v5.1.pdf"
+    },
+    "contracts__audits__2026-02-v5.6": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts v5.6 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2026-02-27",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
+    },
+    "g0-safe-1-1-0": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_0.pdf"
+    },
+    "g0-safe-1-1-1": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0 and v1.1.1",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_1.pdf"
+    },
+    "g0-safe-1-3-0-final": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
+      "auditor": "G0 Group",
+      "date": "2021-05-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
+    },
+    "g0-safe-1-3-0-initial": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
+      "auditor": "G0 Group",
+      "date": "2021-04-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Initial.pdf"
+    },
+    "nethermind-safe-1-3-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.3.0 Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2026-08-17",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Nethermind.pdf"
+    },
+    "nethermind-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2026-08-17",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-nethermind.pdf"
+    },
+    "oxorio-privacy-pools-circuits-2025-02": {
+      "collections": ["privacy-pools"],
+      "title": "Privacy Pools circuits audit report",
+      "auditor": "Oxorio",
+      "date": "2025-02-21",
+      "document": "privacy-pools/reports/oxorio-privacy-pools-circuits-audit-2025-02.md"
+    },
+    "oxorio-privacy-pools-core-contracts-2025-03": {
+      "collections": ["privacy-pools"],
+      "title": "Privacy Pools Smart Contracts Audit Report",
+      "auditor": "Oxorio",
+      "date": "2025-03-18",
+      "document": "privacy-pools/reports/oxorio-privacy-pools-core-contracts-audit-2025-03.pdf"
+    },
+    "oxorio-privacy-pools-precommitment-pr-2025-05": {
+      "collections": ["privacy-pools"],
+      "title": "Privacy Pools Smart Contracts Audit Report (Entrypoint precommitment upgrade)",
+      "auditor": "Oxorio",
+      "date": "2025-05-20",
+      "document": "privacy-pools/reports/oxorio-privacy-pools-precommitment-pr-audit-2025-05.pdf"
+    },
+    "oxorio-privacy-pools-v1-2024-05": {
+      "collections": ["privacy-pools"],
+      "title": "Privacy Pools Smart Contracts Security Audit Report (Privacy Pools v1)",
+      "auditor": "Oxorio",
+      "date": "2024-05-24",
+      "document": "privacy-pools/reports/oxorio-privacy-pools-v1-audit-2024-05.pdf"
+    },
+    "pse-semaphore-4-0-0-audit-2024-03": {
+      "collections": ["_libs/zk-kit"],
+      "title": "Semaphore PSE audit",
+      "auditor": "PSE (Privacy & Scaling Explorations)",
+      "document": "_libs/zk-kit/reports/PSE - Semaphore 4.0.0 Audit.pdf"
+    }
+  },
+  "auditedFiles": {
+    "0017f1fe7e41": {
+      "repository": "0xbow-io/privacy-pools-core",
+      "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+      "path": "packages/contracts/src/contracts/implementations/PrivacyPoolComplex.sol",
+      "blob": "0017f1fe7e411bcedac5eeed097372f87134b180"
+    },
+    "0b8ab296c0f9": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/base/Executor.sol",
+      "blob": "0b8ab296c0f951e04b18400891a007fb78620462"
+    },
+    "0e2107037773": {
+      "repository": "0xbow-io/privacy-pools-core",
+      "commit": "238e3594053becde68aa40e1e4cef6c0c46e68da",
+      "path": "packages/contracts/src/interfaces/IEntrypoint.sol",
+      "blob": "0e2107037773acb3060401f95e6cc4c0e10db199"
+    },
+    "1c4aeb9fb2a0": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/access/AccessControl.sol",
+      "blob": "1c4aeb9fb2a036093ba444a5b9146aece4f213a2"
+    },
+    "33faab29faf6": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "04e0df30aaf341bed5398012e3a8740bddeb6e04",
+      "path": "contracts/utils/Address.sol",
+      "blob": "33faab29faf65d3e8d8076f1e1ba098f833dadf4"
+    },
+    "4272cb5a06c3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "4272cb5a06c3d4803df5f2861d7b6713bd9216dd"
+    },
+    "428cc5ce6a43": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
+      "path": "contracts/proxies/SafeProxy.sol",
+      "blob": "428cc5ce6a4363c7b81e367eca0d33295cf7a241"
+    },
+    "489422336212": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "4894223362122f481eacda4fe1c8a53701ede349"
+    },
+    "4b8583f45cea": {
+      "repository": "0xbow-io/privacy-pools-core",
+      "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+      "path": "packages/contracts/src/contracts/State.sol",
+      "blob": "4b8583f45ceacf00e4aa732c3cb66ff41198a9fc"
+    },
+    "56477c92a27d": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/proxy/beacon/IBeacon.sol",
+      "blob": "56477c92a27d451ba5e72983b3b502d95a35a3a7"
+    },
+    "5903ba1d7b26": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
+      "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
+      "blob": "5903ba1d7b2604d83e023273a135acf87fa78caa"
+    },
+    "668700b0b04b": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "path": "contracts/Safe.sol",
+      "blob": "668700b0b04ba1a29b9777695f29c5896700bdde"
+    },
+    "6f31fca7a77c": {
+      "repository": "0xbow-io/privacy-pools-core",
+      "commit": "238e3594053becde68aa40e1e4cef6c0c46e68da",
+      "path": "packages/contracts/src/contracts/Entrypoint.sol",
+      "blob": "6f31fca7a77cf965ecbf9acd0ed089b7aa6131a2"
+    },
+    "72437bc34ce4": {
+      "repository": "safe-fndn/safe-modules",
+      "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+      "path": "modules/allowances/contracts/SignatureDecoder.sol",
+      "blob": "72437bc34ce4e1463c4105a513d6edca451e147c"
+    },
+    "732cc02b109a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IERC165.sol",
+      "blob": "732cc02b109aec16f55b6851bbdc1aaea463a5f5"
+    },
+    "75a018b0c25d": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "a3aed5ad0e7877b1d825381ed9a8c5f3cb5d2a83",
+      "path": "contracts/proxy/utils/Initializable.sol",
+      "blob": "75a018b0c25d9002a907eee7d15cac9847de44bf"
+    },
+    "7c44280f07aa": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "7c44280f07aa184f6f7506e335c9da0db8c30469"
+    },
+    "898739cbc764": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "898739cbc764ffba051eb57699b730e8950ab732"
+    },
+    "8b0478e847e6": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/proxy/ERC1967/ERC1967Utils.sol",
+      "blob": "8b0478e847e661e16a83e4882004b65f08f75988"
+    },
+    "98cb5009e6e8": {
+      "repository": "0xbow-io/privacy-pools-core",
+      "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+      "path": "packages/contracts/src/contracts/PrivacyPool.sol",
+      "blob": "98cb5009e6e8accb08a5233189300ed668182dc3"
+    },
+    "9c421d7aa0fb": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "9c421d7aa0fb31e3e58b27bf827520b148963b59"
+    },
+    "9fafeba8c058": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/Singleton.sol",
+      "blob": "9fafeba8c0589b764fe558a913411217e9420a9a"
+    },
+    "a57f767f1132": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/interfaces/IERC1967.sol",
+      "blob": "a57f767f11326c1c9d3b662269d1a7259274269a"
+    },
+    "aab31696d64e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "aab31696d64e9fbce70c6280db56b39a2a3eebac"
+    },
+    "ac4aa74e9bb8": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+      "path": "contracts/utils/Errors.sol",
+      "blob": "ac4aa74e9bb8989382f68934ab18e160340dbf8b"
+    },
+    "b0e9189675cc": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/utils/StorageSlot.sol",
+      "blob": "b0e9189675cc5f0b86963d29b363a9568d156dd0"
+    },
+    "c198f7e10e24": {
+      "repository": "tornadocash/tornado-anonymity-mining",
+      "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+      "path": "contracts/interfaces/IVerifier.sol",
+      "blob": "c198f7e10e242ed464ae40f3fad572be39fda2d3"
+    },
+    "c727da1869ab": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/proxy/utils/UUPSUpgradeable.sol",
+      "blob": "c727da1869abfbf89493758c07a84ecf1fdceee7"
+    },
+    "c8f243d15377": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/SecuredTokenTransfer.sol",
+      "blob": "c8f243d15377b3066c7857e8c9e3459ec8405881"
+    },
+    "c9ed9c0487ff": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "c9ed9c0487ffad8099f10a986c677a69ffa1f6f8"
+    },
+    "d36f5c0586ca": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/proxy/Proxy.sol",
+      "blob": "d36f5c0586cafe3298c6fea3046a548495e03e41"
+    },
+    "d4ee1100525d": {
+      "repository": "privacy-scaling-explorations/zk-kit",
+      "commit": "4c5ceca07673e89b112e849c2689ea0b1c3bf4d9",
+      "path": "packages/imt.sol/contracts/internal/InternalLeanIMT.sol",
+      "blob": "d4ee1100525df3f16928b979ae9d09178d520f82"
+    },
+    "df3a61369191": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/proxy/ERC1967/ERC1967Proxy.sol",
+      "blob": "df3a61369191fc619f9d499a87f341d245c97893"
+    },
+    "f0b79cffa90d": {
+      "repository": "0xbow-io/privacy-pools-core",
+      "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+      "path": "packages/contracts/src/contracts/lib/Constants.sol",
+      "blob": "f0b79cffa90d55cc4dfdba411c0acb029ab1d8a7"
+    },
+    "f0f9137bc8d5": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+      "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+      "blob": "f0f9137bc8d5d7bd45aea1a7feb2940081fca8da"
+    },
+    "f3b8944f25b1": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/external/SafeMath.sol",
+      "blob": "f3b8944f25b1f8efcf9bf3451dc023602f223206"
+    },
+    "f452b5e34b74": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/interfaces/draft-IERC1822.sol",
+      "blob": "f452b5e34b744cf925b808e42e338e7146b14a8c"
+    },
+    "f607aff185e5": {
+      "repository": "0xbow-io/privacy-pools-core",
+      "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+      "path": "packages/contracts/src/contracts/implementations/PrivacyPoolSimple.sol",
+      "blob": "f607aff185e50e123f6fdec27fad62fba9b62bb4"
+    },
+    "f7615c135657": {
+      "repository": "0xbow-io/privacy-pools-core",
+      "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+      "path": "packages/contracts/src/contracts/lib/ProofLib.sol",
+      "blob": "f7615c135657154bd62cc7751bde6af80d3db4e8"
+    },
+    "f9b6674650dd": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
+    }
+  },
+  "units": {
+    "522fb9b5cd00": {
+      "name": "WithdrawalVerifier",
+      "kind": "contract",
+      "lines": 195,
+      "status": "none"
+    },
+    "3648b7b8bcac": {
+      "name": "ProofLib",
+      "kind": "library",
+      "lines": 159,
+      "status": "identical",
+      "audited": { "object": "f7615c135657", "lines": [9, 167] },
+      "reports": ["oxorio-privacy-pools-core-contracts-2025-03"]
+    },
+    "e730ab060eed": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 71,
+      "status": "differs",
+      "audited": { "object": "7c44280f07aa", "lines": [7, 23] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [[23, 23]],
+      "removed": [[23, 3, 3]],
+      "covered": 70
+    },
+    "551b45c8f1cf": {
+      "name": "IEntrypoint",
+      "kind": "interface",
+      "lines": 379,
+      "status": "identical",
+      "audited": { "object": "0e2107037773", "lines": [13, 388] },
+      "reports": ["oxorio-privacy-pools-precommitment-pr-2025-05"]
+    },
+    "9ca952e715f6": {
+      "name": "IVerifier",
+      "kind": "interface",
+      "lines": 31,
+      "status": "differs",
+      "audited": { "object": "c198f7e10e24", "lines": [5, 11] },
+      "reports": ["abdk-tornado-anonymity-mining-recheck-2020-12-22"],
+      "added": [[9, 14], [24, 29]],
+      "removed": [[9, 1, 1], [24, 3, 5]],
+      "covered": 19
+    },
+    "26887343b7f6": {
+      "name": "IState",
+      "kind": "interface",
+      "lines": 156,
+      "status": "none"
+    },
+    "9a1d6299731f": {
+      "name": "IPrivacyPool",
+      "kind": "interface",
+      "lines": 148,
+      "status": "none"
+    },
+    "199cb13a572e": {
+      "name": "PoseidonT3",
+      "kind": "library",
+      "lines": 388,
+      "status": "none"
+    },
+    "92e3bd3f9db1": {
+      "name": "InternalLeanIMT",
+      "kind": "library",
+      "lines": 313,
+      "status": "identical",
+      "audited": { "object": "d4ee1100525d", "lines": [33, 342] },
+      "reports": ["pse-semaphore-4-0-0-audit-2024-03"]
+    },
+    "c7fa2b5f396c": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 6,
+      "status": "identical",
+      "audited": { "object": "f0b79cffa90d", "lines": [4, 9] },
+      "reports": [
+        "auditware-privacy-pools-core-2025",
+        "oxorio-privacy-pools-core-contracts-2025-03"
+      ]
+    },
+    "50109a0e8198": {
+      "name": "State",
+      "kind": "abstract",
+      "lines": 153,
+      "status": "identical",
+      "audited": { "object": "4b8583f45cea", "lines": [31, 202] },
+      "reports": [
+        "auditware-privacy-pools-core-2025",
+        "oxorio-privacy-pools-core-contracts-2025-03"
+      ]
+    },
+    "ff671e54333c": {
+      "name": "PoseidonT4",
+      "kind": "library",
+      "lines": 565,
+      "status": "none"
+    },
+    "fe5c17db168d": {
+      "name": "PrivacyPool",
+      "kind": "abstract",
+      "lines": 153,
+      "status": "identical",
+      "audited": { "object": "98cb5009e6e8", "lines": [34, 206] },
+      "reports": ["oxorio-privacy-pools-core-contracts-2025-03"],
+      "findings": { "oxorio-privacy-pools-core-contracts-2025-03": ["M-02"] }
+    },
+    "74bfbf842b09": {
+      "name": "IPrivacyPoolComplex",
+      "kind": "interface",
+      "lines": 15,
+      "status": "none"
+    },
+    "684cb89721da": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "ba18d750e681": {
+      "name": "IERC1363",
+      "kind": "interface",
+      "lines": 71,
+      "status": "none"
+    },
+    "f555a7706b9d": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 181,
+      "status": "identical",
+      "audited": { "object": "f0f9137bc8d5", "lines": [19, 181] },
+      "reports": ["contracts__audits__2024-10-v5.1"]
+    },
+    "4c6853275f13": {
+      "name": "PrivacyPoolComplex",
+      "kind": "contract",
+      "lines": 38,
+      "status": "identical",
+      "audited": { "object": "0017f1fe7e41", "lines": [31, 69] },
+      "reports": ["oxorio-privacy-pools-core-contracts-2025-03"]
+    },
+    "05122e9db059": {
+      "name": "Proxy",
+      "kind": "abstract",
+      "lines": 54,
+      "status": "identical",
+      "audited": { "object": "d36f5c0586ca", "lines": [16, 65] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "ed25952f120e": {
+      "name": "StorageSlot",
+      "kind": "library",
+      "lines": 110,
+      "status": "differs",
+      "audited": { "object": "b0e9189675cc", "lines": [34, 138] },
+      "reports": [
+        "contracts__audits__2023-05-v4.9",
+        "contracts__audits__2023-10-v5.0"
+      ],
+      "added": [
+        [16, 19],
+        [33, 33],
+        [42, 42],
+        [51, 51],
+        [60, 60],
+        [64, 72],
+        [78, 78],
+        [87, 87],
+        [96, 96],
+        [105, 105]
+      ],
+      "removed": [
+        [33, 30, 30],
+        [42, 40, 40],
+        [51, 50, 50],
+        [60, 60, 60],
+        [78, 70, 70],
+        [87, 80, 80],
+        [96, 90, 90],
+        [105, 100, 100]
+      ],
+      "covered": 94
+    },
+    "6d1baf30b633": {
+      "name": "IERC1967",
+      "kind": "interface",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "a57f767f1132", "lines": [9, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "ddf0e3817b55": {
+      "name": "Errors",
+      "kind": "library",
+      "lines": 21,
+      "status": "identical",
+      "audited": { "object": "ac4aa74e9bb8", "lines": [12, 32] },
+      "reports": ["contracts__audits__2024-10-v5.1"]
+    },
+    "48af9c31c3b6": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 140,
+      "status": "identical",
+      "audited": { "object": "33faab29faf6", "lines": [11, 150] },
+      "reports": ["contracts__audits__2024-10-v5.1"]
+    },
+    "de902f926875": {
+      "name": "IBeacon",
+      "kind": "interface",
+      "lines": 8,
+      "status": "identical",
+      "audited": { "object": "56477c92a27d", "lines": [9, 16] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "44c01e90eaac": {
+      "name": "ERC1967Utils",
+      "kind": "library",
+      "lines": 163,
+      "status": "identical",
+      "audited": { "object": "8b0478e847e6", "lines": [15, 177] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "b91c2406e688": {
+      "name": "ERC1967Proxy",
+      "kind": "contract",
+      "lines": 26,
+      "status": "identical",
+      "audited": { "object": "df3a61369191", "lines": [15, 40] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "09c47e3ff486": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 173,
+      "status": "identical",
+      "audited": { "object": "75a018b0c25d", "lines": [56, 228] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "1ae3fd8da881": {
+      "name": "ContextUpgradeable",
+      "kind": "abstract",
+      "lines": 18,
+      "status": "none"
+    },
+    "667198f2dd94": {
+      "name": "IAccessControl",
+      "kind": "interface",
+      "lines": 90,
+      "status": "none"
+    },
+    "471cbcaf9b39": {
+      "name": "ERC165Upgradeable",
+      "kind": "abstract",
+      "lines": 13,
+      "status": "none"
+    },
+    "98771e95ddaa": {
+      "name": "AccessControlUpgradeable",
+      "kind": "abstract",
+      "lines": 184,
+      "status": "differs",
+      "audited": {
+        "object": "1c4aeb9fb2a0",
+        "lines": [49, 207],
+        "name": "AccessControl"
+      },
+      "reports": ["contracts__audits__2026-02-v5.6"],
+      "added": [
+        [0, 0],
+        [7, 21],
+        [31, 37],
+        [48, 49],
+        [77, 78],
+        [142, 142],
+        [144, 144],
+        [156, 156],
+        [158, 158],
+        [174, 174],
+        [176, 176]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [5, 5, 6],
+        [49, 28, 28],
+        [78, 56, 56],
+        [144, 121, 121],
+        [158, 134, 134],
+        [176, 151, 151]
+      ],
+      "covered": 160
+    },
+    "d60656a5ad24": {
+      "name": "IERC1822Proxiable",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "f452b5e34b74", "lines": [10, 20] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "bccfe1b43320": {
+      "name": "UUPSUpgradeable",
+      "kind": "abstract",
+      "lines": 134,
+      "status": "differs",
+      "audited": { "object": "c727da1869ab", "lines": [19, 147] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0], [44, 49]],
+      "removed": [[0, 0, 0], [44, 44, 44]],
+      "covered": 129
+    },
+    "a1d3e74ce4e7": {
+      "name": "ReentrancyGuardUpgradeable",
+      "kind": "abstract",
+      "lines": 83,
+      "status": "none"
+    },
+    "f40974c360bd": {
+      "name": "Entrypoint",
+      "kind": "contract",
+      "lines": 367,
+      "status": "identical",
+      "audited": { "object": "6f31fca7a77c", "lines": [36, 466] },
+      "reports": ["oxorio-privacy-pools-precommitment-pr-2025-05"]
+    },
+    "4ec1f0a52ec3": {
+      "name": "CommitmentVerifier",
+      "kind": "contract",
+      "lines": 167,
+      "status": "none"
+    },
+    "477fadda0baa": {
+      "name": "SafeProxy",
+      "kind": "contract",
+      "lines": 34,
+      "status": "differs",
+      "audited": { "object": "428cc5ce6a43", "lines": [18, 60] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"],
+      "added": [[18, 18], [21, 21], [27, 27], [29, 29]],
+      "removed": [[18, 22, 22], [21, 31, 31], [27, 37, 37]],
+      "covered": 30
+    },
+    "150878a81f46": {
+      "name": "Singleton",
+      "kind": "abstract",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "447d1057dc7c": {
+      "name": "NativeCurrencyPaymentFallback",
+      "kind": "abstract",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "aa97dd1bf3f1": {
+      "name": "SelfAuthorized",
+      "kind": "abstract",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "898739cbc764", "lines": [6, 16] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "40ce0b25499c": {
+      "name": "Enum",
+      "kind": "interface",
+      "lines": 6,
+      "status": "none"
+    },
+    "06a60947381e": {
+      "name": "Executor",
+      "kind": "abstract",
+      "lines": 32,
+      "status": "identical",
+      "audited": { "object": "0b8ab296c0f9", "lines": [10, 42] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "af0af37b8cfc": {
+      "name": "ModuleManager",
+      "kind": "abstract",
+      "lines": 176,
+      "status": "differs",
+      "audited": { "object": "9c421d7aa0fb", "lines": [17, 196] },
+      "reports": ["nethermind-safe-1-3-0"],
+      "added": [[22, 22]],
+      "removed": [[22, 22, 22]],
+      "covered": 175
+    },
+    "f1b466f7c6f6": {
+      "name": "OwnerManager",
+      "kind": "abstract",
+      "lines": 150,
+      "status": "differs",
+      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 2]],
+      "removed": [[1, 1, 2]],
+      "covered": 148
+    },
+    "13e5d12afa8b": {
+      "name": "SignatureDecoder",
+      "kind": "abstract",
+      "lines": 29,
+      "status": "identical",
+      "audited": { "object": "72437bc34ce4", "lines": [7, 33] },
+      "reports": [
+        "certora-safe-allowance-v1-0-0",
+        "nethermind-safe-allowance-v1-0-0"
+      ]
+    },
+    "844a8fe51e4f": {
+      "name": "SecuredTokenTransfer",
+      "kind": "abstract",
+      "lines": 31,
+      "status": "identical",
+      "audited": { "object": "c8f243d15377", "lines": [8, 34] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "de59e343d914": {
+      "name": "ISignatureValidatorConstants",
+      "kind": "contract",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-1-0",
+        "g0-safe-1-1-1",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
+    },
+    "f44a94390330": {
+      "name": "FallbackManager",
+      "kind": "abstract",
+      "lines": 73,
+      "status": "differs",
+      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 1], [11, 25]],
+      "removed": [[1, 1, 1]],
+      "covered": 61
+    },
+    "e213c56fc229": {
+      "name": "StorageAccessible",
+      "kind": "abstract",
+      "lines": 42,
+      "status": "identical",
+      "audited": { "object": "489422336212", "lines": [6, 47] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "b3dc850565d8": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "051f4e0bd8fb": {
+      "name": "Guard",
+      "kind": "interface",
+      "lines": 17,
+      "status": "differs",
+      "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[0, 0]],
+      "removed": [[0, 0, 0]],
+      "covered": 16
+    },
+    "d63eef9ff914": {
+      "name": "GuardManager",
+      "kind": "abstract",
+      "lines": 42,
+      "status": "differs",
+      "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 1], [16, 18]],
+      "removed": [[1, 1, 1]],
+      "covered": 38
+    },
+    "6cd3fcc5ec00": {
+      "name": "SafeMath",
+      "kind": "library",
+      "lines": 57,
+      "status": "identical",
+      "audited": { "object": "f3b8944f25b1", "lines": [8, 64] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "d1308f86f627": {
+      "name": "ISignatureValidator",
+      "kind": "abstract",
+      "lines": 12,
+      "status": "identical",
+      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
+    },
+    "268c431cb6b0": {
+      "name": "Safe",
+      "kind": "contract",
+      "lines": 409,
+      "status": "differs",
+      "audited": { "object": "668700b0b04b", "lines": [36, 467] },
+      "reports": ["nethermind-safe-1-3-0"],
+      "added": [[14, 14]],
+      "removed": [[14, 14, 14]],
+      "covered": 408
+    },
+    "e393c9e98e33": {
+      "name": "ProofLib",
+      "kind": "library",
+      "lines": 159,
+      "status": "identical",
+      "audited": { "object": "f7615c135657", "lines": [9, 167] },
+      "reports": ["oxorio-privacy-pools-core-contracts-2025-03"]
+    },
+    "c6b135171354": {
+      "name": "IState",
+      "kind": "interface",
+      "lines": 156,
+      "status": "none"
+    },
+    "e6401deb5425": {
+      "name": "PrivacyPool",
+      "kind": "abstract",
+      "lines": 153,
+      "status": "identical",
+      "audited": { "object": "98cb5009e6e8", "lines": [34, 206] },
+      "reports": ["oxorio-privacy-pools-core-contracts-2025-03"],
+      "findings": { "oxorio-privacy-pools-core-contracts-2025-03": ["M-02"] }
+    },
+    "581c31cfbc14": {
+      "name": "IEntrypoint",
+      "kind": "interface",
+      "lines": 367,
+      "status": "differs",
+      "audited": { "object": "0e2107037773", "lines": [13, 388] },
+      "reports": ["oxorio-privacy-pools-precommitment-pr-2025-05"],
+      "added": [],
+      "removed": [[221, 221, 225], [366, 368, 374]],
+      "covered": 367
+    },
+    "d8399d804be1": {
+      "name": "IPrivacyPoolSimple",
+      "kind": "interface",
+      "lines": 15,
+      "status": "none"
+    },
+    "7c75b71bddb4": {
+      "name": "PrivacyPoolSimple",
+      "kind": "contract",
+      "lines": 30,
+      "status": "identical",
+      "audited": { "object": "f607aff185e5", "lines": [28, 59] },
+      "reports": ["oxorio-privacy-pools-core-contracts-2025-03"]
+    }
+  },
+  "flats": {
+    "522fb9b5cd006d1e860d1888a529673456a9b6e75894b967709f51fc6dc48454": [
+      ["522fb9b5cd00", 1]
+    ],
+    "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55": [
+      ["3648b7b8bcac", 6],
+      ["e730ab060eed", 169],
+      ["551b45c8f1cf", 245],
+      ["9ca952e715f6", 629],
+      ["26887343b7f6", 665],
+      ["9a1d6299731f", 826],
+      ["199cb13a572e", 996],
+      ["92e3bd3f9db1", 1396],
+      ["c7fa2b5f396c", 1710],
+      ["50109a0e8198", 1722],
+      ["ff671e54333c", 1876],
+      ["fe5c17db168d", 2448],
+      ["74bfbf842b09", 2606],
+      ["684cb89721da", 2631],
+      ["ba18d750e681", 2650],
+      ["f555a7706b9d", 2731],
+      ["4c6853275f13", 2917]
+    ],
+    "4ea7d574fdce79147e882ab0cf5c12f71bbefe5d36c6d25bd2a0561af5b7638b": [
+      ["05122e9db059", 11],
+      ["ed25952f120e", 93],
+      ["6d1baf30b633", 207],
+      ["ddf0e3817b55", 232],
+      ["48af9c31c3b6", 257],
+      ["de902f926875", 401],
+      ["44c01e90eaac", 414],
+      ["b91c2406e688", 584]
+    ],
+    "0e23c55f16c5099af2f60cab2879d111fb58aa95b0c118874e26c90409f3dd69": [
+      ["09c47e3ff486", 51],
+      ["1ae3fd8da881", 235],
+      ["667198f2dd94", 257],
+      ["684cb89721da", 357],
+      ["471cbcaf9b39", 381],
+      ["98771e95ddaa", 434],
+      ["d60656a5ad24", 623],
+      ["ed25952f120e", 662],
+      ["6d1baf30b633", 776],
+      ["ddf0e3817b55", 801],
+      ["48af9c31c3b6", 826],
+      ["de902f926875", 970],
+      ["44c01e90eaac", 983],
+      ["bccfe1b43320", 1157],
+      ["a1d3e74ce4e7", 1308],
+      ["9ca952e715f6", 1396],
+      ["26887343b7f6", 1432],
+      ["3648b7b8bcac", 1594],
+      ["9a1d6299731f", 1758],
+      ["e730ab060eed", 1910],
+      ["551b45c8f1cf", 1986],
+      ["ba18d750e681", 2373],
+      ["f555a7706b9d", 2454],
+      ["c7fa2b5f396c", 2636],
+      ["f40974c360bd", 2647]
+    ],
+    "4ec1f0a52ec3bb9e28d0c942259f0740f1d50eca0f858e082bceb2c1033886f1": [
+      ["4ec1f0a52ec3", 1]
+    ],
+    "a8d4738e202314fac92a69019e0677b25cabeacc8c4f74fd5889e6afd25285cb": [
+      ["477fadda0baa", 6]
+    ],
+    "e99656f3f5e1d8106e268a1448430f4014f13897bbdf77c9845c0eefc99a03fe": [
+      ["150878a81f46", 6],
+      ["447d1057dc7c", 16],
+      ["aa97dd1bf3f1", 32],
+      ["40ce0b25499c", 45],
+      ["06a60947381e", 56],
+      ["af0af37b8cfc", 98],
+      ["f1b466f7c6f6", 282],
+      ["13e5d12afa8b", 437],
+      ["844a8fe51e4f", 471],
+      ["de59e343d914", 503],
+      ["f44a94390330", 512],
+      ["e213c56fc229", 592],
+      ["b3dc850565d8", 636],
+      ["051f4e0bd8fb", 648],
+      ["d63eef9ff914", 670],
+      ["6cd3fcc5ec00", 717],
+      ["d1308f86f627", 775],
+      ["268c431cb6b0", 805]
+    ],
+    "8743eb2fa64b5cdcc692ba2f0ebce8d2faa3d09f1b343251e84e0c6bae510d74": [
+      ["e393c9e98e33", 6],
+      ["e730ab060eed", 169],
+      ["551b45c8f1cf", 245],
+      ["9ca952e715f6", 629],
+      ["c6b135171354", 665],
+      ["9a1d6299731f", 826],
+      ["199cb13a572e", 996],
+      ["92e3bd3f9db1", 1396],
+      ["c7fa2b5f396c", 1710],
+      ["50109a0e8198", 1722],
+      ["ff671e54333c", 1876],
+      ["e6401deb5425", 2448],
+      ["74bfbf842b09", 2606],
+      ["684cb89721da", 2631],
+      ["ba18d750e681", 2650],
+      ["f555a7706b9d", 2731],
+      ["4c6853275f13", 2917]
+    ],
+    "80b31c53e97ae4dc8e30258228e88d4182b282855f22fae7f221e93cc70a76c0": [
+      ["3648b7b8bcac", 6],
+      ["e730ab060eed", 169],
+      ["581c31cfbc14", 245],
+      ["9ca952e715f6", 617],
+      ["26887343b7f6", 653],
+      ["9a1d6299731f", 814],
+      ["199cb13a572e", 984],
+      ["92e3bd3f9db1", 1384],
+      ["c7fa2b5f396c", 1698],
+      ["50109a0e8198", 1710],
+      ["ff671e54333c", 1864],
+      ["fe5c17db168d", 2436],
+      ["d8399d804be1", 2594],
+      ["7c75b71bddb4", 2614]
+    ]
+  },
+  "contracts": {
+    "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d": {
+      "name": "WithdrawalVerifier",
+      "source": "522fb9b5cd006d1e860d1888a529673456a9b6e75894b967709f51fc6dc48454",
+      "critical": true
+    },
+    "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0": {
+      "name": "PrivacyPoolUSDS",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633": {
+      "name": "PrivacyPoolWstETH",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0x1c31C03B8CB2EE674D0F11De77135536db828257": {
+      "name": "PrivacyPoolDAI",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0x6818809EefCe719E480a7526D76bD3e561526b46": {
+      "name": "PrivacyPoolsEntrypoint",
+      "source": "4ea7d574fdce79147e882ab0cf5c12f71bbefe5d36c6d25bd2a0561af5b7638b",
+      "critical": true,
+      "implementations": {
+        "eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c": "0e23c55f16c5099af2f60cab2879d111fb58aa95b0c118874e26c90409f3dd69"
+      }
+    },
+    "eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE": {
+      "name": "PrivacyPoolWOETH",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6": {
+      "name": "RagequitVerifier",
+      "source": "4ec1f0a52ec3bb9e28d0c942259f0740f1d50eca0f858e082bceb2c1033886f1",
+      "critical": true
+    },
+    "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159": {
+      "name": "Privacy Pools Multisig",
+      "source": "a8d4738e202314fac92a69019e0677b25cabeacc8c4f74fd5889e6afd25285cb",
+      "implementations": {
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "e99656f3f5e1d8106e268a1448430f4014f13897bbdf77c9845c0eefc99a03fe"
+      }
+    },
+    "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86": {
+      "name": "PrivacyPoolUSDC",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E": {
+      "name": "PrivacyPoolBOLD",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c": {
+      "name": "PrivacyPoolSUSDS",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98": {
+      "name": "PrivacyPoolUSD1",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84": {
+      "name": "PrivacyPoolFrxUSD",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56": {
+      "name": "PrivacyPoolFxUSD",
+      "source": "8743eb2fa64b5cdcc692ba2f0ebce8d2faa3d09f1b343251e84e0c6bae510d74",
+      "critical": true
+    },
+    "eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc": {
+      "name": "PrivacyPoolUSDe",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572": {
+      "name": "PrivacyPoolUSDT",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    },
+    "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB": {
+      "name": "PrivacyPoolETH",
+      "source": "80b31c53e97ae4dc8e30258228e88d4182b282855f22fae7f221e93cc70a76c0",
+      "critical": true
+    },
+    "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32": {
+      "name": "PrivacyPoolWBTC",
+      "source": "131020bb1f1a7dd07996474dd37aa6b7ea27cfd3fb2cdc1c9b463ae731107b55",
+      "critical": true
+    }
+  }
+}

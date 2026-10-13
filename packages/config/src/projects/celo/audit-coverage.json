@@ -1,0 +1,5212 @@
+{
+  "schema_version": "1.0.0",
+  "project": "celo",
+  "dataset": {
+    "repository": "sergeyshemyakov/audit-dataset",
+    "commit": "5d08fda2ef9429745c5786f70a58c3e3d3d07047"
+  },
+  "discoveredAt": 1791383565,
+  "collections": {
+    "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
+    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "_libs/solady": { "name": "Solady", "kind": "library" },
+    "agglayer": { "name": "Agglayer", "kind": "project" },
+    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
+    "celo": { "name": "Celo", "kind": "project" },
+    "ethscriptions": { "name": "Ethscriptions", "kind": "project" },
+    "facet": { "name": "Facet", "kind": "project" },
+    "mantle": { "name": "Mantle", "kind": "project" },
+    "optimism": { "name": "OP Mainnet", "kind": "project" },
+    "taiko": { "name": "Taiko Alethia", "kind": "project" },
+    "zksync2": { "name": "ZKsync Era", "kind": "project" }
+  },
+  "reports": {
+    "ackee-safe-1-5-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account Security Review",
+      "auditor": "Ackee Blockchain Security",
+      "date": "2025-05-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
+    },
+    "base-mt64cannon-2025-02": {
+      "collections": ["optimism"],
+      "title": "MT64Cannon Security Review (Coinbase Protocol Security)",
+      "auditor": "Base",
+      "date": "2025-02-06",
+      "document": "optimism/reports/2025_01-MT-Cannon-Base.pdf"
+    },
+    "cantina-eip7702-2025-02": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Review (Cantina, EIP-7702 / Pectra impact)",
+      "auditor": "Cantina",
+      "date": "2025-03-09",
+      "document": "optimism/reports/2025_02-EIP7702-Cantina.pdf"
+    },
+    "cantina-interop-l2-rereview-2026-06": {
+      "collections": ["optimism"],
+      "title": "Optimism L2 Interop Re-review (Cantina Managed)",
+      "auditor": "Cantina",
+      "date": "2026-06-18",
+      "document": "optimism/reports/2026_06-Interop-L2-Contracts.pdf"
+    },
+    "cantina-interop-portal-2025-04": {
+      "collections": ["optimism"],
+      "title": "Interop portal - Competition",
+      "auditor": "Cantina",
+      "date": "2025-06-04",
+      "document": "optimism/reports/2025_04-Interop-Portal-Cantina.pdf"
+    },
+    "cantina-mcp-l1-2024-02": {
+      "collections": ["optimism"],
+      "title": "Optimism Cycle 19 Security Review (Cantina, MCP L1)",
+      "auditor": "Cantina",
+      "date": "2024-02-15",
+      "document": "optimism/reports/2024_02-MCP_L1-Cantina.pdf"
+    },
+    "cantina-safe-extensions-2024-06": {
+      "collections": ["optimism"],
+      "title": "Optimism Safe Extensions Competition (Cantina)",
+      "auditor": "Cantina",
+      "date": "2024-06-06",
+      "document": "optimism/reports/2024_05_SafeLivenessExtensions-Cantina.pdf"
+    },
+    "cantina-u17-2025-10": {
+      "collections": ["optimism"],
+      "title": "Optimism u17 Security Review",
+      "auditor": "Cantina",
+      "date": "2025-10-27",
+      "document": "optimism/reports/2025_10-U17-Spearbit.pdf"
+    },
+    "cantina-u18-2026-01": {
+      "collections": ["optimism"],
+      "title": "Optimism PBC U18 Security Review (Cantina)",
+      "auditor": "Cantina",
+      "date": "2026-01-12",
+      "document": "optimism/reports/2026_01-U18-Cantina.pdf"
+    },
+    "cantina-upgrade20-2026-08": {
+      "collections": ["optimism"],
+      "title": "Optimism Upgrade 20 Security Review (Cantina Managed)",
+      "auditor": "Cantina",
+      "date": "2026-08-20",
+      "document": "optimism/reports/2026_08-U20-Cantina.pdf"
+    },
+    "certora-celo-governance-formal-verification": {
+      "collections": ["celo"],
+      "title": "Formal Verification of Celo Governance Protocol",
+      "auditor": "Certora",
+      "document": "celo/reports/Certora - Celo Governance Formal Verification.pdf"
+    },
+    "certora-safe-1-3-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.3.0 Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-07-29",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Certora.pdf"
+    },
+    "certora-safe-1-5-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
+      "auditor": "Certora",
+      "date": "2025-01-14",
+      "document": "_libs/safe/reports/safe-verification__docs__Safe_Audit_Report_1_5_0_Certora.pdf"
+    },
+    "certora-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-02-16",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-certora.pdf"
+    },
+    "code4rena-base-2023-08": {
+      "collections": ["optimism"],
+      "title": "BASE Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2023-08-10",
+      "document": "optimism/reports/2023_08-OP-Stack-Base-Code4rena.html"
+    },
+    "code4rena-superchain-2024-08": {
+      "collections": ["optimism"],
+      "title": "Optimism Superchain Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2024-08-16",
+      "document": "optimism/reports/2024_08-Superchain-Code4rena.html"
+    },
+    "code4rena-taiko-2024-04": {
+      "collections": ["taiko"],
+      "title": "Taiko Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2024-04-26",
+      "document": "taiko/reports/2024_04-code4rena-taiko.html"
+    },
+    "code4rena-zksync-era-2023-10": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era Findings & Analysis Report",
+      "auditor": "Code4rena",
+      "date": "2024-02-29",
+      "document": "zksync2/reports/2023_10-code4rena-zksync-era.html"
+    },
+    "code4rena-zksync-era-2024-03": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era Findings & Analysis Report",
+      "auditor": "Code4rena",
+      "date": "2024-05-29",
+      "document": "zksync2/reports/2024_03-code4rena-zksync-era.html"
+    },
+    "code4rena-zksync-era-system-contracts-2023-03": {
+      "collections": ["zksync2"],
+      "title": "zkSync Era System Contracts contest Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "date": "2023-06-14",
+      "document": "zksync2/reports/2023_03-code4rena-zksync-era-system-contracts.html"
+    },
+    "contracts__audits__2018-10": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Open Zeppelin v2.0 Security Audit",
+      "auditor": "Level K",
+      "date": "2018-10-21",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2018-10.pdf"
+    },
+    "contracts__audits__2022-10-Checkpoints": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Checkpoints Library Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2022-11-15",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2022-10-Checkpoints.pdf"
+    },
+    "contracts__audits__2022-10-ERC4626": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin ERC4626 Tokenized Vault Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2022-11-15",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2022-10-ERC4626.pdf"
+    },
+    "contracts__audits__2023-05-v4.9": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 4.9 Release Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2023-05-09",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-05-v4.9.pdf"
+    },
+    "contracts__audits__2023-10-v5.0": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 5.0 Release",
+      "auditor": "OpenZeppelin",
+      "date": "2023-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
+    },
+    "contracts__audits__2025-07-v5.4": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.4 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-07-17",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-07-v5.4.pdf"
+    },
+    "contracts__audits__2026-02-v5.6": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts v5.6 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2026-02-27",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
+    },
+    "formal-verification__fv__reports__2022-05": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Formal Verification of OpenZeppelin (May - June 2022)",
+      "auditor": "Certora",
+      "document": "_libs/openzeppelin/reports/formal-verification__fv__reports__2022-05.pdf"
+    },
+    "fti-consulting-staked-celo-phase-2": {
+      "collections": ["celo"],
+      "title": "Smart Contract Assessment - Staked Celo - Phase 2",
+      "auditor": "FTI Consulting",
+      "date": "2022-05-04",
+      "document": "celo/reports/FTI Consulting - Staked Celo Phase 2.pdf"
+    },
+    "g0-safe-1-1-0": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_0.pdf"
+    },
+    "g0-safe-1-1-1": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0 and v1.1.1",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_1.pdf"
+    },
+    "g0-safe-1-3-0-final": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
+      "auditor": "G0 Group",
+      "date": "2021-05-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
+    },
+    "g0-safe-1-3-0-initial": {
+      "collections": ["_libs/safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
+      "auditor": "G0 Group",
+      "date": "2021-04-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Initial.pdf"
+    },
+    "hacken-celo-contracts-release-8-2022": {
+      "collections": ["celo"],
+      "title": "Smart Contract Code Review and Security Analysis Report for CLABS (Celo Contracts Release 8 / ASv2)",
+      "auditor": "Hacken OÜ",
+      "date": "2022-07-29",
+      "document": "celo/reports/Hacken - Celo Contracts Release 8.pdf"
+    },
+    "hashlock-celo-optimism-superchain-2026-02": {
+      "collections": ["celo"],
+      "title": "Celo Smart Contract Audit Report (Optimism and Superchain, 2nd audit)",
+      "auditor": "Hashlock Pty Ltd",
+      "date": "2026-02-28",
+      "document": "celo/reports/Hashlock - Celo Optimism and Superchain (2nd Audit).pdf"
+    },
+    "hashlock-celosuperchainconfig-2026-03": {
+      "collections": ["celo"],
+      "title": "Celo Smart Contract Audit Report (CeloSuperchainConfig, 3rd audit)",
+      "auditor": "Hashlock Pty Ltd",
+      "date": "2026-03-31",
+      "document": "celo/reports/Hashlock - CeloSuperchainConfig (3rd Audit).pdf"
+    },
+    "hexens-celo-staking-2024-04": {
+      "collections": ["celo"],
+      "title": "Security Review Report for Celo (Staked CELO pull requests)",
+      "auditor": "Hexens",
+      "date": "2024-04-01",
+      "document": "celo/reports/Hexens - Celo Staking.pdf"
+    },
+    "hexens-clabs-core-contracts-2023-07-14": {
+      "collections": ["celo"],
+      "title": "Security Review Report for cLabs",
+      "auditor": "Hexens",
+      "date": "2023-07-14",
+      "document": "celo/reports/Hexens - cLabs Core Contracts v15.pdf"
+    },
+    "immunefi-celo-audit-competition-2024-11": {
+      "collections": ["celo"],
+      "title": "Celo Audit Competition Summary Report",
+      "auditor": "Immunefi (audit competition)",
+      "date": "2024-12-06",
+      "document": "celo/reports/Immunefi - Celo Audit Competition Summary Report.pdf"
+    },
+    "nethermind-nm-0561-celo-custom-gas-token-2025-07-01": {
+      "collections": ["celo"],
+      "title": "NM-0561 Celo Custom Gas Token Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2025-07-01",
+      "document": "celo/reports/Nethermind - NM-0561 Celo Custom Gas Token.pdf"
+    },
+    "nethermind-nm-0579-celo-contracts-13-2025-07-25": {
+      "collections": ["celo"],
+      "title": "NM-0579 Celo Contracts 13 Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2025-07-25",
+      "document": "celo/reports/Nethermind - NM-0579 Celo.pdf"
+    },
+    "nethermind-safe-1-3-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Smart Account v1.3.0 Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2026-08-17",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Nethermind.pdf"
+    },
+    "nethermind-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2026-08-17",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-nethermind.pdf"
+    },
+    "offbeatlabs-incident-response-updates-2025-01": {
+      "collections": ["optimism"],
+      "title": "Optimism Incident Response Updates Review (Offbeat Security)",
+      "auditor": "Offbeat Labs",
+      "date": "2025-01-24",
+      "document": "optimism/reports/2025_01-IRI-OffbeatLabs.pdf"
+    },
+    "openzeppelin-bedrock-bridge-2022-05": {
+      "collections": ["optimism"],
+      "title": "Optimism Bridge Audit (OpenZeppelin, May 2022)",
+      "auditor": "OpenZeppelin",
+      "date": "2022-05-16",
+      "document": "optimism/reports/2022_05-Bedrock_Contracts-Zeppelin.pdf"
+    },
+    "openzeppelin-bedrock-periphery-2022-09": {
+      "collections": ["optimism"],
+      "title": "Optimism Bedrock and Periphery Audit (OpenZeppelin)",
+      "auditor": "OpenZeppelin",
+      "date": "2022-09-02",
+      "document": "optimism/reports/2022_09-Bedrock_and_Periphery-Zeppelin.pdf"
+    },
+    "openzeppelin-celo-contracts-release-4": {
+      "collections": ["celo"],
+      "title": "Celo Contracts Audit – Release 4",
+      "auditor": "OpenZeppelin",
+      "date": "2021-05-24",
+      "document": "celo/reports/OpenZeppelin - Celo Contracts Release 4.html"
+    },
+    "openzeppelin-celo-contracts-release-5": {
+      "collections": ["celo"],
+      "title": "Celo Contracts Audit Release 5",
+      "auditor": "OpenZeppelin",
+      "date": "2021-08-27",
+      "document": "celo/reports/OpenZeppelin - Celo Contracts Release 5.html"
+    },
+    "openzeppelin-celo-contracts-release-6": {
+      "collections": ["celo"],
+      "title": "Celo Contracts Audit – Release 6",
+      "auditor": "OpenZeppelin",
+      "date": "2022-02-23",
+      "document": "celo/reports/OpenZeppelin - Celo Contracts Release 6.html"
+    },
+    "openzeppelin-celo-contracts-release-7-part-i": {
+      "collections": ["celo"],
+      "title": "Celo Contracts Audit (Release 7, Part I)",
+      "auditor": "OpenZeppelin",
+      "date": "2022-06-16",
+      "document": "celo/reports/OpenZeppelin - Celo Contracts Release 7 Part I.html"
+    },
+    "openzeppelin-celo-contracts-release-7-part-ii": {
+      "collections": ["celo"],
+      "title": "Celo Contracts Audit (Release 7, Part II)",
+      "auditor": "OpenZeppelin",
+      "date": "2022-06-16",
+      "document": "celo/reports/OpenZeppelin - Celo Contracts Release 7 Part II.html"
+    },
+    "openzeppelin-mantle-v2-solidity-contracts-2024-03": {
+      "collections": ["mantle"],
+      "title": "Mantle V2 Solidity Contracts Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-03-15",
+      "document": "mantle/reports/2024_03-openzeppelin-mantle-v2-solidity-contracts-audit.pdf"
+    },
+    "openzeppelin-taiko-protocol-2024-06": {
+      "collections": ["taiko"],
+      "title": "Taiko Protocol Audit (OpenZeppelin)",
+      "auditor": "OpenZeppelin",
+      "date": "2024-06-19",
+      "document": "taiko/reports/2024_06-openzeppelin-taiko-protocol-audit.pdf"
+    },
+    "openzeppelin-zksync-l1-diff-2023-02": {
+      "collections": ["zksync2"],
+      "title": "zkSync | Layer 1 Diff Audit February",
+      "auditor": "OpenZeppelin",
+      "date": "2023-03-08",
+      "document": "zksync2/reports/2023_02-openzeppelin-zksync-l1-diff-audit.html"
+    },
+    "oz-celo-contracts-mainnet-releases-1-3": {
+      "collections": ["celo"],
+      "title": "Celo Contracts Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2021-02-05",
+      "document": "celo/reports/OpenZeppelin - Celo Contracts Mainnet and Releases 1-3.html"
+    },
+    "secure3-mantle-v1-contest-2023-07": {
+      "collections": ["mantle"],
+      "title": "Mantle Competitive Security Assessment",
+      "auditor": "Secure3",
+      "date": "2023-07-17",
+      "document": "mantle/reports/2023_07-secure3-mantle-v1-competitive-security-assessment.pdf"
+    },
+    "secure3-mantle-v2-public-contest-2024-04": {
+      "collections": ["mantle"],
+      "title": "Mantle_V2_Public Competitive Security Assessment (Secure3, April 2024 edition)",
+      "auditor": "Secure3",
+      "date": "2024-04-18",
+      "document": "mantle/reports/2024_04-secure3-mantle-v2-public-audit-contest.pdf"
+    },
+    "secure3-mantle-v2-public-contest-final-2024-05": {
+      "collections": ["mantle"],
+      "title": "Mantle_V2_Public Competitive Security Assessment (Secure3, May 2024 final edition)",
+      "auditor": "Secure3",
+      "date": "2024-05-10",
+      "document": "mantle/reports/2024_05-secure3-mantle-v2-public-audit-contest-final.pdf"
+    },
+    "secure3-mantle-v2-tectonic-2024-03": {
+      "collections": ["mantle"],
+      "title": "Mantle V2 Competitive Security Assessment (Secure3, March 2024)",
+      "auditor": "Secure3",
+      "date": "2024-03-04",
+      "document": "mantle/reports/2024_03-secure3-mantle-v2-tectonic-competitive-security-assessment.pdf"
+    },
+    "sigma-prime-taiko-smart-contracts-2024-02": {
+      "collections": ["taiko"],
+      "title": "Taiko Smart Contract Security Assessment (Sigma Prime)",
+      "auditor": "Sigma Prime",
+      "document": "taiko/reports/2024_02-sigma-prime-taiko-smart-contract-security-assessment.pdf"
+    },
+    "sigmaprime-mantle-l2-rollup-2023-07": {
+      "collections": ["mantle"],
+      "title": "Mantle L2 Rollup Security Assessment (Sigma Prime)",
+      "auditor": "Sigma Prime",
+      "document": "mantle/reports/2023_07-sigmaprime-mantle-l2-rollup-security-assessment.pdf"
+    },
+    "sigmaprime-mantle-l2-rollup-v2-2024-04": {
+      "collections": ["mantle"],
+      "title": "Mantle L2 Rollup V2 Security Assessment Report",
+      "auditor": "Sigma Prime",
+      "document": "mantle/reports/2024_04-sigmaprime-mantle-l2-rollup-v2-security-assessment.pdf"
+    },
+    "spearbit-agglayer-v030-2025-09": {
+      "collections": ["agglayer"],
+      "title": "Polygon Agg Security Review",
+      "auditor": "Spearbit",
+      "date": "2025-09-17",
+      "document": "agglayer/reports/2025_09-spearbit-polygon-agglayer-v0.3.0.pdf"
+    },
+    "spearbit-cannon-eventfd-syscall-fix-review-2025-06": {
+      "collections": ["optimism"],
+      "title": "Optimism - Fix Review: MIPS EventFd and Syscall Error Handling (Spearbit/Cantina)",
+      "auditor": "Cantina",
+      "date": "2025-06-21",
+      "document": "optimism/reports/2025_06-Spearbit-Cannon-fix-review.pdf"
+    },
+    "spearbit-fault-proofs-no-mips-2024-08": {
+      "collections": ["optimism"],
+      "title": "Base Fault Proofs no MIPS Security Review (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2024-08-14",
+      "document": "optimism/reports/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf"
+    },
+    "spearbit-interop-portal-2025-05": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Review",
+      "auditor": "Spearbit",
+      "date": "2025-05-20",
+      "document": "optimism/reports/2025_05-Interop-Portal-Spearbit.pdf"
+    },
+    "spearbit-mt-cannon-2025-02": {
+      "collections": ["optimism"],
+      "title": "Optimism Mt Cannon Security Review (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2025-02-20",
+      "document": "optimism/reports/2025_01-MT-Cannon-Spearbit.pdf"
+    },
+    "spearbit-safersafes-2025-11": {
+      "collections": ["optimism"],
+      "title": "Optimism SaferSafes Security Review (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2025-11-13",
+      "document": "optimism/reports/2025_11-SaferSafes-Spearbit.pdf"
+    },
+    "spearbit-u16a-2025-09": {
+      "collections": ["optimism"],
+      "title": "Optimism u16 Security Review - U16a (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2025-10-07",
+      "document": "optimism/reports/2025_09-U16a-Spearbit.pdf"
+    },
+    "spearbit-upgrade16-2025-05": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Review - Upgrade 16 (Spearbit)",
+      "auditor": "Spearbit",
+      "date": "2025-05-20",
+      "document": "optimism/reports/2025_05-Upgrade16-Spearbit.pdf"
+    },
+    "trail-of-bits-2024-02-equivalent-tokens-release-11": {
+      "collections": ["celo"],
+      "title": "cLabs Equivalent Tokens Review (Security Assessment Summary Report)",
+      "auditor": "Trail of Bits",
+      "date": "2024-02-21",
+      "document": "celo/reports/OpenZeppelin - Celo Equivalent Tokens Release 11.pdf"
+    },
+    "trail-of-bits-celo-l2-2024-12-19": {
+      "collections": ["celo"],
+      "title": "cLabs Celo L2 Security Assessment",
+      "auditor": "Trail of Bits",
+      "date": "2024-12-19",
+      "document": "celo/reports/Trail of Bits - Celo L2.pdf"
+    },
+    "trailofbits-bold-dac-rewards-updates-2024-08": {
+      "collections": ["arbitrum"],
+      "title": "Offchain Labs BoLD and DAC Rewards Updates Security Assessment (Trail of Bits, June 2024)",
+      "auditor": "Trail of Bits",
+      "date": "2024-08-05",
+      "document": "arbitrum/reports/2024-06-offchain-labs-bold-dac-rewards-updates-securityreview.pdf"
+    },
+    "trailofbits-custom-fee-erc20-bridge-upgrade-eip7702-2025-03": {
+      "collections": ["arbitrum"],
+      "title": "Offchain Labs Custom Fee ERC-20 Bridge Upgrade and EIP-7702 Fixes Summary Report (Trail of Bits, March 2025)",
+      "auditor": "Trail of Bits",
+      "date": "2025-03-31",
+      "document": "arbitrum/reports/2025-03-offchain-custom-fee-erc20-bridge-securityreview.pdf"
+    },
+    "trailofbits-governance-actions-2023-08": {
+      "collections": ["arbitrum"],
+      "title": "Offchain Labs Governance Actions Security Assessment Summary Report (Trail of Bits, August 2023)",
+      "auditor": "Trail of Bits",
+      "date": "2023-08-21",
+      "document": "arbitrum/reports/2023_08_21_trail_of_bits_governance_actions_summary_report.pdf"
+    },
+    "trailofbits-invariant-testing-2022-11": {
+      "collections": ["optimism"],
+      "title": "Optimism Security Assessment (testing strategy and invariants, November 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2022-11-10",
+      "document": "optimism/reports/2022_11-Invariant_Testing-TrailOfBits.pdf"
+    },
+    "trailofbits-nitro-2-of-2-2022-10": {
+      "collections": ["arbitrum"],
+      "title": "Arbitrum Nitro Security Assessment (Trail of Bits, second Nitro review, 2022)",
+      "auditor": "Trail of Bits",
+      "date": "2022-10-10",
+      "document": "arbitrum/reports/2022_10_22_trail_of_bits_security_audit_nitro_2_of_2.pdf"
+    },
+    "trailofbits-nitro-contracts-with-bold-2024-10": {
+      "collections": ["arbitrum"],
+      "title": "Offchain Labs Nitro Contracts with BoLD Security Assessment Summary Report (Trail of Bits, October 2024)",
+      "auditor": "Trail of Bits",
+      "date": "2024-10-30",
+      "document": "arbitrum/reports/2024-10-30-Offchain-NitroContractswithBoLD-securityreview.pdf"
+    },
+    "trailofbits-opnode-fix-review-2022-07": {
+      "collections": ["optimism"],
+      "title": "Optimism: Rollup Node and Execution Engine - Fix Review",
+      "auditor": "Trail of Bits",
+      "date": "2022-07-07",
+      "document": "optimism/reports/2022_05-OpNode-TrailOfBits.pdf"
+    },
+    "trust-security-zksync-era-contracts-2024-10": {
+      "collections": ["zksync2"],
+      "title": "Trust Security ZKsync Era Contracts Audit",
+      "auditor": "Trust Security",
+      "date": "2024-10-13",
+      "document": "zksync2/reports/2024_10-trust-security-zksync-era-contracts-audit.pdf"
+    },
+    "trust-superchainconfig-upgrade-2024-01": {
+      "collections": ["optimism"],
+      "title": "Smart Contract Audit: Optimism Bedrock upgrade (Trust Security)",
+      "auditor": "Trust Security",
+      "date": "2024-01-11",
+      "document": "optimism/reports/2023_12_SuperchainConfigUpgrade_Trust.pdf"
+    },
+    "verilog-celo-contracts-pr-9740": {
+      "collections": ["celo"],
+      "title": "Celo Contracts Audit - PR#9740",
+      "auditor": "Verilog Solutions",
+      "date": "2022-09-20",
+      "document": "celo/reports/Verilog - Celo Contracts PR 9740.html"
+    },
+    "verilog-celo-monorepo-prs-9798-10159-2023-03": {
+      "collections": ["celo"],
+      "title": "Celo Monorepo Report (PR Audit #9798-#10159)",
+      "auditor": "Verilog Solutions",
+      "date": "2023-03-09",
+      "document": "celo/reports/Verilog - Celo Monorepo PRs 9798-10159.js"
+    },
+    "verilog-staked-celo-prs-72-120-2023": {
+      "collections": ["celo"],
+      "title": "CELO Liquid Staking (staked-celo) Report",
+      "auditor": "Verilog Solutions",
+      "date": "2023-03-27",
+      "document": "celo/reports/Verilog - Staked Celo PRs 72-120.js"
+    },
+    "xuwinnie-solady-cbrt-proof": {
+      "collections": ["_libs/solady"],
+      "title": "Solady cbrt & cbrtWad Audit Report",
+      "auditor": "xuwinnie",
+      "date": "2024-07-31",
+      "document": "_libs/solady/reports/cbrt-proof__audits__xuwinnie-solady-cbrt-proof.pdf"
+    },
+    "zellic-facet-bridge-2024-11-04": {
+      "collections": ["ethscriptions", "facet"],
+      "title": "Facet Bridge Smart Contract Security Assessment",
+      "auditor": "Zellic",
+      "date": "2024-11-04",
+      "document": "ethscriptions/reports/Zellic_Facet_Bridge_Audit_Report.pdf"
+    }
+  },
+  "auditedFiles": {
+    "0045b2bbd612": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/GnosisSafe.sol",
+      "blob": "0045b2bbd61230dbb61abbddfefb0bef6f366d84"
+    },
+    "0487cb845c4b": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/L1/L1ERC721Bridge.sol",
+      "blob": "0487cb845c4b487781e5b1b0e6de278793e1b865"
+    },
+    "07a6de4542ee": {
+      "repository": "code-423n4/2023-10-zksync",
+      "commit": "1fb4649b612fac7b4ee613df6f6b7d921ddd6b0d",
+      "path": "code/system-contracts/contracts/openzeppelin/utils/Address.sol",
+      "blob": "07a6de4542ee31b3221052eaa6ec898744866607"
+    },
+    "08654fbfcc82": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/libraries/Encoding.sol",
+      "blob": "08654fbfcc82fcddd1f9ebd8b994e449ffbf221a"
+    },
+    "08d136770b8c": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/safe/DeputyPauseModule.sol",
+      "blob": "08d136770b8c9667a88f2da8bb775bee4b4516cf"
+    },
+    "0b6cbdc34973": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "path": "contracts/ownership/Ownable.sol",
+      "blob": "0b6cbdc349739e1422b349d1bbbe108566550c84"
+    },
+    "0b859cc51b9a": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "475801690f7a451469ee4da87b5fe3c54c92f372",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Syscalls.sol",
+      "blob": "0b859cc51b9a143aebd3e7481e14800051dfa2de"
+    },
+    "0b8ab296c0f9": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/base/Executor.sol",
+      "blob": "0b8ab296c0f951e04b18400891a007fb78620462"
+    },
+    "0ec1ecc1cc35": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Instructions.sol",
+      "blob": "0ec1ecc1cc3531658e1fd91298de936809464490"
+    },
+    "10bfc5e90f72": {
+      "repository": "OffchainLabs/nitro-contracts",
+      "commit": "961a498b3ae3e218535a2a9fd28c306aaa04f3ee",
+      "path": "src/bridge/IOwnable.sol",
+      "blob": "10bfc5e90f72d3e7ce827e676e03461aced66bd8"
+    },
+    "11522e3740d7": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+      "blob": "11522e3740d7cc2ed41fb72e4295656b2f683c85"
+    },
+    "12195b5a3251": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/examples/guards/BaseGuard.sol",
+      "blob": "12195b5a3251105f59bae930ca43340f6050de63"
+    },
+    "16c007f7a290": {
+      "repository": "code-423n4/2024-03-taiko",
+      "commit": "f58384f44dbf4c6535264a472322322705133b11",
+      "path": "packages/protocol/contracts/thirdparty/optimism/trie/MerkleTrie.sol",
+      "blob": "16c007f7a2902e3754fd064f43ea3f6288d8767d"
+    },
+    "199ee4175f1f": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+      "path": "packages/contracts-bedrock/src/dispute/interfaces/IDisputeGameFactory.sol",
+      "blob": "199ee4175f1faf3f463a654c412778c710bcb1d5"
+    },
+    "1a0f4cc937e4": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+      "path": "contracts/utils/Strings.sol",
+      "blob": "1a0f4cc937e4d2c2e36ba403ce5eb3601fad5c0c"
+    },
+    "1a56eb43bd1e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "1a56eb43bd1e25dff33868bade27b3a8e8f7fc4e"
+    },
+    "1ac24cfad012": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "7f339a26424c499e7338045da5bab603762727a1",
+      "path": "packages/contracts-bedrock/contracts/L1/ResourceMetering.sol",
+      "blob": "1ac24cfad012b6a8a0ccf30ffe4feeec831a5225"
+    },
+    "1cc118f42f1e": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
+      "blob": "1cc118f42f1e947ea87295c30fa1a237c31777b5"
+    },
+    "1cf7e0b2edfc": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "blob": "1cf7e0b2edfce1fb89d4f1ab51380cec2b9960aa"
+    },
+    "1d3a83dd0f27": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/utils/cryptography/EIP712.sol",
+      "blob": "1d3a83dd0f27fcd9ef5ad35357e436758734acab"
+    },
+    "1eb423f63bd3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/token/ERC721/IERC721.sol",
+      "blob": "1eb423f63bd30a984c44bfba460c587c32c47a0d"
+    },
+    "1f18f98e389b": {
+      "repository": "Vectorized/solady",
+      "commit": "43f9d49815c8126d92771b26bd9bdbe2dbea87a5",
+      "path": "src/utils/FixedPointMathLib.sol",
+      "blob": "1f18f98e389b9b4263b3f5952af2a44c7deb15d3"
+    },
+    "20cfdbc92607": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/dispute/FaultDisputeGame.sol",
+      "blob": "20cfdbc9260787be9972feca5a8204ad938a2409"
+    },
+    "221e2fd82b46": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "14f98dbb581a5365ce3f0c50bd850e499c554f72",
+      "path": "contracts/utils/math/Math.sol",
+      "blob": "221e2fd82b462fbb96d43b2da9a19e8cc0284e53"
+    },
+    "254cf6eabe82": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+      "path": "packages/contracts-bedrock/src/libraries/EOA.sol",
+      "blob": "254cf6eabe822a91673f3ebd898a5455ecbccf5e"
+    },
+    "272851b2f81b": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+      "path": "contracts/utils/structs/EnumerableSet.sol",
+      "blob": "272851b2f81b2c71dcf5115a063892668f38275f"
+    },
+    "2a56119aa12b": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+      "path": "contracts/proxy/utils/Initializable.sol",
+      "blob": "2a56119aa12b8bf6088f9490433596450145f7bd"
+    },
+    "2addf0516442": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+      "path": "packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
+      "blob": "2addf0516442396b9ac86bbb17aab6db3a953afe"
+    },
+    "2d2735ba716c": {
+      "repository": "celo-org/optimism",
+      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
+      "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+      "blob": "2d2735ba716c2fbda69364eb76b42346e7b0ebcf"
+    },
+    "2d517987d5b4": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+      "path": "contracts/utils/Context.sol",
+      "blob": "2d517987d5b49aee1a37634c95a69dae911b9d7a"
+    },
+    "2d531d2ea0d2": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "fa9974a2cd38d9e7633a12f9024d52f41de55f86",
+      "path": "packages/contracts-bedrock/src/libraries/Hashing.sol",
+      "blob": "2d531d2ea0d2dc88012df7fae69dc070acf03f53"
+    },
+    "2e7c50ed862d": {
+      "repository": "code-423n4/2024-07-optimism",
+      "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol",
+      "blob": "2e7c50ed862d1c8c7ae8869400836fa3c711c2a0"
+    },
+    "332d2a2984e9": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+      "path": "contracts/utils/Strings.sol",
+      "blob": "332d2a2984e917adbca3dd915d8f6a7dc5561504"
+    },
+    "33729a1da4d5": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/libraries/SafeCall.sol",
+      "blob": "33729a1da4d53e5887b4f6c7b729391b77fa3324"
+    },
+    "33bc7a1bf439": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+      "path": "packages/contracts-bedrock/src/L2/L2CrossDomainMessenger.sol",
+      "blob": "33bc7a1bf439308a31a44c4b26ddfb2fe649a87b"
+    },
+    "33d08b4a94b8": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/dispute/lib/Types.sol",
+      "blob": "33d08b4a94b88a257d569202baa84413db10727b"
+    },
+    "3b6a2b1659a5": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/universal/ReinitializableBase.sol",
+      "blob": "3b6a2b1659a5c08effbeef2953f31c1c4cf2014a"
+    },
+    "423248cc7d0c": {
+      "repository": "code-423n4/2024-03-taiko",
+      "commit": "f58384f44dbf4c6535264a472322322705133b11",
+      "path": "packages/protocol/contracts/thirdparty/optimism/Bytes.sol",
+      "blob": "423248cc7d0cfcc8fc058e490e3c555cc3fd3ef8"
+    },
+    "4272cb5a06c3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "4272cb5a06c3d4803df5f2861d7b6713bd9216dd"
+    },
+    "428cc5ce6a43": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
+      "path": "contracts/proxies/SafeProxy.sol",
+      "blob": "428cc5ce6a4363c7b81e367eca0d33295cf7a241"
+    },
+    "43212ea60fab": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/L1/SuperchainConfig.sol",
+      "blob": "43212ea60fab95da149a526a83482a7cd7e668e5"
+    },
+    "450af9c4112d": {
+      "repository": "celo-org/optimism",
+      "commit": "f574233e574df6122459ac589fe7141b4c8c637d",
+      "path": "packages/contracts-bedrock/src/celo/CeloSuperchainConfig.sol",
+      "blob": "450af9c4112d804e9ad4fa07f909517faaf75037"
+    },
+    "489422336212": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "4894223362122f481eacda4fe1c8a53701ede349"
+    },
+    "49100b3a7f20": {
+      "repository": "0xFacet/facet-optimism",
+      "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+      "path": "packages/contracts-bedrock/src/L2/L2ToL1MessagePasser.sol",
+      "blob": "49100b3a7f205233e40dd876a5d4ee6cffdb5acc"
+    },
+    "4c8ff00c5796": {
+      "repository": "celo-org/optimism",
+      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
+      "path": "packages/contracts-bedrock/src/L2/L2StandardBridge.sol",
+      "blob": "4c8ff00c5796d13383c798a964f0658f24847690"
+    },
+    "4d09ab547dbb": {
+      "repository": "agglayer/agglayer-contracts",
+      "commit": "07b40c26ae748c47a2a51f8159990ad4163c4d43",
+      "path": "contracts/v2/interfaces/ISP1Verifier.sol",
+      "blob": "4d09ab547dbb9726428db12ad854013c36563d8b"
+    },
+    "52d790cbee51": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "00ce7b04bef0b4866200b9fcf98633d475290792",
+      "path": "packages/contracts-bedrock/contracts/libraries/Types.sol",
+      "blob": "52d790cbee515702f832a836660f7326c38b1705"
+    },
+    "5470681ebbfb": {
+      "repository": "celo-org/optimism",
+      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
+      "path": "packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+      "blob": "5470681ebbfb26f20a43fcb64b3ec646104c5277"
+    },
+    "587b6a908ff5": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/safe/SaferSafes.sol",
+      "blob": "587b6a908ff5a23866576b383e18993a22b9c425"
+    },
+    "5881a159a886": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/libraries/Encoding.sol",
+      "blob": "5881a159a886925366ad13b0cd48b67b9f6d209b"
+    },
+    "5903ba1d7b26": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
+      "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
+      "blob": "5903ba1d7b2604d83e023273a135acf87fa78caa"
+    },
+    "5968b45f9bfb": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+      "path": "packages/contracts-bedrock/src/dispute/interfaces/IInitializable.sol",
+      "blob": "5968b45f9bfb5b2eb0643708ec59a6a94fa8d064"
+    },
+    "5a6f37e94f90": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "475801690f7a451469ee4da87b5fe3c54c92f372",
+      "path": "packages/contracts-bedrock/src/libraries/SemverComp.sol",
+      "blob": "5a6f37e94f909b88763df20a471e6484b0b4f292"
+    },
+    "5bafd968611c": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+      "path": "packages/contracts-bedrock/src/dispute/lib/LibPosition.sol",
+      "blob": "5bafd968611cee92c56500183e5726d93f882851"
+    },
+    "5bbd73283f02": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+      "path": "contracts/utils/cryptography/ECDSA.sol",
+      "blob": "5bbd73283f02dfd4a88829b4fb87138698bbb237"
+    },
+    "5cfccdbaa45d": {
+      "repository": "code-423n4/2024-03-taiko",
+      "commit": "f58384f44dbf4c6535264a472322322705133b11",
+      "path": "packages/protocol/contracts/thirdparty/optimism/trie/SecureMerkleTrie.sol",
+      "blob": "5cfccdbaa45d16a794ceaa232ea56f194a904795"
+    },
+    "62846b5b8a44": {
+      "repository": "0xFacet/facet-optimism",
+      "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+      "path": "packages/contracts-bedrock/src/libraries/GasPayingToken.sol",
+      "blob": "62846b5b8a449a1f21169786d7ffdc8b786cb86c"
+    },
+    "668700b0b04b": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "path": "contracts/Safe.sol",
+      "blob": "668700b0b04ba1a29b9777695f29c5896700bdde"
+    },
+    "67bda6663096": {
+      "repository": "celo-org/optimism",
+      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
+      "path": "packages/contracts-bedrock/src/universal/OptimismMintableERC20.sol",
+      "blob": "67bda66630961b953ca690f32fb7564c45d21d24"
+    },
+    "6b58a07e098b": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "4fc9181a73795334f0c657a79ea8177b8de1814c",
+      "path": "packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+      "blob": "6b58a07e098be55571966b3a813568df4a989852"
+    },
+    "6d79d2af21dc": {
+      "repository": "celo-org/optimism",
+      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
+      "path": "packages/contracts-bedrock/interfaces/L2/IL1Block.sol",
+      "blob": "6d79d2af21dc5408377ebd3d90b90c14fa56912d"
+    },
+    "6f74b4e83125": {
+      "repository": "code-423n4/2024-07-optimism",
+      "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+      "path": "packages/contracts-bedrock/src/cannon/PreimageOracle.sol",
+      "blob": "6f74b4e831253e9af85d031057239c6ab828a9f8"
+    },
+    "72437bc34ce4": {
+      "repository": "safe-fndn/safe-modules",
+      "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+      "path": "modules/allowances/contracts/SignatureDecoder.sol",
+      "blob": "72437bc34ce4e1463c4105a513d6edca451e147c"
+    },
+    "732cc02b109a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IERC165.sol",
+      "blob": "732cc02b109aec16f55b6851bbdc1aaea463a5f5"
+    },
+    "763455f04af3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/external/GnosisSafeMath.sol",
+      "blob": "763455f04af3b886884a3d9ee56f325ea9ffa2b1"
+    },
+    "765ac0a781f8": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/libraries/Burn.sol",
+      "blob": "765ac0a781f8cdc4cf210c88683ba190d65926e2"
+    },
+    "76df3ce4265e": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/safe/LivenessModule.sol",
+      "blob": "76df3ce4265e11569f37031218972c4615b6589b"
+    },
+    "786d4d0f11d7": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/universal/OptimismMintableERC20Factory.sol",
+      "blob": "786d4d0f11d7a1467f00c3f0b7610dfe8df1a1d7"
+    },
+    "7e11f59c4288": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+      "path": "contracts/utils/cryptography/EIP712.sol",
+      "blob": "7e11f59c4288c9120543a755ddf3ce291c9b41c1"
+    },
+    "7e7a1159d854": {
+      "repository": "celo-org/staked-celo",
+      "commit": "ba3cfa38761266d19e1d24851a25fc18ea210431",
+      "path": "contracts/common/ERC20Upgradeable.sol",
+      "blob": "7e7a1159d85406ce37cc80c02f69108025107963"
+    },
+    "80d020ff7c1d": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/utils/introspection/ERC165Checker.sol",
+      "blob": "80d020ff7c1d2c73623fa050892d634514c3f869"
+    },
+    "8259df1c162b": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
+      "blob": "8259df1c162bc9a04875a8591f919ca79b08e36f"
+    },
+    "8699afc9d67a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/EtherPaymentFallback.sol",
+      "blob": "8699afc9d67a512502ebf5beae4a812a28957627"
+    },
+    "871b28ca0406": {
+      "repository": "celo-org/optimism",
+      "commit": "55317e34b608cb39ff52c63026f174bb748a7e7e",
+      "path": "packages/contracts-bedrock/interfaces/L2/IL1Block.sol",
+      "blob": "871b28ca0406e3a7f4da35886dfd38610307febd"
+    },
+    "891a3dd1754c": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/safe/LivenessModule2.sol",
+      "blob": "891a3dd1754cc39357783942b7065c1c532d56c9"
+    },
+    "898739cbc764": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "898739cbc764ffba051eb57699b730e8950ab732"
+    },
+    "8b8442123116": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "48393a6a1ea32efac65bb3ce6617cf101ad88225",
+      "path": "packages/contracts-bedrock/src/Safe/SafeSigners.sol",
+      "blob": "8b8442123116de3be84d8b1a0402fd2b9fdb34c7"
+    },
+    "8d366ae9c470": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/dispute/DisputeGameFactory.sol",
+      "blob": "8d366ae9c470b7eba3a6049d41cbc459709d2171"
+    },
+    "8d475bd3daf8": {
+      "repository": "code-423n4/2023-03-zksync",
+      "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
+      "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
+      "blob": "8d475bd3daf8df3bf2d086ef429b5d9f9c05aeb1"
+    },
+    "92b89811bf4f": {
+      "repository": "celo-org/optimism",
+      "commit": "d80448275d1cc3577f07374432617fd808163c8c",
+      "path": "packages/contracts-bedrock/src/L1/OptimismPortal2.sol",
+      "blob": "92b89811bf4f565dff405a81b73b287fc07d90dd"
+    },
+    "94516ef14945": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/cannon/MIPS64.sol",
+      "blob": "94516ef14945b502d53ae15ed919ce9fcbb8f7ef"
+    },
+    "979554d4061c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/token/ERC20/extensions/IERC20Permit.sol",
+      "blob": "979554d4061c5a62d62524fbfda1c16307f4a7cb"
+    },
+    "9c421d7aa0fb": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "9c421d7aa0fb31e3e58b27bf827520b148963b59"
+    },
+    "9de908305096": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+      "blob": "9de908305096f81098ee9326a5afc77c7b996686"
+    },
+    "9ec9f07fc0ec": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/legacy/AddressManager.sol",
+      "blob": "9ec9f07fc0ecdef52acdd9339e18c00ae6c3a736"
+    },
+    "9fafeba8c058": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/Singleton.sol",
+      "blob": "9fafeba8c0589b764fe558a913411217e9420a9a"
+    },
+    "a14a2e22ef57": {
+      "repository": "celo-org/optimism",
+      "commit": "d80448275d1cc3577f07374432617fd808163c8c",
+      "path": "packages/contracts-bedrock/src/L1/SystemConfig.sol",
+      "blob": "a14a2e22ef573978f0e81fc4bd667e5cf23ef120"
+    },
+    "a19535a30046": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "a19535a30046f312e5208ab5b2ff7eb351a0f72d"
+    },
+    "a1d689e731db": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "b8c011f18c79d735e01168345fc1c6f02fac584f",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Arch.sol",
+      "blob": "a1d689e731dba1e5e6f7d429028418f8c00c0f0a"
+    },
+    "a2cd6ce57ad5": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+      "blob": "a2cd6ce57ad582cba4ea7ec515b66d354e0fba60"
+    },
+    "a6554ce54d76": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/dispute/zk/AccessManager.sol",
+      "blob": "a6554ce54d76c81a1b888351d9b682726fb11393"
+    },
+    "a8904777a883": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "6982dd1bd411be75ce45144e91609c995460065f",
+      "path": "contracts/utils/ShortStrings.sol",
+      "blob": "a8904777a883cef3807aa0175f21e0ebb0b0f14e"
+    },
+    "aab31696d64e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "aab31696d64e9fbce70c6280db56b39a2a3eebac"
+    },
+    "af2928eaf2f4": {
+      "repository": "code-423n4/2024-03-taiko",
+      "commit": "f58384f44dbf4c6535264a472322322705133b11",
+      "path": "packages/protocol/contracts/thirdparty/optimism/rlp/RLPWriter.sol",
+      "blob": "af2928eaf2f4d08de62e260e656f63a41342fb4b"
+    },
+    "b07bdc626c62": {
+      "repository": "celo-org/optimism",
+      "commit": "cdba802eb5e374fa3aa387deaa3243f219f821a1",
+      "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+      "blob": "b07bdc626c62141f71d7e4e1a8db92abcca48c71"
+    },
+    "b0e9189675cc": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/utils/StorageSlot.sol",
+      "blob": "b0e9189675cc5f0b86963d29b363a9568d156dd0"
+    },
+    "b303f0d27597": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "b31d35b67755479645dd150e7cc8c6710f0b4a56",
+      "path": "packages/contracts-bedrock/contracts/libraries/Burn.sol",
+      "blob": "b303f0d275973c1451f6fdfcabf5b4a6fae77e5f"
+    },
+    "b90d268bfc49": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "path": "packages/contracts-bedrock/src/dispute/AnchorStateRegistry.sol",
+      "blob": "b90d268bfc496849aa48f0f10934d522b2c05abe"
+    },
+    "b9c6139cd384": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "48393a6a1ea32efac65bb3ce6617cf101ad88225",
+      "path": "packages/contracts-bedrock/src/Safe/LivenessGuard.sol",
+      "blob": "b9c6139cd384fdacf1bea77874020c0078c3833a"
+    },
+    "ba1bb6e060a0": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+      "path": "packages/contracts-bedrock/src/dispute/lib/LibUDT.sol",
+      "blob": "ba1bb6e060a0ba72ce638e205fadae50dac1af37"
+    },
+    "c29005491aea": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+      "path": "packages/contracts-bedrock/src/dispute/interfaces/IBigStepper.sol",
+      "blob": "c29005491aea6e79367a13e4fe65d8628ae0312f"
+    },
+    "c3f36cb881fd": {
+      "repository": "code-423n4/2024-07-optimism",
+      "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+      "path": "packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
+      "blob": "c3f36cb881fd328c3b6224523d6dd5e16a6c4ddf"
+    },
+    "c477df6e1faa": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/utils/math/Math.sol",
+      "blob": "c477df6e1faa446b7cb9e184e2ed3228bf4fe79c"
+    },
+    "c6c458e0aa0c": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "b8c011f18c79d735e01168345fc1c6f02fac584f",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Memory.sol",
+      "blob": "c6c458e0aa0c90403050956f5912aac70d4cc79e"
+    },
+    "c7c27e763d21": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/L1/ResourceMetering.sol",
+      "blob": "c7c27e763d212ca746272b05471ac2a1adea43fd"
+    },
+    "c8f243d15377": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/SecuredTokenTransfer.sol",
+      "blob": "c8f243d15377b3066c7857e8c9e3459ec8405881"
+    },
+    "c9ed9c0487ff": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "c9ed9c0487ffad8099f10a986c677a69ffa1f6f8"
+    },
+    "ca09e0350541": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/access/Ownable.sol",
+      "blob": "ca09e035054133545c505f7d1c4ca829f8b67df9"
+    },
+    "cb94cc994045": {
+      "repository": "celo-org/optimism",
+      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
+      "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
+      "blob": "cb94cc994045333b641bbd36f9ec08d672047e3f"
+    },
+    "cbc5aef79df2": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/ERC20.sol",
+      "blob": "cbc5aef79df2fa45e68ad7ff4044f29c0b3b60d2"
+    },
+    "cc0e892278f4": {
+      "repository": "mantlenetworkio/mantle",
+      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "path": "packages/contracts/contracts/libraries/resolver/Lib_AddressManager.sol",
+      "blob": "cc0e892278f49456777e1efc87e86b91ff6dc220"
+    },
+    "cd36168f725d": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/universal/ProxyAdmin.sol",
+      "blob": "cd36168f725d632dee2bdab22ebe05e8b6dce1fa"
+    },
+    "cd8c88f25a35": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+      "path": "contracts/utils/math/SignedMath.sol",
+      "blob": "cd8c88f25a356ceff4ebe27e5c7c367de196fc65"
+    },
+    "cdbc92380b25": {
+      "repository": "0xFacet/facet-optimism",
+      "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+      "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+      "blob": "cdbc92380b2528e6ac3374333fe44334ec799006"
+    },
+    "ce662c6592b6": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/universal/IOptimismMintableERC20.sol",
+      "blob": "ce662c6592b6ab79d598ed2d0d5205bde3fbc8de"
+    },
+    "d4febfa2c0c9": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/legacy/ResolvedDelegateProxy.sol",
+      "blob": "d4febfa2c0c90109805fd78d723110955ba19c9b"
+    },
+    "d842b2266fbd": {
+      "repository": "celo-org/optimism",
+      "commit": "55317e34b608cb39ff52c63026f174bb748a7e7e",
+      "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+      "blob": "d842b2266fbd7efb7fcb716a09f33557cf858123"
+    },
+    "da0282ed88c8": {
+      "repository": "matter-labs/era-contracts",
+      "commit": "29f9ff4bbe12dc133c852f81acd70e2b4139d6b2",
+      "path": "l2-contracts/contracts/vendor/AddressAliasHelper.sol",
+      "blob": "da0282ed88c86d592b56169d27c5d8f71e4fa1e8"
+    },
+    "da81f8933044": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+      "path": "packages/contracts-bedrock/src/dispute/interfaces/IDisputeGame.sol",
+      "blob": "da81f8933044326a8fb66e995a00a3e841650975"
+    },
+    "dc7d67ab6757": {
+      "repository": "celo-org/optimism",
+      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
+      "path": "packages/contracts-bedrock/src/L1/L1CrossDomainMessenger.sol",
+      "blob": "dc7d67ab67572b71868953e8797b71d01c13996e"
+    },
+    "df706813de0d": {
+      "repository": "celo-org/optimism",
+      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
+      "path": "packages/contracts-bedrock/src/L1/L1StandardBridge.sol",
+      "blob": "df706813de0da038303faebce1a51a2994cc1c48"
+    },
+    "e108659a8145": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64State.sol",
+      "blob": "e108659a8145cbb4bc780a9a80d29fd8894f6bc3"
+    },
+    "e4a4ebc73aae": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/safe/TimelockGuard.sol",
+      "blob": "e4a4ebc73aae08e41cf7f2d1c93f6bc446350d1b"
+    },
+    "e60171eac28a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/proxies/GnosisSafeProxy.sol",
+      "blob": "e60171eac28ab42852376215e7b78ec351b2e400"
+    },
+    "e6daa774e035": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+      "path": "contracts/utils/cryptography/ECDSA.sol",
+      "blob": "e6daa774e0352960577121bb94483be41b286b34"
+    },
+    "e77c193bdf4e": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",
+      "blob": "e77c193bdf4ec8c79ffe054952c4f732c103d076"
+    },
+    "eb0529a71f33": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
+      "blob": "eb0529a71f332a5b6cfc565133e83a00ec3866ee"
+    },
+    "eb2ea3a3e2b2": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/libraries/Arithmetic.sol",
+      "blob": "eb2ea3a3e2b27c315d9801b5f393e2cd8cf7f38c"
+    },
+    "ec004a31130c": {
+      "repository": "celo-org/optimism",
+      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
+      "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+      "blob": "ec004a31130c329b4352108d18ebe1dd486b8c49"
+    },
+    "f05bf3b042ab": {
+      "repository": "taikoxyz/taiko-mono",
+      "commit": "dd8725f8d27f835102fa3c5a013003090268357d",
+      "path": "packages/protocol/contracts/thirdparty/optimism/rlp/RLPReader.sol",
+      "blob": "f05bf3b042ab7554fcd603c1eaaf5a37911b00b3"
+    },
+    "f20ab01bcd2b": {
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
+      "path": "packages/contracts-bedrock/contracts/legacy/L1ChugSplashProxy.sol",
+      "blob": "f20ab01bcd2b00e53c0390c4549d7d5b53761f24"
+    },
+    "f3b8944f25b1": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/external/SafeMath.sol",
+      "blob": "f3b8944f25b1f8efcf9bf3451dc023602f223206"
+    },
+    "f595cab71425": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/dispute/PermissionedDisputeGame.sol",
+      "blob": "f595cab7142516017d07172bec7089eea458f2b5"
+    },
+    "f71603017bf7": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+      "path": "contracts/utils/cryptography/MessageHashUtils.sol",
+      "blob": "f71603017bf79399215b0b9cd86b5d4057926aa6"
+    },
+    "f8313c732a79": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+      "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
+      "blob": "f8313c732a79f288743ca1d2cc1321a2c9987dec"
+    },
+    "f91a9e564f29": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "b31d35b67755479645dd150e7cc8c6710f0b4a56",
+      "path": "packages/contracts-bedrock/contracts/libraries/Encoding.sol",
+      "blob": "f91a9e564f2914b60be5aca6d44b000f110bb095"
+    },
+    "f9b6674650dd": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "f9b6674650dd96ad6c22ce5aebb85dcda371cd67"
+    },
+    "ffc4841a17cf": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/dispute/zk/OPSuccinctFaultDisputeGame.sol",
+      "blob": "ffc4841a17cf9f5dcf0037f2381498cd003b4dbf"
+    },
+    "ffe8b8c3eefa": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+      "path": "packages/contracts-bedrock/src/libraries/Features.sol",
+      "blob": "ffe8b8c3eefa00e5df725204715a0be1bc70b31c"
+    }
+  },
+  "units": {
+    "e60933e352ce": {
+      "name": "IResourceMetering",
+      "kind": "interface",
+      "lines": 24,
+      "status": "none"
+    },
+    "a6df5b2b9c6d": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 44,
+      "status": "differs",
+      "audited": { "object": "9de908305096", "lines": [11, 58] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [],
+      "removed": [[22, 22, 25]],
+      "covered": 44
+    },
+    "7b9337a52d32": {
+      "name": "Proxy",
+      "kind": "contract",
+      "lines": 159,
+      "status": "differs",
+      "audited": { "object": "8259df1c162b", "lines": [10, 213] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ],
+      "added": [
+        [94, 94],
+        [96, 96],
+        [105, 105],
+        [107, 107],
+        [141, 141],
+        [143, 143],
+        [152, 152],
+        [154, 154]
+      ],
+      "removed": [
+        [1, 1, 15],
+        [96, 133, 133],
+        [107, 146, 146],
+        [143, 186, 186],
+        [154, 199, 199]
+      ],
+      "covered": 151
+    },
+    "4933ae177b35": {
+      "name": "CrossDomainMessengerLegacySpacer0",
+      "kind": "contract",
+      "lines": 6,
+      "status": "identical",
+      "audited": { "object": "ec004a31130c", "lines": [18, 23] },
+      "reports": [
+        "cantina-eip7702-2025-02",
+        "cantina-mcp-l1-2024-02",
+        "hashlock-celo-optimism-superchain-2026-02",
+        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "trust-superchainconfig-upgrade-2024-01"
+      ]
+    },
+    "21c9e76387ed": {
+      "name": "AddressUpgradeable",
+      "kind": "library",
+      "lines": 187,
+      "status": "none"
+    },
+    "8d8dc0a58b96": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 82,
+      "status": "differs",
+      "audited": { "object": "2a56119aa12b", "lines": [57, 138] },
+      "reports": ["formal-verification__fv__reports__2022-05"],
+      "added": [[24, 24]],
+      "removed": [[24, 24, 24]],
+      "covered": 81
+    },
+    "2f8ca1cb8cb7": {
+      "name": "CrossDomainMessengerLegacySpacer1",
+      "kind": "contract",
+      "lines": 51,
+      "status": "identical",
+      "audited": { "object": "ec004a31130c", "lines": [30, 80] },
+      "reports": [
+        "cantina-eip7702-2025-02",
+        "cantina-mcp-l1-2024-02",
+        "hashlock-celo-optimism-superchain-2026-02",
+        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "trust-superchainconfig-upgrade-2024-01"
+      ]
+    },
+    "17434a79a37e": {
+      "name": "Types",
+      "kind": "library",
+      "lines": 73,
+      "status": "differs",
+      "audited": { "object": "52d790cbee51", "lines": [8, 86] },
+      "reports": ["secure3-mantle-v2-tectonic-2024-03"],
+      "added": [[41, 41], [60, 60], [64, 71]],
+      "removed": [[41, 50, 50], [43, 52, 52], [60, 73, 74]],
+      "covered": 67
+    },
+    "522aebe84bc6": {
+      "name": "Hashing",
+      "kind": "library",
+      "lines": 140,
+      "status": "differs",
+      "audited": { "object": "2d531d2ea0d2", "lines": [11, 140] },
+      "reports": [
+        "cantina-interop-l2-rereview-2026-06",
+        "cantina-interop-portal-2025-04",
+        "spearbit-upgrade16-2025-05"
+      ],
+      "added": [],
+      "removed": [[139, 122, 128]],
+      "covered": 140
+    },
+    "9c690dd3c693": {
+      "name": "RLPWriter",
+      "kind": "library",
+      "lines": 155,
+      "status": "differs",
+      "audited": { "object": "af2928eaf2f4", "lines": [9, 70] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06"
+      ],
+      "added": [[11, 32], [40, 47], [91, 153]],
+      "removed": [],
+      "covered": 96
+    },
+    "3d6f7edc7627": {
+      "name": "Encoding",
+      "kind": "library",
+      "lines": 209,
+      "status": "differs",
+      "audited": { "object": "f91a9e564f29", "lines": [12, 150] },
+      "reports": ["trailofbits-invariant-testing-2022-11"],
+      "added": [[128, 207]],
+      "removed": [],
+      "covered": 151
+    },
+    "aeebc2fe3441": {
+      "name": "SafeCall",
+      "kind": "library",
+      "lines": 163,
+      "status": "differs",
+      "audited": { "object": "33729a1da4d5", "lines": [8, 150] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ],
+      "added": [[6, 18], [20, 26], [33, 37], [40, 53], [55, 69]],
+      "removed": [[6, 9, 23], [20, 26, 28], [33, 34, 48], [55, 51, 52]],
+      "covered": 122
+    },
+    "e698bd94db4f": {
+      "name": "CrossDomainMessenger",
+      "kind": "abstract",
+      "lines": 332,
+      "status": "identical",
+      "audited": { "object": "b07bdc626c62", "lines": [89, 417] },
+      "reports": ["nethermind-nm-0561-celo-custom-gas-token-2025-07-01"]
+    },
+    "b61f946296f1": {
+      "name": "ISemver",
+      "kind": "interface",
+      "lines": 7,
+      "status": "none"
+    },
+    "040a1f47c4e5": {
+      "name": "IL2ToL1MessagePasser",
+      "kind": "interface",
+      "lines": 23,
+      "status": "none"
+    },
+    "fd145b587e6b": {
+      "name": "Predeploys",
+      "kind": "library",
+      "lines": 173,
+      "status": "differs",
+      "audited": { "object": "eb0529a71f33", "lines": [9, 265] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [[84, 86], [130, 130], [144, 155]],
+      "removed": [
+        [63, 63, 65],
+        [84, 87, 89],
+        [103, 106, 114],
+        [124, 170, 172],
+        [130, 191, 192],
+        [135, 206, 214],
+        [144, 224, 224],
+        [144, 227, 239]
+      ],
+      "covered": 159
+    },
+    "de55bba76da6": {
+      "name": "IL1Block",
+      "kind": "interface",
+      "lines": 38,
+      "status": "differs",
+      "audited": { "object": "871b28ca0406", "lines": [4, 43] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"],
+      "added": [],
+      "removed": [[19, 19, 20], [33, 34, 34]],
+      "covered": 38
+    },
+    "d0e269c9f6e8": {
+      "name": "AddressAliasHelper",
+      "kind": "library",
+      "lines": 23,
+      "status": "identical",
+      "audited": { "object": "da0282ed88c8", "lines": [21, 43] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-2024-03",
+        "openzeppelin-zksync-l1-diff-2023-02",
+        "trust-security-zksync-era-contracts-2024-10"
+      ]
+    },
+    "c0e4c17bfc2b": {
+      "name": "L2CrossDomainMessenger",
+      "kind": "contract",
+      "lines": 45,
+      "status": "differs",
+      "audited": { "object": "33bc7a1bf439", "lines": [17, 56] },
+      "reports": ["cantina-mcp-l1-2024-02"],
+      "added": [[2, 2], [25, 25], [29, 33]],
+      "removed": [[2, 2, 2], [25, 25, 25]],
+      "covered": 40
+    },
+    "ecedf963bc64": {
+      "name": "Address",
+      "kind": "library",
+      "lines": 214,
+      "status": "differs",
+      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
+      "reports": [
+        "code4rena-zksync-era-2023-10",
+        "code4rena-zksync-era-system-contracts-2023-03"
+      ],
+      "added": [
+        [77, 77],
+        [126, 127],
+        [129, 129],
+        [153, 154],
+        [156, 156],
+        [180, 181],
+        [183, 183],
+        [200, 210]
+      ],
+      "removed": [
+        [77, 77, 77],
+        [129, 120, 120],
+        [156, 145, 145],
+        [183, 169, 169],
+        [185, 171, 194],
+        [200, 210, 210],
+        [213, 213, 226]
+      ],
+      "covered": 199
+    },
+    "b0006e2cedea": {
+      "name": "Initializable",
+      "kind": "abstract",
+      "lines": 82,
+      "status": "identical",
+      "audited": { "object": "2a56119aa12b", "lines": [57, 138] },
+      "reports": ["formal-verification__fv__reports__2022-05"]
+    },
+    "809d3ad2bcb8": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 74,
+      "status": "identical",
+      "audited": { "object": "a19535a30046", "lines": [9, 78] },
+      "reports": [
+        "code4rena-zksync-era-system-contracts-2023-03",
+        "contracts__audits__2023-10-v5.0"
+      ]
+    },
+    "5c1b98c91663": {
+      "name": "IERC20Permit",
+      "kind": "interface",
+      "lines": 47,
+      "status": "identical",
+      "audited": { "object": "979554d4061c", "lines": [42, 83] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "33c1bc98e249": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 98,
+      "status": "identical",
+      "audited": { "object": "8d475bd3daf8", "lines": [19, 95] },
+      "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
+    },
+    "e617819b14e5": {
+      "name": "ICrossDomainMessenger",
+      "kind": "interface",
+      "lines": 37,
+      "status": "none"
+    },
+    "d768b8759414": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "5cb0721f72f0": {
+      "name": "IERC20Metadata",
+      "kind": "interface",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "1cf7e0b2edfc", "lines": [13, 28] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "c6d0c3b96308": {
+      "name": "ERC20",
+      "kind": "contract",
+      "lines": 349,
+      "status": "differs",
+      "audited": { "object": "cbc5aef79df2", "lines": [38, 343] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [
+        [0, 0],
+        [12, 14],
+        [166, 166],
+        [169, 169],
+        [171, 171],
+        [191, 210],
+        [217, 218],
+        [222, 231],
+        [245, 259],
+        [280, 282],
+        [302, 302],
+        [308, 347]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [9, 9, 13],
+        [166, 164, 164],
+        [169, 167, 169],
+        [171, 171, 171],
+        [191, 187, 194],
+        [212, 196, 230],
+        [212, 232, 232],
+        [222, 240, 244],
+        [245, 255, 259],
+        [280, 276, 281],
+        [302, 297, 299]
+      ],
+      "covered": 298
+    },
+    "0b07a9c1be22": {
+      "name": "Strings",
+      "kind": "library",
+      "lines": 67,
+      "status": "differs",
+      "audited": { "object": "332d2a2984e9", "lines": [12, 87] },
+      "reports": ["contracts__audits__2023-05-v4.9"],
+      "added": [[1, 1], [8, 26], [33, 42], [53, 53]],
+      "removed": [
+        [1, 1, 1],
+        [26, 8, 28],
+        [28, 30, 36],
+        [42, 42, 44],
+        [53, 55, 55],
+        [66, 68, 74]
+      ],
+      "covered": 39
+    },
+    "2b1640f289ea": {
+      "name": "ECDSA",
+      "kind": "library",
+      "lines": 205,
+      "status": "differs",
+      "audited": { "object": "5bbd73283f02", "lines": [14, 218] },
+      "reports": ["contracts__audits__2023-05-v4.9"],
+      "added": [[18, 20], [138, 140], [174, 174], [177, 177], [201, 202]],
+      "removed": [
+        [18, 19, 19],
+        [174, 152, 152],
+        [177, 156, 160],
+        [201, 184, 184],
+        [202, 186, 192],
+        [204, 194, 203]
+      ],
+      "covered": 195
+    },
+    "86ab20534f15": {
+      "name": "EIP712",
+      "kind": "abstract",
+      "lines": 78,
+      "status": "differs",
+      "audited": { "object": "7e11f59c4288", "lines": [35, 140] },
+      "reports": ["contracts__audits__2023-05-v4.9"],
+      "added": [[0, 12], [27, 37], [44, 45], [47, 47], [52, 54], [56, 56]],
+      "removed": [
+        [0, 0, 18],
+        [31, 33, 36],
+        [35, 38, 40],
+        [44, 47, 48],
+        [47, 50, 50],
+        [56, 55, 55],
+        [77, 76, 104]
+      ],
+      "covered": 53
+    },
+    "e043a4dd253b": {
+      "name": "Counters",
+      "kind": "library",
+      "lines": 30,
+      "status": "none"
+    },
+    "38d1718b8fc3": {
+      "name": "ERC20Permit",
+      "kind": "abstract",
+      "lines": 74,
+      "status": "differs",
+      "audited": { "object": "e77c193bdf4e", "lines": [22, 82] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [
+        [0, 4],
+        [8, 15],
+        [36, 36],
+        [43, 43],
+        [51, 52],
+        [59, 59],
+        [62, 72]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [8, 4, 13],
+        [36, 30, 32],
+        [43, 39, 41],
+        [51, 49, 50],
+        [59, 57, 57]
+      ],
+      "covered": 60
+    },
+    "d5467e9995bc": {
+      "name": "AbstractFeeCurrency",
+      "kind": "abstract",
+      "lines": 40,
+      "status": "none"
+    },
+    "86a3ff0626e0": {
+      "name": "Preinstalls",
+      "kind": "library",
+      "lines": 158,
+      "status": "none"
+    },
+    "f98775a7d0f9": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "197395080909": {
+      "name": "ILegacyMintableERC20",
+      "kind": "interface",
+      "lines": 7,
+      "status": "identical",
+      "audited": { "object": "ce662c6592b6", "lines": [28, 34] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "efa75a106aeb": {
+      "name": "IOptimismMintableERC20",
+      "kind": "interface",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "ce662c6592b6", "lines": [12, 20] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "4959e40bdc75": {
+      "name": "OptimismMintableERC20",
+      "kind": "contract",
+      "lines": 131,
+      "status": "differs",
+      "audited": { "object": "67bda6663096", "lines": [26, 150] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"],
+      "added": [[28, 28]],
+      "removed": [[28, 28, 28]],
+      "covered": 130
+    },
+    "e950fe694422": {
+      "name": "ERC165Checker",
+      "kind": "library",
+      "lines": 109,
+      "status": "differs",
+      "audited": { "object": "80d020ff7c1d", "lines": [15, 124] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[10, 12], [23, 23], [48, 48], [72, 72], [80, 107]],
+      "removed": [
+        [10, 10, 11],
+        [23, 22, 22],
+        [48, 45, 45],
+        [72, 69, 69],
+        [80, 77, 108]
+      ],
+      "covered": 91
+    },
+    "a83bd6338768": {
+      "name": "StandardBridge",
+      "kind": "abstract",
+      "lines": 477,
+      "status": "differs",
+      "audited": { "object": "cb94cc994045", "lines": [28, 466] },
+      "reports": [
+        "hashlock-celo-optimism-superchain-2026-02",
+        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01"
+      ],
+      "added": [[82, 82], [276, 276], [346, 346]],
+      "removed": [[82, 82, 82], [276, 258, 258], [346, 324, 324]],
+      "covered": 474
+    },
+    "a2a3a3152d08": {
+      "name": "L2StandardBridge",
+      "kind": "contract",
+      "lines": 221,
+      "status": "differs",
+      "audited": { "object": "4c8ff00c5796", "lines": [26, 217] },
+      "reports": [
+        "hashlock-celo-optimism-superchain-2026-02",
+        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01"
+      ],
+      "added": [[38, 38], [43, 43], [48, 48]],
+      "removed": [[38, 38, 38], [43, 43, 43], [48, 48, 48]],
+      "covered": 218
+    },
+    "9b73a9b5c9f6": {
+      "name": "Burner",
+      "kind": "contract",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "765ac0a781f8", "lines": [38, 42] },
+      "reports": [
+        "openzeppelin-bedrock-bridge-2022-05",
+        "openzeppelin-mantle-v2-solidity-contracts-2024-03",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05",
+        "secure3-mantle-v2-tectonic-2024-03",
+        "trailofbits-invariant-testing-2022-11",
+        "trailofbits-opnode-fix-review-2022-07"
+      ]
+    },
+    "433c37b5a737": {
+      "name": "Burn",
+      "kind": "library",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "b303f0d27597", "lines": [8, 30] },
+      "reports": ["trailofbits-invariant-testing-2022-11"]
+    },
+    "5632ed7477af": {
+      "name": "L2ToL1MessagePasser",
+      "kind": "contract",
+      "lines": 86,
+      "status": "differs",
+      "audited": { "object": "49100b3a7f20", "lines": [17, 104] },
+      "reports": ["zellic-facet-bridge-2024-11-04"],
+      "added": [[36, 36]],
+      "removed": [[36, 36, 36], [58, 58, 59]],
+      "covered": 85
+    },
+    "9b385480472b": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 64,
+      "status": "differs",
+      "audited": { "object": "ca09e0350541", "lines": [20, 97] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[8, 9], [31, 31], [50, 50]],
+      "removed": [[2, 2, 11], [8, 18, 19], [31, 41, 43], [50, 62, 64]],
+      "covered": 60
+    },
+    "4a11931b7a86": {
+      "name": "IOwnable",
+      "kind": "interface",
+      "lines": 9,
+      "status": "differs",
+      "audited": { "object": "10bfc5e90f72", "lines": [8, 10] },
+      "reports": [
+        "trailofbits-bold-dac-rewards-updates-2024-08",
+        "trailofbits-custom-fee-erc20-bridge-upgrade-eip7702-2025-03",
+        "trailofbits-governance-actions-2023-08",
+        "trailofbits-nitro-2-of-2-2022-10",
+        "trailofbits-nitro-contracts-with-bold-2024-10"
+      ],
+      "added": [[1, 2], [4, 7]],
+      "removed": [],
+      "covered": 5
+    },
+    "ed326933a23e": {
+      "name": "IAddressManager",
+      "kind": "interface",
+      "lines": 8,
+      "status": "none"
+    },
+    "684f0e81cf49": {
+      "name": "IStaticERC1967Proxy",
+      "kind": "interface",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "cd36168f725d", "lines": [13, 17] },
+      "reports": [
+        "code4rena-base-2023-08",
+        "openzeppelin-bedrock-periphery-2022-09",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "cc08c6ff2ef8": {
+      "name": "IStaticL1ChugSplashProxy",
+      "kind": "interface",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "cd36168f725d", "lines": [23, 27] },
+      "reports": [
+        "code4rena-base-2023-08",
+        "openzeppelin-bedrock-periphery-2022-09",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "40de3fd40246": {
+      "name": "IProxy",
+      "kind": "interface",
+      "lines": 16,
+      "status": "none"
+    },
+    "b277570179e1": {
+      "name": "IL1ChugSplashProxy",
+      "kind": "interface",
+      "lines": 13,
+      "status": "none"
+    },
+    "f8d2ced2582b": {
+      "name": "ProxyAdmin",
+      "kind": "contract",
+      "lines": 174,
+      "status": "differs",
+      "audited": { "object": "cd36168f725d", "lines": [35, 254] },
+      "reports": [
+        "code4rena-base-2023-08",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ],
+      "added": [
+        [21, 21],
+        [50, 50],
+        [118, 118],
+        [120, 120],
+        [134, 134],
+        [136, 137],
+        [165, 165]
+      ],
+      "removed": [
+        [21, 30, 30],
+        [50, 72, 72],
+        [118, 160, 160],
+        [120, 162, 162],
+        [134, 179, 179],
+        [136, 181, 181],
+        [137, 183, 184],
+        [165, 211, 211]
+      ],
+      "covered": 166
+    },
+    "48db7077d4ee": {
+      "name": "EtherPaymentFallback",
+      "kind": "contract",
+      "lines": 8,
+      "status": "identical",
+      "audited": { "object": "8699afc9d67a", "lines": [6, 13] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "ded673ea29c4": {
+      "name": "Singleton",
+      "kind": "contract",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "16eb9f2e8752": {
+      "name": "SelfAuthorized",
+      "kind": "contract",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "898739cbc764", "lines": [6, 16] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "40ce0b25499c": {
+      "name": "Enum",
+      "kind": "interface",
+      "lines": 6,
+      "status": "none"
+    },
+    "68dd4bd4433d": {
+      "name": "Executor",
+      "kind": "contract",
+      "lines": 21,
+      "status": "identical",
+      "audited": { "object": "0b8ab296c0f9", "lines": [10, 42] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "1d5fc2d9e00d": {
+      "name": "ModuleManager",
+      "kind": "contract",
+      "lines": 124,
+      "status": "identical",
+      "audited": { "object": "1a56eb43bd1e", "lines": [11, 139] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "95294331afbc": {
+      "name": "OwnerManager",
+      "kind": "contract",
+      "lines": 142,
+      "status": "identical",
+      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "2ec005ea16b3": {
+      "name": "SignatureDecoder",
+      "kind": "contract",
+      "lines": 31,
+      "status": "identical",
+      "audited": { "object": "72437bc34ce4", "lines": [7, 33] },
+      "reports": [
+        "certora-safe-allowance-v1-0-0",
+        "nethermind-safe-allowance-v1-0-0"
+      ]
+    },
+    "fd10ad67f878": {
+      "name": "SecuredTokenTransfer",
+      "kind": "contract",
+      "lines": 30,
+      "status": "identical",
+      "audited": { "object": "c8f243d15377", "lines": [8, 34] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "de59e343d914": {
+      "name": "ISignatureValidatorConstants",
+      "kind": "contract",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "f9b6674650dd", "lines": [4, 7] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-1-0",
+        "g0-safe-1-1-1",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
+    },
+    "37dc539ed622": {
+      "name": "FallbackManager",
+      "kind": "contract",
+      "lines": 46,
+      "status": "identical",
+      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "bc18eb3148bc": {
+      "name": "StorageAccessible",
+      "kind": "contract",
+      "lines": 42,
+      "status": "identical",
+      "audited": { "object": "489422336212", "lines": [6, 47] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "bd90fb921f2d": {
+      "name": "GuardManager",
+      "kind": "contract",
+      "lines": 24,
+      "status": "identical",
+      "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "c067b1aa9040": {
+      "name": "GnosisSafeMath",
+      "kind": "library",
+      "lines": 45,
+      "status": "identical",
+      "audited": { "object": "763455f04af3", "lines": [10, 54] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "09399b61d7eb": {
+      "name": "Guard",
+      "kind": "interface",
+      "lines": 17,
+      "status": "identical",
+      "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "b2400038371b": {
+      "name": "ISignatureValidator",
+      "kind": "abstract",
+      "lines": 12,
+      "status": "identical",
+      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
+    },
+    "3e84ad780965": {
+      "name": "GnosisSafe",
+      "kind": "contract",
+      "lines": 404,
+      "status": "identical",
+      "audited": { "object": "0045b2bbd612", "lines": [22, 434] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "f223653d7e89": {
+      "name": "LivenessGuard",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "e87f8ddd95c3": {
+      "name": "LivenessModule",
+      "kind": "contract",
+      "lines": 247,
+      "status": "differs",
+      "audited": { "object": "76df3ce4265e", "lines": [22, 268] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [[41, 41]],
+      "removed": [[41, 41, 41]],
+      "covered": 246
+    },
+    "8f7da050ddb2": {
+      "name": "SignedMath",
+      "kind": "library",
+      "lines": 35,
+      "status": "differs",
+      "audited": { "object": "cd8c88f25a35", "lines": [9, 43] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[5, 5]],
+      "removed": [[5, 5, 5]],
+      "covered": 34
+    },
+    "727591669b8c": {
+      "name": "FixedPointMathLib",
+      "kind": "library",
+      "lines": 361,
+      "status": "none"
+    },
+    "7d6554b6cb64": {
+      "name": "Arithmetic",
+      "kind": "library",
+      "lines": 20,
+      "status": "identical",
+      "audited": { "object": "eb2ea3a3e2b2", "lines": [11, 38] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "26ad7b61b37b": {
+      "name": "Math",
+      "kind": "library",
+      "lines": 218,
+      "status": "differs",
+      "audited": { "object": "221e2fd82b46", "lines": [9, 337] },
+      "reports": [
+        "contracts__audits__2022-10-Checkpoints",
+        "contracts__audits__2022-10-ERC4626"
+      ],
+      "added": [[11, 11], [153, 189], [211, 215]],
+      "removed": [
+        [11, 12, 12],
+        [153, 145, 156],
+        [215, 178, 181],
+        [217, 183, 327]
+      ],
+      "covered": 183
+    },
+    "2d60ee7f3ed2": {
+      "name": "ResourceMetering",
+      "kind": "abstract",
+      "lines": 148,
+      "status": "identical",
+      "audited": { "object": "1ac24cfad012", "lines": [15, 182] },
+      "reports": [
+        "openzeppelin-mantle-v2-solidity-contracts-2024-03",
+        "secure3-mantle-v2-tectonic-2024-03",
+        "sigmaprime-mantle-l2-rollup-v2-2024-04"
+      ]
+    },
+    "d44c0cfb8c85": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 37,
+      "status": "differs",
+      "audited": { "object": "cdbc92380b25", "lines": [10, 54] },
+      "reports": ["zellic-facet-bridge-2024-11-04"],
+      "added": [],
+      "removed": [[22, 22, 29]],
+      "covered": 37
+    },
+    "3f3d60f9e37d": {
+      "name": "Proxy",
+      "kind": "contract",
+      "lines": 159,
+      "status": "differs",
+      "audited": { "object": "8259df1c162b", "lines": [10, 213] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ],
+      "added": [
+        [94, 94],
+        [96, 96],
+        [105, 105],
+        [107, 107],
+        [141, 141],
+        [143, 143],
+        [152, 152],
+        [154, 154]
+      ],
+      "removed": [
+        [1, 1, 15],
+        [96, 133, 133],
+        [107, 146, 146],
+        [143, 186, 186],
+        [154, 199, 199]
+      ],
+      "covered": 151
+    },
+    "9c557c702fdd": {
+      "name": "ContextUpgradeable",
+      "kind": "abstract",
+      "lines": 21,
+      "status": "differs",
+      "audited": {
+        "object": "2d517987d5b4",
+        "lines": [16, 24],
+        "name": "Context"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 5], [13, 19]],
+      "removed": [[0, 0, 0]],
+      "covered": 15
+    },
+    "33ed820fd285": {
+      "name": "IERC20Upgradeable",
+      "kind": "interface",
+      "lines": 74,
+      "status": "identical",
+      "audited": {
+        "object": "a19535a30046",
+        "lines": [9, 78],
+        "name": "IERC20"
+      },
+      "reports": [
+        "code4rena-zksync-era-system-contracts-2023-03",
+        "contracts__audits__2023-10-v5.0"
+      ]
+    },
+    "d8b60b8e9606": {
+      "name": "IERC20MetadataUpgradeable",
+      "kind": "interface",
+      "lines": 16,
+      "status": "differs",
+      "audited": {
+        "object": "1cf7e0b2edfc",
+        "lines": [13, 28],
+        "name": "IERC20Metadata"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0]],
+      "removed": [[0, 0, 0]],
+      "covered": 15
+    },
+    "1919fb344589": {
+      "name": "ERC20Upgradeable",
+      "kind": "contract",
+      "lines": 360,
+      "status": "differs",
+      "audited": { "object": "7e7a1159d854", "lines": [38, 394] },
+      "reports": ["verilog-staked-celo-prs-72-120-2023"],
+      "added": [[1, 1], [152, 152], [172, 172]],
+      "removed": [[1, 1, 1], [152, 150, 150], [172, 170, 170]],
+      "covered": 357
+    },
+    "8d5633266ce1": {
+      "name": "CeloTokenL1",
+      "kind": "contract",
+      "lines": 14,
+      "status": "none"
+    },
+    "6b8b61778726": {
+      "name": "GnosisSafeProxy",
+      "kind": "contract",
+      "lines": 32,
+      "status": "identical",
+      "audited": { "object": "e60171eac28a", "lines": [13, 42] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "7ac9eb435da8": {
+      "name": "AddressManager",
+      "kind": "contract",
+      "lines": 51,
+      "status": "identical",
+      "audited": { "object": "9ec9f07fc0ec", "lines": [14, 64] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "f458cbfdf7bd": {
+      "name": "ResolvedDelegateProxy",
+      "kind": "contract",
+      "lines": 52,
+      "status": "identical",
+      "audited": { "object": "d4febfa2c0c9", "lines": [13, 62] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "e9aa0f101d68": {
+      "name": "Types",
+      "kind": "library",
+      "lines": 91,
+      "status": "differs",
+      "audited": { "object": "52d790cbee51", "lines": [8, 86] },
+      "reports": ["secure3-mantle-v2-tectonic-2024-03"],
+      "added": [[25, 42], [59, 59], [78, 78], [82, 89]],
+      "removed": [[25, 32, 34], [59, 50, 50], [61, 52, 52], [78, 73, 74]],
+      "covered": 76
+    },
+    "3e463bddb22c": {
+      "name": "Hashing",
+      "kind": "library",
+      "lines": 147,
+      "status": "identical",
+      "audited": { "object": "2d531d2ea0d2", "lines": [11, 140] },
+      "reports": [
+        "cantina-interop-l2-rereview-2026-06",
+        "cantina-interop-portal-2025-04",
+        "spearbit-upgrade16-2025-05"
+      ]
+    },
+    "b5fd1caa393e": {
+      "name": "Encoding",
+      "kind": "library",
+      "lines": 291,
+      "status": "identical",
+      "audited": { "object": "08654fbfcc82", "lines": [12, 277] },
+      "reports": ["cantina-u17-2025-10"]
+    },
+    "70799d37c1a1": {
+      "name": "CrossDomainMessenger",
+      "kind": "abstract",
+      "lines": 367,
+      "status": "identical",
+      "audited": { "object": "ec004a31130c", "lines": [90, 453] },
+      "reports": [
+        "hashlock-celo-optimism-superchain-2026-02",
+        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01"
+      ]
+    },
+    "e2b40f3d642c": {
+      "name": "IProxyAdmin",
+      "kind": "interface",
+      "lines": 29,
+      "status": "none"
+    },
+    "e59a41a9002d": {
+      "name": "Storage",
+      "kind": "library",
+      "lines": 83,
+      "status": "none"
+    },
+    "383d0a473e13": {
+      "name": "ProxyAdminOwnedBase",
+      "kind": "abstract",
+      "lines": 87,
+      "status": "identical",
+      "audited": { "object": "6b58a07e098b", "lines": [22, 108] },
+      "reports": ["spearbit-interop-portal-2025-05"]
+    },
+    "498007571a41": {
+      "name": "ReinitializableBase",
+      "kind": "abstract",
+      "lines": 20,
+      "status": "identical",
+      "audited": { "object": "3b6a2b1659a5", "lines": [6, 27] },
+      "reports": ["spearbit-upgrade16-2025-05"]
+    },
+    "b5dcc6adafd5": {
+      "name": "IProxyAdminOwnedBase",
+      "kind": "interface",
+      "lines": 11,
+      "status": "none"
+    },
+    "28c2fba54f06": {
+      "name": "IInitializable",
+      "kind": "interface",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "5968b45f9bfb", "lines": [6, 10] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "f596c9295bd4": {
+      "name": "LibTimestamp",
+      "kind": "library",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "ba1bb6e060a0", "lines": [187, 196] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "4185e87640c2": {
+      "name": "LibGameType",
+      "kind": "library",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "ba1bb6e060a0", "lines": [219, 228] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "28cc2b40fa61": {
+      "name": "LibPosition",
+      "kind": "library",
+      "lines": 190,
+      "status": "identical",
+      "audited": { "object": "5bafd968611c", "lines": [15, 201] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "043c3c292b42": {
+      "name": "LibHash",
+      "kind": "library",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "ba1bb6e060a0", "lines": [171, 180] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "401eb66867f1": {
+      "name": "LibClaim",
+      "kind": "library",
+      "lines": 31,
+      "status": "identical",
+      "audited": { "object": "ba1bb6e060a0", "lines": [121, 147] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "7d8185d32ebd": {
+      "name": "IDisputeGame",
+      "kind": "interface",
+      "lines": 16,
+      "status": "differs",
+      "audited": { "object": "da81f8933044", "lines": [10, 69] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
+      "added": [[3, 5], [10, 10], [14, 14]],
+      "removed": [[3, 7, 7], [4, 11, 11], [5, 15, 15], [10, 37, 40]],
+      "covered": 11
+    },
+    "3a8d9764d8a4": {
+      "name": "LibDuration",
+      "kind": "library",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "ba1bb6e060a0", "lines": [155, 164] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "50f26d5b74f2": {
+      "name": "LibClock",
+      "kind": "library",
+      "lines": 41,
+      "status": "identical",
+      "audited": { "object": "ba1bb6e060a0", "lines": [27, 67] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "dad13f394614": {
+      "name": "LibKeccak",
+      "kind": "library",
+      "lines": 380,
+      "status": "none"
+    },
+    "0900421b7dc4": {
+      "name": "LPPMetadataLib",
+      "kind": "library",
+      "lines": 76,
+      "status": "identical",
+      "audited": { "object": "2e7c50ed862d", "lines": [20, 95] },
+      "reports": ["code4rena-superchain-2024-08"]
+    },
+    "a8ac2aff9c48": {
+      "name": "IPreimageOracle",
+      "kind": "interface",
+      "lines": 111,
+      "status": "none"
+    },
+    "6d4853d36d81": {
+      "name": "IBigStepper",
+      "kind": "interface",
+      "lines": 19,
+      "status": "identical",
+      "audited": { "object": "c29005491aea", "lines": [27, 41] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "9e1f6b2ac65d": {
+      "name": "ISuperchainConfig",
+      "kind": "interface",
+      "lines": 31,
+      "status": "none"
+    },
+    "b62c7977279d": {
+      "name": "ISystemConfig",
+      "kind": "interface",
+      "lines": 104,
+      "status": "identical",
+      "audited": { "object": "2d2735ba716c", "lines": [9, 111] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "3aa811a41203": {
+      "name": "IDelayedWETH",
+      "kind": "interface",
+      "lines": 58,
+      "status": "none"
+    },
+    "782035a44473": {
+      "name": "IFaultDisputeGame",
+      "kind": "interface",
+      "lines": 132,
+      "status": "none"
+    },
+    "803ad8f660e7": {
+      "name": "IReinitializableBase",
+      "kind": "interface",
+      "lines": 8,
+      "status": "none"
+    },
+    "7d1791449349": {
+      "name": "LibGameId",
+      "kind": "library",
+      "lines": 37,
+      "status": "identical",
+      "audited": { "object": "ba1bb6e060a0", "lines": [82, 114] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "c957ce169cf6": {
+      "name": "IDisputeGameFactory",
+      "kind": "interface",
+      "lines": 71,
+      "status": "differs",
+      "audited": { "object": "199ee4175f1f", "lines": [10, 121] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
+      "added": [
+        [0, 0],
+        [8, 11],
+        [15, 15],
+        [17, 18],
+        [20, 23],
+        [41, 46],
+        [59, 62],
+        [64, 64],
+        [66, 69]
+      ],
+      "removed": [
+        [0, 0, 3],
+        [15, 11, 14],
+        [20, 68, 73],
+        [28, 77, 81],
+        [42, 55, 61],
+        [43, 39, 39],
+        [59, 66, 66],
+        [64, 83, 87]
+      ],
+      "covered": 46
+    },
+    "77ea6aae461b": {
+      "name": "IAnchorStateRegistry",
+      "kind": "interface",
+      "lines": 48,
+      "status": "none"
+    },
+    "83f950fd95a2": {
+      "name": "IETHLockbox",
+      "kind": "interface",
+      "lines": 30,
+      "status": "none"
+    },
+    "75053a56ff7e": {
+      "name": "IOptimismPortal2",
+      "kind": "interface",
+      "lines": 108,
+      "status": "identical",
+      "audited": { "object": "5470681ebbfb", "lines": [14, 103] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "bf312d30bb56": {
+      "name": "Predeploys",
+      "kind": "library",
+      "lines": 183,
+      "status": "differs",
+      "audited": { "object": "eb0529a71f33", "lines": [9, 265] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [[148, 151], [157, 165]],
+      "removed": [
+        [106, 106, 114],
+        [139, 206, 214],
+        [148, 224, 224],
+        [157, 229, 239]
+      ],
+      "covered": 170
+    },
+    "7551df3271c0": {
+      "name": "L1CrossDomainMessenger",
+      "kind": "contract",
+      "lines": 85,
+      "status": "identical",
+      "audited": { "object": "dc7d67ab6757", "lines": [25, 109] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "fe0a638f2551": {
+      "name": "PreimageKeyLib",
+      "kind": "library",
+      "lines": 54,
+      "status": "identical",
+      "audited": { "object": "c3f36cb881fd", "lines": [6, 59] },
+      "reports": [
+        "code4rena-superchain-2024-08",
+        "spearbit-fault-proofs-no-mips-2024-08"
+      ]
+    },
+    "f73f65abe2e6": {
+      "name": "PreimageOracle",
+      "kind": "contract",
+      "lines": 862,
+      "status": "differs",
+      "audited": { "object": "6f74b4e83125", "lines": [15, 820] },
+      "reports": [
+        "code4rena-superchain-2024-08",
+        "spearbit-fault-proofs-no-mips-2024-08"
+      ],
+      "findings": {
+        "code4rena-superchain-2024-08": ["H-02", "H-03", "H-04", "H-05"]
+      },
+      "added": [
+        [0, 0],
+        [15, 16],
+        [20, 20],
+        [79, 83],
+        [150, 150],
+        [372, 372],
+        [384, 388],
+        [390, 390],
+        [393, 402],
+        [405, 405],
+        [410, 410],
+        [486, 489],
+        [713, 715]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [20, 18, 18],
+        [150, 113, 113],
+        [387, 320, 324],
+        [390, 326, 326],
+        [410, 335, 335]
+      ],
+      "covered": 845
+    },
+    "65bd70d23455": {
+      "name": "EnumerableSet",
+      "kind": "library",
+      "lines": 330,
+      "status": "differs",
+      "audited": { "object": "272851b2f81b", "lines": [41, 378] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[179, 179]],
+      "removed": [[179, 179, 187]],
+      "covered": 329
+    },
+    "7e8bb2971986": {
+      "name": "SafeSigners",
+      "kind": "library",
+      "lines": 82,
+      "status": "identical",
+      "audited": { "object": "8b8442123116", "lines": [4, 78] },
+      "reports": ["cantina-safe-extensions-2024-06"]
+    },
+    "97a7d06803c9": {
+      "name": "LivenessGuard",
+      "kind": "contract",
+      "lines": 139,
+      "status": "identical",
+      "audited": { "object": "b9c6139cd384", "lines": [21, 157] },
+      "reports": ["cantina-safe-extensions-2024-06"]
+    },
+    "05d01a350872": {
+      "name": "ISuperchainConfig",
+      "kind": "interface",
+      "lines": 32,
+      "status": "none"
+    },
+    "79d5284a1ccc": {
+      "name": "CeloSuperchainConfig",
+      "kind": "contract",
+      "lines": 159,
+      "status": "identical",
+      "audited": { "object": "450af9c4112d", "lines": [16, 174] },
+      "reports": ["hashlock-celosuperchainconfig-2026-03"]
+    },
+    "e565cfa17434": {
+      "name": "Clone",
+      "kind": "abstract",
+      "lines": 380,
+      "status": "none"
+    },
+    "e55a3df599bf": {
+      "name": "ISystemConfig",
+      "kind": "interface",
+      "lines": 104,
+      "status": "differs",
+      "audited": { "object": "11522e3740d7", "lines": [8, 110] },
+      "reports": ["cantina-upgrade20-2026-08"],
+      "added": [[28, 29], [40, 40], [56, 56], [83, 83]],
+      "removed": [[19, 19, 19], [28, 29, 29], [38, 38, 38], [76, 74, 75]],
+      "covered": 100
+    },
+    "f2c0dd89e15c": {
+      "name": "IAnchorStateRegistry",
+      "kind": "interface",
+      "lines": 49,
+      "status": "none"
+    },
+    "722461548a39": {
+      "name": "LocalPreimageKey",
+      "kind": "library",
+      "lines": 16,
+      "status": "identical",
+      "audited": { "object": "33d08b4a94b8", "lines": [124, 139] },
+      "reports": [
+        "cantina-u17-2025-10",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "offbeatlabs-incident-response-updates-2025-01",
+        "spearbit-fault-proofs-no-mips-2024-08"
+      ]
+    },
+    "ee71dbd9b1d7": {
+      "name": "RLPReader",
+      "kind": "library",
+      "lines": 232,
+      "status": "differs",
+      "audited": { "object": "f05bf3b042ab", "lines": [9, 262] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06",
+        "sigma-prime-taiko-smart-contracts-2024-02"
+      ],
+      "added": [
+        [27, 28],
+        [43, 46],
+        [90, 93],
+        [122, 125],
+        [141, 142],
+        [148, 149],
+        [155, 156],
+        [162, 163],
+        [169, 172],
+        [179, 180],
+        [186, 187],
+        [193, 194],
+        [200, 203]
+      ],
+      "removed": [
+        [27, 27, 28],
+        [43, 43, 46],
+        [90, 90, 93],
+        [122, 122, 125],
+        [141, 141, 144],
+        [148, 150, 154],
+        [155, 160, 164],
+        [162, 170, 173],
+        [169, 179, 185],
+        [179, 192, 193],
+        [186, 199, 203],
+        [193, 209, 212],
+        [200, 218, 224]
+      ],
+      "covered": 215
+    },
+    "59c1837f9107": {
+      "name": "FixedPointMathLib",
+      "kind": "library",
+      "lines": 1069,
+      "status": "differs",
+      "audited": { "object": "1f18f98e389b", "lines": [7, 1169] },
+      "reports": ["xuwinnie-solady-cbrt-proof"],
+      "added": [
+        [351, 351],
+        [372, 372],
+        [382, 382],
+        [405, 405],
+        [407, 418],
+        [433, 486],
+        [490, 493],
+        [495, 496],
+        [526, 526],
+        [530, 530],
+        [540, 540],
+        [544, 544],
+        [595, 595],
+        [689, 696],
+        [701, 713],
+        [724, 724],
+        [889, 889],
+        [897, 897]
+      ],
+      "removed": [
+        [351, 355, 355],
+        [372, 376, 376],
+        [382, 386, 386],
+        [405, 409, 417],
+        [407, 419, 421],
+        [432, 435, 442],
+        [485, 444, 485],
+        [501, 490, 515],
+        [525, 540, 540],
+        [526, 542, 542],
+        [530, 546, 546],
+        [539, 555, 555],
+        [540, 557, 557],
+        [544, 561, 561],
+        [568, 585, 592],
+        [595, 620, 620],
+        [689, 714, 724],
+        [701, 729, 753],
+        [720, 760, 760],
+        [724, 765, 765],
+        [889, 930, 930],
+        [897, 938, 938],
+        [900, 941, 948],
+        [974, 1019, 1067]
+      ],
+      "covered": 995
+    },
+    "a2abc9923bbe": {
+      "name": "LibVMStatus",
+      "kind": "library",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "ba1bb6e060a0", "lines": [203, 212] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"]
+    },
+    "32bb1b6efb27": {
+      "name": "VMStatuses",
+      "kind": "library",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "33d08b4a94b8", "lines": [108, 120] },
+      "reports": ["cantina-upgrade20-2026-08"]
+    },
+    "7ab877a02905": {
+      "name": "FaultDisputeGame",
+      "kind": "contract",
+      "lines": 1240,
+      "status": "identical",
+      "audited": { "object": "20cfdbc92607", "lines": [77, 1376] },
+      "reports": ["cantina-u17-2025-10"]
+    },
+    "39694e72167f": {
+      "name": "ICrossDomainMessenger",
+      "kind": "interface",
+      "lines": 40,
+      "status": "none"
+    },
+    "a4a11528bc42": {
+      "name": "EOA",
+      "kind": "library",
+      "lines": 20,
+      "status": "identical",
+      "audited": { "object": "254cf6eabe82", "lines": [6, 25] },
+      "reports": ["cantina-eip7702-2025-02"]
+    },
+    "0255f34a839a": {
+      "name": "ERC721Bridge",
+      "kind": "abstract",
+      "lines": 183,
+      "status": "differs",
+      "audited": { "object": "f8313c732a79", "lines": [12, 186] },
+      "reports": ["cantina-mcp-l1-2024-02"],
+      "added": [[7, 7], [11, 11], [60, 62], [75, 75], [83, 83], [126, 126]],
+      "removed": [
+        [7, 7, 7],
+        [11, 11, 11],
+        [60, 61, 61],
+        [75, 73, 73],
+        [83, 81, 81],
+        [126, 122, 122]
+      ],
+      "covered": 175
+    },
+    "2d5a290990a9": {
+      "name": "ISystemConfig",
+      "kind": "interface",
+      "lines": 99,
+      "status": "differs",
+      "audited": { "object": "2d2735ba716c", "lines": [9, 111] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"],
+      "added": [],
+      "removed": [[18, 18, 18], [46, 47, 49], [61, 64, 64]],
+      "covered": 99
+    },
+    "6052ff08685e": {
+      "name": "IERC721",
+      "kind": "interface",
+      "lines": 133,
+      "status": "differs",
+      "audited": { "object": "1eb423f63bd3", "lines": [11, 132] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[115, 115]],
+      "removed": [[115, 104, 104]],
+      "covered": 132
+    },
+    "d263e4b84ecd": {
+      "name": "IERC721Bridge",
+      "kind": "interface",
+      "lines": 44,
+      "status": "none"
+    },
+    "15323fcfa673": {
+      "name": "IL2ERC721Bridge",
+      "kind": "interface",
+      "lines": 15,
+      "status": "none"
+    },
+    "293d03cf402f": {
+      "name": "L1ERC721Bridge",
+      "kind": "contract",
+      "lines": 122,
+      "status": "identical",
+      "audited": { "object": "0487cb845c4b", "lines": [27, 139] },
+      "reports": ["cantina-u17-2025-10"]
+    },
+    "33c344e65c65": {
+      "name": "IStaticERC1967Proxy",
+      "kind": "interface",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "cd36168f725d", "lines": [13, 17] },
+      "reports": [
+        "code4rena-base-2023-08",
+        "openzeppelin-bedrock-periphery-2022-09",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "1bbdc9103ae0": {
+      "name": "IStaticL1ChugSplashProxy",
+      "kind": "interface",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "cd36168f725d", "lines": [23, 27] },
+      "reports": [
+        "code4rena-base-2023-08",
+        "openzeppelin-bedrock-periphery-2022-09",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "d2fdb69068e3": {
+      "name": "Proxy",
+      "kind": "interface",
+      "lines": 9,
+      "status": "none"
+    },
+    "a5d623f4f582": {
+      "name": "L1ChugSplashProxy",
+      "kind": "interface",
+      "lines": 8,
+      "status": "none"
+    },
+    "6fc12095da10": {
+      "name": "ProxyAdmin",
+      "kind": "contract",
+      "lines": 220,
+      "status": "identical",
+      "audited": { "object": "cd36168f725d", "lines": [35, 254] },
+      "reports": [
+        "code4rena-base-2023-08",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "331295c01e85": {
+      "name": "MIPS64State",
+      "kind": "library",
+      "lines": 24,
+      "status": "identical",
+      "audited": { "object": "e108659a8145", "lines": [7, 30] },
+      "reports": ["cantina-u17-2025-10"]
+    },
+    "ae124b181c4d": {
+      "name": "MIPS64Arch",
+      "kind": "library",
+      "lines": 6,
+      "status": "identical",
+      "audited": { "object": "a1d689e731db", "lines": [4, 9] },
+      "reports": ["base-mt64cannon-2025-02"]
+    },
+    "9da5a5b8c58c": {
+      "name": "MIPS64Memory",
+      "kind": "library",
+      "lines": 171,
+      "status": "identical",
+      "audited": { "object": "c6c458e0aa0c", "lines": [7, 173] },
+      "reports": ["base-mt64cannon-2025-02", "spearbit-mt-cannon-2025-02"]
+    },
+    "290e185b28e1": {
+      "name": "MIPS64Syscalls",
+      "kind": "library",
+      "lines": 445,
+      "status": "identical",
+      "audited": { "object": "0b859cc51b9a", "lines": [12, 447] },
+      "reports": [
+        "spearbit-cannon-eventfd-syscall-fix-review-2025-06",
+        "spearbit-u16a-2025-09"
+      ]
+    },
+    "b81bf672674b": {
+      "name": "MIPS64Instructions",
+      "kind": "library",
+      "lines": 943,
+      "status": "identical",
+      "audited": { "object": "0ec1ecc1cc35", "lines": [10, 926] },
+      "reports": ["cantina-u17-2025-10"]
+    },
+    "f18f224d4398": {
+      "name": "MIPS64",
+      "kind": "contract",
+      "lines": 967,
+      "status": "identical",
+      "audited": { "object": "94516ef14945", "lines": [25, 963] },
+      "reports": ["cantina-u17-2025-10"]
+    },
+    "30bf994f1153": {
+      "name": "IOptimismERC20Factory",
+      "kind": "interface",
+      "lines": 6,
+      "status": "none"
+    },
+    "e91d703227c9": {
+      "name": "Preinstalls",
+      "kind": "library",
+      "lines": 173,
+      "status": "none"
+    },
+    "26a00bd0faa6": {
+      "name": "OptimismMintableERC20",
+      "kind": "contract",
+      "lines": 131,
+      "status": "identical",
+      "audited": { "object": "67bda6663096", "lines": [26, 150] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "2b47976a9cd8": {
+      "name": "OptimismMintableERC20Factory",
+      "kind": "contract",
+      "lines": 125,
+      "status": "identical",
+      "audited": { "object": "786d4d0f11d7", "lines": [20, 133] },
+      "reports": ["cantina-u17-2025-10"]
+    },
+    "4f1674fb5377": {
+      "name": "IERC5267",
+      "kind": "interface",
+      "lines": 23,
+      "status": "none"
+    },
+    "0d73af18a3a5": {
+      "name": "StorageSlot",
+      "kind": "library",
+      "lines": 105,
+      "status": "identical",
+      "audited": { "object": "b0e9189675cc", "lines": [34, 138] },
+      "reports": [
+        "contracts__audits__2023-05-v4.9",
+        "contracts__audits__2023-10-v5.0"
+      ]
+    },
+    "79806c93e81e": {
+      "name": "ShortStrings",
+      "kind": "library",
+      "lines": 84,
+      "status": "differs",
+      "audited": { "object": "a8904777a883", "lines": [39, 121] },
+      "reports": ["contracts__audits__2023-05-v4.9"],
+      "added": [[1, 2], [54, 54], [62, 62], [77, 77]],
+      "removed": [[1, 1, 2], [54, 54, 54], [62, 62, 62], [77, 76, 76]],
+      "covered": 80
+    },
+    "c93f4cab4139": {
+      "name": "Math",
+      "kind": "library",
+      "lines": 407,
+      "status": "differs",
+      "audited": { "object": "c477df6e1faa", "lines": [9, 425] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [
+        [7, 10],
+        [99, 103],
+        [119, 119],
+        [157, 157],
+        [200, 200],
+        [251, 251],
+        [304, 304],
+        [353, 353],
+        [396, 396],
+        [399, 405]
+      ],
+      "removed": [
+        [8, 7, 9],
+        [119, 135, 135],
+        [123, 139, 139],
+        [157, 175, 175],
+        [200, 218, 218],
+        [251, 268, 268],
+        [304, 321, 321],
+        [353, 370, 370],
+        [396, 413, 413]
+      ],
+      "covered": 390
+    },
+    "adcc06043c13": {
+      "name": "SignedMath",
+      "kind": "library",
+      "lines": 35,
+      "status": "identical",
+      "audited": { "object": "cd8c88f25a35", "lines": [9, 43] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "efd380ee5f7b": {
+      "name": "Strings",
+      "kind": "library",
+      "lines": 83,
+      "status": "differs",
+      "audited": { "object": "1a0f4cc937e4", "lines": [12, 95] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[1, 2], [25, 25], [59, 59], [73, 73]],
+      "removed": [[1, 1, 2], [25, 25, 25], [59, 61, 61], [73, 74, 74]],
+      "covered": 78
+    },
+    "1af23c5b7d79": {
+      "name": "MessageHashUtils",
+      "kind": "library",
+      "lines": 72,
+      "status": "identical",
+      "audited": { "object": "f71603017bf7", "lines": [14, 85] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "70b8a1abd6c2": {
+      "name": "EIP712",
+      "kind": "abstract",
+      "lines": 127,
+      "status": "identical",
+      "audited": { "object": "1d3a83dd0f27", "lines": [34, 160] },
+      "reports": [
+        "contracts__audits__2025-07-v5.4",
+        "contracts__audits__2026-02-v5.6"
+      ]
+    },
+    "41d6f86c1979": {
+      "name": "ECDSA",
+      "kind": "library",
+      "lines": 163,
+      "status": "identical",
+      "audited": { "object": "e6daa774e035", "lines": [12, 173] },
+      "reports": ["contracts__audits__2023-10-v5.0"]
+    },
+    "a22d83f9e2f9": {
+      "name": "DeputyPauseModule",
+      "kind": "contract",
+      "lines": 184,
+      "status": "identical",
+      "audited": { "object": "08d136770b8c", "lines": [23, 204] },
+      "reports": ["spearbit-upgrade16-2025-05"]
+    },
+    "150878a81f46": {
+      "name": "Singleton",
+      "kind": "abstract",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "447d1057dc7c": {
+      "name": "NativeCurrencyPaymentFallback",
+      "kind": "abstract",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "aa97dd1bf3f1": {
+      "name": "SelfAuthorized",
+      "kind": "abstract",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "898739cbc764", "lines": [6, 16] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "06a60947381e": {
+      "name": "Executor",
+      "kind": "abstract",
+      "lines": 32,
+      "status": "identical",
+      "audited": { "object": "0b8ab296c0f9", "lines": [10, 42] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "af0af37b8cfc": {
+      "name": "ModuleManager",
+      "kind": "abstract",
+      "lines": 176,
+      "status": "differs",
+      "audited": { "object": "9c421d7aa0fb", "lines": [17, 196] },
+      "reports": ["nethermind-safe-1-3-0"],
+      "added": [[22, 22]],
+      "removed": [[22, 22, 22]],
+      "covered": 175
+    },
+    "f1b466f7c6f6": {
+      "name": "OwnerManager",
+      "kind": "abstract",
+      "lines": 150,
+      "status": "differs",
+      "audited": { "object": "aab31696d64e", "lines": [9, 149] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 2]],
+      "removed": [[1, 1, 2]],
+      "covered": 148
+    },
+    "13e5d12afa8b": {
+      "name": "SignatureDecoder",
+      "kind": "abstract",
+      "lines": 29,
+      "status": "identical",
+      "audited": { "object": "72437bc34ce4", "lines": [7, 33] },
+      "reports": [
+        "certora-safe-allowance-v1-0-0",
+        "nethermind-safe-allowance-v1-0-0"
+      ]
+    },
+    "844a8fe51e4f": {
+      "name": "SecuredTokenTransfer",
+      "kind": "abstract",
+      "lines": 31,
+      "status": "identical",
+      "audited": { "object": "c8f243d15377", "lines": [8, 34] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "f44a94390330": {
+      "name": "FallbackManager",
+      "kind": "abstract",
+      "lines": 73,
+      "status": "differs",
+      "audited": { "object": "4272cb5a06c3", "lines": [8, 50] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 1], [11, 25]],
+      "removed": [[1, 1, 1]],
+      "covered": 61
+    },
+    "e213c56fc229": {
+      "name": "StorageAccessible",
+      "kind": "abstract",
+      "lines": 42,
+      "status": "identical",
+      "audited": { "object": "489422336212", "lines": [6, 47] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial",
+        "nethermind-safe-1-3-0"
+      ]
+    },
+    "b3dc850565d8": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "051f4e0bd8fb": {
+      "name": "Guard",
+      "kind": "interface",
+      "lines": 17,
+      "status": "differs",
+      "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[0, 0]],
+      "removed": [[0, 0, 0]],
+      "covered": 16
+    },
+    "d63eef9ff914": {
+      "name": "GuardManager",
+      "kind": "abstract",
+      "lines": 42,
+      "status": "differs",
+      "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "nethermind-safe-1-3-0"
+      ],
+      "added": [[1, 1], [16, 18]],
+      "removed": [[1, 1, 1]],
+      "covered": 38
+    },
+    "6cd3fcc5ec00": {
+      "name": "SafeMath",
+      "kind": "library",
+      "lines": 57,
+      "status": "identical",
+      "audited": { "object": "f3b8944f25b1", "lines": [8, 64] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+    },
+    "d1308f86f627": {
+      "name": "ISignatureValidator",
+      "kind": "abstract",
+      "lines": 12,
+      "status": "identical",
+      "audited": { "object": "f9b6674650dd", "lines": [9, 20] },
+      "reports": [
+        "certora-safe-1-3-0",
+        "g0-safe-1-3-0-final",
+        "g0-safe-1-3-0-initial"
+      ]
+    },
+    "268c431cb6b0": {
+      "name": "Safe",
+      "kind": "contract",
+      "lines": 409,
+      "status": "differs",
+      "audited": { "object": "668700b0b04b", "lines": [36, 467] },
+      "reports": ["nethermind-safe-1-3-0"],
+      "added": [[14, 14]],
+      "removed": [[14, 14, 14]],
+      "covered": 408
+    },
+    "a5d693e781e6": {
+      "name": "OwnableUpgradeable",
+      "kind": "abstract",
+      "lines": 75,
+      "status": "differs",
+      "audited": {
+        "object": "ca09e0350541",
+        "lines": [20, 97],
+        "name": "Ownable"
+      },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[0, 0], [4, 14], [35, 35], [54, 54], [67, 73]],
+      "removed": [
+        [0, 0, 0],
+        [2, 2, 11],
+        [4, 14, 20],
+        [35, 41, 43],
+        [54, 62, 64]
+      ],
+      "covered": 65
+    },
+    "5a099a33d617": {
+      "name": "IGasToken",
+      "kind": "interface",
+      "lines": 10,
+      "status": "identical",
+      "audited": { "object": "62846b5b8a44", "lines": [11, 20] },
+      "reports": ["zellic-facet-bridge-2024-11-04"]
+    },
+    "6042dafdc055": {
+      "name": "LibString",
+      "kind": "library",
+      "lines": 1182,
+      "status": "none"
+    },
+    "c54be8ee19f1": {
+      "name": "GasPayingToken",
+      "kind": "library",
+      "lines": 61,
+      "status": "differs",
+      "audited": { "object": "62846b5b8a44", "lines": [27, 87] },
+      "reports": ["zellic-facet-bridge-2024-11-04"],
+      "added": [[18, 18], [29, 30], [40, 41]],
+      "removed": [[18, 18, 18], [29, 29, 30], [40, 40, 41]],
+      "covered": 56
+    },
+    "4fffde95a01d": {
+      "name": "Features",
+      "kind": "library",
+      "lines": 7,
+      "status": "differs",
+      "audited": { "object": "ffe8b8c3eefa", "lines": [7, 18] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [],
+      "removed": [[6, 6, 10]],
+      "covered": 7
+    },
+    "0d504ac1c7bd": {
+      "name": "SystemConfig",
+      "kind": "contract",
+      "lines": 622,
+      "status": "identical",
+      "audited": { "object": "a14a2e22ef57", "lines": [30, 648] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "c85326df91bb": {
+      "name": "ISystemConfig",
+      "kind": "interface",
+      "lines": 90,
+      "status": "differs",
+      "audited": { "object": "d842b2266fbd", "lines": [9, 106] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"],
+      "added": [],
+      "removed": [
+        [16, 16, 16],
+        [19, 20, 20],
+        [21, 23, 23],
+        [42, 45, 47],
+        [57, 62, 62],
+        [87, 93, 94]
+      ],
+      "covered": 90
+    },
+    "230abc5a1bbf": {
+      "name": "IDisputeGameFactory",
+      "kind": "interface",
+      "lines": 68,
+      "status": "differs",
+      "audited": { "object": "199ee4175f1f", "lines": [10, 121] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
+      "added": [
+        [0, 0],
+        [8, 11],
+        [16, 17],
+        [19, 22],
+        [40, 44],
+        [57, 60],
+        [63, 66]
+      ],
+      "removed": [
+        [0, 0, 3],
+        [19, 68, 73],
+        [27, 77, 81],
+        [40, 61, 61],
+        [41, 39, 39],
+        [57, 66, 66]
+      ],
+      "covered": 46
+    },
+    "392ea602a54d": {
+      "name": "IDelayedWETH",
+      "kind": "interface",
+      "lines": 66,
+      "status": "none"
+    },
+    "76f6bb4c5dca": {
+      "name": "IFaultDisputeGame",
+      "kind": "interface",
+      "lines": 131,
+      "status": "none"
+    },
+    "17f4e4e43390": {
+      "name": "AnchorStateRegistry",
+      "kind": "contract",
+      "lines": 325,
+      "status": "identical",
+      "audited": { "object": "b90d268bfc49", "lines": [27, 348] },
+      "reports": ["spearbit-upgrade16-2025-05"]
+    },
+    "34e3ca2fb900": {
+      "name": "WETH98",
+      "kind": "contract",
+      "lines": 128,
+      "status": "differs",
+      "audited": { "object": "2addf0516442", "lines": [26, 99] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
+      "added": [
+        [0, 0],
+        [4, 28],
+        [42, 42],
+        [48, 48],
+        [51, 65],
+        [68, 69],
+        [76, 77],
+        [92, 93],
+        [112, 117],
+        [120, 121]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [4, 2, 4],
+        [42, 17, 17],
+        [48, 22, 22],
+        [68, 27, 28],
+        [76, 34, 35],
+        [92, 46, 47],
+        [114, 59, 59],
+        [115, 61, 63],
+        [120, 66, 67]
+      ],
+      "covered": 100
+    },
+    "58c409f738a3": {
+      "name": "DelayedWETH",
+      "kind": "contract",
+      "lines": 106,
+      "status": "identical",
+      "audited": { "object": "1cc118f42f1e", "lines": [27, 132] },
+      "reports": ["spearbit-upgrade16-2025-05"]
+    },
+    "5fe8253cda76": {
+      "name": "IOwnable",
+      "kind": "interface",
+      "lines": 15,
+      "status": "none"
+    },
+    "e8603e635ea4": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 66,
+      "status": "identical",
+      "audited": { "object": "a2cd6ce57ad5", "lines": [11, 76] },
+      "reports": ["cantina-upgrade20-2026-08"]
+    },
+    "5c25b6316c9c": {
+      "name": "SuperchainConfig",
+      "kind": "contract",
+      "lines": 157,
+      "status": "identical",
+      "audited": { "object": "43212ea60fab", "lines": [15, 175] },
+      "reports": ["cantina-upgrade20-2026-08"]
+    },
+    "34ceb7e1b670": {
+      "name": "IL1ChugSplashDeployer",
+      "kind": "interface",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "f20ab01bcd2b", "lines": [7, 9] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "185b8bd0deb1": {
+      "name": "L1ChugSplashProxy",
+      "kind": "contract",
+      "lines": 266,
+      "status": "identical",
+      "audited": { "object": "f20ab01bcd2b", "lines": [24, 284] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ]
+    },
+    "2d2e4ae61666": {
+      "name": "StandardBridge",
+      "kind": "abstract",
+      "lines": 477,
+      "status": "identical",
+      "audited": { "object": "cb94cc994045", "lines": [28, 466] },
+      "reports": [
+        "hashlock-celo-optimism-superchain-2026-02",
+        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01"
+      ]
+    },
+    "26d4c5bd016f": {
+      "name": "L1StandardBridge",
+      "kind": "contract",
+      "lines": 332,
+      "status": "identical",
+      "audited": { "object": "df706813de0d", "lines": [29, 325] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "477fadda0baa": {
+      "name": "SafeProxy",
+      "kind": "contract",
+      "lines": 34,
+      "status": "differs",
+      "audited": { "object": "428cc5ce6a43", "lines": [18, 60] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"],
+      "added": [[18, 18], [21, 21], [27, 27], [29, 29]],
+      "removed": [[18, 22, 22], [21, 31, 31], [27, 37, 37]],
+      "covered": 30
+    },
+    "8ce8926c193d": {
+      "name": "ISystemConfig",
+      "kind": "interface",
+      "lines": 101,
+      "status": "differs",
+      "audited": { "object": "2d2735ba716c", "lines": [9, 111] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"],
+      "added": [[94, 94], [97, 97]],
+      "removed": [
+        [9, 9, 9],
+        [17, 18, 18],
+        [69, 74, 74],
+        [84, 90, 90],
+        [94, 47, 47]
+      ],
+      "covered": 99
+    },
+    "016039f5fb3e": {
+      "name": "Encoding",
+      "kind": "library",
+      "lines": 247,
+      "status": "identical",
+      "audited": { "object": "5881a159a886", "lines": [12, 237] },
+      "reports": [
+        "spearbit-interop-portal-2025-05",
+        "spearbit-upgrade16-2025-05"
+      ]
+    },
+    "2b6743521737": {
+      "name": "PermissionedDisputeGame",
+      "kind": "contract",
+      "lines": 91,
+      "status": "identical",
+      "audited": { "object": "f595cab71425", "lines": [20, 98] },
+      "reports": ["cantina-u17-2025-10"]
+    },
+    "73f31dfdee9f": {
+      "name": "JSONParserLib",
+      "kind": "library",
+      "lines": 810,
+      "status": "none"
+    },
+    "eddb29bfa8a6": {
+      "name": "SemverComp",
+      "kind": "library",
+      "lines": 87,
+      "status": "identical",
+      "audited": { "object": "5a6f37e94f90", "lines": [10, 96] },
+      "reports": ["spearbit-u16a-2025-09"]
+    },
+    "dcae5a947391": {
+      "name": "LivenessModule2",
+      "kind": "abstract",
+      "lines": 373,
+      "status": "identical",
+      "audited": { "object": "891a3dd1754c", "lines": [55, 429] },
+      "reports": ["cantina-u18-2026-01"]
+    },
+    "54337a866fb2": {
+      "name": "BaseGuard",
+      "kind": "abstract",
+      "lines": 7,
+      "status": "differs",
+      "audited": { "object": "12195b5a3251", "lines": [11, 26] },
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"],
+      "added": [[0, 0], [2, 3]],
+      "removed": [[0, 0, 0], [2, 8, 8], [2, 11, 12]],
+      "covered": 4
+    },
+    "50d971b27034": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 53,
+      "status": "differs",
+      "audited": { "object": "9de908305096", "lines": [11, 58] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [[33, 37]],
+      "removed": [],
+      "covered": 52
+    },
+    "9f650b1cc0bf": {
+      "name": "TimelockGuard",
+      "kind": "abstract",
+      "lines": 600,
+      "status": "identical",
+      "audited": { "object": "e4a4ebc73aae", "lines": [81, 675] },
+      "reports": ["cantina-u18-2026-01", "spearbit-safersafes-2025-11"]
+    },
+    "68c7712c17e0": {
+      "name": "SaferSafes",
+      "kind": "contract",
+      "lines": 44,
+      "status": "identical",
+      "audited": { "object": "587b6a908ff5", "lines": [27, 70] },
+      "reports": ["cantina-u18-2026-01"]
+    },
+    "4a4a709ef23b": {
+      "name": "Arithmetic",
+      "kind": "library",
+      "lines": 46,
+      "status": "differs",
+      "audited": { "object": "eb2ea3a3e2b2", "lines": [11, 38] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05"
+      ],
+      "added": [[19, 44]],
+      "removed": [],
+      "covered": 36
+    },
+    "7768d7b8daff": {
+      "name": "ResourceMetering",
+      "kind": "abstract",
+      "lines": 158,
+      "status": "differs",
+      "audited": { "object": "c7c27e763d21", "lines": [15, 184] },
+      "reports": [
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05",
+        "secure3-mantle-v2-tectonic-2024-03"
+      ],
+      "added": [[1, 2], [114, 116], [136, 142]],
+      "removed": [[1, 1, 2], [114, 127, 130], [136, 151, 153]],
+      "covered": 151
+    },
+    "e4274230bf81": {
+      "name": "Bytes",
+      "kind": "library",
+      "lines": 139,
+      "status": "identical",
+      "audited": { "object": "423248cc7d0c", "lines": [6, 144] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06"
+      ]
+    },
+    "6f6f5cc580d2": {
+      "name": "MerkleTrie",
+      "kind": "library",
+      "lines": 210,
+      "status": "identical",
+      "audited": { "object": "16c007f7a290", "lines": [11, 215] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06",
+        "sigma-prime-taiko-smart-contracts-2024-02"
+      ]
+    },
+    "1e116b431cf7": {
+      "name": "SecureMerkleTrie",
+      "kind": "library",
+      "lines": 41,
+      "status": "identical",
+      "audited": { "object": "5cfccdbaa45d", "lines": [9, 44] },
+      "reports": [
+        "code4rena-taiko-2024-04",
+        "openzeppelin-taiko-protocol-2024-06",
+        "sigma-prime-taiko-smart-contracts-2024-02"
+      ]
+    },
+    "3b145388bd1d": {
+      "name": "IL1Block",
+      "kind": "interface",
+      "lines": 43,
+      "status": "identical",
+      "audited": { "object": "6d79d2af21dc", "lines": [4, 45] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "59ca4a296d85": {
+      "name": "OptimismPortal2",
+      "kind": "contract",
+      "lines": 793,
+      "status": "identical",
+      "audited": { "object": "92b89811bf4f", "lines": [44, 830] },
+      "reports": ["hashlock-celo-optimism-superchain-2026-02"]
+    },
+    "f04119ddc474": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 10,
+      "status": "differs",
+      "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[1, 1], [5, 6]],
+      "removed": [[1, 1, 1], [5, 5, 5]],
+      "covered": 7
+    },
+    "64b6456f336a": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 51,
+      "status": "differs",
+      "audited": { "object": "0b6cbdc34973", "lines": [8, 72] },
+      "reports": ["contracts__audits__2018-10"],
+      "added": [
+        [0, 0],
+        [9, 11],
+        [17, 17],
+        [25, 25],
+        [30, 30],
+        [36, 36],
+        [45, 48]
+      ],
+      "removed": [
+        [0, 0, 0],
+        [10, 10, 11],
+        [17, 17, 17],
+        [25, 25, 25],
+        [28, 28, 34],
+        [36, 42, 42],
+        [45, 51, 52],
+        [50, 54, 63]
+      ],
+      "covered": 40
+    },
+    "741ae7846536": {
+      "name": "Lib_AddressManager",
+      "kind": "contract",
+      "lines": 86,
+      "status": "identical",
+      "audited": { "object": "cc0e892278f4", "lines": [10, 67] },
+      "reports": [
+        "secure3-mantle-v1-contest-2023-07",
+        "sigmaprime-mantle-l2-rollup-2023-07"
+      ]
+    },
+    "d41b7fcc1ae5": {
+      "name": "IDisputeGame",
+      "kind": "interface",
+      "lines": 16,
+      "status": "differs",
+      "audited": { "object": "da81f8933044", "lines": [10, 69] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
+      "added": [[3, 5], [10, 10], [14, 14]],
+      "removed": [[3, 7, 7], [4, 11, 11], [5, 15, 15], [10, 37, 40]],
+      "covered": 11
+    },
+    "753d84a5821e": {
+      "name": "IDisputeGameFactory",
+      "kind": "interface",
+      "lines": 68,
+      "status": "differs",
+      "audited": { "object": "199ee4175f1f", "lines": [10, 121] },
+      "reports": ["spearbit-fault-proofs-no-mips-2024-08"],
+      "added": [[8, 11], [16, 17], [19, 22], [40, 44], [57, 60], [63, 66]],
+      "removed": [
+        [1, 1, 3],
+        [19, 68, 73],
+        [27, 77, 81],
+        [40, 61, 61],
+        [41, 39, 39],
+        [57, 66, 66]
+      ],
+      "covered": 47
+    },
+    "a62a12b06885": {
+      "name": "AccessManager",
+      "kind": "contract",
+      "lines": 132,
+      "status": "identical",
+      "audited": { "object": "a6554ce54d76", "lines": [13, 143] },
+      "reports": ["cantina-u18-2026-01"]
+    },
+    "7f6263045100": {
+      "name": "LibClone",
+      "kind": "library",
+      "lines": 801,
+      "status": "none"
+    },
+    "bd67ba2519f7": {
+      "name": "DisputeGameFactory",
+      "kind": "contract",
+      "lines": 281,
+      "status": "identical",
+      "audited": { "object": "8d366ae9c470", "lines": [27, 301] },
+      "reports": ["cantina-u17-2025-10"]
+    },
+    "5db8c510ecd8": {
+      "name": "ISP1Verifier",
+      "kind": "interface",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "4d09ab547dbb", "lines": [9, 21] },
+      "reports": ["spearbit-agglayer-v030-2025-09"]
+    },
+    "e1df3925aa68": {
+      "name": "AccessManager",
+      "kind": "contract",
+      "lines": 137,
+      "status": "differs",
+      "audited": { "object": "a6554ce54d76", "lines": [13, 143] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [[84, 89], [93, 93], [112, 117], [119, 119], [126, 126]],
+      "removed": [
+        [93, 86, 86],
+        [112, 126, 126],
+        [119, 128, 128],
+        [126, 107, 113]
+      ],
+      "covered": 126
+    },
+    "34339836b5ec": {
+      "name": "OPSuccinctFaultDisputeGame",
+      "kind": "contract",
+      "lines": 647,
+      "status": "differs",
+      "audited": { "object": "ffc4841a17cf", "lines": [52, 724] },
+      "reports": ["cantina-u18-2026-01"],
+      "added": [
+        [89, 89],
+        [111, 114],
+        [220, 220],
+        [227, 234],
+        [236, 239],
+        [244, 244],
+        [276, 281],
+        [290, 290],
+        [295, 295],
+        [335, 335],
+        [342, 342],
+        [351, 351]
+      ],
+      "removed": [
+        [89, 101, 101],
+        [111, 123, 126],
+        [220, 238, 238],
+        [239, 248, 250],
+        [244, 255, 255],
+        [290, 295, 295],
+        [295, 300, 300],
+        [335, 348, 348],
+        [342, 357, 357],
+        [351, 366, 366]
+      ],
+      "covered": 629
+    }
+  },
+  "flats": {
+    "183831fc8f6415a37cb7b0f8001883e1a545179dea6581bf88d8214a4a58b3a4": [
+      ["e60933e352ce", 1],
+      ["a6df5b2b9c6d", 30],
+      ["7b9337a52d32", 79]
+    ],
+    "923f22b759ea42a6fd91bc09ef596beafcc4fdf1711272727d0d7134703964bd": [
+      ["4933ae177b35", 6],
+      ["21c9e76387ed", 16],
+      ["8d8dc0a58b96", 253],
+      ["2f8ca1cb8cb7", 341],
+      ["17434a79a37e", 395],
+      ["522aebe84bc6", 471],
+      ["9c690dd3c693", 617],
+      ["3d6f7edc7627", 775],
+      ["aeebc2fe3441", 987],
+      ["e60933e352ce", 1151],
+      ["a6df5b2b9c6d", 1180],
+      ["e698bd94db4f", 1233],
+      ["b61f946296f1", 1569],
+      ["040a1f47c4e5", 1577],
+      ["fd145b587e6b", 1604],
+      ["de55bba76da6", 1778],
+      ["d0e269c9f6e8", 1817],
+      ["c0e4c17bfc2b", 1847]
+    ],
+    "80e4b00eb7ad2d0d6aa23de0f95498061cfea05dfad0082b9d8e12863d7efc85": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["809d3ad2bcb8", 354],
+      ["5c1b98c91663", 437],
+      ["33c1bc98e249", 494],
+      ["e617819b14e5", 593],
+      ["e60933e352ce", 631],
+      ["a6df5b2b9c6d", 660],
+      ["aeebc2fe3441", 707],
+      ["d768b8759414", 881],
+      ["5cb0721f72f0", 896],
+      ["c6d0c3b96308", 938],
+      ["0b07a9c1be22", 1291],
+      ["2b1640f289ea", 1365],
+      ["86ab20534f15", 1590],
+      ["e043a4dd253b", 1677],
+      ["38d1718b8fc3", 1718],
+      ["b61f946296f1", 1796],
+      ["d5467e9995bc", 1804],
+      ["86a3ff0626e0", 1848],
+      ["f98775a7d0f9", 2016],
+      ["197395080909", 2034],
+      ["efa75a106aeb", 2046],
+      ["4959e40bdc75", 2062],
+      ["e950fe694422", 2201],
+      ["a83bd6338768", 2316],
+      ["fd145b587e6b", 2797],
+      ["de55bba76da6", 2971],
+      ["a2a3a3152d08", 3019]
+    ],
+    "ef2633a8e95f6680576f3cf93c94a2ec3e4d0d5d22ddb8d09c233a933c025e8e": [
+      ["b61f946296f1", 4],
+      ["9b73a9b5c9f6", 16],
+      ["433c37b5a737", 24],
+      ["17434a79a37e", 44],
+      ["9c690dd3c693", 123],
+      ["3d6f7edc7627", 281],
+      ["522aebe84bc6", 493],
+      ["5632ed7477af", 640]
+    ],
+    "6f2c4f140876635a8255cb165465298c85db36e5a46c5cf42ddf0652af9697b8": [
+      ["d768b8759414", 11],
+      ["9b385480472b", 33],
+      ["4a11931b7a86", 100],
+      ["ed326933a23e", 112],
+      ["684f0e81cf49", 123],
+      ["cc08c6ff2ef8", 130],
+      ["40de3fd40246", 135],
+      ["b277570179e1", 154],
+      ["e60933e352ce", 168],
+      ["a6df5b2b9c6d", 197],
+      ["f8d2ced2582b", 246]
+    ],
+    "c71f25285aed5ddb957aee2e65e93cb0983e1b1d200209ad2b58a5235cee1fb9": [
+      ["b61f946296f1", 4],
+      ["48db7077d4ee", 14],
+      ["ded673ea29c4", 26],
+      ["16eb9f2e8752", 34],
+      ["40ce0b25499c", 47],
+      ["68dd4bd4433d", 56],
+      ["1d5fc2d9e00d", 81],
+      ["95294331afbc", 209],
+      ["2ec005ea16b3", 354],
+      ["fd10ad67f878", 388],
+      ["de59e343d914", 419],
+      ["37dc539ed622", 426],
+      ["bc18eb3148bc", 475],
+      ["bd90fb921f2d", 520],
+      ["c067b1aa9040", 551],
+      ["09399b61d7eb", 597],
+      ["b2400038371b", 615],
+      ["3e84ad780965", 631],
+      ["f223653d7e89", 1037],
+      ["e87f8ddd95c3", 1049]
+    ],
+    "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["8f7da050ddb2", 354],
+      ["727591669b8c", 392],
+      ["7d6554b6cb64", 756],
+      ["26ad7b61b37b", 780],
+      ["9b73a9b5c9f6", 1003],
+      ["433c37b5a737", 1011],
+      ["2d60ee7f3ed2", 1033],
+      ["d44c0cfb8c85", 1186],
+      ["3f3d60f9e37d", 1228]
+    ],
+    "d4746bb71cea92e071dca210fb29d482f71476bfc5bcc4922577c604ad549f64": [
+      ["21c9e76387ed", 4],
+      ["8d8dc0a58b96", 241],
+      ["9c557c702fdd", 334],
+      ["33ed820fd285", 359],
+      ["d8b60b8e9606", 439],
+      ["1919fb344589", 481],
+      ["8d5633266ce1", 842]
+    ],
+    "7df86540e8491697461e4719fd93052c329d1d0565f4c7c72a9d37700802ec71": [
+      ["6b8b61778726", 4]
+    ],
+    "8d7cdf752191616e4e00fca1de6ca09bd97a59805815ae8e5131612f04aa21f6": [
+      ["48db7077d4ee", 3],
+      ["ded673ea29c4", 15],
+      ["16eb9f2e8752", 23],
+      ["40ce0b25499c", 36],
+      ["68dd4bd4433d", 45],
+      ["1d5fc2d9e00d", 70],
+      ["95294331afbc", 198],
+      ["2ec005ea16b3", 343],
+      ["fd10ad67f878", 377],
+      ["de59e343d914", 408],
+      ["37dc539ed622", 415],
+      ["bc18eb3148bc", 464],
+      ["bd90fb921f2d", 509],
+      ["c067b1aa9040", 540],
+      ["09399b61d7eb", 586],
+      ["b2400038371b", 604],
+      ["3e84ad780965", 620]
+    ],
+    "985893ea76af56dfa3281a6fc217a51092f0daa6916a88ddf385b39e60fe1f63": [
+      ["d768b8759414", 1],
+      ["9b385480472b", 23],
+      ["7ac9eb435da8", 96],
+      ["f458cbfdf7bd", 155]
+    ],
+    "c37341067449901b442aa1dac20a34a9b163ecfb6fbf3dae45e7a8b56db79e77": [
+      ["4933ae177b35", 6],
+      ["21c9e76387ed", 16],
+      ["8d8dc0a58b96", 253],
+      ["2f8ca1cb8cb7", 341],
+      ["e9aa0f101d68", 395],
+      ["3e463bddb22c", 489],
+      ["9c690dd3c693", 642],
+      ["b5fd1caa393e", 800],
+      ["aeebc2fe3441", 1094],
+      ["e60933e352ce", 1258],
+      ["a6df5b2b9c6d", 1287],
+      ["26ad7b61b37b", 1335],
+      ["70799d37c1a1", 1562],
+      ["4a11931b7a86", 1932],
+      ["ed326933a23e", 1944],
+      ["e2b40f3d642c", 1953],
+      ["e59a41a9002d", 1985],
+      ["383d0a473e13", 2077],
+      ["498007571a41", 2167],
+      ["b61f946296f1", 2191],
+      ["b5dcc6adafd5", 2199],
+      ["28c2fba54f06", 2211],
+      ["f596c9295bd4", 2227],
+      ["4185e87640c2", 2245],
+      ["28cc2b40fa61", 2263],
+      ["043c3c292b42", 2465],
+      ["401eb66867f1", 2483],
+      ["7d8185d32ebd", 2520],
+      ["3a8d9764d8a4", 2539],
+      ["50f26d5b74f2", 2558],
+      ["dad13f394614", 2616],
+      ["0900421b7dc4", 2998],
+      ["a8ac2aff9c48", 3090],
+      ["6d4853d36d81", 3223],
+      ["9e1f6b2ac65d", 3243],
+      ["b62c7977279d", 3276],
+      ["3aa811a41203", 3381],
+      ["782035a44473", 3451],
+      ["803ad8f660e7", 3584],
+      ["7d1791449349", 3595],
+      ["c957ce169cf6", 3646],
+      ["77ea6aae461b", 3727],
+      ["83f950fd95a2", 3776],
+      ["75053a56ff7e", 3807],
+      ["bf312d30bb56", 3932],
+      ["7551df3271c0", 4121]
+    ],
+    "b042e9806d4b33a5513459740fe1884c0cb7cc8f959e610d2556e2054d447387": [
+      ["b61f946296f1", 4],
+      ["0900421b7dc4", 13],
+      ["fe0a638f2551", 107],
+      ["dad13f394614", 181],
+      ["f73f65abe2e6", 599]
+    ],
+    "91165b18bc52b85f474f8b51b031cd5b2fda6b8a1834604bc2e214fff49c28f9": [
+      ["b61f946296f1", 4],
+      ["40ce0b25499c", 13],
+      ["09399b61d7eb", 20],
+      ["65bd70d23455", 70],
+      ["48db7077d4ee", 403],
+      ["ded673ea29c4", 415],
+      ["16eb9f2e8752", 423],
+      ["68dd4bd4433d", 437],
+      ["1d5fc2d9e00d", 462],
+      ["95294331afbc", 590],
+      ["2ec005ea16b3", 735],
+      ["fd10ad67f878", 769],
+      ["de59e343d914", 800],
+      ["37dc539ed622", 807],
+      ["bc18eb3148bc", 856],
+      ["bd90fb921f2d", 901],
+      ["c067b1aa9040", 932],
+      ["b2400038371b", 978],
+      ["3e84ad780965", 994],
+      ["7e8bb2971986", 1399],
+      ["97a7d06803c9", 1491]
+    ],
+    "4e09a594014d9adb114f3da70d497d68c1516602ab0e7fdf5a0a192fa705e442": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["b61f946296f1", 354],
+      ["4a11931b7a86", 364],
+      ["ed326933a23e", 376],
+      ["e2b40f3d642c", 385],
+      ["b5dcc6adafd5", 415],
+      ["05d01a350872", 427],
+      ["e59a41a9002d", 462],
+      ["79d5284a1ccc", 552]
+    ],
+    "034129726fcb91e8bca43d3fc9c6f5c29674de29d0c61a5ae04fd035763154f5": [
+      ["e565cfa17434", 5],
+      ["b61f946296f1", 389],
+      ["28cc2b40fa61", 399],
+      ["043c3c292b42", 601],
+      ["401eb66867f1", 619],
+      ["3a8d9764d8a4", 658],
+      ["f596c9295bd4", 677],
+      ["50f26d5b74f2", 695],
+      ["4185e87640c2", 751],
+      ["dad13f394614", 771],
+      ["0900421b7dc4", 1153],
+      ["a8ac2aff9c48", 1245],
+      ["6d4853d36d81", 1378],
+      ["4a11931b7a86", 1400],
+      ["ed326933a23e", 1412],
+      ["e2b40f3d642c", 1421],
+      ["b5dcc6adafd5", 1451],
+      ["e60933e352ce", 1463],
+      ["9e1f6b2ac65d", 1488],
+      ["e55a3df599bf", 1520],
+      ["3aa811a41203", 1625],
+      ["28c2fba54f06", 1684],
+      ["7d8185d32ebd", 1698],
+      ["e9aa0f101d68", 1728],
+      ["782035a44473", 1820],
+      ["803ad8f660e7", 1962],
+      ["7d1791449349", 1973],
+      ["c957ce169cf6", 2024],
+      ["f2c0dd89e15c", 2096],
+      ["26ad7b61b37b", 2159],
+      ["722461548a39", 2442],
+      ["9c690dd3c693", 2467],
+      ["b5fd1caa393e", 2625],
+      ["3e463bddb22c", 2919],
+      ["ee71dbd9b1d7", 3096],
+      ["59c1837f9107", 3345],
+      ["a2abc9923bbe", 4435],
+      ["32bb1b6efb27", 4453],
+      ["7ab877a02905", 4473]
+    ],
+    "0e2e9a7a985125c85630bb3bcaf43424c39bb5b7090f6c946806b7d7a6428e6b": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["39694e72167f", 351],
+      ["a4a11528bc42", 394],
+      ["0255f34a839a", 417],
+      ["4a11931b7a86", 603],
+      ["ed326933a23e", 615],
+      ["e2b40f3d642c", 624],
+      ["e59a41a9002d", 656],
+      ["e60933e352ce", 740],
+      ["a6df5b2b9c6d", 769],
+      ["383d0a473e13", 822],
+      ["498007571a41", 912],
+      ["b61f946296f1", 936],
+      ["b5dcc6adafd5", 944],
+      ["9e1f6b2ac65d", 956],
+      ["2d5a290990a9", 988],
+      ["bf312d30bb56", 1104],
+      ["f98775a7d0f9", 1297],
+      ["6052ff08685e", 1312],
+      ["d263e4b84ecd", 1446],
+      ["15323fcfa673", 1491],
+      ["293d03cf402f", 1512]
+    ],
+    "78bcac044e6867b02595a275b18e7d79465a570665c210eae873b0f918315bd7": [
+      ["d768b8759414", 11],
+      ["9b385480472b", 33],
+      ["7ac9eb435da8", 106],
+      ["33c344e65c65", 162],
+      ["1bbdc9103ae0", 172],
+      ["d2fdb69068e3", 179],
+      ["a5d623f4f582", 190],
+      ["6fc12095da10", 205]
+    ],
+    "ea4d03626f5a0c1e9cc62fc137366e6f417ed1404a2be2e94413ded273a4d2dc": [
+      ["d768b8759414", 11],
+      ["9b385480472b", 33],
+      ["7ac9eb435da8", 106]
+    ],
+    "0c70c0fc28285080b84f841f586c3aef3dde0f949aad3465894ae707ab5a0d44": [
+      ["b61f946296f1", 4],
+      ["dad13f394614", 16],
+      ["0900421b7dc4", 398],
+      ["a8ac2aff9c48", 490],
+      ["331295c01e85", 608],
+      ["ae124b181c4d", 633],
+      ["9da5a5b8c58c", 643],
+      ["fe0a638f2551", 817],
+      ["290e185b28e1", 872],
+      ["b81bf672674b", 1318],
+      ["a2abc9923bbe", 2267],
+      ["32bb1b6efb27", 2285],
+      ["f18f224d4398", 2305]
+    ],
+    "116cbf898104710a97d5ec351e31eff336642169d25adf2de30c8c54d63e7cda": [
+      ["b61f946296f1", 4],
+      ["ecedf963bc64", 15],
+      ["b0006e2cedea", 279],
+      ["30bf994f1153", 365],
+      ["d768b8759414", 382],
+      ["809d3ad2bcb8", 395],
+      ["5cb0721f72f0", 475],
+      ["c6d0c3b96308", 517],
+      ["5c1b98c91663", 875],
+      ["0b07a9c1be22", 926],
+      ["2b1640f289ea", 1000],
+      ["86ab20534f15", 1225],
+      ["e043a4dd253b", 1312],
+      ["38d1718b8fc3", 1353],
+      ["d5467e9995bc", 1428],
+      ["e91d703227c9", 1472],
+      ["f98775a7d0f9", 1655],
+      ["197395080909", 1673],
+      ["efa75a106aeb", 1685],
+      ["26a00bd0faa6", 1701],
+      ["2b47976a9cd8", 1840]
+    ],
+    "efb71309f9ef52adce318153e49b25626beba02756d1e0f534ebcd7fbad32afb": [
+      ["b61f946296f1", 4],
+      ["4f1674fb5377", 12],
+      ["0d73af18a3a5", 64],
+      ["79806c93e81e", 198],
+      ["c93f4cab4139", 286],
+      ["adcc06043c13", 697],
+      ["efd380ee5f7b", 736],
+      ["1af23c5b7d79", 827],
+      ["70b8a1abd6c2", 924],
+      ["48db7077d4ee", 1054],
+      ["ded673ea29c4", 1066],
+      ["16eb9f2e8752", 1074],
+      ["40ce0b25499c", 1087],
+      ["68dd4bd4433d", 1096],
+      ["1d5fc2d9e00d", 1121],
+      ["95294331afbc", 1249],
+      ["2ec005ea16b3", 1394],
+      ["fd10ad67f878", 1428],
+      ["de59e343d914", 1459],
+      ["37dc539ed622", 1466],
+      ["bc18eb3148bc", 1515],
+      ["bd90fb921f2d", 1560],
+      ["c067b1aa9040", 1591],
+      ["09399b61d7eb", 1637],
+      ["b2400038371b", 1655],
+      ["3e84ad780965", 1671],
+      ["4a11931b7a86", 2078],
+      ["ed326933a23e", 2090],
+      ["e2b40f3d642c", 2099],
+      ["b5dcc6adafd5", 2129],
+      ["05d01a350872", 2141],
+      ["41d6f86c1979", 2180],
+      ["a22d83f9e2f9", 2348]
+    ],
+    "e99656f3f5e1d8106e268a1448430f4014f13897bbdf77c9845c0eefc99a03fe": [
+      ["150878a81f46", 6],
+      ["447d1057dc7c", 16],
+      ["aa97dd1bf3f1", 32],
+      ["40ce0b25499c", 45],
+      ["06a60947381e", 56],
+      ["af0af37b8cfc", 98],
+      ["f1b466f7c6f6", 282],
+      ["13e5d12afa8b", 437],
+      ["844a8fe51e4f", 471],
+      ["de59e343d914", 503],
+      ["f44a94390330", 512],
+      ["e213c56fc229", 592],
+      ["b3dc850565d8", 636],
+      ["051f4e0bd8fb", 648],
+      ["d63eef9ff914", 670],
+      ["6cd3fcc5ec00", 717],
+      ["d1308f86f627", 775],
+      ["268c431cb6b0", 805]
+    ],
+    "3faaec3ee1d75fa0cf9c8ff25236cc226b7287ed75406e0b51b3805fc5d89a14": [
+      ["4a11931b7a86", 3],
+      ["ed326933a23e", 15],
+      ["e2b40f3d642c", 24],
+      ["e59a41a9002d", 56],
+      ["e60933e352ce", 140],
+      ["a6df5b2b9c6d", 169],
+      ["383d0a473e13", 222],
+      ["21c9e76387ed", 313],
+      ["8d8dc0a58b96", 550],
+      ["9c557c702fdd", 643],
+      ["a5d693e781e6", 677],
+      ["498007571a41", 755],
+      ["b61f946296f1", 779],
+      ["5a099a33d617", 790],
+      ["b5dcc6adafd5", 801],
+      ["9e1f6b2ac65d", 813],
+      ["28c2fba54f06", 845],
+      ["f596c9295bd4", 861],
+      ["4185e87640c2", 879],
+      ["28cc2b40fa61", 897],
+      ["043c3c292b42", 1099],
+      ["401eb66867f1", 1117],
+      ["7d8185d32ebd", 1154],
+      ["3a8d9764d8a4", 1173],
+      ["50f26d5b74f2", 1192],
+      ["dad13f394614", 1250],
+      ["0900421b7dc4", 1632],
+      ["a8ac2aff9c48", 1724],
+      ["6d4853d36d81", 1857],
+      ["b62c7977279d", 1878],
+      ["3aa811a41203", 1983],
+      ["e9aa0f101d68", 2055],
+      ["782035a44473", 2147],
+      ["803ad8f660e7", 2280],
+      ["7d1791449349", 2291],
+      ["c957ce169cf6", 2342],
+      ["77ea6aae461b", 2423],
+      ["83f950fd95a2", 2472],
+      ["75053a56ff7e", 2503],
+      ["6042dafdc055", 2621],
+      ["c54be8ee19f1", 3809],
+      ["d768b8759414", 3881],
+      ["809d3ad2bcb8", 3894],
+      ["5cb0721f72f0", 3974],
+      ["c6d0c3b96308", 4016],
+      ["4fffde95a01d", 4369],
+      ["0d504ac1c7bd", 4382]
+    ],
+    "890a83117d1f7e3c49f81ca058f8bb649577ff4694b993d3515b73e592b23533": [
+      ["4a11931b7a86", 3],
+      ["ed326933a23e", 15],
+      ["e2b40f3d642c", 24],
+      ["e59a41a9002d", 56],
+      ["e60933e352ce", 140],
+      ["a6df5b2b9c6d", 169],
+      ["383d0a473e13", 222],
+      ["ecedf963bc64", 313],
+      ["b0006e2cedea", 577],
+      ["498007571a41", 662],
+      ["b61f946296f1", 686],
+      ["b5dcc6adafd5", 694],
+      ["05d01a350872", 706],
+      ["c85326df91bb", 739],
+      ["803ad8f660e7", 830],
+      ["4185e87640c2", 841],
+      ["f596c9295bd4", 859],
+      ["7d1791449349", 877],
+      ["28cc2b40fa61", 930],
+      ["043c3c292b42", 1132],
+      ["401eb66867f1", 1150],
+      ["28c2fba54f06", 1187],
+      ["7d8185d32ebd", 1201],
+      ["230abc5a1bbf", 1218],
+      ["3a8d9764d8a4", 1289],
+      ["50f26d5b74f2", 1308],
+      ["dad13f394614", 1366],
+      ["0900421b7dc4", 1748],
+      ["a8ac2aff9c48", 1840],
+      ["6d4853d36d81", 1973],
+      ["392ea602a54d", 1993],
+      ["77ea6aae461b", 2069],
+      ["e9aa0f101d68", 2131],
+      ["76f6bb4c5dca", 2223],
+      ["17f4e4e43390", 2361]
+    ],
+    "86a82dbbec0546abe9c8c49dc84a9d82f6e9fc438f05e48a56c7557e036a5ff0": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["4a11931b7a86", 353],
+      ["ed326933a23e", 365],
+      ["e2b40f3d642c", 374],
+      ["e59a41a9002d", 406],
+      ["e60933e352ce", 490],
+      ["a6df5b2b9c6d", 519],
+      ["383d0a473e13", 572],
+      ["498007571a41", 662],
+      ["34e3ca2fb900", 686],
+      ["b61f946296f1", 818],
+      ["b5dcc6adafd5", 826],
+      ["05d01a350872", 838],
+      ["c85326df91bb", 871],
+      ["58c409f738a3", 972]
+    ],
+    "2d51b20cfea414cc7d3a7ad8c686b819bcebbb0baeb496ac075c512a34a025a9": [
+      ["5fe8253cda76", 3],
+      ["ed326933a23e", 21],
+      ["e2b40f3d642c", 30],
+      ["e59a41a9002d", 62],
+      ["e60933e352ce", 146],
+      ["e8603e635ea4", 175],
+      ["383d0a473e13", 250],
+      ["ecedf963bc64", 341],
+      ["b0006e2cedea", 605],
+      ["498007571a41", 690],
+      ["b61f946296f1", 714],
+      ["5c25b6316c9c", 725]
+    ],
+    "13e2982d84601d29e51496f0252cb02a378a2f29f101c9782f04700bdb6ea737": [
+      ["34ceb7e1b670", 4],
+      ["185b8bd0deb1", 21]
+    ],
+    "888dd559b111ecbee29887c99dbe107604e091d1a3263bd2c8f7d4f00be8a8fb": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["809d3ad2bcb8", 354],
+      ["5c1b98c91663", 437],
+      ["33c1bc98e249", 494],
+      ["39694e72167f", 593],
+      ["a4a11528bc42", 636],
+      ["e60933e352ce", 657],
+      ["a6df5b2b9c6d", 686],
+      ["aeebc2fe3441", 733],
+      ["f98775a7d0f9", 906],
+      ["efa75a106aeb", 922],
+      ["e950fe694422", 939],
+      ["197395080909", 1055],
+      ["2d2e4ae61666", 1068],
+      ["4a11931b7a86", 1548],
+      ["ed326933a23e", 1560],
+      ["e2b40f3d642c", 1569],
+      ["e59a41a9002d", 1601],
+      ["383d0a473e13", 1693],
+      ["498007571a41", 1783],
+      ["b61f946296f1", 1807],
+      ["b5dcc6adafd5", 1815],
+      ["9e1f6b2ac65d", 1827],
+      ["b62c7977279d", 1860],
+      ["bf312d30bb56", 1981],
+      ["26d4c5bd016f", 2175]
+    ],
+    "a8d4738e202314fac92a69019e0677b25cabeacc8c4f74fd5889e6afd25285cb": [
+      ["477fadda0baa", 6]
+    ],
+    "63ace3445adb07bfdae82f29e864e255a020ed0701f036e86dda85ce37f44d86": [
+      ["e565cfa17434", 5],
+      ["b61f946296f1", 389],
+      ["28cc2b40fa61", 399],
+      ["043c3c292b42", 601],
+      ["401eb66867f1", 619],
+      ["3a8d9764d8a4", 658],
+      ["f596c9295bd4", 677],
+      ["50f26d5b74f2", 695],
+      ["4185e87640c2", 751],
+      ["dad13f394614", 771],
+      ["0900421b7dc4", 1153],
+      ["a8ac2aff9c48", 1245],
+      ["6d4853d36d81", 1378],
+      ["4a11931b7a86", 1400],
+      ["ed326933a23e", 1412],
+      ["e2b40f3d642c", 1421],
+      ["b5dcc6adafd5", 1451],
+      ["e60933e352ce", 1463],
+      ["9e1f6b2ac65d", 1488],
+      ["8ce8926c193d", 1520],
+      ["3aa811a41203", 1622],
+      ["28c2fba54f06", 1681],
+      ["7d8185d32ebd", 1695],
+      ["e9aa0f101d68", 1725],
+      ["782035a44473", 1817],
+      ["803ad8f660e7", 1950],
+      ["7d1791449349", 1961],
+      ["c957ce169cf6", 2012],
+      ["77ea6aae461b", 2093],
+      ["26ad7b61b37b", 2155],
+      ["722461548a39", 2438],
+      ["9c690dd3c693", 2463],
+      ["016039f5fb3e", 2621],
+      ["3e463bddb22c", 2871],
+      ["ee71dbd9b1d7", 3048],
+      ["59c1837f9107", 3297],
+      ["a2abc9923bbe", 4387],
+      ["32bb1b6efb27", 4405],
+      ["7ab877a02905", 4425],
+      ["2b6743521737", 5681]
+    ],
+    "608f9b7a9e7f733d8d99362f98c7417d3e1da708db995343de017f87448211e3": [
+      ["150878a81f46", 6],
+      ["447d1057dc7c", 16],
+      ["aa97dd1bf3f1", 32],
+      ["40ce0b25499c", 45],
+      ["06a60947381e", 56],
+      ["af0af37b8cfc", 98],
+      ["f1b466f7c6f6", 282],
+      ["13e5d12afa8b", 437],
+      ["844a8fe51e4f", 471],
+      ["de59e343d914", 503],
+      ["f44a94390330", 512],
+      ["e213c56fc229", 592],
+      ["b3dc850565d8", 636],
+      ["051f4e0bd8fb", 648],
+      ["d63eef9ff914", 670],
+      ["6cd3fcc5ec00", 717],
+      ["d1308f86f627", 775],
+      ["268c431cb6b0", 805],
+      ["6042dafdc055", 1224],
+      ["73f31dfdee9f", 2409],
+      ["eddb29bfa8a6", 3221],
+      ["dcae5a947391", 3350],
+      ["54337a866fb2", 3724],
+      ["65bd70d23455", 3764],
+      ["e60933e352ce", 4095],
+      ["50d971b27034", 4124],
+      ["9f650b1cc0bf", 4243],
+      ["b61f946296f1", 4847],
+      ["68c7712c17e0", 4870]
+    ],
+    "264ff080626594c8399d554c9b5f7e84661a6cb452dcce331c6a64a6667358e2": [
+      ["ecedf963bc64", 4],
+      ["b0006e2cedea", 268],
+      ["8f7da050ddb2", 354],
+      ["727591669b8c", 392],
+      ["4a4a709ef23b", 756],
+      ["26ad7b61b37b", 806],
+      ["9b73a9b5c9f6", 1029],
+      ["433c37b5a737", 1037],
+      ["7768d7b8daff", 1059],
+      ["498007571a41", 1220],
+      ["4a11931b7a86", 1243],
+      ["ed326933a23e", 1255],
+      ["e2b40f3d642c", 1264],
+      ["e59a41a9002d", 1296],
+      ["e60933e352ce", 1380],
+      ["a6df5b2b9c6d", 1409],
+      ["383d0a473e13", 1462],
+      ["b61f946296f1", 1553],
+      ["809d3ad2bcb8", 1564],
+      ["5c1b98c91663", 1647],
+      ["33c1bc98e249", 1704],
+      ["28c2fba54f06", 1803],
+      ["f596c9295bd4", 1819],
+      ["4185e87640c2", 1837],
+      ["28cc2b40fa61", 1855],
+      ["043c3c292b42", 2057],
+      ["401eb66867f1", 2075],
+      ["7d8185d32ebd", 2112],
+      ["b5dcc6adafd5", 2129],
+      ["9e1f6b2ac65d", 2141],
+      ["b62c7977279d", 2174],
+      ["3a8d9764d8a4", 2281],
+      ["50f26d5b74f2", 2300],
+      ["dad13f394614", 2358],
+      ["0900421b7dc4", 2740],
+      ["a8ac2aff9c48", 2832],
+      ["6d4853d36d81", 2965],
+      ["3aa811a41203", 2985],
+      ["e9aa0f101d68", 3057],
+      ["782035a44473", 3149],
+      ["803ad8f660e7", 3282],
+      ["7d1791449349", 3293],
+      ["c957ce169cf6", 3344],
+      ["77ea6aae461b", 3425],
+      ["75053a56ff7e", 3474],
+      ["83f950fd95a2", 3583],
+      ["9c690dd3c693", 3619],
+      ["b5fd1caa393e", 3777],
+      ["3e463bddb22c", 4071],
+      ["ee71dbd9b1d7", 4242],
+      ["e4274230bf81", 4477],
+      ["6f6f5cc580d2", 4621],
+      ["1e116b431cf7", 4835],
+      ["aeebc2fe3441", 4879],
+      ["a4a11528bc42", 5045],
+      ["d0e269c9f6e8", 5066],
+      ["bf312d30bb56", 5106],
+      ["3b145388bd1d", 5290],
+      ["4fffde95a01d", 5337],
+      ["59ca4a296d85", 5350]
+    ],
+    "2373c9b7fd0716116db3320ff38ef8b22c7aa6eab97c6e244b758971310718f2": [
+      ["f04119ddc474", 11],
+      ["64b6456f336a", 34],
+      ["741ae7846536", 89]
+    ],
+    "78bb3b09fd517e7318b1028681ee745e391aab54dff6ddfec5c3c9ba153a0018": [
+      ["d768b8759414", 11],
+      ["9b385480472b", 33],
+      ["4185e87640c2", 100],
+      ["f596c9295bd4", 118],
+      ["7d1791449349", 136],
+      ["28cc2b40fa61", 189],
+      ["043c3c292b42", 391],
+      ["401eb66867f1", 409],
+      ["28c2fba54f06", 446],
+      ["d41b7fcc1ae5", 460],
+      ["753d84a5821e", 477],
+      ["a62a12b06885", 552]
+    ],
+    "0faa3131c19558a84cfc7f2a0db3f39ec4eb2555b1c7d9b997f6605f98056af0": [
+      ["4a11931b7a86", 3],
+      ["ed326933a23e", 15],
+      ["e2b40f3d642c", 24],
+      ["e59a41a9002d", 56],
+      ["e60933e352ce", 140],
+      ["a6df5b2b9c6d", 169],
+      ["383d0a473e13", 222],
+      ["498007571a41", 312],
+      ["21c9e76387ed", 336],
+      ["8d8dc0a58b96", 573],
+      ["9c557c702fdd", 666],
+      ["a5d693e781e6", 700],
+      ["b61f946296f1", 779],
+      ["7f6263045100", 815],
+      ["4185e87640c2", 1619],
+      ["28cc2b40fa61", 1637],
+      ["043c3c292b42", 1839],
+      ["401eb66867f1", 1857],
+      ["f596c9295bd4", 1896],
+      ["7d1791449349", 1914],
+      ["28c2fba54f06", 1965],
+      ["7d8185d32ebd", 1979],
+      ["bd67ba2519f7", 2017]
+    ],
+    "1d47a9ea39d6e1a44c15ad81c9a73b1b76c1f3b7b8428dd1c191aa7fbc414cac": [
+      ["e565cfa17434", 5],
+      ["b61f946296f1", 389],
+      ["28c2fba54f06", 397],
+      ["f596c9295bd4", 413],
+      ["4185e87640c2", 431],
+      ["28cc2b40fa61", 449],
+      ["043c3c292b42", 651],
+      ["401eb66867f1", 669],
+      ["7d8185d32ebd", 706],
+      ["3a8d9764d8a4", 736],
+      ["4a11931b7a86", 755],
+      ["ed326933a23e", 767],
+      ["e2b40f3d642c", 776],
+      ["b5dcc6adafd5", 806],
+      ["803ad8f660e7", 818],
+      ["7d1791449349", 829],
+      ["c957ce169cf6", 880],
+      ["5db8c510ecd8", 955],
+      ["50f26d5b74f2", 971],
+      ["dad13f394614", 1029],
+      ["0900421b7dc4", 1411],
+      ["a8ac2aff9c48", 1503],
+      ["6d4853d36d81", 1636],
+      ["e60933e352ce", 1656],
+      ["9e1f6b2ac65d", 1681],
+      ["2d5a290990a9", 1713],
+      ["3aa811a41203", 1813],
+      ["e9aa0f101d68", 1874],
+      ["782035a44473", 1966],
+      ["77ea6aae461b", 2108],
+      ["d768b8759414", 2167],
+      ["9b385480472b", 2189],
+      ["e1df3925aa68", 2260],
+      ["34339836b5ec", 2473]
+    ]
+  },
+  "contracts": {
+    "celo:0x4200000000000000000000000000000000000007": {
+      "name": "L2CrossDomainMessenger",
+      "source": "183831fc8f6415a37cb7b0f8001883e1a545179dea6581bf88d8214a4a58b3a4",
+      "critical": { "sinceTimestamp": 1742960663 },
+      "implementations": {
+        "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": "923f22b759ea42a6fd91bc09ef596beafcc4fdf1711272727d0d7134703964bd"
+      }
+    },
+    "celo:0x4200000000000000000000000000000000000010": {
+      "name": "L2StandardBridge",
+      "source": "183831fc8f6415a37cb7b0f8001883e1a545179dea6581bf88d8214a4a58b3a4",
+      "critical": { "sinceTimestamp": 1742960663 },
+      "implementations": {
+        "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": "80e4b00eb7ad2d0d6aa23de0f95498061cfea05dfad0082b9d8e12863d7efc85"
+      }
+    },
+    "celo:0x4200000000000000000000000000000000000016": {
+      "name": "L2ToL1MessagePasser",
+      "source": "183831fc8f6415a37cb7b0f8001883e1a545179dea6581bf88d8214a4a58b3a4",
+      "critical": { "sinceTimestamp": 1742960663 },
+      "implementations": {
+        "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "ef2633a8e95f6680576f3cf93c94a2ec3e4d0d5d22ddb8d09c233a933c025e8e"
+      }
+    },
+    "celo:0x4200000000000000000000000000000000000018": {
+      "name": "L2ProxyAdmin",
+      "source": "183831fc8f6415a37cb7b0f8001883e1a545179dea6581bf88d8214a4a58b3a4",
+      "critical": { "sinceTimestamp": 1742960663 },
+      "implementations": {
+        "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "6f2c4f140876635a8255cb165465298c85db36e5a46c5cf42ddf0652af9697b8"
+      }
+    },
+    "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
+      "name": "LivenessModule",
+      "source": "c71f25285aed5ddb957aee2e65e93cb0983e1b1d200209ad2b58a5235cee1fb9",
+      "critical": true
+    },
+    "eth:0x057898f3C43F129a17517B9056D23851F124b19f": {
+      "name": "Celo native asset Token",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0x64fE3f9201E6534D2d744c7C57D134E709131a6e": "d4746bb71cea92e071dca210fb29d482f71476bfc5bcc4922577c604ad549f64"
+      }
+    },
+    "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": {
+      "name": "Optimism Guardian Multisig",
+      "source": "7df86540e8491697461e4719fd93052c329d1d0565f4c7c72a9d37700802ec71",
+      "implementations": {
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "8d7cdf752191616e4e00fca1de6ca09bd97a59805815ae8e5131612f04aa21f6"
+      }
+    },
+    "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95": {
+      "name": "L1CrossDomainMessenger",
+      "source": "985893ea76af56dfa3281a6fc217a51092f0daa6916a88ddf385b39e60fe1f63",
+      "critical": true,
+      "implementations": {
+        "eth:0xE45D2d835d0b2D3C7f4fEe1eaa19A068d0ba8A88": "c37341067449901b442aa1dac20a34a9b163ecfb6fbf3dae45e7a8b56db79e77"
+      }
+    },
+    "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3": {
+      "name": "PreimageOracle",
+      "source": "b042e9806d4b33a5513459740fe1884c0cb7cc8f959e610d2556e2054d447387",
+      "critical": true
+    },
+    "eth:0x24424336F04440b1c28685a38303aC33C9D14a25": {
+      "name": "LivenessGuard",
+      "source": "91165b18bc52b85f474f8b51b031cd5b2fda6b8a1834604bc2e214fff49c28f9",
+      "critical": true
+    },
+    "eth:0x25035d2233d099f0BA710ca1e5a3834842870C66": {
+      "name": "CeloSuperchainConfig",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0xA59b2eBf8231f0e31508Bd18e9185BeB5Ab1C038": "4e09a594014d9adb114f3da70d497d68c1516602ab0e7fdf5a0a192fa705e442"
+      }
+    },
+    "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F": {
+      "name": "FaultDisputeGame",
+      "source": "034129726fcb91e8bca43d3fc9c6f5c29674de29d0c61a5ae04fd035763154f5",
+      "critical": true
+    },
+    "eth:0x3C519816C5BdC0a0199147594F83feD4F5847f13": {
+      "name": "L1ERC721Bridge",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "implementations": {
+        "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9": "0e2e9a7a985125c85630bb3bcaf43424c39bb5b7090f6c946806b7d7a6428e6b"
+      }
+    },
+    "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112": {
+      "name": "CeloProxyAdminOwner",
+      "source": "7df86540e8491697461e4719fd93052c329d1d0565f4c7c72a9d37700802ec71",
+      "implementations": {
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "8d7cdf752191616e4e00fca1de6ca09bd97a59805815ae8e5131612f04aa21f6"
+      }
+    },
+    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
+      "name": "SuperchainProxyAdmin",
+      "source": "78bcac044e6867b02595a275b18e7d79465a570665c210eae873b0f918315bd7",
+      "critical": true
+    },
+    "eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753": {
+      "name": "AddressManager",
+      "source": "ea4d03626f5a0c1e9cc62fc137366e6f417ed1404a2be2e94413ded273a4d2dc",
+      "critical": true
+    },
+    "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": {
+      "name": "SuperchainProxyAdminOwner",
+      "source": "7df86540e8491697461e4719fd93052c329d1d0565f4c7c72a9d37700802ec71",
+      "implementations": {
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "8d7cdf752191616e4e00fca1de6ca09bd97a59805815ae8e5131612f04aa21f6"
+      }
+    },
+    "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908": {
+      "name": "MIPS",
+      "source": "0c70c0fc28285080b84f841f586c3aef3dde0f949aad3465894ae707ab5a0d44",
+      "critical": true
+    },
+    "eth:0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906": {
+      "name": "OptimismMintableERC20Factory",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "implementations": {
+        "eth:0x149BD036f5F57D0FF4b5F102C9d46E3c0EB2C016": "116cbf898104710a97d5ec351e31eff336642169d25adf2de30c8c54d63e7cda"
+      }
+    },
+    "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754": {
+      "name": "DeputyPauseModule",
+      "source": "efb71309f9ef52adce318153e49b25626beba02756d1e0f534ebcd7fbad32afb",
+      "critical": true
+    },
+    "eth:0x783A434532Ee94667979213af1711505E8bFE374": {
+      "name": "ProxyAdmin",
+      "source": "78bcac044e6867b02595a275b18e7d79465a570665c210eae873b0f918315bd7",
+      "critical": true
+    },
+    "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": {
+      "name": "OpFoundationUpgradeSafe",
+      "source": "7df86540e8491697461e4719fd93052c329d1d0565f4c7c72a9d37700802ec71",
+      "implementations": {
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "e99656f3f5e1d8106e268a1448430f4014f13897bbdf77c9845c0eefc99a03fe"
+      }
+    },
+    "eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861": {
+      "name": "SystemConfig",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0xe5Dc3C0a3489b81A6F3AE3bB49bF9CcBFB85a3dB": "3faaec3ee1d75fa0cf9c8ff25236cc226b7287ed75406e0b51b3805fc5d89a14"
+      }
+    },
+    "eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d": {
+      "name": "AnchorStateRegistry",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E": "890a83117d1f7e3c49f81ca058f8bb649577ff4694b993d3515b73e592b23533"
+      }
+    },
+    "eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4": {
+      "name": "DelayedWETH",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0xb86a464CC743440FddAa43900e05318ef4818b29": "86a82dbbec0546abe9c8c49dc84a9d82f6e9fc438f05e48a56c7557e036a5ff0"
+      }
+    },
+    "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": {
+      "name": "SuperchainConfig",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504": "2d51b20cfea414cc7d3a7ad8c686b819bcebbb0baeb496ac075c512a34a025a9"
+      }
+    },
+    "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe": {
+      "name": "L1StandardBridge",
+      "source": "13e2982d84601d29e51496f0252cb02a378a2f29f101c9782f04700bdb6ea737",
+      "critical": true,
+      "implementations": {
+        "eth:0xfA707F45A23370d9154AF4457401274E38FA2d8A": "888dd559b111ecbee29887c99dbe107604e091d1a3263bd2c8f7d4f00be8a8fb"
+      }
+    },
+    "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d": {
+      "name": "Celo cLabs Multisig",
+      "source": "a8d4738e202314fac92a69019e0677b25cabeacc8c4f74fd5889e6afd25285cb",
+      "implementations": {
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "e99656f3f5e1d8106e268a1448430f4014f13897bbdf77c9845c0eefc99a03fe"
+      }
+    },
+    "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9": {
+      "name": "PermissionedDisputeGame",
+      "source": "63ace3445adb07bfdae82f29e864e255a020ed0701f036e86dda85ce37f44d86",
+      "critical": true
+    },
+    "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
+      "name": "SaferSafes",
+      "source": "608f9b7a9e7f733d8d99362f98c7417d3e1da708db995343de017f87448211e3",
+      "critical": true
+    },
+    "eth:0xC03172263409584f7860C25B6eB4985f0f6F4636": {
+      "name": "Celo Security Council",
+      "source": "a8d4738e202314fac92a69019e0677b25cabeacc8c4f74fd5889e6afd25285cb",
+      "implementations": {
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "e99656f3f5e1d8106e268a1448430f4014f13897bbdf77c9845c0eefc99a03fe"
+      }
+    },
+    "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
+      "name": "Optimism Security Council",
+      "source": "7df86540e8491697461e4719fd93052c329d1d0565f4c7c72a9d37700802ec71",
+      "implementations": {
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "8d7cdf752191616e4e00fca1de6ca09bd97a59805815ae8e5131612f04aa21f6"
+      }
+    },
+    "eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC": {
+      "name": "OptimismPortal2",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0x2c431080Fc733E259654f3b91E39468d9A85Ac9b": "264ff080626594c8399d554c9b5f7e84661a6cb452dcce331c6a64a6667358e2"
+      }
+    },
+    "eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552": {
+      "name": "DelayedWETH",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0xb86a464CC743440FddAa43900e05318ef4818b29": "86a82dbbec0546abe9c8c49dc84a9d82f6e9fc438f05e48a56c7557e036a5ff0"
+      }
+    },
+    "eth:0xD1C635987B6Aa287361d08C6461491Fa9df087f2": {
+      "name": "Safe",
+      "source": "a8d4738e202314fac92a69019e0677b25cabeacc8c4f74fd5889e6afd25285cb",
+      "implementations": {
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "e99656f3f5e1d8106e268a1448430f4014f13897bbdf77c9845c0eefc99a03fe"
+      }
+    },
+    "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {
+      "name": "AddressManager",
+      "source": "2373c9b7fd0716116db3320ff38ef8b22c7aa6eab97c6e244b758971310718f2"
+    },
+    "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816": {
+      "name": "AccessManager",
+      "source": "78bb3b09fd517e7318b1028681ee745e391aab54dff6ddfec5c3c9ba153a0018",
+      "critical": true
+    },
+    "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683": {
+      "name": "DisputeGameFactory",
+      "source": "353963d779ff273a1d264a5a33e5cf6afae15b73fa218ec1e78772696b169bf4",
+      "critical": true,
+      "implementations": {
+        "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50": "0faa3131c19558a84cfc7f2a0db3f39ec4eb2555b1c7d9b997f6605f98056af0"
+      }
+    },
+    "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF": {
+      "name": "OPSuccinctFaultDisputeGame",
+      "source": "1d47a9ea39d6e1a44c15ad81c9a73b1b76c1f3b7b8428dd1c191aa7fbc414cac",
+      "critical": true
+    }
+  }
+}

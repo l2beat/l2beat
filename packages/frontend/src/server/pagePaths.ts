@@ -41,6 +41,7 @@ export const STATIC_PAGE_PATHS = [
   '/interop/token-frameworks',
   '/interop/intent-bridges',
   '/privacy/summary',
+  '/audits/summary',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
@@ -84,6 +85,7 @@ async function getDynamicPages(): Promise<Page[]> {
     ecosystemProjects,
     privacyProjects,
     defiProjects,
+    auditedProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -96,6 +98,7 @@ async function getDynamicPages(): Promise<Page[]> {
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps.getProjects({ where: ['defiInfo'] })
       : Promise.resolve([]),
+    ps.getProjects({ where: ['auditCoverage'] }),
   ])
 
   const pages: Page[] = [
@@ -107,6 +110,7 @@ async function getDynamicPages(): Promise<Page[]> {
     ...ecosystemProjects.map(projectPage('/ecosystems')),
     ...privacyProjects.map(projectPage('/privacy/projects')),
     ...defiProjects.map(projectPage('/defi/projects')),
+    ...auditedProjects.map(projectPage('/audits/projects')),
   ]
 
   const publications = [

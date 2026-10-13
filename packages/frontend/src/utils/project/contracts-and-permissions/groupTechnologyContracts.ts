@@ -7,6 +7,7 @@ export function hasGroupableTechnologyContractState(
   return (
     (contract.pastUpgrades?.upgrades.length ?? 0) === 0 &&
     !contract.escrow &&
+    !contract.audit &&
     !contract.impactfulChange &&
     !contract.addresses.some(
       (address) => address.verificationStatus === 'became-verified',
