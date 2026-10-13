@@ -25,6 +25,16 @@
   :focus-visible {
     outline-color: var(--brand);
   }
+
+  /* Not a selection: utility on body: that compiles to a descendant rule
+     which makes every style recalc about 40% slower. */
+  ::selection {
+    background-color: color-mix(in oklab, var(--brand) 30%, transparent);
+  }
+
+  .dark ::selection {
+    background-color: color-mix(in oklab, var(--brand) 50%, transparent);
+  }
 }
 
 /* Opt-out rather than opt-in: motion ships from many components, and one
