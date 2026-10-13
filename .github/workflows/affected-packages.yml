@@ -1,12 +1,13 @@
 name: List affected packages
 
 # Lists the workspace packages that the triggering commit changes, plus every
-# package that depends on them. On main it compares the commit with the previous
-# one. On a pull request it compares the PR head with the commit it branched
-# from, like the PR's "Files changed" tab, so the list covers the whole PR, not
-# just the last push. Not the merge commit: when a PR is retargeted, e.g. a
-# stacked PR onto its parent's branch, GitHub fires the event before it rebuilds
-# refs/pull/N/merge, which then still diffs against the old base.
+# package that depends on them. Changes to test files don't count. On main it
+# compares the commit with the previous one. On a pull request it compares the
+# PR head with the commit it branched from, like the PR's "Files changed" tab,
+# so the list covers the whole PR, not just the last push. Not the merge
+# commit: when a PR is retargeted, e.g. a stacked PR onto its parent's branch,
+# GitHub fires the event before it rebuilds refs/pull/N/merge, which then still
+# diffs against the old base.
 
 on:
   workflow_call:
@@ -50,12 +51,31 @@ jobs:
           fetch-depth: ${{ steps.pr.outputs.depth || 2 }}
           persist-credentials: false
 
+      # Tests don't ship, so a change only to them should build and deploy
+      # nothing. turbo can't ignore files here (its affectedUsingTaskInputs flag
+      # makes `turbo ls --affected` list nothing at all), so commit a copy of
+      # HEAD with the test files reset to the base, and let turbo diff that.
+      # Resolve the base to a SHA first: HEAD^1 moves with the new commit.
+      - name: Undo changes to test files
+        id: base
+        env:
+          BASE: ${{ steps.pr.outputs.base || 'HEAD^1' }}
+        run: |
+          base=$(git rev-parse "$BASE")
+          git diff --name-only -z "$base" HEAD -- \
+              ':(glob)**/*.test.ts' ':(glob)**/*.test.tsx' ':(glob)**/*.test.ts.snapshot' \
+              ':(glob)**/*.e2e.ts' ':(glob)**/.mocharc*' ':(glob)**/playwright.config.ts' \
+            | xargs -0 --no-run-if-empty git restore --source="$base" --staged --worktree --
+          git -c user.name=ci -c user.email=ci@localhost commit --quiet --allow-empty \
+            --message "Changes without test files"
+          echo "sha=$base" >> "$GITHUB_OUTPUT"
+
       # turbo reads the workspace graph from package.json files and the
       # lockfile, so this needs no pnpm install.
       - name: List affected packages
         id: affected
         env:
-          TURBO_SCM_BASE: ${{ steps.pr.outputs.base || 'HEAD^1' }}
+          TURBO_SCM_BASE: ${{ steps.base.outputs.sha }}
           TURBO_SCM_HEAD: HEAD
         run: |
           turbo_version=$(jq -r .devDependencies.turbo package.json)
