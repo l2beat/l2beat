@@ -7,7 +7,10 @@ import { optionToRange } from '~/utils/range/range'
 import { getDaLayersInfo } from './getDaLayersInfo'
 
 export async function getDataPostedSection(
-  project: Project<never | 'scalingInfo', 'archivedAt' | 'daTrackingConfig'>,
+  project: Project<
+    'scalingInfo',
+    'archivedAt' | 'daTrackingConfig' | 'scalingDa'
+  >,
 ): Promise<
   | Pick<
       DataPostedSectionProps,
@@ -29,6 +32,7 @@ export async function getDataPostedSection(
   const { currentDaLayers, pastDaLayers } = getDaLayersInfo(
     project.daTrackingConfig,
     daLayers,
+    project.scalingDa ?? [],
   )
 
   const daTrackingConfig = project.daTrackingConfig.map((config) => {

@@ -1,4 +1,8 @@
-import type { Project, ProjectDaTrackingConfig } from '@l2beat/config'
+import type {
+  Project,
+  ProjectDaTrackingConfig,
+  ProjectScalingDa,
+} from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getDaLayersInfo } from './getDaLayersInfo'
@@ -17,6 +21,7 @@ describe(getDaLayersInfo.name, () => {
     const result = getDaLayersInfo(
       [config({ untilBlock: 200 }), config({ sinceBlock: 200 })],
       [ethereum],
+      [],
     )
 
     expect(result).toEqual({
@@ -32,6 +37,7 @@ describe(getDaLayersInfo.name, () => {
         config({ sinceBlock: 200, untilBlock: 300 }),
       ],
       [ethereum],
+      [],
     )
 
     expect(result).toEqual({
@@ -39,7 +45,30 @@ describe(getDaLayersInfo.name, () => {
       pastDaLayers: [ETHEREUM_INFO],
     })
   })
+
+  // Like Fuel: its Ethereum inbox closed and it now posts only to EigenDA,
+  // which is untracked. DAC is a label but not a layer to name.
+  it('names untracked layers from the DA labels', () => {
+    const result = getDaLayersInfo(
+      [config({ untilBlock: 200 })],
+      [ethereum],
+      [daLabel('EigenDA'), daLabel('DAC')],
+    )
+
+    expect(result).toEqual({
+      currentDaLayers: [{ name: 'EigenDA', logo: '/icons/eigenda.png' }],
+      pastDaLayers: [ETHEREUM_INFO],
+    })
+  })
 })
+
+function daLabel(value: string): ProjectScalingDa {
+  return {
+    layer: { value },
+    bridge: { value: 'None' },
+    mode: { value: 'Transaction data' },
+  }
+}
 
 function config(
   overrides: Partial<ProjectDaTrackingConfig>,

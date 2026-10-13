@@ -1,4 +1,8 @@
-import type { Project, ProjectDaTrackingConfig } from '@l2beat/config'
+import type {
+  Project,
+  ProjectDaTrackingConfig,
+  ProjectScalingDa,
+} from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import { manifest } from '~/utils/Manifest'
@@ -6,6 +10,7 @@ import { manifest } from '~/utils/Manifest'
 export function getDaLayersInfo(
   configs: ProjectDaTrackingConfig[],
   daLayers: Project<'daLayer'>[],
+  scalingDa: ProjectScalingDa[],
 ): {
   currentDaLayers: DaLayerInfo[]
   pastDaLayers: DaLayerInfo[]
@@ -27,7 +32,10 @@ export function getDaLayersInfo(
   )
 
   return {
-    currentDaLayers: current.map(([id]) => getDaLayer(id, daLayers)),
+    currentDaLayers: [
+      ...current.map(([id]) => getDaLayer(id, daLayers)),
+      ...getUntrackedDaLayers(scalingDa),
+    ],
     pastDaLayers: past.map(([id]) => getDaLayer(id, daLayers)),
   }
 }
@@ -48,4 +56,22 @@ function getDaLayer(
     name: daLayer.name,
     logo: manifest.getUrl(`/icons/${daLayer.slug}.png`),
   }
+}
+
+/**
+ * L2BEAT does not track the data posted to these layers, so only the DA label
+ * says a project posts to them.
+ */
+const UNTRACKED_DA_LAYER_ICONS: Record<string, string> = {
+  Avail: 'avail',
+  Celestia: 'celestia',
+  EigenDA: 'eigenda',
+}
+
+function getUntrackedDaLayers(scalingDa: ProjectScalingDa[]): DaLayerInfo[] {
+  return scalingDa.flatMap(({ layer }) => {
+    const icon = UNTRACKED_DA_LAYER_ICONS[layer.value]
+    if (!icon) return []
+    return [{ name: layer.value, logo: manifest.getUrl(`/icons/${icon}.png`) }]
+  })
 }
