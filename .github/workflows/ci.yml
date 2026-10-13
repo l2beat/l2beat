@@ -204,6 +204,7 @@ jobs:
 
   # A runner's four CPUs limit how many tests can run at once without slowing
   # each other down, so the suites are spread over runners instead
+  # (see packages/frontend/e2e/README.md)
   test-e2e-shard:
     name: E2E tests (${{ matrix.name }})
     runs-on: ubuntu-latest
