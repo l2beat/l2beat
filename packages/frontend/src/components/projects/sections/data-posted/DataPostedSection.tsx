@@ -3,6 +3,7 @@ import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDataPostedChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { CustomLink } from '~/components/link/CustomLink'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import { DATA_POSTED_DESCRIPTION, EIGENLAYER_DATA_SOURCE } from '../sectionCopy'
@@ -11,14 +12,8 @@ import { DataPostedTrackedTransactions } from './DataPostedTrackedTransactions'
 
 export interface DataPostedSectionProps extends ProjectSectionProps {
   project: ChartProject
-  currentDaLayers: {
-    name: string
-    logo: string
-  }[]
-  pastDaLayers: {
-    name: string
-    logo: string
-  }[]
+  currentDaLayers: DaLayer[]
+  pastDaLayers: DaLayer[]
   milestones: Milestone[]
   defaultRange: ChartRange
   daTrackingConfig: (ProjectDaTrackingConfig & {
@@ -69,15 +64,28 @@ export function DataPostedSection({
   )
 }
 
-function DaLayerName({ daLayer }: { daLayer: { name: string; logo: string } }) {
-  return (
-    <span className="ml-1 font-medium">
+interface DaLayer {
+  name: string
+  logo: string
+  href: string | undefined
+}
+
+function DaLayerName({ daLayer }: { daLayer: DaLayer }) {
+  const content = (
+    <>
       <img
         src={daLayer.logo}
         alt={daLayer.name}
         className="mr-1 inline-block size-5"
       />
       {daLayer.name}
-    </span>
+    </>
+  )
+  return daLayer.href ? (
+    <CustomLink href={daLayer.href} className="ml-1">
+      {content}
+    </CustomLink>
+  ) : (
+    <span className="ml-1 font-medium">{content}</span>
   )
 }

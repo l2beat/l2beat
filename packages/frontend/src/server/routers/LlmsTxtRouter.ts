@@ -314,6 +314,12 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts.',
     },
     {
+      name: 'Ethereum',
+      path: '/projects/ethereum.md',
+      description:
+        'Ethereum as the data availability layer of the scaling projects: economic security, validators, blob throughput, risks and technology.',
+    },
+    {
       name: 'Privacy protocol',
       path: '/privacy/projects/{slug}.md',
       description:
