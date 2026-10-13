@@ -174,7 +174,9 @@ function describeDaLayers({
   pastDaLayers,
 }: Pick<DataPostedSectionProps, 'currentDaLayers' | 'pastDaLayers'>) {
   const links = (layers: DataPostedSectionProps['currentDaLayers']) =>
-    layers.map((layer) => layer.name).join(', ')
+    layers
+      .map((layer) => (layer.href ? link(layer.name, layer.href) : layer.name))
+      .join(', ')
   if (currentDaLayers.length === 0) {
     return pastDaLayers.length > 0
       ? `We no longer track where the project posts data; previously it posted to ${links(pastDaLayers)}.`

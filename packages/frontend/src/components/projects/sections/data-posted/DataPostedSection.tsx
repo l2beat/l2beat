@@ -3,6 +3,7 @@ import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDataPostedChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { CustomLink } from '~/components/link/CustomLink'
 import type { DaLayerInfo } from '~/utils/project/data-posted/getDaLayersInfo'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
@@ -83,9 +84,9 @@ function DaLayerName({ daLayer }: { daLayer: DaLayerInfo }) {
     </>
   )
   return daLayer.href ? (
-    <a href={daLayer.href} className="ml-1 font-medium text-link underline">
+    <CustomLink href={daLayer.href} className="ml-1">
       {content}
-    </a>
+    </CustomLink>
   ) : (
     <span className="ml-1 font-medium">{content}</span>
   )

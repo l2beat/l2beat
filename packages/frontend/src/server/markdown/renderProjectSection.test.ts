@@ -459,8 +459,8 @@ describe(renderProjectSection.name, () => {
     )
   })
 
-  it('names the DA layers a project posts to, or posted to once it stopped', () => {
-    const dataPosted = (currentDaLayers: { name: string; logo: string }[]) =>
+  it('names the DA layers a project posts to, or posted to once it stopped, linking those with a page', () => {
+    const dataPosted = (currentDaLayers: (typeof ETHEREUM)[]) =>
       render({
         type: 'DataPostedSection',
         props: {
@@ -476,7 +476,7 @@ describe(renderProjectSection.name, () => {
       })
 
     expect(dataPosted([ETHEREUM])).toInclude(
-      'The project currently posts data to Ethereum; previously it posted to Celestia.',
+      'The project currently posts data to [Ethereum](https://l2beat.com/blobs); previously it posted to Celestia.',
     )
     expect(dataPosted([])).toInclude(
       'We no longer track where the project posts data; previously it posted to Celestia.',
@@ -667,11 +667,13 @@ const GROTH16 = {
 const ETHEREUM = {
   name: 'Ethereum',
   logo: '/icons/ethereum.png',
+  href: '/blobs',
 }
 
 const CELESTIA = {
   name: 'Celestia',
   logo: '/icons/celestia.png',
+  href: undefined,
 }
 
 const CHART_PROJECT = {

@@ -41,7 +41,7 @@ export function getDaLayersInfo(
 export interface DaLayerInfo {
   name: string
   logo: string
-  href?: string
+  href: string | undefined
 }
 
 function getDaLayer(
