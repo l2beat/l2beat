@@ -13,7 +13,6 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isThroughputSynced } from './isThroughputSynced'
-import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 
 type ProjectDaThroughputChart = {
@@ -90,10 +89,7 @@ export async function getProjectDaThroughputChartData({
           [projectId],
           sovereignProjectsIds,
         )
-      : db.dataAvailability.getFirstTimestampByProjectIds(
-          [projectId],
-          THROUGHPUT_ENABLED_DA_LAYERS,
-        ),
+      : db.dataAvailability.getFirstTimestampByProjectIds([projectId]),
   ])
 
   if (throughput.length === 0) {

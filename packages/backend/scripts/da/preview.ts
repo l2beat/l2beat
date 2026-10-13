@@ -125,11 +125,7 @@ const cmd = command({
         continue
       }
 
-      if (
-        layer.name === 'ethereum' &&
-        !blobCache &&
-        window.to - window.from > 6 * UnixTime.HOUR
-      ) {
+      if (!blobCache && window.to - window.from > 6 * UnixTime.HOUR) {
         logger.warn(
           'Previewing more than 6h of ethereum blobs without DA_PREVIEW_DB_URL will be slow',
         )

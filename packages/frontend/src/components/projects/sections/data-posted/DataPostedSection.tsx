@@ -44,7 +44,7 @@ export function DataPostedSection({
             <DaLayerNames daLayers={currentDaLayers} />
           </>
         ) : (
-          'The project no longer posts data'
+          'The project no longer posts data to Ethereum'
         )}
         {pastDaLayers.length > 0 && (
           <>

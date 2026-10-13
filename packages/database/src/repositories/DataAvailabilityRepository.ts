@@ -103,15 +103,12 @@ export class DataAvailabilityRepository extends BaseRepository {
 
   async checkIfExists(
     projectId: string,
-    daLayers: string[],
     fromInclusive?: UnixTime,
   ): Promise<boolean> {
-    if (daLayers.length === 0) return false
     let query = this.db
       .selectFrom('DataAvailability')
       .select('projectId')
       .where('projectId', '=', projectId)
-      .where('daLayer', 'in', daLayers)
       .limit(1)
 
     if (fromInclusive !== undefined) {
@@ -146,14 +143,12 @@ export class DataAvailabilityRepository extends BaseRepository {
 
   async getFirstTimestampByProjectIds(
     projectIds: string[],
-    daLayers: string[],
   ): Promise<UnixTime | undefined> {
-    if (projectIds.length === 0 || daLayers.length === 0) return undefined
+    if (projectIds.length === 0) return undefined
     const row = await this.db
       .selectFrom('DataAvailability')
       .select((eb) => eb.fn.min('timestamp').as('timestamp'))
       .where('projectId', 'in', projectIds)
-      .where('daLayer', 'in', daLayers)
       .executeTakeFirst()
 
     return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
@@ -161,14 +156,12 @@ export class DataAvailabilityRepository extends BaseRepository {
 
   async getFirstTimestampsByProjectIds(
     projectIds: string[],
-    daLayers: string[],
   ): Promise<Record<string, UnixTime>> {
-    if (projectIds.length === 0 || daLayers.length === 0) return {}
+    if (projectIds.length === 0) return {}
     const rows = await this.db
       .selectFrom('DataAvailability')
       .select(['projectId', (eb) => eb.fn.min('timestamp').as('timestamp')])
       .where('projectId', 'in', projectIds)
-      .where('daLayer', 'in', daLayers)
       .groupBy('projectId')
       .execute()
 

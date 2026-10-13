@@ -15,10 +15,6 @@ import {
   toProjectRanges,
 } from '~/server/features/utils/projectSeriesChart'
 import type { ChartRange } from '~/utils/range/range'
-import {
-  THROUGHPUT_ENABLED_DA_LAYERS,
-  withoutDeprecatedDaLayers,
-} from './utils/consts'
 
 export const DataPostedChartWithProjectsRangesDataParams = ProjectsChartParams
 
@@ -82,14 +78,10 @@ export async function getDataPostedChartData(
   projectIds: ProjectId[],
   range: ChartRange,
 ): Promise<DetailedDataPostedChartWithProjectsRangesData> {
-  const [allRecords, firstTimestamps] = await Promise.all([
+  const [records, firstTimestamps] = await Promise.all([
     repository.getByProjectIdsAndTimeRange(projectIds, range),
-    repository.getFirstTimestampsByProjectIds(
-      projectIds,
-      THROUGHPUT_ENABLED_DA_LAYERS,
-    ),
+    repository.getFirstTimestampsByProjectIds(projectIds),
   ])
-  const records = withoutDeprecatedDaLayers(allRecords)
 
   const projectRanges = toProjectRanges(
     projectIds,

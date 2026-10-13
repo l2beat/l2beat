@@ -43,28 +43,6 @@ describe(getDataPostedChartData.name, () => {
     })
   })
 
-  it('ignores records from deprecated alt-DA layers', async () => {
-    const repository = repositoryMock(
-      [
-        record(ARBITRUM, 'ethereum', T, 100n),
-        record(ARBITRUM, 'eigenda', T + 3 * HOUR, 25n),
-        record(ARBITRUM, 'ethereum', T + DAY, 200n),
-      ],
-      { [ARBITRUM]: T },
-    )
-
-    const result = await getDataPostedChartData(
-      repository,
-      [ARBITRUM],
-      [T, T + 2 * DAY],
-    )
-
-    expect(result.chart).toEqual([
-      [T, { [ARBITRUM]: 100 }],
-      [T + DAY, { [ARBITRUM]: 200 }],
-    ])
-  })
-
   it('fills zeros for missing days after launch and nulls before launch', async () => {
     const repository = repositoryMock(
       [

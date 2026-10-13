@@ -125,12 +125,12 @@ describe(DaBeatPricesIndexer.name, () => {
   })
 
   describe(DaBeatPricesIndexer.prototype.wipeData.name, () => {
-    it('deletes records by coingecko ids', async () => {
+    it('keeps prices of the current coingecko ids and deletes the rest', async () => {
       const currentPriceRepository = mockObject<Database['currentPrice']>({
-        deleteByCoingeckoIds: mockFn().resolvesTo(5),
+        deleteAllExcept: mockFn().resolvesTo(4),
       })
 
-      const configuration = mockConfiguration(['ethereum', 'bitcoin'])
+      const configuration = mockConfiguration(['ethereum'])
       const deps = mockIndexerDeps({
         configurations: [configuration],
         currentPriceRepository,
@@ -140,9 +140,9 @@ describe(DaBeatPricesIndexer.name, () => {
 
       await indexer.wipeData([{ id: 'config1' }])
 
-      expect(
-        currentPriceRepository.deleteByCoingeckoIds,
-      ).toHaveBeenOnlyCalledWith(['ethereum', 'bitcoin'])
+      expect(currentPriceRepository.deleteAllExcept).toHaveBeenOnlyCalledWith([
+        'ethereum',
+      ])
     })
 
     it('throws error when multiple configurations provided', async () => {
