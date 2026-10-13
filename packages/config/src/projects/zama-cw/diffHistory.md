@@ -1,3 +1,158 @@
+Generated with discovered.json: 0x748382de93acc207319b560b0be642e56dcb6acf
+
+# Diff at Mon, 12 Oct 2026 07:17:01 GMT:
+
+- id: d2fea842
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1791458506
+- current timestamp: 1791789284
+
+## Description
+
+Gateway coprocessors expanded from one to five, and their majority threshold rose to three. ACL updates now need three responses.
+
+## Watched changes
+
+```diff
+    contract MultichainACL (zama:0x055d9FD50a612A9027716ec8db663E7D68562468) [zama/MultichainACL] {
+    +++ description: Gateway-side ACL mirror that records coprocessor consensus for host-chain public decryption permissions, account handle allowances, and delegated user-decryption access. For Ethereum, it mirrors ACL events emitted by the L1 ACL contract registered in GatewayConfig.
++++ description: Minimum number of matching coprocessor messages required before an ACL update reaches consensus.
++++ severity: HIGH
+      values.gatewayCoprocessorMajorityThreshold:
+-        1
++        3
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may update the gateway ACL mirror once enough coprocessors agree.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.1:
++        "zama:0x679953d556e71F62673F38EE4775d6E7CCb23E64"
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may update the gateway ACL mirror once enough coprocessors agree.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.2:
++        "zama:0xF6ee37de6bDaB31597E90ED70448B92073cD9634"
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may update the gateway ACL mirror once enough coprocessors agree.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.3:
++        "zama:0x2e809E897AA8046Ff6e936502b6275F0B8993456"
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may update the gateway ACL mirror once enough coprocessors agree.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.4:
++        "zama:0x68EDabe2F16CcC37cB2Bb05F1D1EDad3e1Eecbd7"
+    }
+```
+
+```diff
+    contract InputVerification (zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287) [zama/InputVerification_v0_5_0] {
+    +++ description: Gateway contract that receives encrypted input verification requests from registered and enabled host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Since v0.5.0, if GatewayConfig designates a priority coprocessor, that coprocessor's single response finalizes verification or rejection and the attestation carries only its signature. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain.
++++ description: Minimum number of matching coprocessor responses required for an encrypted input proof to be verified or rejected. Inert while a priority coprocessor is set in GatewayConfig (see gatewayPriorityCoprocessorTxSender).
++++ severity: HIGH
+      values.gatewayCoprocessorMajorityThreshold:
+-        1
++        3
++++ description: Coprocessor signer addresses configured in GatewayConfig. Their EIP-712 signatures determine whether encrypted input proofs reach consensus.
++++ severity: HIGH
+      values.gatewayCoprocessorSigners.1:
++        "zama:0x679953d556e71F62673F38EE4775d6E7CCb23E64"
++++ description: Coprocessor signer addresses configured in GatewayConfig. Their EIP-712 signatures determine whether encrypted input proofs reach consensus.
++++ severity: HIGH
+      values.gatewayCoprocessorSigners.2:
++        "zama:0xF6ee37de6bDaB31597E90ED70448B92073cD9634"
++++ description: Coprocessor signer addresses configured in GatewayConfig. Their EIP-712 signatures determine whether encrypted input proofs reach consensus.
++++ severity: HIGH
+      values.gatewayCoprocessorSigners.3:
++        "zama:0x2e809E897AA8046Ff6e936502b6275F0B8993456"
++++ description: Coprocessor signer addresses configured in GatewayConfig. Their EIP-712 signatures determine whether encrypted input proofs reach consensus.
++++ severity: HIGH
+      values.gatewayCoprocessorSigners.4:
++        "zama:0x68EDabe2F16CcC37cB2Bb05F1D1EDad3e1Eecbd7"
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit signed verification responses and rejection responses.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.1:
++        "zama:0x679953d556e71F62673F38EE4775d6E7CCb23E64"
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit signed verification responses and rejection responses.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.2:
++        "zama:0xF6ee37de6bDaB31597E90ED70448B92073cD9634"
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit signed verification responses and rejection responses.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.3:
++        "zama:0x2e809E897AA8046Ff6e936502b6275F0B8993456"
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit signed verification responses and rejection responses.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.4:
++        "zama:0x68EDabe2F16CcC37cB2Bb05F1D1EDad3e1Eecbd7"
+    }
+```
+
+```diff
+    contract CiphertextCommits (zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F) [zama/CiphertextCommits_v0_5_0] {
+    +++ description: Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material. Digests referencing unregistered or disabled host chains are rejected. Since v0.5.0, if GatewayConfig designates a priority coprocessor, that coprocessor's single submission commits the material on its own.
++++ description: Minimum number of matching coprocessor submissions required before ciphertext material is committed. Inert while a priority coprocessor is set in GatewayConfig (see gatewayPriorityCoprocessorTxSender).
++++ severity: HIGH
+      values.gatewayCoprocessorMajorityThreshold:
+-        1
++        3
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit ciphertext material commitments.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.1:
++        "zama:0x679953d556e71F62673F38EE4775d6E7CCb23E64"
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit ciphertext material commitments.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.2:
++        "zama:0xF6ee37de6bDaB31597E90ED70448B92073cD9634"
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit ciphertext material commitments.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.3:
++        "zama:0x2e809E897AA8046Ff6e936502b6275F0B8993456"
++++ description: Coprocessor transaction-sender addresses configured in GatewayConfig. These accounts may submit ciphertext material commitments.
++++ severity: HIGH
+      values.gatewayCoprocessorTxSenders.4:
++        "zama:0x68EDabe2F16CcC37cB2Bb05F1D1EDad3e1Eecbd7"
+    }
+```
+
+```diff
+    contract GatewayConfig (zama:0xDE537Be194777A56f8B19d14079E6a78249390ab) [zama/GatewayConfig_v0_7_0] {
+    +++ description: Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; the owner can create new contexts, retune the thresholds of any live context, and destroy non-current contexts, which immediately invalidates them for decryption. Registered host chains can be disabled, re-enabled, or removed by the owner. Since v0.7.0 the owner can designate a priority coprocessor transaction sender whose single response finalizes coprocessor consensus in InputVerification and CiphertextCommits, making the coprocessor majority threshold inert, and coprocessor set and threshold updates are applied live without pausing InputVerification.
++++ description: Minimum number of matching coprocessor messages required for gateway coprocessor consensus. Updates are applied live without pausing InputVerification. The threshold is inert while a priority coprocessor is set (see getPriorityCoprocessorTxSender).
++++ severity: HIGH
+      values.getCoprocessorMajorityThreshold:
+-        1
++        3
++++ description: Coprocessor signer addresses registered for this gateway. These sign encrypted input proof responses accepted by InputVerification.
++++ severity: HIGH
+      values.getCoprocessorSigners.1:
++        "zama:0x679953d556e71F62673F38EE4775d6E7CCb23E64"
++++ description: Coprocessor signer addresses registered for this gateway. These sign encrypted input proof responses accepted by InputVerification.
++++ severity: HIGH
+      values.getCoprocessorSigners.2:
++        "zama:0xF6ee37de6bDaB31597E90ED70448B92073cD9634"
++++ description: Coprocessor signer addresses registered for this gateway. These sign encrypted input proof responses accepted by InputVerification.
++++ severity: HIGH
+      values.getCoprocessorSigners.3:
++        "zama:0x2e809E897AA8046Ff6e936502b6275F0B8993456"
++++ description: Coprocessor signer addresses registered for this gateway. These sign encrypted input proof responses accepted by InputVerification.
++++ severity: HIGH
+      values.getCoprocessorSigners.4:
++        "zama:0x68EDabe2F16CcC37cB2Bb05F1D1EDad3e1Eecbd7"
++++ description: Coprocessor transaction-sender addresses registered for this gateway. These accounts submit input-verification, ACL, and ciphertext-material consensus messages.
++++ severity: HIGH
+      values.getCoprocessorTxSenders.1:
++        "zama:0x679953d556e71F62673F38EE4775d6E7CCb23E64"
++++ description: Coprocessor transaction-sender addresses registered for this gateway. These accounts submit input-verification, ACL, and ciphertext-material consensus messages.
++++ severity: HIGH
+      values.getCoprocessorTxSenders.2:
++        "zama:0xF6ee37de6bDaB31597E90ED70448B92073cD9634"
++++ description: Coprocessor transaction-sender addresses registered for this gateway. These accounts submit input-verification, ACL, and ciphertext-material consensus messages.
++++ severity: HIGH
+      values.getCoprocessorTxSenders.3:
++        "zama:0x2e809E897AA8046Ff6e936502b6275F0B8993456"
++++ description: Coprocessor transaction-sender addresses registered for this gateway. These accounts submit input-verification, ACL, and ciphertext-material consensus messages.
++++ severity: HIGH
+      values.getCoprocessorTxSenders.4:
++        "zama:0x68EDabe2F16CcC37cB2Bb05F1D1EDad3e1Eecbd7"
+    }
+```
+
 Generated with discovered.json: 0x06ccc1160d798638819c0b5cbb9dbe4b25e68e82
 
 # Diff at Thu, 08 Oct 2026 11:23:05 GMT:
