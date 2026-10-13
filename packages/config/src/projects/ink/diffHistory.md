@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x0eba5781ea981a7e251d9acdf97d22be48d9517e
+
+# Diff at Wed, 07 Oct 2026 14:46:54 GMT:
+
+- id: 78be07fe
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1790862352
+- current timestamp: 1790862352
+
+## Description
+
+The L1 counterpart fields of the L2CrossDomainMessenger and L2StandardBridge are formatted as Ethereum addresses (opstack/Layer2 template change), which removes the L1 addresses previously indexed as L2 EOAs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862352 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (ink:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      values.l1CrossDomainMessenger:
+-        "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
++        "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
+      values.OTHER_MESSENGER:
+-        "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
++        "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
+      values.otherMessenger:
+-        "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
++        "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (ink:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      values.l1TokenBridge:
+-        "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      values.OTHER_BRIDGE:
+-        "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      values.otherBridge:
+-        "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
 Generated with discovered.json: 0x8c7c684c51111dd690662ff6fea158854f83c44e
 
 # Diff at Sun, 04 Oct 2026 05:55:33 GMT:

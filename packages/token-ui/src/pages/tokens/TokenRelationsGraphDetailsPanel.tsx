@@ -12,7 +12,7 @@ import {
   XIcon,
 } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Badge } from '~/components/core/Badge'

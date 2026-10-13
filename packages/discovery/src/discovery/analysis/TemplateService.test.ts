@@ -144,6 +144,33 @@ describe(TemplateService.prototype.reload.name, () => {
   })
 })
 
+describe(TemplateService.prototype.loadContractTemplate.name, () => {
+  let rootPath: string
+
+  beforeEach(() => {
+    rootPath = mkdtempSync(join(tmpdir(), 'template-service-'))
+  })
+
+  afterEach(() => {
+    rmSync(rootPath, { recursive: true, force: true })
+  })
+
+  function writeTemplate(templateId: string, template: object) {
+    const path = join(rootPath, '_templates', templateId)
+    mkdirSync(path, { recursive: true })
+    writeFileSync(join(path, 'template.jsonc'), JSON.stringify(template))
+  }
+
+  it('rejects a template that sets ignoreDiscovery', () => {
+    writeTemplate('ignoring', { ignoreDiscovery: true })
+    const templateService = new TemplateService(rootPath)
+
+    expect(() => templateService.loadContractTemplate('ignoring')).toThrow(
+      'ignoreDiscovery cannot be set in a template',
+    )
+  })
+})
+
 describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
   const OWNER = 'shared-provider'
   const CONSUMER = 'consumer'

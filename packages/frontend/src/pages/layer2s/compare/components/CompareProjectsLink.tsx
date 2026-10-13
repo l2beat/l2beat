@@ -28,7 +28,7 @@ export function CompareProjectsLink({
       href={href}
       className={cn(
         'items-center justify-center whitespace-nowrap font-bold text-xs leading-none',
-        'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',
+        'ring-brand ring-offset-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2',
         VARIANT_CLASSES[variant],
         className,
       )}

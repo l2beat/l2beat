@@ -1,0 +1,111 @@
+/*
+  The sticky section navigation shown below `lg`: the project strip on top of
+  the tabs. Anchored content on those pages clears its height, so jumping to a
+  section or an address lands just below the bar instead of under it.
+*/
+:root {
+  --project-strip-height: 30px;
+  --section-nav-tabs-height: 40px;
+  --section-nav-height: calc(
+    var(--project-strip-height) +
+    var(--section-nav-tabs-height)
+  );
+
+  /* The bar is hidden from `lg` up. */
+  @variant lg {
+    --section-nav-height: 0px;
+  }
+}
+
+/* For anchors inside sections: the gap keeps them off the bar's bottom edge. */
+@utility scroll-mt-section-nav {
+  scroll-margin-top: calc(var(--section-nav-height) + --spacing(4));
+}
+
+/*
+  For section cards. On phones they run edge to edge and carry their own top
+  padding, so they land flush, tucked 2px under the bar to hide the divider
+  above them. From `md` they are spaced, rounded cards and get the gap.
+*/
+@utility scroll-mt-section-nav-card {
+  scroll-margin-top: calc(var(--section-nav-height) - 2px);
+
+  @variant md {
+    scroll-margin-top: calc(var(--section-nav-height) + --spacing(4));
+  }
+}
+
+/*
+  The project strip rests behind the tabs (see `StickyMobileSectionNavigation`)
+  and the tabs uncover it by moving down a strip's height while the page title
+  slides under them. The tabs cover the big title as the small one in the
+  strip comes out, so the title seems to move from the page into the strip.
+
+  Where scroll-driven animations work, the move follows the scroll 1:1 over
+  the scroll that takes the title under the tabs. The component marks the tabs
+  `data-strip-shown` once the title starts going under; elsewhere (Firefox,
+  Safari before 26) or with reduced motion, that mark moves them over a fixed
+  time instead: those browsers hand scroll positions to scripts too rarely to
+  follow the scroll.
+
+  Either way the tabs are at the top whenever the whole title is in view. The
+  timed move uses `top`, which has no effect once the tabs come unstuck, so a
+  fast scroll to the top can't catch them mid-move out of place.
+*/
+
+/* The page title, whose way under the tabs drives the scroll-linked move. */
+@utility project-title-timeline {
+  view-timeline: --project-title block;
+  /* Puts the timeline's edge at the bottom of the tabs before they move. */
+  view-timeline-inset: var(--section-nav-tabs-height) 0px;
+}
+
+:root {
+  /* Lets the tabs, which don't contain the title, follow its timeline. */
+  timeline-scope: --project-title;
+}
+
+@utility section-nav-tabs-under-strip {
+  top: 0;
+  /* Where the tabs settle, for sticky table headers below them. */
+  --sticky-top-bar-top: var(--project-strip-height);
+  /* Leaving is quicker than arriving. */
+  transition: top 180ms cubic-bezier(0.23, 1, 0.32, 1);
+
+  &[data-strip-shown] {
+    top: var(--project-strip-height);
+    transition-duration: 260ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  /*
+    The tabs aren't inside the title, so its timeline only reaches them
+    through `timeline-scope`; a browser with timelines but without that would
+    leave the tabs stuck over the strip.
+  */
+  @supports (animation-timeline: view()) and (timeline-scope: --x) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: uncover-project-strip linear both;
+      animation-timeline: --project-title;
+      animation-range: exit-crossing 0% exit-crossing 100%;
+
+      /* The scroll does the moving here; the timed mark is ignored. */
+      &[data-strip-shown] {
+        top: 0;
+      }
+    }
+  }
+}
+
+/*
+  The scroll-linked move uses `translate`, which the compositor applies in
+  step with the scroll; it is zero whenever the title is in view anyway.
+*/
+@keyframes uncover-project-strip {
+  to {
+    translate: 0 var(--project-strip-height);
+  }
+}

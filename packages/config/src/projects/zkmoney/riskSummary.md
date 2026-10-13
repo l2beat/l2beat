@@ -9,18 +9,15 @@
 ## Funds can be lost if
 
 1. a user loses their passkey.
-2. no AWS-attested enclave is running.
-3. resolver screening blocks an external payment. Funds remain recoverable, but the recipient needs their own tooling to re-derive the unannounced deposit address.
+2. every AWS-attested enclave stops running.
+3. resolver screening blocks an external payment and the recipient lacks the tooling to re-derive its deposit address.
 
 <br>
 
 ## Privacy can be lost if
 
-1. a user pays a new contact. The handshake reveals the recipient's Aztec address, publicly linked to their name. The first sponsored transaction after registration also reveals the sender's account.
-2. an enclave or AWS Nitro attestation is compromised.
-3. the resolver operator re-derives deposit addresses and links deposits to recipients.
-4. public deposits, withdrawals, registration and deposit-address reuse allow amount or timing correlation.
-5. an external Aztec RPC learns the account from note requests, or zk.money and Predicate correlate screened addresses by IP.
-6. someone reads keys and decrypted notes stored unencrypted on the device.
-7. a freeze forces refunds, which expose note and deposit amounts on Ethereum and use proofs without zero knowledge.
-8. a quantum computer breaks the elliptic-curve encryption of notes published to Ethereum.
+1. a user pays a new contact, which reveals the recipient, or makes their first sponsored transaction after registration, which is tied to their account (see public observer).
+2. the resolver operator derives the wallets' deposit addresses and links L1 deposits to L2 recipients (see privileged insider).
+3. an enclave or AWS Nitro is compromised (see privileged insider).
+4. the portal freezes and users exit through refunds, which publish note or deposit amounts on Ethereum.
+5. elliptic-curve cryptography is broken, which decrypts data published to Ethereum (see future adversary).

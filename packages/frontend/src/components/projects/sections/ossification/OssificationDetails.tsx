@@ -35,20 +35,17 @@ export function OssificationDetails({
   ossification: ProjectOssificationView
 }) {
   return (
-    <div
-      id="ossification"
-      className="scroll-mt-[38px] md:scroll-mt-14 lg:scroll-mt-4"
-    >
+    <div id="ossification" className="scroll-mt-section-nav-card">
       <SubsectionHeading className="mb-3 font-bold text-heading-20">
         Ossification
       </SubsectionHeading>
       <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
         Contracts our research team classifies as critical form the project's
-        perimeter. Any deployment or critical change to them resets its clock
-        (changes within 24 hours count as one). The ossification score is the
-        share of recorded code-bug exploits whose exploited code was younger
-        than this perimeter is today. Battle-tested exposure is the value
-        secured, summed over that unchanged period.
+        critical perimeter. Its clock starts at the ossification genesis, and
+        every critical change resets it (changes within 24 hours count as one).
+        The ossification score is the share of recorded code-bug exploits whose
+        exploited code was younger than this perimeter is today. Battle-tested
+        exposure is the value secured, summed over that unchanged period.
       </p>
       {/* The same values as a row of the ossification table. */}
       <ChartStats className="lg:grid-cols-3">
@@ -61,7 +58,7 @@ export function OssificationDetails({
             isUnverified={ossification.isUnverified}
           />
           <SecondLine>
-            last reset {formatTimestamp(ossification.timeline.clockStart)}
+            since {formatTimestamp(ossification.timeline.clockStart)}
           </SecondLine>
         </ChartStatsItem>
         <ChartStatsItem

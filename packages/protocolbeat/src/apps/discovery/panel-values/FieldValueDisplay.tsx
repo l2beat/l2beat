@@ -48,11 +48,11 @@ export function FieldValueDisplay({
     const QUOT_OPEN = '\u201C'
     const QUOT_CLOSE = '\u201D'
     inlineDisplay = (
-      <p className="break-words font-serif">
+      <p className="wrap-break-word font-serif">
         <strong
           className={clsx(
             'select-none text-coffee-600',
-            topLevel && '-ml-[6px] inline-block',
+            topLevel && 'ml-[-6px] inline-block',
           )}
         >
           {QUOT_OPEN}
@@ -63,7 +63,7 @@ export function FieldValueDisplay({
     )
   } else if (value.type === 'number') {
     inlineDisplay = (
-      <p className="overflow-hidden break-words font-mono text-aux-orange">
+      <p className="wrap-break-word overflow-hidden font-mono text-aux-orange">
         {BigInt(value.value)}
       </p>
     )

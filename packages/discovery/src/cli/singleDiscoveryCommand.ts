@@ -3,8 +3,8 @@ import { HttpClient } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
 import { boolean, command, flag, positional } from 'cmd-ts'
+import { rm } from 'fs/promises'
 import path from 'path'
-import { rimraf } from 'rimraf'
 import { getChainConfigs } from '../config/config.discovery'
 import { TEMPLATES_PATH } from '../discovery/analysis/TemplateService'
 import { ConfigRegistry } from '../discovery/config/ConfigRegistry'
@@ -50,7 +50,7 @@ export const SingleDiscoveryCommand = command({
     const rootFolder = './cache/single-discovery'
     const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
-    await rimraf(rootFolder)
+    await rm(rootFolder, { recursive: true, force: true })
 
     await saveDiscoveryResult(
       result,

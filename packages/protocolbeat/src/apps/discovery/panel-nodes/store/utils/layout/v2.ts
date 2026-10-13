@@ -24,4 +24,3 @@ export const LayoutV2 = v.object({
 })
 
 export type LayoutV2 = v.infer<typeof LayoutV2>
-export type NodeLocationsV2 = v.infer<typeof NodeLocations>

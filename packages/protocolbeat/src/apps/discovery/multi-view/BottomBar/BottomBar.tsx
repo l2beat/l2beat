@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { IS_READONLY } from '../../../../config/readonly'
 import { useIsomorphicKeys } from '../../hooks/useIsomorphicKeys'
 import { useStore } from '../../panel-nodes/store/store'

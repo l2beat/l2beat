@@ -1855,14 +1855,14 @@
         "$upgradeCount": 2,
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
-        "l1CrossDomainMessenger": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
+        "l1CrossDomainMessenger": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621347",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
-        "otherMessenger": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
+        "OTHER_MESSENGER": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
+        "otherMessenger": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "paused": false,
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
@@ -1877,7 +1877,8 @@
       "implementationNames": {
         "ink:0x4200000000000000000000000000000000000007": "Proxy",
         "ink:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96": "L2CrossDomainMessenger"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "GasPriceOracle",
@@ -1965,11 +1966,11 @@
           ]
         ],
         "$upgradeCount": 2,
-        "l1TokenBridge": "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0",
+        "l1TokenBridge": "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0",
         "messenger": "ink:0x4200000000000000000000000000000000000007",
         "MESSENGER": "ink:0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0",
-        "otherBridge": "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0",
+        "OTHER_BRIDGE": "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0",
+        "otherBridge": "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0",
         "paused": false,
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
@@ -1979,7 +1980,8 @@
       "implementationNames": {
         "ink:0x4200000000000000000000000000000000000010": "Proxy",
         "ink:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1": "L2StandardBridge"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "SequencerFeeVault",
@@ -2500,18 +2502,8 @@
       "proxyType": "EOA"
     },
     {
-      "address": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "SuperchainProxyAdminOwner_L2Alias",
       "address": "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -4132,10 +4124,10 @@
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xd82fdc4cca4e4480df42ce9cc0c0bf9b71ade8dbc73dd8c46519a0d37c93735c",
+    "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L2ProxyAdmin_karst": "0x70d00d08dd524425b6612b13b16781498c13da3b7e3fac0a5ccd63078eeb5644",
-    "opstack/Layer2/L2StandardBridge": "0x43f9de36085fd31eaccaa3249b87da157440022278c664ab18e5a9d4fa8174af",
+    "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -4150,7 +4142,7 @@
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
   "usedBlockNumbers": { "ethereum": 26097852, "ink": 57363941 },
-  "permissionsConfigHash": "0xd69698c3f40a689e4c19f71253945c349c824205612f4c006722f4a20e6c5bea",
+  "permissionsConfigHash": "0x5a939d173c3f4cf84a2fb13b7186b4651f36eb2ed70162b10975d12984421e20",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [

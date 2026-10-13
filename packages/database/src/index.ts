@@ -105,6 +105,16 @@ export type {
 } from './repositories/InteropTransferTypeStats'
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
+export type {
+  LiveBlobBatchRecord,
+  LiveBucketRecord,
+  LivePostedRecord,
+} from './repositories/LiveBlobBatchRepository'
+export type {
+  LiveBlockBucketRecord,
+  LiveBlockRecord,
+  LiveSlotRange,
+} from './repositories/LiveBlockRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
 export type { NotificationRecord } from './repositories/NotificationsRepository'
 export type {

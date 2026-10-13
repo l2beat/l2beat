@@ -1,13 +1,13 @@
-No onchain governance, no contracts, instant change permissions. Three parties can change the swap routes.
+Three parties change this swap route, each instantly and offchain since there are no onchain contracts.
 
 ### Cake Labs LLC (the wallet)
 
-MIT-licensed and self-custodial. Cake runs no swap backend. Privacy defaults, all user-changeable: Tor off, swap mode "Enabled", Blink on, Etherscan on, Cake's price API on, Cake's Monero node, publicnode's Ethereum RPC. Moralis token discovery is always on.
+Cake picks the swap services, their defaults and its API keys with each app release. Cake Wallet is MIT-licensed and self-custodial.
 
 ### The swap services (the custodians)
 
-Fully centralized, custodial and intransparent.
+Each service sets its own terms, limits and compliance rules and can change them at any time.
 
 ### Monero (the chain)
 
-Rules change through scheduled hard forks. The mainnet table ends at version 16, active since block 2689608 (August 2022) with a ring size of 16.
+Rules change through scheduled hard forks. The mainnet table ends at version 16, active since block 2,689,608 (August 2022), with a ring size of 16.

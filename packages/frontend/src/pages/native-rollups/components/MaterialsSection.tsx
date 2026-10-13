@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DocumentIcon } from '~/icons/Document'
+import { GlobeIcon } from '~/icons/Globe'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { GithubIcon } from '~/icons/products/Github'
 import { YouTubeIcon } from '~/icons/products/Youtube'
@@ -15,6 +16,7 @@ const MATERIAL_ICONS: Record<
 > = {
   document: DocumentIcon,
   code: GithubIcon,
+  demo: GlobeIcon,
   talk: YouTubeIcon,
 }
 
@@ -23,7 +25,7 @@ export function MaterialsSection({ talks }: { talks: Talk[] }) {
     <section id="materials" className="mt-8 md:mt-12">
       <SectionHeading
         title="Materials, articles & talks"
-        description="Explore native proof verification, the technical book, the original EXECUTE research, and implementation work."
+        description="Explore the technical book, the live devnet, EIP-8288 and EIP-8357, the original EXECUTE research, and implementation work."
       />
 
       <GroupLabel>Articles &amp; specs</GroupLabel>

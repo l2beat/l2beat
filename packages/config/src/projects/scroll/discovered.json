@@ -1,6 +1,6 @@
 {
   "name": "scroll",
-  "timestamp": 1790601073,
+  "timestamp": 1791455050,
   "configHash": "0xae8e37d1db659a2ee7e6b44d49157b96d435a21c8a5af8c9b13962ba5264df44",
   "entries": [
     {
@@ -766,11 +766,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1790596091,
+        "getFirstUnfinalizedMessageEnqueueTime": 1791447599,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 999032,
-        "nextUnfinalizedQueueIndex": 999031,
+        "nextCrossDomainMessageIndex": 999091,
+        "nextUnfinalizedQueueIndex": 999089,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1897,14 +1897,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 520076,
+        "lastFinalizedBatchIndex": 520247,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 520076,
-          "lastFinalizedBatchIndex": 520076,
-          "lastFinalizeTimestamp": 1790599691,
+          "lastCommittedBatchIndex": 520247,
+          "lastFinalizedBatchIndex": 520247,
+          "lastFinalizeTimestamp": 1791451727,
           "flags": 1,
           "reserved": 0
         },
@@ -2338,14 +2338,16 @@
       "name": "PlonkVerifierPostEuclid",
       "address": "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0xf1304144e7e31f4b3006633baf6786a35f34e00eec7b2a387c4bb9cb35164fce"
+      ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e",
       "sinceTimestamp": 1743130487,
       "sinceBlock": 22142558,
       "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": ""
+        "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": "Halo2Verifier"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
@@ -2533,7 +2535,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 5118660631979,
+        "totalBridgedUSDC": 4892343672312,
         "withdrawPaused": false
       },
       "fieldMeta": {
@@ -2703,10 +2705,9 @@
       "name": "GnosisSafeL2",
       "address": "scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F",
       "type": "Contract",
-      "unverified": true,
       "template": "GnosisSafe",
       "sourceHashes": [
-        null,
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
@@ -2740,7 +2741,7 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": "",
+        "scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": "GnosisSafeProxy",
         "scr:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       },
       "category": { "name": "Spam", "priority": -1 }
@@ -3387,9 +3388,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x5b39bff8d05e8c506386b8abed47c4058bcebcec6f996fa17266f5c295514eb2",
+        "messageRoot": "0x1e548ca2690260942785bf416ec0ed0a1ed6ae1f8bd7b7b6868c10fa315441e4",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 323698,
+        "nextMessageIndex": 323829,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -3536,10 +3537,9 @@
       "name": "SafeL2",
       "address": "scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825",
       "type": "Contract",
-      "unverified": true,
       "template": "GnosisSafe",
       "sourceHashes": [
-        null,
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
@@ -3564,7 +3564,7 @@
         "VERSION": "1.4.1"
       },
       "implementationNames": {
-        "scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825": "",
+        "scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825": "SafeProxy",
         "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       },
       "category": { "name": "Spam", "priority": -1 }
@@ -3951,10 +3951,9 @@
       "name": "SafeL2",
       "address": "scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC",
       "type": "Contract",
-      "unverified": true,
       "template": "GnosisSafe",
       "sourceHashes": [
-        null,
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
@@ -3979,7 +3978,7 @@
         "VERSION": "1.4.1"
       },
       "implementationNames": {
-        "scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC": "",
+        "scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC": "SafeProxy",
         "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       },
       "category": { "name": "Spam", "priority": -1 }
@@ -3998,10 +3997,9 @@
       "name": "SafeL2",
       "address": "scr:0x9479ABfebefEea3c846163012a472b44F305b3d7",
       "type": "Contract",
-      "unverified": true,
       "template": "GnosisSafe",
       "sourceHashes": [
-        null,
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
@@ -4025,7 +4023,7 @@
         "VERSION": "1.4.1"
       },
       "implementationNames": {
-        "scr:0x9479ABfebefEea3c846163012a472b44F305b3d7": "",
+        "scr:0x9479ABfebefEea3c846163012a472b44F305b3d7": "SafeProxy",
         "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       },
       "category": { "name": "Spam", "priority": -1 }
@@ -4265,10 +4263,9 @@
       "name": "SafeL2",
       "address": "scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896",
       "type": "Contract",
-      "unverified": true,
       "template": "GnosisSafe",
       "sourceHashes": [
-        null,
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
@@ -4289,7 +4286,7 @@
         "VERSION": "1.4.1"
       },
       "implementationNames": {
-        "scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896": "",
+        "scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896": "SafeProxy",
         "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       },
       "category": { "name": "Spam", "priority": -1 }
@@ -5954,6 +5951,9 @@
       "function unpause(address component)",
       "function updatePauseCooldownPeriod(uint256 newPauseCooldownPeriod)"
     ],
+    "scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": [
+      "constructor(address _singleton)"
+    ],
     "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B": [
       "constructor()",
       "event GrantAccess(bytes32 indexed role, address indexed target, bytes4[] selectors)",
@@ -6392,6 +6392,9 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
+    "scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825": [
+      "constructor(address _singleton)"
+    ],
     "scr:0x6E0618d128d2d861994DF7a725743F69b53C2804": [
       "constructor(address _l1USDC, address _l2USDC, address _counterpart, address _router, address _messenger)",
       "error ErrorCallerIsNotCounterpartGateway()",
@@ -6722,6 +6725,12 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC": [
+      "constructor(address _singleton)"
+    ],
+    "scr:0x9479ABfebefEea3c846163012a472b44F305b3d7": [
+      "constructor(address _singleton)"
+    ],
     "scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -6833,6 +6842,9 @@
       "function transferOwnership(address newOwner)"
     ],
     "scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": [
+      "constructor(address _singleton)"
+    ],
+    "scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896": [
       "constructor(address _singleton)"
     ],
     "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": [
@@ -7065,7 +7077,7 @@
     "scroll/SystemConfig": "0x4445e6ed56e720f7012a666fd191c15d7509665193dbd3a87a2df9eb740cb4c9",
     "tokens/circle/MasterMinter": "0x4ecc241fb1c41dc92b97207ddd89fc61a51d7a6fc2dc5b29fe727faadea66a2a"
   },
-  "usedBlockNumbers": { "ethereum": 26076168, "scroll": 35204777 },
+  "usedBlockNumbers": { "ethereum": 26147062, "scroll": 35310392 },
   "permissionsConfigHash": "0xb3a78d73709a995be82f4c6283061dc10100cf94b7d8cfcb83e107de4f642f87",
   "permissions": {
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": {

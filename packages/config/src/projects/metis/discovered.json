@@ -1313,13 +1313,14 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "l1CrossDomainMessenger": "metis-andromeda:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+        "l1CrossDomainMessenger": "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
         "messageNonce": 108123
       },
       "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "metis-andromeda:0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "metis-andromeda:0x4200000000000000000000000000000000000008",
@@ -1398,13 +1399,14 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "l1TokenBridge": "metis-andromeda:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
+        "l1TokenBridge": "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
         "messenger": "metis-andromeda:0x4200000000000000000000000000000000000007"
       },
       "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "metis-andromeda:0x4200000000000000000000000000000000000010": "L2StandardBridge"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "OVM_SequencerFeeVault",
@@ -2531,8 +2533,8 @@
     "metis/MVM_ProposerRegistry": "0xe1ffd265bd8338b3febfd389d682d407e4109970d138c349e86e6c131b918a57",
     "metis/MVM_StateCommitmentChain": "0x8496d4b5edbf854305227b9e0e5b8c845600e4bad4d3bd9aa391933a57a5e82e",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xd82fdc4cca4e4480df42ce9cc0c0bf9b71ade8dbc73dd8c46519a0d37c93735c",
-    "opstack/Layer2/L2StandardBridge": "0x43f9de36085fd31eaccaa3249b87da157440022278c664ab18e5a9d4fa8174af"
+    "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
+    "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b"
   },
   "usedBlockNumbers": { "ethereum": 24183445, "metis": 21929673 },
   "permissionsConfigHash": "0xb96023e04497340993ffbb0391613ffa09c63601099984150bf64225d4079020",

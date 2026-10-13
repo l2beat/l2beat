@@ -50,7 +50,9 @@ export function MobileSectionNavigation({ sections }: Props) {
   return (
     <OverflowWrapper
       ref={overflowContainer}
-      className="flex justify-center bg-header-primary"
+      // The divider lives here, outside the list that fades out at its
+      // overflowing edges, so the fade doesn't eat it.
+      className="flex justify-center bg-header-primary shadow-[inset_0_-1px_0_var(--color-divider)]"
       childrenClassName="w-full"
     >
       <div className="flex items-center justify-between">
@@ -87,7 +89,7 @@ function Item({
       ref={ref}
       href={href}
       className={cn(
-        'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b px-4 text-center text-xs transition-colors duration-150 motion-reduce:transition-none',
+        'flex h-(--section-nav-tabs-height) w-full items-center justify-center whitespace-nowrap border-transparent border-b px-4 text-center text-xs transition-colors duration-150 motion-reduce:transition-none',
         selected &&
           'border-current border-b text-brand group-data-[has-colors=true]/section-wrapper:text-branding-primary',
       )}

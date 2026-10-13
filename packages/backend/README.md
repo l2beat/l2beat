@@ -144,6 +144,7 @@ FEATURES=*,!interop.relay
 - `<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to
   60
 - `<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
+- `<CHAIN>_RPC_MAX_BATCH_SIZE` - Optional. The RPC's limit of calls per batch request, bigger batches are split. A batch it still rejects throws. Unset, batches of 50 shrink for 5 minutes when the RPC rejects them.
 
 You can also append the feature name to the environment variables if you'd like a specific feature
 to use a different endpoint. For example:
@@ -193,6 +194,23 @@ The activity feature is configured via the following environment variables:
 **Feature flags:**
 
 - `activity` - enables activity feature
+
+### `da.liveBlobs` feature
+
+Follows the Ethereum head slot by slot and keeps the last ~25 h of blocks and blob batches, attributed
+to projects, for the live blobs view. Needs the Ethereum layer of `da` (`ETHEREUM_BEACON_API_URL`).
+
+- `ETHEREUM_LIVE_BLOBS_BATCH_SIZE` - Optional. Blocks fetched at once while catching up with the
+  head. Defaults to 50
+- `ETHEREUM_LIVE_BLOBS_RPC_URL` - Optional. An RPC that keeps up with the head, used only by these
+  indexers. Defaults to `ETHEREUM_RPC_URL`, then to the public RPC of Ethereum's chain config
+- `ETHEREUM_LIVE_BLOBS_RPC_CALLS_PER_MINUTE` - Optional. Defaults to 600: the head is asked for every
+  quarter second until a slot's block comes
+- `ETHEREUM_LIVE_BLOBS_RPC_MAX_BATCH_SIZE` - Optional. The RPC's limit of receipts per batch request, as `<CHAIN>_RPC_MAX_BATCH_SIZE`
+
+**Feature flags:**
+
+- `da.liveBlobs` - enables the live blobs indexers. On whenever `da` is, unless `!da.liveBlobs` is set
 
 ### `status` feature
 

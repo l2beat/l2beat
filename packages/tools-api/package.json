@@ -21,7 +21,6 @@
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/discovery": "workspace:*",
-    "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
