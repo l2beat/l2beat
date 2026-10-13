@@ -11,9 +11,7 @@
   "overrides": {
     "arb1:0xcD3D1CFE5e0cDa77D0a2D1ac1c0268C77115f89D": {
       "fields": {
-        // Seeds the L3's transaction-filtering precompile (0x..74, ArbOS 60+) as
-        // a relative. This contract only hosts the seed: it is not an L3 chain
-        // owner (see chainOwners on the precompile).
+        // Seeds the transaction-filtering precompile (0x..74) as a relative.
         "transactionFilteringPrecompile": {
           "handler": {
             "type": "hardcoded",
@@ -23,16 +21,10 @@
       }
     },
     "earnm:0x0000000000000000000000000000000000000074": {
-      // Not on the shared orbitstack/ArbFilteredTransactionsManager template: its
-      // event counts need full-range eth_getLogs, which the earnm RPC caps at
-      // 100 blocks. Only the filterer set is read; it shows any activation.
+      // No shared template: its event counts need eth_getLogs, capped at 100 blocks here.
       "displayName": "ArbFilteredTransactionsManager",
       "description": "ArbOS transaction-filtering precompile (0x..74, ArbOS 60+). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
       "fields": {
-        // ArbOS chain owners of the L3, read off ArbOwnerPublic (0x..6b, on this
-        // contract's chain). A chain owner can call every ArbOwner (0x..70) method,
-        // including adding transaction filterers, directly on the L3 without any
-        // parent-chain step. The parent-chain UpgradeExecutor is not one of them.
         "chainOwners": {
           "severity": "HIGH",
           "handler": {
@@ -64,8 +56,7 @@
           ]
         }
       },
-      // Precompile with a 0xfe stub as code; point at the Nitro implementation.
-      // Its integrity is covered by the RollupProxy wasmModuleRoot.
+      // Precompile with a 0xfe stub as code: source from Nitro.
       "manualSourcePaths": {
         "earnm:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
       }
