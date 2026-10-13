@@ -127,10 +127,14 @@ export const derivev3: ScalingProject = {
       sentiment: 'bad',
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, submitterStallTimeout),
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(submitterStallTimeout),
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
+      description: `${RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1').description} If the oldest queued action stays unprocessed for ${formatSeconds(submitterStallTimeout)}, anyone can remove the designated batch submitter, but independent proving is not possible from published artifacts and there is no exit hatch.`,
+      orderHint: submitterStallTimeout,
+    },
     proposerFailure: {
       value: 'Self propose',
-      description: `If an L1 action stays unprocessed for ${formatSeconds(submitterStallTimeout)}, anyone can remove the batch submitter and submit batches. However, the zkVM program is not public, so no one other than the operator can currently produce valid proofs.`,
+      description: `If an L1 action stays unprocessed for ${formatSeconds(submitterStallTimeout)}, anyone can remove the batch submitter and submit batches. However, the zkVM program is not public, so independent proving is not possible from published artifacts.`,
       sentiment: 'bad',
       orderHint: submitterStallTimeout,
     },
@@ -177,12 +181,12 @@ export const derivev3: ScalingProject = {
       risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
-      name: 'Users can force withdrawals through L1',
-      description: `Deposits and withdrawal requests submitted on L1 are appended to an onchain queue that each proven batch must consume in order. If the oldest queued action stays unprocessed for ${formatSeconds(submitterStallTimeout)}, anyone can remove the designated batch submitter and submit batches themselves. Since the zkVM program is not public, no third party can currently produce the proofs needed to do so.`,
+      name: 'Users can queue withdrawals on L1',
+      description: `Deposits and withdrawal requests submitted on L1 are appended to an onchain queue. Batches consume it in order but are not required to consume any of it. If the oldest queued action stays unprocessed for ${formatSeconds(submitterStallTimeout)}, anyone can remove the designated batch submitter and submit batches themselves. Since the zkVM program is not public, independent proving is not possible from published artifacts, and there is no exit hatch.`,
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'the operator refuses to process their L1 withdrawal request, as no one else can currently generate valid proofs.',
+          text: 'the operator refuses to process their L1 withdrawal request, as independent proving is not possible from published artifacts.',
         },
       ],
       references: [],
@@ -193,7 +197,11 @@ export const derivev3: ScalingProject = {
         risks: [
           {
             category: 'Funds can be frozen if',
-            text: 'a single pauser or the guardian pauses the WithdrawalOutbox. Only the owner can unpause.',
+            text: 'the owner, the guardian or a single pauser pauses the WithdrawalOutbox. Only the owner can unpause.',
+          },
+          {
+            category: 'Funds can be frozen if',
+            text: 'the owner revokes the WithdrawalOutbox allowance on the SpotVault, or does not retry withdrawals whose payout failed, which only the owner can do.',
           },
           {
             category: 'Withdrawals can be delayed if',
@@ -257,7 +265,11 @@ export const derivev3: ScalingProject = {
           },
           {
             category: 'Funds can be stolen if',
-            text: 'the zkVM program does not restrict admin actions, which anyone can queue on L1, to authorized senders, and those actions can move user funds.',
+            text: 'the SP1VerifierGateway owner adds a malicious or faulty verifier route and the batch submitter routes proofs through it.',
+          },
+          {
+            category: 'Funds can be frozen if',
+            text: 'the SP1VerifierGateway owner freezes the verifier route used for the proofs.',
           },
         ],
         references: [
@@ -270,7 +282,7 @@ export const derivev3: ScalingProject = {
     ],
   },
   upgradesAndGovernance: {
-    content: `All contracts are upgradeable. Upgrades and other owner actions take effect either through a timelock with a ${formatSeconds(timelockDelay)} delay or immediately through a path that bypasses it. The owner can replace the state root, the program verification key, the verifier and the trusted Celestia anchor, set the batch submitter and the stall timeout, register or re-point asset vaults, and move funds held in forwarded-withdrawal escrows. A guardian can refill the withdrawal rate limits and, like a set of individual pausers, pause withdrawals.`,
+    content: `The core contracts are upgradeable. Upgrades and other owner actions take effect either through a timelock with a ${formatSeconds(timelockDelay)} delay or immediately through a path that bypasses it. The owner can replace the state root, the program verification key, the verifier and the trusted Celestia anchor, set the batch submitter and the stall timeout, register or re-point asset vaults, and move funds held in forwarded-withdrawal escrows. A guardian can refill the withdrawal rate limits and, like a set of individual pausers, pause withdrawals.`,
   },
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
