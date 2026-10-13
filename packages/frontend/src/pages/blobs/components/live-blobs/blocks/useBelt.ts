@@ -87,6 +87,7 @@ export function useBelt({
   sceneRef.current = scene
   const liveHeadRef = useRef(liveHead)
   liveHeadRef.current = liveHead
+  const waitingSince = useRef<number>(undefined)
   const pointer = useRef<{ x: number; y: number } | undefined>(undefined)
   const hoveredKey = useRef<number | undefined>(undefined)
   const [hover, setHover] = useState<BeltHover>()
@@ -145,10 +146,22 @@ export function useBelt({
     if (x !== anchor.x || y !== anchor.y) pin(hit)
   }
 
+  /** A view of the past, or a finger on the belt, needs no live answer */
+  const waitsForAnswer = (now: number) => {
+    const following =
+      viewTarget.current === undefined && held.current === undefined
+    if (!following || !isOutrun(liveHeadRef.current, progressNow())) {
+      waitingSince.current = undefined
+      return false
+    }
+    waitingSince.current ??= now
+    return now - waitingSince.current < MAX_WAIT
+  }
+
   const running = onScreen && scene !== undefined
   useAnimationFrame((dt, now) => {
     const current = sceneRef.current
-    if (!current || isOutrun(liveHeadRef.current, progressNow())) return
+    if (!current || waitsForAnswer(now)) return
     const play = playback.current
     forgetSettled(play, now)
     if (play.revealedAt === undefined && current.blocks.size > 0) {
@@ -188,7 +201,8 @@ export function useBelt({
   // the site's font is in, as canvas text cannot swap fonts by itself
   const hoveredNow = hover?.key
   useEffect(() => {
-    if (running || !scene || isOutrun(liveHead, progressNow())) return
+    if (running || !scene) return
+    if (view === undefined && isOutrun(liveHead, progressNow())) return
     let cancelled = false
     const play = playback.current
     if (scene.blocks.size > 0) play.revealedAt ??= Number.NEGATIVE_INFINITY
@@ -287,6 +301,12 @@ interface PaintedFrame {
    */
   moving: boolean
 }
+
+/**
+ * Seconds the belt keeps its last frame for an answer. A request that stalls
+ * never fails, so without a cap the belt would stand still for good
+ */
+const MAX_WAIT = 5
 
 /**
  * A hidden tab stops polling while the clock runs on, so on its return the
