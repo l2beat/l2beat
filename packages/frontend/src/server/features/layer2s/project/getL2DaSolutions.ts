@@ -3,16 +3,17 @@ import type {
   ProjectContract,
   ProjectPermissions,
 } from '@l2beat/config'
-import { notUndefined, type ProjectId } from '@l2beat/shared-pure'
+import { notUndefined, ProjectId } from '@l2beat/shared-pure'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { ps } from '~/server/projects'
 
 type Common = {
   layerName: string
   layerSlug: string
   layerId: ProjectId
-  layerHref: string
+  /** Only Ethereum and DA layers that are scaling projects have a page. */
+  layerHref: string | undefined
   bridgeName: string
-  bridgeSlug: string
   hostChainName: string
 }
 
@@ -58,19 +59,18 @@ export async function getL2DaSolutions(
         const daBridgePermissions = daBridge?.permissions?.[hostChainSelector]
         const daBridgeContracts =
           daBridge?.contracts?.addresses[hostChainSelector]
-        const bridgeSlug = daBridge?.slug ?? 'no-bridge'
 
         return {
           layerName: daLayer.name,
           layerSlug: daLayer.slug,
           layerId: daLayer.id,
-          layerHref: getDaSolutionHref({
-            layerSlug: daLayer.slug,
-            bridgeSlug,
-            isL2Project: daLayer.scalingInfo !== undefined,
-          }),
+          layerHref:
+            daLayer.id === ProjectId.ETHEREUM
+              ? ETHEREUM_PROJECT_PATH
+              : daLayer.scalingInfo
+                ? `/layer2s/projects/${daLayer.slug}`
+                : undefined,
           bridgeName: daBridge?.name ?? 'No bridge',
-          bridgeSlug,
           hostChainName: project.scalingInfo.hostChain.name,
           permissions: daBridgePermissions,
           contracts: daBridgeContracts,
@@ -78,18 +78,4 @@ export async function getL2DaSolutions(
       })
       .filter(notUndefined) ?? []
   )
-}
-
-export function getDaSolutionHref({
-  layerSlug,
-  bridgeSlug,
-  isL2Project,
-}: {
-  layerSlug: string
-  bridgeSlug: string
-  isL2Project: boolean
-}) {
-  return isL2Project
-    ? `/layer2s/projects/${layerSlug}`
-    : `/data-availability/projects/${layerSlug}/${bridgeSlug}`
 }

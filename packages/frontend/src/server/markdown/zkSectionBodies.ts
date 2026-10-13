@@ -189,7 +189,11 @@ export function formatTag(tag: ZkCatalogTag) {
 
 export function renderUsedIn(projects: UsedInProjectWithIcon[]) {
   if (projects.length === 0) return 'none'
-  return projects.map((project) => link(project.name, project.url)).join(', ')
+  return projects
+    .map((project) =>
+      project.url ? link(project.name, project.url) : project.name,
+    )
+    .join(', ')
 }
 
 export function renderVerificationStatus(

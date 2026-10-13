@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x14eba8deb8c84d77c2add5ec8d64997ce6f895d9
+
+# Diff at Thu, 08 Oct 2026 10:25:25 GMT:
+
+- id: 1cd0a92a
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ea0f844d485c4192528096e99c5cace57e234c4c block: 1790601073
+- current timestamp: 1791455050
+
+## Description
+
+Some safes and verifier sources were verified on Etherscan.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790601073 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierPostEuclid (eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      implementationNames.eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582:
+-        ""
++        "Halo2Verifier"
+      sourceHashes:
++        ["0xf1304144e7e31f4b3006633baf6786a35f34e00eec7b2a387c4bb9cb35164fce"]
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) [GnosisSafe] {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes.0:
+-        null
++        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
+      implementationNames.scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F:
+-        ""
++        "GnosisSafeProxy"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825) [GnosisSafe] {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes.0:
+-        null
++        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
+      implementationNames.scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825:
+-        ""
++        "SafeProxy"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) [GnosisSafe] {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes.0:
+-        null
++        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
+      implementationNames.scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC:
+-        ""
++        "SafeProxy"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x9479ABfebefEea3c846163012a472b44F305b3d7) [GnosisSafe] {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes.0:
+-        null
++        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
+      implementationNames.scr:0x9479ABfebefEea3c846163012a472b44F305b3d7:
+-        ""
++        "SafeProxy"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896) [GnosisSafe] {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes.0:
+-        null
++        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
+      implementationNames.scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896:
+-        ""
++        "SafeProxy"
+    }
+```
+
 Generated with discovered.json: 0xa78f88b1ebcbcc01dc104a79f99354b6a6112d93
 
 # Diff at Sun, 04 Oct 2026 05:55:36 GMT:

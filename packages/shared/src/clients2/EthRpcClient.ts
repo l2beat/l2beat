@@ -1,5 +1,11 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import {
+  BATCH_REJECTED,
+  isBatchRejected,
+  RpcBatcher,
+  type RpcBatcherOptions,
+} from '../clients/rpc/RpcBatcher'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
 import type { Http } from './Http'
 
@@ -29,13 +35,18 @@ export interface FilterParameter {
 }
 
 export class EthRpcClient {
+  private readonly batcher: RpcBatcher
+
   constructor(
     private http: Http,
     private url: string,
     private nextId: () => string | number = randomId,
     private timeout?: number,
     private readonly rpcMetrics?: RpcMetricsRecorder,
-  ) {}
+    batching?: RpcBatcherOptions,
+  ) {
+    this.batcher = new RpcBatcher(batching)
+  }
 
   async getChainId(): Promise<bigint> {
     const data = await this.rawCall('eth_chainId')
@@ -197,6 +208,17 @@ export class EthRpcClient {
     return ReceiptResponse.parse(data)
   }
 
+  /** In batch requests, in the order of `hashes` */
+  async getTransactionReceipts(
+    hashes: string[],
+  ): Promise<(RpcReceipt | null)[]> {
+    const data = await this.rawBatchCall(
+      'eth_getTransactionReceipt',
+      hashes.map((hash) => [hash]),
+    )
+    return data.map((item) => ReceiptResponse.parse(item))
+  }
+
   async getLogs(filter: FilterParameter): Promise<RpcLog[]> {
     const data = await this.rawCall('eth_getLogs', [encodeFilter(filter)])
     return LogsResponse.parse(data)
@@ -213,6 +235,77 @@ export class EthRpcClient {
       rewardPercentiles,
     ])
     return FeeHistory.parse(data)
+  }
+
+  /** Results in the order of `paramsList` */
+  async rawBatchCall(
+    method: string,
+    paramsList: unknown[],
+  ): Promise<unknown[]> {
+    return await this.batcher.run(
+      method,
+      paramsList,
+      (chunk) => this.sendBatch(method, chunk),
+      (params) => this.rawCall(method, params),
+    )
+  }
+
+  private async sendBatch(
+    method: string,
+    paramsList: unknown[],
+  ): Promise<unknown[] | typeof BATCH_REJECTED> {
+    const ids = paramsList.map(() => this.nextId())
+    let rejected = false
+
+    try {
+      const response = await this.http.fetch(this.url, {
+        method: 'POST',
+        body: JSON.stringify(
+          paramsList.map((params, i) => ({
+            jsonrpc: '2.0',
+            id: ids[i],
+            method,
+            params,
+          })),
+        ),
+        headers: { 'Content-Type': 'application/json' },
+        timeout: this.timeout,
+      })
+      let data: unknown
+      try {
+        data = JSON.parse(response.body)
+      } catch {}
+      if (isBatchRejected(response.status, data)) {
+        rejected = true
+        return BATCH_REJECTED
+      }
+      const parsed = v.array(JsonRpcResponse).safeValidate(data)
+      if (!parsed.success) {
+        throw new Error(
+          `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+        )
+      }
+      const byId = new Map(
+        parsed.data.map((envelope) => [envelope.id, envelope]),
+      )
+      return ids.map((id) => {
+        const envelope = byId.get(id)
+        if (!envelope) {
+          throw new Error('RPC call failed. ID mismatch.')
+        }
+        if ('error' in envelope) {
+          throw new Error(
+            `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
+          )
+        }
+        return envelope.result
+      })
+    } finally {
+      // The calls of a rejected batch are recorded when sent again
+      if (!rejected) {
+        this.rpcMetrics?.record({ method, count: paramsList.length })
+      }
+    }
   }
 
   async rawCall(method: string, params: unknown = []) {

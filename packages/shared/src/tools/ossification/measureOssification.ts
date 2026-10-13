@@ -20,55 +20,61 @@ export function measureOssification(
   assert(history.contracts.length > 0, 'a measured perimeter has a contract')
   const changes = sortedChanges(history)
   const timestamps = changes.map((change) => change.timestamp)
+  const criticalChanges = clusterStarts(timestamps)
+  const firstChange = timestamps[0] ?? Number.POSITIVE_INFINITY
+  const genesis = getGenesis(history, firstChange)
+  const clockStart = Math.max(genesis, ...timestamps)
 
-  const projectClockStart = getProjectClockStart(history)
-  const maturity = history.contracts.every((contract) => contract.isVerified)
-    ? exploitAgePercentile(Math.max(0, now - projectClockStart))
+  const isVerified = history.contracts.every((contract) => contract.isVerified)
+  const score = isVerified
+    ? toDisplayScore(exploitAgePercentile(Math.max(0, now - clockStart)))
     : 0
 
-  const from = Math.max(now - RATE_WINDOW, history.observedSince)
-  const windowSeconds = Math.max(now - from, RATE_WINDOW_MIN)
-  const clusteredEventCount = clusterStarts(
-    timestamps.filter((timestamp) => timestamp >= from),
-  ).length
+  const from = Math.max(now - RATE_WINDOW, genesis)
+  const recent = criticalChanges.filter((change) => change >= from).length
+  const years = Math.max(now - from, RATE_WINDOW_MIN) / YEAR
 
   return {
-    score: toDisplayScore(maturity),
-    maturity,
-    projectClockStart,
-    lastCriticalChange: timestamps.at(-1),
-    criticalChangesPerYear: clusteredEventCount / (windowSeconds / YEAR),
-    clusteredEventCount,
-    windowSeconds,
-    criticalChanges: clusterStarts(timestamps),
-    perimeterResets: clusterStarts(
-      [...timestamps, ...history.resets].sort((a, b) => a - b),
-    ),
-    contracts: [...history.contracts].sort(
-      (a, b) => b.ossifyingSince - a.ossifyingSince,
-    ),
+    score,
+    clockStart,
+    genesis,
+    criticalChangesPerYear: recent / years,
+    criticalChanges,
+    contracts: history.contracts
+      .map((contract) => ({
+        ...contract,
+        ossifyingSince: Math.max(contract.ossifyingSince, genesis),
+      }))
+      .sort((a, b) => b.ossifyingSince - a.ossifyingSince),
     criticalUpdates: getCriticalUpdates(changes),
   }
 }
 
+/** The newest change starts the clock, so it must be dated exactly. */
 export function getUncertainNewestChange(
   history: OssificationHistory,
 ): OssificationChange | undefined {
   const newest = sortedChanges(history).at(-1)
-  if (newest === undefined || newest.earliest === newest.timestamp) {
-    return undefined
-  }
-  return newest.timestamp === getProjectClockStart(history) ? newest : undefined
+  return newest !== undefined && newest.earliest !== newest.timestamp
+    ? newest
+    : undefined
 }
 
 function sortedChanges(history: OssificationHistory): OssificationChange[] {
   return [...history.changes].sort((a, b) => a.timestamp - b.timestamp)
 }
 
-function getProjectClockStart(history: OssificationHistory): number {
-  return Math.max(
-    ...history.contracts.map((contract) => contract.ossifyingSince),
+// The rollout's last deployment, not its first: earlier ones only assembled
+// the perimeter.
+function getGenesis(
+  { deployments, observedSince }: OssificationHistory,
+  firstChange: number,
+): number {
+  const rollout = deployments.filter(
+    (deployment) =>
+      deployment <= observedSince + CLUSTER_WINDOW && deployment < firstChange,
   )
+  return Math.min(Math.max(observedSince, ...rollout), firstChange)
 }
 
 function getCriticalUpdates(
@@ -114,6 +120,6 @@ export function exploitAgePercentile(ageSeconds: number): number {
   return p(i - 1 + (ageSeconds - a) / (b - a))
 }
 
-export function toDisplayScore(maturity: number): number {
-  return maturity === 0 ? 0 : clamp(Math.round(maturity * 100), 1, 99)
+export function toDisplayScore(percentile: number): number {
+  return percentile === 0 ? 0 : clamp(Math.round(percentile * 100), 1, 99)
 }

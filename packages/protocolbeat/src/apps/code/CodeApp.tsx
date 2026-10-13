@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 import type { AppModule } from '../createRouter'
 import { AddressSelectionPage } from './AddressSelectionPage'
 import { CodePage } from './CodePage'

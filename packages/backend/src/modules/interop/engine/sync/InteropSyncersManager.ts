@@ -279,6 +279,7 @@ export class InteropSyncersManager {
           rpcChain: chainConfig.name,
           rpcClient: EthRpcClient.name,
         }),
+        { maxBatchSize: rpcConfig.maxBatchSize, logger: rpcLogger },
       )
       this.rpcClients[chainConfig.name] = client
     }

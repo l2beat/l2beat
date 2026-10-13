@@ -148,9 +148,8 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
             'flex w-9 items-center justify-center p-0',
             'h-full rounded-md',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
-            'focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-1 focus:ring-offset-transparent',
             // unset the ring inset from the popover trigger classnames
-            'focus:[--tw-ring-inset:_]!',
+            'focus-visible:[--tw-ring-inset:_]!',
             'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
           )}
         >

@@ -6,10 +6,8 @@ import {
   formatJson,
   type UnixTime,
 } from '@l2beat/shared-pure'
-import { writeFile } from 'fs/promises'
-import { mkdirp } from 'mkdirp'
+import { mkdir, rm, writeFile } from 'fs/promises'
 import { dirname, posix } from 'path'
-import { rimraf } from 'rimraf'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { TemplateService } from '../analysis/TemplateService'
 import type { ConfigRegistry } from '../config/ConfigRegistry'
@@ -47,7 +45,7 @@ export async function saveDiscoveryResult(
   const projectDiscoveryFolder =
     options.projectDiscoveryFolder ??
     posix.join(options.paths.discovery, config.structure.name)
-  await mkdirp(projectDiscoveryFolder)
+  await mkdir(projectDiscoveryFolder, { recursive: true })
 
   const templateService = new TemplateService(options.paths.discovery)
   const discoveryOutput = toDiscoveryOutput(
@@ -110,7 +108,7 @@ async function saveSources(
     .filter((c) => c.type !== 'Reference')
     .map((c) => (c.type !== 'EOA' ? c.name : 'EOA'))
 
-  await rimraf(sourcesPath)
+  await rm(sourcesPath, { recursive: true, force: true })
   for (const contract of results) {
     if (contract.type === 'EOA' || contract.type === 'Reference') {
       continue
@@ -130,7 +128,7 @@ async function saveSources(
           sourcesPath,
           allContractNames,
         )
-        await mkdirp(dirname(path))
+        await mkdir(dirname(path), { recursive: true })
         await writeFile(path, content)
       }
     }
@@ -146,15 +144,15 @@ async function saveFlatSources(
   const flatSourcesFolder = options.flatSourcesFolder ?? '.flat'
   const flatSourcesPath = posix.join(rootPath, flatSourcesFolder)
 
-  await rimraf(flatSourcesPath)
-  await mkdirp(flatSourcesPath)
+  await rm(flatSourcesPath, { recursive: true, force: true })
+  await mkdir(flatSourcesPath, { recursive: true })
 
   const flatten = flattenDiscoveredSources(results, logger)
   for (const entryPath of Object.keys(flatten)) {
     const outputPath = posix.join(flatSourcesPath, entryPath)
 
     if (posix.dirname(outputPath) !== flatSourcesPath) {
-      await mkdirp(posix.dirname(outputPath))
+      await mkdir(posix.dirname(outputPath), { recursive: true })
     }
 
     const content = flatten[entryPath]

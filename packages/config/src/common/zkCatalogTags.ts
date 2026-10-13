@@ -215,6 +215,12 @@ export const zkCatalogTags = [
   },
   // Groth16
   {
+    id: 'Arkworks',
+    type: ZkCatalogTagType.Groth16,
+    name: 'Arkworks',
+    description: 'Arkworks implementation of Groth16 written in Rust.',
+  },
+  {
     id: 'Gnark',
     type: ZkCatalogTagType.Groth16,
     name: 'Gnark',
@@ -393,12 +399,3 @@ export const ZK_CATALOG_TAGS: {
   return acc
   // biome-ignore lint/suspicious/noExplicitAny: needed any
 }, {} as any)
-
-export const zkCatalogTagTypeOrder = Object.values<string>(ZkCatalogTagType)
-export const zkCatalogTagsCompareFn = (a: ZkCatalogTag, b: ZkCatalogTag) => {
-  const typeOrder =
-    zkCatalogTagTypeOrder.indexOf(a.type) -
-    zkCatalogTagTypeOrder.indexOf(b.type)
-  if (typeOrder !== 0) return typeOrder
-  return a.name.localeCompare(b.name)
-}

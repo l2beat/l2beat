@@ -12,10 +12,6 @@ export function isMultisigLike(entry: EntryParameters | undefined): boolean {
   return hasMembers && hasThreshold
 }
 
-export function formatPermissionDescription(description: string): string {
-  return description !== '' ? `- ${trimTrailingDots(description)}` : ''
-}
-
 export function trimTrailingDots(s: string): string {
   return s.replace(/\.*$/, '')
 }

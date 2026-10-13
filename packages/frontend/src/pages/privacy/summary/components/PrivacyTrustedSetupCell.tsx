@@ -1,4 +1,3 @@
-import { formatInteger } from '@l2beat/shared-pure'
 import {
   Tooltip,
   TooltipContent,
@@ -24,11 +23,7 @@ export function PrivacyTrustedSetupCell({
               className="shrink-0"
             />
           }
-          label={
-            trustedSetup.participantCount === undefined
-              ? undefined
-              : `${formatInteger(trustedSetup.participantCount)} participants`
-          }
+          label={trustedSetup.label}
         />
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">

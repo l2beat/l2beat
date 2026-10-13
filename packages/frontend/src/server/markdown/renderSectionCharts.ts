@@ -181,18 +181,20 @@ export function renderPrivacyAnonymitySetSection(
 }
 
 /**
- * A project whose tracking has all ended has no current layer: the HTML
- * sentence then names nothing after "posts data to", so it is reworded.
+ * A project whose tracking has all ended has no current layer. It may still
+ * post somewhere we don't track, so the sentence says we stopped tracking.
  */
 function describeDaLayers({
   currentDaLayers,
   pastDaLayers,
 }: Pick<DataPostedSectionProps, 'currentDaLayers' | 'pastDaLayers'>) {
   const links = (layers: DataPostedSectionProps['currentDaLayers']) =>
-    layers.map((layer) => link(layer.name, layer.href)).join(', ')
+    layers
+      .map((layer) => (layer.href ? link(layer.name, layer.href) : layer.name))
+      .join(', ')
   if (currentDaLayers.length === 0) {
     return pastDaLayers.length > 0
-      ? `The project no longer posts data; previously it posted to ${links(pastDaLayers)}.`
+      ? `We no longer track where the project posts data; previously it posted to ${links(pastDaLayers)}.`
       : ''
   }
   const previously =

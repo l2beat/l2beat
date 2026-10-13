@@ -34,7 +34,8 @@
     "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226": "DepositTree",
     "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": "PoseidonHasher",
     "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": "MiMCHasher",
-    "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": "WithdrawalTree"
+    "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": "WithdrawalTree",
+    "eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79": "PoseidonHasher2"
   },
   // Ossification perimeter: the 19 immutable pools, their Verifier and the
   // MiMCHasher. The pools have no admin (the legacy operator renounced in May
@@ -46,9 +47,6 @@
   "overrides": {
     "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e": {
       "ignoreDiscovery": true
-    },
-    "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226": {
-      "description": "Unverified merkle tree instance that stores legacy Tornado deposit leaves for TornadoTreesV1."
     },
     "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": {
       "description": "MiMC hasher used by every Tornado pool for commitment-tree operations (linked library in the 2019 pools, constructor argument in the 2021 pools), manually verified against the pinned Tornado circomlib generator.",
@@ -65,7 +63,11 @@
       ]
     },
     "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": {
-      "description": "Anonymity Mining - Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees.",
+      "description": "Anonymity Mining - Unverified Poseidon hasher used by TornadoTreesV1 to hash deposit and withdrawal leaves.",
+      "category": "bridge-external"
+    },
+    "eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79": {
+      "description": "Anonymity Mining - Unverified Poseidon hasher used by the legacy DepositTree and WithdrawalTree to hash tree nodes.",
       "category": "bridge-external"
     },
     "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
@@ -82,9 +84,6 @@
     },
     "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888": {
       "ignoreDiscovery": true
-    },
-    "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": {
-      "description": "Unverified merkle tree instance that stores legacy Tornado withdrawal leaves for TornadoTreesV1."
     },
     "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": {
       "ignoreDiscovery": true

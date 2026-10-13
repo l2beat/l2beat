@@ -5,21 +5,24 @@ import { PRIVACY_SUMMARY_DESCRIPTION } from '~/consts/summaryPageDescriptions'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyBestPracticesBanner } from './components/PrivacyBestPracticesBanner'
 import { PrivacySummaryChartsSection } from './components/PrivacySummaryChartsSection'
-import { PrivacySummaryTable } from './components/PrivacySummaryTable'
+import { PrivacySummaryTables } from './components/PrivacySummaryTables'
+import type { PrivacyTvlBreakdownProject } from './components/PrivacyTvlBreakdownChart'
+import type { PrivacySummaryGroup } from './privacySummaryGroups'
 
 interface Props extends AppLayoutProps {
-  entries: PrivacySummaryEntry[]
+  groups: PrivacySummaryGroup[]
+  chartProjects: PrivacyTvlBreakdownProject[]
   defaultChartRange: ChartRange
   bestPracticesBannerImageUrl: string
   queryState: DehydratedState
 }
 
 export function PrivacySummaryPage({
-  entries,
+  groups,
+  chartProjects,
   defaultChartRange,
   bestPracticesBannerImageUrl,
   queryState,
@@ -33,12 +36,10 @@ export function PrivacySummaryPage({
             Privacy
           </MainPageHeader>
           <PrivacySummaryChartsSection
-            projects={entries
-              .filter((e) => e.isTracked || e.hasTvl)
-              .map((e) => ({ id: e.id, name: e.name, hasTvl: e.hasTvl }))}
+            projects={chartProjects}
             defaultRange={defaultChartRange}
           />
-          <PrivacySummaryTable entries={entries} />
+          <PrivacySummaryTables groups={groups} />
           <PrivacyBestPracticesBanner
             backgroundImage={bestPracticesBannerImageUrl}
           />

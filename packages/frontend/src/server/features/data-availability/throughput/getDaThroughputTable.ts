@@ -26,9 +26,7 @@ export async function getDaThroughputTable(
   return await getDaThroughputTableData(...parameters)
 }
 
-export type ThroughputTableData = Awaited<
-  ReturnType<typeof getDaThroughputTableData>
->
+type ThroughputTableData = Awaited<ReturnType<typeof getDaThroughputTableData>>
 const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const db = getDb()
   const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day')

@@ -30,7 +30,11 @@ import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { hashJsonStable } from '../config/hashJsonStable'
 import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
-import { type Entrypoint, StructureContract } from '../config/StructureConfig'
+import {
+  type Entrypoint,
+  type StructureContract,
+  TemplateStructureContract,
+} from '../config/StructureConfig'
 import { generateStructureHash } from '../output/structureOutput'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
@@ -235,7 +239,7 @@ export class TemplateService {
     return this.loadContractTemplateBase(
       template,
       'contract',
-      StructureContract,
+      TemplateStructureContract,
     )
   }
 

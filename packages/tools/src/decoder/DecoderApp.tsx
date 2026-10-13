@@ -17,14 +17,14 @@ export function DecoderApp() {
     <div className="mx-auto max-w-[900px] p-4 pb-20">
       <h1 className="mb-4 font-bold">Recursive calldata decoder</h1>
       <textarea
-        className="mb-4 block w-full rounded-sm bg-zinc-800 px-2.5 py-1 font-mono text-sm shadow-inner"
+        className="mb-4 block w-full rounded-xs bg-zinc-800 px-2.5 py-1 font-mono text-sm shadow-inner"
         rows={5}
         value={encoded}
         placeholder="Hex encoded transaction data. e.g. 0x1337dead..."
         onChange={(e) => onChange(e.target.value)}
       />
       <button
-        className="mb-8 rounded-sm border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
+        className="mb-8 rounded-xs border-zinc-900 border-b-4 bg-zinc-800 px-2.5 py-1 active:mt-1 active:border-b-0"
         onClick={() => setToDecode(encoded)}
       >
         Decode

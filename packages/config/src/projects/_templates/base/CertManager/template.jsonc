@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CertManager",
+  "critical": true,
+  "description": "Verifies and caches AWS Nitro certificate chains against a pinned root certificate.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "revoke the root certificate, unrevoke certificates and set the revoker."
+        }
+      ]
+    },
+    // Can only revoke non-root certificates (blocks new signer
+    // registrations), a pause-like role.
+    "revoker": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "revoke non-root certificates."
+        }
+      ]
+    }
+  }
+}

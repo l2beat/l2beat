@@ -25,12 +25,6 @@ import {
 } from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
 
-export interface DiscoveryRunnerOptions {
-  logger: Logger
-  maxRetries?: number
-  retryDelayMs?: number
-}
-
 export interface DiscoveryRunResult {
   discovery: DiscoveryOutput
   flatSources: Record<string, string>

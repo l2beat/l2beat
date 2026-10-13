@@ -250,9 +250,10 @@ starknetProgramHashes.push(
 // Virtual Starknet OS for client-side proving (e.g. STRK-20). Not stored in
 // the L1 core contract: it is pinned as ALLOWED_VIRTUAL_OS_PROGRAM_HASHES
 // inside the L1-registered Starknet OS program above. See
-// https://github.com/starkware-libs/sequencer/blob/5114457/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/constants.cairo#L66-L71
+// https://github.com/starkware-libs/sequencer/blob/f1e649f/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/constants.cairo#L66-L74
 starknetProgramHashes.push(
   '2373625305120835200243020426311988160128377108314438505880592663683179928225',
+  '805228098265968069660874977190930466751870110207234534021332896450772718372',
 )
 starknetProgramHashes.push(...acceptedSHARPVerifierChain.programPins)
 
@@ -579,7 +580,7 @@ export const starknet: ScalingProject = {
       {
         title: 'Proven Program',
         description:
-          'The current Starknet OS and aggregator sources are published in the [Starknet sequencer repository](https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core), and the bootloader sources are published in [cairo-lang](https://github.com/starkware-libs/cairo-lang/tree/1c5dace6fbd1dc9d1ae2eb878dc1dd85f23512ab/src/starkware/cairo/bootloaders). The exact 1,166-felt outer bootloader stored onchain has been reproduced from [this source revision](https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/bootloader). However, SHARP also commits to an ordered allowlist of recursive Cairo verifier programs whose active preimages and source-to-hash mappings have not been published, so the complete proven program is not independently reproducible.',
+          'The current Starknet OS and aggregator sources are published in the [Starknet sequencer repository](https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.4-RC.8/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core), and the bootloader sources are published in [cairo-lang](https://github.com/starkware-libs/cairo-lang/tree/1c5dace6fbd1dc9d1ae2eb878dc1dd85f23512ab/src/starkware/cairo/bootloaders). The exact 1,166-felt outer bootloader stored onchain has been reproduced from [this source revision](https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/bootloader). However, SHARP also commits to an ordered allowlist of recursive Cairo verifier programs whose active preimages and source-to-hash mappings have not been published, so the complete proven program is not independently reproducible.',
         risks: [],
       },
       {

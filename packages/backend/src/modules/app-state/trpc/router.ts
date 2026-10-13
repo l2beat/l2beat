@@ -1,5 +1,4 @@
 import { AppStateKey, AppStatePair } from '@l2beat/database'
-import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { router } from '../../../trpc/init'
 import { protectedProcedure } from '../../../trpc/procedures'
 
@@ -33,5 +32,3 @@ export function createAppStateTrpcRouter() {
 }
 
 export type AppStateTrpcRouter = ReturnType<typeof createAppStateTrpcRouter>
-export type RouterOutputs = inferRouterOutputs<AppStateTrpcRouter>
-export type RouterInputs = inferRouterInputs<AppStateTrpcRouter>

@@ -20,7 +20,7 @@
     },
     // active PLONK verifiers referenced by LineaRollup.verifiers (proof types 1 and 0): a code change lets forged proofs finalize arbitrary state and drain the bridge.
     // Replaced verifiers drop out of discovery and need no override: every rotation is a HIGH `verifiers` change (reviewed events) on LineaRollup.
-    "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": {
+    "eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532": {
       "critical": true
     },
     "eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F": {
