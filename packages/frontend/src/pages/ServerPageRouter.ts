@@ -14,6 +14,7 @@ import { createDefiRouter } from './defi/DefiRouter'
 import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
 import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
+import { createEthereumProjectRouter } from './ethereum/EthereumProjectRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGardenRouter } from './garden/GardenRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
@@ -58,6 +59,7 @@ export function createServerPageRouter(
     createL2Router,
     createInteropRouter,
     createTokensRouter,
+    createEthereumProjectRouter,
     createBlobsRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,

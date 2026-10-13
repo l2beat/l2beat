@@ -8,6 +8,7 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
 import { TableTooltip } from '~/components/table/TableTooltip'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { L2RiskSequencingEntry } from '~/server/features/layer2s/risks/sequencing/getL2RiskSequencingEntries'
 import { formatDate, formatTimestamp } from '~/utils/dates'
 
@@ -15,7 +16,7 @@ const columnHelper = createColumnHelper<L2RiskSequencingEntry>()
 
 function getSequencingHref(entry: L2RiskSequencingEntry) {
   if (entry.slug === 'ethereum') {
-    return undefined
+    return ETHEREUM_PROJECT_PATH
   }
   return `/layer2s/projects/${entry.slug}#sequencing`
 }

@@ -45,6 +45,7 @@ export const LIST_PAGES_WITH_MARKDOWN = [
  */
 export const PROJECT_PAGES_WITH_MARKDOWN = [
   '/layer2s/projects/:slug',
+  '/projects/ethereum',
   '/privacy/projects/:slug',
   '/interop/protocols/:slug',
   '/zk-catalog/:slug',
