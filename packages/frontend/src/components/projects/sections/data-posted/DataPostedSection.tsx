@@ -3,6 +3,7 @@ import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDataPostedChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import type { DaLayerInfo } from '~/utils/project/data-posted/getDaLayersInfo'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import { DATA_POSTED_DESCRIPTION, EIGENLAYER_DATA_SOURCE } from '../sectionCopy'
@@ -11,14 +12,8 @@ import { DataPostedTrackedTransactions } from './DataPostedTrackedTransactions'
 
 export interface DataPostedSectionProps extends ProjectSectionProps {
   project: ChartProject
-  currentDaLayers: {
-    name: string
-    logo: string
-  }[]
-  pastDaLayers: {
-    name: string
-    logo: string
-  }[]
+  currentDaLayers: DaLayerInfo[]
+  pastDaLayers: DaLayerInfo[]
   milestones: Milestone[]
   defaultRange: ChartRange
   daTrackingConfig: (ProjectDaTrackingConfig & {
@@ -38,12 +33,19 @@ export function DataPostedSection({
   return (
     <ProjectSection {...sectionProps}>
       <p className="text-paragraph-15 md:text-paragraph-16">
-        {DATA_POSTED_DESCRIPTION} The project currently posts data to
-        <span>
-          {currentDaLayers.map((daLayer) => (
-            <DaLayerName key={daLayer.name} daLayer={daLayer} />
-          ))}
-        </span>
+        {DATA_POSTED_DESCRIPTION}{' '}
+        {currentDaLayers.length > 0 ? (
+          <>
+            The project currently posts data to
+            <span>
+              {currentDaLayers.map((daLayer) => (
+                <DaLayerName key={daLayer.name} daLayer={daLayer} />
+              ))}
+            </span>
+          </>
+        ) : (
+          'The project no longer posts data'
+        )}
         {pastDaLayers.length > 0 && (
           <span>
             ; previously it posted to
@@ -69,15 +71,22 @@ export function DataPostedSection({
   )
 }
 
-function DaLayerName({ daLayer }: { daLayer: { name: string; logo: string } }) {
-  return (
-    <span className="ml-1 font-medium">
+function DaLayerName({ daLayer }: { daLayer: DaLayerInfo }) {
+  const content = (
+    <>
       <img
         src={daLayer.logo}
         alt={daLayer.name}
         className="mr-1 inline-block size-5"
       />
       {daLayer.name}
-    </span>
+    </>
+  )
+  return daLayer.href ? (
+    <a href={daLayer.href} className="ml-1 font-medium text-link underline">
+      {content}
+    </a>
+  ) : (
+    <span className="ml-1 font-medium">{content}</span>
   )
 }
