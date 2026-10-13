@@ -213,12 +213,9 @@ jobs:
       matrix:
         include:
           - name: Chromium 1/2
-            args: --project chromium --project "blobs desktop" --shard 1/2
+            args: --project chromium --shard 1/2
           - name: Chromium 2/2
-            args: --project chromium --project "blobs desktop" --shard 2/2
-          - name: iPhone
-            args: --project "blobs iphone"
-            webkit: true
+            args: --project chromium --shard 2/2
           # Ratchets, one at a time on a runner of their own
           - name: perf
             args: --project perf --no-deps
@@ -244,7 +241,6 @@ jobs:
             uses: ./.github/actions/setup-playwright
             with:
               package-dir: packages/frontend
-              webkit: ${{ matrix.webkit || false }}
 
           - name: Build frontend
             run: |

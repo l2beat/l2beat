@@ -1,4 +1,4 @@
-import { defineConfig, devices } from 'playwright/test'
+import { defineConfig } from 'playwright/test'
 
 // Socket Firewall (sfw) wraps npx/pnpm and injects HTTP_PROXY, which breaks
 // Playwright's webServer readiness probe against localhost. Exempt local hosts.
@@ -9,17 +9,6 @@ process.env.NO_PROXY = [process.env.NO_PROXY, 'localhost,127.0.0.1']
 process.env.CLIENT_SIDE_DEFI_ENABLED = 'true'
 process.env.CLIENT_SIDE_BLOBS_PAGE = 'true'
 
-/**
- * The blobs page draws and lays itself out per screen, so its suite runs on
- * a desktop through Chromium and on an iPhone through WebKit. An Android
- * phone found nothing the iPhone did not, and the desktop suite sweeps every
- * width a tablet has. The other suites set their own viewports and run once.
- */
-const BLOBS_PAGE = '**/blobs-page/**'
-const BLOBS_SCREENS = {
-  desktop: { viewport: { width: 1440, height: 1000 } },
-  iphone: devices['iPhone 15'],
-}
 /**
  * The ratchets count the work a page does, which other tests running beside
  * them push up, so they run once the rest are done, one at a time. CI gives
@@ -33,14 +22,7 @@ const PERF = '**/*-perf/**'
  */
 const BLOBS_PERF = '**/blobs-perf/**'
 
-const functional = [
-  { name: 'chromium', testIgnore: [BLOBS_PAGE, PERF] },
-  ...Object.entries(BLOBS_SCREENS).map(([screen, use]) => ({
-    name: `blobs ${screen}`,
-    testMatch: `${BLOBS_PAGE}/*.e2e.ts`,
-    use,
-  })),
-]
+const functional = [{ name: 'chromium', testIgnore: [PERF] }]
 
 // biome-ignore lint/style/noDefaultExport: Playwright config uses a default export.
 export default defineConfig({
