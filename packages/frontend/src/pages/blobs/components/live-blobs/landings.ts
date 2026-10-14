@@ -22,6 +22,7 @@ export interface Landings {
 
 export function createLandings(): Landings {
   const listeners = new Set<(landing: Landing) => void>()
+  let loaded: number | undefined
   return {
     emit: (landing) => {
       for (const listener of listeners) listener(landing)
@@ -30,25 +31,10 @@ export function createLandings(): Landings {
       listeners.add(listener)
       return () => listeners.delete(listener)
     },
-    loadedHead: trackLoadedHead(),
-  }
-}
-
-/**
- * The same landings, for numbers first shown after the page loaded, as the
- * posters table built after the belt is. The block they first show is theirs
- * to show whole, as the reader never saw them without it; its landings may
- * well have come before they could listen
- */
-export function shownLater(landings: Landings): Landings {
-  return { ...landings, loadedHead: trackLoadedHead() }
-}
-
-function trackLoadedHead() {
-  let loaded: number | undefined
-  return (head: number) => {
-    loaded = Math.min(loaded ?? head, head)
-    return loaded
+    loadedHead: (head) => {
+      loaded = Math.min(loaded ?? head, head)
+      return loaded
+    },
   }
 }
 
@@ -62,19 +48,6 @@ export const anyLanding = (_: Landing) => true
  */
 export function cameAfterLoad(landings: Landings, slot: number | undefined) {
   return slot !== undefined && slot > landings.loadedHead(slot)
-}
-
-/** Whether a landing counts toward a number holding the block at `stamp` */
-export function countsToward(
-  landing: Landing,
-  stamp: number | undefined,
-  landings: Landings,
-  matches: (landing: Landing) => boolean,
-) {
-  // with no data it holds nothing, and asking would set its load head
-  if (stamp === undefined || !matches(landing)) return false
-  // a landing from above the stamp is of a block the chain took back
-  return !isAbove(landing.slot, stamp) && cameAfterLoad(landings, landing.slot)
 }
 
 /**
@@ -159,7 +132,12 @@ export function useLandedTotal(
   useEffect(
     () =>
       landings?.subscribe((landing) => {
-        if (!countsToward(landing, stampInHand.current, landings, matches)) {
+        // a landing from above the stamp is of a block the chain took back
+        if (
+          !matches(landing) ||
+          isAbove(landing.slot, stampInHand.current) ||
+          !cameAfterLoad(landings, landing.slot)
+        ) {
           return
         }
         setHeld((current) => ({

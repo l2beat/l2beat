@@ -49,6 +49,8 @@ interface Props {
   /** Every project that may post, with the stand-in for unknown senders last */
   posters: LivePoster[]
   limits: BlockLimits
+  /** Called once, from the first paint that draws blocks */
+  onBlocksDrawn?: () => void
 }
 
 /**
@@ -58,7 +60,13 @@ interface Props {
  * target and the maximum. Under it, the day behind it takes the belt back
  * to any of its blocks.
  */
-export function LiveBlocks({ live, status, posters, limits }: Props) {
+export function LiveBlocks({
+  live,
+  status,
+  posters,
+  limits,
+  onBlocksDrawn,
+}: Props) {
   const beltRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const size = useElementSize(beltRef)
@@ -158,6 +166,7 @@ export function LiveBlocks({ live, status, posters, limits }: Props) {
       const found = findBatch(blocks, key)
       if (found) openOnEtherscan(found.batch.txHash)
     },
+    onBlocksDrawn,
   })
   dropBlock.current = belt.dropBlock
   const swipe = useBeltScroll(beltRef, {

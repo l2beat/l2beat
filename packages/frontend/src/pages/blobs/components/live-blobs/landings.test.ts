@@ -4,14 +4,12 @@ import { SLIDE_TIME } from './blocks/beltPosition'
 import { BATCH_STAGGER, LAND_AFTER } from './blocks/motion'
 import {
   cameAfterLoad,
-  countsToward,
   createLandings,
   firstHeld,
   type Held,
   holdBack,
   holdLimitMs,
   secondsUntilSlideEnds,
-  shownLater,
 } from './landings'
 
 // Methodology: one page's landings are asked about the block it loaded with,
@@ -35,54 +33,6 @@ describe(cameAfterLoad.name, () => {
 
   it('has no block to land before the first data', () => {
     expect(cameAfterLoad(createLandings(), undefined)).toEqual(false)
-  })
-
-  it('takes the first block a later-shown number sees as its load, while the page counts it up', () => {
-    const page = createLandings()
-    const later = shownLater(page)
-    cameAfterLoad(page, 1000)
-
-    expect(cameAfterLoad(page, 1001)).toEqual(true)
-    expect(cameAfterLoad(later, 1001)).toEqual(false)
-    expect(cameAfterLoad(later, 1002)).toEqual(true)
-  })
-
-  it('hears the landings the page hears', () => {
-    const page = createLandings()
-    const heard: number[] = []
-    shownLater(page).subscribe((landing) => heard.push(landing.slot))
-    page.emit({ posterId: 'a', blobs: 1, slot: 1001 })
-
-    expect(heard).toEqual([1001])
-  })
-})
-
-// Methodology: landings are offered to numbers in each state they can be in
-// when one comes: no data yet, holding the block, or holding an older one.
-describe(countsToward.name, () => {
-  const any = () => true
-  const landing = { posterId: 'a', blobs: 1, slot: 1001 }
-
-  it('counts a landing of a block after the load toward a number holding it', () => {
-    const landings = createLandings()
-    cameAfterLoad(landings, 1000)
-
-    expect(countsToward(landing, 1001, landings, any)).toEqual(true)
-    expect(countsToward(landing, 1001, landings, () => false)).toEqual(false)
-  })
-
-  it('leaves out a block the number has not got, as the chain took it back', () => {
-    const landings = createLandings()
-    cameAfterLoad(landings, 1000)
-
-    expect(countsToward(landing, 1000, landings, any)).toEqual(false)
-  })
-
-  it('leaves a number with no data its load head to come', () => {
-    const later = shownLater(createLandings())
-
-    expect(countsToward(landing, undefined, later, any)).toEqual(false)
-    expect(cameAfterLoad(later, 1002)).toEqual(false)
   })
 })
 

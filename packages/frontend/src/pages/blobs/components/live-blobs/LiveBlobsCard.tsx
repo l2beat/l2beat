@@ -3,7 +3,10 @@ import {
   Component as ReactComponent,
   type ReactNode,
   Suspense,
-  useDeferredValue,
+  startTransition,
+  useCallback,
+  useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -18,13 +21,17 @@ import { ChainClockContext, createChainClock } from './chainClock'
 import { useIsOnScreen } from './hooks'
 import { LivePosters } from './LivePosters'
 import { type EthereumLink, LiveStats } from './LiveStats'
-import { createLandings, LandingsContext, shownLater } from './landings'
+import { createLandings, LandingsContext } from './landings'
 import { type BlockLimits, toLivePosters, totalByPoster } from './model'
 import { useLiveBlobs } from './useLiveBlobs'
 
-// Loaded on its own: it draws only in the browser
+// Loaded on its own, as it draws only in the browser. Asked for as this module
+// runs, before hydration, so it is in before the first live answer, which waits
+// for hydration, and the table built after that answer never holds it up
+const loadLiveBlocks = () => import('./blocks/LiveBlocks')
+if (typeof window !== 'undefined') void loadLiveBlocks()
 const LiveBlocks = lazy(() =>
-  import('./blocks/LiveBlocks').then((m) => ({ default: m.LiveBlocks })),
+  loadLiveBlocks().then((m) => ({ default: m.LiveBlocks })),
 )
 
 interface Props {
@@ -40,7 +47,6 @@ export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
   // the belt draws on a canvas sized to the screen, which the server has not got
   const isClient = useIsClient()
   const [landings] = useState(createLandings)
-  const [tableLandings] = useState(() => shownLater(landings))
   const [clock] = useState(createChainClock)
   const cardRef = useRef<HTMLDivElement>(null)
   const { data, status } = useLiveBlobs(useIsOnScreen(cardRef))
@@ -52,11 +58,7 @@ export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
     () => postedWindow && totalByPoster(postedWindow.posted, posters),
     [postedWindow, posters],
   )
-  // The table is thousands of elements, below a phone's first screen: built
-  // after the belt and its status show the first answer, not in their task,
-  // even when that answer is in hand at mount. Later answers reach it at once,
-  // as its numbers count up with the belt
-  const tableFilled = useDeferredValue(data !== undefined, false)
+  const [tableFilled, fillTable] = useTableFill(data !== undefined)
   const tableLive = tableFilled ? data : undefined
   const tableTotals = tableFilled ? totals : undefined
 
@@ -79,15 +81,16 @@ export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
                   status={status}
                   posters={posters}
                   limits={limits}
+                  onBlocksDrawn={fillTable}
                 />
               </Suspense>
             </LiveBoundary>
           ) : (
             <LiveSkeleton />
           )}
-          <LandingsContext value={tableLandings}>
+          <TableLandings filled={tableFilled}>
             <LivePosters live={tableLive} totals={tableTotals} />
-          </LandingsContext>
+          </TableLandings>
         </PrimaryCard>
       </LandingsContext>
     </ChainClockContext>
@@ -102,6 +105,55 @@ function LiveSkeleton() {
       <PulseSkeleton />
       <BeltLegend />
     </div>
+  )
+}
+
+/**
+ * The table is thousands of elements, below a phone's first screen: built once
+ * the frame that first draws the belt's blocks is on screen, or, should the
+ * belt not draw, a while after the first answer. In a transition, so the
+ * browser can still draw between its steps. Later answers reach it at once,
+ * as its numbers count up with the belt
+ */
+function useTableFill(hasData: boolean) {
+  const [filled, setFilled] = useState(false)
+  // the belt calls it while drawing a frame, and a task queued then runs once
+  // that frame is on screen
+  const fill = useCallback(() => {
+    setTimeout(() => startTransition(() => setFilled(true)))
+  }, [])
+  useEffect(() => {
+    if (filled || !hasData) return
+    const timer = setTimeout(fill, FILL_WITHOUT_BELT_AFTER_MS)
+    return () => clearTimeout(timer)
+  }, [filled, hasData, fill])
+  return [filled, fill] as const
+}
+
+const FILL_WITHOUT_BELT_AFTER_MS = 2000
+
+/**
+ * The belt's landings, for the table once it has been shown with data. Until
+ * then its numbers hear none and hold nothing back: the block it first shows
+ * is its to show whole, as the reader never saw the table without it, and that
+ * block may have landed before the table was in
+ */
+function TableLandings({
+  filled,
+  children,
+}: {
+  filled: boolean
+  children: ReactNode
+}) {
+  const landings = useContext(LandingsContext)
+  const [shown, setShown] = useState(false)
+  useEffect(() => {
+    if (filled) setShown(true)
+  }, [filled])
+  return (
+    <LandingsContext value={shown ? landings : undefined}>
+      {children}
+    </LandingsContext>
   )
 }
 

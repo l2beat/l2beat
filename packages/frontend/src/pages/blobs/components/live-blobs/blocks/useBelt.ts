@@ -51,6 +51,8 @@ interface Options {
   onScreen: boolean
   /** A batch was clicked, or tapped while its tooltip was pinned */
   onClickBatch: (key: number) => void
+  /** Called once, from the first paint that draws blocks */
+  onBlocksDrawn?: () => void
 }
 
 /**
@@ -67,6 +69,7 @@ export function useBelt({
   view,
   onScreen,
   onClickBatch,
+  onBlocksDrawn,
 }: Options) {
   const playback = useRef<Playback>({
     progress: progressNow(),
@@ -94,6 +97,9 @@ export function useBelt({
   const pinned = useRef<{ key: number; x: number; y: number }>(undefined)
   const tapped = useRef(false)
   const painted = useRef<PaintedFrame>(undefined)
+  const blocksDrawn = useRef(onBlocksDrawn)
+  blocksDrawn.current = onBlocksDrawn
+  const drewBlocks = useRef(false)
 
   const paint = useCallback(
     (toDraw: BeltScene, now: number, hovered: number | undefined) => {
@@ -104,6 +110,10 @@ export function useBelt({
       if (!ctx) return
       playback.current.progress = progressNow()
       drawBelt(ctx, toDraw, playback.current, now, frame.current, hovered)
+      if (!drewBlocks.current && toDraw.blocks.size > 0) {
+        drewBlocks.current = true
+        blocksDrawn.current?.()
+      }
       painted.current = {
         scene: toDraw,
         hovered,

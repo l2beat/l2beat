@@ -118,27 +118,50 @@ async function measureFirstAnswer(
 
 /**
  * Long polls after the first go straight through. Awaited before the page
- * loads, or the first ask may pass and the hold wait a slot for the next
+ * loads, or the first ask may pass and the hold wait a slot for the next.
+ * The first ask must go alone: batched with the charts, holding it would
+ * hold them too, so that fails at once rather than timing out
  */
 async function holdFirstLiveAnswer(page: Page) {
   let release = () => {}
   let onHeld = () => {}
+  let onBatched = (_: Error) => {}
   const released = new Promise<void>((resolve) => {
     release = resolve
   })
-  const held = new Promise<void>((resolve) => {
+  const held = new Promise<void>((resolve, reject) => {
     onHeld = resolve
+    onBatched = reject
   })
   let first = true
-  await page.route('**/da.liveBlobs**', async (route) => {
-    if (first) {
-      first = false
-      onHeld()
-      await released
-    }
-    await route.continue()
-  })
+  await page.route(
+    (url) => trpcProcedures(url).includes(LIVE_PROCEDURE),
+    async (route) => {
+      if (first) {
+        first = false
+        const procedures = trpcProcedures(new URL(route.request().url()))
+        if (procedures.length > 1) {
+          onBatched(
+            new Error('Live answer batched with other queries', {
+              cause: { procedures },
+            }),
+          )
+        }
+        onHeld()
+        await released
+      }
+      await route.continue()
+    },
+  )
   return { held, release }
+}
+
+const LIVE_PROCEDURE = 'da.liveBlobs'
+
+/** A tRPC batch names its procedures in the path, comma-separated */
+function trpcProcedures(url: URL) {
+  const [, path] = url.pathname.split('/api/trpc/')
+  return path ? path.split(',') : []
 }
 
 // Twice, as the charts' answer schedules its render a task after it lands
