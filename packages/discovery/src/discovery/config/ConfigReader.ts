@@ -150,6 +150,12 @@ export class ConfigReader {
       .map((projectPath) => path.basename(projectPath))
   }
 
+  hasDiscovery(name: string): boolean {
+    return existsSync(
+      path.join(this.resolveProjectPath(name), 'discovered.json'),
+    )
+  }
+
   readDiffHistoryHash(name: string): Hash160 | undefined {
     const projectPath = this.resolveProjectPath(name)
     assert(

@@ -37,7 +37,8 @@ export const DiscoverCommandArgs = {
   dev: flag({
     type: boolean,
     long: 'dev',
-    description: 'runs discovery on the block saved in discovered.json',
+    description:
+      'runs discovery on the block saved in discovered.json, or on the latest block when there is none yet',
   }),
   printStats: flag({
     type: boolean,

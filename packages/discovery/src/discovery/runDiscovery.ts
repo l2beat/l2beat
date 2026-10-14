@@ -53,7 +53,7 @@ function getTimestamp(
 
   const configuredTimestamp =
     config.timestamp ??
-    (config.dev
+    (config.dev && configReader.hasDiscovery(config.project)
       ? configReader.readDiscovery(config.project).timestamp
       : undefined) ??
     UnixTime.now() - UnixTime.MINUTE

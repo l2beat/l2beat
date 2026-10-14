@@ -249,6 +249,21 @@ describe('config and discovery resolution', () => {
     })
   })
 
+  describe('hasDiscovery', () => {
+    it('tells whether a project has a discovered.json yet', () => {
+      mockFs({
+        '/base/old/config.jsonc': JSON.stringify({}),
+        '/base/old/discovered.json': JSON.stringify({}),
+        '/base/new/config.jsonc': JSON.stringify({}),
+      })
+
+      const reader = new ConfigReader('/base')
+
+      expect(reader.hasDiscovery('old')).toEqual(true)
+      expect(reader.hasDiscovery('new')).toEqual(false)
+    })
+  })
+
   describe('readConfig', () => {
     it('should read config from project', () => {
       mockFs({
