@@ -24,6 +24,7 @@ import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import { diffDiscovery } from './output/diffDiscovery'
+import { printFrontier } from './output/printFrontier'
 import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
@@ -136,6 +137,15 @@ export async function runDiscovery(
     projectConfig.color,
     templateService,
   )
+
+  if (addressStats.beyondMaxDepth.length > 0) {
+    printFrontier(
+      logger,
+      result,
+      addressStats.beyondMaxDepth,
+      projectConfig.structure.maxDepth,
+    )
+  }
 
   if (addressStats.skipped > 0) {
     printMaxAddressesWarning(
