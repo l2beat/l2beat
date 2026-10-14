@@ -9,7 +9,7 @@ Generated with discovered.json: 0xba2e922bc48c35b401f8ad7bc543f66283b3b1c0
 
 ## Description
 
-L2OutputOracle implementation replaced: `FINALIZATION_PERIOD_SECONDS` 7d → 1d.
+L2OutputOracle implementation replaced: proposed state roots, and with them withdrawals, now finalize after 1d instead of 7d.
 
 ## Watched changes
 
