@@ -29,7 +29,8 @@ import { useLiveBlobs } from './useLiveBlobs'
 // runs, before hydration, so it is in before the first live answer, which waits
 // for hydration, and the table built after that answer never holds it up
 const loadLiveBlocks = () => import('./blocks/LiveBlocks')
-if (typeof window !== 'undefined') void loadLiveBlocks()
+// a failure is the lazy load's to report, to LiveBoundary
+if (typeof window !== 'undefined') loadLiveBlocks().catch(() => {})
 const LiveBlocks = lazy(() =>
   loadLiveBlocks().then((m) => ({ default: m.LiveBlocks })),
 )
@@ -110,17 +111,19 @@ function LiveSkeleton() {
 
 /**
  * The table is thousands of elements, below a phone's first screen: built once
- * the frame that first draws the belt's blocks is on screen, or, should the
+ * a frame is on screen after the belt first draws its blocks, or, should the
  * belt not draw, a while after the first answer. In a transition, so the
  * browser can still draw between its steps. Later answers reach it at once,
  * as its numbers count up with the belt
  */
 function useTableFill(hasData: boolean) {
   const [filled, setFilled] = useState(false)
-  // the belt calls it while drawing a frame, and a task queued then runs once
-  // that frame is on screen
+  // A task queued from a frame's callbacks runs once that frame is on screen.
+  // Through a frame of its own, as the belt draws off screen outside of one
   const fill = useCallback(() => {
-    setTimeout(() => startTransition(() => setFilled(true)))
+    requestAnimationFrame(() => {
+      setTimeout(() => startTransition(() => setFilled(true)))
+    })
   }, [])
   useEffect(() => {
     if (filled || !hasData) return
