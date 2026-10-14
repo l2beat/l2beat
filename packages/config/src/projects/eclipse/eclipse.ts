@@ -71,14 +71,6 @@ export const eclipse: ScalingProject = {
         tokens: ['ETH'],
       },
     ],
-    daTracking: [
-      {
-        type: 'celestia',
-        daLayer: ProjectId('celestia'),
-        sinceBlock: 0, // Edge Case: config added @ DA Module start
-        namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U=',
-      },
-    ],
     activityConfig: {
       type: 'slot',
       startSlot: 1,

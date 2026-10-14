@@ -95,16 +95,6 @@ export const sp1turbo: BaseProject = {
         sinceTimestamp: UnixTime(1751328000),
       },
       {
-        projectId: ProjectId('blobstream'),
-        sinceTimestamp: UnixTime(1717608107),
-        untilTimestamp: UnixTime(1791526391), // v5 routes permanently frozen on the Ethereum, Arbitrum and Base SP1 gateways
-      },
-      {
-        projectId: ProjectId('vector'),
-        sinceTimestamp: UnixTime(1720128227),
-        untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
-      },
-      {
         projectId: ProjectId('sophon'),
         sinceTimestamp: UnixTime(1745341091),
         untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway

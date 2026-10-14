@@ -159,58 +159,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "Sovra Launches as First Sovereign Agent Company Powered by EigenCloud",
-          "content": "Gajesh Naik [introduced](https://blog.eigencloud.xyz/sovra-the-first-agent-media-company/) Sovra, described as the first “agent media company” designed to operate as a sovereign, investable AI agent. Sovra runs within a Trusted Execution Environment (TEE) on EigenCloud, generating cryptographic attestations that prove the exact code it executes.\n\nIts architecture combines TEE-based private execution with on-chain smart contracts on Base and Solana that control funds, identity, and permissions. The agent earns stablecoins through auctions for custom content, manages its own credentials, and is designed to operate without human key control."
-        },
-        {
-          "title": "EigenCloud Outlines Vision for Verifiable Agent Infrastructure",
-          "content": "JT Rose, Chief Growth Officer at EigenCloud, [published](https://x.com/jt_rose/status/2023856777260134441) an article outlining a vision for a “verifiable cloud” built for the agentic era. The piece argues that as agents begin handling financial transactions and critical operations, infrastructure must prioritize cryptographic proof and accountability over raw performance.\n\nRose highlights EigenLayer’s slashing mechanism, alongside EigenDA, EigenCompute, and EigenAI, as primitives enabling verifiable compute and enforceable agent behavior."
-        },
-        {
-          "title": "EigenCloud CTO Highlights Verifiability Thesis Following Google DeepMind Paper",
-          "content": "Vishnu Patankar, CTO of EigenCloud, [published](https://x.com/vishnu_patankar/status/2024594955168338005) an article arguing that research on intelligent AI delegation reinforces EigenCloud’s thesis: agent systems require verifiable execution and cryptoeconomic enforcement to operate safely at scale.\n\nThe piece emphasizes two requirements for the agentic web: verifiable execution that produces cryptographic proof of computation, and enforcement mechanisms (including slashing) that align incentives and punish misbehavior."
-        },
-        {
-          "title": "EigenCloud Updates Website with Agentic-Era Focus",
-          "content": "EigenCloud [unveiled](https://x.com/eigencloud/status/2026360976187261284) a refreshed website emphasizing its positioning as infrastructure for the agentic economy — focused on verifiable cloud primitives for agents that observe, decide, transact, and execute tasks involving real economic value."
-        },
-        {
-          "title": "$EIGEN/USDC Market Goes Live on Morpho",
-          "content": "The Eigen Foundation [announced](https://x.com/eigenfoundation/status/2018348569640722595) that $EIGEN is now available on Morpho on Ethereum mainnet, launching with the first $EIGEN/USDC lending market. The deployment expands liquidity access for EIGEN holders and integrates the token into Ethereum’s on-chain lending infrastructure."
-        },
-        {
-          "title": "CloutCards Showcases Verifiable Poker on EigenCompute",
-          "content": "EigenCloud [showcased](https://x.com/eigencloud/status/2018443301515575760) CloutCards, a live crypto poker demo built on EigenCompute featuring gasless gameplay, private execution, and verifiably fair mechanics with auditable Sepolia payouts. The demo illustrates how applications can integrate trustless payments and verifiable execution with cryptographic guarantees around fairness, privacy, and settlement."
-        },
-        {
-          "title": "EigenCloud Publishes Deterministic Inference Whitepaper",
-          "content": "EigenCloud, led by CTO Vishnu Patankar, [published](https://x.com/vishnu_patankar/status/2018827284464177507) a whitepaper outlining a framework for deterministic LLM inference to make agent decisions reproducible and auditable in high-stakes environments.\n\nThe approach combines Trusted Execution Environments (TEEs), threshold decryption keys, and bit-exact execution so inference results can be re-executed identically, enabling byte-level verification and making deviations detectable."
-        },
-        {
-          "title": "Eigen Foundation Awards Grant to Puffer’s UniFi AVS",
-          "content": "The Eigen Foundation [announced](https://x.com/eigenfoundation/status/2021609856088838428) grant support for Puffer Finance and UniFi AVS, backing rollup preconfirmations designed to improve UX without compromising Ethereum’s credible neutrality.\n\nUniFi AVS targets near-instant rollup interactions via economically enforced preconfirmations secured through Ethereum’s restaking framework rather than centralized trust assumptions."
-        },
-        {
-          "title": "MoltCourt Launches on EigenCloud with Verifiable AI Debates",
-          "content": "EigenCloud [introduced](https://x.com/eigencloud/status/2021707457324609615) MoltCourt, an experimental AI debate arena where agents engage in structured multi-round arguments evaluated by an AI jury. Each verdict is issued with cryptographic proof powered by EigenCompute, showcasing verifiable compute anchoring agent-to-agent interactions in provable execution."
-        },
-        {
-          "title": "EigenCloud Joins ETHGas Open Gas Initiative",
-          "content": "EigenCloud [announced](https://x.com/eigencloud/status/2022324526860918868) it has joined ETHGas’ Open Gas Initiative (OG Cohort) to advance gas abstraction and reduce transaction friction. Through the initiative, EigenCloud will sponsor gas for users and support gasless interactions to improve onboarding for agent-native and crypto applications."
-        },
-        {
-          "title": "Eigen Positions Itself for the Agent-Driven Economy",
-          "content": "Eigen Labs founder Sreeram Kannan [shared](https://x.com/sreeramkannan/status/2027383624396571028) a strategic update on how Eigen is aligning around the rapid rise of autonomous AI agents. He framed EigenCloud as the integration of EigenLayer, EigenDA, EigenCompute, and EigenAI into a full-stack system for agent-native companies and digital institutions.\n\nFor 2026, Eigen plans to accelerate network revenue, strengthen value capture for EIGEN, and begin launching consumer-facing agent applications directly. Kannan also reaffirmed long-term conviction around EIGEN, stating he has not sold any and does not plan to ahead of the 2027 unlock."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

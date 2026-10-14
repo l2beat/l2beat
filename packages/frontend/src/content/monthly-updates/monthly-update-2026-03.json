@@ -151,30 +151,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "Eigen Foundation Appoints New Executive Director",
-          "content": "The Eigen Foundation [announced](https://x.com/eigenfoundation/status/2032521576386875621) that Ajit Tripathi has joined as Executive Director, while Robert Drost transitions to Senior Advisor."
-        },
-        {
-          "title": "EigenCloud Participates in Agent Hackathon",
-          "content": "EigenCloud [announced](https://x.com/eigencloud/status/2034511590310187414) its participation in the Synthesis hackathon, focusing on verifiable compute for agent applications."
-        },
-        {
-          "title": "Eigen Labs Hiring Social Media Lead for AI",
-          "content": "Eigen Labs is [hiring](https://x.com/eigen_labs/status/2032614064409686499) a Social Media Lead focused on AI, agents, and verifiable systems."
-        },
-        {
-          "title": "EigenCloud Launches AgentKit for Sovereign Agents",
-          "content": "EigenCloud [introduced](https://x.com/eigencloud/status/2037204321008500947) AgentKit, a toolkit enabling AI agents to manage assets, identity, and payments autonomously.\n\nThe system combines verifiable compute, secure execution, and onchain financial primitives."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

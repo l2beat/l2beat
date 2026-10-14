@@ -33,7 +33,8 @@ import {
   type ChartResolution,
   rangeToResolution,
 } from '~/utils/range/range'
-import { THROUGHPUT_ENABLED_DA_LAYERS } from '../../../server/features/data-availability/throughput/utils/consts'
+
+const DATA_POSTED_KEY = 'ethereum'
 
 interface CostsChartDataPoint {
   timestamp: number
@@ -42,9 +43,6 @@ interface CostsChartDataPoint {
   compute: number | null
   overhead: number | null
   ethereum?: number | null
-  celestia?: number | null
-  avail?: number | null
-  eigenda?: number | null
 }
 
 interface Props {
@@ -71,15 +69,7 @@ export function CostsChart({
   hasBlobs,
 }: Props) {
   const chartMeta = useMemo(() => {
-    const hasData = data?.reduce(
-      (acc, d) => ({
-        ethereum: acc.ethereum || isNumber(d.ethereum),
-        celestia: acc.celestia || isNumber(d.celestia),
-        avail: acc.avail || isNumber(d.avail),
-        eigenda: acc.eigenda || isNumber(d.eigenda),
-      }),
-      { ethereum: false, celestia: false, avail: false, eigenda: false },
-    )
+    const hasEthereumData = data?.some((d) => isNumber(d.ethereum))
     return {
       calldata: {
         label: 'Calldata',
@@ -105,7 +95,7 @@ export function CostsChart({
         color: 'var(--chart-stacked-purple)',
         indicatorType: { shape: 'square' },
       },
-      ...(hasData?.ethereum
+      ...(hasEthereumData
         ? {
             ethereum: {
               label: 'Data posted on Ethereum',
@@ -114,40 +104,12 @@ export function CostsChart({
             },
           }
         : {}),
-      ...(hasData?.celestia
-        ? {
-            celestia: {
-              label: 'Data posted on Celestia',
-              color: 'var(--chart-fuchsia)',
-              indicatorType: { shape: 'line' as const },
-            },
-          }
-        : {}),
-      ...(hasData?.avail
-        ? {
-            avail: {
-              label: 'Data posted on Avail',
-              color: 'var(--chart-sky)',
-              indicatorType: { shape: 'line' as const },
-            },
-          }
-        : {}),
-      ...(hasData?.eigenda
-        ? {
-            eigenda: {
-              label: 'Data posted on EigenDA',
-              color: 'var(--chart-lime)',
-              indicatorType: { shape: 'line' as const },
-            },
-          }
-        : {}),
     }
   }, [hasBlobs, data]) satisfies ChartMeta
 
-  const { dataKeys, toggleDataKey } = useChartDataKeys(
-    chartMeta,
-    THROUGHPUT_ENABLED_DA_LAYERS as (keyof typeof chartMeta)[],
-  )
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, [
+    DATA_POSTED_KEY,
+  ])
 
   const resolution = rangeToResolution(range)
 
@@ -224,36 +186,6 @@ export function CostsChart({
             isAnimationActive={false}
             dot={false}
             hide={!dataKeys.includes('ethereum')}
-          />
-        )}
-        {chartMeta.celestia && (
-          <Line
-            yAxisId="right"
-            dataKey="celestia"
-            stroke={chartMeta.celestia.color}
-            isAnimationActive={false}
-            dot={false}
-            hide={!dataKeys.includes('celestia')}
-          />
-        )}
-        {chartMeta.avail && (
-          <Line
-            yAxisId="right"
-            dataKey="avail"
-            stroke={chartMeta.avail.color}
-            isAnimationActive={false}
-            dot={false}
-            hide={!dataKeys.includes('avail')}
-          />
-        )}
-        {chartMeta.eigenda && (
-          <Line
-            yAxisId="right"
-            dataKey="eigenda"
-            stroke={chartMeta.eigenda.color}
-            isAnimationActive={false}
-            dot={false}
-            hide={!dataKeys.includes('eigenda')}
           />
         )}
 
@@ -369,7 +301,7 @@ function CustomTooltip({
                   {entry.value !== null &&
                   entry.value !== undefined &&
                   entry.name !== undefined
-                    ? THROUGHPUT_ENABLED_DA_LAYERS.includes(entry.name)
+                    ? isDataPostedKey(entry.name)
                       ? formatBytes(entry.value)
                       : formatCostValue(entry.value, unit, 'total')
                     : 'No data'}
@@ -384,5 +316,5 @@ function CustomTooltip({
 }
 
 function isDataPostedKey(name: string | undefined) {
-  return name !== undefined && THROUGHPUT_ENABLED_DA_LAYERS.includes(name)
+  return name === DATA_POSTED_KEY
 }
