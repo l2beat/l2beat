@@ -62,7 +62,6 @@ export function DefiLiquidStakingCharts({
     formatAxisLabel: (value: number) => `${value.toFixed(0)}M`,
     formatTooltipValue: (value: number) => `${value.toFixed(1)}M ETH`,
   }
-  const snapshot = `Static snapshot up to ${charts.asOf}.`
 
   return (
     <div className="grid gap-x-6 gap-y-8 lg:grid-cols-2">
@@ -74,7 +73,6 @@ export function DefiLiquidStakingCharts({
             'Network average is the return of all Ethereum validators before any protocol fee: consensus issuance plus MEV-boost payments and tips, over the active stake, for the same 30 days.',
           stake &&
             'The shaded area is the ETH staked network-wide (right axis): rewards per validator shrink as the square root of the total stake, so the yield falls as the stake grows.',
-          snapshot,
         ]
           .filter(Boolean)
           .join(' ')}
@@ -96,7 +94,6 @@ export function DefiLiquidStakingCharts({
           'The discount is a 7-day median of quoted prices, before swap fees and price impact. For wBETH the wait is the operator-set lock time.',
           bufferCharted &&
             `Rocket Pool has no queue: burning is free while its burn buffer holds ETH, which it did not on ${bufferEmptyDays} of ${exitDays.data.length} days.`,
-          snapshot,
         ]
           .filter(Boolean)
           .join(' ')}
