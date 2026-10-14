@@ -1,5 +1,8 @@
 import compact from 'lodash/compact'
-import type { InteropTokenDashboardData } from '~/server/features/layer2s/interop/getInteropTokenData'
+import type {
+  InteropTokenDashboardData,
+  InteropTokenTopProtocol,
+} from '~/server/features/layer2s/interop/getInteropTokenData'
 import type { InteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import type { InteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
 import {
@@ -23,6 +26,7 @@ import { htmlPagePointer } from '~/server/markdown/renderSectionParts'
 import { getInteropTokenPagePath } from '../utils/getInteropTokenUrl'
 import {
   getInteropTokenNotices,
+  getTopProtocolBasis,
   UNRELIABLE_PRICE_NOTICE,
 } from './getInteropTokenNotices'
 
@@ -31,26 +35,25 @@ export interface InteropTokenPage {
   tokenEntry: InteropTokenEntry
   /** Null when no aggregated snapshot has transfers of the token. */
   tokenData: InteropTokenDashboardData | null
+  /** Set when the latest snapshot lacks the token and an older one is shown. */
+  lastSyncedAt: number | undefined
 }
 
 /** The markdown alternate of the interop token page, from the data the HTML page renders. */
-export function renderInteropTokenMarkdown({
-  token,
-  tokenEntry,
-  tokenData,
-}: InteropTokenPage): string {
+export function renderInteropTokenMarkdown(page: InteropTokenPage): string {
+  const { token, tokenEntry, tokenData } = page
   return renderProjectMarkdown({
     name: token.symbol,
     pagePath: getInteropTokenPagePath(token),
     summary: {
-      warnings: getInteropTokenNotices(token, tokenData),
+      warnings: getInteropTokenNotices(page),
       facts: getFacts(token, tokenEntry, tokenData),
       risks: [],
       description: undefined,
     },
     // Without data the HTML page shows only the summary, without sections.
     sections: tokenData ? tokenEntry.sections : [],
-    sectionBodies: tokenData ? getDashboardSectionBodies(token, tokenData) : {},
+    sectionBodies: tokenData ? getDashboardSectionBodies(tokenData) : {},
     apiLinks: {},
   })
 }
@@ -63,18 +66,16 @@ function getFacts(
 ) {
   const stats = data?.token
   const protocols = data?.entries ?? []
-  const showUsd = !token.isPriceUnreliable
   return compact([
     token.issuer && {
       label: 'Issued by',
       value: capitalizeWords(token.issuer),
     },
     token.category && { label: 'Category', value: token.category },
-    showUsd &&
-      stats?.volume != null && {
-        label: 'Last 24h volume',
-        value: formatUsd(stats.volume),
-      },
+    stats?.volume != null && {
+      label: 'Last 24h volume',
+      value: formatUsd(stats.volume),
+    },
     stats && {
       label: 'Last 24h transfer count',
       value: formatCount(stats.transferCount),
@@ -83,21 +84,17 @@ function getFacts(
       label: 'Last 24h avg. transfer time',
       value: formatAverageDuration(stats.avgDuration),
     },
-    showUsd &&
-      stats?.avgValue != null && {
-        label: 'Last 24h avg. transfer value',
-        value: formatUsd(stats.avgValue),
-      },
-    showUsd &&
-      data?.topPath && {
-        label: 'Last 24h top path',
-        value: formatTopPath(data.topPath),
-      },
+    stats?.avgValue != null && {
+      label: 'Last 24h avg. transfer value',
+      value: formatUsd(stats.avgValue),
+    },
+    data?.topPath && {
+      label: 'Last 24h top path',
+      value: formatTopPath(data.topPath),
+    },
     data?.topProtocol && {
-      label: showUsd
-        ? 'Top protocol (based on 24h volume)'
-        : 'Top protocol (based on 24h transfer count)',
-      value: `${link(data.topProtocol.name, interopProtocolUrl(data.topProtocol.slug))} (${compact([showUsd && `volume ${formatUsd(data.topProtocol.volume.value)}`, formatTransferCount(data.topProtocol.transfers.value)]).join(', ')})`,
+      label: `Top protocol (based on ${getTopProtocolBasis(token.isPriceUnreliable)})`,
+      value: formatTopProtocol(data.topProtocol),
     },
     protocols.length > 0 && {
       label: 'Protocols used',
@@ -110,18 +107,30 @@ function getFacts(
   ])
 }
 
+function formatTopProtocol({
+  name,
+  slug,
+  volume,
+  transfers,
+}: InteropTokenTopProtocol) {
+  const stats = compact([
+    volume && `volume ${formatUsd(volume.value)}`,
+    formatTransferCount(transfers.value),
+  ])
+  return `${link(name, interopProtocolUrl(slug))} (${stats.join(', ')})`
+}
+
 /**
  * The HTML volume and protocols sections read the dashboard data rather than
  * their props, so their markdown is built here from the same data.
  */
 function getDashboardSectionBodies(
-  token: InteropAbstractToken,
   data: InteropTokenDashboardData,
 ): SectionBodyOverrides {
   return {
     InteropTokenProtocolsSection: () => renderProtocolsTable(data.entries),
     InteropTokenVolumeSection: (props, level) =>
-      token.isPriceUnreliable
+      props.isPriceUnreliable
         ? UNRELIABLE_PRICE_NOTICE
         : renderTopFlows(data, props.id, level),
   }

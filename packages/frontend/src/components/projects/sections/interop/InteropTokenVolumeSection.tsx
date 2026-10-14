@@ -30,14 +30,19 @@ import type { ProjectSectionProps } from '../types'
 export interface InteropTokenVolumeSectionProps extends ProjectSectionProps {
   tokenId: string
   interopChains: InteropChainWithIcon[]
+  isPriceUnreliable: boolean
+  /** Pins the flows to the older snapshot the page shows; otherwise the latest is used. */
+  snapshotTimestamp: number | undefined
 }
 
 export function InteropTokenVolumeSection({
   tokenId,
   interopChains,
+  isPriceUnreliable,
+  snapshotTimestamp,
   ...sectionProps
 }: InteropTokenVolumeSectionProps) {
-  const { data, isPriceUnreliable } = useInteropTokenDashboard()
+  const { data } = useInteropTokenDashboard()
   const protocols = data?.entries ?? []
   const sortedChains = useMemo(
     () => sortChainsByFlowVolume(interopChains, data?.flows ?? []),
@@ -69,7 +74,7 @@ export function InteropTokenVolumeSection({
       >
         <Content
           tokenId={tokenId}
-          snapshotTimestamp={data?.snapshotTimestamp}
+          snapshotTimestamp={snapshotTimestamp}
           interopChains={sortedChains}
         />
       </InteropFlowsProvider>

@@ -126,6 +126,8 @@ export type InteropTokenParams = v.infer<typeof InteropTokenParams>
 export const InteropTokenParams = v.object({
   tokenId: v.string(),
   ...InteropSelectionInputShape,
+  /** Pins the data to the promoted snapshot the rest of a page shows; otherwise the latest is used. */
+  snapshotTimestamp: v.number().optional(),
 })
 
 export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>

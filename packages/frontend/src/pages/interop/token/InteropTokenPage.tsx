@@ -12,6 +12,7 @@ import type { InteropTokenEntry } from '~/server/features/layer2s/interop/token/
 import { useTRPC } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InteropEntityPageLayout } from '../components/InteropEntityPageLayout'
+import { InteropEmptyState } from '../summary/components/InteropEmptyState'
 import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
@@ -19,7 +20,10 @@ import {
 import type { InteropSelection } from '../utils/types'
 import { InteropTokenSummary } from './components/InteropTokenSummary'
 import { TokenTopProtocolCard } from './components/TokenTopProtocolCard'
-import { getInteropTokenNotices } from './getInteropTokenNotices'
+import {
+  getInteropTokenNotices,
+  NOT_SYNCED_NOTICE,
+} from './getInteropTokenNotices'
 import {
   InteropTokenDashboardProvider,
   useInteropTokenDashboard,
@@ -37,6 +41,8 @@ interface Props extends AppLayoutProps {
   }
   tokenEntry: InteropTokenEntry
   tokenData: InteropTokenDashboardData | null
+  /** Set when the latest snapshot lacks the token and an older one is shown. */
+  lastSyncedAt: number | undefined
   apiSelection: InteropSelection
   interopChains: InteropChainWithIcon[]
   initialSelection: InteropSelection
@@ -46,6 +52,7 @@ export function InteropTokenPage({
   token,
   tokenEntry,
   tokenData,
+  lastSyncedAt,
   apiSelection,
   interopChains,
   initialSelection,
@@ -61,6 +68,7 @@ export function InteropTokenPage({
           token={token}
           tokenEntry={tokenEntry}
           tokenData={tokenData}
+          lastSyncedAt={lastSyncedAt}
           apiSelection={apiSelection}
         />
       </InteropSelectedChainsProvider>
@@ -72,13 +80,12 @@ function Content({
   token,
   tokenEntry,
   tokenData,
+  lastSyncedAt,
   apiSelection,
-}: {
-  token: Props['token']
-  tokenEntry: InteropTokenEntry
-  tokenData: InteropTokenDashboardData | null
-  apiSelection: InteropSelection
-}) {
+}: Pick<
+  Props,
+  'token' | 'tokenEntry' | 'tokenData' | 'lastSyncedAt' | 'apiSelection'
+>) {
   const trpc = useTRPC()
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = useQuery(
@@ -86,6 +93,7 @@ function Content({
       {
         tokenId: token.id,
         ...selectedChains,
+        snapshotTimestamp: lastSyncedAt,
       },
       {
         initialData: isSameSelection(selectedChains, apiSelection)
@@ -126,25 +134,40 @@ function Content({
     </>
   )
 
-  const notices = data === undefined ? [] : getInteropTokenNotices(token, data)
+  const layoutProps = {
+    navigationSections,
+    isNavigationEmpty,
+    navigationProject,
+    header,
+  }
+  const notices = (
+    <InteropTokenNotices
+      notices={getInteropTokenNotices({ token, tokenData, lastSyncedAt })}
+    />
+  )
 
   // Without any aggregates there is nothing to show beyond the token itself.
-  if (data === null) {
+  if (tokenData === null) {
     return (
-      <InteropEntityPageLayout
-        navigationSections={navigationSections}
-        isNavigationEmpty={isNavigationEmpty}
-        navigationProject={navigationProject}
-        header={header}
-      >
-        <InteropTokenNotices notices={notices} />
+      <InteropEntityPageLayout {...layoutProps}>
+        {notices}
         <InteropTokenSummary
-          data={null}
+          data={undefined}
           isLoading={false}
           tokenCategory={token.category}
           isPriceUnreliable={token.isPriceUnreliable}
           deploymentsCount={tokenEntry.deploymentsCount}
+          unavailableReason={NOT_SYNCED_NOTICE}
         />
+      </InteropEntityPageLayout>
+    )
+  }
+
+  if (data === null) {
+    return (
+      <InteropEntityPageLayout {...layoutProps}>
+        {notices}
+        <InteropEmptyState />
       </InteropEntityPageLayout>
     )
   }
@@ -155,15 +178,9 @@ function Content({
       isLoading={isLoading}
       apiSelection={selectedChains}
       tokenId={token.id}
-      isPriceUnreliable={token.isPriceUnreliable}
     >
-      <InteropEntityPageLayout
-        navigationSections={navigationSections}
-        isNavigationEmpty={isNavigationEmpty}
-        navigationProject={navigationProject}
-        header={header}
-      >
-        <InteropTokenNotices notices={notices} />
+      <InteropEntityPageLayout {...layoutProps}>
+        {notices}
         <TokenPageContent token={token} tokenEntry={tokenEntry} />
       </InteropEntityPageLayout>
     </InteropTokenDashboardProvider>
@@ -177,8 +194,7 @@ function TokenPageContent({
   token: Props['token']
   tokenEntry: InteropTokenEntry
 }) {
-  const { data, isLoading, apiSelection, isPriceUnreliable } =
-    useInteropTokenDashboard()
+  const { data, isLoading, apiSelection } = useInteropTokenDashboard()
 
   return (
     <>
@@ -186,14 +202,14 @@ function TokenPageContent({
         data={data}
         isLoading={isLoading}
         tokenCategory={token.category}
-        isPriceUnreliable={isPriceUnreliable}
+        isPriceUnreliable={token.isPriceUnreliable}
         deploymentsCount={tokenEntry.deploymentsCount}
       />
       <TokenTopProtocolCard
         data={data}
         isLoading={isLoading}
         apiSelection={apiSelection}
-        isPriceUnreliable={isPriceUnreliable}
+        isPriceUnreliable={token.isPriceUnreliable}
       />
       <HighlightableLinkContextProvider>
         <ProjectDetails items={tokenEntry.sections} />

@@ -179,5 +179,6 @@ const TOKEN_PAGE: InteropTokenPage & { apiSelection: { from: []; to: [] } } = {
   },
   tokenEntry: { sections: [], deploymentsCount: 0 },
   tokenData: null,
+  lastSyncedAt: undefined,
   apiSelection: { from: [], to: [] },
 }

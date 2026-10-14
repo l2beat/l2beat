@@ -377,7 +377,6 @@ const TOKEN_DATA: InteropTokenDashboardData = {
   ],
   zeroTransferProtocols: [],
   snapshotTimestamp: 1_700_000_000,
-  isSynced: true,
 }
 
 const PAGE: InteropTokenPage = {
@@ -399,6 +398,8 @@ const PAGE: InteropTokenPage = {
           title: 'Volume and flows',
           tokenId: 'usdc01',
           interopChains: [],
+          isPriceUnreliable: false,
+          snapshotTimestamp: undefined,
         },
       },
       {
@@ -425,4 +426,5 @@ const PAGE: InteropTokenPage = {
     ],
   },
   tokenData: TOKEN_DATA,
+  lastSyncedAt: undefined,
 }

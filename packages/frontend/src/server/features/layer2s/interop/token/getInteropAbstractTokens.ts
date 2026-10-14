@@ -39,21 +39,18 @@ export async function getInteropAbstractTokens(
 }
 
 /**
- * Also finds tokens missing from the latest snapshot, so their pages can say
- * the data is not synced instead of disappearing.
+ * Looks the token up directly rather than in the latest snapshot's list, so a
+ * token missing from that snapshot still gets a page saying it is not synced.
  */
 export async function findInteropAbstractToken(
   id: string,
-  chainIds: string[],
 ): Promise<InteropAbstractToken | undefined> {
-  const tokens = await getInteropAbstractTokens(chainIds)
-  const token = tokens.find((token) => token.id === id)
-  if (token) return token
-  // Mock mode has no token DB to fall back to.
-  if (env.MOCK) return undefined
+  if (env.MOCK) {
+    return MOCK_INTEROP_ABSTRACT_TOKENS.find((token) => token.id === id)
+  }
 
-  const [record] = await getTokenDb().abstractToken.getByIds([id])
-  return record
+  const [token] = await getTokenDb().abstractToken.getByIds([id])
+  return token
 }
 
 async function getInteropAbstractTokensData(

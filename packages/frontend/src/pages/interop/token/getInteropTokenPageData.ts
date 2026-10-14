@@ -2,7 +2,7 @@ import { INTEROP_TRANSFER_RETENTION } from '@l2beat/database'
 import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
+import { getLatestInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { findInteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
 import { getAggregatedInteropSnapshotTimestamp } from '~/server/features/layer2s/interop/utils/getAggregatedInteropTimestamp'
@@ -60,6 +60,7 @@ export async function getInteropTokenPageData(
         },
         tokenEntry: data.tokenEntry,
         tokenData: data.tokenData,
+        lastSyncedAt: data.lastSyncedAt,
         apiSelection: data.apiSelection,
         interopChains: interopChainsWithIcons,
         initialSelection: ALL_CHAINS_SELECTION,
@@ -111,7 +112,6 @@ function getCachedInteropTokenPage(
       getCachedData({
         slug,
         initialSelection: ALL_CHAINS_SELECTION,
-        activeInteropChainIds: interopChainsWithIcons.map((chain) => chain.id),
         interopChainsWithIcons,
       }),
   )
@@ -120,16 +120,14 @@ function getCachedInteropTokenPage(
 async function getCachedData({
   slug,
   initialSelection,
-  activeInteropChainIds,
   interopChainsWithIcons,
 }: {
   slug: string
   initialSelection: InteropSelection
-  activeInteropChainIds: string[]
   interopChainsWithIcons: InteropChainWithIcon[]
 }) {
   const [token, snapshotTimestamp, interopProjects] = await Promise.all([
-    findInteropAbstractToken(slug, activeInteropChainIds),
+    findInteropAbstractToken(slug),
     getAggregatedInteropSnapshotTimestamp(),
     ps.getProjects({ select: ['interopConfig'] }),
   ])
@@ -137,20 +135,18 @@ async function getCachedData({
 
   const apiSelection = initialSelection
 
-  const [tokenData, relationsGraph] = await Promise.all([
-    getInteropTokenData(
-      { tokenId: token.id, ...apiSelection },
-      { snapshotTimestamp, interopProjects },
-    ),
+  const [{ tokenData, lastSyncedAt }, relationsGraph] = await Promise.all([
+    getLatestInteropTokenData(token.id, { snapshotTimestamp, interopProjects }),
     getRelationsGraph(token.id),
   ])
 
-  const tokenEntry = getInteropTokenEntry(
-    token.id,
-    interopChainsWithIcons,
+  const tokenEntry = getInteropTokenEntry({
+    token,
+    interopChains: interopChainsWithIcons,
     relationsGraph,
-    hasRawTransfers(tokenData?.snapshotTimestamp),
-  )
+    lastSyncedAt,
+    hasRawTransfers: hasRawTransfers(tokenData?.snapshotTimestamp),
+  })
 
   return {
     token: {
@@ -159,6 +155,7 @@ async function getCachedData({
     },
     tokenEntry,
     tokenData,
+    lastSyncedAt,
     apiSelection,
   }
 }

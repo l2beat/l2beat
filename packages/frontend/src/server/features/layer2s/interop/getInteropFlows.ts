@@ -101,6 +101,9 @@ export async function getInteropFlows(
     return getMockInteropFlows()
   }
 
+  const snapshotTimestamp = await getPromotedInteropSnapshotTimestamp(
+    params.snapshotTimestamp,
+  )
   const { records } = await getLatestAggregatedInteropTransferWithTokens({
     selection: {
       from: params.chains,
@@ -108,9 +111,7 @@ export async function getInteropFlows(
     },
     protocolIds: params.protocolIds,
     anchorChain: params.anchorChain,
-    snapshotTimestamp: await getPromotedInteropSnapshotTimestamp(
-      params.snapshotTimestamp,
-    ),
+    snapshotTimestamp,
   })
   const scopedRecords = params.tokenId
     ? scopeRecordsToToken(records, params.tokenId)

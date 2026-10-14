@@ -14,7 +14,10 @@ import { cn } from '~/utils/cn'
 import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { buildInteropUrl } from '../../utils/buildInteropUrl'
 import type { InteropSelection } from '../../utils/types'
-import { UNRELIABLE_PRICE_NOTICE } from '../getInteropTokenNotices'
+import {
+  getTopProtocolBasis,
+  UNRELIABLE_PRICE_NOTICE,
+} from '../getInteropTokenNotices'
 
 type TopProtocol = NonNullable<InteropTokenDashboardData['topProtocol']>
 
@@ -23,9 +26,15 @@ const TOP_PROTOCOL_STATS = [
     label: 'Volume',
     tooltip:
       "The total USD value of this token's transfers handled by the protocol in the past 24 hours.",
-    format: (topProtocol: TopProtocol) =>
-      formatCurrency(topProtocol.volume.value, 'usd'),
-    isUsd: true,
+    format: ({ volume }: TopProtocol) =>
+      volume ? (
+        formatCurrency(volume.value, 'usd')
+      ) : (
+        <InteropNoDataBadge
+          size="extraSmall"
+          tooltip={UNRELIABLE_PRICE_NOTICE}
+        />
+      ),
   },
   {
     label: 'Transaction count',
@@ -33,7 +42,6 @@ const TOP_PROTOCOL_STATS = [
       "The total number of this token's transfers handled by the protocol in the past 24 hours.",
     format: (topProtocol: TopProtocol) =>
       formatInteger(topProtocol.transfers.value),
-    isUsd: false,
   },
 ] as const
 
@@ -73,7 +81,6 @@ export function TokenTopProtocolCard({
             <TopProtocolStats
               topProtocol={topProtocol}
               isLoading={isLoading}
-              isPriceUnreliable={isPriceUnreliable}
               variant="card"
             />
           </div>
@@ -83,7 +90,6 @@ export function TokenTopProtocolCard({
           <TopProtocolStats
             topProtocol={topProtocol}
             isLoading={isLoading}
-            isPriceUnreliable={isPriceUnreliable}
             variant="card"
           />
         </div>
@@ -92,7 +98,6 @@ export function TokenTopProtocolCard({
           <TopProtocolStats
             topProtocol={topProtocol}
             isLoading={isLoading}
-            isPriceUnreliable={isPriceUnreliable}
             variant="row"
           />
         </div>
@@ -112,9 +117,7 @@ function TopProtocolHeading({
         Top protocol
       </h2>
       <p className="mt-1 font-medium text-paragraph-12 text-secondary">
-        {isPriceUnreliable
-          ? 'Based on 24h transfer count'
-          : 'Based on 24h volume'}
+        Based on {getTopProtocolBasis(isPriceUnreliable)}
       </p>
     </div>
   )
@@ -168,12 +171,10 @@ function TopProtocolIdentity({
 function TopProtocolStats({
   topProtocol,
   isLoading,
-  isPriceUnreliable,
   variant,
 }: {
   topProtocol: TopProtocol | undefined
   isLoading: boolean
-  isPriceUnreliable: boolean
   variant: 'card' | 'row'
 }) {
   const stats = TOP_PROTOCOL_STATS.map((stat) => (
@@ -183,16 +184,7 @@ function TopProtocolStats({
       label={stat.label}
       tooltip={stat.tooltip}
       isLoading={isLoading}
-      value={
-        stat.isUsd && isPriceUnreliable ? (
-          <InteropNoDataBadge
-            size="extraSmall"
-            tooltip={UNRELIABLE_PRICE_NOTICE}
-          />
-        ) : (
-          formatStatValue(topProtocol, stat.format)
-        )
-      }
+      value={formatStatValue(topProtocol, stat.format)}
     />
   ))
 

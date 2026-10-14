@@ -87,12 +87,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       new Map([
         [
           'eth',
-          {
-            symbol: 'ETH',
-            iconUrl: 'https://token/eth.png',
-            issuer: null,
-            isPriceUnreliable: false,
-          },
+          { symbol: 'ETH', iconUrl: 'https://token/eth.png', issuer: null },
         ],
       ]),
       { name: 'Across', href: '/interop/protocols/across' },
@@ -115,7 +110,6 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
             symbol: 'USDC',
             iconUrl: 'https://token/usdc.png',
             issuer: 'Circle',
-            isPriceUnreliable: false,
           },
         ],
       ]),
@@ -152,7 +146,6 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
             symbol: 'Unknown',
             iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
             issuer: null,
-            isPriceUnreliable: false,
           },
         ],
       ]),

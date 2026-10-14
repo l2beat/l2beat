@@ -9,10 +9,7 @@ import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { InteropTopPathValue } from '../../components/InteropTopPathValue'
 import { TopProtocolsCell } from '../../components/protocols/TopProtocolsCell'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
-import {
-  NOT_SYNCED_NOTICE,
-  UNRELIABLE_PRICE_NOTICE,
-} from '../getInteropTokenNotices'
+import { UNRELIABLE_PRICE_NOTICE } from '../getInteropTokenNotices'
 
 export function InteropTokenSummary({
   data,
@@ -20,18 +17,20 @@ export function InteropTokenSummary({
   tokenCategory,
   isPriceUnreliable,
   deploymentsCount,
+  unavailableReason,
 }: {
-  /** Null when no aggregated snapshot has transfers of the token. */
-  data: InteropTokenDashboardData | null | undefined
+  data: InteropTokenDashboardData | undefined
   isLoading: boolean
   tokenCategory: string | null
   isPriceUnreliable: boolean
   deploymentsCount: number
+  /** Replaces every interop stat, when the token has no data at all. */
+  unavailableReason?: string
 }) {
   const token = data?.token
-  const notSyncedBadge = data === null ? <NotSyncedBadge /> : undefined
-  const usdUnavailableBadge =
-    notSyncedBadge ?? (isPriceUnreliable ? <UnreliablePriceBadge /> : undefined)
+  const usdUnavailableReason =
+    unavailableReason ??
+    (isPriceUnreliable ? UNRELIABLE_PRICE_NOTICE : undefined)
 
   return (
     <section
@@ -48,20 +47,18 @@ export function InteropTokenSummary({
         <StatsItem
           title="Last 24h volume"
           isLoading={isLoading}
+          unavailableReason={usdUnavailableReason}
           value={
-            usdUnavailableBadge ??
-            (token?.volume !== null && token?.volume !== undefined
+            token?.volume !== null && token?.volume !== undefined
               ? formatCurrency(token.volume, 'usd')
-              : EM_DASH)
+              : EM_DASH
           }
         />
         <StatsItem
           title="Last 24h transfer count"
           isLoading={isLoading}
-          value={
-            notSyncedBadge ??
-            (token ? formatInteger(token.transferCount) : EM_DASH)
-          }
+          unavailableReason={unavailableReason}
+          value={token ? formatInteger(token.transferCount) : EM_DASH}
         />
       </div>
       <HorizontalSeparator className="col-span-3 my-4 max-md:hidden" />
@@ -69,9 +66,9 @@ export function InteropTokenSummary({
         <StatsItem
           title="Last 24h avg. transfer time"
           isLoading={isLoading}
+          unavailableReason={unavailableReason}
           value={
-            notSyncedBadge ??
-            (token?.avgDuration ? (
+            token?.avgDuration ? (
               <AvgDurationCell
                 className="font-bold text-label-value-16"
                 splitClassName="flex-row gap-3 text-label-value-16 font-bold md:gap-3"
@@ -81,30 +78,30 @@ export function InteropTokenSummary({
               <InteropNoDataBadge size="extraSmall" />
             ) : (
               EM_DASH
-            ))
+            )
           }
         />
         <StatsItem
           title="Last 24h avg. transfer value"
           isLoading={isLoading}
+          unavailableReason={usdUnavailableReason}
           value={
-            usdUnavailableBadge ??
-            (token?.avgValue !== null && token?.avgValue !== undefined
+            token?.avgValue !== null && token?.avgValue !== undefined
               ? formatCurrency(token.avgValue, 'usd')
-              : EM_DASH)
+              : EM_DASH
           }
         />
         <StatsItem
           title="Last 24h top path"
           isLoading={isLoading}
           // The top path is picked by volume, so it needs a reliable price too.
+          unavailableReason={usdUnavailableReason}
           value={
-            usdUnavailableBadge ??
-            (data?.topPath ? (
+            data?.topPath ? (
               <InteropTopPathValue path={data.topPath} />
             ) : (
               EM_DASH
-            ))
+            )
           }
         />
       </div>
@@ -112,21 +109,22 @@ export function InteropTokenSummary({
       <div className="grid grid-cols-1 gap-x-3 max-md:mt-3 max-md:gap-y-3 md:grid-cols-3">
         <StatsItem
           title="Protocols used"
-          href={notSyncedBadge ? undefined : '#interop-protocols'}
+          href="#interop-protocols"
           isLoading={isLoading}
+          unavailableReason={unavailableReason}
           value={
-            notSyncedBadge ??
-            (data?.entries?.length ? (
+            data?.entries?.length ? (
               <TopProtocolsCell protocols={data.entries} />
             ) : (
               EM_DASH
-            ))
+            )
           }
         />
         {deploymentsCount > 0 && (
           <StatsItem
             title="Deployments"
-            href={notSyncedBadge ? undefined : '#onchain-deployments'}
+            // Without data the page has no sections to link to.
+            href={unavailableReason ? undefined : '#onchain-deployments'}
             isLoading={isLoading}
             value={formatInteger(deploymentsCount)}
           />
@@ -136,42 +134,42 @@ export function InteropTokenSummary({
   )
 }
 
-function NotSyncedBadge() {
-  return <InteropNoDataBadge size="extraSmall" tooltip={NOT_SYNCED_NOTICE} />
-}
-
-function UnreliablePriceBadge() {
-  return (
-    <InteropNoDataBadge size="extraSmall" tooltip={UNRELIABLE_PRICE_NOTICE} />
-  )
-}
-
 function StatsItem({
   title,
   value,
   isLoading,
   href,
+  unavailableReason,
 }: {
   title: string
   value: ReactNode
   isLoading: boolean
   href?: string
+  /** Shown as a no-data badge instead of the value, which also drops the link. */
+  unavailableReason?: string
 }) {
+  const link = unavailableReason ? undefined : href
   const content = (
     <>
       <span className="shrink-0 font-medium text-paragraph-12 text-secondary">
         {title}
       </span>
       <div className="min-w-0 text-right font-bold text-label-value-16 leading-none group-hover:underline md:text-left">
-        {isLoading ? <Skeleton className="h-5 w-24" /> : value}
+        {isLoading ? (
+          <Skeleton className="h-5 w-24" />
+        ) : unavailableReason ? (
+          <InteropNoDataBadge size="extraSmall" tooltip={unavailableReason} />
+        ) : (
+          value
+        )}
       </div>
     </>
   )
   const className =
     'flex gap-3 max-md:items-start max-md:justify-between md:flex-col md:gap-1.5'
 
-  return href ? (
-    <a href={href} className={`group ${className}`}>
+  return link ? (
+    <a href={link} className={`group ${className}`}>
       {content}
     </a>
   ) : (

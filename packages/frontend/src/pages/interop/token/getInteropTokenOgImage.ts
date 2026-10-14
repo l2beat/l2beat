@@ -7,7 +7,6 @@ import {
   findInteropAbstractToken,
   type InteropAbstractToken,
 } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
-import { getActiveInteropChainIds } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import {
   detectImageMimeType,
@@ -35,7 +34,7 @@ export function getInteropTokenOgImage(
 async function renderInteropTokenOgImage(
   slug: string,
 ): Promise<Buffer | undefined> {
-  const token = await findInteropAbstractToken(slug, getActiveInteropChainIds())
+  const token = await findInteropAbstractToken(slug)
   if (!token) return undefined
 
   const assets = await getStaticAssets()

@@ -31,24 +31,8 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        [
-          'eth',
-          {
-            symbol: 'ETH',
-            iconUrl: '/eth.png',
-            issuer: null,
-            isPriceUnreliable: false,
-          },
-        ],
-        [
-          'usdc',
-          {
-            symbol: 'USDC',
-            iconUrl: '/usdc.png',
-            issuer: null,
-            isPriceUnreliable: false,
-          },
-        ],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
+        ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png', issuer: null }],
       ]),
       interopProjects,
       subgroupProjects: new Set(),
@@ -87,24 +71,8 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        [
-          'eth',
-          {
-            symbol: 'ETH',
-            iconUrl: '/eth.png',
-            issuer: null,
-            isPriceUnreliable: false,
-          },
-        ],
-        [
-          'usdc',
-          {
-            symbol: 'USDC',
-            iconUrl: '/usdc.png',
-            issuer: null,
-            isPriceUnreliable: false,
-          },
-        ],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
+        ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png', issuer: null }],
       ]),
       interopProjects,
       subgroupProjects: new Set([ProjectId('sub')]),
@@ -143,15 +111,7 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        [
-          'eth',
-          {
-            symbol: 'ETH',
-            iconUrl: '/eth.png',
-            issuer: null,
-            isPriceUnreliable: false,
-          },
-        ],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
       ]),
       interopProjects,
       subgroupProjects: new Set(),
@@ -180,24 +140,8 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        [
-          'eth',
-          {
-            symbol: 'ETH',
-            iconUrl: '/eth.png',
-            issuer: null,
-            isPriceUnreliable: false,
-          },
-        ],
-        [
-          'usdc',
-          {
-            symbol: 'USDC',
-            iconUrl: '/usdc.png',
-            issuer: null,
-            isPriceUnreliable: false,
-          },
-        ],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
+        ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png', issuer: null }],
       ]),
       interopProjects,
       subgroupProjects: new Set(),
@@ -223,15 +167,7 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        [
-          'eth',
-          {
-            symbol: 'ETH',
-            iconUrl: '/eth.png',
-            issuer: null,
-            isPriceUnreliable: false,
-          },
-        ],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
       ]),
       interopProjects,
       subgroupProjects: new Set(),

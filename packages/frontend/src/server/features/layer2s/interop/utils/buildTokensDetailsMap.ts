@@ -9,7 +9,6 @@ export interface TokensDetails {
   symbol: string
   iconUrl: string
   issuer: string | null
-  isPriceUnreliable: boolean
 }
 
 export async function buildTokensDetailsMap(abstractTokenIds: string[]) {

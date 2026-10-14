@@ -6,12 +6,14 @@ import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { TOKEN_DASHBOARD_TOP_FLOWS_LIMIT } from './consts'
+import { findInteropAbstractToken } from './token/getInteropAbstractTokens'
 import type { InteropTokenParams, ProtocolEntry, TokenData } from './types'
 import { buildTokensDataMap } from './utils/buildTokensDataMap'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import { getPromotedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { getAverageDuration } from './utils/getAverageDuration'
 import { getFlows, type InteropFlowData } from './utils/getFlows'
-import { getInteropChains } from './utils/getInteropChains'
+import { getActiveInteropChainIds } from './utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
 import { getTokensData } from './utils/getTokensData'
@@ -28,19 +30,65 @@ export type InteropTokenDashboardData = {
   token: TokenData | undefined
   flows: InteropFlowData[]
   topPath: InteropTopPathData | undefined
-  topProtocol: InteropProtocolData | undefined
+  topProtocol: InteropTokenTopProtocol | undefined
   topProtocols: InteropProtocolData[]
   entries: ProtocolEntry[]
   zeroTransferProtocols: { name: string; iconUrl: string }[]
   snapshotTimestamp: number | undefined
-  /** False when the latest snapshot lacks the token and an older one is shown. */
-  isSynced: boolean
+}
+
+/** Volume is null when the token's price is unreliable. */
+export type InteropTokenTopProtocol = Omit<InteropProtocolData, 'volume'> & {
+  volume: InteropProtocolData['volume'] | null
 }
 
 /** Inputs the caller may already hold; anything missing is loaded here. */
 export interface InteropTokenDataContext {
   snapshotTimestamp?: UnixTime
   interopProjects?: Project<'interopConfig'>[]
+}
+
+/**
+ * Falls back to the newest promoted snapshot that has the token, so a token
+ * missing from the latest aggregation still shows its last known data. Being
+ * synced is a property of the token, not of a chain selection, so this always
+ * looks at all active chains.
+ */
+export async function getLatestInteropTokenData(
+  tokenId: string,
+  context: InteropTokenDataContext,
+): Promise<{
+  tokenData: InteropTokenDashboardData | null
+  /** Set when the latest snapshot lacks the token and an older one is shown. */
+  lastSyncedAt: UnixTime | undefined
+}> {
+  const params = { tokenId, from: [], to: [] }
+  const tokenData = await getInteropTokenData(params, context)
+  if (tokenData || context.snapshotTimestamp === undefined) {
+    return { tokenData, lastSyncedAt: undefined }
+  }
+
+  const activeChainIds = getActiveInteropChainIds()
+  const lastSyncedAt =
+    await getDb().aggregatedInteropToken.getLatestPromotedTimestampForToken(
+      tokenId,
+      {
+        upTo: context.snapshotTimestamp,
+        sourceChains: activeChainIds,
+        destinationChains: activeChainIds,
+      },
+    )
+  if (lastSyncedAt === undefined) {
+    return { tokenData: null, lastSyncedAt }
+  }
+
+  return {
+    tokenData: await getInteropTokenData(params, {
+      ...context,
+      snapshotTimestamp: lastSyncedAt,
+    }),
+    lastSyncedAt,
+  }
 }
 
 export async function getInteropTokenData(
@@ -51,18 +99,19 @@ export async function getInteropTokenData(
     return getMockInteropTokenData(params)
   }
 
-  const interopProjects =
-    context.interopProjects ??
-    (await ps.getProjects({
-      select: ['interopConfig'],
-    }))
   const selection = getTokenDataSelection(params)
-
-  const { tokenRecords, snapshotTimestamp, isSynced } = await getTokenRecords(
-    params.tokenId,
-    selection,
-    context.snapshotTimestamp,
-  )
+  const snapshotTimestamp =
+    context.snapshotTimestamp ??
+    (await getPromotedInteropSnapshotTimestamp(params.snapshotTimestamp))
+  const [interopProjects, abstractToken, latest] = await Promise.all([
+    context.interopProjects ?? ps.getProjects({ select: ['interopConfig'] }),
+    findInteropAbstractToken(params.tokenId),
+    getLatestAggregatedInteropTransferWithTokens({
+      selection,
+      snapshotTimestamp,
+    }),
+  ])
+  const tokenRecords = scopeRecordsToToken(latest.records, params.tokenId)
 
   if (tokenRecords.length === 0) {
     return null
@@ -98,104 +147,44 @@ export async function getInteropTokenData(
     subgroupProjects,
   )
 
-  return {
+  const data: InteropTokenDashboardData = {
     token,
     flows: flows.slice(0, TOKEN_DASHBOARD_TOP_FLOWS_LIMIT),
     topPath: getTopPath(flows),
     topProtocol: topProtocols.toSorted(
-      tokensDetailsMap.get(params.tokenId)?.isPriceUnreliable
-        ? byTransferCountThenVolume
-        : byVolumeThenTransferCount,
+      (a, b) => b.volume.value - a.volume.value,
     )[0],
     topProtocols,
-    snapshotTimestamp,
-    isSynced,
+    snapshotTimestamp: latest.snapshotTimestamp,
     ...getProtocolEntries(
       tokenRecords,
       tokensDetailsMap,
       interopProjects,
       undefined,
-      snapshotTimestamp,
+      latest.snapshotTimestamp,
       selection,
     ),
   }
+  return abstractToken?.isPriceUnreliable ? withoutUsdValues(data) : data
 }
 
 /**
- * Volumes of a token without a reliable price are zero, or stale when its
- * snapshot predates the flag, so the card ranks such a token by transfer count.
+ * Without a reliable price the token's volumes are zero, or stale when the
+ * snapshot predates the flag, so the page gets none of them and the top
+ * protocol is picked by transfer count instead.
  */
-function byTransferCountThenVolume(
-  a: InteropProtocolData,
-  b: InteropProtocolData,
-) {
-  return (
-    b.transfers.value - a.transfers.value || b.volume.value - a.volume.value
-  )
-}
-
-function byVolumeThenTransferCount(
-  a: InteropProtocolData,
-  b: InteropProtocolData,
-) {
-  return (
-    b.volume.value - a.volume.value || b.transfers.value - a.transfers.value
-  )
-}
-
-/**
- * Falls back to the last snapshot that had the token's transfers, so a token
- * missing from the latest aggregation still shows its last known data.
- */
-async function getTokenRecords(
-  tokenId: string,
-  selection: InteropTokenParams,
-  snapshotTimestamp: UnixTime | undefined,
-) {
-  const latest = await getScopedTokenRecords(
-    tokenId,
-    selection,
-    snapshotTimestamp,
-  )
-  if (
-    latest.tokenRecords.length > 0 ||
-    latest.snapshotTimestamp === undefined
-  ) {
-    return { ...latest, isSynced: true }
-  }
-
-  const lastSyncedTimestamp =
-    await getDb().aggregatedInteropToken.getLatestPromotedTimestampForToken(
-      tokenId,
-      {
-        upTo: latest.snapshotTimestamp,
-        sourceChains: selection.from,
-        destinationChains: selection.to,
-      },
-    )
-  if (lastSyncedTimestamp === undefined) {
-    return { ...latest, isSynced: false }
-  }
-
+function withoutUsdValues(
+  data: InteropTokenDashboardData,
+): InteropTokenDashboardData {
+  const topProtocol = data.topProtocols.toSorted(
+    (a, b) => b.transfers.value - a.transfers.value,
+  )[0]
   return {
-    ...(await getScopedTokenRecords(tokenId, selection, lastSyncedTimestamp)),
-    isSynced: false,
-  }
-}
-
-async function getScopedTokenRecords(
-  tokenId: string,
-  selection: InteropTokenParams,
-  snapshotTimestamp: UnixTime | undefined,
-) {
-  const { records, snapshotTimestamp: resolvedSnapshotTimestamp } =
-    await getLatestAggregatedInteropTransferWithTokens({
-      selection,
-      snapshotTimestamp,
-    })
-  return {
-    tokenRecords: scopeRecordsToToken(records, tokenId),
-    snapshotTimestamp: resolvedSnapshotTimestamp,
+    ...data,
+    token: data.token && { ...data.token, volume: null, avgValue: null },
+    flows: [],
+    topPath: undefined,
+    topProtocol: topProtocol && { ...topProtocol, volume: null },
   }
 }
 
@@ -204,9 +193,7 @@ function getTokenDataSelection(params: InteropTokenParams): InteropTokenParams {
     return params
   }
 
-  const activeInteropChainIds = getInteropChains()
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => chain.id)
+  const activeInteropChainIds = getActiveInteropChainIds()
 
   return {
     ...params,
@@ -254,6 +241,5 @@ function getMockInteropTokenData({
     entries: [],
     zeroTransferProtocols: [],
     snapshotTimestamp: UnixTime.toStartOf(UnixTime.now(), 'hour'),
-    isSynced: true,
   }
 }
