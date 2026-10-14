@@ -17,6 +17,15 @@ import { lowerOf } from '../blobs-perf/blobsPage'
  * because CI runners differ: the same commit measures up to 4x slower on
  * some hosts than on others, and up to 5x slower than on a Mac.
  *
+ * As a block lands, iOS Safari also repaints the rows it touches, painting
+ * each box in a row on its own, so a row's boxes set what a landing costs
+ * while the visitor swipes the belt. Desktop WebKit paints them cheaply and
+ * shows no time to ratchet, so the boxes are counted instead: the HTML
+ * elements in the fullest row, an SVG counting as one. Against the iOS
+ * simulator, drawing the activity bars as one SVG took a row from 73 boxes to
+ * 25, and the frames over 8.3 ms in a swipe across a landing from about 30 to
+ * none.
+ *
  * Lower a ceiling by running with UPDATE_CEILINGS=1, which rewrites
  * ceilings.json from the current run plus the margin below.
  */
@@ -28,16 +37,18 @@ const CHANGES_PER_SAMPLE = 20
 
 const MARGIN = {
   layoutMsPerChange: (ms: number) => Math.ceil(ms * 8),
+  // a count of what is rendered, the same on every run
+  boxesPerRow: (boxes: number) => boxes,
 }
 
-type Measurement = { layoutMsPerChange: number }
+type Measurement = { layoutMsPerChange: number; boxesPerRow: number }
 type Ceilings = Record<string, Measurement>
 
 const ceilings: Ceilings = JSON.parse(readFileSync(CEILINGS_FILE, 'utf8'))
 const measured: Ceilings = {}
 
 for (const viewport of Object.keys(ceilings)) {
-  test(`a number counting in the /blobs table at ${viewport} stays under its ceiling`, async ({
+  test(`the /blobs table at ${viewport} stays under its ceilings`, async ({
     browser,
   }) => {
     const [width, height] = viewport.split('x').map(Number)
@@ -48,18 +59,24 @@ for (const viewport of Object.keys(ceilings)) {
     await page.goto('/blobs', { waitUntil: 'load' })
     await page.locator(TABLE_NUMBER).first().waitFor()
 
-    const result = (await page.evaluate(
-      `(${measureLayoutPerChange})(${JSON.stringify(TABLE_NUMBER)}, ${SAMPLES}, ${CHANGES_PER_SAMPLE})`,
-    )) as Measurement
+    const result: Measurement = {
+      ...((await page.evaluate(
+        `(${measureLayoutPerChange})(${JSON.stringify(TABLE_NUMBER)}, ${SAMPLES}, ${CHANGES_PER_SAMPLE})`,
+      )) as Pick<Measurement, 'layoutMsPerChange'>),
+      boxesPerRow: (await page.evaluate(
+        `(${countBoxesPerRow})(${JSON.stringify(TABLE_ROW)})`,
+      )) as number,
+    }
     await context.close()
     measured[viewport] = result
     console.log(viewport, JSON.stringify(result))
 
     if (process.env.UPDATE_CEILINGS) return
-    expect(
-      result.layoutMsPerChange,
-      `layoutMsPerChange at ${viewport}`,
-    ).toBeLessThanOrEqual(ceilings[viewport]!.layoutMsPerChange)
+    for (const key of Object.keys(MARGIN) as (keyof Measurement)[]) {
+      expect(result[key], `${key} at ${viewport}`).toBeLessThanOrEqual(
+        ceilings[viewport]![key],
+      )
+    }
   })
 }
 
@@ -68,18 +85,20 @@ test.afterAll(() => {
   if (!process.env.UPDATE_CEILINGS) return
   const next: Ceilings = { ...ceilings }
   for (const [viewport, result] of Object.entries(measured)) {
-    next[viewport] = {
-      layoutMsPerChange: lowerOf(
-        ceilings[viewport]?.layoutMsPerChange,
-        MARGIN.layoutMsPerChange(result.layoutMsPerChange),
-      ),
-    }
+    next[viewport] = Object.fromEntries(
+      (Object.keys(MARGIN) as (keyof Measurement)[]).map((key) => [
+        key,
+        lowerOf(ceilings[viewport]?.[key], MARGIN[key](result[key])),
+      ]),
+    ) as Measurement
   }
   writeFileSync(CEILINGS_FILE, `${JSON.stringify(next, null, 2)}\n`)
 })
 
+/** A row of the posters table, one per project */
+const TABLE_ROW = '#live-posters [data-flip-key]'
 /** A RollingNumber in a posters row, which counts as its poster's blobs land */
-const TABLE_NUMBER = '#live-posters [data-flip-key] span.tabular-nums'
+const TABLE_NUMBER = `${TABLE_ROW} span.tabular-nums`
 
 // A string, as tsx injects a helper the page lacks into closures. Many changes
 // per sample, as WebKit rounds performance.now() to the millisecond
@@ -101,4 +120,13 @@ const measureLayoutPerChange = `(selector, samples, changes) => {
   }
   text.data = shown
   return { layoutMsPerChange: Math.round(best * 10) / 10 }
+}`
+
+// Rows differ by what a project has, a link or a logo, so the fullest counts
+const countBoxesPerRow = `(selector) => {
+  const boxes = (row) =>
+    [...row.querySelectorAll('*')].filter(
+      (element) => !(element instanceof SVGElement) || element instanceof SVGSVGElement,
+    ).length
+  return Math.max(...[...document.querySelectorAll(selector)].map(boxes))
 }`

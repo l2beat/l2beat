@@ -28,7 +28,7 @@ export function Activity({
   firstBucket: number
   color: string
 }) {
-  const barsRef = useRef<HTMLDivElement>(null)
+  const barsRef = useRef<SVGSVGElement>(null)
   const reducedMotion = usePrefersReducedMotion()
   const leaving = useLeavingBar(buckets, firstBucket, reducedMotion)
 
@@ -71,21 +71,28 @@ export function Activity({
       style={{ width: buckets.length * BAR_STEP - 1 }}
       aria-hidden
     >
-      <div
+      {/* One SVG, not a box per bar: as a block lands, iOS Safari repaints
+          the rows it touches, and paints each box in a row on its own. A
+          fixed height, as Safari lays out a percent height in a table cell
+          twice whenever a number in the table changes */}
+      <svg
         ref={barsRef}
-        // a fixed height: Safari lays out a percent height in a table cell
-        // twice, every bar with it, whenever a number in the table changes
-        className="flex h-5 items-end gap-px"
+        width={bars.length * BAR_STEP - 1}
+        height={ROW_HEIGHT}
+        className="block"
       >
-        {bars.map(({ step, blobs, height }) => (
-          <div
+        {bars.map(({ step, blobs, height }, index) => (
+          <rect
             key={step}
-            className="shrink-0 origin-bottom rounded-[1px]"
+            x={index * BAR_STEP}
+            y={ROW_HEIGHT - height}
+            width={BAR_WIDTH}
+            height={height}
+            rx={1}
+            className="origin-bottom [transform-box:fill-box]"
             style={{
-              width: BAR_WIDTH,
-              height,
               // dimmed by its color, as an opacity would make it a layer
-              backgroundColor:
+              fill:
                 blobs === 0
                   ? 'var(--divider)'
                   : step === current
@@ -94,7 +101,7 @@ export function Activity({
             }}
           />
         ))}
-      </div>
+      </svg>
     </div>
   )
 }
@@ -119,7 +126,7 @@ function barHeight(blobs: number, scale: number) {
  * into it by scaling, on the compositor, and is a layer only while it does.
  */
 function useGrowingBars(
-  barsRef: RefObject<HTMLDivElement | null>,
+  barsRef: RefObject<SVGSVGElement | null>,
   bars: { step: number; height: number }[],
   animate: boolean,
 ) {
