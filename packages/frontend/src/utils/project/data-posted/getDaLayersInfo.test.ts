@@ -15,7 +15,11 @@ describe(getDaLayersInfo.name, () => {
     name: 'Ethereum',
     slug: 'ethereum',
   } as Project<'daLayer'>
-  const ETHEREUM_INFO = { name: 'Ethereum', logo: '/icons/ethereum.png' }
+  const ETHEREUM_INFO = {
+    name: 'Ethereum',
+    logo: '/icons/ethereum.png',
+    href: '/projects/ethereum',
+  }
 
   it('keeps a layer current while one of its configs is still open', () => {
     const result = getDaLayersInfo(
@@ -56,7 +60,9 @@ describe(getDaLayersInfo.name, () => {
     )
 
     expect(result).toEqual({
-      currentDaLayers: [{ name: 'EigenDA', logo: '/icons/eigenda.png' }],
+      currentDaLayers: [
+        { name: 'EigenDA', logo: '/icons/eigenda.png', href: undefined },
+      ],
       pastDaLayers: [ETHEREUM_INFO],
     })
   })
@@ -69,7 +75,7 @@ describe(getDaLayersInfo.name, () => {
     )
 
     expect(result.currentDaLayers).toEqual([
-      { name: 'NearDA', logo: undefined },
+      { name: 'NearDA', logo: undefined, href: undefined },
     ])
   })
 })

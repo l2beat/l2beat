@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import {
+  getDaMetadataDescription,
   getInteropMetadataDescription,
   getPrivacyMetadataDescription,
   getProjectMetadataDescription,
@@ -161,6 +162,34 @@ describe(getScalingMetadataDescription.name, () => {
       `Stage 1 · $16B TVS. ${sentences.slice(0, 9).join(' ')}`,
     )
     expect(description.length).toBeLessThanOrEqual(300)
+  })
+})
+
+describe(getDaMetadataDescription.name, () => {
+  it('leads with TVS and economic security', () => {
+    const description = getDaMetadataDescription({
+      name: 'Ethereum',
+      tvs: 1_500_000_000,
+      economicSecurity: 2_300_000_000,
+      description: 'Ethereum is a data availability layer.',
+    })
+
+    expect(description).toEqual(
+      'DA layer · $1.5B TVS · $2.3B economic security. Ethereum is a data availability layer.',
+    )
+  })
+
+  it('omits economic security when the layer has none', () => {
+    const description = getDaMetadataDescription({
+      name: 'Ethereum',
+      tvs: 1_500_000_000,
+      economicSecurity: undefined,
+      description: 'Ethereum is a blockchain.',
+    })
+
+    expect(description).toEqual(
+      'DA layer · $1.5B TVS. Ethereum is a blockchain.',
+    )
   })
 })
 

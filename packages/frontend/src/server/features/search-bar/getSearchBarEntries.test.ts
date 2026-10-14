@@ -34,6 +34,21 @@ describe(getSearchBarEntries.name, () => {
     ])
   })
 
+  // Ethereum is a DA layer, not a scaling project, yet has its own page.
+  it('finds Ethereum and links its page', async () => {
+    ps.getProjects = async () =>
+      [
+        { id: ProjectId.ETHEREUM, slug: 'ethereum', name: 'Ethereum' },
+        l2Project('etherex', 'Etherex'),
+      ] as never
+
+    const result = await getSearchBarEntries('ethereum')
+
+    expect(result.find((entry) => entry.name === 'Ethereum')?.href).toEqual(
+      '/projects/ethereum',
+    )
+  })
+
   it('falls back to fuzzy project matches when there are no direct matches', async () => {
     ps.getProjects = async () =>
       [l2Project('jetstreamchain', 'Jetstream')] as never

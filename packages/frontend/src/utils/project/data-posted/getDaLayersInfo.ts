@@ -3,8 +3,9 @@ import type {
   ProjectDaTrackingConfig,
   ProjectScalingDa,
 } from '@l2beat/config'
-import { assert, type ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import { manifest } from '~/utils/Manifest'
 
 export function getDaLayersInfo(
@@ -43,6 +44,8 @@ export function getDaLayersInfo(
 export interface DaLayerInfo {
   name: string
   logo: string | undefined
+  /** Only Ethereum has a page of its own among DA layers. */
+  href: string | undefined
 }
 
 function getDaLayer(
@@ -55,6 +58,7 @@ function getDaLayer(
   return {
     name: daLayer.name,
     logo: manifest.getUrl(`/icons/${daLayer.slug}.png`),
+    href: daLayer.id === ProjectId.ETHEREUM ? ETHEREUM_PROJECT_PATH : undefined,
   }
 }
 
@@ -80,6 +84,7 @@ function getUntrackedDaLayers(scalingDa: ProjectScalingDa[]): DaLayerInfo[] {
       {
         name: layer.value,
         logo: icon ? manifest.getUrl(`/icons/${icon}.png`) : undefined,
+        href: undefined,
       },
     ]
   })

@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x08adbda1d55919b3a8510da943818d5ff391bf5c
+
+# Diff at Fri, 09 Oct 2026 18:29:46 GMT:
+
+- id: efb50891
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@22c541703ff2e8c94ffcd7f942a71969eee3e84d block: 1779964040
+- current timestamp: 1791570511
+
+## Description
+
+The ASP postman permission now says that withdrawals must prove against the latest root, so a new root can exclude a deposit or narrow the set.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779964040 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "publish new association-set roots and IPFS CIDs used by withdrawals."
++        "publish a new association-set root and its IPFS list at any time. Private withdrawals must prove against the latest root, so a new root can exclude any deposit or narrow the set to a few."
+    }
+```
+
+```diff
+    contract Privacy Pools Multisig (eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2.description:
+-        "publish new association-set roots and IPFS CIDs used by withdrawals."
++        "publish a new association-set root and its IPFS list at any time. Private withdrawals must prove against the latest root, so a new root can exclude any deposit or narrow the set to a few."
+    }
+```
+
 Generated with discovered.json: 0x1cfdee93b2b289430f4c83042fd841675aa3c0fc
 
 # Diff at Sun, 04 Oct 2026 05:55:35 GMT:

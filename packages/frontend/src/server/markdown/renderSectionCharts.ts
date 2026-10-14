@@ -14,9 +14,11 @@ import {
   DATA_POSTED_DESCRIPTION,
   LAST_30_DAY_ANOMALIES_DESCRIPTION,
   LIVENESS_DESCRIPTION,
+  THROUGHPUT_DESCRIPTION,
   TRACKED_CONTRACTS_CHANGED_WARNING,
   trackedTxsOutageText,
 } from '~/components/projects/sections/sectionCopy'
+import type { ThroughputSectionProps } from '~/components/projects/sections/throughput/ThroughputSection'
 import type { L2TvsSectionProps } from '~/components/projects/sections/tvs/L2TvsSection'
 import type { ProjectSectionId } from '~/components/projects/sections/types'
 import { env } from '~/env'
@@ -132,6 +134,19 @@ export function renderLivenessSection(
   ])
 }
 
+export function renderThroughputSection(
+  props: Pick<ThroughputSectionProps, 'id' | 'syncStatus'>,
+) {
+  return joinBlocks([
+    props.syncStatus.warning ? warning(props.syncStatus.warning) : '',
+    THROUGHPUT_DESCRIPTION,
+    htmlPagePointer(
+      'The interactive throughput chart and its past day stats are shown',
+      props.id,
+    ),
+  ])
+}
+
 /** The explanations around the two charts; the charts load in the browser. */
 export function renderPrivacyAnonymitySetSection(
   props: { id: ProjectSectionId },
@@ -157,18 +172,20 @@ export function renderPrivacyAnonymitySetSection(
 }
 
 /**
- * A project whose tracking has all ended has no current layer: the HTML
- * sentence then names nothing after "posts data to", so it is reworded.
+ * A project whose tracking has all ended has no current layer. It may still
+ * post somewhere we don't track, so the sentence says we stopped tracking.
  */
 function describeDaLayers({
   currentDaLayers,
   pastDaLayers,
 }: Pick<DataPostedSectionProps, 'currentDaLayers' | 'pastDaLayers'>) {
   const links = (layers: DataPostedSectionProps['currentDaLayers']) =>
-    layers.map((layer) => layer.name).join(', ')
+    layers
+      .map((layer) => (layer.href ? link(layer.name, layer.href) : layer.name))
+      .join(', ')
   if (currentDaLayers.length === 0) {
     return pastDaLayers.length > 0
-      ? `The project no longer posts data; previously it posted to ${links(pastDaLayers)}.`
+      ? `We no longer track where the project posts data; previously it posted to ${links(pastDaLayers)}.`
       : ''
   }
   const previously =

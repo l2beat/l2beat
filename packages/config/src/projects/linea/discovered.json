@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1791455017,
+  "timestamp": 1791897274,
   "configHash": "0x2065d22edc42cabb516c774ee0cc6f9d767b2addc90c3dec404ec73153fdb05d",
   "entries": [
     {
@@ -936,9 +936,9 @@
         "CONTRACT_VERSION": "8.0",
         "COOLDOWN_DURATION": 172800,
         "COOLDOWN_DURATION_fmt": "2d",
-        "currentFinalizedShnarf": "0xf5529c36d62c0c518fd99831fb773595adefda740c0a73f212a86163b3d9c0ce",
-        "currentFinalizedState": "0xb65de82f77332aac7c7dc8f30a75fc547b442817f188e7215b031a8df1539df5",
-        "currentPeriodAmountInWei": "852705868256608160",
+        "currentFinalizedShnarf": "0x9e60d60e3cee1ebb192ea6ca1187f2c4e1b5dc5b7dd032e81eba8fd1c9e3503b",
+        "currentFinalizedState": "0xd344885456b3cdf7702c7ecbcbd4f7acbe29813a72f7baa6a712a7225f7a5612",
+        "currentPeriodAmountInWei": "323684858351309000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
@@ -1357,7 +1357,7 @@
         "isPaused_NATIVE_YIELD_REPORTING": false,
         "isPaused_NATIVE_YIELD_STAKING": false,
         "isPaused_NATIVE_YIELD_UNSTAKING": false,
-        "isWithdrawalReserveBelowMinimum": true,
+        "isWithdrawalReserveBelowMinimum": false,
         "L1_MESSAGE_SERVICE": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "minimumWithdrawalReserveAmount": "17500000000000000000000",
         "minimumWithdrawalReservePercentageBps": 3500,
@@ -1399,7 +1399,7 @@
           "11": "0x7961622440af20a7a00804174e730d12d511766368df55fbaf2d698ffa1d4216",
           "12": "0x32026462812ef90f03ebdf4117c1e143d38ab0e31e1266d4e8bd348c28ee2aa5"
         },
-        "userFundsInYieldProvidersTotal": "24019411122956594613375",
+        "userFundsInYieldProvidersTotal": "17383593430683481334481",
         "WITHDRAWAL_RESERVE_SETTER_ROLE": "0x58cd6cd2c63b9e5685aee547419caac3d1184e3aeb3ed7c8b63ec61cda1e27e0",
         "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
         "YIELD_PROVIDER_UNSTAKER_ROLE": "0x1208ee08ba851b41059d729bfba4fffc3a98c2b6d121e3cf0db274417dea3d70",
@@ -1902,8 +1902,8 @@
         "allUnpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "CONTRACT_VERSION": "1.0",
         "COOLDOWN_DURATION": 172800,
-        "currentPeriodAmountInWei": "4000280891303750000000",
-        "currentPeriodEnd": 1791450897,
+        "currentPeriodAmountInWei": 6400000000000000,
+        "currentPeriodEnd": 1791969298,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -1927,11 +1927,11 @@
         "l1l2Unpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "l2l1Pausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "l2l1Unpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
-        "lastAnchoredL1MessageNumber": 810520,
+        "lastAnchoredL1MessageNumber": 810775,
         "limitInWei": "8000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 108520,
+        "nextMessageNumber": 108558,
         "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_DURATION": 172800,
@@ -3616,7 +3616,7 @@
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/YieldManager": "0x15befc37e3984bc9e0b8548c3b5266b2ad9e24ca61f02cd9ab3c9176983303ab"
   },
-  "usedBlockNumbers": { "ethereum": 26147060, "linea": 32264045 },
+  "usedBlockNumbers": { "ethereum": 26183799, "linea": 32312277 },
   "permissionsConfigHash": "0xf49cfea4e29aeafa5d92e463f33237818af544e2270838009fb197034328d471",
   "permissions": {
     "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0": {

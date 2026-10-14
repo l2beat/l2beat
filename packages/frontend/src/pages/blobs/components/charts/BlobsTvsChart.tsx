@@ -242,11 +242,12 @@ function Header({
       </a>
       <div className="flex flex-col items-end">
         {isLoading ? (
-          // the total and its change, wrapping where the real ones would, so
-          // the header is as tall before the numbers come as after
+          // the total and its change, as tall as their lines, 30 and 14 px,
+          // and wrapping where they would, so the header keeps its height
+          // when the numbers come
           <div className="flex flex-wrap items-baseline justify-end gap-x-1.5">
-            <Skeleton className="my-1 h-5 w-20" />
-            <Skeleton className="h-3 w-24" />
+            <Skeleton className="my-[5px] h-5 w-20" />
+            <Skeleton className="my-px h-3 w-24" />
           </div>
         ) : stats === undefined ? (
           <span className="whitespace-nowrap font-bold text-xl">No data</span>

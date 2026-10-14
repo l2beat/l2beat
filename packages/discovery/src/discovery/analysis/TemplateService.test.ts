@@ -51,6 +51,45 @@ describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
   })
 })
 
+describe(TemplateService.prototype.admitsAddress.name, () => {
+  let root: string
+  beforeEach(() => {
+    root = mkdtempSync(join(tmpdir(), 'template-service-'))
+  })
+  afterEach(() => rmSync(root, { recursive: true, force: true }))
+
+  function writeTemplate(templateId: string, validAddresses?: string[]) {
+    const directory = join(root, '_templates', templateId)
+    mkdirSync(directory, { recursive: true })
+    writeFileSync(join(directory, 'template.jsonc'), '{}')
+    if (validAddresses !== undefined) {
+      writeFileSync(
+        join(directory, 'criteria.json'),
+        JSON.stringify({ validAddresses }),
+      )
+    }
+  }
+
+  it('admits any address to a template without criteria, and only the listed ones to a template with them', () => {
+    writeTemplate('proj/Open')
+    writeTemplate('proj/Listed', [CORRECT_SUPERCHAIN_CONFIG_ADDR.toString()])
+    const templateService = new TemplateService(root)
+
+    expect(
+      templateService.admitsAddress('proj/Open', FAKE_SUPERCHAIN_CONFIG_ADDR),
+    ).toEqual(true)
+    expect(
+      templateService.admitsAddress(
+        'proj/Listed',
+        CORRECT_SUPERCHAIN_CONFIG_ADDR,
+      ),
+    ).toEqual(true)
+    expect(
+      templateService.admitsAddress('proj/Listed', FAKE_SUPERCHAIN_CONFIG_ADDR),
+    ).toEqual(false)
+  })
+})
+
 describe(TemplateService.prototype.reload.name, () => {
   const HASH_A = Hash256('0x' + 'a'.repeat(64))
   const HASH_B = Hash256('0x' + 'b'.repeat(64))

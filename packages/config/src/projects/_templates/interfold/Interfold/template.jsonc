@@ -88,6 +88,27 @@
       "description": "Committee size of the compiled-in active BFV configuration; the matching decryption threshold and assumed-honest count are constants of the ActiveCryptoConfig library in the verified source and are not readable onchain.",
       "type": "RISK_PARAMETER"
     },
+    "committeeCapacityAlertSupported": {
+      "description": "Whether the compiled-in committee size matches the capacity alert's threshold. A false value requires reviewing that alert.",
+      "copy": "MAX_COMMITTEE_SIZE",
+      "edit": ["=", 19],
+      "type": "RISK_PARAMETER",
+      "severity": "MEDIUM"
+    },
+    "insufficientCommitteeOwnerCapacity": {
+      "description": "Whether eligible bond-owner capacity is below the committee size, blocking new E3 requests.",
+      "handler": {
+        "type": "call",
+        "address": "{{ bondingRegistry }}",
+        "method": "function committeeOwnerCapacity(uint256 timepoint) view returns (uint256)",
+        "args": [281474976710655]
+      },
+      // ActiveCryptoConfig fixes the current committee size at 19. The watched
+      // committeeCapacityAlertSupported field flags upgrades requiring a new threshold.
+      "edit": ["<", 19],
+      "type": "RISK_PARAMETER",
+      "severity": "MEDIUM"
+    },
     "getTimeoutConfig": {
       "description": "Protocol-wide DKG, encrypted-computation and decryption timeout windows applied to new E3s.",
       "type": "RISK_PARAMETER"

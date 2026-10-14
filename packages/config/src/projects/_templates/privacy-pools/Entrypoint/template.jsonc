@@ -88,7 +88,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "publish new association-set roots and IPFS CIDs used by withdrawals."
+          "description": "publish a new association-set root and its IPFS list at any time. Private withdrawals must prove against the latest root, so a new root can exclude any deposit or narrow the set to a few."
         }
       ]
     }

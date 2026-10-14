@@ -1,6 +1,6 @@
 name: Set up Playwright
 description: >
-  Installs the headless Chromium used by Playwright tests, and WebKit when
+  Installs the headless Chromium used by Playwright tests, and WebKit if
   asked, cached per Playwright version. Run after setup-pnpm.
 
 inputs:
@@ -8,7 +8,8 @@ inputs:
     description: Package whose Playwright version is installed
     required: true
   webkit:
-    description: Also install WebKit, for tests that stand in for iOS Safari
+    description: Also install WebKit, for the ratchets that measure Safari's engine
+    required: false
     default: 'false'
 
 runs:
@@ -33,10 +34,15 @@ runs:
       if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
       working-directory: ${{ inputs.package-dir }}
-      run: pnpm exec playwright install --only-shell chromium ${{ inputs.webkit == 'true' && 'webkit' || '' }}
+      run: pnpm exec playwright install --only-shell chromium
 
-    # The cache holds the browsers but not the libraries WebKit links to,
-    # which the runner image lacks
+    - name: Install Playwright WebKit
+      if: inputs.webkit == 'true' && steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      working-directory: ${{ inputs.package-dir }}
+      run: pnpm exec playwright install webkit
+
+    # System libraries are not in the browser cache, so they go in every run
     - name: Install WebKit's system libraries
       if: inputs.webkit == 'true'
       shell: bash

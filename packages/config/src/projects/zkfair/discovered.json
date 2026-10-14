@@ -1,7 +1,7 @@
 {
   "name": "zkfair",
-  "timestamp": 1745306051,
-  "configHash": "0x39fccae02a0039d85a32983c3be66689dbb8052b6b1eef4d7b97720bf7b0f661",
+  "timestamp": 1791789247,
+  "configHash": "0x165b2fa317c5fcb4ab36b64fac821004db46740e9185313af177d73d758fb099",
   "entries": [
     {
       "name": "ZKFairAdmin",
@@ -111,12 +111,22 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x44fb52EB2bdDAf1c8b6D441e0b5DCa123A345292",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0x4dba6F06597Ea29A330C06806FA284610c810295",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x4Ea1f0f05E7484Ee85a97303DC88c2dF4288df3e",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -173,6 +183,11 @@
     },
     {
       "address": "eth:0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x689752C198f0cEbe9993ee3E13AF0e565C068c25",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -265,6 +280,72 @@
       }
     },
     {
+      "name": "FeeHandlerRouter",
+      "address": "eth:0x899b97352c91cC21384944350Ba8bf00fCAbCd53",
+      "type": "Contract",
+      "template": "chainsafe/FeeHandlerRouter",
+      "sourceHashes": [
+        "0xa3f4b1b46090644b38807901e40a533ef87d6bb31b76e277a8f030970d9ad46f"
+      ],
+      "proxyType": "immutable",
+      "description": "Routes bridge deposit fees to a configured fee handler for each token resource.",
+      "deployerAddress": "eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b",
+      "sinceTimestamp": 1742988371,
+      "sinceBlock": 22130769,
+      "values": {
+        "_bridgeAddress": "eth:0xB66bbf236CE102A1De692f2A034b9dB245986671",
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b"]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x899b97352c91cC21384944350Ba8bf00fCAbCd53": "FeeHandlerRouter"
+      }
+    },
+    {
+      "name": "AccessControlSegregator",
+      "address": "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512",
+      "type": "Contract",
+      "template": "chainsafe/AccessControlSegregator",
+      "sourceHashes": [
+        "0xffa23c6121a2e1d41ad45b0ea97f759dbbc6b73bc7e8d810590d9cb36b3dfb2b"
+      ],
+      "proxyType": "immutable",
+      "description": "Stores one authorized address per bridge function selector. The authority for grantAccess can replace any function's authority, including unrestricted escrow withdrawal and access-control replacement.",
+      "critical": { "sinceTimestamp": 1744292087 },
+      "deployerAddress": "eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b",
+      "sinceTimestamp": 1742988287,
+      "sinceBlock": 22130762,
+      "values": {
+        "$immutable": true,
+        "accessControlAccount": "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
+        "forwarderAccount": "eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b",
+        "GRANT_ACCESS_SIG": "0xa973ec93",
+        "grantAccessAccount": "eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b",
+        "pauseAccount": "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
+        "resourceAccount": "eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b",
+        "unpauseAccount": "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
+        "withdrawAccount": "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F"
+      },
+      "fieldMeta": {
+        "grantAccessAccount": { "severity": "MEDIUM" },
+        "withdrawAccount": { "severity": "MEDIUM" },
+        "accessControlAccount": { "severity": "MEDIUM" },
+        "resourceAccount": { "severity": "MEDIUM" },
+        "forwarderAccount": { "severity": "MEDIUM" },
+        "pauseAccount": { "severity": "MEDIUM" },
+        "unpauseAccount": { "severity": "MEDIUM" }
+      },
+      "implementationNames": {
+        "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512": "AccessControlSegregator"
+      }
+    },
+    {
       "address": "eth:0x9231622437bD57349cC9a15CDEc5383627DEbA17",
       "type": "EOA",
       "proxyType": "EOA"
@@ -337,7 +418,10 @@
       "name": "OldBridge",
       "address": "eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x9435648db8821f142e34edf2f081caac9606cb70cdc1186184324c5db48ecf78"
+      ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
       "sinceTimestamp": 1702879283,
@@ -357,11 +441,21 @@
             ["eth:0x58371687dc997A7A11154bBcA72aEb15e4Db8F46"]
           ]
         ],
-        "$upgradeCount": 2
+        "$upgradeCount": 2,
+        "admin": "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
+        "bridgeFee": 2500000000000000,
+        "feeAddress": "eth:0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D",
+        "gasTokenAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "gasTokenDecimalDiffFactor": 1000000000000,
+        "gasTokenMetadata": "0x000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000005457468657200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000034554480000000000000000000000000000000000000000000000000000000000",
+        "globalExitRootManager": "eth:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
+        "isEmergencyState": false,
+        "networkID": 0,
+        "polygonZkEVMaddress": "eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
       },
       "implementationNames": {
         "eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861": "TransparentUpgradeableProxy",
-        "eth:0x58371687dc997A7A11154bBcA72aEb15e4Db8F46": ""
+        "eth:0x58371687dc997A7A11154bBcA72aEb15e4Db8F46": "PolygonZkEVMBridge"
       }
     },
     {
@@ -388,15 +482,43 @@
       "name": "Bridge",
       "address": "eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
       "type": "Contract",
-      "unverified": true,
+      "template": "chainsafe/ERC20Handler",
+      "sourceHashes": [
+        "0xa697494f19ebcebaa1da9ce4932e84eab588af0f3f92468fc196e40d80f1582a"
+      ],
       "proxyType": "immutable",
+      "description": "Escrow holding ERC20 tokens and ETH for the configured bridge. Only that bridge can execute releases, withdraw funds or configure token mappings. Its own admin can set deposit limits.",
+      "critical": { "sinceTimestamp": 1744292087 },
       "deployerAddress": "eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b",
       "sinceTimestamp": 1742988323,
       "sinceBlock": 22130765,
-      "values": { "$immutable": true },
+      "values": {
+        "_bridgeAddress": "eth:0xB66bbf236CE102A1De692f2A034b9dB245986671",
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b"]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b"],
+        "defaultDecimals": 18,
+        "startTime": 1742988323
+      },
+      "fieldMeta": {
+        "_bridgeAddress": {
+          "description": "Bridge authorized to release or withdraw all escrow funds and configure token mappings."
+        }
+      },
       "implementationNames": {
-        "eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e": ""
+        "eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e": "ERC20Handler"
       }
+    },
+    {
+      "address": "eth:0xb2A240c6cEac75176d99287961F05ccb8DB39a0e",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -419,6 +541,91 @@
       }
     },
     {
+      "name": "TokenBridge",
+      "address": "eth:0xB66bbf236CE102A1De692f2A034b9dB245986671",
+      "type": "Contract",
+      "template": "chainsafe/Bridge",
+      "sourceHashes": [
+        "0xa25a1b62a0e29222fa956396946975bc9e77e00c8c059fb9c2a23e9fbe5af403"
+      ],
+      "proxyType": "immutable",
+      "description": "Routes token deposits and releases to asset handlers. Releases require an EIP-712 signature recovering to the configured signing address. The contract checks no source-chain proof or signer threshold. Per-function authorities can withdraw escrow funds, remap handlers and replace access control.",
+      "critical": { "sinceTimestamp": 1744292087 },
+      "deployerAddress": "eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b",
+      "sinceTimestamp": 1742988311,
+      "sinceBlock": 22130764,
+      "values": {
+        "_accessControl": "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512",
+        "_domainID": 0,
+        "_feeHandler": "eth:0x899b97352c91cC21384944350Ba8bf00fCAbCd53",
+        "_MPCAddress": "eth:0xb2A240c6cEac75176d99287961F05ccb8DB39a0e",
+        "$immutable": true,
+        "ethHandler": "eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+        "paused": false,
+        "usdcHandler": "eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e"
+      },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "_MPCAddress": {
+          "description": "Address accepted by the ECDSA signature check. It is set once and cannot subsequently be replaced through endKeygen."
+        },
+        "_accessControl": {
+          "severity": "HIGH",
+          "description": "Contract defining authority for each administrative function, including unrestricted escrow withdrawals."
+        },
+        "_feeHandler": {
+          "description": "Configurable contract collecting deposit fees."
+        },
+        "usdcHandler": {
+          "severity": "HIGH",
+          "description": "Handler holding USDC for resource ID zero."
+        },
+        "ethHandler": {
+          "severity": "HIGH",
+          "description": "Handler holding ETH for resource ID one."
+        }
+      },
+      "implementationNames": {
+        "eth:0xB66bbf236CE102A1De692f2A034b9dB245986671": "Bridge"
+      }
+    },
+    {
+      "name": "BridgeAdminMultiSig",
+      "address": "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x4Ea1f0f05E7484Ee85a97303DC88c2dF4288df3e",
+      "sinceTimestamp": 1702832627,
+      "sinceBlock": 18807102,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x4Ea1f0f05E7484Ee85a97303DC88c2dF4288df3e",
+          "eth:0x44fb52EB2bdDAf1c8b6D441e0b5DCa123A345292",
+          "eth:0x689752C198f0cEbe9993ee3E13AF0e565C068c25",
+          "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x9d22409767fa3e9aa92ef09e471ff6b638895a6cce2402989781ff1f9e0cc451",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 18,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
       "address": "eth:0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87",
       "type": "EOA",
       "proxyType": "EOA"
@@ -434,7 +641,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xFe1da7CAd939805d4A889822357c348177a5118d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -492,6 +709,61 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0x58371687dc997A7A11154bBcA72aEb15e4Db8F46": [
+      "error AlreadyClaimed()",
+      "error AmountDoesNotMatchMsgValue()",
+      "error AmountTooSmall()",
+      "error DestinationNetworkInvalid()",
+      "error EtherTransferFailed()",
+      "error GlobalExitRootInvalid()",
+      "error InvalidSmtProof()",
+      "error MerkleTreeFull()",
+      "error MessageFailed()",
+      "error MsgValueNotZero()",
+      "error NotValidAmount()",
+      "error NotValidOwner()",
+      "error NotValidSignature()",
+      "error NotValidSpender()",
+      "error OnlyAdmin()",
+      "error OnlyEmergencyState()",
+      "error OnlyNotEmergencyState()",
+      "error OnlyPolygonZkEVM()",
+      "event BridgeEvent(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata, uint32 depositCount)",
+      "event ClaimEvent(uint32 index, uint32 originNetwork, address originAddress, address destinationAddress, uint256 amount)",
+      "event EmergencyStateActivated()",
+      "event EmergencyStateDeactivated()",
+      "event Initialized(uint8 version)",
+      "event NewWrappedToken(uint32 originNetwork, address originTokenAddress, address wrappedTokenAddress, bytes metadata)",
+      "function activateEmergencyState()",
+      "function admin() view returns (address)",
+      "function bridgeAsset(uint32 destinationNetwork, address destinationAddress, uint256 amount, address token, bool forceUpdateGlobalExitRoot, bytes permitData) payable",
+      "function bridgeFee() view returns (uint256)",
+      "function claimAsset(bytes32[32] smtProof, uint32 index, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originTokenAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
+      "function claimedBitMap(uint256) view returns (uint256)",
+      "function deactivateEmergencyState()",
+      "function depositCount() view returns (uint256)",
+      "function feeAddress() view returns (address)",
+      "function fetchAll(address token, uint256 amount)",
+      "function gasTokenAddress() view returns (address)",
+      "function gasTokenDecimalDiffFactor() view returns (uint256)",
+      "function gasTokenMetadata() view returns (bytes)",
+      "function getDepositRoot() view returns (bytes32)",
+      "function getLeafValue(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes32 metadataHash) pure returns (bytes32)",
+      "function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
+      "function globalExitRootManager() view returns (address)",
+      "function initialize(uint32 _networkID, address _globalExitRootManager, address _polygonZkEVMaddress, address _admin, uint256 _bridgeFee, address _feeAddress, address _gasTokenAddress, bytes _gasTokenMetadata, uint256 _gasTokenDecimalDiffFactor)",
+      "function isClaimed(uint256 index) view returns (bool)",
+      "function isEmergencyState() view returns (bool)",
+      "function lastUpdatedDepositCount() view returns (uint32)",
+      "function networkID() view returns (uint32)",
+      "function polygonZkEVMaddress() view returns (address)",
+      "function precalculatedWrapperAddress(uint32 originNetwork, address originTokenAddress, string name, string symbol, uint8 decimals) view returns (address)",
+      "function setBridgeSettingsFee(address _feeAddress, uint256 _bridgeFee)",
+      "function tokenInfoToWrappedToken(bytes32) view returns (address)",
+      "function updateGlobalExitRoot()",
+      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
+      "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
     ],
     "eth:0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc": [
       "error CommitteeAddressDoesntExist()",
@@ -665,6 +937,35 @@
     "eth:0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88": [
       "constructor(address _singleton)"
     ],
+    "eth:0x899b97352c91cC21384944350Ba8bf00fCAbCd53": [
+      "constructor(address bridgeAddress)",
+      "event FeeChanged(uint256 newFee)",
+      "event FeeCollected(address sender, uint8 fromDomainID, uint8 destinationDomainID, bytes32 resourceID, uint256 fee, address tokenAddress)",
+      "event FeeDistributed(address tokenAddress, address recipient, uint256 amount)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function _bridgeAddress() view returns (address)",
+      "function _domainResourceIDToFeeHandlerAddress(uint8, bytes32) view returns (address)",
+      "function adminSetResourceHandler(uint8 destinationDomainID, bytes32 resourceID, address handlerAddress)",
+      "function calculateFee(address sender, uint8 fromDomainID, uint8 destinationDomainID, bytes32 resourceID, bytes depositData, bytes feeData) view returns (uint256 fee, address tokenAddress)",
+      "function collectFee(address sender, uint8 fromDomainID, uint8 destinationDomainID, bytes32 resourceID, bytes depositData, bytes feeData) payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getRoleMemberIndex(bytes32 role, address account) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)"
+    ],
+    "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512": [
+      "constructor(bytes4[] functions, address[] accounts)",
+      "function GRANT_ACCESS_SIG() view returns (bytes4)",
+      "function functionAccess(bytes4) view returns (address)",
+      "function grantAccess(bytes4 sig, address account)",
+      "function hasAccess(bytes4 sig, address account) view returns (bool)"
+    ],
     "eth:0x997CfB0838544f68E59f877EDc905001456F125b": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -687,6 +988,33 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e": [
+      "constructor(address bridgeAddress)",
+      "error ContractAddressNotWhitelisted(address contractAddress)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function _bridgeAddress() view returns (address)",
+      "function _resourceIDToTokenContractAddress(bytes32) view returns (address)",
+      "function _tokenContractAddressToTokenProperties(address) view returns (bytes32 resourceID, bool isWhitelisted, bool isBurnable, tuple(bool isSet, uint8 externalDecimals) decimals)",
+      "function defaultDecimals() view returns (uint8)",
+      "function deposit(bytes32 resourceID, address depositor, bytes data) payable returns (bytes)",
+      "function executeProposal(bytes32 resourceID, bytes data) returns (bytes)",
+      "function fundERC20(address tokenAddress, address owner, uint256 amount)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setBurnable(address contractAddress)",
+      "function setResource(bytes32 resourceID, address contractAddress, bytes args)",
+      "function startTime() view returns (uint256)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function tokenLimitedMap(address) view returns (bool isLimited, uint256 singleLimit, uint256 dailyLimit)",
+      "function updateLimitedInfo(address token, bool isLimited, uint256 singleLimit, uint256 dailyLimit)",
+      "function withdraw(bytes data)"
+    ],
     "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -697,6 +1025,57 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xB66bbf236CE102A1De692f2A034b9dB245986671": [
+      "constructor(uint8 domainID, address accessControl)",
+      "error AccessNotAllowed(address sender, bytes4 funcSig)",
+      "error DepositToCurrentDomain()",
+      "error EmptyProposalsArray()",
+      "error InvalidProposalSigner()",
+      "error MPCAddressAlreadySet()",
+      "error MPCAddressIsNotUpdatable()",
+      "error MPCAddressNotSet()",
+      "error MPCAddressZeroAddress()",
+      "error NonceDecrementsNotAllowed()",
+      "error ResourceIDNotMappedToHandler()",
+      "event AccessControlChanged(address newAccessControl)",
+      "event Deposit(uint8 destinationDomainID, bytes32 resourceID, uint64 depositNonce, address indexed user, bytes data, bytes handlerResponse)",
+      "event EndKeygen()",
+      "event FailedHandlerExecution(bytes lowLevelData, uint8 originDomainID, uint64 depositNonce)",
+      "event FeeHandlerChanged(address newFeeHandler)",
+      "event KeyRefresh(string hash)",
+      "event Paused(address account)",
+      "event ProposalExecution(uint8 originDomainID, uint64 depositNonce, bytes32 dataHash, bytes handlerResponse)",
+      "event Retry(string txHash)",
+      "event StartKeygen()",
+      "event Unpaused(address account)",
+      "function _MPCAddress() view returns (address)",
+      "function _accessControl() view returns (address)",
+      "function _depositCounts(uint8) view returns (uint64)",
+      "function _domainID() view returns (uint8)",
+      "function _feeHandler() view returns (address)",
+      "function _resourceIDToHandlerAddress(bytes32) view returns (address)",
+      "function adminChangeAccessControl(address newAccessControl)",
+      "function adminChangeFeeHandler(address newFeeHandler)",
+      "function adminPauseTransfers()",
+      "function adminSetBurnable(address handlerAddress, address tokenAddress)",
+      "function adminSetDepositNonce(uint8 domainID, uint64 nonce)",
+      "function adminSetForwarder(address forwarder, bool valid)",
+      "function adminSetResource(address handlerAddress, bytes32 resourceID, address contractAddress, bytes args)",
+      "function adminUnpauseTransfers()",
+      "function adminWithdraw(address handlerAddress, bytes data)",
+      "function deposit(uint8 destinationDomainID, bytes32 resourceID, bytes depositData, bytes feeData) payable returns (uint64 depositNonce, bytes handlerResponse)",
+      "function endKeygen(address MPCAddress)",
+      "function executeProposal(tuple(uint8 originDomainID, uint64 depositNonce, bytes32 resourceID, bytes data) proposal, bytes signature)",
+      "function executeProposals(tuple(uint8 originDomainID, uint64 depositNonce, bytes32 resourceID, bytes data)[] proposals, bytes signature)",
+      "function isProposalExecuted(uint8 domainID, uint256 depositNonce) view returns (bool)",
+      "function isValidForwarder(address) view returns (bool)",
+      "function paused() view returns (bool)",
+      "function refreshKey(string hash)",
+      "function retry(string txHash)",
+      "function startKeygen()",
+      "function usedNonces(uint8, uint256) view returns (uint256)",
+      "function verify(tuple(uint8 originDomainID, uint64 depositNonce, bytes32 resourceID, bytes data)[] proposals, bytes signature) view returns (bool)"
     ],
     "eth:0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615": [
       "constructor(address _rollupAddress, address _bridgeAddress)",
@@ -709,6 +1088,9 @@
       "function lastRollupExitRoot() view returns (bytes32)",
       "function rollupAddress() view returns (address)",
       "function updateExitRoot(bytes32 newRoot)"
+    ],
+    "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F": [
+      "constructor(address _singleton)"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -761,11 +1143,15 @@
     ]
   },
   "usedTemplates": {
+    "chainsafe/AccessControlSegregator": "0x1b4fa7f409cd7a49c6238a3e3b0b93bca2b3ebb08e5f71c831b0c02a0f327087",
+    "chainsafe/Bridge": "0x65183f2d3adfc79f3cab281ecefb8ad9f5842a66aa0a723042b446571f55cb32",
+    "chainsafe/ERC20Handler": "0xf984bec8082a98fcf395ff8c9cc8e19b4a9670f9769a07b82ce275b3297ad724",
+    "chainsafe/FeeHandlerRouter": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22322978 },
-  "permissionsConfigHash": "0x0181d2cbc1ab3f5158e7a70557a657a3c1cf53d14d324c8ba0b47f7da1f2e1a4",
+  "usedBlockNumbers": { "ethereum": 26174823 },
+  "permissionsConfigHash": "0x796e683a2c302b5dfcddc3f508839560530d000ca9c23f3ccdee7dcb5b0b790c",
   "permissions": {
     "eth:0x52882c7564fAca480549145fAc4d0b09eD0D9c17": {
       "receivedPermissions": [
@@ -810,6 +1196,44 @@
         }
       ]
     },
+    "eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512",
+          "description": "authorize trusted forwarders that can impersonate administrative callers by appending their address to calldata.",
+          "role": ".forwarderAccount"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512",
+          "description": "remap token resources and their handlers in the bridge.",
+          "role": ".resourceAccount"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512",
+          "description": "replace every per-function bridge authority, including authority to withdraw all escrow funds.",
+          "role": ".grantAccessAccount"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e",
+          "description": "set per-token limits on individual and daily deposits.",
+          "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "eth:0xb2A240c6cEac75176d99287961F05ccb8DB39a0e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB66bbf236CE102A1De692f2A034b9dB245986671",
+          "description": "authorize arbitrary token releases by signing bridge proposals.",
+          "role": "._MPCAddress"
+        }
+      ]
+    },
     "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3": {
       "directlyReceivedPermissions": [
         {
@@ -831,6 +1255,34 @@
           "permission": "upgrade",
           "from": "eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
           "role": "admin"
+        }
+      ]
+    },
+    "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512",
+          "description": "pause bridge deposits and releases.",
+          "role": ".pauseAccount"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512",
+          "description": "replace the bridge's access-control contract.",
+          "role": ".accessControlAccount"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512",
+          "description": "unpause bridge deposits and releases.",
+          "role": ".unpauseAccount"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512",
+          "description": "withdraw all escrow funds through the bridge's adminWithdraw function.",
+          "role": ".withdrawAccount"
         }
       ]
     }

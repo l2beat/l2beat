@@ -14,6 +14,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { stickyTableColumnRowProps } from '~/components/table/useStickyTableHeader'
 import {
   getLeftPinnedCellStyles,
+  NOT_A_FOOTER_PROPS,
   PINNED_CELL_ATTRIBUTE,
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
@@ -247,7 +248,10 @@ const PosterRow = memo(function PosterRow({
         {/* the hover box stays in its own cell: reaching left under the
             pinned logo, it would be cut by the logo's fade */}
         {row.poster.href ? (
-          <TableLink href={row.poster.href} className="md:ml-0 md:pl-1.5">
+          <TableLink
+            href={row.poster.href}
+            className="md:-mr-1.5 md:ml-0 md:px-1.5"
+          >
             <PosterName poster={row.poster} />
           </TableLink>
         ) : (
@@ -370,6 +374,7 @@ function pinnedCellProps(index: number, className?: string) {
       className,
     ),
     [PINNED_CELL_ATTRIBUTE]: '',
+    ...NOT_A_FOOTER_PROPS,
   }
 }
 

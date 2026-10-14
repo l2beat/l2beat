@@ -59,6 +59,45 @@ describe(BatchingAndCachingProvider.name, () => {
       )
     })
 
+    it('divides when the RPC times out asking for a smaller range', async () => {
+      const cache = mockObject<ReorgAwareCache>({
+        entry: mockFn().returns({
+          read: () => undefined,
+        }),
+        write: mockFn().returns(undefined),
+      })
+      const provider = mockObject<LowLevelProvider>({
+        getLogs: mockFn()
+          .throwsOnce(
+            new Error(
+              'bad response (status=400, body="{\\"error\\":{\\"code\\":-32000,\\"message\\":\\"Query timeout exceeded. Consider reducing your block range.\\"}}")',
+            ),
+          )
+          .returnsOnce([])
+          .returnsOnce([]),
+      })
+      const multicallClient = mockObject<MulticallClient>()
+
+      const batchingProvider = new BatchingAndCachingProvider(
+        cache,
+        provider,
+        multicallClient,
+        logger,
+      )
+
+      const address = EthereumAddress.random()
+      await batchingProvider.getLogs(address, ['aaaa'], 0, 2000)
+
+      expect(provider.getLogs).toHaveBeenCalledTimes(3)
+      expect(provider.getLogs).toHaveBeenNthCalledWith(
+        2,
+        address,
+        [['aaaa']],
+        0,
+        1000,
+      )
+    })
+
     it('correctly divides range of two', async () => {
       const cache = mockObject<ReorgAwareCache>({
         entry: mockFn().returns({

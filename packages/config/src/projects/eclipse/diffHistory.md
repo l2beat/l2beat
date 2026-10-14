@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xf6831e4a86983cd731547e910b66f78d64cd7c58
+
+# Diff at Mon, 12 Oct 2026 07:19:47 GMT:
+
+- id: 45a75af8
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1763979972
+- current timestamp: 1791789506
+
+## Description
+
+The bridge-controlling Eclipse Multisig lowered its threshold from 3/4 to 2/4. Two signers can now exercise its withdrawal and administration powers.
+
+## Watched changes
+
+```diff
+    contract Eclipse Multisig (eth:0x4720342419C1D316B948690d12C86D5b485C64E0) [GnosisSafe] {
+    +++ description: None
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xd1ba151200ac7f9fd551dd17fd65b1a9bd010dbb
 
 # Diff at Fri, 08 May 2026 07:51:15 GMT:

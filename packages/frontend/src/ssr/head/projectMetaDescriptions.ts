@@ -25,6 +25,22 @@ export function getScalingMetadataDescription(project: {
   )
 }
 
+export function getDaMetadataDescription(project: {
+  name: string
+  tvs: number
+  economicSecurity: number | undefined
+  description: string
+}) {
+  return describe(
+    [
+      unlessMentioned('DA layer', project.description),
+      usd(project.tvs, 'TVS'),
+      usd(project.economicSecurity, 'economic security'),
+    ],
+    project,
+  )
+}
+
 export function getZkCatalogMetadataDescription(project: {
   name: string
   creator: string | undefined
