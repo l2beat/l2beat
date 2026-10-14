@@ -20,7 +20,7 @@ import { ConfigReader } from '../discovery/config/ConfigReader'
 import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
 import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
 import { configureLogger } from './logger'
-import { PositiveInteger } from './types'
+import { NonNegativeInteger, PositiveInteger } from './types'
 
 export const DiscoverCommandArgs = {
   project: positional({
@@ -86,6 +86,12 @@ export const DiscoverCommandArgs = {
     type: boolean,
     long: 'overwrite-cache',
     description: 'overwrite the cache entries',
+  }),
+  maxDepth: option({
+    type: optional(NonNegativeInteger),
+    long: 'max-depth',
+    description:
+      'analyze only addresses up to this many hops from the initial addresses (0: only them), overriding maxDepth of config.jsonc; writes a partial discovered.json',
   }),
   ai: flag({
     type: boolean,

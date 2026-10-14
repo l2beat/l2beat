@@ -61,6 +61,16 @@ function getTimestamp(
   return UnixTime.toDate(configuredTimestamp)
 }
 
+function readProjectConfig(
+  configReader: ConfigReader,
+  config: DiscoveryModuleConfig,
+): ConfigRegistry {
+  if (config.maxDepth === undefined) {
+    return configReader.readConfig(config.project)
+  }
+  return configReader.readConfig(config.project, { maxDepth: config.maxDepth })
+}
+
 export async function runDiscovery(
   paths: DiscoveryPaths,
   http: HttpClient,
@@ -69,7 +79,7 @@ export async function runDiscovery(
   chainConfigs: DiscoveryChainConfig[],
   logger: Logger,
 ): Promise<void> {
-  const projectConfig = configReader.readConfig(config.project)
+  const projectConfig = readProjectConfig(configReader, config)
 
   const timestampDate = getTimestamp(configReader, config)
 
@@ -172,7 +182,7 @@ export async function dryRunDiscovery(
   const now = UnixTime.now() - UnixTime.MINUTE
   const yesterday = now - UnixTime.DAY
 
-  const projectConfig = configReader.readConfig(config.project)
+  const projectConfig = readProjectConfig(configReader, config)
 
   const [discovered, discoveredYesterday] = await Promise.all([
     justDiscover(

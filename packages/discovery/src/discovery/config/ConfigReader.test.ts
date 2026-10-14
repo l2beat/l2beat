@@ -1,3 +1,4 @@
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import mockFs from 'mock-fs'
 import { ConfigReader } from './ConfigReader'
@@ -122,6 +123,19 @@ describe('readConfig layering', () => {
 
     expect(field?.copy).toEqual('g')
     expect(field?.handler).toEqual(undefined)
+  })
+
+  it('puts an override layer above config.jsonc', () => {
+    const reader = new ConfigReader('/layered')
+
+    expect(reader.readConfig('proj').structure.maxDepth).toEqual(
+      Number.POSITIVE_INFINITY,
+    )
+    const config = reader.readConfig('proj', { maxDepth: 0 })
+    expect(config.structure.maxDepth).toEqual(0)
+    expect(config.structure.initialAddresses).toEqual([
+      ChainSpecificAddress(ADDRESS),
+    ])
   })
 
   it('makes every config value read-only, inherited or not', () => {

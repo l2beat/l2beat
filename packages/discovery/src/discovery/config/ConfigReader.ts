@@ -40,8 +40,11 @@ export class ConfigReader {
 
   constructor(private rootPath: string) {}
 
-  readConfig(name: string): ConfigRegistry {
+  readConfig(name: string, override?: ConfigLayer): ConfigRegistry {
     const layers = this.readConfigLayers(name)
+    if (override !== undefined) {
+      layers.push(override)
+    }
     const merged = layers.reduce((base, layer) => mergeConfigLayer(base, layer))
     return new ConfigRegistry(merged)
   }
