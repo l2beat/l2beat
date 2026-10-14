@@ -60,7 +60,12 @@ export function Activity({
       style={{ width: buckets.length * BAR_STEP - 1 }}
       aria-hidden
     >
-      <div ref={barsRef} className="flex h-full items-end gap-px">
+      <div
+        ref={barsRef}
+        // a fixed height: Safari lays out a percent height in a table cell
+        // twice, every bar with it, whenever a number in the table changes
+        className="flex h-5 items-end gap-px"
+      >
         {shown.map(({ step, blobs }) => (
           <div
             key={step}

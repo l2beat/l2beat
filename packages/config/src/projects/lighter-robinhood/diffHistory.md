@@ -1,3 +1,157 @@
+Generated with discovered.json: 0x6a020c4556af82c75085a078e0c0bdd53af500d3
+
+# Diff at Tue, 13 Oct 2026 13:47:36 GMT:
+
+- id: b94370c0
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f86fa8ee6214e9cba302685affb910adddc04f2d block: 1790671691
+- current timestamp: 1791898285
+
+## Description
+
+Lighter upgrade with a new ZkLighterVerifier and a new DesertVerifier (no sources published yet). Main contract changes:
+- L1 `createOrder` now takes a public market index instead of a perps market index.
+- `changePubKey` accepts `NIL_ACCOUNT_INDEX` to target the caller's own master account.
+- Minor validation changes.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      values.versionId:
+-        6
++        8
+    }
+```
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [lighter/ZkLighterWithSpotQuoteAsset] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter.
+      sourceHashes.1:
+-        "0x3a35ceb50e1870902c0afbda8de806932d6a7168c2e27af00ca755fc5db60b93"
++        "0xa487039dbc3c481c5afc59f1bb3d5a3fb364cd58cc965f573d2a4d7bae0e4e88"
+      values.$implementation.0:
+-        "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"
++        "robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA"
+      values.$implementation.1:
+-        "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
++        "robinhood:0x8E1aF081a30C5d632999b8ECA8438B911a4670EB"
+      values.getTarget:
+-        "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"
++        "robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA"
+      values.additionalZkLighter:
++        "robinhood:0x8E1aF081a30C5d632999b8ECA8438B911a4670EB"
+      values.assetConfigNative:
++        {"tokenAddress":"robinhood:0x0000000000000000000000000000000000000000","withdrawalsEnabled":1,"extensionMultiplier":100,"tickSize":10000000000,"depositCapTicks":"1152921504606846975","minDepositTicks":100000}
+      values.assetConfigQuote:
++        {"tokenAddress":"robinhood:0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168","withdrawalsEnabled":1,"extensionMultiplier":1000000,"tickSize":1,"depositCapTicks":"1152921504606846975","minDepositTicks":1000000}
++++ severity: HIGH
+      values.desertVerifier:
++        "robinhood:0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0"
+      values.governance:
++        "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7"
+      values.MAX_PUBLIC_MARKET_INDEX:
++        281474976710655
+      values.NIL_PUBLIC_MARKET_INDEX:
++        255
+      values.registeredAssets:
++        [{"assetIndex":1,"tokenAddress":"robinhood:0x0000000000000000000000000000000000000000"},{"assetIndex":3,"tokenAddress":"robinhood:0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"},{"assetIndex":4,"tokenAddress":"robinhood:0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9"},{"assetIndex":5,"tokenAddress":"robinhood:0x12f190a9F9d7D37a250758b26824B97CE941bF54"},{"assetIndex":6,"tokenAddress":"robinhood:0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3"},{"assetIndex":7,"tokenAddress":"robinhood:0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35"},{"assetIndex":8,"tokenAddress":"robinhood:0xe93237C50D904957Cf27E7B1133b510C669c2e74"},{"assetIndex":9,"tokenAddress":"robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC"},{"assetIndex":10,"tokenAddress":"robinhood:0x322F0929c4625eD5bAd873c95208D54E1c003b2d"},{"assetIndex":11,"tokenAddress":"robinhood:0xb0992820E760d836549ba69BC7598b4af75dEE03"},{"assetIndex":12,"tokenAddress":"robinhood:0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa"},{"assetIndex":13,"tokenAddress":"robinhood:0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4"},{"assetIndex":14,"tokenAddress":"robinhood:0x822CC93fFD030293E9842c30BBD678F530701867"},{"assetIndex":15,"tokenAddress":"robinhood:0xd917B029C761D264c6A312BBbcDA868658eF86a6"},{"assetIndex":16,"tokenAddress":"robinhood:0xa30FA36Db767ad9eD3f7a60fC79526fB4d56D344"},{"assetIndex":17,"tokenAddress":"robinhood:0x6330D8C3178a418788dF01a47479c0ce7CCF450b"},{"assetIndex":18,"tokenAddress":"robinhood:0xdF0992E440dD0be65BD8439b609d6D4366bf1CB5"},{"assetIndex":19,"tokenAddress":"robinhood:0xD5f3879160bc7c32ebb4dC785F8a4F505888de68"},{"assetIndex":20,"tokenAddress":"robinhood:0x117cc2133c37B721F49dE2A7a74833232B3B4C0C"},{"assetIndex":21,"tokenAddress":"robinhood:0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5"},{"assetIndex":22,"tokenAddress":"robinhood:0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f"},{"assetIndex":23,"tokenAddress":"robinhood:0x86923f96303D656E4aa86D9d42D1e57ad2023fdC"},{"assetIndex":24,"tokenAddress":"robinhood:0xc72b96e0E48ecd4DC75E1e45396e26300BC39681"},{"assetIndex":25,"tokenAddress":"robinhood:0xfF080c8ce2E5feadaCa0Da81314Ae59D232d4afD"},{"assetIndex":26,"tokenAddress":"robinhood:0xB90A19fF0Af67f7779afF50A882A9CfF42446400"},{"assetIndex":27,"tokenAddress":"robinhood:0x5f10A1C971B69e47e059e1dC91901B59b3fB49C3"},{"assetIndex":28,"tokenAddress":"robinhood:0x894E1EC2D74FFE5AEF8Dc8A9e84686acCB964F2A"},{"assetIndex":29,"tokenAddress":"robinhood:0x39dBED3a2bd333467115dE45665cC57F813C4571"}]
++++ severity: HIGH
+      values.verifier:
++        "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31"
+      implementationNames.robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90:
+-        "ZkLighter"
+      implementationNames.robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c:
+-        "AdditionalZkLighter"
+      implementationNames.robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA:
++        "ZkLighter"
+      implementationNames.robinhood:0x8E1aF081a30C5d632999b8ECA8438B911a4670EB:
++        "AdditionalZkLighter"
+      template:
++        "lighter/ZkLighterWithSpotQuoteAsset"
+      description:
++        "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter."
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0xa54f86e01624213bae74fb0e5155537807b948cb043a804c3b2acb905aa631d1"
++        "0x020d69201a7fde88b16a01da83de6719640fb7ad4524c577b001f4f446f1dcb2"
+      values.$implementation:
+-        "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"
++        "robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4"
+      values.getTarget:
+-        "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"
++        "robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4"
+      implementationNames.robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2:
+-        "ZkLighterVerifier"
+      implementationNames.robinhood:0x7817a34136c56A6097C7042B3cAAe24b9eEd9fb4:
++        "ZkLighterVerifier"
+      template:
++        "lighter/ZkLighterVerifier"
+      description:
++        "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation."
+      critical:
++        true
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DesertVerifier (robinhood:0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0) [N/A]
+    +++ description: Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).
+```
+
+## Source code changes
+
+```diff
+.../lighter-robinhood/.flat/DesertVerifier.sol     | 1297 ++++++++++++++++++++
+ .../Lighter/AdditionalZkLighter.2.sol              |   93 +-
+ .../Lighter/ZkLighter.1.sol                        |  112 +-
+ .../ZkLighterVerifier/ZkLighterVerifier.sol        |   46 +-
+ 4 files changed, 1450 insertions(+), 98 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790671691 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract DesertVerifier (robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10) [N/A]
+    +++ description: Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).
+```
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      values.additionalZkLighter:
+-        "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
++++ severity: HIGH
+      values.desertVerifier:
+-        "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10"
+      values.governance:
+-        "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7"
++++ severity: HIGH
+      values.verifier:
+-        "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31"
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [N/A] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x74db8f3862124920db08fd872fb9b86f97e3fd3b
 
 # Diff at Sun, 04 Oct 2026 05:55:33 GMT:

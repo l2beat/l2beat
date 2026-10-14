@@ -112,20 +112,20 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       exposureShort:
-        'Each swap service custodies its leg and can hold the funds until you pass identity checks, and identities on both legs link them.',
+        'Each swap service custodies its leg and can hold the funds until the user passes identity checks, and identities on both legs link them.',
       exposureContinued:
-        'The entry service knows the XMR output it paid you, and the exit service sees the rings of the transaction that pays it. Together they find that output in the rings behind the exit, and self-transfers only widen the search.',
+        'The entry service knows the XMR output it paid the user, and the exit service sees the rings of the transaction that pays it. Together they find that output in the rings behind the exit, and self-transfers only widen the search.',
       interior: {
         sender: {
           verdict: 'atRisk',
-          note: "Rings that reference the service's payout output point to the spend of your XMR.",
+          note: "Rings that reference the service's payout output point to the spend of the user's XMR.",
         },
         recipient: 'private',
         amount: 'private',
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'A service can hold either leg until you identify yourself.',
+          note: 'A service can hold either leg until the user provides identification.',
         },
       },
       sources: [
@@ -146,12 +146,12 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       exposureShort:
         'Whoever breaks elliptic-curve cryptography recovers every Monero output key from public chain data, so every ring shows its real spend.',
       exposureContinued:
-        "A known address also yields its view key, and anyone learns a service's address by starting a trade. Your XMR can then be followed from the entry service to the exit service, where amounts and timing pair it with both Ethereum legs.",
+        "A known address also yields its view key, and anyone learns a service's address by starting a trade. The user's XMR can then be followed from the entry service to the exit service, where amounts and timing pair it with both Ethereum legs.",
       interior: {
         sender: 'exposed',
         recipient: {
           verdict: 'atRisk',
-          note: 'Readable for outputs to known addresses, and the services know yours.',
+          note: "Readable for outputs to known addresses, and the services know the user's address.",
         },
         amount: {
           verdict: 'atRisk',
