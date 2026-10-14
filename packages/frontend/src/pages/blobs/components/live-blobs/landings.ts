@@ -64,6 +64,19 @@ export function cameAfterLoad(landings: Landings, slot: number | undefined) {
   return slot !== undefined && slot > landings.loadedHead(slot)
 }
 
+/** Whether a landing counts toward a number holding the block at `stamp` */
+export function countsToward(
+  landing: Landing,
+  stamp: number | undefined,
+  landings: Landings,
+  matches: (landing: Landing) => boolean,
+) {
+  // with no data it holds nothing, and asking would set its load head
+  if (stamp === undefined || !matches(landing)) return false
+  // a landing from above the stamp is of a block the chain took back
+  return !isAbove(landing.slot, stamp) && cameAfterLoad(landings, landing.slot)
+}
+
 /**
  * The belt may be scrolled away, loading or failed, so a number must not wait
  * for it forever; a working belt lands at most `blobs` batches, one after another
@@ -146,12 +159,7 @@ export function useLandedTotal(
   useEffect(
     () =>
       landings?.subscribe((landing) => {
-        // a landing from above the stamp is of a block the chain took back
-        if (
-          !matches(landing) ||
-          isAbove(landing.slot, stampInHand.current) ||
-          !cameAfterLoad(landings, landing.slot)
-        ) {
+        if (!countsToward(landing, stampInHand.current, landings, matches)) {
           return
         }
         setHeld((current) => ({

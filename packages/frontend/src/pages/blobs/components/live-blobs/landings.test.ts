@@ -4,6 +4,7 @@ import { SLIDE_TIME } from './blocks/beltPosition'
 import { BATCH_STAGGER, LAND_AFTER } from './blocks/motion'
 import {
   cameAfterLoad,
+  countsToward,
   createLandings,
   firstHeld,
   type Held,
@@ -53,6 +54,35 @@ describe(cameAfterLoad.name, () => {
     page.emit({ posterId: 'a', blobs: 1, slot: 1001 })
 
     expect(heard).toEqual([1001])
+  })
+})
+
+// Methodology: landings are offered to numbers in each state they can be in
+// when one comes: no data yet, holding the block, or holding an older one.
+describe(countsToward.name, () => {
+  const any = () => true
+  const landing = { posterId: 'a', blobs: 1, slot: 1001 }
+
+  it('counts a landing of a block after the load toward a number holding it', () => {
+    const landings = createLandings()
+    cameAfterLoad(landings, 1000)
+
+    expect(countsToward(landing, 1001, landings, any)).toEqual(true)
+    expect(countsToward(landing, 1001, landings, () => false)).toEqual(false)
+  })
+
+  it('leaves out a block the number has not got, as the chain took it back', () => {
+    const landings = createLandings()
+    cameAfterLoad(landings, 1000)
+
+    expect(countsToward(landing, 1000, landings, any)).toEqual(false)
+  })
+
+  it('leaves a number with no data its load head to come', () => {
+    const later = shownLater(createLandings())
+
+    expect(countsToward(landing, undefined, later, any)).toEqual(false)
+    expect(cameAfterLoad(later, 1002)).toEqual(false)
   })
 })
 
