@@ -118,15 +118,6 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       ],
     ],
   },
-  env.CLIENT_SIDE_TOKENS_PAGE && {
-    type: 'single',
-    title: 'Tokens',
-    match: 'tokens',
-    href: '/tokens',
-    icon: (
-      <TokensIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-  },
   {
     type: 'single',
     title: 'Privacy',
@@ -134,6 +125,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/privacy',
     icon: (
       <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+  },
+  env.CLIENT_SIDE_TOKENS_PAGE && {
+    type: 'single',
+    title: 'Tokens',
+    match: 'tokens',
+    href: '/tokens',
+    icon: (
+      <TokensIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
   env.CLIENT_SIDE_OSSIFICATION_ENABLED && {
