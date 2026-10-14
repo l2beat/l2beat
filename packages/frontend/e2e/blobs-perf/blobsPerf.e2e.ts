@@ -19,6 +19,7 @@ import {
   SLOT_MS,
   type TraceEvent,
   traceEvents,
+  untilNextPeriodMs,
   untilNextSlotMs,
 } from './blobsPage'
 
@@ -30,12 +31,13 @@ import {
  * A watch is one whole slot, from just after it starts, so it holds exactly
  * one block landing whatever the clock. The watches run back to back in one
  * trace, split where each slot starts, as stopping one trace and starting
- * another would take long enough to miss the next slot's start. Mock mode's
- * beacon node makes each slot's block from its number, so the data is fixed
- * too; what still varies is which slot, and with it how many batches land,
- * which is why the best of a few watches counts and the margins are wide. A
- * slot whose block was missed, as mock mode misses one in 40, lands nothing
- * and would be the best by far, so it is watched past rather than counted.
+ * another would take long enough to miss the next slot's start. The mock
+ * repeats the same few blocks every period (see playwright.config), and the
+ * watches start on a period's first slot, so every run sees the same blocks
+ * land in the same order: what a run counts differs from the last only by
+ * what the browser does differently, which is little, so the margins are
+ * narrow. The best of the watches counts, so one slot's count is what gets
+ * ratcheted and a stall on the runner cannot raise it.
  *
  * The main proxy is how many elements the browser restyles: a DOM write that
  * dirties the whole page shows up as millions per slot, where local ones add
@@ -55,9 +57,8 @@ import {
 const CEILINGS_FILE = join(__dirname, 'ceilings.json')
 /** Before the slot's block comes in, which mock mode has two seconds in */
 const START_INTO_SLOT_MS = 500
+/** As many as the mock's period holds, so every watch has a block of its own */
 const WATCHES = 3
-/** Watches allowed beyond `WATCHES` for slots that turn out missed */
-const SPARE_WATCHES = 2
 /**
  * A belt that holds still this long had no block to drop: one that lands
  * keeps it moving from two seconds in until its labels fade, seven at most
@@ -65,7 +66,7 @@ const SPARE_WATCHES = 2
 const STILL_WHEN_MISSED_MS = 9_000
 
 const MARGIN = {
-  restyledElements: (n: number) => n * 2,
+  restyledElements: (n: number) => Math.ceil(n * 1.5),
   quietPaintsPerSecond: (n: number) => n * 2,
   layouts: (n: number) => Math.ceil(n * 1.5),
   beltPaints: (n: number) => Math.ceil(n * 1.25),
@@ -90,19 +91,12 @@ for (const viewport of Object.keys(ceilings)) {
   test(`watching /blobs at ${viewport} stays under its ceiling`, async ({
     browser,
   }) => {
-    // A slot each, and up to a slot to reach the first; every spare may
-    // need a trace of its own, which waits up to a slot to start too
-    test.setTimeout((1 + WATCHES + 2 * SPARE_WATCHES) * SLOT_MS + 30_000)
+    // a slot each, and up to a period to reach the first
+    test.setTimeout(2 * WATCHES * SLOT_MS + 30_000)
     const [width, height] = viewport.split('x').map(Number)
     const { page, cdp, close } = await openBlobs(browser, width!, height!)
 
-    const runs: Measurement[] = []
-    let slotsLeft = WATCHES + SPARE_WATCHES
-    while (runs.length < WATCHES && slotsLeft > 0) {
-      const slots = Math.min(WATCHES - runs.length, slotsLeft)
-      slotsLeft -= slots
-      runs.push(...(await watchSlots(page, cdp, browser, slots)))
-    }
+    const runs = await watchPeriod(page, cdp, browser)
     expect(runs, 'watches with a block landing').toHaveLength(WATCHES)
     await close()
 
@@ -136,17 +130,13 @@ test.afterAll(() => {
   writeFileSync(CEILINGS_FILE, `${JSON.stringify(next, null, 2)}\n`)
 })
 
-/**
- * What each of the next `slots` slots cost to watch, leaving out those whose
- * block was missed
- */
-async function watchSlots(
+/** What each slot of the next period cost to watch */
+async function watchPeriod(
   page: Page,
   cdp: CDPSession,
   browser: Browser,
-  slots: number,
 ): Promise<Measurement[]> {
-  await page.waitForTimeout(untilNextSlotMs() + START_INTO_SLOT_MS)
+  await page.waitForTimeout(untilNextPeriodMs() + START_INTO_SLOT_MS)
   await browser.startTracing(page, {
     categories: [
       'devtools.timeline',
@@ -155,7 +145,7 @@ async function watchSlots(
     ],
   })
   const starts = [await markSlotStart(page, cdp)]
-  for (let slot = 0; slot < slots; slot++) {
+  for (let slot = 0; slot < WATCHES; slot++) {
     await page.waitForTimeout(untilNextSlotMs() + START_INTO_SLOT_MS)
     starts.push(await markSlotStart(page, cdp))
   }
@@ -167,7 +157,7 @@ async function watchSlots(
   expect(startTimes, 'slot starts on the trace').toHaveLength(starts.length)
 
   const runs: Measurement[] = []
-  for (let slot = 0; slot < slots; slot++) {
+  for (let slot = 0; slot < WATCHES; slot++) {
     const [from, to] = [startTimes[slot]!, startTimes[slot + 1]!]
     const inSlot = events.filter((e) => e.ts >= from && e.ts < to)
     const still = longestBeltStill(inSlot)

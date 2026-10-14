@@ -15,7 +15,7 @@ describe(createMockLiveBlobsSource.name, () => {
     const now = () => slotStart(HEAD) + 5
     const source = createMockLiveBlobsSource(
       Promise.resolve(['base', 'arbitrum', 'optimism']),
-      now,
+      { now },
     )
     const feed = new LiveBlobsFeed(source, Logger.SILENT, now)
 
@@ -50,5 +50,37 @@ describe(createMockLiveBlobsSource.name, () => {
     expect(pulse.reduce((sum, b) => sum + b.blobs, 0)).toBeLessThanOrEqual(
       posted.reduce((sum, p) => sum + p.blobs, 0),
     )
+  })
+
+  // Methodology: with a period, a benchmark expects the blocks one period
+  // apart to hold the same batches, so the same work lands on the page, while
+  // still being different blocks of their own slots
+  it('repeats the same batches every period', async () => {
+    const period = 3
+    const source = createMockLiveBlobsSource(
+      Promise.resolve(['base', 'arbitrum', 'optimism']),
+      { now: () => slotStart(HEAD) + 5, period },
+    )
+
+    const blocks = await source.liveBlock.getBySlotRange(
+      HEAD - 2 * period,
+      HEAD,
+    )
+    const batches = await source.liveBlobBatch.getBySlotRange(
+      HEAD - 2 * period,
+      HEAD,
+    )
+    const landing = (slot: number) =>
+      batches
+        .filter((b) => b.slot === slot)
+        .map((b) => ({ blobs: b.blobs, projectId: b.projectId }))
+
+    expect(blocks.map((b) => b.slot)).toEqual(
+      Array.from({ length: 2 * period + 1 }, (_, i) => HEAD - 2 * period + i),
+    )
+    expect(landing(HEAD)).toEqual(landing(HEAD - period))
+    expect(landing(HEAD)).toEqual(landing(HEAD - 2 * period))
+    expect(landing(HEAD)).not.toEqual(landing(HEAD - 1))
+    expect(blocks[0]?.hash).not.toEqual(blocks[period]?.hash)
   })
 })

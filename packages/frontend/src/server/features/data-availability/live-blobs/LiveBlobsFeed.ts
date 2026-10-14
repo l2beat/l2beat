@@ -139,6 +139,7 @@ export function getLiveBlobsFeed(): LiveBlobsFeed {
     env.MOCK
       ? createMockLiveBlobsSource(
           getBlobPosters().then((posters) => posters.map((p) => p.id)),
+          { period: env.MOCK_LIVE_BLOBS_PERIOD },
         )
       : getDb(),
     getLogger(),

@@ -25,6 +25,18 @@ const MISSED_ONE_IN = 40
 const UNATTRIBUTED_ONE_IN = 10
 /** So a few posters post most, as on mainnet */
 const POSTER_FALLOFF = 0.75
+/**
+ * Where a period's slots are seeded from: a stretch of full blocks, so a
+ * benchmark that repeats them has a landing worth counting in every slot
+ */
+const PERIOD_SEED = 8
+
+interface MockOptions {
+  /** Seconds */
+  now?: () => number
+  /** Slots after which the same blocks come round again */
+  period?: number
+}
 
 interface MockSlot {
   block: LiveBlockRecord
@@ -33,13 +45,18 @@ interface MockSlot {
 
 /**
  * Blocks are stored on the real clock, but what each holds follows from its
- * slot alone, so every run and benchmark sees the same blocks without a database.
+ * slot alone, so every run and benchmark sees the same blocks without a
+ * database. With a `period`, the same few blocks come round every `period`
+ * slots, so a benchmark that starts on a period's first slot sees the same
+ * blocks land whenever it runs.
  */
 export function createMockLiveBlobsSource(
   posterIds: Promise<string[]>,
-  now = () => Date.now() / 1000,
+  { now = () => Date.now() / 1000, period }: MockOptions = {},
 ): LiveBlobsSource {
   const pickPoster = posterIds.then(createPosterPicker)
+  const seedOf = (slot: number) =>
+    period === undefined ? slot : PERIOD_SEED + (slot % period)
   const newestStoredSlot = () =>
     Math.floor(slotProgressAt(now()) - STORED_INTO_SLOT / SLOT_SECONDS)
 
@@ -53,7 +70,7 @@ export function createMockLiveBlobsSource(
       slot <= Math.min(to, newest);
       slot++
     ) {
-      const mock = mockSlot(slot, pick)
+      const mock = mockSlot(slot, seedOf(slot), pick)
       if (mock) slots.push(mock)
     }
     return slots
@@ -67,7 +84,7 @@ export function createMockLiveBlobsSource(
       findHead: async () => {
         const pick = await pickPoster
         for (let slot = newestStoredSlot(); ; slot--) {
-          const mock = mockSlot(slot, pick)
+          const mock = mockSlot(slot, seedOf(slot), pick)
           if (mock) return mock.block
         }
       },
@@ -165,9 +182,10 @@ function sumBlockBuckets(
 /** Undefined where the slot was missed */
 function mockSlot(
   slot: number,
+  seed: number,
   pickPoster: (roll: number) => string | undefined,
 ): MockSlot | undefined {
-  const random = seededRandom(slot)
+  const random = seededRandom(seed)
   if (Math.floor(random() * MISSED_ONE_IN) === 0) return undefined
   const blockNumber = slot - 1_000_000
   const batches: LiveBlobBatchRecord[] = []

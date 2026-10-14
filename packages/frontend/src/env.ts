@@ -59,6 +59,8 @@ const SERVER_CONFIG = {
   DATABASE_STATEMENT_TIMEOUT_MS: positiveInteger.default(20_000),
   DISABLE_CACHE: coerceBoolean.default(false),
   MOCK: coerceBoolean.default(false),
+  /** Mock blobs repeat every this many slots, so a benchmark sees the same blocks each run */
+  MOCK_LIVE_BLOBS_PERIOD: positiveInteger.optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
   COOLIFY_URL: z.string().optional(),
@@ -132,6 +134,7 @@ function getRawEnv(): Record<
     DATABASE_STATEMENT_TIMEOUT_MS: process.env.DATABASE_STATEMENT_TIMEOUT_MS,
     DISABLE_CACHE: process.env.DISABLE_CACHE,
     MOCK: process.env.MOCK,
+    MOCK_LIVE_BLOBS_PERIOD: process.env.MOCK_LIVE_BLOBS_PERIOD,
     NODE_ENV: process.env.NODE_ENV,
     COOLIFY_URL: process.env.COOLIFY_URL,
     COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,

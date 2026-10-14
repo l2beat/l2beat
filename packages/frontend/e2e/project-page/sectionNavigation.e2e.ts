@@ -18,8 +18,10 @@ for (const viewport of viewports) {
     const context = await browser.newContext({ viewport })
     const page = await context.newPage()
     await page.goto(`${PAGE}#permissions`, { waitUntil: 'networkidle' })
-    await page.waitForTimeout(1500)
-    expect(await sectionTop(page, 'permissions')).toBeLessThan(100)
+    // Polled, as the sections above hydrate after load and move it while they do
+    await expect
+      .poll(() => sectionTop(page, 'permissions'), { timeout: 15_000 })
+      .toBeLessThan(100)
     expect(await sectionTop(page, 'permissions')).toBeGreaterThanOrEqual(0)
     await context.close()
   })

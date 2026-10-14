@@ -1,16 +1,16 @@
 {
   "1440x1000": {
-    "restyledElements": 6678,
-    "quietPaintsPerSecond": 166,
-    "layouts": 585,
-    "beltPaints": 622,
-    "scriptMs": 1656
+    "restyledElements": 15824,
+    "quietPaintsPerSecond": 142,
+    "layouts": 422,
+    "beltPaints": 712,
+    "scriptMs": 2252
   },
   "402x874": {
-    "restyledElements": 14794,
-    "quietPaintsPerSecond": 164,
-    "layouts": 596,
-    "beltPaints": 665,
-    "scriptMs": 1212
+    "restyledElements": 15872,
+    "quietPaintsPerSecond": 112,
+    "layouts": 455,
+    "beltPaints": 719,
+    "scriptMs": 1344
   }
 }

@@ -8,6 +8,12 @@ process.env.NO_PROXY = [process.env.NO_PROXY, 'localhost,127.0.0.1']
 
 process.env.CLIENT_SIDE_DEFI_ENABLED = 'true'
 process.env.CLIENT_SIDE_BLOBS_PAGE = 'true'
+/**
+ * The blobs ratchets count the work of a block landing, which depends on the
+ * block, so the mock repeats the same few blocks and each ratchet starts
+ * where they come round. Three: as many as a ratchet watches
+ */
+process.env.MOCK_LIVE_BLOBS_PERIOD = '3'
 
 /**
  * The ratchets count the work a page does, which other tests running beside
@@ -55,6 +61,7 @@ export default defineConfig({
       INTEROP_CHAINS: 'ethereum,arbitrum,base,optimism',
       CLIENT_SIDE_DEFI_ENABLED: 'true',
       CLIENT_SIDE_BLOBS_PAGE: 'true',
+      MOCK_LIVE_BLOBS_PERIOD: process.env.MOCK_LIVE_BLOBS_PERIOD,
     },
     command: 'pnpm start:mock',
     url: 'http://localhost:7357',

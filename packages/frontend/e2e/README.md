@@ -24,8 +24,11 @@ slowest one. That is about 1.5 min now.
     they run one at a time (`workers: 1`) after the rest. Its runner installs
     WebKit (`webkit: true` in its matrix entry); locally, run
     `pnpm exec playwright install webkit` once.
-  - `blobs perf`: the ratchets in `blobs-perf`. Each one watches the chain for
-    a few 12 s slots, so each takes about 50 s however fast the machine is.
+  - `blobs perf`: the ratchets in `blobs-perf`. The mock chain repeats the
+    same three blocks every three 12 s slots (`MOCK_LIVE_BLOBS_PERIOD` in
+    `playwright.config.ts`), and each ratchet waits for the first of them
+    and then watches all three, so each takes 40 to 75 s however fast the
+    machine is, and counts the same work every run.
 - The `test-e2e-shard` job in `/.github/workflows/ci.yml` has one matrix entry
   per runner, each with the Playwright arguments that runner gets.
 - The `test-e2e` job, named "E2E tests", is the check branch protection

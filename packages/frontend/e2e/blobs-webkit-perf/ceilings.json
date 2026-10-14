@@ -1,8 +1,8 @@
 {
   "402x874": {
-    "layoutMsPerChange": 20
+    "layoutCostOverPlain": 26
   },
   "1440x1000": {
-    "layoutMsPerChange": 22
+    "layoutCostOverPlain": 29
   }
 }

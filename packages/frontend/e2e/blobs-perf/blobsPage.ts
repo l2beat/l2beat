@@ -7,6 +7,8 @@ import type { Browser, CDPSession } from 'playwright/test'
 
 export const SLOT_MS = 12_000
 const GENESIS_MS = 1606824023_000
+/** Mock blobs come round every this many slots, as playwright.config sets */
+const PERIOD_SLOTS = Number(process.env.MOCK_LIVE_BLOBS_PERIOD)
 
 /**
  * /blobs scrolled to the belt, as a visitor watches it, once it is live.
@@ -40,6 +42,14 @@ export async function openBlobs(
 export function untilNextSlotMs() {
   const intoSlot = (Date.now() - GENESIS_MS) % SLOT_MS
   return SLOT_MS - intoSlot
+}
+
+/** Until the first slot of the next period, where the mock's blocks start over */
+export function untilNextPeriodMs() {
+  if (!PERIOD_SLOTS) throw new Error('MOCK_LIVE_BLOBS_PERIOD is not set')
+  const slot = Math.floor((Date.now() - GENESIS_MS) / SLOT_MS)
+  const next = (Math.floor(slot / PERIOD_SLOTS) + 1) * PERIOD_SLOTS
+  return GENESIS_MS + next * SLOT_MS - Date.now()
 }
 
 export interface TraceEvent {

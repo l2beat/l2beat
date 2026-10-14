@@ -100,6 +100,21 @@ function parseCalls(rawUrl: string): TrpcCall[] {
   })
 }
 
+const TRPC_QUIET_MS = 1000
+const TRPC_QUIET_TIMEOUT_MS = 15000
+
+async function waitForTrpcQuiet(lastRequestAt: () => number) {
+  const deadline = Date.now() + TRPC_QUIET_TIMEOUT_MS
+  while (Date.now() - lastRequestAt() < TRPC_QUIET_MS) {
+    if (Date.now() > deadline) {
+      throw new Error('tRPC requests kept coming', {
+        cause: { quietMs: TRPC_QUIET_MS, timeoutMs: TRPC_QUIET_TIMEOUT_MS },
+      })
+    }
+    await new Promise((resolve) => setTimeout(resolve, 100))
+  }
+}
+
 /**
  * Layer 2: verifies the client serves prefetched queries from the hydrated
  * cache instead of refetching. Loads each page and:
@@ -114,10 +129,12 @@ export async function checkNoRefetch(
 ): Promise<NoRefetchResult> {
   const { url, prefetched } = item
   const observed = new Map<string, unknown[]>()
+  let lastTrpcRequestAt = Date.now()
 
   page.on('request', (request) => {
     const reqUrl = request.url()
     if (reqUrl.includes('/api/trpc/')) {
+      lastTrpcRequestAt = Date.now()
       for (const call of parseCalls(reqUrl)) {
         const inputs = observed.get(call.path) ?? []
         inputs.push(call.input)
@@ -132,9 +149,10 @@ export async function checkNoRefetch(
       timeout: 45000,
     })
     // Trigger any below-the-fold charts that fetch on becoming visible, then
-    // wait for the network to settle again so their requests are observed.
+    // wait for their requests to be observed. Only tRPC requests count: the
+    // page may keep other traffic going, which never goes idle.
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
-    await page.waitForLoadState('networkidle', { timeout: 15000 })
+    await waitForTrpcQuiet(() => lastTrpcRequestAt)
   } catch (error) {
     return {
       url,

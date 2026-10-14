@@ -17,6 +17,7 @@ import {
   resetProbes,
   SLOT_MS,
   traceEvents,
+  untilNextPeriodMs,
   untilNextSlotMs,
 } from './blobsPage'
 
@@ -28,11 +29,11 @@ import {
  *
  * Each swipe starts 1.2 seconds into a slot, before mock mode's block comes
  * in at two, and goes back and forth across it with a real touch: four racks
- * right, eight left, four right, ending where it started. Mock mode makes
- * each slot's block from its number, so the data is fixed; what varies is
- * which slot, and with it how much lands, which is why the best of a few
- * swipes counts. A slot whose block was missed animates nothing, and would
- * be the best by far, so it is swiped past rather than counted.
+ * right, eight left, four right, ending where it started. The mock repeats
+ * the same few blocks every period (see playwright.config), and the swipes
+ * start on a period's first slot, so every run swipes across the same
+ * landings in the same order and the margins can be narrow. The best of the
+ * swipes counts, so a stall on the runner cannot raise what gets ratcheted.
  *
  * The main proxy is how many elements the browser restyles, which does not
  * depend on the machine's speed; against the iOS simulator it moved with the
@@ -44,9 +45,8 @@ import {
  */
 const CEILINGS_FILE = join(__dirname, 'swipeCeilings.json')
 const START_INTO_SLOT_MS = 1_200
+/** As many as the mock's period holds, so every swipe meets a block of its own */
 const SWIPES = 3
-/** Swipes allowed beyond `SWIPES` for slots that turn out missed */
-const SPARE_SWIPES = 2
 /** Pixels the finger moves each step, a step a frame */
 const STEP_PX = 2.4
 const STEP_MS = 16
@@ -76,8 +76,8 @@ for (const viewport of Object.keys(ceilings)) {
   test(`swiping the /blobs belt at ${viewport} as a block lands stays under its ceiling`, async ({
     browser,
   }) => {
-    // up to two slots for each swipe: one to reach its start, one to swipe
-    test.setTimeout(2 * (SWIPES + SPARE_SWIPES) * SLOT_MS + 30_000)
+    // a slot each, and up to a period to reach the first
+    test.setTimeout(2 * SWIPES * SLOT_MS + 30_000)
     const [width, height] = viewport.split('x').map(Number)
     const { page, cdp, close } = await openBlobs(browser, width!, height!, {
       touch: true,
@@ -85,12 +85,9 @@ for (const viewport of Object.keys(ceilings)) {
     await page.evaluate(countAnimations)
 
     const runs: Measurement[] = []
-    for (
-      let swipe = 0;
-      swipe < SWIPES + SPARE_SWIPES && runs.length < SWIPES;
-      swipe++
-    ) {
-      const run = await swipeAcrossLanding(page, cdp, browser)
+    for (let swipe = 0; swipe < SWIPES; swipe++) {
+      const untilSlotMs = swipe === 0 ? untilNextPeriodMs() : untilNextSlotMs()
+      const run = await swipeAcrossLanding(page, cdp, browser, untilSlotMs)
       if (run) runs.push(run)
       await backToLive(page)
     }
@@ -127,18 +124,22 @@ test.afterAll(() => {
   writeFileSync(CEILINGS_FILE, `${JSON.stringify(next, null, 2)}\n`)
 })
 
-/** What a swipe across a landing cost, or undefined if the block was missed */
+/**
+ * What a swipe across the landing of the slot `untilSlotMs` away cost, or
+ * undefined if nothing landed
+ */
 async function swipeAcrossLanding(
   page: Page,
   cdp: CDPSession,
   browser: Browser,
+  untilSlotMs: number,
 ): Promise<Measurement | undefined> {
   const box = await page.locator('canvas[role=img]').boundingBox()
   if (!box) throw new Error('The belt is not on the page')
   const x = box.x + box.width / 2
   const y = box.y + box.height / 2
 
-  await page.waitForTimeout(untilNextSlotMs() + START_INTO_SLOT_MS)
+  await page.waitForTimeout(untilSlotMs + START_INTO_SLOT_MS)
   await page.evaluate(resetProbes)
   await page.evaluate('window.__animations = 0')
   const before = await metrics(cdp)
