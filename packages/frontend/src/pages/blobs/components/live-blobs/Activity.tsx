@@ -1,11 +1,17 @@
-import { useLayoutEffect, useRef, useState } from 'react'
-import { cn } from '~/utils/cn'
+import { type RefObject, useLayoutEffect, useRef, useState } from 'react'
+import { toRgba } from './color'
 import { usePrefersReducedMotion } from './hooks'
 
 // thin enough for a whole day of bars to fit a table column
 const BAR_WIDTH = 2
 const BAR_STEP = BAR_WIDTH + 1
+/** As the row's `h-5` */
+const ROW_HEIGHT = 20
 const SLIDE_MS = 700
+const GROW_MS = 700
+/** Tailwind's `ease-out` */
+const GROW_EASING = 'cubic-bezier(0, 0, 0.2, 1)'
+const PAST_ALPHA = 0.6
 
 /**
  * Steps are fixed in time: the last bar grows as batches land, and a new step
@@ -53,6 +59,11 @@ export function Activity({
   const current = firstBucket + buckets.length - 1
   // as the row slides, bars must not also grow or shrink on the way
   const sliding = leaving.bar !== undefined || leaving.pending
+  const bars = shown.map((bar) => ({
+    ...bar,
+    height: barHeight(bar.blobs, scale),
+  }))
+  useGrowingBars(barsRef, bars, !sliding && !reducedMotion)
 
   return (
     <div
@@ -66,20 +77,20 @@ export function Activity({
         // twice, every bar with it, whenever a number in the table changes
         className="flex h-5 items-end gap-px"
       >
-        {shown.map(({ step, blobs }) => (
+        {bars.map(({ step, blobs, height }) => (
           <div
             key={step}
-            // grown by scaling, not by height: a height change lays out the
-            // whole table again on every frame of the transition
-            className={cn(
-              'h-full shrink-0 origin-bottom rounded-[1px]',
-              !sliding && 'transition-transform duration-700 ease-out',
-            )}
+            className="shrink-0 origin-bottom rounded-[1px]"
             style={{
               width: BAR_WIDTH,
-              transform: `scaleY(${blobs === 0 ? 0.08 : 0.2 + (0.8 * blobs) / scale})`,
-              backgroundColor: blobs === 0 ? 'var(--divider)' : color,
-              opacity: blobs === 0 || step === current ? 1 : 0.6,
+              height,
+              // dimmed by its color, as an opacity would make it a layer
+              backgroundColor:
+                blobs === 0
+                  ? 'var(--divider)'
+                  : step === current
+                    ? color
+                    : toRgba(color, PAST_ALPHA),
             }}
           />
         ))}
@@ -91,6 +102,44 @@ export function Activity({
 interface Bar {
   step: number
   blobs: number
+}
+
+/** Px; a bar with no blobs keeps a sliver, so the row still reads as a day */
+function barHeight(blobs: number, scale: number) {
+  const share = blobs === 0 ? 0.08 : 0.2 + (0.8 * blobs) / scale
+  // to a hundredth, so float error does not reach the markup
+  return Math.round(ROW_HEIGHT * share * 100) / 100
+}
+
+/**
+ * Bars stand at their height, with no transform or opacity, as either makes
+ * a bar a layer of its own, and while any animation runs off the compositor
+ * (a number's color as it counts) WebKit goes through every layer on each
+ * frame: ~1,600 bars, 2 ms a frame on a Mac. A bar whose height changed eases
+ * into it by scaling, on the compositor, and is a layer only while it does.
+ */
+function useGrowingBars(
+  barsRef: RefObject<HTMLDivElement | null>,
+  bars: { step: number; height: number }[],
+  animate: boolean,
+) {
+  const drawn = useRef(new Map<number, number>())
+  useLayoutEffect(() => {
+    const row = barsRef.current
+    if (!row) return
+    const next = new Map<number, number>()
+    bars.forEach(({ step, height }, i) => {
+      next.set(step, height)
+      const was = drawn.current.get(step)
+      const bar = row.children[i]
+      if (!animate || was === undefined || was === height || !bar) return
+      bar.animate(
+        [{ transform: `scaleY(${was / height})` }, { transform: 'none' }],
+        { duration: GROW_MS, easing: GROW_EASING },
+      )
+    })
+    drawn.current = next
+  })
 }
 
 function toBars(buckets: number[], firstBucket: number): Bar[] {
