@@ -15,8 +15,8 @@ export function AudiencePicker({
       <AudienceCard
         href={`#${consumersId}`}
         eyebrow="For wallets, explorers and interfaces"
-        title="Show the crops"
-        description="Get the crops for a protocol based on id or a contract address."
+        title="Show the ratings"
+        description="Get the CROPS ratings for a protocol by its ID or a contract address."
         cta="Read the API"
         art={<WalletMock />}
       />

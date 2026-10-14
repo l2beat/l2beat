@@ -4,6 +4,8 @@ import type {
   ProjectCropStatus,
   ProjectCrops,
 } from '@l2beat/config'
+import { formatCurrency } from '@l2beat/shared-pure'
+import { formatTimestamp } from '~/utils/dates'
 
 // The site's vocabulary for a crop. Config declares a crop with optional
 // fields; resolveCrops.ts on the server fills them in to the shapes below.
@@ -93,15 +95,49 @@ export function getCropStatusText(
   return CROP_SENTIMENT_LABELS[sentiment]
 }
 
+/** Whether a reviewed project is listed in the garden, and if not, why. */
+export type GardenListing = 'listed' | 'ratedBad' | 'noOssificationScore'
+
+/** The measured ossification of a project, shown with its Security crop. */
+export interface CropOssification {
+  score: number
+  isUnverified: boolean
+  /** Unix seconds: the last critical change, or the start of tracking if there was none */
+  unchangedSince: number
+  /** USD·years; null when it cannot be measured */
+  exposure: number | null
+}
+
+export function getCropOssificationLines(
+  ossification: CropOssification,
+): string[] {
+  const { score, isUnverified, unchangedSince, exposure } = ossification
+  return [
+    isUnverified
+      ? 'No score: some critical contracts are unverified.'
+      : `Score: ${score} of 100.`,
+    `No critical change since ${formatTimestamp(unchangedSince, { mode: 'date' })}.`,
+    ...(exposure !== null
+      ? [`Battle-tested exposure: ${formatCurrency(exposure, 'usd')}·years.`]
+      : []),
+  ]
+}
+
 /** A crop's definition and its evaluation together, in garden order. */
 export interface CropEntry {
   definition: CropDefinition
   evaluation: ResolvedCropEvaluation
+  /** Only on the Security crop, for projects whose ossification we measure. */
+  ossification?: CropOssification
 }
 
-export function toCropEntries(crops: ResolvedCrops): CropEntry[] {
+export function toCropEntries(
+  crops: ResolvedCrops,
+  ossification?: CropOssification,
+): CropEntry[] {
   return CROP_COLUMNS.map((definition) => ({
     definition,
     evaluation: crops[definition.key],
+    ...(definition.key === 'security' && ossification ? { ossification } : {}),
   }))
 }

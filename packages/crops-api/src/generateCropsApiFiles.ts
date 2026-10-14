@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   type AddressMatch,
   type AddressResponse,
@@ -59,7 +60,11 @@ export function generateCropsApiFiles(input: CropsApiInput): CropsApiFile[] {
   const projects = input.projects
     .map((source) => ({
       ...source,
-      api: resolveCropsProject(source, input.ledger),
+      api: resolveCropsProject(
+        source,
+        input.ledger,
+        UnixTime(input.generatedAt),
+      ),
     }))
     .sort((a, b) => a.id.localeCompare(b.id))
   const files: CropsApiFile[] = [

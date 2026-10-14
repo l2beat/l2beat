@@ -9,7 +9,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -22,6 +22,7 @@ import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
+import { scoreOssification } from '~/server/features/garden/resolveCrops'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
@@ -393,7 +394,11 @@ export async function getL2ProjectEntry(
 
   const chartProject = toChartProject(project)
 
-  const gardenCropsSection = getGardenCropsSection(project.crops)
+  const gardenCropsSection = getGardenCropsSection(
+    project.crops,
+    scoreOssification(project.ossificationHistory, UnixTime.now()),
+    ossification,
+  )
   if (gardenCropsSection) {
     sections.push(gardenCropsSection)
   }

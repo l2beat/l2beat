@@ -6,7 +6,11 @@ import {
   CROP_SWATCH,
   CROP_TINT,
 } from '~/components/garden/cropPalette'
-import type { ResolvedCrops } from '~/components/garden/crops'
+import type {
+  CropOssification,
+  GardenListing,
+  ResolvedCrops,
+} from '~/components/garden/crops'
 import {
   type CropEntry,
   getCropStatusText,
@@ -31,17 +35,20 @@ const STAGGER = 0.05
  */
 export function CropsBed({
   crops,
-  inGarden,
+  listing,
+  ossification,
 }: {
   crops: ResolvedCrops
-  inGarden: boolean
+  listing: GardenListing
+  ossification: CropOssification | undefined
 }) {
-  const entries = toCropEntries(crops)
+  const inGarden = listing === 'listed'
+  const entries = toCropEntries(crops, ossification)
   const entranceHold = useEntranceHold()
 
   return (
     <div className={cn('@container', entranceHold)}>
-      <Verdict inGarden={inGarden} entries={entries} />
+      <Verdict listing={listing} entries={entries} />
       <div
         className={cn(
           'relative mt-4 overflow-hidden rounded-t-xl border border-b-0',
@@ -70,6 +77,14 @@ export function CropsBed({
           <Findings key={entry.definition.key} entry={entry} index={index} />
         ))}
       </div>
+      {/* Standing caveats span the bed instead of lengthening their own column. */}
+      {entries.map(({ definition }) => (
+        <CropNote
+          key={definition.key}
+          note={definition.note}
+          className="mt-4 text-[12px] leading-snug"
+        />
+      ))}
     </div>
   )
 }
@@ -80,7 +95,9 @@ function Plant({ entry, index }: { entry: CropEntry; index: number }) {
     <div
       role="img"
       aria-label={`${definition.label}: ${getCropStatusText(evaluation.status, evaluation.sentiment)}`}
-      className="flex flex-col items-center gap-1.5 pb-2"
+      // The mound's centre sits 11.5% of the plant's height above its base;
+      // shifting by that buries the lower half in the soil, so it reads as planted.
+      className="flex translate-y-[11.5%] justify-center"
     >
       <CropPlant
         status={evaluation.status}
@@ -88,11 +105,6 @@ function Plant({ entry, index }: { entry: CropEntry; index: number }) {
         delay={index * STAGGER}
         width={80}
         className="@max-[519.9px]:[&>svg]:h-[62px] @max-[519.9px]:[&>svg]:w-[53px]"
-      />
-      <LetterChip
-        entry={entry}
-        delay={index * STAGGER}
-        className="size-7 text-[11px]"
       />
     </div>
   )
@@ -144,13 +156,14 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
         <LetterChip
           entry={entry}
           delay={index * STAGGER}
-          className={'@max-[719.9px]:grid hidden size-[22px] text-[10px]'}
+          // Wide layouts stand each plant over its column, so the badge is only needed once the columns wrap.
+          className="@max-[719.9px]:grid hidden size-[22px] text-[10px]"
         />
         {definition.label}
       </h3>
       <p
         className={cn(
-          'mt-0.5 font-semibold text-[11px] uppercase tracking-[.14em]',
+          'mt-1 font-semibold text-paragraph-14',
           CROP_INK[evaluation.sentiment],
         )}
       >
@@ -162,25 +175,24 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
           '@min-[900px]:text-paragraph-14',
         )}
       >
-        <CropFindings evaluation={evaluation} />
+        <CropFindings
+          evaluation={evaluation}
+          ossification={entry.ossification}
+        />
       </div>
-      <CropNote
-        note={definition.note}
-        className="mt-3 text-[12px] leading-snug"
-      />
     </div>
   )
 }
 
 /** The verdict as a headline, with a swatch per crop so the tally can be read at a glance. */
 function Verdict({
-  inGarden,
+  listing,
   entries,
 }: {
-  inGarden: boolean
+  listing: GardenListing
   entries: CropEntry[]
 }) {
-  const bloomCount = entries.filter(
+  const goodCount = entries.filter(
     (e) => e.evaluation.sentiment === 'good',
   ).length
   return (
@@ -188,14 +200,14 @@ function Verdict({
       <p
         className={cn(
           'font-bold text-heading-20 leading-tight',
-          inGarden ? 'text-garden-accent' : 'text-primary',
+          listing === 'listed' ? 'text-garden-accent' : 'text-primary',
         )}
       >
-        {gardenVerdictText(inGarden)}
+        {gardenVerdictText(listing)}
       </p>
       <div className="flex items-center gap-2">
-        <span className="font-medium text-[12px] text-secondary uppercase tracking-wider">
-          {bloomCount} of 4 in bloom
+        <span className="text-paragraph-13 text-secondary">
+          {goodCount} of 4 rated good
         </span>
         <span className="flex gap-1" aria-hidden>
           {entries.map((entry) => (
@@ -252,7 +264,8 @@ function Sky({ inGarden }: { inGarden: boolean }) {
 
 function Sun() {
   return (
-    <span className="absolute top-3 right-4 size-14 rounded-full bg-garden-sun/70 blur-[2px] dark:hidden" />
+    // Smaller in a narrow bed, where a full-size sun would sit on the last plant.
+    <span className="absolute @max-[519.9px]:top-2 top-3 @max-[519.9px]:right-2 right-4 @max-[519.9px]:size-8 size-14 rounded-full bg-garden-sun/70 blur-[2px] dark:hidden" />
   )
 }
 

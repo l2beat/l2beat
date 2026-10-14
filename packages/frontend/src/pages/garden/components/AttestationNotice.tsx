@@ -2,7 +2,7 @@ import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestat
 import { formatTimestamp } from '~/utils/dates'
 import { SproutIcon } from './SproutIcon'
 
-/** Counts the reviewed set, not the garden: a project with a red crop is attested but not planted. */
+/** Counts the reviewed set, not the garden: a project with a red crop or no ossification score is attested but not listed. */
 export function AttestationNotice({
   attestation,
 }: {

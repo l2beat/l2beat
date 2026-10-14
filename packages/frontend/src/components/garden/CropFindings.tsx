@@ -2,18 +2,20 @@ import type { OsiLicense } from '@l2beat/config'
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 import { CROP_TITLE } from './cropPalette'
-import type { ResolvedCropEvaluation } from './crops'
-import { getCropStatusText } from './crops'
+import type { CropOssification, ResolvedCropEvaluation } from './crops'
+import { getCropOssificationLines, getCropStatusText } from './crops'
 
 /** The verdict in the crop's colour, the standing caveat, then the findings. */
 export function CropEvaluationDetails({
   label,
   note,
   evaluation,
+  ossification,
 }: {
   label: string
   note: string | undefined
   evaluation: ResolvedCropEvaluation
+  ossification?: CropOssification
 }) {
   return (
     <>
@@ -26,7 +28,7 @@ export function CropEvaluationDetails({
         {label}: {getCropStatusText(evaluation.status, evaluation.sentiment)}
       </p>
       <CropNote note={note} />
-      <CropFindings evaluation={evaluation} />
+      <CropFindings evaluation={evaluation} ossification={ossification} />
     </>
   )
 }
@@ -34,8 +36,10 @@ export function CropEvaluationDetails({
 /** Shared by the garden tooltip and the project page, so the two cannot drift. */
 export function CropFindings({
   evaluation,
+  ossification,
 }: {
   evaluation: ResolvedCropEvaluation
+  ossification?: CropOssification
 }) {
   return (
     <>
@@ -50,6 +54,12 @@ export function CropFindings({
         items={evaluation.additionalConsiderations}
       />
       <CropSection title="Not reviewed yet" items={evaluation.notReviewed} />
+      {ossification && (
+        <CropSection
+          title="Ossification"
+          items={getCropOssificationLines(ossification)}
+        />
+      )}
     </>
   )
 }
@@ -83,9 +93,7 @@ function CropSection({
   }
   return (
     <>
-      <p className="mt-2.5 font-semibold text-[10px] text-secondary uppercase tracking-wider">
-        {title}
-      </p>
+      <p className="mt-3 font-medium text-[12px] text-secondary">{title}</p>
       <ul className="mt-1 flex flex-col gap-1">
         {license && (
           <CropBullet>

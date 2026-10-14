@@ -24,7 +24,7 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
         <div className="flex grow flex-col pb-24">
           <GardenPageHeader
             title="The Infinite Garden"
-            description="Each project is evaluated across the CROPS framework: Censorship Resistance, Open source, Privacy, and Security. Hover a plant for the reasoning behind its evaluation."
+            description="The four CROPS properties count as a whole: a project is listed only if none is rated bad and it has an ossification score."
           />
           <main>
             <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-6">
