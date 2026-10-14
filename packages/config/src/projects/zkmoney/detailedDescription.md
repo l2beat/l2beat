@@ -2,10 +2,17 @@ zk.money lets users send DAI privately on Aztec and move it into sUSDS savings. 
 
 Every withdrawal and refund needs a zk proof and a signature from a live AWS Nitro enclave (TEE). The DAI enclave decrypts and reads the operations it handles. Aztec Labs controls names and the contract lists the released wallets use.
 
-### Multiproof system
 The portal releases funds only after Aztec proves the withdrawal message and one registered enclave signer co-signs it. Stealing escrowed funds requires both layers to fail, while a failure of either breaks privacy.
 
-If Aztec Network governance changes its canonical rollup, anyone can freeze the zk.money portal, see [upgrades and governance](#upgrades-and-governance). Refunds then publish note or deposit amounts on Ethereum and use proofs without zero knowledge.
+### Flow
+
+1. **Deposit.** You fund an L1 deposit address called a SIPA, and anyone can sweep it into the portal. USDC and USDT are swapped to DAI through Curve. After fees, an Inbox message credits private notes on Aztec. Reusing a SIPA links its deposits.
+2. **Pay.** You add a name as a contact, and the wallet reads its Aztec address from the onchain registry and sends a private transfer.
+3. **Withdraw.** Aztec proves the withdrawal message, an enclave co-signs it and the portal pays out DAI on Ethereum.
+
+### Keys
+
+Accounts sign with a passkey. The released wallet requires a registered name to access an account on a new device.
 
 ### Wallets
 The privacy ratings cover DAI in [zk.money Desktop v0.1.0](https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.1.0). sUSDS remains unassessed.
@@ -30,6 +37,10 @@ Name claims need the domain owner's signature. The assessed wallet needs a regis
 
 ### Resolver
 For ENS lookups, the resolver operator derives each deposit address from a secret shared with the recipient and announces it to them on L2. The assessed wallet derives its own deposit addresses from the same shared secret, so the operator can link them. The onchain Resolver checks a zk proof on every lookup, which stops the operator from redirecting payments. Users can choose a custom operator for name payments.
+
+### Exits
+
+**Refund.** If Aztec Network governance changes its canonical rollup, anyone can freeze the portal, see [upgrades and governance](#upgrades-and-governance). Refunds then publish note or deposit amounts on Ethereum and use proofs without zero knowledge.
 
 ### Compliance
 The assessed wallet sends Ethereum addresses to Predicate through zk.money for screening, which funding a deposit SIPA directly avoids. The relayer screens token movements against OFAC and optionally Predicate, and self-submitted sweeps and withdrawals skip it.

@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { LIVE_LAG_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { prepareCanvas, useAnimationFrame } from '../hooks'
 import { GLIDE_SLOTS } from '../lookBack'
 import type { ChainBlock } from './beaconChain'
@@ -41,6 +42,8 @@ interface Options {
   scene: BeltScene | undefined
   /** Slots since genesis */
   progressNow: () => number
+  /** The head of an answer that came in live; undefined while there is none */
+  liveHead: number | undefined
   /** Reduced motion */
   still: boolean
   /** Undefined to follow the chain */
@@ -59,6 +62,7 @@ export function useBelt({
   canvasRef,
   scene,
   progressNow,
+  liveHead,
   still,
   view,
   onScreen,
@@ -81,6 +85,9 @@ export function useBelt({
   })
   const sceneRef = useRef(scene)
   sceneRef.current = scene
+  const liveHeadRef = useRef(liveHead)
+  liveHeadRef.current = liveHead
+  const waitingSince = useRef<number>(undefined)
   const pointer = useRef<{ x: number; y: number } | undefined>(undefined)
   const hoveredKey = useRef<number | undefined>(undefined)
   const [hover, setHover] = useState<BeltHover>()
@@ -139,10 +146,22 @@ export function useBelt({
     if (x !== anchor.x || y !== anchor.y) pin(hit)
   }
 
+  /** A view of the past, or a finger on the belt, needs no live answer */
+  const waitsForAnswer = (now: number) => {
+    const following =
+      viewTarget.current === undefined && held.current === undefined
+    if (!following || !isOutrun(liveHeadRef.current, progressNow())) {
+      waitingSince.current = undefined
+      return false
+    }
+    waitingSince.current ??= now
+    return now - waitingSince.current < MAX_WAIT
+  }
+
   const running = onScreen && scene !== undefined
   useAnimationFrame((dt, now) => {
     const current = sceneRef.current
-    if (!current) return
+    if (!current || waitsForAnswer(now)) return
     const play = playback.current
     forgetSettled(play, now)
     if (play.revealedAt === undefined && current.blocks.size > 0) {
@@ -183,6 +202,7 @@ export function useBelt({
   const hoveredNow = hover?.key
   useEffect(() => {
     if (running || !scene) return
+    if (view === undefined && isOutrun(liveHead, progressNow())) return
     let cancelled = false
     const play = playback.current
     if (scene.blocks.size > 0) play.revealedAt ??= Number.NEGATIVE_INFINITY
@@ -194,7 +214,7 @@ export function useBelt({
     return () => {
       cancelled = true
     }
-  }, [running, paint, scene, hoveredNow, view])
+  }, [running, paint, scene, hoveredNow, view, liveHead, progressNow])
 
   const dropBlock = (block: ChainBlock) => {
     if (block.status !== 'proposed' || playback.current.still) return
@@ -280,6 +300,23 @@ interface PaintedFrame {
    * painted before frames stopped (off screen, hidden tab)
    */
   moving: boolean
+}
+
+/**
+ * Seconds the belt keeps its last frame for an answer. A request that stalls
+ * never fails, so without a cap the belt would stand still for good
+ */
+const MAX_WAIT = 5
+
+/**
+ * A hidden tab stops polling while the clock runs on, so on its return the
+ * belt would roll into racks with no blocks yet. It keeps the last frame until
+ * the answer catches up; a feed that stopped being live is no reason to wait
+ */
+function isOutrun(liveHead: number | undefined, progress: number) {
+  return (
+    liveHead !== undefined && Math.floor(progress) - liveHead > LIVE_LAG_SLOTS
+  )
 }
 
 /** Seconds the belt takes to cover most of the way to where it is taken */

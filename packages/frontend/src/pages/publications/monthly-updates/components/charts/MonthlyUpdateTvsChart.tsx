@@ -1,7 +1,7 @@
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { useId, useMemo } from 'react'
+import { useId } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
@@ -22,13 +22,11 @@ import { useTRPC } from '~/trpc/React'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateTvsChart({
-  type,
   entries,
   allL2ProjectsTvs,
   from,
   to,
 }: {
-  type: 'ecosystem' | 'daLayer'
   entries: ProjectId[]
   allL2ProjectsTvs: number
   from: UnixTime
@@ -61,20 +59,13 @@ export function MonthlyUpdateTvsChart({
     },
   )
 
-  const chartMeta = useMemo(() => {
-    return {
-      value: {
-        color: 'var(--project-primary)',
-        indicatorType: { shape: 'line' },
-        label:
-          type === 'ecosystem'
-            ? 'Total Value Secured'
-            : type === 'daLayer'
-              ? 'L2s TVS'
-              : 'TVS',
-      },
-    } satisfies ChartMeta
-  }, [type])
+  const chartMeta = {
+    value: {
+      color: 'var(--project-primary)',
+      indicatorType: { shape: 'line' },
+      label: 'Total Value Secured',
+    },
+  } satisfies ChartMeta
 
   const stats = getStats(chartData, allL2ProjectsTvs)
   const timeRange = getChartTimeRangeFromData(chartData)

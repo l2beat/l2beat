@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xf8c04fcbbdd7039823c9beaec7808849385bb89d
+
+# Diff at Mon, 12 Oct 2026 07:20:28 GMT:
+
+- id: 9821718a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1790850461
+- current timestamp: 1791789528
+
+## Description
+
+Three operator keys joined the registries. The valid active-operator count rose from 70 to 74.
+
+## Watched changes
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits. It checkpoints bond ownership so that committee sortition admits at most one operator key per bond owner, and applies an owner-set admission policy (cooldown and pause) to future committees.
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.72:
++        "eth:0xDb78ebaB8597AF977B686E540DCe734E613Eba88"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.73:
++        "eth:0x86Ab0b3C4A36cAB3037d750C850D660cE710e2a1"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.74:
++        "eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310"
++++ description: Number of operators whose active status is valid under the current eligibility-configuration version. Unlike activeOperators, this drops immediately when the version is bumped, so it is the signal for a mass invalidation.
+      values.numActiveOperators:
+-        70
++        74
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection (admitting at most one operator key per bond owner, and only when the BondingRegistry counts at least as many distinct active bond owners as the committee size), records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.72:
++        "eth:0xDb78ebaB8597AF977B686E540DCe734E613Eba88"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.73:
++        "eth:0x86Ab0b3C4A36cAB3037d750C850D660cE710e2a1"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3 a committee of up to the coordinator's MAX_COMMITTEE_SIZE is selected from these keys by ticket-weighted sortition, with at most one key per request-time bond owner.
+      values.$members.74:
++        "eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310"
+      values.unreleasedCommitteeCount:
+-        2
++        0
+    }
+```
+
 Generated with discovered.json: 0x9363e201a33c7138bd48f90902119e89f6cd97a0
 
 # Diff at Thu, 01 Oct 2026 11:10:36 GMT:

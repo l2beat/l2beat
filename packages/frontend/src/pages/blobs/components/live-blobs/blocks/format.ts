@@ -33,7 +33,7 @@ export function formatRate(value: number): string {
 export function describeWindow(slots: number) {
   const minutes = Math.floor((slots * SLOT_SECONDS) / 60)
   if (minutes < 60) return `Last ${Math.max(1, minutes)} min`
-  return `Last ${Math.floor(minutes / 60)} h`
+  return `Last ${Math.floor(minutes / 60)}h`
 }
 
 const SIZE_UNITS = ['KiB', 'MiB', 'GiB', 'TiB'] as const

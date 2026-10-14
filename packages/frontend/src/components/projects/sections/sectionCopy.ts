@@ -36,9 +36,6 @@ export const APPCHAIN_STAGES_NOTE =
 export const LIVENESS_DESCRIPTION =
   'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
 
-export const DA_BRIDGE_LIVENESS_DESCRIPTION =
-  'This section shows how frequently DA attestations are submitted. It also highlights anomalies - significant deviations from the typical schedule.'
-
 export const LAST_30_DAY_ANOMALIES_DESCRIPTION =
   'All liveness anomalies detected for this project in the last 30 days, helping you review recent downtime and availability issues.'
 
@@ -54,7 +51,10 @@ export const COSTS_DESCRIPTION =
 
 /** The page continues the sentence with the DA layers the project posts to. */
 export const DATA_POSTED_DESCRIPTION =
-  'This section shows how much data the project publishes to its data-availability (DA) layer over time.'
+  'This section shows how much data the project publishes to Ethereum over time. It leaves out data posted to other data-availability (DA) layers.'
+
+export const THROUGHPUT_DESCRIPTION =
+  'The chart shows the actual size of data posted to the DA Layer per day for the selected time period, as well as the maximum possible throughput per day.'
 
 export const L3_RISKS_DESCRIPTION =
   'The L3 risks depend on the individual properties of L3 and those of the host chain combined.'
@@ -107,14 +107,15 @@ export const ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON =
 export const PROJECT_UNVERIFIED_CONTRACTS_WARNING =
   'This project includes unverified contracts.'
 
+export const BRIDGE_UNVERIFIED_CONTRACTS_WARNING =
+  'This bridge includes unverified contracts.'
+
 export const DEPLOYMENT_RISKS_INTRO =
   'The current deployment carries some associated risks:'
 
 export function l3RisksShownText(isCombined: boolean) {
   return `The information below reflects ${isCombined ? 'combined L2 & L3' : 'individual L3'} risks.`
 }
-
-export const EIGENLAYER_DATA_SOURCE = 'API provided by EigenLayer'
 
 export function anonymitySetHistoricDescription(windowDays: number) {
   return `How many unique depositors you could have blended in with if you withdrew on a particular day after depositing during the previous ${windowDays} days. This metric is a proxy for the historic anonymity set and shows how it developed over time.`

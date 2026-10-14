@@ -75,6 +75,45 @@ const stakeLockPeriod = formatSeconds(
   voteExtendTime + executionExpiration + executionDelay,
 )
 
+// The IPFS app pinned on tornadocash.eth. L2BEAT rebuilt this CID from
+// tornado-dao/classic-ui 17c54dae with the DAO's Docker recipe
+// (tornado-dao/tornado-ipfs-ui d2aa401) on 2026-10-10. Two download fixes, not
+// build inputs: apt from archive.debian.org (Debian 11 is end of life) and kubo
+// v0.29.0 from GitHub with its sha512. A new pin fails this assert until the
+// new release is rebuilt and the reproducibility text is checked.
+const REBUILT_APP_CID =
+  'bafybeigduniojgqrz7e4vntsgmovdli3oi7a2pnzzvz2gfxlvj3yqwk75a'
+const appCid = contenthashToCid(
+  discovery.getContractValue<string>(
+    'GovernanceProposalStateUpgrade',
+    'appContenthash',
+  ),
+)
+assert(
+  appCid === REBUILT_APP_CID,
+  `tornadocash.eth pins ${appCid}, rebuild it and update REBUILT_APP_CID`,
+)
+
+/** ENS contenthash (ipfs-ns, 0xe301) to a base32 CIDv1. */
+function contenthashToCid(contenthash: string): string {
+  const bytes = Buffer.from(contenthash.replace(/^0x/, ''), 'hex')
+  assert(bytes[0] === 0xe3 && bytes[1] === 0x01, 'not an IPFS contenthash')
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz234567'
+  let bits = 0
+  let value = 0
+  let out = 'b'
+  for (const byte of bytes.subarray(2)) {
+    value = (value << 8) | byte
+    bits += 8
+    while (bits >= 5) {
+      out += alphabet[(value >>> (bits - 5)) & 31]
+      bits -= 5
+    }
+  }
+  if (bits > 0) out += alphabet[(value << (5 - bits)) & 31]
+  return out
+}
+
 function formatDenomination(amount: bigint, decimals: number): string {
   return utils.formatUnits(amount, decimals).replace(/\.?0+$/, '')
 }
@@ -118,17 +157,73 @@ export const tornadoCash: BaseProject = {
   },
   display: {
     description:
-      'A classic Ethereum mixer design based on fixed-denomination pools and zk withdrawals.',
+      'An unconditional privacy pool of fixed amounts with immutable contracts, and an app pinned on ENS by token governance.',
     detailedDescription: readProjectMarkdown(
       'tornado-cash',
       'detailedDescription',
+      { appCid },
     ),
     links: {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
+      repositories: [
+        'https://github.com/tornadocash/tornado-core',
+        'https://github.com/tornado-dao/classic-ui',
+      ],
       socialMedia: ['https://t.me/TornadoCashOfficialDAO'],
     },
     badges: [],
   },
+  milestones: [
+    {
+      // operator() on every pool reads zero from here on (1 ETH pool: block
+      // 10,091,702), after the trusted setup ceremony ended on 2020-05-10.
+      title: 'Pools become immutable',
+      url: 'https://www.coindesk.com/tech/2020/05/18/developers-of-ethereum-privacy-tool-tornado-cash-smash-their-keys',
+      date: '2020-05-18T00:00:00Z',
+      description:
+        'The developers set the operator of every pool to zero, so no one can change the pools.',
+      type: 'general',
+    },
+    {
+      title: 'Added to the OFAC sanctions list',
+      url: 'https://home.treasury.gov/news/press-releases/jy0916',
+      date: '2022-08-08T00:00:00Z',
+      description:
+        "OFAC adds Tornado Cash and the pools' addresses to its sanctions list.",
+      type: 'incident',
+    },
+    {
+      // Proposal 20, executed 2023-05-20 (tx 0x3274b609…), gave the attacker
+      // 1.2M fake votes. Proposal 21, executed 2023-05-28 (tx 0xaac00510…),
+      // reverted it. The pools were not affected.
+      title: 'Governance taken over by a malicious proposal',
+      url: 'https://www.theblock.co/post/231637/attacker-uses-malicious-proposal-to-take-over-tornado-cash-governance',
+      date: '2023-05-20T00:00:00Z',
+      description:
+        'Proposal 20 hands the attacker control of governance until proposal 21 reverts it.',
+      type: 'incident',
+    },
+    {
+      // tornadocash.eth contenthash set by proposal 44 (tx 0xd0702bce…,
+      // 2024-01-02) and replaced by proposal 52 (tx 0x4fb9cbe3…, 2024-03-14).
+      // Reports date the leaking code to January 1 and its discovery to
+      // 2024-02-26 (Gas404). Press calls the proposal 47.
+      title: 'Pinned app leaks deposit notes',
+      url: 'https://forklog.com/en/backdoor-discovered-in-ipfs-version-of-tornado-cash/',
+      date: '2024-01-02T00:00:00Z',
+      description:
+        'The app pinned by proposal 44 sends deposit notes to an outside server until proposal 52.',
+      type: 'incident',
+    },
+    {
+      title: 'Removed from the OFAC sanctions list',
+      url: 'https://home.treasury.gov/news/press-releases/sb0057',
+      date: '2025-03-21T00:00:00Z',
+      description:
+        "OFAC removes Tornado Cash and the pools' addresses from its sanctions list.",
+      type: 'general',
+    },
+  ],
   escrows: BUCKETS.map((bucket) => ({
     address: ChainSpecificAddress.address(bucket.address),
     chain: ChainSpecificAddress.longChain(bucket.address),
@@ -205,10 +300,14 @@ export const tornadoCash: BaseProject = {
       value: 'Reproducible',
       sentiment: 'good',
       description:
-        'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
+        'The circuits, contracts, app and relayer are open source. Each app release names its commit and a build recipe for its IPFS hash, and rebuilding the current release reproduces it.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
-    adversaries: tornadoCashAdversaries,
+    adversaries: tornadoCashAdversaries(
+      formatSeconds(votingDelay + votingPeriod + executionDelay, {
+        fullUnit: true,
+      }),
+    ),
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
@@ -221,7 +320,7 @@ export const tornadoCash: BaseProject = {
           'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
           'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
           'Voting venue':
-            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the voting tab of the frontend, see the note on secure frontend above.',
+            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the governance page of the app, see the App section above.',
           'Proposal threshold': `**${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
           Quorum: `**${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
           'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,

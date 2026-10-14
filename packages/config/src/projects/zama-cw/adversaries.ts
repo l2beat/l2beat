@@ -52,7 +52,7 @@ export function zamaCwAdversaries(
         exposureContinued:
           'Either party to a transfer can disclose its amount onchain at any time.',
         advice:
-          'Pay and get paid inside the confidential token, and unwrap only what you need.',
+          'Pay and get paid inside the confidential token, and unwrap only what the user needs.',
         interior: INTERIOR,
         sources: [
           {
@@ -97,9 +97,12 @@ export function zamaCwAdversaries(
         ],
       },
       networkObserver: {
-        sentiment: 'good',
+        sentiment: 'warning',
         exposureShort:
-          'Amounts leave your device only as FHE ciphertext and come back encrypted to a key only your device holds.',
+          "Zama's app is closed source, so what it sends to third parties is up to Zama and can change at any time.",
+        exposureContinued:
+          "Through Zama's open SDK, amounts leave the user's device only as FHE ciphertext and return encrypted to a key held only by that device. Today the app sends the user's address, chain reads and decryption requests to Zama's own servers, which forward chain reads to an RPC provider Zama does not name. Analytics wait for the user's consent.",
+        advice: "Use a client built on Zama's open SDK.",
         interior: INTERIOR,
         sources: [
           {
@@ -109,6 +112,16 @@ export function zamaCwAdversaries(
           {
             title: 'Balance reads use a device ML-KEM key pair',
             url: `${RELAYER_SDK}relayer/userDecrypt.ts#L85-L89`,
+          },
+          {
+            title:
+              "The app's content security policy lists every endpoint it contacts",
+            url: 'https://app.zama.org',
+          },
+          {
+            title:
+              'The SDK the app bundles (@zama-fhe/sdk 3.6.0) is open source',
+            url: 'https://github.com/zama-ai/sdk',
           },
         ],
       },

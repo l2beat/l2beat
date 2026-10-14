@@ -4,7 +4,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { FetchInit } from '../http/fetchWithTimeout'
 import type { HttpClient } from '../http/HttpClient'
 import { MulticallV3Client } from './multicall/MulticallV3Client'
-import { RpcClient } from './RpcClient'
+import { NotFoundOnRpcError, RpcClient } from './RpcClient'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
 
 describe(RpcClient.name, () => {
@@ -70,6 +70,20 @@ describe(RpcClient.name, () => {
       const result = await rpc.getBlock(100, false)
 
       expect(result.settledHeight).toEqual(98)
+    })
+
+    it('tells a block the RPC has not got from a broken response', async () => {
+      // A node behind a load balancer answers null for a block past its head:
+      // a caller following the head waits for it, not for a broken response
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ jsonrpc: '2.0', id: 'unique-id', result: null }),
+      })
+      const rpc = mockClient({ http })
+
+      await expect(rpc.getBlock(100, true)).toBeRejectedWith(
+        NotFoundOnRpcError,
+        'Block not found',
+      )
     })
 
     it('do not include tx bodies', async () => {
@@ -1047,6 +1061,27 @@ describe(RpcClient.name, () => {
         expect(node.requests.map(callsIn)).toEqual([4, 4])
       })
     }
+
+    // Methodology: the node answers one receipt and has not got the other
+    it('names the receipts the RPC has not got', async () => {
+      const node = fakeNode((request) =>
+        ok(
+          (request as RpcRequest[]).map((call, i) => ({
+            id: call.id,
+            result: i === 0 ? mockReceipt : null,
+          })),
+        ),
+      )
+      const rpc = batchingClient(node.http)
+
+      const error = await rpc.getTransactionReceipts(['0x1', '0x2']).then(
+        () => undefined,
+        (e: Error) => e,
+      )
+
+      expect(error).toBeA(NotFoundOnRpcError)
+      expect(error?.cause).toEqual({ txHashes: ['0x2'] })
+    })
 
     // Methodology: one receipt fails for a reason of its own, not the batch's
     it('refuses receipts when one call of an answered batch fails', async () => {

@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x0235290d511905d26887355f5fc63968fb7e80a5
+
+# Diff at Sat, 10 Oct 2026 08:00:08 GMT:
+
+- id: 52c48b32
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@22c541703ff2e8c94ffcd7f942a71969eee3e84d block: 1791454331
+- current timestamp: 1791619122
+
+## Description
+
+The RelayerRegistry description now says that the app lists registered relayers while the pools pay any relayer. Governance gets two watched fields for tornadocash.eth, its ENS resolver and the IPFS contenthash of the app it pins.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791454331 (main branch discovery), not current.
+
+```diff
+    contract RelayerRegistry (eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2) [tornado-cash/RelayerRegistry] {
+    +++ description: Upgradeable registry of relayers, their worker addresses and their staked TORN. The app lists the relayers registered here, while the pools pay any relayer a withdrawal names.
+      description:
+-        "Upgradeable registry that tracks registered relayers, their worker addresses, and their staked TORN balances used to service withdrawals. Relayers registered here could be queried by a tornadocash frontend to facilitate discovery for users, but users are free to use any (unregistered) relayer at withdrawal time."
++        "Upgradeable registry of relayers, their worker addresses and their staked TORN. The app lists the relayers registered here, while the pools pay any relayer a withdrawal names."
+    }
+```
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
++++ description: IPFS contenthash of tornadocash.eth, the app that governance pins.
++++ severity: HIGH
+      values.appContenthash:
++        "0xe30101701220c3a350e49a11cfc9cab672331d51ad1b723e0d3db9cd73a316ebaa7788595fe8"
++++ description: Resolver set for tornadocash.eth in the ENS registry.
++++ severity: HIGH
+      values.appEnsResolver:
++        "eth:0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41"
+      fieldMeta.appEnsResolver:
++        {"severity":"HIGH","description":"Resolver set for tornadocash.eth in the ENS registry."}
+      fieldMeta.appContenthash:
++        {"severity":"HIGH","description":"IPFS contenthash of tornadocash.eth, the app that governance pins."}
+    }
+```
+
 Generated with discovered.json: 0x915be121c3bde25ede63f3145adfb76ff7fc19a3
 
 # Diff at Thu, 08 Oct 2026 10:13:17 GMT:

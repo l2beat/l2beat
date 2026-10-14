@@ -56,12 +56,6 @@ export const lyra: ScalingProject = opStackL2({
   },
   genesisTimestamp: UnixTime(1700022479),
   daTracking: [
-    {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw=',
-    },
     // Ethereum fallback: when Celestia is unavailable the batcher posts the
     // batches as blobs to the same inbox (first seen 2026-09-14).
     getOpStackDaTracking(discovery, { sinceBlock: 25974565 }),

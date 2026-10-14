@@ -1,4 +1,5 @@
 import type { ProjectScalingInfo } from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getPrivacyTrackedChains } from './getPrivacyTrackedChains'
 
@@ -12,18 +13,21 @@ describe(getPrivacyTrackedChains.name, () => {
     interopConfig: undefined,
   }
   const ethereum = {
+    id: ProjectId.ETHEREUM,
     slug: 'ethereum',
     name: 'Ethereum',
     chainConfig: { name: 'ethereum' },
     ...NO_PAGE,
   }
   const polygon = {
+    id: ProjectId('polygon-pos'),
     slug: 'polygon-pos',
     name: 'Polygon PoS',
     chainConfig: { name: 'polygonpos' },
     ...NO_PAGE,
   }
   const arbitrum = {
+    id: ProjectId('arbitrum'),
     slug: 'arbitrum',
     name: 'Arbitrum One',
     chainConfig: { name: 'arbitrum' },
@@ -44,11 +48,10 @@ describe(getPrivacyTrackedChains.name, () => {
   })
 
   it('links only chains that have a project page', () => {
-    const [ethereumChain, arbitrumChain] = getPrivacyTrackedChains(
-      ['ethereum', 'arbitrum'],
-      projects,
-    )
-    expect(ethereumChain?.href).toEqual(undefined)
+    const [ethereumChain, polygonChain, arbitrumChain] =
+      getPrivacyTrackedChains(['ethereum', 'polygonpos', 'arbitrum'], projects)
+    expect(ethereumChain?.href).toEqual('/projects/ethereum')
+    expect(polygonChain?.href).toEqual(undefined)
     expect(arbitrumChain?.href).toEqual('/layer2s/projects/arbitrum')
   })
 

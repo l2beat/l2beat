@@ -15,7 +15,7 @@ const HANDSHAKE_REGISTRY =
 const INTERIOR: PrivacyExposureMap = {
   sender: {
     verdict: 'atRisk',
-    note: 'Public for your first sponsored transaction after registration.',
+    note: "Public for the user's first sponsored transaction after registration.",
   },
   recipient: {
     verdict: 'exposed',
@@ -25,7 +25,7 @@ const INTERIOR: PrivacyExposureMap = {
   asset: { verdict: 'exposed', note: 'Only DAI.' },
   linkage: {
     verdict: 'atRisk',
-    note: 'Exposed when your first sponsored transaction after registration withdraws or pays a new contact.',
+    note: "Exposed when the user's first sponsored transaction after registration withdraws or pays a new contact.",
   },
 }
 
@@ -43,9 +43,9 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       exposureShort: 'Private payments publish encrypted notes.',
       exposureContinued:
-        'Claiming a name ties it and its Aztec address to the wallet that funds the registration. The first payment to a new contact reveals the recipient through a handshake, and L2 logs mark every transaction of the shared token smart contract. Your first sponsored transaction after registration is tied to your account, with the payment, deposit address or withdrawal it carries.',
+        "Claiming a name ties it and its Aztec address to the wallet that funds the registration. The first payment to a new contact reveals the recipient through a handshake, and L2 logs mark every transaction of the shared token smart contract. The user's first sponsored transaction after registration is tied to their account, with the payment, deposit address or withdrawal it carries.",
       advice:
-        'Claim your name from a wallet with no public link to you, and make your first transaction after registration a deposit from that wallet. Fund each deposit address once and let it be swept/relayed.',
+        "Claim the user's name from a wallet without a public link to them, then make the first transaction after registration a deposit from that wallet. Fund each deposit address once and let it be swept/relayed.",
       interior: INTERIOR,
       sources: [
         {
@@ -72,7 +72,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
         "In practice the anonymity set is zk.money's users on Aztec, although the L2 contract is permissionless.",
       exposureContinued:
         'The first payment to a name from outside zk.money is publicly tied to that name.',
-      advice: `Give outside payers a deposit address your wallet created. ${S.commonAmounts} ${S.freshExit}`,
+      advice: `Give outside payers a deposit address the user's wallet created. ${S.commonAmounts} ${S.freshExit}`,
       interior: {
         ...INTERIOR,
         amount: {
@@ -105,7 +105,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        'Anyone on your network path sees when you send Aztec transactions and can match your deposit and withdrawal to the blocks they land in.',
+        "Anyone on the user's network path sees their Aztec transactions and can match their deposit and withdrawal to the blocks they land in.",
       exposureContinued: 'Desktop has no Tor or proxy setting.',
       advice: 'Route zk.money Desktop through Tor with system-wide tools.',
       interior: {

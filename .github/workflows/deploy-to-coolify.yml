@@ -54,6 +54,61 @@ jobs:
           jq -e '.deployments | length > 0' "$RUNNER_TEMP/response.json" >/dev/null
           cat "$RUNNER_TEMP/response.json"
 
+      # The concurrency group cancels a superseded workflow run, but the
+      # Coolify build that run queued keeps going and holds a build slot every
+      # other preview waits for. Stacked PRs make this common, since a
+      # parent's merge pushes into and retargets each child. Builds of the
+      # head commit stay: Coolify skips queuing a commit already in flight.
+      # Best effort, because a failure here only costs build time. Each request
+      # is time-boxed so a slow Coolify cannot use up the job's timeout and
+      # skip the deploy below.
+      - name: Cancel superseded preview deployments
+        if: ${{ inputs.preview }}
+        continue-on-error: true
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Lists only queued and in-progress deployments, for the whole team.
+          if ! curl --fail-with-body --silent --show-error \
+            --retry 2 \
+            --retry-delay 5 \
+            --max-time 10 \
+            --retry-max-time 30 \
+            --output "$RUNNER_TEMP/deployments.json" \
+            --header "Authorization: Bearer $COOLIFY_API_KEY" \
+            --header "Accept: application/json" \
+            "$COOLIFY_SERVER/api/v1/deployments"; then
+            echo "::warning::Could not list Coolify deployments; superseded previews keep building"
+            cat "$RUNNER_TEMP/deployments.json"
+            exit 0
+          fi
+
+          # The list has no application uuid field, but deployment_url
+          # contains it. `.[]` because Coolify may send an object, not an array.
+          superseded=$(jq -r --arg app "/application/$COOLIFY_UUID/" \
+            --argjson pr "$PR_NUMBER" --arg commit "$HEAD_SHA" '
+            .[]
+            | select(.deployment_url | contains($app))
+            | select(.pull_request_id == $pr)
+            | select(.commit != $commit)
+            | .deployment_uuid' "$RUNNER_TEMP/deployments.json")
+
+          for uuid in $superseded; do
+            if ! curl --fail-with-body --silent --show-error \
+              -X POST \
+              --retry 2 \
+              --retry-delay 5 \
+              --max-time 10 \
+              --retry-max-time 30 \
+              --write-out '\n' \
+              --header "Authorization: Bearer $COOLIFY_API_KEY" \
+              --header "Accept: application/json" \
+              "$COOLIFY_SERVER/api/v1/deployments/$uuid/cancel"; then
+              echo "::warning::Could not cancel superseded Coolify deployment $uuid"
+            fi
+          done
+
       # Opens the preview on the first call and redeploys it afterwards.
       # Retrying is safe: Coolify skips a deployment already queued for the
       # same commit, and curl honours Retry-After when the queue is full.

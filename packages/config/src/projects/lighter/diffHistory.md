@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x885535fa9f7e1efc35697a15b6aad5e4e2c15487
+
+# Diff at Tue, 13 Oct 2026 13:17:25 GMT:
+
+- id: eff7f903
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f86fa8ee6214e9cba302685affb910adddc04f2d block: 1790947397
+- current timestamp: 1791897358
+
+## Description
+
+New verifier deployed. The verifier is regenerated from sources.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      values.versionId:
+-        74
++        75
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x4dc54ffb4008a4ca0179446fed46565fbd602cc3963270f555f70ed93eea7cbe"
++        "0xb90e379e327aaf48e4d92789e2d24b41ab6c89ed69c958ddbab73b0fb6f47290"
+      values.$implementation:
+-        "eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11"
++        "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463"
+      values.getTarget:
+-        "eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11"
++        "eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463"
+      implementationNames.eth:0xc4c2067ece6e33e50a30087ec14096715e56aE11:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0xE586511973e02b5A3bB9e4290adc4F406Aa8f463:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol        | 45 +++++++++++-----------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
+```
+
 Generated with discovered.json: 0xcc1f45ba10d9b1ef318fd5f388dcab97286d5148
 
 # Diff at Mon, 05 Oct 2026 08:49:21 GMT:
