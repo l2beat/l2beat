@@ -12,6 +12,7 @@ import {
   Legend,
   TokenRelationsGraphView,
 } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/TokenRelationsGraphView'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTiles'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
@@ -46,7 +47,7 @@ export function TokenGraphDialog({
         fullScreen
       >
         <DialogClose />
-        <DialogTitle className="flex items-center gap-2 pr-8">
+        <DialogTitle className="flex flex-wrap items-center gap-x-2 gap-y-1 pr-8">
           {tile && (
             <img
               src={tile.iconUrl}
@@ -61,6 +62,16 @@ export function TokenGraphDialog({
             <span className="font-normal text-label-value-14 text-secondary">
               Issued by <span className="capitalize">{tile.issuer}</span>
             </span>
+          )}
+          {tile?.href && (
+            <a
+              href={tile.href}
+              title={`Open the full ${tile.symbol} page`}
+              className="group flex items-center gap-1 rounded-full bg-brand/10 py-1 pr-2 pl-2.5 font-medium text-brand text-label-value-12 transition-colors hover:bg-brand hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            >
+              Token page
+              <ArrowRightIcon className="size-3 fill-current transition-transform group-hover:translate-x-0.5" />
+            </a>
           )}
         </DialogTitle>
         <DialogDescription className="sr-only">
@@ -94,15 +105,6 @@ export function TokenGraphDialog({
           <p className="flex flex-1 items-center justify-center py-8 text-center text-label-value-14 text-secondary">
             No deployments found for this token.
           </p>
-        )}
-
-        {tile?.href && (
-          <a
-            href={tile.href}
-            className="font-bold text-brand text-label-value-14 hover:underline"
-          >
-            Open the full {tile.symbol} page
-          </a>
         )}
       </DialogContent>
     </Dialog>
