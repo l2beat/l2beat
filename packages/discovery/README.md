@@ -176,6 +176,49 @@ All of the parameters are optional:
 }
 ```
 
+## Where discovery must stop
+
+Discovery follows each address that it reads from a contract. Some of these addresses refer to contracts of a different project. An example is the Sky (Maker) contracts that hold `DAI`. If discovery follows them, `discovered.json` gets many contracts that are not part of your project.
+
+There are three ways to stop discovery. Use the narrowest one that is sufficient.
+
+### Do not follow one field
+
+Add the field to `ignoreRelatives` in the override of the contract. Discovery keeps the value of the field. Discovery does not analyze the address in the field.
+
+Use this when one contract has one pointer to an external contract.
+
+### Do not analyze one contract
+
+Add an override for the address with `ignoreDiscovery: true`. Discovery does not analyze the contract. There is no entry for the contract in `discovered.json`. The address stays only as a value in the contracts that refer to it.
+
+Use this when more than one contract refers to the same external address. Each project that reaches the address must have this override.
+
+### Make the contract a reference to a shared project
+
+Make the external contracts the entrypoints of a shared project. Discovery then stops at them in every project. It writes a `Reference` entry with the name of the contract and `targetProject`. It does not analyze the contract or the contracts that it refers to.
+
+Use this when:
+
+- More than one project reaches the same contracts.
+- You want the entry to show the project that the contract belongs to.
+
+You do not need to discover the shared project fully. A shared project that is only a boundary has `maxDepth: 0`. Discovery then analyzes only the contracts in `initialAddresses`.
+
+To make a shared project that is only a boundary:
+
+1. Make the directory `packages/config/src/projects/shared-<name>`.
+2. Make `config.jsonc` in that directory. Put `"maxDepth": 0` in it. Put the boundary contracts in `initialAddresses`.
+3. Run `l2b discover shared-<name>`.
+4. Remove the errors from `discovered.json` with `ignoreMethods`. Put the values that change often in `ignoreInWatchMode`. The update monitor discovers the shared project each day.
+5. Run `l2b generate-entrypoints shared-<name>`. This writes `entrypoints.json` with all the contracts in `initialAddresses`.
+6. Add `"../projects/shared-<name>/entrypoints.json"` to `packages/config/src/projects/globalEntrypoints.jsonc`.
+7. Run discovery again for each project that reaches one of these contracts.
+
+Note: The name must start with `shared-`. The config tests then do not look for a project page with that name.
+
+Note: Discovery checks the entrypoints before it checks `maxDepth`. If a relative of a boundary contract is an entrypoint of a different project, the shared project gets a `Reference` to that project. To prevent this, add `"ignoreRelatives": true` to the override of the boundary contract.
+
 ## Handlers
 
 ### Storage handler
