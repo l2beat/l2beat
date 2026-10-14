@@ -91,7 +91,7 @@ async function measureFirstAnswer(
   page: Page,
   browser: Browser,
 ): Promise<Measurement> {
-  const answer = holdFirstLiveAnswer(page)
+  const answer = await holdFirstLiveAnswer(page)
   await page.addInitScript(watchForShownBelt)
   const charts = page.waitForResponse((r) => r.url().includes('tvs.chart'))
   await page.goto('/blobs', { waitUntil: 'load' })
@@ -116,8 +116,11 @@ async function measureFirstAnswer(
   }
 }
 
-/** Long polls after the first go straight through */
-function holdFirstLiveAnswer(page: Page) {
+/**
+ * Long polls after the first go straight through. Awaited before the page
+ * loads, or the first ask may pass and the hold wait a slot for the next
+ */
+async function holdFirstLiveAnswer(page: Page) {
   let release = () => {}
   let onHeld = () => {}
   const released = new Promise<void>((resolve) => {
@@ -127,7 +130,7 @@ function holdFirstLiveAnswer(page: Page) {
     onHeld = resolve
   })
   let first = true
-  void page.route('**/da.liveBlobs**', async (route) => {
+  await page.route('**/da.liveBlobs**', async (route) => {
     if (first) {
       first = false
       onHeld()
