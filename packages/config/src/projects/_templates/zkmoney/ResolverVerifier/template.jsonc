@@ -2,5 +2,25 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ResolverVerifier",
   "category": "core",
-  "description": "UltraHonk verifier for the zk.money resolver circuit with a hardcoded verification key. The Resolver uses it to check that a resolver operator's answer matches the user's registered keys and L2 address."
+  "discoverLibraries": true,
+  "description": "UltraHonk verifier for the zk.money resolver circuit with a hardcoded verification key. The Resolver uses it to check that a resolver operator's answer matches the user's registered keys and L2 address.",
+  "fields": {
+    "verificationKeyHash": {
+      "description": "Circuit verification key hash embedded in the verified Solidity source.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      // Internal constant without a getter. The template shape and catalog
+      // source-hash assertion bind this value to the verified circuit.
+      "handler": {
+        "type": "hardcoded",
+        "value": "0x279d6dad93155d6c03ddd050359fb4675a66c08812b5306f6dfc9754e42827b7"
+      }
+    },
+    "$libraries": {
+      "template": "zkmoney/ResolverVerifierLibrary",
+      "description": "Runtime libraries immutably linked into this verifier.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    }
+  }
 }

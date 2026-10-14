@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FrozenDepositRefundVerifier",
+  "critical": true,
+  "category": "core",
+  "discoverLibraries": true,
+  "description": "UltraHonk verifier for refunds of deposits included in Aztec's frozen message tree but still unclaimed. Its verification key is immutable.",
+  "fields": {
+    "verificationKeyHash": {
+      "description": "Circuit verification key hash embedded in the verified Solidity source.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      // Internal constant without a getter. The template shape and catalog
+      // source-hash assertion bind this value to the verified circuit.
+      "handler": {
+        "type": "hardcoded",
+        "value": "0x2290cfb58dea33c485e0ac33581c1c8d358ac3dd9f434470b6cf87da12b5fd43"
+      }
+    },
+    "$libraries": {
+      "template": "zkmoney/RefundRelationsLib",
+      "description": "Runtime libraries immutably linked into this verifier.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    }
+  }
+}

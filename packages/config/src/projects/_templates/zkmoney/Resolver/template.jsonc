@@ -6,6 +6,36 @@
   "fields": {
     "VERIFIER": {
       "template": "zkmoney/ResolverVerifier"
+    },
+    "ensNode": {
+      "description": "ENS node monitored for this deployment."
+    },
+    "ensNodeOwner": {
+      "description": "Owner of zk.money in the ENS registry. The DNS domain holder can reclaim this DNS name in ENS with a DNSSEC proof.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "call",
+        "address": "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+        "method": "function owner(bytes32 node) view returns (address)",
+        "args": ["{{ ensNode }}"]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace this Resolver as the ENS resolver of zk.money names, which decides the addresses that payments to these names resolve to."
+        }
+      ]
+    },
+    "ensResolver": {
+      "description": "Resolver set for zk.money in the ENS registry.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "address": "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+        "method": "function resolver(bytes32 node) view returns (address)",
+        "args": ["{{ ensNode }}"],
+        "ignoreRelative": true
+      }
     }
   }
 }
