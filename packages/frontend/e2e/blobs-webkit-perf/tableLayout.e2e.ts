@@ -13,7 +13,9 @@ import { lowerOf } from '../blobs-perf/blobsPage'
  * Method: change one number in the table back and forth, forcing a layout
  * after each change, and time it, best of a few samples. Time, not a count,
  * as WebKit has no layout counter to read; the margin is wide because the
- * regressions this catches cost ten times as much, not ten percent.
+ * regressions this catches cost ten times as much, not ten percent, and
+ * because CI runners differ: the same commit measures up to 4x slower on
+ * some hosts than on others, and up to 5x slower than on a Mac.
  *
  * Lower a ceiling by running with UPDATE_CEILINGS=1, which rewrites
  * ceilings.json from the current run plus the margin below.
@@ -25,7 +27,7 @@ const SAMPLES = 5
 const CHANGES_PER_SAMPLE = 20
 
 const MARGIN = {
-  layoutMsPerChange: (ms: number) => Math.ceil(ms * 4),
+  layoutMsPerChange: (ms: number) => Math.ceil(ms * 8),
 }
 
 type Measurement = { layoutMsPerChange: number }
