@@ -56,6 +56,35 @@ are never cut apart:
 So shards balance only when the tests are about as long as each other. A file
 of slow serial tests can tip one shard over.
 
+## What a ratchet measures
+
+A count of the work a page does (layouts, restyled elements, chart rerenders,
+boxes, layers) is the same on every run, so its ceiling can sit at the count
+itself and a regression of one fails. Gate on counts.
+
+A time is not the same on every run. GitHub's runners come with different
+CPUs, and the same commit measures up to 2.5× apart: the WebKit table layout
+took 3.4 ms a change on an AMD EPYC 9V45 and 8.1 ms on an EPYC 7763, and
+`scriptMs` on `/scaling/projects/arbitrum` ranges 56–131 ms over 22 runs.
+Neither escape works on these runners:
+
+- **CPU time** splits the same way. The WebKit main thread's CPU time matched
+  its wall time within 5%, with no time stolen by the host: the runner is
+  slow, not interrupted.
+- **Instruction counts** need the CPU's hardware counters, which the VMs do
+  not expose. `perf_event_open` fails with `ENOENT` even with
+  `kernel.perf_event_paranoid` lowered.
+
+So a time ceiling is only a backstop for regressions several times over: set
+it from the slowest CI run with at least 2× headroom. One set from a local run
+lands inside the CI spread and fails at random; the WebKit ceiling did, set at
+4× a Mac's time. Printing a time without a ceiling is fine.
+
+To catch a new kind of slowness, find it by time where time is steady: a
+profile on a device or the iOS Simulator. Fix it, then ratchet what caused it
+as a count, and check once that the count moves with the time (the `h-full`
+bars: 31 ms a change, 3 ms fixed; boxes under a percent height, 68 and 0).
+
 ## Adding tests
 
 - **A functional test**: put it anywhere outside a `*-perf` folder and it
