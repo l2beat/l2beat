@@ -100,7 +100,7 @@ describe(getPrivacyAnonymitySetSeries.name, () => {
         label: 'Registered recipients',
         compactLabel: 'Registered recipients',
         description:
-          'Number of unique addresses that registered stealth keys onchain during the last 30 complete UTC days.',
+          'Unique addresses that registered stealth keys in the last 30 complete UTC days.',
         steps: [
           'Register keys for Registry onchain.',
           WAIT_STEP,
