@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared'
 import { formatNumber } from '@l2beat/shared-pure'
 import type { PrivacyProject } from '../types'
+import { ANONYMITY_SET_TOOLTIPS } from './anonymitySetTooltips'
 import { ANONYMITY_SET_WINDOW_DAYS } from './calculateAnonymitySets'
 
 export type PrivacyAnonymitySetProject = Pick<
@@ -93,7 +94,8 @@ function getKeyRegistrationsSeries(
     id: base.bucketId,
     label,
     compactLabel: label,
-    description: `Number of unique addresses that registered stealth keys onchain during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
+    // A recipient table shows only key registrations, so the cell repeats its header.
+    description: ANONYMITY_SET_TOOLTIPS['key-registrations'],
     steps: [
       `Register keys for ${projectName} onchain.`,
       WAIT_STEP,

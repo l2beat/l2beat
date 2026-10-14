@@ -36,6 +36,26 @@ describe(getPrivacySummaryGroups.name, () => {
     ])
   })
 
+  it('describes the anonymity set as key registrations only for recipient privacy', () => {
+    const groups = getPrivacySummaryGroups([
+      entry('a', 'linkage'),
+      entry('b', 'recipient'),
+    ])
+
+    expect(
+      groups.map((group) => [group.label, group.anonymitySetTooltip]),
+    ).toEqual([
+      [
+        'Link privacy',
+        'Unique depositors over the last 30 complete UTC days, in the largest tracked pool.',
+      ],
+      [
+        'Recipient privacy',
+        'Unique stealth key registrations in the last 30 complete UTC days.',
+      ],
+    ])
+  })
+
   it('throws for a promise without a table', () => {
     expect(() => getPrivacySummaryGroups([entry('a', 'sender')])).toThrow(
       'No privacy summary table for protocols protecting sender',
