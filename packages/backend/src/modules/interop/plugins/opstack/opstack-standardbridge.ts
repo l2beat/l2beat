@@ -4,7 +4,7 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { findTransferLogBefore, type ParsedTransferLog } from '../logScan'
+import { findBestTransferLogByExactAmount } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -534,8 +534,14 @@ function wasBurned(
   amount: bigint,
   bridge: EthereumAddress,
 ): boolean | undefined {
-  const transfer = findTokenTransfer(input, token, amount, (transfer) =>
-    isZeroOrBridge(transfer.to, bridge),
+  const { transfer } = findBestTransferLogByExactAmount(
+    input.txLogs,
+    amount,
+    input.log.logIndex ?? -1,
+    (log) => parseTransfer(log, null),
+    (transfer) =>
+      transfer.logAddress === Address32.from(token) &&
+      isZeroOrBridge(transfer.to, bridge),
   )
   return transfer && transfer.to === Address32.ZERO
 }
@@ -546,28 +552,16 @@ function wasMinted(
   amount: bigint,
   bridge: EthereumAddress,
 ): boolean | undefined {
-  const transfer = findTokenTransfer(input, token, amount, (transfer) =>
-    isZeroOrBridge(transfer.from, bridge),
-  )
-  return transfer && transfer.from === Address32.ZERO
-}
-
-function findTokenTransfer(
-  input: LogToCapture,
-  token: string,
-  amount: bigint,
-  predicate: (transfer: ParsedTransferLog) => boolean,
-): ParsedTransferLog | undefined {
-  const token32 = Address32.from(token)
-  return findTransferLogBefore(
+  const { transfer } = findBestTransferLogByExactAmount(
     input.txLogs,
+    amount,
     input.log.logIndex ?? -1,
     (log) => parseTransfer(log, null),
     (transfer) =>
-      transfer.logAddress === token32 &&
-      transfer.value === amount &&
-      predicate(transfer),
-  ).transfer
+      transfer.logAddress === Address32.from(token) &&
+      isZeroOrBridge(transfer.from, bridge),
+  )
+  return transfer && transfer.from === Address32.ZERO
 }
 
 function isZeroOrBridge(address: Address32, bridge: EthereumAddress) {
