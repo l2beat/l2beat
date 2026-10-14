@@ -91,6 +91,18 @@ gh run view <run-id> --json jobs \
 
 The log of each job ends with the tests' own time, e.g. `16 passed (38.4s)`.
 
+## How the blobs ratchets count
+
+Mock mode makes each slot's block from the slot's number, so which blocks a
+run sees depends on when it runs. A block of five posters restyles about four
+times what a block of one does, as each poster's row in the table washes and
+counts up. So the ratchets divide restyles by the rows the block washed, read
+from the page's own feed, and take the best of three slots.
+
+They also stop what moves on its own clock, not the slots': the live dot's
+ping and the logo's beat. Each lays out or restyles on every frame it runs,
+and a slot would meet more or less of it by chance.
+
 ## DiscoUI
 
 `packages/protocolbeat` works the same way in the `test-e2e-discoui` job: its
