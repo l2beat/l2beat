@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
-import { type UnixTime, unique } from '@l2beat/shared-pure'
+import { UnixTime, unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
+import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -32,6 +33,8 @@ export type InteropTokenDashboardData = {
   entries: ProtocolEntry[]
   zeroTransferProtocols: { name: string; iconUrl: string }[]
   snapshotTimestamp: number | undefined
+  /** False when the latest snapshot lacks the token and an older one is shown. */
+  isSynced: boolean
 }
 
 /** Inputs the caller may already hold; anything missing is loaded here. */
@@ -55,12 +58,11 @@ export async function getInteropTokenData(
     }))
   const selection = getTokenDataSelection(params)
 
-  const { records, snapshotTimestamp } =
-    await getLatestAggregatedInteropTransferWithTokens({
-      selection,
-      snapshotTimestamp: context.snapshotTimestamp,
-    })
-  const tokenRecords = scopeRecordsToToken(records, params.tokenId)
+  const { tokenRecords, snapshotTimestamp, isSynced } = await getTokenRecords(
+    params.tokenId,
+    selection,
+    context.snapshotTimestamp,
+  )
 
   if (tokenRecords.length === 0) {
     return null
@@ -100,11 +102,16 @@ export async function getInteropTokenData(
     token,
     flows: flows.slice(0, TOKEN_DASHBOARD_TOP_FLOWS_LIMIT),
     topPath: getTopPath(flows),
+    // Transfer count breaks ties because tokens without a reliable price have
+    // zero volume everywhere.
     topProtocol: topProtocols.toSorted(
-      (a, b) => b.volume.value - a.volume.value,
+      (a, b) =>
+        b.volume.value - a.volume.value ||
+        b.transfers.value - a.transfers.value,
     )[0],
     topProtocols,
     snapshotTimestamp,
+    isSynced,
     ...getProtocolEntries(
       tokenRecords,
       tokensDetailsMap,
@@ -113,6 +120,62 @@ export async function getInteropTokenData(
       snapshotTimestamp,
       selection,
     ),
+  }
+}
+
+/**
+ * Falls back to the last snapshot that had the token's transfers, so a token
+ * missing from the latest aggregation still shows its last known data.
+ */
+async function getTokenRecords(
+  tokenId: string,
+  selection: InteropTokenParams,
+  snapshotTimestamp: UnixTime | undefined,
+) {
+  const latest = await getScopedTokenRecords(
+    tokenId,
+    selection,
+    snapshotTimestamp,
+  )
+  if (
+    latest.tokenRecords.length > 0 ||
+    latest.snapshotTimestamp === undefined
+  ) {
+    return { ...latest, isSynced: true }
+  }
+
+  const lastSyncedTimestamp =
+    await getDb().aggregatedInteropToken.getLatestPromotedTimestampForToken(
+      tokenId,
+      {
+        upTo: latest.snapshotTimestamp,
+        sourceChains: selection.from,
+        destinationChains: selection.to,
+      },
+    )
+  if (lastSyncedTimestamp === undefined) {
+    return { ...latest, isSynced: false }
+  }
+
+  return {
+    ...(await getScopedTokenRecords(tokenId, selection, lastSyncedTimestamp)),
+    isSynced: false,
+  }
+}
+
+async function getScopedTokenRecords(
+  tokenId: string,
+  selection: InteropTokenParams,
+  snapshotTimestamp: UnixTime | undefined,
+) {
+  const { records, snapshotTimestamp: resolvedSnapshotTimestamp } =
+    await getLatestAggregatedInteropTransferWithTokens({
+      selection,
+      snapshotTimestamp,
+    })
+  return {
+    tokenRecords: scopeRecordsToToken(records, tokenId),
+    snapshotTimestamp: resolvedSnapshotTimestamp,
   }
 }
 
@@ -170,6 +233,7 @@ function getMockInteropTokenData({
     topProtocols: [],
     entries: [],
     zeroTransferProtocols: [],
-    snapshotTimestamp: 0,
+    snapshotTimestamp: UnixTime.toStartOf(UnixTime.now(), 'hour'),
+    isSynced: true,
   }
 }

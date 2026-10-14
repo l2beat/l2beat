@@ -168,11 +168,11 @@ describe(renderInteropTokenMarkdown.name, () => {
     )
   })
 
-  it('warns instead of giving statistics when the token has no transfers', () => {
+  it('warns instead of giving statistics when the token has no aggregates', () => {
     const markdown = renderInteropTokenMarkdown({ ...PAGE, tokenData: null })
 
     expect(getSection(markdown, 'Summary')).toInclude(
-      '**Warning:** No transfers of this token were found in the past 24 hours',
+      '**Warning:** Data for the token is not synced. Please check again later.',
       '- Issued by: Circle\n- Category: stablecoin\n- Deployments: 4',
     )
     expect(markdown).not.toInclude('## Top protocols')
@@ -377,6 +377,7 @@ const TOKEN_DATA: InteropTokenDashboardData = {
   ],
   zeroTransferProtocols: [],
   snapshotTimestamp: 1_700_000_000,
+  isSynced: true,
 }
 
 const PAGE: InteropTokenPage = {
@@ -386,6 +387,7 @@ const PAGE: InteropTokenPage = {
     issuer: 'circle',
     iconUrl: null,
     category: 'stablecoin',
+    isPriceUnreliable: false,
   },
   tokenEntry: {
     deploymentsCount: 4,

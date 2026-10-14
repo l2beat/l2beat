@@ -21,11 +21,15 @@ import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import type { SectionBodyOverrides } from '~/server/markdown/renderProjectSection'
 import { htmlPagePointer } from '~/server/markdown/renderSectionParts'
 import { getInteropTokenPagePath } from '../utils/getInteropTokenUrl'
+import {
+  getInteropTokenNotices,
+  UNRELIABLE_PRICE_NOTICE,
+} from './getInteropTokenNotices'
 
 export interface InteropTokenPage {
   token: InteropAbstractToken
   tokenEntry: InteropTokenEntry
-  /** Null when no transfers of the token were found in the past 24 hours. */
+  /** Null when no aggregated snapshot has transfers of the token. */
   tokenData: InteropTokenDashboardData | null
 }
 
@@ -39,20 +43,17 @@ export function renderInteropTokenMarkdown({
     name: token.symbol,
     pagePath: getInteropTokenPagePath(token),
     summary: {
-      warnings: tokenData ? [] : [NO_DATA_WARNING],
+      warnings: getInteropTokenNotices(token, tokenData),
       facts: getFacts(token, tokenEntry, tokenData),
       risks: [],
       description: undefined,
     },
-    // Without data the HTML page shows an empty state instead of sections.
+    // Without data the HTML page shows only the summary, without sections.
     sections: tokenData ? tokenEntry.sections : [],
-    sectionBodies: tokenData ? getDashboardSectionBodies(tokenData) : {},
+    sectionBodies: tokenData ? getDashboardSectionBodies(token, tokenData) : {},
     apiLinks: {},
   })
 }
-
-const NO_DATA_WARNING =
-  'No transfers of this token were found in the past 24 hours, so there are no interop statistics for it.'
 
 /** Labels follow the header, the stats block and the top protocol card of the HTML page. */
 function getFacts(
@@ -62,16 +63,18 @@ function getFacts(
 ) {
   const stats = data?.token
   const protocols = data?.entries ?? []
+  const showUsd = !token.isPriceUnreliable
   return compact([
     token.issuer && {
       label: 'Issued by',
       value: capitalizeWords(token.issuer),
     },
     token.category && { label: 'Category', value: token.category },
-    stats?.volume != null && {
-      label: 'Last 24h volume',
-      value: formatUsd(stats.volume),
-    },
+    showUsd &&
+      stats?.volume != null && {
+        label: 'Last 24h volume',
+        value: formatUsd(stats.volume),
+      },
     stats && {
       label: 'Last 24h transfer count',
       value: formatCount(stats.transferCount),
@@ -80,17 +83,21 @@ function getFacts(
       label: 'Last 24h avg. transfer time',
       value: formatAverageDuration(stats.avgDuration),
     },
-    stats?.avgValue != null && {
-      label: 'Last 24h avg. transfer value',
-      value: formatUsd(stats.avgValue),
-    },
-    data?.topPath && {
-      label: 'Last 24h top path',
-      value: formatTopPath(data.topPath),
-    },
+    showUsd &&
+      stats?.avgValue != null && {
+        label: 'Last 24h avg. transfer value',
+        value: formatUsd(stats.avgValue),
+      },
+    showUsd &&
+      data?.topPath && {
+        label: 'Last 24h top path',
+        value: formatTopPath(data.topPath),
+      },
     data?.topProtocol && {
-      label: 'Top protocol (based on 24h volume)',
-      value: `${link(data.topProtocol.name, interopProtocolUrl(data.topProtocol.slug))} (volume ${formatUsd(data.topProtocol.volume.value)}, ${formatTransferCount(data.topProtocol.transfers.value)})`,
+      label: showUsd
+        ? 'Top protocol (based on 24h volume)'
+        : 'Top protocol (based on 24h transfer count)',
+      value: `${link(data.topProtocol.name, interopProtocolUrl(data.topProtocol.slug))} (${compact([showUsd && `volume ${formatUsd(data.topProtocol.volume.value)}`, formatTransferCount(data.topProtocol.transfers.value)]).join(', ')})`,
     },
     protocols.length > 0 && {
       label: 'Protocols used',
@@ -108,12 +115,15 @@ function getFacts(
  * their props, so their markdown is built here from the same data.
  */
 function getDashboardSectionBodies(
+  token: InteropAbstractToken,
   data: InteropTokenDashboardData,
 ): SectionBodyOverrides {
   return {
     InteropTokenProtocolsSection: () => renderProtocolsTable(data.entries),
     InteropTokenVolumeSection: (props, level) =>
-      renderTopFlows(data, props.id, level),
+      token.isPriceUnreliable
+        ? UNRELIABLE_PRICE_NOTICE
+        : renderTopFlows(data, props.id, level),
   }
 }
 

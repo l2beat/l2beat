@@ -8,7 +8,7 @@ import { getLatestAggregatedInteropTransferWithTokens } from '../utils/getLatest
 
 export type InteropAbstractToken = Pick<
   AbstractTokenRecord,
-  'id' | 'symbol' | 'issuer' | 'iconUrl' | 'category'
+  'id' | 'symbol' | 'issuer' | 'iconUrl' | 'category' | 'isPriceUnreliable'
 >
 
 const interopAbstractTokensCache = new FrontendInMemoryCache(
@@ -38,6 +38,22 @@ export async function getInteropAbstractTokens(
   )
 }
 
+/**
+ * Also finds tokens missing from the latest snapshot, so their pages can say
+ * the data is not synced instead of disappearing.
+ */
+export async function findInteropAbstractToken(
+  id: string,
+  chainIds: string[],
+): Promise<InteropAbstractToken | undefined> {
+  const tokens = await getInteropAbstractTokens(chainIds)
+  const token = tokens.find((token) => token.id === id)
+  if (token || env.MOCK) return token
+
+  const [record] = await getTokenDb().abstractToken.getByIds([id])
+  return record
+}
+
 async function getInteropAbstractTokensData(
   chainIds: string[],
 ): Promise<InteropAbstractToken[]> {
@@ -65,6 +81,7 @@ const MOCK_INTEROP_ABSTRACT_TOKENS: InteropAbstractToken[] = [
     iconUrl:
       'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     category: 'ether',
+    isPriceUnreliable: false,
   },
   {
     id: 'usdc01',
@@ -73,6 +90,7 @@ const MOCK_INTEROP_ABSTRACT_TOKENS: InteropAbstractToken[] = [
     iconUrl:
       'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
     category: 'stablecoin',
+    isPriceUnreliable: false,
   },
   {
     id: 'usdt01',
@@ -81,5 +99,6 @@ const MOCK_INTEROP_ABSTRACT_TOKENS: InteropAbstractToken[] = [
     iconUrl:
       'https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663',
     category: 'stablecoin',
+    isPriceUnreliable: false,
   },
 ]

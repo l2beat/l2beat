@@ -1,8 +1,9 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
+import { INTEROP_TRANSFER_RETENTION } from '@l2beat/database'
+import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
-import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
+import { findInteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
 import { getAggregatedInteropSnapshotTimestamp } from '~/server/features/layer2s/interop/utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
@@ -127,13 +128,11 @@ async function getCachedData({
   activeInteropChainIds: string[]
   interopChainsWithIcons: InteropChainWithIcon[]
 }) {
-  const [abstractTokens, snapshotTimestamp, interopProjects] =
-    await Promise.all([
-      getInteropAbstractTokens(activeInteropChainIds),
-      getAggregatedInteropSnapshotTimestamp(),
-      ps.getProjects({ select: ['interopConfig'] }),
-    ])
-  const token = abstractTokens.find((token) => token.id === slug)
+  const [token, snapshotTimestamp, interopProjects] = await Promise.all([
+    findInteropAbstractToken(slug, activeInteropChainIds),
+    getAggregatedInteropSnapshotTimestamp(),
+    ps.getProjects({ select: ['interopConfig'] }),
+  ])
   if (!token) return undefined
 
   const apiSelection = initialSelection
@@ -150,6 +149,7 @@ async function getCachedData({
     token.id,
     interopChainsWithIcons,
     relationsGraph,
+    hasRawTransfers(tokenData?.snapshotTimestamp),
   )
 
   return {
@@ -161,6 +161,18 @@ async function getCachedData({
     tokenData,
     apiSelection,
   }
+}
+
+/**
+ * Raw transfers are cleaned up long before aggregates, so a stale snapshot may
+ * have no transfers left to list next to its aggregated numbers.
+ */
+function hasRawTransfers(snapshotTimestamp: number | undefined) {
+  return (
+    snapshotTimestamp !== undefined &&
+    snapshotTimestamp - UnixTime.DAY >=
+      UnixTime.now() - INTEROP_TRANSFER_RETENTION
+  )
 }
 
 /** The page stays useful without its deployments section, so a failed build only hides it. */

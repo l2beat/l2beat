@@ -175,6 +175,7 @@ const TOKEN_PAGE: InteropTokenPage & { apiSelection: { from: []; to: [] } } = {
     issuer: 'circle',
     iconUrl: null,
     category: 'stablecoin',
+    isPriceUnreliable: false,
   },
   tokenEntry: { sections: [], deploymentsCount: 0 },
   tokenData: null,

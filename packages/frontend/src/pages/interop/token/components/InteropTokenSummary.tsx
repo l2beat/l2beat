@@ -9,19 +9,29 @@ import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { InteropTopPathValue } from '../../components/InteropTopPathValue'
 import { TopProtocolsCell } from '../../components/protocols/TopProtocolsCell'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
+import {
+  NOT_SYNCED_NOTICE,
+  UNRELIABLE_PRICE_NOTICE,
+} from '../getInteropTokenNotices'
 
 export function InteropTokenSummary({
   data,
   isLoading,
   tokenCategory,
+  isPriceUnreliable,
   deploymentsCount,
 }: {
-  data: InteropTokenDashboardData | undefined
+  /** Null when no aggregated snapshot has transfers of the token. */
+  data: InteropTokenDashboardData | null | undefined
   isLoading: boolean
   tokenCategory: string | null
+  isPriceUnreliable: boolean
   deploymentsCount: number
 }) {
   const token = data?.token
+  const notSyncedBadge = data === null ? <NotSyncedBadge /> : undefined
+  const usdUnavailableBadge =
+    notSyncedBadge ?? (isPriceUnreliable ? <UnreliablePriceBadge /> : undefined)
 
   return (
     <section
@@ -39,15 +49,19 @@ export function InteropTokenSummary({
           title="Last 24h volume"
           isLoading={isLoading}
           value={
-            token?.volume !== null && token?.volume !== undefined
+            usdUnavailableBadge ??
+            (token?.volume !== null && token?.volume !== undefined
               ? formatCurrency(token.volume, 'usd')
-              : EM_DASH
+              : EM_DASH)
           }
         />
         <StatsItem
           title="Last 24h transfer count"
           isLoading={isLoading}
-          value={token ? formatInteger(token.transferCount) : EM_DASH}
+          value={
+            notSyncedBadge ??
+            (token ? formatInteger(token.transferCount) : EM_DASH)
+          }
         />
       </div>
       <HorizontalSeparator className="col-span-3 my-4 max-md:hidden" />
@@ -56,7 +70,8 @@ export function InteropTokenSummary({
           title="Last 24h avg. transfer time"
           isLoading={isLoading}
           value={
-            token?.avgDuration ? (
+            notSyncedBadge ??
+            (token?.avgDuration ? (
               <AvgDurationCell
                 className="font-bold text-label-value-16"
                 splitClassName="flex-row gap-3 text-label-value-16 font-bold md:gap-3"
@@ -66,27 +81,30 @@ export function InteropTokenSummary({
               <InteropNoDataBadge size="extraSmall" />
             ) : (
               EM_DASH
-            )
+            ))
           }
         />
         <StatsItem
           title="Last 24h avg. transfer value"
           isLoading={isLoading}
           value={
-            token?.avgValue !== null && token?.avgValue !== undefined
+            usdUnavailableBadge ??
+            (token?.avgValue !== null && token?.avgValue !== undefined
               ? formatCurrency(token.avgValue, 'usd')
-              : EM_DASH
+              : EM_DASH)
           }
         />
         <StatsItem
           title="Last 24h top path"
           isLoading={isLoading}
+          // The top path is picked by volume, so it needs a reliable price too.
           value={
-            data?.topPath ? (
+            usdUnavailableBadge ??
+            (data?.topPath ? (
               <InteropTopPathValue path={data.topPath} />
             ) : (
               EM_DASH
-            )
+            ))
           }
         />
       </div>
@@ -94,14 +112,15 @@ export function InteropTokenSummary({
       <div className="grid grid-cols-1 gap-x-3 max-md:mt-3 max-md:gap-y-3 md:grid-cols-3">
         <StatsItem
           title="Protocols used"
-          href="#interop-protocols"
+          href={notSyncedBadge ? undefined : '#interop-protocols'}
           isLoading={isLoading}
           value={
-            data?.entries?.length ? (
+            notSyncedBadge ??
+            (data?.entries?.length ? (
               <TopProtocolsCell protocols={data.entries} />
             ) : (
               EM_DASH
-            )
+            ))
           }
         />
         {deploymentsCount > 0 && (
@@ -117,6 +136,16 @@ export function InteropTokenSummary({
         )}
       </div>
     </section>
+  )
+}
+
+function NotSyncedBadge() {
+  return <InteropNoDataBadge size="extraSmall" tooltip={NOT_SYNCED_NOTICE} />
+}
+
+function UnreliablePriceBadge() {
+  return (
+    <InteropNoDataBadge size="extraSmall" tooltip={UNRELIABLE_PRICE_NOTICE} />
   )
 }
 

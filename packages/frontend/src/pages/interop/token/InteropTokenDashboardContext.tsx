@@ -7,6 +7,7 @@ interface InteropTokenDashboardContextValue {
   isLoading: boolean
   apiSelection: InteropSelection
   tokenId: string
+  isPriceUnreliable: boolean
 }
 
 const InteropTokenDashboardContext = createContext<

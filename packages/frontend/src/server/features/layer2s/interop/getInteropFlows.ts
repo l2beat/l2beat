@@ -1,5 +1,10 @@
 import type { InteropDurationSplit, Project } from '@l2beat/config'
-import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  notUndefined,
+  type ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
@@ -107,6 +112,10 @@ export async function getInteropFlows(
     },
     protocolIds: params.protocolIds,
     anchorChain: params.anchorChain,
+    snapshotTimestamp:
+      params.snapshotTimestamp !== undefined
+        ? UnixTime(params.snapshotTimestamp)
+        : undefined,
   })
   const scopedRecords = params.tokenId
     ? scopeRecordsToToken(records, params.tokenId)

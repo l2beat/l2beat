@@ -4,6 +4,7 @@ import { HighlightableLinkContextProvider } from '~/components/link/highlightabl
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
+import { WarningBar } from '~/components/WarningBar'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { InteropTokenDashboardData } from '~/server/features/layer2s/interop/getInteropTokenData'
@@ -11,7 +12,6 @@ import type { InteropTokenEntry } from '~/server/features/layer2s/interop/token/
 import { useTRPC } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InteropEntityPageLayout } from '../components/InteropEntityPageLayout'
-import { InteropEmptyState } from '../summary/components/InteropEmptyState'
 import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
@@ -19,6 +19,7 @@ import {
 import type { InteropSelection } from '../utils/types'
 import { InteropTokenSummary } from './components/InteropTokenSummary'
 import { TokenTopProtocolCard } from './components/TokenTopProtocolCard'
+import { getInteropTokenNotices } from './getInteropTokenNotices'
 import {
   InteropTokenDashboardProvider,
   useInteropTokenDashboard,
@@ -32,6 +33,7 @@ interface Props extends AppLayoutProps {
     issuer: string | null
     iconUrl: string
     category: string | null
+    isPriceUnreliable: boolean
   }
   tokenEntry: InteropTokenEntry
   tokenData: InteropTokenDashboardData | null
@@ -124,6 +126,9 @@ function Content({
     </>
   )
 
+  const notices = data === undefined ? [] : getInteropTokenNotices(token, data)
+
+  // Without any aggregates there is nothing to show beyond the token itself.
   if (data === null) {
     return (
       <InteropEntityPageLayout
@@ -132,7 +137,14 @@ function Content({
         navigationProject={navigationProject}
         header={header}
       >
-        <InteropEmptyState />
+        <InteropTokenNotices notices={notices} />
+        <InteropTokenSummary
+          data={null}
+          isLoading={false}
+          tokenCategory={token.category}
+          isPriceUnreliable={token.isPriceUnreliable}
+          deploymentsCount={tokenEntry.deploymentsCount}
+        />
       </InteropEntityPageLayout>
     )
   }
@@ -143,6 +155,7 @@ function Content({
       isLoading={isLoading}
       apiSelection={selectedChains}
       tokenId={token.id}
+      isPriceUnreliable={token.isPriceUnreliable}
     >
       <InteropEntityPageLayout
         navigationSections={navigationSections}
@@ -150,6 +163,7 @@ function Content({
         navigationProject={navigationProject}
         header={header}
       >
+        <InteropTokenNotices notices={notices} />
         <TokenPageContent token={token} tokenEntry={tokenEntry} />
       </InteropEntityPageLayout>
     </InteropTokenDashboardProvider>
@@ -163,7 +177,8 @@ function TokenPageContent({
   token: Props['token']
   tokenEntry: InteropTokenEntry
 }) {
-  const { data, isLoading, apiSelection } = useInteropTokenDashboard()
+  const { data, isLoading, apiSelection, isPriceUnreliable } =
+    useInteropTokenDashboard()
 
   return (
     <>
@@ -171,17 +186,31 @@ function TokenPageContent({
         data={data}
         isLoading={isLoading}
         tokenCategory={token.category}
+        isPriceUnreliable={isPriceUnreliable}
         deploymentsCount={tokenEntry.deploymentsCount}
       />
       <TokenTopProtocolCard
         data={data}
         isLoading={isLoading}
         apiSelection={apiSelection}
+        isPriceUnreliable={isPriceUnreliable}
       />
       <HighlightableLinkContextProvider>
         <ProjectDetails items={tokenEntry.sections} />
       </HighlightableLinkContextProvider>
     </>
+  )
+}
+
+function InteropTokenNotices({ notices }: { notices: string[] }) {
+  if (notices.length === 0) return null
+
+  return (
+    <div className="mt-4 flex flex-col gap-2 max-md:px-4">
+      {notices.map((notice) => (
+        <WarningBar key={notice} color="yellow" text={notice} ignoreMarkdown />
+      ))}
+    </div>
   )
 }
 

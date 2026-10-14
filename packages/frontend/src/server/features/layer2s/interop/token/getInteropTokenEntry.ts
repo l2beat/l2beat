@@ -12,6 +12,7 @@ export function getInteropTokenEntry(
   tokenId: string,
   interopChains: InteropChainWithIcon[],
   relationsGraph: InteropTokenRelationsGraph | undefined,
+  hasRawTransfers: boolean,
 ): InteropTokenEntry {
   const sections: ProjectDetailsSection[] = [
     {
@@ -43,15 +44,17 @@ export function getInteropTokenEntry(
     })
   }
 
-  sections.push({
-    type: 'InteropTokenTransfersSection',
-    props: {
-      id: 'interop-transfers',
-      title: 'Transfers',
-      tokenId,
-      interopChains,
-    },
-  })
+  if (hasRawTransfers) {
+    sections.push({
+      type: 'InteropTokenTransfersSection',
+      props: {
+        id: 'interop-transfers',
+        title: 'Transfers',
+        tokenId,
+        interopChains,
+      },
+    })
+  }
 
   return {
     sections,
