@@ -11,11 +11,8 @@ import { lowerOf } from '../blobs-perf/blobsPage'
  * every frame on an iPhone while the Chromium ratchets see nothing.
  *
  * Method: change one number in the table back and forth, forcing a layout
- * after each change, and time it, best of a few samples. Time, not a count,
- * as WebKit has no layout counter to read; the margin is wide because the
- * regressions this catches cost ten times as much, not ten percent, and
- * because CI runners differ: the same commit measures up to 4x slower on
- * some hosts than on others, and up to 5x slower than on a Mac.
+ * after each change, and time it, best of a few samples. The time is logged,
+ * not asserted, as it varies with the runner's CPU (see ../README.md).
  *
  * As a block lands, iOS Safari also repaints the rows it touches, painting
  * each box in a row on its own, so a row's boxes set what a landing costs
@@ -36,16 +33,15 @@ const SAMPLES = 5
 const CHANGES_PER_SAMPLE = 20
 
 const MARGIN = {
-  layoutMsPerChange: (ms: number) => Math.ceil(ms * 8),
   // a count of what is rendered, the same on every run
   boxesPerRow: (boxes: number) => boxes,
 }
 
 type Measurement = { layoutMsPerChange: number; boxesPerRow: number }
-type Ceilings = Record<string, Measurement>
+type Ceilings = Record<string, Pick<Measurement, keyof typeof MARGIN>>
 
 const ceilings: Ceilings = JSON.parse(readFileSync(CEILINGS_FILE, 'utf8'))
-const measured: Ceilings = {}
+const measured: Record<string, Measurement> = {}
 
 for (const viewport of Object.keys(ceilings)) {
   test(`the /blobs table at ${viewport} stays under its ceilings`, async ({
@@ -72,7 +68,7 @@ for (const viewport of Object.keys(ceilings)) {
     console.log(viewport, JSON.stringify(result))
 
     if (process.env.UPDATE_CEILINGS) return
-    for (const key of Object.keys(MARGIN) as (keyof Measurement)[]) {
+    for (const key of Object.keys(MARGIN) as (keyof typeof MARGIN)[]) {
       expect(result[key], `${key} at ${viewport}`).toBeLessThanOrEqual(
         ceilings[viewport]![key],
       )
@@ -86,11 +82,11 @@ test.afterAll(() => {
   const next: Ceilings = { ...ceilings }
   for (const [viewport, result] of Object.entries(measured)) {
     next[viewport] = Object.fromEntries(
-      (Object.keys(MARGIN) as (keyof Measurement)[]).map((key) => [
+      (Object.keys(MARGIN) as (keyof typeof MARGIN)[]).map((key) => [
         key,
         lowerOf(ceilings[viewport]?.[key], MARGIN[key](result[key])),
       ]),
-    ) as Measurement
+    ) as Ceilings[string]
   }
   writeFileSync(CEILINGS_FILE, `${JSON.stringify(next, null, 2)}\n`)
 })
