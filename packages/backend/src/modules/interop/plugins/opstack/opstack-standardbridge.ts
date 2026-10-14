@@ -4,6 +4,7 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { findBestTransferLogByExactAmount } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -37,6 +38,10 @@ const ethBridgeInitiatedLog =
   'event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)'
 const ethBridgeFinalizedLog =
   'event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)'
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
+
+const parseTransfer = createEventParser(transferLog)
 
 // ============= L2 -> L1 Events =============
 
@@ -46,6 +51,7 @@ const ERC20BridgeInitiated = createInteropEventType<{
   l1Token: Address32
   l2Token: Address32
   amount: bigint
+  wasBurned?: boolean
 }>('opstack.ERC20BridgeInitiated', {
   ttl: 30 * UnixTime.DAY,
 })
@@ -58,6 +64,7 @@ const ERC20BridgeFinalized = createInteropEventType<{
   l1Token: Address32
   l2Token: Address32
   amount: bigint
+  wasMinted?: boolean
 }>('opstack.ERC20BridgeFinalized')
 
 const parseERC20BridgeFinalized = createEventParser(erc20BridgeFinalizedLog)
@@ -84,6 +91,7 @@ const ERC20DepositInitiated = createInteropEventType<{
   l1Token: Address32
   l2Token: Address32
   amount: bigint
+  wasBurned?: boolean
 }>('opstack.ERC20DepositInitiated')
 
 const parseERC20DepositInitiated = createEventParser(erc20DepositInitiatedLog)
@@ -94,6 +102,7 @@ const DepositFinalized = createInteropEventType<{
   l1Token: Address32
   l2Token: Address32
   amount: bigint
+  wasMinted?: boolean
 }>('opstack.DepositFinalized')
 
 const parseDepositFinalized = createEventParser(depositFinalizedLog)
@@ -123,6 +132,7 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: erc20BridgeInitiatedLog,
+        includeTxEvents: [transferLog],
         addresses: OPSTACK_NETWORKS.map((n) => n.l2StandardBridge),
       },
       {
@@ -134,6 +144,7 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: depositFinalizedLog,
+        includeTxEvents: [transferLog],
         addresses: OPSTACK_NETWORKS.map((n) => n.l2StandardBridge),
       },
       {
@@ -145,6 +156,7 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: erc20BridgeFinalizedLog,
+        includeTxEvents: [transferLog],
         addresses: OPSTACK_NETWORKS.map((n) => n.l1StandardBridge),
       },
       {
@@ -156,6 +168,7 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: erc20DepositInitiatedLog,
+        includeTxEvents: [transferLog],
         addresses: OPSTACK_NETWORKS.map((n) => n.l1StandardBridge),
       },
       {
@@ -186,6 +199,12 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
             l1Token: Address32.from(erc20BridgeInitiated.l1Token),
             l2Token: Address32.from(erc20BridgeInitiated.l2Token),
             amount: erc20BridgeInitiated.amount,
+            wasBurned: wasBurned(
+              input,
+              erc20BridgeInitiated.l2Token,
+              erc20BridgeInitiated.amount,
+              l2StandardBridge,
+            ),
           }),
         ]
       }
@@ -214,6 +233,12 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
             l1Token: Address32.from(depositFinalized.l1Token),
             l2Token: Address32.from(depositFinalized.l2Token),
             amount: depositFinalized.amount,
+            wasMinted: wasMinted(
+              input,
+              depositFinalized.l2Token,
+              depositFinalized.amount,
+              l2StandardBridge,
+            ),
           }),
         ]
       }
@@ -252,6 +277,12 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
             l1Token: Address32.from(erc20BridgeFinalized.l1Token),
             l2Token: Address32.from(erc20BridgeFinalized.l2Token),
             amount: erc20BridgeFinalized.amount,
+            wasMinted: wasMinted(
+              input,
+              erc20BridgeFinalized.l1Token,
+              erc20BridgeFinalized.amount,
+              l1StandardBridge,
+            ),
           }),
         ]
       }
@@ -280,6 +311,12 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
             l1Token: Address32.from(erc20DepositInitiated.l1Token),
             l2Token: Address32.from(erc20DepositInitiated.l2Token),
             amount: erc20DepositInitiated.amount,
+            wasBurned: wasBurned(
+              input,
+              erc20DepositInitiated.l1Token,
+              erc20DepositInitiated.amount,
+              l1StandardBridge,
+            ),
           }),
         ]
       }
@@ -340,11 +377,14 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
           srcEvent: erc20BridgeInitiated,
           srcAmount: erc20BridgeInitiated.args.amount,
           srcTokenAddress: erc20BridgeInitiated.args.l2Token,
-          srcWasBurned: true,
+          // The flags are unset when no matching Transfer log was found and
+          // on events captured before they were recorded. Those fall back
+          // to the usual case: minted on L2, native on L1.
+          srcWasBurned: erc20BridgeInitiated.args.wasBurned ?? true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
-          dstWasMinted: false,
+          dstWasMinted: event.args.wasMinted ?? false,
         }),
       ]
     }
@@ -473,14 +513,57 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
           srcEvent: erc20DepositInitiated,
           srcAmount: erc20DepositInitiated.args.amount,
           srcTokenAddress: erc20DepositInitiated.args.l1Token,
-          srcWasBurned: false,
+          srcWasBurned: erc20DepositInitiated.args.wasBurned ?? false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
-          dstWasMinted: true,
+          dstWasMinted: event.args.wasMinted ?? true,
           extraEvents: [event],
         }),
       ]
     }
   }
+}
+
+// The StandardBridge mints and burns only OptimismMintableERC20 tokens. It
+// escrows any other token, which then moves to or from the bridge instead of
+// the zero address, e.g. native USDC bridged between Ethereum and Base.
+function wasBurned(
+  input: LogToCapture,
+  token: string,
+  amount: bigint,
+  bridge: EthereumAddress,
+): boolean | undefined {
+  const { transfer } = findBestTransferLogByExactAmount(
+    input.txLogs,
+    amount,
+    input.log.logIndex ?? -1,
+    (log) => parseTransfer(log, null),
+    (transfer) =>
+      transfer.logAddress === Address32.from(token) &&
+      isZeroOrBridge(transfer.to, bridge),
+  )
+  return transfer && transfer.to === Address32.ZERO
+}
+
+function wasMinted(
+  input: LogToCapture,
+  token: string,
+  amount: bigint,
+  bridge: EthereumAddress,
+): boolean | undefined {
+  const { transfer } = findBestTransferLogByExactAmount(
+    input.txLogs,
+    amount,
+    input.log.logIndex ?? -1,
+    (log) => parseTransfer(log, null),
+    (transfer) =>
+      transfer.logAddress === Address32.from(token) &&
+      isZeroOrBridge(transfer.from, bridge),
+  )
+  return transfer && transfer.from === Address32.ZERO
+}
+
+function isZeroOrBridge(address: Address32, bridge: EthereumAddress) {
+  return address === Address32.ZERO || address === Address32.from(bridge)
 }
