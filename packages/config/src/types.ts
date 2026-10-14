@@ -1097,6 +1097,7 @@ export interface ProjectPrivacyInfo {
     | { type: 'partially-attributed' }
     /** Too few users to matter, so exact tracking is not set up. */
     | { type: 'too-small' }
+    | ProjectPrivacyKeyRegistrationsAnonymitySet
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
@@ -1116,6 +1117,22 @@ export interface ProjectPrivacyInfo {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
+}
+
+/**
+ * Stealth-address protocols have no pool, so their anonymity set counts the
+ * addresses that registered keys in a registry, in place of bucket sets.
+ */
+export type ProjectPrivacyKeyRegistrationsAnonymitySet = {
+  type: 'key-registrations'
+  registry: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+} & PrivacyAnonymitySetRegistrationSource
+
+export type PrivacyAnonymitySetRegistrationSource = {
+  event: string
+  /** StealthKeyChanged: the registrant is the indexed event arg. */
+  extractor: 'umbraStealthKeyChanged'
 }
 
 export type ProjectPrivacyRelayerTracking =

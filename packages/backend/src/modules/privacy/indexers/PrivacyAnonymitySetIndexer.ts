@@ -30,9 +30,9 @@ import type {
   PrivacyAnonymitySetIndexerConfigProperties,
 } from '../types'
 import {
-  extractPrivacyAnonymitySetDeposit,
-  type PrivacyAnonymitySetDeposit,
-} from '../utils/extractPrivacyAnonymitySetDeposit'
+  extractPrivacyAnonymitySetMember,
+  type PrivacyAnonymitySetMember,
+} from '../utils/extractPrivacyAnonymitySetMember'
 import {
   buildPrivacyLogConfigMap,
   buildPrivacyLogFilter,
@@ -80,19 +80,19 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     configurations: Configuration<PrivacyAnonymitySetIndexerConfig>[],
   ) {
     const adjustedTo = Math.min(UnixTime.toNext(from, 'day'), to)
-    this.logger.info('Fetching privacy anonymity set deposits', {
+    this.logger.info('Fetching privacy anonymity set events', {
       from,
       to: adjustedTo,
       configurations: configurations.length,
     })
 
-    const records = await this.fetchDepositsForConfigurations(
+    const records = await this.fetchEventsForConfigurations(
       configurations,
       from,
       adjustedTo,
     )
 
-    this.logger.info('Fetched privacy anonymity set deposits', {
+    this.logger.info('Fetched privacy anonymity set events', {
       from,
       to: adjustedTo,
       records: records.length,
@@ -101,7 +101,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     return async () => {
       await this.$.db.privacyAnonymitySetEvent.upsertMany(records)
 
-      this.logger.info('Saved privacy anonymity set deposits into DB', {
+      this.logger.info('Saved privacy anonymity set events into DB', {
         from,
         to: adjustedTo,
         records: records.length,
@@ -120,7 +120,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       )
 
     if (deletedRecords > 0) {
-      this.logger.info('Wiped privacy anonymity set deposits', {
+      this.logger.info('Wiped privacy anonymity set events', {
         configurations: configurations.length,
         deletedRecords,
       })
@@ -140,7 +140,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
         )
 
       if (deletedRecords > 0) {
-        this.logger.info('Trimmed privacy anonymity set deposits', {
+        this.logger.info('Trimmed privacy anonymity set events', {
           configurationId: configuration.id,
           from,
           to,
@@ -150,7 +150,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     }
   }
 
-  private async fetchDepositsForConfigurations(
+  private async fetchEventsForConfigurations(
     configurations: Configuration<PrivacyAnonymitySetIndexerConfig>[],
     from: number,
     to: number,
@@ -338,7 +338,7 @@ interface RawRecord {
   configuration: Configuration<PrivacyAnonymitySetIndexerConfig>
   log: Log
   amount: bigint
-  origin: PrivacyAnonymitySetDeposit['origin']
+  origin: PrivacyAnonymitySetMember['origin']
 }
 
 interface TimedRawRecord extends RawRecord {
@@ -380,11 +380,11 @@ function extractRawRecords(
     const configurations = configMap.get(key) ?? []
 
     for (const configuration of configurations) {
-      const result = extractPrivacyAnonymitySetDeposit(
+      const result = extractPrivacyAnonymitySetMember(
         configuration.properties,
         log,
       )
-      if (!result || result.amount === 0n) continue
+      if (!result) continue
 
       records.push({
         configuration,

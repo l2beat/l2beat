@@ -469,14 +469,28 @@ describe('getProjects', () => {
           }
         }
 
-        // Every state but partially-attributed means the set is not tracked.
-        const state = privacyInfo.anonymitySet?.type
-        if (state === 'partially-attributed') {
+        // Partially attributed sets are tracked through buckets. Every other
+        // state replaces them: key registrations are tracked through a
+        // registry, and the remaining states are not tracked at all.
+        const anonymitySet = privacyInfo.anonymitySet
+        if (anonymitySet?.type === 'partially-attributed') {
           if (configuredBuckets === 0) {
-            problems.push(`${project.id}: ${state} without buckets`)
+            problems.push(`${project.id}: ${anonymitySet.type} without buckets`)
           }
-        } else if (state !== undefined && configuredBuckets !== 0) {
-          problems.push(`${project.id}: ${state} with buckets`)
+        } else if (anonymitySet !== undefined && configuredBuckets !== 0) {
+          problems.push(`${project.id}: ${anonymitySet.type} with buckets`)
+        }
+
+        if (anonymitySet?.type === 'key-registrations') {
+          const contracts = Object.values(project.contracts?.addresses ?? {})
+            .flat()
+            .map((contract) => contract.address)
+          if (!contracts.includes(anonymitySet.registry)) {
+            problems.push(`${project.id}: registry is not a project contract`)
+          }
+          if (anonymitySet.sinceTimestamp <= 0) {
+            problems.push(`${project.id}: non-positive registry sinceTimestamp`)
+          }
         }
       }
       expect(problems).toEqual([])

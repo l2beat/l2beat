@@ -10,6 +10,7 @@ import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -123,6 +124,73 @@ describe(getPrivacyConfig.name, () => {
     expect(config.priceConfigs).toHaveLength(0)
     expect(config.relayerConfigs).toHaveLength(1)
     expect(config.blockTimestampConfigs).toHaveLength(1)
+  })
+
+  it('indexes key registrations of a project without token buckets', async () => {
+    const project = await ps.getProject({
+      slug: 'privacy-pools',
+      select: ['privacyInfo'],
+    })
+    if (!project) throw new Error('Privacy Pools project not found')
+
+    const registryOnlyProject = {
+      ...project,
+      id: ProjectId('registry'),
+      privacyInfo: {
+        ...project.privacyInfo,
+        relayerTracking: undefined,
+        tokens: [],
+        anonymitySet: {
+          type: 'key-registrations' as const,
+          registry: ChainSpecificAddress.fromLong('ethereum', POOL),
+          sinceTimestamp: UnixTime(1000),
+          event: '0xregistered',
+          extractor: 'umbraStealthKeyChanged' as const,
+        },
+      },
+    }
+    const projectService = mockObject<ProjectService>({
+      getProjects: mockFn().resolvesToOnce([registryOnlyProject]),
+    })
+
+    const config = await getPrivacyConfig(
+      projectService,
+      env,
+      new FeatureFlags('privacy'),
+      [],
+    )
+
+    if (!config) throw new Error('Privacy config not created')
+    expect(config.anonymitySetConfigs).toEqual([
+      {
+        id: expect.a(String),
+        projectId: 'registry',
+        bucketId: 'key-registrations',
+        chain: 'ethereum',
+        address: POOL,
+        sinceTimestamp: UnixTime(1000),
+        event: '0xregistered',
+        extractor: 'umbraStealthKeyChanged',
+        params: {},
+      },
+    ])
+    expect(config.flowConfigs).toHaveLength(0)
+    expect(config.chains).toEqual(['ethereum'])
+  })
+
+  it('keeps the Umbra key registrations configuration id', async () => {
+    const config = await getPrivacyConfig(
+      ps,
+      env,
+      new FeatureFlags('privacy'),
+      [{ name: 'ethereum', chainId: 1, apis: [] } as ChainConfig],
+    )
+
+    if (!config) throw new Error('Privacy config not created')
+    // A changed id drops the indexed registrations and re-indexes them from 2021.
+    expect(
+      config.anonymitySetConfigs.find((c) => c.projectId === 'umbra')?.id,
+    ).toEqual('46fe8385cd6e')
   })
 
   it('builds Railgun Waku sample configs without onchain dependencies', async () => {

@@ -1,15 +1,19 @@
 import type { Env } from '@l2beat/backend-tools'
 import type {
   ChainConfig,
-  PrivacyAnonymitySetDepositSource,
   PrivacyFlowSource,
   ProjectPrivacyBucket,
+  ProjectPrivacyInfo,
   ProjectPrivacyOnchainRelayerSource,
   ProjectPrivacyRailgunWakuRelayerSource,
   ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
-import { getPrivacyBucketAddress } from '@l2beat/shared'
+import {
+  getPrivacyAnonymitySetSources,
+  getPrivacyBucketAddress,
+  type PrivacyAnonymitySetSource,
+} from '@l2beat/shared'
 import {
   assert,
   assertUnreachable,
@@ -59,6 +63,7 @@ export async function getPrivacyConfig(
     .filter(
       (project) =>
         project.privacyInfo.tokens.some((token) => token.buckets.length > 0) ||
+        getPrivacyAnonymitySetSources(project.privacyInfo).length > 0 ||
         project.privacyInfo.relayerTracking !== undefined,
     )
     .map((project) => ({
@@ -84,22 +89,21 @@ export async function getPrivacyConfig(
   const relayerConfigs: PrivacyRelayerActivityIndexerConfig[] = []
   const relayerSampleConfigs: PrivacyRelayerSampleConfig[] = []
   for (const project of projects) {
+    for (const source of getPrivacyAnonymitySetSources(project.privacyInfo)) {
+      const config = toAnonymitySetConfig(
+        project.projectId,
+        source,
+        minTimestamp,
+      )
+      if (config.extractor === 'strk20Deposit') {
+        starknetAnonymitySetConfigs.push(config)
+      } else {
+        anonymitySetConfigs.push(config)
+      }
+    }
+
     for (const token of project.privacyInfo.tokens) {
       for (const bucket of token.buckets) {
-        if (bucket.anonymitySet !== undefined) {
-          const config = toAnonymitySetConfig(
-            project.projectId,
-            bucket,
-            bucket.deposit,
-            minTimestamp,
-          )
-          if (config.extractor === 'strk20Deposit') {
-            starknetAnonymitySetConfigs.push(config)
-          } else {
-            anonymitySetConfigs.push(config)
-          }
-        }
-
         const configs = [
           toFlowConfig(
             project.projectId,
@@ -185,6 +189,7 @@ export async function getPrivacyConfig(
 
   const onchainConfigs = [
     ...flowConfigs,
+    ...anonymitySetConfigs,
     ...starknetAnonymitySetConfigs,
     ...starknetFlowConfigs,
     ...relayerConfigs,
@@ -266,19 +271,23 @@ function toRelayerConfig(
 
 function toAnonymitySetConfig(
   projectId: string,
-  bucket: ProjectPrivacyBucket,
-  source: PrivacyAnonymitySetDepositSource,
+  {
+    bucketId,
+    chain,
+    address,
+    sinceTimestamp,
+    source,
+  }: PrivacyAnonymitySetSource<ProjectPrivacyInfo>,
   minTimestamp: UnixTime,
 ): PrivacyAnonymitySetIndexerConfig | StarknetPrivacyAnonymitySetIndexerConfig {
-  const privacyAddress = getPrivacyBucketAddress(bucket.address)
   const base = {
     projectId,
-    bucketId: bucket.id,
-    chain: privacyAddress.chain,
-    sinceTimestamp: Math.max(bucket.sinceTimestamp, minTimestamp),
+    bucketId,
+    chain,
+    sinceTimestamp: Math.max(sinceTimestamp, minTimestamp),
   }
   if (source.extractor === 'strk20Deposit') {
-    const config = { ...base, address: privacyAddress.address, ...source }
+    const config = { ...base, address, ...source }
     return {
       id: StarknetPrivacyAnonymitySetIndexer.idToConfigurationId(config),
       ...config,
@@ -287,7 +296,7 @@ function toAnonymitySetConfig(
 
   const config: PrivacyAnonymitySetIndexerConfigProperties = {
     ...base,
-    address: EthereumAddress(privacyAddress.address),
+    address: EthereumAddress(address),
     ...source,
   }
   return {
