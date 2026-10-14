@@ -168,11 +168,9 @@ async function getCachedData({
  * have no transfers left to list next to its aggregated numbers.
  */
 function hasRawTransfers(snapshotTimestamp: number | undefined) {
-  return (
-    snapshotTimestamp !== undefined &&
-    snapshotTimestamp - UnixTime.DAY >=
-      UnixTime.now() - INTEROP_TRANSFER_RETENTION
-  )
+  if (snapshotTimestamp === undefined) return false
+  const snapshotWindowStart = snapshotTimestamp - UnixTime.DAY
+  return snapshotWindowStart >= UnixTime.now() - INTEROP_TRANSFER_RETENTION
 }
 
 /** The page stays useful without its deployments section, so a failed build only hides it. */

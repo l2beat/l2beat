@@ -205,7 +205,7 @@ export const InteropFlowsParams = v.object({
   chains: v.array(v.string()),
   protocolIds: v.array(v.string()),
   tokenId: v.string().optional(),
-  /** Pins the flows to the snapshot the rest of a page shows; defaults to the latest. */
+  /** Pins the flows to the promoted snapshot the rest of a page shows; otherwise the latest is used. */
   snapshotTimestamp: v.number().optional(),
 })
 

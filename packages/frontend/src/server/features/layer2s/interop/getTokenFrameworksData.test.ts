@@ -146,9 +146,33 @@ describe('getTokenFrameworksData helpers', () => {
 
   describe(buildTopTokens.name, () => {
     const tokensDetailsMap: TokensDetailsMap = new Map([
-      ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
-      ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png', issuer: null }],
-      ['dai', { symbol: 'DAI', iconUrl: '/dai.png', issuer: null }],
+      [
+        'eth',
+        {
+          symbol: 'ETH',
+          iconUrl: '/eth.png',
+          issuer: null,
+          isPriceUnreliable: false,
+        },
+      ],
+      [
+        'usdc',
+        {
+          symbol: 'USDC',
+          iconUrl: '/usdc.png',
+          issuer: null,
+          isPriceUnreliable: false,
+        },
+      ],
+      [
+        'dai',
+        {
+          symbol: 'DAI',
+          iconUrl: '/dai.png',
+          issuer: null,
+          isPriceUnreliable: false,
+        },
+      ],
     ])
 
     it('sorts tokens by volume and applies limit', () => {

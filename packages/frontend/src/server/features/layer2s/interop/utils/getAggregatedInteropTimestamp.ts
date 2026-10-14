@@ -22,3 +22,17 @@ export async function getAggregatedInteropSnapshotTimestamp(): Promise<
 
   return db.interopAggregateStatus.getLatestPromotedTimestamp()
 }
+
+/**
+ * A client-supplied timestamp pins a snapshot the page already shows, so only
+ * a promoted one is honoured. Anything else (a blocked snapshot, a guess) is
+ * ignored and the caller resolves the default snapshot instead.
+ */
+export async function getPromotedInteropSnapshotTimestamp(
+  requested: number | undefined,
+): Promise<UnixTime | undefined> {
+  if (requested === undefined || env.MOCK) return undefined
+  const timestamp = UnixTime(requested)
+  const status = await getDb().interopAggregateStatus.getByTimestamp(timestamp)
+  return status?.status === 'promoted' ? timestamp : undefined
+}

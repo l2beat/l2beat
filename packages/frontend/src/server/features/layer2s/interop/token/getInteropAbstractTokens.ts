@@ -48,7 +48,9 @@ export async function findInteropAbstractToken(
 ): Promise<InteropAbstractToken | undefined> {
   const tokens = await getInteropAbstractTokens(chainIds)
   const token = tokens.find((token) => token.id === id)
-  if (token || env.MOCK) return token
+  if (token) return token
+  // Mock mode has no token DB to fall back to.
+  if (env.MOCK) return undefined
 
   const [record] = await getTokenDb().abstractToken.getByIds([id])
   return record

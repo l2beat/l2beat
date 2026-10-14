@@ -128,9 +128,13 @@ export function InteropTokenSummary({
             title="Deployments"
             isLoading={isLoading}
             value={
-              <a href="#onchain-deployments" className="hover:underline">
-                {formatInteger(deploymentsCount)}
-              </a>
+              notSyncedBadge ? (
+                formatInteger(deploymentsCount)
+              ) : (
+                <a href="#onchain-deployments" className="hover:underline">
+                  {formatInteger(deploymentsCount)}
+                </a>
+              )
             }
           />
         )}

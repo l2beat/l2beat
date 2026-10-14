@@ -102,12 +102,10 @@ export async function getInteropTokenData(
     token,
     flows: flows.slice(0, TOKEN_DASHBOARD_TOP_FLOWS_LIMIT),
     topPath: getTopPath(flows),
-    // Transfer count breaks ties because tokens without a reliable price have
-    // zero volume everywhere.
     topProtocol: topProtocols.toSorted(
-      (a, b) =>
-        b.volume.value - a.volume.value ||
-        b.transfers.value - a.transfers.value,
+      tokensDetailsMap.get(params.tokenId)?.isPriceUnreliable
+        ? byTransferCountThenVolume
+        : byVolumeThenTransferCount,
     )[0],
     topProtocols,
     snapshotTimestamp,
@@ -121,6 +119,28 @@ export async function getInteropTokenData(
       selection,
     ),
   }
+}
+
+/**
+ * Volumes of a token without a reliable price are zero, or stale when its
+ * snapshot predates the flag, so the card ranks such a token by transfer count.
+ */
+function byTransferCountThenVolume(
+  a: InteropProtocolData,
+  b: InteropProtocolData,
+) {
+  return (
+    b.transfers.value - a.transfers.value || b.volume.value - a.volume.value
+  )
+}
+
+function byVolumeThenTransferCount(
+  a: InteropProtocolData,
+  b: InteropProtocolData,
+) {
+  return (
+    b.volume.value - a.volume.value || b.transfers.value - a.transfers.value
+  )
 }
 
 /**
