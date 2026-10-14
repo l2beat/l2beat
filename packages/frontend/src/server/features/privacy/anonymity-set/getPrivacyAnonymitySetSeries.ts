@@ -95,7 +95,7 @@ function getKeyRegistrationsSeries(
     label,
     compactLabel: label,
     // A recipient table shows only key registrations, so the cell repeats its header.
-    description: ANONYMITY_SET_TOOLTIPS['key-registrations'],
+    description: ANONYMITY_SET_TOOLTIPS.keyRegistrations,
     steps: [
       `Register keys for ${projectName} onchain.`,
       WAIT_STEP,

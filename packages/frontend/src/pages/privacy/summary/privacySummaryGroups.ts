@@ -54,7 +54,7 @@ const GROUPS: PrivacySummaryGroupConfig[] = [
     hiddenColumns: [COLUMNS.tvl, COLUMNS.trustedSetup],
     // Stealth payments have no pool to hide in; the crowd is everyone who
     // registered keys.
-    anonymitySetTooltip: ANONYMITY_SET_TOOLTIPS['key-registrations'],
+    anonymitySetTooltip: ANONYMITY_SET_TOOLTIPS.keyRegistrations,
   },
   {
     field: 'amount',

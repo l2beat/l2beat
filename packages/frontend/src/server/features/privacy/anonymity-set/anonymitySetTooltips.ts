@@ -1,8 +1,7 @@
 import { ANONYMITY_SET_WINDOW_DAYS } from './calculateAnonymitySets'
-import type { PrivacyAnonymitySetType } from './getPrivacyAnonymitySetSeries'
 
 /** The summary table's anonymity set column header, by what the set counts. */
-export const ANONYMITY_SET_TOOLTIPS: Record<PrivacyAnonymitySetType, string> = {
+export const ANONYMITY_SET_TOOLTIPS = {
   deposits: `Unique depositors over the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days, in the largest tracked pool.`,
-  'key-registrations': `Unique stealth key registrations in the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
+  keyRegistrations: `Unique stealth key registrations in the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
 }
