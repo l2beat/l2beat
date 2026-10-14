@@ -20,7 +20,7 @@ const NEEDS = [
   {
     title: 'EVM verification key registry (EIP-8357)',
     description:
-      'Records which verification key is Ethereum’s EVM program at each fork, so rollups follow L1 upgrades without their own governance. Under review.',
+      'Records which verification key is Ethereum’s EVM program at each fork, so rollups follow L1 upgrades without their own governance. A Draft EIP, not yet in a fork.',
   },
   {
     title: 'A zkVM for arbitrary programs',
