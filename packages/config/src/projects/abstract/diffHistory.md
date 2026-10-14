@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x2061ed199b76be6b3f80d96407af6ca066b0572a
+
+# Diff at Tue, 13 Oct 2026 13:07:31 GMT:
+
+- id: 4fc53816
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f86fa8ee6214e9cba302685affb910adddc04f2d block: 1790939141
+- current timestamp: 1791896776
+
+## Description
+
+Abstract chain admin increased execution delay from 3 hours to 1 day (following governance proposal ZIP-17).
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
++++ severity: HIGH
+      values.executionDelayAbstract:
+-        10800
++        86400
++++ severity: HIGH
+      values.executionDelayAbstract_fmt:
+-        "3h"
++        "1d"
+    }
+```
+
 Generated with discovered.json: 0x7eb934834abf33e129ec51dec1123066935d61dc
 
 # Diff at Mon, 05 Oct 2026 08:43:56 GMT:
