@@ -94,8 +94,8 @@ function getKeyRegistrationsSeries(
     id: base.bucketId,
     label,
     compactLabel: label,
-    // A recipient table shows only key registrations, so the cell repeats its header.
-    description: ANONYMITY_SET_TOOLTIPS.keyRegistrations,
+    // Only the Recipient table has key-registration sets, so the cell repeats its header.
+    description: ANONYMITY_SET_TOOLTIPS['key-registrations'],
     steps: [
       `Register keys for ${projectName} onchain.`,
       WAIT_STEP,

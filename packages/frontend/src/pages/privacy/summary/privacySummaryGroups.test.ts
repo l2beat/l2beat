@@ -1,5 +1,9 @@
 import type { PrivacyField } from '@l2beat/config'
 import { expect } from 'earl'
+import {
+  getPrivacyAnonymitySetType,
+  type PrivacyAnonymitySetType,
+} from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSeries'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { ps } from '~/server/projects'
 import { getPrivacySummaryGroups } from './privacySummaryGroups'
@@ -51,7 +55,7 @@ describe(getPrivacySummaryGroups.name, () => {
       ],
       [
         'Recipient privacy',
-        'Unique stealth key registrations in the last 30 complete UTC days.',
+        'Unique addresses that registered stealth keys in the last 30 complete UTC days.',
       ],
     ])
   })
@@ -77,6 +81,34 @@ describe(getPrivacySummaryGroups.name, () => {
     for (const group of groups) {
       const field = fields.find((field) => field.id === group.field)
       expect(field?.promiseLabel).toEqual(group.label)
+    }
+  })
+
+  // The header names one kind of anonymity set per table, so a project
+  // counting another kind would sit under the wrong sentence.
+  it('heads every table with the anonymity set type of its projects', async () => {
+    const projects = await ps.getProjects({ select: ['privacyInfo'] })
+    const groups = getPrivacySummaryGroups(
+      projects.map((project) =>
+        entry(project.id, project.privacyInfo.adversaries.promise.protects),
+      ),
+    )
+
+    const typeById = new Map<string, PrivacyAnonymitySetType | undefined>(
+      projects.map((project) => [
+        project.id,
+        getPrivacyAnonymitySetType(project),
+      ]),
+    )
+
+    for (const group of groups) {
+      if (group.anonymitySetType === undefined) continue
+      for (const { id } of group.entries) {
+        const type = typeById.get(id)
+        if (type !== undefined) {
+          expect({ id, type }).toEqual({ id, type: group.anonymitySetType })
+        }
+      }
     }
   })
 })

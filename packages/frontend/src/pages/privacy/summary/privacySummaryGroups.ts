@@ -2,6 +2,7 @@ import type { PrivacyField } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { ANONYMITY_SET_TOOLTIPS } from '~/server/features/privacy/anonymity-set/anonymitySetTooltips'
+import type { PrivacyAnonymitySetType } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSeries'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 
 /** Ids of the summary table columns that only some groups show. */
@@ -21,10 +22,11 @@ interface PrivacySummaryGroupConfig {
   description: string
   hiddenColumns: PrivacySummaryOptionalColumn[]
   /** Unset where the anonymity set column is hidden. */
-  anonymitySetTooltip?: string
+  anonymitySetType?: PrivacyAnonymitySetType
 }
 
 export interface PrivacySummaryGroup extends PrivacySummaryGroupConfig {
+  anonymitySetTooltip: string | undefined
   entries: PrivacySummaryEntry[]
 }
 
@@ -43,7 +45,7 @@ const GROUPS: PrivacySummaryGroupConfig[] = [
     description:
       'Hides which deposit became which withdrawal. Both stay public.',
     hiddenColumns: [COLUMNS.volume30d],
-    anonymitySetTooltip: ANONYMITY_SET_TOOLTIPS.deposits,
+    anonymitySetType: 'deposits',
   },
   {
     field: 'recipient',
@@ -54,7 +56,7 @@ const GROUPS: PrivacySummaryGroupConfig[] = [
     hiddenColumns: [COLUMNS.tvl, COLUMNS.trustedSetup],
     // Stealth payments have no pool to hide in; the crowd is everyone who
     // registered keys.
-    anonymitySetTooltip: ANONYMITY_SET_TOOLTIPS.keyRegistrations,
+    anonymitySetType: 'key-registrations',
   },
   {
     field: 'amount',
@@ -91,6 +93,12 @@ export function getPrivacySummaryGroups(
     if (!groupEntries) {
       return []
     }
-    return { ...group, entries: groupEntries }
+    return {
+      ...group,
+      anonymitySetTooltip:
+        group.anonymitySetType &&
+        ANONYMITY_SET_TOOLTIPS[group.anonymitySetType],
+      entries: groupEntries,
+    }
   })
 }
