@@ -1,7 +1,4 @@
-import {
-  definePrivacyAdversaries,
-  PRIVACY_ADVERSARY_SNIPPETS as S,
-} from '../../common/privacyAdversaries'
+import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
 const SRC =
@@ -102,13 +99,19 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         },
       ],
     },
+    // Anonymity set counted by hand on 2026-10-14 from vault events at block
+    // 26190107, ETH/USD 2,495.55: 87 deposits from 70 funders, 19 mutual
+    // closes, 68 active notes from 64 funders. Notes whose deposit covers the
+    // budget tier (an upper bound, the balance is unknown): $1 and $2 tiers 66,
+    // $3 and $4.5 tiers 64, $6 tier 30. 61 active notes come from the launch
+    // days 2026-09-30 to 2026-10-03 and expire by 2026-11-02, leaving 26
+    // without new deposits. Of the 19 closed notes, 9 spent nothing.
     privilegedInsider: {
-      sentiment: 'warning',
+      sentiment: 'bad',
       exposureShort:
-        "The operator sees each request's time and budget but not its note, so the candidates are all active notes, a small set.",
+        "The operator sees each request's time and budget tier but not its note, and too few active notes cover a top-tier budget to hide among.",
       exposureContinued:
-        "The daemon reveals the note id to the operator's indexer before each request. An escape dispute lets the operator publish one request's link onchain. The provider can read prompts and responses and link requests under one key.",
-      advice: `Use the browser app rather than the daemon, and wait a day or more between depositing and the user's first request. ${S.localBuild}`,
+        "The candidates are the active notes whose balance covers the request's budget tier, which follows the chosen model's price. The daemon reveals the note id to the operator's indexer before each request. The provider can read prompts and responses and link requests under one key.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -117,10 +120,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
           note: 'The operator bills each request and the provider meters it.',
         },
         asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'Timing narrows a small set, and daemon users reveal the note id.',
-        },
+        linkage: 'exposed',
       },
       sources: [
         {
@@ -128,12 +128,12 @@ export const zkApiAdversaries = definePrivacyAdversaries({
           url: `${SRC}docs/note-bound-commitments.md`,
         },
         {
-          title: 'Daemon fetches the note path by note id',
-          url: `${DAEMON}indexer.rs#L71-L80`,
+          title: "OA Chat sets the budget tier from the model's price",
+          url: `${OA_CHAT}chat/zkapi/services/zkapiModelBudget.mjs#L6-L14`,
         },
         {
-          contract: 'ZkApiVault',
-          title: 'challengeEscapeWithdrawal publishes a request proof',
+          title: 'Daemon fetches the note path by note id',
+          url: `${DAEMON}indexer.rs#L71-L80`,
         },
         {
           title: 'Provider sees inference content',
