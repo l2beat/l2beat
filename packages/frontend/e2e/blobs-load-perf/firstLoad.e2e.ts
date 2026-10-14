@@ -93,10 +93,8 @@ async function measureFirstAnswer(
 ): Promise<Measurement> {
   const answer = await holdFirstLiveAnswer(page)
   await page.addInitScript(watchForShownBelt)
-  const charts = page.waitForResponse((r) => r.url().includes('tvs.chart'))
   await page.goto('/blobs', { waitUntil: 'load' })
-  // the whole body, as tRPC streams a batch's answers after its headers
-  await Promise.all([answer.held, charts.then((r) => r.finished())])
+  await Promise.all([answer.held, page.waitForFunction(CHARTS_ANSWERED)])
   await page.evaluate(UNTIL_IDLE)
 
   await browser.startTracing(page, {
@@ -117,10 +115,12 @@ async function measureFirstAnswer(
 }
 
 /**
- * Long polls after the first go straight through. Awaited before the page
- * loads, or the first ask may pass and the hold wait a slot for the next.
- * The first ask must go alone: batched with the charts, holding it would
- * hold them too, so that fails at once rather than timing out
+ * Long polls after the first go straight through. Paused with the browser's
+ * own interception, matched to the live ask alone: Playwright's routes catch
+ * every request, and a streamed charts answer then stalls while the live ask
+ * is held. Set up before the page loads, or the first ask may pass and the
+ * hold wait a slot for the next. The first ask must go alone: batched with
+ * the charts, holding it would hold them too, so that fails at once
  */
 async function holdFirstLiveAnswer(page: Page) {
   let release = () => {}
@@ -133,26 +133,27 @@ async function holdFirstLiveAnswer(page: Page) {
     onHeld = resolve
     onBatched = reject
   })
+  const cdp = await page.context().newCDPSession(page)
   let first = true
-  await page.route(
-    (url) => trpcProcedures(url).includes(LIVE_PROCEDURE),
-    async (route) => {
-      if (first) {
-        first = false
-        const procedures = trpcProcedures(new URL(route.request().url()))
-        if (procedures.length > 1) {
-          onBatched(
-            new Error('Live answer batched with other queries', {
-              cause: { procedures },
-            }),
-          )
-        }
-        onHeld()
-        await released
+  cdp.on('Fetch.requestPaused', async ({ requestId, request }) => {
+    if (first) {
+      first = false
+      const procedures = trpcProcedures(new URL(request.url))
+      if (procedures.length > 1) {
+        onBatched(
+          new Error('Live answer batched with other queries', {
+            cause: { procedures },
+          }),
+        )
       }
-      await route.continue()
-    },
-  )
+      onHeld()
+      await released
+    }
+    await cdp.send('Fetch.continueRequest', { requestId })
+  })
+  await cdp.send('Fetch.enable', {
+    patterns: [{ urlPattern: `*${LIVE_PROCEDURE}*` }],
+  })
   return { held, release }
 }
 
@@ -164,6 +165,13 @@ function trpcProcedures(url: URL) {
   return path ? path.split(',') : []
 }
 
+// The whole body, as tRPC streams a batch's answers after its headers. Read
+// in the page, as Playwright's `finished()` on that stream at times never
+// settles though the browser has it all
+const CHARTS_ANSWERED = `performance
+  .getEntriesByType('resource')
+  .some((entry) => entry.name.includes('tvs.chart'))`
+
 // Twice, as the charts' answer schedules its render a task after it lands
 const UNTIL_IDLE = `(async () => {
   for (let i = 0; i < 2; i++) {
@@ -174,7 +182,7 @@ const UNTIL_IDLE = `(async () => {
 const RELEASED_MARK = 'first-answer-released'
 const SHOWN_MARK = 'belt-shown'
 
-/** From the released answer to the frame after the belt is shown */
+/** From the released answer to the frame that shows the belt being on screen */
 function inSpan(events: TraceEvent[]) {
   const markAt = (name: string) => events.find((e) => e.name === name)?.ts
   const from = markAt(RELEASED_MARK)
@@ -202,26 +210,27 @@ function countLayoutObjects(events: LayoutEvent[]) {
 }
 
 // A string, as tsx injects a helper the page lacks into closures. The belt
-// has blocks once its description gives their average; a paint after that
-// draws them, and the next frame comes once that one is on screen
+// has blocks once its description gives their average. The mark is queued
+// while the frame that first draws them is drawn, so it runs once that frame
+// is on screen, and ahead of the table the page builds after it
 const watchForShownBelt = `(() => {
-  let paintedBlocks = false
+  let marked = false
   const clearRect = CanvasRenderingContext2D.prototype.clearRect
   CanvasRenderingContext2D.prototype.clearRect = function (...args) {
     const label = this.canvas.getAttribute('aria-label') ?? ''
-    if (this.canvas.isConnected && label.includes('on average')) {
-      paintedBlocks = true
+    const status = document.querySelector('[role=status]')?.textContent ?? ''
+    if (
+      !marked &&
+      this.canvas.isConnected &&
+      label.includes('on average') &&
+      status.includes('Live')
+    ) {
+      marked = true
+      setTimeout(() => {
+        performance.mark('${SHOWN_MARK}')
+        window.__beltShown = true
+      })
     }
     return clearRect.apply(this, args)
   }
-  const watch = () => {
-    const status = document.querySelector('[role=status]')?.textContent ?? ''
-    if (paintedBlocks && status.includes('Live')) {
-      performance.mark('${SHOWN_MARK}')
-      window.__beltShown = true
-      return
-    }
-    requestAnimationFrame(watch)
-  }
-  requestAnimationFrame(watch)
 })()`
