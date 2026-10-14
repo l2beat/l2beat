@@ -32,7 +32,8 @@ export async function getDataPostedSection(
   const { currentDaLayers, pastDaLayers } = getDaLayersInfo(
     project.daTrackingConfig,
     daLayers,
-    project.scalingDa ?? [],
+    // An archived project posts nowhere, whatever its DA label says.
+    project.archivedAt ? [] : (project.scalingDa ?? []),
   )
 
   const daTrackingConfig = project.daTrackingConfig.map((config) => {

@@ -60,6 +60,18 @@ describe(getDaLayersInfo.name, () => {
       pastDaLayers: [ETHEREUM_INFO],
     })
   })
+
+  it('names an untracked layer that has no icon', () => {
+    const result = getDaLayersInfo(
+      [config({ untilBlock: 200 })],
+      [ethereum],
+      [daLabel('NearDA')],
+    )
+
+    expect(result.currentDaLayers).toEqual([
+      { name: 'NearDA', logo: undefined },
+    ])
+  })
 })
 
 function daLabel(value: string): ProjectScalingDa {

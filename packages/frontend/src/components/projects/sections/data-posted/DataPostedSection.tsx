@@ -2,6 +2,7 @@ import type { Milestone, ProjectDaTrackingConfig } from '@l2beat/config'
 import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDataPostedChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import type { DaLayerInfo } from '~/utils/project/data-posted/getDaLayersInfo'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import { DATA_POSTED_DESCRIPTION } from '../sectionCopy'
@@ -10,14 +11,8 @@ import { DataPostedTrackedTransactions } from './DataPostedTrackedTransactions'
 
 export interface DataPostedSectionProps extends ProjectSectionProps {
   project: ChartProject
-  currentDaLayers: {
-    name: string
-    logo: string
-  }[]
-  pastDaLayers: {
-    name: string
-    logo: string
-  }[]
+  currentDaLayers: DaLayerInfo[]
+  pastDaLayers: DaLayerInfo[]
   milestones: Milestone[]
   defaultRange: ChartRange
   daTrackingConfig: (ProjectDaTrackingConfig & {
@@ -42,13 +37,16 @@ export function DataPostedSection({
           <>
             The project currently posts data to
             <DaLayerNames daLayers={currentDaLayers} />
+            {pastDaLayers.length > 0 && (
+              <>
+                ; previously it posted to
+                <DaLayerNames daLayers={pastDaLayers} />
+              </>
+            )}
           </>
         ) : (
-          'The project no longer posts data to Ethereum'
-        )}
-        {pastDaLayers.length > 0 && (
           <>
-            ; previously it posted to
+            The project posted data to
             <DaLayerNames daLayers={pastDaLayers} />
           </>
         )}
@@ -66,11 +64,7 @@ export function DataPostedSection({
   )
 }
 
-function DaLayerNames({
-  daLayers,
-}: {
-  daLayers: { name: string; logo: string }[]
-}) {
+function DaLayerNames({ daLayers }: { daLayers: DaLayerInfo[] }) {
   return (
     <span>
       {daLayers.map((daLayer) => (
@@ -80,14 +74,16 @@ function DaLayerNames({
   )
 }
 
-function DaLayerName({ daLayer }: { daLayer: { name: string; logo: string } }) {
+function DaLayerName({ daLayer }: { daLayer: DaLayerInfo }) {
   return (
     <span className="ml-1 font-medium">
-      <img
-        src={daLayer.logo}
-        alt={daLayer.name}
-        className="mr-1 inline-block size-5"
-      />
+      {daLayer.logo && (
+        <img
+          src={daLayer.logo}
+          alt={daLayer.name}
+          className="mr-1 inline-block size-5"
+        />
+      )}
       {daLayer.name}
     </span>
   )

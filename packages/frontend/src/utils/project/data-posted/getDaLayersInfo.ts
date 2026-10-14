@@ -40,9 +40,9 @@ export function getDaLayersInfo(
   }
 }
 
-interface DaLayerInfo {
+export interface DaLayerInfo {
   name: string
-  logo: string
+  logo: string | undefined
 }
 
 function getDaLayer(
@@ -58,20 +58,29 @@ function getDaLayer(
   }
 }
 
-/**
- * L2BEAT does not track the data posted to these layers, so only the DA label
- * says a project posts to them.
- */
+/** The tracking configs cover Ethereum; DAC and None are not layers. */
+const SKIPPED_DA_LABELS = new Set(['Ethereum', 'DAC', 'None'])
+
+/** Decoration only; a layer without an icon is still named. */
 const UNTRACKED_DA_LAYER_ICONS: Record<string, string> = {
   Avail: 'avail',
   Celestia: 'celestia',
   EigenDA: 'eigenda',
 }
 
+/**
+ * L2BEAT does not track the data posted to these layers, so only the DA label
+ * says a project posts to them.
+ */
 function getUntrackedDaLayers(scalingDa: ProjectScalingDa[]): DaLayerInfo[] {
   return scalingDa.flatMap(({ layer }) => {
+    if (SKIPPED_DA_LABELS.has(layer.value)) return []
     const icon = UNTRACKED_DA_LAYER_ICONS[layer.value]
-    if (!icon) return []
-    return [{ name: layer.value, logo: manifest.getUrl(`/icons/${icon}.png`) }]
+    return [
+      {
+        name: layer.value,
+        logo: icon ? manifest.getUrl(`/icons/${icon}.png`) : undefined,
+      },
+    ]
   })
 }
