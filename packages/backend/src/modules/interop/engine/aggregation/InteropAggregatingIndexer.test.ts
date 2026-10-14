@@ -21,6 +21,7 @@ import type {
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
 import type { InteropAggregationService } from './InteropAggregationService'
+import { aggregatedToken, aggregatedTransfer } from './test/fixtures'
 
 describe(InteropAggregatingIndexer.name, () => {
   const to = 1768484645
@@ -189,7 +190,7 @@ describe(InteropAggregatingIndexer.name, () => {
         interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        getAggregationBlockers: mockFn().resolvesTo([]),
+        getLaggingChainsByPlugin: mockFn().resolvesTo(new Map()),
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
@@ -206,7 +207,6 @@ describe(InteropAggregatingIndexer.name, () => {
         {
           db,
           configs,
-          pluginClusters: [],
           aggregationService,
           syncersManager,
           parents: [],
@@ -310,7 +310,7 @@ describe(InteropAggregatingIndexer.name, () => {
         }),
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        getAggregationBlockers: mockFn().resolvesTo([]),
+        getLaggingChainsByPlugin: mockFn().resolvesTo(new Map()),
       })
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
@@ -342,7 +342,6 @@ describe(InteropAggregatingIndexer.name, () => {
         {
           db,
           configs: [],
-          pluginClusters: [],
           aggregationService,
           promotionService,
           notifier,
@@ -425,7 +424,7 @@ describe(InteropAggregatingIndexer.name, () => {
         interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        getAggregationBlockers: mockFn().resolvesTo([]),
+        getLaggingChainsByPlugin: mockFn().resolvesTo(new Map()),
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
@@ -442,7 +441,6 @@ describe(InteropAggregatingIndexer.name, () => {
         {
           db,
           configs,
-          pluginClusters: [],
           aggregationService,
           syncersManager,
           parents: [],
@@ -475,10 +473,9 @@ describe(InteropAggregatingIndexer.name, () => {
           type: 'other',
         },
       ]
-      const pluginClusters = [{ name: 'across', plugins: [{ name: 'across' }] }]
       const previousTimestamp = to - UnixTime.HOUR
 
-      it('replaces stale lanes with the previous snapshot and marks where they came from', async () => {
+      it('carries stale lanes forward from the latest earlier snapshot', async () => {
         const freshArbitrum = aggregatedTransfer(
           'p',
           'ethereum',
@@ -500,17 +497,6 @@ describe(InteropAggregatingIndexer.name, () => {
           previousTimestamp,
           10,
         )
-        const previousTwiceCarried = {
-          ...aggregatedTransfer('p', 'avalanche', 'base', previousTimestamp, 7),
-          carriedFrom: previousTimestamp - UnixTime.HOUR,
-        }
-        const previousArbitrum = aggregatedTransfer(
-          'p',
-          'ethereum',
-          'arbitrum',
-          previousTimestamp,
-          99,
-        )
         const freshToken = aggregatedToken('p', 'ethereum', 'avalanche', to, 1)
         const previousToken = aggregatedToken(
           'p',
@@ -523,11 +509,7 @@ describe(InteropAggregatingIndexer.name, () => {
         const { db, aggregatedInteropTransfer, aggregatedInteropToken } =
           mockAggregateDb({
             previousTimestamp,
-            previousTransfers: [
-              previousAvalanche,
-              previousTwiceCarried,
-              previousArbitrum,
-            ],
+            previousTransfers: [previousAvalanche],
             previousTokens: [previousToken],
           })
         const promotionService = mockPromotionService()
@@ -535,15 +517,14 @@ describe(InteropAggregatingIndexer.name, () => {
           {
             db,
             configs,
-            pluginClusters,
             aggregationService: mockAggregationService({
               aggregatedTransfers: [freshAvalanche, freshArbitrum],
               aggregatedTokens: [freshToken],
             }),
             syncersManager: mockObject<InteropSyncersManager>({
-              getAggregationBlockers: mockFn().resolvesTo([
-                { cluster: 'across', chain: 'avalanche' },
-              ]),
+              getLaggingChainsByPlugin: mockFn().resolvesTo(
+                new Map([['across', new Set(['avalanche'])]]),
+              ),
             }),
             parents: [],
             promotionService,
@@ -562,71 +543,28 @@ describe(InteropAggregatingIndexer.name, () => {
             timestamp: to,
             carriedFrom: previousTimestamp,
           },
-          { ...previousTwiceCarried, timestamp: to },
         ]
+        const expectedTokens = [{ ...previousToken, timestamp: to }]
         expect(
           aggregatedInteropTransfer.getMaxTimestampAtOrBefore,
         ).toHaveBeenCalledWith(to - 1)
+        expect(aggregatedInteropTransfer.getByTimestamp).toHaveBeenCalledWith(
+          previousTimestamp,
+        )
         expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith(
           expectedTransfers,
         )
-        expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
-          { ...previousToken, timestamp: to },
-        ])
+        expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith(
+          expectedTokens,
+        )
         expect(promotionService.reconcile).toHaveBeenCalledWith({
           timestamp: to,
           transfers: expectedTransfers,
-          tokens: [{ ...previousToken, timestamp: to }],
+          tokens: expectedTokens,
         })
       })
 
-      it('drops stale lanes when there is no previous snapshot', async () => {
-        const freshArbitrum = aggregatedTransfer(
-          'p',
-          'ethereum',
-          'arbitrum',
-          to,
-          2,
-        )
-        const freshAvalanche = aggregatedTransfer(
-          'p',
-          'ethereum',
-          'avalanche',
-          to,
-          1,
-        )
-        const { db, aggregatedInteropTransfer } = mockAggregateDb({
-          previousTimestamp: undefined,
-        })
-        const indexer = new InteropAggregatingIndexer(
-          {
-            db,
-            configs,
-            pluginClusters,
-            aggregationService: mockAggregationService({
-              aggregatedTransfers: [freshAvalanche, freshArbitrum],
-            }),
-            syncersManager: mockObject<InteropSyncersManager>({
-              getAggregationBlockers: mockFn().resolvesTo([
-                { cluster: 'across', chain: 'avalanche' },
-              ]),
-            }),
-            parents: [],
-            promotionService: mockPromotionService(),
-            indexerService: mockObject<IndexerService>({}),
-            minHeight: 0,
-          },
-          Logger.SILENT,
-        )
-
-        await indexer.update(from, to)
-
-        expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
-          freshArbitrum,
-        ])
-      })
-
-      it('does not read the previous snapshot when the lagging cluster backs no project', async () => {
+      it('does not read the previous snapshot when the lagging plugin backs no project', async () => {
         const fresh = aggregatedTransfer('p', 'ethereum', 'avalanche', to, 1)
         const { db, aggregatedInteropTransfer } = mockAggregateDb({
           previousTimestamp: undefined,
@@ -635,14 +573,13 @@ describe(InteropAggregatingIndexer.name, () => {
           {
             db,
             configs,
-            pluginClusters,
             aggregationService: mockAggregationService({
               aggregatedTransfers: [fresh],
             }),
             syncersManager: mockObject<InteropSyncersManager>({
-              getAggregationBlockers: mockFn().resolvesTo([
-                { cluster: 'unrelated', chain: 'avalanche' },
-              ]),
+              getLaggingChainsByPlugin: mockFn().resolvesTo(
+                new Map([['unrelated', new Set(['avalanche'])]]),
+              ),
             }),
             parents: [],
             promotionService: mockPromotionService(),
@@ -731,65 +668,6 @@ function mockAggregationService(result: {
       aggregatedTokensPairs: [],
     }),
   })
-}
-
-function aggregatedTransfer(
-  id: string,
-  srcChain: string,
-  dstChain: string,
-  timestamp: UnixTime,
-  transferCount: number,
-): AggregatedInteropTransferRecord {
-  return {
-    timestamp,
-    id,
-    bridgeType: 'nonMinting',
-    srcChain,
-    dstChain,
-    transferTypeStats: undefined,
-    transferCount,
-    transfersWithDurationCount: transferCount,
-    identifiedCount: transferCount,
-    totalDurationSum: 0,
-    srcValueUsd: undefined,
-    dstValueUsd: undefined,
-    minTransferValueUsd: undefined,
-    maxTransferValueUsd: undefined,
-    avgValueInFlight: undefined,
-    mintedValueUsd: undefined,
-    burnedValueUsd: undefined,
-    countUnder100: 0,
-    count100To1K: 0,
-    count1KTo10K: 0,
-    count10KTo100K: 0,
-    countOver100K: 0,
-  }
-}
-
-function aggregatedToken(
-  id: string,
-  srcChain: string,
-  dstChain: string,
-  timestamp: UnixTime,
-  transferCount: number,
-): AggregatedInteropTokenRecord {
-  return {
-    timestamp,
-    id,
-    bridgeType: 'nonMinting',
-    srcChain,
-    dstChain,
-    abstractTokenId: 'eth',
-    transferTypeStats: undefined,
-    transferCount,
-    transfersWithDurationCount: transferCount,
-    totalDurationSum: 0,
-    volume: 0,
-    minTransferValueUsd: undefined,
-    maxTransferValueUsd: undefined,
-    mintedValueUsd: undefined,
-    burnedValueUsd: undefined,
-  }
 }
 
 function createTransfer(

@@ -258,7 +258,6 @@ export function createInteropModule({
       {
         db,
         configs: config.interop.aggregation.configs,
-        pluginClusters: syncersManager.pluginClusters,
         aggregationService,
         promotionService,
         indexerService,

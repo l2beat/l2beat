@@ -15,7 +15,6 @@ import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
 import type { PluginCluster } from '../../plugins'
 import { isPluginResyncable } from '../../plugins/types'
-import type { AggregationBlocker } from '../aggregation/staleLanes'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropDataCleaner } from './InteropDataCleaner'
 import { InteropEventSyncer } from './InteropEventSyncer'
@@ -41,7 +40,19 @@ export type PluginSyncStatus = {
   toTimestamp?: number
   lastError?: string
   resyncRequestedFrom?: number
-  blocksAggregation: boolean
+  carriesLanesForward: boolean
+}
+
+type LaggingSyncer = { syncer: InteropEventSyncer } & (
+  | { reason: 'pendingWipeOrResync' | 'noSyncedRange' }
+  | { reason: 'behind'; toTimestamp: UnixTime }
+)
+
+interface SyncerIndexes {
+  syncedRanges: InteropPluginSyncedRangeRecord[]
+  syncStates: InteropPluginSyncStateRecord[]
+  rangeByKey: Map<string, InteropPluginSyncedRangeRecord>
+  stateByKey: Map<string, InteropPluginSyncStateRecord>
 }
 
 export class InteropSyncersManager {
@@ -124,58 +135,32 @@ export class InteropSyncersManager {
   }
 
   /**
-   * Syncers whose captured data cannot back the snapshot at `target`, judged
-   * by the persisted synced range rather than instantaneous state so transient
-   * errors and brief catch-ups don't count as "not ready". A pending
-   * wipe/resync also blocks: its range still looks recent while the underlying
-   * data is about to be deleted or rebuilt. Blockers are logged - missing range
-   * as error (suspicious outside cold start), stale range or pending
-   * wipe/resync as warnings.
+   * Chains, per plugin, on which captured data cannot back the snapshot at
+   * `target`. Every plugin of a lagging cluster syncer lags with it.
    */
-  async getAggregationBlockers(
+  async getLaggingChainsByPlugin(
     target: UnixTime,
     tolerance: number,
-  ): Promise<AggregationBlocker[]> {
-    const { rangeByKey, stateByKey } = await this.loadSyncerIndexes()
-    const threshold = target - tolerance
-
-    const { pending, missing, stale } = this.findAggregationBlockers(
-      rangeByKey,
-      stateByKey,
+  ): Promise<Map<string, Set<string>>> {
+    const lagging = this.findLaggingSyncers(
+      await this.loadSyncerIndexes(),
       target,
       tolerance,
     )
+    this.logLaggingSyncers(lagging, target, target - tolerance)
 
-    if (missing.length > 0) {
-      this.logger.error('Syncers have no synced range', {
-        target,
-        missing: missing.map(blockerKey),
-      })
+    const result = new Map<string, Set<string>>()
+    for (const { syncer } of lagging) {
+      for (const plugin of syncer.cluster.plugins) {
+        const chains = result.get(plugin.name) ?? new Set()
+        chains.add(syncer.chain)
+        result.set(plugin.name, chains)
+      }
     }
-    if (stale.length > 0) {
-      this.logger.warn('Syncers are behind the aggregation threshold', {
-        target,
-        threshold,
-        stale: stale.map((s) => ({
-          syncer: blockerKey(s),
-          toTimestamp: s.toTimestamp,
-        })),
-      })
-    }
-    if (pending.length > 0) {
-      this.logger.warn('Syncers have a pending wipe or resync', {
-        pending: pending.map(blockerKey),
-      })
-    }
-
-    return [
-      ...pending,
-      ...missing,
-      ...stale.map(({ cluster, chain }) => ({ cluster, chain })),
-    ]
+    return result
   }
 
-  private async loadSyncerIndexes() {
+  private async loadSyncerIndexes(): Promise<SyncerIndexes> {
     const [syncedRanges, syncStates] = await Promise.all([
       this.db.interopPluginSyncedRange.getAll(),
       this.db.interopPluginSyncState.getAll(),
@@ -193,40 +178,73 @@ export class InteropSyncersManager {
   }
 
   /**
-   * Finds registered syncers that would block aggregation at `target`,
-   * grouped by reason: a pending wipe/resync, no persisted synced range, or a
-   * range older than `target - tolerance`. Syncers not registered in this
-   * manager never block aggregation.
+   * Judged by the persisted synced range rather than instantaneous state so
+   * transient errors and brief catch-ups don't count as lagging. A pending
+   * wipe/resync lags too: its range still looks recent while the underlying
+   * data is about to be deleted or rebuilt. Syncers not registered in this
+   * manager are never considered.
    */
-  private findAggregationBlockers(
-    rangeByKey: Map<string, InteropPluginSyncedRangeRecord>,
-    stateByKey: Map<string, InteropPluginSyncStateRecord>,
+  private findLaggingSyncers(
+    { rangeByKey, stateByKey }: SyncerIndexes,
     target: UnixTime,
     tolerance: number,
-  ) {
+  ): LaggingSyncer[] {
     const threshold = target - tolerance
-    const pending: AggregationBlocker[] = []
-    const missing: AggregationBlocker[] = []
-    const stale: (AggregationBlocker & { toTimestamp: UnixTime })[] = []
+    const lagging: LaggingSyncer[] = []
 
-    for (const [cluster, byChain] of this.syncers) {
-      for (const chain of byChain.keys()) {
-        const key = syncerKey(cluster, chain)
+    for (const byChain of this.syncers.values()) {
+      for (const syncer of byChain.values()) {
+        const key = keyOf(syncer)
         const state = stateByKey.get(key)
-        if (state?.wipeRequired || state?.resyncRequestedFrom != null) {
-          pending.push({ cluster, chain })
-          continue
-        }
         const range = rangeByKey.get(key)
-        if (!range) {
-          missing.push({ cluster, chain })
+        if (state?.wipeRequired || state?.resyncRequestedFrom != null) {
+          lagging.push({ syncer, reason: 'pendingWipeOrResync' })
+        } else if (!range) {
+          lagging.push({ syncer, reason: 'noSyncedRange' })
         } else if (range.toTimestamp < threshold) {
-          stale.push({ cluster, chain, toTimestamp: range.toTimestamp })
+          lagging.push({
+            syncer,
+            reason: 'behind',
+            toTimestamp: range.toTimestamp,
+          })
         }
       }
     }
 
-    return { pending, missing, stale }
+    return lagging
+  }
+
+  /** A missing range is an error because it is suspicious outside cold start. */
+  private logLaggingSyncers(
+    lagging: LaggingSyncer[],
+    target: UnixTime,
+    threshold: UnixTime,
+  ) {
+    const missing = lagging.flatMap((s) =>
+      s.reason === 'noSyncedRange' ? [keyOf(s.syncer)] : [],
+    )
+    const stale = lagging.flatMap((s) =>
+      s.reason === 'behind'
+        ? [{ syncer: keyOf(s.syncer), toTimestamp: s.toTimestamp }]
+        : [],
+    )
+    const pending = lagging.flatMap((s) =>
+      s.reason === 'pendingWipeOrResync' ? [keyOf(s.syncer)] : [],
+    )
+
+    if (missing.length > 0) {
+      this.logger.error('Syncers have no synced range', { target, missing })
+    }
+    if (stale.length > 0) {
+      this.logger.warn('Syncers are behind the aggregation threshold', {
+        target,
+        threshold,
+        stale,
+      })
+    }
+    if (pending.length > 0) {
+      this.logger.warn('Syncers have a pending wipe or resync', { pending })
+    }
   }
 
   getSyncer(
@@ -324,23 +342,23 @@ export class InteropSyncersManager {
 
   /**
    * `aggregationTarget` and `freshnessTolerance` should mirror what the
-   * aggregating indexer passes to `getAggregationBlockers` so that
-   * `blocksAggregation` reflects whether a row makes it carry its lanes
+   * aggregating indexer passes to `getLaggingChainsByPlugin` so that
+   * `carriesLanesForward` reflects whether a row makes it carry its lanes
    * forward from the previous snapshot instead of aggregating them.
    */
   async getPluginSyncStatuses(
     aggregationTarget: UnixTime,
     freshnessTolerance: number,
   ): Promise<PluginSyncStatus[]> {
-    const { syncedRanges, syncStates, rangeByKey, stateByKey } =
-      await this.loadSyncerIndexes()
-    const { pending, missing, stale } = this.findAggregationBlockers(
-      rangeByKey,
-      stateByKey,
-      aggregationTarget,
-      freshnessTolerance,
+    const indexes = await this.loadSyncerIndexes()
+    const { syncedRanges, syncStates, stateByKey } = indexes
+    const lagging = new Set(
+      this.findLaggingSyncers(
+        indexes,
+        aggregationTarget,
+        freshnessTolerance,
+      ).map((s) => keyOf(s.syncer)),
     )
-    const blockers = new Set([...pending, ...missing, ...stale].map(blockerKey))
     const seen = new Set<string>()
     const rows: PluginSyncStatus[] = []
 
@@ -361,7 +379,7 @@ export class InteropSyncersManager {
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,
         resyncRequestedFrom: state?.resyncRequestedFrom ?? undefined,
-        blocksAggregation: blockers.has(key),
+        carriesLanesForward: lagging.has(key),
       })
     }
 
@@ -381,14 +399,14 @@ export class InteropSyncersManager {
         chainStatus: this.getChainStatus(state.pluginName, state.chain),
         syncMode: formatSyncMode(syncer),
         lastError: state.lastError ?? undefined,
-        blocksAggregation: blockers.has(key),
+        carriesLanesForward: lagging.has(key),
       })
     }
 
     for (const chain of this.syncers.values()) {
       for (const syncer of chain.values()) {
         const clusterName = syncer.cluster.name
-        const key = syncerKey(clusterName, syncer.chain)
+        const key = keyOf(syncer)
         if (seen.has(key)) {
           continue
         }
@@ -398,7 +416,7 @@ export class InteropSyncersManager {
           chain: syncer.chain,
           chainStatus: 'active',
           syncMode: formatSyncMode(syncer),
-          blocksAggregation: blockers.has(key),
+          carriesLanesForward: lagging.has(key),
         })
       }
     }
@@ -425,6 +443,6 @@ function syncerKey(cluster: string, chain: string): string {
   return `${cluster}:${chain}`
 }
 
-function blockerKey(blocker: AggregationBlocker): string {
-  return syncerKey(blocker.cluster, blocker.chain)
+function keyOf(syncer: InteropEventSyncer): string {
+  return syncerKey(syncer.cluster.name, syncer.chain)
 }

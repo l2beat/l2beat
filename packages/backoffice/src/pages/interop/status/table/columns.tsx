@@ -98,8 +98,8 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
           : 'n/a',
     },
   }),
-  columnHelper.accessor((row) => (row.blocksAggregation ? 'yes' : 'no'), {
-    id: 'blocksAggregation',
+  columnHelper.accessor((row) => (row.carriesLanesForward ? 'yes' : 'no'), {
+    id: 'carriesLanesForward',
     header: 'Carries lanes forward',
     enableGlobalFilter: false,
     cell: ({ getValue }) => {
@@ -112,7 +112,7 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
       )
     },
     meta: {
-      csvHeader: 'Blocks aggregation',
+      csvHeader: 'Carries lanes forward',
       filter: { kind: 'select' },
     },
   }),

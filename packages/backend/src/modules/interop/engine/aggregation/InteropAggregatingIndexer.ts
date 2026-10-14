@@ -1,8 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type {
-  AggregatedInteropTransferRecord,
-  Database,
-} from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import {
@@ -20,10 +17,9 @@ import type {
   InteropAggregationService,
 } from './InteropAggregationService'
 import {
-  type ClusterMembers,
   carryForwardStaleLanes,
-  getStaleChainsByProject,
-  type StaleChainsByProject,
+  getStaleChains,
+  type StaleChains,
 } from './staleLanes'
 
 /**
@@ -38,8 +34,6 @@ export interface InteropAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configs: InteropAggregationConfig[]
-  /** Maps plugin names to the syncing cluster they belong to. */
-  pluginClusters: ClusterMembers[]
   aggregationService: InteropAggregationService
   promotionService: InteropPromotionService
   notifier?: Pick<InteropNotifier, 'notifyBlockedSnapshot'>
@@ -55,14 +49,12 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
   }
 
   override async update(_: number, to: number): Promise<number> {
-    const blockers = await this.$.syncersManager.getAggregationBlockers(
-      to,
-      SYNCER_FRESHNESS_TOLERANCE,
-    )
-    const staleChains = getStaleChainsByProject(
+    const staleChains = getStaleChains(
       this.$.configs,
-      this.$.pluginClusters,
-      blockers,
+      await this.$.syncersManager.getLaggingChainsByPlugin(
+        to,
+        SYNCER_FRESHNESS_TOLERANCE,
+      ),
     )
 
     const from = to - UnixTime.DAY
@@ -81,9 +73,9 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       aggregatedDeployedTokens,
       aggregatedTokensPairs,
     } =
-      staleChains.size > 0
-        ? await this.withStaleLanesCarriedForward(fresh, staleChains, to)
-        : fresh
+      staleChains.size === 0
+        ? fresh
+        : await this.carryFromPreviousSnapshot(fresh, staleChains, to)
 
     let promotion: ReconcileResult | undefined
     await this.$.db.transaction(async () => {
@@ -139,15 +131,9 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     return to
   }
 
-  /**
-   * Stale lanes would show a drop in activity that is really a capture lag, so
-   * they are replaced by the previous snapshot's rows re-stamped to this hour.
-   * Transfers remember the snapshot they were copied from; the other tables
-   * are detail rows keyed by the same lane and inherit that marker through it.
-   */
-  private async withStaleLanesCarriedForward(
+  private async carryFromPreviousSnapshot(
     fresh: AggregationResult,
-    staleChains: StaleChainsByProject,
+    staleChains: StaleChains,
     to: UnixTime,
   ): Promise<AggregationResult> {
     const previousTimestamp =
@@ -156,41 +142,15 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       )
     this.logger.warn('Carrying stale lanes forward from previous snapshot', {
       previousTimestamp,
-      staleChainsByProject: Object.fromEntries(
-        [...staleChains].map(([id, chains]) => [id, [...chains]]),
+      staleChains: Object.fromEntries(
+        [...staleChains].map(([key, chains]) => [key, [...chains]]),
       ),
     })
     const previous =
       previousTimestamp === undefined
         ? EMPTY_SNAPSHOT
         : await this.loadSnapshot(previousTimestamp)
-
-    return {
-      aggregatedTransfers: carryForwardStaleLanes(
-        fresh.aggregatedTransfers,
-        previous.aggregatedTransfers.map(markCarriedFrom),
-        staleChains,
-        to,
-      ),
-      aggregatedTokens: carryForwardStaleLanes(
-        fresh.aggregatedTokens,
-        previous.aggregatedTokens,
-        staleChains,
-        to,
-      ),
-      aggregatedDeployedTokens: carryForwardStaleLanes(
-        fresh.aggregatedDeployedTokens,
-        previous.aggregatedDeployedTokens,
-        staleChains,
-        to,
-      ),
-      aggregatedTokensPairs: carryForwardStaleLanes(
-        fresh.aggregatedTokensPairs,
-        previous.aggregatedTokensPairs,
-        staleChains,
-        to,
-      ),
-    }
+    return carryForwardStaleLanes(fresh, previous, staleChains, to)
   }
 
   private async loadSnapshot(timestamp: UnixTime): Promise<AggregationResult> {
@@ -228,11 +188,4 @@ const EMPTY_SNAPSHOT: AggregationResult = {
   aggregatedTokens: [],
   aggregatedDeployedTokens: [],
   aggregatedTokensPairs: [],
-}
-
-/** A lane carried more than once keeps pointing at the snapshot it was last computed in. */
-function markCarriedFrom(
-  row: AggregatedInteropTransferRecord,
-): AggregatedInteropTransferRecord {
-  return { ...row, carriedFrom: row.carriedFrom ?? row.timestamp }
 }

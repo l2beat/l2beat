@@ -1,86 +1,115 @@
-/** A plugin cluster whose captured data on `chain` cannot be trusted for this snapshot. */
-export interface AggregationBlocker {
-  cluster: string
-  chain: string
-}
+import type { AggregatedInteropTransferRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
+import type { AggregationResult } from './InteropAggregationService'
 
-/** The part of a plugin cluster that matters here: which plugin names it syncs. */
-export interface ClusterMembers {
-  name: string
-  plugins: { name: string }[]
-}
+/**
+ * Past this age the previous numbers stop being a fair stand-in for current
+ * activity, so the lane falls back to its fresh, undercounted rows and the lag
+ * shows up as a drop instead of being hidden indefinitely.
+ */
+export const MAX_CARRY_FORWARD_AGE = UnixTime.DAY
 
-export interface Lane {
+/** `${projectId}:${bridgeType}` -> chains on which those transfers lag. */
+export type StaleChains = Map<string, Set<string>>
+
+/** Every aggregate table is keyed by a lane, so all of them carry forward alike. */
+interface Lane {
   id: string
+  bridgeType: string
   srcChain: string
   dstChain: string
 }
 
-/** Project id -> chains on which at least one of its plugin clusters is blocked. */
-export type StaleChainsByProject = Map<string, Set<string>>
-
 /**
- * Every cluster runs a syncer on every enabled chain, so a lagging chain blocks
- * that chain for every project whose plugins live in a blocked cluster. Plugins
- * outside any cluster (API-fed ones) have no syncer and never block.
+ * A plugin's transfers aggregate under the bridge type its project config gives
+ * it, or under `unknown` for one-sided transfers the classifier cannot type, so
+ * a lagging plugin makes both stale. The `chain` and `abstractTokenId`
+ * qualifiers of a plugin entry are ignored: over-marking only means a lane
+ * shows its previous numbers for an hour.
  */
-export function getStaleChainsByProject(
-  configs: { id: string; plugins: { plugin: string }[] }[],
-  clusters: ClusterMembers[],
-  blockers: AggregationBlocker[],
-): StaleChainsByProject {
-  const clusterByPlugin = new Map(
-    clusters.flatMap((c) => c.plugins.map((p) => [p.name, c.name] as const)),
-  )
-  const staleChainsByCluster = new Map<string, Set<string>>()
-  for (const { cluster, chain } of blockers) {
-    const chains = staleChainsByCluster.get(cluster) ?? new Set()
-    chains.add(chain)
-    staleChainsByCluster.set(cluster, chains)
-  }
-
-  const result: StaleChainsByProject = new Map()
+export function getStaleChains(
+  configs: { id: string; plugins: { plugin: string; bridgeType: string }[] }[],
+  laggingChainsByPlugin: Map<string, Set<string>>,
+): StaleChains {
+  const result: StaleChains = new Map()
   for (const config of configs) {
-    const chains = new Set<string>()
-    for (const { plugin } of config.plugins) {
-      const cluster = clusterByPlugin.get(plugin)
-      if (!cluster) continue
-      for (const chain of staleChainsByCluster.get(cluster) ?? []) {
-        chains.add(chain)
+    for (const { plugin, bridgeType } of config.plugins) {
+      const laggingChains = laggingChainsByPlugin.get(plugin)
+      if (!laggingChains) continue
+      for (const type of [bridgeType, 'unknown']) {
+        const key = projectBridgeKey(config.id, type)
+        result.set(key, new Set([...(result.get(key) ?? []), ...laggingChains]))
       }
-    }
-    if (chains.size > 0) {
-      result.set(config.id, chains)
     }
   }
   return result
 }
 
-export function isLaneStale(lane: Lane, stale: StaleChainsByProject): boolean {
-  const chains = stale.get(lane.id)
+/**
+ * Stale lanes undercount (their captured data lags), so showing them would
+ * look like a drop in activity. Their rows from the previous snapshot,
+ * re-stamped to `timestamp`, replace the fresh ones. A stale lane missing from
+ * the previous snapshot, or computed longer than MAX_CARRY_FORWARD_AGE ago,
+ * keeps its fresh rows.
+ */
+export function carryForwardStaleLanes(
+  fresh: AggregationResult,
+  previous: AggregationResult,
+  stale: StaleChains,
+  timestamp: UnixTime,
+): AggregationResult {
+  const carried = previous.aggregatedTransfers.filter(
+    (row) =>
+      isLaneStale(row, stale) &&
+      computedAt(row) >= timestamp - MAX_CARRY_FORWARD_AGE,
+  )
+  const carriedLanes = new Set(carried.map(laneKey))
+  const isCarried = (row: Lane) => carriedLanes.has(laneKey(row))
+
+  function merge<T extends Lane & { timestamp: UnixTime }>(
+    freshRows: T[],
+    previousRows: T[],
+  ): T[] {
+    return [
+      ...freshRows.filter((row) => !isCarried(row)),
+      ...previousRows.filter(isCarried).map((row) => ({ ...row, timestamp })),
+    ]
+  }
+
+  return {
+    aggregatedTransfers: merge(
+      fresh.aggregatedTransfers,
+      carried.map((row) => ({ ...row, carriedFrom: computedAt(row) })),
+    ),
+    aggregatedTokens: merge(fresh.aggregatedTokens, previous.aggregatedTokens),
+    aggregatedDeployedTokens: merge(
+      fresh.aggregatedDeployedTokens,
+      previous.aggregatedDeployedTokens,
+    ),
+    aggregatedTokensPairs: merge(
+      fresh.aggregatedTokensPairs,
+      previous.aggregatedTokensPairs,
+    ),
+  }
+}
+
+function isLaneStale(lane: Lane, stale: StaleChains): boolean {
+  const chains = stale.get(projectBridgeKey(lane.id, lane.bridgeType))
   return (
     chains !== undefined &&
     (chains.has(lane.srcChain) || chains.has(lane.dstChain))
   )
 }
 
-/**
- * Stale lanes are undercounted (their captured data is behind), so showing them
- * would look like a drop in activity. The previous snapshot is the best
- * available data for them: drop the fresh rows of stale lanes and re-stamp the
- * previous snapshot's rows for those lanes to `timestamp` instead.
- */
-export function carryForwardStaleLanes<T extends Lane & { timestamp: number }>(
-  fresh: T[],
-  previous: T[],
-  stale: StaleChainsByProject,
-  timestamp: number,
-): T[] {
-  if (stale.size === 0) return fresh
-  return [
-    ...fresh.filter((row) => !isLaneStale(row, stale)),
-    ...previous
-      .filter((row) => isLaneStale(row, stale))
-      .map((row) => ({ ...row, timestamp })),
-  ]
+/** A lane carried more than once keeps pointing at the snapshot it was last computed in. */
+function computedAt(row: AggregatedInteropTransferRecord): UnixTime {
+  return row.carriedFrom ?? row.timestamp
+}
+
+function projectBridgeKey(id: string, bridgeType: string): string {
+  return `${id}:${bridgeType}`
+}
+
+function laneKey(lane: Lane): string {
+  return `${projectBridgeKey(lane.id, lane.bridgeType)}:${lane.srcChain}:${lane.dstChain}`
 }

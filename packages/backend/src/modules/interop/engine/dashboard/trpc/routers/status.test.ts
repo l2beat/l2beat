@@ -17,7 +17,7 @@ describe(createStatusRouter.name, () => {
           toTimestamp: 456,
           lastError: 'boom',
           resyncRequestedFrom: 111,
-          blocksAggregation: true,
+          carriesLanesForward: true,
         },
       ],
     })
@@ -34,7 +34,7 @@ describe(createStatusRouter.name, () => {
         toTimestamp: 456,
         lastError: 'boom',
         resyncRequestedFrom: 111,
-        blocksAggregation: true,
+        carriesLanesForward: true,
       },
     ])
   })
