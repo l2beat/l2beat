@@ -1,11 +1,9 @@
 const SENSITIVE_PARAM_PARTS = ['key', 'token', 'secret', 'auth', 'password']
 
 /**
- * Keeps the URL readable while masking secrets: userinfo credentials, values
- * of query params whose name contains a sensitive word (e.g. `apiKey`,
- * `x_cg_pro_api_key`), the part after `:` in path segments (e.g.
- * `.../<service>:<token>`) and high-entropy path segments (e.g. RPC provider
- * keys baked into the path like `.../v2/<API_KEY>`).
+ * Keeps the URL readable while masking secrets: values of sensitive query
+ * params and high-entropy path segments (e.g. RPC provider keys baked into the
+ * path like `.../v2/<API_KEY>`).
  */
 export function sanitizeUrl(url: string): string {
   try {
