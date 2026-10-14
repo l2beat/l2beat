@@ -126,16 +126,9 @@ export function InteropTokenSummary({
         {deploymentsCount > 0 && (
           <StatsItem
             title="Deployments"
+            href={notSyncedBadge ? undefined : '#onchain-deployments'}
             isLoading={isLoading}
-            value={
-              notSyncedBadge ? (
-                formatInteger(deploymentsCount)
-              ) : (
-                <a href="#onchain-deployments" className="hover:underline">
-                  {formatInteger(deploymentsCount)}
-                </a>
-              )
-            }
+            value={formatInteger(deploymentsCount)}
           />
         )}
       </div>
