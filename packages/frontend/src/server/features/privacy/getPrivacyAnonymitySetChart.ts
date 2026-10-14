@@ -38,10 +38,7 @@ export type PrivacyAnonymitySetChartParams = v.infer<
 >
 
 export interface PrivacyAnonymitySetChartResponse {
-  series: Pick<
-    PrivacyAnonymitySetSeries,
-    'id' | 'label' | 'token' | 'minimumAmount'
-  >[]
+  series: Pick<PrivacyAnonymitySetSeries, 'id' | 'label' | 'minimumAmount'>[]
   history: PrivacyAnonymitySetHistoryPoint[]
   holdingDuration: PrivacyAnonymitySetHoldingDurationPoint[]
   /** Labels of configured series excluded from the charts while their history is indexed. */
@@ -197,10 +194,9 @@ export function selectPrivacyAnonymitySetChartRange(
 }
 
 function toResponseSeries(series: PrivacyAnonymitySetSeries[]) {
-  return series.map(({ id, label, token, minimumAmount }) => ({
+  return series.map(({ id, label, minimumAmount }) => ({
     id,
     label,
-    token,
     minimumAmount,
   }))
 }

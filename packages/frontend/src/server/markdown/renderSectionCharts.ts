@@ -6,10 +6,9 @@ import { TRACKED_TXS_SUBTYPE_TITLES } from '~/components/projects/sections/costs
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
 import { anomalySubtypeToLabel } from '~/components/projects/sections/liveness/anomalySubtypeToLabel'
 import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
+import type { PrivacyAnonymitySetSectionProps } from '~/components/projects/sections/privacy/PrivacyAnonymitySetSection'
 import {
-  ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
-  anonymitySetByHoldingDurationDescription,
-  anonymitySetHistoricDescription,
+  anonymitySetCopy,
   COSTS_DESCRIPTION,
   DATA_POSTED_DESCRIPTION,
   LAST_30_DAY_ANOMALIES_DESCRIPTION,
@@ -149,24 +148,18 @@ export function renderThroughputSection(
 
 /** The explanations around the two charts; the charts load in the browser. */
 export function renderPrivacyAnonymitySetSection(
-  props: { id: ProjectSectionId },
+  props: Pick<PrivacyAnonymitySetSectionProps, 'id' | 'anonymitySetType'>,
   level: number,
 ) {
   const days = ANONYMITY_SET_WINDOW_DAYS
+  const copy = anonymitySetCopy(props.anonymitySetType, days)
   return joinBlocks([
     subsection(
       level,
       `${days} day historic anonymity set`,
-      joinBlocks([
-        anonymitySetHistoricDescription(days),
-        ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
-      ]),
+      joinBlocks([copy.historicDescription, copy.looksBackwardsNote]),
     ),
-    subsection(
-      level,
-      'Estimated anonymity set by holding duration',
-      anonymitySetByHoldingDurationDescription(days),
-    ),
+    subsection(level, copy.durationTitle, copy.durationDescription),
     htmlPagePointer('The interactive charts are shown', props.id),
   ])
 }
