@@ -161,13 +161,45 @@ describe(TemplateService.prototype.loadContractTemplate.name, () => {
     writeFileSync(join(path, 'template.jsonc'), JSON.stringify(template))
   }
 
+  function loadProblems(templateId: string): unknown {
+    const templateService = new TemplateService(rootPath)
+    try {
+      templateService.loadContractTemplate(templateId)
+    } catch (error) {
+      expect(error).toBeA(Error)
+      expect((error as Error).message).toEqual('Invalid template.jsonc')
+      return ((error as Error).cause as { problems: unknown }).problems
+    }
+    throw new Error('Template loaded')
+  }
+
   it('rejects a template that sets ignoreDiscovery', () => {
     writeTemplate('ignoring', { ignoreDiscovery: true })
-    const templateService = new TemplateService(rootPath)
 
-    expect(() => templateService.loadContractTemplate('ignoring')).toThrow(
-      'ignoreDiscovery cannot be set in a template',
-    )
+    expect(loadProblems('ignoring')).toEqual([
+      expect.includes('ignoreDiscovery cannot be set in a template'),
+    ])
+  })
+
+  it('reports every mistake of a template at its path', () => {
+    writeTemplate('typos', {
+      $schema: '../schema.json',
+      ignoreMethod: ['a'],
+      fields: {
+        owner: { handler: { type: 'call', methd: 'owner', args: [] } },
+        slot: { handler: { type: 'storag', slot: 3 } },
+      },
+    })
+
+    expect(loadProblems('typos')).toEqual([
+      expect.includes(
+        'ignoreMethod: unexpected key (did you mean "ignoreMethods"?)',
+      ),
+      expect.includes(
+        'fields.owner.handler.methd: unexpected key (did you mean "method"?)',
+      ),
+      expect.includes('fields.slot.handler.type: expected one of'),
+    ])
   })
 })
 

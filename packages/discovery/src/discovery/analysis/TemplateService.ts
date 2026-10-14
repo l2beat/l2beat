@@ -26,6 +26,7 @@ import {
 } from '../../utils/fsLayer'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { ColorContract } from '../config/ColorConfig'
+import { ContractLayer } from '../config/ConfigLayer'
 import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { hashJsonStable } from '../config/hashJsonStable'
 import { ContractPermission } from '../config/PermissionConfig'
@@ -38,6 +39,7 @@ import {
 import { generateStructureHash } from '../output/structureOutput'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
+import { schemaProblems } from '../templatizer/draft/schemaProblems'
 import { readJsonc } from '../utils/readJsonc'
 
 export const TEMPLATES_PATH = path.join('_templates')
@@ -220,9 +222,17 @@ export class TemplateService {
       path.join(this.rootPath, TEMPLATES_PATH, template, 'template.jsonc'),
     )
 
-    const parsed = parser.parse(templateJsonc)
-    this.loadedTemplates[key] = parsed
-    return parsed
+    const parsed = parser.safeParse(templateJsonc)
+    if (!parsed.success) {
+      throw new Error('Invalid template.jsonc', {
+        cause: {
+          template,
+          problems: templateProblems(templateJsonc, parsed.message),
+        },
+      })
+    }
+    this.loadedTemplates[key] = parsed.data
+    return parsed.data
   }
 
   loadClingoModelTemplate(template: string): string | undefined {
@@ -631,4 +641,16 @@ function criteriaScore(
     return 2
   }
   return listed.length > 0 ? undefined : 1
+}
+
+function templateProblems(
+  templateJsonc: unknown,
+  parserMessage: string,
+): string[] {
+  const { $schema: _, ...template } = templateJsonc as Record<string, unknown>
+  const problems = schemaProblems(ContractLayer, template, '')
+  if (problems.length === 0) {
+    return [parserMessage]
+  }
+  return problems.map((problem) => `${problem.path}: ${problem.message}`)
 }
