@@ -18,13 +18,20 @@ export interface Landings {
   subscribe: (listener: (landing: Landing) => void) => () => void
   /** The head the page loaded with, or lower once the chain takes that back */
   loadedHead: (head: number) => number
+  /** What the newest block has landed so far */
+  landedIn: (slot: number) => Landing[]
 }
 
 export function createLandings(): Landings {
   const listeners = new Set<(landing: Landing) => void>()
   let loaded: number | undefined
+  let newest: { slot: number; landed: Landing[] } | undefined
   return {
     emit: (landing) => {
+      if (!newest || landing.slot > newest.slot) {
+        newest = { slot: landing.slot, landed: [] }
+      }
+      if (landing.slot === newest.slot) newest.landed.push(landing)
       for (const listener of listeners) listener(landing)
     },
     subscribe: (listener) => {
@@ -35,6 +42,7 @@ export function createLandings(): Landings {
       loaded = Math.min(loaded ?? head, head)
       return loaded
     },
+    landedIn: (slot) => (newest?.slot === slot ? newest.landed : []),
   }
 }
 
@@ -48,6 +56,27 @@ export const anyLanding = (_: Landing) => true
  */
 export function cameAfterLoad(landings: Landings, slot: number | undefined) {
   return slot !== undefined && slot > landings.loadedHead(slot)
+}
+
+/**
+ * What the block at `stamp` has still to land on a number. One that mounts
+ * after some of its batches landed, as the posters table built after the belt
+ * may, never heard of them, so they count as in already
+ */
+export function stillToLand(
+  landings: Landings | undefined,
+  stamp: number | undefined,
+  fresh: number,
+  matches: (landing: Landing) => boolean,
+) {
+  if (!landings || stamp === undefined || !cameAfterLoad(landings, stamp)) {
+    return 0
+  }
+  const landed = landings
+    .landedIn(stamp)
+    .filter(matches)
+    .reduce((sum, landing) => sum + landing.blobs, 0)
+  return Math.max(0, fresh - landed)
 }
 
 /**
@@ -78,7 +107,7 @@ export function useLandedTotal(
   const landings = useContext(LandingsContext)
   // put right by `useLiveBlobs`, which the callers read `stamp` from
   const clock = useChainClock()
-  const toLand = landings && cameAfterLoad(landings, stamp) ? fresh : 0
+  const toLand = stillToLand(landings, stamp, fresh, matches)
   const [held, setHeld] = useState<Held>(() =>
     firstHeld(
       stamp,

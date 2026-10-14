@@ -95,7 +95,8 @@ async function measureFirstAnswer(
   await page.addInitScript(watchForShownBelt)
   const charts = page.waitForResponse((r) => r.url().includes('tvs.chart'))
   await page.goto('/blobs', { waitUntil: 'load' })
-  await Promise.all([answer.held, charts])
+  // the whole body, as tRPC streams a batch's answers after its headers
+  await Promise.all([answer.held, charts.then((r) => r.finished())])
   await page.evaluate(UNTIL_IDLE)
 
   await browser.startTracing(page, {

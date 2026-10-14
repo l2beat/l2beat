@@ -52,9 +52,10 @@ export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
     [postedWindow, posters],
   )
   // The table is thousands of elements, below a phone's first screen: built
-  // after the belt and its status show the first answer, not in their task.
-  // Later answers reach it at once, as its numbers count up with the belt
-  const tableFilled = useDeferredValue(data !== undefined)
+  // after the belt and its status show the first answer, not in their task,
+  // even when that answer is in hand at mount. Later answers reach it at once,
+  // as its numbers count up with the belt
+  const tableFilled = useDeferredValue(data !== undefined, false)
   const tableLive = tableFilled ? data : undefined
   const tableTotals = tableFilled ? totals : undefined
 

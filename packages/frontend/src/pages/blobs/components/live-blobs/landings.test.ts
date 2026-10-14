@@ -10,6 +10,7 @@ import {
   holdBack,
   holdLimitMs,
   secondsUntilSlideEnds,
+  stillToLand,
 } from './landings'
 
 // Methodology: one page's landings are asked about the block it loaded with,
@@ -33,6 +34,37 @@ describe(cameAfterLoad.name, () => {
 
   it('has no block to land before the first data', () => {
     expect(cameAfterLoad(createLandings(), undefined)).toEqual(false)
+  })
+})
+
+// Methodology: the belt lands some of a block's batches, then a number asks
+// what is left, as the posters table does when it is built after the belt.
+describe(stillToLand.name, () => {
+  const isA = (landing: { posterId: string }) => landing.posterId === 'a'
+
+  it('leaves out what the block landed on the number before it asked', () => {
+    const landings = createLandings()
+    cameAfterLoad(landings, 1000)
+    landings.emit({ posterId: 'a', blobs: 2, slot: 1001 })
+    landings.emit({ posterId: 'b', blobs: 3, slot: 1001 })
+
+    expect(stillToLand(landings, 1001, 5, isA)).toEqual(3)
+  })
+
+  it('counts only the newest block as landed', () => {
+    const landings = createLandings()
+    cameAfterLoad(landings, 1000)
+    landings.emit({ posterId: 'a', blobs: 2, slot: 1001 })
+    landings.emit({ posterId: 'a', blobs: 1, slot: 1002 })
+
+    expect(stillToLand(landings, 1001, 5, isA)).toEqual(5)
+    expect(stillToLand(landings, 1002, 5, isA)).toEqual(4)
+  })
+
+  it('has nothing to land of the block the page loaded with', () => {
+    const landings = createLandings()
+
+    expect(stillToLand(landings, 1000, 5, isA)).toEqual(0)
   })
 })
 
