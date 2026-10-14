@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xba2e922bc48c35b401f8ad7bc543f66283b3b1c0
+
+# Diff at Wed, 14 Oct 2026 08:34:53 GMT:
+
+- id: ec5eb970
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1772118382
+- current timestamp: 1791966825
+
+## Description
+
+L2OutputOracle implementation replaced: `FINALIZATION_PERIOD_SECONDS` 7d → 1d.
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$implementation:
+-        "eth:0x1C90963D451316E3DBFdD5A30354EE56C29016EB"
++        "eth:0x550893B7041E91A090e7d03Cf437029Fe0f68ABc"
+      values.$pastUpgrades.3:
++        ["2026-10-02T18:05:11.000Z","0xf80d3e9a9768cde2683afdc6a71b7d595d4dc32768c965446b1bb79bb0bc63a8",["eth:0x550893B7041E91A090e7d03Cf437029Fe0f68ABc"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: Challenge period (Number of seconds until a state root is finalized).
+      values.FINALIZATION_PERIOD_SECONDS:
+-        604800
++        86400
+      values.finalizationPeriodSeconds:
+-        604800
++        86400
+      implementationNames.eth:0x1C90963D451316E3DBFdD5A30354EE56C29016EB:
+-        "L2OutputOracle"
+      implementationNames.eth:0x550893B7041E91A090e7d03Cf437029Fe0f68ABc:
++        "L2OutputOracle"
+    }
+```
+
 Generated with discovered.json: 0x933178658ad917b117babc306f33dd02a046d174
 
 # Diff at Wed, 23 Sep 2026 05:45:29 GMT:

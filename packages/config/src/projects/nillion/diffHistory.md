@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xda75c902df2c62082943870cd93311b1799b2ad6
+
+# Diff at Wed, 14 Oct 2026 08:35:01 GMT:
+
+- id: d519fcea
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1787834329
+- current timestamp: 1791966833
+
+## Description
+
+SystemConfig `blobbasefeeScalar` 801949 → 0.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x8a502d8EEa2Ed3e89c4D52DE51364688590cE591) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.blobbasefeeScalar:
+-        801949
++        0
+    }
+```
+
 Generated with discovered.json: 0x2137f8fc815d635fac174b6a2956b4eae3b6b912
 
 # Diff at Sun, 04 Oct 2026 05:55:34 GMT:

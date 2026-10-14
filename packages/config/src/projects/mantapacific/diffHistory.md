@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xda249eb7f572cf88e20b2ae9421af9ac77634300
+
+# Diff at Wed, 14 Oct 2026 08:22:56 GMT:
+
+- id: 73fe1454
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1787230124
+- current timestamp: 1791966112
+
+## Description
+
+L2OutputOracle implementation replaced: the finality-provider path (`finalityProvider`, `proposalChangeFinalizationPeriodSeconds`, `setFinalityProvider`) removed. FinalityRelayerManager and BLSApkRegistry dropped from the graph. Upgraded by the MantaMultisig; one of its members is now a 7702-delegated EOA.
+https://disco.l2beat.com/diff/eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441/eth:0xc9E9b111c5a14C0C75Ef753e26eA5D4D7D2610FE
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) [mantapacific/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. Each proposal records its own finalization period.
+      template:
+-        "mantapacific/L2OutputOracle_FinalityProvider"
++        "mantapacific/L2OutputOracle"
+      sourceHashes.1:
+-        "0x3437a7a092d08f59ae124806ebb927c551003d6c2b04bdcc21079332bb6d30c8"
++        "0xaab2d5f257c8ae0e9785689bc0da144b1ba3c05ff39cb502758e8f378feb81bb"
+      description:
+-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. The challenge period can be reduced by the FinalityRelayerManager contract."
++        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. Each proposal records its own finalization period."
+      values.$implementation:
+-        "eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441"
++        "eth:0xc9E9b111c5a14C0C75Ef753e26eA5D4D7D2610FE"
+      values.$pastUpgrades.2:
++        ["2026-10-13T22:39:11.000Z","0x9785856bac155883f8a5f03c17345796820218b3553051e627b9d009fc6423df",["eth:0xc9E9b111c5a14C0C75Ef753e26eA5D4D7D2610FE"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.finalityProvider:
+-        "eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E"
+      implementationNames.eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441:
+-        "L2OutputOracle"
+      implementationNames.eth:0xc9E9b111c5a14C0C75Ef753e26eA5D4D7D2610FE:
++        "L2OutputOracle"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FinalityRelayerManager (eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E) [mantapacific/FinalityRelayerManager]
+    +++ description: Contract managing challenge period reductions based on whitelisted signer and staked amounts. No threshold is currently enforced and no validation is done on the staked amounts. The current challenge period is set to 3d, the manta quorum can reduce it by a maximum of 1d, the bitcoin quorum can reduce it by a maximum of 1d, and the minimum challenge period allowed is set to 12h.
+```
+
+```diff
+-   Status: DELETED
+    contract BLSApkRegistry (eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60) [mantapacific/BLSApkRegistry]
+    +++ description: Contract used to register BLS keys and verify aggregated signatures. No specific threshold is enforced here, as all addresses to exclude from the signature check are provided as an input.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
+    EOA (eth:0xB44948Ff3E8a4d3Ac32A376B4b3209AdC7620770) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0xB44948Ff3E8a4d3Ac32A376B4b3209AdC7620770","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x4c207837aa7768d63d9263927b37af857abd763bf15acfef36498c066f633f54","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262) [global/ProxyAdmin]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../BLSApkRegistry/BLSApkRegistry.sol => /dev/null | 3871 --------------------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  877 -----
+ .../FinalityRelayerManager.sol => /dev/null        | 1033 ------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  877 -----
+ .../L2OutputOracle/L2OutputOracle.sol              |   40 +-
+ .../dev/null                                       |  188 -
+ .../dev/null                                       |  188 -
+ .../ProxyAdmin.sol}                                |    0
+ 8 files changed, 25 insertions(+), 7049 deletions(-)
+```
+
 Generated with discovered.json: 0x353363e6344aea09246cc6efb162b41c2f288e3f
 
 # Diff at Wed, 23 Sep 2026 05:47:47 GMT:
