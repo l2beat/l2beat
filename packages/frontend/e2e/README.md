@@ -59,8 +59,9 @@ of slow serial tests can tip one shard over.
 ## What a ratchet measures
 
 A count of the work a page does (layouts, restyled elements, chart rerenders,
-boxes, layers) is the same on every run, so its ceiling can sit at the count
-itself and a regression of one fails. Gate on counts.
+boxes, layers) does not depend on the machine: it is the same on every run, or
+moves by a fifth at most with what the page happens to animate, so its ceiling
+sits at or just above it. Gate on counts.
 
 A time is not the same on every run. GitHub's runners come with different
 CPUs, and the same commit measures up to 2.5× apart: the WebKit table layout
@@ -75,10 +76,10 @@ Neither escape works on these runners:
   not expose. `perf_event_open` fails with `ENOENT` even with
   `kernel.perf_event_paranoid` lowered.
 
-So a time ceiling is only a backstop for regressions several times over: set
-it from the slowest CI run with at least 2× headroom. One set from a local run
-lands inside the CI spread and fails at random; the WebKit ceiling did, set at
-4× a Mac's time. Printing a time without a ceiling is fine.
+So times are logged, never asserted. A ceiling set from a local run lands
+inside the CI spread and fails at random, as the WebKit one did at 4× a Mac's
+time; one wide enough to never fail, as `scriptMs` was at 2–7× above the
+slowest CI run, only catches a regression bigger than that.
 
 To catch a new kind of slowness, find it by time where time is steady: a
 profile on a device or the iOS Simulator. Fix it, then ratchet what caused it

@@ -36,8 +36,9 @@ import {
  *
  * The main proxy is how many elements the browser restyles, which does not
  * depend on the machine's speed; against the iOS simulator it moved with the
- * frames that ran long. Layouts come with it, and script time with wide
- * headroom only. Slow frames are logged, not asserted.
+ * frames that ran long. Layouts come with it. Script time and slow frames
+ * are logged, not asserted, as they vary with the runner's CPU (see
+ * ../README.md).
  *
  * Lower a ceiling by running with UPDATE_CEILINGS=1, which rewrites
  * swipeCeilings.json from the current run plus the margins below.
@@ -56,7 +57,6 @@ const REACH_PX = 120
 const MARGIN = {
   restyledElements: (n: number) => Math.ceil(n * 1.5),
   layouts: (n: number) => Math.ceil(n * 1.5),
-  scriptMs: (n: number) => n * 4,
 }
 
 type Measurement = {

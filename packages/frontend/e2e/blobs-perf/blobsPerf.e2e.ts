@@ -46,8 +46,8 @@ import {
  * over the longest stretch the belt holds still, after every landing has
  * played out, so how big the block was does not move them. Layouts and belt
  * repaints come with them; the belt has nothing to repaint for most of a
- * slot. Script time is kept with wide headroom only, as it varies by machine;
- * slow frames are logged, not asserted, for the same reason.
+ * slot. Script time and slow frames are logged, not asserted, as they vary
+ * with the runner's CPU (see ../README.md).
  *
  * Lower a ceiling by running with UPDATE_CEILINGS=1, which rewrites
  * ceilings.json from the current run plus the margins below.
@@ -69,7 +69,6 @@ const MARGIN = {
   quietPaintsPerSecond: (n: number) => n * 2,
   layouts: (n: number) => Math.ceil(n * 1.5),
   beltPaints: (n: number) => Math.ceil(n * 1.25),
-  scriptMs: (n: number) => n * 4,
 }
 
 type Measurement = {
