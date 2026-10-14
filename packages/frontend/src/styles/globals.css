@@ -29,11 +29,11 @@
   /* Not a selection: utility on body: that compiles to a descendant rule
      which makes every style recalc about 40% slower. */
   ::selection {
-    background-color: color-mix(in oklab, var(--brand) 30%, transparent);
-  }
-
-  .dark ::selection {
-    background-color: color-mix(in oklab, var(--brand) 50%, transparent);
+    background-color: color-mix(
+      in oklab,
+      var(--brand) var(--selection-brand-share),
+      transparent
+    );
   }
 }
 
@@ -81,6 +81,7 @@
   --warning: #ab8000;
   --negative: #d70000;
   --brand: #9621bf;
+  --selection-brand-share: 30%;
   --background: #e6e7ec;
   --surface-primary: #fafafa;
   --surface-primary-hover: #e6ecef;
@@ -152,6 +153,7 @@
   --warning: #ffc107;
   --negative: #ff3d3d;
   --brand: #db8bf7;
+  --selection-brand-share: 50%;
   --background: #07080c;
   --surface-primary: #1b1e2a;
   --surface-primary-hover: #272b3a;
