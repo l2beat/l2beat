@@ -1,3 +1,146 @@
+Generated with discovered.json: 0x144bdd0722e59a8c60ad13f21700aba2e3e58b97
+
+# Diff at Mon, 12 Oct 2026 08:16:37 GMT:
+
+- id: 48c1876f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1790850976
+- current timestamp: 1791789484
+
+## Description
+
+New source verification confirms existing intent approval powers: authorized spenders can transfer users' approved tokens, and the allowance holder is instantly upgradeable.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790850976 (main branch discovery), not current.
+
+```diff
+    contract FeeTreasury (eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc) [debridge/FeeTreasury] {
+    +++ description: Holds fees collected by deBridge intent contracts. Authorized collectors can withdraw native tokens and ERC20 tokens to any recipient.
+      name:
+-        ""
++        "FeeTreasury"
+      unverified:
+-        true
+      description:
+-        "Unverified proxy referenced as the feeTreasury of the DeBridgeIntentManager."
++        "Holds fees collected by deBridge intent contracts. Authorized collectors can withdraw native tokens and ERC20 tokens to any recipient."
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"]}}
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.defaultAdminAC:
++        ["eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"]
+      values.FEE_COLLECTOR_ROLE:
++        "0x2dca0f5ce7e75a4b43fe2b0d6f5d0b7a2bf92ecf89f8f0aa17b8308b67038821"
+      values.feeCollectorAC:
++        []
+      values.version:
++        "1.0.0"
+      implementationNames.eth:0x4F2f3d3949B37A944A10Bf3C5355d0c827BbaF68:
+-        ""
++        "FeeTreasury"
+      template:
++        "debridge/FeeTreasury"
+      sourceHashes:
++        ["0xf31aeb6e49fa6b302d2dc1ed76c4d201ad9c2accdb0d9a45c30b13ae334fb5e9","0x35116f806a2c73237392ff272ff3e42a08883a47b72e2bf25a4a527e5c9bc0df"]
+    }
+```
+
+```diff
+    EOA (eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc","description":"grant and revoke fee withdrawal permissions.","role":".defaultAdminAC"}
+    }
+```
+
+```diff
+    contract DeBridgeIntentManager_v0_8_0 (eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07) [debridge/DeBridgeIntentManager_v0_8_0] {
+    +++ description: Fills signed user intents through DLN orders or same-chain swaps. It pulls approved tokens through its configurable allowance holder. Fees, the DLN source and the fee recipient are configurable independently of user signatures.
+      name:
+-        ""
++        "DeBridgeIntentManager_v0_8_0"
+      unverified:
+-        true
+      description:
+-        "Unverified proxy holding the INTENT_MANAGER_ROLE on the IntentManagerValidator, allowing it to create DLN orders with custom or zero protocol fees."
++        "Fills signed user intents through DLN orders or same-chain swaps. It pulls approved tokens through its configurable allowance holder. Fees, the DLN source and the fee recipient are configurable independently of user signatures."
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x6681b27BEC88Ba8c6F0E4B42dD6E3e5c1a797021"]}}
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.defaultAdminAC:
++        ["eth:0x6681b27BEC88Ba8c6F0E4B42dD6E3e5c1a797021"]
+      values.eip712Domain:
++        {"fields":"0x0f","name":"DeBridgeIntentManager","version":"1","chainId":1,"verifyingContract":"eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
++++ description: Configurable contract holding user token approvals.
+      values.getAllowanceHolder:
++        "eth:0x6A4C907A987635Fe0cD7C5003740599D4026C25A"
+      values.getChainId:
++        1
++++ description: Default intent fee in basis points, independently configurable from signed intents.
+      values.getDefaultFeeBps:
++        0
++++ description: Configurable DLN contract used to create orders.
+      values.getDlnSource:
++        "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66"
++++ description: Configurable recipient of fees charged on intent fills.
+      values.getFeeTreasury:
++        "eth:0xA9e6dc0AEA659e087f1597dE618993506F2b0256"
++++ description: Intents signed before this timestamp are invalid.
+      values.getGlobalNullificationTimestamp:
++        0
+      values.GOVMONITORING_ROLE:
++        "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1"
+      values.govMonitoringAC:
++        []
++++ severity: MEDIUM
+      values.paused:
++        false
+      values.subscriptionId:
++        0
+      values.version:
++        "0.8.0"
+      implementationNames.eth:0x87Da5Cb5Ab2d98d4f0C0c9df195f33d08f6caD59:
+-        ""
++        "DeBridgeIntentManager"
+      template:
++        "debridge/DeBridgeIntentManager_v0_8_0"
+      sourceHashes:
++        ["0xf31aeb6e49fa6b302d2dc1ed76c4d201ad9c2accdb0d9a45c30b13ae334fb5e9","0x6e6b05a99b4cc1f246594dd1383952c7c190d86f251c4b50a61cbc3f7e24c8bd"]
+      fieldMeta:
++        {"getAllowanceHolder":{"description":"Configurable contract holding user token approvals."},"getFeeTreasury":{"description":"Configurable recipient of fees charged on intent fills."},"getDlnSource":{"description":"Configurable DLN contract used to create orders."},"getDefaultFeeBps":{"description":"Default intent fee in basis points, independently configurable from signed intents."},"paused":{"severity":"MEDIUM"},"getGlobalNullificationTimestamp":{"description":"Intents signed before this timestamp are invalid."}}
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x6A4C907A987635Fe0cD7C5003740599D4026C25A","description":"transfer approved tokens from any user to any recipient through direct allowances or Permit2.","role":".allowedSpenderAC"}]
+    }
+```
+
+```diff
+    EOA (eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"upgrade","from":"eth:0x6A4C907A987635Fe0cD7C5003740599D4026C25A","role":"admin","via":[{"address":"eth:0xA813476c73514012F5825Cbd408d05A19742714e"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0xA813476c73514012F5825Cbd408d05A19742714e","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DeBridgeAllowanceHolder_v0_1_4 (eth:0x6A4C907A987635Fe0cD7C5003740599D4026C25A) [debridge/DeBridgeAllowanceHolder_v0_1_4]
+    +++ description: Upgradeable approval holder for deBridge intents. Authorized spenders can transfer any approved token from any user to any recipient, through direct allowances or Permit2. Transfers carry no intent-level checks.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xA813476c73514012F5825Cbd408d05A19742714e) [global/ProxyAdmin]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0988b9994d2b2f1144a1380094c0f3b8e53a055e
 
 # Diff at Thu, 01 Oct 2026 11:10:29 GMT:

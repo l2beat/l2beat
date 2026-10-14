@@ -61,7 +61,6 @@ async function loadEthereumProjectPage(manifest: Manifest) {
         name: entry.name,
         description: getDaMetadataDescription({
           name: entry.name,
-          bridge: undefined,
           tvs: entry.header.tvs,
           economicSecurity: entry.header.economicSecurity,
           description: entry.description,

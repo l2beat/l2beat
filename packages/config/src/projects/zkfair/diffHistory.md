@@ -1,3 +1,113 @@
+Generated with discovered.json: 0x15e3a180540cb2d2535cff7f9166e23f3a698880
+
+# Diff at Mon, 12 Oct 2026 08:23:53 GMT:
+
+- id: e82e4031
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1745306051
+- current timestamp: 1791789247
+
+## Description
+
+New source verification confirms that the current escrow trusts one ECDSA signing address. Separate administrators can withdraw funds without bridge signatures or validium proofs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745306051 (main branch discovery), not current.
+
+```diff
+    contract OldBridge (eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      values.admin:
++        "eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F"
+      values.bridgeFee:
++        2500000000000000
+      values.feeAddress:
++        "eth:0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D"
+      values.gasTokenAddress:
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.gasTokenDecimalDiffFactor:
++        1000000000000
+      values.gasTokenMetadata:
++        "0x000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000005457468657200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000034554480000000000000000000000000000000000000000000000000000000000"
+      values.globalExitRootManager:
++        "eth:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+      values.isEmergencyState:
++        false
+      values.networkID:
++        0
+      values.polygonZkEVMaddress:
++        "eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      implementationNames.eth:0x58371687dc997A7A11154bBcA72aEb15e4Db8F46:
+-        ""
++        "PolygonZkEVMBridge"
+      sourceHashes:
++        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0x9435648db8821f142e34edf2f081caac9606cb70cdc1186184324c5db48ecf78"]
+    }
+```
+
+```diff
+    contract Bridge (eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e) [chainsafe/ERC20Handler] {
+    +++ description: Escrow holding ERC20 tokens and ETH for the configured bridge. Only that bridge can execute releases, withdraw funds or configure token mappings. Its own admin can set deposit limits.
+      unverified:
+-        true
++++ description: Bridge authorized to release or withdraw all escrow funds and configure token mappings.
+      values._bridgeAddress:
++        "eth:0xB66bbf236CE102A1De692f2A034b9dB245986671"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b"]}}
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.defaultAdminAC:
++        ["eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b"]
+      values.defaultDecimals:
++        18
+      values.startTime:
++        1742988323
+      implementationNames.eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e:
+-        ""
++        "ERC20Handler"
+      template:
++        "chainsafe/ERC20Handler"
+      sourceHashes:
++        ["0xa697494f19ebcebaa1da9ce4932e84eab588af0f3f92468fc196e40d80f1582a"]
+      description:
++        "Escrow holding ERC20 tokens and ETH for the configured bridge. Only that bridge can execute releases, withdraw funds or configure token mappings. Its own admin can set deposit limits."
+      critical:
++        {"sinceTimestamp":1744292087}
+      fieldMeta:
++        {"_bridgeAddress":{"description":"Bridge authorized to release or withdraw all escrow funds and configure token mappings."}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FeeHandlerRouter (eth:0x899b97352c91cC21384944350Ba8bf00fCAbCd53) [chainsafe/FeeHandlerRouter]
+    +++ description: Routes bridge deposit fees to a configured fee handler for each token resource.
+```
+
+```diff
++   Status: CREATED
+    contract AccessControlSegregator (eth:0x8E1b1B3Be901eF8efACe4767097a75976Ce7d512) [chainsafe/AccessControlSegregator]
+    +++ description: Stores one authorized address per bridge function selector. The authority for grantAccess can replace any function's authority, including unrestricted escrow withdrawal and access-control replacement.
+```
+
+```diff
++   Status: CREATED
+    contract TokenBridge (eth:0xB66bbf236CE102A1De692f2A034b9dB245986671) [chainsafe/Bridge]
+    +++ description: Routes token deposits and releases to asset handlers. Releases require an EIP-712 signature recovering to the configured signing address. The contract checks no source-chain proof or signer threshold. Per-function authorities can withdraw escrow funds, remap handlers and replace access control.
+```
+
+```diff
++   Status: CREATED
+    contract BridgeAdminMultiSig (eth:0xcd14BE1959928BB8c160D11817E2BE2129e2F25F) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5b55e139e8b919eae750da6502bf7502ef41306d
 
 # Diff at Wed, 23 Sep 2026 05:50:42 GMT:

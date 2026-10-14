@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ProjectDaTrackingConfig } from '../../types'
 import type { SnapshotIdentity } from '../types'
@@ -40,7 +40,7 @@ describe(freezeSnippet.name, () => {
     )
   })
 
-  it('keeps a closed range and renders topics, namespace, appIds and eigen-da', () => {
+  it('keeps a closed range and renders topics', () => {
     expect(
       freezeSnippet(
         identity({
@@ -61,46 +61,6 @@ describe(freezeSnippet.name, () => {
         '      untilBlock: 200,',
         "      inbox: EthereumAddress('0xAA'),",
         "      topics: ['0xT1'],",
-        '    },',
-      ].join('\n'),
-    )
-    expect(
-      freezeSnippet(
-        identity({
-          type: 'celestia',
-          daLayer: ProjectId('celestia'),
-          sinceBlock: 5,
-          namespace: 'AAAA=',
-        }),
-      ),
-    ).toInclude("      namespace: 'AAAA=',")
-    expect(
-      freezeSnippet(
-        identity({
-          type: 'avail',
-          daLayer: ProjectId('avail'),
-          sinceBlock: 5,
-          appIds: ['17', '36'],
-        }),
-      ),
-    ).toInclude("      appIds: ['17', '36'],")
-    expect(
-      freezeSnippet(
-        identity({
-          type: 'eigen-da',
-          daLayer: ProjectId('eigenda'),
-          customerId: '0xdd',
-          sinceTimestamp: UnixTime(1700000000),
-        }),
-      ),
-    ).toEqual(
-      [
-        '    {',
-        "      type: 'eigen-da',",
-        "      daLayer: ProjectId('eigenda'),",
-        "      customerId: '0xdd',",
-        '      sinceTimestamp: UnixTime(1700000000),',
-        '      untilTimestamp: UnixTime(0), // TODO step 2: last point the old configuration was live',
         '    },',
       ].join('\n'),
     )

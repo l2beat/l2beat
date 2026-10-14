@@ -342,7 +342,6 @@ export interface Badge {
 export type BadgeAction =
   | BadgeScalingFilterAction
   | BadgeSelfScalingFilterAction
-  | BadgePublicDaHighlightAction
   | BadgeselfDaHighlightAction
 
 // Move to scaling/summary with given filterId and value
@@ -358,13 +357,7 @@ export type BadgeSelfScalingFilterAction = {
   id: BadgeFilterId
 }
 
-// Move to data-availability/summary and highlight project with given slug
-export type BadgePublicDaHighlightAction = {
-  type: 'publicDaHighlight'
-  slug: string
-}
-
-// Move to data-availability/summary and highlight project with the same slug as the project
+// Move to layer2s/risk/data-availability and highlight the project
 export type BadgeselfDaHighlightAction = {
   type: 'selfDaHighlight'
 }
@@ -825,7 +818,6 @@ export interface ProjectDaLayer {
   throughput?: DaLayerThroughput[]
   /** The time it takes to finalize the data. @unit seconds */
   finality?: number
-  dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
   /** Config for getting the number of validators. Type: `static` means the number is fixed. Type: `dynamic` means we need to fetch it (has to be implemented in BE). */
   validators?: DaValidators
@@ -890,11 +882,6 @@ export interface DaLayerThroughput {
   sinceTimestamp: number
 }
 
-export interface DataAvailabilitySampling {
-  erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
-  erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
-}
-
 export interface DaEconomicSecurity {
   token: {
     symbol: string
@@ -919,14 +906,6 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
-  relayerType?: TableReadyValue<'Permissioned' | 'SelfRelay'>
-  validationType?: DaBridgeValidationType
-}
-
-type DaBridgeValidationType = TableReadyValue<
-  'Validity Proof' | 'BLS Signature'
-> & {
-  zkCatalogId?: ProjectId
 }
 
 export interface DaBridgeRisks {
@@ -1742,24 +1721,10 @@ export interface ProjectCostsInfo {
 export interface SovereignProjectDaTrackingConfig {
   projectId: ProjectId
   name: string
-  daTrackingConfig: (
-    | Omit<EthereumDaTrackingConfig, 'daLayer'>
-    | Omit<CelestiaDaTrackingConfig, 'daLayer'>
-    | Omit<AvailDaTrackingConfig, 'daLayer'>
-    | Omit<EigenDaTrackingConfig, 'daLayer'>
-  )[]
+  daTrackingConfig: Omit<EthereumDaTrackingConfig, 'daLayer'>[]
 }
 
-export type ProjectDaTrackingConfig =
-  | BlockDaTrackingConfig
-  | TimestampDaTrackingConfig
-
-export type BlockDaTrackingConfig =
-  | EthereumDaTrackingConfig
-  | CelestiaDaTrackingConfig
-  | AvailDaTrackingConfig
-
-export type TimestampDaTrackingConfig = EigenDaTrackingConfig
+export type ProjectDaTrackingConfig = EthereumDaTrackingConfig
 
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
@@ -1769,30 +1734,6 @@ export interface EthereumDaTrackingConfig {
   topics?: string[]
   sinceBlock: number
   untilBlock?: number
-}
-
-export interface CelestiaDaTrackingConfig {
-  type: 'celestia'
-  daLayer: ProjectId
-  namespace: string
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export interface AvailDaTrackingConfig {
-  type: 'avail'
-  daLayer: ProjectId
-  appIds: string[]
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export interface EigenDaTrackingConfig {
-  type: 'eigen-da'
-  daLayer: ProjectId
-  customerId: string
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
 }
 
 export interface ProjectEcosystemInfo {

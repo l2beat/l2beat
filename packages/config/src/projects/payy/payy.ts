@@ -35,12 +35,12 @@ export const payy: ScalingProject = {
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     redWarning: {
-      text: 'The protocol was [exploited](https://x.com/PeckShieldAlert/status/2103041942405960096) on September 24, 2026. Do not deposit funds.',
+      text: 'The escrow was [drained](https://x.com/payy_link/status/2105047468639658317) on September 24, 2026, and the network has been halted since. Do not deposit funds.',
     },
     name: 'Payy',
     slug: 'payy',
     description:
-      'Payy is a payments-focused ZK network for private stablecoin transfers, settled on Ethereum with aggregated validity proofs and validator signatures, while transaction data is kept offchain.',
+      'A shielded ledger L2 for USDC payments in a mobile app, with payment links and a card, that hides amounts but not which notes fund which.',
     purposes: ['Payments', 'Privacy'],
     links: {
       websites: ['https://payy.network'],
@@ -168,7 +168,7 @@ export const payy: ScalingProject = {
       {
         ...EXITS.REGULAR_WITHDRAWAL('zk'),
         description:
-          'Users can withdraw by burning notes on the Payy network. The burn is included as a public message in the next proven state update, upon which the Rollup contract transfers the escrowed tokens to the specified Ethereum address. Whitelisted burn substitutors can front withdrawals from their own funds before settlement and are refunded when the original burn is processed. There is no mechanism for users to exit independently of the operators.',
+          'Users can withdraw by burning notes on the Payy network. The burn is included as a public message in the next proven state update, upon which the RollupV1 contract transfers the escrowed tokens to the specified Ethereum address. Whitelisted burn substitutors can front withdrawals from their own funds before settlement and are refunded when the original burn is processed. There is no mechanism for users to exit independently of the operators.',
         risks: [
           {
             category: 'Funds can be frozen if',
@@ -198,7 +198,7 @@ export const payy: ScalingProject = {
       {
         name: 'Owner can overwrite the state root',
         description:
-          'The Rollup contract owner can directly overwrite the current state root via `setRoot()` without providing a validity proof or validator signatures, and can replace the ZK verifier contracts referenced by state updates.',
+          'The RollupV1 contract owner can directly overwrite the current state root via `setRoot()` without providing a validity proof or validator signatures, and can replace the ZK verifier contracts referenced by state updates.',
         risks: [
           {
             category: 'Funds can be stolen if',
@@ -227,7 +227,7 @@ export const payy: ScalingProject = {
       {
         title: 'Verification Keys Generation',
         description:
-          'The Rollup contract maps verification key hashes to verifier contracts. Each state update references one of the registered keys. The owner can add, replace and remove verifiers at any time without delay.',
+          'The RollupV1 contract maps verification key hashes to verifier contracts. Each state update references one of the registered keys. The owner can add, replace and remove verifiers at any time without delay.',
         references: [
           {
             title: 'RollupV1.sol - addZkVerifier()',
@@ -251,7 +251,9 @@ export const payy: ScalingProject = {
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     trackedOn: ['ethereum'],
-    detailedDescription: readProjectMarkdown('payy', 'detailedDescription'),
+    detailedDescription: readProjectMarkdown('payy', 'detailedDescription', {
+      multisigStats: discovery.getMultisigStats('PayyMultisig'),
+    }),
     // TODO: privacy flow tracking is not configured yet. Deposits could be
     // tracked via the Rollup's `MintAdded(bytes32 indexed mint_hash, uint256
     // value, bytes32 note_kind)` event, but the `Burned(address indexed token,
@@ -267,7 +269,7 @@ export const payy: ScalingProject = {
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The PayyMultisig can instantly upgrade the Rollup contract, replace ZK verifiers and directly overwrite the state root, so users have no time to exit before a malicious change takes effect.',
+        'The PayyMultisig can instantly upgrade the RollupV1 contract, replace ZK verifiers and directly overwrite the state root, so users have no time to exit before a malicious change takes effect.',
       walkawayTest: {
         passed: false,
         reason:
@@ -278,7 +280,7 @@ export const payy: ScalingProject = {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The sources for UI / wallet are not published, so users have to rely on Payy operated software. Also, DA is not posted to identifiable public source, so L2 state could not be independently reproduced.\n\nThe contracts, Noir circuits and node software are published in the Payy repository (without any license) and can be built and run locally.',
+        'The Payy app is closed source. The contracts, circuits and node are published without a license and can be built locally. Transaction data is not posted anywhere public, so the state cannot be rebuilt independently.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
@@ -309,7 +311,7 @@ export const payy: ScalingProject = {
       url: 'https://payy.network/blog/payy-network-is-live-on-ethereum',
       date: '2026-02-19T00:00:00Z',
       description:
-        'Payy launches its rollup on Ethereum, migrating from its previous deployment on Polygon.',
+        'Payy launches its network on Ethereum, migrating from its previous deployment on Polygon.',
       type: 'general',
     },
     {
@@ -318,6 +320,21 @@ export const payy: ScalingProject = {
       date: '2026-06-10T00:00:00Z',
       description:
         'An aggregation circuit bug allowed forged burn messages, was patched by the team.',
+      type: 'incident',
+    },
+    {
+      // verifyRollup by the prover EOA 0x5343…, blocks 26,044,909 and
+      // 26,046,439 (txs 0xf43abdac…, 0xda88fb92…): burns pay 1,828,589.38 and
+      // 90,202.82 USDC to 0xaa4985dbdabfaca344237d40f7e06c4a0bb57e70. Payy's
+      // post-mortem: its deployed Noir/Barretenberg verifier accepted an
+      // invalid burn proof. Last settlement 2026-09-24 09:30 UTC, about 711
+      // USDC left in the escrow, node RPC returns 502 since (checked
+      // 2026-10-10).
+      title: 'Escrow drained, network halted',
+      url: 'https://x.com/payy_link/status/2105047468639658317',
+      date: '2026-09-24T00:00:00Z',
+      description:
+        'Two state updates pay out almost all escrowed USDC for an invalid burn. Payy halts the network.',
       type: 'incident',
     },
   ],

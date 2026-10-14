@@ -255,7 +255,7 @@ export const zkmoney: BaseProject = {
   },
   display: {
     description:
-      'A private DAI wallet on Aztec Network, with funds escrowed on Ethereum.',
+      'A shielded ledger for DAI payments on Aztec, paid by name, with funds escrowed in an Ethereum portal that an enclave co-signs.',
     detailedDescription: readProjectMarkdown(
       'zkmoney',
       'detailedDescription',
@@ -271,6 +271,17 @@ export const zkmoney: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      // ZkMoneyPortal deployed 2026-09-25 (tx 0xcfbf21f3…).
+      title: 'zk.money relaunches on Aztec',
+      url: 'https://decrypt.co/379621/ethereum-privacy-aztec-brings-back-zk-money',
+      date: '2026-09-29T00:00:00Z',
+      description:
+        'Aztec Labs relaunches zk.money as a private DAI wallet on the Aztec network.',
+      type: 'general',
+    },
+  ],
   escrows: [
     {
       address: portalAddress,

@@ -5,14 +5,12 @@ import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { EIGENLAYER_DATA_SOURCE } from '~/components/projects/sections/sectionCopy'
 import { useTRPC } from '~/trpc/React'
 import {
   type ChartRange,
   optionToRange,
   rangeToResolution,
 } from '~/utils/range/range'
-import { ChartDataSourceInfo } from '../ChartDataSourceInfo'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
 import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
 import { getDataWithConfiguredThroughputs } from './getDataWithConfiguredThroughputs'
@@ -64,9 +62,6 @@ export function ThroughputSectionChart({
 
   return (
     <div>
-      {project.id === 'eigenda' && (
-        <ChartDataSourceInfo dataSource={EIGENLAYER_DATA_SOURCE} />
-      )}
       <div className="mt-2 space-y-1">
         <EthereumProjectsOnlyCheckbox
           name="projectThroughputIncludeL2Only"
@@ -94,7 +89,6 @@ export function ThroughputSectionChart({
           milestones={milestones}
           syncedUntil={data?.syncedUntil}
           resolution={resolution}
-          dataGap={data?.totalChart.dataGap}
         />
       </div>
       <DaThroughputByProjectChart

@@ -25,7 +25,7 @@ export interface Dependencies
   daProvider: DaProvider
   daLayer: string
   batchSize: number
-  blobService?: BlobService
+  blobService: BlobService
 }
 
 export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
@@ -68,24 +68,15 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
           to: adjustedTo,
         })
 
-        let blobs: DaBlob[] = []
-        if (this.$.blobService) {
-          blobs = await this.$.blobService.get(this.daLayer, from, adjustedTo)
+        const blobs = await this.$.blobService.get(
+          this.daLayer,
+          from,
+          adjustedTo,
+        )
 
-          this.logger.info('Fetched blobs from cache', {
-            blobs: blobs.length,
-          })
-        } else {
-          blobs = await this.$.daProvider.getBlobs(
-            this.daLayer,
-            from,
-            adjustedTo,
-          )
-
-          this.logger.info('Fetched blobs from provider', {
-            blobs: blobs.length,
-          })
-        }
+        this.logger.info('Fetched blobs from cache', {
+          blobs: blobs.length,
+        })
 
         if (blobs.length === 0) {
           this.logger.info('Empty blobs response received', {
