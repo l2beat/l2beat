@@ -59,9 +59,10 @@ of slow serial tests can tip one shard over.
 ## What a ratchet measures
 
 A count of the work a page does (layouts, restyled elements, chart rerenders,
-boxes, layers) does not depend on the machine: it is the same on every run, or
-moves by a fifth at most with what the page happens to animate, so its ceiling
-sits at or just above it. Gate on counts.
+boxes, layers) does not depend on the machine. Some are the same on every run
+and get a ceiling at the count itself; others move with what the page happens
+to animate (how many batches a slot lands, whether a step stalls) and get a
+margin sized to that, 1.25–2× in the tests here. Gate on counts.
 
 A time is not the same on every run. GitHub's runners come with different
 CPUs, and the same commit measures up to 2.5× apart: the WebKit table layout
