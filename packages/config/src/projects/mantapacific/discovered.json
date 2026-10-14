@@ -1,6 +1,6 @@
 {
   "name": "mantapacific",
-  "timestamp": 1791966112,
+  "timestamp": 1792012114,
   "configHash": "0x1c5ee19b94b5494094783283ad0ebb7cc9bde4c16ba4724323573552e1324c5b",
   "entries": [
     {
@@ -23,7 +23,7 @@
         "0xaab2d5f257c8ae0e9785689bc0da144b1ba3c05ff39cb502758e8f378feb81bb"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. Each proposal records its own finalization period.",
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Each proposal records its own finalization period.",
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -58,10 +58,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 259200,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 9773400,
-        "latestOutputIndex": 81444,
-        "nextBlockNumber": 9773520,
-        "nextOutputIndex": 81445,
+        "latestBlockNumber": 9777960,
+        "latestOutputIndex": 81482,
+        "nextBlockNumber": 9778080,
+        "nextOutputIndex": 81483,
         "PROPOSER": "eth:0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
         "startingBlockNumber": 0,
         "startingTimestamp": 1694223959,
@@ -227,7 +227,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292684912",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292684913",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -359,8 +359,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 492334,
-          "prevBlockNum": 26189094
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 26190119
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x895E00269A05848F3c9889EfA677D02fF7351a5D",
@@ -772,7 +772,7 @@
     "opstack/OptimismPortal": "0x9965c29a37e54bf5eb2175e2aee7d367fb11669af9b1e358af2c30fd8c9e47b8",
     "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
-  "usedBlockNumbers": { "ethereum": 26189510 },
+  "usedBlockNumbers": { "ethereum": 26193332 },
   "permissionsConfigHash": "0x981041198eb52478c18b790390889aecbaf9c0ef361ef6d401526ed9d15fa6f6",
   "permissions": {
     "eth:0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E": {

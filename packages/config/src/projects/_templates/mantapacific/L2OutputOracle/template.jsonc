@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2OutputOracle",
-  "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. Each proposal records its own finalization period.",
+  "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Each proposal records its own finalization period.",
   "ignoreMethods": [
     "getL2OutputAfter",
     "getL2OutputIndexAfter",

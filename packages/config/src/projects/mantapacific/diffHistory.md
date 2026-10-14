@@ -1,11 +1,11 @@
-Generated with discovered.json: 0xda249eb7f572cf88e20b2ae9421af9ac77634300
+Generated with discovered.json: 0x4f5cecfc57216d5692610cb463ba38d621754379
 
-# Diff at Wed, 14 Oct 2026 08:22:56 GMT:
+# Diff at Wed, 14 Oct 2026 21:09:38 GMT:
 
 - id: 73fe1454
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1787230124
-- current timestamp: 1791966112
+- current timestamp: 1792012114
 
 ## Description
 
@@ -16,7 +16,7 @@ https://disco.l2beat.com/diff/eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441/eth
 
 ```diff
     contract L2OutputOracle (eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) [mantapacific/L2OutputOracle] {
-    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. Each proposal records its own finalization period.
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Each proposal records its own finalization period.
       template:
 -        "mantapacific/L2OutputOracle_FinalityProvider"
 +        "mantapacific/L2OutputOracle"
@@ -25,7 +25,7 @@ https://disco.l2beat.com/diff/eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441/eth
 +        "0xaab2d5f257c8ae0e9785689bc0da144b1ba3c05ff39cb502758e8f378feb81bb"
       description:
 -        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. The challenge period can be reduced by the FinalityRelayerManager contract."
-+        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. Each proposal records its own finalization period."
++        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Each proposal records its own finalization period."
       values.$implementation:
 -        "eth:0x0e874B9acD8d284B9bF6f6c6CC95BCE6F66E5441"
 +        "eth:0xc9E9b111c5a14C0C75Ef753e26eA5D4D7D2610FE"
