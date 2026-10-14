@@ -27,7 +27,7 @@
   }
 
   /* Not a selection: utility on body: that compiles to a descendant rule
-     which makes every style recalc about 40% slower. */
+     which makes every full style recalc about 50% slower. */
   ::selection {
     background-color: color-mix(
       in oklab,
