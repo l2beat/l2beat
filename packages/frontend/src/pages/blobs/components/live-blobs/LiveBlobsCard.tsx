@@ -3,6 +3,7 @@ import {
   Component as ReactComponent,
   type ReactNode,
   Suspense,
+  useDeferredValue,
   useMemo,
   useRef,
   useState,
@@ -50,6 +51,12 @@ export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
     () => postedWindow && totalByPoster(postedWindow.posted, posters),
     [postedWindow, posters],
   )
+  // The table is thousands of elements, below a phone's first screen: built
+  // after the belt and its status show the first answer, not in their task.
+  // Later answers reach it at once, as its numbers count up with the belt
+  const tableFilled = useDeferredValue(data !== undefined)
+  const tableLive = tableFilled ? data : undefined
+  const tableTotals = tableFilled ? totals : undefined
 
   return (
     <ChainClockContext value={clock}>
@@ -76,7 +83,7 @@ export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
           ) : (
             <LiveSkeleton />
           )}
-          <LivePosters live={data} totals={totals} />
+          <LivePosters live={tableLive} totals={tableTotals} />
         </PrimaryCard>
       </LandingsContext>
     </ChainClockContext>
