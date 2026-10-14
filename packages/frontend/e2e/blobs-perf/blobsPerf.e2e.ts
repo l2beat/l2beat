@@ -11,11 +11,13 @@ import {
   BELT_PAINT_MARK,
   bestOf,
   countRestyledElements,
+  currentSlot,
   lowerOf,
   metrics,
   openBlobs,
   readProbes,
   resetProbes,
+  rowsLandedBySlot,
   SLOT_MS,
   type TraceEvent,
   traceEvents,
@@ -32,15 +34,18 @@ import {
  * trace, split where each slot starts, as stopping one trace and starting
  * another would take long enough to miss the next slot's start. Mock mode's
  * beacon node makes each slot's block from its number, so the data is fixed
- * too; what still varies is which slot, and with it how many batches land,
- * which is why the best of a few watches counts and the margins are wide. A
- * slot whose block was missed, as mock mode misses one in 40, lands nothing
- * and would be the best by far, so it is watched past rather than counted.
+ * too; what still varies is which slot, and with it how much lands, which is
+ * why the best of a few watches counts and the margins are wide. A slot whose
+ * block was missed, as mock mode misses one in 40, lands nothing and would be
+ * the best by far, so it is watched past rather than counted.
  *
  * The main proxy is how many elements the browser restyles: a DOM write that
  * dirties the whole page shows up as millions per slot, where local ones add
- * up to thousands, and it does not depend on the machine's speed. Quiet
- * paints catch what restyles miss: one element changed on every frame
+ * up to thousands, and it does not depend on the machine's speed. It is
+ * counted per row of the posters table the block washed, as those rows are
+ * most of it: a block of five posters restyles four times what a block of one
+ * does, a swing no margin could hold. The rows come from the page's own feed.
+ * Quiet paints catch what restyles miss: one element changed on every frame
  * restyles almost nothing, yet repaints and re-layers the page around it each
  * time, which on a phone is most of a frame. They are counted per second
  * over the longest stretch the belt holds still, after every landing has
@@ -65,14 +70,16 @@ const SPARE_WATCHES = 2
 const STILL_WHEN_MISSED_MS = 9_000
 
 const MARGIN = {
-  restyledElements: (n: number) => n * 2,
+  restyledPerRowLanded: (n: number) => n * 2,
   quietPaintsPerSecond: (n: number) => n * 2,
-  layouts: (n: number) => Math.ceil(n * 1.5),
+  // a few dozen, which swing by as many again run to run, where a layout on
+  // every frame would add hundreds
+  layouts: (n: number) => n * 2 + 30,
   beltPaints: (n: number) => Math.ceil(n * 1.25),
 }
 
 type Measurement = {
-  restyledElements: number
+  restyledPerRowLanded: number
   quietPaintsPerSecond: number
   layouts: number
   beltPaints: number
@@ -153,9 +160,11 @@ async function watchSlots(
       'blink.user_timing',
     ],
   })
+  const watched = [currentSlot()]
   const starts = [await markSlotStart(page, cdp)]
   for (let slot = 0; slot < slots; slot++) {
     await page.waitForTimeout(untilNextSlotMs() + START_INTO_SLOT_MS)
+    watched.push(currentSlot())
     starts.push(await markSlotStart(page, cdp))
   }
   const events = traceEvents(await browser.stopTracing())
@@ -165,15 +174,22 @@ async function watchSlots(
     .sort((a, b) => a - b)
   expect(startTimes, 'slot starts on the trace').toHaveLength(starts.length)
 
+  const rowsLanded = await rowsLandedBySlot(page)
   const runs: Measurement[] = []
   for (let slot = 0; slot < slots; slot++) {
     const [from, to] = [startTimes[slot]!, startTimes[slot + 1]!]
     const inSlot = events.filter((e) => e.ts >= from && e.ts < to)
     const still = longestBeltStill(inSlot)
     if (!still || still.to - still.from > STILL_WHEN_MISSED_MS * 1000) continue
+    const rows = rowsLanded.get(watched[slot]!) ?? 0
+    if (rows === 0) continue
+    const restyled = countRestyledElements(inSlot)
+    console.log(
+      `slot ${watched[slot]}: ${restyled} restyled, ${rows} rows landed`,
+    )
     const [start, end] = [starts[slot]!, starts[slot + 1]!]
     runs.push({
-      restyledElements: countRestyledElements(inSlot),
+      restyledPerRowLanded: Math.round(restyled / rows),
       quietPaintsPerSecond: paintsPerSecond(inSlot, still),
       layouts: end.counters.LayoutCount - start.counters.LayoutCount,
       scriptMs: Math.round(

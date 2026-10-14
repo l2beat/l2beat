@@ -1,14 +1,14 @@
 {
   "1440x1000": {
-    "restyledElements": 6678,
-    "quietPaintsPerSecond": 166,
-    "layouts": 585,
+    "restyledPerRowLanded": 4922,
+    "quietPaintsPerSecond": 74,
+    "layouts": 134,
     "beltPaints": 622
   },
   "402x874": {
-    "restyledElements": 14794,
-    "quietPaintsPerSecond": 164,
-    "layouts": 596,
-    "beltPaints": 665
+    "restyledPerRowLanded": 4440,
+    "quietPaintsPerSecond": 72,
+    "layouts": 126,
+    "beltPaints": 634
   }
 }
