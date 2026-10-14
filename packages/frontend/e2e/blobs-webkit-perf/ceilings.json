@@ -1,8 +1,10 @@
 {
   "402x874": {
-    "boxesPerRow": 25
+    "boxesPerRow": 25,
+    "boxesUnderPercentHeight": 0
   },
   "1440x1000": {
-    "boxesPerRow": 25
+    "boxesPerRow": 25,
+    "boxesUnderPercentHeight": 0
   }
 }
