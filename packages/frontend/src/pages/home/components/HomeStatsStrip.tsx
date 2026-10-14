@@ -62,6 +62,10 @@ export function HomeStatsStrip({
       ? [
           {
             label: 'Tokens',
+            metric:
+              counts.tokens !== undefined
+                ? { count: counts.tokens, unit: 'tokens' }
+                : undefined,
             href: '/tokens',
             icon: <TokensIcon className="size-5 stroke-yellow-700" />,
             iconBgClassName: 'bg-yellow-700/10',
@@ -72,6 +76,7 @@ export function HomeStatsStrip({
       ? [
           {
             label: 'Ossification',
+            metric: { count: counts.ossification, unit: 'projects' },
             href: '/ossification',
             icon: <OssificationIcon className="size-5 stroke-sky-600" />,
             iconBgClassName: 'bg-sky-600/10',
