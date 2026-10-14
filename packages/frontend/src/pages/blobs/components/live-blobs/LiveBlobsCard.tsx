@@ -18,7 +18,7 @@ import { ChainClockContext, createChainClock } from './chainClock'
 import { useIsOnScreen } from './hooks'
 import { LivePosters } from './LivePosters'
 import { type EthereumLink, LiveStats } from './LiveStats'
-import { createLandings, LandingsContext } from './landings'
+import { createLandings, LandingsContext, shownLater } from './landings'
 import { type BlockLimits, toLivePosters, totalByPoster } from './model'
 import { useLiveBlobs } from './useLiveBlobs'
 
@@ -40,6 +40,7 @@ export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
   // the belt draws on a canvas sized to the screen, which the server has not got
   const isClient = useIsClient()
   const [landings] = useState(createLandings)
+  const [tableLandings] = useState(() => shownLater(landings))
   const [clock] = useState(createChainClock)
   const cardRef = useRef<HTMLDivElement>(null)
   const { data, status } = useLiveBlobs(useIsOnScreen(cardRef))
@@ -84,7 +85,9 @@ export function LiveBlobsCard({ projects, limits, ethereum }: Props) {
           ) : (
             <LiveSkeleton />
           )}
-          <LivePosters live={tableLive} totals={tableTotals} />
+          <LandingsContext value={tableLandings}>
+            <LivePosters live={tableLive} totals={tableTotals} />
+          </LandingsContext>
         </PrimaryCard>
       </LandingsContext>
     </ChainClockContext>

@@ -18,31 +18,37 @@ export interface Landings {
   subscribe: (listener: (landing: Landing) => void) => () => void
   /** The head the page loaded with, or lower once the chain takes that back */
   loadedHead: (head: number) => number
-  /** What the newest block has landed so far, for a number that mounts late */
-  landedIn: (slot: number) => Landing[]
 }
 
 export function createLandings(): Landings {
   const listeners = new Set<(landing: Landing) => void>()
-  let loaded: number | undefined
-  let newest: { slot: number; landed: Landing[] } | undefined
   return {
     emit: (landing) => {
-      if (!newest || landing.slot > newest.slot) {
-        newest = { slot: landing.slot, landed: [] }
-      }
-      if (landing.slot === newest.slot) newest.landed.push(landing)
       for (const listener of listeners) listener(landing)
     },
     subscribe: (listener) => {
       listeners.add(listener)
       return () => listeners.delete(listener)
     },
-    loadedHead: (head) => {
-      loaded = Math.min(loaded ?? head, head)
-      return loaded
-    },
-    landedIn: (slot) => (newest?.slot === slot ? newest.landed : []),
+    loadedHead: trackLoadedHead(),
+  }
+}
+
+/**
+ * The same landings, for numbers first shown after the page loaded, as the
+ * posters table built after the belt is. The block they first show is theirs
+ * to show whole, as the reader never saw them without it; its landings may
+ * well have come before they could listen
+ */
+export function shownLater(landings: Landings): Landings {
+  return { ...landings, loadedHead: trackLoadedHead() }
+}
+
+function trackLoadedHead() {
+  let loaded: number | undefined
+  return (head: number) => {
+    loaded = Math.min(loaded ?? head, head)
+    return loaded
   }
 }
 
@@ -137,40 +143,31 @@ export function useLandedTotal(
     return () => clearTimeout(timer)
   }, [departing, clock])
 
-  const replayed = useRef(false)
-  useEffect(() => {
-    if (!landings) return
-    const hear = (landing: Landing) => {
-      // a landing from above the stamp is of a block the chain took back
-      if (
-        !matches(landing) ||
-        isAbove(landing.slot, stampInHand.current) ||
-        !cameAfterLoad(landings, landing.slot)
-      ) {
-        return
-      }
-      setHeld((current) => ({
-        ...current,
-        arriving: Math.max(0, current.arriving - landing.blobs),
-      }))
-      // a block's batches add up, so the pop says all the number gained
-      setArrival((current) => ({
-        amount:
-          landing.blobs + (current?.slot === landing.slot ? current.amount : 0),
-        slot: landing.slot,
-      }))
-    }
-    const unsubscribe = landings.subscribe(hear)
-    // A number built after some of its block landed, as the posters table
-    // built after the belt may be, hears those landings now; in the same task
-    // as subscribing, so none falls between the two
-    const stamp = stampInHand.current
-    if (!replayed.current && stamp !== undefined) {
-      replayed.current = true
-      for (const landing of landings.landedIn(stamp)) hear(landing)
-    }
-    return unsubscribe
-  }, [landings, matches])
+  useEffect(
+    () =>
+      landings?.subscribe((landing) => {
+        // a landing from above the stamp is of a block the chain took back
+        if (
+          !matches(landing) ||
+          isAbove(landing.slot, stampInHand.current) ||
+          !cameAfterLoad(landings, landing.slot)
+        ) {
+          return
+        }
+        setHeld((current) => ({
+          ...current,
+          arriving: Math.max(0, current.arriving - landing.blobs),
+        }))
+        // a block's batches add up, so the pop says all the number gained
+        setArrival((current) => ({
+          amount:
+            landing.blobs +
+            (current?.slot === landing.slot ? current.amount : 0),
+          slot: landing.slot,
+        }))
+      }),
+    [landings, matches],
+  )
 
   return {
     value: total - held.arriving + held.departed,

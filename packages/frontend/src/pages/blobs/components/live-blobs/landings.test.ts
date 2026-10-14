@@ -10,6 +10,7 @@ import {
   holdBack,
   holdLimitMs,
   secondsUntilSlideEnds,
+  shownLater,
 } from './landings'
 
 // Methodology: one page's landings are asked about the block it loaded with,
@@ -34,32 +35,24 @@ describe(cameAfterLoad.name, () => {
   it('has no block to land before the first data', () => {
     expect(cameAfterLoad(createLandings(), undefined)).toEqual(false)
   })
-})
 
-// Methodology: the belt lands blocks one after another, and a number that
-// mounts late asks what its block has landed so far.
-describe('landedIn', () => {
-  it("keeps the newest block's landings", () => {
-    const landings = createLandings()
-    landings.emit({ posterId: 'a', blobs: 2, slot: 1001 })
-    landings.emit({ posterId: 'b', blobs: 3, slot: 1001 })
+  it('takes the first block a later-shown number sees as its load, while the page counts it up', () => {
+    const page = createLandings()
+    const later = shownLater(page)
+    cameAfterLoad(page, 1000)
 
-    expect(landings.landedIn(1001)).toEqual([
-      { posterId: 'a', blobs: 2, slot: 1001 },
-      { posterId: 'b', blobs: 3, slot: 1001 },
-    ])
+    expect(cameAfterLoad(page, 1001)).toEqual(true)
+    expect(cameAfterLoad(later, 1001)).toEqual(false)
+    expect(cameAfterLoad(later, 1002)).toEqual(true)
   })
 
-  it('lets go of a block once a newer one lands', () => {
-    const landings = createLandings()
-    landings.emit({ posterId: 'a', blobs: 2, slot: 1001 })
-    landings.emit({ posterId: 'a', blobs: 1, slot: 1002 })
-    landings.emit({ posterId: 'a', blobs: 4, slot: 1001 })
+  it('hears the landings the page hears', () => {
+    const page = createLandings()
+    const heard: number[] = []
+    shownLater(page).subscribe((landing) => heard.push(landing.slot))
+    page.emit({ posterId: 'a', blobs: 1, slot: 1001 })
 
-    expect(landings.landedIn(1001)).toEqual([])
-    expect(landings.landedIn(1002)).toEqual([
-      { posterId: 'a', blobs: 1, slot: 1002 },
-    ])
+    expect(heard).toEqual([1001])
   })
 })
 
