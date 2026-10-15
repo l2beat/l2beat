@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { gestureCamera } from './relationsCamera'
+import { centerCamera, gestureCamera } from './relationsCamera'
 
 describe(gestureCamera.name, () => {
   const camera = { x: 10, y: 20, k: 1 }
@@ -58,5 +58,17 @@ describe(gestureCamera.name, () => {
     )
 
     expect(next.k).toEqual(4)
+  })
+})
+
+describe(centerCamera.name, () => {
+  it('moves a world point to the middle of the viewport at the same scale', () => {
+    const next = centerCamera(
+      { x: 10, y: 20, k: 0.5 },
+      { x: 300, y: 400 },
+      { width: 390, height: 300 },
+    )
+
+    expect(next).toEqual({ x: 45, y: -50, k: 0.5 })
   })
 })

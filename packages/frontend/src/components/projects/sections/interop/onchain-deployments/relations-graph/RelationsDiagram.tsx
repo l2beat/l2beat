@@ -1,4 +1,4 @@
-import { type ReactNode, useMemo, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
@@ -30,6 +30,8 @@ interface Props {
    * pan it. Otherwise they scroll the page, and touch pans with two fingers.
    */
   fillsView?: boolean
+  /** Centres the selected node, e.g. once a details panel has shrunk the diagram. */
+  centersSelection?: boolean
   className?: string
 }
 
@@ -40,6 +42,7 @@ export function RelationsDiagram({
   onSelectNode,
   onExpand,
   fillsView = false,
+  centersSelection = false,
   className,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -71,13 +74,20 @@ export function RelationsDiagram({
     const box = top && layout.boxes.get(top.id)
     return box ? box.x + box.width / 2 : undefined
   }, [graph.nodes, layout])
-  const { camera, setCamera, zoomBy, reset } = useRelationsCamera(
+  const { camera, setCamera, zoomBy, centerOn, reset } = useRelationsCamera(
     layout,
     viewport,
     focusX,
     containerRef,
     fillsView,
   )
+  // Re-runs once the viewport settles, so the node lands in the middle of
+  // the diagram's final size.
+  useEffect(() => {
+    const box =
+      centersSelection && selectedNodeId && layout.boxes.get(selectedNodeId)
+    if (box) centerOn({ x: box.x + box.width / 2, y: box.y + box.height / 2 })
+  }, [centersSelection, selectedNodeId, layout, centerOn])
   const pan = useDragToPan(camera, setCamera, containerRef, fillsView)
 
   const [hoveredId, setHoveredId] = useState<string>()

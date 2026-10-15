@@ -76,6 +76,18 @@ export function useRelationsCamera(
       })),
     [content, fitted, viewportWidth, viewportHeight],
   )
+  const centerOn = useCallback(
+    (point: Point) =>
+      setManual((previous) => ({
+        content,
+        camera: centerCamera(
+          previous?.content === content ? previous.camera : fitted,
+          point,
+          { width: viewportWidth, height: viewportHeight },
+        ),
+      })),
+    [content, fitted, viewportWidth, viewportHeight],
+  )
   const panBy = useCallback(
     (dx: number, dy: number) =>
       setManual((previous) => {
@@ -113,7 +125,7 @@ export function useRelationsCamera(
     return () => element.removeEventListener('wheel', onWheel)
   }, [containerRef, zoomBy, panBy, wheelPans])
 
-  return { camera, setCamera, zoomBy, reset }
+  return { camera, setCamera, zoomBy, centerOn, reset }
 }
 
 /**
@@ -194,6 +206,19 @@ function spread(points: Point[], center: Point): number {
       0,
     ) / points.length
   )
+}
+
+/** Keeps the scale and moves the world `point` to the middle of the viewport. */
+export function centerCamera(
+  camera: Camera,
+  point: Point,
+  viewport: Size,
+): Camera {
+  return {
+    k: camera.k,
+    x: viewport.width / 2 - point.x * camera.k,
+    y: viewport.height / 2 - point.y * camera.k,
+  }
 }
 
 /** Scales around `point` so the world point under it stays put. */

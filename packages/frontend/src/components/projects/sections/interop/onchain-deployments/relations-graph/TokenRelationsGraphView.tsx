@@ -97,6 +97,7 @@ export function TokenRelationsGraphView({
           {...paneProps}
           className={diagramClassName}
           fillsView={embedded}
+          centersSelection={isMobile && embedded}
           onExpand={
             isMobile || embedded ? undefined : () => setIsExpanded(true)
           }
@@ -167,6 +168,7 @@ function DiagramPane({
   onCloseDetails,
   onExpand,
   fillsView,
+  centersSelection,
   className,
 }: {
   graph: InteropTokenRelationsGraph
@@ -178,6 +180,7 @@ function DiagramPane({
   onCloseDetails: () => void
   onExpand?: () => void
   fillsView?: boolean
+  centersSelection?: boolean
   className: string
 }) {
   // Fills a flex-column parent; a no-op in block flow.
@@ -190,6 +193,7 @@ function DiagramPane({
         onSelectNode={onSelectNode}
         onExpand={onExpand}
         fillsView={fillsView}
+        centersSelection={centersSelection}
         className={className}
       />
       {detailsNode && (
