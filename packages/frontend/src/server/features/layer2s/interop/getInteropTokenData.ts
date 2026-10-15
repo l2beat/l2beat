@@ -170,8 +170,8 @@ export async function getInteropTokenData(
 
 /**
  * Without a reliable price the token's volumes are zero, or stale when the
- * snapshot predates the flag, so the page gets none of them and the top
- * protocol is picked by transfer count instead.
+ * snapshot predates the flag, so the page gets none of them and protocols
+ * are ranked by transfer count instead.
  */
 function withoutUsdValues(
   data: InteropTokenDashboardData,
@@ -185,6 +185,17 @@ function withoutUsdValues(
     flows: [],
     topPath: undefined,
     topProtocol: topProtocol && { ...topProtocol, volume: null },
+    entries: data.entries
+      .map((entry) => ({
+        ...entry,
+        volume: 0,
+        averageValue: null,
+        minTransferValueUsd: undefined,
+        maxTransferValueUsd: undefined,
+        averageValueInFlight: undefined,
+        netMintedValue: undefined,
+      }))
+      .sort((a, b) => b.transferCount - a.transferCount),
   }
 }
 
