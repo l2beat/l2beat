@@ -1,5 +1,10 @@
 import { type PointerEvent, type RefObject, useEffect, useRef } from 'react'
-import { type Camera, gestureCamera, type Point } from './relationsCamera'
+import {
+  type Camera,
+  gestureCamera,
+  type Point,
+  toLocalPoint,
+} from './relationsCamera'
 
 /** Pointer travel below this still counts as a click. */
 const CLICK_SLOP = 4
@@ -54,23 +59,23 @@ export function useDragToPan(
     event.pointerType !== 'touch' ||
     pointers.current.size >= (capturesTouch ? 1 : 2)
 
-  const onPointerDown = (event: PointerEvent) => {
+  const onPointerDown = (event: PointerEvent<HTMLElement>) => {
     if (event.pointerType === 'mouse' && event.button !== 0) return
     // Touch pans end without a click, so the flag must not wait for one.
     suppressClick.current = false
-    pointers.current.set(event.pointerId, {
-      x: event.clientX,
-      y: event.clientY,
-    })
+    pointers.current.set(
+      event.pointerId,
+      toLocalPoint(event.currentTarget, event),
+    )
     reanchor(anchor.current?.moved ?? false)
   }
   const onPointerMove = (event: PointerEvent<HTMLElement>) => {
     const current = anchor.current
     if (!current || !pointers.current.has(event.pointerId)) return
-    pointers.current.set(event.pointerId, {
-      x: event.clientX,
-      y: event.clientY,
-    })
+    pointers.current.set(
+      event.pointerId,
+      toLocalPoint(event.currentTarget, event),
+    )
     if (!pansWith(event)) return
     const from = current.points.map(([, point]) => point)
     const to = current.points.map(

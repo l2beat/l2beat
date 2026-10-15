@@ -114,17 +114,28 @@ export function useRelationsCamera(
         return
       }
       event.preventDefault()
-      const rect = element.getBoundingClientRect()
-      zoomBy(event.deltaY < 0 ? WHEEL_ZOOM_STEP : 1 / WHEEL_ZOOM_STEP, {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
-      })
+      zoomBy(
+        event.deltaY < 0 ? WHEEL_ZOOM_STEP : 1 / WHEEL_ZOOM_STEP,
+        toLocalPoint(element, event),
+      )
     }
     element.addEventListener('wheel', onWheel, { passive: false })
     return () => element.removeEventListener('wheel', onWheel)
   }, [containerRef, zoomBy, panBy, wheelPans])
 
   return { camera, setCamera, updateCamera, zoomBy, reset }
+}
+
+/** A pointer's position in the container's space, the one the camera maps the world into. */
+export function toLocalPoint(
+  element: HTMLElement,
+  event: { clientX: number; clientY: number },
+): Point {
+  const rect = element.getBoundingClientRect()
+  return {
+    x: event.clientX - rect.left - element.clientLeft,
+    y: event.clientY - rect.top - element.clientTop,
+  }
 }
 
 /**
