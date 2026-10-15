@@ -206,9 +206,15 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
 
   describe(RealTimeLivenessRepository.prototype.getLatestRecords.name, () => {
     it('should return latest records', async () => {
-      const results = await repository.getLatestRecords()
+      const results = await repository.getLatestRecords([txIdA, txIdB, txIdC])
 
       expect(results).toEqualUnsorted([DATA[0]!, DATA[2]!, DATA[3]!])
+    })
+
+    it('should return only the requested configurations', async () => {
+      const results = await repository.getLatestRecords([txIdA, 'missing'])
+
+      expect(results).toEqual([DATA[0]!])
     })
   })
 

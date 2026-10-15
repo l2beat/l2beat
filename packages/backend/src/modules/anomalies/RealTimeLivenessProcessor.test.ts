@@ -496,7 +496,9 @@ describe(RealTimeLivenessProcessor.name, () => {
       await processor.checkForAnomalies(block)
 
       expect(anomalyStatsRepository.getLatestStats).toHaveBeenCalled()
-      expect(realTimeLivenessRepository.getLatestRecords).toHaveBeenCalled()
+      expect(
+        realTimeLivenessRepository.getLatestRecords,
+      ).toHaveBeenOnlyCalledWith([configurationId1, configurationId2])
       expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(realTimeAnomaliesRepository.upsertMany).toHaveBeenCalledWith([
