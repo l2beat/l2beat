@@ -114,6 +114,7 @@ export class TokenIngestionProcessor {
   private interopTransferIndex:
     | { index: InteropTransferIndex; refreshedAtMs: number }
     | undefined
+  private interopTransferIndexRefresh: Promise<InteropTransferIndex> | undefined
 
   constructor(private readonly deps: TokenIngestionProcessorDeps) {}
 
@@ -125,14 +126,33 @@ export class TokenIngestionProcessor {
     ) {
       return Promise.resolve(cached.index)
     }
-    return this.refreshInteropTransferIndex()
+    return (
+      this.interopTransferIndexRefresh ?? this.refreshInteropTransferIndex()
+    )
   }
 
+  // Always starts a new read: the ingestion loop needs routes that include
+  // transfers enqueued just before. Readers of the cache join it meanwhile.
   async refreshInteropTransferIndex(): Promise<InteropTransferIndex> {
+    const refresh = this.loadInteropTransferIndex()
+    this.interopTransferIndexRefresh = refresh
+    try {
+      return await refresh
+    } finally {
+      if (this.interopTransferIndexRefresh === refresh) {
+        this.interopTransferIndexRefresh = undefined
+      }
+    }
+  }
+
+  private async loadInteropTransferIndex(): Promise<InteropTransferIndex> {
     const refreshedAtMs = this.nowMs()
     const routes = await this.deps.db.interopTransfer.getTokenRoutes()
     const index = buildInteropTransferIndex(routes)
-    this.interopTransferIndex = { index, refreshedAtMs }
+    const cached = this.interopTransferIndex
+    if (!cached || cached.refreshedAtMs <= refreshedAtMs) {
+      this.interopTransferIndex = { index, refreshedAtMs }
+    }
     return index
   }
 

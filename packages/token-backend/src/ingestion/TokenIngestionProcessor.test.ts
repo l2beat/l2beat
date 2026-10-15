@@ -39,6 +39,41 @@ describe(TokenIngestionProcessor.name, () => {
         await processor.getInteropTransferIndex()
         expect(getTokenRoutes).toHaveBeenCalledTimes(2)
       })
+
+      it('shares one read between concurrent callers', async () => {
+        const getTokenRoutes = mockFn().resolvesTo([])
+        const processor = createProcessor({
+          db: mockObject<Database>({
+            interopTransfer: mockObject<Database['interopTransfer']>({
+              getTokenRoutes,
+            }),
+          }),
+        })
+
+        await Promise.all([
+          processor.getInteropTransferIndex(),
+          processor.getInteropTransferIndex(),
+        ])
+
+        expect(getTokenRoutes).toHaveBeenCalledTimes(1)
+      })
+
+      it('joins a refresh started by the ingestion loop', async () => {
+        const getTokenRoutes = mockFn().resolvesTo([])
+        const processor = createProcessor({
+          db: mockObject<Database>({
+            interopTransfer: mockObject<Database['interopTransfer']>({
+              getTokenRoutes,
+            }),
+          }),
+        })
+
+        const refreshed = processor.refreshInteropTransferIndex()
+        const read = processor.getInteropTransferIndex()
+
+        expect(await read).toEqual(await refreshed)
+        expect(getTokenRoutes).toHaveBeenCalledTimes(1)
+      })
     },
   )
 
