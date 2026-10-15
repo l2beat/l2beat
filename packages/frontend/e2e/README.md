@@ -56,6 +56,37 @@ are never cut apart:
 So shards balance only when the tests are about as long as each other. A file
 of slow serial tests can tip one shard over.
 
+## What a ratchet measures
+
+A count of the work a page does (layouts, restyled elements, chart rerenders,
+boxes, layers) does not depend on the machine. Some are the same on every run
+and get a ceiling at the count itself; others move with what the page happens
+to animate (how many batches a slot lands, whether a step stalls) and get a
+margin sized to that, 1.25–2× in the tests here. Gate on counts.
+
+A time is not the same on every run. GitHub's runners come with different
+CPUs, and the same commit measures up to 2.5× apart: the WebKit table layout
+took 3.4 ms a change on an AMD EPYC 9V45 and 8.1 ms on an EPYC 7763, and
+`scriptMs` on `/scaling/projects/arbitrum` ranges 56–131 ms over 22 runs.
+Neither escape works on these runners:
+
+- **CPU time** splits the same way. The WebKit main thread's CPU time matched
+  its wall time within 5%, with no time stolen by the host: the runner is
+  slow, not interrupted.
+- **Instruction counts** need the CPU's hardware counters, which the VMs do
+  not expose. `perf_event_open` fails with `ENOENT` even with
+  `kernel.perf_event_paranoid` lowered.
+
+So times are logged, never asserted. A ceiling set from a local run lands
+inside the CI spread and fails at random, as the WebKit one did at 4× a Mac's
+time; one wide enough to never fail, as `scriptMs` was at 2–7× above the
+slowest CI run, only catches a regression bigger than that.
+
+To catch a new kind of slowness, find it by time where time is steady: a
+profile on a device or the iOS Simulator. Fix it, then ratchet what caused it
+as a count, and check once that the count moves with the time (the `h-full`
+bars: 31 ms a change, 3 ms fixed; boxes under a percent height, 68 and 0).
+
 ## Adding tests
 
 - **A functional test**: put it anywhere outside a `*-perf` folder and it
@@ -90,6 +121,18 @@ gh run view <run-id> --json jobs \
 ```
 
 The log of each job ends with the tests' own time, e.g. `16 passed (38.4s)`.
+
+## How the blobs ratchets count
+
+Mock mode makes each slot's block from the slot's number, so which blocks a
+run sees depends on when it runs. A block of five posters restyles about four
+times what a block of one does, as each poster's row in the table washes and
+counts up. So the ratchets divide restyles by the rows the block washed, read
+from the page's own feed, and take the best of three slots.
+
+They also stop what moves on its own clock, not the slots': the live dot's
+ping and the logo's beat. Each lays out or restyles on every frame it runs,
+and a slot would meet more or less of it by chance.
 
 ## DiscoUI
 

@@ -10,12 +10,18 @@ import { lowerOf } from '../blobs-perf/blobsPage'
  * WebKit lays out the whole table, so a cell that is costly to lay out slows
  * every frame on an iPhone while the Chromium ratchets see nothing.
  *
- * Method: change one number in the table back and forth, forcing a layout
- * after each change, and time it, best of a few samples. Time, not a count,
- * as WebKit has no layout counter to read; the margin is wide because the
- * regressions this catches cost ten times as much, not ten percent, and
- * because CI runners differ: the same commit measures up to 4x slower on
- * some hosts than on others, and up to 5x slower than on a Mac.
+ * What makes that layout costly is a percent height in a table cell, which
+ * WebKit lays out twice, with every box under it: the activity bars as
+ * `h-full` boxes cost 31 ms a change on a Mac, against 3 ms with a fixed
+ * height. So the boxes at or under a percent height in the table's cells are
+ * counted: the same on every run, where a time is not. GitHub's runners come
+ * with different CPUs, and the same commit times 3.4 ms on an EPYC 9V45 and
+ * 8.1 ms on an EPYC 7763, in CPU time as much as wall time, and their VMs
+ * expose no instruction counter to count instead.
+ *
+ * The time is still measured and printed, as a hint for what the count does
+ * not cover: change one number in the table back and forth, forcing a layout
+ * after each change, best of a few samples.
  *
  * As a block lands, iOS Safari also repaints the rows it touches, painting
  * each box in a row on its own, so a row's boxes set what a landing costs
@@ -36,16 +42,17 @@ const SAMPLES = 5
 const CHANGES_PER_SAMPLE = 20
 
 const MARGIN = {
-  layoutMsPerChange: (ms: number) => Math.ceil(ms * 8),
-  // a count of what is rendered, the same on every run
+  // counts of what is rendered, the same on every run
   boxesPerRow: (boxes: number) => boxes,
+  boxesUnderPercentHeight: (boxes: number) => boxes,
 }
 
-type Measurement = { layoutMsPerChange: number; boxesPerRow: number }
-type Ceilings = Record<string, Measurement>
+type Counts = { boxesPerRow: number; boxesUnderPercentHeight: number }
+type Measurement = Counts & { layoutMsPerChange: number }
+type Ceilings = Record<string, Counts>
 
 const ceilings: Ceilings = JSON.parse(readFileSync(CEILINGS_FILE, 'utf8'))
-const measured: Ceilings = {}
+const measured: Record<string, Measurement> = {}
 
 for (const viewport of Object.keys(ceilings)) {
   test(`the /blobs table at ${viewport} stays under its ceilings`, async ({
@@ -66,13 +73,16 @@ for (const viewport of Object.keys(ceilings)) {
       boxesPerRow: (await page.evaluate(
         `(${countBoxesPerRow})(${JSON.stringify(TABLE_ROW)})`,
       )) as number,
+      boxesUnderPercentHeight: (await page.evaluate(
+        `(${countBoxesUnderPercentHeight})(${JSON.stringify(TABLE_ROW)})`,
+      )) as number,
     }
     await context.close()
     measured[viewport] = result
     console.log(viewport, JSON.stringify(result))
 
     if (process.env.UPDATE_CEILINGS) return
-    for (const key of Object.keys(MARGIN) as (keyof Measurement)[]) {
+    for (const key of Object.keys(MARGIN) as (keyof Counts)[]) {
       expect(result[key], `${key} at ${viewport}`).toBeLessThanOrEqual(
         ceilings[viewport]![key],
       )
@@ -86,11 +96,11 @@ test.afterAll(() => {
   const next: Ceilings = { ...ceilings }
   for (const [viewport, result] of Object.entries(measured)) {
     next[viewport] = Object.fromEntries(
-      (Object.keys(MARGIN) as (keyof Measurement)[]).map((key) => [
+      (Object.keys(MARGIN) as (keyof Counts)[]).map((key) => [
         key,
         lowerOf(ceilings[viewport]?.[key], MARGIN[key](result[key])),
       ]),
-    ) as Measurement
+    ) as Counts
   }
   writeFileSync(CEILINGS_FILE, `${JSON.stringify(next, null, 2)}\n`)
 })
@@ -129,4 +139,26 @@ const countBoxesPerRow = `(selector) => {
       (element) => !(element instanceof SVGElement) || element instanceof SVGSVGElement,
     ).length
   return Math.max(...[...document.querySelectorAll(selector)].map(boxes))
+}`
+
+// Typed OM, as getComputedStyle resolves a percent height to pixels. A box is
+// counted once, however many percent heights it sits under
+const countBoxesUnderPercentHeight = `(selector) => {
+  const isPercent = (element) =>
+    ['height', 'min-height', 'max-height'].some(
+      (property) => element.computedStyleMap().get(property)?.unit === 'percent',
+    )
+  const isBox = (element) =>
+    !(element instanceof SVGElement) || element instanceof SVGSVGElement
+  const under = new Set()
+  for (const cell of document.querySelectorAll(selector + ' td')) {
+    for (const element of cell.querySelectorAll('*')) {
+      if (!isBox(element) || !isPercent(element)) continue
+      under.add(element)
+      for (const below of element.querySelectorAll('*')) {
+        if (isBox(below)) under.add(below)
+      }
+    }
+  }
+  return under.size
 }`

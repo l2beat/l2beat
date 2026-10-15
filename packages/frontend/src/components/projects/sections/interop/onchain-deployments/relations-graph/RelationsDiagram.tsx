@@ -1,4 +1,4 @@
-import { type ReactNode, useMemo, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
@@ -12,12 +12,19 @@ import {
   RelationsEdgePath,
 } from './RelationsEdges'
 import { RelationsNode } from './RelationsNode'
-import { useRelationsCamera } from './relationsCamera'
+import {
+  centerCamera,
+  dotGridSpacing,
+  revealCamera,
+  useRelationsCamera,
+} from './relationsCamera'
 import { routeRelationsEdges } from './routeRelationsEdges'
 import { useDragToPan } from './useDragToPan'
 
 const ZOOM_STEP = 1.25
 const DOT_GRID_STEP = 24
+/** Space kept between a revealed node and the edge it was moved clear of. */
+const REVEAL_MARGIN = 24
 
 interface Props {
   graph: InteropTokenRelationsGraph
@@ -25,8 +32,15 @@ interface Props {
   selectedNodeId: string | undefined
   onSelectNode: (id: string | undefined) => void
   onExpand?: () => void
-  /** A bare wheel pans instead of scrolling the page, for full-screen views. */
-  wheelPans?: boolean
+  /**
+   * Fills a view with no page left to scroll, so a bare wheel and one finger
+   * pan it. Otherwise they scroll the page, and touch pans with two fingers.
+   */
+  fillsView?: boolean
+  /** Centres the selected node, e.g. once a details panel has shrunk the diagram. */
+  centersSelection?: boolean
+  /** Pixels of the right edge that a details panel covers; the selected node is kept clear of them. */
+  coveredRight?: number
   className?: string
 }
 
@@ -36,12 +50,16 @@ export function RelationsDiagram({
   selectedNodeId,
   onSelectNode,
   onExpand,
-  wheelPans = false,
+  fillsView = false,
+  centersSelection = false,
+  coveredRight = 0,
   className,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const size = useResizeObserver({ ref: containerRef })
-  const viewport = { width: size.width ?? 960, height: size.height ?? 520 }
+  const viewportWidth = size.width ?? 960
+  const viewportHeight = size.height ?? 520
+  const viewport = { width: viewportWidth, height: viewportHeight }
 
   const layout = useMemo(() => {
     const items = graph.nodes.map((node) => ({
@@ -68,14 +86,47 @@ export function RelationsDiagram({
     const box = top && layout.boxes.get(top.id)
     return box ? box.x + box.width / 2 : undefined
   }, [graph.nodes, layout])
-  const { camera, setCamera, zoomBy, reset } = useRelationsCamera(
+  const { camera, setCamera, updateCamera, zoomBy, reset } = useRelationsCamera(
     layout,
     viewport,
     focusX,
     containerRef,
-    wheelPans,
+    fillsView,
   )
-  const pan = useDragToPan(camera, setCamera, containerRef)
+  // Brings a newly selected node into view. Re-runs once the viewport
+  // settles, so it lands right in the diagram's final size.
+  useEffect(() => {
+    const box = selectedNodeId && layout.boxes.get(selectedNodeId)
+    if (!box) return
+    if (centersSelection) {
+      const middle = { x: box.x + box.width / 2, y: box.y + box.height / 2 }
+      updateCamera((current) =>
+        centerCamera(current, middle, {
+          width: viewportWidth,
+          height: viewportHeight,
+        }),
+      )
+    } else if (coveredRight > 0) {
+      const uncovered = {
+        x: 0,
+        y: 0,
+        width: viewportWidth - coveredRight,
+        height: viewportHeight,
+      }
+      updateCamera((current) =>
+        revealCamera(current, box, uncovered, REVEAL_MARGIN),
+      )
+    }
+  }, [
+    centersSelection,
+    coveredRight,
+    selectedNodeId,
+    layout,
+    updateCamera,
+    viewportWidth,
+    viewportHeight,
+  ])
+  const pan = useDragToPan(camera, setCamera, containerRef, fillsView)
 
   const [hoveredId, setHoveredId] = useState<string>()
   const activeId = hoveredId ?? selectedNodeId
@@ -91,10 +142,11 @@ export function RelationsDiagram({
   }, [graph.edges])
 
   const transform = `translate(${camera.x}px, ${camera.y}px) scale(${camera.k})`
+  const dotSpacing = dotGridSpacing(DOT_GRID_STEP, camera.k)
   const dotGrid = {
     backgroundImage:
       'radial-gradient(var(--color-divider) 1px, transparent 1px)',
-    backgroundSize: `${DOT_GRID_STEP * camera.k}px ${DOT_GRID_STEP * camera.k}px`,
+    backgroundSize: `${dotSpacing}px ${dotSpacing}px`,
     backgroundPosition: `${camera.x}px ${camera.y}px`,
   }
 
@@ -102,7 +154,8 @@ export function RelationsDiagram({
     <div
       ref={containerRef}
       className={cn(
-        'relative touch-pan-y select-none overflow-hidden rounded-lg border border-divider bg-background',
+        'relative select-none overflow-hidden rounded-lg border border-divider bg-background',
+        fillsView ? 'touch-none' : 'touch-pan-y',
         className,
       )}
       style={dotGrid}
@@ -157,7 +210,10 @@ export function RelationsDiagram({
               isDimmed={active !== undefined && !active.nodeIds.has(node.id)}
               isUnconnected={unconnectedIds.has(node.id)}
               isSource={sourceIds.has(node.id)}
-              onSelect={onSelectNode}
+              // A touch drag that starts on a node may still end in a click on it.
+              onSelect={(id) => {
+                if (!pan.consumeSuppressedClick()) onSelectNode(id)
+              }}
               onHover={setHoveredId}
             />
           )
@@ -180,10 +236,12 @@ export function RelationsDiagram({
 
       <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1 text-label-value-12 text-secondary">
         <p className="hidden rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:block">
-          Use two fingers to move the diagram
+          {fillsView
+            ? 'Drag to move, pinch to zoom'
+            : 'Use two fingers to move or zoom'}
         </p>
         <p className="rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:hidden">
-          {wheelPans
+          {fillsView
             ? 'Scroll or drag to move the diagram'
             : 'Drag to move the diagram, Ctrl + scroll to zoom'}
         </p>
@@ -191,7 +249,12 @@ export function RelationsDiagram({
           Past 24h crosschain volume
         </p>
       </div>
-      <div className="absolute right-3 bottom-3 flex flex-col gap-1">
+      {/* Drags don't start on the controls, so a touch that wanders off a
+          button neither pans the diagram nor leaves a click to filter out. */}
+      <div
+        className="absolute right-3 bottom-3 flex flex-col gap-1"
+        onPointerDown={(event) => event.stopPropagation()}
+      >
         <ControlButton label="Zoom in" onClick={() => zoomBy(ZOOM_STEP)}>
           <Glyph d="M5 12h14M12 5v14" />
         </ControlButton>

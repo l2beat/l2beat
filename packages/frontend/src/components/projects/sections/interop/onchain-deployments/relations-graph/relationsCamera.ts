@@ -13,7 +13,7 @@ export interface Camera {
   k: number
 }
 
-interface Point {
+export interface Point {
   x: number
   y: number
 }
@@ -29,6 +29,7 @@ const FIT_PADDING = 32
 /** Below this the node text stops being readable. */
 const READABLE_SCALE = 0.55
 const WHEEL_ZOOM_STEP = 1.15
+const MIN_DOT_SPACING = 16
 /** Pixels per wheel line, for browsers that report line-based deltas. */
 const WHEEL_LINE_HEIGHT = 16
 
@@ -76,6 +77,16 @@ export function useRelationsCamera(
       })),
     [content, fitted, viewportWidth, viewportHeight],
   )
+  const updateCamera = useCallback(
+    (update: (camera: Camera) => Camera) =>
+      setManual((previous) => ({
+        content,
+        camera: update(
+          previous?.content === content ? previous.camera : fitted,
+        ),
+      })),
+    [content, fitted],
+  )
   const panBy = useCallback(
     (dx: number, dy: number) =>
       setManual((previous) => {
@@ -103,17 +114,28 @@ export function useRelationsCamera(
         return
       }
       event.preventDefault()
-      const rect = element.getBoundingClientRect()
-      zoomBy(event.deltaY < 0 ? WHEEL_ZOOM_STEP : 1 / WHEEL_ZOOM_STEP, {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
-      })
+      zoomBy(
+        event.deltaY < 0 ? WHEEL_ZOOM_STEP : 1 / WHEEL_ZOOM_STEP,
+        toLocalPoint(element, event),
+      )
     }
     element.addEventListener('wheel', onWheel, { passive: false })
     return () => element.removeEventListener('wheel', onWheel)
   }, [containerRef, zoomBy, panBy, wheelPans])
 
-  return { camera, setCamera, zoomBy, reset }
+  return { camera, setCamera, updateCamera, zoomBy, reset }
+}
+
+/** A pointer's position in the container's space, the one the camera maps the world into. */
+export function toLocalPoint(
+  element: HTMLElement,
+  event: { clientX: number; clientY: number },
+): Point {
+  const rect = element.getBoundingClientRect()
+  return {
+    x: event.clientX - rect.left - element.clientLeft,
+    y: event.clientY - rect.top - element.clientTop,
+  }
 }
 
 /**
@@ -155,6 +177,106 @@ function fitCamera(content: Size, viewport: Size, focusX?: number): Camera {
           : viewport.width / 2 - focusX * k,
     y: height <= innerHeight ? (viewport.height - height) / 2 : FIT_PADDING,
   }
+}
+
+/**
+ * The camera after pointers moved `from` → `to` (same pointers, same order):
+ * their centroid pans and their spread zooms, keeping the world point under
+ * the starting centroid under the current one.
+ */
+export function gestureCamera(
+  camera: Camera,
+  from: Point[],
+  to: Point[],
+): Camera {
+  const start = centroid(from)
+  const end = centroid(to)
+  const startSpread = spread(from, start)
+  const factor = startSpread > 0 ? spread(to, end) / startSpread : 1
+  const k = clamp(camera.k * factor, MIN_SCALE, MAX_SCALE)
+  return {
+    k,
+    x: end.x - ((start.x - camera.x) / camera.k) * k,
+    y: end.y - ((start.y - camera.y) / camera.k) * k,
+  }
+}
+
+function centroid(points: Point[]): Point {
+  return {
+    x: points.reduce((sum, point) => sum + point.x, 0) / points.length,
+    y: points.reduce((sum, point) => sum + point.y, 0) / points.length,
+  }
+}
+
+/** Mean distance from the centroid; 0 for a single point. */
+function spread(points: Point[], center: Point): number {
+  return (
+    points.reduce(
+      (sum, point) => sum + Math.hypot(point.x - center.x, point.y - center.y),
+      0,
+    ) / points.length
+  )
+}
+
+/** Keeps the scale and moves the world `point` to the middle of the viewport. */
+export function centerCamera(
+  camera: Camera,
+  point: Point,
+  viewport: Size,
+): Camera {
+  return {
+    k: camera.k,
+    x: viewport.width / 2 - point.x * camera.k,
+    y: viewport.height / 2 - point.y * camera.k,
+  }
+}
+
+/**
+ * Keeps the scale and pans as little as possible to bring the world `box`
+ * inside the screen `area`, `margin` clear of its edges. A box too big to
+ * fit keeps its top-left corner in view.
+ */
+export function revealCamera(
+  camera: Camera,
+  box: Point & Size,
+  area: Point & Size,
+  margin: number,
+): Camera {
+  return {
+    k: camera.k,
+    x:
+      camera.x +
+      fitShift(
+        box.x * camera.k + camera.x,
+        box.width * camera.k,
+        area.x + margin,
+        area.x + area.width - margin,
+      ),
+    y:
+      camera.y +
+      fitShift(
+        box.y * camera.k + camera.y,
+        box.height * camera.k,
+        area.y + margin,
+        area.y + area.height - margin,
+      ),
+  }
+}
+
+/** The smallest shift that moves `[start, start + size]` inside `[min, max]`, favouring `min`. */
+function fitShift(start: number, size: number, min: number, max: number) {
+  return Math.max(Math.min(0, max - (start + size)), min - start)
+}
+
+/**
+ * On-screen spacing of a background grid with `step` world units between
+ * dots. Zoomed far out it skips every other dot, as often as needed, so the
+ * dots never pack tighter than `MIN_DOT_SPACING`; the kept dots stay put.
+ */
+export function dotGridSpacing(step: number, k: number): number {
+  let spacing = step * k
+  while (spacing < MIN_DOT_SPACING) spacing *= 2
+  return spacing
 }
 
 /** Scales around `point` so the world point under it stays put. */

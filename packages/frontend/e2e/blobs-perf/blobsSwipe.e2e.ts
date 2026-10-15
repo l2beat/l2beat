@@ -10,11 +10,13 @@ import {
 import {
   bestOf,
   countRestyledElements,
+  currentSlot,
   lowerOf,
   metrics,
   openBlobs,
   readProbes,
   resetProbes,
+  rowsLandedBySlot,
   SLOT_MS,
   traceEvents,
   untilNextSlotMs,
@@ -28,16 +30,19 @@ import {
  *
  * Each swipe starts 1.2 seconds into a slot, before mock mode's block comes
  * in at two, and goes back and forth across it with a real touch: four racks
- * right, eight left, four right, ending where it started. Mock mode makes
- * each slot's block from its number, so the data is fixed; what varies is
- * which slot, and with it how much lands, which is why the best of a few
- * swipes counts. A slot whose block was missed animates nothing, and would
- * be the best by far, so it is swiped past rather than counted.
+ * right, eight left, four right, ending where it started. A slot whose block
+ * was missed animates nothing, and would be the best by far, so it is swiped
+ * past rather than counted.
  *
  * The main proxy is how many elements the browser restyles, which does not
  * depend on the machine's speed; against the iOS simulator it moved with the
- * frames that ran long. Layouts come with it, and script time with wide
- * headroom only. Slow frames are logged, not asserted.
+ * frames that ran long. It is counted per row of the posters table the block
+ * washed, as those rows are most of it: mock mode makes each slot's block
+ * from its number, so which slots a run swipes depends on the clock, and a
+ * block of five posters restyles four times what a block of one does. The
+ * rows come from the page's own feed. Layouts come with the swipe. Script
+ * time and slow frames are logged, not asserted, as they vary with the
+ * runner's CPU (see ../README.md).
  *
  * Lower a ceiling by running with UPDATE_CEILINGS=1, which rewrites
  * swipeCeilings.json from the current run plus the margins below.
@@ -54,13 +59,14 @@ const STEP_MS = 16
 const REACH_PX = 120
 
 const MARGIN = {
-  restyledElements: (n: number) => Math.ceil(n * 1.5),
-  layouts: (n: number) => Math.ceil(n * 1.5),
-  scriptMs: (n: number) => n * 4,
+  restyledPerRowLanded: (n: number) => Math.ceil(n * 1.5),
+  // a few dozen, which swing by as many again run to run, where a layout on
+  // every frame would add hundreds
+  layouts: (n: number) => n * 2 + 30,
 }
 
 type Measurement = {
-  restyledElements: number
+  restyledPerRowLanded: number
   layouts: number
   scriptMs: number
   beltPaints: number
@@ -139,6 +145,7 @@ async function swipeAcrossLanding(
   const y = box.y + box.height / 2
 
   await page.waitForTimeout(untilNextSlotMs() + START_INTO_SLOT_MS)
+  const slot = currentSlot()
   await page.evaluate(resetProbes)
   await page.evaluate('window.__animations = 0')
   const before = await metrics(cdp)
@@ -148,14 +155,17 @@ async function swipeAcrossLanding(
   await swipe(page, cdp, x, y)
   const trace = await browser.stopTracing()
   const after = await metrics(cdp)
-  const landed = (await page.evaluate('window.__animations')) as number
-  if (landed === 0) return undefined
+  const animated = (await page.evaluate('window.__animations')) as number
+  const rows = (await rowsLandedBySlot(page)).get(slot) ?? 0
+  if (animated === 0 || rows === 0) return undefined
   const probes = (await page.evaluate(readProbes)) as Pick<
     Measurement,
     'beltPaints' | 'framesOverBudget' | 'maxFrameMs'
   >
+  const restyled = countRestyledElements(traceEvents(trace))
+  console.log(`slot ${slot}: ${restyled} restyled, ${rows} rows landed`)
   return {
-    restyledElements: countRestyledElements(traceEvents(trace)),
+    restyledPerRowLanded: Math.round(restyled / rows),
     layouts: after.LayoutCount - before.LayoutCount,
     scriptMs: Math.round((after.ScriptDuration - before.ScriptDuration) * 1000),
     ...probes,
