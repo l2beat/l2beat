@@ -8,6 +8,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { calculateExposure } from './calculateExposure'
 import {
   getOssificationSeries,
+  type OssificationSeries,
   type OssificationSeriesProject,
   type OssificationValueSource,
 } from './getOssificationSeries'
@@ -52,18 +53,44 @@ export interface OssificationStatsProject extends OssificationSeriesProject {
   privacyInfo?: ProjectPrivacyInfo
 }
 
-export async function getOssificationStats(
-  project: OssificationStatsProject,
-  ossification: OssificationResult,
+export interface OssificationStatsRequest {
+  project: OssificationStatsProject
+  ossification: OssificationResult
+}
+
+/** Batched, so a page listing many projects reads their series at once */
+export async function getOssificationStats<T extends OssificationStatsRequest>(
+  requests: T[],
   now: UnixTime,
-): Promise<OssificationStats> {
-  const clockStart = ossification.clockStart
+): Promise<(T & { stats: OssificationStats })[]> {
   const from = now - TIMELINE_WINDOW
   // One read covers both the exposure since the clock start and the timeline.
   const series = await getOssificationSeries(
-    project,
-    Math.min(from, clockStart),
+    requests.map(({ project, ossification }) => ({
+      project,
+      since: Math.min(from, ossification.clockStart),
+    })),
   )
+  return requests.map((request, i) => ({
+    ...request,
+    stats: toOssificationStats(
+      request.project,
+      request.ossification,
+      series[i] ?? null,
+      from,
+      now,
+    ),
+  }))
+}
+
+function toOssificationStats(
+  project: OssificationStatsProject,
+  ossification: OssificationResult,
+  series: OssificationSeries | null,
+  from: UnixTime,
+  now: UnixTime,
+): OssificationStats {
+  const clockStart = ossification.clockStart
   const isUnverified = ossification.contracts.some((c) => !c.isVerified)
 
   return {

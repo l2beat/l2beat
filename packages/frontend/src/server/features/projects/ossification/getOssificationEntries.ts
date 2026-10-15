@@ -44,14 +44,20 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
   })
 
   const now = UnixTime.now()
-
-  const entries = await Promise.all(
-    projects.map(async (project): Promise<OssificationEntry | undefined> => {
+  const placed = await getOssificationStats(
+    projects.flatMap((project) => {
       const placement = getPlacement(project)
       if (!placement) {
-        return undefined
+        return []
       }
+      const ossification = measureOssification(project.ossificationHistory, now)
+      return [{ project, ossification, placement }]
+    }),
+    now,
+  )
 
+  const entries = placed.map(
+    ({ project, placement, stats }): OssificationEntry => {
       const statuses = {
         yellowWarning: project.statuses.yellowWarning,
         redWarning: project.statuses.redWarning,
@@ -68,20 +74,14 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
         backgroundColor: getRowBackgroundColor(statuses),
         statuses,
         ...placement,
-        ...(await getOssificationStats(
-          project,
-          measureOssification(project.ossificationHistory, now),
-          now,
-        )),
+        ...stats,
       }
-    }),
+    },
   )
 
-  return entries
-    .filter((entry) => entry !== undefined)
-    .sort(
-      (a, b) => b.score - a.score || (b.exposure ?? -1) - (a.exposure ?? -1),
-    )
+  return entries.sort(
+    (a, b) => b.score - a.score || (b.exposure ?? -1) - (a.exposure ?? -1),
+  )
 }
 
 function getPlacement(

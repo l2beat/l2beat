@@ -324,6 +324,31 @@ export class TokenValueRepository extends BaseRepository {
       : undefined
   }
 
+  /** Per project, the latest timestamp at or before its own `timestamp` */
+  async getMaxTimestampsAtOrBeforeByProject(
+    entries: readonly { projectId: string; timestamp: UnixTime }[],
+  ): Promise<{ projectId: string; timestamp: UnixTime }[]> {
+    if (entries.length === 0) return []
+
+    const { rows } = await sql<{ projectId: string; timestamp: Date }>`
+      SELECT p."projectId", m.timestamp
+      FROM unnest(
+        ${entries.map((e) => e.projectId)}::varchar[],
+        ${entries.map((e) => UnixTime.toDate(e.timestamp).toISOString())}::timestamp[]
+      ) AS p("projectId", "atOrBefore")
+      CROSS JOIN LATERAL (
+        SELECT max(t."timestamp") AS timestamp FROM "TokenValue" t
+        WHERE t."projectId" = p."projectId"
+          AND t."timestamp" <= p."atOrBefore"
+      ) m
+      WHERE m.timestamp IS NOT NULL
+    `.execute(this.db)
+    return rows.map((row) => ({
+      projectId: row.projectId,
+      timestamp: UnixTime.fromDate(row.timestamp),
+    }))
+  }
+
   async getByTimestamp(timestamp: UnixTime): Promise<TokenValueRecord[]> {
     const rows = await this.db
       .selectFrom('TokenValue')
@@ -759,22 +784,30 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toSummedByProjectRow)
   }
 
-  async checkIfExists(
-    projectId: string,
+  /**
+   * The subset of `projectIds` with at least one record at or after
+   * `fromInclusive`. One index probe per project, in a single statement.
+   */
+  async getProjectIdsWithData(
+    projectIds: readonly string[],
     fromInclusive?: UnixTime,
-  ): Promise<boolean> {
-    let query = this.db
-      .selectFrom('TokenValue')
-      .select('projectId')
-      .where('projectId', '=', projectId)
-      .limit(1)
+  ): Promise<string[]> {
+    if (projectIds.length === 0) return []
 
-    if (fromInclusive) {
-      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
-    }
-
-    const result = await query.executeTakeFirst()
-    return result !== undefined
+    const since =
+      fromInclusive !== undefined
+        ? sql`AND t."timestamp" >= ${UnixTime.toDate(fromInclusive)}`
+        : sql``
+    const { rows } = await sql<{ projectId: string }>`
+      SELECT p."projectId"
+      FROM unnest(${projectIds}::varchar[]) AS p("projectId")
+      WHERE EXISTS (
+        SELECT 1 FROM "TokenValue" t
+        WHERE t."projectId" = p."projectId"
+        ${since}
+      )
+    `.execute(this.db)
+    return rows.map((row) => row.projectId)
   }
 }
 

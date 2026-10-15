@@ -40,34 +40,39 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
-  describe(ActivityRepository.prototype.checkIfExists.name, () => {
+  describe(ActivityRepository.prototype.getProjectIdsWithData.name, () => {
     beforeEach(async () => {
       await repository.deleteAll()
     })
 
-    it('is true when the project has a non-zero count', async () => {
-      await repository.upsertMany([record('a', START, 5)])
-      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(true)
+    it('returns the projects with a non-zero count', async () => {
+      await repository.upsertMany([
+        record('a', START, 5),
+        record('b', START, 7),
+      ])
+      expect(
+        await repository.getProjectIdsWithData(['a', 'b', 'c']),
+      ).toEqualUnsorted(['a', 'b'])
     })
 
     it('ignores rows with a zero count, which draw an empty chart', async () => {
       await repository.upsertMany([record('a', START, 0)])
-      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(false)
-    })
-
-    it('is scoped to the project', async () => {
-      await repository.upsertMany([record('a', START, 5)])
-      expect(await repository.checkIfExists(ProjectId('b'))).toEqual(false)
+      expect(await repository.getProjectIdsWithData(['a'])).toEqual([])
     })
 
     it('only counts rows at or after fromInclusive', async () => {
-      await repository.upsertMany([record('a', START - UnixTime.DAY, 5)])
-      expect(await repository.checkIfExists(ProjectId('a'), START)).toEqual(
-        false,
+      await repository.upsertMany([
+        record('a', START - UnixTime.DAY, 5),
+        record('b', START, 5),
+      ])
+      expect(await repository.getProjectIdsWithData(['a', 'b'], START)).toEqual(
+        ['b'],
       )
-      expect(
-        await repository.checkIfExists(ProjectId('a'), START - UnixTime.DAY),
-      ).toEqual(true)
+    })
+
+    it('returns nothing for no projects', async () => {
+      await repository.upsertMany([record('a', START, 5)])
+      expect(await repository.getProjectIdsWithData([])).toEqual([])
     })
   })
 

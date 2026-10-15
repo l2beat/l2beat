@@ -1,13 +1,13 @@
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { createProjectDataCheck } from '~/server/features/utils/createProjectDataCheck'
+import { ps } from '~/server/projects'
 
-export async function checkIfDataPostedExists(
-  projectId: ProjectId,
-  fromInclusive?: UnixTime,
-): Promise<boolean> {
-  if (env.MOCK) {
-    return true
-  }
-  return await getDb().dataAvailability.checkIfExists(projectId, fromInclusive)
-}
+export const checkIfDataPostedExists = createProjectDataCheck({
+  name: 'checkIfDataPostedExists',
+  getCandidates: async () => {
+    const projects = await ps.getProjects({ where: ['daTrackingConfig'] })
+    return projects.map((p) => p.id)
+  },
+  getKeysWithData: (projectIds, fromInclusive) =>
+    getDb().dataAvailability.getProjectIdsWithData(projectIds, fromInclusive),
+})

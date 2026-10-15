@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedL2Cost } from '../kysely/generated/types'
 
@@ -99,22 +100,30 @@ export class AggregatedL2CostRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async checkIfExists(
-    projectId: ProjectId,
+  /**
+   * The subset of `projectIds` with at least one record at or after
+   * `fromInclusive`. One index probe per project, in a single statement.
+   */
+  async getProjectIdsWithData(
+    projectIds: readonly string[],
     fromInclusive?: UnixTime,
-  ): Promise<boolean> {
-    let query = this.db
-      .selectFrom('AggregatedL2Cost')
-      .select('projectId')
-      .where('projectId', '=', projectId.toString())
-      .limit(1)
+  ): Promise<string[]> {
+    if (projectIds.length === 0) return []
 
-    if (fromInclusive !== undefined) {
-      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
-    }
-
-    const result = await query.executeTakeFirst()
-    return result !== undefined
+    const since =
+      fromInclusive !== undefined
+        ? sql`AND t."timestamp" >= ${UnixTime.toDate(fromInclusive)}`
+        : sql``
+    const { rows } = await sql<{ projectId: string }>`
+      SELECT p."projectId"
+      FROM unnest(${projectIds}::varchar[]) AS p("projectId")
+      WHERE EXISTS (
+        SELECT 1 FROM "AggregatedL2Cost" t
+        WHERE t."projectId" = p."projectId"
+        ${since}
+      )
+    `.execute(this.db)
+    return rows.map((row) => row.projectId)
   }
 
   async getByProjectAndTimeRange(

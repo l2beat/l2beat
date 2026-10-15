@@ -76,24 +76,36 @@ export class AggregatedLivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async checkIfExists(
-    projectId: ProjectId,
-    subtype: TrackedTxsConfigSubtype,
+  /**
+   * The subset of `entries` with at least one record at or after
+   * `fromInclusive`. One index probe per entry, in a single statement.
+   */
+  async getProjectSubtypesWithData(
+    entries: readonly { projectId: string; subtype: TrackedTxsConfigSubtype }[],
     fromInclusive?: UnixTime,
-  ): Promise<boolean> {
-    let query = this.db
-      .selectFrom('AggregatedLiveness')
-      .select('projectId')
-      .where('projectId', '=', projectId)
-      .where('subtype', '=', subtype)
-      .limit(1)
+  ): Promise<{ projectId: string; subtype: TrackedTxsConfigSubtype }[]> {
+    if (entries.length === 0) return []
 
-    if (fromInclusive !== undefined) {
-      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
-    }
-
-    const result = await query.executeTakeFirst()
-    return result !== undefined
+    const since =
+      fromInclusive !== undefined
+        ? sql`AND t."timestamp" >= ${UnixTime.toDate(fromInclusive)}`
+        : sql``
+    const { rows } = await sql<{ projectId: string; subtype: string }>`
+      SELECT p."projectId", p.subtype
+      FROM unnest(
+        ${entries.map((e) => e.projectId)}::varchar[],
+        ${entries.map((e) => e.subtype)}::varchar[]
+      ) AS p("projectId", subtype)
+      WHERE EXISTS (
+        SELECT 1 FROM "AggregatedLiveness" t
+        WHERE t."projectId" = p."projectId" AND t.subtype = p.subtype
+        ${since}
+      )
+    `.execute(this.db)
+    return rows.map((row) => ({
+      projectId: row.projectId,
+      subtype: row.subtype as TrackedTxsConfigSubtype,
+    }))
   }
 
   async getByProjectAndSubtypeInTimeRange(

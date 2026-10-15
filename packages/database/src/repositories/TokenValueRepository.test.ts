@@ -583,7 +583,40 @@ describeDatabase(TokenValueRepository.name, (db) => {
     )
   })
 
-  describe(TokenValueRepository.prototype.checkIfExists.name, () => {
+  describe(
+    TokenValueRepository.prototype.getMaxTimestampsAtOrBeforeByProject.name,
+    () => {
+      beforeEach(async () => {
+        await repository.upsertMany([
+          tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+          tokenValue('a', 'ethereum', UnixTime(200), 2, 2000, 1600, 1000, 10),
+          tokenValue('b', 'arbitrum', UnixTime(150), 1, 1000, 800, 500, 10),
+          tokenValue('b', 'arbitrum', UnixTime(250), 1, 1000, 800, 500, 10),
+        ])
+      })
+
+      it('bounds each project by its own timestamp', async () => {
+        const result = await repository.getMaxTimestampsAtOrBeforeByProject([
+          { projectId: 'ethereum', timestamp: UnixTime(199) },
+          { projectId: 'arbitrum', timestamp: UnixTime(250) },
+        ])
+        expect(result).toEqualUnsorted([
+          { projectId: 'ethereum', timestamp: UnixTime(100) },
+          { projectId: 'arbitrum', timestamp: UnixTime(250) },
+        ])
+      })
+
+      it('omits projects without a record at or before', async () => {
+        const result = await repository.getMaxTimestampsAtOrBeforeByProject([
+          { projectId: 'ethereum', timestamp: UnixTime(99) },
+          { projectId: 'non-existent', timestamp: UnixTime(300) },
+        ])
+        expect(result).toEqual([])
+      })
+    },
+  )
+
+  describe(TokenValueRepository.prototype.getProjectIdsWithData.name, () => {
     beforeEach(async () => {
       await repository.upsertMany([
         tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
@@ -593,24 +626,21 @@ describeDatabase(TokenValueRepository.name, (db) => {
       ])
     })
 
-    it('returns true when project exists', async () => {
-      const exists = await repository.checkIfExists('ethereum')
-      expect(exists).toEqual(true)
+    it('returns the projects with any record', async () => {
+      const result = await repository.getProjectIdsWithData([
+        'ethereum',
+        'arbitrum',
+        'non-existent',
+      ])
+      expect(result).toEqualUnsorted(['ethereum', 'arbitrum'])
     })
 
-    it('returns false when project does not exist', async () => {
-      const exists = await repository.checkIfExists('non-existent')
-      expect(exists).toEqual(false)
-    })
-
-    it('returns true when project has records from specified timestamp', async () => {
-      const exists = await repository.checkIfExists('ethereum', UnixTime(200))
-      expect(exists).toEqual(true)
-    })
-
-    it('returns false when project has no records from specified timestamp', async () => {
-      const exists = await repository.checkIfExists('ethereum', UnixTime(250))
-      expect(exists).toEqual(false)
+    it('only counts records at or after fromInclusive', async () => {
+      const result = await repository.getProjectIdsWithData(
+        ['ethereum', 'arbitrum', 'optimism'],
+        UnixTime(200),
+      )
+      expect(result).toEqualUnsorted(['ethereum', 'optimism'])
     })
   })
 

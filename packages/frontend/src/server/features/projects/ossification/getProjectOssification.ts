@@ -3,7 +3,11 @@ import {
   type OssificationCriticalUpdate,
   type OssificationHistory,
 } from '@l2beat/shared/frontend'
-import { type ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  type ChainSpecificAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { env } from '~/env'
 import {
   getOssificationStats,
@@ -38,8 +42,10 @@ export async function getProjectOssification(
 
   const now = UnixTime.now()
   const ossification = measureOssification(project.ossificationHistory, now)
+  const [result] = await getOssificationStats([{ project, ossification }], now)
+  assert(result, 'Missing ossification stats')
   return {
-    ...(await getOssificationStats(project, ossification, now)),
+    ...result.stats,
     contracts: ossification.contracts.map(
       ({ ossifyingSince, ...contract }) => ({
         ...contract,

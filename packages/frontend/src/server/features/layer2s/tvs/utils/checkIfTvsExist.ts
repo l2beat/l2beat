@@ -1,11 +1,13 @@
-import type { UnixTime } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { createProjectDataCheck } from '~/server/features/utils/createProjectDataCheck'
+import { ps } from '~/server/projects'
 
-export async function checkIfTvsExist(projectId: string, from?: UnixTime) {
-  if (env.MOCK) {
-    return true
-  }
-  const db = getDb()
-  return await db.tvsTokenValue.checkIfExists(projectId, from)
-}
+export const checkIfTvsExist = createProjectDataCheck({
+  name: 'checkIfTvsExist',
+  getCandidates: async () => {
+    const projects = await ps.getProjects({ select: ['scalingInfo'] })
+    return projects.map((p) => p.id)
+  },
+  getKeysWithData: (projectIds, fromInclusive) =>
+    getDb().tvsTokenValue.getProjectIdsWithData(projectIds, fromInclusive),
+})

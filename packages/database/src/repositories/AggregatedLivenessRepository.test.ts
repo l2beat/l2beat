@@ -128,32 +128,38 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     })
   })
 
-  describe(AggregatedLivenessRepository.prototype.checkIfExists.name, () => {
-    it('is true for a project and subtype with records', async () => {
-      expect(
-        await repository.checkIfExists(PROJECT_A, 'batchSubmissions'),
-      ).toEqual(true)
-    })
+  describe(
+    AggregatedLivenessRepository.prototype.getProjectSubtypesWithData.name,
+    () => {
+      it('matches project and subtype together', async () => {
+        expect(
+          await repository.getProjectSubtypesWithData([
+            { projectId: PROJECT_A, subtype: 'batchSubmissions' },
+            { projectId: PROJECT_B, subtype: 'batchSubmissions' },
+            { projectId: PROJECT_B, subtype: 'stateUpdates' },
+          ]),
+        ).toEqualUnsorted([
+          { projectId: PROJECT_A, subtype: 'batchSubmissions' },
+          { projectId: PROJECT_B, subtype: 'stateUpdates' },
+        ])
+      })
 
-    it('is false for a subtype the project has no records for', async () => {
-      expect(
-        await repository.checkIfExists(PROJECT_B, 'batchSubmissions'),
-      ).toEqual(false)
-    })
-
-    it('only counts records at or after fromInclusive', async () => {
-      expect(
-        await repository.checkIfExists(
-          PROJECT_A,
-          'batchSubmissions',
-          START + UnixTime.HOUR,
-        ),
-      ).toEqual(false)
-      expect(
-        await repository.checkIfExists(PROJECT_A, 'batchSubmissions', START),
-      ).toEqual(true)
-    })
-  })
+      it('only counts records at or after fromInclusive', async () => {
+        const entries = [
+          { projectId: PROJECT_A, subtype: 'batchSubmissions' as const },
+        ]
+        expect(
+          await repository.getProjectSubtypesWithData(
+            entries,
+            START + UnixTime.HOUR,
+          ),
+        ).toEqual([])
+        expect(
+          await repository.getProjectSubtypesWithData(entries, START),
+        ).toEqual(entries)
+      })
+    },
+  )
 
   describe(AggregatedLivenessRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
