@@ -13,7 +13,7 @@
         "address": "0x35fA164735182de50811E8e2E824cFb9B6118ac2",
         "chain": "ethereum",
         "decimals": 18,
-        "sinceTimestamp": 1689005015
+        "sinceTimestamp": 1707264000
       },
       "category": "ether",
       "source": "canonical",
