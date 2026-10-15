@@ -19,16 +19,6 @@ const ecosystemUpdate = v.object({
 })
 export type EcosystemUpdate = v.infer<typeof ecosystemUpdate>
 
-const dataAvailabilityUpdate = v.object({
-  type: v.literal('data-availability'),
-  id: v.string(),
-  daLayerId: v.string(),
-  name: v.string().optional(),
-  newProjectsIds: v.array(v.string()).optional(),
-  news: v.array(news).check((v) => v.length > 0),
-})
-export type DataAvailabilityUpdate = v.infer<typeof dataAvailabilityUpdate>
-
 const upcomingProjectUpdate = v.object({
   name: v.string(),
   type: v.literal('upcoming-project'),
@@ -43,9 +33,7 @@ const monthlyUpdate = v.object({
   startDate: v.unknown().transform((v) => new Date(v as string)),
   endDate: v.unknown().transform((v) => new Date(v as string)),
   publishedOn: v.unknown().transform((v) => new Date(v as string)),
-  updates: v.array(
-    v.union([ecosystemUpdate, dataAvailabilityUpdate, upcomingProjectUpdate]),
-  ),
+  updates: v.array(v.union([ecosystemUpdate, upcomingProjectUpdate])),
 })
 
 export const monthlyUpdatesCollection = defineCollection({

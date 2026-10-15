@@ -1,0 +1,10 @@
+{
+  "402x874": {
+    "layoutMsPerChange": 20,
+    "boxesPerRow": 25
+  },
+  "1440x1000": {
+    "layoutMsPerChange": 22,
+    "boxesPerRow": 25
+  }
+}

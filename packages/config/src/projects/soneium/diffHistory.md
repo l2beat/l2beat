@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xd95bab6edb140a991347a6adaf860a541bec806c
+
+# Diff at Wed, 14 Oct 2026 08:17:42 GMT:
+
+- id: c0fbf0ac
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1790862358
+- current timestamp: 1791965773
+
+## Description
+
+SystemConfig `minBaseFee` 0 → 13000000, set by the Soneium Multisig.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        0
++        13000000
+    }
+```
+
 Generated with discovered.json: 0x37d6274609c2e523aa741168bc12cb8a85a20905
 
 # Diff at Sun, 04 Oct 2026 05:55:37 GMT:

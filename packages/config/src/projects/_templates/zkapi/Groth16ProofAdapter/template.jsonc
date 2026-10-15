@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Groth16ProofAdapter",
+  "category": "core",
+  "critical": true,
+  "description": "BN254 Groth16 verifier containing the request and withdrawal verification keys for zkapi-v2-note-bound-v1. Request proofs hide the note identity, exact balance and state signature. Withdrawal proofs expose the note id, destination, final balance and nullifier. The published circuit-specific keys were generated in a single-party setup. Retained setup secrets can allow forged proofs."
+}

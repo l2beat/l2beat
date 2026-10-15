@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ERC20Vault",
+  "critical": true,
+  "description": "Vault for canonical ERC20 tokens and their bridged representations. Deposits support standing approvals, ERC-2612 permits and Permit2 signatures. Successful deliveries consume token quota when a quota manager is configured. The bridge controls access to the refund callback.",
+  "category": "shared",
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreRelatives": ["PERMIT2"],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause token flows and change a canonical token's bridged representation after the migration delay."
+        }
+      ]
+    },
+    "pendingOwner": { "severity": "MEDIUM" },
+    "paused": { "severity": "MEDIUM" },
+    "resolver": {
+      "description": "Immutable registry resolving the bridge, counterpart vaults and default bridged token implementation."
+    },
+    "quotaManager": {
+      "description": "Immutable quota manager limiting successful token deliveries. Refunds consume no quota. The zero address disables quotas."
+    },
+    "btokenDenylist": {
+      "description": "Bridged tokens excluded from sends by token migration logic."
+    }
+  }
+}

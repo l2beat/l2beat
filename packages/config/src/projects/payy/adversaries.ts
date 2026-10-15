@@ -8,21 +8,19 @@ const HONK_README =
 export const payyAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'linkage',
-    text: 'Promises private stablecoin transfers. Delivers hidden amounts and note owners over a public spend graph: which notes fund which, and every deposit and withdrawal, is public.',
+    text: 'Hides note amounts and owners. Which notes fund which, and every deposit and withdrawal, are public.',
   },
   cells: {
     publicObserver: {
       sentiment: 'bad',
       exposureShort:
-        'Every transaction names the notes it spends and creates, so which notes fund which is public by design; only the amount and owner of a note are hidden.',
+        'Every transaction names the notes it spends and creates, so which notes fund which is public.',
       exposureContinued:
-        'Empty padding notes have a zero commitment, so single-input and single-output transactions are recognizable. All blocks and proofs are served openly, and each deposit or withdrawal shows address and amount and points at one node of that graph. The per-transaction proofs use a flavor whose authors document that it is not zero-knowledge; how much of a note it leaks is not established.',
-      advice:
-        'Withdraw to an address that cannot be tied to you, and never an amount that matches a deposit.',
+        'Empty padding notes have a zero commitment, so single-input and single-output transactions are recognizable. Each deposit or withdrawal shows address and amount and points at one node of that graph. The per-transaction proofs use a flavor its authors document as not zero-knowledge, and how much of a note it leaks is not established.',
       interior: {
         sender: {
           verdict: 'private',
-          note: 'The owner key is hidden; the spent note is a public graph node.',
+          note: 'The owner key is hidden, but the spent note is a public graph node.',
         },
         recipient: {
           verdict: 'private',
@@ -36,15 +34,14 @@ export const payyAdversaries = definePrivacyAdversaries({
         linkage: 'exposed',
       },
       sources: [
-        { contract: 'RollupV1' },
+        {
+          title: 'Spend graph explorer built from Payy blocks (by L2BEAT)',
+          url: 'https://sekuba.github.io/payy-graph/',
+        },
         {
           title:
             'UTXO circuit: spent and created commitments are public, no nullifier',
           url: PAYY + 'noir/utxo/src/main.nr#L9-L15',
-        },
-        {
-          title: 'Burn hash is the first consumed commitment',
-          url: PAYY + 'noir/utxo/src/main.nr#L66-L71',
         },
         {
           title: 'Client proofs use the non-ZK Honk flavor',
@@ -54,24 +51,14 @@ export const payyAdversaries = definePrivacyAdversaries({
           title: 'Honk docs: the base flavor leaks witness information',
           url: HONK_README + '#zero-knowledge',
         },
-        {
-          title: 'Public transactions endpoint serves every proof',
-          url: PAYY + 'pkg/node/src/rpc/routes/configure.rs#L19-L25',
-        },
-        {
-          title: 'Docs describe nullifiers the deployed circuit does not have',
-          url: 'https://docs.payy.network/protocol/privacy-layer/nullifiers',
-        },
       ],
     },
     chainAnalyst: {
       sentiment: 'bad',
       exposureShort:
-        'Along a path without splits or merges the public deposit and withdrawal amounts fix every amount in between, and the graph shows who paid whom end to end.',
+        'Along a path without splits or merges, the deposit and withdrawal amounts fix every amount in between.',
       exposureContinued:
         'Each wallet has one fixed deposit address, so all its deposits link to each other and to whoever funded them.',
-      advice:
-        'Keep funds in the network across many transfers; only a split or merge stops amounts from being inferred. Fund the deposit address from a wallet that is not yours to keep.',
       interior: {
         sender: {
           verdict: 'atRisk',
@@ -108,13 +95,12 @@ export const payyAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'bad',
       exposureShort:
-        'The payment-link website loads a third-party analytics script that records the page URL, which holds the redeem secret of the link, and reports a device fingerprint to the backend.',
+        'The Payy app is closed source and no open client works on mainnet, so what it sends to third parties is up to Payy and can change at any time.',
       exposureContinued:
-        "On the other hand, proofs are built on your device and the app talks only to the operator's servers.",
-      advice: 'Redeem payment links in the app, not in a browser.',
+        "The payment-link website loads a third-party analytics script that records the page URL, which holds the link's redeem secret.",
       interior: {
-        sender: 'private',
-        recipient: 'private',
+        sender: 'unverifiable',
+        recipient: 'unverifiable',
         amount: {
           verdict: 'atRisk',
           note: 'A link opened in a browser hands its redeem secret to the analytics provider.',
@@ -124,20 +110,20 @@ export const payyAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
+          title: 'The repository publishes only type bindings of the app',
+          url: PAYY + 'app/packages/payy/src',
+        },
+        {
+          title: 'The open TypeScript client knows only dev and testnet',
+          url: PAYY + 'app/packages/payy-client/src/network.ts#L6-L17',
+        },
+        {
           title: 'Analytics with default settings on the link website',
           url: PAYY + 'app/packages/link/src/config/posthog.ts#L10-L18',
         },
         {
           title: 'Send links carry the secret in the URL fragment',
           url: PAYY + 'pkg/parse-link/src/lib.rs#L50-L56',
-        },
-        {
-          title: 'Device fingerprint and analytics id posted to the backend',
-          url: PAYY + 'app/packages/link/src/hooks/useStoreRedirect.ts#L30-L58',
-        },
-        {
-          title: 'Node logs every submitted proof',
-          url: PAYY + 'pkg/node/src/rpc/routes/txn.rs#L30-L34',
         },
       ],
     },
@@ -146,15 +132,13 @@ export const payyAdversaries = definePrivacyAdversaries({
       exposureShort:
         'One company runs the only validator and prover, the node, the note registry, the deposit relayer and the KYC checks.',
       exposureContinued:
-        "Its backend ties each session to a wallet address and keeps, per wallet, the deposit address, KYC record, country, IP country and the commitment and owner of every note the app reports. For payment links and fiat ramps it holds the notes' private keys and can read and spend them. It can drop your withdrawals, and its owner can rewrite the state root with no delay.",
-      advice:
-        'Use only ordinary transfers for anything you want to keep private. Links, ramps and the card hand the operator the note keys.',
+        "Its backend ties each session to a wallet address and keeps, per wallet, the deposit address, KYC record, country, IP country and the commitment and owner of every note the app reports. For payment links and fiat ramps it holds the notes' private keys and can read and spend them. Its registry sees which wallet delivers a note to which recipient key, and in which block.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
         amount: {
           verdict: 'atRisk',
-          note: 'Hidden for ordinary transfers; the backend holds the keys of link and ramp notes.',
+          note: 'The backend holds the keys of link and ramp notes.',
         },
         asset: 'exposed',
         linkage: 'exposed',
@@ -164,15 +148,9 @@ export const payyAdversaries = definePrivacyAdversaries({
           contract: 'RollupV1',
           title: 'setRoot, provers, validators, burn substitutors',
         },
-        { section: 'permissions' },
         {
           title: 'Session bound to a wallet address by signature',
           url: PAYY + 'pkg/guild-interface/src/auth.rs#L1-L16',
-        },
-        {
-          title:
-            'Registry entries are keyed by recipient key and posted authenticated',
-          url: PAYY + 'pkg/guild-client-http/src/registry.rs#L45-L56',
         },
         {
           title:
@@ -183,40 +161,22 @@ export const payyAdversaries = definePrivacyAdversaries({
           title: 'Wallet table: deposit address, KYC, country, IP country',
           url: PAYY + 'pkg/database/src/schema.rs#L464-L481',
         },
-        {
-          title: 'Wallet notes table: commitment and owner per note',
-          url: PAYY + 'pkg/database/src/schema.rs#L452-L462',
-        },
-        {
-          title: 'Diagnostics table with a recovery phrase field',
-          url: PAYY + 'pkg/database/src/schema.rs#L36-L48',
-        },
       ],
     },
     futureAdversary: {
       sentiment: 'bad',
       exposureShort:
-        'Every per-transaction proof is public forever and not zero-knowledge, so whatever it leaks stays available to future compute, and a discrete-log break opens the commitments inside it.',
+        'The per-transaction proofs are public and not zero-knowledge, and the commitments inside them rest on elliptic curves.',
       exposureContinued:
-        'Registry ciphertexts use elliptic-curve key exchange. If the operator retains them, whoever breaks elliptic-curve cryptography opens every note delivered through it.',
+        'How much more whoever breaks elliptic-curve cryptography extracts from those proofs is not established.',
       interior: {
-        sender: {
-          verdict: 'atRisk',
-          note: 'If the registry is retained; its ciphertexts are not on Ethereum.',
-        },
+        sender: 'atRisk',
         recipient: 'atRisk',
-        amount: {
-          verdict: 'atRisk',
-          note: 'Proofs are public and not zero-knowledge; registry ciphertexts open if retained.',
-        },
+        amount: 'atRisk',
         asset: 'exposed',
         linkage: 'exposed',
       },
       sources: [
-        {
-          title: 'Registry encryption (X25519-XSalsa20-Poly1305)',
-          url: PAYY + 'pkg/encrypt/src/asymmetric.rs#L80-L81',
-        },
         {
           title: 'Client proofs use the non-ZK Honk flavor',
           url: PAYY + 'pkg/barretenberg-rs/src/binding.rs#L109-L118',

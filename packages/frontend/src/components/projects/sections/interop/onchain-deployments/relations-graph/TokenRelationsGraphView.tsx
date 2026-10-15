@@ -93,6 +93,7 @@ export function TokenRelationsGraphView({
         <DiagramPane
           {...paneProps}
           className={diagramClassName}
+          wheelPans={embedded && !isMobile}
           onExpand={
             isMobile || embedded ? undefined : () => setIsExpanded(true)
           }
@@ -146,7 +147,7 @@ export function TokenRelationsGraphView({
             others.
           </DialogDescription>
           <DialogClose />
-          <DiagramPane {...paneProps} className="h-full" />
+          <DiagramPane {...paneProps} className="h-full" wheelPans />
         </DialogContent>
       </Dialog>
     </div>
@@ -162,6 +163,7 @@ function DiagramPane({
   onSelectNode,
   onCloseDetails,
   onExpand,
+  wheelPans,
   className,
 }: {
   graph: InteropTokenRelationsGraph
@@ -172,6 +174,7 @@ function DiagramPane({
   onSelectNode: (id: string | undefined) => void
   onCloseDetails: () => void
   onExpand?: () => void
+  wheelPans?: boolean
   className: string
 }) {
   // Fills a flex-column parent; a no-op in block flow.
@@ -183,6 +186,7 @@ function DiagramPane({
         selectedNodeId={selectedNodeId}
         onSelectNode={onSelectNode}
         onExpand={onExpand}
+        wheelPans={wheelPans}
         className={className}
       />
       {detailsNode && (

@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Bridge",
+  "critical": true,
+  "description": "Bridge escrow for ETH and cross-chain messages. Pausing stops all message flows. The immutable recallEnabled setting controls failed-message refunds. Successful ETH releases use the configured quota manager.",
+  "category": "shared",
+  "ignoreMethods": ["context", "getMessageMinGasLimit", "proxiableUUID"],
+  "ignoreInWatchMode": ["nextMessageId"],
+  "fields": {
+    "owner": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause bridge flows and run one-time message recovery initializers."
+        }
+      ]
+    },
+    "pendingOwner": { "severity": "MEDIUM" },
+    "paused": { "severity": "MEDIUM" },
+    "pauser": {
+      "severity": "MEDIUM",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause bridge flows and fund the bridge through direct ETH transfers."
+        }
+      ]
+    },
+    "recallEnabled": {
+      "description": "Immutable switch controlling failMessage, recallMessage and the failed branch of retryMessage. When false, failed deliveries must succeed on retry to release their funds."
+    },
+    "signalService": {
+      "description": "Immutable signal service proving cross-chain message delivery and failure signals."
+    },
+    "quotaManager": {
+      "description": "Immutable quota manager limiting successful ETH releases. The zero address disables quotas."
+    },
+    "resolver": {
+      "description": "Immutable registry resolving the trusted counterpart bridge on each chain."
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "OffchainResolver": {
+    "hash": "0x04f4a6fa707d0ac615fc02603f8514c54d1f605e28459b11249433b2ef8b5475",
+    "address": "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c",
+    "chain": "ethereum",
+    "blockNumber": 26153452
+  }
+}

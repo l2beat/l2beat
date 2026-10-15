@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { formatBytes, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart, ReferenceArea } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type {
   ChartMeta,
   ChartProject,
@@ -18,10 +18,7 @@ import {
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
-import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
-import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
-import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
@@ -43,7 +40,10 @@ interface Props {
   milestones: Milestone[]
   syncedUntil: UnixTime | undefined
   resolution: ChartResolution
-  dataGap: [number, number] | undefined
+  /** For when the page already says whose data it is */
+  hideProjectLogo?: boolean
+  /** The hint's extra row would lift this chart's baseline above a hint-less chart beside it */
+  disableLegendOnboarding?: boolean
 }
 
 const hiddenDataKeys = ['projectMax'] as const
@@ -55,7 +55,8 @@ export function ProjectDaAbsoluteThroughputChart({
   milestones,
   syncedUntil,
   resolution,
-  dataGap,
+  hideProjectLogo,
+  disableLegendOnboarding,
 }: Props) {
   const projectChartMeta = useMemo(
     () => getProjectChartMeta(project.id),
@@ -94,11 +95,12 @@ export function ProjectDaAbsoluteThroughputChart({
     <ChartContainer
       meta={projectChartMeta}
       data={chartData}
-      project={project}
+      project={hideProjectLogo ? undefined : project}
       isLoading={isLoading}
       interactiveLegend={{
         dataKeys,
         onItemClick: toggleDataKey,
+        disableOnboarding: disableLegendOnboarding,
       }}
       milestones={milestones}
     >
@@ -106,13 +108,6 @@ export function ProjectDaAbsoluteThroughputChart({
         <defs>
           {project.id === 'ethereum' && (
             <EthereumFillGradientDef id="ethereum-fill" />
-          )}
-          {project.id === 'celestia' && (
-            <FuchsiaFillGradientDef id="celestia-fill" />
-          )}
-          {project.id === 'avail' && <SkyFillGradientDef id="avail-fill" />}
-          {project.id === 'eigenda' && (
-            <LimeFillGradientDef id="eigenda-fill" />
           )}
           <NoDataPatternDef />
         </defs>
@@ -150,20 +145,12 @@ export function ProjectDaAbsoluteThroughputChart({
           dot={false}
           hide={!dataKeys.includes('projectMax')}
         />
-        {dataGap && (
-          <ReferenceArea
-            x1={dataGap[0]}
-            x2={dataGap[1]}
-            fill="url(#noDataFill)"
-          />
-        )}
         <ChartTooltip
           filterNull={false}
           content={
             <ProjectDaThroughputCustomTooltip
               denominator={denominator}
               resolution={resolution}
-              dataGap={dataGap}
             />
           }
         />
@@ -181,21 +168,17 @@ export function ProjectDaAbsoluteThroughputChart({
   )
 }
 
-export function ProjectDaThroughputCustomTooltip({
+function ProjectDaThroughputCustomTooltip({
   payload,
   label,
   denominator,
   resolution,
-  dataGap,
 }: CustomChartTooltipProps & {
   denominator: number
   resolution: ChartResolution
-  dataGap?: [number, number]
 }) {
   const { meta: config } = useChart()
   if (!payload || typeof label !== 'number') return null
-
-  const isInDataGap = !!dataGap && label >= dataGap[0] && label <= dataGap[1]
 
   return (
     <ChartTooltipWrapper>
@@ -225,7 +208,7 @@ export function ProjectDaThroughputCustomTooltip({
               {(entry.value === null || entry.value === undefined) &&
               configEntry.label === 'Actual data size' ? (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {isInDataGap ? 'Data not available' : 'No data'}
+                  No data
                 </span>
               ) : entry.value === null &&
                 configEntry.label === 'Max capacity' ? (
@@ -262,45 +245,6 @@ function getProjectChartMeta(projectId: ProjectId) {
         projectMax: {
           label: 'Max capacity',
           color: 'var(--chart-ethereum)',
-          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-        },
-      } satisfies ChartMeta
-    case 'celestia':
-      return {
-        project: {
-          label: 'Actual data size',
-          color: 'var(--chart-fuchsia)',
-          indicatorType: { shape: 'line' },
-        },
-        projectMax: {
-          label: 'Max capacity',
-          color: 'var(--chart-fuchsia)',
-          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-        },
-      } satisfies ChartMeta
-    case 'avail':
-      return {
-        project: {
-          label: 'Actual data size',
-          color: 'var(--chart-sky)',
-          indicatorType: { shape: 'line' },
-        },
-        projectMax: {
-          label: 'Max capacity',
-          color: 'var(--chart-sky)',
-          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-        },
-      } satisfies ChartMeta
-    case 'eigenda':
-      return {
-        project: {
-          label: 'Actual data size',
-          color: 'var(--chart-lime)',
-          indicatorType: { shape: 'line' },
-        },
-        projectMax: {
-          label: 'Max capacity',
-          color: 'var(--chart-lime)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta

@@ -276,12 +276,12 @@ function entryToLabel(entry: AnySearchBarEntry) {
   if (entry.type === 'token') return 'Token'
 
   switch (entry.kind) {
+    case 'ethereum':
+      return 'Base layer'
     case 'layer2':
       return 'Layer 2'
     case 'layer3':
       return 'Layer 3'
-    case 'da':
-      return 'DA Layer'
     case 'interop':
       return 'Interop'
     case 'zkCatalog':

@@ -100,6 +100,30 @@ describe('readConfig layering', () => {
     expect(config.structure.overrides?.[ADDRESS]?.ignoreDiscovery).toEqual(true)
   })
 
+  it('lets a project copy replace an imported handler on one field', () => {
+    mockFs({
+      '/layered/global.jsonc': JSON.stringify({
+        overrides: {
+          [ADDRESS]: {
+            fields: { f: { handler: { type: 'storage', slot: 1 } } },
+          },
+        },
+      }),
+      '/layered/proj/config.jsonc': JSON.stringify({
+        import: ['../global.jsonc'],
+        name: 'proj',
+        initialAddresses: [ADDRESS],
+        overrides: { [ADDRESS]: { fields: { f: { copy: 'g' } } } },
+      }),
+    })
+
+    const config = new ConfigReader('/layered').readConfig('proj')
+    const field = config.structure.overrides?.[ADDRESS]?.fields.f
+
+    expect(field?.copy).toEqual('g')
+    expect(field?.handler).toEqual(undefined)
+  })
+
   it('makes every config value read-only, inherited or not', () => {
     const reader = new ConfigReader('/layered')
     const config = reader.readConfig('proj')

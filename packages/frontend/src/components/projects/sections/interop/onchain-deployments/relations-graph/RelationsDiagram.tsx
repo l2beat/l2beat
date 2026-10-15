@@ -2,6 +2,7 @@ import { type ReactNode, useMemo, useRef, useState } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
+import { DiagramWatermark } from './DiagramWatermark'
 import { edgeKey, getActiveBacking } from './graphSelectors'
 import { layoutRelationsGraph } from './layoutRelationsGraph'
 import { getRelationsNodeSize } from './nodeSize'
@@ -24,6 +25,8 @@ interface Props {
   selectedNodeId: string | undefined
   onSelectNode: (id: string | undefined) => void
   onExpand?: () => void
+  /** A bare wheel pans instead of scrolling the page, for full-screen views. */
+  wheelPans?: boolean
   className?: string
 }
 
@@ -33,6 +36,7 @@ export function RelationsDiagram({
   selectedNodeId,
   onSelectNode,
   onExpand,
+  wheelPans = false,
   className,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -69,6 +73,7 @@ export function RelationsDiagram({
     viewport,
     focusX,
     containerRef,
+    wheelPans,
   )
   const pan = useDragToPan(camera, setCamera, containerRef)
 
@@ -106,6 +111,7 @@ export function RelationsDiagram({
         if (!pan.consumeSuppressedClick()) onSelectNode(undefined)
       }}
     >
+      <DiagramWatermark />
       <svg className="absolute inset-0 size-full" aria-hidden>
         <RelationsEdgeMarkers />
         <g transform={`translate(${camera.x}, ${camera.y}) scale(${camera.k})`}>
@@ -175,6 +181,11 @@ export function RelationsDiagram({
       <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1 text-label-value-12 text-secondary">
         <p className="hidden rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:block">
           Use two fingers to move the diagram
+        </p>
+        <p className="rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:hidden">
+          {wheelPans
+            ? 'Scroll or drag to move the diagram'
+            : 'Drag to move the diagram, Ctrl + scroll to zoom'}
         </p>
         <p className="rounded-md border border-divider bg-surface-primary px-2 py-1">
           Past 24h crosschain volume

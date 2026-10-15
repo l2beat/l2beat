@@ -37,8 +37,6 @@ export async function getSearchBarEntries(search: string) {
     ps.getProjects({
       optional: [
         'scalingInfo',
-        'daLayer',
-        'daBridge',
         'ecosystemConfig',
         'interopConfig',
         'zkCatalogInfo',
@@ -53,7 +51,7 @@ export async function getSearchBarEntries(search: string) {
   ])
 
   const searchBarEntries = projects.flatMap((p) =>
-    getSearchBarProjectEntries(p, projects),
+    getSearchBarProjectEntries(p),
   )
 
   if (EthereumAddress.check(search)) {

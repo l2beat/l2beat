@@ -1,6 +1,6 @@
 {
   "name": "bob",
-  "timestamp": 1790944898,
+  "timestamp": 1791965825,
   "configHash": "0xdaa10f5f3b0c285bd42d95c7e6ff081bcbf3355abc170959d20b058349db6468",
   "entries": [
     {
@@ -464,6 +464,33 @@
             "data": "0xd547741ffd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": 259200
+          },
+          {
+            "id": "0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910",
+            "index": 1,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910",
+            "index": 2,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
           }
         ],
         "Canceller": ["eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"],
@@ -540,7 +567,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9"
       },
       "fieldMeta": {
@@ -628,15 +655,15 @@
           "eth:0x10B0589c16a8851450BD7FEE274cD349fB9d6A0E",
           "eth:0x751708D6341b36c0C258754fc2DbF96074f5BdC7",
           "eth:0xbF58b6DE2B893e7ab707edc6cf99Bb6989C173a4",
-          "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926",
+          "eth:0x9a017883e4A6BB2a6261D92D70f71107F2C39D12",
           "eth:0xDA8e7102681f9652FB8a10b70949CF7F260e0A01"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x47737e89c747e1ee0cc9da891edc10788a1f86d914aaa945fc62aa1ef3165426",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1080,7 +1107,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": true,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97"
       },
       "fieldMeta": {
@@ -1157,7 +1184,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85"
       },
       "fieldMeta": {
@@ -1273,7 +1300,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 26095414
+          "prevBlockNum": 26176433
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -1437,7 +1464,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 987,
+        "gameCount": 1082,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1448,7 +1475,7 @@
         "initVersion": 1,
         "owner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "permissionedGameArgs": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6b6b6342ff75b4213cbf101c135f1fc33695acc13c9ac21acd8696b64270716528bf83630ea7a293c048d0cff3f0729117f44da6494dbf4d78e593d95000000000000000000000000000000000000000000000000000000000000ed887cb1022d30b9860c36b243e7b181a1d46f618c69c91482a96e9c2a104d9298d1980eccf8c4dc764e",
-        "permissionedGamesTotal": 129,
+        "permissionedGamesTotal": 224,
         "proposerFromDGF": "eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "proxyAdmin": "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "proxyAdminOwner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
@@ -1582,6 +1609,11 @@
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
+      "address": "eth:0x9a017883e4A6BB2a6261D92D70f71107F2C39D12",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RiscZeroVerifierEmergencyStop",
       "address": "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696",
       "type": "Contract",
@@ -1599,7 +1631,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D"
       },
       "fieldMeta": {
@@ -2004,13 +2036,13 @@
           ]
         ],
         "$upgradeCount": 5,
-        "anchorGame": "eth:0x383cF83b49cEcCEf60926F28A3b956f94dD7ACF5",
+        "anchorGame": "eth:0xda1DEe33E8626B9f8fE2888916E9c3baC54D5860",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
         "disputeGameFinalityDelaySeconds": 43200,
         "getAnchorRoot": [
-          "0xee55ad54be74d82305f432a8677a232e94f6f6123d4140ef3cccb183d7115e23",
-          38992594
+          "0x4a7eb4f821d9f8453701edde603af373907687a99f737da5424e2d20291c44f1",
+          39506324
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -2119,11 +2151,6 @@
       }
     },
     {
-      "address": "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xDA8e7102681f9652FB8a10b70949CF7F260e0A01",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2145,7 +2172,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": true,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF"
       },
       "fieldMeta": {
@@ -2251,7 +2278,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660840",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660844",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -3874,8 +3901,8 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26104707 },
-  "permissionsConfigHash": "0x56f2a398d07dccd05419b1018f03b1c81663823b7d1e5d142a31ee063bdf9d18",
+  "usedBlockNumbers": { "ethereum": 26189486 },
+  "permissionsConfigHash": "0xdd26874aff85a1264b5a1a84e481a0a597299c4ab2c26c85105bf2ec576c82ac",
   "permissions": {
     "eth:0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11": {
       "receivedPermissions": [

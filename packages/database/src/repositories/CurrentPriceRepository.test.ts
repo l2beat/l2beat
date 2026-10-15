@@ -40,40 +40,26 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
     },
   )
 
-  describe(
-    CurrentPriceRepository.prototype.deleteByCoingeckoIds.name,
-    async () => {
-      it('returns 0 for empty array', async () => {
-        await repository.upsertMany([mock('A', 1), mock('B', 2)])
+  describe(CurrentPriceRepository.prototype.deleteAllExcept.name, () => {
+    it('deletes every record whose id is not kept and returns count', async () => {
+      await repository.upsertMany([mock('A', 1), mock('B', 2), mock('C', 3)])
 
-        const deletedCount = await repository.deleteByCoingeckoIds([])
-        expect(deletedCount).toEqual(0)
+      const deletedCount = await repository.deleteAllExcept(['A', 'X'])
+      expect(deletedCount).toEqual(2)
 
-        const remaining = await repository.getAll()
-        expect(remaining).toEqualUnsorted([saved('A', 1), saved('B', 2)])
-      })
+      const remaining = await repository.getAll()
+      expect(remaining).toEqualUnsorted([saved('A', 1)])
+    })
 
-      it('deletes existing records and returns count', async () => {
-        await repository.upsertMany([mock('A', 1), mock('B', 2), mock('C', 3)])
+    it('deletes everything for an empty array', async () => {
+      await repository.upsertMany([mock('A', 1), mock('B', 2)])
 
-        const deletedCount = await repository.deleteByCoingeckoIds(['A', 'B'])
-        expect(deletedCount).toEqual(2)
+      const deletedCount = await repository.deleteAllExcept([])
+      expect(deletedCount).toEqual(2)
 
-        const remaining = await repository.getAll()
-        expect(remaining).toEqualUnsorted([saved('C', 3)])
-      })
-
-      it('returns 0 when deleting non-existent records', async () => {
-        await repository.upsertMany([mock('A', 1), mock('B', 2)])
-
-        const deletedCount = await repository.deleteByCoingeckoIds(['X', 'Y'])
-        expect(deletedCount).toEqual(0)
-
-        const remaining = await repository.getAll()
-        expect(remaining).toEqualUnsorted([saved('A', 1), saved('B', 2)])
-      })
-    },
-  )
+      expect(await repository.getAll()).toEqual([])
+    })
+  })
 })
 
 function mock(

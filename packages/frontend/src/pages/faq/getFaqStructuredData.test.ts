@@ -17,7 +17,7 @@ describe(getFaqStructuredData.name, () => {
       name: 'What is the overall purpose of this site?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '<p>L2BEAT was created to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the <a href="https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698">rollup-centric Ethereum scaling roadmap</a> are aimed at scaling Ethereum.</p>\n',
+        text: '<p>L2BEAT was created to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the <a href="https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698">rollup-centric Ethereum scaling roadmap</a> are aimed at scaling Ethereum. Since then we have expanded to cover the interoperability protocols that connect these chains, privacy protocols on Ethereum, and the ZK technology many of these projects rely on.</p>\n',
       },
     })
   })

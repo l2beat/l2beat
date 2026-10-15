@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x5490b25fa103fd64b33f9e5019324808b9bf1522
+
+# Diff at Thu, 08 Oct 2026 14:33:58 GMT:
+
+- id: 53644418
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@66bd7fd1bea653502521aeddf38d5b0a0b3ca755 block: 1787834220
+- current timestamp: 1791469973
+
+## Description
+
+Proposer and challenger permissions are now read from the DisputeGameFactory `gameArgs`, since the clones-with-immutable-args `PermissionedDisputeGame` implementation returns zero addresses.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787834220 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x03e820562ffd2e0390787caD706EaF1FF98C2608) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21","description":"Allowed to post new state roots of the current layer to the host chain.","role":".proposerFromDGF"}]
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengerFromDGF"}
+    }
+```
+
 Generated with discovered.json: 0x572cee81718cabc5cb5d127757f2a5a46e157250
 
 # Diff at Sun, 04 Oct 2026 05:55:33 GMT:

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xe20c6953addc969cb2919b2b99d389dc66983055
+
+# Diff at Tue, 13 Oct 2026 13:15:49 GMT:
+
+- id: 26ef3899
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f86fa8ee6214e9cba302685affb910adddc04f2d block: 1791455017
+- current timestamp: 1791897274
+
+## Description
+
+ETH withdrawal reserve was topped-up, so withdrawal reserve is above minimum again.
+
+## Watched changes
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: True when the LineaRollup ETH balance (the withdrawal reserve backing L2 exits) is below the effective minimum reserve. While true, no more ETH can be moved to the YieldManager or staked, and anyone can permissionlessly trigger unstaking from yield providers (with beacon chain proofs) and replenish the reserve up to the target. Refilling a deficit depends on beacon chain withdrawal latency.
++++ severity: MEDIUM
+      values.isWithdrawalReserveBelowMinimum:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0xdf75e523538932e3ffd982720e6f36c49afb21f3
 
 # Diff at Thu, 08 Oct 2026 12:03:29 GMT:

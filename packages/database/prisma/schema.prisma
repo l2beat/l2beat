@@ -341,7 +341,7 @@ model PrivacyAnonymitySetEvent {
   blockNumber     Int
   txHash          String   @db.VarChar(66)
   logIndex        Int
-  sender          String   @db.VarChar(42)
+  sender          String   @db.VarChar(66)
   amount          Decimal  @db.Decimal(80, 0)
 
   @@id([configurationId, txHash, logIndex])
