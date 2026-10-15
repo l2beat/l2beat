@@ -35,8 +35,9 @@ export function TokenRelationsGraphView({
   graph: InteropTokenRelationsGraph
   diagramClassName?: string
   /**
-   * Fills a dialog already: no expand button, the wheel and one finger move
-   * the diagram, and on mobile the details sit below it instead of in a drawer.
+   * Fills a dialog already: no expand button, and it behaves like the
+   * expanded view: the wheel and one finger move the diagram, and on mobile
+   * the details sit below it instead of in a drawer.
    */
   embedded?: boolean
   className?: string
@@ -67,6 +68,16 @@ export function TokenRelationsGraphView({
   }
 
   const closeDetails = () => setSelectedNodeId(undefined)
+  // On mobile a full-screen view shows the details below the diagram.
+  const detailsBelow = isMobile && selectedNode && (
+    <RelationsDetails
+      graph={graph}
+      node={selectedNode}
+      onSelectNode={selectNode}
+      onClose={closeDetails}
+      className="mt-3 h-auto max-h-[50%] shrink-0 rounded-lg border border-divider"
+    />
+  )
   const paneProps = {
     graph,
     visibleGraph,
@@ -101,23 +112,13 @@ export function TokenRelationsGraphView({
           className={diagramClassName}
           fillsView={embedded}
           centersSelection={isMobile && embedded}
-          onExpand={
-            isMobile || embedded ? undefined : () => setIsExpanded(true)
-          }
+          onExpand={embedded ? undefined : () => setIsExpanded(true)}
         />
       )}
 
-      {isMobile && embedded && selectedNode && (
-        <RelationsDetails
-          graph={graph}
-          node={selectedNode}
-          onSelectNode={selectNode}
-          onClose={closeDetails}
-          className="mt-3 h-auto max-h-[50%] shrink-0 rounded-lg border border-divider"
-        />
-      )}
+      {embedded && detailsBelow}
 
-      {isMobile && !embedded && (
+      {isMobile && !embedded && !isExpanded && (
         <Drawer
           open={selectedNode !== undefined}
           onOpenChange={(open) => !open && closeDetails()}
@@ -145,16 +146,28 @@ export function TokenRelationsGraphView({
 
       <Dialog open={isExpanded} onOpenChange={setIsExpanded}>
         <DialogContent
-          className="flex flex-col gap-3 bg-surface-primary p-4"
+          className="flex flex-col gap-3 bg-surface-primary p-4 max-md:pt-0"
           fullScreen
         >
-          <DialogTitle className="pr-8">Onchain deployments</DialogTitle>
+          {/* The title row is a sticky bar at the very top because iOS Safari only
+              re-tints its status bar from a sticky or fixed bar at the top. */}
+          <DialogTitle className="pr-8 max-md:sticky max-md:top-0 max-md:bg-surface-primary max-md:pt-4">
+            Onchain deployments
+          </DialogTitle>
           <DialogDescription className="sr-only">
             A full-screen view of which deployments of this token back which
             others.
           </DialogDescription>
           <DialogClose />
-          <DiagramPane {...paneProps} className="h-full" fillsView />
+          <div className="flex min-h-0 flex-1 flex-col">
+            <DiagramPane
+              {...paneProps}
+              className="h-full"
+              fillsView
+              centersSelection={isMobile}
+            />
+            {detailsBelow}
+          </div>
         </DialogContent>
       </Dialog>
     </div>

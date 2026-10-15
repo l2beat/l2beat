@@ -29,6 +29,7 @@ const FIT_PADDING = 32
 /** Below this the node text stops being readable. */
 const READABLE_SCALE = 0.55
 const WHEEL_ZOOM_STEP = 1.15
+const MIN_DOT_SPACING = 16
 /** Pixels per wheel line, for browsers that report line-based deltas. */
 const WHEEL_LINE_HEIGHT = 16
 
@@ -254,6 +255,17 @@ export function revealCamera(
 /** The smallest shift that moves `[start, start + size]` inside `[min, max]`, favouring `min`. */
 function fitShift(start: number, size: number, min: number, max: number) {
   return Math.max(Math.min(0, max - (start + size)), min - start)
+}
+
+/**
+ * On-screen spacing of a background grid with `step` world units between
+ * dots. Zoomed far out it skips every other dot, as often as needed, so the
+ * dots never pack tighter than `MIN_DOT_SPACING`; the kept dots stay put.
+ */
+export function dotGridSpacing(step: number, k: number): number {
+  let spacing = step * k
+  while (spacing < MIN_DOT_SPACING) spacing *= 2
+  return spacing
 }
 
 /** Scales around `point` so the world point under it stays put. */

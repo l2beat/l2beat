@@ -14,6 +14,7 @@ import {
 import { RelationsNode } from './RelationsNode'
 import {
   centerCamera,
+  dotGridSpacing,
   revealCamera,
   useRelationsCamera,
 } from './relationsCamera'
@@ -141,10 +142,11 @@ export function RelationsDiagram({
   }, [graph.edges])
 
   const transform = `translate(${camera.x}px, ${camera.y}px) scale(${camera.k})`
+  const dotSpacing = dotGridSpacing(DOT_GRID_STEP, camera.k)
   const dotGrid = {
     backgroundImage:
       'radial-gradient(var(--color-divider) 1px, transparent 1px)',
-    backgroundSize: `${DOT_GRID_STEP * camera.k}px ${DOT_GRID_STEP * camera.k}px`,
+    backgroundSize: `${dotSpacing}px ${dotSpacing}px`,
     backgroundPosition: `${camera.x}px ${camera.y}px`,
   }
 

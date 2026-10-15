@@ -1,5 +1,10 @@
 import { expect } from 'earl'
-import { centerCamera, gestureCamera, revealCamera } from './relationsCamera'
+import {
+  centerCamera,
+  dotGridSpacing,
+  gestureCamera,
+  revealCamera,
+} from './relationsCamera'
 
 describe(gestureCamera.name, () => {
   const camera = { x: 10, y: 20, k: 1 }
@@ -102,5 +107,17 @@ describe(revealCamera.name, () => {
       y: 0,
       k: 0.5,
     })
+  })
+})
+
+describe(dotGridSpacing.name, () => {
+  it('scales the world grid step with the zoom', () => {
+    expect(dotGridSpacing(24, 1)).toEqual(24)
+    expect(dotGridSpacing(24, 2)).toEqual(48)
+  })
+
+  it('skips every other dot once zooming out packs them too tightly', () => {
+    expect(dotGridSpacing(24, 0.375)).toEqual(18)
+    expect(dotGridSpacing(24, 0.125)).toEqual(24)
   })
 })
