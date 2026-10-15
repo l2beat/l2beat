@@ -15,6 +15,33 @@ import { TokenIngestionProcessor } from './TokenIngestionProcessor'
 import { buildInteropTransferIndex } from './tokenIngestionUtils'
 
 describe(TokenIngestionProcessor.name, () => {
+  describe(
+    TokenIngestionProcessor.prototype.getInteropTransferIndex.name,
+    () => {
+      it('reuses the index for a minute, then reads routes again', async () => {
+        let nowMs = 0
+        const getTokenRoutes = mockFn().resolvesTo([])
+        const processor = createProcessor({
+          db: mockObject<Database>({
+            interopTransfer: mockObject<Database['interopTransfer']>({
+              getTokenRoutes,
+            }),
+          }),
+          nowMs: () => nowMs,
+        })
+
+        await processor.getInteropTransferIndex()
+        nowMs = 59_999
+        await processor.getInteropTransferIndex()
+        expect(getTokenRoutes).toHaveBeenCalledTimes(1)
+
+        nowMs = 60_000
+        await processor.getInteropTransferIndex()
+        expect(getTokenRoutes).toHaveBeenCalledTimes(2)
+      })
+    },
+  )
+
   describe(TokenIngestionProcessor.prototype.plan.name, () => {
     it('does not count non-swapping transfers without a recorded other side', async () => {
       const address = token('ethereum', '0xaaa')
@@ -1517,6 +1544,7 @@ function createProcessor(deps: {
     address: string,
   ) => Promise<DeployedTokenFacts>
   generateAbstractTokenId?: () => string
+  nowMs?: () => number
 }) {
   return new TokenIngestionProcessor({
     db: deps.db ?? mockObject<Database>({}),
@@ -1525,6 +1553,7 @@ function createProcessor(deps: {
     etherscanApiKey: undefined,
     fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
     generateAbstractTokenId: deps.generateAbstractTokenId,
+    nowMs: deps.nowMs,
   })
 }
 

@@ -59,6 +59,7 @@ interface TokenIngestionProcessorDeps {
   ) => Promise<DeployedTokenFacts>
   generateAbstractTokenId?: () => string
   newQueueState?: Extract<TokenIngestionQueueState, 'staged' | 'pending'>
+  nowMs?: () => number
 }
 
 /**
@@ -101,6 +102,8 @@ type FinalizedAbstractSymbol =
       outcome: Extract<IngestionOutcome, { kind: 'conflict' }>
     }
 
+const INTEROP_TRANSFER_INDEX_MAX_AGE_MS = 60_000
+
 const ABSTRACT_TOKEN_ID_CHARS =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
@@ -108,21 +111,33 @@ export class TokenIngestionProcessor {
   private coingeckoCoinMap:
     | Promise<Map<string, CoinListPlatformEntry>>
     | undefined
-  private interopTransferIndex: InteropTransferIndex | undefined
+  private interopTransferIndex:
+    | { index: InteropTransferIndex; refreshedAtMs: number }
+    | undefined
 
   constructor(private readonly deps: TokenIngestionProcessorDeps) {}
 
   getInteropTransferIndex(): Promise<InteropTransferIndex> {
-    return this.interopTransferIndex
-      ? Promise.resolve(this.interopTransferIndex)
-      : this.refreshInteropTransferIndex()
+    const cached = this.interopTransferIndex
+    if (
+      cached &&
+      this.nowMs() - cached.refreshedAtMs < INTEROP_TRANSFER_INDEX_MAX_AGE_MS
+    ) {
+      return Promise.resolve(cached.index)
+    }
+    return this.refreshInteropTransferIndex()
   }
 
   async refreshInteropTransferIndex(): Promise<InteropTransferIndex> {
+    const refreshedAtMs = this.nowMs()
     const routes = await this.deps.db.interopTransfer.getTokenRoutes()
     const index = buildInteropTransferIndex(routes)
-    this.interopTransferIndex = index
+    this.interopTransferIndex = { index, refreshedAtMs }
     return index
+  }
+
+  private nowMs() {
+    return this.deps.nowMs?.() ?? Date.now()
   }
 
   async process(
