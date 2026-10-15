@@ -70,58 +70,79 @@ describe(TvsCleaner.name, () => {
       expect(result).toEqual(to)
     })
 
-    it('always cleans from the beginning up to the current cutoff', async () => {
-      const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
-        deleteHourlyUntil: mockFn().resolvesTo(3),
-        deleteSixHourlyUntil: mockFn().resolvesTo(2),
-      })
-      const tvsBlockTimestampRepository = mockObject<
-        Database['tvsBlockTimestamp']
-      >({
-        deleteHourlyUntil: mockFn().resolvesTo(1),
-        deleteSixHourlyUntil: mockFn().resolvesTo(1),
-      })
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        deleteHourlyUntil: mockFn().resolvesTo(6),
-        deleteSixHourlyUntil: mockFn().resolvesTo(4),
-      })
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        deleteHourlyUntil: mockFn().resolvesTo(5),
-        deleteSixHourlyUntil: mockFn().resolvesTo(3),
-      })
-
+    it('cleans each day exactly once when ticks arrive hourly', async () => {
+      const repositories = createRepositories()
       const indexer = await createInitializedIndexer({
-        db: mockDatabase({
-          tvsTokenValue: tvsTokenValueRepository,
-          tvsBlockTimestamp: tvsBlockTimestampRepository,
-          tvsAmount: tvsAmountRepository,
-          tvsPrice: tvsPriceRepository,
-        }),
+        db: mockDatabase(repositories),
       })
 
-      const from = timestamp('2026-04-01T00:00:00Z')
-      const to = timestamp('2026-04-30T00:00:00Z')
-      const adjustedTo = UnixTime.toStartOf(to, 'day')
+      let safeHeight = timestamp('2026-04-10T05:00:00Z')
+      const end = timestamp('2026-04-13T05:00:00Z')
+      while (safeHeight < end) {
+        const to = safeHeight + UnixTime.HOUR
+        await indexer.update(safeHeight + 1, to)
+        safeHeight = to
+      }
+
+      const syncOptimizer = testSyncOptimizer()
+      const days = ['2026-04-10', '2026-04-11', '2026-04-12', '2026-04-13']
+      const midnights = days.map((day) => timestamp(`${day}T00:00:00Z`))
+      const hourlyRanges = midnights.slice(1).map((midnight, i) => ({
+        from: syncOptimizer.getHourlyCutOffWithGracePeriod(midnights[i]),
+        to: syncOptimizer.getHourlyCutOffWithGracePeriod(midnight),
+      }))
+      const sixHourlyRanges = midnights.slice(1).map((midnight, i) => ({
+        from: syncOptimizer.getSixHourlyCutOffWithGracePeriod(midnights[i]),
+        to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(midnight),
+      }))
+      for (const repository of Object.values(repositories)) {
+        expectDeleteCallsInOrder(repository, hourlyRanges, sixHourlyRanges)
+      }
+    })
+
+    it('does not delete anything on a tick that does not cross midnight', async () => {
+      const repositories = createRepositories()
+      const indexer = await createInitializedIndexer({
+        db: mockDatabase(repositories),
+      })
+
+      const from = timestamp('2026-04-10T05:00:00Z') + 1
+      const to = timestamp('2026-04-10T06:00:00Z')
+
+      const result = await indexer.update(from, to)
+
+      for (const repository of Object.values(repositories)) {
+        expect(repository.deleteHourlyUntil as any).not.toHaveBeenCalled()
+        expect(repository.deleteSixHourlyUntil as any).not.toHaveBeenCalled()
+      }
+      expect(result).toEqual(to)
+    })
+
+    it('cleans every missed day when it resumes after downtime', async () => {
+      const repositories = createRepositories()
+      const indexer = await createInitializedIndexer({
+        db: mockDatabase(repositories),
+      })
+
+      const from = timestamp('2026-04-10T15:00:00Z') + 1
+      const to = timestamp('2026-04-13T10:00:00Z')
+      const cleanedMidnight = timestamp('2026-04-10T00:00:00Z')
+      const lastMidnight = timestamp('2026-04-13T00:00:00Z')
       const syncOptimizer = testSyncOptimizer()
       const hourlyRange = {
-        from: syncOptimizer.getHourlyCutOffWithGracePeriod(from),
-        to: syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedTo),
+        from: syncOptimizer.getHourlyCutOffWithGracePeriod(cleanedMidnight),
+        to: syncOptimizer.getHourlyCutOffWithGracePeriod(lastMidnight),
       }
       const sixHourlyRange = {
-        from: syncOptimizer.getSixHourlyCutOffWithGracePeriod(from),
-        to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedTo),
+        from: syncOptimizer.getSixHourlyCutOffWithGracePeriod(cleanedMidnight),
+        to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(lastMidnight),
       }
 
       const result = await indexer.update(from, to)
 
-      expectDeleteCalls(tvsTokenValueRepository, hourlyRange, sixHourlyRange)
-      expectDeleteCalls(
-        tvsBlockTimestampRepository,
-        hourlyRange,
-        sixHourlyRange,
-      )
-      expectDeleteCalls(tvsAmountRepository, hourlyRange, sixHourlyRange)
-      expectDeleteCalls(tvsPriceRepository, hourlyRange, sixHourlyRange)
+      for (const repository of Object.values(repositories)) {
+        expectDeleteCalls(repository, hourlyRange, sixHourlyRange)
+      }
       expect(result).toEqual(to)
     })
   })
@@ -180,6 +201,47 @@ function timestamp(value: string): UnixTime {
 
 function testSyncOptimizer(): SyncOptimizer {
   return new SyncOptimizer(new Clock(0, 0))
+}
+
+function createRepositories() {
+  const methods = () => ({
+    deleteHourlyUntil: mockFn().resolvesTo(0),
+    deleteSixHourlyUntil: mockFn().resolvesTo(0),
+  })
+  return {
+    tvsTokenValue: mockObject<Database['tvsTokenValue']>(methods()),
+    tvsBlockTimestamp: mockObject<Database['tvsBlockTimestamp']>(methods()),
+    tvsAmount: mockObject<Database['tvsAmount']>(methods()),
+    tvsPrice: mockObject<Database['tvsPrice']>(methods()),
+  }
+}
+
+function expectDeleteCallsInOrder(
+  repository: {
+    deleteHourlyUntil: unknown
+    deleteSixHourlyUntil: unknown
+  },
+  hourlyRanges: { from: UnixTime | undefined; to: UnixTime }[],
+  sixHourlyRanges: { from: UnixTime | undefined; to: UnixTime }[],
+) {
+  expect(repository.deleteHourlyUntil as any).toHaveBeenCalledTimes(
+    hourlyRanges.length,
+  )
+  hourlyRanges.forEach((range, i) => {
+    expect(repository.deleteHourlyUntil as any).toHaveBeenNthCalledWith(
+      i + 1,
+      range,
+    )
+  })
+  expect(repository.deleteSixHourlyUntil as any).toHaveBeenCalledTimes(
+    sixHourlyRanges.length,
+  )
+  sixHourlyRanges.forEach((range, i) => {
+    expect(repository.deleteSixHourlyUntil as any).toHaveBeenNthCalledWith(
+      i + 1,
+      range,
+    )
+  })
 }
 
 function expectDeleteCalls(
