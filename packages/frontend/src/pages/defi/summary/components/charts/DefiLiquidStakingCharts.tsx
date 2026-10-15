@@ -13,7 +13,6 @@ import type {
   DefiLiquidStakingCharts as DefiLiquidStakingChartsData,
 } from '~/server/features/defi/liquidStakingCharts/getDefiLiquidStakingCharts'
 import {
-  BURN_BUFFER_PROJECT,
   formatDays,
   getExitCost,
   getLiquidStakingSeries,
@@ -45,14 +44,6 @@ export function DefiLiquidStakingCharts({
   const timeRange = getChartTimeRangeFromData(apr.data)
   const exitCost = getExitCost(exitDays, premium, apr)
 
-  // In `exitDays` the burn buffer project has no value on a day its buffer
-  // held under 1 ETH.
-  const bufferCharted = exitDays.projects.some(
-    (project) => project.id === BURN_BUFFER_PROJECT,
-  )
-  const bufferEmptyDays = exitDays.data.filter(
-    (point) => point[BURN_BUFFER_PROJECT] === null,
-  ).length
   const benchmarkCharted = apr.projects.some((project) => project.benchmark)
   const stake = charts.stake && {
     key: 'stake',
@@ -92,8 +83,6 @@ export function DefiLiquidStakingCharts({
         info={[
           'How many days of staking yield a holder gives up to exit, by the cheaper route: waiting for a protocol withdrawal, which earns nothing while queued, or selling at the market discount.',
           'The discount is a 7-day median of quoted prices, before swap fees and price impact. For wBETH the wait is the operator-set lock time.',
-          bufferCharted &&
-            `Rocket Pool has no queue: burning is free while its burn buffer holds ETH, which it did not on ${bufferEmptyDays} of ${exitDays.data.length} days.`,
         ]
           .filter(Boolean)
           .join(' ')}

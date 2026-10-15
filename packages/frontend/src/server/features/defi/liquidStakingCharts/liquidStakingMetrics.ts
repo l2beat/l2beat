@@ -35,7 +35,7 @@ export function getLiquidStakingSeries(
 }
 
 /** The one protocol whose exit is a burn against a buffer, not a queue. */
-export const BURN_BUFFER_PROJECT = 'rocketpool'
+const BURN_BUFFER_PROJECT = 'rocketpool'
 
 const DISCOUNT_WINDOW = 7
 
