@@ -1,4 +1,6 @@
+import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
+import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import { CustomLink } from './link/CustomLink'
 
 interface Props {
@@ -8,6 +10,7 @@ interface Props {
 
 export function Footer({ className, innerContainerClassName }: Props) {
   const currentYear = new Date().getFullYear()
+  const markdownHref = getMarkdownAlternatePath(usePathname())
 
   return (
     <footer
@@ -20,26 +23,39 @@ export function Footer({ className, innerContainerClassName }: Props) {
     >
       <div
         className={cn(
-          'mx-auto flex max-w-[1216px] flex-col items-center gap-2 text-secondary md:h-6 md:flex-row md:justify-between',
+          'mx-auto flex max-w-[1216px] flex-col items-center gap-2 text-secondary lg:h-6 lg:flex-row lg:justify-between',
           innerContainerClassName,
         )}
       >
         <p className="text-center font-medium text-xs leading-none">
           Made with 💗 by the L2BEAT team
         </p>
-        <p>
-          <CustomLink
-            href="/terms-of-service"
-            variant="plain"
-            className="font-medium text-secondary text-xs"
-          >
-            Terms of Service
-          </CustomLink>
-        </p>
-        <p className="text-center font-medium text-xs leading-none md:text-right">
+        {/* In the body, because agents that fetch a page skip its <head> links and headers. */}
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+          <FooterLink href="/terms-of-service">Terms of Service</FooterLink>
+          <FooterLink href="/llms.txt">llms.txt</FooterLink>
+          {markdownHref && (
+            <FooterLink href={markdownHref}>
+              Markdown version of this page
+            </FooterLink>
+          )}
+        </div>
+        <p className="text-center font-medium text-xs leading-none lg:text-right">
           Copyright {currentYear} L2BEAT
         </p>
       </div>
     </footer>
+  )
+}
+
+function FooterLink({ href, children }: { href: string; children: string }) {
+  return (
+    <CustomLink
+      href={href}
+      variant="plain"
+      className="font-medium text-secondary text-xs"
+    >
+      {children}
+    </CustomLink>
   )
 }
