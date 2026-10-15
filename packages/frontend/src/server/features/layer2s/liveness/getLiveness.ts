@@ -6,7 +6,7 @@ import type {
   RealTimeAnomalyRecord,
 } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import isEmpty from 'lodash/isEmpty'
@@ -14,6 +14,7 @@ import range from 'lodash/range'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { ChartRange } from '~/utils/range/range'
 import { getConfigurationsSyncedUntil } from '../../utils/getConfigurationsSyncedUntil'
 import type { TrackedTxsProject } from '../../utils/getTrackedTxsProjects'
@@ -27,15 +28,19 @@ import type {
 } from './types'
 import { getAnomalyFailureMechanism } from './utils/getAnomalyFailureMechanism'
 
-export async function getLiveness(projectId?: ProjectId) {
+const cache = new FrontendInMemoryCache('getLiveness')
+
+export async function getLiveness() {
   if (env.MOCK) {
     return getMockLivenessData()
   }
 
-  return await getLivenessData(projectId)
+  // Each project page needs one project, but sharing the read of all of them
+  // is cheaper than one read per page when pages render together.
+  return await cache.get({ key: ['liveness'], ttl: 5 * 60 }, getLivenessData)
 }
 
-async function getLivenessData(projectId?: ProjectId) {
+async function getLivenessData() {
   const db = getDb()
   const projects: LivenessResponse = {}
 
@@ -72,25 +77,17 @@ async function getLivenessData(projectId?: ProjectId) {
     anomalyRecords,
     realTimeAnomalyRecords,
   ] = await Promise.all([
-    db.aggregatedLiveness.getAggregatesByTimeRange(
-      [targetTimestamp - 30 * UnixTime.DAY, targetTimestamp],
-      projectId,
-    ),
-    db.aggregatedLiveness.getAggregatesByTimeRange(
-      [targetTimestamp - 90 * UnixTime.DAY, targetTimestamp],
-      projectId,
-    ),
-    db.aggregatedLiveness.getAggregatesByTimeRange(
-      [null, targetTimestamp],
-      projectId,
-    ),
-    db.anomalies.getByProjectIdsFrom(
-      projectId ? [projectId] : projectIds,
-      last30Days,
-    ),
-    db.realTimeAnomalies.getApprovedAnomaliesByProjectIds(
-      projectId ? [projectId] : projectIds,
-    ),
+    db.aggregatedLiveness.getAggregatesByTimeRange([
+      targetTimestamp - 30 * UnixTime.DAY,
+      targetTimestamp,
+    ]),
+    db.aggregatedLiveness.getAggregatesByTimeRange([
+      targetTimestamp - 90 * UnixTime.DAY,
+      targetTimestamp,
+    ]),
+    db.aggregatedLiveness.getAggregatesByTimeRange([null, targetTimestamp]),
+    db.anomalies.getByProjectIdsFrom(projectIds, last30Days),
+    db.realTimeAnomalies.getApprovedAnomaliesByProjectIds(projectIds),
   ])
 
   const groupedLast30Days = groupBy(last30DaysRecords, (r) => r.projectId)

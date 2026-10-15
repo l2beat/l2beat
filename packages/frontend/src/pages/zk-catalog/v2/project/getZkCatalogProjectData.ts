@@ -1,5 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { limitProjectPageLoad } from '~/pages/limitProjectPageLoad'
 import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -47,7 +48,7 @@ function getCachedZkCatalogProjectPage(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => loadZkCatalogProjectPage(manifest, slug),
+    () => limitProjectPageLoad(() => loadZkCatalogProjectPage(manifest, slug)),
   )
 }
 

@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express, { type Request } from 'express'
+import { limitProjectPageLoad } from '~/pages/limitProjectPageLoad'
 import {
   serveMarkdown,
   serveMarkdownIfPreferred,
@@ -170,10 +171,12 @@ export function createL2Router(
           staleWhileRevalidate: 25 * 60,
         },
         () =>
-          getL2ProjectTvsBreakdownData(
-            manifest,
-            req.params.slug,
-            req.originalUrl,
+          limitProjectPageLoad(() =>
+            getL2ProjectTvsBreakdownData(
+              manifest,
+              req.params.slug,
+              req.originalUrl,
+            ),
           ),
       )
       if (!data) {

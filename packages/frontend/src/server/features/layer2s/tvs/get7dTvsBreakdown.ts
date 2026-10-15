@@ -9,6 +9,7 @@ import {
   calculatePercentageChange,
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { getSyncState, type SyncState } from '../../utils/syncState'
 import { getAdditionalTrustAssumptionsPercentage } from './utils/getAdditionalTrustAssumptionsPercentage'
@@ -74,6 +75,8 @@ export type TvsBreakdownProjectFilter = v.infer<
   typeof TvsBreakdownProjectFilter
 >
 
+const cache = new FrontendInMemoryCache('get7dTvsBreakdown')
+
 export async function get7dTvsBreakdown(
   params: TvsBreakdownProjectFilter,
 ): Promise<SevenDayTvsBreakdown> {
@@ -81,6 +84,16 @@ export async function get7dTvsBreakdown(
     return getMockTvsBreakdownData(params)
   }
 
+  // Every project page asks for the same breakdown, so pages share one read.
+  return await cache.get(
+    { key: ['7d-tvs-breakdown', JSON.stringify(params)], ttl: 5 * 60 },
+    () => get7dTvsBreakdownData(params),
+  )
+}
+
+async function get7dTvsBreakdownData(
+  params: TvsBreakdownProjectFilter,
+): Promise<SevenDayTvsBreakdown> {
   const db = getDb()
   const tvsProjects = await getTvsProjects(
     createTvsBreakdownProjectFilter(params),

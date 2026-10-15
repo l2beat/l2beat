@@ -202,7 +202,7 @@ export async function getL2ProjectEntry(
     getActivityProjectStats(project.id),
     get7dTvsBreakdown({ type: 'layer2' }),
     getTokensForProject(project),
-    getLiveness(project.id),
+    getLiveness(),
     getContractUtils(),
     getL2TvsSection(project),
     getActivitySection(project),

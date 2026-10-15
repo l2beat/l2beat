@@ -1,5 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { limitProjectPageLoad } from '~/pages/limitProjectPageLoad'
 import { getDefiProjectEntry } from '~/server/features/defi/project/getDefiProjectEntry'
 import { getDefiProjectTotalValueLocked } from '~/server/features/defi/project/getDefiProjectTotalValueLocked'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -60,7 +61,7 @@ function getCachedDefiProjectPage(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => loadDefiProjectPage(manifest, slug),
+    () => limitProjectPageLoad(() => loadDefiProjectPage(manifest, slug)),
   )
 }
 

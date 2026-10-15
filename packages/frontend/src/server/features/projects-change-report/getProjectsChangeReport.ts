@@ -8,6 +8,7 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 
 export type ProjectsChangeReport = Awaited<
   ReturnType<typeof getProjectsChangeReportWithFns>
@@ -40,12 +41,18 @@ type ProjectChangeReport = Record<
   }
 >
 
+const cache = new FrontendInMemoryCache('getProjectsChangeReport')
+
 export async function getProjectsChangeReport() {
   if (env.MOCK) {
     return getProjectsChangeReportMock()
   }
 
-  return await getProjectsChangeReportWithFns()
+  // Every page reads the whole UpdateDiff table, so pages share one read.
+  return await cache.get(
+    { key: ['projects-change-report'], ttl: 5 * 60 },
+    getProjectsChangeReportWithFns,
+  )
 }
 
 async function getProjectsChangeReportWithFns() {

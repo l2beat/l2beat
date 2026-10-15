@@ -1,5 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { limitProjectPageLoad } from '~/pages/limitProjectPageLoad'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -51,7 +52,7 @@ function getCachedPrivacyProjectPage(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => loadPrivacyProjectPage(manifest, slug),
+    () => limitProjectPageLoad(() => loadPrivacyProjectPage(manifest, slug)),
   )
 }
 

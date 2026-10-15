@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { limitProjectPageLoad } from '~/pages/limitProjectPageLoad'
 import { getL2ProjectEntry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -52,7 +53,7 @@ function getCachedL2ProjectPage(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => loadL2ProjectPage(manifest, slug),
+    () => limitProjectPageLoad(() => loadL2ProjectPage(manifest, slug)),
   )
 }
 

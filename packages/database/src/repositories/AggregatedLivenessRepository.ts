@@ -181,7 +181,6 @@ export class AggregatedLivenessRepository extends BaseRepository {
 
   async getAggregatesByTimeRange(
     range: [UnixTime | null, UnixTime],
-    projectId?: ProjectId,
   ): Promise<
     Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
   > {
@@ -204,9 +203,6 @@ export class AggregatedLivenessRepository extends BaseRepository {
 
     if (from) {
       query = query.where('timestamp', '>=', UnixTime.toDate(from))
-    }
-    if (projectId) {
-      query = query.where('projectId', '=', projectId)
     }
 
     query = query.groupBy(['projectId', 'subtype'])
