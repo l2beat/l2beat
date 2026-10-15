@@ -826,7 +826,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
       const anomalyStatsRepository = mockObject<Database['anomalyStats']>({
-        getLatestStats: mockFn().resolvesTo([
+        getLatestStats: latestStatsFrom([
           {
             timestamp: outdatedStatTimestamp,
             projectId,
@@ -834,7 +834,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             mean: 10,
             stdDev: 20,
           },
-        ] as AnomalyStatsRecord[]),
+        ]),
       })
 
       const realTimeLivenessRepository = mockObject<
@@ -953,7 +953,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         Logger.SILENT,
         mockDatabase({
           anomalyStats: mockObject<Database['anomalyStats']>({
-            getLatestStats: mockFn().resolvesTo([
+            getLatestStats: latestStatsFrom([
               {
                 timestamp: staleStatTimestamp,
                 projectId,
@@ -1039,4 +1039,10 @@ function createMockTrackedTxsConfig(
       },
     ],
   })
+}
+
+function latestStatsFrom(stats: AnomalyStatsRecord[]) {
+  return mockFn().executes(async (fromInclusive: UnixTime) =>
+    stats.filter((stat) => stat.timestamp >= fromInclusive),
+  )
 }
