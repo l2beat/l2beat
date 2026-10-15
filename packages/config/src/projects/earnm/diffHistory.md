@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x87b8598ba308bac8fdc2548248c1155e6690e60e
+
+# Diff at Mon, 12 Oct 2026 09:59:50 GMT:
+
+- id: 81f799c7
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1790927850
+- current timestamp: 1791533687
+
+## Description
+
+RollupProxy: ArbOS v51.1 → v61 wasm module root, set by an executor EOA through the UpgradeExecutor.
+ArbFilteredTransactionsManager: transaction-filtering precompile live with ArbOS 61, no filterers set; the L3 chain owner (an EOA) is now tracked.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x2E3f48e1A9B9849e5c0e4Fe987AEa2dA1702Ddda) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v51.1 wasmModuleRoot"
++        "ArbOS v61 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
++++ severity: HIGH
+      values.wasmModuleRoot:
+-        "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c"
++        "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
+    }
+```
+
+```diff
+    contract ArbFilteredTransactionsManager (earnm:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS transaction-filtering precompile (0x..74, ArbOS 60+). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      values.transactionFilterers:
+-        "EXPECT_REVERT"
++        []
+      values.$immutable:
++        true
+      sourceHashes:
++        ["0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"]
+      implementationNames:
++        {"earnm:0x0000000000000000000000000000000000000074":""}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790927850 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (arb1:0xcD3D1CFE5e0cDa77D0a2D1ac1c0268C77115f89D) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.transactionFilteringPrecompile:
++        "earnm:0x0000000000000000000000000000000000000074"
+    }
+```
+
 Generated with discovered.json: 0x2cc0a3cb1276ffd8b0ff2c47390c791ef8a30bb8
 
 # Diff at Sun, 04 Oct 2026 05:55:32 GMT:

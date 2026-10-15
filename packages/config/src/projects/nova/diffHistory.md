@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x86558e134fd100573e4787ae3be5a93e1f00a4b0
+Generated with discovered.json: 0x2f6c625af9a3e0f607ebde6f7d873bd551b34441
+
+# Diff at Mon, 12 Oct 2026 11:38:50 GMT:
+
+- id: 063b2834
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1788792011
+- current timestamp: 1788792011
+
+## Description
+
+ArbFilteredTransactionsManager: template description corrected to ArbOS 60+.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788792011 (main branch discovery), not current.
+
+```diff
+    contract ArbFilteredTransactionsManager (arb-nova:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.
+      description:
+-        "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active."
++        "ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered."
+    }
+```
 
 # Diff at Sun, 04 Oct 2026 05:55:34 GMT:
 
