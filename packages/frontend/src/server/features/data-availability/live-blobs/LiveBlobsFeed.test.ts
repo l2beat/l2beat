@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { type LogEntry, Logger } from '@l2beat/backend-tools'
 import type { LiveBlockRecord } from '@l2beat/database'
 import { slotStart, UnixTime } from '@l2beat/shared-pure'
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
@@ -226,6 +226,31 @@ describe(LiveBlobsFeed.name, () => {
     const blobs = await feed.latest()
     expect(blobs?.head).toEqual(HEAD + 1)
     expect(blobs?.live).toEqual(true)
+  })
+
+  it('tells in its warning what a read that took too long waits on', async () => {
+    const db = fakeDb()
+    const warnings: LogEntry[] = []
+    const logger = new Logger({
+      level: 'WARN',
+      transports: [{ log: (entry) => warnings.push(entry), flush: () => {} }],
+    })
+    db.source.poolStats = () => ({ total: 200, idle: 0, waiting: 37 })
+    feed = new LiveBlobsFeed(db.source, logger)
+    await feed.latest()
+    db.head = HEAD + 1
+    db.source.liveBlobBatch.getPostedSince = () => new Promise(() => {})
+
+    await clock.tickAsync(5500)
+
+    expect(warnings.map((w) => w.message)).toEqual(['Live blobs unreadable'])
+    expect(warnings[0]?.parameters).toEqual(
+      expect.subset({
+        pendingPhase: 'readRows',
+        readSeconds: expect.greaterThanOrEqual(5),
+        dbPool: { total: 200, idle: 0, waiting: 37 },
+      }),
+    )
   })
 
   it('has no answer while the database has no blocks, or has never been read', async () => {

@@ -16,18 +16,26 @@ export type DB = GeneratedDB
 defaults.parseInputDatesAsUTC = true
 types.setTypeParser(types.builtins.TIMESTAMP, (value) => new Date(value + 'Z'))
 
+/** The pool's connections right now */
+export interface PoolStats {
+  total: number
+  idle: number
+  /** Queries queued for a free connection */
+  waiting: number
+}
+
 export type Transaction = Omit<KyselyTransaction<DB>, 'transaction'>
 export type QueryBuilder = Omit<Kysely<DB>, 'transaction'>
 
 export class DatabaseClient {
   private readonly kysely: Kysely<DB>
+  private readonly pool: Pool
   private context = new AsyncLocalStorage<Transaction>()
 
   constructor({ log, ...config }: PoolConfig & { log?: LogConfig }) {
+    this.pool = new Pool({ types, ...config })
     this.kysely = new Kysely<DB>({
-      dialect: new PostgresDialect({
-        pool: new Pool({ types, ...config }),
-      }),
+      dialect: new PostgresDialect({ pool: this.pool }),
       log,
     })
   }
@@ -50,6 +58,14 @@ export class DatabaseClient {
       tx.setIsolationLevel(isolationLevel)
     }
     return tx.execute((trx) => this.context.run(trx, cb))
+  }
+
+  poolStats(): PoolStats {
+    return {
+      total: this.pool.totalCount,
+      idle: this.pool.idleCount,
+      waiting: this.pool.waitingCount,
+    }
   }
 
   close() {

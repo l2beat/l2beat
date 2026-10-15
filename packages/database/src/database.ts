@@ -65,6 +65,7 @@ export function createDatabase(
   return {
     transaction: db.transaction.bind(db),
     close: db.close.bind(db),
+    poolStats: db.poolStats.bind(db),
     url: config.connectionString,
 
     // #region Activity

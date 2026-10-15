@@ -1,3 +1,4 @@
+import { monitorEventLoopDelay } from 'node:perf_hooks'
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, LiveSlotRange } from '@l2beat/database'
 import { v } from '@l2beat/validate'
@@ -30,6 +31,9 @@ const IDLE_AFTER = 3 * LONG_POLL
 const FIRST_ANSWER_TIMEOUT = 10
 /** The pool waits for a free connection with no limit, so a stuck read must be cut off */
 const READ_TIMEOUT = 5
+
+/** Shared by every feed: one sampling timer is enough for the process */
+const eventLoopDelay = monitorEventLoopDelay()
 
 export const LiveBlobsParams = v.object({
   /** The newest slot the page has: the answer waits for the head to move off it */
@@ -129,6 +133,8 @@ export interface LiveBlobsSource {
     Database['liveBlobBatch'],
     'getBySlotRange' | 'getPostedSince' | 'getBucketsSince'
   >
+  /** Missing in mock mode, which has no pool */
+  poolStats?: Database['poolStats']
 }
 
 let feed: LiveBlobsFeed | undefined
@@ -163,6 +169,9 @@ export class LiveBlobsFeed {
   private warmup: Promise<void> | undefined
   /** A poll after a timed-out read waits on it rather than starting another */
   private reading: Promise<void> | undefined
+  /** When the read in `reading` began, and what it waits on */
+  private readStartedAt = 0
+  private readPhase: 'findHead' | 'readRows' | undefined
   private readonly waiting = new Set<() => void>()
   private timer: ReturnType<typeof setTimeout> | undefined
   private readonly logger: Logger
@@ -173,6 +182,7 @@ export class LiveBlobsFeed {
     private readonly now = () => Date.now() / 1000,
   ) {
     this.logger = logger.for(this)
+    eventLoopDelay.enable()
   }
 
   /** Undefined while no head has ever been read */
@@ -240,7 +250,10 @@ export class LiveBlobsFeed {
     } catch (error) {
       // logged once per outage, not on every retry
       if (this.failures === 0) {
-        this.logger.warn('Live blobs unreadable', { error })
+        this.logger.warn('Live blobs unreadable', {
+          error,
+          ...this.whyUnreadable(),
+        })
       }
       this.failures++
       if (this.snapshot?.live) this.snapshot = { ...this.snapshot, live: false }
@@ -255,18 +268,26 @@ export class LiveBlobsFeed {
    * on it rather than starting another, which could also land after a newer one
    */
   private async readInTime() {
-    this.reading ??= this.read().finally(() => {
-      this.reading = undefined
-    })
+    if (!this.reading) {
+      this.readStartedAt = this.now()
+      // reset per read, so the delays are those the read lived through
+      eventLoopDelay.reset()
+      this.reading = this.read().finally(() => {
+        this.reading = undefined
+        this.readPhase = undefined
+      })
+    }
     if (!(await settlesWithin(this.reading, READ_TIMEOUT))) {
       throw new Error(`Live blobs read took over ${READ_TIMEOUT} s`)
     }
   }
 
   private async read() {
+    this.readPhase = 'findHead'
     const head = await this.source.liveBlock.findHead()
     if (!head) return
     if (head.hash !== this.headHash) {
+      this.readPhase = 'readRows'
       const rows = await readRows(this.source, head.slot)
       this.snapshot = buildLiveBlobs(rows, head.slot, this.now())
       this.stored = rows.stored
@@ -278,6 +299,27 @@ export class LiveBlobsFeed {
       const live = isLive(this.snapshot.head, this.now())
       if (live !== this.snapshot.live)
         this.snapshot = { ...this.snapshot, live }
+    }
+  }
+
+  /**
+   * Tells a wait for a pooled connection, a slow query and a blocked event
+   * loop apart: the query durations Kysely logs start only once a connection is taken
+   */
+  private whyUnreadable() {
+    const ms = (ns: number) => Math.round(ns / 1e6)
+    return {
+      pendingPhase: this.readPhase,
+      readSeconds: this.reading ? this.now() - this.readStartedAt : undefined,
+      dbPool: this.source.poolStats?.(),
+      eventLoopDelayMs:
+        eventLoopDelay.count > 0
+          ? {
+              max: ms(eventLoopDelay.max),
+              p99: ms(eventLoopDelay.percentile(99)),
+              mean: ms(eventLoopDelay.mean),
+            }
+          : undefined,
     }
   }
 
