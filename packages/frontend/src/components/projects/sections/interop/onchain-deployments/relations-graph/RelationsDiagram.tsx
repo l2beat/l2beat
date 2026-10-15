@@ -25,8 +25,11 @@ interface Props {
   selectedNodeId: string | undefined
   onSelectNode: (id: string | undefined) => void
   onExpand?: () => void
-  /** A bare wheel pans instead of scrolling the page, for full-screen views. */
-  wheelPans?: boolean
+  /**
+   * Fills a view with no page left to scroll, so a bare wheel and one finger
+   * pan it. Otherwise they scroll the page, and touch pans with two fingers.
+   */
+  fillsView?: boolean
   className?: string
 }
 
@@ -36,7 +39,7 @@ export function RelationsDiagram({
   selectedNodeId,
   onSelectNode,
   onExpand,
-  wheelPans = false,
+  fillsView = false,
   className,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -73,9 +76,9 @@ export function RelationsDiagram({
     viewport,
     focusX,
     containerRef,
-    wheelPans,
+    fillsView,
   )
-  const pan = useDragToPan(camera, setCamera, containerRef)
+  const pan = useDragToPan(camera, setCamera, containerRef, fillsView)
 
   const [hoveredId, setHoveredId] = useState<string>()
   const activeId = hoveredId ?? selectedNodeId
@@ -102,7 +105,8 @@ export function RelationsDiagram({
     <div
       ref={containerRef}
       className={cn(
-        'relative touch-pan-y select-none overflow-hidden rounded-lg border border-divider bg-background',
+        'relative select-none overflow-hidden rounded-lg border border-divider bg-background',
+        fillsView ? 'touch-none' : 'touch-pan-y',
         className,
       )}
       style={dotGrid}
@@ -157,7 +161,10 @@ export function RelationsDiagram({
               isDimmed={active !== undefined && !active.nodeIds.has(node.id)}
               isUnconnected={unconnectedIds.has(node.id)}
               isSource={sourceIds.has(node.id)}
-              onSelect={onSelectNode}
+              // A touch drag that starts on a node may still end in a click on it.
+              onSelect={(id) => {
+                if (!pan.consumeSuppressedClick()) onSelectNode(id)
+              }}
               onHover={setHoveredId}
             />
           )
@@ -180,10 +187,12 @@ export function RelationsDiagram({
 
       <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1 text-label-value-12 text-secondary">
         <p className="hidden rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:block">
-          Use two fingers to move the diagram
+          {fillsView
+            ? 'Drag to move, pinch to zoom'
+            : 'Use two fingers to move or zoom'}
         </p>
         <p className="rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:hidden">
-          {wheelPans
+          {fillsView
             ? 'Scroll or drag to move the diagram'
             : 'Drag to move the diagram, Ctrl + scroll to zoom'}
         </p>

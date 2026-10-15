@@ -17,10 +17,10 @@ import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTil
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 
-// On desktop the graph fills the full-screen dialog. On mobile the details
-// panel sits below the graph, so the graph keeps a fixed height and the dialog scrolls.
-const FILL_ON_DESKTOP_CLASS_NAME = 'md:flex md:min-h-0 md:flex-1 md:flex-col'
-const DIAGRAM_CLASS_NAME = 'h-[min(60vh,720px)] md:h-full'
+// The graph fills the full-screen dialog; on mobile it shares the space with
+// the details panel below it.
+const FILL_CLASS_NAME = 'flex min-h-0 flex-1 flex-col'
+const DIAGRAM_CLASS_NAME = 'h-full'
 
 export function TokenGraphDialog({
   tile,
@@ -43,7 +43,7 @@ export function TokenGraphDialog({
       onOpenChange={(open) => !open && onClose()}
     >
       <DialogContent
-        className="bg-surface-primary max-md:overflow-y-auto md:flex md:flex-col md:gap-3 md:p-4"
+        className="flex flex-col gap-3 bg-surface-primary p-4"
         fullScreen
       >
         <DialogClose />
@@ -79,7 +79,7 @@ export function TokenGraphDialog({
         </DialogDescription>
 
         {isPending ? (
-          <div className={FILL_ON_DESKTOP_CLASS_NAME}>
+          <div className={FILL_CLASS_NAME}>
             <div className="mb-3 flex min-h-8 items-center">
               <Legend />
             </div>
@@ -98,7 +98,7 @@ export function TokenGraphDialog({
           <TokenRelationsGraphView
             graph={data}
             diagramClassName={DIAGRAM_CLASS_NAME}
-            className={FILL_ON_DESKTOP_CLASS_NAME}
+            className={FILL_CLASS_NAME}
             embedded
           />
         ) : (

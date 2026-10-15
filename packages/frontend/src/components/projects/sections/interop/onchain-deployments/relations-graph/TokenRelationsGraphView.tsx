@@ -31,7 +31,10 @@ export function TokenRelationsGraphView({
 }: {
   graph: InteropTokenRelationsGraph
   diagramClassName?: string
-  /** Inside a dialog already: no expand button, details inline instead of a drawer. */
+  /**
+   * Fills a dialog already: no expand button, the wheel and one finger move
+   * the diagram, and on mobile the details sit below it instead of in a drawer.
+   */
   embedded?: boolean
   className?: string
 }) {
@@ -93,7 +96,7 @@ export function TokenRelationsGraphView({
         <DiagramPane
           {...paneProps}
           className={diagramClassName}
-          wheelPans={embedded && !isMobile}
+          fillsView={embedded}
           onExpand={
             isMobile || embedded ? undefined : () => setIsExpanded(true)
           }
@@ -106,7 +109,7 @@ export function TokenRelationsGraphView({
           node={selectedNode}
           onSelectNode={selectNode}
           onClose={closeDetails}
-          className="mt-3 rounded-lg border border-divider"
+          className="mt-3 h-auto max-h-[50%] shrink-0 rounded-lg border border-divider"
         />
       )}
 
@@ -147,7 +150,7 @@ export function TokenRelationsGraphView({
             others.
           </DialogDescription>
           <DialogClose />
-          <DiagramPane {...paneProps} className="h-full" wheelPans />
+          <DiagramPane {...paneProps} className="h-full" fillsView />
         </DialogContent>
       </Dialog>
     </div>
@@ -163,7 +166,7 @@ function DiagramPane({
   onSelectNode,
   onCloseDetails,
   onExpand,
-  wheelPans,
+  fillsView,
   className,
 }: {
   graph: InteropTokenRelationsGraph
@@ -174,7 +177,7 @@ function DiagramPane({
   onSelectNode: (id: string | undefined) => void
   onCloseDetails: () => void
   onExpand?: () => void
-  wheelPans?: boolean
+  fillsView?: boolean
   className: string
 }) {
   // Fills a flex-column parent; a no-op in block flow.
@@ -186,7 +189,7 @@ function DiagramPane({
         selectedNodeId={selectedNodeId}
         onSelectNode={onSelectNode}
         onExpand={onExpand}
-        wheelPans={wheelPans}
+        fillsView={fillsView}
         className={className}
       />
       {detailsNode && (
