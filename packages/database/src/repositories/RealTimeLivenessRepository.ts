@@ -1,6 +1,6 @@
 import type { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { RealTimeLiveness } from '../kysely/generated/types'
 import {
@@ -75,21 +75,33 @@ export class RealTimeLivenessRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async getLatestRecords(): Promise<RealTimeLivenessRecord[]> {
-    const subQuery = this.db
-      .selectFrom('RealTimeLiveness')
-      .select([
-        'configurationId',
-        this.db.fn.max('timestamp').as('maxTimestamp'),
-      ])
-      .groupBy('configurationId')
+  async getLatestRecords(
+    configurationIds: string[],
+  ): Promise<RealTimeLivenessRecord[]> {
+    if (configurationIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('RealTimeLiveness as rtl')
-      .innerJoin(subQuery.as('latest'), (join) =>
-        join
-          .onRef('rtl.configurationId', '=', 'latest.configurationId')
-          .onRef('rtl.timestamp', '=', 'latest.maxTimestamp'),
+      .selectFrom(
+        sql<{
+          configurationId: string
+        }>`(select unnest(${configurationIds}::text[]) as "configurationId")`.as(
+          'c',
+        ),
+      )
+      .innerJoinLateral(
+        (eb) =>
+          eb
+            .selectFrom('RealTimeLiveness')
+            .selectAll()
+            .whereRef(
+              'RealTimeLiveness.configurationId',
+              '=',
+              'c.configurationId',
+            )
+            .orderBy('RealTimeLiveness.timestamp', 'desc')
+            .limit(1)
+            .as('rtl'),
+        (join) => join.onTrue(),
       )
       .selectAll('rtl')
       .execute()

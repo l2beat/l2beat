@@ -190,14 +190,17 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
   }
 
   async checkForAnomalies(block: Block) {
+    const configGroups = this.groupConfigurations()
+    const configurationIds = [...configGroups.values()].flatMap(
+      (group) => group.configurationIds,
+    )
     const [latestStats, latestRecords, ongoingAnomalies] = await Promise.all([
       this.db.anomalyStats.getLatestStats(),
-      this.db.realTimeLiveness.getLatestRecords(),
+      this.db.realTimeLiveness.getLatestRecords(configurationIds),
       this.db.realTimeAnomalies.getOngoingAnomalies(),
     ])
 
     const records: RealTimeAnomalyRecord[] = []
-    const configGroups = this.groupConfigurations()
 
     await this.removeOngoingAnomaliesForMissingConfigurations(
       ongoingAnomalies,
