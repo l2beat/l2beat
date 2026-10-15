@@ -6,7 +6,10 @@ import { Logo } from '~/components/Logo'
  */
 export function DiagramWatermark() {
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+    <div
+      className="pointer-events-none absolute inset-0 flex items-center justify-center"
+      aria-hidden
+    >
       <Logo animated={false} className="h-[118px] w-72 opacity-[0.07]" />
     </div>
   )
