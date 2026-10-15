@@ -249,7 +249,12 @@ export function RelationsDiagram({
           Past 24h crosschain volume
         </p>
       </div>
-      <div className="absolute right-3 bottom-3 flex flex-col gap-1">
+      {/* Drags don't start on the controls, so a touch that wanders off a
+          button neither pans the diagram nor leaves a click to filter out. */}
+      <div
+        className="absolute right-3 bottom-3 flex flex-col gap-1"
+        onPointerDown={(event) => event.stopPropagation()}
+      >
         <ControlButton label="Zoom in" onClick={() => zoomBy(ZOOM_STEP)}>
           <Glyph d="M5 12h14M12 5v14" />
         </ControlButton>
