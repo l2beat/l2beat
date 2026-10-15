@@ -14,13 +14,13 @@ export function getDb() {
 /**
  * Only for the live blobs feed: a burst of page renders can queue hundreds of
  * queries on the shared pool, and the feed's reads would wait behind them.
- * The feed polls every 100 ms while anyone watches, which keeps its
- * connections open.
+ * Its connections never close when idle: the polling reuses only one, and the
+ * others would close between blocks, 12 s apart, to be opened again for each.
  */
 export function getLiveBlobsDb() {
   liveBlobsDb ??= connect(
     `${createConnectionTag()}-live-blobs`,
-    { max: 3 },
+    { max: 3, idleTimeoutMillis: 0 },
     'LiveBlobsDatabase',
   )
   return liveBlobsDb
@@ -28,7 +28,7 @@ export function getLiveBlobsDb() {
 
 function connect(
   applicationName: string,
-  poolConfig: { min?: number; max?: number },
+  poolConfig: { min?: number; max?: number; idleTimeoutMillis?: number },
   logTag: string,
 ) {
   return !env.MOCK

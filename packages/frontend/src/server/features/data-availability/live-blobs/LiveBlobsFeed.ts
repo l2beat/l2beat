@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database, LiveSlotRange } from '@l2beat/database'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
-import { getLiveBlobsDb } from '~/server/database'
+import { getDb, getLiveBlobsDb } from '~/server/database'
 import { getLogger } from '~/server/utils/logger'
 import {
   buildLiveBlobs,
@@ -135,14 +135,14 @@ let feed: LiveBlobsFeed | undefined
 
 /** Shared by every visitor of this server */
 export function getLiveBlobsFeed(): LiveBlobsFeed {
-  feed ??= new LiveBlobsFeed(
-    env.MOCK
-      ? createMockLiveBlobsSource(
+  feed ??= env.MOCK
+    ? new LiveBlobsFeed(
+        createMockLiveBlobsSource(
           getBlobPosters().then((posters) => posters.map((p) => p.id)),
-        )
-      : getLiveBlobsDb(),
-    getLogger(),
-  )
+        ),
+        getLogger(),
+      )
+    : new LiveBlobsFeed(getLiveBlobsDb(), getLogger(), getDb())
   return feed
 }
 
@@ -170,6 +170,8 @@ export class LiveBlobsFeed {
   constructor(
     private readonly source: LiveBlobsSource,
     logger: Logger,
+    /** Kept apart from `source`, so pages looking back cannot hold up the polling */
+    private readonly pastSource = source,
     private readonly now = () => Date.now() / 1000,
   ) {
     this.logger = logger.for(this)
@@ -221,8 +223,8 @@ export class LiveBlobsFeed {
     const first = page * PAST_PAGE_SLOTS
     const last = first + PAST_PAGE_SLOTS - 1
     const [blocks, batches] = await Promise.all([
-      this.source.liveBlock.getBySlotRange(first, last),
-      this.source.liveBlobBatch.getBySlotRange(first, last),
+      this.pastSource.liveBlock.getBySlotRange(first, last),
+      this.pastSource.liveBlobBatch.getBySlotRange(first, last),
     ])
     return buildPastBlobs({ stored, blocks, batches }, live.head, first, last)
   }
