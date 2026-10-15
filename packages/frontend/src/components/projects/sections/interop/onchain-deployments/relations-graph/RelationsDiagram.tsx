@@ -180,11 +180,11 @@ export function RelationsDiagram({
         <p className="hidden rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:block">
           Use two fingers to move the diagram
         </p>
-        {wheelPans && (
-          <p className="rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:hidden">
-            Scroll or drag to move the diagram
-          </p>
-        )}
+        <p className="rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:hidden">
+          {wheelPans
+            ? 'Scroll or drag to move the diagram'
+            : 'Drag to move the diagram, Ctrl + scroll to zoom'}
+        </p>
         <p className="rounded-md border border-divider bg-surface-primary px-2 py-1">
           Past 24h crosschain volume
         </p>
