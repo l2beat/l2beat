@@ -2,6 +2,7 @@ import { type ReactNode, useMemo, useRef, useState } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
+import { DiagramWatermark } from './DiagramWatermark'
 import { edgeKey, getActiveBacking } from './graphSelectors'
 import { layoutRelationsGraph } from './layoutRelationsGraph'
 import { getRelationsNodeSize } from './nodeSize'
@@ -106,6 +107,7 @@ export function RelationsDiagram({
         if (!pan.consumeSuppressedClick()) onSelectNode(undefined)
       }}
     >
+      <DiagramWatermark />
       <svg className="absolute inset-0 size-full" aria-hidden>
         <RelationsEdgeMarkers />
         <g transform={`translate(${camera.x}, ${camera.y}) scale(${camera.k})`}>
