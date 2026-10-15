@@ -195,7 +195,9 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       (group) => group.configurationIds,
     )
     const [latestStats, latestRecords, ongoingAnomalies] = await Promise.all([
-      this.db.anomalyStats.getLatestStats(),
+      this.db.anomalyStats.getLatestStats(
+        UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR,
+      ),
       this.db.realTimeLiveness.getLatestRecords(configurationIds),
       this.db.realTimeAnomalies.getOngoingAnomalies(),
     ])
@@ -222,12 +224,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         (a) => a.projectId === group.projectId && a.subtype === group.subtype,
       )
 
-      const isLatestStatStale =
-        latestStat &&
-        latestStat.timestamp <
-          UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
-
-      if (!latestRecord || !latestStat || isLatestStatStale) {
+      if (!latestRecord || !latestStat) {
         if (ongoingAnomaly) {
           // if there is an ongoing anomaly and we don't have all data
           // needed to calculate the anomaly, we recover it automatically
