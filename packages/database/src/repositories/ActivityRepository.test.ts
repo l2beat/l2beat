@@ -220,6 +220,25 @@ describeDatabase(ActivityRepository.name, (db) => {
         },
       })
     })
+
+    it('should return the latest timestamp when the max repeats', async () => {
+      await repository.upsertMany([
+        record('a', START, 5, 9),
+        record('a', START + 1 * UnixTime.DAY, 5, 9),
+        record('a', START + 2 * UnixTime.DAY, 4, 7),
+      ])
+
+      const result = await repository.getMaxCountsForProjects()
+
+      expect(result).toEqual({
+        [ProjectId('a')]: {
+          uopsCount: 9,
+          uopsTimestamp: START + 1 * UnixTime.DAY,
+          count: 5,
+          countTimestamp: START + 1 * UnixTime.DAY,
+        },
+      })
+    })
   })
 
   describe(
