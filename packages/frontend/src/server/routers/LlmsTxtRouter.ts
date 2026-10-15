@@ -1,5 +1,6 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { env } from '~/env'
 import {
   type LinkListSection,
   type MarkdownLink,
@@ -254,6 +255,22 @@ const PAGE_SECTIONS: LinkListSection[] = [
         path: markdownAlternate('/defi/summary.md'),
         description:
           'Markdown list of every tracked DeFi protocol with category and page URL; the HTML page adds value locked.',
+      },
+      ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
+        ? [
+            {
+              name: 'Ossification',
+              path: '/ossification' as const,
+              description:
+                'How battle-tested the critical contracts of each layer 2, layer 3, privacy and DeFi project are: the share of recorded exploits whose code was younger, value secured since the last critical change, critical changes per year and exit window.',
+            },
+          ]
+        : []),
+      {
+        name: 'All ossification projects',
+        path: markdownAlternate('/ossification.md'),
+        description:
+          'Markdown list of every project on the ossification page with its score, clock start, battle-tested exposure, critical changes per year, exit window and page URL.',
       },
       {
         name: 'Governance',

@@ -33,10 +33,11 @@ export const LIST_PAGES_WITH_MARKDOWN = [
   '/zk-catalog',
   '/privacy/summary',
   '/interop/summary',
-  // Behind the same flag as the pages: advertised while off, these would be
+  // Behind the same flags as the pages: advertised while off, these would be
   // 404s. Everything that lists markdown pages filters by this registry, so
-  // the flag is read here only.
+  // the flags are read here only.
   ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/summary'] as const) : []),
+  ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED ? (['/ossification'] as const) : []),
 ] as const satisfies ListPagePath[]
 
 /**
@@ -56,7 +57,10 @@ export const PROJECT_PAGES_WITH_MARKDOWN = [
 export type ListPageWithMarkdown = (typeof LIST_PAGES_WITH_MARKDOWN)[number]
 
 /** Static pages plus the flagged ones `STATIC_PAGE_PATHS` cannot list unconditionally. */
-type ListPagePath = (typeof STATIC_PAGE_PATHS)[number] | '/defi/summary'
+type ListPagePath =
+  | (typeof STATIC_PAGE_PATHS)[number]
+  | '/defi/summary'
+  | '/ossification'
 
 const PAGES_WITH_MARKDOWN: readonly string[] = [
   ...LIST_PAGES_WITH_MARKDOWN,
