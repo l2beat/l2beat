@@ -98,9 +98,8 @@ export function useRelationsCamera(
       if (!event.ctrlKey && !event.metaKey) {
         if (!wheelPans) return
         event.preventDefault()
-        const scale =
-          event.deltaMode === WheelEvent.DOM_DELTA_LINE ? WHEEL_LINE_HEIGHT : 1
-        panBy(-event.deltaX * scale, -event.deltaY * scale)
+        const delta = wheelPanDelta(event, element)
+        panBy(-delta.x, -delta.y)
         return
       }
       event.preventDefault()
@@ -115,6 +114,23 @@ export function useRelationsCamera(
   }, [containerRef, zoomBy, panBy, wheelPans])
 
   return { camera, setCamera, zoomBy, reset }
+}
+
+/**
+ * The wheel's travel in pixels. Most browsers turn a shifted wheel sideways
+ * themselves, Firefox only flags it.
+ */
+function wheelPanDelta(event: WheelEvent, element: HTMLElement): Point {
+  const shifted = event.shiftKey && event.deltaX === 0
+  const x = shifted ? event.deltaY : event.deltaX
+  const y = shifted ? 0 : event.deltaY
+  if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) {
+    return { x: x * WHEEL_LINE_HEIGHT, y: y * WHEEL_LINE_HEIGHT }
+  }
+  if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+    return { x: x * element.clientWidth, y: y * element.clientHeight }
+  }
+  return { x, y }
 }
 
 /** Fits the width and anchors the top: a tall graph is panned, not shrunk into a smudge. */
