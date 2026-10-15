@@ -58,6 +58,11 @@ function ssl() {
     : undefined
 }
 
+/**
+ * `min` keeps that many idle connections open past `idleTimeoutMillis`
+ * (default 10 s), so a burst of renders doesn't have to open them all at
+ * once. It doesn't open them up front.
+ */
 export function pool() {
   switch (env.DEPLOYMENT_ENV) {
     case 'production':
