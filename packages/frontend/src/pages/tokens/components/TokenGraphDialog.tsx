@@ -43,11 +43,13 @@ export function TokenGraphDialog({
       onOpenChange={(open) => !open && onClose()}
     >
       <DialogContent
-        className="flex flex-col gap-3 bg-surface-primary p-4"
+        className="flex flex-col gap-3 bg-surface-primary p-4 max-md:pt-0"
         fullScreen
       >
         <DialogClose />
-        <DialogTitle className="flex flex-wrap items-center gap-x-2 gap-y-1 pr-8">
+        {/* The title row is a sticky bar at the very top because iOS Safari only
+            re-tints its status bar from a sticky or fixed bar at the top. */}
+        <DialogTitle className="flex flex-wrap items-center gap-x-2 gap-y-1 pr-8 max-md:sticky max-md:top-0 max-md:bg-surface-primary max-md:pt-4">
           {tile && (
             <img
               src={tile.iconUrl}
