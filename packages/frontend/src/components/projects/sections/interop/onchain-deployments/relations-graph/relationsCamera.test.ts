@@ -3,6 +3,7 @@ import {
   centerCamera,
   dotGridSpacing,
   gestureCamera,
+  gridShift,
   revealCamera,
 } from './relationsCamera'
 
@@ -119,5 +120,23 @@ describe(dotGridSpacing.name, () => {
   it('skips every other dot once zooming out packs them too tightly', () => {
     expect(dotGridSpacing(24, 0.375)).toEqual(18)
     expect(dotGridSpacing(24, 0.125)).toEqual(24)
+  })
+})
+
+describe(gridShift.name, () => {
+  const offsets = [0, 7, -7, 23.5, -23.5, 1000.5, -1000.5]
+
+  it('moves the dots with the camera, by less than one spacing', () => {
+    for (const spacing of [16, 24, 96]) {
+      // Where the dots fall within a spacing, the same at every offset.
+      const phases = offsets.map((offset) => {
+        const shift = gridShift(offset, spacing)
+        expect(shift).toBeLessThanOrEqual(0)
+        expect(shift).toBeGreaterThan(-spacing)
+        return (((offset - shift) % spacing) + spacing) % spacing
+      })
+
+      expect(new Set(phases).size).toEqual(1)
+    }
   })
 })

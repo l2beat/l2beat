@@ -14,7 +14,6 @@ import {
 import { RelationsNode } from './RelationsNode'
 import {
   centerCamera,
-  dotGridSpacing,
   revealCamera,
   useRelationsCamera,
 } from './relationsCamera'
@@ -22,7 +21,6 @@ import { routeRelationsEdges } from './routeRelationsEdges'
 import { useDragToPan } from './useDragToPan'
 
 const ZOOM_STEP = 1.25
-const DOT_GRID_STEP = 24
 /** Space kept between a revealed node and the edge it was moved clear of. */
 const REVEAL_MARGIN = 24
 
@@ -86,13 +84,8 @@ export function RelationsDiagram({
     const box = top && layout.boxes.get(top.id)
     return box ? box.x + box.width / 2 : undefined
   }, [graph.nodes, layout])
-  const { camera, setCamera, updateCamera, zoomBy, reset } = useRelationsCamera(
-    layout,
-    viewport,
-    focusX,
-    containerRef,
-    fillsView,
-  )
+  const { camera, worldRef, drawingRef, gridRef, initialStyles } =
+    useRelationsCamera(layout, viewport, focusX, containerRef, fillsView)
   // Brings a newly selected node into view. Re-runs once the viewport
   // settles, so it lands right in the diagram's final size.
   useEffect(() => {
@@ -100,8 +93,8 @@ export function RelationsDiagram({
     if (!box) return
     if (centersSelection) {
       const middle = { x: box.x + box.width / 2, y: box.y + box.height / 2 }
-      updateCamera((current) =>
-        centerCamera(current, middle, {
+      camera.glideTo(
+        centerCamera(camera.get(), middle, {
           width: viewportWidth,
           height: viewportHeight,
         }),
@@ -113,20 +106,18 @@ export function RelationsDiagram({
         width: viewportWidth - coveredRight,
         height: viewportHeight,
       }
-      updateCamera((current) =>
-        revealCamera(current, box, uncovered, REVEAL_MARGIN),
-      )
+      camera.glideTo(revealCamera(camera.get(), box, uncovered, REVEAL_MARGIN))
     }
   }, [
     centersSelection,
     coveredRight,
     selectedNodeId,
     layout,
-    updateCamera,
+    camera,
     viewportWidth,
     viewportHeight,
   ])
-  const pan = useDragToPan(camera, setCamera, containerRef, fillsView)
+  const pan = useDragToPan(camera, containerRef, fillsView)
 
   const [hoveredId, setHoveredId] = useState<string>()
   const activeId = hoveredId ?? selectedNodeId
@@ -141,15 +132,6 @@ export function RelationsDiagram({
     )
   }, [graph.edges])
 
-  const transform = `translate(${camera.x}px, ${camera.y}px) scale(${camera.k})`
-  const dotSpacing = dotGridSpacing(DOT_GRID_STEP, camera.k)
-  const dotGrid = {
-    backgroundImage:
-      'radial-gradient(var(--color-divider) 1px, transparent 1px)',
-    backgroundSize: `${dotSpacing}px ${dotSpacing}px`,
-    backgroundPosition: `${camera.x}px ${camera.y}px`,
-  }
-
   return (
     <div
       ref={containerRef}
@@ -158,80 +140,100 @@ export function RelationsDiagram({
         fillsView ? 'touch-none' : 'touch-pan-y',
         className,
       )}
-      style={dotGrid}
       {...pan.handlers}
       onClick={() => {
         if (!pan.consumeSuppressedClick()) onSelectNode(undefined)
       }}
     >
+      {/* The camera moves the grid and the world by writing their transforms,
+          so React never re-renders the diagram for a pan or a pinch. */}
+      <div
+        ref={gridRef}
+        className="pointer-events-none absolute will-change-transform"
+        style={{
+          backgroundImage:
+            'radial-gradient(var(--color-divider) 1px, transparent 1px)',
+          ...initialStyles.grid,
+        }}
+        aria-hidden
+      />
       <DiagramWatermark />
-      <svg className="absolute inset-0 size-full" aria-hidden>
-        <RelationsEdgeMarkers />
-        <g transform={`translate(${camera.x}, ${camera.y}) scale(${camera.k})`}>
-          {layout.unconnectedDividerY !== undefined && (
-            <line
-              x1={0}
-              x2={layout.width}
-              y1={layout.unconnectedDividerY}
-              y2={layout.unconnectedDividerY}
-              className="stroke-divider"
-              strokeDasharray="2 6"
-            />
-          )}
-          {graph.edges.map((edge) => {
-            const path = paths.get(edgeKey(edge))
-            if (!path) return null
-            const isHighlighted = active?.edgeKeys.has(edgeKey(edge)) ?? false
+      <div
+        ref={worldRef}
+        className="absolute top-0 left-0 origin-top-left will-change-transform"
+        style={initialStyles.world}
+      >
+        <div
+          ref={drawingRef}
+          className="origin-top-left"
+          style={initialStyles.drawing}
+        >
+          <svg
+            width={layout.width}
+            height={layout.height}
+            className="absolute top-0 left-0 overflow-visible"
+            aria-hidden
+          >
+            <RelationsEdgeMarkers />
+            {layout.unconnectedDividerY !== undefined && (
+              <line
+                x1={0}
+                x2={layout.width}
+                y1={layout.unconnectedDividerY}
+                y2={layout.unconnectedDividerY}
+                className="stroke-divider"
+                strokeDasharray="2 6"
+              />
+            )}
+            {graph.edges.map((edge) => {
+              const path = paths.get(edgeKey(edge))
+              if (!path) return null
+              const isHighlighted = active?.edgeKeys.has(edgeKey(edge)) ?? false
+              return (
+                <RelationsEdgePath
+                  key={edgeKey(edge)}
+                  path={path}
+                  isHighlighted={isHighlighted}
+                  isDimmed={active !== undefined && !isHighlighted}
+                />
+              )
+            })}
+          </svg>
+          {graph.nodes.map((node) => {
+            const box = layout.boxes.get(node.id)
+            if (!box) return null
             return (
-              <RelationsEdgePath
-                key={edgeKey(edge)}
-                path={path}
-                isHighlighted={isHighlighted}
-                isDimmed={active !== undefined && !isHighlighted}
+              <RelationsNode
+                key={node.id}
+                node={node}
+                box={box}
+                isSelected={selectedNodeId === node.id}
+                isDimmed={active !== undefined && !active.nodeIds.has(node.id)}
+                isUnconnected={unconnectedIds.has(node.id)}
+                isSource={sourceIds.has(node.id)}
+                // A touch drag that starts on a node may still end in a click on it.
+                onSelect={(id) => {
+                  if (!pan.consumeSuppressedClick()) onSelectNode(id)
+                }}
+                onHover={setHoveredId}
               />
             )
           })}
-        </g>
-      </svg>
-
-      <div
-        className="absolute top-0 left-0 origin-top-left"
-        style={{ transform }}
-      >
-        {graph.nodes.map((node) => {
-          const box = layout.boxes.get(node.id)
-          if (!box) return null
-          return (
-            <RelationsNode
-              key={node.id}
-              node={node}
-              box={box}
-              isSelected={selectedNodeId === node.id}
-              isDimmed={active !== undefined && !active.nodeIds.has(node.id)}
-              isUnconnected={unconnectedIds.has(node.id)}
-              isSource={sourceIds.has(node.id)}
-              // A touch drag that starts on a node may still end in a click on it.
-              onSelect={(id) => {
-                if (!pan.consumeSuppressedClick()) onSelectNode(id)
-              }}
-              onHover={setHoveredId}
-            />
-          )
-        })}
-        {graph.edges.map((edge) => {
-          const path = paths.get(edgeKey(edge))
-          if (!path) return null
-          return (
-            <RelationsEdgeBadge
-              key={edgeKey(edge)}
-              edge={edge}
-              position={path}
-              isDimmed={
-                active !== undefined && !active.edgeKeys.has(edgeKey(edge))
-              }
-            />
-          )
-        })}
+          {graph.edges.map((edge) => {
+            const path = paths.get(edgeKey(edge))
+            if (!path) return null
+            return (
+              <RelationsEdgeBadge
+                key={edgeKey(edge)}
+                edge={edge}
+                position={path}
+                isDimmed={
+                  active !== undefined && !active.edgeKeys.has(edgeKey(edge))
+                }
+              />
+            )
+          })}
+        </div>
       </div>
 
       <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1 text-label-value-12 text-secondary">
@@ -255,13 +257,16 @@ export function RelationsDiagram({
         className="absolute right-3 bottom-3 flex flex-col gap-1"
         onPointerDown={(event) => event.stopPropagation()}
       >
-        <ControlButton label="Zoom in" onClick={() => zoomBy(ZOOM_STEP)}>
+        <ControlButton label="Zoom in" onClick={() => camera.zoomBy(ZOOM_STEP)}>
           <Glyph d="M5 12h14M12 5v14" />
         </ControlButton>
-        <ControlButton label="Zoom out" onClick={() => zoomBy(1 / ZOOM_STEP)}>
+        <ControlButton
+          label="Zoom out"
+          onClick={() => camera.zoomBy(1 / ZOOM_STEP)}
+        >
           <Glyph d="M5 12h14" />
         </ControlButton>
-        <ControlButton label="Reset view" onClick={reset}>
+        <ControlButton label="Reset view" onClick={camera.reset}>
           <Glyph d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5" />
         </ControlButton>
         {onExpand && (
