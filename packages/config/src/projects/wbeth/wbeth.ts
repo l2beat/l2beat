@@ -85,12 +85,7 @@ export const wbeth: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
-    tvl: {
-      source: 'defillama',
-      protocolSlug: 'binance-staked-eth',
-      sinceTimestamp: UnixTime(1704067200),
-      chains: [{ chain: 'ethereum', providerChain: 'Ethereum' }],
-    },
+    tvl: { source: 'l2beat' },
     tokens: [
       {
         symbol,

@@ -175,12 +175,7 @@ export const rocketpool: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
-    tvl: {
-      source: 'defillama',
-      protocolSlug: 'rocket-pool',
-      sinceTimestamp: UnixTime(1704067200),
-      chains: [{ chain: 'ethereum', providerChain: 'Ethereum' }],
-    },
+    tvl: { source: 'l2beat' },
     tokens: [
       {
         symbol: rethSymbol,

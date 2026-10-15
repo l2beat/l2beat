@@ -132,12 +132,7 @@ export const etherfi: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
-    tvl: {
-      source: 'defillama',
-      protocolSlug: 'ether.fi-stake',
-      sinceTimestamp: UnixTime(1704067200),
-      chains: [{ chain: 'ethereum', providerChain: 'Ethereum' }],
-    },
+    tvl: { source: 'l2beat' },
     tokens: [
       {
         symbol: value('eETH', 'symbol'),
