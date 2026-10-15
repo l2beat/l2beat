@@ -142,28 +142,13 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       ],
     },
     futureAdversary: {
-      sentiment: 'warning',
+      sentiment: 'good',
       exposureShort:
-        'Onchain data stays hashed, but retained operator transcripts and indexer logs would tie requests to deposits.',
+        'Note leaves and nullifiers are Poseidon hashes and nothing encrypted is written onchain, so there is nothing to decrypt.',
       exposureContinued:
-        'Note leaves and nullifiers are Poseidon hashes. Whoever breaks elliptic-curve cryptography opens only the balance commitment that a published dispute carries.',
-      advice: 'Assume the operator and provider keep what the user sends.',
-      interior: {
-        ...PUBLIC_INTERIOR,
-        amount: {
-          verdict: 'atRisk',
-          note: 'Per-request charges exist only in operator records.',
-        },
-        linkage: {
-          verdict: 'atRisk',
-          note: 'Depends on what the operator retains.',
-        },
-      },
+        'Whoever breaks elliptic-curve cryptography opens only the balance commitment that a published dispute carries.',
+      interior: PUBLIC_INTERIOR,
       sources: [
-        {
-          title: 'Transcript store',
-          url: `${SRC}crates/zkapi-serverd/src/nullifier_store.rs`,
-        },
         {
           title: 'Note-bound commitments and assumptions',
           url: `${SRC}docs/note-bound-commitments.md`,

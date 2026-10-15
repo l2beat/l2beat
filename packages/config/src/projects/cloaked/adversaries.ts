@@ -40,9 +40,9 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      sentiment: 'warning',
+      sentiment: 'good',
       exposureShort:
-        "Cloaked's relayers and fee Safe mark every spend, so an address hides only among Cloaked's users, a small set by onchain activity.",
+        "Cloaked's relayers and fee Safe mark every spend as a Cloaked user's, so an address hides among all stealth addresses Cloaked has ever spent from.",
       exposureContinued:
         'Timing, distinctive amounts, recurring counterparties and change outputs cluster recipients further. Incognito withdrawals from Privacy Pools carry the same relayer and fee marks.',
       advice:
@@ -55,6 +55,11 @@ export const cloakedAdversaries = definePrivacyAdversaries({
         {
           title: 'Deterministic ephemeral keys stay offchain',
           url: STEALTH + 'shared/deriveDeterministicEphemeralKey.ts#L35-L68',
+        },
+        {
+          title:
+            'Fee Safe payers: 2,495 stealth addresses since launch, 1,148 in the 90 days to 2026-10-14',
+          url: 'https://etherscan.io/address/0x145444c66A32A0464059D400Dc488CCf4704f9B5#internaltx',
         },
         {
           title: 'Relay fee receiver for Privacy Pools withdrawals',
@@ -97,10 +102,10 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
     futureAdversary: {
-      sentiment: 'warning',
+      sentiment: 'good',
       exposureShort: S.noAnnouncement,
-      exposureContinued: `${S.operatorViewingKeyRegardless('Cloaked')} ${S.walletSignatureAccounts('plus a four-digit PIN')} Passkey secrets do not follow from breaking the passkey.`,
-      advice: `${S.notWalletSignature('with a passkey')} ${S.permanentlyDisclosed('the address history shared with Cloaked')}`,
+      exposureContinued: `${S.walletSignatureAccounts('plus a four-digit PIN')} Passkey secrets do not follow from breaking the passkey.`,
+      advice: `${S.notWalletSignature('with a passkey')} Keep the backup file from setup, since the passkey works only on Cloaked's domain.`,
       sources: [
         {
           title:

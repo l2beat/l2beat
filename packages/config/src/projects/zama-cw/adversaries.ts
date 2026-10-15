@@ -8,8 +8,6 @@ const OZ =
   'https://github.com/OpenZeppelin/openzeppelin-confidential-contracts/blob/23ba15402346027f2416667acbb1e741179f8485/contracts/token/ERC7984/'
 const WRAPPER =
   'https://github.com/zama-ai/protocol-apps/blob/85eef95c797da20875fe7eeae7f8d212d760486f/contracts/confidential-wrapper/contracts/ConfidentialWrapper.sol'
-const FHEVM =
-  'https://github.com/zama-ai/fhevm/blob/94f1f3b35c71175dc68bb36887e0525f7c5d80c5/'
 const KMS =
   'https://github.com/zama-ai/kms/blob/b5cd5cf465dc488ff04ac8c19f3ef12877abffa0/'
 const RELAYER_SDK =
@@ -149,22 +147,26 @@ export function zamaCwAdversaries(
       futureAdversary: {
         sentiment: 'bad',
         exposureShort:
-          'One long-lived lattice key protects every balance and transfer amount, and anyone can download the ciphertexts today.',
+          "Whoever breaks elliptic-curve cryptography recovers a user's wallet key from any past transaction and can have the KMS decrypt that user's history.",
         exposureContinued:
-          'Balance reads also publish decryption shares on the Zama Gateway chain, encrypted to each user with ML-KEM, also lattice-based. Whoever breaks lattice cryptography, or later obtains enough KMS key shares, decrypts the entire history.',
+          'A wallet signature alone authorizes decryption, permissions on past balances and transfers never expire, and the KMS encrypts its replies to whatever key the request names. The ciphertexts themselves rest on lattice assumptions with no known quantum attack, and anyone can download them today.',
         interior: ALL_EXPOSED,
         sources: [
           {
+            contract: 'Decryption',
+            title: 'A wallet signature authorizes a user decryption request',
+          },
+          {
+            contract: 'ACL',
+            title: 'Permissions on past ciphertexts have no expiry',
+          },
+          {
+            title: 'Replies are encrypted to the key the request names',
+            url: `${KMS}core/service/src/cryptography/hybrid_ml_kem.rs`,
+          },
+          {
             title: 'Coprocessor ciphertext store (public listing)',
             url: 'https://coprocessor-1.mainnet.zama.org/',
-          },
-          {
-            title: 'Gateway publishes encrypted decryption shares',
-            url: `${FHEVM}gateway-contracts/contracts/Decryption.sol#L808-L817`,
-          },
-          {
-            title: 'ML-KEM-512 encryption of decryption shares',
-            url: `${KMS}core/service/src/cryptography/hybrid_ml_kem.rs`,
           },
         ],
       },

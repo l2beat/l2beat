@@ -14,4 +14,4 @@
 2. the token owner appoints an observer or upgrades the token (see privileged insider).
 3. Zama changes its closed-source app to leak amounts to itself or to third parties (see privileged insider and network observer).
 4. public wraps and unwraps bound a user's balance (see chain analyst).
-5. lattice cryptography is broken or old KMS key shares leak, which decrypts every published ciphertext (see future adversary).
+5. elliptic-curve cryptography is broken, so anyone can impersonate a user to the KMS and decrypt that user's history (see future adversary).

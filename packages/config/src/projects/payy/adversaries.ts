@@ -168,25 +168,15 @@ export const payyAdversaries = definePrivacyAdversaries({
       exposureShort:
         'The per-transaction proofs are public and not zero-knowledge, and the commitments inside them rest on elliptic curves.',
       exposureContinued:
-        'Registry ciphertexts use elliptic-curve key exchange. If the operator retains them, whoever breaks elliptic-curve cryptography opens every note delivered through it.',
+        'How much more whoever breaks elliptic-curve cryptography extracts from those proofs is not established.',
       interior: {
-        sender: {
-          verdict: 'atRisk',
-          note: 'Only if Payy retains the registry, whose ciphertexts are not on Ethereum.',
-        },
+        sender: 'atRisk',
         recipient: 'atRisk',
-        amount: {
-          verdict: 'atRisk',
-          note: 'Public proofs are not zero-knowledge, and retained registry ciphertexts open.',
-        },
+        amount: 'atRisk',
         asset: 'exposed',
         linkage: 'exposed',
       },
       sources: [
-        {
-          title: 'Registry encryption (X25519-XSalsa20-Poly1305)',
-          url: PAYY + 'pkg/encrypt/src/asymmetric.rs#L80-L81',
-        },
         {
           title: 'Client proofs use the non-ZK Honk flavor',
           url: PAYY + 'pkg/barretenberg-rs/src/binding.rs#L109-L118',
