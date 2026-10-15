@@ -85,6 +85,7 @@ async function getDynamicPages(): Promise<Page[]> {
     ecosystemProjects,
     privacyProjects,
     defiProjects,
+    interopProtocols,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -97,6 +98,8 @@ async function getDynamicPages(): Promise<Page[]> {
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps.getProjects({ where: ['defiInfo'] })
       : Promise.resolve([]),
+    // Protocols that are also scaling projects redirect to the scaling page.
+    ps.getProjects({ where: ['interopConfig'], whereNot: ['scalingInfo'] }),
   ])
 
   const pages: Page[] = [
@@ -108,6 +111,7 @@ async function getDynamicPages(): Promise<Page[]> {
     ...ecosystemProjects.map(projectPage('/ecosystems')),
     ...privacyProjects.map(projectPage('/privacy/projects')),
     ...defiProjects.map(projectPage('/defi/projects')),
+    ...interopProtocols.map(projectPage('/interop/protocols')),
   ]
 
   const publications = [
