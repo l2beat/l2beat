@@ -9,12 +9,9 @@
 // to approximate the block time. Having that we can guess at which block the
 // timestamp we are looking for is in.
 //
-// But doing just that is not enough because we're always searching from the
-// start and block times are the start are very irregular so we want to narrow
-// the search range as fast as possible to have the highest resolution on our
-// range. Tested empirically first guessing and later doing a single step of
-// binary search gives us the least amount of calls to the node. On average it
-// takes 2.5-4x less calls to get to the same result.
+// But doing just that is not enough: irregular block times can place an
+// interpolated guess near the boundary of the current range. We narrow the
+// range with a binary step when the guess does not halve it.
 //
 // The approach is to interpolate the block number for as long as we are
 // halving the block range we are looking into. If we get stuck and fail to at
