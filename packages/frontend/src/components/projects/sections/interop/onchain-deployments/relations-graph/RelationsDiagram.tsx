@@ -12,12 +12,18 @@ import {
   RelationsEdgePath,
 } from './RelationsEdges'
 import { RelationsNode } from './RelationsNode'
-import { useRelationsCamera } from './relationsCamera'
+import {
+  centerCamera,
+  revealCamera,
+  useRelationsCamera,
+} from './relationsCamera'
 import { routeRelationsEdges } from './routeRelationsEdges'
 import { useDragToPan } from './useDragToPan'
 
 const ZOOM_STEP = 1.25
 const DOT_GRID_STEP = 24
+/** Space kept between a revealed node and the edge it was moved clear of. */
+const REVEAL_MARGIN = 24
 
 interface Props {
   graph: InteropTokenRelationsGraph
@@ -32,6 +38,8 @@ interface Props {
   fillsView?: boolean
   /** Centres the selected node, e.g. once a details panel has shrunk the diagram. */
   centersSelection?: boolean
+  /** Pixels of the right edge that a details panel covers; the selected node is kept clear of them. */
+  coveredRight?: number
   className?: string
 }
 
@@ -43,11 +51,14 @@ export function RelationsDiagram({
   onExpand,
   fillsView = false,
   centersSelection = false,
+  coveredRight = 0,
   className,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const size = useResizeObserver({ ref: containerRef })
-  const viewport = { width: size.width ?? 960, height: size.height ?? 520 }
+  const viewportWidth = size.width ?? 960
+  const viewportHeight = size.height ?? 520
+  const viewport = { width: viewportWidth, height: viewportHeight }
 
   const layout = useMemo(() => {
     const items = graph.nodes.map((node) => ({
@@ -74,20 +85,46 @@ export function RelationsDiagram({
     const box = top && layout.boxes.get(top.id)
     return box ? box.x + box.width / 2 : undefined
   }, [graph.nodes, layout])
-  const { camera, setCamera, zoomBy, centerOn, reset } = useRelationsCamera(
+  const { camera, setCamera, updateCamera, zoomBy, reset } = useRelationsCamera(
     layout,
     viewport,
     focusX,
     containerRef,
     fillsView,
   )
-  // Re-runs once the viewport settles, so the node lands in the middle of
-  // the diagram's final size.
+  // Brings a newly selected node into view. Re-runs once the viewport
+  // settles, so it lands right in the diagram's final size.
   useEffect(() => {
-    const box =
-      centersSelection && selectedNodeId && layout.boxes.get(selectedNodeId)
-    if (box) centerOn({ x: box.x + box.width / 2, y: box.y + box.height / 2 })
-  }, [centersSelection, selectedNodeId, layout, centerOn])
+    const box = selectedNodeId && layout.boxes.get(selectedNodeId)
+    if (!box) return
+    if (centersSelection) {
+      const middle = { x: box.x + box.width / 2, y: box.y + box.height / 2 }
+      updateCamera((current) =>
+        centerCamera(current, middle, {
+          width: viewportWidth,
+          height: viewportHeight,
+        }),
+      )
+    } else if (coveredRight > 0) {
+      const uncovered = {
+        x: 0,
+        y: 0,
+        width: viewportWidth - coveredRight,
+        height: viewportHeight,
+      }
+      updateCamera((current) =>
+        revealCamera(current, box, uncovered, REVEAL_MARGIN),
+      )
+    }
+  }, [
+    centersSelection,
+    coveredRight,
+    selectedNodeId,
+    layout,
+    updateCamera,
+    viewportWidth,
+    viewportHeight,
+  ])
   const pan = useDragToPan(camera, setCamera, containerRef, fillsView)
 
   const [hoveredId, setHoveredId] = useState<string>()

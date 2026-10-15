@@ -23,6 +23,9 @@ import { getUnconnectedIds, isCluster } from './graphSelectors'
 import { RelationsDetails } from './RelationsDetails'
 import { RelationsDiagram } from './RelationsDiagram'
 
+/** The desktop details panel's width (340px) plus its gap to the diagram's edge (`right-3`). */
+const DETAILS_PANEL_COVER = 340 + 12
+
 export function TokenRelationsGraphView({
   graph,
   diagramClassName = 'h-[380px] md:h-[520px]',
@@ -194,6 +197,7 @@ function DiagramPane({
         onExpand={onExpand}
         fillsView={fillsView}
         centersSelection={centersSelection}
+        coveredRight={detailsNode ? DETAILS_PANEL_COVER : undefined}
         className={className}
       />
       {detailsNode && (

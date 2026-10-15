@@ -76,17 +76,15 @@ export function useRelationsCamera(
       })),
     [content, fitted, viewportWidth, viewportHeight],
   )
-  const centerOn = useCallback(
-    (point: Point) =>
+  const updateCamera = useCallback(
+    (update: (camera: Camera) => Camera) =>
       setManual((previous) => ({
         content,
-        camera: centerCamera(
+        camera: update(
           previous?.content === content ? previous.camera : fitted,
-          point,
-          { width: viewportWidth, height: viewportHeight },
         ),
       })),
-    [content, fitted, viewportWidth, viewportHeight],
+    [content, fitted],
   )
   const panBy = useCallback(
     (dx: number, dy: number) =>
@@ -125,7 +123,7 @@ export function useRelationsCamera(
     return () => element.removeEventListener('wheel', onWheel)
   }, [containerRef, zoomBy, panBy, wheelPans])
 
-  return { camera, setCamera, zoomBy, centerOn, reset }
+  return { camera, setCamera, updateCamera, zoomBy, reset }
 }
 
 /**
@@ -219,6 +217,43 @@ export function centerCamera(
     x: viewport.width / 2 - point.x * camera.k,
     y: viewport.height / 2 - point.y * camera.k,
   }
+}
+
+/**
+ * Keeps the scale and pans as little as possible to bring the world `box`
+ * inside the screen `area`, `margin` clear of its edges. A box too big to
+ * fit keeps its top-left corner in view.
+ */
+export function revealCamera(
+  camera: Camera,
+  box: Point & Size,
+  area: Point & Size,
+  margin: number,
+): Camera {
+  return {
+    k: camera.k,
+    x:
+      camera.x +
+      fitShift(
+        box.x * camera.k + camera.x,
+        box.width * camera.k,
+        area.x + margin,
+        area.x + area.width - margin,
+      ),
+    y:
+      camera.y +
+      fitShift(
+        box.y * camera.k + camera.y,
+        box.height * camera.k,
+        area.y + margin,
+        area.y + area.height - margin,
+      ),
+  }
+}
+
+/** The smallest shift that moves `[start, start + size]` inside `[min, max]`, favouring `min`. */
+function fitShift(start: number, size: number, min: number, max: number) {
+  return Math.max(Math.min(0, max - (start + size)), min - start)
 }
 
 /** Scales around `point` so the world point under it stays put. */

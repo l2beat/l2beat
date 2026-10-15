@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { centerCamera, gestureCamera } from './relationsCamera'
+import { centerCamera, gestureCamera, revealCamera } from './relationsCamera'
 
 describe(gestureCamera.name, () => {
   const camera = { x: 10, y: 20, k: 1 }
@@ -70,5 +70,37 @@ describe(centerCamera.name, () => {
     )
 
     expect(next).toEqual({ x: 45, y: -50, k: 0.5 })
+  })
+})
+
+describe(revealCamera.name, () => {
+  const camera = { x: 0, y: 0, k: 0.5 }
+  const area = { x: 0, y: 0, width: 600, height: 400 }
+
+  it('leaves the camera alone when the box is already inside the area', () => {
+    const box = { x: 200, y: 200, width: 200, height: 100 }
+
+    expect(revealCamera(camera, box, area, 16)).toEqual(camera)
+  })
+
+  it('pans the box just clear of the area edge it crosses', () => {
+    // On screen the box spans x 550..650, past the area's right edge at 600.
+    const box = { x: 1100, y: 200, width: 200, height: 100 }
+
+    expect(revealCamera(camera, box, area, 16)).toEqual({
+      x: -66,
+      y: 0,
+      k: 0.5,
+    })
+  })
+
+  it('keeps the left edge in view when the box is wider than the area', () => {
+    const box = { x: 1200, y: 100, width: 2000, height: 100 }
+
+    expect(revealCamera(camera, box, area, 16)).toEqual({
+      x: -584,
+      y: 0,
+      k: 0.5,
+    })
   })
 })
