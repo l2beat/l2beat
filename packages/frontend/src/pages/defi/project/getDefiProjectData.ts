@@ -15,7 +15,10 @@ export async function getDefiProjectData(
   cache: InMemoryCache,
   selectedUpdateId?: string,
 ): Promise<RenderData | undefined> {
-  const data = await getCachedDefiProjectPage(slug, manifest, cache)
+  const [data, totalValueLockedUsd] = await Promise.all([
+    getCachedDefiProjectPage(slug, manifest, cache),
+    getCachedTotalValueLocked(slug, cache),
+  ])
   if (!data) return undefined
 
   return {
@@ -25,6 +28,7 @@ export async function getDefiProjectData(
       props: {
         ...data.props,
         selectedUpdateId,
+        totalValueLockedUsd,
       },
     },
   }
@@ -32,8 +36,8 @@ export async function getDefiProjectData(
 
 /**
  * The markdown alternate of the page, built from the same cached entry as the
- * HTML. The TVL is queried apart: the HTML page only charts it in the
- * browser, so its render should not pay for the query.
+ * HTML. The TVL is cached apart from the entry, with its own shorter life,
+ * and shown by both versions in their summary.
  */
 export async function getDefiProjectMarkdown(
   slug: string,

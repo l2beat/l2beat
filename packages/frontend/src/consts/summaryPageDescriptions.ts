@@ -11,3 +11,6 @@ export const PRIVACY_SUMMARY_DESCRIPTION =
 
 export const DEFI_SUMMARY_DESCRIPTION =
   'Overview of DeFi protocols tracked by L2BEAT.'
+
+export const DEFI_LIQUID_STAKING_SUMMARY_DESCRIPTION =
+  'Risk comparison and historical charts for the liquid staking protocols tracked by L2BEAT.'

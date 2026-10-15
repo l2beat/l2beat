@@ -31,10 +31,18 @@ const rateCapPercent = `${Number.parseFloat(
   (Number(BigInt(rateCap.amount)) / 1e16).toFixed(4),
 )}%`
 const rateCapInterval = formatSeconds(rateCap.interval, { fullUnit: true })
+const rateCapIntervalShort =
+  rateCap.interval === 365 * 86400 ? 'yr' : rateCapInterval
+// --- Liquid staking risk comparison (DeFi summary tab) ---
+const symbol = value('wBETH', 'symbol')
+const lockTimeDays =
+  discovery.getContractValue<number>('UnwrapTokenV1ETH', 'lockTimeSeconds') /
+  86400
+
 export const wbeth: BaseProject = {
   id: ProjectId('wbeth'),
   slug: 'wbeth',
-  name: 'Binance Wrapped Beacon ETH',
+  name: 'Binance',
   shortName: 'wBETH',
   addedAt: UnixTime(0),
   discoveryInfo: getDiscoveryInfo([discovery]),
@@ -46,7 +54,7 @@ export const wbeth: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Binance Wrapped Beacon ETH (${value('wBETH', 'symbol')}) is a liquid staking token for ETH issued by Binance. Users can mint by depositing ETH onchain, while Binance also mints it against BETH balances held on its exchange. Binance controls the exchange rate and custody, must fund queued redemptions (currently delayed by ${duration('UnwrapTokenV1ETH', 'lockTimeSeconds')}), and can mint, pause, blacklist or upgrade without delay.`,
+    description: `Binance Wrapped Beacon ETH (${symbol}) is Binance's liquid staking token. Binance mints it mostly against exchange balances, sets its exchange rate and funds redemptions at its own discretion.`,
     detailedDescription: readProjectMarkdown('wbeth', 'detailedDescription', {
       symbol: value('wBETH', 'symbol'),
       rateCapPercent,
@@ -77,6 +85,59 @@ export const wbeth: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
+    tvl: { source: 'l2beat' },
+    tokens: [
+      {
+        symbol,
+        name: 'Wrapped Beacon ETH',
+        description:
+          "Appreciating wrapper of BETH, Binance's exchange balance for staked ETH; the rate is set by a Binance key.",
+      },
+    ],
+    liquidStaking: {
+      minting: {
+        value: 'Permissionless',
+        secondLine: 'swept by Binance',
+        sentiment: 'bad',
+        warning: {
+          value: `About 99% of ${symbol} was minted by Binance against exchange balances, with no ETH deposited on-chain.`,
+          sentiment: 'bad',
+        },
+        description: `Anyone can deposit ETH for ${symbol}, but about 99% of supply was minted by Binance against exchange balances, with no ETH deposited on-chain. A Binance key can move deposited ETH to Binance at will.`,
+      },
+      operators: {
+        value: 'Binance',
+        secondLine: 'no bond',
+        sentiment: 'bad',
+        description: `No contract tracks validators, balances or slashing. Binance says its validators back ${symbol}; whether losses pass to holders is Binance's policy, not code.`,
+      },
+      backing: {
+        value: 'Off-chain custody',
+        secondLine: 'creds: Binance',
+        sentiment: 'bad',
+        description:
+          'Deposited ETH moves to a Binance wallet. The token contract holds about 0.04% of the ETH its supply represents; the rest is an exchange balance that cannot be checked on-chain.',
+      },
+      exchangeRate: {
+        value: `${callerLimits.length} of ${callerLimits.length}`,
+        secondLine: `daily · ≤${rateCapPercent}/${rateCapIntervalShort}`,
+        sentiment: 'bad',
+        description: `One Binance key writes the rate, with no cap per update and at most ${rateCapPercent} over ${rateCapInterval}. The owner can switch the oracle and set any rate at once.`,
+      },
+      exit: {
+        value: 'Binance-funded',
+        secondLine: `${lockTimeDays} days · pausable`,
+        sentiment: 'bad',
+        description: `Burned ${symbol} is paid after a ${lockTimeDays}-day lock, only once Binance funds the queue. Binance keys can pause withdrawals or blacklist holders.`,
+      },
+      upgrades: {
+        value: 'Single EOA',
+        secondLine: 'no delay · no veto',
+        sentiment: 'bad',
+        description:
+          'A single key can replace the code of both contracts instantly. There is no multisig, timelock or governance.',
+      },
+    },
   },
   // The contracts call no bridge, price feed or other protocol; they only call
   // each other. Binance's off-chain custody and validator operation are trust

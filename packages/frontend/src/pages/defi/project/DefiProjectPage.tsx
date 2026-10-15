@@ -17,17 +17,21 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiProjectEntry'
+import { DefiLiquidStakingSummary } from './components/DefiLiquidStakingSummary'
 
 interface Props extends AppLayoutProps {
   entry: ProjectDefiEntry
   queryState: DehydratedState
   selectedUpdateId?: string
+  /** The latest value, as the DeFi summary table shows it. */
+  totalValueLockedUsd?: number
 }
 
 export function DefiProjectPage({
   entry,
   queryState,
   selectedUpdateId,
+  totalValueLockedUsd,
   ...props
 }: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
@@ -105,6 +109,14 @@ export function DefiProjectPage({
                           )}
                         </div>
                       </div>
+                      {entry.liquidStaking && (
+                        <DefiLiquidStakingSummary
+                          liquidStaking={entry.liquidStaking}
+                          tokens={entry.tokens}
+                          totalValueLockedUsd={totalValueLockedUsd}
+                          className="px-4 max-md:mt-2 md:mt-6 md:px-0"
+                        />
+                      )}
                     </PrimaryCard>
 
                     <ProjectDetails

@@ -1,4 +1,8 @@
-import type { ProjectDefiCategory, ProjectRedWarning } from '@l2beat/config'
+import type {
+  ProjectDefiCategory,
+  ProjectDefiLiquidStakingRisks,
+  ProjectRedWarning,
+} from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -18,10 +22,16 @@ import { optionToRange } from '~/utils/range/range'
 import { EMPTY_TVS_BREAKDOWN } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getDefiTvlDataSource } from '../getDefiTvlDataSource'
+import { getLiquidStakingProjectMetrics } from '../liquidStakingCharts/getDefiLiquidStakingCharts'
+import type { LiquidStakingMetrics } from '../liquidStakingCharts/liquidStakingMetrics'
 import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,
 } from '../resolveDefiDependencies'
+import {
+  type DefiProjectToken,
+  getDefiProjectTokens,
+} from './getDefiProjectTokens'
 import { hasDefiProjectPage } from './hasDefiProjectPage'
 
 export interface ProjectDefiEntry {
@@ -49,6 +59,13 @@ export interface ProjectDefiEntry {
     emergency?: string
   }
   sections: ProjectDetailsSection[]
+  /** The protocol's tokens, also listed in its Tokens section. */
+  tokens: DefiProjectToken[]
+  /** The summary page's risk comparison and the end of its chart lines. */
+  liquidStaking?: {
+    risks: ProjectDefiLiquidStakingRisks
+    metrics?: LiquidStakingMetrics
+  }
 }
 
 export async function getDefiProjectEntry(
@@ -79,11 +96,13 @@ export async function getDefiProjectEntry(
     projectsChangeReport,
     dependencyProjectsById,
     ossification,
+    tokens,
   ] = await Promise.all([
     getContractUtils(),
     getProjectsChangeReport(),
     getDefiDependencyProjectsById(project.externalDependencies),
     getProjectOssification(project),
+    getDefiProjectTokens(project.slug, project.defiInfo.tokens ?? []),
   ])
   // DeFi pages get the Updates section together with ossification.
   const discoveryUpdates = env.CLIENT_SIDE_OSSIFICATION_ENABLED
@@ -139,6 +158,17 @@ export async function getDefiProjectEntry(
         description: undefined,
         detailedDescription: project.display.detailedDescription,
         references: project.display.references,
+      },
+    })
+  }
+
+  if (tokens.length > 0) {
+    sections.push({
+      type: 'DefiTokensSection',
+      props: {
+        id: 'tokens',
+        title: 'Tokens',
+        tokens,
       },
     })
   }
@@ -232,5 +262,10 @@ export async function getDefiProjectEntry(
       emergency: project.statuses.emergencyWarning,
     },
     sections,
+    tokens,
+    liquidStaking: project.defiInfo.liquidStaking && {
+      risks: project.defiInfo.liquidStaking,
+      metrics: getLiquidStakingProjectMetrics(project.id),
+    },
   }
 }

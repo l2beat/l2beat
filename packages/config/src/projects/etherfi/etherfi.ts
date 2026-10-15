@@ -46,6 +46,47 @@ const reportWaitDelay = formatSeconds(
   { fullUnit: true },
 )
 
+// --- Liquid staking risk comparison (DeFi summary tab) ---
+// 18-decimals wei string -> whole ETH with thousands separators.
+const wholeEth = (contract: string, key: string): string =>
+  (
+    BigInt(discovery.getContractValue<string>(contract, key)) /
+    10n ** 18n
+  ).toLocaleString('en-US')
+const pooled = BigInt(value('LiquidityPool', 'getTotalPooledEther'))
+const inLp = BigInt(value('LiquidityPool', 'totalValueInLp'))
+const bufferPct = `${(Number((inLp * 10000n) / pooled) / 100).toFixed(2)}%`
+const OPERATIONS_SAFE = 'eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC'
+const operationsSafe = discovery.getMultisigStats(OPERATIONS_SAFE)
+const reportPeriod = formatSeconds(
+  discovery.getContractValue<number>('EtherFiOracle', 'reportPeriodSlot') * 12,
+  { fullUnit: true },
+)
+const maxNegativeRebaseBps = value(
+  'EtherFiAdmin',
+  'effectiveMaxNegativeRebaseBps',
+)
+const staleOracleWindow = formatSeconds(
+  discovery.getContractValue<number>(
+    'EtherFiAdmin',
+    'staleOracleReportBlockWindow',
+  ) * 12,
+  { fullUnit: true },
+)
+const maxFinalizedPerDay = wholeEth(
+  'EtherFiAdmin',
+  'maxFinalizedWithdrawalAmountPerDay',
+)
+const stethSharePct = `${(
+  Number(
+    (BigInt(value('EtherFiRestaker', 'getTotalPooledEther')) * 10000n) / pooled,
+  ) / 100
+).toFixed(1)}%`
+const upgradeDelayDays =
+  discovery.getContractValue<number>(UPGRADE_TIMELOCK, 'getMinDelay') / 86400
+const operatingDelayDays =
+  discovery.getContractValue<number>(OPERATING_TIMELOCK, 'getMinDelay') / 86400
+
 export const etherfi: BaseProject = {
   id: ProjectId('etherfi'),
   slug: 'etherfi',
@@ -61,7 +102,7 @@ export const etherfi: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `ether.fi is a liquid staking and restaking protocol. Deposit ETH for ${value('eETH', 'symbol')} (rebasing) or its wrapper ${value('weETH', 'symbol')}, and the pool stakes it both through ether.fi's own permissioned operators and through third-party liquid staking tokens it accepts, with restaking in EigenLayer. A ${oracleQuorum}-of-${oracleMembers} committee sets the exchange rate under hard caps of at most ${maxPositiveRebase} per report. To exit, holders burn ${value('eETH', 'symbol')} for a withdrawal NFT the oracle must finalize, or swap instantly through a buffer for a fee up to ${maxExitFee}, though only a small buffer is instantly liquid, so large exits wait for validators to unwind. Upgrades and roles sit behind a ${upgradeDelay} timelock, with multisigs for day-to-day pausing and parameters.`,
+    description: `ether.fi is a liquid staking and restaking protocol. Users deposit ETH for ${value('eETH', 'symbol')} (rebasing) or its wrapper ${value('weETH', 'symbol')}, staked through whitelisted operators and restaked in EigenLayer, with an oracle committee setting the exchange rate.`,
     detailedDescription: readProjectMarkdown('etherfi', 'detailedDescription', {
       eethSymbol: value('eETH', 'symbol'),
       weethSymbol: value('weETH', 'symbol'),
@@ -91,6 +132,59 @@ export const etherfi: BaseProject = {
   },
   defiInfo: {
     category: 'Liquid Staking',
+    tvl: { source: 'l2beat' },
+    tokens: [
+      {
+        symbol: value('eETH', 'symbol'),
+        name: 'ether.fi ETH',
+        description:
+          'Rebasing receipt for pooled and restaked ETH: balances follow the oracle report.',
+      },
+      {
+        symbol: value('weETH', 'symbol'),
+        name: 'Wrapped eETH',
+        description:
+          'Non-rebasing wrapper of eETH: a fixed amount whose ETH value rises with rewards.',
+      },
+    ],
+    liquidStaking: {
+      minting: {
+        value: 'Permissionless',
+        secondLine: 'gated by ether.fi ops',
+        sentiment: 'good',
+        description: `Anyone can deposit ETH for ${value('eETH', 'symbol')} with no cap or fee; ${value('weETH', 'symbol')} wraps it. Only ether.fi's operations team can send that ETH to validators, which withdraw to protocol EigenPods.`,
+      },
+      operators: {
+        value: 'Whitelisted',
+        secondLine: 'no bond',
+        sentiment: 'warning',
+        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Stake is also restaked in EigenLayer, where extra slashing can cut principal.`,
+      },
+      backing: {
+        value: 'EigenPods, stETH',
+        secondLine: 'creds: EigenPod',
+        sentiment: 'warning',
+        description: `Validators withdraw to EigenPods, so most ETH sits in EigenLayer, which its own governance can upgrade. ${stethSharePct} of backing is stETH and ${bufferPct} is a liquid buffer.`,
+      },
+      exchangeRate: {
+        value: `${oracleQuorum} of ${oracleMembers}`,
+        secondLine: `~4h · ≤${maxPositiveRebase}`,
+        sentiment: 'warning',
+        description: `All ${oracleMembers} oracle members must agree on each report, every ${reportPeriod}. A report can raise the rate by at most ${maxPositiveRebase}. After ${staleOracleWindow} of silence, anyone can submit a report.`,
+      },
+      exit: {
+        value: 'Oracle-gated',
+        secondLine: '~1 day · pausable',
+        sentiment: 'warning',
+        description: `Withdrawal requests are finalized from oracle reports, at most ${maxFinalizedPerDay} ETH a day. Instant redemption from the buffer costs up to ${maxExitFee}. The ${operationsSafe} Safe can pause all exits.`,
+      },
+      upgrades: {
+        value: '6/10 Safe',
+        secondLine: `${upgradeDelayDays}d · no veto`,
+        sentiment: 'warning',
+        description: `A 6-of-10 Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock tunes parameters within fixed limits. Holders have no veto.`,
+      },
+    },
   },
   externalDependencies: [
     {

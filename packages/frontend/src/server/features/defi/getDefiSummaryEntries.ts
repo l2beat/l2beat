@@ -1,4 +1,8 @@
-import type { Project, ProjectDefiCategory } from '@l2beat/config'
+import type {
+  Project,
+  ProjectDefiCategory,
+  ProjectDefiLiquidStakingRisks,
+} from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -30,6 +34,9 @@ export interface DefiSummaryEntry {
   /** External provider name, undefined when the TVL comes from L2BEAT. */
   tvlDataSource?: string
   dependencies?: DefiDependency[]
+  /** The protocol's token tickers, in config order. */
+  tokens?: string[]
+  liquidStaking?: ProjectDefiLiquidStakingRisks
   isUnderReview: boolean
 }
 
@@ -72,6 +79,8 @@ export function buildDefiSummaryEntries(
                 dependencyProjectsById,
               )
             : undefined,
+        tokens: project.defiInfo.tokens?.map((token) => token.symbol),
+        liquidStaking: project.defiInfo.liquidStaking,
         isUnderReview: !!project.statuses.reviewStatus,
       }
     })

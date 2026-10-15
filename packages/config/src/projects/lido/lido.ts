@@ -85,6 +85,59 @@ const emergencyEnd = new Date(
   .toISOString()
   .slice(0, 10)
 
+// --- Liquid staking risk comparison (DeFi summary tab) ---
+const days = (n: number) => `${n} day${n === 1 ? '' : 's'}`
+const stakeLimit = discovery.getContractValue<{
+  maxStakeLimit: string
+  maxStakeLimitGrowthBlocks: number
+}>(STETH, 'getStakeLimitFullInfo')
+const stakeLimitEth = (
+  BigInt(stakeLimit.maxStakeLimit) /
+  10n ** 18n
+).toLocaleString('en-US')
+const oracleFrameDays =
+  (discovery.getContractValue<{ epochsPerFrame: number }>(
+    ACCOUNTING_HASH_CONSENSUS,
+    'getFrameConfig',
+  ).epochsPerFrame *
+    32 *
+    12) /
+  86400
+// 1e9-precision fraction -> percent
+const maxPositiveRebasePercent =
+  discovery.getContractValue<number>(
+    'OracleReportSanityChecker',
+    'getMaxPositiveTokenRebase',
+  ) / 1e7
+const stakingModules = discovery.getContractValue<
+  {
+    nodeOperatorsCount: number
+    state: { name: string; stakeShareLimit: number }
+  }[]
+>('StakingRouter', 'getAllStakingModuleDigests')
+const stakingModule = (name: string) => {
+  const module = stakingModules.find((m) => m.state.name === name)
+  if (!module) throw new Error(`lido: staking module ${name} not found`)
+  return {
+    operators: module.nodeOperatorsCount,
+    sharePercent: module.state.stakeShareLimit / 100,
+  }
+}
+const csm = stakingModule('Community Staking')
+const externalLivePercent = (
+  Number(
+    (discovery.getContractValueBigInt(STETH, 'getExternalEther') * 10000n) /
+      discovery.getContractValueBigInt(STETH, 'getTotalPooledEther'),
+  ) / 100
+).toFixed(2)
+const circuitBreakerPauseDays =
+  discovery.getContractValue<number>('CircuitBreaker', 'pauseDuration') / 86400
+const circuitBreakerCommittee = discovery.getMultisigStats(
+  'CircuitBreakerCommittee',
+)
+const oracleCadence =
+  oracleFrameDays === 1 ? 'daily' : `every ${days(oracleFrameDays)}`
+
 export const lido: BaseProject = {
   id: ProjectId('lido'),
   slug: 'lido',
@@ -100,7 +153,8 @@ export const lido: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Lido is Ethereum’s largest liquid staking protocol. Users deposit ETH and receive stETH, a rebasing token whose supply tracks the protocol’s total pooled ETH staked across four node-operator modules. Because staked ETH lives on the beacon chain, the core trust surface is the execution-layer↔consensus-layer boundary, bridged by a ${oracleQuorum}-of-${oracleMembers} oracle committee (bounded by on-chain sanity checks) and by trustless EIP-4788 beacon-root proofs. Withdrawal credentials are set by the protocol, so node operators cannot take user principal. Every protocol-critical change is controlled by the Lido DAO through Dual Governance, which gives stETH holders a veto and a rage-quit exit against DAO proposals over a ${dgSubmitDays}-day-plus timelock.`,
+    description:
+      'Lido is Ethereum’s largest liquid staking protocol. Users deposit ETH for stETH, a rebasing token backed by validators run by curated and bonded node-operator modules, priced by an oracle committee and governed by the Lido DAO under a stETH-holder veto.',
     detailedDescription: readProjectMarkdown('lido', 'detailedDescription', {
       oracleMembers,
       oracleQuorum,
@@ -126,6 +180,58 @@ export const lido: BaseProject = {
   defiInfo: {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
+    tokens: [
+      {
+        symbol: 'stETH',
+        name: 'Lido Staked Ether',
+        description:
+          'Rebasing receipt for pooled ETH: balances follow the daily oracle report.',
+      },
+      {
+        symbol: 'wstETH',
+        name: 'Wrapped liquid staked Ether 2.0',
+        description:
+          'Non-rebasing wrapper of stETH: a fixed share count whose ETH value rises with rewards; immutable.',
+      },
+    ],
+    liquidStaking: {
+      minting: {
+        value: 'Permissionless',
+        secondLine: `gated by DSM ${dsmQuorum}/${dsmGuardians}`,
+        sentiment: 'good',
+        description: `Anyone can stake ETH for stETH, up to ${stakeLimitEth} ETH at a time. Sending it to new validators needs ${dsmQuorum} of ${dsmGuardians} guardian signatures, and any one guardian can pause that.`,
+      },
+      operators: {
+        value: 'Hybrid',
+        secondLine: 'no bond; CSM bonded',
+        sentiment: 'neutral',
+        description: `Most operators are curated and post no bond, so their slashing losses are shared by all holders. ${csm.operators} permissionless operators (${csm.sharePercent}% of stake) post a bond that covers their penalties.`,
+      },
+      backing: {
+        value: 'Protocol vault',
+        secondLine: 'creds: protocol',
+        sentiment: 'good',
+        description: `Validators withdraw to a Lido contract set by the protocol, not by operators. Vaults can also mint stETH against their own collateral, capped at ${externalRatioCap}% of supply (${externalLivePercent}% today).`,
+      },
+      exchangeRate: {
+        value: `${oracleQuorum} of ${oracleMembers}`,
+        secondLine: `${oracleCadence} · ≤${maxPositiveRebasePercent}%`,
+        sentiment: 'warning',
+        description: `A ${oracleQuorum}-of-${oracleMembers} oracle committee reports balances ${oracleCadence}, and each report can raise the rate by at most ${maxPositiveRebasePercent}%. If the committee stops, the rate and withdrawals freeze.`,
+      },
+      exit: {
+        value: 'Oracle-gated',
+        secondLine: '≤1 day · pausable',
+        sentiment: 'warning',
+        description: `Withdrawal requests are finalized in a later oracle report, at the lower of the request and report rate. A ${circuitBreakerCommittee} committee can pause the queue for ${days(circuitBreakerPauseDays)}, and another can extend that indefinitely.`,
+      },
+      upgrades: {
+        value: 'Lido DAO',
+        secondLine: `${dgSubmitDays + dgScheduleDays}d min · stETH veto`,
+        sentiment: 'neutral',
+        description: `Code changes go through Dual Governance and take at least ${days(dgSubmitDays + dgScheduleDays)}. Holders locking ${vetoPercent}% of stETH delay a change; at ${rageQuitPercent}% they can exit before it applies. Until ${emergencyEnd}, emergency committees can freeze execution.`,
+      },
+    },
   },
   externalDependencies: [],
   permissions: discovery.getDiscoveredPermissions(),
