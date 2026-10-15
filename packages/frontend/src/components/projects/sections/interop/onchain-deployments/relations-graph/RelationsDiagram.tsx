@@ -24,6 +24,8 @@ interface Props {
   selectedNodeId: string | undefined
   onSelectNode: (id: string | undefined) => void
   onExpand?: () => void
+  /** A bare wheel pans instead of scrolling the page, for full-screen views. */
+  wheelPans?: boolean
   className?: string
 }
 
@@ -33,6 +35,7 @@ export function RelationsDiagram({
   selectedNodeId,
   onSelectNode,
   onExpand,
+  wheelPans = false,
   className,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -69,6 +72,7 @@ export function RelationsDiagram({
     viewport,
     focusX,
     containerRef,
+    wheelPans,
   )
   const pan = useDragToPan(camera, setCamera, containerRef)
 
@@ -176,6 +180,11 @@ export function RelationsDiagram({
         <p className="hidden rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:block">
           Use two fingers to move the diagram
         </p>
+        {wheelPans && (
+          <p className="rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:hidden">
+            Scroll or drag to move the diagram
+          </p>
+        )}
         <p className="rounded-md border border-divider bg-surface-primary px-2 py-1">
           Past 24h crosschain volume
         </p>

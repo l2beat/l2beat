@@ -29,13 +29,20 @@ const FIT_PADDING = 32
 /** Below this the node text stops being readable. */
 const READABLE_SCALE = 0.55
 const WHEEL_ZOOM_STEP = 1.15
+/** Pixels per wheel line, for browsers that report line-based deltas. */
+const WHEEL_LINE_HEIGHT = 16
 
-/** Fits on mount and on resize; ctrl/meta + wheel over `containerRef` zooms. */
+/**
+ * Fits on mount and on resize; ctrl/meta + wheel over `containerRef` zooms.
+ * A bare wheel scrolls the page, or pans when `wheelPans` is set, for views
+ * with no page left to scroll.
+ */
 export function useRelationsCamera(
   content: Size,
   viewport: Size,
   focusX: number | undefined,
   containerRef: RefObject<HTMLElement | null>,
+  wheelPans = false,
 ) {
   const { width: contentWidth, height: contentHeight } = content
   const { width: viewportWidth, height: viewportHeight } = viewport
@@ -69,15 +76,33 @@ export function useRelationsCamera(
       })),
     [content, fitted, viewportWidth, viewportHeight],
   )
+  const panBy = useCallback(
+    (dx: number, dy: number) =>
+      setManual((previous) => {
+        const current = previous?.content === content ? previous.camera : fitted
+        return {
+          content,
+          camera: { ...current, x: current.x + dx, y: current.y + dy },
+        }
+      }),
+    [content, fitted],
+  )
   const reset = useCallback(() => setManual(undefined), [])
 
   // Native listener: React's wheel handler is passive, so it cannot stop the
-  // browser from zooming the page on ctrl+wheel. A bare wheel keeps scrolling.
+  // browser from zooming the page on ctrl+wheel or scrolling it on a pan.
   useEffect(() => {
     const element = containerRef.current
     if (!element) return
     const onWheel = (event: WheelEvent) => {
-      if (!event.ctrlKey && !event.metaKey) return
+      if (!event.ctrlKey && !event.metaKey) {
+        if (!wheelPans) return
+        event.preventDefault()
+        const scale =
+          event.deltaMode === WheelEvent.DOM_DELTA_LINE ? WHEEL_LINE_HEIGHT : 1
+        panBy(-event.deltaX * scale, -event.deltaY * scale)
+        return
+      }
       event.preventDefault()
       const rect = element.getBoundingClientRect()
       zoomBy(event.deltaY < 0 ? WHEEL_ZOOM_STEP : 1 / WHEEL_ZOOM_STEP, {
@@ -87,7 +112,7 @@ export function useRelationsCamera(
     }
     element.addEventListener('wheel', onWheel, { passive: false })
     return () => element.removeEventListener('wheel', onWheel)
-  }, [containerRef, zoomBy])
+  }, [containerRef, zoomBy, panBy, wheelPans])
 
   return { camera, setCamera, zoomBy, reset }
 }
