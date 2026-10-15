@@ -17,10 +17,10 @@ import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTil
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 
-// On desktop the graph fills the full-screen dialog. On mobile the details
-// panel sits below the graph, so the graph keeps a fixed height and the dialog scrolls.
-const FILL_ON_DESKTOP_CLASS_NAME = 'md:flex md:min-h-0 md:flex-1 md:flex-col'
-const DIAGRAM_CLASS_NAME = 'h-[min(60vh,720px)] md:h-full'
+// The graph fills the full-screen dialog; on mobile it shares the space with
+// the details panel below it.
+const FILL_CLASS_NAME = 'flex min-h-0 flex-1 flex-col'
+const DIAGRAM_CLASS_NAME = 'h-full'
 
 export function TokenGraphDialog({
   tile,
@@ -43,11 +43,13 @@ export function TokenGraphDialog({
       onOpenChange={(open) => !open && onClose()}
     >
       <DialogContent
-        className="bg-surface-primary max-md:overflow-y-auto md:flex md:flex-col md:gap-3 md:p-4"
+        className="flex flex-col gap-3 bg-surface-primary p-4 max-md:pt-0"
         fullScreen
       >
         <DialogClose />
-        <DialogTitle className="flex flex-wrap items-center gap-x-2 gap-y-1 pr-8">
+        {/* The title row is a sticky bar at the very top because iOS Safari only
+            re-tints its status bar from a sticky or fixed bar at the top. */}
+        <DialogTitle className="flex flex-wrap items-center gap-x-2 gap-y-1 pr-8 max-md:sticky max-md:top-0 max-md:bg-surface-primary max-md:pt-4">
           {tile && (
             <img
               src={tile.iconUrl}
@@ -79,7 +81,7 @@ export function TokenGraphDialog({
         </DialogDescription>
 
         {isPending ? (
-          <div className={FILL_ON_DESKTOP_CLASS_NAME}>
+          <div className={FILL_CLASS_NAME}>
             <div className="mb-3 flex min-h-8 items-center">
               <Legend />
             </div>
@@ -98,7 +100,7 @@ export function TokenGraphDialog({
           <TokenRelationsGraphView
             graph={data}
             diagramClassName={DIAGRAM_CLASS_NAME}
-            className={FILL_ON_DESKTOP_CLASS_NAME}
+            className={FILL_CLASS_NAME}
             embedded
           />
         ) : (
