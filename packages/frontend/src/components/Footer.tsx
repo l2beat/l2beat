@@ -23,39 +23,41 @@ export function Footer({ className, innerContainerClassName }: Props) {
     >
       <div
         className={cn(
-          'mx-auto flex max-w-[1216px] flex-col items-center gap-2 text-secondary lg:h-6 lg:flex-row lg:justify-between',
+          'mx-auto flex max-w-[1216px] flex-col items-center gap-2 text-secondary md:h-6 md:flex-row md:justify-between',
           innerContainerClassName,
         )}
       >
         <p className="text-center font-medium text-xs leading-none">
           Made with 💗 by the L2BEAT team
         </p>
-        {/* In the body, because agents that fetch a page skip its <head> links and headers. */}
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
-          <FooterLink href="/terms-of-service">Terms of Service</FooterLink>
-          <FooterLink href="/llms.txt">llms.txt</FooterLink>
+        <p>
+          <CustomLink
+            href="/terms-of-service"
+            variant="plain"
+            className="font-medium text-secondary text-xs"
+          >
+            Terms of Service
+          </CustomLink>
+        </p>
+        {/* For agents, which follow only links in the page body: they skip <head> links and headers. */}
+        <ul className="sr-only">
+          <li>
+            <a href="/llms.txt" tabIndex={-1}>
+              llms.txt
+            </a>
+          </li>
           {markdownHref && (
-            <FooterLink href={markdownHref}>
-              Markdown version of this page
-            </FooterLink>
+            <li>
+              <a href={markdownHref} tabIndex={-1}>
+                Markdown version of this page
+              </a>
+            </li>
           )}
-        </div>
-        <p className="text-center font-medium text-xs leading-none lg:text-right">
+        </ul>
+        <p className="text-center font-medium text-xs leading-none md:text-right">
           Copyright {currentYear} L2BEAT
         </p>
       </div>
     </footer>
-  )
-}
-
-function FooterLink({ href, children }: { href: string; children: string }) {
-  return (
-    <CustomLink
-      href={href}
-      variant="plain"
-      className="font-medium text-secondary text-xs"
-    >
-      {children}
-    </CustomLink>
   )
 }
