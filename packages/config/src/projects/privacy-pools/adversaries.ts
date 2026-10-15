@@ -109,7 +109,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'good',
       exposureShort:
-        'Nothing encrypted is written onchain and commitments are hashes, so whoever breaks public-key cryptography recovers nothing from the chain.',
+        'Nothing encrypted is written onchain and commitments are Poseidon hashes, so whoever breaks elliptic-curve cryptography recovers nothing from the chain.',
       exposureContinued: S.walletSignatureAccounts(),
       advice: S.notWalletSignature('from a recovery phrase'),
       sources: [

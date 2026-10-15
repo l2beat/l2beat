@@ -61,9 +61,9 @@ export const ARTICLES: Article[] = [
   {
     kind: 'document',
     label: 'EIP-8357: EVM Verification Key Registry',
-    source: 'github.com/ethereum',
+    source: 'eips.ethereum.org',
     description:
-      'The proposed L1 registry of the EVM program’s verification keys, which lets native rollups follow L1 upgrades.',
+      'The L1 registry of the EVM program’s verification keys, which lets native rollups follow L1 upgrades.',
     href: EIP_8357_URL,
   },
   {

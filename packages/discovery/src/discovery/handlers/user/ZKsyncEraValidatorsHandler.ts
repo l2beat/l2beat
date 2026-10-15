@@ -25,6 +25,10 @@ const initializeFunctions = [
 
   // Taken from: https://etherscan.io/address/0x877a3c97705c5d1a6fd7f3ed84d9a74de737c64a
   'initialize(tuple(uint256 chainId, address bridgehub, address chainTypeManager, uint256 protocolVersion, address admin, address validatorTimelock, bytes32 baseTokenAssetId, bytes32 storedBatchZero, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes32 l2BootloaderBytecodeHash, bytes32 l2DefaultAccountBytecodeHash, bytes32 l2EvmEmulatorBytecodeHash, uint256 priorityTxMaxGasLimit, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) feeParams, address blobVersionedHashRetriever) _initializeData) returns (bytes32)',
+
+  // Without blobVersionedHashRetriever, taken from the ADI Chain diamond
+  // init: https://etherscan.io/tx/0xaa1dbb6591bbc6c81cd9378502e6ae8f73f2da3de4dcec9b185b21bbdd650578
+  'initialize(tuple(uint256 chainId, address bridgehub, address chainTypeManager, uint256 protocolVersion, address admin, address validatorTimelock, bytes32 baseTokenAssetId, bytes32 storedBatchZero, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes32 l2BootloaderBytecodeHash, bytes32 l2DefaultAccountBytecodeHash, bytes32 l2EvmEmulatorBytecodeHash, uint256 priorityTxMaxGasLimit, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) feeParams) _initializeData) returns (bytes32)',
 ]
 
 const abi = new utils.Interface([

@@ -64,7 +64,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'futureAdversary',
       label: 'Future adversary',
       description:
-        'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and breaks all public-key cryptography, by quantum computer or new mathematics: elliptic curves, pairings, RSA, lattices and isogenies. Hashes, Poseidon included, and symmetric ciphers survive.',
+        'Harvest now, decrypt later. Holds every byte ever published and runs the known quantum attacks: elliptic curves, pairings and RSA fall. Hashes, symmetric ciphers and post-quantum schemes stand until an attack on them is known.',
       examples:
         'An intelligence agency archiving chain data today, then anyone once a break is public.',
     },
@@ -264,15 +264,10 @@ export const PRIVACY_ADVERSARY_SNIPPETS = {
   /** Stealth addresses without onchain announcements. */
   noAnnouncement:
     'No announcement is published, so address derivations cannot be replayed from the chain alone.',
-  /** Follows `noAnnouncement` when the operator holds the viewing key. */
-  operatorViewingKeyRegardless: (operator: string) =>
-    `The viewing key held by ${operator} exposes the history regardless.`,
   /** Account keys derived from a wallet signature. `extra` names what else is needed, e.g. a PIN. */
   walletSignatureAccounts: (extra?: string) =>
     `Accounts created from a wallet signature reduce to that wallet's key${extra ? ` ${extra}` : ''}.`,
   /** `alternative` is the client's own option, e.g. "from a seed phrase". */
   notWalletSignature: (alternative: string) =>
     `Create the user's account ${alternative}, not from a wallet signature.`,
-  permanentlyDisclosed: (what: string) =>
-    `Treat ${what} as permanently disclosed.`,
 } as const

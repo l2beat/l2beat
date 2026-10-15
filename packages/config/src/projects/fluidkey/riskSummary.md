@@ -10,6 +10,7 @@
 3. an auto-earn vault loses funds or blocks withdrawals, or a service used by Hide Trail keeps the funds.
 <br>
 ## Privacy can be lost if
-1. Fluidkey, or anyone who obtains its records, uses the viewing keys to link all Safes of every account (see privileged insider and future adversary).
+1. Fluidkey, or anyone who obtains its records, uses the viewing keys to link all Safes of every account (see privileged insider).
 2. Fluidkey changes its closed-source app to send account data to outside services, which users cannot check (see network observer).
 3. a user takes Hide Trail and Houdini or the exchanges link the route from their records (see privileged insider).
+4. Fluidkey's relayer marks every spend as a Fluidkey account's (see chain analyst).

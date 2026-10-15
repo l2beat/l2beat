@@ -12,4 +12,4 @@
 2. a path without splits or merges reveals every amount between a deposit and a withdrawal (see chain analyst).
 3. the closed-source Payy app sends user data to third parties, which Payy can change at any time (see network observer).
 4. Payy's backend, which ties each wallet to its KYC record, deposit address and notes, leaks or uses this data (see privileged insider).
-5. the public per-transaction proofs, which are not zero-knowledge, or retained registry ciphertexts are opened in the future (see future adversary).
+5. the public per-transaction proofs, which are not zero-knowledge, are opened in the future (see future adversary).

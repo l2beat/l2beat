@@ -125,10 +125,11 @@ export function fluidkeyAdversaries(accounts: number) {
         ],
       },
       futureAdversary: {
-        sentiment: 'warning',
+        sentiment: 'good',
         exposureShort: S.noAnnouncement,
-        exposureContinued: `${S.operatorViewingKeyRegardless('Fluidkey')} ${S.walletSignatureAccounts('plus a four-digit PIN')}`,
-        advice: `Create the user's account in the mobile app, with Google or Apple login, or with a new wallet that has never sent a transaction. ${S.permanentlyDisclosed('the viewing key shared with Fluidkey')}`,
+        exposureContinued: S.walletSignatureAccounts('plus a four-digit PIN'),
+        advice:
+          'Connect a new wallet that has never sent a transaction instead of logging in with Google or Apple.',
         sources: [
           {
             title: 'Stealth signer depends on a hashed shared secret',

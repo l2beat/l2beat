@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "etherfi",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "etherfi-eETH",
+      "priceId": "ether-fi-staked-eth",
+      "symbol": "eETH",
+      "name": "ether.fi ETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1707264000
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}
