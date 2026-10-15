@@ -4,22 +4,43 @@ import { env } from '~/env'
 import { getLogger } from './utils/logger'
 
 let db: Database | undefined
+let liveBlobsDb: Database | undefined
 
 export function getDb() {
-  if (!db) {
-    db = !env.MOCK
-      ? createDatabase({
-          application_name: createConnectionTag(),
-          connectionString: env.DATABASE_URL,
-          ssl: ssl(),
-          ...pool(),
-          ...statementTimeout(),
-          log: env.DATABASE_LOG_ENABLED ? makeDbLogger('Database') : undefined,
-        })
-      : createThrowingProxy()
-  }
-
+  db ??= connect(createConnectionTag(), pool(), 'Database')
   return db
+}
+
+/**
+ * Only for the live blobs feed: a burst of page renders can queue hundreds of
+ * queries on the shared pool, and the feed's reads would wait behind them.
+ * The feed polls every 100 ms while anyone watches, which keeps its
+ * connections open.
+ */
+export function getLiveBlobsDb() {
+  liveBlobsDb ??= connect(
+    `${createConnectionTag()}-live-blobs`,
+    { max: 3 },
+    'LiveBlobsDatabase',
+  )
+  return liveBlobsDb
+}
+
+function connect(
+  applicationName: string,
+  poolConfig: { min?: number; max?: number },
+  logTag: string,
+) {
+  return !env.MOCK
+    ? createDatabase({
+        application_name: applicationName,
+        connectionString: env.DATABASE_URL,
+        ssl: ssl(),
+        ...poolConfig,
+        ...statementTimeout(),
+        log: env.DATABASE_LOG_ENABLED ? makeDbLogger(logTag) : undefined,
+      })
+    : createThrowingProxy()
 }
 
 function createThrowingProxy() {

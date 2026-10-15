@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database, LiveSlotRange } from '@l2beat/database'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
+import { getLiveBlobsDb } from '~/server/database'
 import { getLogger } from '~/server/utils/logger'
 import {
   buildLiveBlobs,
@@ -140,7 +140,7 @@ export function getLiveBlobsFeed(): LiveBlobsFeed {
       ? createMockLiveBlobsSource(
           getBlobPosters().then((posters) => posters.map((p) => p.id)),
         )
-      : getDb(),
+      : getLiveBlobsDb(),
     getLogger(),
   )
   return feed
