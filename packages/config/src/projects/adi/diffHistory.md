@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x2044f28bdbb037a94e790db36c6988275eb38730
+
+# Diff at Thu, 15 Oct 2026 10:19:41 GMT:
+
+- id: 3478b789
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cca6ff908b0e5396df35a6f7980a9d0244c0366e block: 1789042187
+- current timestamp: 1792059502
+
+## Description
+
+The zksynceraValidators handler now decodes the diamond initialize signature without blobVersionedHashRetriever, so the ValidatorTimelock shows up as validator of the diamond.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789042187 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.validators.0:
++        "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","role":".validators"}]
+    }
+```
+
 Generated with discovered.json: 0x6cc18d56b8804d9a45117971241ac2b38bb0a07b
 
 # Diff at Sun, 04 Oct 2026 05:55:30 GMT:
