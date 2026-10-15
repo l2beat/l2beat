@@ -292,17 +292,19 @@ export class TokenValueRepository extends BaseRepository {
   ): Promise<UnixTime | undefined> {
     if (projectIds.length === 0) return undefined
     const row = await this.db
-      .selectFrom(
-        sql<{
-          projectId: string
-        }>`(select unnest(${projectIds}::text[]) as "projectId")`.as('p'),
+      .selectFrom((eb) =>
+        eb
+          .fn<{ projectId: string }>('unnest', [
+            eb.cast(eb.val(projectIds), sql`text[]`),
+          ])
+          .as('projectId'),
       )
       .innerJoinLateral(
         (eb) =>
           eb
             .selectFrom('TokenValue')
             .select('TokenValue.timestamp')
-            .whereRef('TokenValue.projectId', '=', 'p.projectId')
+            .whereRef('TokenValue.projectId', '=', 'projectId.projectId')
             .orderBy('TokenValue.timestamp')
             .limit(1)
             .as('first'),
