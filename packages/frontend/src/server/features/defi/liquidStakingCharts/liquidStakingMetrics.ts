@@ -75,7 +75,27 @@ export function getExitCost(
     }
     return cost
   })
-  return { projects: wait.projects, data }
+  // A queue wait is only known once the day's requests are served.
+  return withoutIncompleteTail({ projects: wait.projects, data })
+}
+
+/**
+ * The series without its newest days that lack a value for some project, so
+ * every day charted shows every project.
+ */
+export function withoutIncompleteTail(
+  series: LiquidStakingSeries,
+): LiquidStakingSeries {
+  let end = series.data.length
+  while (
+    end > 0 &&
+    series.projects.some(
+      (project) => series.data[end - 1]?.[project.id] === null,
+    )
+  ) {
+    end--
+  }
+  return { projects: series.projects, data: series.data.slice(0, end) }
 }
 
 /** Median of the last `DISCOUNT_WINDOW` values up to `index`, nulls skipped. */

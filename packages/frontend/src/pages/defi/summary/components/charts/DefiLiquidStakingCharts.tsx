@@ -16,6 +16,7 @@ import {
   formatDays,
   getExitCost,
   getLiquidStakingSeries,
+  withoutIncompleteTail,
 } from '~/server/features/defi/liquidStakingCharts/liquidStakingMetrics'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { LiquidStakingLineChart } from './LiquidStakingLineChart'
@@ -41,8 +42,10 @@ export function DefiLiquidStakingCharts({
   const apr = getLiquidStakingSeries(charts, 'apr30')
   const premium = getLiquidStakingSeries(charts, 'premium')
   const exitDays = getLiquidStakingSeries(charts, 'exitDays')
-  const timeRange = getChartTimeRangeFromData(apr.data)
   const exitCost = getExitCost(exitDays, premium, apr)
+  // The newest day can lack the network average, published a day later.
+  const aprCharted = withoutIncompleteTail(apr)
+  const timeRange = getChartTimeRangeFromData(aprCharted.data)
 
   const benchmarkCharted = apr.projects.some((project) => project.benchmark)
   const stake = charts.stake && {
@@ -70,9 +73,9 @@ export function DefiLiquidStakingCharts({
         timeRange={timeRange}
       >
         <LiquidStakingLineChart
-          projects={apr.projects}
+          projects={aprCharted.projects}
           colors={colors}
-          data={apr.data}
+          data={aprCharted.data}
           formatYAxisLabel={(value) => formatPercent(value, 1)}
           formatTooltipValue={(value) => formatPercent(value, 2)}
           background={stake}
@@ -86,7 +89,7 @@ export function DefiLiquidStakingCharts({
         ]
           .filter(Boolean)
           .join(' ')}
-        timeRange={timeRange}
+        timeRange={getChartTimeRangeFromData(exitCost.data)}
       >
         <LiquidStakingLineChart
           projects={exitCost.projects}
