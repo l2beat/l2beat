@@ -81,12 +81,12 @@ export class RealTimeLivenessRepository extends BaseRepository {
     if (configurationIds.length === 0) return []
 
     const rows = await this.db
-      .selectFrom(
-        sql<{
-          configurationId: string
-        }>`(select unnest(${configurationIds}::text[]) as "configurationId")`.as(
-          'c',
-        ),
+      .selectFrom((eb) =>
+        eb
+          .fn<{ configurationId: string }>('unnest', [
+            eb.cast(eb.val(configurationIds), sql`text[]`),
+          ])
+          .as('configurationId'),
       )
       .innerJoinLateral(
         (eb) =>
@@ -96,7 +96,7 @@ export class RealTimeLivenessRepository extends BaseRepository {
             .whereRef(
               'RealTimeLiveness.configurationId',
               '=',
-              'c.configurationId',
+              'configurationId.configurationId',
             )
             .orderBy('RealTimeLiveness.timestamp', 'desc')
             .limit(1)
