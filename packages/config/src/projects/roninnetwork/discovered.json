@@ -1,6 +1,6 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1791533505,
+  "timestamp": 1791965839,
   "configHash": "0x10fce1053e455a7c200de2e02b641e2785529553d18414eb9374637f9e2b0e1b",
   "entries": [
     {
@@ -382,6 +382,33 @@
             "data": "0xd547741ffd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": 259200
+          },
+          {
+            "id": "0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910",
+            "index": 1,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910",
+            "index": 2,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
           }
         ],
         "Canceller": ["eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"],
@@ -449,13 +476,13 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0x0Ca6784D6389DD3117417ab34BB36FEb291bd1e0",
+        "anchorGame": "eth:0xf30d71C9625ae43436Fe75Bb4d24A87a8ef65dfF",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x1673b7a3f42570ce8343bc7d1064bad65e619ae5a27e261f3bf58d9308692133",
-          61712372
+          "0x8dbb6c3fc7b3625b18aa1c9dd3fcbbf84cc356b17a5275a159af8d0e6f6474bc",
+          61928577
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -569,7 +596,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9"
       },
       "fieldMeta": {
@@ -951,7 +978,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1121,7 +1148,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 300,
+        "gameCount": 310,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1132,7 +1159,7 @@
         "initVersion": 1,
         "owner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
         "permissionedGameArgs": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54cacc005dcd857b401e4732e6f7837135a22825cfa0b95ff1d1b113bac3e29ac0bbf2089126c9ae81a2562ae2fb030274e3ceb63fcd32c232ab0fcec6d00000000000000000000000000000000000000000000000000000000000007e4d379de941e78ab394d4d4917fcce1cc45b6cd6204a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 97,
+        "permissionedGamesTotal": 107,
         "proposerFromDGF": "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620",
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
@@ -1233,7 +1260,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 331,
+        "nonce": 334,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1648,7 +1675,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": true,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97"
       },
       "fieldMeta": {
@@ -1810,7 +1837,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85"
       },
       "fieldMeta": {
@@ -1965,7 +1992,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D"
       },
       "fieldMeta": {
@@ -2095,7 +2122,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2176868240682490323290672"
+        "totalSupply": "2200826587983521701899691"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -2368,7 +2395,7 @@
         "$immutable": true,
         "owner": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
         "paused": true,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
         "verifier": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF"
       },
       "fieldMeta": {
@@ -4462,7 +4489,7 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26153572 },
+  "usedBlockNumbers": { "ethereum": 26189487 },
   "permissionsConfigHash": "0xf8d96379b935aadc94af837d07df7e286ef5a187fc2beeca6e82ec181ecdac63",
   "permissions": {
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
