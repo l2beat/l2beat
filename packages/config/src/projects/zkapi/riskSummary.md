@@ -16,7 +16,7 @@
 
 ## Privacy can be lost if
 
-1. the operator matches a deposit to its requests by timing, which few active notes make easy (see privileged insider).
+1. the operator ties a request to its deposit, since few active notes cover a top-tier budget (see privileged insider).
 2. a daemon user reveals the note id to the operator's indexer before each request (see privileged insider).
 3. prompts identify the user to OpenRouter or the model provider (see privileged insider).
 4. the operator keeps request transcripts and indexer logs, which later tie requests to deposits (see future adversary).
