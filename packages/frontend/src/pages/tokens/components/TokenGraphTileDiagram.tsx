@@ -57,7 +57,7 @@ function NodeMark({ mark }: { mark: Mark }) {
     const contentLeft = x - metrics.contentWidth / 2
     return (
       <g>
-        <title>Burn & mint across {node.chains.length} chains</title>
+        <title>{`Burn & mint across ${node.chains.length} chains`}</title>
         <rect
           x={x - metrics.width / 2}
           y={y - radius}

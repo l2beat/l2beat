@@ -5,8 +5,61 @@
   "chain": "arbitrum",
   "initialAddresses": [
     "arb1:0xA9F4ee72439afC704db48dc049CbFb7E914aD300",
-    "arb1:0xc930fd48846e956b308f28524dA2d5E14c832e33"
+    "arb1:0x2E3f48e1A9B9849e5c0e4Fe987AEa2dA1702Ddda"
   ],
   "names": {},
-  "overrides": {}
+  "overrides": {
+    "arb1:0xcD3D1CFE5e0cDa77D0a2D1ac1c0268C77115f89D": {
+      "fields": {
+        // Seeds the transaction-filtering precompile (0x..74) as a relative.
+        "transactionFilteringPrecompile": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "earnm:0x0000000000000000000000000000000000000074"
+          }
+        }
+      }
+    },
+    "earnm:0x0000000000000000000000000000000000000074": {
+      // No shared template: its event counts need eth_getLogs, capped at 100 blocks here.
+      "displayName": "ArbFilteredTransactionsManager",
+      "description": "ArbOS transaction-filtering precompile (0x..74, ArbOS 60+). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
+      "fields": {
+        "chainOwners": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getAllChainOwners() view returns (address[])",
+            "args": [],
+            "address": "0x000000000000000000000000000000000000006b"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "ArbOS chain owner: can change any ArbOS chain parameter, add chain owners and add transaction filterers, which can forcibly fail any transaction, including force-included ones."
+            }
+          ]
+        },
+        "transactionFilterers": {
+          "handler": {
+            "type": "call",
+            "method": "function getAllTransactionFilterers() view returns (address[])",
+            "args": [],
+            "address": "0x000000000000000000000000000000000000006b",
+            "expectRevert": true
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Can register/remove transaction hashes in the ArbFilteredTransactionsManager precompile, causing the state transition function to forcibly fail those transactions, including force-included ones, without delay."
+            }
+          ]
+        }
+      },
+      // Precompile with a 0xfe stub as code: source from Nitro.
+      "manualSourcePaths": {
+        "earnm:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+      }
+    }
+  }
 }

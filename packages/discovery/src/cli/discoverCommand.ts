@@ -20,6 +20,7 @@ import { ConfigReader } from '../discovery/config/ConfigReader'
 import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
 import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
 import { configureLogger } from './logger'
+import { PositiveInteger } from './types'
 
 export const DiscoverCommandArgs = {
   project: positional({
@@ -86,6 +87,36 @@ export const DiscoverCommandArgs = {
     long: 'overwrite-cache',
     description: 'overwrite the cache entries',
   }),
+  ai: flag({
+    type: boolean,
+    long: 'ai',
+    description:
+      'author a template with a model for every verified contract no template matches; when a contract whose code changed still fits its old template, add to that template instead (writes into _templates; review before committing)',
+  }),
+  aiModel: option({
+    type: optional(string),
+    long: 'ai-model',
+    description:
+      'model for --ai: a Codex model name (default: Codex default), or an opencode gateway model, opencode/<model> (Zen) or opencode-go/<model> (Go), e.g. opencode-go/deepseek-v4.1-flash for the cheap option',
+  }),
+  aiRounds: option({
+    type: optional(PositiveInteger),
+    long: 'ai-rounds',
+    description:
+      'model turns per contract for --ai, the first included (default 3)',
+  }),
+  aiEffort: option({
+    type: optional(string),
+    long: 'ai-effort',
+    description:
+      'reasoning effort for --ai (default high): for opencode one of the levels of the model, which `opencode models <provider> --verbose` lists under variants (DeepSeek: low, high, max); for Codex none, minimal, low, medium, high, xhigh or max',
+  }),
+  aiRevisit: flag({
+    type: boolean,
+    long: 'ai-revisit',
+    description:
+      '--ai, and also ask the model for additions to every template that already matches (keeps all existing fields; review shared-template changes before committing)',
+  }),
 }
 
 export const DiscoverCommand = command({
@@ -105,6 +136,10 @@ export async function discover(
   chainConfigs: DiscoveryChainConfig[] = getChainConfigs(),
   logger: Logger = configureLogger(Logger.DEBUG),
 ): Promise<void> {
+  if (config.dryRun && (config.ai || config.aiRevisit)) {
+    // The dry run never reaches the templatizer, so the flags would be ignored.
+    throw new Error('--ai and --ai-revisit do not work with --dry-run')
+  }
   const http = new HttpClient()
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)

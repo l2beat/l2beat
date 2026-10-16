@@ -30,7 +30,7 @@ export async function getL2CostsData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Costs - L2BEAT',
+        name: 'Costs',
         description:
           'Compare transaction costs across Ethereum scaling solutions.',
         url: req.originalUrl,

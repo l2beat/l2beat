@@ -12,7 +12,7 @@ import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -21,9 +21,15 @@ import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiPro
 interface Props extends AppLayoutProps {
   entry: ProjectDefiEntry
   queryState: DehydratedState
+  selectedUpdateId?: string
 }
 
-export function DefiProjectPage({ entry, queryState, ...props }: Props) {
+export function DefiProjectPage({
+  entry,
+  queryState,
+  selectedUpdateId,
+  ...props
+}: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
 
@@ -36,9 +42,13 @@ export function DefiProjectPage({ entry, queryState, ...props }: Props) {
             data-project-page
           >
             {!isNavigationEmpty && (
-              <div className="md:-mx-5 sticky top-0 z-100 lg:hidden">
-                <MobileSectionNavigation sections={navigationSections} />
-              </div>
+              <StickyMobileSectionNavigation
+                sections={navigationSections}
+                project={{
+                  name: entry.shortName ?? entry.name,
+                  icon: entry.icon,
+                }}
+              />
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
@@ -83,7 +93,7 @@ export function DefiProjectPage({ entry, queryState, ...props }: Props) {
                     <PrimaryCard
                       id="summary"
                       data-role="nav-section"
-                      className="border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
+                      className="scroll-mt-[100vh] border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
                     >
                       <div className="max-md:hidden">
                         <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
@@ -97,7 +107,10 @@ export function DefiProjectPage({ entry, queryState, ...props }: Props) {
                       </div>
                     </PrimaryCard>
 
-                    <ProjectDetails items={entry.sections} />
+                    <ProjectDetails
+                      items={entry.sections}
+                      selectedUpdateId={selectedUpdateId}
+                    />
                   </HighlightableLinkContextProvider>
                 </div>
 

@@ -13,14 +13,13 @@ const TOP_PROTOCOLS_COUNT = 5
 
 /** Carries what the privacy dot needs, so the card can show it per row. */
 export interface HomePrivacyTopProtocol
-  extends Pick<PrivacySummaryEntry, 'adversaries'> {
+  extends Pick<PrivacySummaryEntry, 'adversaries' | 'isUnderReview'> {
   id: string
   name: string
   href: string
   iconUrl: string
   /** Undefined when the protocol has no value locked to track. */
   tvl: number | undefined
-  tvlChange: number | undefined
   /** Value deposited over the last 30 days. */
   deposited30d: number | undefined
 }
@@ -126,9 +125,9 @@ export async function getHomePrivacyData(
       href: entry.href,
       iconUrl: entry.icon,
       tvl: entry.hasTvl ? entry.totalValueLockedUsd : undefined,
-      tvlChange: entry.hasTvl ? entry.totalValueLockedChange7d : undefined,
       deposited30d: entry.totalValueDeposited30dUsd,
       adversaries: entry.adversaries,
+      isUnderReview: entry.isUnderReview,
     })),
   }
 }

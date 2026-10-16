@@ -51,6 +51,45 @@ describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
   })
 })
 
+describe(TemplateService.prototype.admitsAddress.name, () => {
+  let root: string
+  beforeEach(() => {
+    root = mkdtempSync(join(tmpdir(), 'template-service-'))
+  })
+  afterEach(() => rmSync(root, { recursive: true, force: true }))
+
+  function writeTemplate(templateId: string, validAddresses?: string[]) {
+    const directory = join(root, '_templates', templateId)
+    mkdirSync(directory, { recursive: true })
+    writeFileSync(join(directory, 'template.jsonc'), '{}')
+    if (validAddresses !== undefined) {
+      writeFileSync(
+        join(directory, 'criteria.json'),
+        JSON.stringify({ validAddresses }),
+      )
+    }
+  }
+
+  it('admits any address to a template without criteria, and only the listed ones to a template with them', () => {
+    writeTemplate('proj/Open')
+    writeTemplate('proj/Listed', [CORRECT_SUPERCHAIN_CONFIG_ADDR.toString()])
+    const templateService = new TemplateService(root)
+
+    expect(
+      templateService.admitsAddress('proj/Open', FAKE_SUPERCHAIN_CONFIG_ADDR),
+    ).toEqual(true)
+    expect(
+      templateService.admitsAddress(
+        'proj/Listed',
+        CORRECT_SUPERCHAIN_CONFIG_ADDR,
+      ),
+    ).toEqual(true)
+    expect(
+      templateService.admitsAddress('proj/Listed', FAKE_SUPERCHAIN_CONFIG_ADDR),
+    ).toEqual(false)
+  })
+})
+
 describe(TemplateService.prototype.reload.name, () => {
   const HASH_A = Hash256('0x' + 'a'.repeat(64))
   const HASH_B = Hash256('0x' + 'b'.repeat(64))
@@ -105,6 +144,33 @@ describe(TemplateService.prototype.reload.name, () => {
   })
 })
 
+describe(TemplateService.prototype.loadContractTemplate.name, () => {
+  let rootPath: string
+
+  beforeEach(() => {
+    rootPath = mkdtempSync(join(tmpdir(), 'template-service-'))
+  })
+
+  afterEach(() => {
+    rmSync(rootPath, { recursive: true, force: true })
+  })
+
+  function writeTemplate(templateId: string, template: object) {
+    const path = join(rootPath, '_templates', templateId)
+    mkdirSync(path, { recursive: true })
+    writeFileSync(join(path, 'template.jsonc'), JSON.stringify(template))
+  }
+
+  it('rejects a template that sets ignoreDiscovery', () => {
+    writeTemplate('ignoring', { ignoreDiscovery: true })
+    const templateService = new TemplateService(rootPath)
+
+    expect(() => templateService.loadContractTemplate('ignoring')).toThrow(
+      'ignoreDiscovery cannot be set in a template',
+    )
+  })
+})
+
 describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
   const OWNER = 'shared-provider'
   const CONSUMER = 'consumer'
@@ -119,7 +185,6 @@ describe(TemplateService.prototype.discoveryNeedsRefresh.name, () => {
 
     const config = new ConfigRegistry({
       name: CONSUMER,
-      chain: 'ethereum',
       initialAddresses: [],
       entrypoints,
     })

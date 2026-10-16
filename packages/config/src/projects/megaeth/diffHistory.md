@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x1807accb31c6ecb10ee93639d42aa097bdbd30b6
+
+# Diff at Fri, 09 Oct 2026 09:24:18 GMT:
+
+- id: 6c108edc
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1787834236
+- current timestamp: 1791537732
+
+## Description
+
+1/5 Safe holding one seat on the 6/10 admin multisig: member rotated.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x63eCafD27E0B86B37903c8aA64beD47244Ad909A) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x12130aF2fd6E23Cb4EFD396146bE064e893Fc694"
++        "eth:0x23BB78620bd7cC7A7870c47A0058484c6263D48B"
+    }
+```
+
+Generated with discovered.json: 0x083b6f6cc4513206ea33622c32ecd24bd0cbd842
+
+# Diff at Wed, 30 Sep 2026 22:47:35 GMT:
+
+- id: 5b36a9df
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@65e15aefbf807aa6fcdc89f1109068adc7f4c0e7 block: 1787834236
+- current timestamp: 1787834236
+
+## Description
+
+Config-only rerun on the same block number. The OP Stack templates now label the Upgrade 20 super dispute game types, 9 and 5, in the respected game type mapping. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787834236 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0x0f8126a4f34ae43d3de018aa38c3f5a27e85a963
 
 # Diff at Tue, 29 Sep 2026 17:46:56 GMT:

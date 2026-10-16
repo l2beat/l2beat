@@ -30,7 +30,12 @@
       "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
     },
     "state": {
-      "description": "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
+      "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING.",
+      // Ossification: COMMITTING is a live authority path for a single owner
+      // EOA to change or delete smart wallet verification keys. Both setters
+      // stayed in COMMITTING after their rollouts until 2026-09-09. A pure
+      // SETTING <-> WAITING toggle grants nothing and belongs in ignoredUpdates.
+      "severity": "HIGH"
     }
   }
 }

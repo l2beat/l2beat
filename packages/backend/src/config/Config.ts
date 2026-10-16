@@ -1,7 +1,6 @@
 import type {
-  BlockDaTrackingConfig,
   ProjectActivityConfig,
-  TimestampDaTrackingConfig,
+  ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { CleanableRepoName } from '@l2beat/database'
 import type {
@@ -14,7 +13,6 @@ import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
 import type { DefiTvlConfig } from '../modules/defi-tvl/types'
 import type { PrivacyConfig } from '../modules/privacy/types'
-import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
   BlockTimestampConfig,
@@ -34,6 +32,7 @@ export interface Config {
   readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
+  readonly coingeckoApiUrl: string | undefined
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
@@ -127,35 +126,6 @@ export interface TrackedTxsConfig {
         }
       | false
   }
-}
-
-export interface BlockscoutChainConfig {
-  readonly type: 'blockscout'
-  readonly url: string
-}
-
-export interface EtherscanChainConfig {
-  readonly type: 'etherscan'
-  readonly apiKey: string
-  readonly url: string
-}
-
-export interface RoutescanChainConfig {
-  readonly type: 'routescan'
-  readonly url: string
-}
-
-export interface ChainTvlConfig {
-  readonly name: string
-  readonly providerUrl: string
-  readonly providerCallsPerMinute: number
-  readonly minBlockTimestamp: UnixTime
-  readonly blockExplorerConfig:
-    | EtherscanChainConfig
-    | BlockscoutChainConfig
-    | RoutescanChainConfig
-    | undefined
-  readonly multicallConfig: MulticallConfigEntry[]
 }
 
 export interface HealthConfig {
@@ -307,11 +277,6 @@ export interface DaBeatConfig {
   readonly projectsForDaBeatStats: ProjectId[]
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
-  readonly celestiaApiUrl: string
-  readonly celestiaCallsPerMinute: number
-  readonly nearRpcUrl: string
-  readonly availRpcUrl: string
-  readonly espressoApiUrl: string
 }
 
 export interface EcosystemTokenConfig {
@@ -330,15 +295,8 @@ type BlockLayerAsProjectDaTrackingConfig = {
   untilBlock?: number
 }
 
-type TimestampLayerAsProjectDaTrackingConfig = {
-  type: 'baseLayer'
-  daLayer: string
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
-}
-
 export type BlockDaIndexedConfig = (
-  | BlockDaTrackingConfig
+  | ProjectDaTrackingConfig
   | BlockLayerAsProjectDaTrackingConfig
 ) & {
   /** Hash computed automatically based on fields */
@@ -346,39 +304,35 @@ export type BlockDaIndexedConfig = (
   projectId: ProjectId
 }
 
-export type TimestampDaIndexedConfig = (
-  | TimestampDaTrackingConfig
-  | TimestampLayerAsProjectDaTrackingConfig
-) & {
-  /** Hash computed automatically based on fields */
-  configurationId: string
-  projectId: ProjectId
-}
-
 export type BlockLayerDaTrackingConfig = {
-  type: 'ethereum' | 'celestia' | 'avail'
+  type: 'ethereum'
   name: string
   url: string
   callsPerMinute: number
-  timeout?: number
   batchSize: number
   startingBlock: number
 }
 
-export type TimestampLayerDaTrackingConfig = {
-  type: 'eigen-da'
-  name: string
-  url: string
-  callsPerMinute: number
-  startingTimestamp: UnixTime
-  perProjectUrl?: string
-}
-
 export interface DataAvailabilityTrackingConfig {
   readonly blockLayers: BlockLayerDaTrackingConfig[]
-  readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
-  readonly timestampProjects: TimestampDaIndexedConfig[]
+  /** The last day of Ethereum blocks and blobs, kept slot by slot */
+  readonly liveBlobs: LiveBlobsTrackingConfig | false
+}
+
+export interface LiveBlobsTrackingConfig {
+  /** Blocks fetched at once while catching up with the head */
+  readonly batchSize: number
+  /**
+   * An RPC of its own: it has to keep up with the head, and the hourly
+   * indexers' backfill must not hold up its calls
+   */
+  readonly rpc: {
+    readonly url: string
+    readonly callsPerMinute: number
+    /** Calls per HTTP request, the RPC rejects bigger batches */
+    readonly maxBatchSize?: number
+  }
 }
 
 export interface BlockSyncModuleConfig {

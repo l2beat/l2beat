@@ -15,6 +15,7 @@ import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTv
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import { getOrganizationStructuredData } from '~/ssr/head/structured-data/getOrganizationStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -65,6 +66,7 @@ export async function getHomeData(
         openGraph: {
           image: '/meta-images/home/opengraph-image.png',
         },
+        structuredData: () => [getOrganizationStructuredData()],
       }),
     },
     ssr: {
@@ -231,7 +233,7 @@ export interface HomeRecentProject {
   name: string
   href: string
   iconUrl: string
-  category: 'l2' | 'da' | 'interop' | 'zkCatalog' | 'ecosystems' | 'privacy'
+  category: 'l2' | 'interop' | 'zkCatalog' | 'ecosystems' | 'privacy'
   l2Category: string | undefined
 }
 
@@ -254,7 +256,6 @@ async function getRecentProjectsForHome(
     .filter(
       (project) =>
         project.scalingInfo ||
-        project.daLayer ||
         project.ecosystemConfig ||
         project.interopConfig ||
         project.zkCatalogInfo ||
@@ -274,16 +275,6 @@ async function getRecentProjectsForHome(
             project.scalingInfo.type === 'Other'
               ? `${project.scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} - Other`
               : project.scalingInfo.type,
-        }
-      }
-      if (project.daLayer) {
-        return {
-          id: project.id.toString(),
-          name: project.name,
-          href: `/data-availability/projects/${project.slug}/no-bridge`,
-          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-          category: 'da' as const,
-          l2Category: undefined,
         }
       }
       // Privacy is checked before the ZK Catalog: projects listed in both

@@ -4,6 +4,11 @@ import type { DashboardProject } from '../props/getDashboardProjects'
 
 export type GroupVariant = 'single'
 
+export type GroupingProjectConfig = Project<
+  never,
+  'scalingInfo' | 'daLayer' | 'privacyInfo' | 'defiInfo' | 'interopConfig'
+>
+
 export interface Group {
   name: string
   assignees: readonly string[]
@@ -13,7 +18,7 @@ export interface Group {
 
 export function groupProjects(
   projects: DashboardProject[],
-  projectConfigs: Project<never, 'scalingInfo' | 'daLayer'>[],
+  projectConfigs: GroupingProjectConfig[],
 ): Group[] {
   const projectMap = new Map(
     projectConfigs.map((c) => [
@@ -21,6 +26,9 @@ export function groupProjects(
       {
         stacks: c.scalingInfo?.stacks ?? [],
         isDaLayer: !!c.daLayer,
+        isPrivacy: !!c.privacyInfo,
+        isDefi: !!c.defiInfo,
+        isInterop: !!c.interopConfig && c.interopConfig.type !== 'canonical',
       },
     ]),
   )
@@ -81,10 +89,26 @@ export function groupProjects(
       name: 'DA Projects',
       assignees: ['🐿', '🐱'],
       predicate: (p) =>
-        projectMap.get(p.name)?.isDaLayer ||
-        p.name === 'blobstream' ||
-        p.name === 'vector' ||
-        p.name === 'shared-eigenlayer',
+        projectMap.get(p.name)?.isDaLayer || p.name === 'shared-eigenlayer',
+    },
+    {
+      name: 'DeFi',
+      assignees: ['🐱', '🐿'],
+      predicate: (p) => projectMap.get(p.name)?.isDefi ?? false,
+    },
+    {
+      name: 'Privacy',
+      assignees: ['🐝', '🐻'],
+      predicate: (p) => projectMap.get(p.name)?.isPrivacy ?? false,
+    },
+    {
+      name: 'Interop',
+      assignees: ['🐱', '🐿'],
+      predicate: (p) =>
+        projectMap.get(p.name)?.isInterop ||
+        p.name === 'wormhole' ||
+        p.name === 'shared-circle' ||
+        p.name === 'hop',
     },
     // Finally individual projects so they can show inline labels
     {

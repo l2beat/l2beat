@@ -3,5 +3,11 @@
     "hash": "0x9831f0365a1629899a27a5e77f1445d6b78de4d90376053079da107921dda3a2",
     "address": "eth:0xeaB9b34BDD26Ad451B381B0934a30fAa6ED5E316",
     "blockNumber": 25193152
+  },
+  "TEEProverRegistry_v0_6_1_base": {
+    "hash": "0xede8082a5b614fbd752ea8f214321a92d5c97db36aac1070675b57e45a775d5d",
+    "address": "eth:0x1d8728CabC8BC022005dd08D02a749B8a32Af440",
+    "chain": "ethereum",
+    "blockNumber": 26078391
   }
 }

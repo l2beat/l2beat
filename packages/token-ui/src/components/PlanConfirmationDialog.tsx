@@ -2,7 +2,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Command, Plan } from '@l2beat/token-backend'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner'
 import { useInvalidateAbstractTokenQueries } from '~/hooks/useInvalidateAbstractTokenQueries'
 import { useTRPC } from '~/react-query/trpc'
@@ -129,17 +129,19 @@ export function PlanConfirmationDialog({
           case 'DeleteAbstractTokenIntent':
             toast.success('Abstract token deleted successfully')
             invalidateAbstractTokenQueries()
-            navigate('/')
+            void navigate('/')
             break
           case 'MergeAbstractTokenIntent':
             toast.success('Abstract token merged successfully')
             invalidateDeployedTokenQueries()
-            navigate(`/tokens/${extractAbstractTokenId(plan.intent.targetId)}`)
+            void navigate(
+              `/tokens/${extractAbstractTokenId(plan.intent.targetId)}`,
+            )
             break
           case 'DeleteDeployedTokenIntent':
             toast.success('Deployed token deleted successfully')
             invalidateDeployedTokenQueries()
-            navigate('/')
+            void navigate('/')
             break
           case 'UpdateAbstractTokenIntent':
             toast.success('Abstract token updated successfully')

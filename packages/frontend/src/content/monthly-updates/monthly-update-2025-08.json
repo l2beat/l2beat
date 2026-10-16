@@ -98,22 +98,6 @@
       ]
     },
     {
-      "type": "data-availability",
-      "id": "eigenlayer",
-      "daLayerId": "eigenda",
-      "name": "EigenLayer",
-      "news": [
-        {
-          "title": "EigenLayer Proposes Incentives v2",
-          "content": "The Eigen Foundation [introduced](https://forum.eigenlayer.xyz/t/introducing-programmatic-incentives-v2/14690?utm_source=chatgpt.com) Programmatic Incentives v2, doubling reward emissions from 4% to 8% annual inflation (≈2.67M EIGEN/week). Allocation: 3% to ETH stakers, 4% to EIGEN stakers, 1% to ecosystem growth."
-        },
-        {
-          "title": "EigenLayer Protocol Council Approves Key Upgrades Including Redistributable Slashing",
-          "content": "The Protocol Council [approved](https://forum.eigenlayer.xyz/t/protocol-council-evaluation-elip-005-elip-006-elip-009/14674?utm_source=chatgpt.com) ELIP-005 (simplified contracts), ELIP-006 (Redistributable Slashing), and ELIP-009 (MOOCOW performance optimizations). All passed unanimously, with emphasis on risk disclosure for slashing mechanics."
-        }
-      ]
-    },
-    {
       "name": "Nethermind",
       "type": "upcoming-project",
       "projectId": "nethermind",

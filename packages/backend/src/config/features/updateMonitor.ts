@@ -4,6 +4,7 @@ import {
   ConfigReader,
   type DiscoveryChainConfig,
   type ExplorerConfig,
+  getDiscoveryCoingeckoConfig,
   getDiscoveryPaths,
   getMulticall3Config,
 } from '@l2beat/discovery'
@@ -162,10 +163,7 @@ function getChainDiscoveryConfig(
       'CELESTIA_API_URL_FOR_DISCOVERY',
       'CELESTIA_API_URL',
     ]),
-    coingeckoApiKey: env.optionalString([
-      'COINGECKO_API_KEY_FOR_DISCOVERY',
-      'COINGECKO_API_KEY',
-    ]),
+    ...getDiscoveryCoingeckoConfig(env),
     multicall: multicallConfig,
     explorer,
   }

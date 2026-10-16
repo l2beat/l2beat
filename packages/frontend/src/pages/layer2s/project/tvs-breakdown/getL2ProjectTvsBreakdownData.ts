@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getL2ProjectTvsBreakdownStructuredData } from '~/pages/layer2s/project/getL2ProjectStructuredData'
 import { getL2ProjectTvsBreakdown } from '~/server/features/layer2s/project/getL2ProjectTvsBreakdown'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -27,12 +28,25 @@ export async function getL2ProjectTvsBreakdownData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        name: 'TVS Breakdown',
         title: `${tvsBreakdownData.project.name} | TVS Breakdown - L2BEAT`,
         description: `See a detailed breakdown of ${tvsBreakdownData.project.name}'s TVS on L2BEAT.`,
         url,
         openGraph: {
           image: `/meta-images/layer2s/projects/${tvsBreakdownData.project.slug}/opengraph-image.png`,
         },
+        breadcrumbParents: [
+          {
+            name: tvsBreakdownData.project.name,
+            path: `/layer2s/projects/${tvsBreakdownData.project.slug}`,
+          },
+        ],
+        structuredData: (page) => [
+          getL2ProjectTvsBreakdownStructuredData(
+            page,
+            tvsBreakdownData.project,
+          ),
+        ],
       }),
     },
     ssr: {

@@ -67,7 +67,10 @@ export const mantle: ScalingProject = opStackL2({
       },
     ],
   },
-  ossification: discovery.getOssification(genesisTimestamp),
+  ossificationHistory: discovery.getOssificationHistory(genesisTimestamp, {
+    // OPSuccinctL2OutputOracle verifier set to the SP1 Groth16 gateway (tx 0xf9fc68ef)
+    'shared-sp1': UnixTime(1758005207),
+  }),
   nonTemplateProofSystem: {
     type: 'Validity',
     zkCatalogIds: [ProjectId('sp1hypercube')],
@@ -127,16 +130,7 @@ export const mantle: ScalingProject = opStackL2({
       },
     },
   ],
-  daTracking: [
-    {
-      type: 'eigen-da',
-      customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1738821600),
-      untilTimestamp: UnixTime(1776322715), // Arsia upgrade: EigenDA code path removed, DA is Ethereum only
-    },
-    getOpStackDaTracking(discovery, { sinceBlock: 19434945 }),
-  ],
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19434945 })],
   associatedTokens: ['MNT'],
   additionalBadges: [BADGES.Stack.OPSuccinct],
   milestones: [

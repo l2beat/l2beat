@@ -1,5 +1,5 @@
 export interface MainPage {
-  type?: 'layer2s' | 'data-availability' | 'interop' | 'privacy' | 'defi'
+  type?: 'layer2s' | 'interop' | 'privacy' | 'defi'
   /** Appended to the `type` caption after a divider, e.g. "SCALING | RISKS". */
   secondaryLabel?: string
   title: string
@@ -172,14 +172,6 @@ const typeToIcon: Record<NonNullable<MainPage['type']>, React.ReactNode> = {
       />
     </svg>
   ),
-  'data-availability': (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-      <path
-        d="M7.326 4.036c-1.955 0-3.577 1.622-3.577 3.577v3.577c0 1.956 1.622 3.578 3.577 3.578h3.577c1.955 0 3.577-1.623 3.577-3.578V7.614c0-1.955-1.622-3.577-3.577-3.577zm21.462 0c-1.955 0-3.577 1.622-3.577 3.577v3.577c0 1.956 1.622 3.578 3.577 3.578h3.577c1.955 0 3.577-1.623 3.577-3.578V7.614c0-1.955-1.622-3.577-3.577-3.577zM7.326 7.613h3.577v3.577H7.326zm10.73 0v3.577h3.578V7.614zm10.732 0h3.577v3.577h-3.577zM7.326 18.345v3.577h3.577v-3.577zm21.462 0v3.577h3.577v-3.577zM7.326 25.499c-1.955 0-3.577 1.622-3.577 3.577v3.577c0 1.955 1.622 3.577 3.577 3.577h3.577c1.955 0 3.577-1.622 3.577-3.577v-3.577c0-1.955-1.622-3.577-3.577-3.577zm21.462 0c-1.955 0-3.577 1.622-3.577 3.577v3.577c0 1.955 1.622 3.577 3.577 3.577h3.577c1.955 0 3.577-1.622 3.577-3.577v-3.577c0-1.955-1.622-3.577-3.577-3.577zM7.326 29.076h3.577v3.577H7.326zm10.73 0v3.577h3.578v-3.577zm10.732 0h3.577v3.577h-3.577z"
-        fill="#DB8BF7"
-      />
-    </svg>
-  ),
   privacy: (
     <svg
       width="40"
@@ -189,16 +181,24 @@ const typeToIcon: Record<NonNullable<MainPage['type']>, React.ReactNode> = {
       stroke="#DB8BF7"
     >
       <path
-        d="m10 2.5-5.5 2v4.4c0 3.6 2.28 6.89 5.5 8.6 3.22-1.71 5.5-5 5.5-8.6V4.5z"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-      <path
-        d="m7.75 9.75 1.5 1.5L12.5 8"
+        d="M8.94 4.23a8.95 8.95 0 0 1 9.34 5.48.83.83 0 0 1 0 .58 8.96 8.96 0 0 1-1.2 2.07"
         strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+      <path
+        d="M11.74 11.8a2.5 2.5 0 0 1-3.54-3.54"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14.57 14.58a8.96 8.96 0 0 1-12.85-4.29.83.83 0 0 1 0-.58 8.96 8.96 0 0 1 3.7-4.29"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="m2.5 2.5 15 15" strokeWidth="1.7" strokeLinecap="round" />
     </svg>
   ),
   defi: (

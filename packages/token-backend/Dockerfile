@@ -2,7 +2,7 @@
 ARG TURBO_TEAM
 ARG COREPACK_VERSION="^0.36.0"
 
-FROM node:22.22.0-slim AS base
+FROM node:24.21.0-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 ARG COREPACK_VERSION
@@ -37,7 +37,7 @@ FROM deps AS proddeps
 RUN rm -rf node_modules packages/*/node_modules && \
   CI=true pnpm install --prod --frozen-lockfile --offline
 
-FROM node:22.22.0-slim AS release
+FROM node:24.21.0-slim AS release
 
 # Install curl for healthcheck and create non-root user
 RUN apt update && \

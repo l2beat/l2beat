@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LayerZeroBridge",
+  "description": "A LayerZero (v1 endpoint) bridge that relays synchronization hashes and block confirmations between zkLink chains. Messages are only accepted from the trusted remote bridges set by its governor, and the governor-set minimum gas is forwarded for execution on the destination chain.",
+  "ignoreRelatives": ["endpoint"],
+  "fields": {
+    "governor": {
+      "description": "Address authorized to change the trusted remote bridges, the LayerZero messaging configuration, the minimum destination gas, and the governor itself.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the trusted remote bridges and the LayerZero messaging configuration (message libraries and verifiers), which together determine which synchronization hashes and block confirmations are accepted, set the minimum destination gas, force-resume blocked message delivery and change the bridge governor."
+        }
+      ]
+    },
+    "zklink": {
+      "description": "Associated zkLink contract authorized to send synchronization hashes and block confirmations.",
+      "severity": "HIGH"
+    },
+    "endpoint": {
+      "description": "LayerZero endpoint used to send and receive cross-chain messages."
+    },
+    "trustedRemotes": {
+      "description": "Trusted remote bridge from which messages are accepted and to which messages are sent, indexed by zkLink chain ID. The destination address lives on the remote chain given by its LayerZero chain ID (the chain prefix shown is the local one).",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["lzChainId", "destination"],
+        "set": {
+          "event": "UpdateDestination"
+        },
+        "groupBy": "zkLinkChainId",
+        "ignoreRelative": true
+      }
+    },
+    "minDstGas": {
+      "description": "Minimum gas forwarded for message execution on the destination chain, indexed by LayerZero chain ID. Sending to a destination without a value reverts.",
+      "handler": {
+        "type": "event",
+        "select": "minDstGas",
+        "set": {
+          "event": "SetMinDstGas"
+        },
+        "groupBy": "lzChainId"
+      }
+    },
+    "ALL_CHAINS": {
+      "description": "Bitmask of zkLink chain IDs participating in the network."
+    },
+    "CHAIN_ID": {
+      "description": "This chain's zkLink chain ID."
+    },
+    "DEFAULT_FEE_ADDRESS": {
+      "description": "Default fee account in the zkLink state."
+    },
+    "MASTER_CHAIN_ID": {
+      "description": "zkLink chain ID of the master chain."
+    },
+    "MAX_CHAIN_ID": {
+      "description": "Highest valid zkLink chain ID."
+    },
+    "MIN_CHAIN_ID": {
+      "description": "Lowest valid zkLink chain ID."
+    }
+  }
+}

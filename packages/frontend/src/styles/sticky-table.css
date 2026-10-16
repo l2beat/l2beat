@@ -1,0 +1,119 @@
+/*
+  Sticky table header, driven by `useStickyTableHeader` (see there for why it
+  is built this way). The hook sets `data-sticky-table-ready` and the lengths
+  once the header copy matches the real columns; until then the copy is hidden.
+  `--sticky-table-header-top` is set by whatever sticks above the table.
+*/
+@utility sticky-table {
+  timeline-scope: --sticky-table-timeline;
+  /*
+    Sorting from the stuck header reorders the rows on screen, and scroll
+    anchoring (iOS Safari) would then scroll the page after whichever row it
+    anchored to. Readers expect the page to stay where they are.
+  */
+  overflow-anchor: none;
+}
+
+@utility sticky-table-scroller {
+  scroll-timeline: --sticky-table-timeline inline;
+  overscroll-behavior-x: none;
+
+  [data-sticky-table-ready] > & {
+    margin-top: calc(
+      -1 *
+      (
+        var(--sticky-table-header-height) +
+        var(--sticky-table-header-bottom-gap)
+      )
+    );
+  }
+
+  /*
+    Invisible, but still the table's header for screen readers, which the
+    copy cannot be: it is a separate table, so its cells head no data.
+  */
+  [data-sticky-table-ready] > & > table > thead {
+    opacity: 0;
+    pointer-events: none;
+    /*
+      Its pinned cells are never seen, so they need not stick. Sticky cells
+      under an opacity layer make iOS Safari redo its compositing on every
+      scroll frame, which stalls sideways scrolling of long tables.
+    */
+    --sticky-table-pinned-position: static;
+
+    /*
+      Its controls are all repeated in the copy. Hidden, they leave the tab
+      order and the screen reader's view, so each is met once, while the
+      header cells' own text stays.
+    */
+    :is(a[href], button, input, select, textarea, [tabindex]) {
+      visibility: hidden;
+    }
+  }
+}
+
+/*
+  The bottom margin stops the header where the table's last row starts, so it
+  never covers that row, only the border above it; the scroller's negative top margin gives that space
+  back, along with the header's own height.
+*/
+@utility sticky-table-header {
+  display: none;
+
+  /* Pinned cells are held by the pinned layer, see `getCommonPinningStyles`. */
+  --sticky-table-pinned-position: static;
+  top: var(--sticky-table-header-top, 0px);
+  /* Sideways drags are passed to the table, see `forwardStickyHeaderInput`. */
+  touch-action: pan-y;
+
+  [data-sticky-table-ready] > & {
+    display: block;
+    position: sticky;
+    z-index: 20;
+    overflow: clip;
+    height: var(--sticky-table-header-height);
+    margin-bottom: var(--sticky-table-header-bottom-gap);
+  }
+}
+
+/* Each cell is shown, and interactive, in one layer only. */
+@utility sticky-table-header-track {
+  animation: sticky-table-header-track linear both;
+  animation-timeline: --sticky-table-timeline;
+
+  & th[data-pinned] {
+    visibility: hidden;
+  }
+}
+
+/*
+  The pinned columns again, clipped to their width and not sliding. Its other
+  cells stay hidden. `StickyTableHeader` sets the overlap and the matching
+  `animation-range`.
+*/
+@utility sticky-table-header-pinned-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--sticky-table-pinned-width, 0px);
+  overflow: clip;
+  animation: sticky-table-header-pinned-layer linear both;
+  animation-timeline: --sticky-table-timeline;
+
+  & th:not([data-pinned]) {
+    visibility: hidden;
+  }
+}
+
+@keyframes sticky-table-header-track {
+  to {
+    transform: translateX(calc(-1 * var(--sticky-table-max-scroll, 0px)));
+  }
+}
+
+@keyframes sticky-table-header-pinned-layer {
+  to {
+    transform: translateX(calc(-1 * var(--sticky-table-pinned-overlap, 0px)));
+  }
+}

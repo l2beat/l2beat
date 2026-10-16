@@ -1,28 +1,34 @@
-Railgun is a non-custodial privacy protocol on Ethereum built around encrypted UTXO-style private balances rather than fixed-denomination pools. This design enables in-protocol transfers of shielded tokens and interactions with DeFi smart contracts on L1.
+Railgun lets the user shield tokens on Ethereum, send them privately to other Railgun users, use them in DeFi and unshield them to any address. Sender, recipient, token and amount stay hidden inside the pool, including which shield funds which unshield. Shields and unshields are public.
 
-A shield transaction moves assets from a public address on Ethereum into the Railgun contract and creates encrypted commitments in a Merkle-tree state. Later private transfers or unshields use zk-SNARK proofs to spend those commitments without revealing the sender, recipient, token type, or amount. Notes created by deposits and private transactions represents ownership of tokens in Railgun, users must keep them secret and make sure the notes are not lost.
+No operator holds a key into the pool. RAIL stakers govern the core contract through a DAO, whose upgrades wait {{executionDelay}}. Leaving is permissionless: the user can submit their own unshield at any time.
 
-Railgun supports private transfers and cross-contract interactions without fragmenting liquidity across denominations. DeFi calls can be executed through the RelayAdapt contract, which temporarily unshields tokens to Ethereum L1, performs a sequence of contract calls, and shields the resulting assets back into Railgun in a single transaction (facilitated by a relayer).
+### Architecture
 
-Railgun has a DAO governed by holders of the RAIL token. The DAO has the authority to arbitrarily change the logic of the protocol and its shielded tokens.
+Balances are encrypted notes in a public tree of commitments. Spending a note publishes its nullifier, and a zk-SNARK proves the spend without revealing which note it was. Each note is encrypted to the recipient's 0zk address.
 
-### Privacy considerations
+### Flow
 
-Railgun protocol supports [relayed withdrawals](https://docs.railgun.org/developer-guide/wallet/transactions/unshielding), in which a relayer (called a broadcaster in Railgun ecosystem) processes withdrawals on the user's behalf for a fee, which enables sending funds to fresh addresses. Transactions from private addresses can be sent through relayers over the [Waku network](https://blog.waku.org/2024-04-26-railgun-case-study/), which increases network-level privacy. Railgun allows interactions between shielded tokens and DeFi, which allows depositing and withdrawing different tokens.
+1. **Shield.** You send tokens to the pool, which creates a note for your 0zk address. Your address, token and amount are public.
+2. **Transfer.** Your wallet proves the spend locally. A [broadcaster](https://docs.railgun.org/developer-guide/wallet/transactions/unshielding), reached over the [Waku network](https://blog.waku.org/2024-04-26-railgun-case-study/), submits it and pays the gas for a fee paid in a private note.
+3. **DeFi.** The RelayAdapt contract unshields tokens, runs the calls and shields the results back in one transaction. Tokens and amounts of the calls are public.
+4. **Unshield.** The pool pays out to any address. Recipient, token and amount are public.
 
-Practical privacy also depends on the timing and amounts of deposits and withdrawals. Users are advised to research [OPSEC best practice](/publications/privacy-best-practices).
+### Keys
 
-### Fees
+The user's wallet derives spending and viewing keys from a recovery phrase. The user can share a read-only viewing key, which discloses all their private transactions.
 
-There are mandatory onchain protocol fees of {{shieldFee}} for shields and {{unshieldFee}} for unshields. The NFT fee field is currently set to {{nftFee}}. Shield and unshield fees are sent to the Railgun Treasury.
+### App
 
-Relayers can charge additional offchain fees for submitting transactions on a user's behalf. These relayer fees are not set by the core protocol contracts.
+Railgun names no reference wallet, so the ratings assume [RailOxide](https://github.com/triamazikamno/railoxide). It routes all traffic through built-in Tor and builds Private Proofs of Innocence (PPoI) from a local copy of the lists. Other wallets likely leak significantly more.
 
 ### Compliance
 
-Railgun protocol does not enforce any compliance measures. However it allows using [Private Proof of Innocence](https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence)(PPoI), which can attest to the origin and history of shielded tokens. Relayers and some wallets require a valid PPoI for their services, but they are not generally enforced.
+Screening happens offchain. A [PPoI](https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence) proves that a note descends only from shields a list provider accepted. The default list screens shields with Chainalysis's sanctions API. Broadcasters on Ethereum require a PPoI, and a transaction the user submits directly skips the check.
 
-Additionally, Railgun users can share a read-only viewing key to expose all sent and received private transactions, if required by a regulator or enforcer. 
+### Fees
+
+Shields pay a protocol fee of {{shieldFee}} and unshields {{unshieldFee}}, both to the Railgun Treasury. The NFT fee is {{nftFee}}. Broadcasters charge their own fee per transaction.
+
 ### Anonymity set
 
-Because Railgun allows private transfers, optional PPoIs that can be enforced by relayers, and interactions with DeFi, its anonymity set depends on many details. A withdrawal from Railgun could be connected with a deposit of another token, or could not correspond to any deposit if a user received a private transfer from another user. The anonymity set, in the best case, corresponds to the set of all Railgun users.
+Each token has its own anonymity set. Private transfers between users mix their notes within it.

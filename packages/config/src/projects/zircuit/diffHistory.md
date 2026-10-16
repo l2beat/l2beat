@@ -1,4 +1,152 @@
-Generated with discovered.json: 0x89e4ae993b78742abd9992f1c8562608d96d4f0e
+Generated with discovered.json: 0x9c0aa0bbaa6c90cba04da03adf6237e12a3dfefb
+
+# Diff at Wed, 07 Oct 2026 14:48:40 GMT:
+
+- id: 707b1a51
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1791217049
+- current timestamp: 1791217049
+
+## Description
+
+The permission modelling now recognizes the L2 alias of Conduit Multisig 1 (owner of the L2ProxyAdmin) as an alias, so it no longer counts as an EOA with upgrade permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791217049 (main branch discovery), not current.
+
+```diff
+    EOA (zircuit:0x5b5A62275DF8c60A80D3a25FAeC5aA7De116b857) {
+    +++ description: None
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
+Generated with discovered.json: 0xc2c4d2406eac66d0c93297ad3e6a0518a73b0f20
+
+# Diff at Mon, 05 Oct 2026 16:18:38 GMT:
+
+- id: 42546ee1
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fd1ddb46d7e6cc7af90a258f28b6624761350a24 block: 1790778923
+- current timestamp: 1791217049
+
+## Description
+
+Config-only rerun. The DisputeGameFactory template now reads the Upgrade 20 super dispute game types, 9 and 5, together with their init bonds and clone arguments; both types are unset on this chain. No onchain state changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790778923 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x2613d77fFBE105CA861D526061dC3ef191E17051) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      usedTypes.0.arg.9:
++        "SuperFaultDisputeGame"
+      usedTypes.0.arg.5:
++        "SuperPermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game5:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game5AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game5Args:
++        "0x"
+      values.game5Proposer:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game9AbsolutePrestate:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9AnchorStateRegistry:
++        "UNRESOLVED"
+      values.game9Args:
++        "0x"
++++ severity: HIGH
+      values.game9Vm:
++        "UNRESOLVED"
++++ severity: HIGH
+      values.game9Weth:
++        "UNRESOLVED"
+      values.initBondGame5:
++        0
+      values.initBondGame9:
++        0
+      usedTypes.6:
++        {"typeCaster":"SliceAddress","arg":{"offset":0}}
+      usedTypes.7:
++        {"typeCaster":"SliceAddress","arg":{"offset":20}}
+    }
+```
+
+Generated with discovered.json: 0x4cfb28e4f5f42ec543569501fa9bac72a0968371
+
+# Diff at Sun, 04 Oct 2026 05:55:38 GMT:
+
+- id: 6c528201
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790778923
+- current timestamp: 1790778923
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790778923 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x2613d77fFBE105CA861D526061dC3ef191E17051) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x95c5f8489dd7dfa35b7e42d48a3d06d7e2bbe629
 
 # Diff at Wed, 30 Sep 2026 14:36:30 GMT:
 

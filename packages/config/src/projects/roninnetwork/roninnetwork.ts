@@ -107,13 +107,6 @@ const roninTemplate = opStackL2({
         verifierContractsReproducible: null,
         programHashesReproducible: null,
       },
-      stage2: {
-        fraudProofSystemIsPermissionless: false,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow: false,
-        daMechanismEconomicSecurity: false,
-      },
     },
     {
       nodeSourceLink:
@@ -143,11 +136,11 @@ const roninTemplate = opStackL2({
       },
       {
         type: 'blockscout',
-        url: 'https://explorer.roninchain.com/api',
+        url: 'https://ronin.blockscout.com/api',
       },
     ],
   },
-  ossification: discovery.getOssification(genesisTimestamp),
+  ossificationHistory: discovery.getOssificationHistory(genesisTimestamp),
   milestones: [
     {
       title: 'Ronin migrates to an Ethereum L2',

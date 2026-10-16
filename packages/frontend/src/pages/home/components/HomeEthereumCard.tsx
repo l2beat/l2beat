@@ -1,5 +1,6 @@
 import { formatActivityCount, formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
+import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -10,8 +11,6 @@ import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 import { HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
-
-const ETHEREUM_HREF = '/data-availability/projects/ethereum/ethereum'
 
 /** Ethereum's blob data and activity, a chart pair like every other card's. */
 export function HomeEthereumCard({
@@ -49,7 +48,7 @@ export function HomeEthereumCard({
 
   return (
     <HomeCard className={cn('flex min-w-0 flex-col gap-5', className)}>
-      <HomeCardHeader title="Ethereum" href={ETHEREUM_HREF} />
+      <HomeCardHeader title="Ethereum" href={ETHEREUM_PROJECT_PATH} />
       <HomeKpiRow>
         <HomeKpiTile
           label="Blob data"

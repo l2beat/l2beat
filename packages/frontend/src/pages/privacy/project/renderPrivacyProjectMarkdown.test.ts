@@ -92,10 +92,28 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     const summary = getSection(renderPrivacyProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- Trusted setup: 1,114 participants (sentiment: good). Groth16 ceremony: A multi-party ceremony.',
-      '- Exit window: Infinite (sentiment: good). The pools are immutable. This protocol passes the walkaway test: users can fully use it if all centralized protocol participants disappear.',
       '- Privacy: Link privacy. Public observer: Link private (sentiment: good); Chain analyst: Link at risk (sentiment: warning); Network observer: Link private (sentiment: good); Privileged insider: Link private (sentiment: good); Future adversary: Link exposed (sentiment: bad).',
+      '- Trusted setup: 1,114 participants (sentiment: good). Groth16 ceremony: A multi-party ceremony.',
+      '- Exit window: Infinite (sentiment: good). The pools are immutable. This protocol passes the walkaway test: users can still fully use it if every centralized participant disappears.',
       '- Reproducibility: Reproducible (sentiment: good). The client can be built locally.',
+    )
+  })
+
+  it('keeps a multi-paragraph risk explanation inside its list item', () => {
+    const summary = getSection(
+      renderPrivacyProjectMarkdown({
+        ...ENTRY,
+        reproducibility: {
+          ...ENTRY.reproducibility,
+          description:
+            'The client can be built locally.\n\nThe prover keys are not published.',
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '- Reproducibility: Reproducible (sentiment: good). The client can be built locally.\n\n  The prover keys are not published.',
     )
   })
 
@@ -115,7 +133,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     )
 
     expect(summary).toInclude(
-      'This protocol does not pass the walkaway test: users cannot fully use it if all centralized protocol participants disappear. Withdrawals need a relayer.',
+      'This protocol fails the walkaway test: users cannot fully use it if every centralized participant disappears. Withdrawals need a relayer.',
     )
   })
 
@@ -166,6 +184,27 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     )
     expect(getSection(markdown, 'Flows')).toInclude(
       'https://l2beat.com/privacy/projects/tornado-cash#privacy-flows',
+    )
+  })
+
+  it('explains key registrations for stealth-address projects', () => {
+    const markdown = renderPrivacyProjectMarkdown({
+      ...ENTRY,
+      sections: SECTIONS.map((section) =>
+        section.type === 'PrivacyAnonymitySetSection'
+          ? {
+              ...section,
+              props: {
+                ...section.props,
+                anonymitySetType: 'key-registrations',
+              },
+            }
+          : section,
+      ),
+    })
+
+    expect(getSection(markdown, 'Anonymity sets')).toInclude(
+      '### Estimated anonymity set by waiting time',
     )
   })
 
@@ -284,14 +323,14 @@ function cell(
   id: PrivacyAdversaryId,
   value: string,
   sentiment: PrivacyAdversaryCell['sentiment'],
-  exposure: string,
+  exposureShort: string,
   rest: Partial<PrivacyAdversaryCell> = {},
 ): PrivacyAdversaryCell {
   return {
     id,
     value,
     sentiment,
-    exposure,
+    exposureShort,
     alsoExposed: [],
     interior: PUBLIC_OBSERVER_INTERIOR,
     ...rest,
@@ -391,8 +430,9 @@ function chartSection(
     | 'PrivacyFlowsSection',
   id: 'privacy-tvl' | 'privacy-anonymity-set' | 'privacy-flows',
   title: string,
+  props: object = {},
 ) {
-  return { type, props: { id, title } } as ProjectDetailsSection
+  return { type, props: { id, title, ...props } } as ProjectDetailsSection
 }
 
 function deposits(last7d: number, last30d: number, total: number) {
@@ -451,6 +491,7 @@ const SECTIONS: ProjectDetailsSection[] = [
     'PrivacyAnonymitySetSection',
     'privacy-anonymity-set',
     'Anonymity sets',
+    { anonymitySetType: 'deposits' },
   ),
   chartSection('PrivacyFlowsSection', 'privacy-flows', 'Flows'),
   {
@@ -511,6 +552,7 @@ const ENTRY: ProjectPrivacyEntry = {
     sentiment: 'good',
     description: 'Groth16 ceremony: A multi-party ceremony.',
     risk: 'green',
+    label: '1,114 participants',
   },
   reproducibility: {
     value: 'Reproducible',

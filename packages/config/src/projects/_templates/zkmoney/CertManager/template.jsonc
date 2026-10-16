@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CertManager",
+  "critical": true,
+  "category": "core",
+  "description": "Verifies and caches AWS Nitro attestation certificates. The only trust anchor is the hardcoded AWS Nitro root certificate.",
+  "ignoreMethods": ["verified"]
+}

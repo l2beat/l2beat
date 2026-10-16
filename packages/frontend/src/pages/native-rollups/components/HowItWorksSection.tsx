@@ -5,22 +5,22 @@ const STEPS = [
   {
     title: 'Build and prove an L2 block',
     description:
-      "The operator executes an L2 block and proves Ethereum's stateless payload-validation program with one or more supported zkVM backends.",
+      "The operator executes an L2 block and proves it with Ethereum's stateless validation program, the same program that proves L1's own blocks.",
   },
   {
-    title: 'Submit a proof-carrying transaction',
+    title: 'Post a frame transaction',
     description:
-      'A new L1 transaction type commits to the L2 data in blobs, the proof backends and program identity, and a hash of the proof’s public values.',
+      'An EIP-8141 frame transaction carries the block data in blobs, declares the proof as an EIP-8288 dependency, and calls the rollup contract.',
   },
   {
-    title: 'Ethereum verifies the proofs',
+    title: 'Ethereum covers the proof',
     description:
-      'Raw proofs travel in ephemeral sidecars. Ethereum clients validate them through a program-agnostic proof engine, while recursive aggregation keeps verification efficient at scale.',
+      'Proofs travel through the mempool and never enter the block. Mempool nodes and the builder aggregate them recursively into one proof per block, which validators verify.',
   },
   {
     title: 'The rollup advances its state',
     description:
-      'The rollup contract confirms that Ethereum verified the right program and block data, then accepts the new L2 state root.',
+      'The rollup contract rebuilds what the proof must commit to, checks the program against the EIP-8357 registry, and accepts the new L2 state root.',
   },
 ]
 
@@ -29,7 +29,7 @@ export function HowItWorksSection() {
     <section id="how-it-works" className="mt-8 md:mt-12">
       <SectionHeading
         title="From an L2 block to an L1-verified state root"
-        description="A native rollup proves its blocks against Ethereum's own execution program, submits the proof to L1, and lets its settlement contract advance the chain."
+        description="A native rollup proves its blocks with Ethereum's own execution program, declares each proof in an L1 transaction, and lets its rollup contract advance the chain."
       />
       <PrimaryCard className="overflow-hidden p-0 md:p-0">
         <ol className="grid gap-px bg-divider md:grid-cols-2 xl:grid-cols-4">

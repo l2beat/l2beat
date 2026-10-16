@@ -60,7 +60,7 @@ export async function getInteropTokenFrameworksData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Token frameworks - L2BEAT',
+        name: 'Token frameworks',
         description:
           'Overview of token frameworks used across interop protocols.',
         url: req.originalUrl,

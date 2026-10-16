@@ -2,7 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type {
   BlockDaIndexedConfig,
   DataAvailabilityTrackingConfig,
-  TimestampDaIndexedConfig,
 } from '../../../config/Config'
 import { router } from '../../../trpc/init'
 import { protectedProcedure } from '../../../trpc/procedures'
@@ -11,11 +10,10 @@ export const STALE_AFTER_SECONDS = 2 * UnixTime.DAY
 
 export interface DaTrackingStatusRow {
   configId: string
-  type: BlockDaIndexedConfig['type'] | TimestampDaIndexedConfig['type']
+  type: BlockDaIndexedConfig['type']
   projectId: string
   daLayer: string
-  since: number
-  sinceUnit: 'block' | 'timestamp'
+  sinceBlock: number
   latestTimestamp: number | undefined
   ageSeconds: number | undefined
   details: string
@@ -52,10 +50,9 @@ export function getDaTrackingStatusRows({
     latestTimestamps.map((row) => [row.configurationId, row.latestTimestamp]),
   )
 
-  const rows = [
-    ...configs.blockProjects.filter(isActiveBlockConfig),
-    ...configs.timestampProjects.filter(isActiveTimestampConfig),
-  ].map((config) => toStatusRow(config, latestByConfigId, now))
+  const rows = configs.blockProjects
+    .filter(isActiveBlockConfig)
+    .map((config) => toStatusRow(config, latestByConfigId, now))
 
   return rows.sort(compareStatusRows)
 }
@@ -64,12 +61,8 @@ function isActiveBlockConfig(config: BlockDaIndexedConfig): boolean {
   return config.untilBlock === undefined
 }
 
-function isActiveTimestampConfig(config: TimestampDaIndexedConfig): boolean {
-  return config.untilTimestamp === undefined
-}
-
 function toStatusRow(
-  config: BlockDaIndexedConfig | TimestampDaIndexedConfig,
+  config: BlockDaIndexedConfig,
   latestByConfigId: Map<string, UnixTime>,
   now: UnixTime,
 ): DaTrackingStatusRow {
@@ -84,8 +77,7 @@ function toStatusRow(
     type: config.type,
     projectId: config.projectId.toString(),
     daLayer: config.daLayer.toString(),
-    since: 'sinceBlock' in config ? config.sinceBlock : config.sinceTimestamp,
-    sinceUnit: 'sinceBlock' in config ? 'block' : 'timestamp',
+    sinceBlock: config.sinceBlock,
     latestTimestamp,
     ageSeconds,
     details: getConfigDetails(config),
@@ -98,9 +90,7 @@ function toStatusRow(
   }
 }
 
-function getConfigDetails(
-  config: BlockDaIndexedConfig | TimestampDaIndexedConfig,
-): string {
+function getConfigDetails(config: BlockDaIndexedConfig): string {
   switch (config.type) {
     case 'baseLayer':
       return 'base layer'
@@ -114,12 +104,6 @@ function getConfigDetails(
       }
       return parts.join('; ')
     }
-    case 'celestia':
-      return `namespace: ${config.namespace}`
-    case 'avail':
-      return `app IDs: ${config.appIds.join(', ')}`
-    case 'eigen-da':
-      return `customer ID: ${config.customerId}`
   }
 }
 

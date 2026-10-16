@@ -26,7 +26,7 @@ export const RELAYER_STAT_COPY: Record<
   activeRelayers: {
     title: 'Active Relayers 30D',
     tooltip:
-      'The number of unique relayer addresses observed in relayed withdrawals over the past 30 days.',
+      'Unique relayer addresses seen in withdrawals over the past 30 days, without self-relays. One operator can use several addresses.',
   },
   avgDailyRelayers: {
     title: 'Avg. Relayers 30D',

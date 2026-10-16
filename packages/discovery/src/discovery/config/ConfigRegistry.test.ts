@@ -17,7 +17,6 @@ const OVERRIDE_B = {
 }
 const CONFIG = new ConfigRegistry({
   name: 'a',
-  chain: 'ethereum',
   initialAddresses: [ADDRESS_A],
   maxAddresses: 1,
   maxDepth: 1,

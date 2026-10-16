@@ -1,3 +1,211 @@
+Generated with discovered.json: 0xe127e64d0902808bc8f98e039d0a554fe942672f
+
+# Diff at Mon, 12 Oct 2026 08:03:13 GMT:
+
+- id: 7808de1e
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1783679422
+- current timestamp: 1791789577
+
+## Description
+
+SP1 gateways permanently froze the v5.0.0 and v6.0.0 verifier routes on Ethereum, Arbitrum and Base. Older proofs through these gateways are rejected.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+    contract SP1VerifierGatewayArb (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
++++ severity: HIGH
+      values.activeVerifiers.0:
+-        {"selector":"0xd4e8ecd2","verifier":"arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"}
++++ description: Verifiers that are routed to by their selector and not frozen.
++++ severity: HIGH
+      values.activeVerifiers.1:
+-        {"selector":"0xbb1a6f29","verifier":"arb1:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (arb1:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (base:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+    contract SP1VerifierGatewayBase (base:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
++++ severity: HIGH
+      values.activeVerifiers.0:
+-        {"selector":"0xd4e8ecd2","verifier":"base:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"}
++++ description: Verifiers that are routed to by their selector and not frozen.
++++ severity: HIGH
+      values.activeVerifiers.1:
+-        {"selector":"0xbb1a6f29","verifier":"base:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (base:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+    contract SP1VerifierGatewayOlder (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
++++ severity: HIGH
+      values.activeVerifiers.0:
+-        {"selector":"0xa4594c59","verifier":"eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"}
++++ description: Verifiers that are routed to by their selector and not frozen.
++++ severity: HIGH
+      values.activeVerifiers.1:
+-        {"selector":"0x0e78f4db","verifier":"eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"}
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
++++ severity: HIGH
+      values.activeVerifiers.0:
+-        {"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"}
++++ description: Verifiers that are routed to by their selector and not frozen.
++++ severity: HIGH
+      values.activeVerifiers.1:
+-        {"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 1402 -------------------
+ .../dev/null                                       | 1429 --------------------
+ .../dev/null                                       | 1402 -------------------
+ .../dev/null                                       | 1429 --------------------
+ .../dev/null                                       | 1402 -------------------
+ .../dev/null                                       |  614 ---------
+ .../dev/null                                       | 1429 --------------------
+ .../dev/null                                       |  661 ---------
+ 8 files changed, 9768 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783679422 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      critical:
+-        true
++        {"untilTimestamp":1791526391}
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      critical:
+-        true
++        {"untilTimestamp":1791526499}
+    }
+```
+
+Generated with discovered.json: 0xb023560529c84f3feb61c974461471d23c534c38
+
+# Diff at Sun, 04 Oct 2026 05:55:36 GMT:
+
+- id: 4b8a0e22
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1783679422
+- current timestamp: 1783679422
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783679422 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGatewayArb (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayBase (base:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayOlder (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.owner:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x1428d668e57791ff1d43eb2a7bf80d1c42fa2863
 
 # Diff at Wed, 23 Sep 2026 05:49:39 GMT:

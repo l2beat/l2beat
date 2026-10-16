@@ -28,5 +28,11 @@
     "hash": "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05",
     "address": "eth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
     "blockNumber": 22188285
+  },
+  "Safe_v1_5_0": {
+    "hash": "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78",
+    "address": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
+    "chain": "ethereum",
+    "blockNumber": 26084189
   }
 }

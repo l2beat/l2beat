@@ -7,14 +7,14 @@ import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
+import { createBlobsRouter } from './blobs/BlobsRouter'
 import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
-import { createDaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
-import { createDataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
 import { createDefiRouter } from './defi/DefiRouter'
 import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
 import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
+import { createEthereumProjectRouter } from './ethereum/EthereumProjectRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGardenRouter } from './garden/GardenRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
@@ -25,6 +25,7 @@ import { createL2Router } from './layer2s/L2Router'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
 import { NotFoundHandler } from './not-found/NotFoundHandler'
+import { createOssificationRouter } from './ossification/OssificationRouter'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createStagesRouter } from './stages/StagesRouter'
@@ -58,7 +59,8 @@ export function createServerPageRouter(
     createL2Router,
     createInteropRouter,
     createTokensRouter,
-    createDataAvailabilityRouter,
+    createEthereumProjectRouter,
+    createBlobsRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,
     createGovernanceRouter,
@@ -70,10 +72,10 @@ export function createServerPageRouter(
     createChangelogRouter,
     createDonateRouter,
     createGlossaryRouter,
-    createDaRiskFrameworkRouter,
     createMultisigReportRouter,
     createPrivacyRouter,
     createDefiRouter,
+    createOssificationRouter,
     createTermsOfServiceRouter,
     createStagesRouter,
     createPublicationsRouter,

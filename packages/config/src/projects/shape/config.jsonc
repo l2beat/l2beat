@@ -8,12 +8,15 @@
       // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
       "critical": true
     },
-    "eth:0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952": {
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the ProxyAdminOwner.
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
     },
-    "eth:0xfFC1CC63846dac521FB173dE86d0D765Df4DF735": {
+    "eth:0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "fields": {
-        "proposer": {
+        "proposerFromDGF": {
           "permissions": [
             {
               "type": "interact",
@@ -21,7 +24,7 @@
             }
           ]
         },
-        "challenger": {
+        "challengerFromDGF": {
           "permissions": [
             {
               "type": "interact",

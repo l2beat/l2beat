@@ -47,15 +47,16 @@ export async function getVerifiersSection(
     })
 
     const knownDeployments = verifier.knownDeployments.map((d) => {
-      const explorerUrl = projects.find(
-        (p) => p.id === ChainSpecificAddress.longChain(d.address),
-      )?.chainConfig.explorerUrl
+      const chain = ChainSpecificAddress.longChain(d.address)
+      const chainProject = projects.find((p) => p.id === chain)
+      const explorerUrl = chainProject?.chainConfig.explorerUrl
       const addressKey = plainDeploymentAddress(d.address)
       return {
         url: explorerUrl
           ? `${explorerUrl}/address/${addressKey}#code`
           : undefined,
         address: addressKey,
+        chain: chainProject?.name ?? chain,
         projectsUsedIn: (d.overrideUsedIn
           ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
           : contractUtils.getUsedIn(

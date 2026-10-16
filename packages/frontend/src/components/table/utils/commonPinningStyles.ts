@@ -8,7 +8,22 @@ const EDGE_FADE_WIDTH_PX = 6
 // Sticky cells are pulled 1px past the scrollport edge so that fractional
 // scroll offsets (touch scrolling, browser zoom) cannot leave a sub-pixel
 // sliver of scrolled content visible beside them.
-const STICKY_OVERLAP_PX = 1
+export const STICKY_OVERLAP_PX = 1
+
+/**
+ * Pinned cells stick unless an ancestor sets this to `static`, as the sticky
+ * header copy does: it lives outside the scroller, so it pins its cells itself.
+ */
+const PINNED_POSITION_VARIABLE = '--sticky-table-pinned-position'
+
+/**
+ * Where a left-pinned column sticks, set by `useStickyTableHeader` from the
+ * rendered column widths. Without it the offset comes from the declared sizes,
+ * which drift from the real ones whenever content makes a column wider.
+ */
+export function getPinnedLeftVariable(pinnedIndex: number) {
+  return `--sticky-table-pinned-left-${pinnedIndex}`
+}
 
 export function getCommonPinningStyles<T>(
   column: Column<T>,
@@ -22,21 +37,72 @@ export function getCommonPinningStyles<T>(
       : undefined
 
   return {
+    ...getStickyStyles(isLastPinned),
     left:
       isPinned === 'left'
-        ? `${column.getStart('left') - STICKY_OVERLAP_PX}px`
+        ? `var(${getPinnedLeftVariable(column.getPinnedIndex())}, ${
+            column.getStart('left') - STICKY_OVERLAP_PX
+          }px)`
         : undefined,
     right:
       isPinned === 'right'
         ? `${column.getAfter('right') - STICKY_OVERLAP_PX}px`
         : undefined,
-    position: 'sticky',
     width: column.getSize(),
+  }
+}
+
+/**
+ * For tables that lay out their own cells rather than through TanStack. The
+ * cell sits `start` px in until the sticky header measures the real offset.
+ */
+export function getLeftPinnedCellStyles(
+  pinnedIndex: number,
+  start: number,
+  isLast: boolean,
+): CSSProperties {
+  return {
+    ...getStickyStyles(isLast ? 'left' : undefined),
+    left: `var(${getPinnedLeftVariable(pinnedIndex)}, ${start - STICKY_OVERLAP_PX}px)`,
+  }
+}
+
+/** The last pinned column fades where the rest scroll under */
+function getStickyStyles(lastPinned: 'left' | 'right' | undefined) {
+  return {
+    position:
+      `var(${PINNED_POSITION_VARIABLE}, sticky)` as CSSProperties['position'],
     maskImage:
-      isLastPinned &&
+      lastPinned &&
       `linear-gradient(to ${
-        isLastPinned === 'left' ? 'right' : 'left'
+        lastPinned === 'left' ? 'right' : 'left'
       }, transparent 0, black 0px, black calc(100% - ${EDGE_FADE_WIDTH_PX}px), transparent 100%)`,
     zIndex: 10,
+  }
+}
+
+/**
+ * X's Android app injects a script into linked pages that lifts any sticky
+ * element reaching the bottom of the screen, as if it were a footer, by the
+ * height of the sheet it overlays. Sticky cells below the fold count too, so
+ * they end up rows above their own. The script skips elements carrying its own
+ * marker for consent dialogs it has already padded.
+ */
+export const NOT_A_FOOTER_PROPS = { 'data-x-lv-consent-pad': 'not-a-footer' }
+
+/** Marks pinned header cells, for the sticky header copy to tell them apart. */
+export const PINNED_CELL_ATTRIBUTE = 'data-pinned'
+
+export function getPinnedCellProps<T>(column: Column<T>) {
+  return {
+    style: getCommonPinningStyles(column),
+    ...(column.getIsPinned() && NOT_A_FOOTER_PROPS),
+  }
+}
+
+export function getPinnedHeaderCellProps<T>(column: Column<T>) {
+  return {
+    ...getPinnedCellProps(column),
+    [PINNED_CELL_ATTRIBUTE]: column.getIsPinned() ? '' : undefined,
   }
 }

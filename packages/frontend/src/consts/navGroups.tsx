@@ -1,8 +1,8 @@
 import compact from 'lodash/compact'
 import type { NavGroup, NavLink } from '~/components/nav/types'
 import { env } from '~/env'
+import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
-import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
 import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
@@ -125,7 +125,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
           title: 'ZK Catalog',
           href: '/zk-catalog',
         },
-        // Not built yet: listed, but not links.
+        // Not built yet, or behind a flag: listed, but not links.
         {
           title: 'Audits',
           href: '/security/audits',
@@ -133,8 +133,8 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         },
         {
           title: 'Ossification',
-          href: '/security/ossification',
-          disabled: true,
+          href: '/ossification',
+          disabled: !env.CLIENT_SIDE_OSSIFICATION_ENABLED,
         },
       ],
     ],
@@ -174,42 +174,14 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <TokensIcon className="transition-colors duration-300 group-data-[active=true]:stroke-chart-pink" />
     ),
   },
-  {
-    type: 'multiple',
+  env.CLIENT_SIDE_BLOBS_PAGE && {
+    type: 'single',
     section: 'more',
     title: 'Blobs',
-    match: 'data-availability',
+    match: 'blobs',
+    href: '/blobs',
     icon: (
-      <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-chart-pink" />
+      <BlobsIcon className="transition-colors duration-300 group-data-[active=true]:fill-chart-pink" />
     ),
-    links: [
-      [
-        {
-          title: 'Summary',
-          href: '/data-availability/summary',
-        },
-        {
-          title: 'Risk Analysis',
-          shortTitle: 'Risks',
-          href: '/data-availability/risk',
-        },
-        {
-          title: 'Throughput',
-          shortTitle: 'Throughput',
-          href: '/data-availability/throughput',
-        },
-        {
-          title: 'Liveness',
-          shortTitle: 'Liveness',
-          href: '/data-availability/liveness',
-        },
-      ],
-      [
-        {
-          title: 'Archived',
-          href: '/data-availability/archived',
-        },
-      ],
-    ],
   },
 ])

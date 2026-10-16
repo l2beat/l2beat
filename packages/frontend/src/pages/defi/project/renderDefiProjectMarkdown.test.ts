@@ -11,34 +11,61 @@ import { renderDefiProjectMarkdown } from './renderDefiProjectMarkdown'
 // values are literals from the fixture, worded as on the HTML page.
 describe(renderDefiProjectMarkdown.name, () => {
   it('opens with the project name and a link to the HTML page', () => {
-    const markdown = renderDefiProjectMarkdown(ENTRY)
+    const markdown = renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD)
 
     expect(markdown).toMatchRegex(
       /^# Lido\n\nMarkdown version of https:\/\/l2beat\.com\/defi\/projects\/lido\n\n/,
     )
   })
 
-  it('summarizes badges and description, without a risk rosette', () => {
-    const summary = getSection(renderDefiProjectMarkdown(ENTRY), 'Summary')
+  it('gives the TVL and category of the DeFi summary table, without a risk rosette', () => {
+    const summary = getSection(
+      renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
+      'Summary',
+    )
 
     expect(summary).toInclude(
-      '- Badges: Ethereum, Chainlink',
+      '- TVL: $26.53 B (total USD value of assets locked in the protocol)\n- Category: Liquid Staking',
       '### About\n\nLido is a liquid staking protocol.',
     )
     expect(summary).not.toInclude('### Risks')
   })
 
+  it('leaves out the TVL of a project whose value is not tracked', () => {
+    const summary = getSection(
+      renderDefiProjectMarkdown(ENTRY, undefined),
+      'Summary',
+    )
+
+    expect(summary).not.toInclude('- TVL:')
+  })
+
+  it('lists the header links, badges with their descriptions and the contracts explorer', () => {
+    const summary = getSection(
+      renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
+      'Summary',
+    )
+
+    expect(summary).toInclude(
+      '### Links\n\n- Website: https://lido.fi\n- Contracts explorer (Disco): https://disco.l2beat.com/ui/p/lido',
+      '### Badges\n\n- Ethereum: Ethereum badge.\n- Chainlink: Chainlink badge.',
+    )
+  })
+
   it('surfaces the under review status and warnings before the facts', () => {
     const summary = getSection(
-      renderDefiProjectMarkdown({
-        ...ENTRY,
-        isUnderReview: true,
-        warnings: {
-          emergency: 'Funds are at risk.',
-          red: { text: 'Critical contracts are unverified.' },
-          yellow: 'Withdrawals are paused.',
+      renderDefiProjectMarkdown(
+        {
+          ...ENTRY,
+          isUnderReview: true,
+          warnings: {
+            emergency: 'Funds are at risk.',
+            red: { text: 'Critical contracts are unverified.' },
+            yellow: 'Withdrawals are paused.',
+          },
         },
-      }),
+        TOTAL_VALUE_LOCKED_USD,
+      ),
       'Summary',
     )
 
@@ -49,12 +76,12 @@ describe(renderDefiProjectMarkdown.name, () => {
       '**Warning:** Withdrawals are paused.',
     )
     expect(summary.indexOf('**Warning:**')).toBeLessThan(
-      summary.indexOf('- Badges:'),
+      summary.indexOf('- Category:'),
     )
   })
 
   it('follows the HTML page outline with one H2 per section', () => {
-    const headings = renderDefiProjectMarkdown(ENTRY)
+    const headings = renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD)
       .split('\n')
       .filter((line) => line.startsWith('## '))
 
@@ -70,7 +97,7 @@ describe(renderDefiProjectMarkdown.name, () => {
 
   it('carries the protocol description with its references', () => {
     const description = getSection(
-      renderDefiProjectMarkdown(ENTRY),
+      renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
       'Protocol description',
     )
 
@@ -82,13 +109,16 @@ describe(renderDefiProjectMarkdown.name, () => {
 
   it('points the value locked chart to the HTML page', () => {
     expect(
-      getSection(renderDefiProjectMarkdown(ENTRY), 'Value Locked'),
+      getSection(
+        renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
+        'Value Locked',
+      ),
     ).toInclude('https://l2beat.com/defi/projects/lido#tvs')
   })
 
   it('lists external dependencies with absolute links and review status', () => {
     const dependencies = getSection(
-      renderDefiProjectMarkdown(ENTRY),
+      renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD),
       'External dependencies',
     )
 
@@ -102,10 +132,13 @@ describe(renderDefiProjectMarkdown.name, () => {
 
   it('says so when there are no external dependencies', () => {
     const dependencies = getSection(
-      renderDefiProjectMarkdown({
-        ...ENTRY,
-        sections: [externalDependencies([])],
-      }),
+      renderDefiProjectMarkdown(
+        {
+          ...ENTRY,
+          sections: [externalDependencies([])],
+        },
+        TOTAL_VALUE_LOCKED_USD,
+      ),
       'External dependencies',
     )
 
@@ -113,7 +146,7 @@ describe(renderDefiProjectMarkdown.name, () => {
   })
 
   it('lists permissions and contracts per chain with addresses', () => {
-    const markdown = renderDefiProjectMarkdown(ENTRY)
+    const markdown = renderDefiProjectMarkdown(ENTRY, TOTAL_VALUE_LOCKED_USD)
 
     expect(getSection(markdown, 'Permissions')).toInclude(
       '#### Actors\n\n##### Lido DAO Agent\n\nAddresses: [0x2222222222222222222222222222222222222222](https://etherscan.io/address/0x2222222222222222222222222222222222222222)\n\nCan upgrade every contract.',
@@ -263,14 +296,18 @@ const SECTIONS: ProjectDetailsSection[] = [
   },
 ]
 
+const TOTAL_VALUE_LOCKED_USD = 26_530_000_000
+
 const ENTRY: ProjectDefiEntry = {
   id: ProjectId('lido'),
   slug: 'lido',
   name: 'Lido',
   icon: '/icons/lido.png',
   description: 'Lido is a liquid staking protocol.',
+  category: 'Liquid Staking',
   badges: [badge('ethereum', 'Ethereum'), badge('chainlink', 'Chainlink')],
-  projectLinks: [],
+  projectLinks: [{ name: 'Website', links: ['https://lido.fi'] }],
+  discoveryHref: DISCO_UI.href,
   discoUi: DISCO_UI,
   isUnderReview: false,
   warnings: {},

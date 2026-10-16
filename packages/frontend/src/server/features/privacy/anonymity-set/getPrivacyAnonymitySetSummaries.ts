@@ -1,4 +1,5 @@
 import type {
+  Database,
   IndexerConfigurationRecord,
   PrivacyAnonymitySetSenderDayRecord,
 } from '@l2beat/database'
@@ -11,6 +12,10 @@ import {
   calculateAnonymitySetHistory,
 } from './calculateAnonymitySets'
 import {
+  getPrivacyAnonymitySetCoverage,
+  type PrivacyAnonymitySetCoverage,
+} from './getPrivacyAnonymitySetCoverage'
+import {
   getPrivacyAnonymitySetSeries,
   type PrivacyAnonymitySetProject,
   type PrivacyAnonymitySetSeries,
@@ -21,20 +26,20 @@ import {
 } from './getPrivacyAnonymitySetSync'
 
 export type PrivacyAnonymitySetSummary =
-  | ({
+  | {
       status: 'available'
       value: number
-      label: string
       /** Labels of configured series excluded from the value while their history is indexed. */
       syncingLabels: string[]
-    } & Pick<
-      PrivacyAnonymitySetSeries,
-      'bucketType' | 'chain' | 'formattedAmount' | 'token'
-    >)
+      coverage?: PrivacyAnonymitySetCoverage
+      /** The series whose set is counted in the value. */
+      series: Omit<PrivacyAnonymitySetSeries, 'configurationId'>
+    }
   | {
       status: 'not-applicable'
       description: string
     }
+  | { status: 'too-small' }
   | { status: 'syncing' }
   | { status: 'unavailable' }
 
@@ -55,13 +60,14 @@ export async function getPrivacyAnonymitySetSummaries(
   const trackedProjectIds = unique(allSeries.map((item) => item.projectId))
   const cutoff = currentDay - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
 
-  const [configurations, rows] = await Promise.all([
+  const [configurations, rows, coverageByProject] = await Promise.all([
     getPrivacyAnonymitySetConfigurations(db, allSeries),
     db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
       trackedProjectIds,
       cutoff,
       currentDay,
     ),
+    getCoverageByProject(db, projects, currentDay),
   ])
 
   return new Map(
@@ -73,6 +79,7 @@ export async function getPrivacyAnonymitySetSummaries(
         configurations,
         rows,
         currentDay,
+        coverageByProject.get(project.id),
       ),
     ]),
   )
@@ -84,10 +91,14 @@ export function getPrivacyAnonymitySetSummary(
   configurations: IndexerConfigurationRecord[],
   rows: PrivacyAnonymitySetSenderDayRecord[],
   currentDay: UnixTime,
+  coverage?: PrivacyAnonymitySetCoverage,
 ): PrivacyAnonymitySetSummary {
   const state = project.privacyInfo.anonymitySet
   if (state?.type === 'not-applicable') {
     return { status: 'not-applicable', description: state.description }
+  }
+  if (state?.type === 'too-small') {
+    return { status: 'too-small' }
   }
   if (series.length === 0) {
     return { status: 'unavailable' }
@@ -107,13 +118,27 @@ export function getPrivacyAnonymitySetSummary(
   return {
     status: 'available',
     value: largest.value,
-    label: largest.series.label,
     syncingLabels,
-    bucketType: largest.series.bucketType,
-    chain: largest.series.chain,
-    formattedAmount: largest.series.formattedAmount,
-    token: largest.series.token,
+    ...(coverage && { coverage }),
+    series: largest.series,
   }
+}
+
+async function getCoverageByProject(
+  db: Database,
+  projects: PrivacyProject[],
+  currentDay: UnixTime,
+): Promise<Map<string, PrivacyAnonymitySetCoverage | undefined>> {
+  const entries = await Promise.all(
+    projects.map(
+      async (project) =>
+        [
+          project.id,
+          await getPrivacyAnonymitySetCoverage(db, project, currentDay),
+        ] as const,
+    ),
+  )
+  return new Map(entries)
 }
 
 /**
@@ -147,6 +172,9 @@ function getMockSummaries(
           { status: 'not-applicable', description: state.description },
         ]
       }
+      if (state?.type === 'too-small') {
+        return [project.id, { status: 'too-small' }]
+      }
       const series = seriesByProject.get(project.id)?.[0]
       if (series) {
         return [
@@ -154,12 +182,11 @@ function getMockSummaries(
           {
             status: 'available',
             value: Math.round(Math.random() * 1_000),
-            label: series.label,
             syncingLabels: [],
-            bucketType: series.bucketType,
-            chain: series.chain,
-            formattedAmount: series.formattedAmount,
-            token: series.token,
+            ...(state?.type === 'partially-attributed' && {
+              coverage: { attributed: 90, total: 100 },
+            }),
+            series,
           },
         ]
       }

@@ -3,6 +3,7 @@ import { StageBadge } from '~/components/badge/StageBadge'
 import { Countdown } from '~/components/Countdown'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
+import { STAGE_DOWNGRADE_PENDING } from '~/components/projects/sections/sectionCopy'
 import { externalLinks } from '~/consts/externalLinks'
 import { useDevice } from '~/hooks/useDevice'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
@@ -50,7 +51,7 @@ export function StageOneRequirementsChangeNotice({
         href={externalLinks.articles.stageOneRequirementsChange}
         className="mt-4 flex items-center gap-1 font-bold text-paragraph-14"
       >
-        Learn more about the new requirements <ArrowRightIcon />
+        {STAGE_DOWNGRADE_PENDING.learnMore} <ArrowRightIcon />
       </CustomLink>
     </CountdownSection>
   )
@@ -69,12 +70,16 @@ export function StageOneRequirementsChangeStageSectionNotice({
     <div className={cn('flex gap-2 rounded-lg bg-brand/20 p-4', className)}>
       <StopwatchIcon className="mt-0.5 size-5 shrink-0" />
       <div>
-        <p className="font-bold text-lg">New requirements coming soon</p>
+        <p className="font-bold text-lg">{STAGE_DOWNGRADE_PENDING.title}</p>
         <Countdown expiresAt={downgradePending.expiresAt} size="sm" />
         <div className="mt-4 font-medium text-paragraph-15 md:text-paragraph-16">
-          The project will be downgraded to{' '}
-          <StageBadge stage="Stage 0" isAppchain={false} className="inline" />{' '}
-          because it does not satisfy upcoming Stage 1 requirements.
+          {STAGE_DOWNGRADE_PENDING.before}{' '}
+          <StageBadge
+            stage={STAGE_DOWNGRADE_PENDING.stage}
+            isAppchain={false}
+            className="inline"
+          />{' '}
+          {STAGE_DOWNGRADE_PENDING.after}
         </div>
         {downgradePending.reasons.map((reason, i) => (
           <div
@@ -94,7 +99,7 @@ export function StageOneRequirementsChangeStageSectionNotice({
           href={externalLinks.articles.stageOneRequirementsChange}
           className="mt-4 flex items-center gap-1 font-bold text-paragraph-14"
         >
-          Learn more about the new requirements <ArrowRightIcon />
+          {STAGE_DOWNGRADE_PENDING.learnMore} <ArrowRightIcon />
         </CustomLink>
       </div>
     </div>

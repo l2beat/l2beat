@@ -18,7 +18,7 @@ export async function getIntegrateCropsData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Integrate CROPS - L2BEAT',
+        name: 'Integrate CROPS',
         description:
           'Pull the CROPS evaluations from The Infinite Garden into your own app.',
         url,

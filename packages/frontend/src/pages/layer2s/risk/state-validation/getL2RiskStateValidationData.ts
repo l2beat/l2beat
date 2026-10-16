@@ -27,6 +27,7 @@ export async function getL2RiskStateValidationData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        name: 'State Validation',
         title: 'Risk Analysis - L2BEAT',
         description:
           'Understand the risks of Ethereum scaling solutions using L2BEAT’s assessments.',

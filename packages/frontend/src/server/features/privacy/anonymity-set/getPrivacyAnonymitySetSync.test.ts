@@ -144,6 +144,7 @@ function makeProject(
     EthereumAddress(`0x${'22'.repeat(20)}`),
   ]
   const privacyInfo = mockObject<ProjectPrivacyInfo>({
+    anonymitySet: undefined,
     tokens: [
       {
         token: {
@@ -176,7 +177,7 @@ function makeProject(
     ],
   })
 
-  return { id: ProjectId('project'), privacyInfo }
+  return { id: ProjectId('project'), name: 'Project', privacyInfo }
 }
 
 function configuration(

@@ -65,7 +65,9 @@ function SidebarProvider({
           'group/sidebar-wrapper flex min-h-svh w-full flex-col bg-background',
           // A page that brings a `PageBackdrop` gets a stacking context, so the
           // scenery stays above this background and the nav paints none of its own.
-          'has-data-backdrop:relative has-data-backdrop:isolate',
+          // An attribute, not `:has()`: under `:has()`, a node inserted
+          // anywhere on the page restyles all of it.
+          'data-with-backdrop:relative data-with-backdrop:isolate',
           className,
         )}
         {...props}
@@ -90,7 +92,13 @@ function Sidebar({
         {/* From the left, where the desktop sidebar sits: the whole screen
             on phones, the desktop sidebar's width from tablets up. */}
         <SheetContent
-          className="z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
+          // iOS Safari tints its toolbars from the overlay and swaps the tint in
+          // one frame, so a full-width sheet needs a matching overlay and no
+          // animation. The 1% see-through keeps Chrome drawing the page beneath,
+          // so closing isn't delayed on Android. From `sm` the sheet is
+          // `max-w-sm`, so the page beside it stays dimmed.
+          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
+          overlayClassName="animate-none! max-sm:bg-background/99"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
@@ -120,7 +128,7 @@ function Sidebar({
         )}
         {...props}
       >
-        <div className="flex size-full flex-col gap-6 bg-background group-has-data-backdrop/sidebar-wrapper:bg-transparent">
+        <div className="flex size-full flex-col gap-6 bg-background group-data-with-backdrop/sidebar-wrapper:bg-transparent">
           {children}
         </div>
       </div>

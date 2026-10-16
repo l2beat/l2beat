@@ -28,7 +28,9 @@
     },
     "dead": {
       "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits.",
-      "severity": "HIGH"
+      // Ossification: wind-down only stops deposits, withdrawals and ragequits
+      // are unaffected, so it is pause-like (MEDIUM).
+      "severity": "MEDIUM"
     },
     "assetConfigFromEntrypoint": {
       "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",

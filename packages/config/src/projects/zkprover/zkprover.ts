@@ -65,6 +65,7 @@ export const zkprover: BaseProject = {
       {
         projectId: ProjectId('silicon'),
         sinceTimestamp: UnixTime(1724796000),
+        untilTimestamp: UnixTime(1790114400),
       },
       {
         projectId: ProjectId('ternoa'),
@@ -73,6 +74,7 @@ export const zkprover: BaseProject = {
       {
         projectId: ProjectId('penchain'),
         sinceTimestamp: UnixTime(1749938400),
+        untilTimestamp: UnixTime(1777586400),
       },
       {
         projectId: ProjectId('wirex'),

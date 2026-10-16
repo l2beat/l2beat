@@ -1,5 +1,5 @@
 import type { Database, IndexerConfigurationRecord } from '@l2beat/database'
-import { formatNumber, type UnixTime, unique } from '@l2beat/shared-pure'
+import { type UnixTime, unique } from '@l2beat/shared-pure'
 import type { PrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
 
 export async function getPrivacyAnonymitySetConfigurations(
@@ -36,17 +36,6 @@ export function getPrivacyAnonymitySetSyncStatus(
   return {
     syncedSeries,
     syncingSeries,
-    syncingLabels: syncingSeries.map(toCompactSeriesLabel),
+    syncingLabels: syncingSeries.map((item) => item.compactLabel),
   }
-}
-
-function toCompactSeriesLabel(series: PrivacyAnonymitySetSeries): string {
-  const amount = Number(series.formattedAmount)
-  const formattedAmount =
-    Number.isFinite(amount) && amount >= 1_000
-      ? formatNumber(amount).replace(/\.?0+(?=\u200a)/, '')
-      : series.formattedAmount
-  const prefix = series.bucketType === 'pool' ? '≥' : ''
-
-  return `${prefix}${formattedAmount} ${series.token}`
 }

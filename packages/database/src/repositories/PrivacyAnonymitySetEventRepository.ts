@@ -106,6 +106,26 @@ export class PrivacyAnonymitySetEventRepository extends BaseRepository {
     }))
   }
 
+  async getDepositCount(
+    projectId: string,
+    bucketIds: string[],
+    fromInclusive: UnixTime,
+    toExclusive: UnixTime,
+  ): Promise<number> {
+    if (bucketIds.length === 0) return 0
+
+    const row = await this.db
+      .selectFrom('PrivacyAnonymitySetEvent')
+      .select((eb) => eb.fn.countAll().as('depositCount'))
+      .where('projectId', '=', projectId)
+      .where('bucketId', 'in', bucketIds)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .executeTakeFirstOrThrow()
+
+    return Number(row.depositCount)
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,

@@ -3,7 +3,44 @@
   "name": "edgechain",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
-    "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+    "arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e",
     "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20"
-  ]
+  ],
+  "overrides": {
+    "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf": {
+      "fields": {
+        // Seeds the transaction-filtering precompile (0x..74) as a relative.
+        "transactionFilteringPrecompile": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "edge:0x0000000000000000000000000000000000000074"
+          },
+          "template": "orbitstack/ArbFilteredTransactionsManager"
+        }
+      }
+    },
+    "edge:0x0000000000000000000000000000000000000074": {
+      "fields": {
+        "chainOwners": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getAllChainOwners() view returns (address[])",
+            "args": [],
+            "address": "0x000000000000000000000000000000000000006b"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "ArbOS chain owner: can change any ArbOS chain parameter, add chain owners and add transaction filterers, which can forcibly fail any transaction, including force-included ones."
+            }
+          ]
+        }
+      },
+      // Precompile with a 0xfe stub as code: source from Nitro.
+      "manualSourcePaths": {
+        "edge:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+      }
+    }
+  }
 }

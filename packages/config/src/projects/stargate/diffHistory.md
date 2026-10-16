@@ -1,3 +1,108 @@
+Generated with discovered.json: 0xb4665e8727b7c2dd07c67292dde828d45b34fabb
+
+# Diff at Mon, 12 Oct 2026 07:57:28 GMT:
+
+- id: d14ac086
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1790851350
+- current timestamp: 1791789583
+
+## Description
+
+The shared LayerZero executor on Ethereum upgraded to an unverified implementation.
+
+[Executor diff](https://disco.l2beat.com/diff/eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805/eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0).
+
+## Watched changes
+
+```diff
+    contract LayerZero Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [N/A] {
+    +++ description: Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source.
+      template:
+-        "layerzero/LayerZeroExecutor"
+      sourceHashes:
+-        ["0x4a43bdaa7c21f911802bc9e3457cf5fef469f43b372ea6944d53823caf2f53f2","0x914fbceaba4b6418a09bd2104433bfcb47eed119a783154a8f7f6301c06a6d2b"]
+      values.$implementation:
+-        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
++        "eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0"
+      values.$pastUpgrades.3:
++        ["2026-10-02T00:08:11.000Z","0x682248f5070d80b5c52e90030913f204331e1f0516ed6a0e5d471e6417c3fb52",["eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.allowlistSize:
+-        0
+      values.DEFAULT_ADMIN_ROLE:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.defaultMultiplierBps:
+-        12000
+      values.endpoint:
+-        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.localEidV2:
+-        30101
+      values.paused:
+-        false
+      values.priceFeed:
+-        "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      values.receiveUln301:
+-        "eth:0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC"
+      values.workerFeeLib:
+-        "eth:0x4e9C57FD2Bd0f47C43F2D62642C1b05894fb9ed0"
+      implementationNames.eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805:
+-        "Executor"
+      implementationNames.eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0:
++        ""
+      unverified:
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../LayerZero Executor/Executor.sol => /dev/null   | 2928 --------------------
+ 1 file changed, 2928 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790851350 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [layerzero/LayerZeroExecutor] {
+    +++ description: Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source.
+      description:
+-        "Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint."
++        "Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source."
+    }
+```
+
+Generated with discovered.json: 0x6f909c4bb428a1d39ace77cf9fab688ceb192d40
+
+# Diff at Thu, 01 Oct 2026 11:11:01 GMT:
+
+- id: 64622989
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed7cdd77b1978c118fb9b1f824ae6cb10dfb566e block: 1786352916
+- current timestamp: 1790851350
+
+## Description
+
+The owner of CreditMessagingMintableBurnable manually minted credits without crosschain messages for the USDC pool (gnosis, aurora) and the ETH pool (gnosis, lightlink), stated reason: consolidating balance and credit as part of the deprecation of these remote pools on 2026-09-24.
+
+## Watched changes
+
+```diff
+    contract CreditMessagingMintableBurnable (eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173) [stargate/CreditMessagingMintableBurnable] {
+    +++ description: A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits across chains, the owner can increase/decrease them arbitrarily.
++++ description: Credits minted manually by the owner without crosschain messages.
+      values.creditsMinted.2:
++        {"batches":[[1,[[30145,5585911234],[30211,12487351781]]],[13,[[30145,46611],[30309,32980]]]],"reason":"Minting 5585.911234 USDC for gnosis (eid 30145), 12487.351781 USDC for aurora (eid 30211), 0.046611 ETH for gnosis (eid 30145), 0.032980 ETH for lightlink (eid 30309), to consolidate balance and credit as part of pool deprecation 2026-09-24"}
+    }
+```
+
 Generated with discovered.json: 0xaaa3cbddd06a44b302605d56fbabd892cf9cb292
 
 # Diff at Wed, 23 Sep 2026 05:49:52 GMT:

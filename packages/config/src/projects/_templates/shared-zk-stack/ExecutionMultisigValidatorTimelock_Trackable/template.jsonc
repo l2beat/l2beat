@@ -141,6 +141,7 @@
     },
     "threshold": { "severity": "HIGH" },
     "$threshold": {
+      "severity": "HIGH",
       "copy": "threshold"
     }
   }

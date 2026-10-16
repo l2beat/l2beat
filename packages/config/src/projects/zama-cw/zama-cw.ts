@@ -17,10 +17,15 @@ import { zamaCwAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('zama-cw')
 
-const ZAMA_WRAP_EVENT =
-  '0xcda691c81d2fd787d8c209adb4ae8b138f857d7575adf7669195ed05482e701b'
-const ZAMA_UNWRAP_FINALIZED_EVENT =
-  '0x87061fd1a5b3714805472c94c9eb8a6b8491992ee77791aa2594be67b92fd962'
+// Flows are the underlying token transfers into and out of each wrapper. The
+// wrappers' own events changed when the ones deployed before block 25077611
+// (2026-05-12) were upgraded in it: before, wraps emitted no Wrap event and
+// UnwrapFinalized had a different signature. Underlying transfers cover both
+// implementations and match every nonzero wrap and finalized unwrap. They also
+// include a few hundred dust transfers into cUSDT and cUSDC (address
+// poisoning, under 2 USD in total) that wrapped nothing.
+const ERC20_TRANSFER_EVENT =
+  '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
 
 const WRAPPER_NAMES = [
   'ConfidentialUSDCWrapper',
@@ -69,7 +74,6 @@ const trackedWrappers = WRAPPER_NAMES.flatMap((name) => {
       {
         wrapper,
         wrapperSymbol: discovery.getContractValue<string>(name, 'symbol'),
-        wrapperRate: discovery.getContractValue<number>(name, 'rate'),
         wrapperSinceTimestamp: UnixTime(wrapper.sinceTimestamp ?? 0),
         underlyingAddress,
         underlyingToken,
@@ -117,14 +121,69 @@ const coprocessorSignerCount = discovery.getContractValue<string[]>(
   'InputVerifier',
   'getCoprocessorSigners',
 ).length
+const gatewayCoprocessorThreshold = discovery.getContractValue<number>(
+  'GatewayConfig',
+  'getCoprocessorMajorityThreshold',
+)
+const gatewayCoprocessorCount = discovery.getContractValue<string[]>(
+  'GatewayConfig',
+  'getCoprocessorTxSenders',
+).length
+const priorityCoprocessorTxSender =
+  discovery.getContractValue<ChainSpecificAddress>(
+    'GatewayConfig',
+    'getPriorityCoprocessorTxSender',
+  )
+const priorityCoprocessorMode =
+  ChainSpecificAddress.address(priorityCoprocessorTxSender) ===
+  EthereumAddress.ZERO
+    ? 'off'
+    : 'on'
+// Shamir sharing of degree t: t + 1 operators reconstruct the FHE key.
+const kmsKeyThreshold =
+  discovery.getContractValue<number>('ProtocolConfig', 'getMpcThreshold') + 1
 const multisigAStats = discovery.getMultisigStats('ZamaGovMultisigA')
 const multisigBStats = discovery.getMultisigStats('ZamaGovMultisigB')
+const gatewaySafeStats = discovery.getMultisigStats('SafeL2')
+const aclPauserCount = discovery.getContractValue<string[]>(
+  'PauserSet',
+  'pausers',
+).length
+const gatewayPauserCount = discovery.getContractValue<string[]>(
+  'GatewayPauserSet',
+  'pausers',
+).length
+
+function formatZama(wei: string): string {
+  return (Number(BigInt(wei) / 10n ** 14n) / 10_000).toString()
+}
+const inputPrice = formatZama(
+  discovery.getContractValue<string>(
+    'ProtocolPayment',
+    'getInputVerificationPrice',
+  ),
+)
+const decryptionPrice = formatZama(
+  discovery.getContractValue<string>(
+    'ProtocolPayment',
+    'getPublicDecryptionPrice',
+  ),
+)
+assert(
+  decryptionPrice ===
+    formatZama(
+      discovery.getContractValue<string>(
+        'ProtocolPayment',
+        'getUserDecryptionPrice',
+      ),
+    ),
+  'Public and user decryption prices differ: update the fees text.',
+)
 
 const privacyTokens: ProjectPrivacyToken[] = trackedWrappers.map(
   ({
     wrapper,
     wrapperSymbol,
-    wrapperRate,
     wrapperSinceTimestamp,
     underlyingAddress,
     underlyingToken,
@@ -145,15 +204,19 @@ const privacyTokens: ProjectPrivacyToken[] = trackedWrappers.map(
         address: wrapper.address,
         sinceTimestamp: wrapperSinceTimestamp,
         deposit: {
-          event: ZAMA_WRAP_EVENT,
-          extractor: 'zamaWrap',
-          params: {},
+          event: ERC20_TRANSFER_EVENT,
+          extractor: 'erc20Transfer',
+          params: {
+            to: EthereumAddress(ChainSpecificAddress.address(wrapper.address)),
+          },
         },
         withdrawal: {
-          event: ZAMA_UNWRAP_FINALIZED_EVENT,
-          extractor: 'zamaUnwrap',
+          event: ERC20_TRANSFER_EVENT,
+          extractor: 'erc20Transfer',
           params: {
-            rate: wrapperRate.toString(),
+            from: EthereumAddress(
+              ChainSpecificAddress.address(wrapper.address),
+            ),
           },
         },
       },
@@ -177,12 +240,18 @@ export const zamaCw: BaseProject = {
   },
   display: {
     description:
-      'Zama Confidential Tokens is an app that wraps ERC-20 assets into confidential tokens and hides balances and transfer amounts using Zama FHEVM on Ethereum.',
+      'Confidential amounts for ERC-20 tokens on Ethereum: wrappers that encrypt balances and transfer amounts with FHE, decrypted by a committee of KMS operators.',
     detailedDescription: readProjectMarkdown('zama-cw', 'detailedDescription', {
       kmsThreshold,
       kmsSignerCount,
+      kmsKeyThreshold,
       coprocessorThreshold,
       coprocessorSignerCount,
+      gatewayCoprocessorThreshold,
+      gatewayCoprocessorCount,
+      priorityCoprocessorMode,
+      inputPrice,
+      decryptionPrice,
     }),
     links: {
       websites: ['https://www.zama.org'],
@@ -191,6 +260,42 @@ export const zamaCw: BaseProject = {
     },
     badges: [],
   },
+  milestones: [
+    {
+      title: 'Zama Protocol live on Ethereum',
+      url: 'https://cryptoast.fr/?p=199633',
+      date: '2025-12-30T00:00:00Z',
+      description:
+        'Zama launches its mainnet with a first confidential stablecoin transfer, in cUSDT.',
+      type: 'general',
+    },
+    {
+      // ACL 0xcA2E…ffb6: Paused by 0x9436…d827 at 14:17:59 UTC (tx
+      // 0x1fe5bf2c…), Unpaused by 0xb6d6…1ef3 at 15:41:47 UTC (tx
+      // 0x2a4de4df…). No public explanation found.
+      title: 'ACL paused, every token halted',
+      url: 'https://etherscan.io/tx/0x1fe5bf2c4c59b4c0034167e8eea979e3a8fa700d590c73ca7587712bb43359b2',
+      date: '2026-01-06T00:00:00Z',
+      description:
+        'A pauser halts the ACL, and with it every confidential token, for 84 minutes.',
+      type: 'incident',
+    },
+    {
+      // USDC Blacklisted(ConfidentialUSDCWrapper 0xe978…72B2) at 2026-05-30
+      // 01:08 UTC, UnBlacklisted 2026-06-01 18:58 UTC. Zama: a temporary
+      // restraining order (N.D. Cal., Overnight Finance dispute, Zama not a
+      // party) targeted one deposit of about $12.5M, over 99% of the wrapper.
+      // The deposit had passed Zama's sanctions screening. The court lifted
+      // the order at its June 1 review. Press names the case Newton AC/DC Fund
+      // v. Ermilov.
+      title: 'Circle freezes the cUSDC escrow',
+      url: 'https://www.zama.org/post/the-freeze-on-zamas-cusdc-contract-has-been-lifted-and-all-systems-are-back-to-normal',
+      date: '2026-05-30T00:00:00Z',
+      description:
+        'A court order makes Circle blacklist the cUSDC wrapper for almost three days, blocking every unwrap.',
+      type: 'incident',
+    },
+  ],
   escrows: trackedWrappers.map(
     ({ wrapper, wrapperSinceTimestamp, underlyingToken }) => ({
       address: ChainSpecificAddress.address(wrapper.address),
@@ -210,24 +315,24 @@ export const zamaCw: BaseProject = {
     anonymitySet: {
       type: 'not-applicable',
       description:
-        'Zama confidential tokens hide amounts, but sender and receiver addresses remain public and are not mixed in a shared anonymity set.',
+        'Only amounts are hidden. Every transfer names its sender and recipient.',
     },
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The confidential token contracts and system contracts are upgradeable without an onchain delay, so users do not get a guaranteed withdrawal window before changes take effect.',
+        'The governance multisigs upgrade the contracts instantly, before users can leave.',
       walkawayTest: {
         passed: false,
-        reason: `Only KMS ${kmsThreshold}/${kmsSignerCount} multisig members can decrypt FHE ciphertext. Also, FHE coprocessor operator is currently essential for protocol liveness.`,
+        reason: `Every unwrap needs a decryption signed by ${kmsThreshold} of ${kmsSignerCount} KMS operators, and every input needs Zama's coprocessor.`,
       },
     },
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The smart contracts are source-available, but users also rely on offchain FHE execution and threshold decryption services whose outputs are accepted onchain through signature verification. The offchain data cannot currently be fully reproduced from Ethereum DA.',
+        "The contracts, the SDK and the KMS and coprocessor sources are public. Zama's app source is unpublished.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,
@@ -236,14 +341,14 @@ export const zamaCw: BaseProject = {
       {
         ...PRIVACY_ATTRIBUTES.defi,
         description:
-          'Interop with DeFi (swaps, vaults) from within the confidential token.',
+          'Interop with DeFi vaults from within the confidential token.',
       },
     ],
-    adversaries: zamaCwAdversaries,
+    adversaries: zamaCwAdversaries(kmsKeyThreshold, kmsSignerCount),
     quantumResistant: true,
     riskSummary: readProjectMarkdown('zama-cw', 'riskSummary', {
-      kmsThreshold,
       kmsSignerCount,
+      kmsKeyThreshold,
       coprocessorThreshold,
       coprocessorSignerCount,
     }),
@@ -251,6 +356,9 @@ export const zamaCw: BaseProject = {
       content: readProjectMarkdown('zama-cw', 'upgradesAndGovernance', {
         multisigAStats,
         multisigBStats,
+        gatewaySafeStats,
+        aclPauserCount,
+        gatewayPauserCount,
       }),
     },
   },

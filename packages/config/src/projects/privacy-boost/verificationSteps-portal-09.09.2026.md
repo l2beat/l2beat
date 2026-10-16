@@ -41,5 +41,5 @@ Helper scripts implementing all of the reproduction steps are in the
 
 4. For each circuit, encode the re-derived `.vk` into the onchain layout (negate `beta`, `gamma`,
    `delta`; interleave `G1.K`) and confirm its digest equals the value read from chain. The helper
-   reads all registered keys at one finalized OP Mainnet block, recomputing the storage slots from
+   reads all registered keys at one finalized OP Mainnet block (equivalent to the Base deployment), recomputing the storage slots from
    the circuit parameters and cross-checking them against the getters.

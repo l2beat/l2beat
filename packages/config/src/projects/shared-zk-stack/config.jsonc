@@ -70,7 +70,8 @@
     },
     "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": {
       // ZK token: its voting power controls the protocol governor, and its minter administration is controlled by token governance.
-      "critical": true
+      // Critical since token voting became binding for the shared L1 contracts: the first ProtocolUpgradeHandler (L2_PROTOCOL_GOVERNOR = timelock of the ZkProtocolGovernor) accepted ownership of BridgeHub/CTM/L1SharedBridge in tx 0x04252ef77e208a233dfe0e7a3c70a04c8c8e95364c6ec67e5dd4ca7299bad8cb. The 2024-06-10 token upgrade predates this and is not a change of the perimeter.
+      "critical": { "sinceTimestamp": 1726123295 }
     },
     "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": {
       // Upgrade admin of the ZK token proxy.

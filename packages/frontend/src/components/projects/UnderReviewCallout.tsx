@@ -1,5 +1,6 @@
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { cn } from '~/utils/cn'
+import { UNDER_REVIEW_DESCRIPTION } from './sections/sectionCopy'
 
 interface Props {
   withoutDescription?: boolean
@@ -33,10 +34,9 @@ export function UnderReviewCallout({ withoutDescription, className }: Props) {
       </div>
       {!withoutDescription && (
         <p className="text-balance text-center text-sm">
-          The information in the section might be incomplete or outdated.
+          {UNDER_REVIEW_DESCRIPTION[0]}
           <br />
-          The L2BEAT Team is working to research & validate the content before
-          publishing.
+          {UNDER_REVIEW_DESCRIPTION[1]}
         </p>
       )}
     </div>

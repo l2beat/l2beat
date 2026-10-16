@@ -1,7 +1,10 @@
 import type { ProjectExternalDependency } from '@l2beat/config'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import { getProjectUrl } from '~/utils/project/getProjectUrl'
+import {
+  getProjectUrl,
+  PROJECT_PAGE_METADATA_FIELDS,
+} from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 
 export interface DefiDependencyProject {
@@ -33,13 +36,10 @@ export async function getDefiDependencyProjectsById(
     return new Map()
   }
 
-  const [projects, daLayers] = await Promise.all([
-    ps.getProjects({
-      ids: trackedIds,
-      optional: ['defiInfo', 'privacyInfo', 'daBridge', 'daLayer'],
-    }),
-    ps.getProjects({ where: ['daLayer'] }),
-  ])
+  const projects = await ps.getProjects({
+    ids: trackedIds,
+    optional: [...PROJECT_PAGE_METADATA_FIELDS],
+  })
 
   return new Map(
     projects.map((project) => [
@@ -47,7 +47,7 @@ export async function getDefiDependencyProjectsById(
       {
         name: project.name,
         slug: project.slug,
-        href: getProjectUrl(project, daLayers),
+        href: getProjectUrl(project),
       },
     ]),
   )

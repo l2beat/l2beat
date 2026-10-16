@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ArbFilteredTransactionsManager",
-  "description": "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.",
+  "description": "ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.",
   "fields": {
     // Number of transactions ever added to the censored list
     // (FilteredTransactionAdded(bytes32)). A non-zero, growing value means the
@@ -27,9 +27,9 @@
     },
     // The authorized transaction filterers, read cross-address off the
     // ArbOwnerPublic precompile (bare 0x..6b resolves to this contract's chain).
-    // getAllTransactionFilterers is an ArbOS-61-only method: it reverts on chains
-    // still below ArbOS 61 (expectRevert -> "EXPECT_REVERT", no actor), and
-    // returns the real (possibly empty) filterer set on ArbOS 61+.
+    // getAllTransactionFilterers is available from ArbOS 60: it reverts on chains
+    // still below ArbOS 60 (expectRevert -> "EXPECT_REVERT", no actor), and
+    // returns the real (possibly empty) filterer set on ArbOS 60+.
     "transactionFilterers": {
       "handler": {
         "type": "call",

@@ -18,32 +18,27 @@ jobs:
     timeout-minutes: 10
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
-    services:
-      postgres:
-        image: postgres:18
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-        ports:
-          - 5432:5432
     steps:
+      # A background step rather than a service container, so the image pull
+      # overlaps with setup instead of blocking the first step
+      - name: Start Postgres
+        id: postgres
+        background: true
+        timeout-minutes: 3
+        run: |
+          docker run -d --name postgres -p 5432:5432 \
+            -e POSTGRES_PASSWORD=postgres postgres:18
+          # TCP, because the init-time server only listens on the unix socket
+          until docker exec postgres pg_isready -h 127.0.0.1; do sleep 1; done
+
       - name: Check out code
         uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
-        with:
-          run_install: false
+      - name: Set up pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Wait for Postgres
+        wait: postgres
 
       - name: Check if prisma migration is updated
         run: |-

@@ -3,18 +3,19 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { formatBpsToMbps, formatBytes } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import {
+  IncludeL2OnlyProvider,
+  useIncludeL2Only,
+} from '~/components/chart/data-availability/IncludeL2OnlyContext'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ClockIcon } from '~/icons/Clock'
-import {
-  IncludeL2OnlyProvider,
-  useIncludeL2Only,
-} from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import { useTRPC } from '~/trpc/React'
 import { optionToRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
+import { THROUGHPUT_DESCRIPTION } from '../sectionCopy'
 import type { ProjectSectionProps } from '../types'
 
 export interface ThroughputSectionProps extends ProjectSectionProps {
@@ -48,9 +49,7 @@ export function ThroughputSection({
           </div>
         )}
         <p className="text-paragraph-15 md:text-paragraph-16">
-          The chart shows the actual size of data posted to the DA Layer per day
-          for the selected time period, as well as the maximum possible
-          throughput per day.
+          {THROUGHPUT_DESCRIPTION}
         </p>
         <HorizontalSeparator className="my-4" />
         <ThroughputSectionChart

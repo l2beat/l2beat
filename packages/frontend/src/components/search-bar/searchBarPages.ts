@@ -75,36 +75,6 @@ export const searchBarPages = withIndex([
     href: '/layer2s/archived',
   },
   {
-    category: 'da',
-    name: 'Summary',
-    tags: ['pages', 'da', 'data', 'availability'],
-    href: '/data-availability/summary',
-  },
-  {
-    category: 'da',
-    name: 'Risk Analysis',
-    tags: ['pages', 'da', 'data', 'availability', 'risks'],
-    href: '/data-availability/risk',
-  },
-  {
-    category: 'da',
-    name: 'Throughput',
-    tags: ['pages', 'da', 'data', 'availability', 'throughput'],
-    href: '/data-availability/throughput',
-  },
-  {
-    category: 'da',
-    name: 'Liveness',
-    tags: ['pages', 'da', 'data', 'availability', 'liveness'],
-    href: '/data-availability/liveness',
-  },
-  {
-    category: 'da',
-    name: 'Archived',
-    tags: ['pages', 'da', 'data', 'availability', 'archived'],
-    href: '/data-availability/archived',
-  },
-  {
     category: 'interop',
     name: 'Summary',
     tags: ['pages', 'interop', 'interoperability'],
@@ -144,6 +114,16 @@ export const searchBarPages = withIndex([
         },
       ]
     : []),
+  ...(env.CLIENT_SIDE_BLOBS_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Blobs',
+          href: '/blobs',
+          tags: ['pages', 'blobs', 'da', 'data', 'availability'],
+        },
+      ]
+    : []),
   {
     category: 'zkCatalog',
     name: 'ZK Catalog',
@@ -157,6 +137,16 @@ export const searchBarPages = withIndex([
           name: 'DeFi',
           href: '/defi/summary',
           tags: ['pages', 'defi'],
+        },
+      ]
+    : []),
+  ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Ossification',
+          href: '/ossification',
+          tags: ['pages', 'ossification', 'upgrades', 'security'],
         },
       ]
     : []),

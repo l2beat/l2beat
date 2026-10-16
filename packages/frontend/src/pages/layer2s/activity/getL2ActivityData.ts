@@ -30,7 +30,7 @@ export async function getL2ActivityData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Activity - L2BEAT',
+        name: 'Activity',
         description:
           'Track activity across Ethereum scaling projects with interactive charts.',
         url: req.originalUrl,

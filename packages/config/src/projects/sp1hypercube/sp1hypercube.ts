@@ -92,16 +92,24 @@ export const sp1hypercube: BaseProject = {
         sinceTimestamp: UnixTime(1781600877),
       },
       {
+        projectId: ProjectId('haust'),
+        sinceTimestamp: UnixTime(1781600877),
+      },
+      {
+        projectId: ProjectId('polygonzkevm'),
+        sinceTimestamp: UnixTime(1781600877),
+      },
+      {
+        projectId: ProjectId('silicon'),
+        sinceTimestamp: UnixTime(1790152247), // migrated to AggchainECDSAMultisig 2026-09-23
+      },
+      {
         projectId: ProjectId('celo'),
         sinceTimestamp: UnixTime(1771445567),
       },
       {
         projectId: ProjectId('rise'),
         sinceTimestamp: UnixTime(1767605759), // mainnet genesis 2026-01-05
-      },
-      {
-        projectId: ProjectId('vector'),
-        sinceTimestamp: UnixTime(1771445567),
       },
       {
         projectId: ProjectId('sophon'),
@@ -118,10 +126,6 @@ export const sp1hypercube: BaseProject = {
       },
       {
         projectId: ProjectId('rari'),
-        sinceTimestamp: UnixTime(1771445567),
-      },
-      {
-        projectId: ProjectId('blobstream'),
         sinceTimestamp: UnixTime(1771445567),
       },
       {

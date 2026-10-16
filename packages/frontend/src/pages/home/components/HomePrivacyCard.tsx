@@ -1,18 +1,13 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
+import { PrivacyRosetteCell } from '~/pages/privacy/rosette/PrivacyRosetteCell'
 import type { HomePrivacyData } from '~/server/features/home/getHomePrivacyData'
 import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
 import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
 import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
-import { HomePrivacyDot } from './HomePrivacyDot'
-import {
-  HomeRankedTable,
-  HomeRankedValue,
-  HomeRankedValueWithChange,
-  VALUE_WITH_CHANGE_HEADER_CLASS,
-} from './HomeRankedTable'
+import { HomeRankedTable, HomeRankedValue } from './HomeRankedTable'
 
 export function HomePrivacyCard({
   data,
@@ -95,23 +90,18 @@ export function HomePrivacyCard({
             header: 'Privacy',
             middle: true,
             cell: (protocol) => (
-              <HomePrivacyDot
+              <PrivacyRosetteCell
                 adversaries={protocol.adversaries}
                 href={protocol.href}
+                isUnderReview={protocol.isUnderReview}
               />
             ),
           },
           {
             id: 'tvl',
             header: 'TVL',
-            headerClassName: VALUE_WITH_CHANGE_HEADER_CLASS,
             align: 'right',
-            cell: (protocol) => (
-              <HomeRankedValueWithChange
-                value={protocol.tvl}
-                change={protocol.tvlChange}
-              />
-            ),
+            cell: (protocol) => <HomeRankedValue value={protocol.tvl} />,
           },
           {
             id: 'deposited30d',

@@ -70,7 +70,7 @@ export const privacyPools: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-05-12')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossification: discovery.getOssification(),
+  ossificationHistory: discovery.getOssificationHistory(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -80,7 +80,7 @@ export const privacyPools: BaseProject = {
   },
   display: {
     description:
-      'A selective-disclosure privacy system for Ethereum that adds compliance-aware association sets.',
+      'A privacy pool system for any amount, where only centrally approved deposits can be withdrawn privately.',
     detailedDescription: readProjectMarkdown(
       'privacy-pools',
       'detailedDescription',
@@ -88,9 +88,45 @@ export const privacyPools: BaseProject = {
     ),
     links: {
       websites: ['https://privacypools.com'],
+      documentation: ['https://docs.privacypools.com'],
+      repositories: [
+        'https://github.com/0xbow-io/privacy-pools-core',
+        'https://github.com/0xbow-io/privacy-pools-website',
+      ],
     },
     badges: [],
   },
+  milestones: [
+    // Both incidents fall on the day 0xbow fixed a key-entropy bug in its v1
+    // SDK (bounty to z0r0zzz on @0xprivacypools, fix in website v2.12.0 on
+    // 2026-03-19). 0xbow has not explained either root, so the texts stay
+    // factual. Evidence in l2beat-notes privacy-pools.md, 2026-03-11 section.
+    {
+      // Root 933, 21:26 UTC: the first real root after the halt drops all 66
+      // approved fxUSD labels (IPFS trees of roots 931 and 933). Root 1022 on
+      // 2026-03-24 restores all 66. Four of those depositors ragequit in
+      // between. No fxUSD incident at f(x) Protocol found.
+      title: 'ASP revokes every fxUSD approval',
+      url: 'https://etherscan.io/tx/0xd67628764f6ba49ef61e8e16b9aa3b3e4143b5daea4e37e914594c152f6120cb',
+      date: '2026-03-11T00:00:00Z',
+      description:
+        'Approved fxUSD deposits leave the list for 13 days, with public ragequit as the only exit.',
+      type: 'incident',
+    },
+    {
+      // Root 932, 19:10 UTC: the postman EOA posts root 1 with the IPFS CID
+      // "eEEee…", which no label can prove against. Fast Relay relayed every
+      // few minutes before, then nothing until 22:17. Website v2.11.0 adds a
+      // maintenance banner at 20:04 UTC: "Withdrawals may be limited. Exit
+      // remains available at all times." (commit 26db9f7).
+      title: 'ASP halts all private withdrawals',
+      url: 'https://etherscan.io/tx/0x4fbb5ecd0d2436b89756ddb584d31de6b71eaf743f71d09605bba3dff36adac0',
+      date: '2026-03-11T00:00:00Z',
+      description:
+        'The ASP posts a root no deposit belongs to, blocking every private withdrawal for two hours.',
+      type: 'incident',
+    },
+  ],
   escrows: BUCKETS.map((bucket) => ({
     address: ChainSpecificAddress.address(bucket.address),
     chain: ChainSpecificAddress.longChain(bucket.address),
@@ -168,18 +204,18 @@ export const privacyPools: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'Even if the Entrypoint or ASP turns malicious, users can always ragequit (withdraw tokens) from the immutable pool contracts, at the cost of losing privacy.',
+        'The depositing address can always ragequit its funds from the immutable pools, without the Entrypoint or the ASP. A ragequit is public.',
       walkawayTest: {
         passed: false,
         reason:
-          'Association Set Providers must explicitly approve deposited funds before private withdrawals.',
+          'Private withdrawals need the ASP to approve each deposit and keep posting roots.',
       },
     },
     reproducibility: {
       value: 'Reproducible',
       sentiment: 'good',
       description:
-        'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
+        'The contracts, circuits, SDK, relayer and website are open source and build locally. The ASP service is closed.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: privacyPoolsAdversaries,

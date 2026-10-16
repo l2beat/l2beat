@@ -6,7 +6,7 @@ type InputProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
   VariantProps<typeof inputVariants>
 
 const inputVariants = cva(
-  'placeholder:text-coffee-200/40 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'placeholder:text-coffee-200/40 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {

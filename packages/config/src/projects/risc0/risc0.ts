@@ -104,6 +104,7 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('base'),
         sinceTimestamp: UnixTime(1779825599), // 2026-05-26 AggregateVerifier upgrade
+        untilTimestamp: UnixTime(1790627891), // 2026-09-28 Cobalt upgrade, TEE signer registration no longer uses RISC Zero
       },
       {
         projectId: ProjectId('roninnetwork'),
@@ -122,7 +123,6 @@ export const risc0: BaseProject = {
               'ethereum',
               '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
             ),
-            // Base also references this verifier via its TEE arm (Nitro attestation), not for state validation.
             overrideUsedIn: [
               ProjectId('taiko'),
               ProjectId('bob'),
@@ -152,7 +152,6 @@ export const risc0: BaseProject = {
               'ethereum',
               '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
             ),
-            // Base also references this verifier via its TEE arm (Nitro attestation), not for state validation.
             overrideUsedIn: [
               ProjectId('bob'),
               ProjectId('taiko'),

@@ -9,7 +9,6 @@ describe(shouldSkip.name, () => {
     const address = ChainSpecificAddress.random()
     const config = new ConfigRegistry({
       name: 'Test',
-      chain: 'ethereum',
       initialAddresses: [],
       overrides: {
         [address.toString()]: StructureContract.parse({
@@ -25,7 +24,6 @@ describe(shouldSkip.name, () => {
     const address = ChainSpecificAddress.random()
     const config = new ConfigRegistry({
       name: 'Test',
-      chain: 'ethereum',
       initialAddresses: [],
       maxDepth: 1,
     })
@@ -37,7 +35,6 @@ describe(shouldSkip.name, () => {
     const address = ChainSpecificAddress.random()
     const config = new ConfigRegistry({
       name: 'Test',
-      chain: 'ethereum',
       initialAddresses: [],
       maxAddresses: 1,
     })
@@ -49,7 +46,6 @@ describe(shouldSkip.name, () => {
     const address = ChainSpecificAddress.random()
     const config = new ConfigRegistry({
       name: 'Test',
-      chain: 'ethereum',
       initialAddresses: [],
     })
     const result = shouldSkip(address, config.structure, 0, 1)

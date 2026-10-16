@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x12e5ab43d25cb07636cae19274d309e5acecac2a
+
+# Diff at Sun, 04 Oct 2026 05:55:31 GMT:
+
+- id: 80e3b93e
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1782746615
+- current timestamp: 1782746615
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782746615 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (eth:0xdF41d94e28AA0bB35471225121BDBA710DdaF068) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.isUsingFeeToken:
+-        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
+-        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xf5f226fc5ba3cdefed0a257299dca59d0bfea0d5
 
 # Diff at Wed, 23 Sep 2026 05:45:34 GMT:

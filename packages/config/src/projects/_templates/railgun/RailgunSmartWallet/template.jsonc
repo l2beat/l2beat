@@ -58,7 +58,9 @@
     },
     "shieldFee": {
       "description": "Basis-point fee charged on shield operations.",
-      "severity": "HIGH",
+      // Ossification: charged only on funds entering at the time of shielding,
+      // so it cannot touch shielded funds (unlike unshieldFee).
+      "severity": "MEDIUM",
       "type": "RISK_PARAMETER"
     },
     "unshieldFee": {
@@ -161,6 +163,12 @@
     },
     "verificationKeyChangeCount": {
       "description": "Number of SNARK verification key changes, including keys later replaced or restored.",
+      // Ossification: the verification keys themselves are not exposed as a
+      // field. This count of VerifyingKeySet events is their only witness and
+      // only moves when a key is written (2022-05 init, 2023-03 and 2025-07
+      // rollouts), never with user activity, so it is configuration, not a live
+      // counter.
+      "severity": "HIGH",
       "handler": {
         "type": "eventCount",
         "topics": [

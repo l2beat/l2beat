@@ -133,7 +133,9 @@ export function TokensDialog({
             {subtitle}
             {tabsList}
           </DialogHeader>
-          <div className="-mt-4 flex-1 overflow-x-auto overflow-y-auto pt-4">
+          {/* A stuck table header tucks under the header's faded bottom edge, so
+              no row shows between them. */}
+          <div className="-mt-4 flex-1 overflow-x-auto overflow-y-auto pt-4 [--sticky-table-header-top:--spacing(-3)]">
             <div className="mx-6 pb-3">{tabsContent}</div>
           </div>
         </Tabs>

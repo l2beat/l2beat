@@ -19,7 +19,14 @@
       "type": "state",
       "contract": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
       "transaction": "0xa96ecb2b47d0bf1426bfe83a513e10cba141f6cbf05e28ce1355edac968cb96c",
-      "reason": "Transferred control of the Delegator to token-weighted governance."
+      "reason": "Replaced the Delegator's owner: the original Voting contract 0xfc4b580c, executing its proposal 7, transferred Delegator ownership to the current Voting contract 0xc480F68A."
+    },
+    {
+      "timestamp": 1678360187,
+      "type": "state",
+      "contract": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+      "transaction": "0xe001ac69697083957933db13ff27c56769ce8826d4ab676b3965d7a44b9f0668",
+      "reason": "Governance proposal 5 switched this VKeySetter to COMMITTING, letting its owner EOA push staged verification keys to the smart wallet without further governance."
     },
     {
       "timestamp": 1678360187,
@@ -38,6 +45,13 @@
     {
       "timestamp": 1753717703,
       "type": "state",
+      "contract": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+      "transaction": "0xfc6cda4a6e9b8e2d055a50212551e6daa8ec180ad7aced11d00ae71e1d0eab6e",
+      "reason": "Governance proposal 17 switched this VKeySetter to COMMITTING, letting its owner EOA push staged verification keys to the smart wallet without further governance."
+    },
+    {
+      "timestamp": 1753717703,
+      "type": "state",
       "contract": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
       "transaction": "0xfc6cda4a6e9b8e2d055a50212551e6daa8ec180ad7aced11d00ae71e1d0eab6e",
       "reason": "Authorized the replacement VKeySetter to update the smart wallet's SNARK verification keys."
@@ -48,6 +62,22 @@
       "contract": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
       "transaction": "0x256b66eb07d1bc6f1e87375917077f4c607952f13b12f577021a14f9f1a22eca",
       "reason": "Completed a batch rollout of new smart wallet SNARK verification keys."
+    },
+    {
+      "timestamp": 1788946295,
+      "type": "state",
+      "contract": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+      "transaction": "0x954f695980615ba281c505b1ca35c37f1bd643642ee74389bc7598364965555e",
+      "updateId": "eed67565",
+      "reason": "The owner EOA returned this VKeySetter from COMMITTING to SETTING, closing its path to push the 2023 verification keys (or empty keys) to the smart wallet without governance."
+    },
+    {
+      "timestamp": 1788947087,
+      "type": "state",
+      "contract": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+      "transaction": "0x5432fa7fa6ebda2004e92c9d6cde65d7b519f28ddf17ade7303014727dc29731",
+      "updateId": "eed67565",
+      "reason": "The owner EOA returned this VKeySetter from COMMITTING to SETTING, closing its path to push staged verification keys (or empty keys) to the smart wallet without governance."
     }
   ]
 }

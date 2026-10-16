@@ -1,4 +1,5 @@
 import { env } from '~/env'
+import { jsonForInlineScript } from '~/utils/jsonForInlineScript'
 import type { Manifest } from '~/utils/Manifest'
 import { FontStyles } from './FontStyles'
 import { fonts } from './fonts'
@@ -58,6 +59,18 @@ export function Head({ manifest, metadata }: HeadProps) {
 
       <OpengraphMeta {...metadata} />
       <TwitterMeta {...metadata} />
+      {metadata.structuredData.map((data, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: jsonForInlineScript({
+              '@context': 'https://schema.org',
+              ...data,
+            }),
+          }}
+        />
+      ))}
       {env.CLIENT_SIDE_OPENPANEL_CLIENT_ID && (
         <>
           <script

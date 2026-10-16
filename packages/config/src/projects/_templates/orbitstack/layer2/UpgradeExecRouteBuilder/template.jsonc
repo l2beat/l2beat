@@ -4,11 +4,8 @@
   "critical": true,
   "ignoreMethods": ["upExecLocationExists", "upExecLocations"],
   "fields": {
-    "l1TimelockMinDelay": {
-      "severity": "HIGH"
-    },
-    "l1TimelockAddr": {
-      "severity": "HIGH"
-    }
+    // Immutables of a non-upgradeable contract: they cannot change.
+    "l1TimelockMinDelay": {},
+    "l1TimelockAddr": {}
   }
 }

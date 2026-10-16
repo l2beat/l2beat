@@ -6,6 +6,8 @@
   "initialAddresses": [
     "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
     "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+    "eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa",
+    "eth:0xaf145913EA4a56BE22E120ED9C24589659881702",
     "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
     "eth:0x2affadeb2ef5e1f2a7f58964ee191f1e88317ecd", // SC: emrgMultisig
     "eth:0xd7da1c25e915438720692bc55eb3a7170ca90321", // SC: standardMultisig
@@ -14,7 +16,9 @@
     "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
     "taiko:0x1670000000000000000000000000000000000001",
     "taiko:0x1670000000000000000000000000000000010001",
-    "taiko:0x1670000000000000000000000000000000000002"
+    "taiko:0x1670000000000000000000000000000000000002",
+    "taiko:0x1670000000000000000000000000000000000003",
+    "taiko:0x1670000000000000000000000000000000000004"
   ],
   "names": {},
   "overrides": {
@@ -44,11 +48,16 @@
       "category": "spam"
     },
     "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C": {
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"],
+      // ossification: L2 DelegateController governs the L2 contracts only since the L2 ERC20Vault ownership moved
+      // from the Taiko L2 Multisig (Safe) to it (taiko tx 0x777b65f0..., 2025-06-12)
+      "critical": { "sinceTimestamp": 1749710483 }
     },
     "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
-      // RiscZeroVerifierRouter: dispatches RISC0 seals to registered verifiers (shared risc0 template, flagged per-project)
-      "critical": true,
+      // RiscZeroVerifierRouter: dispatches RISC0 seals to registered verifiers (shared risc0 template, flagged per-project).
+      // Taiko depends on it only since the Shasta TaikoRisc0Verifier 0x059d... was deployed with it as immutable
+      // riscoGroth16Verifier (tx 0xff70e373..., 2026-03-04); the Pacaya Risc0VerifierGateway called RiscZeroGroth16Verifier directly
+      "critical": { "sinceTimestamp": 1772638115 },
       "fields": {
         "verifier": {
           "handler": {
@@ -61,43 +70,48 @@
       }
     },
     "taiko:0x1670000000000000000000000000000000000001": {
-      "description": "Bridge escrow holding preminted ETH on Taiko."
+      "description": "Bridge escrow holding preminted ETH on Taiko. Failed messages remain retryable, but message failure and source-chain refunds are disabled."
     },
     // --- ossification criticality overrides (shared or untemplated contracts) ---
     "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a": {
-      // active TaikoDAOController: owner/admin of the inbox, bridge, vaults, signal service and verifier gateways
-      // (template-level flag would also hit the deprecated controller 0xfC3C..., which holds no permissions)
-      "critical": true
+      // active TaikoDAOController: owner/admin of the inbox, bridge, vaults, signal service and verifiers
+      // (template-level flag would also hit the deprecated controller 0xfC3C..., which holds no permissions).
+      // The DAO governance stack (this controller and the taiko/DAO, Multisig, EmergencyMultisig, SignerList and
+      // OptimisticTokenVotingPlugin templates) controls Taiko contracts only since this controller accepted
+      // ownership of the Taiko Token from the Taiko Multisig (tx 0xa4dfb666..., 2025-06-06)
+      "critical": { "sinceTimestamp": 1749196415 }
     },
+    // RISC Zero governance and verifier fleet (shared with base/bob/ronin, flagged per-project). Taiko's live path
+    // TaikoRisc0Verifier -> RiscZeroVerifierRouter exists since the Shasta TaikoRisc0Verifier deployment (2026-03-04).
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
-      // TimelockController (global template): manages RiscZeroVerifierRouter roles and can add/remove verifiers
-      "critical": true
+      // TimelockController (global template): owner of the RiscZeroVerifierRouter, can add/remove verifier routes
+      "critical": { "sinceTimestamp": 1772638115 }
     },
     // active RISC0 verifier fleet registered in the RiscZeroVerifierRouter (shared risc0/taiko groth16 templates, flagged per-project);
     // permanently estopped entries (0x44c2..., 0x68dC..., 0xDa8f...) and their wrapped verifiers are deliberately not flagged
     "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696": {
       // active RiscZeroVerifierEmergencyStop (selector 0x73c457ba)
-      "critical": true
+      "critical": { "sinceTimestamp": 1772638115 }
     },
     "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D": {
       // RiscZeroGroth16Verifier v3.0.0 behind the active estop 0x9F99...
-      "critical": true
+      "critical": { "sinceTimestamp": 1772638115 }
     },
     "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": {
       // active RiscZeroVerifierEmergencyStop (selector 0xbb001d44)
-      "critical": true
+      "critical": { "sinceTimestamp": 1772638115 }
     },
     "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9": {
       // RiscZeroGroth16Verifier v2.2.0 behind the active estop 0x1efD...
-      "critical": true
+      "critical": { "sinceTimestamp": 1772638115 }
     },
     "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": {
       // active RiscZeroVerifierEmergencyStop (selector 0x242f9d5b)
-      "critical": true
+      "critical": { "sinceTimestamp": 1772638115 }
     },
     "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": {
       // RiscZeroSetVerifier behind the active estop 0x844D...
-      "critical": true
+      "critical": { "sinceTimestamp": 1772638115 }
     },
     // --- ossification: retired critical contracts (keep their change history; untilTimestamp = time they left the perimeter) ---
     // tier-system era (deleted in diffHistory 167b8dff, 2025-05-28)
@@ -142,14 +156,23 @@
       // PreconfRouter: exclusive proposal route for whitelisted preconf operators
       "critical": { "untilTimestamp": 1775747881 }
     },
-    // shared-era resolver (deleted in diffHistory 423dca4a, 2026-06-30)
+    // Legacy shared resolver, dropped from discovery before its NFT dependencies retired.
     "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": {
-      // L1SharedAddressManager: resolved the Bridge's trusted SignalService/vault addresses (remapping acted as an upgrade)
-      "critical": { "untilTimestamp": 1782824701 }
+      // The L1 NFT vaults still used it after the ETH bridge and ERC20 vault migrated.
+      "critical": { "untilTimestamp": 1791767075 }
     },
     "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a": {
       // pre-Shasta DefaultResolver: remapped trusted bridge and preconfirmation components; retired at the Shasta discovery boundary
       "critical": { "untilTimestamp": 1775747881 }
+    },
+    "taiko:0x1670000000000000000000000000000000000006": {
+      // The NFT vaults still used this resolver after the bridge and ERC20 vault migrated.
+      // It left the critical perimeter when the NFT vaults migrated too.
+      "critical": { "untilTimestamp": 1791767237 }
+    },
+    "taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984": {
+      // Deployed earlier, became critical when the live bridge and vault started resolving through it.
+      "critical": { "sinceTimestamp": 1791444621 }
     }
   }
 }

@@ -29,8 +29,11 @@
     "$admin": {
       "severity": "HIGH"
     },
+    // Role holders below (Katana Foundation Engineering Safe): swapping one actor for
+    // another is identity, not mechanism. Mechanism changes (e.g. the EOA-to-multisig
+    // handover of May 2025) are recorded in katana/ossification.json.
     "getProxiedTokensManager": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -39,7 +42,7 @@
       ]
     },
     "bridgeManager": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

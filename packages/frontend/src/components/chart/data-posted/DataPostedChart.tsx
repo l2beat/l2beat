@@ -18,10 +18,7 @@ import {
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
-import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
-import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
-import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { formatRange } from '~/utils/dates'
@@ -33,29 +30,11 @@ const chartMeta = {
     color: 'var(--chart-ethereum)',
     indicatorType: { shape: 'line' as const },
   },
-  celestia: {
-    label: 'Celestia',
-    color: 'var(--chart-fuchsia)',
-    indicatorType: { shape: 'line' as const },
-  },
-  avail: {
-    label: 'Avail',
-    color: 'var(--chart-sky)',
-    indicatorType: { shape: 'line' as const },
-  },
-  eigenda: {
-    label: 'EigenDA',
-    color: 'var(--chart-lime)',
-    indicatorType: { shape: 'line' as const },
-  },
 }
 
 interface DataPostedChartDataPoint {
   timestamp: number
   ethereum: number | null
-  celestia: number | null
-  avail: number | null
-  eigenda: number | null
 }
 
 interface Props {
@@ -126,9 +105,6 @@ export function DataPostedChart({
         />
         <defs>
           <EthereumFillGradientDef id="ethereum-fill" />
-          <FuchsiaFillGradientDef id="celestia-fill" />
-          <LimeFillGradientDef id="eigenda-fill" />
-          <SkyFillGradientDef id="avail-fill" />
           <NoDataPatternDef />
         </defs>
       </AreaChart>

@@ -22,7 +22,8 @@ import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
-import { getUpdatesSectionProps } from '~/server/features/projects/discovery-updates/getUpdatesSectionProps'
+import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
+import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -43,6 +44,7 @@ import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedS
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { getL2RiskSummarySection } from '~/utils/project/risk-summary/getL2RiskSummary'
@@ -174,6 +176,7 @@ export async function getL2ProjectEntry(
     | 'discoveryUpdates'
     | 'daTrackingConfig'
     | 'crops'
+    | 'ossificationHistory'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectL2Entry> {
@@ -193,6 +196,7 @@ export async function getL2ProjectEntry(
     allProjectsWithContracts,
     allProjects,
     interopData,
+    ossification,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -212,15 +216,10 @@ export async function getL2ProjectEntry(
     }),
     ps.getProjects({
       select: ['display'],
-      optional: [
-        'daBridge',
-        'scalingInfo',
-        'daLayer',
-        'privacyInfo',
-        'defiInfo',
-      ],
+      optional: [...PROJECT_PAGE_METADATA_FIELDS],
     }),
     getL2ProjectInteropData(project.id),
+    getProjectOssification(project),
   ])
 
   const projectLiveness = liveness[project.id]
@@ -702,19 +701,14 @@ export async function getL2ProjectEntry(
     })
   }
 
-  if (discoveryUpdates.length > 0) {
-    sections.push({
-      type: 'UpdatesSection',
-      props: {
-        id: 'updates',
-        title: 'Updates',
-        ...(await getUpdatesSectionProps(
-          helpers,
-          project.id,
-          discoveryUpdates,
-        )),
-      },
-    })
+  const updatesSection = await getUpdatesSection(
+    helpers,
+    project.id,
+    discoveryUpdates,
+    ossification,
+  )
+  if (updatesSection) {
+    sections.push(updatesSection)
   }
 
   if (operatorSection) {

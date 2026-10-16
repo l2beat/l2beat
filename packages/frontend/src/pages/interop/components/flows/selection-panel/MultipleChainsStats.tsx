@@ -22,6 +22,7 @@ export function MultipleChainsStats({
   chainIdB,
   selectedChains,
   tokenId,
+  snapshotTimestamp,
   linkTopProtocols,
   hideTopProtocols,
 }: {
@@ -29,6 +30,7 @@ export function MultipleChainsStats({
   chainIdB: string
   selectedChains: string[]
   tokenId?: string
+  snapshotTimestamp?: number
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
@@ -39,6 +41,7 @@ export function MultipleChainsStats({
       chains: selectedChains,
       protocolIds: selectedProtocols,
       tokenId,
+      snapshotTimestamp,
     }),
   )
 

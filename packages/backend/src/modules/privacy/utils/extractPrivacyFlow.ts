@@ -3,8 +3,10 @@ import type {
   PrivacyFlowSource,
 } from '@l2beat/config'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
+import { type BigNumber, utils } from 'ethers'
 import type { PrivacyFlowExtractResult, PrivacyRpcLog } from '../types'
+import { zkApiInterface } from '../zkapi/abi'
+import { zkMoneyInterface } from '../zkmoney/abi'
 import { erc20Interface } from './erc20'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
 
@@ -56,6 +58,34 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
       return extractZamaWrap(log)
     case 'zamaUnwrap':
       return extractZamaUnwrap(source, log)
+    case 'zkMoneyDeposit':
+      return {
+        count: 1,
+        amount: BigInt(zkMoneyInterface.parseLog(log).args.amount.toString()),
+      }
+    case 'zkMoneyWithdrawal':
+      return {
+        count: 1,
+        amount: BigInt(
+          zkMoneyInterface.parseLog(log).args.executionAmount.toString(),
+        ),
+      }
+    case 'zkApiDeposit':
+      return {
+        count: 1,
+        amount: zkApiUnitsToWei(
+          zkApiInterface.parseLog(log).args.amount,
+          source.params.weiPerUnit,
+        ),
+      }
+    case 'zkApiWithdrawal':
+      return {
+        count: 1,
+        amount: zkApiUnitsToWei(
+          zkApiInterface.parseLog(log).args.finalBalance,
+          source.params.weiPerUnit,
+        ),
+      }
     default:
       return undefined
   }
@@ -175,4 +205,9 @@ function extractZamaUnwrap(
       BigInt(parsedLog.args.cleartextAmount.toString()) *
       BigInt(source.params.rate),
   }
+}
+
+// The zkAPI vault stores ETH amounts as whole units (gwei), not wei.
+function zkApiUnitsToWei(units: BigNumber, weiPerUnit: string): bigint {
+  return BigInt(units.toString()) * BigInt(weiPerUnit)
 }

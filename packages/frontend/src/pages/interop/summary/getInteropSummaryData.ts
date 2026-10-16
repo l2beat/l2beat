@@ -78,7 +78,7 @@ export async function getInteropSummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Interoperability - L2BEAT',
+        name: 'Interoperability',
         description:
           'Compare interoperability protocols across the Ethereum ecosystem. Track bridge volumes, transfer times & sizes, and explore how Non-minting, Lock & Mint, and Burn & Mint mechanisms affect cross-chain risk.',
         url: req.originalUrl,

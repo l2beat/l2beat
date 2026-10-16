@@ -1,3 +1,4 @@
+import type { OssificationHistory } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -43,7 +44,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectOssification,
   ProjectPermissions,
   ProjectReviewStatus,
   ProjectRisk,
@@ -95,7 +95,7 @@ interface AgglayerBaseConfig {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   activityConfig?: ProjectActivityConfig
   chainConfig?: ChainConfig
-  ossification?: ProjectOssification
+  ossificationHistory?: OssificationHistory
   stateDerivation?: ProjectScalingStateDerivation
   nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplateRiskView?: Partial<ScalingProject['riskView']>
@@ -289,7 +289,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
       ...config.chainConfig,
       gasTokens: config.chainConfig?.gasTokens ?? ['ETH'],
     },
-    ossification: config.ossification,
+    ossificationHistory: config.ossificationHistory,
     dataAvailability: variantSections.dataAvailability,
     riskView: variantSections.riskView,
     stage: config.stage ?? { stage: 'NotApplicable' },

@@ -46,11 +46,11 @@ export function diff(left: unknown, right: unknown): Difference[] {
   }
 
   const diffs: Difference[] = []
-  for (const key in left) {
+  for (const key of Object.keys(left)) {
     // @ts-ignore: it's fine
     const lhs = left[key]
     const path = isLeftArray ? +key : key
-    if (!(key in right)) {
+    if (!Object.hasOwn(right, key)) {
       diffs.push({ kind: 'remove', path: [path], lhs })
       continue
     }
@@ -89,8 +89,8 @@ export function diff(left: unknown, right: unknown): Difference[] {
     }
   }
 
-  for (const key in right) {
-    if (!(key in left)) {
+  for (const key of Object.keys(right)) {
+    if (!Object.hasOwn(left, key)) {
       // @ts-ignore: it's fine
       const rhs = right[key]
       const path = [isRightArray ? +key : key]
@@ -100,29 +100,87 @@ export function diff(left: unknown, right: unknown): Difference[] {
   return diffs
 }
 
-function getLCSLength<T, U>(a: T[], b: U[]): number[][] {
-  const lcs: number[][] = []
-  for (let i = 0; i < a.length + 1; i++) {
-    lcs[i] = []
-    for (let j = 0; j < b.length + 1; j++) {
-      if (i === 0 || j === 0) {
-        lcs[i]?.push(0)
-      } else if (isDeepStrictEqual(a[i - 1], b[j - 1])) {
-        // biome-ignore lint/style/noNonNullAssertion: it's there
-        lcs[i]?.push(1 + lcs[i - 1]![j - 1]!)
-      } else {
-        // biome-ignore lint/style/noNonNullAssertion: it's there
-        lcs[i]?.push(Math.max(lcs[i - 1]![j]!, lcs[i]![j - 1]!))
-      }
+// The walk in lcsDiff matches equal ends before it reads the table, and the
+// LCS of two equal prefixes is the shorter one, so only the middle is stored.
+function getLCSLength(a: Int32Array, b: Int32Array) {
+  let prefix = 0
+  while (prefix < a.length && prefix < b.length && a[prefix] === b[prefix]) {
+    prefix++
+  }
+  let suffix = 0
+  while (
+    suffix < a.length - prefix &&
+    suffix < b.length - prefix &&
+    a[a.length - 1 - suffix] === b[b.length - 1 - suffix]
+  ) {
+    suffix++
+  }
+  const rows = a.length - prefix - suffix + 1
+  const width = b.length - prefix - suffix + 1
+  const table = new Int32Array(rows * width)
+  for (let i = 1; i < rows; i++) {
+    for (let j = 1; j < width; j++) {
+      const at = i * width + j
+      table[at] =
+        a[prefix + i - 1] === b[prefix + j - 1]
+          ? (table[at - width - 1] as number) + 1
+          : Math.max(table[at - width] as number, table[at - 1] as number)
     }
   }
-  return lcs
+  return (i: number, j: number): number =>
+    i <= prefix || j <= prefix
+      ? Math.min(i, j)
+      : prefix + (table[(i - prefix) * width + (j - prefix)] as number)
+}
+
+// Equal elements get equal ids so the table compares numbers. The
+// fingerprint only narrows the candidates, isDeepStrictEqual still decides.
+// Short lists skip it, scanning a few candidates is cheaper.
+function toIds(lhs: unknown[], rhs: unknown[]): [Int32Array, Int32Array] {
+  const candidates = new Map<unknown, { value: unknown; id: number }[]>()
+  let count = 0
+  const idOf = (value: unknown): number => {
+    const key = lhs.length + rhs.length > 16 ? fingerprint(value) : 0
+    const bucket = candidates.get(key) ?? []
+    candidates.set(key, bucket)
+    const found = bucket.find((c) => isDeepStrictEqual(c.value, value))
+    if (found) {
+      return found.id
+    }
+    bucket.push({ value, id: count })
+    return count++
+  }
+  return [Int32Array.from(lhs, idOf), Int32Array.from(rhs, idOf)]
+}
+
+// Keys and primitives of the first few values in a fixed order, so deeply
+// equal values always share a fingerprint.
+function fingerprint(value: unknown): unknown {
+  if (typeof value !== 'object' || value === null) {
+    return value
+  }
+  let result = ''
+  const work: unknown[] = [value]
+  for (let step = 0; step < 16 && work.length > 0; step++) {
+    const next = work.pop()
+    if (typeof next !== 'object' || next === null) {
+      result += `${typeof next}:${String(next)},`
+      continue
+    }
+    const keys = Object.keys(next).sort()
+    result += `{${keys.join(',')}}`
+    for (const key of keys) {
+      work.push((next as Record<string, unknown>)[key])
+    }
+  }
+  return result
 }
 
 // NOTE(radomski): Based on - https://florian.github.io/diffing/
 function lcsDiff<T, U>(lhs: T[], rhs: U[]): Difference[] {
   const out: Difference[] = []
-  const lcs = getLCSLength(lhs, rhs)
+  const [left, right] = toIds(lhs, rhs)
+  const lcs = getLCSLength(left, right)
 
   let i = lhs.length
   let j = rhs.length
@@ -130,20 +188,13 @@ function lcsDiff<T, U>(lhs: T[], rhs: U[]): Difference[] {
   while (i > 0 || j > 0) {
     const u = i - 1
     const v = j - 1
-    if (i > 0 && j > 0 && isDeepStrictEqual(lhs[u], rhs[v])) {
+    if (i > 0 && j > 0 && left[u] === right[v]) {
       i--
       j--
       continue
     }
 
-    if (
-      i > 0 &&
-      j > 0 &&
-      // biome-ignore lint/style/noNonNullAssertion: We know it's there
-      lcs[u]![v]! >= lcs[u]![j]! &&
-      // biome-ignore lint/style/noNonNullAssertion: We know it's there
-      lcs[u]![v]! >= lcs[i]![v]!
-    ) {
+    if (i > 0 && j > 0 && lcs(u, v) >= lcs(u, j) && lcs(u, v) >= lcs(i, v)) {
       const nested = diff(lhs[u], rhs[v])
 
       if (nested.length) {
@@ -159,8 +210,7 @@ function lcsDiff<T, U>(lhs: T[], rhs: U[]): Difference[] {
       continue
     }
 
-    // biome-ignore lint/style/noNonNullAssertion: We know it's fine
-    if (j > 0 && (i === 0 || lcs[i]![v]! >= lcs[u]![j]!)) {
+    if (j > 0 && (i === 0 || lcs(i, v) >= lcs(u, j))) {
       out.push({ kind: 'create', path: [v], rhs: rhs[v] })
       j--
     } else {

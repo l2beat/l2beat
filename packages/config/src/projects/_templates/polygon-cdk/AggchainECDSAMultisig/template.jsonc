@@ -13,8 +13,16 @@
         }
       ]
     },
+    "aggchainManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the aggchainSigners and the signature threshold (which sign the state transitions of this aggchain), switch to the default signers of the AgglayerGateway, upgrade the aggchain to a newer rollup type of the same aggchain type registered in the AgglayerManager, set the aggchain metadata manager and transfer the aggchainManager role."
+        }
+      ]
+    },
     "CONSENSUS_TYPE": {
-      "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)",
+      "description": "Read by the pessimistic program. 0 - legacy single ECDSA signature, 1 - aggchain hash consisting of the multisig hash (aggchainSigners and threshold), plus an optional aggchain proof vkey and params. This contract sets the vkey and params to zero, so the pessimistic program only verifies the aggchainSigners' ECDSA signatures (multisig-only).",
       "severity": "HIGH"
     },
     "forceBatchAddress": {

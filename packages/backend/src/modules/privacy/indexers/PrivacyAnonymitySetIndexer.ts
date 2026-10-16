@@ -9,12 +9,14 @@ import type {
 import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import {
   assert,
+  assertUnreachable,
   EthereumAddress,
   type Log,
   UnixTime,
   unique,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import groupBy from 'lodash/groupBy'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -28,14 +30,15 @@ import type {
   PrivacyAnonymitySetIndexerConfigProperties,
 } from '../types'
 import {
-  extractPrivacyAnonymitySetDeposit,
-  type PrivacyAnonymitySetDeposit,
-} from '../utils/extractPrivacyAnonymitySetDeposit'
+  extractPrivacyAnonymitySetMember,
+  type PrivacyAnonymitySetMember,
+} from '../utils/extractPrivacyAnonymitySetMember'
 import {
   buildPrivacyLogConfigMap,
   buildPrivacyLogFilter,
   getPrivacyLogKey,
 } from '../utils/privacyLogIndexerUtils'
+import { traceZkMoneyFunders } from '../zkmoney/traceFunders'
 
 const TRANSACTION_LOOKUP_BATCH_SIZE = 25
 
@@ -77,19 +80,19 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     configurations: Configuration<PrivacyAnonymitySetIndexerConfig>[],
   ) {
     const adjustedTo = Math.min(UnixTime.toNext(from, 'day'), to)
-    this.logger.info('Fetching privacy anonymity set deposits', {
+    this.logger.info('Fetching privacy anonymity set events', {
       from,
       to: adjustedTo,
       configurations: configurations.length,
     })
 
-    const records = await this.fetchDepositsForConfigurations(
+    const records = await this.fetchEventsForConfigurations(
       configurations,
       from,
       adjustedTo,
     )
 
-    this.logger.info('Fetched privacy anonymity set deposits', {
+    this.logger.info('Fetched privacy anonymity set events', {
       from,
       to: adjustedTo,
       records: records.length,
@@ -98,7 +101,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     return async () => {
       await this.$.db.privacyAnonymitySetEvent.upsertMany(records)
 
-      this.logger.info('Saved privacy anonymity set deposits into DB', {
+      this.logger.info('Saved privacy anonymity set events into DB', {
         from,
         to: adjustedTo,
         records: records.length,
@@ -117,7 +120,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       )
 
     if (deletedRecords > 0) {
-      this.logger.info('Wiped privacy anonymity set deposits', {
+      this.logger.info('Wiped privacy anonymity set events', {
         configurations: configurations.length,
         deletedRecords,
       })
@@ -137,7 +140,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
         )
 
       if (deletedRecords > 0) {
-        this.logger.info('Trimmed privacy anonymity set deposits', {
+        this.logger.info('Trimmed privacy anonymity set events', {
           configurationId: configuration.id,
           from,
           to,
@@ -147,7 +150,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     }
   }
 
-  private async fetchDepositsForConfigurations(
+  private async fetchEventsForConfigurations(
     configurations: Configuration<PrivacyAnonymitySetIndexerConfig>[],
     from: number,
     to: number,
@@ -204,39 +207,85 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       ),
     )
 
-    return recordsInRange.map((record) => {
-      const config = record.configuration.properties
-      return {
-        configurationId: record.configuration.id,
-        projectId: config.projectId,
-        bucketId: config.bucketId,
-        chain: config.chain,
-        timestamp: record.timestamp,
-        blockNumber: record.log.blockNumber,
-        txHash: record.log.transactionHash,
-        logIndex: record.log.logIndex,
-        sender: this.resolveSender(record, transactionSenders),
-        amount: record.amount,
-      }
-    })
+    const tracedFunders = await this.getTracedFunders(recordsInRange)
+
+    return withoutUntracedFunders(recordsInRange, tracedFunders).map(
+      (record) => {
+        const config = record.configuration.properties
+        return {
+          configurationId: record.configuration.id,
+          projectId: config.projectId,
+          bucketId: config.bucketId,
+          chain: config.chain,
+          timestamp: record.timestamp,
+          blockNumber: record.log.blockNumber,
+          txHash: record.log.transactionHash,
+          logIndex: record.log.logIndex,
+          sender: this.resolveSender(record, transactionSenders, tracedFunders),
+          amount: record.amount,
+        }
+      },
+    )
   }
 
   private resolveSender(
     record: RawRecord,
     transactionSenders: Map<string, string>,
+    tracedFunders: Map<RawRecord, EthereumAddress>,
   ): string {
-    if (record.origin.type === 'event') {
-      return record.origin.sender.toString()
+    switch (record.origin.type) {
+      case 'event':
+        return record.origin.sender.toString()
+      case 'transaction': {
+        const sender = transactionSenders.get(
+          record.log.transactionHash.toLowerCase(),
+        )
+        assert(
+          sender !== undefined,
+          `Missing transaction sender for ${record.log.transactionHash}`,
+        )
+        return sender
+      }
+      case 'tracedFunder': {
+        const funder = tracedFunders.get(record)
+        assert(
+          funder !== undefined,
+          `Missing traced funder for ${record.log.transactionHash}`,
+        )
+        return funder.toString()
+      }
+      default:
+        assertUnreachable(record.origin)
     }
+  }
 
-    const sender = transactionSenders.get(
-      record.log.transactionHash.toLowerCase(),
+  /** One trace per configuration, as each carries its own funding params. */
+  private async getTracedFunders(
+    records: TimedRawRecord[],
+  ): Promise<Map<RawRecord, EthereumAddress>> {
+    const funders = new Map<RawRecord, EthereumAddress>()
+    const byConfiguration = groupBy(
+      records.filter(isTracedFunderRecord),
+      (record) => record.configuration.id,
     )
-    assert(
-      sender !== undefined,
-      `Missing transaction sender for ${record.log.transactionHash}`,
-    )
-    return sender
+    for (const group of Object.values(byConfiguration)) {
+      const [first] = group
+      if (first === undefined) continue
+      const traced = await traceZkMoneyFunders(group, first.origin.params, {
+        rpc: this.$.rpcClient,
+        logsProvider: this.$.logsProvider,
+        getBlockNumberAtOrBefore: (timestamp) =>
+          this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
+            timestamp,
+            this.$.chain,
+          ),
+      })
+      for (const record of group) {
+        const funder = traced.get(record.log)
+        if (funder !== undefined) funders.set(record, funder)
+      }
+    }
+    return funders
   }
 
   private async getTransactionSenders(
@@ -289,7 +338,35 @@ interface RawRecord {
   configuration: Configuration<PrivacyAnonymitySetIndexerConfig>
   log: Log
   amount: bigint
-  origin: PrivacyAnonymitySetDeposit['origin']
+  origin: PrivacyAnonymitySetMember['origin']
+}
+
+interface TimedRawRecord extends RawRecord {
+  timestamp: UnixTime
+}
+
+type TracedFunderRecord = TimedRawRecord & {
+  origin: Extract<RawRecord['origin'], { type: 'tracedFunder' }>
+}
+
+function isTracedFunderRecord(
+  record: TimedRawRecord,
+): record is TracedFunderRecord {
+  return record.origin.type === 'tracedFunder'
+}
+
+/**
+ * zk.money deposits whose funder cannot be traced are left out rather than
+ * attributed to an intermediary; the frontend reports the coverage.
+ */
+function withoutUntracedFunders(
+  records: TimedRawRecord[],
+  tracedFunders: Map<RawRecord, EthereumAddress>,
+): TimedRawRecord[] {
+  return records.filter(
+    (record) =>
+      record.origin.type !== 'tracedFunder' || tracedFunders.has(record),
+  )
 }
 
 function extractRawRecords(
@@ -303,11 +380,11 @@ function extractRawRecords(
     const configurations = configMap.get(key) ?? []
 
     for (const configuration of configurations) {
-      const result = extractPrivacyAnonymitySetDeposit(
+      const result = extractPrivacyAnonymitySetMember(
         configuration.properties,
         log,
       )
-      if (!result || result.amount === 0n) continue
+      if (!result) continue
 
       records.push({
         configuration,

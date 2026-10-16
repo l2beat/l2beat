@@ -162,7 +162,7 @@ export const railgun: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-05-12')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossification: discovery.getOssification(),
+  ossificationHistory: discovery.getOssificationHistory(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -172,17 +172,30 @@ export const railgun: BaseProject = {
   },
   display: {
     description:
-      'An onchain privacy system for Ethereum based on encrypted UTXO-style private balances and zk-proven DeFi interactions.',
+      'A shielded ledger on Ethereum for ERC-20 tokens, with private transfers and DeFi calls, run by no operator and governed by RAIL stakers.',
     detailedDescription: readProjectMarkdown('railgun', 'detailedDescription', {
       shieldFee: formatBasisPoints(shieldFee),
       unshieldFee: formatBasisPoints(unshieldFee),
       nftFee,
+      executionDelay: formatSeconds(executionStartOffset, { fullUnit: true }),
     }),
     links: {
       websites: ['https://railgun.org'],
     },
     badges: [],
   },
+  milestones: [
+    {
+      // ProxyUpgrade and ProxyUnpause in tx 0x2bd98cd1…, implementation
+      // RailgunLogic 0xbcfa4de7…
+      title: 'Current pool goes live on Ethereum',
+      url: 'https://etherscan.io/tx/0x2bd98cd135e2eaf7b7239bb4951a043f655629b5d0f0ca12334ce05718512361',
+      date: '2022-05-08T00:00:00Z',
+      description:
+        "The proxy that holds today's pool is unpaused with the RailgunLogic implementation.",
+      type: 'general',
+    },
+  ],
   escrows: TRACKED_TOKENS.map((token) => ({
     address: ChainSpecificAddress.address(railgunCore.address),
     chain: ChainSpecificAddress.longChain(railgunCore.address),
@@ -250,7 +263,7 @@ export const railgun: BaseProject = {
       value: formatSeconds(executionStartOffset),
       sentiment: 'warning',
       orderHint: executionStartOffset,
-      description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before they can execute, giving users time to unshield funds if they do not approve the change.`,
+      description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before execution, so users can unshield before a change they reject.`,
       walkawayTest: { passed: true },
     },
     reproducibility: {
@@ -265,8 +278,12 @@ export const railgun: BaseProject = {
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
-    adversaries: railgunAdversaries,
-    riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
+    adversaries: railgunAdversaries(
+      formatSeconds(executionStartOffset, { fullUnit: true }),
+    ),
+    riskSummary: readProjectMarkdown('railgun', 'riskSummary', {
+      executionDelay: formatSeconds(executionStartOffset, { fullUnit: true }),
+    }),
     upgradesAndGovernance: {
       content: readProjectMarkdown('railgun', 'upgradesAndGovernance'),
       governanceInfo: {

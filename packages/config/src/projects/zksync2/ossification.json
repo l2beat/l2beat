@@ -1,12 +1,148 @@
 {
   "events": [
     {
+      "timestamp": 1695403367,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x5e3ce9e7d3920f293487a5581146f8333191a4068762db6fe4d1eec65a3fb805",
+      "updateId": "469b08ac",
+      "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 14 -> 15 (read at blocks 18192837/18192838). Dates the protocol version change of diffHistory entry 469b08ac, which has no previous run to bound it, at its upgrade."
+    },
+    {
+      "timestamp": 1697818535,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x0de4556791139b205562b388f2ddc4a2d2ec1bf0996feea38158535cd7e1a5c6",
+      "updateId": "81da15da",
+      "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 15 -> 16 (read at blocks 18392661/18392662). Dates the protocol version change of diffHistory entry 81da15da, which has no previous run to bound it, at its upgrade instead of counting it a week later as a separate change."
+    },
+    {
+      "timestamp": 1698856895,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x4d3e09380ee604e75800fd61da0c1771987e1cbca7c5254e8c7479e3dd0e3b37",
+      "updateId": "77994965",
+      "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 16 -> 17 (read at blocks 18478511/18478512). Dates the protocol version change of diffHistory entry 77994965 at its upgrade."
+    },
+    {
+      "timestamp": 1701721751,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd",
+      "updateId": "cdbb5dce",
+      "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 17 -> 18, the verifier, and the bootloader and default account bytecode hashes (read at blocks 18715387/18715388). Dates the state changes of diffHistory entry cdbb5dce at their upgrade instead of counting them four days later as a separate change."
+    },
+    {
+      "timestamp": 1703156615,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x2aa89e013c9d54c8c216cda65ccb4f315791987e59292d0c70e14dcb51e7b17c",
+      "updateId": "54f097de",
+      "reason": "Moved the Era Diamond's upgrade authority (getGovernor) from the Matter Labs Multisig 0x4e49…7828 to the Governance contract 0x0b62…3F61 with its timelock and Security Council (NewGovernor event; getGovernor bisected to block 18833819). The field was later renamed to getAdmin, so diffHistory does not count it."
+    },
+    {
+      "timestamp": 1703159495,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x2200e7109d3abbb74cb03144fea37f7227188e1fcaba4538bd9dfa3fa17cca02",
+      "updateId": "54f097de",
+      "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 18 -> 19 and the bootloader and default account bytecode hashes (read at blocks 18834056/18834057). Dates the state changes of diffHistory entry 54f097de at their upgrade instead of counting them 19 days later as a separate change."
+    },
+    {
+      "timestamp": 1707143447,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x937dd21a05142c02159170dafb1bbaaa145ae7bd2c29bf512534fbec9ff801ab",
+      "updateId": "2f064657",
+      "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 19 -> 20, the verifier, and the bootloader and default account bytecode hashes (read at blocks 19162676/19162677). Dates the state changes of diffHistory entry 2f064657 at their upgrade."
+    },
+    {
+      "timestamp": 1710167531,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0xa5fd3584a815267a84a5686b386d911ed7e53d6c1863ff64a57ef0f7085bd4d7",
+      "updateId": "e467f488",
+      "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 20 -> 21, the verifier, and the bootloader and default account bytecode hashes (read at blocks 19412471/19412472). Dates the state changes of diffHistory entry e467f488 at their upgrade."
+    },
+    {
+      "timestamp": 1710285383,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0xc78a986be023f367f121c06fa9662ef950ad76f2cfe9397693f63de6c5959c61",
+      "updateId": "9dbc9655",
+      "reason": "Protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 21 -> 22 (read at blocks 19422221/19422222). Dates the protocol version change of diffHistory entry 9dbc9655 at its upgrade."
+    },
+    {
+      "timestamp": 1717674923,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x71a3b924989f551cbf3024fcd6b52aeb9a52902d95c0efb690e7340d667b6e21",
+      "updateId": "6a5eae28",
+      "reason": "v24 (shared bridge) protocol upgrade of the Era Diamond. The same transaction connected Era to the BridgeHub (getBridgehub, getAdmin and getPubdataPricingMode start to exist) and set getProtocolVersion 22 -> 0.24.1, the verifier, and the bootloader and default account bytecode hashes (read at blocks 20032621/20032622). Dates the state changes of diffHistory entry 6a5eae28 at their upgrade."
+    },
+    {
+      "timestamp": 1722934619,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0xc1e73b06359759201b76ab7654e0bd49011f33c0230dfc24423985fbf36ea817",
+      "updateId": "2ed0a950",
+      "reason": "Changed the Era Diamond admin from the Governance contract 0x0b62…3F61 to the EraChainAdminProxy 0x2cf3…5063 (NewAdmin event; getAdmin bisected to block 20468479). Part of diffHistory entry 2ed0a950, which has no previous run to bound it."
+    },
+    {
+      "timestamp": 1722937847,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x2060aa785aeefa91a0b103accc9df689c7a2056aacfa70309492e729ddea4565",
+      "updateId": "2ed0a950",
+      "reason": "v24.2 protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 0.24.1 -> 0.24.2 (read at blocks 20468744/20468745). Dates the protocol version change of diffHistory entry 2ed0a950 at its upgrade."
+    },
+    {
+      "timestamp": 1744719383,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x7231d81031024145e04ffb478eb6e6ebdb95b914ab56ab8456ce191a9966f256",
+      "updateId": "6fa1ad76",
+      "reason": "Matter Labs Multisig, via the EraChainAdminProxy, set a TransactionFilterer (0xC8Cc…7C78) on the Era Diamond, enabling censorship of L1 -> L2 transactions (NewTransactionFilterer event, bisected to block 22274324)."
+    },
+    {
+      "timestamp": 1744982567,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x623f5a56f03cffc61976f063804b7aefb38dda0d0aa11a4d9af0369e967d5b1c",
+      "updateId": "0dff75a3",
+      "reason": "Matter Labs Multisig, via the EraChainAdminProxy, replaced the Era Diamond's TransactionFilterer 0xC8Cc…7C78 with 0x62F3…FA4f (NewTransactionFilterer event, bisected to block 22296155)."
+    },
+    {
+      "timestamp": 1745497499,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x1ea454b64ef579e7377d66bb8784c0c0554ef93fe903e425c0a8b6b3233e40aa",
+      "updateId": "bff2a528",
+      "reason": "Matter Labs Multisig, via the EraChainAdminProxy, removed the Era Diamond's TransactionFilterer (0x62F3…FA4f -> zero address) (NewTransactionFilterer event, bisected to block 22338850)."
+    },
+    {
+      "timestamp": 1746446579,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0xf20c9ac3a8c84e97d8403833810d9c2d38f29bb18f592b983e69e14da66b1d12",
+      "updateId": "8c1eeeb8",
+      "reason": "v27 protocol upgrade of the Era Diamond. The same transaction set getProtocolVersion, the verifier, and the bootloader, default account and EVM emulator bytecode hashes (read at blocks 22417414/22417415). Diff 8c1eeeb8 lists a reindexed 2023 $pastUpgrades item as appended, which dated these state changes at 2023-09-22."
+    },
+    {
+      "timestamp": 1750722695,
+      "type": "code",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x57b72110d70a2c2f9b7762a0069d3c61d6b58888a4ac6bec35adde7d3f664a57",
+      "updateId": "0d60433d",
+      "reason": "v28 protocol upgrade of the Era Diamond. The same transaction set getProtocolVersion, the verifier, and the bootloader, default account and EVM emulator bytecode hashes (read at blocks 22770520/22770521). Diff 0d60433d lists a reindexed 2023 $pastUpgrades item as appended, which dated these state changes at 2023-09-22."
+    },
+    {
       "timestamp": 1753709927,
       "type": "state",
       "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
       "transaction": "0x6c54ae13afd01a30d20bc48537326fc8d920e58cdc4292d85f2fc50a4bf2d89e",
       "updateId": "8cabc948",
-      "reason": "Moved ZKsync Era settlement from Ethereum to Gateway; the first block with the new settlement-layer pointer was identified by historical state bisection."
+      "reason": "Matter Labs Multisig, via the EraChainAdminProxy and the BridgeHub, moved ZKsync Era's settlement from Ethereum to Gateway (getSettlementLayer 0x0 -> Gateway diamond 0x6E96…F2B9, read at blocks 23017991/23017992). The Diamond is reached by internal calls, so the transaction does not reference it in its logs."
     },
     {
       "timestamp": 1769897051,
@@ -14,7 +150,7 @@
       "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
       "transaction": "0x2829993f6183647fc954ec75b67441ab0e597f445a3f5d6f976733775ca06f26",
       "updateId": "35e6a989",
-      "reason": "Finalized ZKsync Era's migration from Gateway back to Ethereum; the Diamond emitted MigrationComplete."
+      "reason": "Finalized ZKsync Era's migration from Gateway back to Ethereum; the Diamond emitted MigrationComplete and getSettlementLayer went back to the zero address (read at blocks 24357716/24357717)."
     },
     {
       "timestamp": 1777553063,

@@ -3,30 +3,32 @@
   "name": "privacy-boost",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
-    "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-    "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118"
+    // "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+    // "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+    "base:0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40",
+    "base:0x7Bb891f7D7c78A8d6770cb273aBC603A148824b6"
   ],
   "names": {
-    "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f": "AuthRegistry",
-    "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC": "AdminMultisig",
-    "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B": "OperatorMultisig",
-    "oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e": "TreasuryMultisig",
-    "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": "PrivacyBoostProxyAdmin",
-    "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": "TokenRegistryProxyAdmin",
-    "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C": "AuthRegistryProxyAdmin",
-    "oeth:0x96f3E5551E1330f31974597217019812667544c8": "AuditGatewayProxyAdmin"
+    "base:0x4daC7dA2c8cA097B3e0FF42aBFCebd2833196eB3": "AuthRegistry",
+    "base:0x78DFf7F33E3d5edD68D13D6d1fE23078062866f7": "AdminMultisig",
+    "base:0x420A8a682892bae85cba7fb0e5Cd806807C5Bf95": "OperatorMultisig",
+    "base:0x04484B6065A43fa286e05E9C28a6c4Db77d917f8": "TreasuryMultisig",
+    "base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e": "PrivacyBoostProxyAdmin",
+    "base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f": "TokenRegistryProxyAdmin",
+    "base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc": "AuthRegistryProxyAdmin",
+    "base:0xB32ef2884794999e1E260a3f68368A24CEF25b35": "AuditGatewayProxyAdmin"
   },
   "overrides": {
-    "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": {
+    "base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e": {
       "description": "Admin contract of the PrivacyBoost proxy."
     },
-    "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": {
+    "base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f": {
       "description": "Admin contract of the TokenRegistry proxy."
     },
-    "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C": {
+    "base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc": {
       "description": "Admin contract of the AuthRegistry proxy."
     },
-    "oeth:0x96f3E5551E1330f31974597217019812667544c8": {
+    "base:0xB32ef2884794999e1E260a3f68368A24CEF25b35": {
       "description": "Admin contract of the AuditGateway proxy."
     }
   }

@@ -36,10 +36,6 @@ export function DonatePage(props: Props) {
       name: 'OP Mainnet',
       linkURL: `https://optimistic.etherscan.io/address/${DONATE_ADDRESS}`,
     },
-    {
-      name: 'ZKsync Lite',
-      linkURL: `https://zkscan.io/explorer/accounts/${DONATE_ADDRESS}`,
-    },
     props.gitcoinOption && {
       name: 'Gitcoin',
       linkURL: GITCOIN_ROUND_URL,

@@ -18,6 +18,10 @@ import type { ChartRange } from '~/utils/range/range'
 import { TrackedTransactions } from '../costs/TrackedTransactions'
 import { ProjectSection } from '../ProjectSection'
 import { SubsectionHeading } from '../Subsection'
+import {
+  LIVENESS_DESCRIPTION,
+  TRACKED_CONTRACTS_CHANGED_WARNING,
+} from '../sectionCopy'
 import type { ProjectSectionProps } from '../types'
 import { Last30DayAnomalies } from './Last30DayAnomalies'
 
@@ -35,7 +39,6 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   isArchived: boolean
   hideSubtypeSwitch?: boolean
-  isForDaBridge?: boolean
 }
 
 export function LivenessSection({
@@ -49,16 +52,13 @@ export function LivenessSection({
   defaultRange,
   isArchived,
   hideSubtypeSwitch,
-  isForDaBridge,
   ...sectionProps
 }: LivenessSectionProps) {
   const ongoingAnomalies = anomalies.filter(isAnomalyOngoing)
   return (
     <ProjectSection {...sectionProps}>
       <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
-        {!isForDaBridge
-          ? 'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
-          : 'This section shows how frequently DA attestations are submitted. It also highlights anomalies - significant deviations from the typical schedule.'}
+        {LIVENESS_DESCRIPTION}
       </p>
       {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (
         <TrackedTxsOutageNotice type="section" />
@@ -162,7 +162,7 @@ function ImplementationChangeCallout() {
       color="yellow"
       small
       icon={<RoundedWarningIcon className="size-4" sentiment="warning" />}
-      body="There are implementation changes to tracked contracts, anomaly data might be inaccurate."
+      body={TRACKED_CONTRACTS_CHANGED_WARNING}
     />
   )
 }

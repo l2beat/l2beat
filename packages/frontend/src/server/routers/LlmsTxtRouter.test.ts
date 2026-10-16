@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import type express from 'express'
+import { env } from '~/env'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import {
   LIST_PAGES_WITH_MARKDOWN,
@@ -24,6 +25,29 @@ describe(createLlmsTxtRouter.name, () => {
     )
   })
 
+  it('serves the same map as the homepage when Accept prefers markdown', async () => {
+    const response = await fetchFromRouter(createLlmsTxtRouter(), '/', {
+      headers: { Accept: 'text/markdown' },
+    })
+
+    expect(response.status).toEqual(200)
+    expect(response.headers.get('content-type')).toEqual(
+      'text/markdown; charset=utf-8',
+    )
+    expect(response.headers.get('vary')).toEqual('Accept')
+    expect(await response.text()).toEqual(await getLlmsTxt())
+  })
+
+  it('leaves the homepage to the HTML page for browsers', async () => {
+    // Nothing else is mounted here, so falling through shows up as a 404.
+    const response = await fetchFromRouter(createLlmsTxtRouter(), '/', {
+      headers: { Accept: 'text/html' },
+    })
+
+    expect(response.status).toEqual(404)
+    expect(response.headers.get('vary')).toEqual('Accept')
+  })
+
   it('opens with the L2BEAT title and a one-paragraph summary', async () => {
     const body = await getLlmsTxt()
 
@@ -41,10 +65,12 @@ describe(createLlmsTxtRouter.name, () => {
       'https://l2beat.com/layer2s/liveness',
       'https://l2beat.com/layer2s/costs',
       'https://l2beat.com/stages',
-      'https://l2beat.com/data-availability/summary',
       'https://l2beat.com/interop/summary',
       'https://l2beat.com/privacy/summary',
       'https://l2beat.com/zk-catalog',
+      ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
+        ? ['https://l2beat.com/ossification']
+        : []),
       'https://l2beat.com/governance',
       'https://l2beat.com/glossary',
       'https://l2beat.com/faq',
@@ -72,11 +98,14 @@ describe(createLlmsTxtRouter.name, () => {
 
     expect(urls).toEqual([
       'https://l2beat.com/layer2s/projects/{slug}.md',
-      'https://l2beat.com/data-availability/projects/{layer}/{bridge}.md',
+      'https://l2beat.com/projects/ethereum.md',
       'https://l2beat.com/privacy/projects/{slug}.md',
       'https://l2beat.com/interop/protocols/{slug}.md',
       'https://l2beat.com/zk-catalog/{slug}.md',
       'https://l2beat.com/interop/tokens/{slug}.md',
+      ...(env.CLIENT_SIDE_DEFI_ENABLED
+        ? ['https://l2beat.com/defi/projects/{slug}.md']
+        : []),
     ])
   })
 
@@ -96,6 +125,15 @@ describe(createLlmsTxtRouter.name, () => {
     const [notes] = body.split('\n## ')
 
     expect(notes ?? '').toInclude('When to use L2BEAT:')
+  })
+
+  // The edge cache caveat applies to every page, not to one entry.
+  it('tells agents to prefer the .md URLs, before the link sections', async () => {
+    const body = await getLlmsTxt()
+    const [notes] = body.split('\n## ')
+
+    expect(notes ?? '').toInclude('Prefer the .md URLs')
+    expect(body.split('edge cache').length - 1).toEqual(1)
   })
 
   it('keeps secondary links in the Optional section', async () => {

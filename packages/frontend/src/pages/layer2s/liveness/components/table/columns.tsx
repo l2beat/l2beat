@@ -27,45 +27,58 @@ export function getL2LivenessColumns(hideProofSystem?: boolean) {
       id: 'data',
       header: () => <IntervalsHeader average={true} />,
       columns: [
-        columnHelper.accessor('data.batchSubmissions.averageInSeconds', {
-          header: 'Tx data\nsubmissions',
-          cell: (ctx) => (
-            <LivenessIntervalCell
-              entry={ctx.row.original}
-              dataType="batchSubmissions"
-            />
-          ),
-          sortUndefined: 'last',
-          meta: {
-            tooltip: 'How often transaction batches are submitted to the L1',
+        columnHelper.accessor(
+          (row) => row.data?.batchSubmissions?.averageInSeconds,
+          {
+            // Ids match the former 'data.x' accessor keys; column visibility is persisted by id.
+            id: 'data_batchSubmissions_averageInSeconds',
+            header: 'Tx data\nsubmissions',
+            cell: (ctx) => (
+              <LivenessIntervalCell
+                entry={ctx.row.original}
+                dataType="batchSubmissions"
+              />
+            ),
+            sortUndefined: 'last',
+            meta: {
+              tooltip: 'How often transaction batches are submitted to the L1',
+            },
           },
-        }),
-        columnHelper.accessor('data.proofSubmissions.averageInSeconds', {
-          header: 'Proof\nsubmissions',
-          cell: (ctx) => (
-            <LivenessIntervalCell
-              entry={ctx.row.original}
-              dataType="proofSubmissions"
-            />
-          ),
-          sortUndefined: 'last',
-          meta: {
-            tooltip: 'How often validity proofs are submitted to the L1',
+        ),
+        columnHelper.accessor(
+          (row) => row.data?.proofSubmissions?.averageInSeconds,
+          {
+            id: 'data_proofSubmissions_averageInSeconds',
+            header: 'Proof\nsubmissions',
+            cell: (ctx) => (
+              <LivenessIntervalCell
+                entry={ctx.row.original}
+                dataType="proofSubmissions"
+              />
+            ),
+            sortUndefined: 'last',
+            meta: {
+              tooltip: 'How often validity proofs are submitted to the L1',
+            },
           },
-        }),
-        columnHelper.accessor('data.stateUpdates.averageInSeconds', {
-          header: 'State\nupdates',
-          cell: (ctx) => (
-            <LivenessIntervalCell
-              entry={ctx.row.original}
-              dataType="stateUpdates"
-            />
-          ),
-          sortUndefined: 'last',
-          meta: {
-            tooltip: 'How often state roots are submitted to the L1',
+        ),
+        columnHelper.accessor(
+          (row) => row.data?.stateUpdates?.averageInSeconds,
+          {
+            id: 'data_stateUpdates_averageInSeconds',
+            header: 'State\nupdates',
+            cell: (ctx) => (
+              <LivenessIntervalCell
+                entry={ctx.row.original}
+                dataType="stateUpdates"
+              />
+            ),
+            sortUndefined: 'last',
+            meta: {
+              tooltip: 'How often state roots are submitted to the L1',
+            },
           },
-        }),
+        ),
       ],
     }),
     !hideProofSystem &&

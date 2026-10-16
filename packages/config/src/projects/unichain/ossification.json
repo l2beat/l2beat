@@ -1,20 +1,6 @@
 {
   "events": [
     {
-      "timestamp": 1734645071,
-      "type": "state",
-      "contract": "eth:0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC",
-      "transaction": "0x4f14b1991d4873d9b622257ea90a34acc14bb9979283309617ae4df2afc81256",
-      "reason": "Changed the then-governing Unichain Multisig 1 threshold on the Safe itself."
-    },
-    {
-      "timestamp": 1734645095,
-      "type": "state",
-      "contract": "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1",
-      "transaction": "0x99fbaee89a08c16eac5596353f67516a16e0a2086b0023bd0279e3178df02463",
-      "reason": "Changed the Unichain Multisig 2 threshold while it controlled SystemConfig."
-    },
-    {
       "timestamp": 1737130811,
       "type": "state",
       "contract": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
@@ -29,85 +15,134 @@
       "reason": "Switched the respected game type to the permissionless FaultDisputeGame, activating fault proofs for withdrawals."
     },
     {
-      "timestamp": 1738943723,
-      "type": "state",
-      "contract": "eth:0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC",
-      "transaction": "0xdfafffe5bd2719576b97c3bb44327bae72be6880d3080dfe3623674194645d75",
-      "reason": "Changed the then-governing Unichain Multisig 1 threshold on the Safe itself."
+      "timestamp": 1744485539,
+      "type": "code",
+      "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+      "transaction": "0x7e5e478cafbe30293645e6972a477f77dcfdc006c4cf1dd248a94e6386d04159",
+      "updateId": "f5d3d3f4",
+      "reason": "Replaced the canonical L1StandardBridge implementation in the upgrade transaction that also upgraded the portal, messenger, SystemConfig and DisputeGameFactory; the EIP-1967 slot changed in this block without a past-upgrades entry."
     },
     {
-      "timestamp": 1738953155,
-      "type": "state",
-      "contract": "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1",
-      "transaction": "0x8947040ba4b100235363384a2a8af5913f7dea93b337b748929b21e37af0d691",
-      "reason": "Changed the Unichain Multisig 2 threshold while it controlled SystemConfig."
+      "timestamp": 1745543531,
+      "type": "code",
+      "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+      "transaction": "0xc74c5e0dddfa9e2d0fd5d902fb7b1aa4cc28ba034ebed7bf3a0aa3a8b8d21b20",
+      "updateId": "290b6c6d",
+      "reason": "Replaced the canonical L1StandardBridge implementation in the upgrade transaction that also upgraded the portal, messenger and SystemConfig; the EIP-1967 slot changed in this block without a past-upgrades entry."
     },
     {
-      "timestamp": 1753378247,
+      "timestamp": 1746635327,
       "type": "state",
-      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-      "transaction": "0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
-      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe that can pause Unichain."
+      "contract": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
+      "transaction": "0xd3247421f6f8039ab186878aa996984a67b3149dd543e688b1d30236516eba00",
+      "updateId": "2a2d7a74",
+      "reason": "Replaced the FaultDisputeGame (type 0) and PermissionedDisputeGame (type 1) implementations that verify proposed state roots (new absolute prestate)."
     },
     {
       "timestamp": 1753380539,
       "type": "state",
-      "contract": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+      "contract": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "transaction": "0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
-      "reason": "Disabled the former Unichain pause deputy on the Guardian Safe."
+      "updateId": "ababb0b2",
+      "reason": "The Guardian Safe disabled DeputyGuardianModule 2.0.0, removing the OP Foundation Operations Safe's path to set the respected game type, blacklist games and set the anchor state through the guardian. Only the pause-only DeputyPauseModule remains."
+    },
+    {
+      "timestamp": 1753380731,
+      "type": "code",
+      "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+      "transaction": "0x1f1f283ad793a901a94e11241d46b87cd264b2e276a690b9554148ba56c57959",
+      "updateId": "ababb0b2",
+      "reason": "OP Contracts Upgrade 16 replaced the canonical L1StandardBridge implementation; the EIP-1967 slot changed in this block without a past-upgrades entry."
     },
     {
       "timestamp": 1759437959,
       "type": "code",
       "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
-      "updateId": "cbee75ee",
       "transaction": "0xc98240172fa3950ec9c62f32cc09d0eb0ed21684b02f1b2677357674cda64ca5",
+      "updateId": "cbee75ee",
       "reason": "Upgrade 16a replaced the canonical L1StandardBridge implementation; its EIP-1967 implementation slot changed in this block despite the proxy not recording a past-upgrades entry."
     },
     {
       "timestamp": 1764106535,
       "type": "code",
       "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
-      "updateId": "7ac95a79",
       "transaction": "0x7c9e6b65258838fb38bc0bf584cb0c0802bc0dfbbe877a8639880e2ed88b3aa6",
+      "updateId": "7ac95a79",
       "reason": "Jovian upgrade replaced the canonical L1StandardBridge implementation; the EIP-1967 implementation slot changed in this block."
     },
     {
-      "timestamp": 1765898063,
-      "type": "code",
-      "contract": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-      "updateId": "86db7e3e",
-      "transaction": "0x50705cdd13e7f50da7227683b06acbd13c53eb636e0f7a16dffe6b109aa5f829",
-      "reason": "The Upgrade Safe changed its singleton implementation from Gnosis Safe 1.3.0 to Safe 1.4.1, changing the code behind an active governance path."
-    },
-    {
       "timestamp": 1769109083,
       "type": "state",
-      "contract": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+      "contract": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+      "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
       "updateId": "58eb42e4",
-      "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
-      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe, allowing the configured fallback owner to take over after a liveness challenge."
+      "reason": "The OP Foundation Upgrade Safe, one of the two members of the SuperchainProxyAdminOwner, enabled the SaferSafes module: after an unanswered liveness challenge (30-day response period) its fallback owner, the Security Council, can take over the Foundation's half of the upgrade authority."
     },
     {
-      "timestamp": 1769109083,
-      "type": "state",
-      "contract": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
-      "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
-      "reason": "Configured a 30-day response period and Security Council fallback owner for the Upgrade Safe's SaferSafes module."
+      "timestamp": 1783362755,
+      "type": "code",
+      "contract": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
+      "transaction": "0xb3c65cbf6285d4b32d576c866fffced1c77747c53163b604e20feb6aad121421",
+      "reason": "OP Contracts Upgrade 19b (Karst) upgraded the DisputeGameFactory implementation (1.4.0 to 1.6.1) in the same transaction that replaced its dispute games; listed so the reviewed game replacement does not hide this code change."
     },
     {
       "timestamp": 1783362755,
       "type": "state",
       "contract": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
       "transaction": "0xb3c65cbf6285d4b32d576c866fffced1c77747c53163b604e20feb6aad121421",
-      "reason": "Replaced the dispute games with interop-ready implementations: registered SuperPermissionedDisputeGame (type 1) and SuperCannon (type 8) games, retired the legacy fault games, and switched the respected game type used to validate withdrawals."
+      "reason": "Replaced the dispute games: cleared the Cannon FaultDisputeGame (type 0), registered a new PermissionedDisputeGame (type 1) and the kona-based FaultDisputeGame (type 8, CANNON_KONA), and the respected game type moved from 0 to 8."
     },
     {
       "timestamp": 1783362755,
       "type": "code",
       "contract": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
       "transaction": "0xb3c65cbf6285d4b32d576c866fffced1c77747c53163b604e20feb6aad121421",
-      "reason": "The July 2026 upgrade replaced the canonical L1StandardBridge implementation; the EIP-1967 slot changed in this block without a past-upgrades entry."
+      "updateId": "cd925ce0",
+      "reason": "OP Contracts Upgrade 19b (Karst) replaced the canonical L1StandardBridge implementation (2.8.0 to 2.8.2); the EIP-1967 slot changed in this block without a past-upgrades entry. It did not change again in Upgrade 20."
+    },
+    {
+      "timestamp": 1783526401,
+      "type": "code",
+      "contract": "unichain:0x4200000000000000000000000000000000000007",
+      "transaction": "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+      "reason": "First recorded upgrade of the L2CrossDomainMessenger predeploy (Karst hardfork) replaced an implementation that was already initialized at genesis (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1783526401,
+      "type": "code",
+      "contract": "unichain:0x4200000000000000000000000000000000000010",
+      "transaction": "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+      "reason": "First recorded upgrade of the L2StandardBridge predeploy (Karst hardfork) replaced an implementation that was already initialized at genesis (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1783526401,
+      "type": "code",
+      "contract": "unichain:0x4200000000000000000000000000000000000016",
+      "transaction": "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+      "reason": "First recorded upgrade of the L2ToL1MessagePasser predeploy (Karst hardfork) replaced an implementation that was already initialized at genesis (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1783526401,
+      "type": "code",
+      "contract": "unichain:0x4200000000000000000000000000000000000018",
+      "transaction": "0x48aa8d6a9d281bf0eaa204e895acdfe0ba38640c34f6d133b2f4ecb879f5c72c",
+      "reason": "First recorded upgrade of the L2ProxyAdmin predeploy (Karst hardfork) replaced an implementation that was already initialized at genesis (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1789396679,
+      "type": "state",
+      "contract": "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4",
+      "transaction": "0xfca98b14ae7163d444cd17285c7f97e1fb76db00cd971bae847a8af5f8ecb77f",
+      "updateId": "cd925ce0",
+      "reason": "Transferred the ProxyAdmin (and, in the same transaction, the DisputeGameFactory) from the 3-of-3 UnichainProxyAdminOwner (Unichain Multisig 1, OP Foundation Upgrade Safe, Security Council) to the 2-of-2 SuperchainProxyAdminOwner, removing Unichain Multisig 1 from the upgrade path."
+    },
+    {
+      "timestamp": 1789402468,
+      "type": "state",
+      "contract": "unichain:0x4200000000000000000000000000000000000018",
+      "transaction": "0x1a33b8796ec4b48ea30a2333b9e6dc045a4a880c1125deaa1ebb49e6fe5a57e7",
+      "updateId": "cd925ce0",
+      "reason": "Transferred the L2ProxyAdmin from the aliased UnichainProxyAdminOwner to the aliased SuperchainProxyAdminOwner, matching the L1 ProxyAdmin transfer."
     }
   ]
 }

@@ -138,7 +138,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
     ),
     ...withChangeSort(
       columnHelper,
-      columnHelper.accessor('activity.pastDayUops', {
+      columnHelper.accessor((row) => row.activity?.pastDayUops, {
         id: 'pastDayUops',
         header: 'Past day UOPS',
         cell: (ctx) => {
@@ -157,7 +157,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
                   changePeriod={data.changePeriod}
                   disabledOnMobile
                 >
-                  {formatActivityCount(ctx.getValue())}
+                  {formatActivityCount(data.pastDayUops)}
                 </ValueWithPercentageChange>
               </SyncStatusWrapper>
             </TableLink>

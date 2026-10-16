@@ -5,19 +5,15 @@ import {
   BeaconChainClient,
   type BlockClient,
   BlockIndexerClient,
-  CelestiaRpcClient,
   CoingeckoClient,
   DuneClient,
-  EigenApiClient,
-  EspressoClient,
   FuelClient,
   HttpClient,
   type IRpcClient,
   LighterClient,
   type LogsClient,
   MulticallV3Client,
-  NearClient,
-  PolkadotRpcClient,
+  type RetryHandlerVariant,
   RpcClient,
   RpcClientCompat,
   RpcMetricsAggregator,
@@ -43,18 +39,13 @@ export interface Clients {
   starkex: StarkexClient | undefined
   coingecko: CoingeckoClient
   beacon: BeaconChainClient | undefined
-  celestia: CelestiaRpcClient | undefined
-  celestiaDaBeat: CelestiaRpcClient | undefined
-  avail: PolkadotRpcClient | undefined
-  availDaBeat: PolkadotRpcClient | undefined
-  eigen: EigenApiClient | undefined
+  /** Ethereum, for following the head: see `LiveBlobsTrackingConfig.rpc` */
+  liveBlobsRpc: IRpcClient | undefined
   getRpcClient: (chain: string) => IRpcClient
   getStarknetClient: (chain: string) => StarknetClient
   rpcClients: IRpcClient[]
   rpcMetricsAggregator: RpcMetricsAggregator
   starknetClients: StarknetClient[]
-  near: NearClient | undefined
-  espresso: EspressoClient | undefined
   dune: DuneClient | undefined
 }
 
@@ -63,17 +54,33 @@ export function initClients(config: Config, logger: Logger): Clients {
   const rpcMetricsAggregator = new RpcMetricsAggregator({
     logger: logger.for(RpcMetricsAggregator.name),
   })
+  function createRpcClient(options: {
+    chain: string
+    url: string
+    callsPerMinute: number
+    retryStrategy: RetryHandlerVariant
+    logger: Logger
+    multicallClient?: MulticallV3Client
+    timeout?: number
+    maxBatchSize?: number
+  }): IRpcClient {
+    return config.newClientsEnabled
+      ? RpcClientCompat.create({ ...options, http, rpcMetricsAggregator })
+      : new RpcClient({
+          ...options,
+          http,
+          rpcMetrics: rpcMetricsAggregator.createRecorder({
+            rpcChain: options.chain,
+            rpcClient: RpcClient.name,
+          }),
+        })
+  }
+
   let starkexClient: StarkexClient | undefined
   let voyagerClient: VoyagerClient | undefined
   let ethereumClient: IRpcClient | undefined
   let beaconChainClient: BeaconChainClient | undefined
-  let celestia: CelestiaRpcClient | undefined
-  let celestiaDaBeat: CelestiaRpcClient | undefined
-  let avail: PolkadotRpcClient | undefined
-  let availDaBeat: PolkadotRpcClient | undefined
-  let near: NearClient | undefined
-  let espresso: EspressoClient | undefined
-  let eigen: EigenApiClient | undefined
+  let liveBlobsRpc: IRpcClient | undefined
   let dune: DuneClient | undefined
 
   const starknetClients: StarknetClient[] = []
@@ -108,32 +115,16 @@ export function initClients(config: Config, logger: Logger): Clients {
                 500,
               )
             : undefined
-          const rpcClient = config.newClientsEnabled
-            ? RpcClientCompat.create({
-                chain: chain.name,
-                url: blockApi.url,
-                http,
-                callsPerMinute: blockApi.callsPerMinute,
-                retryStrategy: blockApi.retryStrategy,
-                logger: chainLogger,
-                multicallClient,
-                rpcMetricsAggregator,
-                timeout: blockApi.timeout,
-              })
-            : new RpcClient({
-                chain: chain.name,
-                url: blockApi.url,
-                http,
-                callsPerMinute: blockApi.callsPerMinute,
-                retryStrategy: blockApi.retryStrategy,
-                logger: chainLogger,
-                multicallClient,
-                rpcMetrics: rpcMetricsAggregator.createRecorder({
-                  rpcChain: chain.name,
-                  rpcClient: RpcClient.name,
-                }),
-                timeout: blockApi.timeout,
-              })
+          const rpcClient = createRpcClient({
+            chain: chain.name,
+            url: blockApi.url,
+            callsPerMinute: blockApi.callsPerMinute,
+            retryStrategy: blockApi.retryStrategy,
+            logger: chainLogger,
+            multicallClient,
+            timeout: blockApi.timeout,
+            maxBatchSize: blockApi.maxBatchSize,
+          })
           blockClients.push(rpcClient)
           logsClients.push(rpcClient)
           rpcClients.push(rpcClient)
@@ -209,56 +200,15 @@ export function initClients(config: Config, logger: Logger): Clients {
     }
   }
 
-  if (config.da) {
-    for (const layer of config.da.blockLayers) {
-      switch (layer.type) {
-        case 'celestia': {
-          celestia = new CelestiaRpcClient({
-            callsPerMinute: layer.callsPerMinute,
-            url: layer.url,
-            retryStrategy: 'RELIABLE',
-            sourceName: layer.name,
-            logger,
-            http,
-            timeout: layer.timeout,
-          })
-          blockClients.push(celestia)
-          break
-        }
-
-        case 'avail': {
-          avail = new PolkadotRpcClient({
-            callsPerMinute: layer.callsPerMinute,
-            url: layer.url,
-            retryStrategy: 'RELIABLE',
-            sourceName: layer.name,
-            logger,
-            http,
-          })
-          blockClients.push(avail)
-        }
-      }
-    }
-    for (const layer of config.da.timestampLayers) {
-      switch (layer.type) {
-        case 'eigen-da': {
-          const perProjectUrl = layer.perProjectUrl
-          assert(perProjectUrl, 'EigenDA per project url is required')
-          eigen = new EigenApiClient({
-            sourceName: 'eigen',
-            url: layer.url,
-            perProjectUrl,
-            http,
-            logger,
-            callsPerMinute: layer.callsPerMinute,
-            retryStrategy: 'RELIABLE',
-          })
-          break
-        }
-        default:
-          assertUnreachable(layer.type)
-      }
-    }
+  if (config.da && config.da.liveBlobs) {
+    liveBlobsRpc = createRpcClient({
+      chain: 'ethereum',
+      ...config.da.liveBlobs.rpc,
+      // The newest block reaches each node behind a load balancer at its
+      // own pace: the next node asked has it a moment later
+      retryStrategy: 'FAST',
+      logger: logger.tag({ chain: 'ethereum', feature: 'liveBlobs' }),
+    })
   }
 
   if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {
@@ -280,6 +230,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   const coingeckoClient = new CoingeckoClient({
     sourceName: 'coingeckoApi',
     apiKey: config.coingeckoApiKey,
+    apiUrl: config.coingeckoApiUrl,
     http,
     logger,
     callsPerMinute: config.coingeckoApiKey ? 400 : 10,
@@ -317,41 +268,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     })
   }
 
-  if (config.daBeat) {
-    near = new NearClient({
-      sourceName: 'near',
-      nearApiUrl: config.daBeat.nearRpcUrl,
-      http,
-      retryStrategy: 'RELIABLE',
-      logger,
-      callsPerMinute: 100,
-    })
-    celestiaDaBeat = new CelestiaRpcClient({
-      callsPerMinute: config.daBeat.celestiaCallsPerMinute,
-      url: config.daBeat.celestiaApiUrl,
-      retryStrategy: 'RELIABLE',
-      sourceName: 'celestia',
-      logger,
-      http,
-    })
-    availDaBeat = new PolkadotRpcClient({
-      url: config.daBeat.availRpcUrl,
-      callsPerMinute: 100,
-      retryStrategy: 'RELIABLE',
-      sourceName: 'avail',
-      logger,
-      http,
-    })
-    espresso = new EspressoClient({
-      sourceName: 'espresso',
-      apiUrl: config.daBeat.espressoApiUrl,
-      http,
-      retryStrategy: 'RELIABLE',
-      logger,
-      callsPerMinute: 100,
-    })
-  }
-
   const getRpcClient = (chain: string) => {
     const client = rpcClients.find((r) => r.chain === chain)
     assert(client, `${chain}: Client not found`)
@@ -373,13 +289,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     starkex: starkexClient,
     coingecko: coingeckoClient,
     beacon: beaconChainClient,
-    celestia,
-    celestiaDaBeat,
-    eigen,
-    avail,
-    availDaBeat,
-    near,
-    espresso,
+    liveBlobsRpc,
     getStarknetClient,
     getRpcClient,
     rpcClients,

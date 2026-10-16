@@ -12,6 +12,7 @@ import {
   EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
+import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Clock } from '../../tools/Clock'
 import type { WorkerPool } from './createWorkers'
@@ -261,6 +262,60 @@ describe(UpdateMonitor.name, () => {
 
       expect(processedProjects).toEqual([PROJECT_A, PROJECT_A])
       expect(updateDiffer.run).toHaveBeenCalledWith([PROJECT_A], timestamp)
+    })
+
+    it('discovers every project at the timestamp the update started', async () => {
+      const time = install({ now: 1_000_000 })
+      const discoveredAt: number[] = []
+      const discoveryRunner = mockObject<DiscoveryRunner>({
+        run: mockFn(async (_: ConfigRegistry, timestamp: number) => {
+          if (timestamp !== mockProject.timestamp) {
+            discoveredAt.push(timestamp)
+          }
+          return { discovery: DISCOVERY_RESULT, flatSources: {} }
+        }),
+      })
+      const slowWorkerPool = mockObject<WorkerPool>({
+        runInPool: mockFn(async (tasks) => {
+          for (const task of tasks) {
+            await task.job()
+            time.tick(60_000)
+          }
+          return { results: [], errors: [], timedOut: false }
+        }),
+      })
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: () => ({ ...mockProject, entries: COMMITTED }),
+        readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
+        readConfig: mockFn((name: string) => mockConfig(name)),
+      })
+
+      const updateMonitor = new UpdateMonitor(
+        discoveryRunner,
+        updateNotifier,
+        updateDiffer,
+        configReader,
+        mockObject<Database>({
+          updateMonitor: mockObject<Database['updateMonitor']>({
+            findLatest: async () => undefined,
+            upsert: async () => undefined,
+          }),
+          flatSources: flatSourcesRepository,
+        }),
+        mockObject<Clock>(),
+        discoveryOutputCache,
+        Logger.SILENT,
+        false,
+        slowWorkerPool,
+      )
+
+      try {
+        await updateMonitor.update(0)
+      } finally {
+        time.uninstall()
+      }
+
+      expect(discoveredAt).toEqual([1_000, 1_000])
     })
 
     // Diffs are written as one snapshot, so they run once every discovery lands.

@@ -16,17 +16,23 @@ describe(getMarkdownAlternatePath.name, () => {
     expect(getMarkdownAlternatePath('/layer2s/projects/arbitrum')).toEqual(
       '/layer2s/projects/arbitrum.md',
     )
-    expect(
-      getMarkdownAlternatePath(
-        '/data-availability/projects/celestia/blobstream',
-      ),
-    ).toEqual('/data-availability/projects/celestia/blobstream.md')
+    expect(getMarkdownAlternatePath('/privacy/projects/railgun')).toEqual(
+      '/privacy/projects/railgun.md',
+    )
   })
 
   it('resolves every path Express routes to the page', () => {
-    expect(getMarkdownAlternatePath('/Layer2s/Projects/Arbitrum/')).toEqual(
-      '/layer2s/projects/arbitrum.md',
+    expect(getMarkdownAlternatePath('/Layer2s/Summary/')).toEqual(
+      '/Layer2s/Summary.md',
     )
+  })
+
+  // Token ids and project slugs are case-sensitive: /interop/tokens/9hn5pn is
+  // another token than /interop/tokens/9HN5PN, or none at all.
+  it('keeps the case of the path it resolves', () => {
+    expect(
+      getMarkdownAlternatePath('/interop/tokens/9HN5PN/circle/usdc'),
+    ).toEqual('/interop/tokens/9HN5PN/circle/usdc.md')
   })
 
   it('resolves a page in every shape its optional segments allow', () => {

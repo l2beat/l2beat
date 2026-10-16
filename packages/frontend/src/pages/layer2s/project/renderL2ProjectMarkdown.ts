@@ -1,10 +1,29 @@
+import type { ReasonForBeingInOther } from '@l2beat/config'
 import { formatActivityCount, pluralize } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
+import lowerFirst from 'lodash/lowerFirst'
+import {
+  TVS_ASSET_CATEGORIES,
+  TVS_ASSET_CATEGORY_LABELS,
+} from '~/components/breakdown/tvsAssetCategories'
+import {
+  ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON,
+  WHY_LISTED_IN_OTHERS_HEADING,
+} from '~/components/projects/sections/sectionCopy'
+import type { RosetteValue } from '~/components/rosette/types'
+import { externalLinks } from '~/consts/externalLinks'
 import type { ProjectL2Entry } from '~/server/features/layer2s/project/getL2ProjectEntry'
 import {
+  linkInteropProtocol,
+  linkInteropToken,
+  listTopItems,
+} from '~/server/markdown/interopMarkdown'
+import {
   formatChange,
+  formatCount,
   formatUsd,
+  link,
+  NO_DATA,
   withSentiment,
 } from '~/server/markdown/markdown'
 import {
@@ -13,15 +32,15 @@ import {
   renderProjectMarkdown,
 } from '~/server/markdown/renderProjectMarkdown'
 import { formatPercent } from '~/utils/calculatePercentageChange'
+import { getL2ProjectApiUrls } from './getL2ProjectApiUrls'
 
 /** The markdown alternate of the scaling project page, from the entry the HTML page renders. */
 export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
-  const api = `${PRODUCTION_ORIGIN}/api/scaling`
+  const api = getL2ProjectApiUrls(entry)
+  const summaryRisks = getSummaryRisks(entry)
   return renderProjectMarkdown({
     name: entry.name,
-    // Production URLs, like the canonical link: the document is meant to be
-    // cited, whichever deployment rendered it.
-    pageUrl: `${PRODUCTION_ORIGIN}/layer2s/projects/${entry.slug}`,
+    pagePath: `/layer2s/projects/${entry.slug}`,
     summary: {
       // Same order as the banners on the HTML page.
       warnings: compact([
@@ -29,24 +48,34 @@ export function renderL2ProjectMarkdown(entry: ProjectL2Entry): string {
         entry.header.warning,
         entry.header.redWarning?.text,
         entry.header.emergencyWarning,
+        ...getReasonsForBeingOther(entry),
       ]),
-      facts: getFacts(entry),
-      risks: entry.rosette.self,
+      facts: [
+        ...getFacts(entry),
+        ...getInteropFacts(entry),
+        ...(summaryRisks.fact ? [summaryRisks.fact] : []),
+      ],
+      risks: summaryRisks.risks,
       description: entry.header.description,
+    },
+    header: {
+      links: entry.header.links,
+      badges: entry.header.badges,
+      discoUiHref: entry.discoUiHref,
     },
     sections: entry.sections,
     apiLinks: {
       tvs: [
-        { title: 'TVS chart (JSON)', url: `${api}/tvs/${entry.slug}` },
+        { title: 'TVS chart (JSON)', url: api.tvs },
         {
           title: 'TVS breakdown by token (JSON)',
-          url: `${api}/tvs/${entry.slug}/breakdown`,
+          url: api.tvsBreakdown,
         },
       ],
       activity: [
         {
           title: 'Activity chart (JSON)',
-          url: `${api}/activity/${entry.slug}`,
+          url: api.activity,
         },
       ],
     },
@@ -58,30 +87,44 @@ function getFacts({
   header,
   stageConfig,
   hostChainName,
+  isAppchain,
 }: ProjectL2Entry): ProjectFact[] {
   return compact([
-    header.tvs?.breakdown && {
+    {
       label: 'Total Value Secured',
-      value: formatTvs(
-        header.tvs.breakdown,
-        header.tvs.additionalTrustAssumptionsPercentage,
-      ),
+      value: header.tvs?.breakdown
+        ? formatTvs(
+            header.tvs.breakdown,
+            header.tvs.additionalTrustAssumptionsPercentage,
+          )
+        : NO_DATA,
       // The HTML shows these next to the TVS value and the tokens breakdown.
       warnings: compact([
-        header.tvs.warning,
-        ...header.tvs.tokens.warnings,
+        header.tvs?.warning,
+        ...(header.tvs?.tokens.warnings ?? []),
       ]).map((w) => withSentiment(w.value, w.sentiment)),
     },
-    header.activity && {
+    header.tvs?.tokens.breakdown && {
+      label: 'TVS by asset',
+      value: formatTokensBreakdown(header.tvs.tokens.breakdown),
+    },
+    header.tvs?.tokens.breakdown &&
+      header.tvs.tokens.breakdown.associated > 0 && {
+        label: 'Associated tokens',
+        value: formatAssociatedTokens(
+          header.tvs.tokens.breakdown,
+          header.tvs.tokens.associatedTokens,
+        ),
+      },
+    {
       label: 'Past day UOPS',
-      value: `${formatActivityCount(header.activity.lastDayUops)} (${formatChange(header.activity.uopsWeeklyChange, header.activity.uopsWeeklyChangePeriod)})`,
+      value: header.activity
+        ? `${formatActivityCount(header.activity.lastDayUops)} (${formatChange(header.activity.uopsWeeklyChange, header.activity.uopsWeeklyChangePeriod)})`
+        : NO_DATA,
     },
     stageConfig.stage !== 'NotApplicable' && {
       label: 'Stage',
-      value:
-        stageConfig.stage === 'UnderReview'
-          ? 'Under review'
-          : stageConfig.stage,
+      value: formatStage(stageConfig, isAppchain),
     },
     header.gasTokens &&
       header.gasTokens.length > 0 && {
@@ -107,6 +150,21 @@ function getFacts({
   ])
 }
 
+/** The HTML shows a "No data" badge in place of a missing stat. */
+function formatStage(
+  stageConfig: ProjectL2Entry['stageConfig'],
+  isAppchain: boolean,
+) {
+  if (stageConfig.stage === 'UnderReview') return 'Under review'
+  if (stageConfig.stage === 'NotApplicable' || !isAppchain) {
+    return stageConfig.stage
+  }
+  const considerations = stageConfig.additionalConsiderations?.short
+  return considerations
+    ? `${stageConfig.stage} (Appchain: ${considerations})`
+    : `${stageConfig.stage} (Appchain)`
+}
+
 type TvsBreakdown = NonNullable<
   NonNullable<ProjectL2Entry['header']['tvs']>['breakdown']
 >
@@ -124,10 +182,121 @@ function formatTvs(
     `natively minted ${formatUsd(breakdown.native)}`,
     `externally bridged ${formatUsd(breakdown.external)}`,
   ].join(', ')
-  const trust = `${formatPercent(additionalTrustAssumptionsPercentage)} ${ADDITIONAL_TRUST_ASSUMPTIONS}`
+  const trust = `${formatPercent(additionalTrustAssumptionsPercentage)} ${ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON}`
   return `${formatUsd(breakdown.total)} (${change}; ${sources}; ${trust})`
 }
 
-/** The wording of the HTML TVS tooltip, which says what the percentage is relative to. */
-const ADDITIONAL_TRUST_ASSUMPTIONS =
-  "with additional trust assumptions compared to the tokens involved and the Stage assigned to the project's canonical messaging bridge"
+type TvsTokens = NonNullable<ProjectL2Entry['header']['tvs']>['tokens']
+type TokensBreakdown = NonNullable<TvsTokens['breakdown']>
+
+/** The "Tokens breakdown" tooltip of the HTML page: only the asset classes with value. */
+function formatTokensBreakdown(breakdown: TokensBreakdown) {
+  if (breakdown.total === 0) return NO_DATA
+  return TVS_ASSET_CATEGORIES.filter((category) => breakdown[category] > 0)
+    .map((category) => {
+      const value = breakdown[category]
+      return `${TVS_ASSET_CATEGORY_LABELS[category]} ${formatUsd(value)} (${formatPercent(value / breakdown.total)})`
+    })
+    .join(', ')
+}
+
+/** Associated tokens overlap the asset classes, so the HTML lists them apart. */
+function formatAssociatedTokens(
+  breakdown: TokensBreakdown,
+  associatedTokens: TvsTokens['associatedTokens'],
+) {
+  const symbols = associatedTokens.map((token) => token.symbol).join(', ')
+  return `${symbols}: ${formatUsd(breakdown.associated)} (${formatPercent(breakdown.associated / breakdown.total)} of TVS)`
+}
+
+/** The notice the HTML page shows under the summary of a project in Others. */
+function getReasonsForBeingOther({
+  header,
+  reasonsForBeingOther,
+}: ProjectL2Entry) {
+  if (
+    header.category !== 'Other' ||
+    !reasonsForBeingOther ||
+    reasonsForBeingOther.length === 0
+  ) {
+    return []
+  }
+  return [
+    [
+      WHY_LISTED_IN_OTHERS_HEADING,
+      ...reasonsForBeingOther.map(describeReasonForBeingOther),
+      `Learn more about the ${link('recategorisation', externalLinks.articles.recategorisation)}.`,
+    ].join(' '),
+  ]
+}
+
+function describeReasonForBeingOther(reason: ReasonForBeingInOther) {
+  return compact([
+    `${reason.shortDescription}.`,
+    reason.explanation,
+    `Consequence: ${lowerFirst(reason.description)}`,
+  ]).join(' ')
+}
+
+/**
+ * The HTML rosette of an L3 opens on the risks stacked with its host chain,
+ * or on the L3's own while the project is under review. The summary lists
+ * the same ones and says which, as the Risk analysis section shows both.
+ */
+function getSummaryRisks({
+  rosette,
+  underReviewStatus,
+  name,
+  hostChainName,
+}: ProjectL2Entry): { risks: RosetteValue[]; fact?: ProjectFact } {
+  if (!rosette.stacked || !rosette.host) {
+    return { risks: rosette.self }
+  }
+  if (underReviewStatus === 'config') {
+    return {
+      risks: rosette.self,
+      fact: {
+        label: 'Risks shown',
+        value: `${name} alone, while under review; Risk analysis also lists them combined with ${hostChainName}`,
+      },
+    }
+  }
+  return {
+    risks: rosette.stacked,
+    fact: {
+      label: 'Risks shown',
+      value: `combined with host chain ${hostChainName}; Risk analysis also lists each separately`,
+    },
+  }
+}
+
+/** The cross-chain block of the HTML summary; its volume and top lists cover the last 24 hours. */
+function getInteropFacts({ header }: ProjectL2Entry): ProjectFact[] {
+  const interop = header.interop
+  if (!interop) return []
+  return compact([
+    {
+      label: 'Last 24h cross-chain volume',
+      value: formatUsd(interop.volume),
+    },
+    {
+      label: 'Last 24h cross-chain transfers',
+      value: formatCount(interop.transferCount),
+    },
+    interop.protocols.items.length > 0 && {
+      label: 'Interop protocols used (last 24h volume)',
+      value: listTopItems(
+        interop.protocols,
+        (protocol) =>
+          `${linkInteropProtocol(protocol)} (${formatUsd(protocol.volume)})`,
+      ).join(', '),
+    },
+    interop.tokens.items.length > 0 && {
+      label: 'Tokens by volume (last 24h)',
+      value: listTopItems(
+        interop.tokens,
+        (token) => `${linkInteropToken(token)} (${formatUsd(token.volume)})`,
+      ).join(', '),
+    },
+  ])
+}

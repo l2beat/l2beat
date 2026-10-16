@@ -11,6 +11,8 @@
       "arg": {
         "0": "FaultDisputeGame",
         "1": "PermissionedDisputeGame",
+        "9": "SuperFaultDisputeGame",
+        "5": "SuperPermissionedDisputeGame",
         "2000": "KailuaGame"
       }
     }

@@ -1,7 +1,6 @@
-import type { Project } from '@l2beat/config'
 import { discoveryDiffToMarkdown } from '@l2beat/discovery'
 import type { DashboardProject } from '../props/getDashboardProjects'
-import { groupProjects } from './groupProjects'
+import { type GroupingProjectConfig, groupProjects } from './groupProjects'
 
 export function renderProjectMarkdown(
   project: DashboardProject,
@@ -57,7 +56,7 @@ export function renderProjectMarkdown(
 
 export function renderDashboardMarkdown(
   projects: DashboardProject[],
-  projectConfigs: Project<never, 'scalingInfo' | 'daLayer'>[],
+  projectConfigs: GroupingProjectConfig[],
   projectsWithHighSeverityChanges: Set<string>,
   selectedEmoji?: string,
 ): string {

@@ -2,7 +2,10 @@ import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import { getProjectUrl } from '~/utils/project/getProjectUrl'
+import {
+  getProjectUrl,
+  PROJECT_PAGE_METADATA_FIELDS,
+} from '~/utils/project/getProjectUrl'
 
 export interface ContractUtils {
   getChainName(chain: string): string
@@ -57,23 +60,14 @@ async function getContractUsageMap() {
     }
   }
 
-  const [daLayers, projects] = await Promise.all([
-    ps.getProjects({ where: ['daLayer'] }),
-    ps.getProjects({
-      select: ['contracts'],
-      optional: [
-        'permissions',
-        'scalingInfo',
-        'daBridge',
-        'privacyInfo',
-        'defiInfo',
-      ],
-      whereNot: ['archivedAt'],
-    }),
-  ])
+  const projects = await ps.getProjects({
+    select: ['contracts'],
+    optional: ['permissions', ...PROJECT_PAGE_METADATA_FIELDS],
+    whereNot: ['archivedAt'],
+  })
 
   for (const project of projects) {
-    const url = getProjectUrl(project, daLayers)
+    const url = getProjectUrl(project)
 
     const basic = {
       id: project.id,

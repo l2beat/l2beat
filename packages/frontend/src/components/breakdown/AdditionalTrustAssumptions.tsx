@@ -1,5 +1,6 @@
 import { cva } from 'class-variance-authority'
 import type { ReactNode } from 'react'
+import { ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON } from '~/components/projects/sections/sectionCopy'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 
@@ -55,9 +56,7 @@ export function AdditionalTrustAssumptionsBanner({
     <div className={additionalTrustBannerVariants({ sentiment })}>
       <p className="text-pretty text-label-value-13 text-primary leading-snug">
         <AdditionalTrustAssumptionsContent percentage={percentage}>
-          of TVS with additional trust assumptions compared to the tokens
-          involved and the Stage assigned to the project's canonical messaging
-          bridge.
+          of TVS {ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON}.
         </AdditionalTrustAssumptionsContent>
       </p>
     </div>

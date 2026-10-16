@@ -6,6 +6,10 @@ import { UnverifiedIcon } from '~/icons/Unverified'
 import { ProjectSection } from './ProjectSection'
 import type { RiskGroup } from './RiskSummarySection'
 import { EnumeratedRisks } from './RiskSummarySection'
+import {
+  BRIDGE_UNVERIFIED_CONTRACTS_WARNING,
+  PROJECT_UNVERIFIED_CONTRACTS_WARNING,
+} from './sectionCopy'
 import type { ProjectSectionProps } from './types'
 
 export interface DaRiskSummarySectionProps extends ProjectSectionProps {
@@ -38,7 +42,7 @@ export function DaRiskSummarySection({
     <ProjectSection {...sectionProps}>
       {isVerified === false && (
         <WarningBar
-          text="This project includes unverified contracts."
+          text={PROJECT_UNVERIFIED_CONTRACTS_WARNING}
           color="red"
           isCritical={true}
           className="my-4 text-paragraph-15 md:text-paragraph-16"
@@ -80,7 +84,7 @@ export function DaRiskSummarySection({
           </span>
           {!bridge.isVerified && (
             <WarningBar
-              text="This bridge includes unverified contracts."
+              text={BRIDGE_UNVERIFIED_CONTRACTS_WARNING}
               color="red"
               isCritical={true}
             />

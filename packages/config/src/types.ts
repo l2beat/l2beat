@@ -1,4 +1,5 @@
 import type {
+  OssificationHistory,
   RetryHandlerVariant,
   TrackedTxConfigEntryWithoutId,
 } from '@l2beat/shared'
@@ -280,9 +281,10 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
   /** Public entries of diffHistory.md, newest first. */
   discoveryUpdates?: ProjectDiscoveryUpdate[]
-  /** Ossification factor measured at config build time, for projects with a
-   *  critical contract in their discovery config. */
-  ossification?: ProjectOssification
+  /** Ossification perimeter and history, for projects with a critical
+   *  contract in their discovery config. */
+  ossificationHistory?: OssificationHistory
+  auditCoverage?: ProjectAuditCoverage
 
   // tags
   archivedAt?: UnixTime
@@ -340,7 +342,6 @@ export interface Badge {
 export type BadgeAction =
   | BadgeScalingFilterAction
   | BadgeSelfScalingFilterAction
-  | BadgePublicDaHighlightAction
   | BadgeselfDaHighlightAction
 
 // Move to scaling/summary with given filterId and value
@@ -356,13 +357,7 @@ export type BadgeSelfScalingFilterAction = {
   id: BadgeFilterId
 }
 
-// Move to data-availability/summary and highlight project with given slug
-export type BadgePublicDaHighlightAction = {
-  type: 'publicDaHighlight'
-  slug: string
-}
-
-// Move to data-availability/summary and highlight project with the same slug as the project
+// Move to layer2s/risk/data-availability and highlight the project
 export type BadgeselfDaHighlightAction = {
   type: 'selfDaHighlight'
 }
@@ -823,7 +818,6 @@ export interface ProjectDaLayer {
   throughput?: DaLayerThroughput[]
   /** The time it takes to finalize the data. @unit seconds */
   finality?: number
-  dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
   /** Config for getting the number of validators. Type: `static` means the number is fixed. Type: `dynamic` means we need to fetch it (has to be implemented in BE). */
   validators?: DaValidators
@@ -888,11 +882,6 @@ export interface DaLayerThroughput {
   sinceTimestamp: number
 }
 
-export interface DataAvailabilitySampling {
-  erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
-  erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
-}
-
 export interface DaEconomicSecurity {
   token: {
     symbol: string
@@ -917,14 +906,6 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
-  relayerType?: TableReadyValue<'Permissioned' | 'SelfRelay'>
-  validationType?: DaBridgeValidationType
-}
-
-type DaBridgeValidationType = TableReadyValue<
-  'Validity Proof' | 'BLS Signature'
-> & {
-  zkCatalogId?: ProjectId
 }
 
 export interface DaBridgeRisks {
@@ -1104,10 +1085,19 @@ export interface ProjectPrivacyInfo {
   relayerTracking?: ProjectPrivacyRelayerTracking
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
-  anonymitySet?: {
-    type: 'not-applicable'
-    description: string
-  }
+  anonymitySet?:
+    | {
+        type: 'not-applicable'
+        description: string
+      }
+    /**
+     * Depositors are traced through intermediate deposit addresses. Deposits
+     * that cannot be traced are left out, so the frontend reports coverage.
+     */
+    | { type: 'partially-attributed' }
+    /** Too few users to matter, so exact tracking is not set up. */
+    | { type: 'too-small' }
+    | ProjectPrivacyKeyRegistrationsAnonymitySet
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
@@ -1129,6 +1119,22 @@ export interface ProjectPrivacyInfo {
   zkCatalogId?: ProjectId
 }
 
+/**
+ * Stealth-address protocols have no pool, so their anonymity set counts the
+ * addresses that registered keys in a registry, in place of bucket sets.
+ */
+export type ProjectPrivacyKeyRegistrationsAnonymitySet = {
+  type: 'key-registrations'
+  registry: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+} & PrivacyAnonymitySetRegistrationSource
+
+export type PrivacyAnonymitySetRegistrationSource = {
+  event: string
+  /** StealthKeyChanged: the registrant is the indexed event arg. */
+  extractor: 'umbraStealthKeyChanged'
+}
+
 export type ProjectPrivacyRelayerTracking =
   | {
       type: 'onchainEvents'
@@ -1136,11 +1142,47 @@ export type ProjectPrivacyRelayerTracking =
     }
   | ProjectPrivacyRailgunWakuRelayerSource
 
-/** Relayers identified by extracting their addresses from onchain withdrawal events. */
+/** Relayer addresses identified from onchain withdrawals. */
 export type ProjectPrivacyOnchainRelayerSource = {
   address: ChainSpecificAddress
   sinceTimestamp: UnixTime
-  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
+} & PrivacyRelayerExtractorConfig
+
+export type PrivacyRelayerExtractorConfig =
+  | { extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal' }
+  | {
+      extractor: 'zkMoneyWithdrawalRelayer'
+      params: ZkMoneyWithdrawalRelayerParams
+    }
+
+/** Locates a portal deposit's funding transfer and authenticates its sender with the SIPA factory. */
+export type ZkMoneyDepositParams = {
+  tokenAddress: EthereumAddress
+  /** Fee sponsorship the portal keeps: the funding transfer is the credited amount plus this. */
+  fundingCut: string
+  factoryAddress: EthereumAddress
+  depositImplementation: EthereumAddress
+  registrationImplementation: EthereumAddress
+}
+
+/** Traces who funded each deposit address (SIPA) from its token history. */
+export type ZkMoneyFundingParams = ZkMoneyDepositParams & {
+  /** Tokens a SIPA accepts; those other than `tokenAddress` reach it through `exchangeAddress`. */
+  fundingTokens: EthereumAddress[]
+  exchangeAddress: EthereumAddress
+  /**
+   * SIPA factory deployment. Funding scans never start earlier; balances held
+   * before a scan starts count as untraceable until the SIPA is emptied.
+   */
+  historyFromBlock: number
+}
+
+/** Identifies withdrawal finalizers and excludes observable self-finalizations. */
+export type ZkMoneyWithdrawalRelayerParams = {
+  tokenAddress: EthereumAddress
+  executorAddress: EthereumAddress
+  /** Helper that forwards fees to its caller, so the payout is followed through it. */
+  operationExecutor: EthereumAddress
 }
 
 /** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
@@ -1170,6 +1212,7 @@ export interface PrivacyAttribute {
 }
 
 export type PrivacyCategoryId =
+  | 'anonymousAccess'
   | 'pool'
   | 'shieldedLedger'
   | 'stealthAddress'
@@ -1266,12 +1309,18 @@ export interface PrivacyAdversaryAssessment {
    */
   sentiment: PrivacyAdversarySentiment
   /**
-   * What this adversary learns beyond the public observer and what stays
-   * hidden, in one or two plain sentences; the first sentence carries the
-   * reason for the sentiment. Never refers to other cells or quotes live
-   * numbers; the tracked anonymity set stands in for them.
+   * The reason for the sentiment, in one plain sentence. Shown alone in the
+   * rosette tooltip, and followed by `exposureContinued` on the project page.
+   * Never refers to other cells or quotes live numbers; the tracked anonymity
+   * set stands in for them.
    */
-  exposure: string
+  exposureShort: string
+  /**
+   * The rest of what this adversary learns beyond the public observer and
+   * what stays hidden, under the same rules. Omit when `exposureShort`
+   * says it all.
+   */
+  exposureContinued?: string
   /**
    * How a user keeps it private, when that is conditional (the cell is at
    * risk, or a field is). Omit when nothing the user does changes the result.
@@ -1321,6 +1370,8 @@ export interface PrivacyPromise {
 
 export interface PrivacyAdversariesConfig {
   promise: PrivacyPromise
+  /** Overrides the default field description for this project, e.g. when linkage means something other than a transfer link. */
+  fieldDescriptions?: Partial<Record<PrivacyField, string>>
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
 }
 
@@ -1376,6 +1427,8 @@ interface ProjectPrivacyBucketBase {
   sinceTimestamp: UnixTime
   denomination?: string
   withdrawal: PrivacyFlowSource
+  /** Other payout events of this bucket, tracked without a second bucket that would double-count deposits. */
+  additionalWithdrawals?: PrivacyFlowSource[]
 }
 
 export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
@@ -1389,7 +1442,6 @@ export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
            */
           minimumAmounts: string[]
         }
-        address: ChainSpecificAddress
         deposit: PrivacyAnonymitySetDepositSource
       }
     | {
@@ -1415,10 +1467,27 @@ export type PrivacyAnonymitySetDepositSource = {
   event: string
 } & Extract<
   PrivacyFlowExtractorConfig,
-  { extractor: 'fixedAmount' | 'privacyPoolsValue' | 'railgunShield' }
+  {
+    extractor:
+      | 'fixedAmount'
+      | 'privacyPoolsValue'
+      | 'railgunShield'
+      | 'strk20Deposit'
+      | 'zkMoneyDeposit'
+  }
 >
 
 export type PrivacyFlowExtractorConfig =
+  | {
+      /** Deposited note amount, in whole `weiPerUnit` units (e.g. gwei). */
+      extractor: 'zkApiDeposit'
+      params: { weiPerUnit: string }
+    }
+  | {
+      /** User payout (final balance) of a cooperative close or finalized escape, in whole `weiPerUnit` units (e.g. gwei). */
+      extractor: 'zkApiWithdrawal'
+      params: { weiPerUnit: string }
+    }
   | {
       extractor: 'fixedAmount'
       params: {
@@ -1481,6 +1550,16 @@ export type PrivacyFlowExtractorConfig =
       params: {
         tokenAddress: string
       }
+    }
+  | {
+      /** Credited DAI amount, after the portal's fee sponsorship cut. */
+      extractor: 'zkMoneyDeposit'
+      params: ZkMoneyFundingParams
+    }
+  | {
+      /** Withdrawal and refund payouts, after prover tips and sponsorship cuts. */
+      extractor: 'zkMoneyWithdrawal'
+      params: Record<string, never>
     }
 
 export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
@@ -1659,24 +1738,10 @@ export interface ProjectCostsInfo {
 export interface SovereignProjectDaTrackingConfig {
   projectId: ProjectId
   name: string
-  daTrackingConfig: (
-    | Omit<EthereumDaTrackingConfig, 'daLayer'>
-    | Omit<CelestiaDaTrackingConfig, 'daLayer'>
-    | Omit<AvailDaTrackingConfig, 'daLayer'>
-    | Omit<EigenDaTrackingConfig, 'daLayer'>
-  )[]
+  daTrackingConfig: Omit<EthereumDaTrackingConfig, 'daLayer'>[]
 }
 
-export type ProjectDaTrackingConfig =
-  | BlockDaTrackingConfig
-  | TimestampDaTrackingConfig
-
-export type BlockDaTrackingConfig =
-  | EthereumDaTrackingConfig
-  | CelestiaDaTrackingConfig
-  | AvailDaTrackingConfig
-
-export type TimestampDaTrackingConfig = EigenDaTrackingConfig
+export type ProjectDaTrackingConfig = EthereumDaTrackingConfig
 
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
@@ -1686,30 +1751,6 @@ export interface EthereumDaTrackingConfig {
   topics?: string[]
   sinceBlock: number
   untilBlock?: number
-}
-
-export interface CelestiaDaTrackingConfig {
-  type: 'celestia'
-  daLayer: ProjectId
-  namespace: string
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export interface AvailDaTrackingConfig {
-  type: 'avail'
-  daLayer: ProjectId
-  appIds: string[]
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export interface EigenDaTrackingConfig {
-  type: 'eigen-da'
-  daLayer: ProjectId
-  customerId: string
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
 }
 
 export interface ProjectEcosystemInfo {
@@ -1881,55 +1922,6 @@ export interface ProjectEscrow {
     warning?: string
   }
   sharedEscrow?: SharedEscrow
-}
-
-export type OssificationChangeType = 'code' | 'state'
-
-export interface ProjectOssificationCriticalUpdate {
-  /** Discovery update id, shared with diffHistory.md and discoveryUpdates. */
-  id: string
-  type: OssificationChangeType
-}
-
-export interface ProjectOssificationContract {
-  name: string
-  address: string
-  isVerified: boolean
-  /** Start of the battle-tested clock: last critical change, or deployment
-   *  if the contract never changed. */
-  ossifyingSince: number
-  codeChangeCount: number
-  stateChangeCount: number
-}
-
-/** Score, change rate and clock timestamps of the critical perimeter. Ages
- *  are not stored: the frontend subtracts the timestamps from the request
- *  time. Score and change rate are measured against the config build time,
- *  which lags the request by at most the age of the deploy. The TVS exposure
- *  needs the database and is added by the frontend. */
-export interface ProjectOssification {
-  /** 0-100: the share of recorded code-bug exploits (published, versioned
-   *  incident dataset, see ossificationCurve.json) whose exploited code was
-   *  younger than this perimeter's age. 0 while any critical contract is
-   *  unverified. */
-  score: number
-  /** score as a 0..1 fraction; 0 gates exposure when unverified */
-  maturity: number
-  /** Start of the unchanged period: the newest deployment or critical change
-   *  anywhere in the perimeter. */
-  projectClockStart: number
-  /** Timestamp of the last critical change, absent if none ever */
-  lastCriticalChange?: number
-  /** 24h-clustered critical change events per year, trailing window */
-  criticalChangesPerYear: number
-  clusteredEventCount: number
-  windowSeconds: number
-  /** 24h-clustered timestamps of every perimeter reset, ascending: critical
-   *  changes plus deployments of critical contracts. */
-  perimeterResets: number[]
-  /** Youngest clock first. */
-  contracts: ProjectOssificationContract[]
-  criticalUpdates: ProjectOssificationCriticalUpdate[]
 }
 
 export interface ProjectDiscoveryInfo {
@@ -2308,6 +2300,76 @@ export const TvsTokenSchema = v.object({
     })
     .optional(),
 })
+
+const LineSpan = v.tuple([v.number(), v.number()])
+
+const AuditCoverageUnit = v.object({
+  name: v.string(),
+  kind: v.enum(['contract', 'abstract', 'library', 'interface', 'function']),
+  lines: v.number(),
+  status: v.enum(['identical', 'differs', 'none']),
+  audited: v
+    .object({
+      object: v.string(),
+      lines: LineSpan,
+      name: v.string().optional(),
+    })
+    .optional(),
+  reports: v.array(v.string()).optional(),
+  findings: v.record(v.string(), v.array(v.string())).optional(),
+  added: v.array(LineSpan).optional(),
+  removed: v.array(v.tuple([v.number(), v.number(), v.number()])).optional(),
+  covered: v.number().optional(),
+})
+
+const AuditCoverageContract = v.object({
+  name: v.string(),
+  critical: v
+    .union([
+      v.literal(true),
+      v.object({
+        sinceTimestamp: v.number().optional(),
+        untilTimestamp: v.number().optional(),
+      }),
+    ])
+    .optional(),
+  source: v.string(),
+  implementations: v.record(v.string(), v.string()).optional(),
+})
+
+export const ProjectAuditCoverageSchema = v.object({
+  schema_version: v.literal('1.0.0'),
+  project: v.string(),
+  dataset: v.object({ repository: v.string(), commit: v.string() }),
+  discoveredAt: v.number(),
+  collections: v.record(
+    v.string(),
+    v.object({ name: v.string(), kind: v.enum(['project', 'library']) }),
+  ),
+  reports: v.record(
+    v.string(),
+    v.object({
+      collections: v.array(v.string()),
+      title: v.string(),
+      auditor: v.string(),
+      date: v.string().optional(),
+      document: v.string(),
+    }),
+  ),
+  auditedFiles: v.record(
+    v.string(),
+    v.object({
+      repository: v.string(),
+      commit: v.string(),
+      path: v.string(),
+      blob: v.string(),
+    }),
+  ),
+  units: v.record(v.string(), AuditCoverageUnit),
+  flats: v.record(v.string(), v.array(v.tuple([v.string(), v.number()]))),
+  contracts: v.record(v.string(), AuditCoverageContract),
+})
+export type ProjectAuditCoverage = v.infer<typeof ProjectAuditCoverageSchema>
 
 export const ProjectTvsConfigSchema = v.object({
   projectId: v.string(),

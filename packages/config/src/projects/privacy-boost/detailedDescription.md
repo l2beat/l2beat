@@ -1,36 +1,34 @@
-Privacy Boost is a shielded pool for registered ERC-20 tokens on OP Mainnet, aimed at institutional users. The operator's TEE setup has to be trusted for privacy and liveness, while ZKPs ensure validity and an exit path against a malicious or faulty operator.
+Privacy Boost lets apps on Base give their users a private ERC-20 balance. The user deposits tokens, sends them privately to other users, uses them in DeFi through approved gateways and withdraws to any address. Everything inside stays hidden from the chain, while the operator's enclave sees every transfer in plaintext.
+
+Users trust the operator, Sunnyside Labs, whose TEE processes and whose relay submits every transaction. They also trust the admin multisig, which can upgrade every contract instantly. If the operator stops, a forced withdrawal takes funds out after {{forcedWithdrawalDelay}}, in public.
 
 ### Architecture
 
-Deposited tokens are represented as notes whose Poseidon2 commitments are appended to an onchain Merkle tree, and spending a note publishes its nullifier. Users can privately transfer deposited tokens to other users. The TEE collects user-approved transfers and withdrawals, batches them into epochs, and a permissioned relay submits each epoch onchain with a Groth16 proof that checks correctness.
+Deposits become notes whose Poseidon2 commitments enter an onchain Merkle tree, and spending a note publishes its nullifier. The TEE collects the transfers and withdrawals users approve and batches them into epochs. A permissioned relay submits each epoch with a Groth16 validity proof. The TEE's code is unpublished, so what it does with the plaintext cannot be checked. Its isolation rests on the hardware vendor and on resistance to attacks by anyone with physical access.
 
-Accounts can authorize spending with registered approval keys or with explicit onchain spend approvals, including batches and approval-only smart-wallet accounts. Epoch proofs use current auth roots or roots superseded no more than {{epochAuthStaleness}} ago.
+### Flow
 
-Users can locally prove a forced withdrawal of up to {{maxForcedInputs}} notes. The contract checks that the referenced auth key or spend approval is live and unexpired when the request is submitted, and records the authorized withdrawal and fee. Anyone can execute it {{forcedWithdrawalDelay}} later if the notes remain unspent, without cooperation from the TEE or relays. The account owner can cancel a pending request.
+1. **Deposit.** You deposit tokens directly, or anyone sends them to a portal address (EIP-7702) you generate locally. A sweep then moves them into the pool for you. Depositor, token and amount are public.
+2. **Transfer.** You approve a spend, and the TEE includes it in the next epoch.
+3. **Gift.** A gift note goes to its recipient, or back to the sender after a deadline. Either way runs privately through the relay or through a public gift exit.
+4. **Withdraw.** The pool pays out to any address and can call an approved gateway for DeFi. Recipient, token and amount are public.
 
-Users can locally generate and deploy portal deposit EIP-7702 addresses. Anyone can send ERC-20 to such a portal address, the tokens are regularly swept into Privacy Boost escrow for the hidden recipient.
-Gift notes can be claimed by recipients or refunded by senders after a bound deadline, either privately through a relay or through a permissionless public gift exit. Proof-authorized withdrawals can also call approved external gateways for DeFi operations.
+### Keys
 
-If the operator disappears, no new deposits or private transfers can be processed and the pool effectively enters this exit-only mode, in which the zero-knowledge guarantees alone are sufficient to recover funds.
+The closed SDK can derive the private account's keys from a wallet signature, which links that wallet to the account. The hosted wallet can upload a backup of the private keys to the operator. Accounts approve spends with registered keys or with onchain spend approvals. Both are leaves of an auth Merkle tree in the AuthRegistry contract. Epoch proofs may use a tree root up to {{epochAuthStaleness}} old, so a revoked key or approval stays usable that long.
 
-### Privacy considerations
+### App
 
-All private data exists in plaintext inside the operator's TEE. This privacy depends on the hardware security of the TEE against actors with physical access (side-channel and microarchitectural attacks could expose the full plaintext ledger), as well as vendor vulnerabilities. The source code running within the TEE is not published.
+Apps integrate the Privacy Boost SDK, whose core ships as closed-source WebAssembly and takes its endpoints from the operator's server.
 
-A permissionless forced withdrawal publishes the commitments of the spent notes and the registered account ID, publicly linking the exit of specific notes with the EOA that registered auth keys. It is a fallback mechanism that reclaims the user's tokens but strips the privacy.
+### Exits
 
-Practical privacy also depends on the timing and amounts of deposits and withdrawals, as well as on the frontend used to interact with the pool. Normal withdrawals and transfers within the private pool are not submitted as onchain transactions via RPC nodes, but directly to the TEE, thus not leaking anything to the RPC. Users are advised to research [OPSEC best practice](/publications/privacy-best-practices).
-
-### Fees
-
-Standard deposits are free of protocol fees. Portal deposits can charge a separate sweeper fee, capped at 10% and currently set to {{portalSweepFee}}, and have token-specific minimum sweep amounts. Withdrawals, including forced withdrawals and public gift exits, pay a {{withdrawFee}} fee forwarded to the treasury; a forced withdrawal records the fee at request time.
-
-### Deposit and withdrawal statistics
-
-The pool's own events do not carry per-transfer amounts, so L2BEAT counts every ERC-20 transfer into the pool as a deposit and every transfer out of it as a withdrawal. Besides regular deposits, portal sweeps and withdrawals, this includes refunds of cancelled deposit requests, withdrawal fees forwarded to the treasury, and both legs of DeFi operations executed through approved gateways.
+**Forced withdrawal.** If operator turns malicious or stops processing withdrawals, a user can prove a forced withdrawal of up to {{maxForcedInputs}} notes locally. The contract checks the authorization at request time, and anyone can execute the withdrawal {{forcedWithdrawalDelay}} later if the notes are still unspent. The account owner can cancel it. It publishes the spent notes and exposes the linked account.
 
 ### Compliance
 
-Registered auditors can query the Audit API of the TEE to fetch the balance and transaction history of any address. The TEE serves such requests without user consent, but is supposed to emit a record of every access on the AuditGateway smart contract, so that users can publicly verify whether and when their private data was disclosed.
+Auditors appointed by the admin multisig can query the TEE's Audit API for the balance and history of any address, without the user's consent. The AuditGateway lists {{auditorCount}} auditors today. The TEE is meant to record each access on that contract, but with its code unpublished this is unverifiable.
 
-The source code running within the TEE is not published, so it is impossible to verify the onchain audit attestation mechanism.
+### Fees
+
+Standard deposits pay no protocol fee. Portal deposits pay a sweeper fee of {{portalSweepFee}}, capped at 10%, and have token-specific minimum sweep amounts. Withdrawals, forced withdrawals and public gift exits pay {{withdrawFee}} to the treasury. A forced withdrawal fixes its fee at request time.

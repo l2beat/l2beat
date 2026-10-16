@@ -72,6 +72,7 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        name: details.name,
         title: `${details.name} - Privacy Dashboard - L2BEAT`,
         description: getPrivacyMetadataDescription({
           name: details.name,

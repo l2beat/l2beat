@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import type { ProjectSectionId } from '~/components/projects/sections/types'
+import { ExitWindowCell } from '~/components/table/cells/ExitWindowCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import {
@@ -7,7 +8,6 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
 import type { L2RiskEntry } from '~/server/features/layer2s/risks/getL2RiskEntries'
-import { ExitWindowCell } from './ExitWindowCell'
 
 const columnHelper = createColumnHelper<L2RiskEntry>()
 
