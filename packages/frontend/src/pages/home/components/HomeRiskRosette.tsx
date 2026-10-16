@@ -12,10 +12,12 @@ import type { RosetteValue } from '~/components/rosette/types'
  * their height; hover shows each risk, a click opens the risk page.
  */
 export function HomeRiskRosette({
+  projectName,
   values,
   href,
   isUnderReview: underReviewConfig,
 }: {
+  projectName: string
   values: RosetteValue[]
   href: string
   isUnderReview: boolean
@@ -25,8 +27,12 @@ export function HomeRiskRosette({
     values.some((value) => value.sentiment === 'UnderReview')
   return (
     <Tooltip contentInHtml>
-      <TooltipTrigger className="flex" disabledOnMobile>
-        <a href={href} aria-label="Risks">
+      <TooltipTrigger asChild disabledOnMobile>
+        <a
+          href={href}
+          aria-label={`${projectName} risk analysis`}
+          className="flex"
+        >
           <PizzaRosetteIcon
             values={values}
             className="size-6"

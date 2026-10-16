@@ -118,6 +118,7 @@ export function HomeL2Card({
             minTableWidth: 640,
             cell: (project) => (
               <HomeRiskRosette
+                projectName={project.name}
                 values={project.risks}
                 href={project.risksHref}
                 isUnderReview={project.risksUnderReview}

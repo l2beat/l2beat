@@ -17,7 +17,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     match: 'home',
     href: '/',
     icon: (
-      <HomeIcon className="transition-colors duration-300 group-data-[active=true]:stroke-chart-pink" />
+      <HomeIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
   },
   {
@@ -26,7 +26,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     match: 'privacy',
     href: '/privacy',
     icon: (
-      <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-chart-pink" />
+      <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
   },
   {
@@ -34,7 +34,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     title: 'Layer 2s',
     match: 'layer2s',
     icon: (
-      <L2Icon className="transition-colors duration-300 group-data-[active=true]:stroke-chart-pink" />
+      <L2Icon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
     links: compact<NavLink[]>([
       [
@@ -117,7 +117,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     // One page to switch between is no tab row.
     disableMobileTabs: true,
     icon: (
-      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-chart-pink" />
+      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
     links: [
       [
@@ -145,7 +145,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     title: 'Interop',
     match: 'interop',
     icon: (
-      <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-chart-pink" />
+      <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
     links: [
       [
@@ -171,7 +171,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     match: 'tokens',
     href: '/tokens',
     icon: (
-      <TokensIcon className="transition-colors duration-300 group-data-[active=true]:stroke-chart-pink" />
+      <TokensIcon className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active" />
     ),
   },
   env.CLIENT_SIDE_BLOBS_PAGE && {
@@ -181,7 +181,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     match: 'blobs',
     href: '/blobs',
     icon: (
-      <BlobsIcon className="transition-colors duration-300 group-data-[active=true]:fill-chart-pink" />
+      <BlobsIcon className="transition-colors duration-300 group-data-[active=true]:fill-nav-active" />
     ),
   },
 ])

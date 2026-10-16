@@ -515,6 +515,8 @@ function CornerStats({
                 <a
                   href={href}
                   title={`${src.name} → ${dst.name}`}
+                  // The icons stand for the chains; say them.
+                  aria-label={`${src.name} to ${dst.name}: ${formatCurrency(volume, 'usd')}`}
                   className="group flex items-center gap-2"
                 >
                   <RouteIcons src={src} dst={dst} />

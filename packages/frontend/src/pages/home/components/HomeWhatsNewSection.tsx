@@ -153,7 +153,7 @@ function ProjectChanges({
           type="button"
           className="group flex w-fit items-center gap-2 text-left"
         >
-          <HomeStackedIcons items={projects} max={4} showRest={false} />
+          <HomeStackedIcons items={projects} max={4} />
           <span
             className={cn(
               'underline-offset-2 group-hover:underline',

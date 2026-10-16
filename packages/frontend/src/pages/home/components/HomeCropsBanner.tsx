@@ -52,7 +52,7 @@ export function HomeCropsBanner({
           </span>
           {/* Pulled out of the line box, so the title row keeps its height. */}
           <span className="-my-1 ml-2 flex items-center gap-2 self-center whitespace-nowrap">
-            <HomeStackedIcons items={projects} max={6} showRest={false} />
+            <HomeStackedIcons items={projects} max={6} />
             <span className={HOME_TEXT.meta}>{projects.length} projects</span>
           </span>
         </div>

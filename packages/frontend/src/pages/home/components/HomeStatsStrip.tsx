@@ -27,7 +27,7 @@ interface MoreItem {
   href: string
 }
 
-/** The charts' pink, as the nav's selected items use. */
+/** The charts' pink, so the menu's sections match the cards below. */
 const ICON_CLASS = 'size-5 stroke-chart-pink'
 
 /**
@@ -136,11 +136,7 @@ function StatTile({ tile }: { tile: Tile }) {
   const className =
     'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-2'
   if (!tile.href) {
-    return (
-      <div aria-disabled className={className}>
-        {content}
-      </div>
-    )
+    return <div className={className}>{content}</div>
   }
   return (
     <a

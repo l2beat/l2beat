@@ -7,17 +7,13 @@ import { SEARCH_BAR_EXAMPLES } from './searchBarExamples'
 
 const EXAMPLE_INTERVAL_MS = 5000
 
-export function SearchBarButton({
-  label,
-  className,
-}: {
-  label?: string
-  className?: string
-}) {
+export function SearchBarButton({ className }: { className?: string }) {
   const { setOpen } = useSearchBarContext()
   return (
     <button
       onClick={() => setOpen((open) => !open)}
+      // A fixed name: the hint after "Search" changes every few seconds.
+      aria-label="Search"
       className={cn(
         'flex h-10 w-72 items-center rounded-lg border border-divider bg-surface-primary p-2.5 text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2',
         className,
@@ -25,12 +21,8 @@ export function SearchBarButton({
     >
       <SearchIcon className="size-5" />
       <span className="ml-2 flex min-w-0 items-baseline gap-1 font-medium text-sm">
-        {label ?? (
-          <>
-            Search
-            <ExampleHint />
-          </>
-        )}
+        Search
+        <ExampleHint />
       </span>
       <kbd className="ml-auto flex size-5 select-none items-center justify-center rounded border border-none bg-icon-secondary px-1.5 font-bold font-mono text-2xs text-primary-invert leading-none">
         /
@@ -44,6 +36,7 @@ export function SmallSearchBarButton() {
   return (
     <button
       onClick={() => setOpen((open) => !open)}
+      aria-label="Search"
       className="flex size-6 items-center justify-center"
     >
       <SearchIcon className="size-6" />

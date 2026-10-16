@@ -139,7 +139,6 @@ function NavGroupItem({
       {group.type === 'single' && group.disabled && (
         <SidebarGroupItem>
           <div
-            aria-disabled
             className={cn(
               'flex h-8 items-center gap-2 p-1.5 text-base text-secondary [&>svg]:shrink-0 [&>svg]:stroke-secondary',
               small && 'h-6 py-1 text-sm max-lg:h-8',
@@ -201,7 +200,7 @@ function NavCollapsibleItem({
           {!small && <div>{group.icon}</div>}
           <span
             className={cn(
-              'font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-chart-pink',
+              'font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-nav-active',
               small && 'text-sm',
             )}
           >
@@ -210,7 +209,7 @@ function NavCollapsibleItem({
         </div>
         <ChevronIcon
           className={cn(
-            '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-chart-pink',
+            '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-nav-active',
             small && 'size-2.5',
           )}
         />
