@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Validator entry gate registered in the Registry under `validatorPass`. The StakeManager only admits a new validator who redeems a single-use pass bound to their address, consensus key and delegation choice.",
+  "description": "Validator entry gate registered in the Registry under `validatorPass`. The StakeManager only admits new validators approved here.",
   "category": "core",
   "ignoreMethods": ["passOf", "passHolderAt", "passHolderCount"],
   "fields": {
@@ -13,7 +13,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "grant and revoke the role that issues validator passes."
+          "description": "grant and revoke the role that approves new validators."
         }
       ]
     },
@@ -29,7 +29,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "issue and revoke the single-use passes that new Polygon PoS validators need to join the validator set."
+          "description": "approve new validators to join the Polygon PoS validator set."
         }
       ]
     },
