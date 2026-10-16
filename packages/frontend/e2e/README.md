@@ -20,11 +20,12 @@ slowest one. That is about 1.5 min now.
   - `chromium`: the functional tests, everything outside a `*-perf` folder.
   - `perf`: the ratchets in `resize-perf`, which count how much work a page
     does, in `token-graph-perf`, which count what dragging and pinching the
-    token graph costs on a phone, and in `blobs-webkit-perf`, which runs in
-    WebKit to catch what only Safari slows down on. Tests running beside them
-    push those counts up, so they run one at a time (`workers: 1`) after the
-    rest. Its runner installs WebKit (`webkit: true` in its matrix entry);
-    locally, run `pnpm exec playwright install webkit` once.
+    token graph costs on a phone and check that a pinch leaves it sharp, and
+    in `blobs-webkit-perf`, which runs in WebKit to catch what only Safari
+    slows down on. Tests running beside them push those counts up, so they
+    run one at a time (`workers: 1`) after the rest. Its runner installs
+    WebKit (`webkit: true` in its matrix entry); locally, run
+    `pnpm exec playwright install webkit` once.
   - `blobs perf`: the ratchets in `blobs-perf`. Each one watches the chain for
     a few 12 s slots, so each takes about 50 s however fast the machine is.
 - The `test-e2e-shard` job in `/.github/workflows/ci.yml` has one matrix entry

@@ -115,6 +115,38 @@ test.afterAll(() => {
   writeFileSync(CEILINGS_FILE, `${JSON.stringify(next, null, 2)}\n`)
 })
 
+// Moving layers instead of drawing anew can leave the diagram drawn at the
+// resolution of an older zoom. A screenshot cannot show it, as taking one
+// has Chrome draw the page anew; the compositor's own record of its layers
+// does.
+test('a pinch draws the token graph at the zoom it ends at', async ({
+  browser,
+}) => {
+  const { page, cdp, center, close } = await openGraph(browser)
+  const node = page
+    .getByRole('dialog')
+    .getByRole('button', { name: /USDC/ })
+    .first()
+  const before = await node.boundingBox()
+  const touch = touchscreen(cdp)
+  await touch('touchStart', twoFingers(center, 30))
+  await spreadFingers(touch, center, 30, 120)
+  await touch('touchEnd', [])
+  await page.waitForTimeout(1_000)
+  const after = await node.boundingBox()
+  const layers = await layerScales(page, browser)
+  await close()
+
+  expect(
+    (after?.width ?? 0) / (before?.width ?? Number.POSITIVE_INFINITY),
+    'how far the pinch zoomed in',
+  ).toBeGreaterThan(2)
+  expect(
+    layers.filter((layer) => layer.drawnAt < layer.shownAt * 0.99),
+    'layers drawn at a lower resolution than they are shown at',
+  ).toEqual([])
+})
+
 /** /tokens on a phone, with USDC's graph open */
 async function openGraph(browser: Browser) {
   const context = await browser.newContext({
@@ -209,20 +241,34 @@ async function dragAndFling(cdp: CDPSession, center: Point) {
 
 /** Two fingers spread to four times as far apart, then pinch back */
 async function pinch(cdp: CDPSession, center: Point) {
-  const fingers = (spread: number) => [
+  const touch = touchscreen(cdp)
+  await touch('touchStart', twoFingers(center, 30))
+  await spreadFingers(touch, center, 30, 120)
+  await spreadFingers(touch, center, 120, 30)
+  await touch('touchEnd', [])
+}
+
+/** Moves two fingers from `from` to `to` apart, in 45 steps */
+async function spreadFingers(
+  touch: ReturnType<typeof touchscreen>,
+  center: Point,
+  from: number,
+  to: number,
+) {
+  const steps = 45
+  for (let step = 1; step <= steps; step++) {
+    await touch(
+      'touchMove',
+      twoFingers(center, from + ((to - from) * step) / steps),
+    )
+  }
+}
+
+function twoFingers(center: Point, spread: number): Point[] {
+  return [
     { x: center.x - spread, y: center.y - spread / 2 },
     { x: center.x + spread, y: center.y + spread / 2 },
   ]
-  const steps = 45
-  const touch = touchscreen(cdp)
-  await touch('touchStart', fingers(30))
-  for (let step = 1; step <= steps; step++) {
-    await touch('touchMove', fingers(30 + (90 * step) / steps))
-  }
-  for (let step = 1; step <= steps; step++) {
-    await touch('touchMove', fingers(120 - (90 * step) / steps))
-  }
-  await touch('touchEnd', [])
 }
 
 function line(from: Point, to: Point, steps: number): Point[] {
@@ -258,6 +304,46 @@ function countPaints(events: TraceEvent[]) {
     .length
 }
 
+interface LayerTreeSnapshot {
+  active_tree?: {
+    layers: {
+      layer_name: string
+      ideal_contents_scale?: number
+      raster_scales?: { contents_scale: [number, number] }
+    }[]
+  }
+}
+
+/**
+ * The scale the compositor drew each layer of the page at, and the one it
+ * shows the layer at, as it records them with each frame it draws
+ */
+async function layerScales(page: Page, browser: Browser) {
+  await browser.startTracing(page, {
+    categories: ['disabled-by-default-cc.debug'],
+  })
+  await page.evaluate(DRAW_FRAMES)
+  const snapshot = traceEvents(await browser.stopTracing())
+    .filter((event) => event.name === 'cc::LayerTreeHostImpl')
+    .map(
+      (event) =>
+        (event.args as { snapshot?: LayerTreeSnapshot } | undefined)?.snapshot,
+    )
+    .findLast((snapshot) => snapshot?.active_tree)
+  if (!snapshot?.active_tree) throw new Error('No layers in the trace')
+  return snapshot.active_tree.layers.flatMap((layer) =>
+    layer.raster_scales && layer.ideal_contents_scale
+      ? [
+          {
+            name: layer.layer_name,
+            drawnAt: layer.raster_scales.contents_scale[0],
+            shownAt: layer.ideal_contents_scale,
+          },
+        ]
+      : [],
+  )
+}
+
 // Strings rather than closures: tsx injects a __name helper the page lacks.
 
 // React reports each commit to the DevTools hook, production builds too
@@ -279,6 +365,22 @@ const countCommits = `(() => {
 const PAUSE_SVG_ANIMATIONS = `document
   .querySelectorAll('svg')
   .forEach((svg) => svg.pauseAnimations())`
+
+// Blinks a dot in a corner for a few frames, as the compositor records its
+// layers only when it draws one
+const DRAW_FRAMES = `new Promise((resolve) => {
+  const dot = document.createElement('div')
+  dot.style.cssText = 'position: fixed; top: 0; left: 0; width: 1px; height: 1px'
+  document.body.append(dot)
+  let frames = 0
+  const blink = () => {
+    dot.style.background = frames % 2 ? 'transparent' : 'red'
+    if (++frames < 10) return requestAnimationFrame(blink)
+    dot.remove()
+    resolve()
+  }
+  requestAnimationFrame(blink)
+})`
 
 const installFrameProbe = `(() => {
   window.__frameGaps = []

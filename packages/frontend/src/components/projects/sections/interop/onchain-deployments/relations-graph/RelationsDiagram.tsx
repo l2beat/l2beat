@@ -158,10 +158,17 @@ export function RelationsDiagram({
         aria-hidden
       />
       <DiagramWatermark />
+      {/* The world paints a pixel of its own, too faint to see. With nothing
+          to paint, it would leave Chrome to put the diagram in a layer of its
+          own, scaled by `drawing`, which under will-change: transform Chrome
+          keeps at the resolution it first drew it at: zoomed in, it blurs. */}
       <div
         ref={worldRef}
-        className="absolute top-0 left-0 origin-top-left will-change-transform"
-        style={initialStyles.world}
+        className="absolute top-0 left-0 size-px origin-top-left will-change-transform"
+        style={{
+          ...initialStyles.world,
+          backgroundColor: 'rgb(0 0 0 / 0.004)',
+        }}
       >
         <div
           ref={drawingRef}
