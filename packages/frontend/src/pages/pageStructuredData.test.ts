@@ -2,6 +2,7 @@ import { expect } from 'earl'
 import { getCollectionEntry } from '~/content/getCollection'
 import { getFaqData } from '~/pages/faq/getFaqData'
 import { getGlossaryData } from '~/pages/glossary/getGlossaryData'
+import { getPrivacyMethodologyData } from '~/pages/privacy/methodology/getPrivacyMethodologyData'
 import { getGovernancePublicationData } from '~/pages/publications/governance/getGovernancePublicationData'
 import { identityManifest as manifest } from '~/test/identityManifest'
 
@@ -21,6 +22,30 @@ describe('page structured data', () => {
     expect(getTypes(data.head.metadata)).toEqual([
       'BreadcrumbList',
       'DefinedTermSet',
+    ])
+  })
+
+  it('privacy methodology page sits under Privacy in its breadcrumbs', async () => {
+    const data = await getPrivacyMethodologyData(
+      manifest,
+      '/privacy/methodology',
+    )
+
+    expect(data.head.metadata.structuredData).toEqual([
+      expect.subset({
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          expect.subset({ name: 'Home' }),
+          expect.subset({
+            name: 'Privacy',
+            item: 'https://l2beat.com/privacy/summary',
+          }),
+          expect.subset({
+            name: 'Privacy methodology',
+            item: 'https://l2beat.com/privacy/methodology',
+          }),
+        ],
+      }),
     ])
   })
 

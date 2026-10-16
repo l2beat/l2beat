@@ -88,6 +88,17 @@ export const PRIVACY_ADVERSARY_VERDICT: Record<
   bad: 'Exposed',
 }
 
+/** What each verdict means, for the rosette legend and the methodology page. */
+export const PRIVACY_ADVERSARY_VERDICT_DESCRIPTION: Record<
+  PrivacyAdversarySentiment,
+  string
+> = {
+  good: "The promise holds for a careful user with the app's own settings.",
+  warning:
+    'The promise holds only with significant extra work, like a custom build or your own servers.',
+  bad: 'The promise breaks, and no reasonable effort prevents that.',
+}
+
 /** One rosette slice per adversary, in spine order, explained by its reason. */
 export function getPrivacyAdversaryRosetteValues(
   adversaries: PrivacyAdversariesSummary,

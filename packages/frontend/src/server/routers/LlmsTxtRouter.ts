@@ -239,6 +239,12 @@ const PAGE_SECTIONS: LinkListSection[] = [
           'Markdown list of every tracked privacy protocol with category, exit window and page URL.',
       },
       {
+        name: 'Privacy methodology',
+        path: staticPagePath('/privacy/methodology'),
+        description:
+          'How privacy protocols are assessed: the promise each one makes, the adversaries it is tested against, the private, at risk and exposed verdicts, and the other columns.',
+      },
+      {
         name: 'ZK catalog',
         path: staticPagePath('/zk-catalog'),
         description:
