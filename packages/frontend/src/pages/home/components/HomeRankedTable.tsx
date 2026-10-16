@@ -88,7 +88,7 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
     // figures.
     <div className={cn('@container min-w-0', className)}>
       <div
-        className="grid @min-[480px]:grid-cols-(--ranked-columns-wide) grid-cols-(--ranked-columns) content-start @min-[480px]:gap-x-5 gap-x-2"
+        className="grid @min-[480px]:grid-cols-(--ranked-columns-wide) grid-cols-(--ranked-columns) content-start @min-[480px]:gap-x-5 gap-x-4"
         style={
           {
             '--ranked-columns': `auto minmax(0,1fr) ${rest}`,

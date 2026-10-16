@@ -51,7 +51,7 @@ const contentAreaVariants = cva('mx-auto flex w-full min-w-0 grow flex-col', {
     variant: {
       default: 'max-w-(--breakpoint-lg) md:px-5 lg:pl-0',
       wide: 'max-w-412 md:px-5 lg:pl-0',
-      home: 'max-w-none px-4 pb-6 max-md:px-0 md:px-6 lg:px-8 xl:px-10 2xl:max-w-[1840px]',
+      home: 'max-w-none px-4 pb-6 max-md:px-0 md:px-6 xl:px-10 2xl:max-w-[1840px]',
     },
   },
 })
@@ -62,7 +62,7 @@ const footerVariants = cva(undefined, {
       default: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
       wide: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
       // The content area's own margins, so the footer lines up with the cards.
-      home: 'md:px-6 md:pt-10 lg:px-8 lg:pt-12 lg:pb-6 xl:px-10',
+      home: 'md:px-6 md:pt-10 lg:pt-12 lg:pb-6 xl:px-10',
     },
   },
 })

@@ -47,7 +47,7 @@ export function HomeKpiRow({
   children: ReactNode
 }) {
   return (
-    <div className={cn('grid grid-cols-2 gap-x-8 lg:gap-x-10', className)}>
+    <div className={cn('grid grid-cols-2 gap-x-6 lg:gap-x-8', className)}>
       {children}
     </div>
   )
