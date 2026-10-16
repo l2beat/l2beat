@@ -49,8 +49,9 @@ export function getStaleChains(
  * Stale lanes undercount (their captured data lags), so showing them would
  * look like a drop in activity. Their rows from the previous snapshot,
  * re-stamped to `timestamp`, replace the fresh ones. A stale lane missing from
- * the previous snapshot, or computed longer than MAX_CARRY_FORWARD_AGE ago,
- * keeps its fresh rows.
+ * the previous snapshot, partial there, or computed longer than
+ * MAX_CARRY_FORWARD_AGE ago, keeps its fresh rows marked partial, so a later
+ * update does not mistake them for a healthy computation and copy them.
  */
 export function carryForwardStaleLanes(
   fresh: AggregationResult,
@@ -61,6 +62,7 @@ export function carryForwardStaleLanes(
   const carried = previous.aggregatedTransfers.filter(
     (row) =>
       isLaneStale(row, stale) &&
+      !row.isPartial &&
       computedAt(row) >= timestamp - MAX_CARRY_FORWARD_AGE,
   )
   const carriedLanes = new Set(carried.map(laneKey))
@@ -78,7 +80,9 @@ export function carryForwardStaleLanes(
 
   return {
     aggregatedTransfers: merge(
-      fresh.aggregatedTransfers,
+      fresh.aggregatedTransfers.map((row) =>
+        isLaneStale(row, stale) ? { ...row, isPartial: true } : row,
+      ),
       carried.map((row) => ({ ...row, carriedFrom: computedAt(row) })),
     ),
     aggregatedTokens: merge(fresh.aggregatedTokens, previous.aggregatedTokens),

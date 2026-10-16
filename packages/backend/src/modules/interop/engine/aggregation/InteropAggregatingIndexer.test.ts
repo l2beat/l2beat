@@ -475,7 +475,7 @@ describe(InteropAggregatingIndexer.name, () => {
       ]
       const previousTimestamp = to - UnixTime.HOUR
 
-      it('carries stale lanes forward from the latest earlier snapshot', async () => {
+      it('carries stale lanes forward from the latest promoted snapshot', async () => {
         const freshArbitrum = aggregatedTransfer(
           'p',
           'ethereum',
@@ -506,12 +506,16 @@ describe(InteropAggregatingIndexer.name, () => {
           10,
         )
 
-        const { db, aggregatedInteropTransfer, aggregatedInteropToken } =
-          mockAggregateDb({
-            previousTimestamp,
-            previousTransfers: [previousAvalanche],
-            previousTokens: [previousToken],
-          })
+        const {
+          db,
+          aggregatedInteropTransfer,
+          aggregatedInteropToken,
+          interopAggregateStatus,
+        } = mockAggregateDb({
+          previousTimestamp,
+          previousTransfers: [previousAvalanche],
+          previousTokens: [previousToken],
+        })
         const promotionService = mockPromotionService()
         const indexer = new InteropAggregatingIndexer(
           {
@@ -546,7 +550,7 @@ describe(InteropAggregatingIndexer.name, () => {
         ]
         const expectedTokens = [{ ...previousToken, timestamp: to }]
         expect(
-          aggregatedInteropTransfer.getMaxTimestampAtOrBefore,
+          interopAggregateStatus.getLatestPromotedTimestampAtOrBefore,
         ).toHaveBeenCalledWith(to - 1)
         expect(aggregatedInteropTransfer.getByTimestamp).toHaveBeenCalledWith(
           previousTimestamp,
@@ -566,9 +570,10 @@ describe(InteropAggregatingIndexer.name, () => {
 
       it('does not read the previous snapshot when the lagging plugin backs no project', async () => {
         const fresh = aggregatedTransfer('p', 'ethereum', 'avalanche', to, 1)
-        const { db, aggregatedInteropTransfer } = mockAggregateDb({
-          previousTimestamp: undefined,
-        })
+        const { db, aggregatedInteropTransfer, interopAggregateStatus } =
+          mockAggregateDb({
+            previousTimestamp: undefined,
+          })
         const indexer = new InteropAggregatingIndexer(
           {
             db,
@@ -592,10 +597,43 @@ describe(InteropAggregatingIndexer.name, () => {
         await indexer.update(from, to)
 
         expect(
-          aggregatedInteropTransfer.getMaxTimestampAtOrBefore,
+          interopAggregateStatus.getLatestPromotedTimestampAtOrBefore,
         ).not.toHaveBeenCalled()
         expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
           fresh,
+        ])
+      })
+
+      it('saves a stale lane as partial when no promoted snapshot exists', async () => {
+        const fresh = aggregatedTransfer('p', 'ethereum', 'avalanche', to, 1)
+        const { db, aggregatedInteropTransfer } = mockAggregateDb({
+          previousTimestamp: undefined,
+        })
+        const indexer = new InteropAggregatingIndexer(
+          {
+            db,
+            configs,
+            aggregationService: mockAggregationService({
+              aggregatedTransfers: [fresh],
+            }),
+            syncersManager: mockObject<InteropSyncersManager>({
+              getLaggingChainsByPlugin: mockFn().resolvesTo(
+                new Map([['across', new Set(['avalanche'])]]),
+              ),
+            }),
+            parents: [],
+            promotionService: mockPromotionService(),
+            indexerService: mockObject<IndexerService>({}),
+            minHeight: 0,
+          },
+          Logger.SILENT,
+        )
+
+        await indexer.update(from, to)
+
+        expect(aggregatedInteropTransfer.getByTimestamp).not.toHaveBeenCalled()
+        expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
+          { ...fresh, isPartial: true },
         ])
       })
     })
@@ -613,9 +651,16 @@ function mockAggregateDb(previous: {
     deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
     deleteByTimestamp: mockFn().resolvesTo(0),
     insertMany: mockFn().resolvesTo(0),
-    getMaxTimestampAtOrBefore: mockFn().resolvesTo(previous.previousTimestamp),
     getByTimestamp: mockFn().resolvesTo(previous.previousTransfers ?? []),
   })
+  const interopAggregateStatus = mockObject<Database['interopAggregateStatus']>(
+    {
+      deleteOrphaned: mockFn().resolvesTo(0),
+      getLatestPromotedTimestampAtOrBefore: mockFn().resolvesTo(
+        previous.previousTimestamp,
+      ),
+    },
+  )
   const aggregatedInteropToken = mockObject<Database['aggregatedInteropToken']>(
     {
       deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
@@ -649,11 +694,14 @@ function mockAggregateDb(previous: {
     aggregatedInteropToken,
     aggregatedInteropDeployedToken,
     aggregatedInteropTokensPair,
-    interopAggregateStatus: mockObject<Database['interopAggregateStatus']>({
-      deleteOrphaned: mockFn().resolvesTo(0),
-    }),
+    interopAggregateStatus,
   })
-  return { db, aggregatedInteropTransfer, aggregatedInteropToken }
+  return {
+    db,
+    aggregatedInteropTransfer,
+    aggregatedInteropToken,
+    interopAggregateStatus,
+  }
 }
 
 function mockAggregationService(result: {

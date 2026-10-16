@@ -186,18 +186,25 @@ describe('staleLanes', () => {
       ])
     })
 
-    it('keeps fresh rows of a stale lane missing from the previous snapshot', () => {
+    it('marks fresh rows of a stale lane missing from the previous snapshot as partial', () => {
       const fresh = snapshot({
         transfers: [aggregatedTransfer('p', 'ethereum', 'avalanche', to, 1)],
         tokens: [aggregatedToken('p', 'ethereum', 'avalanche', to, 1)],
       })
 
       expect(carryForwardStaleLanes(fresh, snapshot({}), stale, to)).toEqual(
-        fresh,
+        snapshot({
+          transfers: [
+            aggregatedTransfer('p', 'ethereum', 'avalanche', to, 1, {
+              isPartial: true,
+            }),
+          ],
+          tokens: fresh.aggregatedTokens,
+        }),
       )
     })
 
-    it('keeps fresh rows once the carried data is older than the limit', () => {
+    it('marks fresh rows partial once the carried data is older than the limit', () => {
       const fresh = snapshot({
         transfers: [aggregatedTransfer('p', 'ethereum', 'avalanche', to, 1)],
       })
@@ -216,7 +223,84 @@ describe('staleLanes', () => {
         ],
       })
 
-      expect(carryForwardStaleLanes(fresh, previous, stale, to)).toEqual(fresh)
+      expect(carryForwardStaleLanes(fresh, previous, stale, to)).toEqual(
+        snapshot({
+          transfers: [
+            aggregatedTransfer('p', 'ethereum', 'avalanche', to, 1, {
+              isPartial: true,
+            }),
+          ],
+        }),
+      )
+    })
+
+    it('does not carry a partial lane', () => {
+      const fresh = snapshot({
+        transfers: [aggregatedTransfer('p', 'ethereum', 'avalanche', to, 1)],
+      })
+      const previous = snapshot({
+        transfers: [
+          aggregatedTransfer(
+            'p',
+            'ethereum',
+            'avalanche',
+            previousTimestamp,
+            10,
+            { isPartial: true },
+          ),
+        ],
+      })
+
+      expect(carryForwardStaleLanes(fresh, previous, stale, to)).toEqual(
+        snapshot({
+          transfers: [
+            aggregatedTransfer('p', 'ethereum', 'avalanche', to, 1, {
+              isPartial: true,
+            }),
+          ],
+        }),
+      )
+    })
+
+    it('stays partial across consecutive updates once the carry expired, until the lane recovers', () => {
+      const computedAt = UnixTime(10 * UnixTime.DAY)
+      let previous = snapshot({
+        transfers: [
+          aggregatedTransfer('p', 'ethereum', 'avalanche', computedAt, 10),
+        ],
+      })
+
+      const hours = MAX_CARRY_FORWARD_AGE / UnixTime.HOUR
+      for (let hour = 1; hour <= hours + 2; hour++) {
+        const timestamp = computedAt + hour * UnixTime.HOUR
+        const fresh = snapshot({
+          transfers: [
+            aggregatedTransfer('p', 'ethereum', 'avalanche', timestamp, 1),
+          ],
+        })
+        // Each update reads what the previous one saved, as the indexer does.
+        previous = carryForwardStaleLanes(fresh, previous, stale, timestamp)
+
+        expect(previous.aggregatedTransfers).toEqual([
+          hour <= hours
+            ? aggregatedTransfer('p', 'ethereum', 'avalanche', timestamp, 10, {
+                carriedFrom: computedAt,
+              })
+            : aggregatedTransfer('p', 'ethereum', 'avalanche', timestamp, 1, {
+                isPartial: true,
+              }),
+        ])
+      }
+
+      const recovered = computedAt + (hours + 3) * UnixTime.HOUR
+      const fresh = snapshot({
+        transfers: [
+          aggregatedTransfer('p', 'ethereum', 'avalanche', recovered, 5),
+        ],
+      })
+      expect(
+        carryForwardStaleLanes(fresh, previous, new Map(), recovered),
+      ).toEqual(fresh)
     })
   })
 })

@@ -123,6 +123,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       aggregatedRecords: aggregatedTransfers.length,
       carriedForwardLanes: aggregatedTransfers.filter((t) => t.carriedFrom)
         .length,
+      partialLanes: aggregatedTransfers.filter((t) => t.isPartial).length,
       aggregatedTokens: aggregatedTokens.length,
       aggregatedDeployedTokens: aggregatedDeployedTokens.length,
       aggregatedTokenPairs: aggregatedTokensPairs.length,
@@ -136,8 +137,11 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     staleChains: StaleChains,
     to: UnixTime,
   ): Promise<AggregationResult> {
+    // A blocked snapshot may hold the very data that got it blocked, so only a
+    // promoted one is a carry source. Otherwise one bad lane, copied while its
+    // syncer catches up, would keep blocking every lane after it.
     const previousTimestamp =
-      await this.$.db.aggregatedInteropTransfer.getMaxTimestampAtOrBefore(
+      await this.$.db.interopAggregateStatus.getLatestPromotedTimestampAtOrBefore(
         to - 1,
       )
     this.logger.warn('Carrying stale lanes forward from previous snapshot', {

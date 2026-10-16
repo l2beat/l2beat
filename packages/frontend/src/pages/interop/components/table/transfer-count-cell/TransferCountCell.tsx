@@ -22,6 +22,7 @@ import type { InteropScope } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
+import { CarriedForwardNotice } from '../../CarriedForwardNotice'
 import { getTransferColumns, type TransferRow } from './columns'
 
 const SCROLL_LOAD_THRESHOLD_PX = 120
@@ -135,6 +136,7 @@ export function TransferDetailsDialog({
     () => data?.pages.flatMap((page) => page.items) ?? [],
     [data],
   )
+  const carriedFrom = data?.pages[0]?.carriedFrom
   const canLoadMore =
     isOpen && !!hasNextPage && !isLoading && !isFetchingNextPage
 
@@ -183,12 +185,19 @@ export function TransferDetailsDialog({
             onScroll={(e) => handleScroll(e.currentTarget)}
             className="max-h-[60vh] overflow-x-auto overflow-y-auto"
           >
-            <BasicTable
-              table={table}
-              isLoading={isLoading}
-              skeletonCount={8}
-              tableWrapperClassName="pb-0"
-            />
+            {carriedFrom !== undefined ? (
+              <CarriedForwardNotice
+                carriedFrom={carriedFrom}
+                className="mx-4"
+              />
+            ) : (
+              <BasicTable
+                table={table}
+                isLoading={isLoading}
+                skeletonCount={8}
+                tableWrapperClassName="pb-0"
+              />
+            )}
             {isFetchingNextPage && (
               <div className="px-4 py-2 text-center font-medium text-label-value-14 text-secondary">
                 Loading more transfers...
@@ -214,12 +223,16 @@ export function TransferDetailsDialog({
           className="max-h-[460px] overflow-x-auto overflow-y-auto"
         >
           <div className="mx-6">
-            <BasicTable
-              table={table}
-              isLoading={isLoading}
-              skeletonCount={8}
-              tableWrapperClassName="pb-0"
-            />
+            {carriedFrom !== undefined ? (
+              <CarriedForwardNotice carriedFrom={carriedFrom} />
+            ) : (
+              <BasicTable
+                table={table}
+                isLoading={isLoading}
+                skeletonCount={8}
+                tableWrapperClassName="pb-0"
+              />
+            )}
             {isFetchingNextPage && (
               <div className="py-2 text-center font-medium text-label-value-14 text-secondary">
                 Loading more transfers...
