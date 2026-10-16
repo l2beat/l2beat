@@ -48,7 +48,10 @@ export function HomeEthereumCard({
 
   return (
     <HomeCard className={cn('flex min-w-0 flex-col gap-5', className)}>
-      <HomeCardHeader title="Ethereum" href={ETHEREUM_PROJECT_PATH} />
+      <HomeCardHeader
+        title="Ethereum"
+        link={{ href: ETHEREUM_PROJECT_PATH, label: 'Project page' }}
+      />
       <HomeKpiRow>
         <HomeKpiTile
           label="Blob data"

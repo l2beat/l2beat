@@ -66,10 +66,9 @@ export function HomeL2Card({
   return (
     <HomeDomainCard
       title="Layer 2s"
-      href="/layer2s/summary"
-      viewAll={{
+      link={{
         href: '/layer2s/summary',
-        label: `View all ${projectCount} Layer 2s`,
+        label: `All ${projectCount} projects`,
       }}
       className={className}
     >

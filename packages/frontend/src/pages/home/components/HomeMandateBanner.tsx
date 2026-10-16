@@ -1,7 +1,10 @@
 import { cn } from '~/utils/cn'
-import { HOME_TEXT } from '../homeStyles'
+import {
+  HOME_BANNER_CLASS,
+  HOME_BANNER_TITLE_CLASS,
+  HOME_TEXT,
+} from '../homeStyles'
 import { HomeCard } from './HomeCard'
-import { HomeTitleLink } from './HomeCardHeader'
 
 // TODO: point at the mandate once it is published; About Us, with our
 // mission, stands in until then.
@@ -14,18 +17,21 @@ const MANDATE_HREF = '/about-us'
  */
 export function HomeMandateBanner({ className }: { className?: string }) {
   return (
-    <HomeCard className={cn('relative overflow-hidden', className)}>
-      <MandateCharter className="-right-2 -bottom-5 pointer-events-none absolute w-36 rotate-[-7deg] lg:max-xl:w-28" />
-      {/* The title runs above the drawing; the line under it keeps clear of
-          it, on the left. */}
-      <div className="relative flex flex-col gap-1.5">
-        <h2 className={HOME_TEXT.title}>
-          <HomeTitleLink href={MANDATE_HREF}>Read our mandate</HomeTitleLink>
-        </h2>
-        <p className={cn('max-w-[62%]', HOME_TEXT.body)}>
-          What L2BEAT stands for and how we work.
-        </p>
-      </div>
+    <HomeCard asChild className={cn(HOME_BANNER_CLASS, className)}>
+      <a href={MANDATE_HREF}>
+        {/* Lifts toward the reader on hover, as if picked up. */}
+        <MandateCharter className="-right-2 -bottom-5 group-hover:-translate-y-1.5 pointer-events-none absolute w-36 rotate-[-7deg] transition-[rotate,translate] duration-300 ease-out group-hover:rotate-[-3deg] lg:max-xl:w-28" />
+        {/* The title runs above the drawing; the line under it keeps clear
+            of it, on the left. */}
+        <div className="relative flex flex-col gap-1.5">
+          <h2 className={cn(HOME_TEXT.title, HOME_BANNER_TITLE_CLASS)}>
+            Read our mandate
+          </h2>
+          <p className={cn('max-w-[62%]', HOME_TEXT.body)}>
+            What L2BEAT stands for and how we work.
+          </p>
+        </div>
+      </a>
     </HomeCard>
   )
 }

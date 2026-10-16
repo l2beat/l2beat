@@ -1,5 +1,4 @@
 import { pluralize } from '@l2beat/shared-pure'
-import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { formatPublicationDate } from '~/utils/dates'
 import type { HomeRecentProject } from '../getHomeData'
@@ -10,6 +9,7 @@ import {
   HOME_ROW_LINES_CLASS,
   HOME_TEXT,
   HOME_THUMBNAIL_CLASS,
+  HOME_UNDERLINE_CLASS,
 } from '../homeStyles'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
@@ -81,7 +81,10 @@ export function HomeLatestArticlesSection({
 }) {
   return (
     <HomeCard className={cn('flex flex-col gap-3', className)}>
-      <HomeCardHeader title="Latest articles" href="/publications" />
+      <HomeCardHeader
+        title="Latest articles"
+        link={{ href: '/publications', label: 'All publications' }}
+      />
       <Research items={research} />
     </HomeCard>
   )
@@ -159,14 +162,14 @@ function ProjectChanges({
             <HomeStackedIcons items={projects} max={4} />
             <span
               className={cn(
-                'underline-offset-2 group-hover:underline',
+                HOME_UNDERLINE_CLASS,
+                'group-hover:decoration-current',
                 HOME_TEXT.row,
               )}
             >
               {count} {pluralize(count, 'change')} in {projects.length}{' '}
               {pluralize(projects.length, 'project')}
             </span>
-            <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
           </button>
         }
       />

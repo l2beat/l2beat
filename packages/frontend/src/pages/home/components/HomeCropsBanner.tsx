@@ -7,9 +7,12 @@ import {
 import { GARDEN_PATH } from '~/pages/garden/paths'
 import { cn } from '~/utils/cn'
 import type { HomeCropsProject } from '../getHomeCropsProjects'
-import { HOME_TEXT } from '../homeStyles'
+import {
+  HOME_BANNER_CLASS,
+  HOME_BANNER_TITLE_CLASS,
+  HOME_TEXT,
+} from '../homeStyles'
 import { HomeCard } from './HomeCard'
-import { HomeTitleLink } from './HomeCardHeader'
 import { HomeStackedIcons } from './HomeStackedIcons'
 
 /** The banner speaks of principles, so Open source reads as Openness here. */
@@ -40,39 +43,42 @@ export function HomeCropsBanner({
   className?: string
 }) {
   return (
-    <HomeCard className={cn('relative overflow-hidden', className)}>
-      <GardenLandscape
-        flat
-        className="left-[54%]"
-        lightClassName="top-[38%] left-[64%] size-36"
-      >
-        <GardenFlowers flowers={FLOWERS} motion="grow" />
-      </GardenLandscape>
-      <div className="relative flex max-w-[54%] flex-col gap-2">
-        {/* Titled like every other card; the sentence says what CROPS is. */}
-        <h2 className={HOME_TEXT.title}>
-          <HomeTitleLink href={GARDEN_PATH}>The Infinite Garden</HomeTitleLink>
-        </h2>
-        <p className={HOME_TEXT.body}>
-          Protocols that hold to CROPS:{' '}
-          {CROP_COLUMNS.map((crop, index) => (
-            <span key={crop.key}>
-              <span className="text-primary">
-                {BANNER_LABELS[crop.key] ?? crop.label}
+    <HomeCard asChild className={cn(HOME_BANNER_CLASS, className)}>
+      <a href={GARDEN_PATH}>
+        <GardenLandscape
+          flat
+          className="left-[54%]"
+          // The sun climbs a little over the hills on hover.
+          lightClassName="top-[38%] left-[64%] size-36 transition-[translate] duration-500 ease-out group-hover:-translate-y-[65%]"
+        >
+          <GardenFlowers flowers={FLOWERS} motion="grow" />
+        </GardenLandscape>
+        <div className="relative flex max-w-[54%] flex-col gap-2">
+          {/* The whole card is the link; the sentence says what CROPS is. */}
+          <h2 className={cn(HOME_TEXT.title, HOME_BANNER_TITLE_CLASS)}>
+            The Infinite Garden
+          </h2>
+          <p className={HOME_TEXT.body}>
+            Protocols that hold to CROPS:{' '}
+            {CROP_COLUMNS.map((crop, index) => (
+              <span key={crop.key}>
+                <span className="text-primary">
+                  {BANNER_LABELS[crop.key] ?? crop.label}
+                </span>
+                {index < CROP_COLUMNS.length - 2
+                  ? ', '
+                  : index === CROP_COLUMNS.length - 2
+                    ? ' and '
+                    : '.'}
               </span>
-              {index < CROP_COLUMNS.length - 2
-                ? ', '
-                : index === CROP_COLUMNS.length - 2
-                  ? ' and '
-                  : '.'}
-            </span>
-          ))}
-        </p>
-        <span className="flex items-center gap-2">
-          <HomeStackedIcons items={projects} max={6} />
-          <span className={HOME_TEXT.meta}>{projects.length} projects</span>
-        </span>
-      </div>
+            ))}
+          </p>
+          <span className="flex items-center gap-2">
+            <HomeStackedIcons items={projects} max={6} />
+            <span className={HOME_TEXT.meta}>{projects.length} projects</span>
+          </span>
+        </div>
+      </a>
     </HomeCard>
   )
 }

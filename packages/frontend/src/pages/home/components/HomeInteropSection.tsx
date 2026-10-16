@@ -98,7 +98,7 @@ function Content({
       <HomeCardHeader
         title="Interop"
         subtitle="Last 24h"
-        href="/interop/summary"
+        link={{ href: '/interop/summary', label: 'Dashboard' }}
       />
       {/* From lg the section is as tall as the column beside it, so its body
           is a size container (it never sets the height itself). Roughly

@@ -39,11 +39,7 @@ export function HomePrivacyCard({
   return (
     <HomeDomainCard
       title="Privacy"
-      href="/privacy"
-      viewAll={{
-        href: '/privacy',
-        label: `View all ${projectCount} privacy projects`,
-      }}
+      link={{ href: '/privacy', label: `All ${projectCount} projects` }}
       className={className}
     >
       <HomeKpiRow>

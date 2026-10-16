@@ -31,7 +31,7 @@ export function CropsMiniBanner({
       onClick={onClick}
       data-active={isActive}
       className={cn(
-        'group relative flex items-center overflow-hidden rounded-md border border-garden-border px-2.5 py-2 outline-none ring-brand transition-colors hover:border-garden-accent/50 focus-visible:ring-2 data-[active=true]:border-garden-accent/60',
+        'group @container/crops relative flex items-center overflow-hidden rounded-md border border-garden-border px-2.5 py-2 outline-none ring-brand transition-colors hover:border-garden-accent/50 focus-visible:ring-2 data-[active=true]:border-garden-accent/60',
         className,
       )}
     >
@@ -40,7 +40,11 @@ export function CropsMiniBanner({
         className="left-[68%]"
         lightClassName="top-[38%] left-[58%] size-12"
       >
-        <GardenFlowers flowers={FLOWERS} motion="still" />
+        {/* A menu tile is narrower than the sidebar and the subtitle reaches
+            the flowers there, so it keeps only the hills. */}
+        <span className="@max-[165px]/crops:hidden">
+          <GardenFlowers flowers={FLOWERS} motion="still" />
+        </span>
       </GardenLandscape>
       <span className="relative flex min-w-0 flex-col gap-1">
         <span className="font-semibold text-sm leading-none">CROPS</span>

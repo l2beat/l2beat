@@ -23,6 +23,22 @@ export const HOME_TEXT = {
     'font-semibold text-heading-32 tabular-nums leading-none tracking-[-0.025em]',
 } as const
 
+/**
+ * How the page marks a text link: a quiet underline in the divider's tone,
+ * taking the text's colour on hover (add `hover:` or `group-hover:`
+ * `decoration-current`). No chevrons.
+ */
+export const HOME_UNDERLINE_CLASS =
+  'underline decoration-divider underline-offset-[0.3em] transition-colors'
+
+/**
+ * A card that is one link (the garden, the mandate): no chevron, the title
+ * underlines and the card's drawing answers the hover instead.
+ */
+export const HOME_BANNER_CLASS = 'group relative block overflow-hidden'
+export const HOME_BANNER_TITLE_CLASS =
+  'underline-offset-4 group-hover:underline'
+
 /** Every KPI chart on the page, so the Layer 2s, Privacy and Ethereum pairs match. */
 export const HOME_CHART_HEIGHT_CLASS = 'h-36'
 

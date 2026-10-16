@@ -3,6 +3,9 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { cn } from '~/utils/cn'
 
 /** A section of the home page: a card like on every other page. */
-export function HomeCard({ className, ...props }: ComponentProps<'div'>) {
+export function HomeCard({
+  className,
+  ...props
+}: ComponentProps<typeof PrimaryCard>) {
   return <PrimaryCard className={cn('min-w-0 md:py-6', className)} {...props} />
 }
