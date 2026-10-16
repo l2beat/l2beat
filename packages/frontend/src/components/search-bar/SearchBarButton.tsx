@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { useInterval } from '~/hooks/useInterval'
+import { useEffect, useRef } from 'react'
 import { SearchIcon } from '~/icons/Search'
 import { cn } from '~/utils/cn'
 import { useSearchBarContext } from './SearchBarContext'
@@ -48,25 +47,40 @@ export function SmallSearchBarButton() {
  * One kind of thing search finds at a time, changing every few seconds; a
  * fixed hint for those who prefer reduced motion. Static on the server, so
  * the first render matches.
+ *
+ * The text is swapped outside React: a state update every few seconds would
+ * be a React commit on every page, one that can land in the middle of a
+ * gesture (the e2e perf ratchets count them).
  */
 function ExampleHint() {
-  const [index, setIndex] = useState(0)
-  const [animate, setAnimate] = useState(false)
+  const ref = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    setAnimate(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    const element = ref.current
+    if (
+      !element ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return
+    }
+    let index = 0
+    const interval = setInterval(() => {
+      index = (index + 1) % SEARCH_BAR_EXAMPLES.length
+      element.textContent = SEARCH_BAR_EXAMPLES[index] ?? ''
+      element.animate(
+        [
+          { opacity: 0, transform: 'translateY(4px)' },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: 300, easing: 'ease-out' },
+      )
+    }, EXAMPLE_INTERVAL_MS)
+    return () => clearInterval(interval)
   }, [])
-  useInterval(
-    () => setIndex((i) => (i + 1) % SEARCH_BAR_EXAMPLES.length),
-    animate ? EXAMPLE_INTERVAL_MS : null,
-  )
 
   return (
-    <span
-      key={index}
-      className="fade-in slide-in-from-bottom-1 animate-in truncate font-normal text-secondary/80 duration-300"
-    >
-      {SEARCH_BAR_EXAMPLES[index]}
+    <span ref={ref} className="truncate font-normal text-secondary/80">
+      {SEARCH_BAR_EXAMPLES[0]}
     </span>
   )
 }
