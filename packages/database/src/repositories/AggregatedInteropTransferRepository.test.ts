@@ -46,7 +46,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         expect(result).toEqualUnsorted(records)
       })
 
-      it('round-trips the carriedFrom marker', async () => {
+      it('round-trips the carriedFrom and isPartial markers', async () => {
         const carried = record({
           id: 'id1',
           timestamp: UnixTime(200),
@@ -54,10 +54,17 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           carriedFrom: UnixTime(100),
         })
+        const partial = record({
+          id: 'id2',
+          timestamp: UnixTime(200),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          isPartial: true,
+        })
 
-        await repository.insertMany([carried])
+        await repository.insertMany([carried, partial])
 
-        expect(await repository.getAll()).toEqual([carried])
+        expect(await repository.getAll()).toEqualUnsorted([carried, partial])
       })
 
       it('handles empty array', async () => {
@@ -1720,12 +1727,14 @@ function record({
   count10KTo100K = 0,
   countOver100K = 0,
   carriedFrom,
+  isPartial = false,
 }: {
   id: string
   timestamp: UnixTime
   srcChain: string
   dstChain: string
   carriedFrom?: UnixTime
+  isPartial?: boolean
   transferTypeStats?: AggregatedInteropTransferRecord['transferTypeStats']
   transferCount?: number
   transfersWithDurationCount?: number
@@ -1769,5 +1778,6 @@ function record({
     countOver100K,
     bridgeType,
     carriedFrom,
+    isPartial,
   }
 }

@@ -29,6 +29,8 @@ export interface AggregatedInteropTransferRecord {
   countOver100K: number
   /** Snapshot this lane was copied from because its syncers lagged; unset when freshly computed. */
   carriedFrom?: UnixTime
+  /** Computed while its syncers lagged, so it undercounts; never a carry source. */
+  isPartial?: boolean
 }
 
 export interface AggregatedInteropTransferSeriesRecord {
@@ -103,6 +105,7 @@ export function toRecord(
     carriedFrom: row.carriedFrom
       ? UnixTime.fromDate(row.carriedFrom)
       : undefined,
+    isPartial: row.isPartial,
   }
 }
 
@@ -135,6 +138,7 @@ export function toRow(
     carriedFrom: record.carriedFrom
       ? UnixTime.toDate(record.carriedFrom)
       : undefined,
+    isPartial: record.isPartial ?? false,
   }
 }
 

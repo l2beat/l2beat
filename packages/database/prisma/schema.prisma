@@ -756,6 +756,8 @@ model AggregatedInteropTransfer {
   countOver100K              Int       @default(0)
   // Set when the lane was copied from an older snapshot because its syncers lagged
   carriedFrom                DateTime? @db.Timestamp(6)
+  // Computed while the lane's syncers lagged, so it undercounts and must not be carried forward
+  isPartial                  Boolean   @default(false)
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
