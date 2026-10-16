@@ -12,10 +12,9 @@ import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
 import {
+  HomeRankedChange,
   HomeRankedTable,
   HomeRankedValue,
-  HomeRankedValueWithChange,
-  VALUE_WITH_CHANGE_HEADER_CLASS,
 } from './HomeRankedTable'
 import { HomeRiskRosette } from './HomeRiskRosette'
 import { HomeStageBadge } from './HomeStageBadge'
@@ -134,14 +133,15 @@ export function HomeL2Card({
           {
             id: 'tvs',
             header: 'TVS',
-            headerClassName: VALUE_WITH_CHANGE_HEADER_CLASS,
             align: 'right',
-            cell: (project) => (
-              <HomeRankedValueWithChange
-                value={project.tvs}
-                change={project.tvsChange}
-              />
-            ),
+            cell: (project) => <HomeRankedValue value={project.tvs} />,
+          },
+          {
+            id: 'tvsChange',
+            header: '7d',
+            align: 'right',
+            minTableWidth: 360,
+            cell: (project) => <HomeRankedChange change={project.tvsChange} />,
           },
           {
             id: 'uops',

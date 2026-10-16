@@ -33,8 +33,6 @@ export interface HomeRankedTableColumn<T> {
   middle?: boolean
   /** Above the column, so the rows need no label of their own. */
   header?: string
-  /** E.g. `VALUE_WITH_CHANGE_HEADER_CLASS`, to set the header over the value. */
-  headerClassName?: string
   /**
    * The narrowest table that still shows the column, e.g. for the 7-day
    * change or a secondary figure, so names keep their room. A hidden column's
@@ -108,7 +106,6 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
                 HOME_TEXT.meta,
                 alignClass(column.align),
                 column.minTableWidth && HIDE_BELOW[column.minTableWidth],
-                column.headerClassName,
               )}
             >
               {column.header}
@@ -197,38 +194,8 @@ export function HomeRankedValue({
   )
 }
 
-/**
- * A value with its 7-day change right after it, in a fixed-width slot so the
- * values line up, as in the KPI tiles; one header covers both. The change
- * gives way in a narrow table.
- */
-/**
- * For HomeRankedValueWithChange's header: right-aligned over the value, not
- * the change after it (its 56px slot and 8px gap), until the change hides.
- */
-export const VALUE_WITH_CHANGE_HEADER_CLASS = 'pr-16 @max-[360px]:pr-0'
-
-export function HomeRankedValueWithChange({
-  value,
-  change,
-  format,
-}: {
-  value: number | undefined
-  change: number | undefined
-  format?: (value: number) => string
-}) {
-  return (
-    <span className="flex items-baseline justify-end gap-2">
-      <HomeRankedValue value={value} format={format} />
-      <span className="flex @max-[360px]:hidden w-14 justify-end">
-        <HomeRankedChange change={change} />
-      </span>
-    </span>
-  )
-}
-
 /** The 7-day change; an em dash keeps the column when there is none. */
-function HomeRankedChange({ change }: { change: number | undefined }) {
+export function HomeRankedChange({ change }: { change: number | undefined }) {
   if (change === undefined) {
     return (
       <span className={cn(HOME_TEXT.value, 'text-secondary')}>{EM_DASH}</span>

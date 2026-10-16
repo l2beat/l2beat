@@ -80,6 +80,89 @@
   }
 }
 
+/* A home list of 40px rows (HOME_ROW_CLASS) that shows as many whole rows as
+   its height holds, up to 15. The rest are dropped, not clipped, so they take
+   no focus and are not read out. Its height must come from its parent: a size
+   container cannot take it from its rows. */
+@utility home-fill-rows {
+  container: home-rows / size;
+  @container home-rows (height < 80px) {
+    & > :nth-child(n + 2) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 120px) {
+    & > :nth-child(n + 3) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 160px) {
+    & > :nth-child(n + 4) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 200px) {
+    & > :nth-child(n + 5) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 240px) {
+    & > :nth-child(n + 6) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 280px) {
+    & > :nth-child(n + 7) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 320px) {
+    & > :nth-child(n + 8) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 360px) {
+    & > :nth-child(n + 9) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 400px) {
+    & > :nth-child(n + 10) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 440px) {
+    & > :nth-child(n + 11) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 480px) {
+    & > :nth-child(n + 12) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 520px) {
+    & > :nth-child(n + 13) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 560px) {
+    & > :nth-child(n + 14) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 600px) {
+    & > :nth-child(n + 15) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 640px) {
+    & > :nth-child(n + 16) {
+      display: none;
+    }
+  }
+}
+
 :root {
   /* Prevent horizontal overscroll on mobile to avoid unwanted scrolling when swiping on charts.
      Not applied on desktop to preserve MacOS swipe-back gesture. */

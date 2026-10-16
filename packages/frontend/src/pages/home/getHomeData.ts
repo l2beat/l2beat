@@ -243,7 +243,6 @@ async function getRecentProjectsForHome(
   const projects = await ps.getProjects({
     optional: [
       'scalingInfo',
-      'daLayer',
       'ecosystemConfig',
       'interopConfig',
       'zkCatalogInfo',

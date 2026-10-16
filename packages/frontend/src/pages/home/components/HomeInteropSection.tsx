@@ -77,15 +77,20 @@ function Content({
     ),
   )
 
-  const activeChains = useMemo(() => {
+  // Only the busiest chains: past about ten, the home graph's ring leaves
+  // each chain too little arc for its label. The figures still cover every
+  // selected chain, as on the interop page.
+  const graphChains = useMemo(() => {
     const activeIds = new Set(
       (data?.chainData ?? [])
         .filter((chain) => chain.totalVolume > 0)
         .map((chain) => chain.chainId),
     )
-    return chains.filter(
-      (chain) => selectedChains.includes(chain.id) && activeIds.has(chain.id),
-    )
+    return chains
+      .filter(
+        (chain) => selectedChains.includes(chain.id) && activeIds.has(chain.id),
+      )
+      .slice(0, GRAPH_CHAINS_COUNT)
   }, [chains, selectedChains, data?.chainData])
 
   return (
@@ -113,7 +118,7 @@ function Content({
         )}
         <div className="pointer-events-none interop-corners:absolute interop-corners:inset-0 flex interop-stacked:aspect-square interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center">
           <FlowsGraphPanel
-            activeChains={activeChains}
+            activeChains={graphChains}
             data={data}
             hasEnoughChains={hasEnoughChains}
             hasEnoughProtocols={hasEnoughProtocols}
@@ -138,6 +143,7 @@ function Content({
   )
 }
 
+const GRAPH_CHAINS_COUNT = 10
 const TOP_ROUTES_COUNT = 5
 /** Stacked from lg the routes fill the height left; whole rows only. */
 const FILL_ROUTES_COUNT = 15
@@ -353,12 +359,11 @@ function TopRoutes({
   return (
     <div className={cn('flex min-w-0 flex-col gap-2', className)}>
       <h3 className={HOME_TEXT.sectionTitle}>Top routes</h3>
-      {/* Stacked from lg, the list takes the height left and wraps the rows
-          that do not fit into a second column, out of view: whole rows only,
-          as many as fit. */}
+      {/* Stacked from lg, the list takes the height left and shows as many
+          whole rows as fit. */}
       <ol
         className={cn(
-          'interop-stacked:flex interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:flex-col interop-stacked:flex-wrap interop-stacked:overflow-hidden',
+          'interop-stacked:home-fill-rows interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden',
           HOME_ROW_LINES_CLASS,
         )}
       >
@@ -366,7 +371,7 @@ function TopRoutes({
           <li
             key={`${src.id}-${dst.id}`}
             className={cn(
-              'flex w-full interop-stacked:shrink-0 items-center gap-2',
+              'flex w-full items-center gap-2',
               HOME_ROW_CLASS,
               index >= TOP_ROUTES_COUNT && 'interop-stacked:flex hidden',
             )}

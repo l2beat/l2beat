@@ -59,6 +59,9 @@ const FILL_HEIGHT_CLASS = cn(
   '[&>div>div:first-child]:h-full! [&>div>div:first-child]:min-h-0!',
   '[&_.recharts-wrapper]:aspect-auto! [&_.recharts-wrapper]:h-full! [&_.recharts-wrapper]:min-h-0!',
   '[&_.recharts-area-curve]:stroke-[1.5px]!',
+  // The chart is a tab stop (arrow keys walk the tooltip), but ChartContainer
+  // hides every chart's outline; a sparkline shows it on keyboard focus.
+  '[&_.recharts-surface:focus-visible]:outline-2! [&_.recharts-surface:focus-visible]:outline-solid! [&_.recharts-surface:focus-visible]:outline-offset-2!',
 )
 
 /**

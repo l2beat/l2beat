@@ -46,7 +46,8 @@ export function Footer({ className, innerContainerClassName }: Props) {
               key={link.title}
               href={link.href}
               variant="plain"
-              className="font-medium text-secondary text-xs"
+              underline={false}
+              className="font-medium text-secondary text-xs underline-offset-2 hover:text-primary hover:underline"
             >
               {link.title}
             </CustomLink>

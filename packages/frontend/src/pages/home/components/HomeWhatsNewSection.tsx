@@ -93,11 +93,11 @@ function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
   return (
     // Row height and lines as in the rankings. Beside the articles the list
     // takes the height they leave (a 0px height, so it never sets it, but
-    // room for five), wrapping the rows that do not fit into a second column,
-    // out of view: whole rows only. Stacked it shows five.
+    // room for five) and shows as many whole rows as fit. Stacked it shows
+    // five.
     <ul
       className={cn(
-        'flex @min-[560px]/recent:h-0 @min-[560px]/recent:min-h-[200px] @min-[560px]/recent:flex-1 flex-col @min-[560px]/recent:flex-wrap @min-[560px]/recent:overflow-hidden',
+        '@min-[560px]/recent:home-fill-rows flex @min-[560px]/recent:h-0 @min-[560px]/recent:min-h-[200px] @min-[560px]/recent:flex-1 flex-col @min-[560px]/recent:overflow-hidden',
         HOME_ROW_LINES_CLASS,
       )}
     >
