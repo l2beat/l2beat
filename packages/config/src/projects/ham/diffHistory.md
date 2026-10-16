@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x6d83d2cfb1079262fd702f887e46b124b9264c61
+
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
+
+- id: 66739395
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1758875696
+- current timestamp: 1758875696
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758875696 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (base:0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (base:0xad22377De22537e4e6bd192AeBCa524a79B0d3Fd) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (base:0xd2e0532f8AE8DeDA4b9Ad2CB79f008C97c9C25eE) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract OptimismPortal (base:0xdD83c537B35d98776913D7ab60EBaA5c28F9dD01) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta.guardian:
++        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x4db4e986a89d434b95be7b072c13d970a8d8deaa
 
 # Diff at Wed, 23 Sep 2026 05:46:44 GMT:

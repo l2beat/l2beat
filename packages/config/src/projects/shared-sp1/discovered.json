@@ -78,12 +78,14 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
+          "severity": "HIGH",
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
@@ -237,12 +239,14 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
+          "severity": "HIGH",
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
@@ -368,12 +372,14 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
+          "severity": "HIGH",
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SP1VerifierGateway"
@@ -455,12 +461,14 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
+          "severity": "HIGH",
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"

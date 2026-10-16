@@ -30,7 +30,10 @@
     // getAllTransactionFilterers is available from ArbOS 60: it reverts on chains
     // still below ArbOS 60 (expectRevert -> "EXPECT_REVERT", no actor), and
     // returns the real (possibly empty) filterer set on ArbOS 60+.
+    // MEDIUM: a role-holder set. The first filterer on a chain is a new
+    // censorship path, recorded as a reviewed event on the RollupProxy.
     "transactionFilterers": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function getAllTransactionFilterers() view returns (address[])",

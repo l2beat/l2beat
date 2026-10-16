@@ -17,7 +17,7 @@
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   },
   "category": "bridge-canonical"

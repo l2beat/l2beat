@@ -4,6 +4,7 @@
   "critical": true,
   "fields": {
     "securityCouncilAddress": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -12,6 +13,7 @@
       ]
     },
     "getMaster": {
+      "severity": "MEDIUM",
       "permissions": [
         { "type": "act", "delay": "{{approvedUpgradeNoticePeriod}}" }
       ]

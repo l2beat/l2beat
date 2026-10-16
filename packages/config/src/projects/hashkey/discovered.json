@@ -107,8 +107,8 @@
         "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
@@ -308,6 +308,7 @@
         "disputeGameFactory": "eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
+        "enabledFeatures": [],
         "gasLimit": 30000000,
         "gasPayingToken": {
           "addr_": "eth:0xE7C6BF469e97eEB0bFB74C8dbFF5BD47D4C1C98a",
@@ -363,10 +364,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198": "Proxy",
@@ -510,6 +517,7 @@
         "$immutable": true,
         "owner": "eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x679A65aD62972Ea3561F40A12e93CcA6f79F35E6": "AddressManager"
       },
@@ -600,6 +608,7 @@
         "isUpgrading": false,
         "owner": "eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C": "ProxyAdmin"
       }
@@ -1950,7 +1959,7 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 26189479 },
   "permissionsConfigHash": "0x344d354018772615fb21d605d0dfaad23256e8db9c1cb50cbde59de16a29ab64",

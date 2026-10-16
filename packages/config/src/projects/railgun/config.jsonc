@@ -35,6 +35,7 @@
     "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": {
       "ignoreDiscovery": true
     },
+    // Not critical, like a router: immutable, holds funds only in transit within one call.
     "eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405": {
       "description": "Execution adapter contract for Railgun. To interact with public contracts from shielded pools, tokens are unshielded to RelayAdapter, which performs specified calls and shields tokens back to the same user."
     }

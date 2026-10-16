@@ -6,7 +6,7 @@
   "ignoreRelatives": ["L1_WETH_TOKEN", "legacyBridge"],
   "ignoreMethods": ["l2BridgeAddress"],
   "fields": {
-    "owner": { "severity": "HIGH" },
+    "owner": { "severity": "MEDIUM" },
     "paused": { "severity": "MEDIUM" },
     "legacyBridge": { "severity": "HIGH" },
     "nativeTokenVault": { "severity": "HIGH" }

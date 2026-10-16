@@ -31,6 +31,7 @@
     }
   },
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "pendingOwner": {
       "severity": "MEDIUM"
     },
@@ -41,6 +42,7 @@
       "severity": "HIGH"
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

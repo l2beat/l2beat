@@ -105,12 +105,10 @@
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "severity": "HIGH",
           "description": "Circuit verification key hash embedded in the verified Solidity source.",
           "type": "CODE_CHANGE"
         },
         "$libraries": {
-          "severity": "HIGH",
           "description": "Runtime libraries immutably linked into this verifier.",
           "type": "CODE_CHANGE"
         }
@@ -265,12 +263,10 @@
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "severity": "HIGH",
           "description": "Circuit verification key hash embedded in the verified Solidity source.",
           "type": "CODE_CHANGE"
         },
         "$libraries": {
-          "severity": "HIGH",
           "description": "Runtime libraries immutably linked into this verifier.",
           "type": "CODE_CHANGE"
         }
@@ -450,12 +446,10 @@
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "severity": "HIGH",
           "description": "Circuit verification key hash embedded in the verified Solidity source.",
           "type": "CODE_CHANGE"
         },
         "$libraries": {
-          "severity": "HIGH",
           "description": "Runtime libraries immutably linked into this verifier.",
           "type": "CODE_CHANGE"
         }
@@ -543,12 +537,10 @@
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "severity": "HIGH",
           "description": "Circuit verification key hash embedded in the verified Solidity source.",
           "type": "CODE_CHANGE"
         },
         "$libraries": {
-          "severity": "HIGH",
           "description": "Runtime libraries immutably linked into this verifier.",
           "type": "CODE_CHANGE"
         }
@@ -631,12 +623,10 @@
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "severity": "HIGH",
           "description": "Circuit verification key hash embedded in the verified Solidity source.",
           "type": "CODE_CHANGE"
         },
         "$libraries": {
-          "severity": "HIGH",
           "description": "Runtime libraries immutably linked into this verifier.",
           "type": "CODE_CHANGE"
         }
@@ -731,12 +721,10 @@
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "severity": "HIGH",
           "description": "Circuit verification key hash embedded in the verified Solidity source.",
           "type": "CODE_CHANGE"
         },
         "$libraries": {
-          "severity": "HIGH",
           "description": "Runtime libraries immutably linked into this verifier.",
           "type": "CODE_CHANGE"
         }
@@ -833,12 +821,10 @@
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "severity": "HIGH",
           "description": "Circuit verification key hash embedded in the verified Solidity source.",
           "type": "CODE_CHANGE"
         },
         "$libraries": {
-          "severity": "HIGH",
           "description": "Runtime libraries immutably linked into this verifier.",
           "type": "CODE_CHANGE"
         }

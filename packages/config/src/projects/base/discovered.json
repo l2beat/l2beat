@@ -308,10 +308,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 118777601,
+        "basefee": 100747051,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 7357630,
+        "blobBaseFee": 5967604,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 148,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -321,15 +321,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x82f09d4f27accee3dfc60f67fad3576c17cfecc9eb34c3fd8a86df635bc9ef8d",
+        "hash": "0x881c9edf42eb44e753dc00676acd177a5eb03c0b0525514d690321b3fd33fc69",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 26153974,
+        "number": 26153982,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 3,
-        "timestamp": 1791538331,
+        "sequenceNumber": 2,
+        "timestamp": 1791538427,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -416,6 +416,7 @@
         "isUpgrading": false,
         "owner": "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0x4200000000000000000000000000000000000018": "Proxy",
         "base:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "ProxyAdmin"
@@ -645,6 +646,7 @@
         "isUpgrading": false,
         "owner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E": "ProxyAdmin"
       }
@@ -827,8 +829,8 @@
           "description": "TEE image hash (PCR0) of the AggregateVerifier registered in the DisputeGameFactory for gameType. Derived, not stored in this contract."
         },
         "manager": { "severity": "MEDIUM" },
-        "owner": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "gameType": { "severity": "HIGH" },
         "getRegisteredSigners": { "severity": "LOW" }
       },
@@ -1164,6 +1166,7 @@
         "wethFromDGF": "eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "game1337": { "severity": "HIGH" },
         "game621": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
@@ -1795,7 +1798,7 @@
         "SECP_384_R1_OID": "0xbd74344bb507daeb9ed315bc535f24a236ccab72c5cd6945fb0efe5c037e2097"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "revoker": { "severity": "MEDIUM" }
       },
       "implementationNames": {
@@ -1915,6 +1918,7 @@
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "eip1559Denominator": 100,
         "eip1559Elasticity": 5,
+        "enabledFeatures": [],
         "gasLimit": 400000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
@@ -1977,10 +1981,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072": "Proxy",
@@ -2237,6 +2247,7 @@
         "$immutable": true,
         "owner": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2": "AddressManager"
       },
@@ -2564,7 +2575,7 @@
         "version": "2.5.0"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "GUARDIAN": { "severity": "MEDIUM" },
         "incidentResponder": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
@@ -2722,12 +2733,14 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
+          "severity": "HIGH",
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xdc32E228636273285Befa5F001dBB5142517C106": "SP1VerifierGateway"
@@ -4779,11 +4792,11 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_base": "0x31564fdf9bec741a56ea08dd6bbd0423e6717dc796eedf852d342d24f9bb349e",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba",
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "base": 52374586, "ethereum": 26153991 },
+  "usedBlockNumbers": { "base": 52374631, "ethereum": 26153997 },
   "permissionsConfigHash": "0xd7b4381bf501db9f82c102402aab61d5ec5f07e1cc785630a169790dc8744969",
   "permissions": {
     "base:0x4200000000000000000000000000000000000018": {

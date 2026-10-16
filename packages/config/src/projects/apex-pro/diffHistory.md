@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x001cb4c97cc1476e286e0053294bf038d45a155b
+
+# Diff at Fri, 16 Oct 2026 05:36:47 GMT:
+
+- id: c407ff6f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1767634866
+- current timestamp: 1767634866
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767634866 (main branch discovery), not current.
+
+```diff
+    contract StarkPerpetualUSDC (eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) [starkex/StarkPerpetual] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract StarkPerpetualUSDT (eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) [starkex/StarkPerpetual] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xbf6718bdb7e02b6175030ad8acbb6f0ac61a38a1
 
 # Diff at Mon, 07 Sep 2026 08:37:40 GMT:

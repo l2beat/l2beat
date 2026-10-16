@@ -1,3 +1,265 @@
+Generated with discovered.json: 0xd0c34f97422f70691d0f23702eab87bf2e93a9fc
+
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
+
+- id: b0db0d0e
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791788974
+- current timestamp: 1791788974
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791788974 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) [katana/OptimismPortal2] {
+    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x263b251D67BB154DD6b8352539466ACE7948ED56) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract vbWBTC (eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta.yieldVault.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.migrationManager.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.minimumReservePercentage.severity:
+-        "MEDIUM"
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract vbETH (eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta.yieldVault.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.migrationManager.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.minimumReservePercentage.severity:
+-        "MEDIUM"
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract vbUSDS (eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta.yieldVault.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.migrationManager.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.minimumReservePercentage.severity:
+-        "MEDIUM"
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract vbUSDC (eth:0x53E82ABbb12638F09d9e624578ccB666217a765e) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta.yieldVault.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.migrationManager.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.minimumReservePercentage.severity:
+-        "MEDIUM"
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract vbUSDT (eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      fieldMeta.yieldVault.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.migrationManager.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.minimumReservePercentage.severity:
+-        "MEDIUM"
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xD1e389c046FB734D2a0c7C390312210c408ba832) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (katana:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x8bc0ff2799e6113495ae76087e150dd9bc1050e1
 
 # Diff at Mon, 12 Oct 2026 07:12:12 GMT:

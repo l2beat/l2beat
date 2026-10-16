@@ -2,12 +2,18 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "mantle",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"],
+  "initialAddresses": [
+    "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+    "mantle:0x4200000000000000000000000000000000000007",
+    "mantle:0x4200000000000000000000000000000000000010",
+    "mantle:0x4200000000000000000000000000000000000016"
+  ],
   "names": {
     "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "L1MantleToken",
     "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "MantleTokenProxyAdmin",
     "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": "MantleSecurityMultisig",
-    "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": "MantleEngineeringMultisig"
+    "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": "MantleEngineeringMultisig",
+    "mantle:0x4200000000000000000000000000000000000018": "L2ProxyAdmin"
   },
   "overrides": {
     "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": {
@@ -16,7 +22,8 @@
     },
     // MNT is the gas token of the L2 and canonically escrowed in the
     // OptimismPortal: a malicious upgrade of the token contract can reassign
-    // escrowed balances, so the token and its upgrade path are critical.
+    // escrowed balances, so the token and its upgrade path are critical
+    // (token rule: the project governs the L2 gas token).
     "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354": {
       "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
       "critical": true,
@@ -24,6 +31,7 @@
       "ignoreInWatchMode": ["totalSupply"],
       "fields": {
         "owner": {
+          "severity": "MEDIUM",
           "permissions": [
             {
               "type": "interact",
@@ -38,15 +46,15 @@
       }
     },
     // ProxyAdmin (L1): can upgrade the core Mantle contracts (Portal, L2OutputOracle, SystemConfig, L1StandardBridge, L1CrossDomainMessenger via AddressManager).
+    // Its fields below only steer how it writes a future upgrade. The live code is
+    // tracked by the proxies' implementations, so none is HIGH.
     "eth:0xca35F8338054739D138884685e08b39EE2217794": {
       "critical": true,
       "fields": {
         "addressManager": {
-          "severity": "HIGH",
           "description": "AddressManager whose mappings this ProxyAdmin can update, including the L1CrossDomainMessenger implementation."
         },
         "l1CrossDomainMessengerProxyType": {
-          "severity": "HIGH",
           "description": "Upgrade mechanism selected by ProxyAdmin for L1CrossDomainMessenger (2 is ResolvedDelegateProxy).",
           "handler": {
             "type": "call",
@@ -55,7 +63,6 @@
           }
         },
         "l1CrossDomainMessengerImplementationName": {
-          "severity": "HIGH",
           "description": "AddressManager key that ProxyAdmin updates when upgrading L1CrossDomainMessenger.",
           "handler": {
             "type": "call",
@@ -64,7 +71,6 @@
           }
         },
         "l1StandardBridgeProxyType": {
-          "severity": "HIGH",
           "description": "Upgrade mechanism selected by ProxyAdmin for L1StandardBridge (1 is L1ChugSplashProxy).",
           "handler": {
             "type": "call",
@@ -80,6 +86,37 @@
     },
     "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": {
       "critical": true
+    },
+    // L2 side of the canonical bridge (Mantle forks of the OP predeploys, untemplated).
+    "mantle:0x4200000000000000000000000000000000000007": {
+      "critical": true,
+      "ignoreMethods": ["xDomainMessageSender"]
+    },
+    "mantle:0x4200000000000000000000000000000000000010": {
+      "critical": true
+    },
+    "mantle:0x4200000000000000000000000000000000000016": {
+      "critical": true
+    },
+    // L2ProxyAdmin: upgrades the L2 predeploys. Its implementation is unverified on
+    // Mantle but byte-identical to the verified Base L2 ProxyAdmin implementation
+    // (codehash 0xaebd68b2...), so that source is linked and owner read without an ABI.
+    "mantle:0x4200000000000000000000000000000000000018": {
+      "critical": true,
+      "manualSourcePaths": {
+        "mantle:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "https://basescan.org/address/0xc0d3c0d3c0d3c0d3c0d3c0d3c0d3c0d3c0d30018#code"
+      },
+      "fields": {
+        "owner": {
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [{ "type": "act" }]
+        }
+      }
     },
     // MantleSecurityMultisig (owner of the core ProxyAdmin, SystemConfig, MNT and
     // the OP Succinct oracle) and MantleEngineeringMultisig (portal guardian and

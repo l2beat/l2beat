@@ -16,6 +16,11 @@
     "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535": "L1USDCGatewayLegacy"
   },
   "overrides": {
+    // Since the Submitter cutover the Rollup no longer calls L1Staking: it only relays
+    // the L2 sequencer set.
+    "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7": {
+      "critical": { "untilTimestamp": 1790063675 }
+    },
     // ProxyAdmin of all core Morph proxies (Rollup, messenger, queue, staking, gateways); owned by the TimelockController.
     "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": {
       "critical": true
@@ -26,7 +31,10 @@
     },
     // Upgrade timelock (currently 0s min delay) between Morph Multisig 1 and the core ProxyAdmin.
     "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530": {
-      "critical": true
+      "critical": true,
+      "fields": {
+        "$admin": { "severity": "MEDIUM" }
+      }
     },
     // Active zk verifier (SP1) routed to by the MultipleVersionRollupVerifier for all
     // batches from the Submitter cutover onwards.
