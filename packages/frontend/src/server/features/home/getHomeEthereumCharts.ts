@@ -135,13 +135,14 @@ async function getEthereumDaSparkline(
       )
     : 0
 
-  // What the projects we track posted, over the same range as the total.
-  const posterRecords = await db.dataAvailability.getByDaLayersAndTimeRange(
-    ['ethereum'],
-    [firstDay, lastDay + UnixTime.DAY],
-    ['ethereum'],
-  )
-  const trackedTotal = posterRecords.reduce(
+  // What the projects we track posted, over the same range as the total;
+  // summed in the database, a row per timestamp rather than per project.
+  const trackedRecords =
+    await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+      ['ethereum'],
+      [firstDay, lastDay + UnixTime.DAY],
+    )
+  const trackedTotal = trackedRecords.reduce(
     (acc, record) => acc + Number(record.totalSize),
     0,
   )
