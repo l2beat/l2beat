@@ -14,6 +14,7 @@ import {
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getOrganizationStructuredData } from '~/ssr/head/structured-data/getOrganizationStructuredData'
 import type { RenderData } from '~/ssr/types'
@@ -106,8 +107,11 @@ async function getCachedData(manifest: Manifest) {
 
   const chartRange = optionToRange(HOME_CHART_RANGE)
 
+  // The sections that read the databases each fall back to empty on their
+  // own, so one failing query costs its card, not the page. The rest come
+  // from the project config.
   const [
-    summaryData,
+    topL2Projects,
     recentProjects,
     projectCounts,
     recentChanges,
@@ -117,14 +121,33 @@ async function getCachedData(manifest: Manifest) {
     privacy,
     cropsProjects,
   ] = await Promise.all([
-    getL2SummaryData(),
+    orEmpty(
+      'topL2Projects',
+      getL2SummaryData().then((summaryData) =>
+        getTopL2Projects(
+          summaryData.tabs.rollups.slice(0, TOP_L2_PROJECTS_COUNT),
+          summaryData.sevenDayTvsBreakdown,
+        ),
+      ),
+      [],
+    ),
     getRecentProjectsForHome(manifest),
     getHomeProjectCounts(),
     getRecentChangesOverview(),
-    getHomeL2Charts(chartRange),
-    getHomeEthereumCharts(chartRange),
+    orEmpty('l2Charts', getHomeL2Charts(chartRange), {
+      tvs: { chart: [], change: undefined },
+      activity: { chart: [], change: undefined },
+    }),
+    orEmpty('ethereumCharts', getHomeEthereumCharts(chartRange), {
+      activity: { chart: [], pastDayUops: undefined, change: undefined },
+      da: { chart: [], trackedShare: undefined, change: undefined },
+    }),
     getInteropFlowsForHome(interopChains, flowProtocols, helpers),
-    getHomePrivacyData(chartRange),
+    orEmpty('privacy', getHomePrivacyData(chartRange), {
+      tvl: { chart: [], change: undefined },
+      deposits: { chart: [], totalValueUsd: 0, change: undefined },
+      topProtocols: [],
+    }),
     getHomeCropsProjects(manifest),
   ])
 
@@ -133,10 +156,7 @@ async function getCachedData(manifest: Manifest) {
     projectCounts,
     cropsProjects,
     l2Charts,
-    topL2Projects: getTopL2Projects(
-      summaryData.tabs.rollups.slice(0, TOP_L2_PROJECTS_COUNT),
-      summaryData.sevenDayTvsBreakdown,
-    ),
+    topL2Projects,
     privacy,
     ethereumCharts,
     interopFlowChains: interopFlows.chains,
@@ -165,9 +185,15 @@ async function getInteropFlowsForHome(
 ) {
   const chainIds = interopChains.map((chain) => chain.id)
   const protocolIds = protocols.map((protocol) => protocol.id)
+  // Unordered, the graph still draws; the flows query itself is prefetched,
+  // and a failed prefetch only means the client fetches it.
   const order =
     chainIds.length > 0 && protocolIds.length > 0
-      ? await getFlowChainOrderByVolume(chainIds, protocolIds)
+      ? await orEmpty(
+          'interopChainOrder',
+          getFlowChainOrderByVolume(chainIds, protocolIds),
+          chainIds,
+        )
       : chainIds
   const { sortedChains, defaultSelectedFlowChains } = selectDefaultFlowChains(
     interopChains,
@@ -320,4 +346,18 @@ async function getRecentProjectsForHome(
         l2Category: undefined,
       }
     })
+}
+
+/** The section's data, or `empty` (logged) when getting it fails. */
+async function orEmpty<T>(
+  section: string,
+  data: Promise<T>,
+  empty: T,
+): Promise<T> {
+  try {
+    return await data
+  } catch (error) {
+    getLogger().error('Home section failed', { section, error })
+    return empty
+  }
 }

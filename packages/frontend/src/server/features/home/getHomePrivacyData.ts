@@ -11,7 +11,7 @@ import { computeSeriesChange } from './computeSeriesChange'
 
 const TOP_PROTOCOLS_COUNT = 5
 
-/** Carries what the privacy dot needs, so the card can show it per row. */
+/** Carries what the privacy rosette needs, so the card can show it per row. */
 export interface HomePrivacyTopProtocol
   extends Pick<PrivacySummaryEntry, 'adversaries' | 'isUnderReview'> {
   id: string
