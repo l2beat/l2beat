@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ERC20Handler",
+  "critical": true,
+  "description": "Escrow holding ERC20 tokens and ETH for the configured bridge. Only that bridge can execute releases, withdraw funds or configure token mappings. Its own admin can set deposit limits.",
+  "ignoreMethods": ["tokenLimitedMap"],
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set per-token limits on individual and daily deposits."
+        }
+      ]
+    },
+    "_bridgeAddress": {
+      "description": "Bridge authorized to release or withdraw all escrow funds and configure token mappings."
+    }
+  }
+}

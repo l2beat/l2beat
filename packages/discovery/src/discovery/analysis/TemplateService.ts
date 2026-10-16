@@ -30,7 +30,11 @@ import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { hashJsonStable } from '../config/hashJsonStable'
 import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
-import { type Entrypoint, StructureContract } from '../config/StructureConfig'
+import {
+  type Entrypoint,
+  type StructureContract,
+  TemplateStructureContract,
+} from '../config/StructureConfig'
 import { generateStructureHash } from '../output/structureOutput'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
@@ -153,7 +157,7 @@ export class TemplateService {
   }
 
   findMatchingTemplates(
-    sources: ContractSources,
+    sources: Pick<ContractSources, 'sources'>,
     address: ChainSpecificAddress,
   ): string[] {
     const sourceHash = getHashForMatchingFromSources(sources.sources)
@@ -163,6 +167,14 @@ export class TemplateService {
     }
 
     return this.findMatchingTemplatesByHash(sourceHash, address)
+  }
+
+  /** Whether the template's `criteria.json` lets it match `address`, whatever its shapes. */
+  admitsAddress(templateId: string, address: ChainSpecificAddress): boolean {
+    return (
+      criteriaScore(this.getTemplateById(templateId)?.criteria, address) !==
+      undefined
+    )
   }
 
   findMatchingTemplatesByHash(
@@ -175,13 +187,10 @@ export class TemplateService {
     const scored: [string, number][] = []
 
     for (const { templateId, criteria } of candidates) {
-      let score = 1 // implementation hash always matched
-      if ((criteria?.validAddresses ?? []).includes(address)) {
-        score++ // valid-address criterion matched
-      } else if (criteria?.validAddresses?.length ?? 0 > 0) {
-        continue // valid-address criterion not matched
+      const score = criteriaScore(criteria, address)
+      if (score === undefined) {
+        continue
       }
-
       max = Math.max(max, score)
       scored.push([templateId, score])
     }
@@ -230,7 +239,7 @@ export class TemplateService {
     return this.loadContractTemplateBase(
       template,
       'contract',
-      StructureContract,
+      TemplateStructureContract,
     )
   }
 
@@ -606,4 +615,20 @@ function referenceRefreshDetail(
     return `references ${targetProject} but the entrypoint is owned by ${entrypoint.project}`
   }
   return undefined
+}
+
+/**
+ * How well a template whose shape matched fits `address`: 1 for the shape
+ * alone, 2 when its criteria list the address, undefined when they list
+ * other addresses only.
+ */
+function criteriaScore(
+  criteria: ShapeCriteria | undefined,
+  address: ChainSpecificAddress,
+): number | undefined {
+  const listed = criteria?.validAddresses ?? []
+  if (listed.includes(address)) {
+    return 2
+  }
+  return listed.length > 0 ? undefined : 1
 }

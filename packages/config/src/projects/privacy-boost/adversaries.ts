@@ -70,11 +70,11 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning',
+      sentiment: 'bad',
       exposureShort:
-        'Anyone on your network path sees when your wallet deposits and when the app contacts the operator, and can match both to the chain.',
-      exposureContinued: 'The SDK has no Tor or proxy setting.',
-      advice: 'Route the app through Tor with system-wide tools.',
+        "The SDK's core is closed source with no open alternative, so what it sends, and where, is up to the operator and can change with any release.",
+      exposureContinued:
+        "Today, anyone on the user's network path sees their wallet deposits and app contacts with the operator, and can match both to the chain. The SDK has no Tor or proxy setting, and the operator's server tells it which endpoints to use.",
       interior: {
         ...INTERIOR,
         linkage: {
@@ -88,6 +88,11 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
           url: 'https://base.privacyboost.io/api/v1/info',
         },
         { title: 'SDK 1.2.5, configured with one server URL', url: SDK },
+        {
+          title:
+            'The compiled core builds and sends every request, its Rust source is unpublished',
+          url: SDK + '?activeTab=code',
+        },
       ],
     },
     privilegedInsider: {
@@ -118,7 +123,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       exposureShort:
         "Every note wraps its key to the enclave's long-lived elliptic-curve public key as well as the receiver's.",
       exposureContinued:
-        'Whoever breaks elliptic-curve cryptography or obtains that one key decrypts the entire history.',
+        'Whoever breaks elliptic-curve cryptography decrypts the entire history.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

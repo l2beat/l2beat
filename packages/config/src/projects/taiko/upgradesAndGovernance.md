@@ -5,4 +5,4 @@ A threshold of {{standardProposalThreshold}} approving Security Council members 
 Emergency proposals are encrypted at proposal time and can only be read by Security Council members. If approved by {{emergencyProposalThreshold}} Security Council members, they can be immediately decrypted and executed.
 
 # Proof system and operators
-The proof system currently does not require zk proofs to validate state transitions and state can be finalized with SGX proofs only. The optional zk verifier contracts can be upgraded by Multisigs. Operator roles (sequencer, proposer) are closed and the whitelist is managed by the Taiko Multisig and related EOAs.
+A separate {{risc0SafeStats}} Safe controls shared RISC0 verifier routes through a {{risc0TimelockDelay}} timelock. It can also freeze RISC0 verifiers immediately. Operator roles (sequencer, proposer) are closed and the whitelist is managed by the Taiko Multisig and related EOAs.

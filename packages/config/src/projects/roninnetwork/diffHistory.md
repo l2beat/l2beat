@@ -1,3 +1,247 @@
+Generated with discovered.json: 0x7e3078ce6b43065ca97722907309ec0c24c6650c
+
+# Diff at Fri, 16 Oct 2026 09:37:50 GMT:
+
+- id: 28636555
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791965839
+- current timestamp: 1791965839
+
+## Description
+
+Ossification review: legacy gateway in the perimeter, RISC Zero router selectors MEDIUM, role holders MEDIUM.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791965839 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract MainchainBridgeManager (eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) [N/A] {
+    +++ description: Governance and proxy-admin contract for the legacy MainchainGateway bridge. Holds the operator/governor set, tallies stake-weighted votes for bridge proposals (operator rotations, threshold changes, withdrawals).
+      fieldMeta.getThreshold.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.getGovernors:
++        {"severity":"MEDIUM"}
+      fieldMeta.getFullBridgeOperatorInfos:
++        {"severity":"MEDIUM"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract MainchainGateway (eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) [N/A] {
+    +++ description: Legacy multi-sig-secured Ronin bridge contract holding the L1 side of deposits made before the April 2025 Chainlink CCIP migration. Still custodies residual user balances (ETH backing legacy WETH on Ronin, the deprecated WBTC contract, and dust). Withdrawals authorised by the Ronin BridgeOperator stake-weighted threshold via MainchainBridgeManager.
++++ severity: MEDIUM
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96"]},"WITHDRAWAL_UNLOCKER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4","eth:0xE5EB222996967BE79468C28bA39D665fd96E8b30","eth:0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0","eth:0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192"]},"0x600e5f1c60beb469a3fa6dd3814a4ae211cc6259a6d033bae218a742f2af01d3":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"]}}
++++ severity: HIGH
+      values.bridgeManager:
++        "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"
+      fieldMeta.getThreshold.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.getHighTierVoteWeightThreshold.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.emergencyPauser:
++        {"severity":"MEDIUM"}
+      fieldMeta.bridgeManager:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      fieldMeta.verifier_310fe598.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_9f39696c.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_f536085a.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_bb001d44.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_73c457ba.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_242f9d5b.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        ["0x435553544f4d5f4741535f544f4b454e00000000000000000000000000000000"]
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract PauseEnforcer (eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062) [N/A] {
+    +++ description: Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency.
++++ severity: MEDIUM
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96","eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"]},"SENTRY_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x944b1282cb9B3e62794f38733F3B6336536c30cc","eth:0x299F344F0c6cC03cbb250E0f2dDdCD22Ae267c0c","eth:0xcb8225AA9D1029Af2E8cA537027E26bbe3056353","eth:0x660Ef9c5a8a92070b03fc5BBC2AC006D0B0Ead33","eth:0x47870D35cdfF193a428C98a3468c833c23488393"]}}
+      critical:
++        true
+      fieldMeta:
++        {"emergency":{"severity":"MEDIUM"},"accessControl":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MultiSigWalletWithDailyLimit (eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96) [N/A]
+    +++ description: None
+```
+
+Generated with discovered.json: 0x9154f48aa464044a4a7389279ddfb7e3056c86cc
+
+# Diff at Wed, 14 Oct 2026 08:18:34 GMT:
+
+- id: de384b20
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1791533505
+- current timestamp: 1791965839
+
+## Description
+
+RISC Zero verifier owner Safe: ownership transfer of the five RiscZeroVerifierEmergencyStops to an EOA started (`pendingOwner`), and Proposer, Executor and Canceller role grants to the same EOA scheduled on the TimelockController, 3d delay.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.21:
++        {"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.22:
++        {"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":1,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.23:
++        {"id":"0xb88d38cc5995760c99a754e1fef6919fc7ee643d4de92b098d916b906b359910","index":2,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
 Generated with discovered.json: 0x88de7dabcce2e0446a0c145c1461305b986e4258
 
 # Diff at Fri, 09 Oct 2026 08:13:19 GMT:

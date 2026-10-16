@@ -23,6 +23,7 @@
       "edit": ["map", ["shape", "startBatchIndex", "verifier"]]
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

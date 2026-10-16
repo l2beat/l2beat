@@ -46,4 +46,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   katana: 'https://katanascan.com',
   robinhood: 'https://robinhoodchain.blockscout.com',
   bsc: 'https://bscscan.com',
+  sxnetwork: 'https://explorerl2.sx.technology',
+  earnm: 'https://earnm-mainnet.explorer.alchemy.com',
+  edgechain: 'https://edge-mainnet.explorer.alchemy.com',
 }

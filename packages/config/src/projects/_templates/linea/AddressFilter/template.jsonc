@@ -32,6 +32,7 @@
       }
     },
     "defaultAdminAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"

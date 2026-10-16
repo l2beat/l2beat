@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OffchainResolver",
+  "description": "Immutable ENS CCIP-Read resolver used by Fluidkey. Every query redirects to a configurable gateway and accepts the returned ENS record if it is unexpired and signed by an accepted signer. It does not verify that a returned payment address was derived for the named recipient.",
+  "category": "core",
+  "fields": {
+    "url": {
+      "description": "URL used for offchain ENS resolution. The owner can replace it immediately."
+    },
+    "owner": {
+      "description": "Owner of the resolver.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the accepted signers and gateway URL immediately, or transfer resolver ownership."
+        }
+      ]
+    },
+    "signers": {
+      "description": "Addresses whose signatures authenticate offchain ENS answers.",
+      "handler": {
+        "type": "event",
+        "add": {
+          "event": "NewSigners"
+        },
+        "remove": {
+          "event": "RemovedSigner"
+        },
+        "select": "signers",
+        "flatten": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign arbitrary offchain ENS answers, including payment addresses accepted by the resolver."
+        }
+      ]
+    }
+  }
+}

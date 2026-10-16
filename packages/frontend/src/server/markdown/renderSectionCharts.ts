@@ -6,14 +6,11 @@ import { TRACKED_TXS_SUBTYPE_TITLES } from '~/components/projects/sections/costs
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
 import { anomalySubtypeToLabel } from '~/components/projects/sections/liveness/anomalySubtypeToLabel'
 import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
+import type { PrivacyAnonymitySetSectionProps } from '~/components/projects/sections/privacy/PrivacyAnonymitySetSection'
 import {
-  ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
-  anonymitySetByHoldingDurationDescription,
-  anonymitySetHistoricDescription,
+  anonymitySetCopy,
   COSTS_DESCRIPTION,
-  DA_BRIDGE_LIVENESS_DESCRIPTION,
   DATA_POSTED_DESCRIPTION,
-  EIGENLAYER_DATA_SOURCE,
   LAST_30_DAY_ANOMALIES_DESCRIPTION,
   LIVENESS_DESCRIPTION,
   THROUGHPUT_DESCRIPTION,
@@ -87,14 +84,8 @@ export function renderDataPostedSection(
   >,
   level: number,
 ) {
-  const allLayers = [...props.pastDaLayers, ...props.currentDaLayers]
   return joinBlocks([
     `${DATA_POSTED_DESCRIPTION} ${describeDaLayers(props)}`.trimEnd(),
-    renderDataSource(
-      allLayers.some((layer) => layer.name === 'EigenDA')
-        ? EIGENLAYER_DATA_SOURCE
-        : undefined,
-    ),
     htmlPagePointer('The interactive data posted chart is shown', props.id),
     subsection(
       level,
@@ -116,13 +107,12 @@ export function renderLivenessSection(
     | 'hasTrackedContractsChanged'
     | 'trackedTransactions'
     | 'isArchived'
-    | 'isForDaBridge'
   >,
   level: number,
 ) {
   const ongoing = props.anomalies.filter(isAnomalyOngoing)
   return joinBlocks([
-    props.isForDaBridge ? DA_BRIDGE_LIVENESS_DESCRIPTION : LIVENESS_DESCRIPTION,
+    LIVENESS_DESCRIPTION,
     renderTrackedTxsOutage(),
     props.isArchived
       ? ''
@@ -158,41 +148,37 @@ export function renderThroughputSection(
 
 /** The explanations around the two charts; the charts load in the browser. */
 export function renderPrivacyAnonymitySetSection(
-  props: { id: ProjectSectionId },
+  props: Pick<PrivacyAnonymitySetSectionProps, 'id' | 'anonymitySetType'>,
   level: number,
 ) {
   const days = ANONYMITY_SET_WINDOW_DAYS
+  const copy = anonymitySetCopy(props.anonymitySetType, days)
   return joinBlocks([
     subsection(
       level,
       `${days} day historic anonymity set`,
-      joinBlocks([
-        anonymitySetHistoricDescription(days),
-        ANONYMITY_SET_LOOKS_BACKWARDS_NOTE,
-      ]),
+      joinBlocks([copy.historicDescription, copy.looksBackwardsNote]),
     ),
-    subsection(
-      level,
-      'Estimated anonymity set by holding duration',
-      anonymitySetByHoldingDurationDescription(days),
-    ),
+    subsection(level, copy.durationTitle, copy.durationDescription),
     htmlPagePointer('The interactive charts are shown', props.id),
   ])
 }
 
 /**
- * A project whose tracking has all ended has no current layer: the HTML
- * sentence then names nothing after "posts data to", so it is reworded.
+ * A project whose tracking has all ended has no current layer. It may still
+ * post somewhere we don't track, so the sentence says we stopped tracking.
  */
 function describeDaLayers({
   currentDaLayers,
   pastDaLayers,
 }: Pick<DataPostedSectionProps, 'currentDaLayers' | 'pastDaLayers'>) {
   const links = (layers: DataPostedSectionProps['currentDaLayers']) =>
-    layers.map((layer) => link(layer.name, layer.href)).join(', ')
+    layers
+      .map((layer) => (layer.href ? link(layer.name, layer.href) : layer.name))
+      .join(', ')
   if (currentDaLayers.length === 0) {
     return pastDaLayers.length > 0
-      ? `The project no longer posts data; previously it posted to ${links(pastDaLayers)}.`
+      ? `We no longer track where the project posts data; previously it posted to ${links(pastDaLayers)}.`
       : ''
   }
   const previously =
@@ -333,36 +319,22 @@ function formatDaTrackingConfig(config: DaTrackingConfig) {
   return `DA layer ${config.daLayerName}: ${details.join('; ')}`
 }
 
-/** EigenDA tracking is bounded by time, the other layers by Ethereum block. */
 function describeDaTrackingRange(config: DaTrackingConfig) {
-  return config.type === 'eigen-da'
-    ? `from ${formatUtcDateTime(config.sinceTimestamp)} to ${config.untilTimestamp ? formatUtcDateTime(config.untilTimestamp) : 'now'}`
-    : `from block ${config.sinceBlock} to ${config.untilBlock ?? 'now'}`
+  return `from block ${config.sinceBlock} to ${config.untilBlock ?? 'now'}`
 }
 
 function isDaTrackingHistorical(config: DaTrackingConfig) {
-  return config.type === 'eigen-da'
-    ? !!config.untilTimestamp
-    : !!config.untilBlock
+  return !!config.untilBlock
 }
 
-/** What identifies the project's data on each layer. */
+/** What identifies the project's blobs on Ethereum. */
 function describeDaTrackingTarget(config: DaTrackingConfig): string[] {
-  switch (config.type) {
-    case 'ethereum':
-      return compact([
-        `inbox: ${etherscanLink(config.inbox)}`,
-        config.sequencers?.length &&
-          `sequencers: ${config.sequencers.map(etherscanLink).join(', ')}`,
-        config.topics?.length && `topics: ${config.topics.join(', ')}`,
-      ])
-    case 'celestia':
-      return [`namespace: ${config.namespace}`]
-    case 'avail':
-      return [`app IDs: ${config.appIds.join(', ')}`]
-    case 'eigen-da':
-      return [`customer ID: ${config.customerId}`]
-  }
+  return compact([
+    `inbox: ${etherscanLink(config.inbox)}`,
+    config.sequencers?.length &&
+      `sequencers: ${config.sequencers.map(etherscanLink).join(', ')}`,
+    config.topics?.length && `topics: ${config.topics.join(', ')}`,
+  ])
 }
 
 /** The HTML links tracked addresses to Etherscan. */

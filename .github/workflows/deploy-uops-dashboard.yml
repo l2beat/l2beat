@@ -1,0 +1,35 @@
+name: Deploy uops-dashboard
+
+concurrency:
+  group: uops-dashboard-deployment
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force deployment"
+        required: true
+        default: true
+        type: boolean
+  push:
+    branches:
+      - main
+
+jobs:
+  affected:
+    # Jobs below run whenever this one doesn't succeed, so a forced run or a
+    # detection error still deploys.
+    if: github.event.inputs.force != 'true'
+    uses: ./.github/workflows/affected-packages.yml
+
+  # Coolify builds the app from source, so there is no image to build here.
+  deploy:
+    needs: affected
+    if: ${{ !cancelled() && (needs.affected.result != 'success' || contains(fromJSON(needs.affected.outputs.packages || '[]'), '@l2beat/uops-dashboard')) }}
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_UOPS_DASHBOARD_ID }}

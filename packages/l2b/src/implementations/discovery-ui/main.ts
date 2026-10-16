@@ -9,7 +9,6 @@ import {
 } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
-import { config as dotenv } from 'dotenv'
 import express, { type Express } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
@@ -107,7 +106,6 @@ const diffHistoryQuerySchema = z.object({
 })
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
-  dotenv()
   const port = process.env.PORT ?? 2021
   const app = createDiscoveryUiApp({ readonly })
 

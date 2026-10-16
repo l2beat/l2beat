@@ -36,6 +36,7 @@
       "severity": "LOW"
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -48,6 +49,29 @@
     },
     "eip1559Denominator": {
       "description": "volatility param: lower denominator -> quicker fee changes on L2"
+    },
+    // setFeature (ProxyAdmin or its owner, no upgrade) decides where ETH is held
+    // (ETH_LOCKBOX), whether ETH deposits and withdrawals work (CUSTOM_GAS_TOKEN)
+    // and the super-root proof path (INTEROP).
+    "enabledFeatures": {
+      "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "feature",
+        "add": {
+          "event": "event FeatureSet(bytes32 indexed feature, bool indexed enabled)",
+          "where": ["=", "#enabled", true]
+        },
+        "remove": {
+          "event": "event FeatureSet(bytes32 indexed feature, bool indexed enabled)",
+          "where": ["!=", "#enabled", true]
+        }
+      }
+    },
+    // the CUSTOM_GAS_TOKEN feature flag, a twin of enabledFeatures
+    "isCustomGasToken": {
+      "severity": "HIGH"
     }
   },
   "ignoreInWatchMode": ["scalar", "overhead"],

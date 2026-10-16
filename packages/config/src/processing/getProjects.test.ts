@@ -43,14 +43,6 @@ describe('getProjects', () => {
         problems.push(`${project.id}: duplicate id`)
       }
       ids.add(project.id)
-      if (project.slug === 'near') {
-        // This project is an exception.
-        // It should most likely be merged with its duplicate
-        // Right now it only works because refactored projects are resolved
-        // first when querying by slug
-        continue
-      }
-
       if (slugs.has(project.slug)) {
         problems.push(`${project.id}: duplicate slug ${project.slug}`)
       }
@@ -203,13 +195,7 @@ describe('getProjects', () => {
   })
 
   describe('daLayer', () => {
-    const SUPPORTED_ECONOMIC_SECURITY_PROJECTS = [
-      'ethereum',
-      'celestia',
-      'avail',
-      'near-da',
-      'espresso',
-    ]
+    const SUPPORTED_ECONOMIC_SECURITY_PROJECTS = ['ethereum']
 
     it('every economicSecurity is supported in BE code', () => {
       const unsupported = projects
@@ -219,13 +205,7 @@ describe('getProjects', () => {
       expect(unsupported).toEqual([])
     })
 
-    const SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS = [
-      'ethereum',
-      'celestia',
-      'avail',
-      'near-da',
-      'espresso',
-    ]
+    const SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS = ['ethereum']
 
     it('every dynamic type validators is supported in BE code', () => {
       const unsupported = projects
@@ -489,14 +469,28 @@ describe('getProjects', () => {
           }
         }
 
-        // Every state but partially-attributed means the set is not tracked.
-        const state = privacyInfo.anonymitySet?.type
-        if (state === 'partially-attributed') {
+        // Partially attributed sets are tracked through buckets. Every other
+        // state replaces them: key registrations are tracked through a
+        // registry, and the remaining states are not tracked at all.
+        const anonymitySet = privacyInfo.anonymitySet
+        if (anonymitySet?.type === 'partially-attributed') {
           if (configuredBuckets === 0) {
-            problems.push(`${project.id}: ${state} without buckets`)
+            problems.push(`${project.id}: ${anonymitySet.type} without buckets`)
           }
-        } else if (state !== undefined && configuredBuckets !== 0) {
-          problems.push(`${project.id}: ${state} with buckets`)
+        } else if (anonymitySet !== undefined && configuredBuckets !== 0) {
+          problems.push(`${project.id}: ${anonymitySet.type} with buckets`)
+        }
+
+        if (anonymitySet?.type === 'key-registrations') {
+          const contracts = Object.values(project.contracts?.addresses ?? {})
+            .flat()
+            .map((contract) => contract.address)
+          if (!contracts.includes(anonymitySet.registry)) {
+            problems.push(`${project.id}: registry is not a project contract`)
+          }
+          if (anonymitySet.sinceTimestamp <= 0) {
+            problems.push(`${project.id}: non-positive registry sinceTimestamp`)
+          }
         }
       }
       expect(problems).toEqual([])
@@ -871,17 +865,11 @@ describe('getProjects', () => {
       (p.daTrackingConfig ?? []).map((config) => ({ projectId: p.id, config })),
     )
 
-    // All new projects should have non-zero sinceBlock/sinceTimestamp - it will make sync more efficient
-    it('every project has non-zero sinceBlock/sinceTimestamp', () => {
+    // All new projects should have non-zero sinceBlock - it will make sync more efficient
+    it('every project has non-zero sinceBlock', () => {
       const invalid = trackingConfigs
         .filter(({ projectId }) => !excluded.has(projectId))
-        .filter(({ config }) =>
-          config.type === 'ethereum' ||
-          config.type === 'avail' ||
-          config.type === 'celestia'
-            ? config.sinceBlock <= 0
-            : config.sinceTimestamp <= 0,
-        )
+        .filter(({ config }) => config.sinceBlock <= 0)
         .map(({ projectId }) => projectId)
       expect(invalid).toEqual([])
     })
@@ -890,34 +878,16 @@ describe('getProjects', () => {
     // so a chain-prefixed address (e.g. 'eth:0x...') silently matches nothing
     it('every ethereum inbox and sequencer is a plain unprefixed address', () => {
       const invalid = trackingConfigs.flatMap(({ projectId, config }) =>
-        config.type === 'ethereum'
-          ? [config.inbox, ...(config.sequencers ?? [])]
-              .filter((a) => EthereumAddress.tryParse(a) === undefined)
-              .map((a) => `${projectId} ${a}`)
-          : [],
+        [config.inbox, ...(config.sequencers ?? [])]
+          .filter((a) => EthereumAddress.tryParse(a) === undefined)
+          .map((a) => `${projectId} ${a}`),
       )
       expect(invalid).toEqual([])
     })
 
-    it('every appId is unique for Avail projects', () => {
-      const appIds = new Map<string, string>()
-      const duplicates: string[] = []
-      for (const { projectId, config } of trackingConfigs) {
-        if (config.type !== 'avail') continue
-        for (const appId of config.appIds) {
-          const owner = appIds.get(appId)
-          if (owner !== undefined) {
-            duplicates.push(`${appId} [${projectId}, ${owner}]`)
-          }
-          appIds.set(appId, projectId)
-        }
-      }
-      expect(duplicates).toEqual([])
-    })
-
-    // A project that posts blobs without an ethereum tracking config shows up
-    // as an unknown blob sender on the Ethereum DA page (e.g. Nova after its
-    // switch to blobs, Fluent since launch).
+    // A project that posts blobs without a tracking config shows up as an
+    // unknown blob sender on the blobs page (e.g. Nova after its switch to
+    // blobs, Fluent since launch).
     it('every live project with Ethereum blobs DA has ethereum tracking', () => {
       const missing = projects
         // L3s inherit the label from their host chain, which posts for them
@@ -933,25 +903,9 @@ describe('getProjects', () => {
               da.layer.secondLine?.includes('Blobs'),
           ),
         )
-        .filter(
-          (p) => !(p.daTrackingConfig ?? []).some((c) => c.type === 'ethereum'),
-        )
+        .filter((p) => (p.daTrackingConfig ?? []).length === 0)
         .map((p) => p.id)
       expect(missing).toEqual([])
-    })
-
-    it('every namespace is unique for Celestia projects', () => {
-      const namespaces = new Map<string, string>()
-      const duplicates: string[] = []
-      for (const { projectId, config } of trackingConfigs) {
-        if (config.type !== 'celestia') continue
-        const owner = namespaces.get(config.namespace)
-        if (owner !== undefined) {
-          duplicates.push(`${config.namespace} [${projectId}, ${owner}]`)
-        }
-        namespaces.set(config.namespace, projectId)
-      }
-      expect(duplicates).toEqual([])
     })
   })
 

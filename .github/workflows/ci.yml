@@ -202,10 +202,31 @@ jobs:
       - name: Test
         run: pnpm run test --reporter min
 
-  test-e2e:
-    name: E2E tests
+  # A runner's four CPUs limit how many tests can run at once without slowing
+  # each other down, so the suites are spread over runners instead
+  # (see packages/frontend/e2e/README.md)
+  test-e2e-shard:
+    name: E2E tests (${{ matrix.name }})
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Chromium 1/2
+            args: --project chromium --shard 1/2
+          - name: Chromium 2/2
+            args: --project chromium --shard 2/2
+          # Ratchets, one at a time on a runner of their own
+          - name: perf
+            args: --project perf --no-deps
+            webkit: true
+          - name: blobs perf 1/3
+            args: --project "blobs perf" --no-deps --shard 1/3
+          - name: blobs perf 2/3
+            args: --project "blobs perf" --no-deps --shard 2/3
+          - name: blobs perf 3/3
+            args: --project "blobs perf" --no-deps --shard 3/3
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -222,19 +243,38 @@ jobs:
             uses: ./.github/actions/setup-playwright
             with:
               package-dir: packages/frontend
+              webkit: ${{ matrix.webkit || false }}
 
-          - name: Build dependencies
-            run: pnpm build:dependencies:frontend
+          - name: Build frontend
+            run: |
+              pnpm build:dependencies:frontend
+              pnpm --dir packages/frontend build
 
       - name: Run e2e tests
-        run: |
-          cd packages/frontend
-          pnpm test:e2e
+        working-directory: packages/frontend
+        run: pnpm exec playwright test ${{ matrix.args }}
 
+  # Branch protection requires this check; it passes once every shard has
+  test-e2e:
+    name: E2E tests
+    needs: test-e2e-shard
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check that every shard passed
+        run: test "${{ needs.test-e2e-shard.result }}" = success
+
+  # The page suite is the long one, so it is split over two runners; the
+  # backend suite, 20 s on its own, follows the second half
   test-e2e-discoui:
-    name: DiscoUI E2E tests
+    name: DiscoUI E2E tests (${{ matrix.shard }}/2)
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -255,16 +295,14 @@ jobs:
           - name: Build dependencies
             run: pnpm build:dependencies:l2b
 
-      # Independent: the backend suite listens on a random port, the page
-      # suite on its own dev server
-      - parallel:
-          - name: Run backend e2e tests
-            working-directory: packages/l2b
-            run: pnpm test:e2e
+      - name: Run page e2e tests
+        working-directory: packages/protocolbeat
+        run: pnpm test:e2e --shard ${{ matrix.shard }}/2
 
-          - name: Run page e2e tests
-            working-directory: packages/protocolbeat
-            run: pnpm test:e2e
+      - name: Run backend e2e tests
+        if: matrix.shard == 2
+        working-directory: packages/l2b
+        run: pnpm test:e2e
 
   biome:
     name: Lint & Format

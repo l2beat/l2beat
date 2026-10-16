@@ -1,3 +1,156 @@
+Generated with discovered.json: 0xca1bf7d0789c204503397c391eacf952af19f797
+
+# Diff at Fri, 16 Oct 2026 05:36:54 GMT:
+
+- id: e8461fd1
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791619122
+- current timestamp: 1791619122
+
+## Description
+
+Ossification review: operator MEDIUM, the 2021 ERC20Tornado rewrite counts as a reviewed code event.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791619122 (main branch discovery), not current.
+
+```diff
+    contract Pool_1000_USDT (eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 USDT deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_0.1_ETH (eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc) [tornado-cash/TornadoCash_Eth_01] {
+    +++ description: Fixed-denomination Tornado Cash pool for 0.1 ETH deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_100_USDT (eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 USDT deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_5K_cDAI (eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 5K cDAI deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_1000_USDC (eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 USDC deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_1_ETH (eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1 ETH deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_10_ETH (eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10 ETH deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_100_ETH (eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 ETH deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_100_DAI (eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 DAI deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_100_USDC (eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 USDC deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Pool_1000_DAI (eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 DAI deposits.
+      fieldMeta.operator.severity:
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x0235290d511905d26887355f5fc63968fb7e80a5
+
+# Diff at Sat, 10 Oct 2026 08:00:08 GMT:
+
+- id: 52c48b32
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@22c541703ff2e8c94ffcd7f942a71969eee3e84d block: 1791454331
+- current timestamp: 1791619122
+
+## Description
+
+The RelayerRegistry description now says that the app lists registered relayers while the pools pay any relayer. Governance gets two watched fields for tornadocash.eth, its ENS resolver and the IPFS contenthash of the app it pins.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791454331 (main branch discovery), not current.
+
+```diff
+    contract RelayerRegistry (eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2) [tornado-cash/RelayerRegistry] {
+    +++ description: Upgradeable registry of relayers, their worker addresses and their staked TORN. The app lists the relayers registered here, while the pools pay any relayer a withdrawal names.
+      description:
+-        "Upgradeable registry that tracks registered relayers, their worker addresses, and their staked TORN balances used to service withdrawals. Relayers registered here could be queried by a tornadocash frontend to facilitate discovery for users, but users are free to use any (unregistered) relayer at withdrawal time."
++        "Upgradeable registry of relayers, their worker addresses and their staked TORN. The app lists the relayers registered here, while the pools pay any relayer a withdrawal names."
+    }
+```
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
++++ description: IPFS contenthash of tornadocash.eth, the app that governance pins.
++++ severity: HIGH
+      values.appContenthash:
++        "0xe30101701220c3a350e49a11cfc9cab672331d51ad1b723e0d3db9cd73a316ebaa7788595fe8"
++++ description: Resolver set for tornadocash.eth in the ENS registry.
++++ severity: HIGH
+      values.appEnsResolver:
++        "eth:0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41"
+      fieldMeta.appEnsResolver:
++        {"severity":"HIGH","description":"Resolver set for tornadocash.eth in the ENS registry."}
+      fieldMeta.appContenthash:
++        {"severity":"HIGH","description":"IPFS contenthash of tornadocash.eth, the app that governance pins."}
+    }
+```
+
 Generated with discovered.json: 0x915be121c3bde25ede63f3145adfb76ff7fc19a3
 
 # Diff at Thu, 08 Oct 2026 10:13:17 GMT:

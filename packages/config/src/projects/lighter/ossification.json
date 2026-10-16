@@ -155,6 +155,13 @@
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 19, before discovery coverage)."
     },
     {
+      "timestamp": 1746235007,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x80cc5eaeee5c03d6fbd26a0f1b64784f82aff94c8e2ac138e8630c56b6f25beb",
+      "reason": "Lighter Multisig, the security council of the UpgradeGatekeeper, raised its threshold from 2 to 3 (ChangedThreshold)."
+    },
+    {
       "timestamp": 1746578783,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
@@ -301,6 +308,22 @@
       "transaction": "0xbe4b9fb433ac2a73f745bc4f9685b4bf0a495bccdd2f59457441e3d80301016c",
       "updateId": "1e1f3162",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 37)."
+    },
+    {
+      "timestamp": 1767804407,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0x66eeeda6e1543c02dfa224c19090b1c02e9a16205ea0ae894368be570a332f09",
+      "updateId": "ad5653e7",
+      "reason": "Lighter Multisig 2, the UpgradeGatekeeper master, went from a 2/3 to a 3/5 Safe (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1767804407,
+      "type": "state",
+      "contract": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+      "transaction": "0x66eeeda6e1543c02dfa224c19090b1c02e9a16205ea0ae894368be570a332f09",
+      "updateId": "ad5653e7",
+      "reason": "Lighter Multisig 2, the network governor, went from a 2/3 to a 3/5 Safe (ChangedThreshold)."
     },
     {
       "timestamp": 1768173383,
@@ -503,6 +526,14 @@
       "reason": "Replaced a Lighter rollup implementation (ZkLighter/AdditionalZkLighter) that holds all user funds (UpgradeGatekeeper version 57)."
     },
     {
+      "timestamp": 1778870699,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "transaction": "0xdc604af05485bffd195ec19b51556661a4c73514eee505d79abda7cbd8195eec",
+      "updateId": "dccd34b3",
+      "reason": "Lighter Multisig, the security council of the UpgradeGatekeeper, raised its threshold from 3 of 6 to 4 of 7 (ChangedThreshold)."
+    },
+    {
       "timestamp": 1779033803,
       "type": "code",
       "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
@@ -693,6 +724,14 @@
       "transaction": "0xa23c2cbf56da3c129a56b5691a289b621d81b0da8946983e0b33898501322723",
       "updateId": "104a582f",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 74)."
+    },
+    {
+      "timestamp": 1791726419,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "transaction": "0x4d19276f7c56bbb0b723c97cdda41bb2fb3b3e84bb3467ebd614955fa366b624",
+      "updateId": "eff7f903",
+      "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 75)."
     }
   ]
 }

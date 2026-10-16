@@ -15,6 +15,7 @@
     "arb1:0xbF5041Fc07E1c866D15c749156657B8eEd0fb649",
     "arb1:0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d",
     "arb1:0x1D62fFeB72e4c360CcBbacf7c965153b00260417",
+    "arb1:0x096760F208390250649E3e8763348E783AEF5562",
     "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
     "eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
     "eth:0xcEe284F754E854890e311e3280b767F80797180d",
@@ -22,7 +23,8 @@
     "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
     "eth:0xD3B5b60020504bc3489D6949d545893982BA3011",
     "eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
-    "eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A"
+    "eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
+    "eth:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
   ],
   "names": {
     "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": "CoreGovernor",
@@ -38,6 +40,7 @@
     "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548": "L2ArbitrumToken",
     "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": "L2GatewayRouter",
     "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe": "L2ERC20Gateway",
+    "arb1:0x096760F208390250649E3e8763348E783AEF5562": "L2CustomGateway",
     "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B": "L2WethGateway",
     "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1": "L2WETH",
     "arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E": "L2ARBGateway",
@@ -56,11 +59,14 @@
     "eth:0xcEe284F754E854890e311e3280b767F80797180d": "L1CustomGateway",
     "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db": "L1WethGateway",
     "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27": "L1ARBGateway",
+    "eth:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1": "L1ArbitrumToken",
     "eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": "L1ERC20Gateway",
     "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": "ArbitrumProxyAdmin",
     "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "UpgradeExecutorAdmin",
     "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1Timelock",
     "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0": "RollupProxy",
+    "eth:0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A": "ClassicRollup",
+    "eth:0x171a2624302775eF943f4f62E76fd22A6813d7c4": "ClassicRollupProxyAdmin",
     "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": "SequencerInbox",
     "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": "Inbox",
     "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a": "OutboxV0",
@@ -87,45 +93,12 @@
       // `rollup` to the BoLD RollupProxy.
       "critical": { "untilTimestamp": 1739368811 }
     },
-    // Governance timelocks: the minimum delay defines the reaction window
-    // users have before a passed proposal executes — a delay change alters
-    // the security conditions of every governed contract.
-    "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
-      "fields": {
-        "getMinDelay": {
-          "severity": "HIGH",
-          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on L1."
-        }
-      }
-    },
-    "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": {
-      "fields": {
-        "getMinDelay": {
-          "severity": "HIGH",
-          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on Arbitrum One."
-        }
-      }
-    },
-    // Changing the constitutional quorum changes the conditions under which
-    // core (upgrade-capable) proposals pass.
-    "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": {
-      "fields": {
-        "l2CoreQuorumPercent": {
-          "severity": "HIGH",
-          "description": "The percentage of total Delegated Voting Power (DVP) required to pass a constitutional proposal."
-        }
-      }
+    // retired pre-BoLD ChallengeManager of that RollupProxy, same retirement
+    "eth:0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": {
+      "critical": { "untilTimestamp": 1739368811 }
     },
     "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": {
       "fields": {
-        // EXECUTOR_ROLE members hold undelayed, unrestricted upgrade authority
-        // over every L2 proxy. The member list is role-holder identity (spec:
-        // LOW in the UpgradeExecutor template), so it does not reset the clock
-        // by itself. MEDIUM puts any change under review, and a mechanism
-        // change (new authority structure, not a Safe swap) is recorded in
-        // ossification.json, like the 2023-09-17 migration to the elected
-        // Security Council and SecurityCouncilManager.
-        "executors": { "severity": "MEDIUM" },
         // Seeds the ArbOS 61 transaction-filtering precompile (0x..74) as a
         // relative and applies the shared orbitstack/ArbFilteredTransactionsManager
         // template (censored-tx counts + authorized filterer set). The feature is
@@ -191,18 +164,10 @@
       "ignoreRelatives": ["destination"]
     },
     "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": {
-      "fields": {
-        // updateRollupAddress() re-points who may call updateSendRoot(): a
-        // swapped rollup can insert arbitrary withdrawal roots. State-only.
-        "rollup": { "severity": "HIGH" }
-      },
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions."
     },
     "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
       "fields": {
-        // updateRollupAddress() re-points the bridge's trusted rollup without
-        // any implementation upgrade; the rollup gates outbox/inbox authority.
-        "rollup": { "severity": "HIGH" },
         "mainOutboxAddress": {
           "handler": {
             "type": "call",
@@ -213,8 +178,47 @@
         }
       }
     },
+    // Classic (pre-Nitro) rollup, still the `rollup` of OutboxV0 and OutboxV1,
+    // which stay allowed outboxes in the Bridge: new code here can insert
+    // withdrawal roots via processOutgoingMessages and drain the Bridge. It
+    // also owns the OutboxEntry beacon.
     "eth:0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A": {
-      "ignoreDiscovery": true
+      "critical": true,
+      "category": "spam",
+      // paused since the Nitro migration: do not follow the retired stack
+      "ignoreRelatives": [
+        "challengeFactory",
+        "delayedBridge",
+        "nodeFactory",
+        "outbox",
+        "rollupEventBridge",
+        "sequencerBridge",
+        "stakeToken"
+      ],
+      // duplicates of getFacets, and node lists of the retired protocol
+      "ignoreMethods": [
+        "getAdminFacet",
+        "getUserFacet",
+        "getNode",
+        "getNodeHash"
+      ],
+      "fields": {
+        // admin and user facet logic, swappable by the owner (setFacets)
+        "getFacets": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
+      }
+    },
+    // facet master copies of the classic rollup, storage is unused
+    "eth:0x3CcB27FD59398a015a1eb465582A934fbF318214": {
+      "ignoreMethods": ["getNode", "getNodeHash"]
+    },
+    "eth:0xDBE5c009095169D3de4a8D1C70E319fE647A3DBf": {
+      "ignoreMethods": ["currentRequiredStake", "getNode", "getNodeHash"]
+    },
+    // ProxyAdmin of the classic rollup: can swap its implementation.
+    "eth:0x171a2624302775eF943f4f62E76fd22A6813d7c4": {
+      "critical": true,
+      "category": "spam"
     },
     "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": {
       "fields": {
@@ -225,7 +229,7 @@
           "severity": "HIGH"
         },
         "$admin": {
-          "severity": "HIGH"
+          "severity": "MEDIUM"
         }
       },
       // legacy outbox, still registered in the Bridge's allowedOutboxList:
@@ -268,7 +272,7 @@
           "severity": "HIGH"
         },
         "$admin": {
-          "severity": "HIGH"
+          "severity": "MEDIUM"
         }
       },
       // legacy outbox, still registered in the Bridge's allowedOutboxList:
@@ -322,7 +326,7 @@
         // beacon swaps are plain value changes (proxyType immutable), not
         // auto-HIGH code events; past swaps are recorded criticalEvents.
         "implementation": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "MEDIUM" }
       }
     },
     // ProxyAdmin of the canonical token gateways and GatewayRouter: can swap
@@ -368,7 +372,7 @@
           "severity": "HIGH"
         },
         "$admin": {
-          "severity": "HIGH"
+          "severity": "MEDIUM"
         }
       },
       "critical": true,
@@ -385,7 +389,7 @@
           "severity": "HIGH"
         },
         "owner": {
-          "severity": "HIGH"
+          "severity": "MEDIUM"
         },
         "inbox": {
           "severity": "HIGH"
@@ -394,7 +398,7 @@
           "severity": "HIGH"
         },
         "$admin": {
-          "severity": "HIGH"
+          "severity": "MEDIUM"
         }
       },
       "critical": true,
@@ -411,7 +415,7 @@
           "severity": "HIGH"
         },
         "$admin": {
-          "severity": "HIGH"
+          "severity": "MEDIUM"
         }
       },
       "critical": true,
@@ -439,45 +443,20 @@
         // beacon swaps are plain value changes (proxyType immutable), not
         // auto-HIGH code events; past swaps are recorded criticalEvents.
         "implementation": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "MEDIUM" }
       }
     },
     "arb1:0x3f770Ac673856F105b586bb393d122721265aD46": {
-      "fields": {
-        "l1Address": {
-          "severity": "HIGH"
-        },
-        "l2Gateway": {
-          "severity": "HIGH"
-        }
-      },
       "critical": true
     },
-    // --- ossification severity overrides on shared orbitstack templates
-    // (config-level, NOT the templates: template edits fan out to all orbit
-    // chains; see the timelock getMinDelay precedent above) ---
-    "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0": {
-      "fields": {
-        // live onlyOwner setters on RollupAdminLogic — no upgrade needed:
-        // setChallengeManager (fraud-proof adjudicator pointer),
-        // setAnyTrustFastConfirmer (bypasses the challenge period when set),
-        // setValidatorWhitelistDisabled (re-permissions fraud proofs),
-        // setConfirmPeriodBlocks (the challenge window), setOwner.
-        "challengeManager": { "severity": "HIGH" },
-        "anyTrustFastConfirmer": { "severity": "HIGH" },
-        "validatorWhitelistDisabled": { "severity": "HIGH" },
-        "confirmPeriodBlocks": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      }
-    },
+    // buffer() mixes the configured delay-buffer parameters with counters
+    // that move with every batch, so the whole field stays in
+    // ignoreInWatchMode and only the settable part is watched here. Kept on
+    // the project rather than the template: older Orbit SequencerInbox
+    // versions have no buffer() at all.
     "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": {
       "fields": {
         "bufferConfig": {
-          // buffer() mixes the configured delay-buffer parameters with counters
-          // that move with every batch, so the whole field stays in
-          // ignoreInWatchMode and only the settable part is watched here.
-          // Kept on the project rather than the template: older Orbit
-          // SequencerInbox versions have no buffer() at all.
           "severity": "HIGH",
           "handler": {
             "type": "call",
@@ -490,33 +469,24 @@
             "prevSequencedBlockNumber",
             "bufferBlocks"
           ]
-        },
-        // force-inclusion window (delayBlocks/delaySeconds): the user's
-        // censorship-resistance guarantee, owner-settable. Same rationale as
-        // the timelock getMinDelay override above.
-        "maxTimeVariation": { "severity": "HIGH" }
+        }
       }
     },
-    "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": {
+    // L1 ARB: on deposits the L1ARBGateway calls bridgeBurn on it, and only
+    // then does L2ARBGateway release escrowed L2 ARB. New token code could skip
+    // the burn and drain that escrow. Only the Arbitrum One gateway can mint
+    // or burn, the Nova gateway only registers the token on Nova.
+    "eth:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1": {
+      "critical": true,
+      "category": "bridge-canonical",
+      "description": "The ARB token on Ethereum. The L1ARBGateway burns it on deposits to Arbitrum One and mints it on withdrawals.",
+      "ignoreRelatives": ["novaGateway", "novaRouter"],
+      "ignoreMethods": ["isArbitrumEnabled"],
+      "ignoreInWatchMode": ["totalSupply"],
       "fields": {
-        // EXECUTOR_ROLE members hold undelayed, unrestricted upgrade authority
-        // over every L1 ProxyAdmin. Role-holder identity (see the
-        // L2UpgradeExecutor override): MEDIUM for review, mechanism changes
-        // such as the 2023-09-17 migration are reviewed events.
-        "executors": { "severity": "MEDIUM" }
-      }
-    },
-    "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": {
-      "fields": {
-        // a changed default gateway redirects future deposits to an arbitrary
-        // "gateway"; owner can also set per-token routes (setGateway).
-        "defaultGateway": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      }
-    },
-    "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": {
-      "fields": {
-        "defaultGateway": { "severity": "HIGH" }
+        "arbOneGateway": { "severity": "HIGH" },
+        "novaGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" }
       }
     }
   }

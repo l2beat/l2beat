@@ -61,7 +61,7 @@ export async function getActivityChart({
 
   const [entries, maxCounts, activityTotals] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(projects, adjustedRange),
-    db.activity.getMaxCountsForProjects(),
+    projectId ? db.activity.getMaxCountsForProject(projectId) : undefined,
     projectId
       ? db.activity.getActivityTotalsForProjects([projectId])
       : undefined,
@@ -139,7 +139,7 @@ export async function getActivityChart({
     ? getActivityChartStats(
         data,
         syncedUntil,
-        maxCounts[projectId],
+        maxCounts,
         activityTotals?.[projectId],
       )
     : undefined

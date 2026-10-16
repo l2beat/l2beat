@@ -31,8 +31,6 @@ export const sophon: ScalingProject = zkStackL2({
   daAttestedByIndependentParty: true,
   daVerifier7DayExitWindow: true,
   daCommitteeDecentralized: true,
-  daVerifier30DayExitWindow: false,
-  daMechanismEconomicSecurity: false,
   daVerifierLink:
     'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
@@ -124,14 +122,6 @@ export const sophon: ScalingProject = zkStackL2({
         tokensToAssignFromL1: ['SOPH'],
       },
     }),
-  ],
-  daTracking: [
-    {
-      type: 'avail',
-      daLayer: ProjectId('avail'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      appIds: ['17', '36', '37', '38'],
-    },
   ],
   nonTemplateRiskView: {
     sequencerFailure: {

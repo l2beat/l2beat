@@ -1,3 +1,116 @@
+Generated with discovered.json: 0x644231216bbf11f83bf469cc934f7af4fedc8fc1
+
+# Diff at Fri, 16 Oct 2026 09:37:50 GMT:
+
+- id: 34e82582
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791789180
+- current timestamp: 1791789180
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM). AgglayerGateway: add-only allRoutes and allAggchainVKeys are HIGH, the active routes and aggchainVKeys drop to MEDIUM, so a route freeze or vkey unset no longer resets the ossification clock.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789180 (main branch discovery), not current.
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
++++ description: All default aggchain vkeys that were ever added, unset ones included.
++++ severity: HIGH
+      values.allAggchainVKeys:
++        [{"selector":"0x00040001","newVKey":"0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f"},{"selector":"0x00060001","newVKey":"0x374ee73950cdb07d1b8779d90a8467df232639c13f9536b03f1ba76a2aa5dac6"},{"selector":"0x00080001","newVKey":"0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53"},{"selector":"0x000a0001","newVKey":"0x7767a8330ce68dac35265ba15d9eec6722b943cf00dc3b733779e1ae55696f70"},{"selector":"0x000b0001","newVKey":"0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915"}]
++++ description: All pessimistic-proof routes that were ever added, frozen ones included.
++++ severity: HIGH
+      values.allRoutes:
++        [{"selector":"0x00000004","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","pessimisticVKey":"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"},{"selector":"0x00000008","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","pessimisticVKey":"0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639"},{"selector":"0x0000000e","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A","pessimisticVKey":"0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"}]
+      fieldMeta.aggchainVKeys.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.routes.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.getAggchainMultisigHash:
++        {"severity":"MEDIUM"}
+      fieldMeta.allAggchainVKeys:
++        {"severity":"HIGH","description":"All default aggchain vkeys that were ever added, unset ones included."}
+      fieldMeta.allRoutes:
++        {"severity":"HIGH","description":"All pessimistic-proof routes that were ever added, frozen ones included."}
+    }
+```
+
+```diff
+    contract SharedProxyAdmin (eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      fieldMeta.isEmergencyState.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.tweakParametersAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.createRollupAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.emergencyCouncilAdminAC:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Timelock (eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) [polygon-cdk/Timelock] {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0xf20b9d6b80b385815ceda9b8e83a2e17ab7a285c
+
+# Diff at Mon, 12 Oct 2026 07:14:52 GMT:
+
+- id: 0f46cb57
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1790850812
+- current timestamp: 1791789180
+
+## Description
+
+Agglayer registered chain 3435 as rollup 29 with aggchain/pessimistic proof verification.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.16:
++        29
+      values.rollupCount:
+-        28
++        29
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.28:
++        {"rollupContract":"eth:0xe104707c9fA943387Bd6b22e327d62119b2107F8","chainID":3435,"verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupTypeID":13,"rollupVerifierType":2,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+    }
+```
+
 Generated with discovered.json: 0x79ebac93af4e31d161736d3d7c36a942866ca2fc
 
 # Diff at Sun, 04 Oct 2026 05:55:36 GMT:

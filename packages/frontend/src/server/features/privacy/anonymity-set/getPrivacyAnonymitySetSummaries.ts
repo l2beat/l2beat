@@ -26,17 +26,15 @@ import {
 } from './getPrivacyAnonymitySetSync'
 
 export type PrivacyAnonymitySetSummary =
-  | ({
+  | {
       status: 'available'
       value: number
-      label: string
       /** Labels of configured series excluded from the value while their history is indexed. */
       syncingLabels: string[]
       coverage?: PrivacyAnonymitySetCoverage
-    } & Pick<
-      PrivacyAnonymitySetSeries,
-      'bucketType' | 'chain' | 'formattedAmount' | 'token'
-    >)
+      /** The series whose set is counted in the value. */
+      series: Omit<PrivacyAnonymitySetSeries, 'configurationId'>
+    }
   | {
       status: 'not-applicable'
       description: string
@@ -120,13 +118,9 @@ export function getPrivacyAnonymitySetSummary(
   return {
     status: 'available',
     value: largest.value,
-    label: largest.series.label,
     syncingLabels,
     ...(coverage && { coverage }),
-    bucketType: largest.series.bucketType,
-    chain: largest.series.chain,
-    formattedAmount: largest.series.formattedAmount,
-    token: largest.series.token,
+    series: largest.series,
   }
 }
 
@@ -188,15 +182,11 @@ function getMockSummaries(
           {
             status: 'available',
             value: Math.round(Math.random() * 1_000),
-            label: series.label,
             syncingLabels: [],
             ...(state?.type === 'partially-attributed' && {
               coverage: { attributed: 90, total: 100 },
             }),
-            bucketType: series.bucketType,
-            chain: series.chain,
-            formattedAmount: series.formattedAmount,
-            token: series.token,
+            series,
           },
         ]
       }

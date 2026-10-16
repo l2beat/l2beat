@@ -1,6 +1,5 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getOssificationEntries } from '~/server/features/projects/ossification/getOssificationEntries'
+import { getCachedOssificationEntries } from '~/server/features/projects/ossification/getOssificationEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -8,18 +7,10 @@ import type { Manifest } from '~/utils/Manifest'
 export async function getOssificationData(
   manifest: Manifest,
   url: string,
-  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
-    cache.get(
-      {
-        key: ['ossification', 'entries'],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      getOssificationEntries,
-    ),
+    getCachedOssificationEntries(),
   ])
 
   return {

@@ -12,7 +12,8 @@
           "description": "can enable new fee tiers, set the protocol fee share (up to 1/4 of LP fees per side) on any pool, collect accrued protocol fees, and transfer factory ownership."
         }
       ],
-      "severity": "HIGH",
+      // Role holder (spec). Its powers are bounded fee settings, never LP principal.
+      "severity": "MEDIUM",
       "description": "Address authorized to exercise the factory owner actions."
     },
     "parameters": {

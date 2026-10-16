@@ -1,8 +1,9 @@
 {
   "CollateralManager.sol": {
-    "hash": "0x7e9156bdbe2b0f1e2fca8925f034693bdf5abaae1b868270c2a4f44956e1ea6a",
+    "hash": "0x78583307d6ee104deeacfc05854f42b8e5262cbd2faffb3e165c1078e44ac4ce",
     "address": "ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA",
-    "blockNumber": 38804
+    "chain": "ethereal",
+    "blockNumber": 5339102
   },
   "ExchangeConfig.sol": {
     "hash": "0x2eb254b441530c0a6a36c063566a20b1b99f95ee5d7100456468373d3d97e905",

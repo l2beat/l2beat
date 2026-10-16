@@ -17,7 +17,7 @@
   "ignoreRelatives": ["getAllZKChains"],
   "fields": {
     "admin": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -26,7 +26,7 @@
       ]
     },
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

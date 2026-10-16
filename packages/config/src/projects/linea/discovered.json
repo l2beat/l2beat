@@ -1,7 +1,7 @@
 {
   "name": "linea",
-  "timestamp": 1791455017,
-  "configHash": "0x2065d22edc42cabb516c774ee0cc6f9d767b2addc90c3dec404ec73153fdb05d",
+  "timestamp": 1791897274,
+  "configHash": "0xa9ed31f02d0119e7d4d556613de8f6bbde8b0a5cf8987f93eecc61ea1de7b876",
   "entries": [
     {
       "name": "TokenBridge",
@@ -187,6 +187,8 @@
         }
       },
       "fieldMeta": {
+        "$admin": { "severity": "MEDIUM" },
+        "defaultAdminAC": { "severity": "MEDIUM" },
         "isPaused_GENERAL": { "severity": "MEDIUM" },
         "isPaused_L1_L2": { "severity": "MEDIUM" },
         "isPaused_L2_L1": { "severity": "MEDIUM" },
@@ -208,6 +210,10 @@
         "allUnpausers": { "severity": "MEDIUM" },
         "initiateTokenBridgingUnpausers": { "severity": "MEDIUM" },
         "completeTokenBridgingUnpausers": { "severity": "MEDIUM" },
+        "customContractSetters": { "severity": "MEDIUM" },
+        "reserveTokenSetters": { "severity": "MEDIUM" },
+        "reserveTokenRemovers": { "severity": "MEDIUM" },
+        "messageServiceSetters": { "severity": "MEDIUM" },
         "remoteSender": {
           "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."
         },
@@ -341,6 +347,7 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
+      "critical": { "untilTimestamp": 1742317187 },
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691086259,
       "sinceBlock": 17836169,
@@ -348,6 +355,7 @@
         "$immutable": true,
         "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": "ProxyAdmin"
       }
@@ -398,6 +406,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L1 side of the old and now unused USDC bridge.",
+      "critical": { "untilTimestamp": 1742317187 },
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691086271,
       "sinceBlock": 17836170,
@@ -486,7 +495,8 @@
         "filteredAddresses": {
           "severity": "MEDIUM",
           "description": "Addresses barred from sending forced transactions from L1 through the LineaRollup."
-        }
+        },
+        "defaultAdminAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E": "AddressFilter"
@@ -632,7 +642,10 @@
         "implementation": "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763",
         "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
-      "fieldMeta": { "implementation": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "UpgradeableBeacon"
       }
@@ -936,9 +949,9 @@
         "CONTRACT_VERSION": "8.0",
         "COOLDOWN_DURATION": 172800,
         "COOLDOWN_DURATION_fmt": "2d",
-        "currentFinalizedShnarf": "0xf5529c36d62c0c518fd99831fb773595adefda740c0a73f212a86163b3d9c0ce",
-        "currentFinalizedState": "0xb65de82f77332aac7c7dc8f30a75fc547b442817f188e7215b031a8df1539df5",
-        "currentPeriodAmountInWei": "852705868256608160",
+        "currentFinalizedShnarf": "0x9e60d60e3cee1ebb192ea6ca1187f2c4e1b5dc5b7dd032e81eba8fd1c9e3503b",
+        "currentFinalizedState": "0xd344885456b3cdf7702c7ecbcbd4f7acbe29813a72f7baa6a712a7225f7a5612",
+        "currentPeriodAmountInWei": "323684858351309000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
@@ -1058,6 +1071,7 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
+        "verifierSetters": ["eth:0xd6B95c960779c72B8C6752119849318E5d550574"],
         "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
         "yieldManager": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
         "yieldManagerSetterAC": [
@@ -1065,6 +1079,7 @@
         ]
       },
       "fieldMeta": {
+        "$admin": { "severity": "MEDIUM" },
         "forcedTransactionFeeInWei": { "severity": "HIGH" },
         "addressFilter": { "severity": "HIGH" },
         "yieldManager": { "severity": "HIGH" },
@@ -1072,8 +1087,12 @@
           "severity": "HIGH",
           "description": "Mapping of proof type to ZK Plonk Verifier contract."
         },
+        "defaultAdminAC": { "severity": "MEDIUM" },
+        "verifierSetters": { "severity": "MEDIUM" },
+        "ethStakerAC": { "severity": "MEDIUM" },
         "securityCouncilAC": { "severity": "MEDIUM" },
         "pauseAllAC": { "severity": "MEDIUM" },
+        "yieldManagerSetterAC": { "severity": "MEDIUM" },
         "pauseTypeToRole": { "severity": "MEDIUM" },
         "unpauseTypeToRole": { "severity": "MEDIUM" },
         "isPaused_GENERAL": { "severity": "MEDIUM" },
@@ -1090,7 +1109,7 @@
         "isPaused_NATIVE_YIELD_REPORTING": { "severity": "MEDIUM" },
         "isPaused_STATE_DATA_SUBMISSION": { "severity": "MEDIUM" },
         "limitInWei": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
         },
         "pauseDuration_fmt": {
@@ -1211,7 +1230,12 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "minDelayFormatted": { "severity": "HIGH" }
+        "minDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
+        "proposerAC": { "severity": "MEDIUM" },
+        "cancellerAC": { "severity": "MEDIUM" },
+        "executorAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xd6B95c960779c72B8C6752119849318E5d550574": "TimeLock"
@@ -1357,7 +1381,7 @@
         "isPaused_NATIVE_YIELD_REPORTING": false,
         "isPaused_NATIVE_YIELD_STAKING": false,
         "isPaused_NATIVE_YIELD_UNSTAKING": false,
-        "isWithdrawalReserveBelowMinimum": true,
+        "isWithdrawalReserveBelowMinimum": false,
         "L1_MESSAGE_SERVICE": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "minimumWithdrawalReserveAmount": "17500000000000000000000",
         "minimumWithdrawalReservePercentageBps": 3500,
@@ -1399,7 +1423,7 @@
           "11": "0x7961622440af20a7a00804174e730d12d511766368df55fbaf2d698ffa1d4216",
           "12": "0x32026462812ef90f03ebdf4117c1e143d38ab0e31e1266d4e8bd348c28ee2aa5"
         },
-        "userFundsInYieldProvidersTotal": "24019411122956594613375",
+        "userFundsInYieldProvidersTotal": "17383593430683481334481",
         "WITHDRAWAL_RESERVE_SETTER_ROLE": "0x58cd6cd2c63b9e5685aee547419caac3d1184e3aeb3ed7c8b63ec61cda1e27e0",
         "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
         "YIELD_PROVIDER_UNSTAKER_ROLE": "0x1208ee08ba851b41059d729bfba4fffc3a98c2b6d121e3cf0db274417dea3d70",
@@ -1417,6 +1441,7 @@
         ]
       },
       "fieldMeta": {
+        "$admin": { "severity": "MEDIUM" },
         "userFundsInYieldProvidersTotal": {
           "description": "User ETH principal currently deployed into yield providers (staked), excluding accrued yield. Together with the rollup and YieldManager balances it forms the total system balance used for the reserve thresholds."
         },
@@ -1436,6 +1461,7 @@
           "description": "Logically this combines several roles: YIELD_PROVIDER_STAKING_ROLE, YIELD_PROVIDER_UNSTAKER_ROLE, YIELD_REPORTER_ROLE, STAKING_PAUSE_CONTROLLER_ROLE, OSSIFICATION_PROCESSOR_ROLE. Currently they are shared by the same two addresses, if this changes the permissions must be modified."
         },
         "yieldStakingManagerAC": {
+          "severity": "MEDIUM",
           "description": "Logically this combines several roles: SET_YIELD_PROVIDER_ROLE, SET_L2_YIELD_RECIPIENT_ROLE, WITHDRAWAL_RESERVE_SETTER_ROLE. Currently they are shared by the same address, if this changes the permissions must be modified."
         },
         "isWithdrawalReserveBelowMinimum": {
@@ -1482,6 +1508,7 @@
         "$immutable": true,
         "owner": "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6": "ProxyAdmin"
       }
@@ -1523,6 +1550,7 @@
         "$immutable": true,
         "owner": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E": "ProxyAdmin"
       }
@@ -1726,6 +1754,8 @@
         }
       },
       "fieldMeta": {
+        "$admin": { "severity": "MEDIUM" },
+        "defaultAdminAC": { "severity": "MEDIUM" },
         "isPaused_GENERAL": { "severity": "MEDIUM" },
         "isPaused_L1_L2": { "severity": "MEDIUM" },
         "isPaused_L2_L1": { "severity": "MEDIUM" },
@@ -1747,6 +1777,10 @@
         "allUnpausers": { "severity": "MEDIUM" },
         "initiateTokenBridgingUnpausers": { "severity": "MEDIUM" },
         "completeTokenBridgingUnpausers": { "severity": "MEDIUM" },
+        "customContractSetters": { "severity": "MEDIUM" },
+        "reserveTokenSetters": { "severity": "MEDIUM" },
+        "reserveTokenRemovers": { "severity": "MEDIUM" },
+        "messageServiceSetters": { "severity": "MEDIUM" },
         "remoteSender": {
           "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."
         },
@@ -1902,8 +1936,8 @@
         "allUnpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "CONTRACT_VERSION": "1.0",
         "COOLDOWN_DURATION": 172800,
-        "currentPeriodAmountInWei": "4000280891303750000000",
-        "currentPeriodEnd": 1791450897,
+        "currentPeriodAmountInWei": 6400000000000000,
+        "currentPeriodEnd": 1791969298,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -1927,11 +1961,11 @@
         "l1l2Unpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "l2l1Pausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "l2l1Unpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
-        "lastAnchoredL1MessageNumber": 810520,
+        "lastAnchoredL1MessageNumber": 810775,
         "limitInWei": "8000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 108520,
+        "nextMessageNumber": 108558,
         "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_DURATION": 172800,
@@ -1957,6 +1991,7 @@
         "USED_RATE_LIMIT_RESETTER_ROLE": "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9"
       },
       "fieldMeta": {
+        "$admin": { "severity": "MEDIUM" },
         "pauseTypeToRole": { "severity": "MEDIUM" },
         "unpauseTypeToRole": { "severity": "MEDIUM" },
         "allPausers": { "severity": "MEDIUM" },
@@ -1970,7 +2005,7 @@
           "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
         },
         "limitInWei": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The cap on the total amount of ether (value plus postman fee) that can be sent from L2 to L1 via sendMessage per period given by periodInSeconds."
         },
         "periodInSeconds": {
@@ -2030,6 +2065,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2 side of the old and now unused USDC bridge.",
+      "critical": { "untilTimestamp": 1742317187 },
       "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691086556,
       "sinceBlock": 118064,
@@ -2177,7 +2213,12 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "minDelayFormatted": { "severity": "HIGH" }
+        "minDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
+        "proposerAC": { "severity": "MEDIUM" },
+        "cancellerAC": { "severity": "MEDIUM" },
+        "executorAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca": "TimeLock"
@@ -2192,6 +2233,7 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
+      "critical": { "untilTimestamp": 1742317187 },
       "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691086544,
       "sinceBlock": 118063,
@@ -2199,6 +2241,7 @@
         "$immutable": true,
         "owner": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c": "ProxyAdmin"
       }
@@ -2295,7 +2338,10 @@
         "implementation": "linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF",
         "owner": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
       },
-      "fieldMeta": { "implementation": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0": "UpgradeableBeacon"
       }
@@ -3607,16 +3653,16 @@
     "linea/AddressFilter": "0xec9a225923e1c6aa429df4fbf59b48079681596a537aae543d198c80870c7c00",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "linea/L1TokenBridge_v1_1": "0x5044d81a1f2301c158a35ca59acdc0264d0fadabc9df74724342d3fbf794f6a3",
+    "linea/L1TokenBridge_v1_1": "0xeb6e72632fca929585b317376b4c43b31d1ef5401aa191db68b6c4dd7c4439f2",
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
-    "linea/L2MessageService_v1_0": "0x9378fc33a2d27326ce6f85574e99826f884c2330457576f27df4b8db54b68a44",
+    "linea/L2MessageService_v1_0": "0x0e2eeb7b7c7211e0b4692848d14b6a883d545b1308f665eb0a96d00aec80257b",
     "linea/LidoStakingVaultYieldProvider": "0xc3f19fa44794b28bab13fe7e59ad3e8982927823f5cea3abf7c1cde603f2da71",
-    "linea/LineaRollup_ForcedTrx_v8_0": "0x1bbfc7441cd649fd9763a6ea2f4b81fd186caa6ff1d7f45346931f4b2e9971f9",
+    "linea/LineaRollup_ForcedTrx_v8_0": "0x7f4f4d65e67a9d810b45942d5de9fe8cdf1f5abc352dc0d12450f718d620b1b4",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
-    "linea/YieldManager": "0x15befc37e3984bc9e0b8548c3b5266b2ad9e24ca61f02cd9ab3c9176983303ab"
+    "linea/YieldManager": "0x81618822c5f6142492897bb40b0042b6b278e7a79970835861b25e4ff087d3c0"
   },
-  "usedBlockNumbers": { "ethereum": 26147060, "linea": 32264045 },
+  "usedBlockNumbers": { "ethereum": 26183799, "linea": 32312277 },
   "permissionsConfigHash": "0xf49cfea4e29aeafa5d92e463f33237818af544e2270838009fb197034328d471",
   "permissions": {
     "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0": {

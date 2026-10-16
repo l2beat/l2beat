@@ -1,9 +1,5 @@
-import type {
-  AvailDaTrackingConfig,
-  CelestiaDaTrackingConfig,
-} from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { AvailBlob, CelestiaBlob, DaBlob } from '@l2beat/shared'
+import type { DaBlob } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 import { matchEthereumConfigs } from './matchEthereumConfigs'
@@ -49,78 +45,20 @@ export class DaService {
     blob: DaBlob,
     configurations: BlockDaIndexedConfig[],
   ): DataAvailabilityRecord[] {
-    const records: DataAvailabilityRecord[] = []
-
-    for (const c of configurations) {
-      switch (c.type) {
-        case 'baseLayer': {
-          if (blob.daLayer === c.daLayer) {
-            records.push({
-              timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
-              daLayer: blob.daLayer,
-              projectId: c.projectId,
-              configurationId: c.configurationId,
-              totalSize: blob.size,
-            })
-          }
-          break
-        }
-        case 'ethereum': {
-          if (blob.type === 'ethereum') {
-            if (matchEthereumConfigs([c], blob.blockNumber, blob).length > 0) {
-              records.push({
-                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
-                daLayer: blob.daLayer,
-                projectId: c.projectId,
-                configurationId: c.configurationId,
-                totalSize: blob.size,
-              })
-            }
-          }
-          break
-        }
-        case 'celestia': {
-          if (blob.type === 'celestia') {
-            if (matchCelestiaProject(blob, c)) {
-              records.push({
-                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
-                daLayer: blob.daLayer,
-                projectId: c.projectId,
-                configurationId: c.configurationId,
-                totalSize: blob.size,
-              })
-            }
-          }
-          break
-        }
-        case 'avail': {
-          if (blob.type === 'avail') {
-            if (matchAvailProject(blob, c)) {
-              records.push({
-                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
-                daLayer: blob.daLayer,
-                projectId: c.projectId,
-                configurationId: c.configurationId,
-                totalSize: blob.size,
-              })
-            }
-          }
-          break
-        }
-      }
-    }
-
-    return records
+    return configurations
+      .filter((c) => matchesConfiguration(blob, c))
+      .map((c) => ({
+        timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
+        daLayer: blob.daLayer,
+        projectId: c.projectId,
+        configurationId: c.configurationId,
+        totalSize: blob.size,
+      }))
   }
 }
 
-function matchCelestiaProject(
-  blob: CelestiaBlob,
-  config: CelestiaDaTrackingConfig,
-) {
-  return config.namespace === blob.namespace
-}
-
-function matchAvailProject(blob: AvailBlob, config: AvailDaTrackingConfig) {
-  return config.appIds.includes(blob.appId)
+function matchesConfiguration(blob: DaBlob, c: BlockDaIndexedConfig) {
+  return c.type === 'baseLayer'
+    ? blob.daLayer === c.daLayer
+    : matchEthereumConfigs([c], blob.blockNumber, blob).length > 0
 }

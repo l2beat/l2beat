@@ -8,9 +8,6 @@ export const searchBarCategories = {
   l2: {
     name: 'Scaling',
   },
-  da: {
-    name: 'Data Availability',
-  },
   interop: {
     name: 'Interoperability',
   },

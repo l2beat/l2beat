@@ -33,10 +33,11 @@
       "critical": true
     },
     "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": {
-      "critical": true
+      // RouteFrozen permanently removed this verifier from the live proof path.
+      "critical": { "untilTimestamp": 1791526391 }
     },
     "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": {
-      "critical": true
+      "critical": { "untilTimestamp": 1791526499 }
     },
     "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": {
       "critical": true

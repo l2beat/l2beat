@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x00942a1633aa726e69ee8812a0c66ec43a6e56f0
+
+# Diff at Fri, 16 Oct 2026 05:36:50 GMT:
+
+- id: 063849b3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791789568
+- current timestamp: 1791789568
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789568 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0x05fb6315a508468f62aa68fc915ecd9d0096b1ab
+
+# Diff at Mon, 12 Oct 2026 08:03:19 GMT:
+
+- id: 88a5944c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04aa433dc68709f003e06fd592edac8330126cec block: 1786352489
+- current timestamp: 1791789568
+
+## Description
+
+The Ethereum executor upgraded to an unverified implementation.
+
+[Executor diff](https://disco.l2beat.com/diff/eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805/eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0).
+
+## Watched changes
+
+```diff
+    contract Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [N/A] {
+    +++ description: Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source.
+      template:
+-        "layerzero/LayerZeroExecutor"
+      sourceHashes:
+-        ["0x4a43bdaa7c21f911802bc9e3457cf5fef469f43b372ea6944d53823caf2f53f2","0x914fbceaba4b6418a09bd2104433bfcb47eed119a783154a8f7f6301c06a6d2b"]
+      values.$implementation:
+-        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
++        "eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0"
+      values.$pastUpgrades.3:
++        ["2026-10-02T00:08:11.000Z","0x682248f5070d80b5c52e90030913f204331e1f0516ed6a0e5d471e6417c3fb52",["eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.allowlistSize:
+-        0
+      values.DEFAULT_ADMIN_ROLE:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.defaultMultiplierBps:
+-        12000
+      values.endpoint:
+-        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.localEidV2:
+-        30101
+      values.paused:
+-        false
+      values.priceFeed:
+-        "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      values.receiveUln301:
+-        "eth:0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC"
+      values.workerFeeLib:
+-        "eth:0x4e9C57FD2Bd0f47C43F2D62642C1b05894fb9ed0"
+      implementationNames.eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805:
+-        "Executor"
+      implementationNames.eth:0x1Ed8E51E8AB2A00B2805aEcf2C6aC0BB6521eaE0:
++        ""
+      unverified:
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../Executor/Executor.sol => /dev/null             | 2928 --------------------
+ 1 file changed, 2928 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786352489 (main branch discovery), not current.
+
+```diff
+    contract Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [layerzero/LayerZeroExecutor] {
+    +++ description: Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source.
+      description:
+-        "Contract that can be used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and permissioned addresses who can call this contract."
++        "Upgradeable contract referenced as an executor by LayerZero message libraries. Its current implementation is unverified, so execution and fee handling cannot be checked against source."
+    }
+```
+
 Generated with discovered.json: 0x29a06568dd7e6d923aeef194b4c4a04e918a30d3
 
 # Diff at Wed, 23 Sep 2026 05:47:36 GMT:

@@ -181,7 +181,7 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (details.hasAnonymitySet) {
+  if (details.anonymitySetType !== undefined) {
     sections.push({
       type: 'PrivacyAnonymitySetSection',
       props: {
@@ -190,6 +190,7 @@ export async function getPrivacyProjectEntry(
         defaultRange: defaultChartRange,
         project: chartProject,
         milestones: details.milestones,
+        anonymitySetType: details.anonymitySetType,
       },
     })
   }

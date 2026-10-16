@@ -21,19 +21,19 @@
     "celo:0x4200000000000000000000000000000000000007": {
       "critical": { "sinceTimestamp": 1742960663 },
       "fields": {
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       }
     },
     "celo:0x4200000000000000000000000000000000000010": {
       "critical": { "sinceTimestamp": 1742960663 },
       "fields": {
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       }
     },
     "celo:0x4200000000000000000000000000000000000016": {
       "critical": { "sinceTimestamp": 1742960663 },
       "fields": {
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       }
     },
     "celo:0x4200000000000000000000000000000000000018": {
@@ -62,7 +62,8 @@
     // L1 CELO token: Celo is a custom-gas-token chain, so this ERC20 is what the
     // portal escrows against native CELO on L2. It is an EIP-1967 proxy behind the
     // same ProxyAdmin as the core contracts; an implementation change can alter
-    // the custody/accounting of the escrowed gas token (mantle L1MantleToken precedent).
+    // the custody/accounting of the escrowed gas token (token rule: the project
+    // governs the L2 gas token).
     "eth:0x057898f3C43F129a17517B9056D23851F124b19f": {
       "critical": true
     },
@@ -84,7 +85,7 @@
       "critical": true,
       "fields": {
         "$admin": {
-          "severity": "HIGH"
+          "severity": "MEDIUM"
         },
         "guardian": {
           "severity": "MEDIUM",
@@ -92,6 +93,53 @@
         },
         "paused": { "severity": "MEDIUM" },
         "celoPaused": { "severity": "MEDIUM" }
+      }
+    },
+    // Detached Cannon fault-proof system. Since tx 0x5fb3f222... (ts 1765362251)
+    // the respected game type is 42 (OPSuccinct), so the AnchorStateRegistry
+    // rejects type 0 and 1 games and OPSuccinctFaultDisputeGame holds no
+    // DelayedWETH. Re-attaching needs a respectedGameType change (HIGH).
+    // FaultDisputeGame (type 0)
+    "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F": {
+      "critical": { "untilTimestamp": 1765362251 }
+    },
+    // PermissionedDisputeGame (type 1)
+    "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9": {
+      "critical": { "untilTimestamp": 1765362251 }
+    },
+    "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908": {
+      "critical": { "untilTimestamp": 1765362251 }
+    },
+    "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3": {
+      "critical": { "untilTimestamp": 1765362251 }
+    },
+    "eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4": {
+      "critical": { "untilTimestamp": 1765362251 }
+    },
+    "eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552": {
+      "critical": { "untilTimestamp": 1765362251 }
+    },
+    // SaferSafes is enabled on the OpFoundationUpgradeSafe. Its response window sets when the Security Council can take over.
+    "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
+      "fields": {
+        "upgradeSafeLivenessResponsePeriod": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function livenessSafeConfiguration(address) view returns (uint256 livenessResponsePeriod, address fallbackOwner)",
+            "args": ["0x847B5c174615B1B7fDF770882256e2D3E95b9D92"]
+          },
+          "edit": ["get", "livenessResponsePeriod"]
+        },
+        "upgradeSafeFallbackOwner": {
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "function livenessSafeConfiguration(address) view returns (uint256 livenessResponsePeriod, address fallbackOwner)",
+            "args": ["0x847B5c174615B1B7fDF770882256e2D3E95b9D92"]
+          },
+          "edit": ["get", "fallbackOwner"]
+        }
       }
     },
     // OP Succinct AccessManager: gates who can propose and challenge OPSuccinct

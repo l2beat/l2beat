@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type {
   BlockProvider,
@@ -14,7 +13,10 @@ import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
-import type { PrivacyAnonymitySetIndexerConfig } from '../types'
+import type {
+  EvmPrivacyAnonymitySetSource,
+  PrivacyAnonymitySetIndexerConfig,
+} from '../types'
 import { DEPOSIT_TOPIC } from '../zkmoney/abi'
 import {
   FUNDED,
@@ -35,6 +37,9 @@ const FIXED_TOPIC = `0x${'aa'.repeat(32)}`
 const TRANSACTION_HASH = `0x${'bb'.repeat(32)}`
 const privacyPoolsInterface = new utils.Interface([
   'event Deposited(address indexed depositor, uint256 commitment, uint256 label, uint256 value, uint256 precommitmentHash)',
+])
+const umbraRegistryInterface = new utils.Interface([
+  'event StealthKeyChanged(address indexed registrant, uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)',
 ])
 
 describe(PrivacyAnonymitySetIndexer.name, () => {
@@ -139,6 +144,60 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
         logIndex: 7,
         sender: DEPOSITOR.toString(),
         amount: 15_000_000_000_000_000_000n,
+      },
+    ])
+  })
+
+  it('stores a key registration under its registrant with amount 0', async () => {
+    const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
+    const to = from + UnixTime.DAY
+    const timestamp = from + UnixTime.HOUR
+    const encoded = umbraRegistryInterface.encodeEventLog('StealthKeyChanged', [
+      DEPOSITOR.toString(),
+      2n,
+      3n,
+      2n,
+      5n,
+    ])
+    const configuration = baseConfiguration({
+      event: encoded.topics[0]!,
+      extractor: 'umbraStealthKeyChanged',
+      params: {},
+    })
+    const log = makeLog({
+      topics: encoded.topics,
+      data: encoded.data,
+      timestamp,
+    })
+    const getTransaction = mockFn<IRpcClient['getTransaction']>()
+    const upsertMany =
+      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(1)
+    const indexer = makeIndexer({
+      configuration,
+      logs: [log],
+      timestamps: new Map([[log.blockNumber, timestamp]]),
+      getTransaction,
+      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+        upsertMany,
+      }),
+    })
+
+    const save = await indexer.multiUpdate(from, to, [configuration])
+    await save()
+
+    expect(getTransaction).not.toHaveBeenCalled()
+    expect(upsertMany).toHaveBeenOnlyCalledWith([
+      {
+        configurationId: 'config-1',
+        projectId: 'project-1',
+        bucketId: 'bucket-1',
+        chain: 'ethereum',
+        timestamp,
+        blockNumber: 100,
+        txHash: TRANSACTION_HASH,
+        logIndex: 7,
+        sender: DEPOSITOR.toString(),
+        amount: 0n,
       },
     ])
   })
@@ -461,7 +520,7 @@ function privacyPoolsConfiguration(
 }
 
 function baseConfiguration(
-  source: PrivacyAnonymitySetDepositSource,
+  source: EvmPrivacyAnonymitySetSource,
   address = POOL,
 ): Configuration<PrivacyAnonymitySetIndexerConfig> {
   const properties = {

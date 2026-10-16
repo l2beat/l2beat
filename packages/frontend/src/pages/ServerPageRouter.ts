@@ -10,12 +10,11 @@ import { createAboutUsRouter } from './about/AboutUsRouter'
 import { createBlobsRouter } from './blobs/BlobsRouter'
 import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
-import { createDaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
-import { createDataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
 import { createDefiRouter } from './defi/DefiRouter'
 import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
 import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
+import { createEthereumProjectRouter } from './ethereum/EthereumProjectRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGardenRouter } from './garden/GardenRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
@@ -60,7 +59,7 @@ export function createServerPageRouter(
     createL2Router,
     createInteropRouter,
     createTokensRouter,
-    createDataAvailabilityRouter,
+    createEthereumProjectRouter,
     createBlobsRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,
@@ -73,7 +72,6 @@ export function createServerPageRouter(
     createChangelogRouter,
     createDonateRouter,
     createGlossaryRouter,
-    createDaRiskFrameworkRouter,
     createMultisigReportRouter,
     createPrivacyRouter,
     createDefiRouter,

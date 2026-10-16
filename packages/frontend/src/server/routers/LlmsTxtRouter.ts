@@ -1,5 +1,6 @@
 import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
+import { env } from '~/env'
 import {
   type LinkListSection,
   type MarkdownLink,
@@ -176,52 +177,6 @@ const PAGE_SECTIONS: LinkListSection[] = [
     ],
   },
   {
-    heading: 'Data availability',
-    links: [
-      {
-        name: 'All data availability layers',
-        path: markdownAlternate('/data-availability/summary.md'),
-        description:
-          'Markdown list of every tracked data availability layer and bridge, public and custom, with type, risks and page URL.',
-      },
-      {
-        name: 'Summary',
-        path: staticPagePath('/data-availability/summary'),
-        description:
-          'Data availability layers and their bridges to Ethereum, with economic security, throughput and the projects using each.',
-      },
-      {
-        name: 'Risk analysis',
-        path: staticPagePath('/data-availability/risk'),
-        description:
-          'Per-layer and per-bridge risks: economic security, fraud detection, committee security, upgradeability and relayer failure.',
-      },
-      {
-        name: 'Throughput',
-        path: staticPagePath('/data-availability/throughput'),
-        description:
-          'Data posted per day to each layer, its maximum capacity and which projects post the most.',
-      },
-      {
-        name: 'Liveness',
-        path: staticPagePath('/data-availability/liveness'),
-        description:
-          'How regularly data is posted to each layer and whether its bridge keeps up.',
-      },
-      {
-        name: 'Archived layers',
-        path: staticPagePath('/data-availability/archived'),
-        description: 'Data availability layers no longer tracked.',
-      },
-      {
-        name: 'Data availability risk framework',
-        path: staticPagePath('/da-risk-framework'),
-        description:
-          'How L2BEAT evaluates the risks of data availability layers and their bridges.',
-      },
-    ],
-  },
-  {
     heading: 'Interoperability',
     links: [
       {
@@ -301,6 +256,22 @@ const PAGE_SECTIONS: LinkListSection[] = [
         description:
           'Markdown list of every tracked DeFi protocol with category and page URL; the HTML page adds value locked.',
       },
+      ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
+        ? [
+            {
+              name: 'Ossification',
+              path: '/ossification' as const,
+              description:
+                'How battle-tested the critical contracts of each layer 2, layer 3, privacy and DeFi project are: the share of recorded exploits whose code was younger, value secured since the last critical change, critical changes per year and exit window.',
+            },
+          ]
+        : []),
+      {
+        name: 'All ossification projects',
+        path: markdownAlternate('/ossification.md'),
+        description:
+          'Markdown list of every project on the ossification page with its score, clock start, battle-tested exposure, critical changes per year, exit window and page URL.',
+      },
       {
         name: 'Governance',
         path: staticPagePath('/governance'),
@@ -360,10 +331,10 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
         'One layer 2 or layer 3 as markdown: stage and its requirements, risks with sentiments, TVS and activity, technology, permissions and contracts.',
     },
     {
-      name: 'Data availability project',
-      path: '/data-availability/projects/{layer}/{bridge}.md',
+      name: 'Ethereum',
+      path: '/projects/ethereum.md',
       description:
-        'One data availability layer with one of its bridges as markdown: economic security, risks with sentiments, technology, committee, permissions and contracts. The {layer}/{bridge} pairs of active layers are listed in /data-availability/summary.md; archived layers keep their pages but are not listed.',
+        'Ethereum as the data availability layer of the scaling projects: economic security, validators, blob throughput, risks and technology.',
     },
     {
       name: 'Privacy protocol',
