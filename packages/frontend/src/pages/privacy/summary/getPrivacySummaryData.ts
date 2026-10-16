@@ -36,7 +36,7 @@ export async function getPrivacySummaryData(
         name: 'Privacy',
         title: 'Ethereum Privacy Protocols: Reviews & Comparison - L2BEAT',
         description:
-          'Reviews of Ethereum privacy protocols: privacy pools, shielded ledgers, stealth addresses and confidential tokens, compared by what they hide from each adversary.',
+          'Reviews of Ethereum privacy protocols: privacy pools, shielded ledgers, stealth addresses, confidential tokens and anonymous access, compared by what they hide from each adversary.',
         url,
         openGraph: {
           image: '/meta-images/privacy/summary/opengraph-image.png',
