@@ -34,8 +34,9 @@ export async function getPrivacySummaryData(
       manifest,
       metadata: getMetadata(manifest, {
         name: 'Privacy',
+        title: 'Ethereum Privacy Protocols: Reviews & Comparison - L2BEAT',
         description:
-          'Live balances, flows and privacy assessments of privacy protocols on Ethereum.',
+          'Reviews of Ethereum privacy protocols: privacy pools, shielded ledgers, stealth addresses, confidential tokens and anonymous access, compared by what they hide from each adversary.',
         url,
         openGraph: {
           image: '/meta-images/privacy/summary/opengraph-image.png',
