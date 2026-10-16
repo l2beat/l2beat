@@ -1,10 +1,14 @@
+import { useDevice } from '~/hooks/useDevice'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
+import { useTracking } from '~/hooks/useTracking'
 import { SidebarGroup } from '../core/Sidebar'
 import { useWhatsNewItem } from './WhatsNewItemContext'
 
 /** The latest announcement at the bottom of the nav, on every page. */
 export function NavWhatsNew({ onNavigate }: { onNavigate: () => void }) {
   const item = useWhatsNewItem()
+  const { track } = useTracking()
+  const { isDesktop } = useDevice()
   // Opening the item counts as seeing it, which also retires the floating
   // what's new widget for it.
   const [, setSeen] = useLocalStorage(
@@ -24,6 +28,11 @@ export function NavWhatsNew({ onNavigate }: { onNavigate: () => void }) {
       <a
         href={item.href}
         onClick={() => {
+          // The same event as the floating widget, which it replaces from lg.
+          track('whatsNewClicked', {
+            device: isDesktop ? 'desktop' : 'mobile',
+            action: 'open',
+          })
           setSeen(true)
           onNavigate()
         }}
