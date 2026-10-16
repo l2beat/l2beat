@@ -65,15 +65,25 @@ export function HomeStatsStrip({
     // ZK Catalog is the only Security page out so far.
     { label: 'Security', href: '/zk-catalog' },
     { label: 'Interop', href: '/interop/summary' },
+    ...(env.CLIENT_SIDE_TOKENS_PAGE
+      ? [{ label: 'Tokens', href: '/tokens' }]
+      : []),
     ...(env.CLIENT_SIDE_BLOBS_PAGE ? [{ label: 'Blobs', href: '/blobs' }] : []),
   ]
 
   return (
     <HomeCard className={cn('flex flex-col gap-2', className)}>
-      <ul className="grid grid-cols-2 gap-2 md:grid-cols-4">
-        <li>
-          <CropsMiniBanner className="h-full rounded-lg" />
-        </li>
+      <ul
+        className={cn(
+          'grid grid-cols-2 gap-2',
+          env.CLIENT_SIDE_GARDEN_ENABLED ? 'md:grid-cols-4' : 'md:grid-cols-3',
+        )}
+      >
+        {env.CLIENT_SIDE_GARDEN_ENABLED && (
+          <li>
+            <CropsMiniBanner className="h-full rounded-lg" />
+          </li>
+        )}
         {domains.map((tile) => (
           <li key={tile.label}>
             <StatTile tile={tile} />

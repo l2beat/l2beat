@@ -24,30 +24,55 @@ const EMPTY: YourProjects = { pinned: [], recent: [] }
 let cachedRaw: string | null | undefined
 let cached: YourProjects = EMPTY
 
+// Storage can throw: blocked cookies make any access a SecurityError, and a
+// full quota fails writes. Without its projects the nav still works, so both
+// fall back quietly rather than taking the page down.
+
 function read(): YourProjects {
-  const raw = localStorage.getItem(STORAGE_KEY)
+  let raw: string | null
+  try {
+    raw = localStorage.getItem(STORAGE_KEY)
+  } catch {
+    return EMPTY
+  }
   if (raw !== cachedRaw) {
     cachedRaw = raw
-    cached = parse(raw)
+    cached = parseYourProjects(raw)
   }
   return cached
 }
 
-function parse(raw: string | null): YourProjects {
+/** Whatever is stored, written by an older version or edited by hand. */
+export function parseYourProjects(raw: string | null): YourProjects {
   if (!raw) return EMPTY
   try {
-    const value = JSON.parse(raw) as Partial<YourProjects>
-    return {
-      pinned: Array.isArray(value.pinned) ? value.pinned : [],
-      recent: Array.isArray(value.recent) ? value.recent : [],
-    }
+    const value: unknown = JSON.parse(raw)
+    if (typeof value !== 'object' || value === null) return EMPTY
+    const { pinned, recent } = value as Record<string, unknown>
+    return { pinned: toProjects(pinned), recent: toProjects(recent) }
   } catch {
     return EMPTY
   }
 }
 
+function toProjects(value: unknown): SavedProject[] {
+  if (!Array.isArray(value)) return []
+  return value.filter(
+    (item): item is SavedProject =>
+      typeof item === 'object' &&
+      item !== null &&
+      typeof item.href === 'string' &&
+      typeof item.name === 'string' &&
+      typeof item.iconUrl === 'string',
+  )
+}
+
 function write(update: (current: YourProjects) => YourProjects) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(update(read())))
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(update(read())))
+  } catch {
+    return
+  }
   window.dispatchEvent(new Event(CHANGE_EVENT))
 }
 

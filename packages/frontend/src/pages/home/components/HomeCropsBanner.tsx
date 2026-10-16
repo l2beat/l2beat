@@ -31,9 +31,6 @@ export function HomeCropsBanner({
   projects: HomeCropsProject[]
   className?: string
 }) {
-  if (projects.length === 0) {
-    return null
-  }
   return (
     // A card, its background a corner of the garden itself.
     <div

@@ -76,13 +76,19 @@ export function HomePage({
             {/* Below lg, where the sidebar hides behind the menu button, its
                 menu opens the page instead of the CROPS banner. */}
             <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
-            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(260px,280px)] xl:grid-cols-[minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
-              <HomeCropsBanner
-                projects={cropsProjects}
-                className="max-lg:hidden"
-              />
+            {/* Without the garden (it is behind a flag) the mandate takes
+                the row. */}
+            {cropsProjects.length > 0 ? (
+              <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(260px,280px)] xl:grid-cols-[minmax(0,1fr)_minmax(300px,360px)] 2xl:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
+                <HomeCropsBanner
+                  projects={cropsProjects}
+                  className="max-lg:hidden"
+                />
+                <HomeMandateBanner />
+              </div>
+            ) : (
               <HomeMandateBanner />
-            </div>
+            )}
             {/* The domain cards subgrid the title, chart and ranking rows, so
                 their parts stay level. */}
             <div className="grid @min-[880px]/home:grid-cols-2 grid-cols-1 md:gap-4">
