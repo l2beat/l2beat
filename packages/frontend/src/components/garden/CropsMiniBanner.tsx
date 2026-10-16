@@ -32,7 +32,7 @@ export function CropsMiniBanner({
       )}
     >
       <GardenLandscape lightClassName="top-[38%] left-[84%] size-14">
-        <GardenFlowers flowers={FLOWERS} />
+        <GardenFlowers flowers={FLOWERS} motion="still" />
       </GardenLandscape>
       <span className="relative flex min-w-0 flex-col gap-1">
         <span className="font-semibold text-sm leading-none">CROPS</span>

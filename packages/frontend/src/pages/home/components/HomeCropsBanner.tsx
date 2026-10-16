@@ -40,7 +40,7 @@ export function HomeCropsBanner({
       )}
     >
       <GardenLandscape lightClassName="top-[36%] left-[76%] size-48">
-        <GardenFlowers flowers={FLOWERS} />
+        <GardenFlowers flowers={FLOWERS} motion="grow" />
       </GardenLandscape>
       <div className="relative flex max-w-[60%] flex-col gap-1 py-5 pl-6">
         <div className="flex items-baseline gap-2.5">

@@ -23,7 +23,19 @@ function getPlantKind(
   return GRADED_KIND[sentiment]
 }
 
-const PLANT: Record<PlantKind, ComponentType<{ delay: number }>> = {
+/**
+ * How a plant moves: `sway` grows in and then idles, as in the garden;
+ * `grow` grows in and stands still; `still` is drawn grown, for scenery
+ * shown on every page, where even the growing in would replay at each load.
+ */
+export type PlantMotion = 'sway' | 'grow' | 'still'
+
+interface PlantProps {
+  delay: number
+  motion: PlantMotion
+}
+
+const PLANT: Record<PlantKind, ComponentType<PlantProps>> = {
   flower: Flower,
   bud: Bud,
   wilt: Wilt,
@@ -41,6 +53,7 @@ export function CropPlant({
   delay,
   width = 46,
   soil = true,
+  motion = 'sway',
   label,
   className,
 }: {
@@ -50,6 +63,7 @@ export function CropPlant({
   width?: number
   /** Off where the plant stands on scenery rather than in a table cell. */
   soil?: boolean
+  motion?: PlantMotion
   /** Read out instead of the art. */
   label?: string
   className?: string
@@ -69,7 +83,7 @@ export function CropPlant({
         aria-hidden
       >
         {soil && <Soil status={status} />}
-        <Plant delay={delay} />
+        <Plant delay={delay} motion={motion} />
       </svg>
     </span>
   )
@@ -79,11 +93,11 @@ export function CropPlant({
 export const EASE_OUT_BACK = 'cubic-bezier(.34,1.56,.64,1)'
 
 /** The stem grows, the leaves unfold, the bloom pops, then the plant idles. */
-function timings(delay: number) {
+function timings(delay: number, motion: PlantMotion) {
   const at = (origin: string, animation: string): CSSProperties => ({
     transformBox: 'fill-box',
     transformOrigin: origin,
-    animation,
+    animation: motion === 'still' ? undefined : animation,
   })
   return {
     grow: at(
@@ -99,7 +113,9 @@ function timings(delay: number) {
     idle: (name: string, duration: string) =>
       at(
         '50% 100%',
-        `${name} ${duration} ease-in-out ${delay + 0.5}s infinite`,
+        motion === 'sway'
+          ? `${name} ${duration} ease-in-out ${delay + 0.5}s infinite`
+          : '',
       ),
   }
 }
@@ -126,8 +142,8 @@ const FLOWER = {
     'M13.96 6.21 A3.2 3.2 0 1 1 20.04 6.21 A3.2 3.2 0 1 1 20.11 11.83 A3.2 3.2 0 1 1 13.89 11.83 A3.2 3.2 0 1 1 13.96 6.21 Z',
 }
 
-function Flower({ delay }: { delay: number }) {
-  const t = timings(delay)
+function Flower({ delay, motion }: PlantProps) {
+  const t = timings(delay, motion)
   return (
     <g style={t.idle('garden-sway', '4.6s')}>
       <g style={t.grow}>
@@ -156,8 +172,8 @@ function Flower({ delay }: { delay: number }) {
   )
 }
 
-function Bud({ delay }: { delay: number }) {
-  const t = timings(delay)
+function Bud({ delay, motion }: PlantProps) {
+  const t = timings(delay, motion)
   return (
     <g style={t.idle('garden-sway-s', '5.2s')}>
       <g style={t.grow}>
@@ -185,8 +201,8 @@ function Bud({ delay }: { delay: number }) {
   )
 }
 
-function Wilt({ delay }: { delay: number }) {
-  const t = timings(delay)
+function Wilt({ delay, motion }: PlantProps) {
+  const t = timings(delay, motion)
   return (
     <g style={t.idle('garden-wilt', '5.6s')}>
       <g style={t.grow}>
@@ -206,7 +222,7 @@ function Wilt({ delay }: { delay: number }) {
 }
 
 /** A dashed sprout that fades in and out: nothing has been looked at yet. */
-function Ghost() {
+function Ghost({ motion }: PlantProps) {
   const dashed = {
     stroke: 'currentColor',
     fill: 'none',
@@ -218,7 +234,10 @@ function Ghost() {
       style={{
         transformBox: 'fill-box',
         transformOrigin: '50% 100%',
-        animation: 'garden-ghost 3.6s ease-in-out infinite',
+        animation:
+          motion === 'sway'
+            ? 'garden-ghost 3.6s ease-in-out infinite'
+            : undefined,
       }}
     >
       <path d="M17 33 V27" strokeWidth="1.5" {...dashed} />
@@ -242,8 +261,8 @@ function Ghost() {
  * colour of the surface behind them, so where they overlap only the
  * silhouette reads as a line.
  */
-function TransparentFlower({ delay }: { delay: number }) {
-  const t = timings(delay)
+function TransparentFlower({ delay, motion }: PlantProps) {
+  const t = timings(delay, motion)
   const outline = {
     stroke: 'currentColor',
     strokeLinecap: 'round',

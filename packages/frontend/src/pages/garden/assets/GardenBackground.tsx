@@ -20,7 +20,7 @@ export function GardenBackground() {
         lightClassName="top-[72%] left-[76%] size-[420px] max-md:size-60"
         ridgesClassName="h-56"
       >
-        <GardenFlowers flowers={FLOWERS} />
+        <GardenFlowers flowers={FLOWERS} motion="grow" />
       </GardenLandscape>
     </PageBackdrop>
   )

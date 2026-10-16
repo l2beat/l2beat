@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
-import { CropPlant } from './CropPlant'
+import { CropPlant, type PlantMotion } from './CropPlant'
 
 // The garden's landscape, shared by its page backdrop and the CROPS banners
 // elsewhere, so the garden looks the same wherever it shows: four ridges that
@@ -85,7 +85,14 @@ export interface GardenFlower {
 }
 
 /** Flowers standing on the nearest ridge, growing in one after another. */
-export function GardenFlowers({ flowers }: { flowers: GardenFlower[] }) {
+export function GardenFlowers({
+  flowers,
+  motion,
+}: {
+  flowers: GardenFlower[]
+  /** Scenery, so never the garden's endless sway: see `PlantMotion`. */
+  motion: Exclude<PlantMotion, 'sway'>
+}) {
   return flowers.map((flower, index) => (
     <span
       key={flower.left}
@@ -98,6 +105,7 @@ export function GardenFlowers({ flowers }: { flowers: GardenFlower[] }) {
         delay={0.25 + index * 0.18}
         width={flower.width}
         soil={false}
+        motion={motion}
       />
     </span>
   ))
