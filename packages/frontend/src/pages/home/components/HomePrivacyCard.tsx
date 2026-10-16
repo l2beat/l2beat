@@ -94,6 +94,7 @@ export function HomePrivacyCard({
                 adversaries={protocol.adversaries}
                 href={protocol.href}
                 isUnderReview={protocol.isUnderReview}
+                className="size-6"
               />
             ),
           },

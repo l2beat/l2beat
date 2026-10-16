@@ -8,12 +8,15 @@ interface Props {
   /** The project page. */
   href: string
   isUnderReview: boolean
+  /** The rosette's size, instead of the table's. */
+  className?: string
 }
 
 export function PrivacyRosetteCell({
   adversaries,
   href,
   isUnderReview,
+  className,
 }: Props) {
   const values = getPrivacyAdversaryRosetteValues(adversaries)
   return (
@@ -25,7 +28,7 @@ export function PrivacyRosetteCell({
     >
       <PizzaRosetteIcon
         values={values}
-        className="size-6 md:size-8"
+        className={className ?? 'size-6 md:size-8'}
         isUnderReview={isUnderReview}
         background={false}
         disableSectionLinking

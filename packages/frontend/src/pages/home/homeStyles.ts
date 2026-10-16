@@ -28,6 +28,17 @@ export const HOME_TEXT = {
 /** Every KPI chart on the page, so the Layer 2s, Privacy and Ethereum pairs match. */
 export const HOME_CHART_HEIGHT_CLASS = 'h-36'
 
+/** Every list and ranking row on the page, so they all match. */
+export const HOME_ROW_CLASS = 'h-10'
+
+/**
+ * The lines between those rows: over each row but the first, so a list that
+ * wraps its overflow out of view ends on its last visible row, with no line
+ * under it.
+ */
+export const HOME_ROW_LINES_CLASS =
+  '[&>li+li]:border-divider [&>li+li]:border-t'
+
 /** Every project, chain and token icon on the page. */
 export const HOME_ICON_CLASS = 'size-5 shrink-0 rounded-full'
 

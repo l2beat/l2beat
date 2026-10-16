@@ -4,7 +4,13 @@ import { cn } from '~/utils/cn'
 import { formatPublicationDate } from '~/utils/dates'
 import type { HomeRecentProject } from '../getHomeData'
 import type { HomeResearchItem } from '../getHomeResearch'
-import { HOME_ICON_CLASS, HOME_TEXT, HOME_THUMBNAIL_CLASS } from '../homeStyles'
+import {
+  HOME_ICON_CLASS,
+  HOME_ROW_CLASS,
+  HOME_ROW_LINES_CLASS,
+  HOME_TEXT,
+  HOME_THUMBNAIL_CLASS,
+} from '../homeStyles'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 import { HomeStackedIcons } from './HomeStackedIcons'
@@ -89,19 +95,25 @@ function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
     // takes the height they leave (a 0px height, so it never sets it, but
     // room for five), wrapping the rows that do not fit into a second column,
     // out of view: whole rows only. Stacked it shows five.
-    <ul className="flex @min-[560px]/recent:h-0 @min-[560px]/recent:min-h-[200px] @min-[560px]/recent:flex-1 flex-col @min-[560px]/recent:flex-wrap divide-y divide-divider @min-[560px]/recent:overflow-hidden">
+    <ul
+      className={cn(
+        'flex @min-[560px]/recent:h-0 @min-[560px]/recent:min-h-[200px] @min-[560px]/recent:flex-1 flex-col @min-[560px]/recent:flex-wrap @min-[560px]/recent:overflow-hidden',
+        HOME_ROW_LINES_CLASS,
+      )}
+    >
       {projects.map((project, index) => (
         <li
           key={project.id}
           className={cn(
-            'flex @min-[560px]/recent:h-10 min-h-10 w-full shrink-0',
+            'flex w-full shrink-0',
+            HOME_ROW_CLASS,
             index >= STACKED_PROJECTS_COUNT &&
               '@min-[560px]/recent:flex hidden',
           )}
         >
           <a
             href={project.href}
-            className="group flex min-w-0 flex-1 items-center gap-2 py-2"
+            className="group flex min-w-0 flex-1 items-center gap-2"
           >
             <img src={project.iconUrl} alt="" className={HOME_ICON_CLASS} />
             <span

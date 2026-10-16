@@ -22,7 +22,12 @@ import type {
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { HOME_ICON_CLASS, HOME_TEXT } from '../homeStyles'
+import {
+  HOME_ICON_CLASS,
+  HOME_ROW_CLASS,
+  HOME_ROW_LINES_CLASS,
+  HOME_TEXT,
+} from '../homeStyles'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
@@ -351,12 +356,18 @@ function TopRoutes({
       {/* Stacked from lg, the list takes the height left and wraps the rows
           that do not fit into a second column, out of view: whole rows only,
           as many as fit. */}
-      <ol className="interop-stacked:flex interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:flex-col interop-stacked:flex-wrap divide-y divide-divider interop-stacked:overflow-hidden">
+      <ol
+        className={cn(
+          'interop-stacked:flex interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:flex-col interop-stacked:flex-wrap interop-stacked:overflow-hidden',
+          HOME_ROW_LINES_CLASS,
+        )}
+      >
         {routes.map(({ src, dst, volume, href }, index) => (
           <li
             key={`${src.id}-${dst.id}`}
             className={cn(
-              'flex interop-stacked:h-10 min-h-10 w-full interop-stacked:shrink-0 items-center gap-2 py-2',
+              'flex w-full interop-stacked:shrink-0 items-center gap-2',
+              HOME_ROW_CLASS,
               index >= TOP_ROUTES_COUNT && 'interop-stacked:flex hidden',
             )}
           >

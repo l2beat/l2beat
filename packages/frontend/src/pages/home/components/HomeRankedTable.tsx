@@ -7,7 +7,12 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
 import { cn } from '~/utils/cn'
-import { HOME_ICON_CLASS, HOME_TEXT } from '../homeStyles'
+import {
+  HOME_ICON_CLASS,
+  HOME_ROW_CLASS,
+  HOME_ROW_LINES_CLASS,
+  HOME_TEXT,
+} from '../homeStyles'
 import { HomeChange } from './HomeChange'
 
 export interface HomeRankedTableRow {
@@ -111,11 +116,14 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
           ))}
         </div>
         {/* The list's own box steps aside, so its rows join the grid. */}
-        <ol className="contents divide-y divide-divider">
+        <ol className={cn('contents', HOME_ROW_LINES_CLASS)}>
           {rows.map((row, index) => (
             <li
               key={row.id}
-              className="col-span-full grid min-h-10 grid-cols-subgrid items-center py-2"
+              className={cn(
+                'col-span-full grid grid-cols-subgrid items-center',
+                HOME_ROW_CLASS,
+              )}
             >
               <span
                 className={cn('w-3 text-right tabular-nums', HOME_TEXT.meta)}
