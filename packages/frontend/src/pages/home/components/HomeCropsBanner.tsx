@@ -49,16 +49,12 @@ export function HomeCropsBanner({
         <GardenFlowers flowers={FLOWERS} motion="grow" />
       </GardenLandscape>
       <div className="relative flex max-w-[54%] flex-col gap-2">
-        <div className="flex flex-wrap items-baseline gap-x-2.5">
-          <h2 className={HOME_TEXT.title}>
-            <HomeTitleLink href={GARDEN_PATH}>CROPS</HomeTitleLink>
-          </h2>
-          <span className="whitespace-nowrap font-light font-roboto-serif text-heading-20 text-secondary leading-tight">
-            The Infinite Garden
-          </span>
-        </div>
+        {/* Titled like every other card; the sentence says what CROPS is. */}
+        <h2 className={HOME_TEXT.title}>
+          <HomeTitleLink href={GARDEN_PATH}>The Infinite Garden</HomeTitleLink>
+        </h2>
         <p className={HOME_TEXT.body}>
-          Protocols built on{' '}
+          Protocols that hold to CROPS:{' '}
           {CROP_COLUMNS.map((crop, index) => (
             <span key={crop.key}>
               <span className="text-primary">
@@ -68,7 +64,7 @@ export function HomeCropsBanner({
                 ? ', '
                 : index === CROP_COLUMNS.length - 2
                   ? ' and '
-                  : ': the ones that last.'}
+                  : '.'}
             </span>
           ))}
         </p>
