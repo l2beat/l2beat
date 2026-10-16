@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x2a0dc9f7898634d2e0e89d9458f151c9218f15c0
+
+# Diff at Fri, 16 Oct 2026 09:21:35 GMT:
+
+- id: 9fc61f9c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1790944819
+- current timestamp: 1790944819
+
+## Description
+
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790944819 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getAdmin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0xc706969454b37da65903b1c3c6b717a8d613cf80
 
 # Diff at Mon, 05 Oct 2026 08:43:58 GMT:

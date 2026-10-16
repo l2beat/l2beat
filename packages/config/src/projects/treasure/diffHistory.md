@@ -1,21 +1,30 @@
-Generated with discovered.json: 0x6eb213c70f5177aa60b432ca7f8b1ae9b656d7b3
+Generated with discovered.json: 0xa1e0e319a63a13b6c3fc760682c4f40e9ac6e2a4
 
-# Diff at Fri, 16 Oct 2026 05:36:54 GMT:
+# Diff at Fri, 16 Oct 2026 09:21:41 GMT:
 
 - id: 59f43cd1
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1753944354
+- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1753944354
 - current timestamp: 1753944354
 
 ## Description
 
-Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1753944354 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getAdmin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
 
 ```diff
     contract TreasureZkEvmAdmin (eth:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) [shared-zk-stack/ChainAdmin] {

@@ -1,21 +1,30 @@
-Generated with discovered.json: 0x9ac58d07971f50bc14f5e5328b911b96479a3bba
+Generated with discovered.json: 0x17cebe842a5e87f9f38140c971f9dec5549c89e7
 
-# Diff at Fri, 16 Oct 2026 05:36:53 GMT:
+# Diff at Fri, 16 Oct 2026 09:21:41 GMT:
 
 - id: 70d7700c
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791458527
+- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1791458527
 - current timestamp: 1791458527
 
 ## Description
 
-Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1791458527 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getAdmin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
 
 ```diff
     contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin] {

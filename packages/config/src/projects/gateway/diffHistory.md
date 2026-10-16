@@ -1,15 +1,15 @@
-Generated with discovered.json: 0x3f222d683181ab6d0ecb196f09ecdc52d13a8589
+Generated with discovered.json: 0xee8eefd7fe905fa46c22a6aa618ea793914cf679
 
-# Diff at Fri, 16 Oct 2026 05:36:49 GMT:
+# Diff at Fri, 16 Oct 2026 09:21:36 GMT:
 
 - id: 22ebb09d
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1770639543
+- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1770639543
 - current timestamp: 1770639543
 
 ## Description
 
-Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
 
 ## Config/verification related changes
 
@@ -22,6 +22,15 @@ discovery. Values are for block 1770639543 (main branch discovery), not current.
     +++ description: None
       fieldMeta:
 +        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract Gateway (eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getAdmin.severity:
+-        "HIGH"
++        "MEDIUM"
     }
 ```
 

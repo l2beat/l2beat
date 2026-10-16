@@ -1,15 +1,15 @@
-Generated with discovered.json: 0x9dda845ac961f6f4ac5ba3fcb3ae3d63d2564b42
+Generated with discovered.json: 0x76d578bbcd1721154d3d07506003bcd5f4928b5f
 
-# Diff at Fri, 16 Oct 2026 05:36:54 GMT:
+# Diff at Fri, 16 Oct 2026 09:21:42 GMT:
 
 - id: e95b9ec5
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1753944481
+- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1753944481
 - current timestamp: 1753944481
 
 ## Description
 
-Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
 
 ## Config/verification related changes
 
@@ -21,6 +21,15 @@ discovery. Values are for block 1753944481 (main branch discovery), not current.
     contract ChainAdmin (eth:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6) [shared-zk-stack/ChainAdmin] {
     +++ description: A governance proxy that lets eth:0x4665ad531c35b02dE090E21FC57B69946434bf2b act through it.
       fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Diamond (eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getAdmin.severity:
 -        "HIGH"
 +        "MEDIUM"
     }

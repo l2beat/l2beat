@@ -128,14 +128,6 @@
       "reason": "Switched the Rollup's verifier from the original single verifier (0x87c1...dcf6) to the MultipleVersionRollupVerifier router, changing which contract validates state-transition proofs (UpdateVerifier)."
     },
     {
-      "timestamp": 1737455087,
-      "type": "state",
-      "contract": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-      "transaction": "0x4c82ceb6cbb9c52d52b80b6040c86949e103f3989e2479c220ab5f844d3a68e2",
-      "updateId": "a9360a3b",
-      "reason": "Moved the core ProxyAdmin, which can upgrade every core contract, from Morph Multisig 2 to Morph Multisig 1, a Safe with a different signer set (OwnershipTransferred)."
-    },
-    {
       "timestamp": 1737504695,
       "type": "state",
       "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",

@@ -113,8 +113,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 895,
-        "latestBlock": 3538176,
+        "latestAuthoritySetId": 902,
+        "latestBlock": 3564032,
         "relayers": ["eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -528,7 +528,7 @@
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
         },
-        "getAdmin": { "severity": "HIGH" },
+        "getAdmin": { "severity": "MEDIUM" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -2155,7 +2155,7 @@
   "usedBlockNumbers": { "ethereum": 26147350 },
   "permissionsConfigHash": "0xd308bdec2be96b03c99f21c7304a1121a8707452fbcef0e3869f065d3b1ba48c",
   "modelledAgainst": {
-    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66",
+    "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b",
     "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"
   },
   "permissions": {

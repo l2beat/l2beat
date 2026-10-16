@@ -1,15 +1,15 @@
-Generated with discovered.json: 0x603b4a475540c64449053a4deab6163ec34359b2
+Generated with discovered.json: 0x48188645253047733ca152d5439ac80ce241e3f8
 
-# Diff at Fri, 16 Oct 2026 05:36:53 GMT:
+# Diff at Fri, 16 Oct 2026 09:21:40 GMT:
 
 - id: 4c72e219
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791896958
+- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1791896958
 - current timestamp: 1791896958
 
 ## Description
 
-Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
 
 ## Config/verification related changes
 
@@ -43,10 +43,79 @@ discovery. Values are for block 1791896958 (main branch discovery), not current.
 ```
 
 ```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) [shared-zk-stack/BridgeHub] {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      fieldMeta.admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1AssetRouter (eth:0x8829AD80E425C646DAB305381ff105169FeEcE56) [shared-zk-stack/L1AssetRouter] {
+    +++ description: Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) [shared-zk-stack/L1NativeTokenVault] {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
     contract ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) [global/ProxyAdmin] {
     +++ description: None
       fieldMeta:
 +        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) [shared-zk-stack/ChainTypeManager] {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1Nullifier (eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) [shared-zk-stack/L1Nullifier] {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ChainAssetHandler (eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076) [shared-zk-stack/ChainAssetHandler] {
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RollupDAManager (eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45) [shared-zk-stack/RollupDAManager] {
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
     }
 ```
 
