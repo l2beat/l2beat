@@ -1,49 +1,49 @@
 {
   "stakeToken": "POL",
   "dateType": "fetched",
-  "date": "2026-08-06T08:48:58.389Z",
-  "validatorCount": 105,
-  "totalStake": 3568595994,
+  "date": "2026-10-16T13:03:10.459Z",
+  "totalStake": 3614655022,
+  "validatorCount": 104,
   "entities": [
     {
       "name": "Upbit Staking",
-      "stake": 417333126
+      "stake": 421533126
     },
     {
       "name": "Coinbase",
-      "stake": 367924777
-    },
-    {
-      "name": "Luganodes",
-      "stake": 257764644
+      "stake": 355128740
     },
     {
       "name": "Anonymous 194",
-      "stake": 245101958
-    },
-    {
-      "name": "Binance Node",
-      "stake": 228831375
+      "stake": 260114767
     },
     {
       "name": "Figment",
-      "stake": 226258957
-    },
-    {
-      "name": "Matic Power",
-      "stake": 207786330
+      "stake": 225211653
     },
     {
       "name": "Blockdaemon",
-      "stake": 181198908
+      "stake": 215228619
+    },
+    {
+      "name": "Matic Power",
+      "stake": 207780686
+    },
+    {
+      "name": "Binance Node",
+      "stake": 191072868
     },
     {
       "name": "Kraken",
-      "stake": 164408175
+      "stake": 174108004
     },
     {
-      "name": "Anonymous 95",
-      "stake": 150542747
+      "name": "Luganodes",
+      "stake": 167683386
+    },
+    {
+      "name": "Kiln x Ownest 🔸 Pro Staking 🔸",
+      "stake": 156809382
     }
   ]
 }

@@ -4,7 +4,9 @@
   "critical": true,
   "category": "core",
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

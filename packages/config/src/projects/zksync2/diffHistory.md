@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x6a8c8e2c46a4dff9bea8938064195d6f381ca02a
+
+# Diff at Fri, 16 Oct 2026 09:37:52 GMT:
+
+- id: 72b8aaa4
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791452652
+- current timestamp: 1791452652
+
+## Description
+
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791452652 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      fieldMeta.executionDelayEra.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.executionDelayEra_fmt.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.upgraderVTL:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getAdmin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x26f22a4009dd4c2177c711ad0b2e48d4ddfe7abf
 
 # Diff at Thu, 08 Oct 2026 12:03:37 GMT:

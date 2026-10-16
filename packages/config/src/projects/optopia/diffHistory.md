@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x43a76e9a967540c815a342fc9c709608ff896ea3
+
+# Diff at Fri, 16 Oct 2026 09:37:49 GMT:
+
+- id: facf67f6
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1768569941
+- current timestamp: 1768569941
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768569941 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (eth:0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x161aF05fA6BdA1c6E7Ee12839d470931bA796948) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x72a21cdac0330120ab16a6a6cd8feac3f61f5df2
 
 # Diff at Wed, 23 Sep 2026 05:48:10 GMT:

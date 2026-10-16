@@ -140,10 +140,10 @@
     // effect on the score: every L1 change to this stack so far shipped in the same OPCM
     // transaction as a portal / SystemConfig upgrade, and the Karst replacement of its L2
     // predeploys falls within 24 hours of an AggchainFEP config change.
-    // The vault-bridge tokens (vbETH, vbUSDC, vbUSDT, vbWBTC, vbUSDS) and their
-    // MigrationManager are not critical: L1 tokens bridged canonically through the shared
-    // AgglayerBridge (TVS: custom-canonical), not natively minted on Katana. Their config
-    // is watched at MEDIUM through the GenericVaultBridgeToken template.
+    // The vault-bridge tokens (vbETH, vbUSDC, vbUSDT, vbWBTC, vbUSDS) hold the backing of
+    // the vb* assets on Katana and are upgradeable by Katana vaultBridge multisigs, so they
+    // and their ProxyAdmins are critical (escrow rule). Their MigrationManager is not: it
+    // holds no funds and each vbToken checks every completeMigration against received assets.
     // SuperchainConfig fork: its guardian can pause the portal and with it the
     // forced-transaction path (the only censorship-resistance mechanism).
     "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": {
@@ -171,6 +171,22 @@
     // ProxyAdmin (L2): can upgrade the AgglayerBridgeL2 and the L2 GER manager.
     "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
       "critical": true
+    },
+    // ProxyAdmins of the vault-bridge tokens.
+    "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951": {
+      "critical": true // vbETH
+    },
+    "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30": {
+      "critical": true // vbUSDC
+    },
+    "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010": {
+      "critical": true // vbUSDT
+    },
+    "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69": {
+      "critical": true // vbWBTC
+    },
+    "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832": {
+      "critical": true // vbUSDS
     },
     "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666": {
       "fields": {

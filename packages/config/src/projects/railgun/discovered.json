@@ -85,7 +85,7 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Controller that can operate any Railgun proxy administered by this ProxyAdmin.",
           "type": "PERMISSION"
         }
@@ -130,6 +130,7 @@
       },
       "fieldMeta": {
         "owner": {
+          "severity": "MEDIUM",
           "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
           "type": "PERMISSION"
         },
@@ -302,6 +303,7 @@
       },
       "fieldMeta": {
         "owner": {
+          "severity": "MEDIUM",
           "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
           "type": "PERMISSION"
         },
@@ -665,7 +667,7 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current controller of the Delegator. The owner bypasses the permission bitmap and can call any target through this contract.",
           "type": "PERMISSION"
         },
@@ -875,7 +877,7 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current governance-controlled minter of the RAIL token.",
           "type": "PERMISSION"
         },
@@ -1173,7 +1175,7 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet proxy.",
           "type": "PERMISSION"
         },
@@ -1182,7 +1184,7 @@
           "type": "CODE_CHANGE"
         },
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Governance-controlled owner of the smart wallet logic.",
           "type": "PERMISSION"
         },

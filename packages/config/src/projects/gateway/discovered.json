@@ -229,6 +229,7 @@
         "$immutable": true,
         "owner": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": "ProxyAdmin"
       }
@@ -521,7 +522,7 @@
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
         },
-        "getAdmin": { "severity": "HIGH" },
+        "getAdmin": { "severity": "MEDIUM" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -839,7 +840,7 @@
         ]
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }

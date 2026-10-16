@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x63f695cd6570eb244c360d844f8c706165568b46
+
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
+
+- id: 68028cd4
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791965742
+- current timestamp: 1791965742
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791965742 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x679A65aD62972Ea3561F40A12e93CcA6f79F35E6) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x40ac7d8ec60a4453d8068bfb718f10f3b2401d4a
 
 # Diff at Wed, 14 Oct 2026 08:17:12 GMT:

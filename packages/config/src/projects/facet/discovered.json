@@ -296,12 +296,14 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
+          "severity": "HIGH",
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": "SP1VerifierGateway"
@@ -340,6 +342,7 @@
         "paused": false,
         "version": "2.2.0"
       },
+      "fieldMeta": { "$admin": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1ChugSplashProxy",
         "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9": "PausedL1StandardBridge"
@@ -377,12 +380,14 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
+          "severity": "HIGH",
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": "SP1VerifierGateway"

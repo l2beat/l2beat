@@ -34,7 +34,7 @@
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "CONSENSUS_TYPE": {
       "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"

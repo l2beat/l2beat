@@ -94,7 +94,8 @@ export const zkapi: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-10-02')),
   discoveryInfo: getDiscoveryInfo([discovery]),
-  ossificationHistory: discovery.getOssificationHistory(),
+  // Starts at the vault deployment: the linked Bn254Poseidon library is older.
+  ossificationHistory: discovery.getOssificationHistory(sinceTimestamp),
   statuses: {
     yellowWarning: undefined,
     redWarning: {

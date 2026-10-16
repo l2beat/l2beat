@@ -192,7 +192,12 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "minDelayFormatted": { "severity": "HIGH" }
+        "minDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "timelockAdminAC": { "severity": "MEDIUM" },
+        "proposerAC": { "severity": "MEDIUM" },
+        "cancellerAC": { "severity": "MEDIUM" },
+        "executorAC": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1": "Proxy",
@@ -393,10 +398,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": "Proxy",
@@ -604,6 +615,7 @@
         "$immutable": true,
         "owner": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd": "ProxyAdmin"
       }

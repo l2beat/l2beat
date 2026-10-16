@@ -7,7 +7,7 @@
   "fields": {
     "owner": {
       "description": "Controller that can operate any Railgun proxy administered by this ProxyAdmin.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "type": "PERMISSION",
       "permissions": [{ "type": "act" }]
     }

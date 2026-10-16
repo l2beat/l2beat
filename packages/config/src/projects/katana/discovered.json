@@ -1,7 +1,7 @@
 {
   "name": "katana",
-  "timestamp": 1791788974,
-  "configHash": "0xbdec9b1e8187f84a6517d49fe06913bb6d811314c0480d34eb5a4393ce82f0cb",
+  "timestamp": 1792144034,
+  "configHash": "0x2256c047c393af620400a7f94b399cde10eb90aa28191a1301eb6436529f66d0",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -114,12 +114,12 @@
         "lastAccInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "latestBlockNumber": 45042586,
-        "latestOutputIndex": 10696,
+        "latestBlockNumber": 45396070,
+        "latestOutputIndex": 10791,
         "MAX_AGGCHAIN_SIGNERS": 255,
         "networkName": "katana",
-        "nextBlockNumber": 45042587,
-        "nextOutputIndex": 10697,
+        "nextBlockNumber": 45396071,
+        "nextOutputIndex": 10792,
         "optimisticMode": false,
         "optimisticModeManager": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "pendingAdmin": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -153,7 +153,7 @@
         "rollupConfigHash": { "severity": "LOW" },
         "submissionInterval": { "severity": "HIGH" },
         "getThreshold": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "CONSENSUS_TYPE": {
           "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
         },
@@ -212,6 +212,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -220,6 +221,7 @@
         "owner": "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951": "ProxyAdmin"
       }
@@ -323,8 +325,6 @@
           "eth:0x5E5D6f849Fa86c058f148E9D3f643C8F4c43f20b",
           "eth:0x5250077c42627cBd112988f32D482acC9ff40bDB",
           "eth:0xC357eE8a8DdE88Dd5a3Ea54847Adef6846A28c51",
-          "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F",
-          "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34",
           "eth:0x80a3887BA60F76acAb48EE4aEAd0a71A0774A8B2",
           "eth:0xB13C8f58a233607569D2F8411B912148aeC4aEe2",
           "eth:0x0Dca0FDC170baA4CA9c1dCd37Ffe01f97bCfD504"
@@ -333,8 +333,8 @@
         "domainSeparator": "0xbb16ecb0b279d38c2ca14b411c7106024a7c501d970c4bceb13756c75313c405",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 3364,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 3371,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -371,6 +371,7 @@
         "isUpgrading": false,
         "owner": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832": "ProxyAdmin"
       }
@@ -671,7 +672,7 @@
         "version": "5.6.1-agglayer"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "LOW" },
         "paused": {
           "severity": "MEDIUM",
@@ -751,6 +752,7 @@
         "owner": "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56": "ProxyAdmin"
       }
@@ -778,6 +780,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
+      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -846,10 +849,10 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 18573387851,
+        "stakedAssets": 16012082535,
         "symbol": "vbWBTC",
-        "totalAssets": 18573387851,
-        "totalSupply": 18573387851,
+        "totalAssets": 16012082535,
+        "totalSupply": 16012082535,
         "underlyingToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
         "yield": 0,
@@ -861,13 +864,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "MEDIUM" },
+        "migrationManager": { "severity": "HIGH" },
         "minimumReservePercentage": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -889,6 +892,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
+      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -934,7 +938,7 @@
         "asset": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "44363308829215700"
+          "difference": "64866960525830130"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -960,13 +964,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "1951001620466744320778",
+        "stakedAssets": "2076433883859931827033",
         "symbol": "vbETH",
-        "totalAssets": "1951001620466744320778",
-        "totalSupply": "1950957257157915105078",
+        "totalAssets": "2076433883859931827033",
+        "totalSupply": "2076369016899405996903",
         "underlyingToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "44363308829215700",
+        "yield": "64866960525830130",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x31A5684983EeE865d943A696AAC155363bA024f9",
@@ -975,13 +979,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "MEDIUM" },
+        "migrationManager": { "severity": "HIGH" },
         "minimumReservePercentage": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1121,6 +1125,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -1129,6 +1134,7 @@
         "owner": "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010": "ProxyAdmin"
       }
@@ -1144,6 +1150,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
+      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1227,13 +1234,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "MEDIUM" },
+        "migrationManager": { "severity": "HIGH" },
         "minimumReservePercentage": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1342,6 +1349,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -1350,6 +1358,7 @@
         "owner": "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69": "ProxyAdmin"
       }
@@ -1399,7 +1408,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 331,
+        "nonce": 353,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1492,6 +1501,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
+      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1535,7 +1545,7 @@
           }
         },
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 581674633 },
+        "backingDifference": { "positive": true, "difference": 662394663 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1560,13 +1570,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 7420564327082,
+        "stakedAssets": 7366155606790,
         "symbol": "vbUSDC",
-        "totalAssets": 7420564327082,
-        "totalSupply": 7419982652449,
+        "totalAssets": 7366155606790,
+        "totalSupply": 7365493212127,
         "underlyingToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 581674633,
+        "yield": 662394663,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
@@ -1575,13 +1585,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "MEDIUM" },
+        "migrationManager": { "severity": "HIGH" },
         "minimumReservePercentage": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1701,6 +1711,7 @@
         "isUpgrading": false,
         "owner": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52": "ProxyAdmin"
       }
@@ -1716,6 +1727,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.",
+      "critical": true,
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1759,7 +1771,7 @@
           }
         },
         "asset": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 140093557 },
+        "backingDifference": { "positive": true, "difference": 149198611 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1784,13 +1796,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 3326690602404,
+        "stakedAssets": 2966428250395,
         "symbol": "vbUSDT",
-        "totalAssets": 3326690602404,
-        "totalSupply": 3326550508847,
+        "totalAssets": 2966428250395,
+        "totalSupply": 2966279051784,
         "underlyingToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 140093557,
+        "yield": 149198611,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
@@ -1799,13 +1811,13 @@
       "fieldMeta": {
         "accessControl": { "severity": "MEDIUM" },
         "yieldVault": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "external vault where the underlying backing assets are deposited to generate yield."
         },
         "yieldRecipient": { "severity": "MEDIUM" },
-        "migrationManager": { "severity": "MEDIUM" },
+        "migrationManager": { "severity": "HIGH" },
         "minimumReservePercentage": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
         },
         "paused": { "severity": "MEDIUM" }
@@ -1874,7 +1886,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 9 (33%)",
-        "nonce": 332,
+        "nonce": 334,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1891,6 +1903,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -1899,6 +1912,7 @@
         "owner": "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30": "ProxyAdmin"
       }
@@ -2033,7 +2047,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 48,
+        "nonce": 49,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2376,6 +2390,7 @@
         "disputeGameFactory": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
         "eip1559Denominator": 50,
         "eip1559Elasticity": 6,
+        "enabledFeatures": [],
         "gasLimit": 120000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
@@ -2442,10 +2457,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174": "Proxy",
@@ -2520,6 +2541,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -2528,6 +2550,7 @@
         "owner": "eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832": "ProxyAdmin"
       }
@@ -2655,6 +2678,7 @@
         "wethFromDGF": "eth:0x99e1fe97767683bbba69fF570b4BbEd7C3e0649e"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "game1337": { "severity": "HIGH" },
         "game621": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
@@ -2830,6 +2854,7 @@
         "$immutable": true,
         "owner": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65": "AddressManager"
       },
@@ -2955,11 +2980,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xFB2a738AE435610354b132c4a4ee647558f663eb",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2971,11 +2991,6 @@
     },
     {
       "address": "eth:0xfB948CB3fE208fd067d36768B2bACd5dCF886066",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3011,6 +3026,7 @@
         "$immutable": true,
         "owner": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin"
       }
@@ -3069,19 +3085,19 @@
         "$upgradeCount": 4,
         "bridgeLib": "katana:0xb30C032b183525de7427f04e79F45Cd19866E124",
         "bridgeManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
-        "claimedGlobalIndexHashChain": "0x573f6dfe463b4707f4afd126de9e967e023644317dcd8899693f4b7a7c8ebd5e",
-        "depositCount": 23457,
+        "claimedGlobalIndexHashChain": "0x962c1a7c9cd7b1f6d77f699a505bf0dae690ffd3f1b01c693ffc2a8fc843652e",
+        "depositCount": 23543,
         "emergencyBridgePauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "emergencyBridgeUnpauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "gasTokenAddress": "katana:0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
-        "getRoot": "0x1d35794cd371d3f36176db44f3c76c3359fce082493df95936ce47ebbeba26bd",
+        "getRoot": "0xba680df03de74fba0c0d8d0bd3969f30e8c4e60a9b11fb3194b9214dcc25c1e7",
         "getWrappedTokenBridgeImplementation": "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c",
         "globalExitRootManager": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
         "isEmergencyState": false,
-        "lastUpdatedDepositCount": 23457,
+        "lastUpdatedDepositCount": 23543,
         "networkID": 20,
         "pendingEmergencyBridgePauser": "katana:0x0000000000000000000000000000000000000000",
         "pendingEmergencyBridgeUnpauser": "katana:0x0000000000000000000000000000000000000000",
@@ -3097,7 +3113,7 @@
         "pendingEmergencyBridgePauser": { "severity": "MEDIUM" },
         "isEmergencyState": { "severity": "MEDIUM" },
         "WETHToken": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "getProxiedTokensManager": { "severity": "MEDIUM" },
         "bridgeManager": { "severity": "MEDIUM" },
         "emergencyBridgePauser": { "severity": "MEDIUM" },
@@ -3241,7 +3257,7 @@
         "$upgradeCount": 3,
         "baseFee": 0,
         "baseFeeScalar": 1368,
-        "blobBaseFee": 6697758,
+        "blobBaseFee": 3652300,
         "blobBaseFeeScalar": 801949,
         "decimals": 6,
         "DECIMALS": 6,
@@ -3250,7 +3266,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 100536268,
+        "l1BaseFee": 61368791,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -3519,10 +3535,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 100536268,
+        "basefee": 61368791,
         "baseFeeScalar": 1368,
         "batcherHash": "0x0000000000000000000000001ffda89c755f6d4af069897d77ccabb580fd412a",
-        "blobBaseFee": 6697758,
+        "blobBaseFee": 3652300,
         "blobBaseFeeScalar": 801949,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "katana:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -3532,17 +3548,17 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x3f5ddaec97e9c3ea7440e00190f49767b03917bccae94f4e4a33b4d86dba9ad2",
+        "hash": "0x12ffb4cb6cd618b0016396f102688ce95282f779b330df557e5085a4da022b21",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26174796,
+        "number": 26204286,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 100000,
         "proxyAdmin": "katana:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
-        "sequenceNumber": 2,
-        "timestamp": 1791788915,
+        "sequenceNumber": 8,
+        "timestamp": 1792143971,
         "version": "1.9.0"
       },
       "implementationNames": {
@@ -3669,6 +3685,7 @@
         "owner": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "version": "1.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "katana:0x4200000000000000000000000000000000000018": "Proxy",
         "katana:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F": "L2ProxyAdmin"
@@ -4028,8 +4045,8 @@
         "GER_SOVEREIGN_VERSION": "al-v0.3.0",
         "globalExitRootRemover": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "globalExitRootUpdater": "katana:0x3138BBdAeAd339d34F084445192B2be9dd4B9f27",
-        "insertedGERHashChain": "0xe78a2506f62d6dec13c547def3e633790d15b64d1cff38f0e38e003e2a5b3bc8",
-        "lastRollupExitRoot": "0x1d35794cd371d3f36176db44f3c76c3359fce082493df95936ce47ebbeba26bd",
+        "insertedGERHashChain": "0xa9db425722f54852b6112a15d6a168e4155df691d15c16a555f65da9b3521592",
+        "lastRollupExitRoot": "0xba680df03de74fba0c0d8d0bd3969f30e8c4e60a9b11fb3194b9214dcc25c1e7",
         "pendingGlobalExitRootRemover": "katana:0x0000000000000000000000000000000000000000",
         "pendingGlobalExitRootUpdater": "katana:0x0000000000000000000000000000000000000000",
         "removedGERHashChain": "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -4037,7 +4054,7 @@
       "fieldMeta": {
         "pendingGlobalExitRootUpdater": { "severity": "MEDIUM" },
         "pendingGlobalExitRootRemover": { "severity": "MEDIUM" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "globalExitRootRemover": { "severity": "MEDIUM" },
         "globalExitRootUpdater": { "severity": "MEDIUM" }
       },
@@ -7053,15 +7070,15 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba",
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
     "polygon-cdk/GenericVaultBridgeToken": "0x8f2f7de70d9d896531454700be7cf820d5095bd49d0c5da4ff998df7533d5823",
     "polygon-cdk/L2Timelock": "0xabef12a0b5dfe935a21e07c0e869f49752b4e127836e2001215b9f0b2c24a5e7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "usedBlockNumbers": { "ethereum": 26174800, "katana": 45046163 },
-  "permissionsConfigHash": "0xe6ff1461f6f02cb2b08467e02e6af305e9065b2c8ead7b62a8909f8016b1cfc1",
+  "usedBlockNumbers": { "ethereum": 26204291, "katana": 45401223 },
+  "permissionsConfigHash": "0x12c812479311180a992f2fb47d0b5c01e98c807ace35549b7480e6da46931f69",
   "modelledAgainst": {
-    "shared-polygon-cdk": "0x2b01a21f2facb60eb34137e255be78fc4ff5ad7f156454e2886c4290de5b9ddf"
+    "shared-polygon-cdk": "0xe9304873e93dfe13b5bffa1058853e7cf85f6a7b0a8666193059e58f9208571b"
   },
   "permissions": {
     "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {

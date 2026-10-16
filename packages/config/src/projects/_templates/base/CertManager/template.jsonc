@@ -5,7 +5,7 @@
   "description": "Verifies and caches AWS Nitro certificate chains against a pinned root certificate.",
   "fields": {
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

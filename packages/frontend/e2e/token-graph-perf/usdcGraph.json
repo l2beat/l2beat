@@ -1,0 +1,3160 @@
+{
+  "nodes": [
+    {
+      "id": "abstract|0x84a71ccd554cc1b02749b35d22f684cc8ec987e1",
+      "volume": 115698.73393071,
+      "transferCount": 292,
+      "avgDuration": 13,
+      "bridges": [
+        {
+          "id": "stargate",
+          "name": "Stargate",
+          "iconUrl": "/static/icons/stargate.3af58488.png",
+          "href": "/interop/protocols/stargate"
+        }
+      ],
+      "deployments": [
+        {
+          "chain": {
+            "id": "tempo",
+            "name": "Tempo",
+            "iconUrl": "/static/icons/tempo.cd0198f3.png"
+          },
+          "address": "0x20c000000000000000000000b9537d11c60e8b50",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://explore.tempo.xyz/address/0x20c000000000000000000000b9537d11c60e8b50",
+          "minters": [
+            {
+              "id": "stargate",
+              "name": "Stargate",
+              "iconUrl": "/static/icons/stargate.3af58488.png",
+              "href": "/interop/protocols/stargate"
+            }
+          ],
+          "isSupported": true,
+          "volume": 77345.20390831001,
+          "transferCount": 218,
+          "avgDuration": 9
+        },
+        {
+          "chain": {
+            "id": "abstract",
+            "name": "Abstract",
+            "iconUrl": "/static/icons/abstract.27bdf3f6.png"
+          },
+          "address": "0x84a71ccd554cc1b02749b35d22f684cc8ec987e1",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://abscan.org/address/0x84a71ccd554cc1b02749b35d22f684cc8ec987e1",
+          "minters": [
+            {
+              "id": "stargate",
+              "name": "Stargate",
+              "iconUrl": "/static/icons/stargate.3af58488.png",
+              "href": "/interop/protocols/stargate"
+            }
+          ],
+          "isSupported": true,
+          "volume": 38253.5718194,
+          "transferCount": 72,
+          "avgDuration": 22
+        },
+        {
+          "chain": {
+            "id": "ink",
+            "name": "Ink",
+            "iconUrl": "/static/icons/ink.8bd61d6f.png"
+          },
+          "address": "0xf1815bd50389c46847f0bda824ec8da914045d14",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://explorer.inkonchain.com/address/0xf1815bd50389c46847f0bda824ec8da914045d14",
+          "minters": [
+            {
+              "id": "stargate",
+              "name": "Stargate",
+              "iconUrl": "/static/icons/stargate.3af58488.png",
+              "href": "/interop/protocols/stargate"
+            }
+          ],
+          "isSupported": true,
+          "volume": 99.958203,
+          "transferCount": 2,
+          "avgDuration": 16
+        }
+      ]
+    },
+    {
+      "id": "aevo|0xc06ed0eb5c0e25fa71b37a3f33cfa62c7d9dd542",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "aevo",
+            "name": "Aevo",
+            "iconUrl": "/static/icons/aevo.2d9db7bd.png"
+          },
+          "address": "0xc06ed0eb5c0e25fa71b37a3f33cfa62c7d9dd542",
+          "symbol": "USDC",
+          "explorerUrl": "https://explorer.aevo.xyz/address/0xc06ed0eb5c0e25fa71b37a3f33cfa62c7d9dd542",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "apechain|0xf1815bd50389c46847f0bda824ec8da914045d14",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "apechain",
+            "name": "ApeChain",
+            "iconUrl": "/static/icons/apechain.381d83e1.png"
+          },
+          "address": "0xf1815bd50389c46847f0bda824ec8da914045d14",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://apescan.io/address/0xf1815bd50389c46847f0bda824ec8da914045d14",
+          "minters": [
+            {
+              "id": "stargate",
+              "name": "Stargate",
+              "iconUrl": "/static/icons/stargate.3af58488.png",
+              "href": "/interop/protocols/stargate"
+            }
+          ],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "arbitrum|0x8619f97d4d08382548f536e5ce1d3e0d9ba40326",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "arbitrum",
+            "name": "Arbitrum One",
+            "iconUrl": "/static/icons/arbitrum.038422c5.png"
+          },
+          "address": "0x8619f97d4d08382548f536e5ce1d3e0d9ba40326",
+          "symbol": "USDC",
+          "explorerUrl": "https://arbiscan.io/address/0x8619f97d4d08382548f536e5ce1d3e0d9ba40326",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "arbitrum|0x93e0fcbed43cd6fc30df00ccbd4669718dc74e77",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "arbitrum",
+            "name": "Arbitrum One",
+            "iconUrl": "/static/icons/arbitrum.038422c5.png"
+          },
+          "address": "0x93e0fcbed43cd6fc30df00ccbd4669718dc74e77",
+          "symbol": "USDC",
+          "explorerUrl": "https://arbiscan.io/address/0x93e0fcbed43cd6fc30df00ccbd4669718dc74e77",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "arbitrum|0x9a3fba8a0870fb9765023681daa5390c7919c916",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "arbitrum",
+            "name": "Arbitrum One",
+            "iconUrl": "/static/icons/arbitrum.038422c5.png"
+          },
+          "address": "0x9a3fba8a0870fb9765023681daa5390c7919c916",
+          "symbol": "USDC",
+          "explorerUrl": "https://arbiscan.io/address/0x9a3fba8a0870fb9765023681daa5390c7919c916",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "arbitrum|0xa16148c6ac9ede0d82f0c52899e22a575284f131",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "arbitrum",
+            "name": "Arbitrum One",
+            "iconUrl": "/static/icons/arbitrum.038422c5.png"
+          },
+          "address": "0xa16148c6ac9ede0d82f0c52899e22a575284f131",
+          "symbol": "USDC",
+          "explorerUrl": "https://arbiscan.io/address/0xa16148c6ac9ede0d82f0c52899e22a575284f131",
+          "minters": [
+            {
+              "id": "axelar-its",
+              "name": "Axelar ITS",
+              "iconUrl": "/static/icons/axelar-its.6d17ad47.png",
+              "href": "/interop/protocols/axelar-its"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "volume": 1013792991.0599853,
+      "transferCount": 66822,
+      "avgDuration": 264,
+      "bridges": [
+        {
+          "id": "cctpv1",
+          "name": "CCTP v1",
+          "iconUrl": "/static/icons/cctpv1.9914d664.png",
+          "href": "/interop/protocols/cctpv1"
+        },
+        {
+          "id": "cctpv2",
+          "name": "CCTP v2",
+          "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+          "href": "/interop/protocols/cctpv2"
+        },
+        {
+          "id": "circlegateway",
+          "name": "Circle Gateway",
+          "iconUrl": "/static/icons/circlegateway.9914d664.png",
+          "href": "/interop/protocols/circlegateway"
+        }
+      ],
+      "deployments": [
+        {
+          "chain": {
+            "id": "ethereum",
+            "name": "Ethereum",
+            "iconUrl": "/static/icons/ethereum.510a78c5.png"
+          },
+          "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "symbol": "USDC",
+          "explorerUrl": "https://etherscan.io/address/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "minters": [
+            {
+              "id": "cctpv1",
+              "name": "CCTP v1",
+              "iconUrl": "/static/icons/cctpv1.9914d664.png",
+              "href": "/interop/protocols/cctpv1"
+            },
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            },
+            {
+              "id": "circlegateway",
+              "name": "Circle Gateway",
+              "iconUrl": "/static/icons/circlegateway.9914d664.png",
+              "href": "/interop/protocols/circlegateway"
+            }
+          ],
+          "isSupported": true,
+          "volume": 450831120.62706023,
+          "transferCount": 12236,
+          "avgDuration": 684
+        },
+        {
+          "chain": {
+            "id": "arbitrum",
+            "name": "Arbitrum One",
+            "iconUrl": "/static/icons/arbitrum.038422c5.png"
+          },
+          "address": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+          "symbol": "USDC",
+          "explorerUrl": "https://arbiscan.io/address/0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+          "minters": [
+            {
+              "id": "cctpv1",
+              "name": "CCTP v1",
+              "iconUrl": "/static/icons/cctpv1.9914d664.png",
+              "href": "/interop/protocols/cctpv1"
+            },
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            },
+            {
+              "id": "circlegateway",
+              "name": "Circle Gateway",
+              "iconUrl": "/static/icons/circlegateway.9914d664.png",
+              "href": "/interop/protocols/circlegateway"
+            }
+          ],
+          "isSupported": true,
+          "volume": 432302723.60756075,
+          "transferCount": 24198,
+          "avgDuration": 131
+        },
+        {
+          "chain": {
+            "id": "hyperevm",
+            "name": "HyperEVM",
+            "iconUrl": "/static/icons/hyperevm.2e6151ca.png"
+          },
+          "address": "0xb88339cb7199b77e23db6e890353e22632ba630f",
+          "symbol": "USDC",
+          "explorerUrl": "https://hyperevmscan.io/address/0xb88339cb7199b77e23db6e890353e22632ba630f",
+          "minters": [
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            },
+            {
+              "id": "circlegateway",
+              "name": "Circle Gateway",
+              "iconUrl": "/static/icons/circlegateway.9914d664.png",
+              "href": "/interop/protocols/circlegateway"
+            }
+          ],
+          "isSupported": true,
+          "volume": 262872531.6738447,
+          "transferCount": 26980,
+          "avgDuration": 51
+        },
+        {
+          "chain": {
+            "id": "polygonpos",
+            "name": "Polygon PoS",
+            "iconUrl": "/static/icons/polygon-pos.1debb7bd.png"
+          },
+          "address": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+          "symbol": "USDC",
+          "explorerUrl": "https://polygonscan.com/address/0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+          "minters": [
+            {
+              "id": "cctpv1",
+              "name": "CCTP v1",
+              "iconUrl": "/static/icons/cctpv1.9914d664.png",
+              "href": "/interop/protocols/cctpv1"
+            },
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            },
+            {
+              "id": "circlegateway",
+              "name": "Circle Gateway",
+              "iconUrl": "/static/icons/circlegateway.9914d664.png",
+              "href": "/interop/protocols/circlegateway"
+            }
+          ],
+          "isSupported": true,
+          "volume": 106179379.86693193,
+          "transferCount": 4197,
+          "avgDuration": 188
+        },
+        {
+          "chain": {
+            "id": "base",
+            "name": "Base",
+            "iconUrl": "/static/icons/base.4840b6b2.png"
+          },
+          "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "symbol": "USDC",
+          "explorerUrl": "https://basescan.org/address/0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "minters": [
+            {
+              "id": "cctpv1",
+              "name": "CCTP v1",
+              "iconUrl": "/static/icons/cctpv1.9914d664.png",
+              "href": "/interop/protocols/cctpv1"
+            },
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            },
+            {
+              "id": "circlegateway",
+              "name": "Circle Gateway",
+              "iconUrl": "/static/icons/circlegateway.9914d664.png",
+              "href": "/interop/protocols/circlegateway"
+            }
+          ],
+          "isSupported": true,
+          "volume": 105447367.35116352,
+          "transferCount": 15824,
+          "avgDuration": 204
+        },
+        {
+          "chain": {
+            "id": "monad",
+            "name": "Monad",
+            "iconUrl": "/static/icons/monad.ac72f0eb.png"
+          },
+          "address": "0x754704bc059f8c67012fed69bc8a327a5aafb603",
+          "symbol": "USDC",
+          "explorerUrl": "https://monadscan.com/address/0x754704bc059f8c67012fed69bc8a327a5aafb603",
+          "minters": [
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            }
+          ],
+          "isSupported": true,
+          "volume": 53180926.13234664,
+          "transferCount": 1742,
+          "avgDuration": 177
+        },
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
+          "symbol": "USDC",
+          "explorerUrl": "https://snowtrace.io/address/0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
+          "minters": [
+            {
+              "id": "cctpv1",
+              "name": "CCTP v1",
+              "iconUrl": "/static/icons/cctpv1.9914d664.png",
+              "href": "/interop/protocols/cctpv1"
+            },
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            },
+            {
+              "id": "circlegateway",
+              "name": "Circle Gateway",
+              "iconUrl": "/static/icons/circlegateway.9914d664.png",
+              "href": "/interop/protocols/circlegateway"
+            }
+          ],
+          "isSupported": true,
+          "volume": 25088749.387255467,
+          "transferCount": 1052,
+          "avgDuration": 129
+        },
+        {
+          "chain": {
+            "id": "optimism",
+            "name": "OP Mainnet",
+            "iconUrl": "/static/icons/op-mainnet.49ac19d6.png"
+          },
+          "address": "0x0b2c639c533813f4aa9d7837caf62653d097ff85",
+          "symbol": "USDC",
+          "explorerUrl": "https://optimistic.etherscan.io/address/0x0b2c639c533813f4aa9d7837caf62653d097ff85",
+          "minters": [
+            {
+              "id": "cctpv1",
+              "name": "CCTP v1",
+              "iconUrl": "/static/icons/cctpv1.9914d664.png",
+              "href": "/interop/protocols/cctpv1"
+            },
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            },
+            {
+              "id": "circlegateway",
+              "name": "Circle Gateway",
+              "iconUrl": "/static/icons/circlegateway.9914d664.png",
+              "href": "/interop/protocols/circlegateway"
+            }
+          ],
+          "isSupported": true,
+          "volume": 9474156.029262137,
+          "transferCount": 2625,
+          "avgDuration": 498
+        },
+        {
+          "chain": {
+            "id": "ink",
+            "name": "Ink",
+            "iconUrl": "/static/icons/ink.8bd61d6f.png"
+          },
+          "address": "0x2d270e6886d130d724215a266106e6832161eaed",
+          "symbol": "USDC",
+          "explorerUrl": "https://explorer.inkonchain.com/address/0x2d270e6886d130d724215a266106e6832161eaed",
+          "minters": [
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            }
+          ],
+          "isSupported": true,
+          "volume": 3840901.9301971486,
+          "transferCount": 706,
+          "avgDuration": 132
+        },
+        {
+          "chain": {
+            "id": "worldchain",
+            "name": "World Chain",
+            "iconUrl": "/static/icons/world.ca690cc9.png"
+          },
+          "address": "0x79a02482a880bce3f13e09da970dc34db4cd24d1",
+          "symbol": "USDC",
+          "explorerUrl": "https://worldscan.org/address/0x79a02482a880bce3f13e09da970dc34db4cd24d1",
+          "minters": [
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            },
+            {
+              "id": "circlegateway",
+              "name": "Circle Gateway",
+              "iconUrl": "/static/icons/circlegateway.9914d664.png",
+              "href": "/interop/protocols/circlegateway"
+            }
+          ],
+          "isSupported": true,
+          "volume": 1685201.0386220252,
+          "transferCount": 187,
+          "avgDuration": 430
+        },
+        {
+          "chain": {
+            "id": "unichain",
+            "name": "Unichain",
+            "iconUrl": "/static/icons/unichain.35a01338.png"
+          },
+          "address": "0x078d782b760474a361dda0af3839290b0ef57ad6",
+          "symbol": "USDC",
+          "explorerUrl": "https://uniscan.xyz/address/0x078d782b760474a361dda0af3839290b0ef57ad6",
+          "minters": [
+            {
+              "id": "cctpv1",
+              "name": "CCTP v1",
+              "iconUrl": "/static/icons/cctpv1.9914d664.png",
+              "href": "/interop/protocols/cctpv1"
+            },
+            {
+              "id": "cctpv2",
+              "name": "CCTP v2",
+              "iconUrl": "/static/icons/cctpv2.475eceb5.png",
+              "href": "/interop/protocols/cctpv2"
+            },
+            {
+              "id": "circlegateway",
+              "name": "Circle Gateway",
+              "iconUrl": "/static/icons/circlegateway.9914d664.png",
+              "href": "/interop/protocols/circlegateway"
+            }
+          ],
+          "isSupported": true,
+          "volume": 1065098.7880668,
+          "transferCount": 206,
+          "avgDuration": 428
+        }
+      ]
+    },
+    {
+      "id": "arbitrum|0xeb466342c4d449bc9f53a865d5cb90586f405215",
+      "volume": 135896.10290774936,
+      "transferCount": 161,
+      "avgDuration": 732,
+      "bridges": [
+        {
+          "id": "axelar",
+          "name": "Axelar",
+          "iconUrl": "/static/icons/axelar.6d17ad47.png",
+          "href": "/interop/protocols/axelar"
+        }
+      ],
+      "deployments": [
+        {
+          "chain": {
+            "id": "bsc",
+            "name": "BNB Smart Chain",
+            "iconUrl": "/static/icons/bsc.f5ab16e0.png"
+          },
+          "address": "0x4268b8f0b87b6eae5d897996e6b845ddbd99adf3",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://bscscan.com/address/0x4268b8f0b87b6eae5d897996e6b845ddbd99adf3",
+          "minters": [
+            {
+              "id": "axelar",
+              "name": "Axelar",
+              "iconUrl": "/static/icons/axelar.6d17ad47.png",
+              "href": "/interop/protocols/axelar"
+            }
+          ],
+          "isSupported": true,
+          "volume": 89208.96523209999,
+          "transferCount": 81,
+          "avgDuration": 384
+        },
+        {
+          "chain": {
+            "id": "polygonpos",
+            "name": "Polygon PoS",
+            "iconUrl": "/static/icons/polygon-pos.1debb7bd.png"
+          },
+          "address": "0x750e4c4984a9e0f12978ea6742bc1c5d248f40ed",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://polygonscan.com/address/0x750e4c4984a9e0f12978ea6742bc1c5d248f40ed",
+          "minters": [
+            {
+              "id": "axelar",
+              "name": "Axelar",
+              "iconUrl": "/static/icons/axelar.6d17ad47.png",
+              "href": "/interop/protocols/axelar"
+            }
+          ],
+          "isSupported": true,
+          "volume": 43739.861334,
+          "transferCount": 45,
+          "avgDuration": 445
+        },
+        {
+          "chain": {
+            "id": "base",
+            "name": "Base",
+            "iconUrl": "/static/icons/base.4840b6b2.png"
+          },
+          "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://basescan.org/address/0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "minters": [
+            {
+              "id": "axelar",
+              "name": "Axelar",
+              "iconUrl": "/static/icons/axelar.6d17ad47.png",
+              "href": "/interop/protocols/axelar"
+            }
+          ],
+          "isSupported": true,
+          "volume": 33691.95502239936,
+          "transferCount": 54,
+          "avgDuration": 1015
+        },
+        {
+          "chain": {
+            "id": "celo",
+            "name": "Celo",
+            "iconUrl": "/static/icons/celo.95365fa0.png"
+          },
+          "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://celoscan.io/address/0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "minters": [
+            {
+              "id": "axelar",
+              "name": "Axelar",
+              "iconUrl": "/static/icons/axelar.6d17ad47.png",
+              "href": "/interop/protocols/axelar"
+            }
+          ],
+          "isSupported": true,
+          "volume": 25600.244402800003,
+          "transferCount": 12,
+          "avgDuration": 1155
+        },
+        {
+          "chain": {
+            "id": "arbitrum",
+            "name": "Arbitrum One",
+            "iconUrl": "/static/icons/arbitrum.038422c5.png"
+          },
+          "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://arbiscan.io/address/0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "minters": [
+            {
+              "id": "axelar",
+              "name": "Axelar",
+              "iconUrl": "/static/icons/axelar.6d17ad47.png",
+              "href": "/interop/protocols/axelar"
+            }
+          ],
+          "isSupported": true,
+          "volume": 9485.673095,
+          "transferCount": 40,
+          "avgDuration": 948
+        },
+        {
+          "chain": {
+            "id": "optimism",
+            "name": "OP Mainnet",
+            "iconUrl": "/static/icons/op-mainnet.49ac19d6.png"
+          },
+          "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://optimistic.etherscan.io/address/0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "minters": [
+            {
+              "id": "axelar",
+              "name": "Axelar",
+              "iconUrl": "/static/icons/axelar.6d17ad47.png",
+              "href": "/interop/protocols/axelar"
+            }
+          ],
+          "isSupported": true,
+          "volume": 5410.54034455,
+          "transferCount": 7,
+          "avgDuration": 1455
+        },
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0xfab550568c688d5d8a52c7d794cb93edc26ec0ec",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://snowtrace.io/address/0xfab550568c688d5d8a52c7d794cb93edc26ec0ec",
+          "minters": [
+            {
+              "id": "axelar",
+              "name": "Axelar",
+              "iconUrl": "/static/icons/axelar.6d17ad47.png",
+              "href": "/interop/protocols/axelar"
+            }
+          ],
+          "isSupported": true,
+          "volume": 3594.3165186493575,
+          "transferCount": 13,
+          "avgDuration": 353
+        }
+      ]
+    },
+    {
+      "id": "arbitrum|0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+      "volume": 133354.71482999998,
+      "transferCount": 17,
+      "avgDuration": 364,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "arbitrum",
+            "name": "Arbitrum One",
+            "iconUrl": "/static/icons/arbitrum.038422c5.png"
+          },
+          "address": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+          "symbol": "USDC",
+          "explorerUrl": "https://arbiscan.io/address/0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+          "minters": [
+            {
+              "id": "arbitrum",
+              "name": "Arbitrum Canonical",
+              "iconUrl": "/static/icons/arbitrum.038422c5.png",
+              "href": "/interop/protocols/arbitrum"
+            }
+          ],
+          "isSupported": true,
+          "volume": 133354.71482999998,
+          "transferCount": 17,
+          "avgDuration": 364
+        }
+      ]
+    },
+    {
+      "id": "avalanche|0x35dbef0b940b348de7c11522129a1d7cf627c00c",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0x35dbef0b940b348de7c11522129a1d7cf627c00c",
+          "symbol": "USDC",
+          "explorerUrl": "https://snowtrace.io/address/0x35dbef0b940b348de7c11522129a1d7cf627c00c",
+          "minters": [
+            {
+              "id": "hyperlane-hwr",
+              "name": "Hyperlane Warp Routes",
+              "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+              "href": "/interop/protocols/hyperlane-hwr"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "avalanche|0x35f80923058a57c2b317bbda1f9eb6184682dc2d",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0x35f80923058a57c2b317bbda1f9eb6184682dc2d",
+          "symbol": "USDC",
+          "explorerUrl": "https://snowtrace.io/address/0x35f80923058a57c2b317bbda1f9eb6184682dc2d",
+          "minters": [
+            {
+              "id": "hyperlane-hwr",
+              "name": "Hyperlane Warp Routes",
+              "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+              "href": "/interop/protocols/hyperlane-hwr"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "avalanche|0x543672e9cbec728cbba9c3ccd99ed80ac3607fa8",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0x543672e9cbec728cbba9c3ccd99ed80ac3607fa8",
+          "symbol": "USDC",
+          "explorerUrl": "https://snowtrace.io/address/0x543672e9cbec728cbba9c3ccd99ed80ac3607fa8",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "avalanche|0x6145e8a910ae937913426bf32de2b26039728acf",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ],
+      "deployments": [
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0x6145e8a910ae937913426bf32de2b26039728acf",
+          "symbol": "USDC",
+          "explorerUrl": "https://snowtrace.io/address/0x6145e8a910ae937913426bf32de2b26039728acf",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        },
+        {
+          "chain": {
+            "id": "polygonpos",
+            "name": "Polygon PoS",
+            "iconUrl": "/static/icons/polygon-pos.1debb7bd.png"
+          },
+          "address": "0x4b3a922c773bdcf3ba8f1a4fdac2029e1d0e9868",
+          "symbol": "USDC",
+          "explorerUrl": "https://polygonscan.com/address/0x4b3a922c773bdcf3ba8f1a4fdac2029e1d0e9868",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "avalanche|0x7c81eb0e83fa59e2b2bac85e0b0f8deb73fbba10",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0x7c81eb0e83fa59e2b2bac85e0b0f8deb73fbba10",
+          "symbol": "USDC",
+          "explorerUrl": "https://snowtrace.io/address/0x7c81eb0e83fa59e2b2bac85e0b0f8deb73fbba10",
+          "minters": [
+            {
+              "id": "hyperlane-hwr",
+              "name": "Hyperlane Warp Routes",
+              "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+              "href": "/interop/protocols/hyperlane-hwr"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "avalanche|0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+      "volume": 18989.541,
+      "transferCount": 1,
+      "avgDuration": 24,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://snowtrace.io/address/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+          "minters": [
+            {
+              "id": "avalanche",
+              "name": "Avalanche",
+              "iconUrl": "/static/icons/avalanche.4017390b.png",
+              "href": "/interop/protocols/avalanche"
+            }
+          ],
+          "isSupported": true,
+          "volume": 18989.541,
+          "transferCount": 1,
+          "avgDuration": 24
+        }
+      ]
+    },
+    {
+      "id": "avalanche|0xb24ca28d4e2742907115fecda335b40dbda07a4c",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0xb24ca28d4e2742907115fecda335b40dbda07a4c",
+          "symbol": "USDC",
+          "explorerUrl": "https://snowtrace.io/address/0xb24ca28d4e2742907115fecda335b40dbda07a4c",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "avalanche|0xc52224a2aa936b9174287846254b3e2015542621",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0xc52224a2aa936b9174287846254b3e2015542621",
+          "symbol": "USDC",
+          "explorerUrl": "https://snowtrace.io/address/0xc52224a2aa936b9174287846254b3e2015542621",
+          "minters": [
+            {
+              "id": "hyperlane-hwr",
+              "name": "Hyperlane Warp Routes",
+              "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+              "href": "/interop/protocols/hyperlane-hwr"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "avalanche|0xc9c4882a135f25d8f68915da6c89ea93aef87889",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "avalanche",
+            "name": "Avalanche",
+            "iconUrl": "/static/icons/avalanche.4017390b.png"
+          },
+          "address": "0xc9c4882a135f25d8f68915da6c89ea93aef87889",
+          "symbol": "USDC",
+          "explorerUrl": "https://snowtrace.io/address/0xc9c4882a135f25d8f68915da6c89ea93aef87889",
+          "minters": [
+            {
+              "id": "hyperlane-hwr",
+              "name": "Hyperlane Warp Routes",
+              "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+              "href": "/interop/protocols/hyperlane-hwr"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "base|0x2079997e72ffe2b4e455d94cd88b5eca0d9155e4",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "base",
+            "name": "Base",
+            "iconUrl": "/static/icons/base.4840b6b2.png"
+          },
+          "address": "0x2079997e72ffe2b4e455d94cd88b5eca0d9155e4",
+          "symbol": "USDCFEE",
+          "explorerUrl": "https://basescan.org/address/0x2079997e72ffe2b4e455d94cd88b5eca0d9155e4",
+          "minters": [
+            {
+              "id": "hyperlane-hwr",
+              "name": "Hyperlane Warp Routes",
+              "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+              "href": "/interop/protocols/hyperlane-hwr"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "base|0x622d90092c7a369b2601d2a49c62faeefbb9ef4d",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "base",
+            "name": "Base",
+            "iconUrl": "/static/icons/base.4840b6b2.png"
+          },
+          "address": "0x622d90092c7a369b2601d2a49c62faeefbb9ef4d",
+          "symbol": "USDCTest",
+          "explorerUrl": "https://basescan.org/address/0x622d90092c7a369b2601d2a49c62faeefbb9ef4d",
+          "minters": [],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "base|0xd7abc360dfcf1b6dd0a03138235e12a2bc1c1c8b",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "base",
+            "name": "Base",
+            "iconUrl": "/static/icons/base.4840b6b2.png"
+          },
+          "address": "0xd7abc360dfcf1b6dd0a03138235e12a2bc1c1c8b",
+          "symbol": "zUSDC",
+          "explorerUrl": "https://basescan.org/address/0xd7abc360dfcf1b6dd0a03138235e12a2bc1c1c8b",
+          "minters": [
+            {
+              "id": "layerzero",
+              "name": "LayerZero",
+              "iconUrl": "/static/icons/layerzero.a08e2491.png",
+              "href": "/interop/protocols/layerzero"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "base|0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+      "volume": 1914.47919,
+      "transferCount": 6,
+      "avgDuration": 47,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "base",
+            "name": "Base",
+            "iconUrl": "/static/icons/base.4840b6b2.png"
+          },
+          "address": "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+          "symbol": "USDbC",
+          "explorerUrl": "https://basescan.org/address/0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+          "minters": [
+            {
+              "id": "base",
+              "name": "Base Canonical",
+              "iconUrl": "/static/icons/base.4840b6b2.png",
+              "href": "/interop/protocols/base"
+            }
+          ],
+          "isSupported": true,
+          "volume": 1914.47919,
+          "transferCount": 6,
+          "avgDuration": 47
+        }
+      ]
+    },
+    {
+      "id": "blast|0xeb466342c4d449bc9f53a865d5cb90586f405215",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "blast",
+            "name": "Blast",
+            "iconUrl": "/static/icons/blast.059d8a31.png"
+          },
+          "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://blastscan.io/address/0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "bob|0xe75d0fb2c24a55ca1e3f96781a2bcc7bdba058f0",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "bob",
+            "name": "BOB",
+            "iconUrl": "/static/icons/bob.c7a2f6d5.png"
+          },
+          "address": "0xe75d0fb2c24a55ca1e3f96781a2bcc7bdba058f0",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://explorer.gobob.xyz/address/0xe75d0fb2c24a55ca1e3f96781a2bcc7bdba058f0",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "bsc|0x11a483d69cc67140fb98a0082837aec11246a0ba",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "bsc",
+            "name": "BNB Smart Chain",
+            "iconUrl": "/static/icons/bsc.f5ab16e0.png"
+          },
+          "address": "0x11a483d69cc67140fb98a0082837aec11246a0ba",
+          "symbol": "USDC",
+          "explorerUrl": "https://bscscan.com/address/0x11a483d69cc67140fb98a0082837aec11246a0ba",
+          "minters": [
+            {
+              "id": "hyperlane-hwr",
+              "name": "Hyperlane Warp Routes",
+              "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+              "href": "/interop/protocols/hyperlane-hwr"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "bsc|0x5caa170b465122d15a6d20fd9a804a9613ce7882",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "bsc",
+            "name": "BNB Smart Chain",
+            "iconUrl": "/static/icons/bsc.f5ab16e0.png"
+          },
+          "address": "0x5caa170b465122d15a6d20fd9a804a9613ce7882",
+          "symbol": "USDC",
+          "explorerUrl": "https://bscscan.com/address/0x5caa170b465122d15a6d20fd9a804a9613ce7882",
+          "minters": [],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "bsc|0x672147dd47674757c457eb155baa382cc10705dd",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "bsc",
+            "name": "BNB Smart Chain",
+            "iconUrl": "/static/icons/bsc.f5ab16e0.png"
+          },
+          "address": "0x672147dd47674757c457eb155baa382cc10705dd",
+          "symbol": "USDC",
+          "explorerUrl": "https://bscscan.com/address/0x672147dd47674757c457eb155baa382cc10705dd",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "bsc|0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+      "volume": 9839667.42784068,
+      "transferCount": 3866,
+      "avgDuration": 10,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "bsc",
+            "name": "BNB Smart Chain",
+            "iconUrl": "/static/icons/bsc.f5ab16e0.png"
+          },
+          "address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+          "symbol": "USDC",
+          "explorerUrl": "https://bscscan.com/address/0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+          "minters": [],
+          "isSupported": true,
+          "volume": 9839667.42784068,
+          "transferCount": 3866,
+          "avgDuration": 10
+        }
+      ]
+    },
+    {
+      "id": "bsc|0xe6d82bbe75041e42e51d755e922ce1ba91af9c4d",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "bsc",
+            "name": "BNB Smart Chain",
+            "iconUrl": "/static/icons/bsc.f5ab16e0.png"
+          },
+          "address": "0xe6d82bbe75041e42e51d755e922ce1ba91af9c4d",
+          "symbol": "USDC",
+          "explorerUrl": "https://bscscan.com/address/0xe6d82bbe75041e42e51d755e922ce1ba91af9c4d",
+          "minters": [],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "celo|0x9d9abae97a9344e3854527b4efbb366a1564bfeb",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "celo",
+            "name": "Celo",
+            "iconUrl": "/static/icons/celo.95365fa0.png"
+          },
+          "address": "0x9d9abae97a9344e3854527b4efbb366a1564bfeb",
+          "symbol": "USDC",
+          "explorerUrl": "https://celoscan.io/address/0x9d9abae97a9344e3854527b4efbb366a1564bfeb",
+          "minters": [],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "celo|0xceba9300f2b948710d2653dd7b07f33a8b32118c",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "celo",
+            "name": "Celo",
+            "iconUrl": "/static/icons/celo.95365fa0.png"
+          },
+          "address": "0xceba9300f2b948710d2653dd7b07f33a8b32118c",
+          "symbol": "USDC",
+          "explorerUrl": "https://celoscan.io/address/0xceba9300f2b948710d2653dd7b07f33a8b32118c",
+          "minters": [],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "corn|0xdf0b24095e15044538866576754f3c964e902ee6",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "corn",
+            "name": "Corn",
+            "iconUrl": "/static/icons/corn.f8a12c02.png"
+          },
+          "address": "0xdf0b24095e15044538866576754f3c964e902ee6",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://maizenet-explorer.usecorn.com/address/0xdf0b24095e15044538866576754f3c964e902ee6",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "degen|0xf1815bd50389c46847f0bda824ec8da914045d14",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "degen",
+            "name": "Degen Chain",
+            "iconUrl": "/static/icons/degen.b762a41a.png"
+          },
+          "address": "0xf1815bd50389c46847f0bda824ec8da914045d14",
+          "symbol": "USDC",
+          "explorerUrl": "https://explorer.degen.tips/address/0xf1815bd50389c46847f0bda824ec8da914045d14",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "educhain|0x12a272a581fee5577a5dfa371afeb4b2f3a8c2f8",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "educhain",
+            "name": "EDU Chain",
+            "iconUrl": "/static/icons/edu-chain.4ddb8cac.png"
+          },
+          "address": "0x12a272a581fee5577a5dfa371afeb4b2f3a8c2f8",
+          "symbol": "USDC.e",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "ethereum|0x53e82abbb12638f09d9e624578ccb666217a765e",
+      "volume": 802151.995,
+      "transferCount": 23,
+      "avgDuration": 44038,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "ethereum",
+            "name": "Ethereum",
+            "iconUrl": "/static/icons/ethereum.510a78c5.png"
+          },
+          "address": "0x53e82abbb12638f09d9e624578ccb666217a765e",
+          "symbol": "vbUSDC",
+          "explorerUrl": "https://etherscan.io/address/0x53e82abbb12638f09d9e624578ccb666217a765e",
+          "minters": [],
+          "isSupported": true,
+          "volume": 802151.995,
+          "transferCount": 23,
+          "avgDuration": 44038
+        }
+      ]
+    },
+    {
+      "id": "ethereum|0x566957ef80f9fd5526cd2bef8be67035c0b81130",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "ethereum",
+            "name": "Ethereum",
+            "iconUrl": "/static/icons/ethereum.510a78c5.png"
+          },
+          "address": "0x566957ef80f9fd5526cd2bef8be67035c0b81130",
+          "symbol": "USDC",
+          "explorerUrl": "https://etherscan.io/address/0x566957ef80f9fd5526cd2bef8be67035c0b81130",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "ethereum|0x6457b0187134b5e0834aaf0180d386e1479f7465",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "ethereum",
+            "name": "Ethereum",
+            "iconUrl": "/static/icons/ethereum.510a78c5.png"
+          },
+          "address": "0x6457b0187134b5e0834aaf0180d386e1479f7465",
+          "symbol": "USDC",
+          "explorerUrl": "https://etherscan.io/address/0x6457b0187134b5e0834aaf0180d386e1479f7465",
+          "minters": [
+            {
+              "id": "debridge",
+              "name": "deBridge",
+              "iconUrl": "/static/icons/debridge.4427097d.png",
+              "href": "/interop/protocols/debridge"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "ethereum|0x7cd167b101d2808cfd2c45d17b2e7ea9f46b74b6",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "ethereum",
+            "name": "Ethereum",
+            "iconUrl": "/static/icons/ethereum.510a78c5.png"
+          },
+          "address": "0x7cd167b101d2808cfd2c45d17b2e7ea9f46b74b6",
+          "symbol": "USDC",
+          "explorerUrl": "https://etherscan.io/address/0x7cd167b101d2808cfd2c45d17b2e7ea9f46b74b6",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "ethereum|0xc38261846c42c1e1d59e04da675eb1974e9ce7b1",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "ethereum",
+            "name": "Ethereum",
+            "iconUrl": "/static/icons/ethereum.510a78c5.png"
+          },
+          "address": "0xc38261846c42c1e1d59e04da675eb1974e9ce7b1",
+          "symbol": "USDC",
+          "explorerUrl": "https://etherscan.io/address/0xc38261846c42c1e1d59e04da675eb1974e9ce7b1",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "forknet|0x203a662b0bd271a6ed5a60edfbd04bfce608fd36",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "forknet",
+            "name": "Forknet",
+            "iconUrl": "/static/icons/forknet.fe6e1b60.png"
+          },
+          "address": "0x203a662b0bd271a6ed5a60edfbd04bfce608fd36",
+          "symbol": "vbUSDC",
+          "explorerUrl": "https://forkscan.org/address/0x203a662b0bd271a6ed5a60edfbd04bfce608fd36",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "form|0xfbf489bb4783d4b1b2e7d07ba39873fb8068507d",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "form",
+            "name": "Form",
+            "iconUrl": "/static/icons/form.e9a5f5ae.png"
+          },
+          "address": "0xfbf489bb4783d4b1b2e7d07ba39873fb8068507d",
+          "symbol": "USDC",
+          "explorerUrl": "https://explorer.form.network/address/0xfbf489bb4783d4b1b2e7d07ba39873fb8068507d",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "fraxtal|0xeb466342c4d449bc9f53a865d5cb90586f405215",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "fraxtal",
+            "name": "Fraxtal",
+            "iconUrl": "/static/icons/fraxtal.ea665f80.png"
+          },
+          "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://fraxscan.com/address/0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "galxegravity|0xfbda5f676cb37624f28265a144a48b0d6e87d3b6",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "galxegravity",
+            "name": "Gravity",
+            "iconUrl": "/static/icons/galxegravity.34f08006.png"
+          },
+          "address": "0xfbda5f676cb37624f28265a144a48b0d6e87d3b6",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://gscan.xyz/address/0xfbda5f676cb37624f28265a144a48b0d6e87d3b6",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "gnosis|0x2a22f9c3b484c3629090feed35f17ff8f88f76f0",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "gnosis",
+            "name": "Gnosis Chain",
+            "iconUrl": "/static/icons/gnosis.49a6317c.png"
+          },
+          "address": "0x2a22f9c3b484c3629090feed35f17ff8f88f76f0",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://gnosis.blockscout.com/address/0x2a22f9c3b484c3629090feed35f17ff8f88f76f0",
+          "minters": [],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "gnosis|0xddafbb505ad214d7b80b1f830fccc89b60fb7a83",
+      "volume": 368021.445,
+      "transferCount": 39,
+      "avgDuration": 286,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "gnosis",
+            "name": "Gnosis Chain",
+            "iconUrl": "/static/icons/gnosis.49a6317c.png"
+          },
+          "address": "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83",
+          "symbol": "USDC",
+          "explorerUrl": "https://gnosis.blockscout.com/address/0xddafbb505ad214d7b80b1f830fccc89b60fb7a83",
+          "minters": [
+            {
+              "id": "gnosis",
+              "name": "Gnosis Bridge",
+              "iconUrl": "/static/icons/gnosis.49a6317c.png",
+              "href": "/interop/protocols/gnosis"
+            }
+          ],
+          "isSupported": true,
+          "volume": 368021.445,
+          "transferCount": 39,
+          "avgDuration": 286
+        }
+      ]
+    },
+    {
+      "id": "hemi|0xad11a8beb98bbf61dbb1aa0f6d6f2ecd87b35afa",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "hemi",
+            "name": "Hemi",
+            "iconUrl": "/static/icons/hemi.cead121e.png"
+          },
+          "address": "0xad11a8beb98bbf61dbb1aa0f6d6f2ecd87b35afa",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://explorer.hemi.xyz/address/0xad11a8beb98bbf61dbb1aa0f6d6f2ecd87b35afa",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "immutablezkevm|0xeb466342c4d449bc9f53a865d5cb90586f405215",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "immutablezkevm",
+            "name": "Immutable zkEVM",
+            "iconUrl": "/static/icons/immutablezkevm.b21ad73e.png"
+          },
+          "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "symbol": "axlUSDC",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "katana|0x203a662b0bd271a6ed5a60edfbd04bfce608fd36",
+      "volume": 810423.90889,
+      "transferCount": 48,
+      "avgDuration": 21104,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "katana",
+            "name": "Katana",
+            "iconUrl": "/static/icons/katana.b31f2db8.png"
+          },
+          "address": "0x203a662b0bd271a6ed5a60edfbd04bfce608fd36",
+          "symbol": "vbUSDC",
+          "explorerUrl": "https://katanascan.com/address/0x203a662b0bd271a6ed5a60edfbd04bfce608fd36",
+          "minters": [
+            {
+              "id": "agglayer",
+              "name": "Agglayer",
+              "iconUrl": "/static/icons/agglayer.4f0790f6.png",
+              "href": "/interop/protocols/agglayer"
+            },
+            {
+              "id": "layerzero",
+              "name": "LayerZero",
+              "iconUrl": "/static/icons/layerzero.a08e2491.png",
+              "href": "/interop/protocols/layerzero"
+            }
+          ],
+          "isSupported": true,
+          "volume": 810423.90889,
+          "transferCount": 48,
+          "avgDuration": 21104
+        }
+      ]
+    },
+    {
+      "id": "katana|0xfd415d011ffaa8e6f17fa753cdb080d1de266784",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "katana",
+            "name": "Katana",
+            "iconUrl": "/static/icons/katana.b31f2db8.png"
+          },
+          "address": "0xfd415d011ffaa8e6f17fa753cdb080d1de266784",
+          "symbol": "USDC",
+          "explorerUrl": "https://katanascan.com/address/0xfd415d011ffaa8e6f17fa753cdb080d1de266784",
+          "minters": [
+            {
+              "id": "agglayer",
+              "name": "Agglayer",
+              "iconUrl": "/static/icons/agglayer.4f0790f6.png",
+              "href": "/interop/protocols/agglayer"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "lightlink|0xbcf8c1b03bbdda88d579330bdf236b58f8bb2cfd",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "lightlink",
+            "name": "LightLink",
+            "iconUrl": "/static/icons/lightlink.b836b66f.png"
+          },
+          "address": "0xbcf8c1b03bbdda88d579330bdf236b58f8bb2cfd",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://phoenix.lightlink.io/address/0xbcf8c1b03bbdda88d579330bdf236b58f8bb2cfd",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "linea|0x176211869ca2b568f2a7d4ee941e073a821ee1ff",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "linea",
+            "name": "Linea",
+            "iconUrl": "/static/icons/linea.7a816716.png"
+          },
+          "address": "0x176211869ca2b568f2a7d4ee941e073a821ee1ff",
+          "symbol": "USDC",
+          "explorerUrl": "https://lineascan.build/address/0x176211869ca2b568f2a7d4ee941e073a821ee1ff",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "linea|0xeb466342c4d449bc9f53a865d5cb90586f405215",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "linea",
+            "name": "Linea",
+            "iconUrl": "/static/icons/linea.7a816716.png"
+          },
+          "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://lineascan.build/address/0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "mantapacific|0xb73603c5d87fa094b7314c74ace2e64d165016fb",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "mantapacific",
+            "name": "Manta Pacific",
+            "iconUrl": "/static/icons/mantapacific.e59fc464.png"
+          },
+          "address": "0xb73603c5d87fa094b7314c74ace2e64d165016fb",
+          "symbol": "USDC",
+          "explorerUrl": "https://pacific-explorer.manta.network/address/0xb73603c5d87fa094b7314c74ace2e64d165016fb",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "mantle|0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "mantle",
+            "name": "Mantle",
+            "iconUrl": "/static/icons/mantle.03e6f03b.png"
+          },
+          "address": "0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9",
+          "symbol": "USDC",
+          "explorerUrl": "https://explorer.mantle.xyz/address/0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "mantle|0xeb466342c4d449bc9f53a865d5cb90586f405215",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "mantle",
+            "name": "Mantle",
+            "iconUrl": "/static/icons/mantle.03e6f03b.png"
+          },
+          "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://explorer.mantle.xyz/address/0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "morph|0xcfb1186f4e93d60e60a8bdd997427d1f33bc372b",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "morph",
+            "name": "Morph",
+            "iconUrl": "/static/icons/morph.fbb34b36.png"
+          },
+          "address": "0xcfb1186f4e93d60e60a8bdd997427d1f33bc372b",
+          "symbol": "USDC",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "optimism|0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "volume": 489.232471,
+      "transferCount": 5,
+      "avgDuration": 8,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "optimism",
+            "name": "OP Mainnet",
+            "iconUrl": "/static/icons/op-mainnet.49ac19d6.png"
+          },
+          "address": "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+          "symbol": "USDC",
+          "explorerUrl": "https://optimistic.etherscan.io/address/0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+          "minters": [
+            {
+              "id": "optimism",
+              "name": "OP Canonical",
+              "iconUrl": "/static/icons/op-mainnet.49ac19d6.png",
+              "href": "/interop/protocols/op-mainnet"
+            }
+          ],
+          "isSupported": true,
+          "volume": 489.232471,
+          "transferCount": 5,
+          "avgDuration": 8
+        }
+      ]
+    },
+    {
+      "id": "optimism|0xa6252f56cc6eea21165d56744c795f91c8a3cf68",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "optimism",
+            "name": "OP Mainnet",
+            "iconUrl": "/static/icons/op-mainnet.49ac19d6.png"
+          },
+          "address": "0xa6252f56cc6eea21165d56744c795f91c8a3cf68",
+          "symbol": "USDC",
+          "explorerUrl": "https://optimistic.etherscan.io/address/0xa6252f56cc6eea21165d56744c795f91c8a3cf68",
+          "minters": [],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "plumenetwork|0x222365ef19f7947e5484218551b56bb3965aa7af",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "plumenetwork",
+            "name": "Plume Network",
+            "iconUrl": "/static/icons/plumenetwork.ecf203a5.png"
+          },
+          "address": "0x222365ef19f7947e5484218551b56bb3965aa7af",
+          "symbol": "USDC",
+          "explorerUrl": "https://explorer.plume.org/address/0x222365ef19f7947e5484218551b56bb3965aa7af",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "plumenetwork|0x78add880a697070c1e765ac44d65323a0dcce913",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "plumenetwork",
+            "name": "Plume Network",
+            "iconUrl": "/static/icons/plumenetwork.ecf203a5.png"
+          },
+          "address": "0x78add880a697070c1e765ac44d65323a0dcce913",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://explorer.plume.org/address/0x78add880a697070c1e765ac44d65323a0dcce913",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "polygonpos|0x1eecab0f75fe93abbfa0cdffb4fb13d1dc8706c8",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "polygonpos",
+            "name": "Polygon PoS",
+            "iconUrl": "/static/icons/polygon-pos.1debb7bd.png"
+          },
+          "address": "0x1eecab0f75fe93abbfa0cdffb4fb13d1dc8706c8",
+          "symbol": "USDC",
+          "explorerUrl": "https://polygonscan.com/address/0x1eecab0f75fe93abbfa0cdffb4fb13d1dc8706c8",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "polygonpos|0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "volume": 14715094.721621802,
+      "transferCount": 212,
+      "avgDuration": 804,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "polygonpos",
+            "name": "Polygon PoS",
+            "iconUrl": "/static/icons/polygon-pos.1debb7bd.png"
+          },
+          "address": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+          "symbol": "USDC",
+          "explorerUrl": "https://polygonscan.com/address/0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+          "minters": [
+            {
+              "id": "polygon-pos",
+              "name": "Polygon PoS",
+              "iconUrl": "/static/icons/polygon-pos.1debb7bd.png",
+              "href": "/interop/protocols/polygon-pos"
+            }
+          ],
+          "isSupported": true,
+          "volume": 14715094.721621802,
+          "transferCount": 212,
+          "avgDuration": 804
+        }
+      ]
+    },
+    {
+      "id": "polygonpos|0x2e3eed2fe72ecca967750e9514f8a48754a9ef41",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "polygonpos",
+            "name": "Polygon PoS",
+            "iconUrl": "/static/icons/polygon-pos.1debb7bd.png"
+          },
+          "address": "0x2e3eed2fe72ecca967750e9514f8a48754a9ef41",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://polygonscan.com/address/0x2e3eed2fe72ecca967750e9514f8a48754a9ef41",
+          "minters": [],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "polygonpos|0x7800fe8951cdc1cdea748d878face63018d97960",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "polygonpos",
+            "name": "Polygon PoS",
+            "iconUrl": "/static/icons/polygon-pos.1debb7bd.png"
+          },
+          "address": "0x7800fe8951cdc1cdea748d878face63018d97960",
+          "symbol": "USDC",
+          "explorerUrl": "https://polygonscan.com/address/0x7800fe8951cdc1cdea748d878face63018d97960",
+          "minters": [
+            {
+              "id": "wormhole-wtt",
+              "name": "Wormhole WTT",
+              "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+              "href": "/interop/protocols/wormhole-wtt"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "polygonpos|0xb05f9ff675ee7f93ee9f32752a5f2444ff218a50",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "polygonpos",
+            "name": "Polygon PoS",
+            "iconUrl": "/static/icons/polygon-pos.1debb7bd.png"
+          },
+          "address": "0xb05f9ff675ee7f93ee9f32752a5f2444ff218a50",
+          "symbol": "USDC",
+          "explorerUrl": "https://polygonscan.com/address/0xb05f9ff675ee7f93ee9f32752a5f2444ff218a50",
+          "minters": [],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "rari|0xfbda5f676cb37624f28265a144a48b0d6e87d3b6",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "rari",
+            "name": "RARI Chain",
+            "iconUrl": "/static/icons/rari.b77c2a49.png"
+          },
+          "address": "0xfbda5f676cb37624f28265a144a48b0d6e87d3b6",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://mainnet.explorer.rarichain.org/address/0xfbda5f676cb37624f28265a144a48b0d6e87d3b6",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "real|0xc518a88c67ceca8b3f24c4562cb71deeb2af86b7",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "real",
+            "name": "Re.al",
+            "iconUrl": "/static/icons/real.a7e562de.png"
+          },
+          "address": "0xc518a88c67ceca8b3f24c4562cb71deeb2af86b7",
+          "symbol": "USDC",
+          "explorerUrl": "https://explorer.re.al/address/0xc518a88c67ceca8b3f24c4562cb71deeb2af86b7",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "reya|0x3b860c0b53f2e8bd5264aa7c3451d41263c933f2",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "reya",
+            "name": "Reya",
+            "iconUrl": "/static/icons/reya.d5336e4c.png"
+          },
+          "address": "0x3b860c0b53f2e8bd5264aa7c3451d41263c933f2",
+          "symbol": "USDC",
+          "explorerUrl": "https://explorer.reya.network/address/0x3b860c0b53f2e8bd5264aa7c3451d41263c933f2",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "robinhood|0x80e0e24718dbfcad49ecaa6f1e6c89a190586ca8",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "robinhood",
+            "name": "Robinhood Chain",
+            "iconUrl": "/static/icons/robinhood.49cfd0e5.png"
+          },
+          "address": "0x80e0e24718dbfcad49ecaa6f1e6c89a190586ca8",
+          "symbol": "USDC",
+          "explorerUrl": "https://robin.etherscan.io/address/0x80e0e24718dbfcad49ecaa6f1e6c89a190586ca8",
+          "minters": [
+            {
+              "id": "robinhood",
+              "name": "Robinhood Chain Canonical",
+              "iconUrl": "/static/icons/robinhood.49cfd0e5.png",
+              "href": "/interop/protocols/robinhood"
+            }
+          ],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "scroll|0x06efdbff2a14a7c8e15944d1f4a48f9f95f663a4",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "scroll",
+            "name": "Scroll",
+            "iconUrl": "/static/icons/scroll.dd0923e7.png"
+          },
+          "address": "0x06efdbff2a14a7c8e15944d1f4a48f9f95f663a4",
+          "symbol": "USDC",
+          "explorerUrl": "https://scrollscan.com/address/0x06efdbff2a14a7c8e15944d1f4a48f9f95f663a4",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "scroll|0xeb466342c4d449bc9f53a865d5cb90586f405215",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "scroll",
+            "name": "Scroll",
+            "iconUrl": "/static/icons/scroll.dd0923e7.png"
+          },
+          "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "symbol": "axlUSDC",
+          "explorerUrl": "https://scrollscan.com/address/0xeb466342c4d449bc9f53a865d5cb90586f405215",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "superposition|0x6c030c5cc283f791b26816f325b9c632d964f8a1",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "superposition",
+            "name": "Superposition",
+            "iconUrl": "/static/icons/superposition.a799d06a.png"
+          },
+          "address": "0x6c030c5cc283f791b26816f325b9c632d964f8a1",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://explorer.superposition.so/address/0x6c030c5cc283f791b26816f325b9c632d964f8a1",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "superseed|0xc316c8252b5f2176d0135ebb0999e99296998f2e",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "superseed",
+            "name": "Superseed",
+            "iconUrl": "/static/icons/superseed.c0367882.png"
+          },
+          "address": "0xc316c8252b5f2176d0135ebb0999e99296998f2e",
+          "symbol": "USDC",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "taiko|0x19e26b0638bf63aa9fa4d14c6baf8d52ebe86c5c",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "taiko",
+            "name": "Taiko Alethia",
+            "iconUrl": "/static/icons/taiko.46374ca5.png"
+          },
+          "address": "0x19e26b0638bf63aa9fa4d14c6baf8d52ebe86c5c",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://taikoscan.io/address/0x19e26b0638bf63aa9fa4d14c6baf8d52ebe86c5c",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "ternoa|0xac8ddbc1f261ee4632518a1a62c23cd2b5a52bad",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "ternoa",
+            "name": "Ternoa",
+            "iconUrl": "/static/icons/ternoa.a1fc711c.png"
+          },
+          "address": "0xac8ddbc1f261ee4632518a1a62c23cd2b5a52bad",
+          "symbol": "vbUSDC",
+          "explorerUrl": "https://explorer-mainnet.zkevm.ternoa.network/address/0xac8ddbc1f261ee4632518a1a62c23cd2b5a52bad",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "xchain|0xfbda5f676cb37624f28265a144a48b0d6e87d3b6",
+      "volume": null,
+      "transferCount": null,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "xchain",
+            "name": "XCHAIN",
+            "iconUrl": "/static/icons/xchain.9e1abfdd.png"
+          },
+          "address": "0xfbda5f676cb37624f28265a144a48b0d6e87d3b6",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://xchain-explorer.idex.io/address/0xfbda5f676cb37624f28265a144a48b0d6e87d3b6",
+          "minters": [],
+          "isSupported": false,
+          "volume": null,
+          "transferCount": null,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "zksync2|0x1d17cbcf0d6d143135ae902365d2e5e2a16538d4",
+      "volume": 0,
+      "transferCount": 0,
+      "avgDuration": null,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "zksync2",
+            "name": "ZKsync Era",
+            "iconUrl": "/static/icons/zksync-era.084a308b.png"
+          },
+          "address": "0x1d17cbcf0d6d143135ae902365d2e5e2a16538d4",
+          "symbol": "USDC",
+          "explorerUrl": "https://explorer.zksync.io/address/0x1d17cbcf0d6d143135ae902365d2e5e2a16538d4",
+          "minters": [],
+          "isSupported": true,
+          "volume": 0,
+          "transferCount": 0,
+          "avgDuration": null
+        }
+      ]
+    },
+    {
+      "id": "zksync2|0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4",
+      "volume": 71158.438894,
+      "transferCount": 38,
+      "avgDuration": 21254,
+      "bridges": [],
+      "deployments": [
+        {
+          "chain": {
+            "id": "zksync2",
+            "name": "ZKsync Era",
+            "iconUrl": "/static/icons/zksync-era.084a308b.png"
+          },
+          "address": "0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4",
+          "symbol": "USDC.e",
+          "explorerUrl": "https://explorer.zksync.io/address/0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4",
+          "minters": [
+            {
+              "id": "zksync2",
+              "name": "ZKsync Era",
+              "iconUrl": "/static/icons/zksync-era.084a308b.png",
+              "href": "/interop/protocols/zksync-era"
+            }
+          ],
+          "isSupported": true,
+          "volume": 71158.438894,
+          "transferCount": 38,
+          "avgDuration": 21254
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "abstract|0x84a71ccd554cc1b02749b35d22f684cc8ec987e1",
+      "bridges": [
+        {
+          "id": "stargate",
+          "name": "Stargate",
+          "iconUrl": "/static/icons/stargate.3af58488.png",
+          "href": "/interop/protocols/stargate"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "apechain|0xf1815bd50389c46847f0bda824ec8da914045d14",
+      "bridges": [
+        {
+          "id": "stargate",
+          "name": "Stargate",
+          "iconUrl": "/static/icons/stargate.3af58488.png",
+          "href": "/interop/protocols/stargate"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "arbitrum|0x8619f97d4d08382548f536e5ce1d3e0d9ba40326",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "arbitrum|0x93e0fcbed43cd6fc30df00ccbd4669718dc74e77",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "arbitrum|0xa16148c6ac9ede0d82f0c52899e22a575284f131",
+      "bridges": [
+        {
+          "id": "axelar-its",
+          "name": "Axelar ITS",
+          "iconUrl": "/static/icons/axelar-its.6d17ad47.png",
+          "href": "/interop/protocols/axelar-its"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "arbitrum|0xeb466342c4d449bc9f53a865d5cb90586f405215",
+      "bridges": [
+        {
+          "id": "axelar",
+          "name": "Axelar",
+          "iconUrl": "/static/icons/axelar.6d17ad47.png",
+          "href": "/interop/protocols/axelar"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "arbitrum|0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+      "bridges": [
+        {
+          "id": "arbitrum",
+          "name": "Arbitrum Canonical",
+          "iconUrl": "/static/icons/arbitrum.038422c5.png",
+          "href": "/interop/protocols/arbitrum"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "avalanche|0x35dbef0b940b348de7c11522129a1d7cf627c00c",
+      "bridges": [
+        {
+          "id": "hyperlane-hwr",
+          "name": "Hyperlane Warp Routes",
+          "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+          "href": "/interop/protocols/hyperlane-hwr"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "avalanche|0x35f80923058a57c2b317bbda1f9eb6184682dc2d",
+      "bridges": [
+        {
+          "id": "hyperlane-hwr",
+          "name": "Hyperlane Warp Routes",
+          "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+          "href": "/interop/protocols/hyperlane-hwr"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "avalanche|0x7c81eb0e83fa59e2b2bac85e0b0f8deb73fbba10",
+      "bridges": [
+        {
+          "id": "hyperlane-hwr",
+          "name": "Hyperlane Warp Routes",
+          "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+          "href": "/interop/protocols/hyperlane-hwr"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "avalanche|0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+      "bridges": [
+        {
+          "id": "avalanche",
+          "name": "Avalanche",
+          "iconUrl": "/static/icons/avalanche.4017390b.png",
+          "href": "/interop/protocols/avalanche"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "avalanche|0xb24ca28d4e2742907115fecda335b40dbda07a4c",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "avalanche|0xc52224a2aa936b9174287846254b3e2015542621",
+      "bridges": [
+        {
+          "id": "hyperlane-hwr",
+          "name": "Hyperlane Warp Routes",
+          "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+          "href": "/interop/protocols/hyperlane-hwr"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "avalanche|0xc9c4882a135f25d8f68915da6c89ea93aef87889",
+      "bridges": [
+        {
+          "id": "hyperlane-hwr",
+          "name": "Hyperlane Warp Routes",
+          "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+          "href": "/interop/protocols/hyperlane-hwr"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "base|0x2079997e72ffe2b4e455d94cd88b5eca0d9155e4",
+      "bridges": [
+        {
+          "id": "hyperlane-hwr",
+          "name": "Hyperlane Warp Routes",
+          "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+          "href": "/interop/protocols/hyperlane-hwr"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "base|0xd7abc360dfcf1b6dd0a03138235e12a2bc1c1c8b",
+      "bridges": [
+        {
+          "id": "layerzero",
+          "name": "LayerZero",
+          "iconUrl": "/static/icons/layerzero.a08e2491.png",
+          "href": "/interop/protocols/layerzero"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "base|0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+      "bridges": [
+        {
+          "id": "base",
+          "name": "Base Canonical",
+          "iconUrl": "/static/icons/base.4840b6b2.png",
+          "href": "/interop/protocols/base"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "bsc|0x11a483d69cc67140fb98a0082837aec11246a0ba",
+      "bridges": [
+        {
+          "id": "hyperlane-hwr",
+          "name": "Hyperlane Warp Routes",
+          "iconUrl": "/static/icons/hyperlane-hwr.feaa9213.png",
+          "href": "/interop/protocols/hyperlane-hwr"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "ethereum|0x6457b0187134b5e0834aaf0180d386e1479f7465",
+      "bridges": [
+        {
+          "id": "debridge",
+          "name": "deBridge",
+          "iconUrl": "/static/icons/debridge.4427097d.png",
+          "href": "/interop/protocols/debridge"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "ethereum|0xc38261846c42c1e1d59e04da675eb1974e9ce7b1",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "gnosis|0xddafbb505ad214d7b80b1f830fccc89b60fb7a83",
+      "bridges": [
+        {
+          "id": "gnosis",
+          "name": "Gnosis Bridge",
+          "iconUrl": "/static/icons/gnosis.49a6317c.png",
+          "href": "/interop/protocols/gnosis"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "katana|0xfd415d011ffaa8e6f17fa753cdb080d1de266784",
+      "bridges": [
+        {
+          "id": "agglayer",
+          "name": "Agglayer",
+          "iconUrl": "/static/icons/agglayer.4f0790f6.png",
+          "href": "/interop/protocols/agglayer"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "optimism|0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "bridges": [
+        {
+          "id": "optimism",
+          "name": "OP Canonical",
+          "iconUrl": "/static/icons/op-mainnet.49ac19d6.png",
+          "href": "/interop/protocols/op-mainnet"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "polygonpos|0x1eecab0f75fe93abbfa0cdffb4fb13d1dc8706c8",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "polygonpos|0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "bridges": [
+        {
+          "id": "polygon-pos",
+          "name": "Polygon PoS",
+          "iconUrl": "/static/icons/polygon-pos.1debb7bd.png",
+          "href": "/interop/protocols/polygon-pos"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "polygonpos|0x7800fe8951cdc1cdea748d878face63018d97960",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "robinhood|0x80e0e24718dbfcad49ecaa6f1e6c89a190586ca8",
+      "bridges": [
+        {
+          "id": "robinhood",
+          "name": "Robinhood Chain Canonical",
+          "iconUrl": "/static/icons/robinhood.49cfd0e5.png",
+          "href": "/interop/protocols/robinhood"
+        }
+      ]
+    },
+    {
+      "backer": "arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "backed": "zksync2|0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4",
+      "bridges": [
+        {
+          "id": "zksync2",
+          "name": "ZKsync Era",
+          "iconUrl": "/static/icons/zksync-era.084a308b.png",
+          "href": "/interop/protocols/zksync-era"
+        }
+      ]
+    },
+    {
+      "backer": "bsc|0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+      "backed": "abstract|0x84a71ccd554cc1b02749b35d22f684cc8ec987e1",
+      "bridges": [
+        {
+          "id": "stargate",
+          "name": "Stargate",
+          "iconUrl": "/static/icons/stargate.3af58488.png",
+          "href": "/interop/protocols/stargate"
+        }
+      ]
+    },
+    {
+      "backer": "bsc|0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+      "backed": "avalanche|0x6145e8a910ae937913426bf32de2b26039728acf",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "bsc|0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+      "backed": "ethereum|0x7cd167b101d2808cfd2c45d17b2e7ea9f46b74b6",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "ethereum|0x53e82abbb12638f09d9e624578ccb666217a765e",
+      "backed": "katana|0x203a662b0bd271a6ed5a60edfbd04bfce608fd36",
+      "bridges": [
+        {
+          "id": "agglayer",
+          "name": "Agglayer",
+          "iconUrl": "/static/icons/agglayer.4f0790f6.png",
+          "href": "/interop/protocols/agglayer"
+        },
+        {
+          "id": "layerzero",
+          "name": "LayerZero",
+          "iconUrl": "/static/icons/layerzero.a08e2491.png",
+          "href": "/interop/protocols/layerzero"
+        }
+      ]
+    },
+    {
+      "backer": "gnosis|0x2a22f9c3b484c3629090feed35f17ff8f88f76f0",
+      "backed": "abstract|0x84a71ccd554cc1b02749b35d22f684cc8ec987e1",
+      "bridges": [
+        {
+          "id": "stargate",
+          "name": "Stargate",
+          "iconUrl": "/static/icons/stargate.3af58488.png",
+          "href": "/interop/protocols/stargate"
+        }
+      ]
+    },
+    {
+      "backer": "polygonpos|0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "backed": "arbitrum|0x9a3fba8a0870fb9765023681daa5390c7919c916",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "polygonpos|0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "backed": "avalanche|0x543672e9cbec728cbba9c3ccd99ed80ac3607fa8",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "polygonpos|0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "backed": "bsc|0x672147dd47674757c457eb155baa382cc10705dd",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    },
+    {
+      "backer": "polygonpos|0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "backed": "ethereum|0x566957ef80f9fd5526cd2bef8be67035c0b81130",
+      "bridges": [
+        {
+          "id": "wormhole-wtt",
+          "name": "Wormhole WTT",
+          "iconUrl": "/static/icons/wormhole-wtt.0dec8f28.png",
+          "href": "/interop/protocols/wormhole-wtt"
+        }
+      ]
+    }
+  ]
+}

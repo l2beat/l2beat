@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x2a40222e056eac870e7daa0970ba95d7f07bd1f5
+
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
+
+- id: d4a92a79
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1768217087
+- current timestamp: 1768217087
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768217087 (main branch discovery), not current.
+
+```diff
+    contract Inbox (arb1:0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x2Bb27ECb6531B8978E1aFe0288C2cbC6505Ff5b7) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedOutboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedDelayedInboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x38Cb5EfbCb3e8783abbBb00210522586e79Ea1D8) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x51a68C63669109BED585347B847c23DcA1cF9713) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x65e556838D665e04737Be37816d12Fae633c7d83) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.executors.severity:
+-        "LOW"
++        "MEDIUM"
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0xBB769cAfc77b8Eadbcdeb8FAAE7369F9df244754) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xDAa72c39422ad709DDd609e12E75A13267474347) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0xE72E807A72c7D36717a3ea9e7668ea690A2bf0E1) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.defaultGateway:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0xf7172c9ea68e2f6e89c69e9ea89048d8f412dad4
 
 # Diff at Sun, 04 Oct 2026 05:55:33 GMT:

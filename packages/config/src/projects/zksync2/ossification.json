@@ -97,6 +97,13 @@
       "reason": "v24.2 protocol upgrade (diamondCut) of the Era Diamond. The same transaction set getProtocolVersion 0.24.1 -> 0.24.2 (read at blocks 20468744/20468745). Dates the protocol version change of diffHistory entry 2ed0a950 at its upgrade."
     },
     {
+      "timestamp": 1741764383,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x0a7e6ae7bdb680aef0261b21078159725b4cdb88146cf75a82838c0884c80e65",
+      "reason": "Matter Labs Multisig, which acts as Era chain admin through the EraChainAdminProxy, went from 4 of 7 to 5 of 8 signers (ChangedThreshold)."
+    },
+    {
       "timestamp": 1744719383,
       "type": "state",
       "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -159,6 +166,21 @@
       "transaction": "0xc886eef19b7182bda72883f0d6b6536e8c07fa399a0c66f7f50d4e66d592e674",
       "updateId": "af5012ae",
       "reason": "Changed the EraMultisigValidator execution threshold from zero to three approvals, enabling validator multisig gating."
+    },
+    {
+      "timestamp": 1782830483,
+      "type": "state",
+      "contract": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "transaction": "0x7242d8cba18a9e6487e807d6f7833b96ac1c3a35519d242077c6c2483e84ea5d",
+      "reason": "Matter Labs Multisig, which acts as Era chain admin through the EraChainAdminProxy, went from 5 of 8 to 4 of 7 signers (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1791391799,
+      "type": "state",
+      "contract": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+      "transaction": "0x91c65b4e1f2415b7da5290bb144f0e97c0d735999dd01fbd093a172c38483c97",
+      "updateId": "11f5e2d6",
+      "reason": "Matter Labs Multisig, via the EraChainAdminProxy, raised Era's execution delay on the ValidatorTimelock from 3h to 1d (ZIP-17), dating diffHistory entry 11f5e2d6 at block 26141812."
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "across",
-  "timestamp": 1791789448,
+  "timestamp": 1792144273,
   "configHash": "0x618d1a49eb3199ff7d4e43dbfa8e8c569d53cef596a92f9f5620533ac4191365",
   "entries": [
     {
@@ -31,28 +31,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "19326772880901051672125320",
+        "cumulativeStake": "19403058383906329643727472",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10369,
+        "getCurrentRoundId": 10371,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 42,
-          "numberResolvedPriceRequests": 5110
+          "numberPendingPriceRequests": 17,
+          "numberResolvedPriceRequests": 5170
         },
         "getVotePhase": 0,
-        "lastRoundIdProcessed": 10369,
-        "lastUpdateTime": 1791789347,
+        "lastRoundIdProcessed": 10371,
+        "lastUpdateTime": 1792144271,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 42,
+        "nextPendingIndexToProcess": 17,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "881095587072626846",
-        "rewardPerTokenStored": "881094941336265328",
+        "rewardPerToken": "883475959304838088",
+        "rewardPerTokenStored": "883475959304838088",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -750,7 +750,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1791789443,
+        "getCurrentTime": 1792144271,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -1014,11 +1014,11 @@
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
         "gateway": "eth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707",
-        "getCurrentTime": 1791789443,
+        "getCurrentTime": 1792144271,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 4762734,
+        "numberOfDeposits": 4783412,
         "OFT_DST_EID": 0,
         "OFT_FEE_CAP": 0,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
@@ -1202,7 +1202,7 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1791789443,
+        "getCurrentTime": 1792144271,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1400,7 +1400,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1791789443,
+        "getCurrentTime": 1792144271,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -2423,13 +2423,13 @@
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x44aa299cbde52e4083c7df189e46b52ed4b217e11930e8281e8a9b636ae8e987",
-          "relayerRefundRoot": "0x36d6dff592980b448416b92ee66f21f706d0d060588b091369043d5ef54716bc",
+          "poolRebalanceRoot": "0x2745cd076cc0779be68218785d8779726f4fce1bb165ac0d6a481d63e85c9053",
+          "relayerRefundRoot": "0x493c52c5bc05beab8f303fc6f727ab86e87282436415e54eb14d68e50290a915",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           "unclaimedPoolRebalanceLeafCount": 20,
-          "challengePeriodEndTimestamp": 1791790487
+          "challengePeriodEndTimestamp": 1792144511
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -3499,14 +3499,14 @@
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
         "gateway": "oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707",
-        "getCurrentTime": 1791789447,
+        "getCurrentTime": 1792144273,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "l1Gas": 5000000,
         "l2Eth": "oeth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
         "MESSENGER": "oeth:0x4200000000000000000000000000000000000007",
-        "numberOfDeposits": 3814817,
+        "numberOfDeposits": 3818581,
         "OFT_DST_EID": 0,
         "OFT_FEE_CAP": 0,
         "pausedDeposits": false,
@@ -3545,7 +3545,7 @@
       "template": "acrossv3/Gateway",
       "sourceHashes": [
         "0xa3a188e65fc0885e5fb907ee0794b5ca81470d468b3876a16374f366c9abd1c7",
-        "0xf2ee0aa25d03ecbb1796a6eac55e023884760df22fda47dedfaed361c1ec6c35"
+        "0x758d7b789b8c7d62dd988d0b7d796f9811d75afa480252b92492fe28259d538f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entry point for Across V5 intent executions. Anyone can submit a user-signed execution path: the Gateway pulls the depositor's funds via standing token approvals or signed permits (Permit2 witness permits, EIP-3009, ERC-2612, EIP-712 transfer authorizations), then calls the committed executor. While executing, it exposes the execution context (submitter, executor, step commitment) that the SpokePool trusts to authenticate V5 fills.",
@@ -3554,7 +3554,7 @@
       "sinceBlock": 155063602,
       "values": {
         "$admin": "oeth:0xd396CcB6770EAB84045c9Bce2939c478639E2A7F",
-        "$implementation": "oeth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e",
+        "$implementation": "oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0",
         "$pastUpgrades": [
           [
             "2026-08-03T02:59:41.000Z",
@@ -3565,9 +3565,14 @@
             "2026-08-03T02:59:49.000Z",
             "0x8ba1e8f01f0cb0113383607378ced0059b3e353088f7deed2d491435efcd77cd",
             ["oeth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e"]
+          ],
+          [
+            "2026-10-14T00:29:47.000Z",
+            "0x40abecfcbb47eb482a6bd29d464e77aedc689b06b6fe75af4f92db1f7e92f106",
+            ["oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "currentExecutor": "oeth:0x0000000000000000000000000000000000000000",
         "currentPathId": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "currentSalt": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -3589,7 +3594,7 @@
       },
       "implementationNames": {
         "oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707": "ERC1967Proxy",
-        "oeth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e": "Gateway"
+        "oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0": "Gateway"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -3622,7 +3627,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -5237,24 +5242,7 @@
       "function withdrawalRecipient() view returns (address)",
       "function wrappedNativeToken() view returns (address)"
     ],
-    "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281": [
-      "constructor(address _logic, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707": [
-      "constructor(address implementation, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "oeth:0xd396CcB6770EAB84045c9Bce2939c478639E2A7F": [
-      "constructor(address _singleton)"
-    ],
-    "oeth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e": [
+    "oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0": [
       "constructor(address permit2_, address multicall3_)",
       "error AddressEmptyCode(address target)",
       "error ECDSAInvalidSignature()",
@@ -5300,6 +5288,23 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0xd396CcB6770EAB84045c9Bce2939c478639E2A7F": [
+      "constructor(address _singleton)"
     ]
   },
   "usedTemplates": {
@@ -5327,7 +5332,7 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 26174840, "optimism": 158095335 },
+  "usedBlockNumbers": { "ethereum": 26204311, "optimism": 158272748 },
   "permissionsConfigHash": "0x5ebe6a714b4870a2e8c0b68a8d3aaae06eb21181080bbab183154141d775bfcf",
   "permissions": {
     "eth:0x2bAaA41d155ad8a4126184950B31F50A1513cE25": {

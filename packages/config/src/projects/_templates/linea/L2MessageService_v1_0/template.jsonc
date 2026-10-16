@@ -9,6 +9,7 @@
     "nextMessageNumber"
   ],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "accessControl": {
       "handler": { "type": "accessControl" }
     },
@@ -83,7 +84,7 @@
       "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
     },
     "limitInWei": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "The cap on the total amount of ether (value plus postman fee) that can be sent from L2 to L1 via sendMessage per period given by periodInSeconds."
     },
     "periodInSeconds": {

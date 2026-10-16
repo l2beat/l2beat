@@ -6,6 +6,7 @@
   "ignoreMethods": ["proxiableUUID"],
   "ignoreInWatchMode": ["whitelisted"],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "pendingOwner": {
       "severity": "MEDIUM"
     },
@@ -28,6 +29,7 @@
       ]
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

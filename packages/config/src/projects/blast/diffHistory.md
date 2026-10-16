@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x8e20e6e55ccdbf85af2353cdec6347e623bc595d
+
+# Diff at Fri, 16 Oct 2026 09:37:44 GMT:
+
+- id: cfae408e
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791966825
+- current timestamp: 1791966825
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966825 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta.guardian:
++        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x364289230b8cc7d9120eF962AF37ebCFe23cE883) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xE064B565Cf2A312a3e66Fe4118890583727380C0) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0xba2e922bc48c35b401f8ad7bc543f66283b3b1c0
 
 # Diff at Wed, 14 Oct 2026 08:34:53 GMT:

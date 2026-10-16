@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x86b5d85d72e5f84073cddccdb1b5f1d738dd657f
+
+# Diff at Fri, 16 Oct 2026 09:37:48 GMT:
+
+- id: 2f057c11
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1789544313
+- current timestamp: 1789544313
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789544313 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x321f4fc729d2123990ebf74c6238955449fc74e8
 
 # Diff at Sun, 04 Oct 2026 05:55:34 GMT:
