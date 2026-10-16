@@ -1,21 +1,21 @@
-Generated with discovered.json: 0x128f1be9395577f22b6e1b195daecc984d3deb0f
+Generated with discovered.json: 0x672cee2944116b782b51768d588680d72e0b8f6c
 
-# Diff at Fri, 16 Oct 2026 05:36:48 GMT:
+# Diff at Fri, 16 Oct 2026 07:04:12 GMT:
 
-- id: acfb95a9
+- id: e38dc8da
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1790927856
-- current timestamp: 1790927856
+- comparing to: main@cdf6aa42d34edc5afafa19572228e1938e1bdc06 block: 1791533705
+- current timestamp: 1791533705
 
 ## Description
 
-Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+Ossification review: orbitstack template severities (role holders MEDIUM).
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1790927856 (main branch discovery), not current.
+discovery. Values are for block 1791533705 (main branch discovery), not current.
 
 ```diff
     contract RollupProxy (arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e) [orbitstack/RollupProxyBoLD] {
@@ -122,6 +122,80 @@ discovery. Values are for block 1790927856 (main branch discovery), not current.
       fieldMeta.$admin.severity:
 -        "HIGH"
 +        "MEDIUM"
+    }
+```
+
+```diff
+    contract ArbFilteredTransactionsManager (edge:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.
+      fieldMeta.transactionFilterers:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0xb973850ce56362128150e2d06c301523088cac33
+
+# Diff at Mon, 12 Oct 2026 11:37:34 GMT:
+
+- id: 1902ee54
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1790927856
+- current timestamp: 1791533705
+
+## Description
+
+RollupProxy: ArbOS v51.1 → v61 wasm module root, set by an executor EOA through the UpgradeExecutor.
+ArbFilteredTransactionsManager: transaction-filtering precompile live with ArbOS 61, no filterers set; the L3 chain owner (an EOA) is now tracked.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x0D9cCeB5Cd108CC9B0b7Ac3aACe3d85c28243c9e) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v51.1 wasmModuleRoot"
++        "ArbOS v61 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
++++ severity: HIGH
+      values.wasmModuleRoot:
+-        "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c"
++        "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
+    }
+```
+
+```diff
+    contract ArbFilteredTransactionsManager (edge:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      values.transactionFilterers:
+-        "EXPECT_REVERT"
++        []
+      values.$immutable:
++        true
+      sourceHashes:
++        ["0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"]
+      implementationNames:
++        {"edge:0x0000000000000000000000000000000000000074":""}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790927856 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.transactionFilteringPrecompile:
++        "edge:0x0000000000000000000000000000000000000074"
     }
 ```
 
