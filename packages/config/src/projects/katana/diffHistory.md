@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xd520eebc77ecf391ea1376b4bbca7fc721fb506a
+
+# Diff at Fri, 16 Oct 2026 10:35:37 GMT:
+
+- id: a6c713f2
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791788974
+- current timestamp: 1792144034
+
+## Description
+
+Yearn Strategist Multisig (a member of Katana vaultBridge Multisig 2) removed two signers, now 3 of 6.
+
+## Watched changes
+
+```diff
+    contract Yearn Strategist Multisig (eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F"
+      values.$members.4:
+-        "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xd0c34f97422f70691d0f23702eab87bf2e93a9fc
 
 # Diff at Fri, 16 Oct 2026 09:37:47 GMT:

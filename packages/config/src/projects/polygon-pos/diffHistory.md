@@ -1,3 +1,104 @@
+Generated with discovered.json: 0xa7cd9551eb4c744b6cf7f288416de68fc987dfae
+
+# Diff at Fri, 16 Oct 2026 10:10:31 GMT:
+
+- id: f07f7540
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790851314
+- current timestamp: 1792144380
+
+## Description
+
+StakeManager upgrade (PIP-91): joining the validator set now needs a single-use pass from the ValidatorPass module registered in the Registry. The pass binds the validator address, consensus key and delegation choice, and expires. Polygon governance (Polygon Multisig via Timelock and Governance, no delay) and the EOA eth:0x4580559314cbBd84B595a6EC52e4dF5cdD54EFc4 can issue and revoke passes. Entry stays capped at `validatorThreshold`. Validator auctions (`startAuction`, `confirmAuctionBid`, `dethroneAndStake`), `slash`, `unjail`, the SlashingManager path in `transferFunds` and the initializers are removed. Removing the ValidatorPass from the Registry makes entry below the cap permissionless again.
+- https://disco.l2beat.com/diff/eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c/eth:0x428D1067b33B2bCa826cF66344dbEcBd5AA6506e
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      sourceHashes.1:
+-        "0xc1bf1e1ffffdb1c23aebc663048d79f349bed55ade9d09b835d75d291c6d4f61"
++        "0x8d3d310e7641961f0013dcc2f82e93a2956413df438a44b49c3f084f0167a0d9"
+      values.$implementation:
+-        "eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c"
++        "eth:0x428D1067b33B2bCa826cF66344dbEcBd5AA6506e"
+      values.$pastUpgrades.9:
++        ["2026-10-13T09:57:59.000Z","0x53ddccd09c36bde3691fc33282b54679019dad1f4f8aa9fdee0d44cd45b1ab65",["eth:0x428D1067b33B2bCa826cF66344dbEcBd5AA6506e"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.implementation:
+-        "eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c"
++        "eth:0x428D1067b33B2bCa826cF66344dbEcBd5AA6506e"
++++ description: Validator entry gate read from the Registry on every new stake. While set, a new validator must redeem a pass from it. The zero address makes entry permissionless up to the validator cap.
++++ severity: HIGH
+      values.validatorPass:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x938529C189525e9a03c66C417D337BE9B5762bA4"
+      implementationNames.eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c:
+-        "StakeManager"
+      implementationNames.eth:0x428D1067b33B2bCa826cF66344dbEcBd5AA6506e:
++        "StakeManager"
+    }
+```
+
+```diff
+    contract Governance (eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) [polygonposbridge/Governance] {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x938529C189525e9a03c66C417D337BE9B5762bA4","description":"grant and revoke the role that issues validator passes.","role":".defaultAdminAC"},{"permission":"interact","from":"eth:0x938529C189525e9a03c66C417D337BE9B5762bA4","description":"issue and revoke the single-use passes that new Polygon PoS validators need to join the validator set.","role":".passIssuerAC"}]
+    }
+```
+
+```diff
+    contract Timelock (eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) [N/A] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x938529C189525e9a03c66C417D337BE9B5762bA4","description":"grant and revoke the role that issues validator passes.","role":".defaultAdminAC","via":[{"address":"eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x938529C189525e9a03c66C417D337BE9B5762bA4","description":"issue and revoke the single-use passes that new Polygon PoS validators need to join the validator set.","role":".passIssuerAC","via":[{"address":"eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorPass (eth:0x938529C189525e9a03c66C417D337BE9B5762bA4) [polygon-pos/ValidatorPass]
+    +++ description: Validator entry gate registered in the Registry under `validatorPass`. The StakeManager only admits a new validator who redeems a single-use pass bound to their address, consensus key and delegation choice.
+```
+
+## Source code changes
+
+```diff
+.../StakeManager/StakeManager.sol                  | 1276 +++---
+ .../projects/polygon-pos/.flat/ValidatorPass.sol   | 4366 ++++++++++++++++++++
+ 2 files changed, 4970 insertions(+), 672 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790851314 (main branch discovery), not current.
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      values.auctionPeriod:
+-        20
+      values.replacementCoolDown:
+-        2018083
++++ description: Validator entry gate read from the Registry on every new stake. While set, a new validator must redeem a pass from it. The zero address makes entry permissionless up to the validator cap.
++++ severity: HIGH
+      values.validatorPass:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.replacementCoolDown:
+-        {"severity":"HIGH","description":"startAuction() can only be called after this epoch (compare with current epoch). this effectively closes the validator set if the cap is hit because no validators can be replaced."}
+      fieldMeta.validatorPass:
++        {"severity":"HIGH","description":"Validator entry gate read from the Registry on every new stake. While set, a new validator must redeem a pass from it. The zero address makes entry permissionless up to the validator cap."}
+    }
+```
+
 Generated with discovered.json: 0x855eb34c6e9145bd7dfc8c0869442a60654eadc1
 
 # Diff at Thu, 01 Oct 2026 11:10:42 GMT:

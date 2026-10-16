@@ -56,13 +56,13 @@ const minDeposit = discovery.getContractValue<string>(
   'minDeposit',
 )
 
-const replacementCoolDown = discovery.getContractValue<number>(
+const validatorPass = discovery.getContractValue<string>(
   'StakeManager',
-  'replacementCoolDown',
+  'validatorPass',
 )
 assert(
-  replacementCoolDown === 2018083,
-  'The far-future replacement cooldown which effectively closed the vali set whenever it was at the cap has changed and the sequencer section and risk rosette should be adjusted if the set is now open+capped with a working replacement auction.',
+  validatorPass === 'eth:0x938529C189525e9a03c66C417D337BE9B5762bA4',
+  'The validator entry gate changed. If it is unset, joining below the cap is permissionless and the sequencer section and risk rosette should be adjusted.',
 )
 
 const polygonSpanBlocks = HARDCODED.POLYGON_POS.SPAN_BLOCKS
@@ -251,7 +251,7 @@ export const polygonpos: ScalingProject = {
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
       sentiment: 'warning',
-      description: `Although there is a sequencer set of ${currentValidatorSetSize} (called validators), if the cap of ${currentValidatorSetCap} is reached, no new stakers can join. A minimum of ${minDeposit} POL stake is required to obtain block production rights. There is no specific censorship resistance mechanism against selective censorship by parts of the active validator set nor a way to force transactions from Ethereum L1. The canonical bridge between Polygon PoS and Ethereum allows for queuing transactions from the Ethereum and Polygon PoS sides, which cannot be skipped, except for halting the queue entirely.`,
+      description: `There is a sequencer set of ${currentValidatorSetSize} (called validators), capped at ${currentValidatorSetCap}. Validator entry is permissioned. A minimum of ${minDeposit} POL stake is required to obtain block production rights. There is no specific censorship resistance mechanism against selective censorship by parts of the active validator set nor a way to force transactions from Ethereum L1. The canonical bridge between Polygon PoS and Ethereum allows for queuing transactions from the Ethereum and Polygon PoS sides, which cannot be skipped, except for halting the queue entirely.`,
     },
     proposerFailure: RISK_VIEW.PROPOSER_POS(
       currentValidatorSetSize,
@@ -306,7 +306,7 @@ export const polygonpos: ScalingProject = {
         blockProductionAccess: {
           value: 'Closed and capped',
           sentiment: 'bad',
-          description: `The current validator cap is ${currentValidatorSetCap}. Joining the set is permissioned (Multisig).`,
+          description: `The current validator cap is ${currentValidatorSetCap}. Validator entry is permissioned (Polygon Multisig or an EOA).`,
         },
         stakePerValidator: {
           value: minDeposit + ' POL minimum, variable',
@@ -387,6 +387,10 @@ export const polygonpos: ScalingProject = {
           'StakingInfo',
           'Contains logging and getter functions about staking on Polygon.',
         ),
+        discovery.getContractDetails('ValidatorPass', {
+          description:
+            'Gates entry into the validator set. Only approved validators can join.',
+        }),
         discovery.getContractDetails('Registry', {
           description:
             'Maintains the addresses of the contracts used in the system.',
@@ -434,11 +438,24 @@ export const polygonpos: ScalingProject = {
           'PolygonMultisig',
           'Can propose and execute code upgrades. Can arbitrarily moves tokens out of the ERC20 escrow without a contract upgrade.',
         ),
+        discovery.getPermissionDetails(
+          'Validator entry approvers',
+          discovery.getPermissionedAccounts('ValidatorPass', 'passIssuerAC'),
+          'Can approve new validators to join the Polygon PoS validator set. The Governance contract acts for the Polygon Multisig.',
+        ),
       ],
     },
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
+    {
+      title: 'Permissioned validator entry',
+      url: 'https://forum.polygon.technology/t/permissioned-validator-entry-via-validatorpass/22108',
+      date: '2026-10-13T00:00:00Z',
+      description:
+        'Each new validator needs approval from governance or a permissioned EOA.',
+      type: 'general',
+    },
     {
       title: 'Rio upgrade',
       url: 'https://polygon.technology/blog/polygon-launches-major-payments-upgrade-with-rio-faster-lighter-and-easier-to-build',

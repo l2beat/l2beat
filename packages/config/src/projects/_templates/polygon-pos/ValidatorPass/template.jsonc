@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Validator entry gate registered in the Registry under `validatorPass`. The StakeManager only admits a new validator who redeems a single-use pass bound to their address, consensus key and delegation choice.",
+  "category": "core",
+  "ignoreMethods": ["passOf", "passHolderAt", "passHolderCount"],
+  "fields": {
+    "defaultAdminAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the role that issues validator passes."
+        }
+      ]
+    },
+    "passIssuerAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xca6b01d99b612bc4cb99ea5d9e9a04eaf684800b68ea42c941c316e0c89393cf": "PASS_ISSUER_ROLE"
+        },
+        "pickRoleMembers": "PASS_ISSUER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "issue and revoke the single-use passes that new Polygon PoS validators need to join the validator set."
+        }
+      ]
+    },
+    "passHolders": {
+      "description": "Addresses holding an unredeemed pass, including expired ones that were not revoked."
+    }
+  }
+}

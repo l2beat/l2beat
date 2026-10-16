@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xad8886b5b84ea7a7ddb531f8772cd3fa36712856
+
+# Diff at Fri, 16 Oct 2026 10:35:39 GMT:
+
+- id: 0185d817
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791789568
+- current timestamp: 1792144369
+
+## Description
+
+Nethermind DVN rotated its signers: one removed, two added. The quorum stays 1, so either key alone can verify messages.
+
+## Watched changes
+
+```diff
+    contract Netherming DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      values.signerSize:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x00942a1633aa726e69ee8812a0c66ec43a6e56f0
 
 # Diff at Fri, 16 Oct 2026 05:36:50 GMT:

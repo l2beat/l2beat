@@ -1,6 +1,6 @@
 {
   "name": "lens",
-  "timestamp": 1790944827,
+  "timestamp": 1792144197,
   "configHash": "0x188896c427e1636acfbd07e0bf6f8f403965df6bee0e074fa8a4517d4997c423",
   "entries": [
     {
@@ -57,8 +57,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 895,
-        "latestBlock": 3538176,
+        "latestAuthoritySetId": 910,
+        "latestBlock": 3598208,
         "relayers": ["eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -240,8 +240,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "executionDelay": 10800,
         "executionDelay_fmt": "3h",
-        "executionDelayLens": 10800,
-        "executionDelayLens_fmt": "3h",
+        "executionDelayLens": 86400,
+        "executionDelayLens_fmt": "1d",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getName": "ValidatorTimelock",
         "MAX_EXECUTION_DELAY": 2592000,
@@ -454,7 +454,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 30,
+        "nonce": 31,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -463,16 +463,16 @@
       }
     },
     {
-      "address": "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Matter Labs Multisig",
       "address": "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0x50d0667992467421f3B359C8138928C0157cB444",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "LensZkEvmAdmin",
@@ -581,14 +581,14 @@
           "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
           "eth:0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5",
           "eth:0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2",
-          "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
+          "eth:0x50d0667992467421f3B359C8138928C0157cB444"
         ],
         "$threshold": 4,
         "domainSeparator": "0x0a3a4ca49dc98b965e6bed30f0e8c99ee93572432964da204089e65025760611",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 19,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -961,7 +961,7 @@
           "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "eth:0xdA6661Df15E79cFe1e679ccD138D813b955ba492"
         ],
-        "getFirstUnprocessedPriorityTx": 7308,
+        "getFirstUnprocessedPriorityTx": 7323,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -970,7 +970,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x924f5b718592045f6f66a64b4c27e425fd76cc13197d213775fd19cafd84fa75",
+        "getPriorityTreeRoot": "0x6153a92f19f6d87b836eb28df45b9e887dfca4c11f242d17cad8aebcd46acd03",
         "getPriorityTreeStartIndex": 25,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -978,13 +978,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 9137,
-        "getTotalBatchesExecuted": 9137,
-        "getTotalBatchesVerified": 9137,
-        "getTotalBlocksCommitted": 9137,
-        "getTotalBlocksExecuted": 9137,
-        "getTotalBlocksVerified": 9137,
-        "getTotalPriorityTxs": 7308,
+        "getTotalBatchesCommitted": 9179,
+        "getTotalBatchesExecuted": 9176,
+        "getTotalBatchesVerified": 9179,
+        "getTotalBlocksCommitted": 9179,
+        "getTotalBlocksExecuted": 9176,
+        "getTotalBlocksVerified": 9179,
+        "getTotalPriorityTxs": 7323,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
         "getVerifierParams": {
@@ -2050,8 +2050,8 @@
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "succinct/SP1Vector": "0x726d693de65ff63629181e9a27ee8342d7521ac412c6676152f27dd13bb195ad"
   },
-  "usedBlockNumbers": { "ethereum": 26104701 },
-  "permissionsConfigHash": "0xdd75e984f84d2ca405f005193fd8a8f4039ac3d29d3daa3f6e5d78f33b6fa6f8",
+  "usedBlockNumbers": { "ethereum": 26204304 },
+  "permissionsConfigHash": "0xaadd6e35d58451d3cac7a0b1d04dba19860bfe46ef65556a9303edbc057986f4",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b",
     "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"

@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xcf2799255bbc6f222d3db01487db2b2ac29ba42b
+
+# Diff at Fri, 16 Oct 2026 10:35:42 GMT:
+
+- id: 3e47563b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1790944827
+- current timestamp: 1792144197
+
+## Description
+
+The Lens execution delay in the ValidatorTimelock went from 3h to 1d via the new chain-specific delay. Lens batches now wait at least 1d between commitment and execution. Avail Multisig 1 swapped one signer.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
++++ severity: HIGH
+      values.executionDelayLens:
+-        10800
++        86400
++++ severity: HIGH
+      values.executionDelayLens_fmt:
+-        "3h"
++        "1d"
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
++        "eth:0x50d0667992467421f3B359C8138928C0157cB444"
+    }
+```
+
 Generated with discovered.json: 0xa8ac85ca907c7d83f9fd41a64325a731b1ba332f
 
 # Diff at Fri, 16 Oct 2026 09:37:47 GMT:

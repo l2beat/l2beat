@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x9811ca322b1fec68f7d624b261d007987be2481b
+
+# Diff at Fri, 16 Oct 2026 10:36:26 GMT:
+
+- id: 634eb4cd
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791789583
+- current timestamp: 1792144404
+
+## Description
+
+The CreditMessaging owner minted credits without crosschain messages for ten USDT pool paths and one ETH path. The onchain reason is consolidating balances before the USDT pools are deprecated on 2026-10-23. Nethermind DVN rotated its signers: one removed, two added, quorum stays 1.
+
+## Watched changes
+
+```diff
+    contract CreditMessagingMintableBurnable (eth:0x9b4D17b45d60B8173a5904b85a7bAaeC291E9173) [stargate/CreditMessagingMintableBurnable] {
+    +++ description: A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits across chains, the owner can increase/decrease them arbitrarily.
++++ description: Credits minted manually by the owner without crosschain messages.
+      values.creditsMinted.3:
++        {"batches":[[2,[[30110,26332395649],[30106,47295908170],[30102,139002869454],[30153,2829443156],[30101,125011714920],[30177,38272026229],[30181,62874011651],[30151,39563827179],[30111,17422465496],[30109,7308496081]]],[13,[[30151,31942]]]],"reason":"Minting 26332.395649 USDT for arbitrum (eid 30110), 47295.908170 USDT for avalanche (eid 30106), 139002.869454 USDT for bsc (eid 30102), 2829.443156 USDT for coredao (eid 30153), 125011.714920 USDT for ethereum (eid 30101), 38272.026229 USDT for kava (eid 30177), 62874.011651 USDT for mantle (eid 30181), 39563.827179 USDT for metis (eid 30151), 17422.465496 USDT for optimism (eid 30111), 7308.496081 USDT for polygon (eid 30109), 0.031942 ETH for metis (eid 30151), to consolidate balance and credit as part of USDT pools deprecation next Oct 23rd, 2026"}
+    }
+```
+
+```diff
+    contract Nethermind DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) [layerzero/DVN] {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      values.signerSize:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x230dbfb4d1def467b884bfe0d2295e9b3e5c5ef2
 
 # Diff at Fri, 16 Oct 2026 05:36:54 GMT:
