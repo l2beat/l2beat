@@ -2,12 +2,35 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import {
+  formatPublicationDate,
   formatTimestamp,
   formatTimestampToDateWithHour,
   getNextDateForDayOfWeek,
 } from './dates'
 
 describe('dates', () => {
+  describe(formatPublicationDate.name, () => {
+    // West of UTC, where local getters put a midnight-UTC date on the day
+    // before, so the client's render differed from the server's.
+    let previousTimezone: string | undefined
+    before(() => {
+      previousTimezone = process.env.TZ
+      process.env.TZ = 'America/Los_Angeles'
+    })
+    after(() => {
+      process.env.TZ = previousTimezone
+    })
+
+    it('formats the calendar day the date stands for, in any timezone', () => {
+      expect(formatPublicationDate(new Date('2026-07-02T00:00:00Z'))).toEqual(
+        '2 Jul 2026',
+      )
+      expect(formatPublicationDate(new Date('2026-01-01T00:00:00Z'))).toEqual(
+        '1 Jan 2026',
+      )
+    })
+  })
+
   describe(formatTimestampToDateWithHour.name, () => {
     it('12:00', () => {
       const date = UnixTime.fromDate(new Date('2021-04-21T12:00:00Z'))

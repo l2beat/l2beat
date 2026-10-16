@@ -43,7 +43,7 @@ function read(): YourProjects {
 }
 
 /** Whatever is stored, written by an older version or edited by hand. */
-export function parseYourProjects(raw: string | null): YourProjects {
+function parseYourProjects(raw: string | null): YourProjects {
   if (!raw) return EMPTY
   try {
     const value: unknown = JSON.parse(raw)

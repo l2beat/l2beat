@@ -22,6 +22,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { cn } from '~/utils/cn'
 import { formatRange, formatTimestamp } from '~/utils/dates'
+import { toWeeklyAverages } from './toWeeklyAverages'
 
 export interface HomeSparklineDataPoint {
   timestamp: number
@@ -197,33 +198,6 @@ const BEHIND_SERIES = -100
 
 /** The low label hangs under the plot, in a margin this tall. */
 const LOW_LABEL_HEIGHT = 16
-
-/**
- * Seven-day buckets counted back from the latest day, so the last point is
- * the latest full week. Each is stamped with its first day and holds the mean
- * of the days that have data. Days left over at the start, too few for a
- * week, are dropped rather than drawn as one.
- */
-export function toWeeklyAverages(
-  data: HomeSparklineDataPoint[],
-): HomeSparklineDataPoint[] {
-  const weeks: HomeSparklineDataPoint[] = []
-  const start = data.length >= 7 ? data.length % 7 : 0
-  for (let end = data.length; end > start; end -= 7) {
-    const days = data.slice(Math.max(start, end - 7), end)
-    const [firstDay] = days
-    if (!firstDay) continue
-    const values = days.flatMap((d) => (d.value === null ? [] : [d.value]))
-    weeks.push({
-      timestamp: firstDay.timestamp,
-      value:
-        values.length > 0
-          ? values.reduce((sum, v) => sum + v, 0) / values.length
-          : null,
-    })
-  }
-  return weeks.reverse()
-}
 
 /** The extremes, and whether each falls in the first half of the period. */
 function getRange(data: HomeSparklineDataPoint[]) {
