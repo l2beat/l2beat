@@ -77,9 +77,9 @@ function Content({
     ),
   )
 
-  // Only the busiest chains: past about ten, the home graph's ring leaves
-  // each chain too little arc for its label. The figures still cover every
-  // selected chain, as on the interop page.
+  // Only the busiest chains: past about nine, the home graph's ring (343px
+  // across on phones) leaves each chain too little arc for its label. The
+  // figures still cover every selected chain, as on the interop page.
   const graphChains = useMemo(() => {
     const activeIds = new Set(
       (data?.chainData ?? [])
@@ -143,7 +143,7 @@ function Content({
   )
 }
 
-const GRAPH_CHAINS_COUNT = 10
+const GRAPH_CHAINS_COUNT = 9
 const TOP_ROUTES_COUNT = 5
 /** Stacked from lg the routes fill the height left; whole rows only. */
 const FILL_ROUTES_COUNT = 15
