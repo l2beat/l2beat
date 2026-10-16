@@ -73,11 +73,12 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
       manifest,
       metadata: getMetadata(manifest, {
         name: details.name,
-        title: `${details.name} - Privacy Dashboard - L2BEAT`,
+        title: `${details.name} Privacy Review & Risks - L2BEAT`,
         description: getPrivacyMetadataDescription({
           name: details.name,
           category: details.category.label,
           description: details.display.description,
+          promise: details.adversaries.promise.text,
         }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
