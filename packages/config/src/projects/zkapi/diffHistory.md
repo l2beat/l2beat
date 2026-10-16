@@ -9,7 +9,7 @@ Generated with discovered.json: 0x09cb59747104b260475678ee50eef780b7eaa7bc
 
 ## Description
 
-Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+Ossification review: Bn254Poseidon critical, no severity on immutable fields.
 
 ## Config/verification related changes
 

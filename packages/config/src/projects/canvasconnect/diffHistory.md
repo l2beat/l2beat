@@ -9,7 +9,7 @@ Generated with discovered.json: 0x29efd6990d591f7097a2b28cf2746050d9a39bad
 
 ## Description
 
-Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
 
 ## Config/verification related changes
 

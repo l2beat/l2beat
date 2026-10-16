@@ -312,7 +312,7 @@
         "$admin": { "severity": "MEDIUM" },
         "owner": { "severity": "MEDIUM" },
         "maxGasLimit": { "severity": "MEDIUM" },
-        "whitelistChecker": { "severity": "MEDIUM" }
+        "whitelistChecker": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF": "TransparentUpgradeableProxy",
@@ -1433,6 +1433,7 @@
       ],
       "proxyType": "immutable",
       "description": "Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.",
+      "critical": true,
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729328435,
       "sinceBlock": 20998580,

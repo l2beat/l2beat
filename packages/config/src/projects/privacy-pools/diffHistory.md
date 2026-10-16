@@ -9,7 +9,7 @@ Generated with discovered.json: 0x263d36dc127498e35b6f897b00b17e460367a79a
 
 ## Description
 
-Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+Ossification review: role holders MEDIUM, new pools classified as asset-plumbing variants (no reset).
 
 ## Config/verification related changes
 

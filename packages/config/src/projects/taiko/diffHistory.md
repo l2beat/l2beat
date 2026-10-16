@@ -1,15 +1,15 @@
-Generated with discovered.json: 0xe327ab2a7bf3fd56426e687bbc1abd0b2510df07
+Generated with discovered.json: 0x688fe98927c82c5361bc0ced4f1339b66a8e11c6
 
-# Diff at Fri, 16 Oct 2026 05:36:54 GMT:
+# Diff at Fri, 16 Oct 2026 08:16:59 GMT:
 
 - id: 98b4c436
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791966804
+- comparing to: main@cdf6aa42d34edc5afafa19572228e1938e1bdc06 block: 1791966804
 - current timestamp: 1791966804
 
 ## Description
 
-Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+Ossification review: RISC Zero router selectors MEDIUM, template severities (role holders MEDIUM).
 
 ## Config/verification related changes
 
@@ -134,6 +134,24 @@ discovery. Values are for block 1791966804 (main branch discovery), not current.
 ```diff
     contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
     +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      fieldMeta.verifier_310fe598.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_9f39696c.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_f536085a.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_bb001d44.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_73c457ba.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_242f9d5b.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.owner:
 +        {"severity":"MEDIUM"}
     }

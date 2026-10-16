@@ -76,21 +76,6 @@
       "reason": "RISC Zero timelock executed addVerifier(0x242f9d5b, RiscZeroVerifierEmergencyStop 0x844D5f01 wrapping the RiscZeroSetVerifier), adding a live verifier route that can verify Kailua proofs."
     },
     {
-      "timestamp": 1762813583,
-      "type": "state",
-      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-      "transaction": "0x4034a5ff890175a954f604129de7a6971ecf55183c8fd76aec3d20d597936f21",
-      "updateId": "c1f6733c",
-      "reason": "RISC Zero timelock executed removeVerifier(0x50bd1769), removing a live (unpaused) verifier route from the router used by Kailua."
-    },
-    {
-      "timestamp": 1762813655,
-      "type": "state",
-      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-      "transaction": "0x17e31ee3b1308a5b30253935460e6dc8dd6f3e65eadc08893559b8d6e22a88a7",
-      "reason": "RISC Zero timelock executed removeVerifier(0xc101b42b), removing a second live (unpaused) verifier route from the router used by Kailua."
-    },
-    {
       "timestamp": 1764685823,
       "type": "state",
       "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",

@@ -9,7 +9,7 @@ Generated with discovered.json: 0xca1bf7d0789c204503397c391eacf952af19f797
 
 ## Description
 
-Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+Ossification review: operator MEDIUM, the 2021 ERC20Tornado rewrite counts as a reviewed code event.
 
 ## Config/verification related changes
 

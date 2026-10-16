@@ -1,15 +1,15 @@
-Generated with discovered.json: 0xfdeb971b3ca8ea082ce74095cc4f1d7d4d3953f4
+Generated with discovered.json: 0xf3ff1b5e4c20123733b6b633e49e7a0bd546ac11
 
-# Diff at Fri, 16 Oct 2026 05:36:51 GMT:
+# Diff at Fri, 16 Oct 2026 08:16:55 GMT:
 
 - id: becbbba7
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1790851283
+- comparing to: main@cdf6aa42d34edc5afafa19572228e1938e1bdc06 block: 1790851283
 - current timestamp: 1790851283
 
 ## Description
 
-Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+Ossification review: whitelist checker HIGH and Whitelist critical (forced-inclusion path), L1Staking retired, role holders MEDIUM.
 
 ## Config/verification related changes
 
@@ -62,9 +62,6 @@ discovery. Values are for block 1790851283 (main branch discovery), not current.
 ```diff
     contract L1MessageQueueWithGasPriceOracle (eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) [morph/L1MessageQueueWithGasPriceOracle] {
     +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
-      fieldMeta.whitelistChecker.severity:
--        "HIGH"
-+        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"MEDIUM"}
       fieldMeta.owner:
@@ -179,14 +176,6 @@ discovery. Values are for block 1790851283 (main branch discovery), not current.
       fieldMeta.$admin.severity:
 -        "HIGH"
 +        "MEDIUM"
-    }
-```
-
-```diff
-    contract Whitelist (eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984) [morph/Whitelist] {
-    +++ description: Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.
-      critical:
--        true
     }
 ```
 
