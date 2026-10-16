@@ -5,6 +5,10 @@
   "maxDepth": 10,
   "initialAddresses": [
     "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+    // EigenDA cert verifier router Celo verifies DA certificates against (the
+    // address its eigenda-proxy and OP Succinct program are configured with).
+    // Nothing on-chain points to it, so it is an initial address.
+    "eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08",
     "celo:0x4200000000000000000000000000000000000007",
     "celo:0x4200000000000000000000000000000000000010",
     "celo:0x4200000000000000000000000000000000000016",
@@ -12,6 +16,8 @@
   ],
   "names": {
     "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112": "CeloProxyAdminOwner",
+    "eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08": "EigenDACertVerifierRouter",
+    "eth:0xd9c4da492c60e92e2b53abb5bea7aa4b8aa5b181": "EigenDACertVerifier",
     "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223": "CeloProxyAdminOwner - L2 Alias"
   },
   "overrides": {

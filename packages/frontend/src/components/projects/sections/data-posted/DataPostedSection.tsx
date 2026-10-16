@@ -68,8 +68,11 @@ export function DataPostedSection({
 function DaLayerNames({ daLayers }: { daLayers: DaLayerInfo[] }) {
   return (
     <span>
-      {daLayers.map((daLayer) => (
-        <DaLayerName key={daLayer.name} daLayer={daLayer} />
+      {daLayers.map((daLayer, index) => (
+        <span key={daLayer.name}>
+          {index > 0 && ','}
+          <DaLayerName daLayer={daLayer} />
+        </span>
       ))}
     </span>
   )

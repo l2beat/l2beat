@@ -1,7 +1,7 @@
 {
   "name": "celo",
   "timestamp": 1791966035,
-  "configHash": "0xde09d9bd917efb26b0b7aba8097681386ea92084ba7f94c21c3c6451f0f0c4ec",
+  "configHash": "0x1190d63bf79affeb861412eda347887d7181938f433ffb4ce311ac9d020cf276",
   "entries": [
     {
       "name": "L2CrossDomainMessenger",
@@ -16,6 +16,9 @@
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
       "critical": { "sinceTimestamp": 1742960663 },
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
       "values": {
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
@@ -58,6 +61,9 @@
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
       "critical": { "sinceTimestamp": 1742960663 },
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
       "values": {
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
@@ -93,6 +99,9 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
       "critical": { "sinceTimestamp": 1742960663 },
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
       "values": {
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
@@ -119,6 +128,9 @@
       "proxyType": "EIP1967 proxy",
       "description": "Administration contract for other contract proxies.",
       "critical": { "sinceTimestamp": 1742960663 },
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
       "values": {
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
@@ -571,6 +583,55 @@
       "proxyType": "EOA"
     },
     {
+      "name": "EigenDACertVerifierRouter",
+      "address": "eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08",
+      "type": "Contract",
+      "template": "eigenda/EigenDACertVerifierRouter",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x309e8fb3f42c76d17ac8e71eae61f52cd213d9dc5feffa12c44e1b6b3d4a022e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.",
+      "deployerAddress": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
+      "sinceTimestamp": 1773650135,
+      "sinceBlock": 24668904,
+      "values": {
+        "$admin": "eth:0x783A434532Ee94667979213af1711505E8bFE374",
+        "$implementation": "eth:0x5c9944372C4cD2895f6305b64aCC07763CcC142E",
+        "$pastUpgrades": [
+          [
+            "2026-03-16T08:35:35.000Z",
+            "0x1ad477fac25c7f7dc64bb0e5c34589499d3f8444134ad4421cac712ba06a776c",
+            ["eth:0x5c9944372C4cD2895f6305b64aCC07763CcC142E"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "certVerifierABNs": [0, 25624000],
+        "DAVerifiers": [
+          {
+            "activationBlockNumber": 0,
+            "certVerifier": "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7"
+          },
+          {
+            "activationBlockNumber": 25624000,
+            "certVerifier": "eth:0xd9C4dA492c60e92e2B53abB5Bea7Aa4b8aA5b181"
+          }
+        ],
+        "owner": "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112"
+      },
+      "fieldMeta": {
+        "DAVerifiers": {
+          "severity": "HIGH",
+          "description": "The DA verifier contracts indexed by activation block number."
+        }
+      },
+      "implementationNames": {
+        "eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08": "TransparentUpgradeableProxy",
+        "eth:0x5c9944372C4cD2895f6305b64aCC07763CcC142E": "EigenDACertVerifierRouter"
+      }
+    },
+    {
       "name": "Optimism EOA 1",
       "address": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
       "type": "EOA",
@@ -811,6 +872,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "EigenDACertVerifier",
+      "address": "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenda"
+    },
+    {
       "address": "eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1039,6 +1107,13 @@
         "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "GnosisSafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
+    },
+    {
+      "name": "EigenDAServiceManager",
+      "address": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenda"
     },
     {
       "name": "SystemConfig",
@@ -1943,6 +2018,42 @@
       "proxyType": "EOA"
     },
     {
+      "name": "EigenDACertVerifier",
+      "address": "eth:0xd9C4dA492c60e92e2B53abB5Bea7Aa4b8aA5b181",
+      "type": "Contract",
+      "template": "eigenda/EigenDACertVerifier",
+      "sourceHashes": [
+        "0xfe7120fe9d61dad66b49443206c3948ef01ea3bdb1e4933a56902a614b500ec6"
+      ],
+      "proxyType": "immutable",
+      "description": "A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.",
+      "deployerAddress": "eth:0x3bec6009e5b9611b7765BC245A4Bb420817483E2",
+      "sinceTimestamp": 1784024735,
+      "sinceBlock": 25530271,
+      "values": {
+        "$immutable": true,
+        "certVersion": 3,
+        "eigenDASignatureVerifier": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+        "eigenDAThresholdRegistry": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+        "quorumNumbersRequired": "0x01",
+        "securityThresholds": {
+          "confirmationThreshold": 55,
+          "adversaryThreshold": 33
+        },
+        "semver": { "major": 3, "minor": 1, "patch": 0 }
+      },
+      "implementationNames": {
+        "eth:0xd9C4dA492c60e92e2B53abB5Bea7Aa4b8aA5b181": "EigenDACertVerifier"
+      }
+    },
+    {
+      "name": "EigenDAThresholdRegistry",
+      "address": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-eigenda"
+    },
+    {
       "name": "AddressManager",
       "address": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "type": "Contract",
@@ -2643,6 +2754,17 @@
       "function systemConfig() view returns (address)",
       "function version() pure returns (string)"
     ],
+    "eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0x3C519816C5BdC0a0199147594F83feD4F5847f13": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2768,6 +2890,25 @@
     ],
     "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": [
       "constructor(address _singleton)"
+    ],
+    "eth:0x5c9944372C4cD2895f6305b64aCC07763CcC142E": [
+      "error ABNNotGreaterThanLast(uint32 activationBlockNumber)",
+      "error ABNNotInFuture(uint32 activationBlockNumber)",
+      "error InvalidCertLength()",
+      "error LengthMismatch()",
+      "error RBNInFuture(uint32 referenceBlockNumber)",
+      "event CertVerifierAdded(uint32 indexed activationBlockNumber, address indexed certVerifier)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addCertVerifier(uint32 activationBlockNumber, address certVerifier)",
+      "function certVerifierABNs(uint256) view returns (uint32)",
+      "function certVerifiers(uint32) view returns (address)",
+      "function checkDACert(bytes abiEncodedCert) view returns (uint8)",
+      "function getCertVerifierAt(uint32 referenceBlockNumber) view returns (address)",
+      "function initialize(address initialOwner, uint32[] initABNs, address[] initCertVerifiers)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
     ],
     "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908": [
       "constructor(address _oracle, uint256 _stateVersion)",
@@ -3232,6 +3373,25 @@
     "eth:0xD1C635987B6Aa287361d08C6461491Fa9df087f2": [
       "constructor(address _singleton)"
     ],
+    "eth:0xd9C4dA492c60e92e2B53abB5Bea7Aa4b8aA5b181": [
+      "constructor(address initEigenDAThresholdRegistry, address initEigenDASignatureVerifier, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) initSecurityThresholds, bytes initQuorumNumbersRequired)",
+      "error BlobQuorumsNotSubset(uint256 blobQuorumsBitmap, uint256 confirmedQuorumsBitmap)",
+      "error InvalidBlobVersion(uint16 blobVersion, uint16 nextBlobVersion)",
+      "error InvalidInclusionProof(uint32 blobIndex, bytes32 blobHash, bytes32 rootHash)",
+      "error InvalidQuorumNumbersRequired(uint256 length)",
+      "error InvalidSecurityThresholds()",
+      "error RequiredQuorumsNotSubset(uint256 requiredQuorumsBitmap, uint256 blobQuorumsBitmap)",
+      "error SecurityAssumptionsNotMet(uint8 confirmationThreshold, uint8 adversaryThreshold, uint8 codingRate, uint32 numChunks, uint32 maxNumOperators)",
+      "function _decodeCert(bytes data) pure returns (tuple(tuple(bytes32 batchRoot, uint32 referenceBlockNumber) batchHeader, tuple(tuple(tuple(uint16 version, bytes quorumNumbers, tuple(tuple(uint256 X, uint256 Y) commitment, tuple(uint256[2] X, uint256[2] Y) lengthCommitment, tuple(uint256[2] X, uint256[2] Y) lengthProof, uint32 length) commitment, bytes32 paymentHeaderHash) blobHeader, bytes signature, uint32[] relayKeys) blobCertificate, uint32 blobIndex, bytes inclusionProof) blobInclusionInfo, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) nonSignerStakesAndSignature, bytes signedQuorumNumbers) cert)",
+      "function certVersion() pure returns (uint8)",
+      "function checkDACert(bytes abiEncodedCert) view returns (uint8)",
+      "function checkDACertReverts(tuple(tuple(bytes32 batchRoot, uint32 referenceBlockNumber) batchHeader, tuple(tuple(tuple(uint16 version, bytes quorumNumbers, tuple(tuple(uint256 X, uint256 Y) commitment, tuple(uint256[2] X, uint256[2] Y) lengthCommitment, tuple(uint256[2] X, uint256[2] Y) lengthProof, uint32 length) commitment, bytes32 paymentHeaderHash) blobHeader, bytes signature, uint32[] relayKeys) blobCertificate, uint32 blobIndex, bytes inclusionProof) blobInclusionInfo, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) nonSignerStakesAndSignature, bytes signedQuorumNumbers) daCert) view",
+      "function eigenDASignatureVerifier() view returns (address)",
+      "function eigenDAThresholdRegistry() view returns (address)",
+      "function quorumNumbersRequired() view returns (bytes)",
+      "function securityThresholds() view returns (tuple(uint8 confirmationThreshold, uint8 adversaryThreshold))",
+      "function semver() pure returns (uint8 major, uint8 minor, uint8 patch)"
+    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -3595,6 +3755,8 @@
     ]
   },
   "usedTemplates": {
+    "eigenda/EigenDACertVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenda/EigenDACertVerifierRouter": "0x859798b12add2e197413aed69a8ede2f18ec1ed8652580f307a8af2f3eb2d61a",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -3624,9 +3786,11 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225",
     "tokens/CELO": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82"
   },
-  "usedBlockNumbers": { "celo": 80065185, "ethereum": 26189498 },
-  "permissionsConfigHash": "0x9634e27737004864ea40269b3821d429aa765a785f4d5d520954a4ce0913762e",
+  "usedBlockNumbers": { "celo": 80065277, "ethereum": 26189504 },
+  "permissionsConfigHash": "0xd36bbc6afb31ebd3c606b07e3c1ea77b55fbe9abbd6bb3d6fb7121aaa8289d4f",
   "modelledAgainst": {
+    "shared-eigenda": "0x68d69c21e1d9fabe1399ed463c4b1eb18edfd532468afd0cfd1839e2e259b167",
+    "shared-eigenlayer": "0x7d4dc86bbe2849d7de33af96e2466d994b8f5133949b99100967a503dd0d98a7",
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"
   },
   "permissions": {
@@ -3697,6 +3861,131 @@
         }
       ]
     },
+    "eth:0x002721B4790d97dC140a049936aA710152Ba92D5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "description": "can add and remove strategies",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
+          "description": "can add cert verifiers to the router, changing which contract validates DA certificates from a chosen block onwards.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "role": ".owner"
+        }
+      ]
+    },
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
         {
@@ -3726,6 +4015,16 @@
         }
       ]
     },
+    "eth:0x0c431C66F4dE941d089625E5B423D00707977060": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry"
+        }
+      ]
+    },
     "eth:0x0cd08c7f7A96AA9635f761b49216B9eA74C5cA60": {
       "receivedPermissions": [
         {
@@ -3736,6 +4035,16 @@
         }
       ]
     },
+    "eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can create rewards submissions.",
+          "role": ".rewardsInitiator"
+        }
+      ]
+    },
     "eth:0x24424336F04440b1c28685a38303aC33C9D14a25": {
       "receivedPermissions": [
         {
@@ -3743,6 +4052,29 @@
           "from": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
           "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 3mo 8d.",
           "role": ".livenessGuard"
+        }
+      ]
+    },
+    "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x2E158da11961426E2A1Cc9e79f40244486b6845C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390" }
+          ]
         }
       ]
     },
@@ -3771,8 +4103,72 @@
         }
       ]
     },
+    "eth:0x338477FfaF63c04AC06048787f910671eC914B34": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "description": "can eject DA operators from a quorum.",
+          "role": ".ejectors"
+        }
+      ]
+    },
+    "eth:0x347660a632B0Aac5B70dCd5e6C3444a7C933a137": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390" }
+          ]
+        }
+      ]
+    },
+    "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0c431C66F4dE941d089625E5B423D00707977060",
+          "role": ".pausers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
+          "description": "change the beacon implementation.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin"
+        }
+      ]
+    },
     "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08",
+          "description": "can add cert verifiers to the router, changing which contract validates DA certificates from a chosen block onwards.",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753",
@@ -3807,6 +4203,14 @@
         {
           "permission": "upgrade",
           "from": "eth:0x25035d2233d099f0BA710ca1e5a3834842870C66",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x783A434532Ee94667979213af1711505E8bFE374" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08",
           "role": "admin",
           "via": [
             { "address": "eth:0x783A434532Ee94667979213af1711505E8bFE374" }
@@ -3893,6 +4297,517 @@
         }
       ]
     },
+    "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can confirm batches to the DA bridge.",
+          "role": ".batchConfirmers"
+        }
+      ]
+    },
+    "eth:0x45dcD05251F3327EcCd4766a9264DBDAab3A4065": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390" }
+          ]
+        }
+      ]
+    },
+    "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
+          "description": "change the beacon implementation.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "description": "executes scheduled operations after the delay",
+          "role": ".executors"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "description": "executes scheduled operations after the delay",
+          "role": ".executors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
+            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
+            {
+              "address": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+              "delay": 2073600
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "delay": 2073600,
+          "role": ".proposers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "delay": 864000,
+          "role": ".proposers"
+        }
+      ]
+    },
+    "eth:0x5050389572f2d220ad927CcbeA0D406831012390": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0c431C66F4dE941d089625E5B423D00707977060",
+          "role": ".pausers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        }
+      ]
+    },
     "eth:0x53E8EEAAE0731CCc888513695eC1Bd792ec975Ca": {
       "receivedPermissions": [
         {
@@ -3925,6 +4840,30 @@
           "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
           "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x57af860e3a1C16641CDDDa92898266D2df7Dfa71": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390" }
+          ]
+        }
+      ]
+    },
+    "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can confirm batches to the DA bridge.",
+          "role": ".batchConfirmers"
         }
       ]
     },
@@ -3963,6 +4902,20 @@
           "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
           "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x7474E1D80E844e6EdB430841DeEF702a6B747863": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390" }
+          ]
         }
       ]
     },
@@ -4006,6 +4959,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0x25035d2233d099f0BA710ca1e5a3834842870C66",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08",
           "role": "admin"
         },
         {
@@ -4065,6 +5023,70 @@
         }
       ]
     },
+    "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+          "role": "admin"
+        }
+      ]
+    },
     "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": {
       "receivedPermissions": [
         {
@@ -4092,6 +5114,194 @@
         }
       ]
     },
+    "eth:0x8642473a123FE33b0aaE90bD8604eA1029417236": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "description": "can eject DA operators from a quorum.",
+          "role": ".ejectors"
+        }
+      ]
+    },
+    "eth:0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can confirm batches to the DA bridge.",
+          "role": ".batchConfirmers"
+        }
+      ]
+    },
+    "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
+          "role": ".owner"
+        }
+      ]
+    },
     "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d": {
       "receivedPermissions": [
         {
@@ -4105,6 +5315,20 @@
           "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
           "description": "Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.",
           "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x9b2C61521AF4AB9f4BE25297838F72a56462B578": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390" }
+          ]
         }
       ]
     },
@@ -4134,6 +5358,498 @@
         }
       ]
     },
+    "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
+          "description": "change the beacon implementation.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "description": "can cancel scheduled operations",
+          "role": ".cancellers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "description": "can cancel scheduled operations",
+          "role": ".cancellers"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
+            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
+            {
+              "address": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+              "delay": 2073600
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0c431C66F4dE941d089625E5B423D00707977060",
+          "role": ".pausers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "delay": 2073600,
+          "role": ".proposers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "delay": 864000,
+          "role": ".proposers"
+        }
+      ]
+    },
     "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
       "receivedPermissions": [
         {
@@ -4147,6 +5863,337 @@
           "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "description": "can eject DA operators from a quorum.",
+          "role": ".ejectors"
+        }
+      ]
+    },
+    "eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "description": "Can disperse EigenDA blobs to the EigenDA node operators.",
+          "role": ".dispersers"
+        }
+      ]
+    },
+    "eth:0xFEA47018D632A77bA579846c840d5706705Dc598": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
+          "description": "change the beacon implementation.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
+            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
         }
       ]
     },
@@ -4173,6 +6220,16 @@
         }
       ]
     },
+    "eth:0xe0550117Cb066D3b330eBd764B0d75D3BA378734": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "description": "can approve the replacement of churned operators from a quorum",
+          "role": ".churnApprover"
+        }
+      ]
+    },
     "eth:0xe4ce4999b1C4C60C384AC96f370F00796ae9eC78": {
       "receivedPermissions": [
         {
@@ -4180,6 +6237,30 @@
           "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
           "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "description": "Can store and serve both unencoded blobs as well as encoded chunks.",
+          "role": ".relayers"
+        }
+      ]
+    },
+    "eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry",
+          "via": [
+            { "address": "eth:0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390" }
+          ]
         }
       ]
     }

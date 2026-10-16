@@ -13,5 +13,11 @@
     "hash": "0xea2c1984b5e295622dc9ac6b7a3cd6f47faf6554fe916ecd14513f73f22be476",
     "address": "eth:0xa4F38615e6a1846ccD7ff08E8179CBdAC8F5ff3B",
     "blockNumber": 24404410
+  },
+  "EigenDACertVerifier_v3_2.sol": {
+    "hash": "0xfe7120fe9d61dad66b49443206c3948ef01ea3bdb1e4933a56902a614b500ec6",
+    "address": "eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE",
+    "chain": "ethereum",
+    "blockNumber": 26193455
   }
 }
