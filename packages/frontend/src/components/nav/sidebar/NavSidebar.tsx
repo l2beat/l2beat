@@ -178,10 +178,13 @@ function NavCollapsibleItem({
 }) {
   const pathname = usePathname()
   const allGroupLinks = useMemo(() => group.links.flat(), [group.links])
-  const isGroupActive = pathname.startsWith('/' + group.match)
   const isAnyLinkActive = allGroupLinks.some((link) =>
     isLinkActive({ href: link.href, pathname, exact: link.exactMatch }),
   )
+  // Its links too: a group's pages need not share its path, e.g. Security's
+  // /zk-catalog and /ossification.
+  const isGroupActive =
+    pathname.startsWith('/' + group.match) || isAnyLinkActive
 
   const [open, setOpen] = useState(isAnyLinkActive)
 
