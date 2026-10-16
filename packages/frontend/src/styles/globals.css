@@ -1017,6 +1017,16 @@
 }
 
 /* Referenced from inline styles in CropPlant, CropsBed and the page backdrops. */
+/* The heartbeat that signs the mandate on the home page, drawn once. */
+@keyframes mandate-sign {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @keyframes garden-grow {
   0% {
     transform: scaleY(0.02);
