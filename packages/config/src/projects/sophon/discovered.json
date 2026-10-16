@@ -750,6 +750,7 @@
         }
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "executionDelay": {
           "severity": "HIGH",
           "description": "Ecosystem-wide minimum execution delay (in seconds), set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
@@ -2148,7 +2149,7 @@
     "shared-zk-stack/L1USDCBridge": "0x061dba0e24ed75235f2eb19caf0c4adfa7896c607bd4b2400c7af30c3bc614ae",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ValidatorTimelock_v31": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e",
+    "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c",
     "succinct/SP1Vector": "0x726d693de65ff63629181e9a27ee8342d7521ac412c6676152f27dd13bb195ad"
   },

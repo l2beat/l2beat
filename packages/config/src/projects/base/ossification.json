@@ -65,6 +65,14 @@
       "reason": "Replaced the game type 0 (FaultDisputeGame) and 1 (PermissionedDisputeGame) implementations."
     },
     {
+      "timestamp": 1753380539,
+      "type": "state",
+      "contract": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+      "transaction": "0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
+      "updateId": "36e9aea4",
+      "reason": "Optimism Guardian Multisig, guardian of this SuperchainConfig, disabled the DeputyGuardianModule (DisabledModule), removing the OP Foundation Operations Safe's path to unpause, blacklist dispute games, set the respected game type and set the anchor state."
+    },
+    {
       "timestamp": 1759862579,
       "type": "code",
       "contract": "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
@@ -87,6 +95,22 @@
       "transaction": "0x9b9aa2d8e857e1a28e55b124e931eac706b3ae04c1b33ba949f0366359860993",
       "updateId": "3e186ad9",
       "reason": "Upgraded L1StandardBridge (ChugSplash proxy, implementation slot changed in this block) in Base's Upgrade 17 (Jovian) execution."
+    },
+    {
+      "timestamp": 1769108699,
+      "type": "state",
+      "contract": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
+      "transaction": "0xf1ae77bea001acd7f3355ce971fd992601f467ce0a2305a38b1a82da459b502c",
+      "updateId": "47a1c68b",
+      "reason": "OP Foundation Operations Safe 0x9BA6, one of two required signers of the Base Governance Multisig that owns this ProxyAdmin, enabled the SaferSafes module with the Optimism Security Council as fallback owner after a 30-day liveness challenge (EnabledModule)."
+    },
+    {
+      "timestamp": 1769109083,
+      "type": "state",
+      "contract": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+      "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
+      "updateId": "47a1c68b",
+      "reason": "OP Foundation Upgrade Safe, one of two required signers of the SuperchainProxyAdminOwner that upgrades this SuperchainConfig, enabled the SaferSafes module with the Optimism Security Council as fallback owner after a 30-day liveness challenge (EnabledModule)."
     },
     {
       "timestamp": 1772558675,

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x61defc9a5c12cf7d69424f4daa0526aaf0491ecf
+Generated with discovered.json: 0x866ef487d4f04c5917056ce3c00c380462eb49c2
 
-# Diff at Fri, 16 Oct 2026 05:36:50 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
 
 - id: 41198deb
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1790862352
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790862352
 - current timestamp: 1790862352
 
 ## Description
@@ -50,6 +50,14 @@ discovery. Values are for block 1790862352 (main branch discovery), not current.
 ```
 
 ```diff
+    contract AddressManager (eth:0x9b7C9BbD6d540A8A4dEDd935819fC4408Ba71153) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
     contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
     +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
 +++ severity: MEDIUM
@@ -66,6 +74,14 @@ discovery. Values are for block 1790862352 (main branch discovery), not current.
 ```diff
     contract ProxyAdmin (eth:0xd56045E68956FCe2576E680c95a4750cf8241f79) [global/ProxyAdmin] {
     +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       fieldMeta:
 +        {"owner":{"severity":"MEDIUM"}}
     }

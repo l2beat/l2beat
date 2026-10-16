@@ -498,6 +498,7 @@
         "$immutable": true,
         "owner": "base:0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0xd2e0532f8AE8DeDA4b9Ad2CB79f008C97c9C25eE": "AddressManager"
       },

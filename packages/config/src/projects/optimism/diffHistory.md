@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x59980e0ea29cf2ce266d633dd7d27222b081e9cc
+Generated with discovered.json: 0x79cb0cf620691452f6ba3f5b1c91488d6cb4253d
 
-# Diff at Fri, 16 Oct 2026 05:36:51 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:49 GMT:
 
 - id: bc708de6
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1790862344
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790862344
 - current timestamp: 1790862344
 
 ## Description
@@ -52,6 +52,14 @@ discovery. Values are for block 1790862344 (main branch discovery), not current.
 +        2592000
       fieldMeta:
 +        {"upgradeSafeLivenessResponsePeriod":{"severity":"HIGH"},"upgradeSafeFallbackOwner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xce1dc38a9708343fa7abb4c11f8a4f3d6be99963
+Generated with discovered.json: 0x5484f51140a910926b89e02a3c46b93047e35d91
 
-# Diff at Fri, 16 Oct 2026 09:21:34 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:44 GMT:
 
 - id: b4f98199
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1791896776
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791896776
 - current timestamp: 1791896776
 
 ## Description
@@ -16,6 +16,14 @@ Ossification review: template severities (role holders MEDIUM, including the ZK 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1791896776 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
 
 ```diff
     contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) [shared-zk-stack/Diamond] {
@@ -40,6 +48,14 @@ discovery. Values are for block 1791896776 (main branch discovery), not current.
       fieldMeta.owner.severity:
 -        "HIGH"
 +        "MEDIUM"
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
     }
 ```
 

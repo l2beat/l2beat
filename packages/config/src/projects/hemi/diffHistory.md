@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe005cb215eb0694f273031a81dbc52153f41fa09
+Generated with discovered.json: 0x16444dcbd136bed6b27e2445d6cdb96fff37b505
 
-# Diff at Fri, 16 Oct 2026 05:36:50 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
 
 - id: cc820b22
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1767717347
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1767717347
 - current timestamp: 1767717347
 
 ## Description
@@ -48,6 +48,14 @@ discovery. Values are for block 1767717347 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This version includes a guardian function to recover USDC that was incorrectly sent to the L2 Stargate USDC address.
       fieldMeta:
 +        {"$admin":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xA5F37791378c55941a52B4dCb70Be4D8D09f5e43) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 

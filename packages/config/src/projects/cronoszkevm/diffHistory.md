@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2a0dc9f7898634d2e0e89d9458f151c9218f15c0
+Generated with discovered.json: 0x2a4cd581627c2aca4a12b220bdc46c39c46019cc
 
-# Diff at Fri, 16 Oct 2026 09:21:35 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:45 GMT:
 
 - id: 9fc61f9c
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1790944819
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790944819
 - current timestamp: 1790944819
 
 ## Description
@@ -16,6 +16,14 @@ Ossification review: template severities (role holders MEDIUM, including the ZK 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1790944819 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
 
 ```diff
     contract Diamond (eth:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) [shared-zk-stack/Diamond] {

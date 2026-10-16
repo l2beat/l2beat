@@ -149,6 +149,7 @@
         }
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "executionDelay": {
           "severity": "HIGH",
           "description": "Ecosystem-wide minimum execution delay (in seconds), set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
@@ -1133,6 +1134,7 @@
       },
       "fieldMeta": {
         "executionDelay": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "executionDelay_fmt": { "severity": "HIGH" },
         "threshold": { "severity": "HIGH" },
         "$threshold": { "severity": "HIGH" }
@@ -1742,7 +1744,7 @@
     "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0xd384a9c9e6643cddbc13f8e706f8c2ad62ec8f9e6dbef85bcdf7eb8853fd6239",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ValidatorTimelock_v31": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
+    "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f"
   },
   "usedBlockNumbers": { "ethereum": 26146863 },
   "permissionsConfigHash": "0xdba055c063d7c0d740e9770a9ee8c46527b2e484090f77dc017292a129086846",

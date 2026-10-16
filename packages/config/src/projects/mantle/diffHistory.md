@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xccb6920454a9ec7fb064046795070d675a4b2e91
+Generated with discovered.json: 0x948fc0f75a607d08aa74573c2d6d1c9aff4aa177
 
-# Diff at Fri, 16 Oct 2026 05:36:51 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:48 GMT:
 
 - id: 2a6a4291
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1789917555
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1789917555
 - current timestamp: 1789917555
 
 ## Description
@@ -42,6 +42,14 @@ discovery. Values are for block 1789917555 (main branch discovery), not current.
 ```
 
 ```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) [opstack/SystemConfig_v1_4_0_mantle] {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
     contract TimelockController (eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) [global/TimelockController] {
     +++ description: A timelock with access control. The current minimum delay is 1d.
       fieldMeta.Executor.severity:
@@ -54,6 +62,14 @@ discovery. Values are for block 1789917555 (main branch discovery), not current.
 +        {"severity":"MEDIUM"}
       fieldMeta.Canceller:
 +        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 

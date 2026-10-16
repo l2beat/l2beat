@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xbe709f707e555030bd6c5916034e147fe993d41a
+Generated with discovered.json: 0x928859b37ec2368534e76e7b6fbdaaec499e92f4
 
-# Diff at Fri, 16 Oct 2026 05:36:55 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:51 GMT:
 
 - id: 70367984
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1745000255
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1745000255
 - current timestamp: 1745000255
 
 ## Description
@@ -42,6 +42,14 @@ discovery. Values are for block 1745000255 (main branch discovery), not current.
     +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled.
       fieldMeta:
 +        {"guardian":{"severity":"MEDIUM"},"GUARDIAN":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 

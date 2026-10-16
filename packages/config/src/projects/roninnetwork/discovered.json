@@ -1852,6 +1852,7 @@
         "OVM_L1CrossDomainMessenger": "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0",
         "owner": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C": "AddressManager"
       },

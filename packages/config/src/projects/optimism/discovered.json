@@ -1956,6 +1956,7 @@
         "Proxy__OVM_L1CrossDomainMessenger": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "Proxy__OVM_L1StandardBridge": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },

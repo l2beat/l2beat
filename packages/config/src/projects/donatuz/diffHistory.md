@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x728cdac589966a9a60b4bbc508257d5f14e16780
+Generated with discovered.json: 0xe8758201e87ffecaf0b421f3236b8bc40cbce8e0
 
-# Diff at Fri, 16 Oct 2026 05:36:48 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:45 GMT:
 
 - id: 536c6fd3
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1765381169
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1765381169
 - current timestamp: 1765381169
 
 ## Description
@@ -16,6 +16,14 @@ Ossification review: template severities (role holders and $admin MEDIUM, aligne
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1765381169 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (base:0x5416B7421c42B9218B29f688C47a46020c23cF0d) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
 
 ```diff
     contract ProxyAdmin (base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15) [global/ProxyAdmin] {

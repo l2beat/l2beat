@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8e777f9e3205739fe7dc51c67ddc6b52e2dafa73
+Generated with discovered.json: 0x36cf8933a6fd446db8bd01047d5612288bd33f07
 
-# Diff at Fri, 16 Oct 2026 05:36:48 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:45 GMT:
 
 - id: 6bffcdf6
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791966035
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791966035
 - current timestamp: 1791966035
 
 ## Description
@@ -122,6 +122,14 @@ discovery. Values are for block 1791966035 (main branch discovery), not current.
 ```
 
 ```diff
+    contract AddressManager (eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
     contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
     +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
       critical:
@@ -207,6 +215,14 @@ discovery. Values are for block 1791966035 (main branch discovery), not current.
       critical:
 -        true
 +        {"untilTimestamp":1765362251}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 

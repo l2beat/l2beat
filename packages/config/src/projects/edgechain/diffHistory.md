@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x672cee2944116b782b51768d588680d72e0b8f6c
+Generated with discovered.json: 0x7800cca3f1b682d28db4e95c2cfa486a3961d308
 
-# Diff at Fri, 16 Oct 2026 07:04:12 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:46 GMT:
 
 - id: e38dc8da
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@cdf6aa42d34edc5afafa19572228e1938e1bdc06 block: 1791533705
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791533705
 - current timestamp: 1791533705
 
 ## Description
@@ -49,6 +49,12 @@ discovery. Values are for block 1791533705 (main branch discovery), not current.
     contract Bridge (arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0) [orbitstack/Bridge] {
     +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
       fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedOutboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedDelayedInboxList.severity:
 -        "HIGH"
 +        "MEDIUM"
       fieldMeta.rollup:

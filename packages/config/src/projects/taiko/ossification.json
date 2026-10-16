@@ -106,6 +106,20 @@
       "reason": "Upgraded the L2 ERC20Vault predeploy away from its genesis implementation (0x0167...0002); the first $pastUpgrades entry is a real upgrade, not an initialization."
     },
     {
+      "timestamp": 1716802403,
+      "type": "code",
+      "contract": "taiko:0x1670000000000000000000000000000000000003",
+      "transaction": "0x8705703a93cb4cfc1ae69d1277f4464f807c7615237f2b04ff010c6e45708d34",
+      "reason": "Upgraded the L2 ERC721Vault predeploy away from its genesis implementation (0x0167...0003); the first $pastUpgrades entry is a real upgrade, not an initialization."
+    },
+    {
+      "timestamp": 1716802439,
+      "type": "code",
+      "contract": "taiko:0x1670000000000000000000000000000000000004",
+      "transaction": "0x264a2a553672a5480141638c3ca00a7bdf2c54e48c53f41867ca4f64703e16d7",
+      "reason": "Upgraded the L2 ERC1155Vault predeploy away from its genesis implementation (0x0167...0004); the first $pastUpgrades entry is a real upgrade, not an initialization."
+    },
+    {
       "timestamp": 1716827831,
       "type": "code",
       "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",

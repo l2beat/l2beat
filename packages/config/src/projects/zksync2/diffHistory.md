@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5cb1ac099cd7c441b9db0cd6f5168fe63c22cc64
+Generated with discovered.json: 0x6a8c8e2c46a4dff9bea8938064195d6f381ca02a
 
-# Diff at Fri, 16 Oct 2026 09:21:42 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:52 GMT:
 
 - id: 72b8aaa4
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1791452652
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791452652
 - current timestamp: 1791452652
 
 ## Description
@@ -34,6 +34,8 @@ discovery. Values are for block 1791452652 (main branch discovery), not current.
       fieldMeta.executionDelayEra_fmt.severity:
 -        "MEDIUM"
 +        "HIGH"
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
       fieldMeta.upgraderVTL:
 +        {"severity":"MEDIUM"}
     }
@@ -45,6 +47,14 @@ discovery. Values are for block 1791452652 (main branch discovery), not current.
       fieldMeta.getAdmin.severity:
 -        "HIGH"
 +        "MEDIUM"
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
     }
 ```
 

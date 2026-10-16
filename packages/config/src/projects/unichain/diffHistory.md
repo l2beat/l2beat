@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x258210e5d6052bf74a99e171ed945250c6cc757c
+Generated with discovered.json: 0xb24d7a8fa2dc59ea89f5c9b9167b556655441369
 
-# Diff at Fri, 16 Oct 2026 05:36:54 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:51 GMT:
 
 - id: bed9f26f
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1790862365
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790862365
 - current timestamp: 1790862365
 
 ## Description
@@ -50,6 +50,14 @@ discovery. Values are for block 1790862365 (main branch discovery), not current.
 ```
 
 ```diff
+    contract AddressManager (eth:0x8098F676033A377b9Defe302e9fE6877cD63D575) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
     contract SystemConfig (eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
 +++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
@@ -62,6 +70,14 @@ discovery. Values are for block 1790862365 (main branch discovery), not current.
 +        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
       fieldMeta.isCustomGasToken:
 +        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 

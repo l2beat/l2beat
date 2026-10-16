@@ -1442,6 +1442,7 @@
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "whitelisted": ["eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7"]
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": "Whitelist"
       }

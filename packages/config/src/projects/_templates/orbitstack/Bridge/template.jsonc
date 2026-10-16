@@ -23,9 +23,11 @@
     "$admin": {
       "severity": "MEDIUM"
     },
+    // MEDIUM: the current set also shrinks on detachments, which do not reset.
+    // Additions count through the add-only outboxHistory.
     "allowedOutboxList": {
       "description": "Can make calls as the bridge, steal all funds.",
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "outboxHistory": {
       "description": "All Outboxes that were ever set as allowed in the bridge.",
@@ -39,9 +41,10 @@
         }
       }
     },
+    // MEDIUM like allowedOutboxList, additions count through inboxHistory.
     "allowedDelayedInboxList": {
       "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge.",
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "inboxHistory": {
       "description": "All Inboxes that were ever set as allowed in the bridge.",

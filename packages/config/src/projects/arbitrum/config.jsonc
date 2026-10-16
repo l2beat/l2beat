@@ -204,7 +204,8 @@
       ],
       "fields": {
         // admin and user facet logic, swappable by the owner (setFacets)
-        "getFacets": { "severity": "HIGH" }
+        "getFacets": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
       }
     },
     // facet master copies of the classic rollup, storage is unused
@@ -473,7 +474,8 @@
     },
     // L1 ARB: on deposits the L1ARBGateway calls bridgeBurn on it, and only
     // then does L2ARBGateway release escrowed L2 ARB. New token code could skip
-    // the burn and drain that escrow. The Nova gateway can also mint L1 ARB.
+    // the burn and drain that escrow. Only the Arbitrum One gateway can mint
+    // or burn, the Nova gateway only registers the token on Nova.
     "eth:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1": {
       "critical": true,
       "category": "bridge-canonical",

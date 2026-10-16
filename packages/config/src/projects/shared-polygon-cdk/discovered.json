@@ -119,6 +119,45 @@
         },
         "aggchainVKeysUpdated": {},
         "AGGLAYER_GATEWAY_VERSION": "v1.1.0",
+        "allAggchainVKeys": [
+          {
+            "selector": "0x00040001",
+            "newVKey": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f"
+          },
+          {
+            "selector": "0x00060001",
+            "newVKey": "0x374ee73950cdb07d1b8779d90a8467df232639c13f9536b03f1ba76a2aa5dac6"
+          },
+          {
+            "selector": "0x00080001",
+            "newVKey": "0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53"
+          },
+          {
+            "selector": "0x000a0001",
+            "newVKey": "0x7767a8330ce68dac35265ba15d9eec6722b943cf00dc3b733779e1ae55696f70"
+          },
+          {
+            "selector": "0x000b0001",
+            "newVKey": "0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915"
+          }
+        ],
+        "allRoutes": [
+          {
+            "selector": "0x00000004",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "pessimisticVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "selector": "0x00000008",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "pessimisticVKey": "0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639"
+          },
+          {
+            "selector": "0x0000000e",
+            "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+            "pessimisticVKey": "0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"
+          }
+        ],
         "alMultisigAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "freezePpRouteAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
@@ -163,16 +202,24 @@
       "fieldMeta": {
         "getAggchainMultisigHash": { "severity": "MEDIUM" },
         "aggchainVKeys": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey(), which some chains (ECDSA) override and do not call."
+        },
+        "allAggchainVKeys": {
+          "severity": "HIGH",
+          "description": "All default aggchain vkeys that were ever added, unset ones included."
         },
         "aggchainVKeysUpdated": {
           "severity": "HIGH",
           "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated."
         },
         "routes": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey for all VerifierType 2 (algateway) chains. It wraps the aggchainVKey, which can be FEP or just ECDSA or anything else. It is freely chosen by the aggregator from among any of the listed routes."
+        },
+        "allRoutes": {
+          "severity": "HIGH",
+          "description": "All pessimistic-proof routes that were ever added, frozen ones included."
         },
         "aggchainMultisigHash": { "severity": "MEDIUM" }
       },
@@ -2439,7 +2486,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "polygon-cdk/AgglayerBridge": "0xa81aeeb573b6377dccef7c71fac6ad2e784a6c7be283b8020ec4ac648d780e46",
-    "polygon-cdk/AgglayerGateway": "0xc1be40a9852a87aef0bf6b631b9e3a1132f3f35b8981231c26ea36e60458c3bc",
+    "polygon-cdk/AgglayerGateway": "0xc66e9029412a30138fa93b3ec2137665b325b07cc17b385b7da5793672761fde",
     "polygon-cdk/AgglayerGER": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
     "polygon-cdk/AgglayerManager": "0x3c5b4cb44f69f247050cec379ef9c049f6c8bd7fca6aabab3b5159c190daa867",
     "polygon-cdk/BridgeLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

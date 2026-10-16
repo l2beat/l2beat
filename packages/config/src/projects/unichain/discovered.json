@@ -1103,6 +1103,7 @@
         "$immutable": true,
         "owner": "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8098F676033A377b9Defe302e9fE6877cD63D575": "AddressManager"
       },
@@ -1984,6 +1985,7 @@
         "$immutable": true,
         "owner": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },

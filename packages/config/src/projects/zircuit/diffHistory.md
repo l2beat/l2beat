@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf66a42d1d2da31fd6ffe344e8fb88d361e09c4f6
+Generated with discovered.json: 0xd6a3068968cbd331d8a38a5a41b4584e88a0011c
 
-# Diff at Fri, 16 Oct 2026 05:36:55 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:52 GMT:
 
 - id: ba116053
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791217049
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791217049
 - current timestamp: 1791217049
 
 ## Description
@@ -46,6 +46,14 @@ discovery. Values are for block 1791217049 (main branch discovery), not current.
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
       fieldMeta.owner:
 +        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x9D3acbf448541738cB45661905AE26233FBe65e5) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 

@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "timestamp": 1790601621,
-  "configHash": "0x251e7a9be7cf885c5c879d4794b287cf11d8b41744f66cfd985d7e4b3fd12166",
+  "configHash": "0x7719f5f8a4b8a6755baa0f3c5ef920db4dc071edbd4e38f88aa98a1aae5880a8",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -3129,7 +3129,7 @@
         "sequencerInbox": { "severity": "HIGH" },
         "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Can make calls as the bridge, steal all funds."
         },
         "outboxHistory": {
@@ -3137,7 +3137,7 @@
           "description": "All Outboxes that were ever set as allowed in the bridge."
         },
         "allowedDelayedInboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
         },
         "inboxHistory": {
@@ -3554,7 +3554,10 @@
         "zombieCount": 0,
         "zombieLatestStakedNode": []
       },
-      "fieldMeta": { "getFacets": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "getFacets": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A": "TransparentUpgradeableProxy",
         "eth:0x3A4661Cc7C5D1E913Ae43f0835525802d6036eCc": "Rollup"

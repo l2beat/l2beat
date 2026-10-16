@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa08cfc663eb32c1bcbe1afc68dac2caf2b2b1e5c
+Generated with discovered.json: 0xf91cc93d9547ce3c29fcfb504e7bf2be95a0474f
 
-# Diff at Fri, 16 Oct 2026 05:36:54 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:51 GMT:
 
 - id: 33535c8a
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1786359739
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1786359739
 - current timestamp: 1786359739
 
 ## Description
@@ -57,6 +57,14 @@ discovery. Values are for block 1786359739 (main branch discovery), not current.
 ```
 
 ```diff
+    contract AddressManager (eth:0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
     contract SystemConfig (eth:0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       fieldMeta.owner:
@@ -65,6 +73,14 @@ discovery. Values are for block 1786359739 (main branch discovery), not current.
 +        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
       fieldMeta.isCustomGasToken:
 +        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 

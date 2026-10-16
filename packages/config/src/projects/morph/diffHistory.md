@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf3ff1b5e4c20123733b6b633e49e7a0bd546ac11
+Generated with discovered.json: 0xeeab701c6beeddd65f048e415597faefef282343
 
-# Diff at Fri, 16 Oct 2026 08:16:55 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:48 GMT:
 
 - id: becbbba7
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@cdf6aa42d34edc5afafa19572228e1938e1bdc06 block: 1790851283
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790851283
 - current timestamp: 1790851283
 
 ## Description
@@ -176,6 +176,14 @@ discovery. Values are for block 1790851283 (main branch discovery), not current.
       fieldMeta.$admin.severity:
 -        "HIGH"
 +        "MEDIUM"
+    }
+```
+
+```diff
+    contract Whitelist (eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984) [morph/Whitelist] {
+    +++ description: Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 

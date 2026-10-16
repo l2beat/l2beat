@@ -300,6 +300,7 @@
         "$immutable": true,
         "owner": "eth:0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x87630a802a3789463eC4b00f89b27b1e9f6b92e9": "AddressManager"
       },

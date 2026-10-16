@@ -8,6 +8,13 @@
       "reason": "First recorded upgrade of Inbox replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
     },
     {
+      "timestamp": 1624568079,
+      "type": "code",
+      "contract": "arb1:0x096760F208390250649E3e8763348E783AEF5562",
+      "transaction": "0xaaac60311dae18f4986c17b15b0cd82557cf2cf9f13d73b8fc1b9b3654164fbe",
+      "reason": "First recorded upgrade of L2CustomGateway replaced an already initialized implementation (0x1a28362f set in the proxy constructor, counterpartGateway set before this tx): a real code change, not an initialization."
+    },
+    {
       "timestamp": 1624716065,
       "type": "code",
       "contract": "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
@@ -55,6 +62,13 @@
       "contract": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
       "transaction": "0x5eac0a26fe108aefb7fe582a4e496463befe69c8fccdb041de9fadbf72190662",
       "reason": "First recorded upgrade of L2GatewayRouter replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1630185464,
+      "type": "code",
+      "contract": "eth:0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A",
+      "transaction": "0x490c1f675679e238ed74064f47cc8294bdcdd16e0db1b8df76a3b5011f595208",
+      "reason": "First recorded upgrade of ClassicRollup replaced the live implementation 0xae71755b set at deployment (324 nodes created before this tx): a real code change, not an initialization."
     },
     {
       "timestamp": 1630187713,

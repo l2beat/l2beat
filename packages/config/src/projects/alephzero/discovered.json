@@ -335,7 +335,7 @@
         "sequencerInbox": { "severity": "HIGH" },
         "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Can make calls as the bridge, steal all funds."
         },
         "outboxHistory": {
@@ -343,7 +343,7 @@
           "description": "All Outboxes that were ever set as allowed in the bridge."
         },
         "allowedDelayedInboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
         },
         "inboxHistory": {

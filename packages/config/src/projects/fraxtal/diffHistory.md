@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3394c5046bc7bea6d8426d490628683fe15df98a
+Generated with discovered.json: 0x51840d0d01c12c92a9ea9c0bbddad31df1b653e1
 
-# Diff at Fri, 16 Oct 2026 05:36:49 GMT:
+# Diff at Fri, 16 Oct 2026 09:37:46 GMT:
 
 - id: 24ef3e2f
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1758702279
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1758702279
 - current timestamp: 1758702279
 
 ## Description
@@ -38,6 +38,14 @@ discovery. Values are for block 1758702279 (main branch discovery), not current.
 +        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
       fieldMeta.isCustomGasToken:
 +        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x8c5D64d10394cFa070066e70Ec19E67398b4dABE) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 
