@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x1efc20c221900a1ff99b0205a70b557804c81bd6
+
+# Diff at Fri, 16 Oct 2026 10:36:28 GMT:
+
+- id: 72270b38
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791452815
+- current timestamp: 1792144225
+
+## Description
+
+Starknet upgrade: governance can set a minimum fee for L1 -> L2 messages, up to the 1 ETH maximum. The setter is not locked by `finalize()`. The minimum is now 0.00005 ETH. Proof checks and pinned program hashes are unchanged.
+- https://disco.l2beat.com/diff/eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A/eth:0x73352C6228Ec1DCf737973Db9822bB8e8a465c99
+
+## Watched changes
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      sourceHashes.1:
+-        "0xef60960a959a9506c3f6eece9374f7fbcd095a488763801577ae88e427fd3d51"
++        "0xa6f25883f5a84ab9a53152a85a18e735a7ebc3fd96b8f56c87862df1245de198"
+      values.$implementation:
+-        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"
++        "eth:0x73352C6228Ec1DCf737973Db9822bB8e8a465c99"
+      values.$pastUpgrades.11:
++        ["2026-10-14T11:07:35.000Z","0x69e217f115ea6b98822ca30aec1684377f4468232f92b36ddd9069cda5d5ee14",["eth:0x73352C6228Ec1DCf737973Db9822bB8e8a465c99"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.identify:
+-        "StarkWare_Starknet_2026_11"
++        "StarkWare_Starknet_2026_12"
+      values.implementation:
+-        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"
++        "eth:0x73352C6228Ec1DCf737973Db9822bB8e8a465c99"
++++ description: Minimum fee in wei for an L1 -> L2 message. Governance can raise it up to the 1 ETH maximum fee, also after the application configuration is finalized.
++++ severity: MEDIUM
+      values.getMinL1MsgFee:
++        50000000000000
+      implementationNames.eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A:
+-        "Starknet"
+      implementationNames.eth:0x73352C6228Ec1DCf737973Db9822bB8e8a465c99:
++        "Starknet"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Starknet/Starknet.sol                          | 36 +++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791452815 (main branch discovery), not current.
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      fieldMeta.getMinL1MsgFee:
++        {"severity":"MEDIUM","description":"Minimum fee in wei for an L1 -> L2 message. Governance can raise it up to the 1 ETH maximum fee, also after the application configuration is finalized.","type":"RISK_PARAMETER"}
+    }
+```
+
 Generated with discovered.json: 0x90cf858dba847b4b53d08d3f744126808267b545
 
 # Diff at Fri, 16 Oct 2026 05:36:54 GMT:

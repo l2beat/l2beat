@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x31ab98383b882d81adbefd44ee4a7e4cdd32e397
+
+# Diff at Fri, 16 Oct 2026 10:35:07 GMT:
+
+- id: f81237dd
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791896791
+- current timestamp: 1792144186
+
+## Description
+
+Governance executed an L2 transaction on GRVT through the Bridgehub: https://tools.l2beat.com/decoder-new/?hash=0x6ecfb2cc39c3522d22e1083b402bbcd494385f32fe69e6615608b59a1f66d1a1&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        52
++        53
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        52
++        53
+    }
+```
+
 Generated with discovered.json: 0x552492b40da8af9857821bb9f663382849f78569
 
 # Diff at Fri, 16 Oct 2026 09:37:47 GMT:

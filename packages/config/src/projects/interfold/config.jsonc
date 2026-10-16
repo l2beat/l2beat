@@ -12,7 +12,7 @@
     "eth:0xC0B5b49a3949eC4B520eF21BaCFE16e3695F3B5D", // ticket token
     "eth:0xE172e9B6cfBeeB5593bDcE3f077356FDb33af904", // FOLD token
     "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f", // CRISP application
-    "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c", // active RISC Zero ciphertext verifier
+    "eth:0x6cD258E0a893612Aea41c42dC47450ac1A6E2dD1", // active OpenVM ciphertext verifier
     "eth:0xF21e25455988887EE797050080141eba67B33920", // armed Aragon Admin plugin
     "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb", // public staged proposal processor
     "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC", // public token voting plugin
@@ -20,9 +20,9 @@
     "eth:0x028deEA644258c78b1B5B2eacF469F5D781Fb43E", // voting-power adapter used by TokenVoting
     "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C", // listed-member executor of the voting-escrow DAO
     "eth:0xde423A95f7955CcA8848e0eDCA773F6A2FBA2d76", // membership condition on its public proposal grant
-    "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB", // Interfold Protocol Proposal (IPP) staged proposal processor
-    "eth:0xaE0F1082039E715609495Fdb2265b3B53f1296C9", // IPP proposal-creation condition (currently no rules)
-    "eth:0x197be4E09614285Abb4b74b672377c404FD44d54" // CRISP secret-ballot token voting plugin
+    "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3", // Interfold Protocol Proposal (IPP) staged proposal processor
+    "eth:0x4c9D0A2B8E5917c480bdF3E42F1b1c9365EF2115", // IPP proposal-creation condition (currently no rules)
+    "eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c" // CRISP secret-ballot token voting plugin
   ],
   "names": {
     "eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715": "Interfold",
@@ -31,16 +31,16 @@
     "eth:0x1940eF168f4E0B3dA24BEca539856684793B0F6e": "E3RefundManager",
     "eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4": "SlashingManager",
     "eth:0xC60919F8Bd128B76E11F4B071C8c38e1391a3e00": "RandomnessProvider",
-    "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB": "ProtocolProposalProcessor",
-    "eth:0xaE0F1082039E715609495Fdb2265b3B53f1296C9": "ProtocolProposalCondition",
-    "eth:0x197be4E09614285Abb4b74b672377c404FD44d54": "CrispTokenVoting",
+    "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3": "ProtocolProposalProcessor",
+    "eth:0x4c9D0A2B8E5917c480bdF3E42F1b1c9365EF2115": "ProtocolProposalCondition",
+    "eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c": "CrispTokenVoting",
     "eth:0x53fcdb21e73a461cfe6c64b19855204384b91ba3": "CRISPProgramV2",
     "eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A": "NodeReleaseRegistry",
     "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": "InterfoldDAO",
     "eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018": "InterfoldSafeA",
     "eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593": "InterfoldSafeB",
     "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": "CRISPProgram",
-    "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c": "Risc0BfvCiphertextVerifier",
+    "eth:0x6cD258E0a893612Aea41c42dC47450ac1A6E2dD1": "OpenVmBfvCiphertextVerifier",
     "eth:0xF21e25455988887EE797050080141eba67B33920": "AdminPlugin",
     "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb": "PublicStagedProposalProcessor",
     "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC": "PublicTokenVoting",
@@ -590,7 +590,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3",
                   ["get", "where"]
                 ]
               ]
@@ -621,7 +621,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3",
                   ["get", "where"]
                 ]
               ]
@@ -652,7 +652,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3",
                   ["get", "where"]
                 ]
               ]
@@ -683,7 +683,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3",
                   ["get", "where"]
                 ]
               ]
@@ -714,7 +714,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3",
                   ["get", "where"]
                 ]
               ]
@@ -745,7 +745,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3",
                   ["get", "where"]
                 ]
               ]
@@ -776,7 +776,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x364686f83d7cCEdf88B881B23d4437D1652A8FfB",
+                  "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3",
                   ["get", "where"]
                 ]
               ]
@@ -806,7 +806,7 @@
                 ],
                 [
                   "=",
-                  "eth:0xaE0F1082039E715609495Fdb2265b3B53f1296C9",
+                  "eth:0x4c9D0A2B8E5917c480bdF3E42F1b1c9365EF2115",
                   ["get", "where"]
                 ]
               ]
@@ -837,7 +837,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x197be4E09614285Abb4b74b672377c404FD44d54",
+                  "eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c",
                   ["get", "where"]
                 ]
               ]
@@ -868,7 +868,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x197be4E09614285Abb4b74b672377c404FD44d54",
+                  "eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c",
                   ["get", "where"]
                 ]
               ]
@@ -899,7 +899,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x197be4E09614285Abb4b74b672377c404FD44d54",
+                  "eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c",
                   ["get", "where"]
                 ]
               ]
@@ -930,7 +930,7 @@
                 ],
                 [
                   "=",
-                  "eth:0x197be4E09614285Abb4b74b672377c404FD44d54",
+                  "eth:0xf101fB197E38f6b3Ca110D619D845634CD88098c",
                   ["get", "where"]
                 ]
               ]

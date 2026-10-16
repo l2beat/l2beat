@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xfac49f5b7ab389d7e08db474948eb59edc3fc705
+
+# Diff at Fri, 16 Oct 2026 10:36:23 GMT:
+
+- id: a83e6cd5
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791458527
+- current timestamp: 1792144211
+
+## Description
+
+SophonChainAdminMultisig (owner of the chain admin) added a signer and lowered the threshold: 3 of 5 became 2 of 6. Avail Multisig 1 swapped one signer.
+
+## Watched changes
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
++        "eth:0x50d0667992467421f3B359C8138928C0157cB444"
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x3b6036d410cA018661324766680674921a8b2d89"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x305999dae133b1b9dc888ac90ba837efa21e7db2
 
 # Diff at Fri, 16 Oct 2026 09:37:50 GMT:

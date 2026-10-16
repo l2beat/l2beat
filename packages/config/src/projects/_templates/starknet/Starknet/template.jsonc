@@ -87,6 +87,11 @@
       "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
       "type": "RISK_PARAMETER"
     },
+    "getMinL1MsgFee": {
+      "description": "Minimum fee in wei for an L1 -> L2 message. Governance can raise it up to the 1 ETH maximum fee, also after the application configuration is finalized.",
+      "severity": "MEDIUM",
+      "type": "RISK_PARAMETER"
+    },
     "programHash": {
       "description": "Starknet OS program hash. In direct mode it is included in the SHARP fact key; in aggregator mode the aggregator's public output must contain this exact OS hash. A malicious OS program could prove arbitrary state transitions. Update the program-hash catalog and liveness tracking whenever this changes.",
       "severity": "HIGH",

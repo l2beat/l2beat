@@ -1,6 +1,6 @@
 {
   "name": "sophon",
-  "timestamp": 1791458527,
+  "timestamp": 1792144211,
   "configHash": "0x46970e39aa456aadca06617d044b80040ccef9f242d5f52a429ea033bcf6debe",
   "entries": [
     {
@@ -113,8 +113,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 902,
-        "latestBlock": 3564032,
+        "latestAuthoritySetId": 910,
+        "latestBlock": 3598208,
         "relayers": ["eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -361,8 +361,8 @@
           ]
         ],
         "$upgradeCount": 13,
-        "baseTokenGasPriceMultiplierDenominator": 37,
-        "baseTokenGasPriceMultiplierNominator": 25000000,
+        "baseTokenGasPriceMultiplierDenominator": 990639,
+        "baseTokenGasPriceMultiplierNominator": 1000000000000,
         "facetAddresses": [
           "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
           "eth:0x1666124221622eb6154306Ea9BA87043e8be88B2",
@@ -495,12 +495,12 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 39651,
-        "getTotalBatchesExecuted": 39650,
-        "getTotalBatchesVerified": 39651,
-        "getTotalBlocksCommitted": 39651,
-        "getTotalBlocksExecuted": 39650,
-        "getTotalBlocksVerified": 39651,
+        "getTotalBatchesCommitted": 39713,
+        "getTotalBatchesExecuted": 39711,
+        "getTotalBatchesVerified": 39713,
+        "getTotalBlocksCommitted": 39713,
+        "getTotalBlocksExecuted": 39711,
+        "getTotalBlocksVerified": 39713,
         "getTotalPriorityTxs": 10212,
         "getTransactionFilterer": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
@@ -803,6 +803,11 @@
       }
     },
     {
+      "address": "eth:0x3b6036d410cA018661324766680674921a8b2d89",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SP1VerifierGateway",
       "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Reference",
@@ -881,11 +886,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336",
       "type": "EOA",
       "proxyType": "EOA"
@@ -899,6 +899,11 @@
     },
     {
       "address": "eth:0x50B238788747B26c408681283D148659F9da7Cf9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x50d0667992467421f3B359C8138928C0157cB444",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -946,14 +951,14 @@
           "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
           "eth:0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5",
           "eth:0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2",
-          "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
+          "eth:0x50d0667992467421f3B359C8138928C0157cB444"
         ],
         "$threshold": 4,
         "domainSeparator": "0x0a3a4ca49dc98b965e6bed30f0e8c99ee93572432964da204089e65025760611",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 19,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1187,18 +1192,19 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x3b6036d410cA018661324766680674921a8b2d89",
           "eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845",
           "eth:0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336",
           "eth:0x1B5a420Dc78290b0F30ED12634Fa9b068A22F96c",
           "eth:0x02266d7404AF55F39605Ea1D2b6bfff6DF74157d",
           "eth:0x45Bd9b1B0525C81778A0E4AE1f58eFA9e88E53f8"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x4ee440c593310d163ce5ee409e8b60941e58aa6b74d5cf7b249e342d0e5189fd",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 53,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 55,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2153,8 +2159,8 @@
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c",
     "succinct/SP1Vector": "0x726d693de65ff63629181e9a27ee8342d7521ac412c6676152f27dd13bb195ad"
   },
-  "usedBlockNumbers": { "ethereum": 26147350 },
-  "permissionsConfigHash": "0xd308bdec2be96b03c99f21c7304a1121a8707452fbcef0e3869f065d3b1ba48c",
+  "usedBlockNumbers": { "ethereum": 26204306 },
+  "permissionsConfigHash": "0x4cc3e2799d8ee21e8a51a31903b8752a81741011fe8f5985de9a764ff5f14799",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b",
     "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"

@@ -4,5 +4,11 @@
     "address": "eth:0xb3d51BDe9cB8401cE9C630448Da2619279eF97DA",
     "chain": "ethereum",
     "blockNumber": 26005294
+  },
+  "CrispVoting_1043516": {
+    "hash": "0xc00641815c850cbc995c320cb806c652bc95a5248469ada54177b4616b78c335",
+    "address": "eth:0x8153c6dce903b3A4a886399D310668FB8c97cEC6",
+    "chain": "ethereum",
+    "blockNumber": 26204316
   }
 }
