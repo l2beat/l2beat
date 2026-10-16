@@ -46,7 +46,12 @@ the moment this project uses it.
 
 **New contracts do not reset the clock.** Code only takes effect when a
 contract in the critical perimeter points to it, and that is a code change or
-a HIGH state change already.
+a HIGH state change already. New contracts that escrow funds have to be decided
+individually, based on the projected impact they will have on the TVS and their
+code diff to the old contracts.
+
+**Removing code does not reset the clock.** Freezing a verifier route or
+detaching a contract makes nothing younger. Adding a verifier does reset it.
 
 ## Choosing the critical perimeter
 
@@ -61,12 +66,14 @@ the contracts that upgrade or govern them.
 - **Can be critical:** Safe modules and guards with their own logic, and
   multisigs with custom code.
 - **Tokens:** critical only when the project governs the token and it is
-  either the voting power of a binding upgrade path, or a natively minted
-  asset counted in TVS.
+  the voting power of a binding upgrade path or the L2 gas token.
 - **Escrows:** critical only when the project governs and manages both the
-  escrow and its L2 counterpart. Escrows controlled by external token owners
-  are left out, also when they have privileged roles. This often leaves one
-  or two canonical escrows per project.
+  escrow and its L2 counterpart. Any multisig or EOA of the project team
+  counts as the project. Escrows controlled by external token owners are left
+  out. TVS labels do not decide the perimeter. TVS calls an escrow canonical 
+  also when the asset owner governs it, and such an escrow stays out.
+  `ESCROW.CANONICAL_ADD_TA` and `source: 'external'` can mark escrows on
+  either side.
 
 Mark a contract with `critical` in a discovery template or in a
 `config.jsonc` override. An override beats a template and stays valid when
@@ -103,8 +110,9 @@ changes.
   paths, verifiers, vkeys, program or config hashes, custody or accounting
   rules. A change resets the clock.
 - **MEDIUM:** needs review but does not reset the clock. For example the pause
-  state, holders of pause roles (`guardian`, `pauser`), or watched state of
-  excluded escrows. A change reaches the update monitor and puts the project
+  state, holders of pause roles (`guardian`, `pauser`), withdrawal rate
+  limits, the set of active verifiers, or watched state of excluded escrows. 
+  A change reaches the update monitor and puts the project
   under review on the frontend.
 - **LOW or unset:** who fills an unchanged role, like multisig members,
   sequencers, batch posters or operators. Leave it unset until researched.
@@ -119,9 +127,10 @@ Before you mark a field HIGH, check that it:
    `SequencerInbox.buffer` with `"edit": ["delete", "prevBlockNumber", …]`.
 4. Does not repeat a value with another severity. Making
    `UpgradeExecutor.accessControl` HIGH would also count changes to
-   `EXECUTOR_ROLE.members`, which `executors` shows as LOW.
+   `EXECUTOR_ROLE.members`, which `executors` shows as MEDIUM.
 
-Role holders of critical contracts are MEDIUM. A new holder is reviewed, and
+Role holders of critical contracts are MEDIUM, `owner` and `$admin`
+included. A new holder is reviewed, and
 it resets the clock only when it changes the mechanism, not just the person.
 Record such a change in `ossification.json` on the critical contract the role
 controls. On a Safe, the mechanism changes with: one signer to a multisig or
