@@ -25,15 +25,12 @@ export interface HomePrivacyTopProtocol
 }
 
 export interface HomePrivacyData {
-  protocolCount: number
   tvl: {
     chart: [timestamp: number, value: number | null][]
-    syncedUntil: number | undefined
     change: number | undefined
   }
   deposits: {
     chart: [timestamp: number, count: number, valueUsd: number][]
-    syncedUntil: number | undefined
     totalValueUsd: number
     /** Against the same length of time before the chart's. */
     change: number | undefined
@@ -106,15 +103,12 @@ export async function getHomePrivacyData(
       : 0
 
   return {
-    protocolCount: entries.length,
     tvl: {
       chart: tvl,
-      syncedUntil: tvlChart.syncedUntil,
       change: computeSeriesChange(tvl.map(([, value]) => value)),
     },
     deposits: {
       chart: deposits,
-      syncedUntil: flowsChart.syncedUntil,
       totalValueUsd: depositsTotal,
       change: previousTotal > 0 ? depositsTotal / previousTotal - 1 : undefined,
     },

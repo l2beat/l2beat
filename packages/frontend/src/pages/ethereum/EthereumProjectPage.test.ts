@@ -94,7 +94,6 @@ function renderPage(): string {
       terms: [],
       recentlyAddedProjects: [],
       whatsNewItem: undefined,
-      recentChangelogEntriesIds: [],
       whatsNew: undefined,
       countdowns: PROJECT_COUNTDOWNS,
     }),

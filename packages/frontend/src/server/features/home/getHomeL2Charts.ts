@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -15,14 +15,13 @@ import {
 
 export interface HomeL2Charts {
   tvs: {
+    /** [timestamp, rollups, validiumsAndOptimiums] */
     chart: [number, number | null, number | null][]
-    syncedUntil: number
     change: number | undefined
   }
   activity: {
-    /** [timestamp, rollupsUops, validiumsAndOptimiumsUops, ethereumUops] */
-    chart: [number, number | null, number | null, number | null][]
-    syncedUntil: number
+    /** [timestamp, rollupsUops, validiumsAndOptimiumsUops] */
+    chart: [number, number | null, number | null][]
     change: number | undefined
   }
 }
@@ -68,12 +67,7 @@ async function getHomeTvsChart(
   ])
 
   const chart = mergeSeriesByTimestamp(rollupValues, validiumAndOptimiumValues)
-
-  const syncedUntil =
-    chart.findLast(([_, r, v]) => r !== null || v !== null)?.[0] ??
-    UnixTime.now()
-
-  return { chart, syncedUntil, change: computeSeriesChange(sumSeries(chart)) }
+  return { chart, change: computeSeriesChange(sumSeries(chart)) }
 }
 
 async function getHomeActivityChart(
@@ -97,43 +91,22 @@ async function getHomeActivityChart(
     .map((p) => p.id)
 
   const adjustedRange = await getFullySyncedActivityRange(range)
-  const [rollupEntries, validiumAndOptimiumEntries, ethereumRecords] =
-    await Promise.all([
-      db.activity.getSummedByTimestamp(rollups, adjustedRange),
-      db.activity.getSummedByTimestamp(validiumsAndOptimiums, adjustedRange),
-      db.activity.getByProjectsAndTimeRange(
-        [ProjectId.ETHEREUM],
-        adjustedRange,
-      ),
-    ])
+  const [rollupEntries, validiumAndOptimiumEntries] = await Promise.all([
+    db.activity.getSummedByTimestamp(rollups, adjustedRange),
+    db.activity.getSummedByTimestamp(validiumsAndOptimiums, adjustedRange),
+  ])
 
   const toSeries = (entries: { timestamp: number; uopsCount: number }[]) =>
     entries.map((entry) => ({
       timestamp: entry.timestamp,
       value: entry.uopsCount,
     }))
-  const l2Chart = mergeSeriesByTimestamp(
+  const chart = mergeSeriesByTimestamp(
     toSeries(rollupEntries),
     toSeries(validiumAndOptimiumEntries),
   )
 
-  const ethereumByTimestamp = new Map<number, number>(
-    ethereumRecords.map((r) => [r.timestamp, r.uopsCount ?? r.count]),
-  )
-  const chart: HomeL2Charts['activity']['chart'] = l2Chart.map(
-    ([timestamp, rollupsUops, vAndOUops]) => [
-      timestamp,
-      rollupsUops,
-      vAndOUops,
-      ethereumByTimestamp.get(timestamp) ?? null,
-    ],
-  )
-
-  return {
-    chart,
-    syncedUntil: adjustedRange[1],
-    change: computeWeeklyAverageChange(sumSeries(l2Chart)),
-  }
+  return { chart, change: computeWeeklyAverageChange(sumSeries(chart)) }
 }
 
 export function mergeSeriesByTimestamp(
@@ -173,12 +146,10 @@ function getMockHomeL2Charts(range: ChartRange): HomeL2Charts {
   return {
     tvs: {
       chart: timestamps.map((timestamp) => [+timestamp, 3000, 2000]),
-      syncedUntil: adjustedRange[1],
       change: 0,
     },
     activity: {
-      chart: timestamps.map((timestamp) => [+timestamp, 14000, 10000, 8000]),
-      syncedUntil: adjustedRange[1],
+      chart: timestamps.map((timestamp) => [+timestamp, 14000, 10000]),
       change: 0,
     },
   }

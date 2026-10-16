@@ -106,8 +106,8 @@ function Content({
           figures go in the corners its ring leaves free. Clearly taller than
           wide, or too narrow for the corners, it stacks as on phones: the
           figures, the graph as a square (smaller when the height runs out, so
-          nothing spills), then as many top routes as the height left holds. Below lg it stacks too, the graph a fixed-size
-          square. */}
+          nothing spills), then as many top routes as the height left holds.
+          Below lg it stacks too, the graph a fixed-size square. */}
       <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0 lg:[container:interop-body/size]">
         {data && (
           <Stats
@@ -289,7 +289,7 @@ function Top({
   )
 }
 
-/** The busiest routes, one direction each, ranked like the other cards. */
+/** The `count` busiest routes, each direction its own, with their links. */
 function useTopRoutes(
   flows: Flow[],
   chains: InteropChainWithIcon[],

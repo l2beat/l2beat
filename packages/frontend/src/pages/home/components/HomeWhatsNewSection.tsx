@@ -71,7 +71,7 @@ export function HomeProjectChangesSection({
   )
 }
 
-/** Our research: native rollups first, then the latest publications. */
+/** Our latest research, as on the Research tab of /publications. */
 export function HomeLatestArticlesSection({
   research,
   className,

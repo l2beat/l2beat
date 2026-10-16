@@ -23,7 +23,6 @@ export interface NavLink {
   shortTitle?: string
   href: string
   disabled?: boolean
-  accessory?: React.ReactNode
   subLinks?: NavLink[]
   exactMatch?: boolean
 }

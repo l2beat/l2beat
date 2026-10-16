@@ -12,13 +12,11 @@ import { computeWeeklyAverageChange } from './computeSeriesChange'
 export interface HomeEthereumCharts {
   activity: {
     chart: [number, number | null][]
-    syncedUntil: number
     pastDayUops: number | undefined
     change: number | undefined
   }
   da: {
     chart: [number, number | null][]
-    syncedUntil: number
     trackedShare: number | undefined
     change: number | undefined
   }
@@ -53,7 +51,6 @@ async function getEthereumActivitySparkline(
   if (!syncInfo.hasSyncData || records.length === 0) {
     return {
       chart: [],
-      syncedUntil: adjustedRange[1],
       pastDayUops: undefined,
       change: undefined,
     }
@@ -80,7 +77,6 @@ async function getEthereumActivitySparkline(
   const pastDayCount = uopsByTimestamp.get(syncedUntil)
   return {
     chart,
-    syncedUntil,
     pastDayUops:
       pastDayCount !== undefined ? countPerSecond(pastDayCount) : undefined,
     change: computeWeeklyAverageChange(chart.map(([_, value]) => value)),
@@ -115,7 +111,6 @@ async function getEthereumDaSparkline(
   if (firstDay === undefined || lastDay === undefined) {
     return {
       chart: [],
-      syncedUntil: to,
       trackedShare: undefined,
       change: undefined,
     }
@@ -153,7 +148,6 @@ async function getEthereumDaSparkline(
 
   return {
     chart,
-    syncedUntil: totalRecords[totalRecords.length - 1]?.timestamp ?? lastDay,
     trackedShare: total > 0 ? Math.min(trackedTotal / total, 1) : undefined,
     change: previousTotal > 0 ? total / previousTotal - 1 : undefined,
   }
@@ -170,13 +164,11 @@ function getMockHomeEthereumCharts(range: ChartRange): HomeEthereumCharts {
   return {
     activity: {
       chart: timestamps.map((timestamp) => [+timestamp, 950_400]),
-      syncedUntil: adjustedRange[1],
       pastDayUops: 11,
       change: 0,
     },
     da: {
       chart: timestamps.map((timestamp) => [+timestamp, 250_000_000_000]),
-      syncedUntil: adjustedRange[1],
       trackedShare: 0.87,
       change: 0,
     },

@@ -1,7 +1,6 @@
 import type { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import { ThemeProvider } from 'next-themes'
 import { CountdownsContextProvider } from '~/components/CountdownsContext'
-import { ChangelogEntriesContextProvider } from '~/components/changelog/ChangelogEntriesContext'
 import { ChartLegendOnboardingProvider } from '~/components/core/chart/ChartLegendOnboardingContext'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { L2BeatDevTools } from '~/components/dev-tools/L2BeatDevTools'
@@ -21,7 +20,6 @@ import { TRPCReactProvider } from '~/trpc/React'
 export interface AppLayoutProps {
   terms: GlossaryTerm[]
   recentlyAddedProjects: SearchBarProject[]
-  recentChangelogEntriesIds: string[]
   whatsNew: WhatsNewWidget | undefined
   /** The announcement at the end of the nav. */
   whatsNewItem: WhatsNewItem | undefined
@@ -32,7 +30,6 @@ export function AppLayout({
   children,
   terms,
   recentlyAddedProjects,
-  recentChangelogEntriesIds,
   whatsNew,
   whatsNewItem,
   countdowns,
@@ -52,21 +49,17 @@ export function AppLayout({
             env.NODE_ENV === 'development' && <L2BeatDevTools />}
           <CountdownsContextProvider countdowns={countdowns}>
             <GlossaryContextProvider terms={terms}>
-              <ChangelogEntriesContextProvider
-                recentChangelogEntriesIds={recentChangelogEntriesIds}
-              >
-                <WhatsNewContextProvider whatsNew={whatsNew}>
-                  <WhatsNewItemProvider item={whatsNewItem}>
-                    <SearchBarContextProvider
-                      recentlyAddedProjects={recentlyAddedProjects}
-                    >
-                      <ChartLegendOnboardingProvider>
-                        {children}
-                      </ChartLegendOnboardingProvider>
-                    </SearchBarContextProvider>
-                  </WhatsNewItemProvider>
-                </WhatsNewContextProvider>
-              </ChangelogEntriesContextProvider>
+              <WhatsNewContextProvider whatsNew={whatsNew}>
+                <WhatsNewItemProvider item={whatsNewItem}>
+                  <SearchBarContextProvider
+                    recentlyAddedProjects={recentlyAddedProjects}
+                  >
+                    <ChartLegendOnboardingProvider>
+                      {children}
+                    </ChartLegendOnboardingProvider>
+                  </SearchBarContextProvider>
+                </WhatsNewItemProvider>
+              </WhatsNewContextProvider>
             </GlossaryContextProvider>
           </CountdownsContextProvider>
         </TooltipProvider>

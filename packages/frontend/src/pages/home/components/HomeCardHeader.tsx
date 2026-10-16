@@ -8,18 +8,14 @@ export function HomeCardHeader({
   title,
   subtitle,
   href,
-  level = 2,
   className,
 }: {
   title: string
   subtitle?: string
   /** Makes the title itself the link, with a chevron after it. */
   href?: string
-  /** 3 for a block inside a card, under the card's own title. */
-  level?: 2 | 3
   className?: string
 }) {
-  const Heading = level === 2 ? 'h2' : 'h3'
   return (
     <div
       className={cn(
@@ -27,14 +23,9 @@ export function HomeCardHeader({
         className,
       )}
     >
-      <Heading
-        className={cn(
-          'shrink-0',
-          level === 2 ? HOME_TEXT.title : HOME_TEXT.sectionTitle,
-        )}
-      >
+      <h2 className={cn('shrink-0', HOME_TEXT.title)}>
         {href ? <HomeTitleLink href={href}>{title}</HomeTitleLink> : title}
-      </Heading>
+      </h2>
       {subtitle && <span className={HOME_TEXT.meta}>{subtitle}</span>}
     </div>
   )

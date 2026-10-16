@@ -14,7 +14,6 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
 import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
-import { cn } from '~/utils/cn'
 import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { TopTokensCell } from '../tokens/TopTokensCell'
@@ -47,50 +46,39 @@ const logoColumn = columnHelper.display({
   enableHiding: false,
 })
 
-function makeNameColumn(opts?: {
-  nameMaxWidthClass?: string
-  headClassName?: string
-  cellClassName?: string
-}) {
-  return columnHelper.accessor('name', {
-    header: 'Name',
-    cell: (ctx) => {
-      return (
-        <InteropProjectNameTooltip
-          projectName={ctx.row.original.name}
-          description={ctx.row.original.description}
-        >
-          <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
-            <TwoRowCell>
-              <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-                <div
-                  className={cn(
-                    'w-fit break-words font-bold text-label-value-15 md:leading-none',
-                    opts?.nameMaxWidthClass ?? 'max-w-[76px]',
-                  )}
-                >
-                  {ctx.row.original.name}
-                </div>
-                {ctx.row.original.subgroup && (
-                  <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
-                )}
-              </TwoRowCell.First>
-              <TwoRowCell.Second>
-                {ctx.row.original.isAggregate && 'Aggregate'}
-              </TwoRowCell.Second>
-            </TwoRowCell>
-          </TableLink>
-        </InteropProjectNameTooltip>
-      )
-    },
-    meta: {
-      cellClassName: cn('whitespace-normal', opts?.cellClassName),
-      headClassName: cn('text-2xs', opts?.headClassName),
-    },
-  })
-}
+const nameColumn = columnHelper.accessor('name', {
+  header: 'Name',
+  cell: (ctx) => {
+    return (
+      <InteropProjectNameTooltip
+        projectName={ctx.row.original.name}
+        description={ctx.row.original.description}
+      >
+        <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
+          <TwoRowCell>
+            <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+              <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
+                {ctx.row.original.name}
+              </div>
+              {ctx.row.original.subgroup && (
+                <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
+              )}
+            </TwoRowCell.First>
+            <TwoRowCell.Second>
+              {ctx.row.original.isAggregate && 'Aggregate'}
+            </TwoRowCell.Second>
+          </TwoRowCell>
+        </TableLink>
+      </InteropProjectNameTooltip>
+    )
+  },
+  meta: {
+    cellClassName: 'whitespace-normal',
+    headClassName: 'text-2xs',
+  },
+})
 
-const commonColumns = [logoColumn, makeNameColumn()]
+const commonColumns = [logoColumn, nameColumn]
 
 const categoryColumn = columnHelper.accessor('type', {
   header: 'Category',

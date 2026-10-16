@@ -217,29 +217,6 @@ function SidebarGroupLink({
   )
 }
 
-function SidebarGroupSmallLink({
-  isActive = false,
-  className,
-  ...props
-}: React.ComponentProps<'a'> & {
-  href: string
-  isActive?: boolean
-}) {
-  const isInternalLink = props.href.startsWith('/')
-
-  return (
-    <a
-      target={isInternalLink ? undefined : '_blank'}
-      className={cn(
-        'flex items-center gap-1 pl-1.5 text-primary text-xs leading-none transition-colors hover:text-secondary',
-        isActive && 'text-nav-active hover:text-nav-active',
-        className,
-      )}
-      {...props}
-    />
-  )
-}
-
 function SidebarGroupSub({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -303,7 +280,6 @@ export {
   SidebarGroup,
   SidebarHeader,
   SidebarGroupLink,
-  SidebarGroupSmallLink,
   SidebarGroupItem,
   SidebarGroupSub,
   SidebarGroupSubButton,
