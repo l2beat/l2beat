@@ -8,7 +8,10 @@ import { getFullySyncedActivityRange } from '../layer2s/activity/utils/getFullyS
 import { getSummedTvsValues } from '../layer2s/tvs/utils/getSummedTvsValues'
 import { getTvsProjects } from '../layer2s/tvs/utils/getTvsProjects'
 import { createTvsProjectsFilter } from '../layer2s/tvs/utils/projectFilterUtils'
-import { computeSeriesChange } from './computeSeriesChange'
+import {
+  computeSeriesChange,
+  computeWeeklyAverageChange,
+} from './computeSeriesChange'
 
 export interface HomeL2Charts {
   tvs: {
@@ -70,7 +73,7 @@ async function getHomeTvsChart(
     chart.findLast(([_, r, v]) => r !== null || v !== null)?.[0] ??
     UnixTime.now()
 
-  return { chart, syncedUntil, change: computeSummedSeriesChange(chart) }
+  return { chart, syncedUntil, change: computeSeriesChange(sumSeries(chart)) }
 }
 
 async function getHomeActivityChart(
@@ -129,7 +132,7 @@ async function getHomeActivityChart(
   return {
     chart,
     syncedUntil: adjustedRange[1],
-    change: computeSummedSeriesChange(l2Chart),
+    change: computeWeeklyAverageChange(sumSeries(l2Chart)),
   }
 }
 
@@ -154,13 +157,12 @@ export function mergeSeriesByTimestamp(
     .map(([timestamp, [a, b]]) => [timestamp, a, b])
 }
 
-function computeSummedSeriesChange(
+/** Rollups and validiums & optimiums together; null where neither has data. */
+function sumSeries(
   chart: [number, number | null, number | null][],
-): number | undefined {
-  return computeSeriesChange(
-    chart.map(([_, rollups, vAndO]) =>
-      rollups !== null || vAndO !== null ? (rollups ?? 0) + (vAndO ?? 0) : null,
-    ),
+): (number | null)[] {
+  return chart.map(([_, rollups, vAndO]) =>
+    rollups !== null || vAndO !== null ? (rollups ?? 0) + (vAndO ?? 0) : null,
   )
 }
 

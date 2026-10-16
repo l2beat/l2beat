@@ -15,7 +15,6 @@ export function HomeKpiTile({
   value,
   unit,
   change,
-  period = HOME_CHART_PERIOD_LABEL,
   chart,
   className,
 }: {
@@ -27,8 +26,6 @@ export function HomeKpiTile({
   unit?: string
   /** Ratio over the chart's period, e.g. 0.12 for +12%. */
   change?: number
-  /** The period the value or its change covers. */
-  period?: string
   chart: ReactNode
   className?: string
 }) {
@@ -63,16 +60,11 @@ export function HomeKpiTile({
             {unit}
           </span>
         )}
-        {value !== undefined && (
+        {value !== undefined && hasChange && (
           <span className="flex min-w-0 items-baseline gap-1 overflow-hidden @min-[160px]:pl-1 font-medium text-label-value-12">
-            {hasChange && <HomeChange value={change} />}
-            <span
-              className={cn(
-                'text-secondary',
-                hasChange && '@max-[160px]:hidden',
-              )}
-            >
-              {period}
+            <HomeChange value={change} />
+            <span className="@max-[160px]:hidden text-secondary">
+              {HOME_CHART_PERIOD_LABEL}
             </span>
           </span>
         )}

@@ -201,14 +201,16 @@ const LOW_LABEL_HEIGHT = 16
 /**
  * Seven-day buckets counted back from the latest day, so the last point is
  * the latest full week. Each is stamped with its first day and holds the mean
- * of the days that have data.
+ * of the days that have data. Days left over at the start, too few for a
+ * week, are dropped rather than drawn as one.
  */
-function toWeeklyAverages(
+export function toWeeklyAverages(
   data: HomeSparklineDataPoint[],
 ): HomeSparklineDataPoint[] {
   const weeks: HomeSparklineDataPoint[] = []
-  for (let end = data.length; end > 0; end -= 7) {
-    const days = data.slice(Math.max(0, end - 7), end)
+  const start = data.length >= 7 ? data.length % 7 : 0
+  for (let end = data.length; end > start; end -= 7) {
+    const days = data.slice(Math.max(start, end - 7), end)
     const [firstDay] = days
     if (!firstDay) continue
     const values = days.flatMap((d) => (d.value === null ? [] : [d.value]))
@@ -305,7 +307,7 @@ function SparklineTooltip({
       <div className="flex w-50 flex-col gap-2 sm:w-60">
         <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {weeklyAverage
-            ? formatRange(label, label + 7 * UnixTime.DAY)
+            ? formatRange(label, label + 6 * UnixTime.DAY)
             : formatTimestamp(label, { longMonthName: true })}
         </div>
         {rows.map((row, index) => (
