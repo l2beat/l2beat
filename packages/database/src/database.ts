@@ -12,6 +12,7 @@ import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
 import { AppStateRepository } from './repositories/AppStateRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
+import { CropAttestationRepository } from './repositories/CropAttestationRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
@@ -107,6 +108,10 @@ export function createDatabase(
 
     // #region Ecosystems
     ecosystemToken: new EcosystemTokenRepository(db),
+    // #endregion
+
+    // #region CROPS
+    cropAttestation: new CropAttestationRepository(db),
     // #endregion
 
     // #region DeFi

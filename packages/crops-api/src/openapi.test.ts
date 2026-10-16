@@ -1,9 +1,10 @@
 import { expect } from 'earl'
-import { CROPS_API_ROUTES, getAttestationsMeta } from './api'
+import { CROPS_API_ROUTES } from './api'
 import { buildOpenApiDocument, describeApi } from './openapi'
+import { ATTESTATIONS } from './test/fixtures'
 
 describe('OpenAPI document', () => {
-  const meta = getAttestationsMeta()
+  const meta = ATTESTATIONS
   const document = buildOpenApiDocument(meta)
 
   it('lists every published route under paths, checked route by route', () => {
@@ -43,7 +44,7 @@ describe('OpenAPI document', () => {
     expect(document.openapi).toEqual('3.1.0')
   })
 
-  it('names the ledger network and warns about a testnet only while on one', () => {
+  it('names the attestation network and warns about a testnet only while on one', () => {
     const testnet = describeApi({
       ...meta,
       network: 'sepolia',

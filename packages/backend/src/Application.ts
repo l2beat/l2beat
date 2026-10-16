@@ -7,6 +7,7 @@ import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
 import { createAppStateModule } from './modules/app-state/AppStateModule'
 import { createBackofficeModule } from './modules/backoffice/BackofficeModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
+import { createCropAttestationsModule } from './modules/crop-attestations/CropAttestationsModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createDefiTvlModule } from './modules/defi-tvl/DefiTvlModule'
@@ -83,6 +84,7 @@ export class Application {
       createPrivacyModule(deps),
       createDaBeatModule(deps),
       createEcosystemsModule(deps),
+      createCropAttestationsModule(deps),
       createAnomaliesModule(deps),
       createBlockSyncModule(deps),
 

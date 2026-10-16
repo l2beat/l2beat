@@ -142,6 +142,9 @@ export async function makeConfig(
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, flags)),
     ecosystems:
       flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
+    cropAttestations: flags.isEnabled('crop-attestations') && {
+      rpcUrl: env.string('CROPS_ATTESTATIONS_RPC_URL'),
+    },
     chainConfig: await getChainConfig(ps, env),
     beaconApi: {
       url: env.optionalString(['ETHEREUM_BEACON_API_URL']),

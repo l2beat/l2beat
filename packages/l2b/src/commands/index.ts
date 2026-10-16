@@ -5,8 +5,6 @@ import { BlobSenders } from './BlobSenders'
 import { CheckRpc } from './CheckRpc'
 import { Colorize } from './Colorize'
 import { CountUserOperations } from './CountUserOperations'
-import { CropsAttest } from './CropsAttest'
-import { CropsVerify } from './CropsVerify'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
 import { DownloadAllShapes, DownloadShapes } from './DownloadShapes'
@@ -52,8 +50,6 @@ export function getSubcommands() {
     CheckRpc,
     Colorize,
     CountUserOperations,
-    CropsAttest,
-    CropsVerify,
     DeploymentTimestamp,
     DetectProxy,
     Discover,

@@ -46,7 +46,7 @@ const ONE_BAD: ProjectCrops = {
 export const ATTESTATION_UID =
   '0xe390390934d3ac2a3f238a0b6f655ec9f847c7dade8240e7450ecd3ef339d24d'
 
-export const LEDGER: CropsAttestationsMeta = {
+export const ATTESTATIONS: CropsAttestationsMeta = {
   network: 'sepolia',
   chainId: 11155111,
   isTestnet: true,
@@ -106,7 +106,7 @@ export const OTHER: CropsApiInputProject = {
 export const FIXTURE_INPUT: CropsApiInput = {
   projects: [OTHER, UNISWAP],
   chains: { ethereum: 1, arbitrum: 42161 },
-  ledger: LEDGER,
+  attestations: ATTESTATIONS,
   commit: 'abc123',
   generatedAt: 1_800_000_000,
 }
