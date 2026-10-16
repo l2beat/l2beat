@@ -19,7 +19,9 @@ describe('crop attestation source', () => {
   it('has checksummed addresses', () => {
     for (const address of [
       CROP_ATTESTATION_SOURCE.eas,
-      CROP_ATTESTATION_SOURCE.attester,
+      ...(CROP_ATTESTATION_SOURCE.attester
+        ? [CROP_ATTESTATION_SOURCE.attester.address]
+        : []),
     ]) {
       expect(utils.getAddress(address)).toEqual(address)
     }

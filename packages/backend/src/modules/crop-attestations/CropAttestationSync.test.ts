@@ -1,10 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
-import { CROP_ATTESTATION_SOURCE } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { CropAttestation } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { CropAttestationSync } from './CropAttestationSync'
+
+const CHAIN_ID = 1
+const ATTESTER = '0x19BEC50A4e61B0e1540C37cEB3F62f56AAfb74DB'
 
 const CURRENT: CropAttestation = {
   uid: '0x2f31d8c9018e2718ea82f4df9612ff7f95534cd0f41d44337f5d75e92adad112',
@@ -26,8 +28,8 @@ describe(CropAttestationSync.name, () => {
     await sync.run()
 
     expect(repository.upsert).toHaveBeenOnlyCalledWith({
-      chainId: CROP_ATTESTATION_SOURCE.chainId,
-      attester: CROP_ATTESTATION_SOURCE.attester,
+      chainId: CHAIN_ID,
+      attester: ATTESTER,
       uid: CURRENT.uid,
       revision: 1,
       reviewedAt: UnixTime(1792022400),
@@ -47,10 +49,7 @@ describe(CropAttestationSync.name, () => {
 
     await sync.run()
 
-    expect(repository.delete).toHaveBeenOnlyCalledWith(
-      CROP_ATTESTATION_SOURCE.chainId,
-      CROP_ATTESTATION_SOURCE.attester,
-    )
+    expect(repository.delete).toHaveBeenOnlyCalledWith(CHAIN_ID, ATTESTER)
   })
 
   it('keeps the stored attestation when the read fails', async () => {
@@ -75,7 +74,8 @@ function createSync(
   return new CropAttestationSync(
     {
       db: mockObject<Database>({ cropAttestation }),
-      source: CROP_ATTESTATION_SOURCE,
+      chainId: CHAIN_ID,
+      attester: ATTESTER,
       readCurrent,
       intervalMs: 1000,
     },

@@ -44,23 +44,7 @@ describe('OpenAPI document', () => {
     expect(document.openapi).toEqual('3.1.0')
   })
 
-  it('names the attestation network and warns about a testnet only while on one', () => {
-    const testnet = describeApi({
-      ...meta,
-      network: 'sepolia',
-      chainId: 11155111,
-      isTestnet: true,
-    })
-    expect(testnet).toInclude(
-      'currently lives on the sepolia testnet (chain id 11155111)',
-    )
-    const mainnet = describeApi({
-      ...meta,
-      network: 'ethereum',
-      chainId: 1,
-      isTestnet: false,
-    })
-    expect(mainnet).toInclude('lives on ethereum (chain id 1)')
-    expect(mainnet).not.toInclude('testnet')
+  it('names the attestation network', () => {
+    expect(describeApi(meta)).toInclude('lives on ethereum (chain id 1)')
   })
 })

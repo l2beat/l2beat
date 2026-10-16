@@ -19,9 +19,12 @@ export async function getAttestationsMeta(): Promise<CropsAttestationsMeta> {
     return getMockAttestationsMeta()
   }
   const source = CROP_ATTESTATION_SOURCE
+  if (!source.attester) {
+    return getCropsAttestationsMeta(undefined)
+  }
   const record = await getDb().cropAttestation.find(
     source.chainId,
-    source.attester,
+    source.attester.address,
   )
   return getCropsAttestationsMeta(record)
 }

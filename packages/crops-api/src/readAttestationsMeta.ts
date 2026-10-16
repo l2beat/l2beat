@@ -12,17 +12,21 @@ import type { CropsAttestationsMeta } from './api'
 
 /**
  * The attester's current attestation, read from EAS while the API is
- * generated. Without an RPC the generation fails rather than publish an API
- * that claims nothing is attested.
+ * generated. Once an attester is set, a missing RPC fails the generation
+ * rather than publish an API that claims nothing is attested.
  */
 export async function readAttestationsMeta(
   rpcUrl: string | undefined,
 ): Promise<CropsAttestationsMeta> {
+  const source = CROP_ATTESTATION_SOURCE
+  if (!source.attester) {
+    return getCropsAttestationsMeta(undefined)
+  }
   if (!rpcUrl) {
     throw new Error('CROPS_ATTESTATIONS_RPC_URL is required')
   }
   const rpc = new RpcClient({
-    chain: CROP_ATTESTATION_SOURCE.network,
+    chain: source.network,
     url: rpcUrl,
     http: new HttpClient(),
     logger: Logger.SILENT,
@@ -30,6 +34,12 @@ export async function readAttestationsMeta(
     retryStrategy: 'SCRIPT',
   })
   return getCropsAttestationsMeta(
-    await readCurrentCropAttestation(rpc, CROP_ATTESTATION_SOURCE),
+    await readCurrentCropAttestation(rpc, {
+      eas: source.eas,
+      schema: source.schema,
+      schemaUid: source.schemaUid,
+      attester: source.attester.address,
+      startBlock: source.attester.sinceBlock,
+    }),
   )
 }

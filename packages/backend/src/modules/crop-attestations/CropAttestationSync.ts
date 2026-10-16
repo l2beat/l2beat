@@ -1,5 +1,4 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { CropAttestationSource } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { CropAttestation } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
@@ -7,7 +6,8 @@ import { TimeLoop } from '../../tools/TimeLoop'
 
 export interface CropAttestationSyncDeps {
   db: Database
-  source: CropAttestationSource
+  chainId: number
+  attester: string
   /** The attester's current attestation, read from EAS. */
   readCurrent: () => Promise<CropAttestation | undefined>
   intervalMs: number
@@ -29,24 +29,21 @@ export class CropAttestationSync extends TimeLoop {
   }
 
   async run() {
-    const { db, source } = this.$
+    const { db, chainId, attester } = this.$
     const current = await this.$.readCurrent()
     if (!current) {
-      const deleted = await db.cropAttestation.delete(
-        source.chainId,
-        source.attester,
-      )
+      const deleted = await db.cropAttestation.delete(chainId, attester)
       if (deleted > 0) {
         // Expected only after the attester revokes everything; otherwise suspect the RPC.
         this.logger.warn('The attester no longer has an attestation', {
-          attester: source.attester,
+          attester,
         })
       }
       return
     }
     await db.cropAttestation.upsert({
-      chainId: source.chainId,
-      attester: source.attester,
+      chainId,
+      attester,
       uid: current.uid,
       revision: current.revision,
       reviewedAt: UnixTime(current.reviewedAt),

@@ -1,9 +1,5 @@
 import { CROP_ATTESTATION_SOURCE } from '@l2beat/config'
-import {
-  HttpClient,
-  RpcClient,
-  readCurrentCropAttestation,
-} from '@l2beat/shared'
+import { readCurrentCropAttestation } from '@l2beat/shared'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { CropAttestationSync } from './CropAttestationSync'
 
@@ -13,9 +9,16 @@ export function createCropAttestationsModule({
   config,
   logger,
   db,
+  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
-  if (!config.cropAttestations) {
+  if (!config.cropAttestationsEnabled) {
     logger.info('Crop attestations module disabled')
+    return
+  }
+  const source = CROP_ATTESTATION_SOURCE
+  const attester = source.attester
+  if (!attester) {
+    logger.info('Crop attestations module idle: no attester is set')
     return
   }
 
@@ -23,23 +26,21 @@ export function createCropAttestationsModule({
     feature: 'crop-attestations',
     module: 'crop-attestations',
   })
-
-  // Its own client: the attestations may live on a network no project uses.
-  const rpc = new RpcClient({
-    chain: CROP_ATTESTATION_SOURCE.network,
-    url: config.cropAttestations.rpcUrl,
-    http: new HttpClient(),
-    logger,
-    callsPerMinute: 60,
-    retryStrategy: 'RELIABLE',
-  })
+  const rpc = providers.clients.getRpcClient(source.network)
 
   const sync = new CropAttestationSync(
     {
       db,
-      source: CROP_ATTESTATION_SOURCE,
+      chainId: source.chainId,
+      attester: attester.address,
       readCurrent: () =>
-        readCurrentCropAttestation(rpc, CROP_ATTESTATION_SOURCE),
+        readCurrentCropAttestation(rpc, {
+          eas: source.eas,
+          schema: source.schema,
+          schemaUid: source.schemaUid,
+          attester: attester.address,
+          startBlock: attester.sinceBlock,
+        }),
       intervalMs: INTERVAL_MS,
     },
     logger,

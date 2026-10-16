@@ -47,7 +47,7 @@ export interface Config {
   readonly chains: { name: string; chainId: number | undefined }[]
   readonly daBeat: DaBeatConfig | false
   readonly ecosystems: EcosystemsConfig | false
-  readonly cropAttestations: CropAttestationsConfig | false
+  readonly cropAttestationsEnabled: boolean
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
     readonly url: string | undefined
@@ -287,11 +287,6 @@ export interface EcosystemTokenConfig {
 }
 export interface EcosystemsConfig {
   readonly tokens: EcosystemTokenConfig[]
-}
-
-export interface CropAttestationsConfig {
-  /** An RPC of the network the attestations live on, set in config's CROP_ATTESTATION_SOURCE. */
-  readonly rpcUrl: string
 }
 
 type BlockLayerAsProjectDaTrackingConfig = {

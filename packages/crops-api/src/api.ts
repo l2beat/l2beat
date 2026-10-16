@@ -30,13 +30,12 @@ export const CropsAttestationsMetaSchema = v.strictObject({
     .string()
     .meta({ description: 'EAS network the attestation lives on.' }),
   chainId: v.number(),
-  isTestnet: v
-    .boolean()
-    .meta({ description: 'True while attestations are on a testnet.' }),
   eas: v.string().meta({ description: 'EAS contract address.' }),
   schemaUid: v.string(),
   schema: v.string().meta({ description: 'EAS schema definition string.' }),
-  attester: v.string(),
+  attester: v
+    .union([v.string(), v.null()])
+    .meta({ description: 'The attester Safe, or null until it is set.' }),
   current: v
     .union([
       v.strictObject({

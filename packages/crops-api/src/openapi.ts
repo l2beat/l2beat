@@ -50,11 +50,9 @@ export function buildOpenApiDocument(attestations: CropsAttestationsMeta) {
   }
 }
 
-/** Only the network section depends on the attestations, so the testnet caveat cannot outlive the testnet. */
+/** Only the network section depends on the attestations. */
 export function describeApi(attestations: CropsAttestationsMeta): string {
-  const where = attestations.isTestnet
-    ? `currently lives on the ${attestations.network} testnet (chain id ${attestations.chainId}); \`attestations.isTestnet\` in every response says so`
-    : `lives on ${attestations.network} (chain id ${attestations.chainId})`
+  const where = `lives on ${attestations.network} (chain id ${attestations.chainId})`
   return `CROPS is L2BEAT's review of a protocol along four crops: censorship resistance, open source, privacy and security. Each crop gets a sentiment (good, warning, bad or neutral) and a status saying how far the review went. A protocol is in the garden when no crop is bad. Separately, the set of reviewed protocols is attested onchain with the Ethereum Attestation Service.
 
 Every response is a static file generated from the L2BEAT repository, so it is served from a CDN with no API key and no rate limit.
