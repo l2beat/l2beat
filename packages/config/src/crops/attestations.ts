@@ -1,58 +1,84 @@
-import data from './attestationData.json'
+import type { CropAttestation } from '@l2beat/shared'
 
-/** Typed so hex-typed callers accept these values without a cast. */
-type HexString = `0x${string}`
-
-export interface CropAttestation {
-  uid: HexString
-  /** Recorded because EAS only accepts a revocation naming the original schema. */
-  schema: HexString
-  /** Bumped every time the attested set changes. Starts at 1. */
-  revision: number
-  reviewedAt: number
-  /** Sorted. */
-  projectIds: string[]
-  txHash: HexString
-  block: number
-}
-
-export interface RevokedCropAttestation {
-  uid: HexString
-  schema: HexString
-  revision: number
-  projectIds: string[]
-  revokedTxHash: HexString
-  revokedBlock: number
+/** The Safe whose attestations count. */
+export interface CropAttester {
+  address: string
+  /** Where the search for its attestations starts: the block it was deployed in. */
+  sinceBlock: number
 }
 
 /**
- * Where the crop attestations live and what is live there. Describes its own
- * network and schema so readers need nothing but this file.
+ * Where the CROPS attestations are read from: EAS on Ethereum. Only the
+ * attester's attestations count, and the newest wins: of those under the
+ * schema that are not revoked, the highest revision names the current reviewed
+ * set. The attester is set here and in the crops-attester repo's config.
  */
-export interface CropAttestationLedger {
-  /** EAS network name, e.g. sepolia. */
+export interface CropAttestationSource {
   network: string
   chainId: number
-  isTestnet: boolean
   /** EAS contract address. */
-  eas: HexString
-  /** easscan host for the network, no trailing slash. */
+  eas: string
+  /** easscan host, no trailing slash. */
   explorer: string
-  /** The schema string and its uid as registered. Entries carry the uid they were attested under. */
   schema: string
-  schemaUid: HexString
-  attester: HexString
-  /**
-   * Steady state is exactly one. More than one means an interrupted run or a
-   * schema change; `l2b crops-attest` revokes the extras on its next run.
-   */
-  live: CropAttestation[]
-  revoked: RevokedCropAttestation[]
+  schemaUid: string
+  /** Null until the attester Safe exists: then nothing counts as attested. */
+  attester: CropAttester | null
 }
 
-/**
- * A cache of onchain state written by `l2b crops-attest`, committed so the
- * API needs no RPC call. JSON cannot carry the hex literal types, so it is
- * asserted once here; `l2b crops-verify` checks it against the chain.
- */
-export const CROP_ATTESTATIONS = data as CropAttestationLedger
+export const CROP_ATTESTATION_SOURCE: CropAttestationSource = {
+  network: 'ethereum',
+  chainId: 1,
+  eas: '0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587',
+  explorer: 'https://easscan.org',
+  schema: 'string[] projectIds,uint64 reviewedAt,uint32 revision',
+  schemaUid:
+    '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb',
+  attester: null,
+}
+
+/** The `attestations` stamp the CROPS API and the CROPS pages carry. */
+export interface CropsAttestationsMeta {
+  network: string
+  chainId: number
+  eas: string
+  schemaUid: string
+  schema: string
+  /** Null until the attester Safe exists. */
+  attester: string | null
+  /** The attester's current attestation, or null before it has attested. */
+  current: {
+    uid: string
+    revision: number
+    /** Unix seconds. */
+    reviewedAt: number
+    /** Sorted. */
+    projectIds: string[]
+    txHash: string
+    explorerUrl: string
+  } | null
+}
+
+export function getCropsAttestationsMeta(
+  current: CropAttestation | undefined,
+): CropsAttestationsMeta {
+  const source = CROP_ATTESTATION_SOURCE
+  return {
+    network: source.network,
+    chainId: source.chainId,
+    eas: source.eas,
+    schemaUid: source.schemaUid,
+    schema: source.schema,
+    attester: source.attester?.address ?? null,
+    current: current
+      ? {
+          uid: current.uid,
+          revision: current.revision,
+          reviewedAt: current.reviewedAt,
+          projectIds: [...current.projectIds].sort(),
+          txHash: current.txHash,
+          explorerUrl: `${source.explorer}/attestation/view/${current.uid}`,
+        }
+      : null,
+  }
+}

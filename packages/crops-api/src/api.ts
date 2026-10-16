@@ -3,7 +3,6 @@ import type {
   ProjectPrivacyInfo,
   ProjectScalingInfo,
 } from '@l2beat/config'
-import { CROP_ATTESTATIONS } from '@l2beat/config'
 import { type Validator, v } from '@l2beat/validate'
 import {
   CropSentimentSchema,
@@ -31,13 +30,12 @@ export const CropsAttestationsMetaSchema = v.strictObject({
     .string()
     .meta({ description: 'EAS network the attestation lives on.' }),
   chainId: v.number(),
-  isTestnet: v
-    .boolean()
-    .meta({ description: 'True while attestations are on a testnet.' }),
   eas: v.string().meta({ description: 'EAS contract address.' }),
   schemaUid: v.string(),
   schema: v.string().meta({ description: 'EAS schema definition string.' }),
-  attester: v.string(),
+  attester: v
+    .union([v.string(), v.null()])
+    .meta({ description: 'The attester Safe, or null until it is set.' }),
   current: v
     .union([
       v.strictObject({
@@ -51,7 +49,8 @@ export const CropsAttestationsMetaSchema = v.strictObject({
       v.null(),
     ])
     .meta({
-      description: 'The live attestation naming the reviewed set, or null.',
+      description:
+        "The attester's current attestation, which names the reviewed set, or null before it has attested.",
     }),
 })
 export type CropsAttestationsMeta = v.infer<typeof CropsAttestationsMetaSchema>
@@ -223,34 +222,6 @@ export const CROPS_API_ROUTES: CropsApiRoute[] = [
     result: 'CropsResponse',
   },
 ]
-
-/** Reads the committed ledger, so no RPC call is needed. */
-export function getAttestationsMeta(): CropsAttestationsMeta {
-  const ledger = CROP_ATTESTATIONS
-  // Anything live under another schema awaits revocation by l2b. Case-insensitive: EAS returns uids in lowercase.
-  const current = ledger.live.find(
-    (x) => x.schema.toLowerCase() === ledger.schemaUid.toLowerCase(),
-  )
-  return {
-    network: ledger.network,
-    chainId: ledger.chainId,
-    isTestnet: ledger.isTestnet,
-    eas: ledger.eas,
-    schemaUid: ledger.schemaUid,
-    schema: ledger.schema,
-    attester: ledger.attester,
-    current: current
-      ? {
-          uid: current.uid,
-          revision: current.revision,
-          reviewedAt: current.reviewedAt,
-          projectIds: current.projectIds,
-          txHash: current.txHash,
-          explorerUrl: `${ledger.explorer}/attestation/view/${current.uid}`,
-        }
-      : null,
-  }
-}
 
 /** Only the fields the API needs, so tests can supply plain fixtures. */
 export interface CropsSourceProject {

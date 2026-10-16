@@ -46,11 +46,10 @@ const ONE_BAD: ProjectCrops = {
 export const ATTESTATION_UID =
   '0xe390390934d3ac2a3f238a0b6f655ec9f847c7dade8240e7450ecd3ef339d24d'
 
-export const LEDGER: CropsAttestationsMeta = {
-  network: 'sepolia',
-  chainId: 11155111,
-  isTestnet: true,
-  eas: '0xC2679fBD37d54388Ce493F1DB75320D236e1815e',
+export const ATTESTATIONS: CropsAttestationsMeta = {
+  network: 'ethereum',
+  chainId: 1,
+  eas: '0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587',
   schemaUid: '0xbe00',
   schema: 'string[] projectIds,uint64 reviewedAt,uint32 revision',
   attester: '0xb55D684Be25227b722a007F6bB8AA706ca18BdDA',
@@ -60,7 +59,7 @@ export const LEDGER: CropsAttestationsMeta = {
     reviewedAt: 1787132641,
     projectIds: ['uniswapv3'],
     txHash: '0x70ef',
-    explorerUrl: `https://sepolia.easscan.org/attestation/view/${ATTESTATION_UID}`,
+    explorerUrl: `https://easscan.org/attestation/view/${ATTESTATION_UID}`,
   },
 }
 
@@ -106,7 +105,7 @@ export const OTHER: CropsApiInputProject = {
 export const FIXTURE_INPUT: CropsApiInput = {
   projects: [OTHER, UNISWAP],
   chains: { ethereum: 1, arbitrum: 42161 },
-  ledger: LEDGER,
+  attestations: ATTESTATIONS,
   commit: 'abc123',
   generatedAt: 1_800_000_000,
 }

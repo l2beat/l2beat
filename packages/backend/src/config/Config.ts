@@ -47,6 +47,7 @@ export interface Config {
   readonly chains: { name: string; chainId: number | undefined }[]
   readonly daBeat: DaBeatConfig | false
   readonly ecosystems: EcosystemsConfig | false
+  readonly cropAttestationsEnabled: boolean
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
     readonly url: string | undefined

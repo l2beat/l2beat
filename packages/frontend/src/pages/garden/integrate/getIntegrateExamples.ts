@@ -68,12 +68,14 @@ const PLACEHOLDER_CONTRACT = {
  * generator, and its OpenAPI document is the contract these mirror.
  */
 export async function getIntegrateExamples(): Promise<IntegrateExamples> {
-  const projects = await ps.getProjects({
-    where: ['crops'],
-    select: ['crops'],
-    optional: ['scalingInfo', 'privacyInfo', 'contracts'],
-  })
-  const meta = getAttestationsMeta()
+  const [projects, meta] = await Promise.all([
+    ps.getProjects({
+      where: ['crops'],
+      select: ['crops'],
+      optional: ['scalingInfo', 'privacyInfo', 'contracts'],
+    }),
+    getAttestationsMeta(),
+  ])
   return buildIntegrateExamples(
     pickSample(projects, meta),
     meta,
