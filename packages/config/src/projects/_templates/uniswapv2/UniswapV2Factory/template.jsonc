@@ -14,11 +14,14 @@
           "description": "can set the protocol fee recipient, which switches on a protocol fee of 1/6 of LP swap fees on every pair, and transfer the fee setter role."
         }
       ],
-      "severity": "HIGH",
+      // Role holder (spec). Its only power is choosing the protocol fee recipient, never LP principal.
+      "severity": "MEDIUM",
       "description": "Address authorized to set the protocol fee recipient and to transfer this role."
     },
+    // Not HIGH: the protocol fee is fixed in code at 1/6 of LP fees, a bounded
+    // accounting rule that never touches principal.
     "feeTo": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "Recipient of the protocol fee, which pairs mint to it as LP tokens on liquidity events. The zero address means the protocol fee is off."
     }
   }
