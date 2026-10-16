@@ -108,25 +108,27 @@ export function HomePage({
             <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2">
               <div className="flex min-w-0 flex-col max-lg:contents md:gap-4">
                 <HomeEthereumCard charts={ethereumCharts} />
-                {/* Two columns once wide enough: articles and the question,
-                    then new research and project changes. Stacked, the
-                    columns dissolve so the question can come last. */}
+                {/* Two columns once wide enough: articles over project
+                    changes, and new research filling the other column with
+                    as many rows as fit. Stacked, the columns dissolve and
+                    project changes comes last. */}
                 <div className="@container/recent flex min-w-0 flex-1 flex-col max-lg:order-last">
                   <div className="flex @min-[560px]/recent:grid min-w-0 flex-1 @min-[560px]/recent:grid-cols-2 flex-col md:gap-4">
                     <div className="@min-[560px]/recent:flex contents @min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-col @min-[560px]/recent:gap-4">
-                      <HomeLatestArticlesSection research={research} />
-                      <HomeQuestionCard className="@min-[560px]/recent:order-none order-last @min-[560px]/recent:flex-1" />
-                    </div>
-                    <div className="@min-[560px]/recent:flex contents @min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-col @min-[560px]/recent:gap-4">
-                      <HomeWhatsNewProjects
-                        projects={recentProjects}
+                      <HomeLatestArticlesSection
+                        research={research}
                         className="@min-[560px]/recent:flex-1"
                       />
                       <HomeProjectChangesSection
                         count={recentChangesCount}
                         projects={recentChangesProjects}
+                        className="@min-[560px]/recent:order-none order-last"
                       />
                     </div>
+                    <HomeWhatsNewProjects
+                      projects={recentProjects}
+                      className="@min-[560px]/recent:min-w-0 @min-[560px]/recent:flex-1"
+                    />
                   </div>
                 </div>
               </div>
@@ -136,6 +138,8 @@ export function HomePage({
                 protocols={flowProtocols}
               />
             </div>
+            {/* The page's one action, last, across the full width. */}
+            <HomeQuestionCard />
           </div>
         </SideNavLayout>
       </HydrationBoundary>
