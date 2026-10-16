@@ -5,6 +5,7 @@ import {
   gestureCamera,
   gridShift,
   revealCamera,
+  wheelZoomFactor,
 } from './relationsCamera'
 
 describe(gestureCamera.name, () => {
@@ -138,5 +139,20 @@ describe(gridShift.name, () => {
 
       expect(new Set(phases).size).toEqual(1)
     }
+  })
+})
+
+describe(wheelZoomFactor.name, () => {
+  const inPixels = (deltaY: number) => wheelZoomFactor({ deltaY, deltaMode: 0 })
+
+  it('zooms as far as a trackpad pinch scales, however its events merge', () => {
+    expect(inPixels(-100 * Math.log(1.05))).toBeCloseTo(1.05, 10)
+    expect(inPixels(-4) * inPixels(-6)).toBeCloseTo(inPixels(-10), 10)
+    expect(inPixels(-10) * inPixels(10)).toBeCloseTo(1, 10)
+  })
+
+  it('zooms a mouse wheel notch by one step', () => {
+    expect(inPixels(100)).toEqual(1 / 1.15)
+    expect(wheelZoomFactor({ deltaY: -3, deltaMode: 1 })).toEqual(1.15)
   })
 })

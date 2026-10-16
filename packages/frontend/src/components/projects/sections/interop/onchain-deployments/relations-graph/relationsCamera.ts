@@ -31,6 +31,7 @@ const MAX_SCALE = 4
 const FIT_PADDING = 32
 /** Below this the node text stops being readable. */
 const READABLE_SCALE = 0.55
+/** The most one wheel event zooms by: a mouse wheel's notch. */
 const WHEEL_ZOOM_STEP = 1.15
 /** A wheel zoom draws the diagram anew once the wheel has rested this long. */
 const WHEEL_SETTLE_MS = 150
@@ -295,7 +296,7 @@ export function useRelationsCamera(
       controls.set(
         zoomCamera(
           controls.get(),
-          event.deltaY < 0 ? WHEEL_ZOOM_STEP : 1 / WHEEL_ZOOM_STEP,
+          wheelZoomFactor(event),
           toLocalPoint(element, event),
         ),
         { live: true },
@@ -396,6 +397,21 @@ function wheelPanDelta(event: WheelEvent, element: HTMLElement): Point {
     return { x: x * element.clientWidth, y: y * element.clientHeight }
   }
   return { x, y }
+}
+
+/**
+ * How far a ctrl+wheel event zooms. Chrome sends a trackpad pinch as a stream
+ * of them, each with deltaY = -100 ln(scale), so following that keeps the
+ * diagram under the fingers, however many events it merges into one. A mouse
+ * wheel's notch, far larger, zooms one step.
+ */
+export function wheelZoomFactor(
+  event: Pick<WheelEvent, 'deltaY' | 'deltaMode'>,
+): number {
+  // deltaMode 0 is pixels; a line or a page is a notch or more
+  const deltaY =
+    event.deltaMode === 0 ? event.deltaY : event.deltaY * WHEEL_LINE_HEIGHT
+  return clamp(Math.exp(-deltaY / 100), 1 / WHEEL_ZOOM_STEP, WHEEL_ZOOM_STEP)
 }
 
 /** Fits the width and anchors the top: a tall graph is panned, not shrunk into a smudge. */
