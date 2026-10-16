@@ -1,7 +1,7 @@
 import { usePathname } from '~/hooks/usePathname'
 import { PinIcon } from '~/icons/Pin'
 import { cn } from '~/utils/cn'
-import { SidebarGroup } from '../core/Sidebar'
+import { SidebarGroup, SidebarGroupLabel } from '../core/Sidebar'
 import {
   type SavedProject,
   unpinProject,
@@ -39,7 +39,7 @@ export function NavYourProjects({ onNavigate }: { onNavigate: () => void }) {
     <>
       {pinned.length > 0 && (
         <SidebarGroup className="mt-5">
-          <span className={LABEL_CLASS}>Pinned</span>
+          <SidebarGroupLabel>Pinned</SidebarGroupLabel>
           <ul className="flex flex-col">
             {pinned.map((project) => row(project, true))}
           </ul>
@@ -47,7 +47,7 @@ export function NavYourProjects({ onNavigate }: { onNavigate: () => void }) {
       )}
       {recentOnly.length > 0 && (
         <SidebarGroup className="mt-5">
-          <span className={LABEL_CLASS}>Recently viewed</span>
+          <SidebarGroupLabel>Recently viewed</SidebarGroupLabel>
           <ul className="flex flex-col">
             {recentOnly.map((project) => row(project))}
           </ul>
@@ -62,10 +62,6 @@ export function NavYourProjects({ onNavigate }: { onNavigate: () => void }) {
     </>
   )
 }
-
-/** As the nav's "And more" label. */
-const LABEL_CLASS =
-  'pl-1.5 font-medium text-2xs text-secondary uppercase tracking-wider'
 
 function ProjectRow({
   project,

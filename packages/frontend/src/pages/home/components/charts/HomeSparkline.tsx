@@ -53,13 +53,13 @@ const STROKE = 'var(--chart-pink)'
  * settled-size box and on the recharts wrapper. Filling an absolutely
  * positioned box instead lets the sparkline take its wrapper's height, and
  * keeps the svg from ever pushing that wrapper taller. The container also
- * pins series strokes to 1.75px; a sparkline wants a finer one.
+ * pins series strokes to 1.75px; a sparkline drawn this small wants 2px.
  */
 const FILL_HEIGHT_CLASS = cn(
   'absolute inset-0 [&>div]:h-full',
   '[&>div>div:first-child]:h-full! [&>div>div:first-child]:min-h-0!',
   '[&_.recharts-wrapper]:aspect-auto! [&_.recharts-wrapper]:h-full! [&_.recharts-wrapper]:min-h-0!',
-  '[&_.recharts-area-curve]:stroke-[1.5px]!',
+  '[&_.recharts-area-curve]:stroke-2!',
   // The chart is a tab stop (arrow keys walk the tooltip), but ChartContainer
   // hides every chart's outline; a sparkline shows it on keyboard focus.
   '[&_.recharts-surface:focus-visible]:outline-2! [&_.recharts-surface:focus-visible]:outline-solid! [&_.recharts-surface:focus-visible]:outline-offset-2!',
@@ -116,7 +116,7 @@ export function HomeSparkline({
           >
             <defs>
               <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={STROKE} stopOpacity={0.12} />
+                <stop offset="0%" stopColor={STROKE} stopOpacity={0.18} />
                 <stop offset="100%" stopColor={STROKE} stopOpacity={0} />
               </linearGradient>
             </defs>
@@ -149,9 +149,8 @@ export function HomeSparkline({
                     position: range[key].early
                       ? 'insideTopRight'
                       : 'insideTopLeft',
-                    fontSize: 10,
+                    fontSize: 12,
                     fill: 'var(--secondary)',
-                    fillOpacity: 0.7,
                   }}
                 />
               ))}
@@ -197,7 +196,7 @@ export function HomeSparkline({
 const BEHIND_SERIES = -100
 
 /** The low label hangs under the plot, in a margin this tall. */
-const LOW_LABEL_HEIGHT = 16
+const LOW_LABEL_HEIGHT = 18
 
 /** The extremes, and whether each falls in the first half of the period. */
 function getRange(data: HomeSparklineDataPoint[]) {

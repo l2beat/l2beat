@@ -152,8 +152,8 @@ const CORNER_ROUTES_COUNT = 3
 
 /**
  * The interop page's general stats: volume, transfers and routes, then the
- * top chain, token and protocol, in columns split by hairlines like the KPI
- * pairs. The busiest routes are listed apart, in TopRoutes.
+ * top chain, token and protocol, in columns like the KPI pairs. The busiest
+ * routes are listed apart, in TopRoutes.
  */
 function Stats({
   data,
@@ -170,7 +170,7 @@ function Stats({
     : undefined
 
   return (
-    <div className={cn('flex flex-col gap-5', className)}>
+    <div className={cn('flex flex-col gap-6', className)}>
       <div className={STAT_ROW_CLASS}>
         <Figure
           label="Volume"
@@ -185,7 +185,7 @@ function Stats({
           value={formatInteger(stats.activeFlows)}
         />
       </div>
-      <div className={cn(STAT_ROW_CLASS, 'border-divider border-t pt-5')}>
+      <div className={STAT_ROW_CLASS}>
         <Top
           label="Top chain"
           href={topChain?.href}
@@ -249,9 +249,8 @@ function Stats({
   )
 }
 
-/** Three columns split by hairlines. */
-const STAT_ROW_CLASS =
-  'grid grid-cols-3 divide-x divide-divider *:px-3 *:first:pl-0 *:last:pr-0 sm:*:px-4'
+/** Three columns set apart by space, on the same tracks in both rows. */
+const STAT_ROW_CLASS = 'grid grid-cols-3 gap-x-4 sm:gap-x-6'
 
 function Figure({ label, value }: { label: string; value: string }) {
   return (

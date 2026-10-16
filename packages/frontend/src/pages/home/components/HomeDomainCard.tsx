@@ -30,7 +30,9 @@ export function HomeDomainCard({
   return (
     <HomeCard
       className={cn(
-        'row-span-3 grid min-w-0 grid-rows-subgrid gap-5',
+        // 24px between the parts, 32px above the ranking: it is a block of
+        // its own, not a caption to the charts.
+        'row-span-3 grid min-w-0 grid-rows-subgrid gap-6 [&>:nth-child(3)]:mt-2',
         className,
       )}
     >
@@ -54,7 +56,7 @@ export function HomeDomainCard({
   )
 }
 
-/** Two KPIs side by side with a hairline between them. */
+/** Two KPIs side by side, set apart by space alone. */
 export function HomeKpiRow({
   className,
   children,
@@ -63,13 +65,7 @@ export function HomeKpiRow({
   children: ReactNode
 }) {
   return (
-    <div
-      className={cn(
-        'grid grid-cols-2 divide-x divide-divider',
-        '*:px-4 *:first:pl-0 *:last:pr-0',
-        className,
-      )}
-    >
+    <div className={cn('grid grid-cols-2 gap-x-8 lg:gap-x-10', className)}>
       {children}
     </div>
   )

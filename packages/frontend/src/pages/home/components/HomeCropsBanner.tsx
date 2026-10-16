@@ -8,6 +8,7 @@ import { GARDEN_PATH } from '~/pages/garden/paths'
 import { cn } from '~/utils/cn'
 import type { HomeCropsProject } from '../getHomeCropsProjects'
 import { HOME_TEXT } from '../homeStyles'
+import { HomeCard } from './HomeCard'
 import { HomeTitleLink } from './HomeCardHeader'
 import { HomeStackedIcons } from './HomeStackedIcons'
 
@@ -16,14 +17,21 @@ const BANNER_LABELS: Partial<Record<CropKey, string>> = {
   openSource: 'Openness',
 }
 
-/** One flower per principle, in the foreground. */
+/**
+ * One flower per principle, standing on the nearest ridge; the ridges climb
+ * to the right, so each stands a little higher than the last.
+ */
 const FLOWERS: GardenFlower[] = [
-  { left: '63%', bottom: '5%', width: 34 },
-  { left: '71.5%', bottom: '6%', width: 40 },
-  { left: '80%', bottom: '7.5%', width: 34 },
-  { left: '88.5%', bottom: '9%', width: 38 },
+  { left: '30%', bottom: '3%', width: 30 },
+  { left: '50%', bottom: '5%', width: 34 },
+  { left: '70%', bottom: '9.5%', width: 30 },
+  { left: '88%', bottom: '13%', width: 32 },
 ]
 
+/**
+ * The garden on the home page: a card like its neighbours, the text on the
+ * left and a flat strip of the garden's landscape on the right.
+ */
 export function HomeCropsBanner({
   projects,
   className,
@@ -32,28 +40,21 @@ export function HomeCropsBanner({
   className?: string
 }) {
   return (
-    // A card, its background a corner of the garden itself.
-    <div
-      className={cn(
-        'relative overflow-hidden rounded-xl border border-garden-border dark:border-[#1d2a36]',
-        className,
-      )}
-    >
-      <GardenLandscape lightClassName="top-[36%] left-[76%] size-48">
+    <HomeCard className={cn('relative overflow-hidden', className)}>
+      <GardenLandscape
+        flat
+        className="left-[54%]"
+        lightClassName="top-[38%] left-[64%] size-36"
+      >
         <GardenFlowers flowers={FLOWERS} motion="grow" />
       </GardenLandscape>
-      <div className="relative flex max-w-[60%] flex-col gap-1 py-5 pl-6">
-        <div className="flex items-baseline gap-2.5">
+      <div className="relative flex max-w-[54%] flex-col gap-2">
+        <div className="flex flex-wrap items-baseline gap-x-2.5">
           <h2 className={HOME_TEXT.title}>
             <HomeTitleLink href={GARDEN_PATH}>CROPS</HomeTitleLink>
           </h2>
-          <span className="whitespace-nowrap font-light font-roboto-serif text-[17px] text-secondary leading-none tracking-[-0.01em]">
+          <span className="whitespace-nowrap font-light font-roboto-serif text-heading-20 text-secondary leading-tight">
             The Infinite Garden
-          </span>
-          {/* Pulled out of the line box, so the title row keeps its height. */}
-          <span className="-my-1 ml-2 flex items-center gap-2 self-center whitespace-nowrap">
-            <HomeStackedIcons items={projects} max={6} />
-            <span className={HOME_TEXT.meta}>{projects.length} projects</span>
           </span>
         </div>
         <p className={HOME_TEXT.body}>
@@ -71,7 +72,11 @@ export function HomeCropsBanner({
             </span>
           ))}
         </p>
+        <span className="flex items-center gap-2">
+          <HomeStackedIcons items={projects} max={6} />
+          <span className={HOME_TEXT.meta}>{projects.length} projects</span>
+        </span>
       </div>
-    </div>
+    </HomeCard>
   )
 }

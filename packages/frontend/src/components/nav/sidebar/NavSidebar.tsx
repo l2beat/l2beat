@@ -1,4 +1,5 @@
 import { Fragment, useMemo, useState } from 'react'
+import { SoonBadge } from '~/components/badge/SoonBadge'
 import { env } from '~/env'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -16,6 +17,7 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupItem,
+  SidebarGroupLabel,
   SidebarGroupLink,
   SidebarGroupSub,
   SidebarGroupSubButton,
@@ -81,9 +83,7 @@ export function NavSidebar({ groups, logoLink, className }: Props) {
             />
           ))}
         <SidebarGroup className="mt-5 mb-1">
-          <span className="pl-1.5 font-medium text-2xs text-secondary uppercase tracking-wider">
-            And more
-          </span>
+          <SidebarGroupLabel>And more</SidebarGroupLabel>
         </SidebarGroup>
         {/* One block, so the content's gap between groups does not apply. */}
         <div className="flex flex-col">
@@ -276,10 +276,3 @@ function NavCollapsibleItem({
 }
 
 /** Marks a section or page that is listed but not out yet. */
-function SoonBadge() {
-  return (
-    <span className="shrink-0 rounded-sm bg-surface-secondary px-1 py-0.5 font-semibold text-[9px] uppercase leading-none tracking-wider">
-      Soon
-    </span>
-  )
-}

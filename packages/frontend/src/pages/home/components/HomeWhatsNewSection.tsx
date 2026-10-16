@@ -146,28 +146,40 @@ function ProjectChanges({
   if (count === 0) {
     return <span className={HOME_TEXT.meta}>No changes this week</span>
   }
+  const named = projects.slice(0, NAMED_CHANGED_PROJECTS)
+  const rest = projects.length - named.length
   return (
-    <RecentChangesDialog
-      trigger={
-        <button
-          type="button"
-          className="group flex w-fit items-center gap-2 text-left"
-        >
-          <HomeStackedIcons items={projects} max={4} />
-          <span
-            className={cn(
-              'underline-offset-2 group-hover:underline',
-              HOME_TEXT.row,
-            )}
+    <div className="flex flex-col gap-1.5">
+      <RecentChangesDialog
+        trigger={
+          <button
+            type="button"
+            className="group flex w-fit items-center gap-2 text-left"
           >
-            {count} {pluralize(count, 'change')}
-          </span>
-          <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
-        </button>
-      }
-    />
+            <HomeStackedIcons items={projects} max={4} />
+            <span
+              className={cn(
+                'underline-offset-2 group-hover:underline',
+                HOME_TEXT.row,
+              )}
+            >
+              {count} {pluralize(count, 'change')} in {projects.length}{' '}
+              {pluralize(projects.length, 'project')}
+            </span>
+            <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
+          </button>
+        }
+      />
+      {/* Which projects, so the card says something before it is opened. */}
+      <p className={HOME_TEXT.meta}>
+        {named.map((project) => project.name).join(', ')}
+        {rest > 0 && ` and ${rest} more`}
+      </p>
+    </div>
   )
 }
+
+const NAMED_CHANGED_PROJECTS = 3
 
 function Research({ items }: { items: HomeResearchItem[] }) {
   if (items.length === 0) {

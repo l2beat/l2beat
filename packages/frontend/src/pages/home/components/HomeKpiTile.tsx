@@ -46,22 +46,22 @@ export function HomeKpiTile({
           <span className="shrink-0 tabular-nums">{labelAccessory}</span>
         )}
       </span>
-      <span className="mt-1 flex min-w-0 items-baseline @max-[140px]:gap-x-1 gap-x-1.5 whitespace-nowrap">
+      <span className="mt-2 flex min-w-0 items-baseline @max-[160px]:gap-x-1 gap-x-2 whitespace-nowrap">
         <span
           className={cn(
             HOME_TEXT.number,
-            '@max-[140px]:text-heading-16 @max-[160px]:text-heading-18 @max-[220px]:text-heading-20',
+            '@max-[150px]:text-heading-20 @max-[180px]:text-heading-24 @max-[220px]:text-heading-28',
           )}
         >
           {value ?? EM_DASH}
         </span>
         {value !== undefined && unit && (
-          <span className="font-medium @max-[220px]:text-label-value-14 text-label-value-16 text-secondary">
+          <span className="font-medium @max-[220px]:text-label-value-16 text-label-value-20 text-secondary">
             {unit}
           </span>
         )}
         {value !== undefined && hasChange && (
-          <span className="flex min-w-0 items-baseline gap-1 overflow-hidden @min-[160px]:pl-1 font-medium text-label-value-12">
+          <span className="flex min-w-0 items-baseline gap-1 overflow-hidden font-medium text-label-value-13">
             <HomeChange value={change} />
             <span className="@max-[160px]:hidden text-secondary">
               {HOME_CHART_PERIOD_LABEL}
@@ -69,7 +69,7 @@ export function HomeKpiTile({
           </span>
         )}
       </span>
-      <div className="mt-3 flex min-h-0 flex-1 flex-col">{chart}</div>
+      <div className="mt-4 flex min-h-0 flex-1 flex-col">{chart}</div>
     </div>
   )
 }

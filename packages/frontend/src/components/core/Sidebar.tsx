@@ -197,6 +197,22 @@ function SidebarGroupItem({
   )
 }
 
+/** A heading over a run of groups, e.g. "And more": sentence case, like the links under it. */
+function SidebarGroupLabel({
+  className,
+  ...props
+}: React.ComponentProps<'span'>) {
+  return (
+    <span
+      className={cn(
+        'pl-1.5 font-medium text-label-value-13 text-secondary',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
 function SidebarGroupLink({
   isActive = false,
   className,
@@ -281,6 +297,7 @@ export {
   SidebarHeader,
   SidebarGroupLink,
   SidebarGroupItem,
+  SidebarGroupLabel,
   SidebarGroupSub,
   SidebarGroupSubButton,
   SidebarGroupSubLink,

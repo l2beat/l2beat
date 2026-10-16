@@ -1,4 +1,5 @@
 import { formatInteger } from '@l2beat/shared-pure'
+import { SoonBadge } from '~/components/badge/SoonBadge'
 import { CropsMiniBanner } from '~/components/garden/CropsMiniBanner'
 import { env } from '~/env'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -111,7 +112,7 @@ function StatTile({ tile }: { tile: Tile }) {
       <div className="flex min-w-0 flex-1 flex-col justify-center">
         <span
           className={cn(
-            'truncate font-medium text-label-value-12 text-secondary leading-tight transition-colors',
+            'truncate font-medium text-label-value-13 text-secondary leading-tight transition-colors',
             tile.href && 'group-hover:text-link',
           )}
         >
@@ -122,10 +123,7 @@ function StatTile({ tile }: { tile: Tile }) {
             <TileMetricValue metric={tile.metric} />
           </span>
         ) : (
-          // As in the sidebar: a section that is not out yet.
-          <span className="mt-0.5 w-fit rounded-sm bg-surface-secondary px-1 py-0.5 font-semibold text-[9px] text-secondary uppercase leading-none tracking-wider">
-            Soon
-          </span>
+          <SoonBadge className="mt-0.5 w-fit" />
         )}
       </div>
       {tile.href && (
@@ -156,7 +154,7 @@ function MoreLink({ item }: { item: MoreItem }) {
   return (
     <a
       href={item.href}
-      className="group flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-divider px-2.5 py-1.5 font-medium text-label-value-13 transition-colors duration-200 hover:border-link-stroke"
+      className="group flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-divider px-2.5 py-1.5 font-medium text-label-value-15 transition-colors duration-200 hover:border-link-stroke"
     >
       {item.label}
       <ChevronIcon className="-rotate-90 size-2 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
@@ -168,7 +166,7 @@ function TileMetricValue({ metric }: { metric: TileMetric }) {
   return (
     <span className="whitespace-nowrap">
       {formatInteger(metric.count)}{' '}
-      <span className="font-medium text-label-value-12 text-secondary">
+      <span className="font-medium text-label-value-13 text-secondary">
         {metric.unit}
       </span>
     </span>

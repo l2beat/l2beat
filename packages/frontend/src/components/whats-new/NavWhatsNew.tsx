@@ -1,7 +1,7 @@
 import { useDevice } from '~/hooks/useDevice'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { useTracking } from '~/hooks/useTracking'
-import { SidebarGroup } from '../core/Sidebar'
+import { SidebarGroup, SidebarGroupLabel } from '../core/Sidebar'
 import { useWhatsNewItem } from './WhatsNewItemContext'
 
 /** The latest announcement at the bottom of the nav, on every page. */
@@ -22,9 +22,7 @@ export function NavWhatsNew({ onNavigate }: { onNavigate: () => void }) {
     // Pushed to the end of the nav, just above its footer; at least 20px
     // under the lists above when the nav is full.
     <SidebarGroup className="mt-auto pt-5">
-      <span className="pl-1.5 font-medium text-2xs text-secondary uppercase tracking-wider">
-        What&apos;s new
-      </span>
+      <SidebarGroupLabel>What&apos;s new</SidebarGroupLabel>
       <a
         href={item.href}
         onClick={() => {

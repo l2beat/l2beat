@@ -33,16 +33,20 @@ const RIDGES = [
 /**
  * The sky, the sun and the ridges, filling the nearest positioned parent.
  * `lightClassName` places and sizes the sun; `ridgesClassName` sets how tall
- * the hills are (the full height by default).
+ * the hills are (the full height by default). `flat` leaves out the sky and
+ * the glow, for a card among cards: the ridges and the sun alone on the
+ * card's own surface.
  */
 export function GardenLandscape({
   lightClassName,
   ridgesClassName = 'h-full',
+  flat = false,
   className,
   children,
 }: {
   lightClassName: string
   ridgesClassName?: string
+  flat?: boolean
   className?: string
   children?: ReactNode
 }) {
@@ -51,7 +55,7 @@ export function GardenLandscape({
       aria-hidden
       className={cn(
         'pointer-events-none absolute inset-0 overflow-hidden',
-        SKY,
+        !flat && SKY,
         className,
       )}
     >
@@ -61,7 +65,9 @@ export function GardenLandscape({
           lightClassName,
         )}
       >
-        <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,206,84,.55)_0%,rgba(255,206,84,.16)_38%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(233,228,200,.22)_0%,rgba(233,228,200,.06)_40%,transparent_70%)]" />
+        {!flat && (
+          <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,206,84,.55)_0%,rgba(255,206,84,.16)_38%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(233,228,200,.22)_0%,rgba(233,228,200,.06)_40%,transparent_70%)]" />
+        )}
         <span className="absolute inset-[38%] rounded-full bg-[#ffd76a] dark:bg-garden-moon" />
       </span>
       <svg

@@ -1,28 +1,26 @@
 /**
- * The home page's small type and icon scale. Every card draws from it, so a
- * title, a row or a number looks the same wherever it appears. Weight is kept
- * for hierarchy: semibold for titles and headline numbers, medium for rows,
- * regular for small print.
+ * The home page's type scale: four sizes, far enough apart to read as steps.
+ * 13px for labels and small print, 15px for rows and body text, 20px for card
+ * titles, 32px for the headline figures. Every card draws from it, so a title,
+ * a row or a number looks the same wherever it appears. Weight carries the
+ * rest: semibold for titles and figures, medium for rows, regular for print.
  */
 export const HOME_TEXT = {
   /** Card titles. */
   title: 'font-semibold text-heading-20 leading-tight tracking-[-0.01em]',
   /** Blocks inside a card, e.g. a ranking. */
-  sectionTitle: 'font-semibold text-label-value-14',
+  sectionTitle: 'font-semibold text-label-value-15',
   /** Project names and other row labels. */
-  row: 'font-medium text-label-value-14',
+  row: 'font-medium text-label-value-15',
   /** Values in a row. */
-  value: 'font-medium text-label-value-14 tabular-nums',
+  value: 'font-medium text-label-value-15 tabular-nums',
   /** Descriptions. */
-  body: 'text-label-value-14 text-secondary text-pretty leading-snug',
+  body: 'text-label-value-15 text-secondary text-pretty leading-normal',
   /** Labels, subtitles and other small print. */
-  meta: 'font-normal text-label-value-12 text-secondary',
-  /** Headline numbers. */
+  meta: 'font-normal text-label-value-13 text-secondary',
+  /** Headline figures. */
   number:
-    'font-semibold text-heading-24 tabular-nums leading-tight tracking-[-0.02em]',
-  /** Numbers that support a headline. */
-  smallNumber:
-    'font-semibold text-heading-18 tabular-nums leading-tight tracking-[-0.01em]',
+    'font-semibold text-heading-32 tabular-nums leading-none tracking-[-0.025em]',
 } as const
 
 /** Every KPI chart on the page, so the Layer 2s, Privacy and Ethereum pairs match. */
@@ -44,7 +42,7 @@ export const HOME_ICON_CLASS = 'size-5 shrink-0 rounded-full'
 
 /** Thumbnails of articles and announcements. */
 export const HOME_THUMBNAIL_CLASS =
-  'aspect-video w-16 shrink-0 rounded-sm object-cover'
+  'aspect-video w-20 shrink-0 rounded-sm object-cover'
 
 /** The page's one button style; neutral, so it adds no colour. */
 export const HOME_BUTTON_CLASS =

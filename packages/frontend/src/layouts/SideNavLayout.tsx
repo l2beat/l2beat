@@ -61,7 +61,8 @@ const footerVariants = cva(undefined, {
     variant: {
       default: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
       wide: 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
-      home: 'md:px-8 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
+      // The content area's own margins, so the footer lines up with the cards.
+      home: 'md:px-6 md:pt-10 lg:px-8 lg:pt-12 lg:pb-6 xl:px-10',
     },
   },
 })
@@ -71,7 +72,7 @@ const footerInnerVariants = cva(undefined, {
     variant: {
       default: 'max-w-[1142px]',
       wide: 'max-w-[1142px]',
-      home: 'max-w-none',
+      home: 'max-w-none 2xl:max-w-[1840px]',
     },
   },
 })
