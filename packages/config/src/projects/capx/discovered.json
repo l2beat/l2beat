@@ -278,7 +278,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x69Af72D5dc7D59DF2164E07dEBba95e6f720f69f": "TransparentUpgradeableProxy",
@@ -362,8 +362,9 @@
         "executors": ["eth:0x2bf43034b9559643e986A2fE3cE015a18247b904"]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x7EA78566fD17a324460d02A74d0054186A0D8966": "TransparentUpgradeableProxy",
@@ -428,7 +429,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x89AB6919680c66C60968B9c5f0614fC09Aab7EE1": "TransparentUpgradeableProxy",
@@ -511,8 +512,9 @@
         "sequencerReportedSubMessageCount": 3445572
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
@@ -552,6 +554,7 @@
         "$immutable": true,
         "owner": "eth:0x7EA78566fD17a324460d02A74d0054186A0D8966"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xCEe383Aa9287D349aa965DF9Ed6e0B582970B2c3": "ProxyAdmin"
       }
@@ -644,7 +647,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "maxTimeVariation": {
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -745,8 +748,9 @@
         "rollup": "eth:0x4967284E726eC01b26cc33c09486C0C2C0C35Efa"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xEf06DEbcD295ACc3E65de85a741FA192565C3df2": "TransparentUpgradeableProxy",

@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1791452815,
-  "configHash": "0x5fdc559a1d8b8085fcd8b63f1752cf42db217caf7d7a4801cdf7e40596a36712",
+  "configHash": "0x1152101c67e6780203b00d7ce41d2fe19004d5f7bb1c8eb8797d02cff4fb85cd",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -179,7 +179,7 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "accessControl": {
@@ -250,7 +250,7 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "govAdminAC": {
@@ -334,6 +334,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
+      "critical": true,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137600,
       "sinceBlock": 15090980,
@@ -562,6 +563,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689267,
       "sinceBlock": 17968760,
@@ -667,6 +669,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -814,6 +817,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.",
+      "critical": true,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1757941367,
       "sinceBlock": 23368649,
@@ -911,7 +915,7 @@
         "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": "ProxyV5",
         "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff": "StarknetTokenBridge"
       },
-      "category": { "name": "Non-Critical", "priority": 0 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
@@ -963,6 +967,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
+      "critical": { "untilTimestamp": 1768848971 },
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1750859519,
       "sinceBlock": 22781865,
@@ -1223,6 +1228,7 @@
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
         "$admin": {
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
@@ -1246,6 +1252,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -1290,6 +1297,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137615,
       "sinceBlock": 15090981,
@@ -1421,6 +1429,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -1460,6 +1469,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0xCd7F67F78E76b2797678dAde0246466459b5D259",
       "sinceTimestamp": 1685452751,
       "sinceBlock": 17371995,
@@ -1574,6 +1584,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -1753,6 +1764,7 @@
         "isFrozen": { "severity": "MEDIUM" },
         "messageCancellationDelay": { "severity": "HIGH" },
         "$admin": {
+          "severity": "MEDIUM",
           "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."
         },
         "isFinalized": {
@@ -1867,6 +1879,7 @@
         "executionExpiration": 4838400,
         "owner": "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c": "DelayedExecutor"
       },
@@ -2003,6 +2016,7 @@
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
         "$admin": {
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
@@ -2026,6 +2040,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -2070,6 +2085,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1685880791,
       "sinceBlock": 17407168,
@@ -2179,6 +2195,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -2260,6 +2277,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689279,
       "sinceBlock": 17968761,
@@ -2365,6 +2383,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -2404,6 +2423,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689255,
       "sinceBlock": 17968759,
@@ -2509,6 +2529,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -2548,6 +2569,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1688046071,
       "sinceBlock": 17585317,
@@ -2652,6 +2674,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -2678,7 +2701,7 @@
           }
         }
       ],
-      "category": { "name": "Non-Critical", "priority": 0 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "MultiBridge",
@@ -2691,6 +2714,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1707322643,
       "sinceBlock": 19177451,
@@ -2840,6 +2864,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137639,
       "sinceBlock": 15090984,
@@ -2971,6 +2996,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -3064,6 +3090,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1698061847,
       "sinceBlock": 18412782,
@@ -3169,6 +3196,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -5009,7 +5037,8 @@
           "from": "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
           "role": ".$admin"
         }
-      ]
+      ],
+      "eoaWithUpgradePermissions": true
     },
     "eth:0x59232aC80E6d403b6381393e52f4665ECA328558": {
       "receivedPermissions": [
@@ -5210,7 +5239,8 @@
           "from": "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e",
           "role": ".$admin"
         }
-      ]
+      ],
+      "eoaWithUpgradePermissions": true
     },
     "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": {
       "receivedPermissions": [

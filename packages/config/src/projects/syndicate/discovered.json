@@ -900,11 +900,13 @@
         "whitelist": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "whitelist": { "severity": "HIGH" },
         "router": { "severity": "HIGH" },
         "inbox": { "severity": "HIGH" },
         "counterpartGateway": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x534Eb1F79C8df3aB1E507e408EeF4e99D53A1239": "TransparentUpgradeableProxy",
@@ -1008,7 +1010,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x5EA55Fd41D42Eb307D281bdE78E4e7572A35ea13": "",
@@ -1180,6 +1182,7 @@
         "$immutable": true,
         "owner": "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x817BE2d0f28b594D7023dAdf2b3Aa54327180c66": "ProxyAdmin"
       }
@@ -1200,6 +1203,7 @@
         "$immutable": true,
         "owner": "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99": "ProxyAdmin"
       }
@@ -1237,7 +1241,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x82E761873714cDe47C594aA6F23E6b1844CD98dB": "",
@@ -1881,8 +1885,9 @@
         "rollup": "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xf555Bc86D1C953414F676479Bf7C979b1A737E8C": "",
@@ -1943,8 +1948,9 @@
         ]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xFA4d1D308f4B4f6E6F836Db2B77Db549606A460c": "",

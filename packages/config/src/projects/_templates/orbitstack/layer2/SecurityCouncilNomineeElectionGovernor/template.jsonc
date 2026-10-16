@@ -31,8 +31,10 @@
     "nomineeVettingDuration": {
       "severity": "HIGH"
     },
-    // Role-holder identity (the vetting address), not a rule change.
-    "nomineeVetter": {},
+    // Role holder (the vetting address), not a rule change.
+    "nomineeVetter": {
+      "severity": "MEDIUM"
+    },
     "securityCouncilMemberElectionGovernor": {
       "severity": "HIGH"
     },
@@ -58,10 +60,10 @@
       "severity": "HIGH"
     },
     "owner": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x63de1a9a3662161fc770d1625c28213ef3c13621
+
+# Diff at Fri, 16 Oct 2026 05:36:47 GMT:
+
+- id: fb628732
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (eth:0x1390f521A79BaBE99b69B37154D63D431da27A07) [starkex/StarkExchange] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x8965de73f89697f4529c3dea79bf6254dba1efb2
 
 # Diff at Mon, 07 Sep 2026 08:37:42 GMT:

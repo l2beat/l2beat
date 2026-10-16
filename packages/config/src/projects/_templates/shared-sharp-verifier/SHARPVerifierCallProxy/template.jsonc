@@ -5,6 +5,7 @@
   "category": "shared",
   "fields": {
     "$admin": {
+      "severity": "MEDIUM",
       // not HIGH: the governor list is identity. Mechanism changes (e.g. removing the EOA
       // governor) are reviewed events in shared-sharp-verifier/ossification.json.
       "description": "Can upgrade the proxy logic and replace the default SHARP fact registry after the configured delay. A malicious target can make arbitrary facts valid for callers routed to it.",
@@ -39,6 +40,7 @@
       }
     },
     "governanceAdminAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {

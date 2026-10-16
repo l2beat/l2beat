@@ -183,7 +183,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "maxTimeVariation": {
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -299,8 +299,9 @@
         "sequencerReportedSubMessageCount": 5466399
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
@@ -367,7 +368,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x365ce7234CE515c2e0139f3578b6c5989da1a863": "TransparentUpgradeableProxy",
@@ -459,8 +460,9 @@
         "rollup": "arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x575d32f7ff0C72921645e302cb14d2757E300786": "TransparentUpgradeableProxy",
@@ -561,7 +563,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD": "TransparentUpgradeableProxy",
@@ -620,8 +622,9 @@
         "executors": ["arb1:0x420B4d16119127E4b96E55CB8a9D0c2828a161BB"]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276": "TransparentUpgradeableProxy",
@@ -673,11 +676,13 @@
         "whitelist": "arb1:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "whitelist": { "severity": "HIGH" },
         "router": { "severity": "HIGH" },
         "inbox": { "severity": "HIGH" },
         "counterpartGateway": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B": "TransparentUpgradeableProxy",
@@ -962,6 +967,7 @@
         "$immutable": true,
         "owner": "arb1:0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "arb1:0xd18b1C6376633000c85541F7c15c591Ffe5f9556": "ProxyAdmin"
       }

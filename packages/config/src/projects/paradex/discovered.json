@@ -132,7 +132,7 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "accessControl": {
@@ -255,7 +255,7 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "govAdminAC": {
@@ -402,6 +402,7 @@
       "fieldMeta": {
         "isFrozen": { "severity": "MEDIUM" },
         "$admin": {
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
@@ -425,6 +426,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
+          "severity": "MEDIUM",
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "secAdminAC": { "severity": "MEDIUM" },
@@ -566,6 +568,7 @@
         "isFrozen": { "severity": "MEDIUM" },
         "messageCancellationDelay": { "severity": "HIGH" },
         "$admin": {
+          "severity": "MEDIUM",
           "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."
         },
         "isFinalized": {

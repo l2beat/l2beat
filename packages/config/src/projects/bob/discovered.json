@@ -506,8 +506,13 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "defaultAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         },
         "callsScheduled": {
@@ -540,6 +545,7 @@
         "isUpgrading": false,
         "owner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0": "ProxyAdmin"
       }
@@ -1370,6 +1376,7 @@
         "verifier7Manual": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "verifier_310fe598": { "severity": "HIGH" },
         "verifier_9f39696c": { "severity": "HIGH" },
         "verifier_f536085a": { "severity": "HIGH" },
@@ -1484,6 +1491,7 @@
         "wethFromDGF": "eth:0x048D0cfF3F0729117F44da6494Dbf4d78e593D95"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "game1337": { "severity": "HIGH" },
         "game621": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
@@ -1686,7 +1694,7 @@
         "ROLLUP_CONFIG_HASH": "0x56ed6a78ed98a992a16a46513ee4ee496a86302a96d0f2bcee133c21351cd681",
         "version": "1.2.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": { "$admin": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d": "Proxy",
         "eth:0xC9934Db60031aDd319d008f8d643E3b723f28e43": "KailuaVerifier"
@@ -1711,6 +1719,7 @@
         "isUpgrading": false,
         "owner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c": "ProxyAdmin"
       }
@@ -1813,6 +1822,7 @@
         "disputeGameFactory": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
+        "enabledFeatures": [],
         "gasLimit": 30000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA",
@@ -1879,10 +1889,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393": "Proxy",
@@ -3892,7 +3908,7 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba",
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
     "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
     "risc0/KailuaTreasury": "0xd9dd804b2c26d406824c61c22dca9d370ef24361dcb89aef9e249f305fd19d4d",
     "risc0/RiscZeroSetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x362a7dc44795b95f722fd65f5082ea11197bb2bc
+
+# Diff at Fri, 16 Oct 2026 05:36:52 GMT:
+
+- id: e8e053be
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1790852159
+- current timestamp: 1790852159
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790852159 (main branch discovery), not current.
+
+```diff
+    contract AuthRegistryProxyAdmin (base:0x321e0edAb1b628aEF03DBe19CC9C7dAB844f84bc) [global/ProxyAdmin] {
+    +++ description: Admin contract of the AuthRegistry proxy.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract TokenRegistryProxyAdmin (base:0x32b0998c86d33b1b6898F486dC78D80FaA27095f) [global/ProxyAdmin] {
+    +++ description: Admin contract of the TokenRegistry proxy.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AuditGatewayProxyAdmin (base:0xB32ef2884794999e1E260a3f68368A24CEF25b35) [global/ProxyAdmin] {
+    +++ description: Admin contract of the AuditGateway proxy.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract PrivacyBoostProxyAdmin (base:0xd4C0599a5d9A2CcA46Ee05a03405B3ad3407b15e) [global/ProxyAdmin] {
+    +++ description: Admin contract of the PrivacyBoost proxy.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0xeda648711b466d011ecfd57ef7c1fd19ac9cc51c
 
 # Diff at Thu, 01 Oct 2026 10:59:52 GMT:

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x00942a1633aa726e69ee8812a0c66ec43a6e56f0
+
+# Diff at Fri, 16 Oct 2026 05:36:50 GMT:
+
+- id: 063849b3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791789568
+- current timestamp: 1791789568
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789568 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x05fb6315a508468f62aa68fc915ecd9d0096b1ab
 
 # Diff at Mon, 12 Oct 2026 08:03:19 GMT:

@@ -6,6 +6,9 @@
   // default aggchain vkeys) that define valid state transitions for aggchains.
   "critical": true,
   "fields": {
+    "getAggchainMultisigHash": {
+      "severity": "MEDIUM"
+    },
     "accessControl": {
       "handler": {
         "type": "accessControl",

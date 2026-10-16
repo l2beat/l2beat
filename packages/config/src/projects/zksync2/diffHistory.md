@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x79125e104434a87a18763e3d31b438c9bb258a0b
+
+# Diff at Fri, 16 Oct 2026 05:36:55 GMT:
+
+- id: 72b8aaa4
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791452652
+- current timestamp: 1791452652
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791452652 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      fieldMeta.executionDelayEra.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.executionDelayEra_fmt.severity:
+-        "MEDIUM"
++        "HIGH"
+      fieldMeta.upgraderVTL:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x26f22a4009dd4c2177c711ad0b2e48d4ddfe7abf
 
 # Diff at Thu, 08 Oct 2026 12:03:37 GMT:

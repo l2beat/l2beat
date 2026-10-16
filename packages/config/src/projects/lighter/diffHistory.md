@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xdc8cec6f6473c8d196ef0d1487fc8fe7fce22f3d
+
+# Diff at Fri, 16 Oct 2026 05:36:51 GMT:
+
+- id: c28316b0
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791897358
+- current timestamp: 1791897358
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791897358 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      fieldMeta.securityCouncilAddress:
++        {"severity":"MEDIUM"}
+      fieldMeta.getMaster:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) [lighter/GovernancePausable] {
+    +++ description: Manages the list of validators, the network governor and the emergency pause guardians.
+      fieldMeta.networkGovernor:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x885535fa9f7e1efc35697a15b6aad5e4e2c15487
 
 # Diff at Tue, 13 Oct 2026 13:17:25 GMT:

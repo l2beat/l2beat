@@ -12,11 +12,16 @@
   "ignoreRelatives": ["nativeToken", "outboxHistory", "inboxHistory"],
   "category": "core",
   "fields": {
+    // updateRollupAddress() re-points the trusted rollup, which gates the
+    // inbox and outbox allowlists.
+    "rollup": {
+      "severity": "HIGH"
+    },
     "sequencerInbox": {
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "allowedOutboxList": {
       "description": "Can make calls as the bridge, steal all funds.",

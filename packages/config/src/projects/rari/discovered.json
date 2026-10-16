@@ -19,6 +19,7 @@
         "$immutable": true,
         "owner": "arb1:0x139C5A235632EDdad741ff380112B3161d31a21C"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "arb1:0x003e70B041abb993006C03E56c8515622a02928C": "ProxyAdmin"
       }
@@ -95,8 +96,9 @@
         ]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x139C5A235632EDdad741ff380112B3161d31a21C": "TransparentUpgradeableProxy",
@@ -179,8 +181,9 @@
         "sequencerReportedSubMessageCount": 4067010
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
@@ -243,11 +246,13 @@
         "whitelist": "arb1:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "whitelist": { "severity": "HIGH" },
         "router": { "severity": "HIGH" },
         "inbox": { "severity": "HIGH" },
         "counterpartGateway": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x2623C144B4d167f70893f6A8968B98c89a6C5F97": "TransparentUpgradeableProxy",
@@ -522,7 +527,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x37e60F80d921dc5E7f501a7130F31f6548dBa564": "TransparentUpgradeableProxy",
@@ -592,7 +597,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6": "TransparentUpgradeableProxy",
@@ -919,8 +924,9 @@
         "rollup": "arb1:0x2e988Ea0873C9d712628F0bf38DAFdE754927C89"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "arb1:0x91591BB66075BCfF94AA128B003134165C3Ab83a": "TransparentUpgradeableProxy",

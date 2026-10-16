@@ -1,3 +1,336 @@
+Generated with discovered.json: 0xe327ab2a7bf3fd56426e687bbc1abd0b2510df07
+
+# Diff at Fri, 16 Oct 2026 05:36:54 GMT:
+
+- id: 98b4c436
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791966804
+- current timestamp: 1791966804
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966804 (main branch discovery), not current.
+
+```diff
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b) [taiko/Risc0Verifier] {
+    +++ description: Gating router contract to verify batches using RISC Zero.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ERC721Vault (eth:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa) [taiko/ERC721Vault] {
+    +++ description: Escrows canonical ERC721 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Taiko Token (eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) [taiko/TaikoToken] {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) [taiko/EmergencyMultisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SecureSgxVerifier (eth:0x41e79EB4F03aBB5DF8716B759528dc5d8f6a84Ee) [taiko/SgxVerifier] {
+    +++ description: Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) [taiko/MainnetInbox] {
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TaikoSP1Verifier (eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F) [taiko/SP1Verifier] {
+    +++ description: Gating router contract to verify batches using SP1.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DefaultResolver (eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e) [taiko/DefaultResolver] {
+    +++ description: Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      fieldMeta.minVetoRatio.severity:
++        "HIGH"
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.minVetoPercent:
++        {"severity":"HIGH"}
+      fieldMeta.governanceSettings_timelockPeriod_fmt:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ERC20Vault (eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) [taiko/ERC20Vault] {
+    +++ description: Vault for canonical ERC20 tokens and their bridged representations. Deposits support standing approvals, ERC-2612 permits and Permit2 signatures. Successful deliveries consume token quota when a quota manager is configured. The bridge controls access to the refund callback.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) [taiko/DAO] {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SecureSgxVerifier (eth:0x9D3C595BFf6Ff7D2b2CbdEcF94aD917eB2fCFFd8) [taiko/SgxVerifier] {
+    +++ description: Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SignalService (eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ERC1155Vault (eth:0xaf145913EA4a56BE22E120ED9C24589659881702) [taiko/ERC1155Vault] {
+    +++ description: Escrows canonical ERC1155 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract QuotaManager (eth:0xBaCb003f0B13CeAF09Eb9Baf5915A640BD4Bc6cC) [taiko/QuotaManager] {
+    +++ description: Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Bridge (eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) [taiko/Bridge] {
+    +++ description: Bridge escrow for ETH and cross-chain messages. Pausing stops all message flows. The immutable recallEnabled setting controls failed-message refunds. Successful ETH releases use the configured quota manager.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProverWhitelist (eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae) [taiko/ProverWhitelist] {
+    +++ description: Defines the prover whitelist queried by the inbox before accepting proofs. If the inbox is configured with this contract and the whitelist is non-empty, only whitelisted provers can prove proposals.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Bridge (taiko:0x1670000000000000000000000000000000000001) [taiko/Bridge] {
+    +++ description: Bridge escrow holding preminted ETH on Taiko. Failed messages remain retryable, but message failure and source-chain refunds are disabled.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ERC20Vault (taiko:0x1670000000000000000000000000000000000002) [taiko/ERC20Vault] {
+    +++ description: Vault for canonical ERC20 tokens and their bridged representations. Deposits support standing approvals, ERC-2612 permits and Permit2 signatures. Successful deliveries consume token quota when a quota manager is configured. The bridge controls access to the refund callback.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ERC721Vault (taiko:0x1670000000000000000000000000000000000003) [taiko/ERC721Vault] {
+    +++ description: Escrows canonical ERC721 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ERC1155Vault (taiko:0x1670000000000000000000000000000000000004) [taiko/ERC1155Vault] {
+    +++ description: Escrows canonical ERC1155 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SignalService (taiko:0x1670000000000000000000000000000000000005) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Anchor (taiko:0x1670000000000000000000000000000000010001) [taiko/Anchor] {
+    +++ description: Stores L1 block details on L2 as a cross-layer oracle and manages EIP-1559 gas pricing for L2 operations.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DefaultResolver (taiko:0x2ea05A9CD06984Cf533a1829d8b0BE6289a43984) [taiko/DefaultResolver] {
+    +++ description: Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) [taiko/DelegateController] {
+    +++ description: Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0xeb3c0ae3066ad3647e5ab0e004eef5eef0efecc4
 
 # Diff at Wed, 14 Oct 2026 08:34:44 GMT:

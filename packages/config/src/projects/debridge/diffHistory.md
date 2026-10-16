@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x0050f50266e726acb522fd7ea0fbf0c8328ad201
+
+# Diff at Fri, 16 Oct 2026 05:36:48 GMT:
+
+- id: edd5d981
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791789484
+- current timestamp: 1791789484
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789484 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xA7b88A746FA457578D5abd6234471f07D895F46b) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xA813476c73514012F5825Cbd408d05A19742714e) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb54CD1e74f232C6de444464C81f81D13E6978816) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x144bdd0722e59a8c60ad13f21700aba2e3e58b97
 
 # Diff at Mon, 12 Oct 2026 08:16:37 GMT:

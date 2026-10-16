@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xc8e18a31a5652e74d1f00e71f64c5e70a26a5ca2
+
+# Diff at Fri, 16 Oct 2026 05:36:54 GMT:
+
+- id: 4ba9cb12
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1763728682
+- current timestamp: 1763728682
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763728682 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (base:0x52fA397D799f1CE416a2089B964Aa293c347994F) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta.guardian:
++        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SystemConfig (base:0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (base:0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0xeeee0f9c15ae4f437010a1ed0acbbacca7d35d45
 
 # Diff at Wed, 23 Sep 2026 05:50:07 GMT:

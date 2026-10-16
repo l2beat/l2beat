@@ -9,6 +9,14 @@
       "updateId": "54877ab0"
     },
     {
+      "timestamp": 1716892271,
+      "type": "state",
+      "contract": "eth:0x1Ea29d57dAC237152d878758bAe4BeB2668998f6",
+      "transaction": "0x82c92e0fab361bcb2130a96eb2537f7d841a2c6215c7417df3e8ec7a03d23f48",
+      "updateId": "5e37408c",
+      "reason": "Moved ownership of the live MultipleVersionRollupVerifier from Scroll Multisig 3 to ScrollOwner, putting verifier updates behind the ScrollOwner timelock roles (OwnershipTransferred)."
+    },
+    {
       "timestamp": 1721018087,
       "type": "state",
       "contract": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",

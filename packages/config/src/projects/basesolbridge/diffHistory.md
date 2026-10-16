@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x515e9f9c0cd81c649cbdba5f9b9cf04d6e495326
+
+# Diff at Fri, 16 Oct 2026 05:36:47 GMT:
+
+- id: 08871f6a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1787816633
+- current timestamp: 1787816633
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787816633 (main branch discovery), not current.
+
+```diff
+    contract TwinBeacon (base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as base:0xb0887e4793d944Cf7bA674B3b3FA5C15900ddaA7. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract CrossChainERC20Beacon (base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as base:0x0c39C78Dc31082187D8D7de9937bA46Ddba3c043. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x29a6f3484edc2b815c058288852a5179fdd14d11
 
 # Diff at Fri, 25 Sep 2026 12:12:05 GMT:

@@ -209,7 +209,6 @@
       "type": "state",
       "contract": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
       "transaction": "0xf2929a5ee3c2a073de95293f91f163b4d743fdec38e4dceaa7c4796e090783c3",
-      "updateId": "7ec2eb8d",
       "reason": "SwitchManagerRolesAction: moved MEMBER_ADDER, MEMBER_REPLACER, MEMBER_ROTATOR and MEMBER_REMOVER roles on the SecurityCouncilManager from the emergency Security Council (0x423552c0) to the non-emergency Security Council (0xADd68bCb)."
     },
     {
@@ -266,5 +265,9 @@
       "updateId": "b0f8c079",
       "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 61."
     }
+  ],
+  "ignoredTransactions": [
+    "0x079984c56c5670108f5c6f664904178f9b364340351949a42e4637d1f645f770",
+    "0xc2e247e5869aaf5b57ff1cc5da8b56f6675161ad6f980b547846f209e43e145b"
   ]
 }

@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x2c0186e7722da86edd6c071d8d3b1d945a2e60c8
+
+# Diff at Fri, 16 Oct 2026 05:36:52 GMT:
+
+- id: caa6661d
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1768984798
+- current timestamp: 1768984798
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984798 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.executors.severity:
+-        "LOW"
++        "MEDIUM"
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xa4270256B160C3Ebec2d6914a906c7EC38D8d072) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Inbox (arb1:0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x4d3d373eed573f962938bd5af0b8de620622d473
 
 # Diff at Sun, 04 Oct 2026 05:55:35 GMT:

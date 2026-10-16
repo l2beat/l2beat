@@ -3,6 +3,8 @@
   "description": "Contract used to bridge ERC721 tokens from L1 to L2.",
   "category": "bridge-canonical",
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "counterpart": {
       "edit": ["format", "ScrollAddress"]
     }

@@ -113,6 +113,14 @@
       "reason": "SystemConfig re-initialization repointed superchainConfig from Optimism's shared SuperchainConfig 0x95703e to Base's own SuperchainConfig 0xb535 (guardian: Base Governance Multisig). OptimismPortal2, L1StandardBridge, L1CrossDomainMessenger, AnchorStateRegistry and the DelayedWETHs read the pause authority through SystemConfig."
     },
     {
+      "timestamp": 1772559431,
+      "type": "state",
+      "contract": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
+      "transaction": "0x117b78c970396446c891ba82439351555c537f04d0d90222a9d523975bfe599b",
+      "updateId": "91b4eeeb",
+      "reason": "The Base Security Council, a signer of the Base Governance Multisig that owns this ProxyAdmin, added an 11th member and raised its threshold from 7 to 8."
+    },
+    {
       "timestamp": 1780160147,
       "type": "state",
       "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",

@@ -483,7 +483,7 @@
         ]
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -530,7 +530,7 @@
         "upgradeTimestamps": []
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -561,6 +561,7 @@
         "$immutable": true,
         "owner": "eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x34f56Ba641aC59E897c6179ffeCAe9769fbfC90C": "ProxyAdmin"
       }
@@ -835,6 +836,7 @@
         "$immutable": true,
         "owner": "eth:0x8253F33026c49A430963FE3991441c02175bda95"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8140aBB60c9AfB5241D90af948Cfa7644b2D3217": "ProxyAdmin"
       }

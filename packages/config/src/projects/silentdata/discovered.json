@@ -107,8 +107,8 @@
         "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
@@ -531,10 +531,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x5c3Efe3cA554816E9960C02AE3B4EB3A9a8D2E16": "Proxy",
@@ -673,6 +679,7 @@
         "isUpgrading": false,
         "owner": "eth:0x61E7D85244Db59e0c03D8C82A0c8ABA78BcBa6Af"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xa78F3521D5aDF038826f0FE3e809DF64Ec8a241D": "ProxyAdmin"
       }
@@ -809,6 +816,7 @@
         "isUpgrading": false,
         "owner": "eth:0xE512f69D8aEed75c737190F4dB84687FBa7C5e88"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xd8eAb3ed39Df0afB9BFD853f49637F7E73963966": "ProxyAdmin"
       }

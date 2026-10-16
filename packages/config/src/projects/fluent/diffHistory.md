@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xcdccbd5450a05a828d2b1785987090c04b1db3e0
+
+# Diff at Fri, 16 Oct 2026 05:36:49 GMT:
+
+- id: d52293ce
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1790592672
+- current timestamp: 1790592672
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790592672 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0xdD283a04cc711aB9c08d79e665835821BEef710B) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0x2d2894cc642b320eee2b15e6bb6f51cf502aba07
 
 # Diff at Mon, 28 Sep 2026 13:34:25 GMT:

@@ -9,6 +9,8 @@
   "category": "gov",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "daoController": {
       "severity": "HIGH",
       "edit": ["format", "EthereumAddress"],

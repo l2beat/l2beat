@@ -17,7 +17,9 @@
     "getFirstUnfinalizedMessageEnqueueTime"
   ],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -29,10 +31,9 @@
     "maxGasLimit": {
       "severity": "MEDIUM"
     },
-    // Every enqueue (including forced transactions) calls isSenderAllowed() on this
-    // contract to price the message, so a reverting checker blocks the escape hatch.
+    // Every enqueue calls isSenderAllowed() on it, but only to waive the fee.
     "whitelistChecker": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

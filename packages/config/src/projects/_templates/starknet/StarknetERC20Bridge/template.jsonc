@@ -26,6 +26,7 @@
       "severity": "MEDIUM"
     },
     "$admin": {
+      "severity": "MEDIUM",
       "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.",
       "permissions": [
         {
@@ -138,6 +139,7 @@
       }
     },
     "govAdminAC": {
+      "severity": "MEDIUM",
       "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.",
       "handler": {
         "type": "accessControl",

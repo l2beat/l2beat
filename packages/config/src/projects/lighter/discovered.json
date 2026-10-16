@@ -577,6 +577,8 @@
         "zkLighterProxy": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
       },
       "fieldMeta": {
+        "securityCouncilAddress": { "severity": "MEDIUM" },
+        "getMaster": { "severity": "MEDIUM" },
         "approvedUpgradeNoticePeriod": {
           "severity": "MEDIUM",
           "description": "Raw upgrade delay in seconds. It can be skipped by the security council."
@@ -749,6 +751,7 @@
         ]
       },
       "fieldMeta": {
+        "networkGovernor": { "severity": "MEDIUM" },
         "pauseGuardian": {
           "severity": "MEDIUM",
           "description": "Can halt batch processing and withdrawals for up to 24h, with a 24h cooldown between pauses."

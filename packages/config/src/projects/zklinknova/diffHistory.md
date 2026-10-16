@@ -1,3 +1,94 @@
+Generated with discovered.json: 0xb3f61103b218411c2be95d1e14cd981cf1af5e88
+
+# Diff at Fri, 16 Oct 2026 05:36:55 GMT:
+
+- id: bfd718f5
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (base:0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract EthereumProxyAdmin (eth:0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract MantaProxyAdmin (manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract MantleProxyAdmin (mantle:0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ScrollProxyAdmin (scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract EraProxyAdmin (zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0xaad4a401c8706e3af2bc1c3596bf792a0f2b1392
 
 # Diff at Wed, 23 Sep 2026 05:50:44 GMT:

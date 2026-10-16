@@ -290,6 +290,7 @@
         "isUpgrading": false,
         "owner": "eth:0x2876c43B17A5750CBea5E2A3C42718374E21D5a2"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x566c7DB023111D897F16b602B2B57f0F12f7bF44": "ProxyAdmin"
       }
@@ -349,7 +350,11 @@
         "systemConfig": "eth:0xf565303B5326C8653E78e5f73a2984f6F778C9E8",
         "version": "2.6.0"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x9fDEEa19836A413C04e9672d3d09f482278e863c": "Proxy",
         "eth:0xCEa36be2e9724d88cB107C552c602a8025DB88bA": "OptimismPortal"
@@ -497,6 +502,7 @@
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0x52ee324F2bCD0c5363d713eb9f62D1eE47266ac1",
         "batchInbox": "eth:0x9BE0c82d5bA973a9e6861695626D4F9983e80C88",
+        "enabledFeatures": [],
         "gasLimit": 30000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
@@ -541,10 +547,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xf565303B5326C8653E78e5f73a2984f6F778C9E8": "Proxy",
@@ -931,7 +943,7 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal": "0x9965c29a37e54bf5eb2175e2aee7d367fb11669af9b1e358af2c30fd8c9e47b8",
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 25748761 },
   "permissionsConfigHash": "0xdb8fbbd2ce693a52506249bb56af96341dee97db59353e291e210f6250a9de65",

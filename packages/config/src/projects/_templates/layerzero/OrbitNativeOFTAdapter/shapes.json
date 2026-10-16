@@ -1,7 +1,8 @@
 {
   "OrbitNativeOFTAdapter": {
-    "hash": "0xdc7fa9200a150735467f7b832663c27d5df9487fe7a30b8b8abc3d3e833081ff",
+    "hash": "0x7a71d39ddb79529955d66cf5907e1b5f505eed9105f5fc34e2fe0f5ccb6cdbf9",
     "address": "ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3",
-    "blockNumber": 38804
+    "chain": "ethereal",
+    "blockNumber": 5339102
   }
 }

@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2CustomGateway",
+  // Counterpart of the critical L1 CustomGateway: its withdrawal messages
+  // release the L1 escrow.
+  "critical": true,
+  "category": "bridge-canonical",
+  "description": "Counterpart to the L1CustomGateway. Mints and burns custom ERC20 tokens on L2 for deposits and withdrawals through the L1CustomGateway escrow.",
+  "ignoreRelatives": ["counterpartGateway"],
+  "ignoreInWatchMode": ["exitNum"],
+  "fields": {
+    "router": {
+      "severity": "HIGH"
+    },
+    "counterpartGateway": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "MEDIUM"
+    }
+  }
+}

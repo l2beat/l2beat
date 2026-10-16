@@ -51,7 +51,11 @@
         "systemConfig": "eth:0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32",
         "version": "2.5.0"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x0485Ca8A73682B3D3f5ae98cdca1E5b512E728e9": "Proxy",
         "eth:0xF3C933F69a43f5a967062448F62b736043b5dEf5": "OptimismPortal"
@@ -382,6 +386,7 @@
         "isUpgrading": false,
         "owner": "eth:0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191": "ProxyAdmin"
       }
@@ -573,10 +578,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32": "Proxy",

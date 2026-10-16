@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x94e62e2be5d2d4db427dfe81c4bf6ae65fa51d37
+
+# Diff at Fri, 16 Oct 2026 05:36:53 GMT:
+
+- id: 34e82582
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791789180
+- current timestamp: 1791789180
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789180 (main branch discovery), not current.
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.getAggchainMultisigHash:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SharedProxyAdmin (eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      fieldMeta.isEmergencyState.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.tweakParametersAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.createRollupAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.emergencyCouncilAdminAC:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Timelock (eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) [polygon-cdk/Timelock] {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0xf20b9d6b80b385815ceda9b8e83a2e17ab7a285c
 
 # Diff at Mon, 12 Oct 2026 07:14:52 GMT:

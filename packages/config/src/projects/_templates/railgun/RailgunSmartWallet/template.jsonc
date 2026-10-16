@@ -16,7 +16,7 @@
   "fields": {
     "$admin": {
       "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet proxy.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "type": "PERMISSION",
       "permissions": [
         {
@@ -31,7 +31,7 @@
     },
     "owner": {
       "description": "Governance-controlled owner of the smart wallet logic.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "type": "PERMISSION",
       "permissions": [
         {

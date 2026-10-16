@@ -20,6 +20,7 @@
         "$immutable": true,
         "owner": "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB": "ProxyAdmin"
       }
@@ -156,8 +157,9 @@
           "severity": "HIGH",
           "description": "Ecosystem-wide minimum execution delay, set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
         },
-        "executionDelayEra": { "severity": "MEDIUM" },
-        "executionDelayEra_fmt": { "severity": "MEDIUM" }
+        "upgraderVTL": { "severity": "MEDIUM" },
+        "executionDelayEra": { "severity": "HIGH" },
+        "executionDelayEra_fmt": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",

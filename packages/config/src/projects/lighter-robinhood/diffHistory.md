@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xc9eb22a4cae1c70c82f72f3b296ba62827ab1cae
+
+# Diff at Fri, 16 Oct 2026 05:36:51 GMT:
+
+- id: b2223e17
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791898285
+- current timestamp: 1791898285
+
+## Description
+
+Ossification review: retired ChallengeManager, StandardArbERC20 master copy and ASR opsuccinct pointers without severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791898285 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      fieldMeta.securityCouncilAddress:
++        {"severity":"MEDIUM"}
+      fieldMeta.getMaster:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      fieldMeta:
++        {"networkGovernor":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x6a020c4556af82c75085a078e0c0bdd53af500d3
 
 # Diff at Tue, 13 Oct 2026 13:47:36 GMT:
