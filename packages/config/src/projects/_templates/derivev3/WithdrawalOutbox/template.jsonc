@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Pays out withdrawals committed to by batches proven in {{ VERIFIABLE_APP }} from the registered asset vaults, subject to USD-denominated per-recipient and global rate limits.",
+  "ignoreMethods": ["deferredWithdrawals"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register assets and their vaults, set rate limits, static prices and the minimum time between guardian refills, appoint the guardian and pausers, pause and unpause, and pay out deferred withdrawals without rate limits."
+        }
+      ]
+    },
+    "guardian": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "refill withdrawal rate limit buckets and pause withdrawals."
+        }
+      ]
+    },
+    "pausers": {
+      "handler": {
+        "type": "event",
+        "select": "pauser",
+        "add": { "event": "PauserSet", "where": ["=", "#allowed", true] },
+        "remove": { "event": "PauserSet", "where": ["!=", "#allowed", true] }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause all withdrawal payouts. Only the owner can unpause."
+        }
+      ]
+    }
+  }
+}

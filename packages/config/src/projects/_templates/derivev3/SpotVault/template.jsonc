@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Escrow for the collateral deposited to Derive. It grants {{ OUTBOX }} unlimited allowance for approved tokens.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "approve or revoke the withdrawal outbox's allowance for any token."
+        }
+      ]
+    }
+  }
+}

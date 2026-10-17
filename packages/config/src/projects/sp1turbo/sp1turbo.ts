@@ -87,6 +87,10 @@ export const sp1turbo: BaseProject = {
         untilTimestamp: UnixTime(1791526391), // v5 route permanently frozen on the Ethereum SP1 gateway
       },
       {
+        projectId: ProjectId('derivev3'),
+        sinceTimestamp: UnixTime(1791311591), // first submitBatch 2026-10-06
+      },
+      {
         projectId: ProjectId('forknet'),
         sinceTimestamp: UnixTime(1753882500),
       },

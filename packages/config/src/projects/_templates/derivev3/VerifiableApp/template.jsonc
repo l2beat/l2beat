@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Holds the state root and verifies SP1 validity proofs for each batch through {{ verifier }}. Each proof also commits to a Celestia header range and blob hash-chain, which this contract chains from a stored Celestia anchor and checks for freshness.",
+  "critical": true,
+  "ignoreInWatchMode": [
+    "stateRoot",
+    "consumedPublicAccIndex",
+    "consumedAdminAccIndex",
+    "lastOpTimestamp",
+    "celestiaTrustedHeight",
+    "celestiaTrustedHash",
+    "celestiaLastCommitment",
+    "getCelestiaAnchor"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the state root, the program verification key, the verifier and the trusted Celestia anchor, and set the batch submitter and its stall timeout."
+        }
+      ]
+    },
+    "batchSubmitter": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "exclusively submit batches with validity proofs, until the oldest unprocessed L1 action is older than the submitter stall timeout."
+        }
+      ]
+    },
+    "submitterStallTimeout": {
+      "severity": "HIGH",
+      "description": "Time after which anyone can remove the batch submitter if an L1 action stays unprocessed."
+    },
+    "programVKey": { "severity": "HIGH" },
+    "verifier": { "severity": "HIGH" }
+  }
+}
