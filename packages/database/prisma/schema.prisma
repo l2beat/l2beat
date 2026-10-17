@@ -561,6 +561,22 @@ model InteropTransfer {
   @@index([dstAbstractTokenId, timestamp(sort: Desc)])
 }
 
+/// The current CROPS attestation of each attester, as the backend last read it from EAS
+model CropAttestation {
+  chainId     Int
+  attester    String   @db.VarChar(42)
+  uid         String   @db.VarChar(66)
+  revision    Int
+  reviewedAt  DateTime @db.Timestamp(6)
+  projectIds  String[] @db.VarChar(255)
+  txHash      String   @db.VarChar(66)
+  blockNumber Int
+  /// When the backend last read it, so a stalled read is visible
+  updatedAt   DateTime @db.Timestamp(6)
+
+  @@id([chainId, attester])
+}
+
 model EcosystemToken {
   projectId                 String   @db.VarChar(255)
   coingeckoId               String   @db.VarChar(255)

@@ -36,6 +36,7 @@ export type {
   ChainRecord,
   ChainUpdateable,
 } from './repositories/ChainRepository'
+export type { CropAttestationRecord } from './repositories/CropAttestationRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
   DataAvailabilityRecord,
