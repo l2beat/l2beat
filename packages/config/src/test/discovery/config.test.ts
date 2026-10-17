@@ -20,6 +20,7 @@ import { configReader, configs, discoveryOf, paths } from './fixtures'
 // (so we don't show them on the frontend), but we still
 // want to monitor using discovery.
 export const onChainProjects: string[] = [
+  'eigenda',
   'shared-eigenlayer',
   'swell',
   'worldcoin',
