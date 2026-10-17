@@ -83,7 +83,7 @@ export abstract class ClientCore {
     return response
   }
 
-  /** This method should return false when there are errors in the response, true otherwise */
+  /** Return a result with success: false for error responses and an optional message. */
   abstract validateResponse(response: json): {
     success: boolean
     message?: string
