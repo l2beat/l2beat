@@ -47,7 +47,8 @@
         "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
         "chain": "superseed",
         "decimals": 6,
-        "sinceTimestamp": 1741824000
+        "sinceTimestamp": 1741824000,
+        "untilTimestamp": 1786752000
       },
       "category": "stablecoin",
       "source": "external",
@@ -92,7 +93,8 @@
         "address": "0xC316C8252B5F2176d0135Ebb0999E99296998F2e",
         "chain": "superseed",
         "decimals": 6,
-        "sinceTimestamp": 1736294021
+        "sinceTimestamp": 1736294021,
+        "untilTimestamp": 1786752000
       },
       "category": "stablecoin",
       "source": "external",
