@@ -1530,16 +1530,6 @@ export type PrivacyFlowExtractorConfig =
       }
     }
   | {
-      extractor: 'zamaWrap'
-      params: Record<string, never>
-    }
-  | {
-      extractor: 'zamaUnwrap'
-      params: {
-        rate: string
-      }
-    }
-  | {
       extractor: 'strk20Deposit'
       params: {
         tokenAddress: string
