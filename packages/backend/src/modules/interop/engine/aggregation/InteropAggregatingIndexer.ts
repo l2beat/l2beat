@@ -12,13 +12,21 @@ import type {
   ReconcileResult,
 } from '../promotion/InteropPromotionService'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
-import type { InteropAggregationService } from './InteropAggregationService'
+import type {
+  AggregationResult,
+  InteropAggregationService,
+} from './InteropAggregationService'
+import {
+  carryForwardStaleLanes,
+  getStaleChains,
+  type StaleChains,
+} from './staleLanes'
 
 /**
  * How stale the syncers' captured data may be relative to the aggregation
- * window end before we skip the hour. `to` is the last whole hour (already up
- * to an hour in the past), so a syncer must lag by more than this plus that
- * gap to trip the check.
+ * window end before its lanes are carried forward instead of aggregated. `to`
+ * is the last whole hour (already up to an hour in the past), so a syncer must
+ * lag by more than this plus that gap to trip the check.
  */
 export const SYNCER_FRESHNESS_TOLERANCE = 30 * UnixTime.MINUTE
 
@@ -41,30 +49,33 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
   }
 
   override async update(_: number, to: number): Promise<number> {
-    const syncersFresh = await this.$.syncersManager.areSyncersFreshEnough(
-      to,
-      SYNCER_FRESHNESS_TOLERANCE,
+    const staleChains = getStaleChains(
+      this.$.configs,
+      await this.$.syncersManager.getLaggingChainsByPlugin(
+        to,
+        SYNCER_FRESHNESS_TOLERANCE,
+      ),
     )
-    if (!syncersFresh) {
-      this.logger.info(
-        'Skipping aggregation - syncers captured data is not fresh enough',
-      )
-      // This is a deliberate no-op: aggregates are best-effort hourly snapshots.
-      // If syncers are behind, we leave this hour empty and try again next hour.
-      return to
-    }
 
     const from = to - UnixTime.DAY
     const retentionCutoff = to - 14 * UnixTime.DAY
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
 
+    const fresh = this.$.aggregationService.aggregate(
+      transfers,
+      this.$.configs,
+      to,
+    )
     const {
       aggregatedTransfers,
       aggregatedTokens,
       aggregatedDeployedTokens,
       aggregatedTokensPairs,
-    } = this.$.aggregationService.aggregate(transfers, this.$.configs, to)
+    } =
+      staleChains.size === 0
+        ? fresh
+        : await this.carryFromPreviousSnapshot(fresh, staleChains, to)
 
     let promotion: ReconcileResult | undefined
     await this.$.db.transaction(async () => {
@@ -110,12 +121,60 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
 
     this.logger.info('Aggregated interop transfers saved to db', {
       aggregatedRecords: aggregatedTransfers.length,
+      carriedForwardLanes: aggregatedTransfers.filter((t) => t.carriedFrom)
+        .length,
+      partialLanes: aggregatedTransfers.filter((t) => t.isPartial).length,
       aggregatedTokens: aggregatedTokens.length,
       aggregatedDeployedTokens: aggregatedDeployedTokens.length,
       aggregatedTokenPairs: aggregatedTokensPairs.length,
     })
 
     return to
+  }
+
+  private async carryFromPreviousSnapshot(
+    fresh: AggregationResult,
+    staleChains: StaleChains,
+    to: UnixTime,
+  ): Promise<AggregationResult> {
+    // A blocked snapshot may hold the very data that got it blocked, so only a
+    // promoted one is a carry source. Otherwise one bad lane, copied while its
+    // syncer catches up, would keep blocking every lane after it.
+    const previousTimestamp =
+      await this.$.db.interopAggregateStatus.getLatestPromotedTimestampAtOrBefore(
+        to - 1,
+      )
+    this.logger.warn('Carrying stale lanes forward from previous snapshot', {
+      previousTimestamp,
+      staleChains: Object.fromEntries(
+        [...staleChains].map(([key, chains]) => [key, [...chains]]),
+      ),
+    })
+    const previous =
+      previousTimestamp === undefined
+        ? EMPTY_SNAPSHOT
+        : await this.loadSnapshot(previousTimestamp)
+    return carryForwardStaleLanes(fresh, previous, staleChains, to)
+  }
+
+  private async loadSnapshot(timestamp: UnixTime): Promise<AggregationResult> {
+    const [
+      aggregatedTransfers,
+      aggregatedTokens,
+      aggregatedDeployedTokens,
+      aggregatedTokensPairs,
+    ] = await Promise.all([
+      this.$.db.aggregatedInteropTransfer.getByTimestamp(timestamp),
+      this.$.db.aggregatedInteropToken.getByTimestamp(timestamp),
+      this.$.db.aggregatedInteropDeployedToken.getByTimestamp(timestamp),
+      this.$.db.aggregatedInteropTokensPair.getByTimestamp(timestamp),
+    ])
+    return {
+      aggregatedTransfers,
+      aggregatedTokens,
+      aggregatedDeployedTokens,
+      aggregatedTokensPairs,
+    }
   }
 
   isAggregationInProgress(): boolean {
@@ -126,4 +185,11 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
   override invalidate(_: number): Promise<number> {
     return Promise.resolve(0)
   }
+}
+
+const EMPTY_SNAPSHOT: AggregationResult = {
+  aggregatedTransfers: [],
+  aggregatedTokens: [],
+  aggregatedDeployedTokens: [],
+  aggregatedTokensPairs: [],
 }
