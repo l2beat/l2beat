@@ -17,6 +17,7 @@ import { IconFileDiff } from '../../../icons/IconFileDiff'
 import { IconGear } from '../../../icons/IconGear'
 import { IconList } from '../../../icons/IconList'
 import { IconNodes } from '../../../icons/IconNodes'
+import { IconShare } from '../../../icons/IconShare'
 import { IconSigma } from '../../../icons/IconSigma'
 import { IconStamp } from '../../../icons/IconStamp'
 import { IconTerminal } from '../../../icons/IconTerminal'
@@ -35,6 +36,7 @@ import { TerminalPanel } from '../panel-terminal/TerminalPanel'
 import { TvlPanel } from '../panel-tvl/TvlPanel'
 import { TvlMapPanel } from '../panel-tvl-map/TvlMapPanel'
 import { ValuesPanel } from '../panel-values/ValuesPanel'
+import { UsagePanel } from '../usage/UsagePanel'
 import { TabExtras } from './TabExtras'
 
 export const PANEL_IDS = [
@@ -50,6 +52,7 @@ export const PANEL_IDS = [
   'diffHistory',
   'tvl',
   'tvlMap',
+  'usage',
 ] as const
 
 export type PanelId = (typeof PANEL_IDS)[number]
@@ -72,6 +75,7 @@ const PANELS: Record<PanelId, Panel> = {
   diffHistory: { icon: IconFileDiff, body: DiffHistoryPanel },
   tvl: { icon: IconToken, body: TvlPanel },
   tvlMap: { icon: IconTreemap, body: TvlMapPanel },
+  usage: { icon: IconShare, body: UsagePanel },
 }
 
 const unallowedInReadOnly = new Set([
@@ -79,6 +83,7 @@ const unallowedInReadOnly = new Set([
   'analyze',
   'tvl',
   'tvlMap',
+  'usage',
 ] as PanelId[])
 
 export function isAllowedPanel(id: PanelId): boolean {

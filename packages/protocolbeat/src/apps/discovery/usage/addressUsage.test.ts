@@ -1,6 +1,10 @@
 import { expect } from 'earl'
-import type { ApiAddressUsageResponse } from '../../../api/types'
-import { summarizeAddressUsage } from './addressUsage'
+import type {
+  ApiAddressEntry,
+  ApiAddressUsageResponse,
+  ApiProjectChain,
+} from '../../../api/types'
+import { summarizeAddressUsage, summarizeProjectUsage } from './addressUsage'
 
 const MODULE = 'shared-zk-stack'
 const OWN = 'eth:0x0000000000000000000000000000000000000001'
@@ -158,3 +162,74 @@ describe(summarizeAddressUsage.name, () => {
     })
   })
 })
+
+describe(summarizeProjectUsage.name, () => {
+  it('counts every address of the project by how it is used', () => {
+    const summary = summarizeProjectUsage(USAGE, 'aevo', [
+      chain('aevo', [OWN, CONDUIT_SAFE]),
+      chain(MODULE, [BRIDGE_HUB, MODULE_INTERNAL]),
+    ])
+
+    expect(summary).toEqual({
+      addressCount: 4,
+      standaloneCount: 1,
+      duplicatedCount: 1,
+      moduleAddressCount: 2,
+      modules: [{ module: MODULE, addressCount: 2, consumerCount: 3 }],
+      candidates: [],
+      overlaps: [
+        { project: 'ancient', addresses: [entry(CONDUIT_SAFE)] },
+        { project: 'bob', addresses: [entry(CONDUIT_SAFE)] },
+      ],
+    })
+  })
+
+  it('groups addresses used by the same projects into a candidate', () => {
+    const usage: ApiAddressUsageResponse = {
+      sharedAddresses: {
+        [OWN]: [{ project: 'aevo' }, { project: 'bob' }, { project: 'zora' }],
+        [CONDUIT_SAFE]: [
+          { project: 'zora' },
+          { project: 'aevo' },
+          { project: 'bob' },
+        ],
+        [BRIDGE_HUB]: [{ project: 'aevo' }, { project: 'zora' }],
+      },
+      moduleConsumers: {},
+      entrypoints: {},
+    }
+
+    const summary = summarizeProjectUsage(usage, 'aevo', [
+      chain('aevo', [OWN, CONDUIT_SAFE, BRIDGE_HUB]),
+    ])
+
+    expect(summary.candidates).toEqual([
+      {
+        projects: ['bob', 'zora'],
+        addresses: [entry(OWN), entry(CONDUIT_SAFE)],
+      },
+    ])
+    expect(summary.overlaps.map((x) => x.project)).toEqual(['zora', 'bob'])
+  })
+})
+
+function chain(project: string, addresses: string[]): ApiProjectChain {
+  return {
+    project,
+    initialContracts: [],
+    discoveredContracts: [],
+    eoas: addresses.map((address) => ({
+      ...entry(address),
+      roles: [],
+      type: 'EOA',
+      referencedBy: [],
+      chain: 'ethereum',
+      isReachable: true,
+    })) satisfies ApiAddressEntry[],
+    blockNumbers: {},
+  }
+}
+
+function entry(address: string): { address: string; name: string } {
+  return { address, name: `Name ${address.slice(-1)}` }
+}
