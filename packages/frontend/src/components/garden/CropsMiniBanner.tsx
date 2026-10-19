@@ -4,10 +4,11 @@ import { type GardenFlower, GardenFlowers, GardenLandscape } from './GardenSky'
 
 /**
  * On the nearest ridge, which climbs to the right. The strip starts where
- * the subtitle ends, so the hills, low at their left edge, stay clear of it.
+ * the subtitle ends, so the hills, rising from the ground there, stay clear
+ * of it.
  */
 const FLOWERS: GardenFlower[] = [
-  { left: '42%', bottom: '5%', width: 13 },
+  { left: '42%', bottom: '3.5%', width: 13 },
   { left: '78%', bottom: '11%', width: 15 },
 ]
 

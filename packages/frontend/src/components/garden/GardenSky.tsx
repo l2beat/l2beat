@@ -5,7 +5,8 @@ import { CropPlant, type PlantMotion } from './CropPlant'
 // The garden's landscape, shared by its page backdrop and the CROPS banners
 // elsewhere, so the garden looks the same wherever it shows: four ridges that
 // fade with distance and a low sun behind the farthest one, a moon in dark mode.
-// The hills sit low on the left, where a banner puts its text.
+// Each ridge rises from the ground at its left end, where a banner puts its
+// text, so a strip that starts partway across a card shows the hills whole.
 
 const SKY =
   'bg-[linear-gradient(180deg,#e2eee1_0%,#edf2de_55%,#f8f0cf_100%)] dark:bg-[linear-gradient(180deg,#060b16_0%,#0c1527_60%,#1a2336_100%)]'
@@ -13,19 +14,19 @@ const SKY =
 /** Far to near, drawn in a 1200x200 box. */
 const RIDGES = [
   {
-    d: 'M0 170 C200 162 380 140 560 114 C720 94 820 70 940 72 C1060 74 1130 90 1200 84 L1200 200 L0 200 Z',
+    d: 'M0 200 C200 200 380 140 560 114 C720 94 820 70 940 72 C1060 74 1130 90 1200 84 L1200 200 Z',
     className: 'fill-[#d5e4cb] dark:fill-[#172131]',
   },
   {
-    d: 'M0 182 C220 178 420 166 600 142 C760 124 880 106 1000 110 C1100 113 1160 122 1200 120 L1200 200 L0 200 Z',
+    d: 'M0 200 C220 200 420 166 600 142 C760 124 880 106 1000 110 C1100 113 1160 122 1200 120 L1200 200 Z',
     className: 'fill-[#bdd6ac] dark:fill-[#152620]',
   },
   {
-    d: 'M0 190 C260 188 480 180 700 166 C860 154 1000 142 1200 150 L1200 200 L0 200 Z',
+    d: 'M0 200 C260 200 480 180 700 166 C860 154 1000 142 1200 150 L1200 200 Z',
     className: 'fill-[#9fc48a] dark:fill-[#132b1b]',
   },
   {
-    d: 'M0 196 C300 195 560 192 800 182 C960 176 1100 172 1200 176 L1200 200 L0 200 Z',
+    d: 'M0 200 C300 200 560 192 800 182 C960 176 1100 172 1200 176 L1200 200 Z',
     className: 'fill-[#7eab68] dark:fill-[#0f2314]',
   },
 ]

@@ -25,10 +25,10 @@ const BANNER_LABELS: Partial<Record<CropKey, string>> = {
  * to the right, so each stands a little higher than the last.
  */
 const FLOWERS: GardenFlower[] = [
-  { left: '30%', bottom: '3%', width: 30 },
-  { left: '50%', bottom: '5%', width: 34 },
-  { left: '70%', bottom: '9.5%', width: 30 },
-  { left: '88%', bottom: '13%', width: 32 },
+  { left: '46%', bottom: '4%', width: 30 },
+  { left: '62%', bottom: '7.5%', width: 34 },
+  { left: '77%', bottom: '11%', width: 30 },
+  { left: '91%', bottom: '12.5%', width: 32 },
 ]
 
 /**
@@ -47,9 +47,9 @@ export function HomeCropsBanner({
       <a href={GARDEN_PATH}>
         <GardenLandscape
           flat
-          className="left-[54%]"
+          className="left-[40%]"
           // The sun climbs a little over the hills on hover.
-          lightClassName="top-[38%] left-[64%] size-36 transition-[translate] duration-500 ease-out group-hover:-translate-y-[65%]"
+          lightClassName="top-[38%] left-[72%] size-36 transition-[translate] duration-500 ease-out group-hover:-translate-y-[65%]"
         >
           <GardenFlowers flowers={FLOWERS} motion="grow" />
         </GardenLandscape>
