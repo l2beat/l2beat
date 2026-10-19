@@ -29,7 +29,7 @@ import { TopProtocolsByVolume } from './widgets/protocols/TopProtocolsByVolume'
 import { TopRoutesWidget } from './widgets/TopRoutesWidget'
 import { TopTokenWidget } from './widgets/TopTokenWidget'
 
-type TransferType = Extract<
+export type TransferType = Extract<
   KnownInteropBridgeType,
   'lockAndMint' | 'burnAndMint' | 'nonMinting'
 >
