@@ -1,7 +1,7 @@
 {
   "name": "zeronetwork",
   "timestamp": 1786615271,
-  "configHash": "0xfe191f045624cc36d992ff374d84468e34bb3ed8f1bad2594588f050a120474e",
+  "configHash": "0xdc6379002d61976ed357aa19286da65050a0377e113b366ba983cd992defc06f",
   "entries": [
     {
       "name": "ValidatorTimelock",
@@ -279,7 +279,7 @@
         ]
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -635,7 +635,7 @@
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
         },
-        "getAdmin": { "severity": "HIGH" },
+        "getAdmin": { "severity": "MEDIUM" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -1134,11 +1134,11 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
-    "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
-    "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
+    "shared-zk-stack/Diamond": "0xf8ceb7cc4613a5afb74ab717732cca35ae7826aaa6ba9643d656020bdb3cec08",
+    "shared-zk-stack/DualVerifier": "0x9378cf0ffe4ba30c57c7c2d9c7eefefc31c62efe9c6be4c177a9fbc3fedd4970",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
+    "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
   "usedBlockNumbers": { "ethereum": 25745363 },
   "permissionsConfigHash": "0xdde73eeac019414de94a46849705afbf7d6d6f23341e7f4f945402645cd54b34",

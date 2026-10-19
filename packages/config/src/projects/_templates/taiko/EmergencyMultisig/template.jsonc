@@ -7,6 +7,7 @@
   "description": "Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).",
   "ignoreMethods": ["canExecute", "getProposal", "proxiableUUID"],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "proposalCount": {
       "description": "total count of encrypted emergency proposals created."
     },

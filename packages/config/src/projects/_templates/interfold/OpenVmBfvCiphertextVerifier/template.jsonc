@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OpenVmBfvCiphertextVerifier",
+  "category": "core",
+  "description": "Ciphertext-output verifier for BFV E3s. It accepts an OpenVM proof for the immutable guest image ID against the E3-specific journal constructed by Interfold.",
+  "fields": {
+    "imageId": {
+      "description": "Immutable OpenVM guest image ID accepted as the encrypted-computation program. It must equal the image ID of the OpenVM receipt verifier.",
+      "type": "CODE_CHANGE"
+    },
+    "openVmVerifier": {
+      "description": "Immutable OpenVM receipt verifier used to validate computation proofs."
+    }
+  }
+}

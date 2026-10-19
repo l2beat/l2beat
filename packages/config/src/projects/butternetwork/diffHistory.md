@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x5eca13bdc7be918527718ed40b80568e73556faa
+
+# Diff at Fri, 16 Oct 2026 10:13:24 GMT:
+
+- id: 7172ce00
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790850942
+- current timestamp: 1792144328
+
+## Description
+
+The Butter Bridge on Base is paused. The Safe at the same address paused the bridge on Ethereum, Arbitrum, Optimism, Polygon PoS and BSC within the same 2h. Linea and Avalanche have stayed paused since the May 2026 exploit. Outbound transfers and inbound message execution are halted. https://x.com/ButterNetworkio/status/2110682522564825340 .
+
+## Watched changes
+
+```diff
+    contract Butter Bridge (base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56) [butternetwork/Bridge] {
+    +++ description: Butter's Base bridge endpoint. Outbound transfers lock or burn assets and emit messages for the MAP relay chain; inbound transfers execute only after a LightNode-validated receipt proof for the configured MAP relay contract. The bridge can mint configured mintable tokens, release escrowed assets, and invoke receiver callbacks, so compromise of validation, relay configuration, or management authority can lead to loss of bridged funds.
++++ description: Whether bridge transfers and message execution are paused. The authority can toggle this circuit breaker.
++++ severity: HIGH
+      values.paused:
+-        false
++        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790850942 (main branch discovery), not current.
+
+```diff
+    EOA (base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A) {
+    +++ description: None
+      unverified:
+-        true
+      values.CUSTOM_STORAGE_ROOT:
++        "0x653ff6dcbda533c3c7d8ffb646da3e510d0de40f237170c4da3f874472aecb00"
+      values.eip712Domain:
++        {"fields":"0x0f","name":"SmartWallet","version":"1.1.0","chainId":8453,"verifyingContract":"base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
+      values.entryPoint:
++        "base:0x0000000071727De22E5E9d8BAf0edAc6f37da032"
+      values.getOwnerKeys:
++        []
+      values.IMPLEMENTATION:
++        "base:0xe40ccB2D94975c51bff0C004eFDfd9B3a5796fA4"
+      values.namespace:
++        "SmartWallet.ERC7201.CustomStorage"
+      values.ownerAt:
++        []
+      values.ownerCount:
++        0
+      sourceHashes:
++        ["0x75edcc789e2feb6dd3863127fde1296f7df029e9ba2e9a8aa0ea96c257bc9432"]
+    }
+```
+
 Generated with discovered.json: 0xb42e981bfa9ea03ee9955be0b048d01c75d6a971
 
 # Diff at Thu, 01 Oct 2026 11:10:27 GMT:

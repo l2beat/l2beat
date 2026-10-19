@@ -80,7 +80,10 @@
         "implementation": "eth:0xc946787cFd6c155886C673BF9815C841c1718903",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
-      "fieldMeta": { "implementation": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9": "UpgradeableBeacon"
       }
@@ -1040,6 +1043,7 @@
         "$immutable": true,
         "owner": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9": "ProxyAdmin"
       }
@@ -2090,6 +2094,7 @@
         "$immutable": true,
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444": "ProxyAdmin"
       }

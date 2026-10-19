@@ -1,3 +1,98 @@
+Generated with discovered.json: 0xa9661fd3cf463dec0b4665c4c666e810ae820775
+
+# Diff at Fri, 16 Oct 2026 09:37:44 GMT:
+
+- id: f408d93c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791533574
+- current timestamp: 1791533574
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791533574 (main branch discovery), not current.
+
+```diff
+    contract Inbox (arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedOutboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedDelayedInboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x927dCF5D08795eEFd7C2bEC89777CFCD67950870) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xe032d15909e90f9A36901abB08944653e9E87d72) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.executors.severity:
+-        "LOW"
++        "MEDIUM"
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x74e047e3042359549ee22afb58d8d6e730bbd122
 
 # Diff at Fri, 09 Oct 2026 08:14:24 GMT:

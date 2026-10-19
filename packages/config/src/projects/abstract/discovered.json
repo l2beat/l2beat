@@ -187,6 +187,7 @@
         }
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "executionDelay": {
           "severity": "HIGH",
           "description": "Ecosystem-wide minimum execution delay (in seconds), set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
@@ -552,7 +553,7 @@
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
         },
-        "getAdmin": { "severity": "HIGH" },
+        "getAdmin": { "severity": "MEDIUM" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -885,6 +886,7 @@
         "owner": "eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA": "ProxyAdmin"
       }
@@ -920,7 +922,7 @@
         ]
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -1076,6 +1078,7 @@
       },
       "fieldMeta": {
         "executionDelay": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "executionDelay_fmt": { "severity": "HIGH" },
         "threshold": { "severity": "HIGH" },
         "$threshold": { "severity": "HIGH" }
@@ -1797,7 +1800,7 @@
     "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0xd384a9c9e6643cddbc13f8e706f8c2ad62ec8f9e6dbef85bcdf7eb8853fd6239",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ValidatorTimelock_v31": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
+    "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f"
   },
   "usedBlockNumbers": { "ethereum": 26183760 },
   "permissionsConfigHash": "0xe4a6c75d1432f63937a6ee79440e7b5a8943062049a0f5e22848dd5feb822d10",

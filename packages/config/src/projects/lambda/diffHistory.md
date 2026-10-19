@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x3c3694bd37c3ce99b154be259b5307301cabec57
+
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
+
+- id: f271ed78
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1728316727
+- current timestamp: 1728316727
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1728316727 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x624808dc4A34B79B90C3c085942D2100F09A0376) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      fieldMeta.guardian:
++        {"severity":"MEDIUM"}
+      fieldMeta.GUARDIAN:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xddbeb19a79caecae7cc3bd20bd081a53a8973e03
 
 # Diff at Wed, 23 Sep 2026 05:47:33 GMT:

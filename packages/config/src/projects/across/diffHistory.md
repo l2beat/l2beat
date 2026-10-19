@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xf9a11413d3972a9078dd5fbc3f18ceaf3c321676
+
+# Diff at Fri, 16 Oct 2026 09:52:47 GMT:
+
+- id: cb3f3b12
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791789448
+- current timestamp: 1792144273
+
+## Description
+
+Gateway (OP Mainnet) upgrade: minor (6 lines) changes, permissions and trust assumptions unchanged.
+- https://disco.l2beat.com/diff/oeth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e/oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0
+
+## Watched changes
+
+```diff
+    contract Gateway (oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707) [acrossv3/Gateway] {
+    +++ description: Entry point for Across V5 intent executions. Anyone can submit a user-signed execution path: the Gateway pulls the depositor's funds via standing token approvals or signed permits (Permit2 witness permits, EIP-3009, ERC-2612, EIP-712 transfer authorizations), then calls the committed executor. While executing, it exposes the execution context (submitter, executor, step commitment) that the SpokePool trusts to authenticate V5 fills.
+      sourceHashes.1:
+-        "0xf2ee0aa25d03ecbb1796a6eac55e023884760df22fda47dedfaed361c1ec6c35"
++        "0x758d7b789b8c7d62dd988d0b7d796f9811d75afa480252b92492fe28259d538f"
+      values.$implementation:
+-        "oeth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e"
++        "oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0"
+      values.$pastUpgrades.2:
++        ["2026-10-14T00:29:47.000Z","0x40abecfcbb47eb482a6bd29d464e77aedc689b06b6fe75af4f92db1f7e92f106",["oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.oeth:0xd9E79B648e42B660d9943A2861aa5d0e4D5CDD3e:
+-        "Gateway"
+      implementationNames.oeth:0x64cFa63aCd51ab86fF1F4f2ADb3C8dA1D7D42aB0:
++        "Gateway"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Gateway.sol                                                  | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+```
+
 Generated with discovered.json: 0x50b68af0225714258a73d481a36ce6bfb99c0dbf
 
 # Diff at Mon, 12 Oct 2026 07:57:23 GMT:

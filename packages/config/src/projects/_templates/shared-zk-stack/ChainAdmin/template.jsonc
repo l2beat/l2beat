@@ -4,8 +4,9 @@
   "description": "A governance proxy that lets {{owner}} act through it.",
   "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
   "fields": {
+    // role holder: mechanism changes are reviewed events
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [{ "type": "act" }]
     },
     // fee role holder identity

@@ -260,6 +260,7 @@
         "isUpgrading": false,
         "owner": "eth:0x9196464e3F828A50233C20732fa6898F4317002c"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x4ebc046b1cfc12659A19E124b0ea8a382777E542": "ProxyAdmin"
       }
@@ -321,12 +322,11 @@
         "version": "3.5.0"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "retirementTimestamp": { "severity": "MEDIUM" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
+        "RespectedGameString": { "severity": "HIGH" },
         "disputeGameFinalityDelaySeconds_fmt": {
           "description": "Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals."
         }
@@ -476,8 +476,8 @@
         "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
@@ -842,6 +842,7 @@
         "isUpgrading": false,
         "owner": "eth:0x9196464e3F828A50233C20732fa6898F4317002c"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xCf32d8c4Be30cA330c1150916A71A651bADd70d5": "ProxyAdmin"
       }
@@ -882,6 +883,7 @@
         "disputeGameFactory": "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3",
         "eip1559Denominator": 1,
         "eip1559Elasticity": 1,
+        "enabledFeatures": [],
         "gasLimit": 2250000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0xC0de1d9B1cD2Caf782355C66a6A8e5948e63c9c6",
@@ -942,10 +944,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xD3CAf2A473dBB5bc2E8FB7F328e01AB9B726a24f": "Proxy",
@@ -971,6 +979,7 @@
         "$immutable": true,
         "owner": "eth:0xCf32d8c4Be30cA330c1150916A71A651bADd70d5"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xdE3a0F0122f702e018e04C6D0824B724E8Be8e16": "AddressManager"
       },
@@ -1985,7 +1994,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13_opsuccinct": "0x9acdb60fbb0da6e8878bc00d658e692486e9f08b6a1cb2c654655e427a9744bd",
+    "opstack/AnchorStateRegistry_post13_opsuccinct": "0x38281242097d8213ff3effa91070b14c9916bbf03f358eed826fde878c0a214b",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DisputeGameFactory": "0xc7fc61755f1890ab4865a9ed9c9fa80ff6360d23cda9433fd6313aadf9a7f141",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
@@ -1997,14 +2006,14 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba",
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
     "succinct/OPSuccinct/AccessManager": "0x4dfa9533d437cf2efb76347ce42e28eaa3a388c509f141d483bf9c9ab7c799b0",
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
   "usedBlockNumbers": { "ethereum": 26104882 },
   "permissionsConfigHash": "0x63b6dd2ed4f8a8096b2a1b39fff9e07d57a9f258813dc0a41af4831dd594c0fb",
   "modelledAgainst": {
-    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
+    "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"
   },
   "permissions": {
     "eth:0x03B85FAa108C10F6EFfec1d91954DE99dA32FB46": {

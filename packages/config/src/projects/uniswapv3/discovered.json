@@ -77,7 +77,6 @@
       ],
       "proxyType": "immutable",
       "description": "Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after 2d and remains executable for a 14d grace period. The delay can be changed only through the timelock itself and must remain between 2d and 1mo. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.",
-      "critical": true,
       "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
       "sinceTimestamp": 1600107105,
       "sinceBlock": 10861678,
@@ -120,7 +119,6 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most 2% of supply per mint, with a minimum interval of 1y. Votes count only when delegated.",
-      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
       "sinceTimestamp": 1600107086,
@@ -173,7 +171,7 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Address authorized to exercise the factory owner actions."
         },
         "parameters": {
@@ -195,7 +193,6 @@
       ],
       "proxyType": "call implementation proxy",
       "description": "Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of 1,000,000 UNI can create proposals. Voting begins 13,140 blocks after proposal creation and lasts 40,320 blocks; success requires more for-votes than against-votes and at least 40,000,000 UNI voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.",
-      "critical": true,
       "ignoreInWatchMode": ["proposalCount"],
       "deployerAddress": "eth:0xCf2a39493f5193e8eE0D0e8DBf78a92a4EF293c4",
       "sinceTimestamp": 1629421922,
@@ -366,7 +363,7 @@
           "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
         },
         "feeProtocol": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current token0/token1 protocol-fee shares packed into two nibbles; changing them redirects a share of future LP swap fees."
         },
         "protocolFees": {
@@ -461,7 +458,7 @@
           "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
         },
         "feeProtocol": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current token0/token1 protocol-fee shares packed into two nibbles; changing them redirects a share of future LP swap fees."
         },
         "protocolFees": {
@@ -504,7 +501,6 @@
       ],
       "proxyType": "immutable",
       "description": "Adapter for administering a configured Uniswap v3 factory. While it holds the factory owner role, anyone can ask it to apply configured protocol fees to pools or collect accrued fees to its fixed recipient. The fee setter controls global, per-tier, and per-pool fee settings; the owner can replace the fee setter, enable factory fee tiers, or transfer factory ownership.",
-      "critical": true,
       "deployerAddress": "eth:0x2CF8e5b175aa29C1fDf0e9fe572735C78eacCE43",
       "sinceTimestamp": 1771859579,
       "sinceBlock": 24520406,

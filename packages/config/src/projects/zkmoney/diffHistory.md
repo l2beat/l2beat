@@ -1,3 +1,92 @@
+Generated with discovered.json: 0xa5e9caca8cfba61c584e8443cc7108a4ceb25bfa
+
+# Diff at Fri, 16 Oct 2026 05:36:55 GMT:
+
+- id: 3e77b31a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791882651
+- current timestamp: 1791882651
+
+## Description
+
+Ossification review: no severity on hardcoded verifier fields, rationale for helpers outside the perimeter.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791882651 (main branch discovery), not current.
+
+```diff
+    contract FrozenNotesRefundVerifier (eth:0x0694fF404DDA586C73EfCe21f34fe084541BB877) [zkmoney/FrozenNotesRefundVerifier] {
+    +++ description: UltraHonk verifier for refunds of notes that were unspent when the zk.money portal froze. Its verification key is immutable.
+      fieldMeta.verificationKeyHash.severity:
+-        "HIGH"
+      fieldMeta.$libraries.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract FrozenDepositRefundVerifier_sUSDS (eth:0x2E0C30821b9fcCf1CDB47F4e3a3A993593344522) [zkmoney/FrozenDepositRefundVerifier] {
+    +++ description: UltraHonk verifier for refunds of deposits included in Aztec's frozen message tree but still unclaimed. Its verification key is immutable.
+      fieldMeta.verificationKeyHash.severity:
+-        "HIGH"
+      fieldMeta.$libraries.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract UnprocessedDepositRefundVerifier (eth:0x5C487AEb500BD0fE65fe52Be7e55a150c3220FA5) [zkmoney/UnprocessedDepositRefundVerifier] {
+    +++ description: UltraHonk verifier for refunds of deposits not absorbed into Aztec before the zk.money portal froze. Its verification key is immutable.
+      fieldMeta.verificationKeyHash.severity:
+-        "HIGH"
+      fieldMeta.$libraries.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract UnprocessedDepositRefundVerifier_sUSDS (eth:0x8ACcBa3958cEF8E30b255c70A4C16CD2D14fb787) [zkmoney/UnprocessedDepositRefundVerifier] {
+    +++ description: UltraHonk verifier for refunds of deposits not absorbed into Aztec before the zk.money portal froze. Its verification key is immutable.
+      fieldMeta.verificationKeyHash.severity:
+-        "HIGH"
+      fieldMeta.$libraries.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract FrozenDepositRefundVerifier (eth:0xa2fd594dCA2d598aF231d615E5D34903154C3cCe) [zkmoney/FrozenDepositRefundVerifier] {
+    +++ description: UltraHonk verifier for refunds of deposits included in Aztec's frozen message tree but still unclaimed. Its verification key is immutable.
+      fieldMeta.verificationKeyHash.severity:
+-        "HIGH"
+      fieldMeta.$libraries.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract ResolverVerifier (eth:0xbF058D54c5033F4cB45c6E1Eba103CaeF232E451) [zkmoney/ResolverVerifier] {
+    +++ description: UltraHonk verifier for the zk.money resolver circuit with a hardcoded verification key. The Resolver uses it to check that a resolver operator's answer matches the user's registered keys and L2 address.
+      fieldMeta.verificationKeyHash.severity:
+-        "HIGH"
+      fieldMeta.$libraries.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract FrozenNotesRefundVerifier_sUSDS (eth:0xd24a49321878AB82E46992ab853A11903882abf2) [zkmoney/FrozenNotesRefundVerifier] {
+    +++ description: UltraHonk verifier for refunds of notes that were unspent when the zk.money portal froze. Its verification key is immutable.
+      fieldMeta.verificationKeyHash.severity:
+-        "HIGH"
+      fieldMeta.$libraries.severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x6b4de558bcec8ca15e1bd691902031211784433c
 
 # Diff at Wed, 14 Oct 2026 08:59:20 GMT:

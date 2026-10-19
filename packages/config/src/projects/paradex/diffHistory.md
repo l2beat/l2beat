@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xc0239d58cdc30b925b696b57fa1ef7a2188d8714
+
+# Diff at Fri, 16 Oct 2026 10:35:43 GMT:
+
+- id: ad6ce9de
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1784193913
+- current timestamp: 1784193913
+
+## Description
+
+Config-only: the shared Starknet template gained the `getMinL1MsgFee` field. The Paradex implementation does not have it.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784193913 (main branch discovery), not current.
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      fieldMeta.getMinL1MsgFee:
++        {"severity":"MEDIUM","description":"Minimum fee in wei for an L1 -> L2 message. Governance can raise it up to the 1 ETH maximum fee, also after the application configuration is finalized.","type":"RISK_PARAMETER"}
+    }
+```
+
+Generated with discovered.json: 0xa7a2b5170a27eed496f2b280678eb04ed5dee95e
+
+# Diff at Fri, 16 Oct 2026 05:36:52 GMT:
+
+- id: 220d8888
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1784193913
+- current timestamp: 1784193913
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784193913 (main branch discovery), not current.
+
+```diff
+    contract StarkgateManager (eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE) [starknet/StarkgateManager] {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280) [starknet/StarkgateRegistry] {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      fieldMeta.$admin.severity:
++        "MEDIUM"
+      fieldMeta.govAdminAC.severity:
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      fieldMeta.$admin.severity:
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x1fe5f3f97657b5eb9776ac8209c85b0e34891efe
 
 # Diff at Sun, 04 Oct 2026 05:55:34 GMT:

@@ -1,20 +1,6 @@
 {
   "events": [
     {
-      "timestamp": 1690185683,
-      "type": "state",
-      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-      "transaction": "0x86f92ceaafba1ca052474433638289f6a9666e0598fa34e329b84a9a3fba6ea1",
-      "reason": "Raised the L2-to-L1 claim rate limit (limitInWei) of LineaRollup from 100 to 400 ETH per period (LimitAmountChanged)."
-    },
-    {
-      "timestamp": 1690185787,
-      "type": "state",
-      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
-      "transaction": "0xffab40563fce1e91031f2c3d8a60aec278af45dbddcb42011bbd35bbc0ca518f",
-      "reason": "Lowered the L2-to-L1 sending rate limit (limitInWei) of L2MessageService from 10000 to 300 ETH per period (LimitAmountChanged)."
-    },
-    {
       "timestamp": 1690563167,
       "type": "state",
       "contract": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
@@ -29,39 +15,11 @@
       "reason": "The L2 governance Safe Linea Multisig 3 (proposer, executor and canceller of the L2Timelock since deployment) raised its threshold from 3 to 4 while rotating two owners, 3/8 to 4/8 (ChangedThreshold): a threshold policy change without a net membership change."
     },
     {
-      "timestamp": 1690564149,
-      "type": "state",
-      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
-      "transaction": "0xd8f6548ffcf3ea730ff58df0b96fae70da66b685d5521be44feae88bfdc80692",
-      "reason": "Raised the L2-to-L1 sending rate limit (limitInWei) of L2MessageService from 300 to 1000 ETH per period (LimitAmountChanged)."
-    },
-    {
-      "timestamp": 1690564163,
-      "type": "state",
-      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-      "transaction": "0x59591ea600f83b7231f5502973243720fcc340c91e2d4058d259ad18610e18db",
-      "reason": "Raised the L2-to-L1 claim rate limit (limitInWei) of LineaRollup from 400 to 1200 ETH per period (LimitAmountChanged)."
-    },
-    {
       "timestamp": 1691513987,
       "type": "state",
       "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
       "transaction": "0xd21fbdc1ea27b65bda39750331f0bda773b0fdba9b5260745b3f50f170d6ce96",
       "reason": "Set proof verifiers for proof types 3 and 4 in LineaRollup one minute after the LineaRollup upgrade (VerifierAddressChanged), changing which proofs finalize state."
-    },
-    {
-      "timestamp": 1693599947,
-      "type": "state",
-      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-      "transaction": "0xe752ce539119fc11af6239e8b26a79d80c9e84cec19ac6aca060f466853f5b7d",
-      "reason": "Raised the L2-to-L1 claim rate limit (limitInWei) of LineaRollup from 1200 to 6250 ETH per period (LimitAmountChanged)."
-    },
-    {
-      "timestamp": 1693600112,
-      "type": "state",
-      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
-      "transaction": "0xdcd89930e7456d8d80313aa109e5ab95d2455354e39e56d1ae0432f2579339d0",
-      "reason": "Raised the L2-to-L1 sending rate limit (limitInWei) of L2MessageService from 1000 to 5000 ETH per period (LimitAmountChanged)."
     },
     {
       "timestamp": 1697064851,
@@ -78,22 +36,6 @@
       "updateId": "d18fed4f",
       "transaction": "0xa050163fc47cf68fc017339edd961479669b0bcedb4b7acfd3e9e49320435455",
       "reason": "Unset (0x1111...) the proof verifiers for proof types 0, 1, 3 and 4 in LineaRollup (VerifierAddressChanged), changing which proofs finalize state."
-    },
-    {
-      "timestamp": 1700506391,
-      "type": "state",
-      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-      "updateId": "3376a51f",
-      "transaction": "0x774d067d06c87040c568530fc6711c5a72aca43332bd60663df6698a12abe11a",
-      "reason": "Raised the L2-to-L1 claim rate limit (limitInWei) of LineaRollup from 6250 to 18750 ETH per period (LimitAmountChanged)."
-    },
-    {
-      "timestamp": 1700507439,
-      "type": "state",
-      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
-      "updateId": "3376a51f",
-      "transaction": "0x6e2e3fbff90f7919cc7a078bedccf9382089c6459c2ff20b51d242266d138a63",
-      "reason": "Raised the L2-to-L1 sending rate limit (limitInWei) of L2MessageService from 5000 to 15000 ETH per period (LimitAmountChanged)."
     },
     {
       "timestamp": 1707813599,
@@ -176,20 +118,20 @@
       "reason": "Set a new proof verifier for proof type 1 and unset the one for type 4 in LineaRollup (VerifierAddressChanged), changing which proofs finalize state."
     },
     {
-      "timestamp": 1758532607,
+      "timestamp": 1758247055,
       "type": "state",
-      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-      "updateId": "b62380e0",
-      "transaction": "0xf40eee2e37a3e163e4aeb8d037536e822db4e1ec55faceddad8a480a8c434217",
-      "reason": "Raised the L2-to-L1 claim rate limit (limitInWei) of LineaRollup from 18750 to 30000 ETH per period (LimitAmountChanged)."
+      "contract": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+      "transaction": "0x166470998b8e14141b0e0621739f702307c3a8b29d9d0007b9c77beda6ddd131",
+      "updateId": "2e900654",
+      "reason": "The Linea Security Council Safe (proposer, executor and canceller of the L1 Timelock) raised its threshold from 4/8 to 5/9 while adding a member (ChangedThreshold)."
     },
     {
-      "timestamp": 1758532817,
+      "timestamp": 1758303821,
       "type": "state",
-      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+      "contract": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
+      "transaction": "0xe08aa51a0d51f28182dc5db719d3f95673e904fdf922198ec98ac1343b2dfaec",
       "updateId": "b62380e0",
-      "transaction": "0x7eec6a5e37602b56f5e79c2044cfea34672f0a018269008956d8a39cf968cf9a",
-      "reason": "Raised the L2-to-L1 sending rate limit (limitInWei) of L2MessageService from 15000 to 24000 ETH per period (LimitAmountChanged)."
+      "reason": "The L2 governance Safe Linea Multisig 3 (proposer, executor and canceller of the L2Timelock) raised its threshold from 4/8 to 5/9 while adding a member (ChangedThreshold)."
     },
     {
       "timestamp": 1761067259,
@@ -270,14 +212,6 @@
       "updateId": "a3b27464",
       "transaction": "0x9779ad2d0ae6309d18442efd5213b589e8e0b00a0c8d4915e4283a191d0afabb",
       "reason": "Lowered the target withdrawal reserve of the YieldManager from 9985 to 9980 bps (WithdrawalReserveParametersSet), in the same transaction as the LineaRollup verifier and rate limit change."
-    },
-    {
-      "timestamp": 1777540107,
-      "type": "state",
-      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
-      "updateId": "45d15938",
-      "transaction": "0x68c138de6149dd8bf6c0c75dbae59b57426a30ac613c608ef78859630c8998ab",
-      "reason": "Lowered the L2-to-L1 sending rate limit (limitInWei) of L2MessageService from 24000 to 8000 ETH per period (LimitAmountChanged)."
     },
     {
       "timestamp": 1777542527,

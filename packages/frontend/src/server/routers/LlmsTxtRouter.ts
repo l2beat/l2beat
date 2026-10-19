@@ -49,7 +49,7 @@ export function createLlmsTxtRouter() {
 const LLMS_TXT = {
   title: 'L2BEAT',
   summary:
-    'L2BEAT is an independent analytics and research website about Ethereum scaling. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols, privacy protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. Risk assessments are backed by on-chain contract discovery and all project data is open source.',
+    'L2BEAT is an independent analytics and research website about Ethereum scaling and privacy. It tracks layer 2s and layer 3s, data availability layers, interoperability protocols and zero-knowledge proving systems, assessing their risks, maturity stages, value secured, activity, liveness and costs. It also reviews privacy protocols on Ethereum and its layer 2s: what each one hides and from whom, anonymity sets, trusted setups and exit windows. Risk assessments are backed by on-chain contract discovery and all project data is open source.',
   notes: [
     'Important notes:',
     '',
@@ -66,7 +66,8 @@ const LLMS_TXT = {
     '- To get current or historical total value secured, activity, liveness or cost figures for a layer 2, via the pages or the JSON API.',
     '- To check where a layer 2 posts its data and how secure that data availability layer and its bridge are.',
     '- To look up which proving system, stack or ecosystem a project uses, or the definitions behind L2BEAT terms.',
-    '- Not for token prices, exchange data, wallet balances or anything outside Ethereum scaling and its infrastructure.',
+    '- To review or compare privacy protocols on Ethereum (privacy pools, shielded pools and ledgers, stealth addresses, confidential tokens): what each one hides and from which adversary, anonymity set sizes, trusted setups and exit windows. Start from /privacy/summary.md, then /privacy/projects/{slug}.md for one protocol.',
+    '- Not for token prices, exchange data, wallet balances or anything outside Ethereum scaling, privacy and their infrastructure.',
   ].join('\n'),
 }
 
@@ -224,19 +225,19 @@ const PAGE_SECTIONS: LinkListSection[] = [
     ],
   },
   {
-    heading: 'Other trackers',
+    heading: 'Privacy',
     links: [
-      {
-        name: 'Privacy',
-        path: staticPagePath('/privacy/summary'),
-        description:
-          'Privacy protocols on Ethereum and its layer 2s, with what they hide, anonymity set sizes and trust assumptions.',
-      },
       {
         name: 'All privacy protocols',
         path: markdownAlternate('/privacy/summary.md'),
         description:
-          'Markdown list of every tracked privacy protocol with category, exit window and page URL.',
+          'Markdown list of every tracked privacy protocol with category, exit window and page URL, to compare them or pick one to review.',
+      },
+      {
+        name: 'Summary',
+        path: staticPagePath('/privacy/summary'),
+        description:
+          'Reviews and comparison of privacy protocols on Ethereum and its layer 2s: what each one hides, anonymity set sizes and trust assumptions.',
       },
       {
         name: 'Privacy methodology',
@@ -244,6 +245,11 @@ const PAGE_SECTIONS: LinkListSection[] = [
         description:
           'How privacy protocols are assessed: the promise each one makes, the adversaries it is tested against, the private, at risk and exposed verdicts, and the other columns.',
       },
+    ],
+  },
+  {
+    heading: 'Other trackers',
+    links: [
       {
         name: 'ZK catalog',
         path: staticPagePath('/zk-catalog'),
@@ -346,7 +352,7 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
       name: 'Privacy protocol',
       path: '/privacy/projects/{slug}.md',
       description:
-        'One privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
+        'Full review of one privacy protocol as markdown: what it promises to hide and how that holds against each adversary, trusted setup, exit window, deposits and value locked per asset, governance, permissions and contracts.',
     },
     {
       name: 'Interop protocol',

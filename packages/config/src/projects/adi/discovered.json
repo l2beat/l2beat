@@ -311,7 +311,7 @@
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
         },
-        "getAdmin": { "severity": "HIGH" },
+        "getAdmin": { "severity": "MEDIUM" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -447,7 +447,7 @@
         "WETH_TOKEN": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "bridgedTokenBeacon": { "severity": "HIGH" }
       },
@@ -483,7 +483,7 @@
         ]
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -530,7 +530,7 @@
         "upgradeTimestamps": []
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -561,6 +561,7 @@
         "$immutable": true,
         "owner": "eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x34f56Ba641aC59E897c6179ffeCAe9769fbfC90C": "ProxyAdmin"
       }
@@ -688,7 +689,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "l1AssetRouter": { "severity": "HIGH" },
         "legacyBridge": { "severity": "HIGH" }
@@ -796,8 +797,8 @@
         "sharedBridge": "eth:0xf25227EFAD2046d19777A4CA540b5C016Df7fe7A"
       },
       "fieldMeta": {
-        "admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "migrationPaused": { "severity": "MEDIUM" },
         "assetRouter": { "severity": "HIGH" },
@@ -835,6 +836,7 @@
         "$immutable": true,
         "owner": "eth:0x8253F33026c49A430963FE3991441c02175bda95"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8140aBB60c9AfB5241D90af948Cfa7644b2D3217": "ProxyAdmin"
       }
@@ -917,7 +919,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "migrationPaused": { "severity": "MEDIUM" },
         "paused": {
           "severity": "LOW",
@@ -1360,7 +1362,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "legacyBridge": { "severity": "HIGH" },
         "nativeTokenVault": { "severity": "HIGH" }
