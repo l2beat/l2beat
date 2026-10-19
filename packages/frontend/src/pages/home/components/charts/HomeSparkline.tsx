@@ -68,7 +68,9 @@ const FILL_HEIGHT_CLASS = cn(
 /**
  * A chart reduced to its line and a soft fill: no axes, a hairline at the
  * period's high and low with their values, a dashed line where it started
- * and a dot on the latest value.
+ * and a dot on the latest value. The high and low hairlines bound the plot;
+ * their values sit outside it, above and below, so the line never runs
+ * through them.
  */
 export function HomeSparkline({
   data: dailyData,
@@ -110,9 +112,14 @@ export function HomeSparkline({
           <AreaChart
             responsive
             data={data}
-            // Room for the end dot, which sits on the last point at the edge,
-            // and under the plot for the low label.
-            margin={{ top: 6, right: 6, bottom: LOW_LABEL_HEIGHT, left: 0 }}
+            // Room above and below the plot for the high and low labels, and
+            // on the right for the end dot, which sits on the last point.
+            margin={{
+              top: LABEL_HEIGHT,
+              right: 6,
+              bottom: LABEL_HEIGHT,
+              left: 0,
+            }}
           >
             <defs>
               <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
@@ -138,20 +145,17 @@ export function HomeSparkline({
               (['max', 'min'] as const).map((key) => (
                 <ReferenceLine
                   key={key}
-                  y={range[key].value}
+                  y={range[key]}
                   stroke="var(--divider)"
                   // Softer than the page's hairlines: a reference, not a frame.
                   strokeOpacity={0.5}
                   zIndex={BEHIND_SERIES}
-                  // On the side away from the extreme itself, clear of the line.
-                  label={{
-                    value: formatValue(range[key].value),
-                    position: range[key].early
-                      ? 'insideTopRight'
-                      : 'insideTopLeft',
-                    fontSize: 12,
-                    fill: 'var(--secondary)',
-                  }}
+                  label={
+                    <ExtremeLabel
+                      value={formatValue(range[key])}
+                      side={key === 'max' ? 'above' : 'below'}
+                    />
+                  }
                 />
               ))}
             <Area
@@ -195,35 +199,27 @@ export function HomeSparkline({
 /** Recharts' grid layer: guide lines go under the series, not across it. */
 const BEHIND_SERIES = -100
 
-/** The low label hangs under the plot, in a margin this tall. */
-const LOW_LABEL_HEIGHT = 18
+/** The high and low labels sit outside the plot, in margins this tall. */
+const LABEL_HEIGHT = 18
 
-/** The extremes, and whether each falls in the first half of the period. */
+/** Between a label and its hairline. */
+const LABEL_GAP = 5
+
+const LABEL_FONT_SIZE = 12
+
+/** The extremes, or nothing for a flat or empty series. */
 function getRange(data: HomeSparklineDataPoint[]) {
-  let min: { value: number; early: boolean } | undefined
-  let max: { value: number; early: boolean } | undefined
-  data.forEach((d, index) => {
-    if (d.value === null) return
-    const early = index < data.length / 2
-    if (!min || d.value < min.value) min = { value: d.value, early }
-    if (!max || d.value > max.value) max = { value: d.value, early }
-  })
-  return min && max && min.value !== max.value ? { min, max } : undefined
+  const [min, max] = getExtremes(data)
+  return min < max ? { min, max } : undefined
 }
 
 /**
- * The series' own range: a sparkline shows the shape, not the size. The low
- * line sits at the bottom of the plot (its label hangs below it); a flat
- * series draws near the top, where a real series would peak.
+ * The series' own range: a sparkline shows the shape, not the size. The
+ * high and low hairlines are the plot's top and bottom; a flat series draws
+ * near the top, where a real series would peak.
  */
 function getDomain(data: HomeSparklineDataPoint[]): [number, number] {
-  let min = Number.POSITIVE_INFINITY
-  let max = Number.NEGATIVE_INFINITY
-  for (const { value } of data) {
-    if (value === null) continue
-    min = Math.min(min, value)
-    max = Math.max(max, value)
-  }
+  const [min, max] = getExtremes(data)
   if (min > max) {
     return [0, 1]
   }
@@ -231,8 +227,52 @@ function getDomain(data: HomeSparklineDataPoint[]): [number, number] {
     const padding = Math.abs(min) || 1
     return [min - padding, max + padding * 0.1]
   }
-  const range = max - min
-  return [min, max + range * 0.05]
+  return [min, max]
+}
+
+/** [min, max] of the values; [Infinity, -Infinity] when there are none. */
+function getExtremes(data: HomeSparklineDataPoint[]): [number, number] {
+  let min = Number.POSITIVE_INFINITY
+  let max = Number.NEGATIVE_INFINITY
+  for (const { value } of data) {
+    if (value === null) continue
+    min = Math.min(min, value)
+    max = Math.max(max, value)
+  }
+  return [min, max]
+}
+
+/**
+ * A hairline's value at its right end, above the line for the high and below
+ * it for the low. Recharts passes the line's `viewBox`.
+ */
+function ExtremeLabel({
+  value,
+  side,
+  viewBox,
+}: {
+  value: string
+  side: 'above' | 'below'
+  viewBox?: { x: number; y: number; width: number }
+}) {
+  if (!viewBox) return null
+  return (
+    <text
+      x={viewBox.x + viewBox.width}
+      // Placed by the baseline, which Safari aligns reliably: a cap height
+      // under the gap for the low label.
+      y={
+        side === 'above'
+          ? viewBox.y - LABEL_GAP
+          : viewBox.y + LABEL_GAP + LABEL_FONT_SIZE * 0.75
+      }
+      textAnchor="end"
+      fontSize={LABEL_FONT_SIZE}
+      fill="var(--secondary)"
+    >
+      {value}
+    </text>
+  )
 }
 
 function SparklineTooltip({
