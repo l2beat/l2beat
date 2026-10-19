@@ -21,7 +21,10 @@ export function HomeKpiTile({
   className,
 }: {
   label: string
-  /** Secondary fact shown opposite the label. */
+  /**
+   * Secondary fact shown opposite the label, where the tiles sit side by
+   * side.
+   */
   labelAccessory?: ReactNode
   value: string | undefined
   /** Drawn smaller after the number, e.g. "TiB". */
@@ -40,18 +43,18 @@ export function HomeKpiTile({
       )}
     >
       <div className="flex min-w-0 flex-col">
-        {/* Beside a chart the label's column gives way to the chart on the
-            narrowest phones; there the accessory wraps under the label
-            instead of cutting it off. */}
         <span
           className={cn(
-            'flex min-w-0 kpi-rows:flex-wrap items-baseline justify-between gap-x-2',
+            'flex min-w-0 items-baseline justify-between gap-x-2',
             HOME_TEXT.meta,
           )}
         >
-          <span className="kpi-rows:shrink-0 truncate">{label}</span>
+          <span className="truncate">{label}</span>
+          {/* Beside a chart the label's column has no room to spare. */}
           {labelAccessory && (
-            <span className="shrink-0 tabular-nums">{labelAccessory}</span>
+            <span className="kpi-rows:hidden shrink-0 tabular-nums">
+              {labelAccessory}
+            </span>
           )}
         </span>
         <span className="mt-2 flex min-w-0 kpi-rows:flex-col kpi-rows:items-start items-baseline gap-x-2 gap-y-1 whitespace-nowrap">
