@@ -8,7 +8,8 @@ import { HomeChange } from './HomeChange'
 /**
  * One headline figure with its change, e.g. "1.39 TiB +4.89% 1y", and a
  * sparkline underneath. Where a `HomeKpiRow` stacks its KPIs (`kpi-rows`),
- * the figure goes smaller, with the change under it, beside the sparkline.
+ * the figure goes smaller, with the change under it, centered beside the
+ * sparkline in the row's columns.
  */
 export function HomeKpiTile({
   label,
@@ -34,13 +35,14 @@ export function HomeKpiTile({
   return (
     <div
       className={cn(
-        'grid min-w-0 grid-cols-1 kpi-rows:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-x-6 gap-y-4',
+        'kpi-rows:col-span-2 grid min-w-0 grid-cols-1 kpi-rows:grid-cols-subgrid kpi-rows:items-center gap-y-4',
         className,
       )}
     >
       <div className="flex min-w-0 flex-col">
-        {/* Beside a chart the label has a narrow column, so the accessory
-            wraps under it there instead of cutting it off. */}
+        {/* Beside a chart the label's column gives way to the chart on the
+            narrowest phones; there the accessory wraps under the label
+            instead of cutting it off. */}
         <span
           className={cn(
             'flex min-w-0 kpi-rows:flex-wrap items-baseline justify-between gap-x-2',
