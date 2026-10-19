@@ -17,6 +17,7 @@ import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import type {
   Flow,
+  FlowProtocol,
   InteropFlowsData,
 } from '~/server/features/layer2s/interop/getInteropFlows'
 import { useTRPC } from '~/trpc/React'
@@ -106,7 +107,7 @@ function Content({
           figures go in the corners its ring leaves free. Clearly taller than
           wide, or too narrow for the corners, it stacks as on phones: the
           figures, the graph as a square (smaller when the height runs out, so
-          nothing spills), then as many top routes as the height left holds.
+          nothing spills), then as many top bridges as the height left holds.
           Below lg it stacks too, the graph a fixed-size square. */}
       <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0 lg:[container:interop-body/size]">
         {data && (
@@ -130,9 +131,8 @@ function Content({
         </div>
         {data && (
           <>
-            <TopRoutes
-              flows={data.flows}
-              chains={chains}
+            <TopBridges
+              protocols={data.stats.topProtocols}
               className="interop-corners:hidden interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden"
             />
             <CornerStats data={data} chains={chains} />
@@ -144,16 +144,15 @@ function Content({
 }
 
 const GRAPH_CHAINS_COUNT = 9
-const TOP_ROUTES_COUNT = 5
-/** Stacked from lg the routes fill the height left; whole rows only. */
-const FILL_ROUTES_COUNT = 15
-/** A corner fits fewer rows than the list under the graph. */
+/** Bridges under the graph; stacked from lg, as many as the height holds. */
+const TOP_BRIDGES_COUNT = 5
+/** The busiest routes, in a corner beside the graph. */
 const CORNER_ROUTES_COUNT = 3
 
 /**
  * The interop page's general stats: volume, transfers and routes, then the
  * top chain, token and protocol, in columns like the KPI pairs. The busiest
- * routes are listed apart, in TopRoutes.
+ * bridges are listed apart, in TopBridges.
  */
 function Stats({
   data,
@@ -341,23 +340,20 @@ function RouteIcons({
   )
 }
 
-/** The busiest routes, one direction each, ranked like the other cards. */
-function TopRoutes({
-  flows,
-  chains,
+/** The busiest bridges over the last 24h, ranked like the other cards. */
+function TopBridges({
+  protocols,
   className,
 }: {
-  flows: Flow[]
-  chains: InteropChainWithIcon[]
+  protocols: FlowProtocol[]
   className?: string
 }) {
-  const routes = useTopRoutes(flows, chains, FILL_ROUTES_COUNT)
-  if (routes.length === 0) {
+  if (protocols.length === 0) {
     return null
   }
   return (
     <div className={cn('flex min-w-0 flex-col gap-2', className)}>
-      <h3 className={HOME_TEXT.sectionTitle}>Top routes</h3>
+      <h3 className={HOME_TEXT.sectionTitle}>Top bridges</h3>
       {/* Stacked from lg, the list takes the height left and shows as many
           whole rows as fit. */}
       <ol
@@ -366,13 +362,13 @@ function TopRoutes({
           HOME_ROW_LINES_CLASS,
         )}
       >
-        {routes.map(({ src, dst, volume, href }, index) => (
+        {protocols.map(({ slug, name, iconUrl, volume }, index) => (
           <li
-            key={`${src.id}-${dst.id}`}
+            key={slug}
             className={cn(
               'flex w-full items-center gap-2',
               HOME_ROW_CLASS,
-              index >= TOP_ROUTES_COUNT && 'interop-stacked:flex hidden',
+              index >= TOP_BRIDGES_COUNT && 'interop-stacked:flex hidden',
             )}
           >
             <span
@@ -384,17 +380,17 @@ function TopRoutes({
               {index + 1}
             </span>
             <a
-              href={href}
+              href={`/interop/protocols/${slug}`}
               className="group flex min-w-0 flex-1 items-center gap-1.5"
             >
-              <RouteIcons src={src} dst={dst} />
+              <img src={iconUrl} alt="" className={HOME_ICON_CLASS} />
               <span
                 className={cn(
                   'truncate underline-offset-2 group-hover:underline',
                   HOME_TEXT.row,
                 )}
               >
-                {src.name} → {dst.name}
+                {name}
               </span>
             </a>
             <span className={cn('shrink-0', HOME_TEXT.value)}>

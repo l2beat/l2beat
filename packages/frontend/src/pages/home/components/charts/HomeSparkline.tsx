@@ -67,10 +67,9 @@ const FILL_HEIGHT_CLASS = cn(
 
 /**
  * A chart reduced to its line and a soft fill: no axes, a hairline at the
- * period's high and low with their values, a dashed line where it started
- * and a dot on the latest value. The high and low hairlines bound the plot;
- * their values sit outside it, above and below, so the line never runs
- * through them.
+ * period's high and low with their values, and a dot on the latest value.
+ * The high and low hairlines bound the plot; their values sit outside it,
+ * above and below, so the line never runs through them.
  */
 export function HomeSparkline({
   data: dailyData,
@@ -85,7 +84,6 @@ export function HomeSparkline({
     [dailyData, weeklyAverage],
   )
   const domain = useMemo(() => getDomain(data), [data])
-  const first = useMemo(() => data.find((d) => d.value !== null), [data])
   const last = useMemo(() => data.findLast((d) => d.value !== null), [data])
   const range = useMemo(() => getRange(data), [data])
   const meta = useMemo<ChartMeta>(
@@ -129,18 +127,6 @@ export function HomeSparkline({
             </defs>
             <XAxis dataKey="timestamp" hide />
             <YAxis hide domain={domain} />
-            {/* Where the period started, so the change beside the number
-                shows in the line's shape. */}
-            {first && first.value !== null && (
-              <ReferenceLine
-                y={first.value}
-                stroke="var(--divider)"
-                strokeOpacity={0.7}
-                strokeDasharray="2 3"
-                ifOverflow="extendDomain"
-                zIndex={BEHIND_SERIES}
-              />
-            )}
             {range &&
               (['max', 'min'] as const).map((key) => (
                 <ReferenceLine

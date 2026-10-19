@@ -81,6 +81,8 @@ interface FlowsStats {
   topChain: FlowChain | undefined
   topToken: FlowToken | undefined
   topProtocol: FlowProtocol | undefined
+  /** Busiest first; the home page lists them under its interop graph. */
+  topProtocols: FlowProtocol[]
 }
 
 export type InteropFlowsData = {
@@ -132,6 +134,7 @@ export async function getInteropFlows(
         topChain: undefined,
         topToken: undefined,
         topProtocol: undefined,
+        topProtocols: [],
       },
     }
   }
@@ -154,7 +157,7 @@ export async function getInteropFlows(
     chainTokenCounts,
     chainProtocolCounts,
     topToken: topTokenEntry,
-    topProtocol: topProtocolEntry,
+    topProtocols: topProtocolEntries,
     tokenIds,
   } = getInteropFlowAggregates(scopedRecords, subgroupProjects)
 
@@ -260,9 +263,9 @@ export async function getInteropFlows(
   }
 
   const topToken = topTokenEntry ? resolveToken(topTokenEntry) : undefined
-  const topProtocol = topProtocolEntry
-    ? resolveProtocol(topProtocolEntry)
-    : undefined
+  const topProtocols = topProtocolEntries.flatMap(
+    (entry) => resolveProtocol(entry) ?? [],
+  )
   const chainData = computeChainsData(
     flows,
     params.chains,
@@ -303,7 +306,8 @@ export async function getInteropFlows(
           }
         : undefined,
       topToken,
-      topProtocol,
+      topProtocol: topProtocols[0],
+      topProtocols,
     },
   }
 }
@@ -493,13 +497,25 @@ function getMockInteropFlows(): InteropFlowsData {
         iconUrl: '/icons/ethereum.png',
         volume: 1_000_000,
       },
-      topProtocol: {
-        id: 'layerzero',
-        slug: 'layerzero',
-        name: 'LayerZero',
-        iconUrl: '/icons/layerzero.png',
-        volume: 1_000_000,
-      },
+      topProtocol: MOCK_TOP_PROTOCOLS[0],
+      topProtocols: MOCK_TOP_PROTOCOLS,
     },
   }
 }
+
+const MOCK_TOP_PROTOCOLS: FlowProtocol[] = [
+  {
+    id: 'layerzero',
+    slug: 'layerzero',
+    name: 'LayerZero',
+    iconUrl: '/icons/layerzero.png',
+    volume: 1_000_000,
+  },
+  {
+    id: 'across',
+    slug: 'across',
+    name: 'Across',
+    iconUrl: '/icons/across.png',
+    volume: 400_000,
+  },
+]
