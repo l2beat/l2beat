@@ -8,6 +8,13 @@ import etag from 'koa-etag'
 
 import { createApiLogger } from './logger'
 
+const CLIENT_DISCONNECT_CODES = new Set([
+  'ECONNRESET',
+  'EPIPE',
+  'ECONNABORTED',
+  'ERR_STREAM_PREMATURE_CLOSE',
+])
+
 export class ApiServer {
   private readonly app: Koa
 
@@ -20,8 +27,16 @@ export class ApiServer {
     this.app = new Koa()
 
     this.app.use(createApiLogger(this.logger))
-    this.app.on('error', (err: Error, ctx: Koa.Context) => {
-      this.logger.error('Request failed', err, ctx.toJSON())
+    this.app.on('error', (error: NodeJS.ErrnoException, ctx: Koa.Context) => {
+      if (isClientDisconnect(error, ctx)) {
+        this.logger.info('Client disconnected', {
+          code: error.code,
+          method: ctx.method,
+          url: ctx.originalUrl,
+        })
+        return
+      }
+      this.logger.error('Request failed', error, ctx.toJSON())
     })
 
     this.app.use(conditional())
@@ -66,4 +81,11 @@ export class ApiServer {
   getNodeCallback() {
     return this.app.callback()
   }
+}
+
+function isClientDisconnect(error: NodeJS.ErrnoException, ctx: Koa.Context) {
+  if (!ctx.req.socket.destroyed) {
+    return false
+  }
+  return error.code !== undefined && CLIENT_DISCONNECT_CODES.has(error.code)
 }
