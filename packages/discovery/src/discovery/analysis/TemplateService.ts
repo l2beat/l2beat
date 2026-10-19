@@ -227,7 +227,7 @@ export class TemplateService {
       throw new Error('Invalid template.jsonc', {
         cause: {
           template,
-          problems: templateProblems(templateJsonc, parsed.message),
+          problems: templateProblems(templateJsonc, parsed),
         },
       })
     }
@@ -645,12 +645,16 @@ function criteriaScore(
 
 function templateProblems(
   templateJsonc: unknown,
-  parserMessage: string,
+  failure: { path: string; message: string },
 ): string[] {
   const { $schema: _, ...template } = templateJsonc as Record<string, unknown>
   const problems = schemaProblems(ContractLayer, template, '')
-  if (problems.length === 0) {
-    return [parserMessage]
+  const lines = problems.map((problem) => `${problem.path}: ${problem.message}`)
+  const walkFoundTheFailure = problems.some(
+    (problem) => !problem.message.startsWith('unexpected key'),
+  )
+  if (!walkFoundTheFailure) {
+    lines.push(`At ${failure.path || '@'}: ${failure.message}`)
   }
-  return problems.map((problem) => `${problem.path}: ${problem.message}`)
+  return lines
 }

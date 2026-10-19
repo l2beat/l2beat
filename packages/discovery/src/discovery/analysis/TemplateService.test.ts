@@ -181,6 +181,15 @@ describe(TemplateService.prototype.loadContractTemplate.name, () => {
     ])
   })
 
+  it('keeps the reason of the parser when the walk finds only unknown keys', () => {
+    writeTemplate('named', { name: 'Rollup', ignoreDiscovery: true })
+
+    expect(loadProblems('named')).toEqual([
+      expect.includes('name: unexpected key'),
+      'At @: ignoreDiscovery cannot be set in a template',
+    ])
+  })
+
   it('reports every mistake of a template at its path', () => {
     writeTemplate('typos', {
       $schema: '../schema.json',
