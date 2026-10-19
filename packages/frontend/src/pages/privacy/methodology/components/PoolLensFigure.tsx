@@ -1,5 +1,5 @@
 import type { PrivacyAdversarySentiment } from '@l2beat/config'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import {
   RosetteTooltipContextProvider,
@@ -9,6 +9,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import { SentimentText } from '~/components/SentimentText'
 import { useAnimationFrame } from '~/hooks/useAnimationFrame'
 import { useElementSize } from '~/hooks/useElementSize'
+import { useInterval } from '~/hooks/useInterval'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { cn } from '~/utils/cn'
 import { prepareCanvas } from '~/utils/prepareCanvas'
@@ -20,45 +21,28 @@ import {
   createPoolScene,
   drawPoolScene,
   type Lens,
+  type PoolDesign,
   type PoolScene,
   stepPoolScene,
 } from './poolLensScene'
+import { getPoolVerdicts } from './poolVerdicts'
 import { useFigureAutoplay } from './useFigureAutoplay'
 
-const INTERVAL_MS = 7000
+const INTERVAL_MS = 9000
 /** How long a view is watched before its verdict shows. */
 const REVEAL_MS = 2800
 
-/** How this made-up pool fares against each adversary, and why. */
-const VERDICTS: Record<
-  Lens,
-  { sentiment: PrivacyAdversarySentiment; sees: string }
-> = {
-  publicObserver: {
-    sentiment: 'good',
-    sees: 'Every deposit and every withdrawal, but nothing that ties one to the other.',
-  },
-  chainAnalyst: {
-    sentiment: 'warning',
-    sees: 'Timing. When only a coin or two is waiting in the pool, a withdrawal gives its deposit away.',
-  },
-  networkObserver: {
-    sentiment: 'good',
-    sees: 'Every request, each leaving through a different Tor exit, so none points back to a sender.',
-  },
-  privilegedInsider: {
-    sentiment: 'bad',
-    sees: 'The inside of the pool it runs: every coin keeps its owner, so every withdrawal is linked.',
-  },
-  futureAdversary: {
-    sentiment: 'bad',
-    sees: 'The archived pool, years later: once the keys protecting each note break, every link comes out.',
-  },
+const INITIAL_DESIGN: PoolDesign = {
+  namesDeposit: false,
+  traffic: 0.38,
+  publicRpc: false,
+  viewingKeys: true,
+  ellipticCurves: true,
 }
 
 export function PoolLensFigure({ data }: { data: FigureData }) {
   return (
-    <MethodologyFigure caption="A made-up pool, running live. Coins enter in their sender's colour; grey means this adversary cannot tell whose a coin is. Pick an adversary to see the same pool through its eyes; its verdict shows once you have watched for a moment.">
+    <MethodologyFigure caption="A made-up pool, running live. Coins enter in their sender's colour; grey means this adversary cannot tell whose a coin is. Pick an adversary, then change the part of the pool's design it depends on: its verdict follows from what the pool then shows.">
       <RosetteTooltipContextProvider>
         <PoolLens data={data} />
       </RosetteTooltipContextProvider>
@@ -72,6 +56,26 @@ function PoolLens({ data }: { data: FigureData }) {
   const adversary = data.adversaries[step] ?? data.adversaries[0]
   const lens = adversary?.id
 
+  const [design, setDesign] = useState(INITIAL_DESIGN)
+  const sceneRef = useRef<PoolScene>(undefined)
+  const scene = () => {
+    sceneRef.current ??= createPoolScene(design)
+    return sceneRef.current
+  }
+
+  // The chain analyst's verdict is measured, so it follows the simulation.
+  const [outcomes, setOutcomes] = useState<boolean[]>([])
+  useInterval(
+    () => {
+      const next = scene().outcomes
+      setOutcomes((current) =>
+        current.join() === next.join() ? current : next,
+      )
+    },
+    animate ? 300 : null,
+  )
+  const verdicts = getPoolVerdicts(design, outcomes)
+
   // A verdict is the conclusion of watching a view, so it shows only after
   // the reader has seen the pool through those eyes for a moment.
   const [seen, setSeen] = useState<ReadonlySet<Lens>>(() => new Set())
@@ -83,45 +87,57 @@ function PoolLens({ data }: { data: FigureData }) {
     )
     return () => clearTimeout(timeout)
   }, [lens, seen, animate, reducedMotion])
+  const shown = (id: Lens) =>
+    seen.has(id) ? verdicts[id].sentiment : undefined
 
   if (!adversary) return null
-  const verdict = VERDICTS[adversary.id]
-  const revealed = seen.has(adversary.id)
+  const verdict = verdicts[adversary.id]
+  const sentiment = shown(adversary.id)
+
+  const change = (next: Partial<PoolDesign>) => {
+    pick(step)
+    if (next.traffic !== undefined) scene().outcomes = []
+    setDesign((current) => ({ ...current, ...next }))
+  }
 
   return (
     <div {...containerProps}>
       <div role="tablist" className="flex flex-wrap gap-1.5">
-        {data.adversaries.map(({ id, label }, i) => (
-          <button
-            key={id}
-            type="button"
-            role="tab"
-            aria-selected={i === step}
-            onClick={() => pick(i)}
-            className={cn(
-              'flex items-center gap-1.5 rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13 transition-colors',
-              i === step
-                ? 'border-brand bg-brand text-white'
-                : 'border-divider bg-surface-primary text-secondary hover:border-brand/50 hover:text-primary',
-            )}
-          >
-            {seen.has(id) ? (
-              <PrivacySentimentDot
-                sentiment={VERDICTS[id].sentiment}
-                className="motion-safe:zoom-in-0 size-4 motion-safe:animate-in"
-              />
-            ) : (
-              <span
-                aria-hidden
-                className={cn(
-                  'size-4 rounded-full border-2 border-dashed',
-                  i === step ? 'border-white/70' : 'border-divider',
-                )}
-              />
-            )}
-            {label}
-          </button>
-        ))}
+        {data.adversaries.map(({ id, label }, i) => {
+          const tabSentiment = shown(id)
+          return (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={i === step}
+              onClick={() => pick(i)}
+              className={cn(
+                'flex items-center gap-1.5 rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13 transition-colors',
+                i === step
+                  ? 'border-brand bg-brand text-white'
+                  : 'border-divider bg-surface-primary text-secondary hover:border-brand/50 hover:text-primary',
+              )}
+            >
+              {tabSentiment ? (
+                <PrivacySentimentDot
+                  key={tabSentiment}
+                  sentiment={tabSentiment}
+                  className="motion-safe:zoom-in-0 size-4 motion-safe:animate-in"
+                />
+              ) : (
+                <span
+                  aria-hidden
+                  className={cn(
+                    'size-4 rounded-full border-2 border-dashed',
+                    i === step ? 'border-white/70' : 'border-divider',
+                  )}
+                />
+              )}
+              {label}
+            </button>
+          )
+        })}
       </div>
       <FigureProgress
         steps={data.adversaries.length}
@@ -130,7 +146,13 @@ function PoolLens({ data }: { data: FigureData }) {
         intervalMs={INTERVAL_MS}
         className="mt-3"
       />
-      <PoolCanvas lens={adversary.id} running={animate} />
+      <DesignControl lens={adversary.id} design={design} onChange={change} />
+      <PoolCanvas
+        lens={adversary.id}
+        design={design}
+        scene={scene}
+        running={animate}
+      />
       <div className="mt-3 flex items-center gap-4">
         <div
           key={adversary.id}
@@ -138,13 +160,14 @@ function PoolLens({ data }: { data: FigureData }) {
         >
           <p className="flex flex-wrap items-baseline gap-x-2 font-bold text-label-value-16">
             {adversary.label} sees
-            {revealed ? (
+            {sentiment ? (
               <SentimentText
-                sentiment={verdict.sentiment}
+                key={sentiment}
+                sentiment={sentiment}
                 vibrant
                 className="motion-safe:fade-in font-bold text-label-value-14 motion-safe:animate-in"
               >
-                {`→ ${PRIVACY_ADVERSARY_VERDICT[verdict.sentiment]}`}
+                {`→ ${PRIVACY_ADVERSARY_VERDICT[sentiment]}`}
               </SentimentText>
             ) : (
               <span className="font-medium text-label-value-14 text-secondary motion-safe:animate-pulse">
@@ -155,7 +178,7 @@ function PoolLens({ data }: { data: FigureData }) {
           <p
             className={cn(
               'mt-1 text-paragraph-14 transition-opacity duration-500',
-              !revealed && 'opacity-0',
+              !seen.has(adversary.id) && 'opacity-0',
             )}
           >
             {verdict.sees}
@@ -164,42 +187,187 @@ function PoolLens({ data }: { data: FigureData }) {
             {adversary.label} {adversary.text}
           </p>
         </div>
-        <VerdictRosette data={data} seen={seen} selected={adversary.label} />
+        <VerdictRosette data={data} shown={shown} selected={adversary.label} />
       </div>
     </div>
   )
 }
 
-function PoolCanvas({ lens, running }: { lens: Lens; running: boolean }) {
+/** The one design choice the current adversary's verdict depends on. */
+function DesignControl({
+  lens,
+  design,
+  onChange,
+}: {
+  lens: Lens
+  design: PoolDesign
+  onChange: (next: Partial<PoolDesign>) => void
+}) {
+  let control: ReactNode
+  switch (lens) {
+    case 'publicObserver':
+      control = (
+        <Choice
+          label="Withdrawals name their deposit"
+          value={design.namesDeposit}
+          options={[
+            [false, 'No'],
+            [true, 'Yes'],
+          ]}
+          onChange={(namesDeposit) => onChange({ namesDeposit })}
+        />
+      )
+      break
+    case 'chainAnalyst':
+      control = (
+        <label className="flex flex-1 flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="font-semibold text-label-value-13">
+            Pool traffic
+          </span>
+          <span className="flex min-w-48 flex-1 items-center gap-2 text-label-value-12 text-secondary">
+            Quiet
+            <input
+              type="range"
+              min={0}
+              max={1}
+              step={0.01}
+              value={design.traffic}
+              onChange={(e) => onChange({ traffic: Number(e.target.value) })}
+              className="flex-1 accent-brand"
+            />
+            Busy
+          </span>
+        </label>
+      )
+      break
+    case 'networkObserver':
+      control = (
+        <Choice
+          label="The client connects through"
+          value={design.publicRpc}
+          options={[
+            [false, 'Tor and a relayer'],
+            [true, 'A public RPC, from home'],
+          ]}
+          onChange={(publicRpc) => onChange({ publicRpc })}
+        />
+      )
+      break
+    case 'privilegedInsider':
+      control = (
+        <Choice
+          label="The operator holds viewing keys"
+          value={design.viewingKeys}
+          options={[
+            [false, 'No'],
+            [true, 'Yes'],
+          ]}
+          onChange={(viewingKeys) => onChange({ viewingKeys })}
+        />
+      )
+      break
+    case 'futureAdversary':
+      control = (
+        <Choice
+          label="Notes are protected by"
+          value={design.ellipticCurves}
+          options={[
+            [false, 'Post-quantum crypto'],
+            [true, 'Elliptic curves'],
+          ]}
+          onChange={(ellipticCurves) => onChange({ ellipticCurves })}
+        />
+      )
+      break
+  }
+  return (
+    <div
+      key={lens}
+      className="motion-safe:fade-in mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-md border border-brand/40 border-dashed bg-brand/5 px-3 py-2 motion-safe:animate-in"
+    >
+      <span className="font-bold text-brand text-label-value-12 uppercase">
+        Pool design
+      </span>
+      {control}
+    </div>
+  )
+}
+
+function Choice<T extends boolean>({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string
+  value: T
+  options: [T, string][]
+  onChange: (value: T) => void
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+      <span className="font-semibold text-label-value-13">{label}</span>
+      <div role="radiogroup" aria-label={label} className="flex gap-1">
+        {options.map(([option, text]) => (
+          <button
+            key={text}
+            type="button"
+            role="radio"
+            aria-checked={option === value}
+            onClick={() => onChange(option)}
+            className={cn(
+              'rounded-full border px-2.5 py-0.5 font-semibold text-label-value-12 transition-colors',
+              option === value
+                ? 'border-brand bg-brand text-white'
+                : 'border-divider bg-surface-primary text-secondary hover:border-brand/50',
+            )}
+          >
+            {text}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function PoolCanvas({
+  lens,
+  design,
+  scene,
+  running,
+}: {
+  lens: Lens
+  design: PoolDesign
+  scene: () => PoolScene
+  running: boolean
+}) {
   const boxRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const sceneRef = useRef<PoolScene>(undefined)
   const lensChange = useRef({ lens, at: 0 })
   const size = useElementSize(boxRef)
   const tokens = useThemeTokens()
 
   if (lensChange.current.lens !== lens) {
-    lensChange.current = { lens, at: sceneRef.current?.time ?? 0 }
+    lensChange.current = { lens, at: scene().time }
   }
 
   const draw = () => {
     const canvas = canvasRef.current
     if (!canvas || size.width === 0) return
-    sceneRef.current ??= createPoolScene()
     const ctx = prepareCanvas(canvas, size.width, size.height)
     if (!ctx) return
-    drawPoolScene(ctx, sceneRef.current, {
+    drawPoolScene(ctx, scene(), {
       width: size.width,
       height: size.height,
       lens,
-      lensAge: running ? sceneRef.current.time - lensChange.current.at : 1,
+      lensAge: running ? scene().time - lensChange.current.at : 1,
       tokens,
+      design,
     })
   }
 
   useAnimationFrame((dt) => {
-    sceneRef.current ??= createPoolScene()
-    stepPoolScene(sceneRef.current, dt)
+    stepPoolScene(scene(), dt, design)
     draw()
   }, running)
 
@@ -207,7 +375,7 @@ function PoolCanvas({ lens, running }: { lens: Lens; running: boolean }) {
   // biome-ignore lint/correctness/useExhaustiveDependencies: redraw on any input change
   useEffect(() => {
     if (!running) draw()
-  }, [running, lens, size, tokens])
+  }, [running, lens, size, tokens, design])
 
   return (
     <div ref={boxRef} className="relative mt-3 h-[300px] w-full sm:h-[320px]">
@@ -224,28 +392,30 @@ function PoolCanvas({ lens, running }: { lens: Lens; running: boolean }) {
 /** The rosette of this made-up pool, filling in as the reader watches. */
 function VerdictRosette({
   data,
-  seen,
+  shown,
   selected,
 }: {
   data: FigureData
-  seen: ReadonlySet<Lens>
+  shown: (id: Lens) => PrivacyAdversarySentiment | undefined
   selected: string
 }) {
   const rosette = useRosetteTooltipContext()
   const setSelected = rosette?.setSelectedRisk
+  const key = data.adversaries.map(({ id }) => shown(id) ?? '-').join()
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `key` stands for the shown verdicts
   const values: RosetteValue[] = useMemo(
     () =>
       data.adversaries.map(({ id, label }) => {
-        const sentiment = seen.has(id) ? VERDICTS[id].sentiment : 'neutral'
+        const sentiment = shown(id)
         return {
           name: label,
-          value: seen.has(id)
-            ? PRIVACY_ADVERSARY_VERDICT[VERDICTS[id].sentiment]
+          value: sentiment
+            ? PRIVACY_ADVERSARY_VERDICT[sentiment]
             : 'Not watched yet',
-          sentiment,
+          sentiment: sentiment ?? 'neutral',
         }
       }),
-    [data, seen],
+    [data, key],
   )
   const value = values.find((v) => v.name === selected)
 

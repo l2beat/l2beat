@@ -4,11 +4,30 @@ import { alpha } from './canvasColor'
 
 /**
  * A made-up pool that never stops: senders deposit, coins wait inside, and
- * leave to fresh addresses. The simulation is the same for every adversary;
- * only the drawing changes, to show what each one can see.
+ * leave to fresh addresses. The pool's design decides what each adversary
+ * can see; the drawing shows it through one adversary's eyes.
  */
 
 export type Lens = PrivacyAdversaryId
+
+/** The protocol choices the reader can change, one per adversary. */
+export interface PoolDesign {
+  /** A withdrawal names the deposit it spends, in public. */
+  namesDeposit: boolean
+  /** 0 (quiet) to 1 (busy). */
+  traffic: number
+  /** The client sends requests from the user's own IP to a public RPC. */
+  publicRpc: boolean
+  /** The operator holds keys that decrypt the pool. */
+  viewingKeys: boolean
+  /** Notes are protected by elliptic curves, which quantum attacks break. */
+  ellipticCurves: boolean
+}
+
+/** Withdrawals the chain analyst's verdict is measured over. */
+const SAMPLE_SIZE = 12
+/** A withdrawal with this many coins waiting, itself included, is caught. */
+const CAUGHT_AT = 2
 
 /** Owner colours; kept clear of the green, yellow and red of the ratings. */
 export const OWNER_COLORS = [
@@ -19,6 +38,13 @@ export const OWNER_COLORS = [
   '#f97316',
 ]
 const CAUGHT_COLOR = '#ef4444'
+const HOME_IPS = [
+  '84.21.7.13',
+  '91.66.3.140',
+  '5.180.22.9',
+  '77.12.201.4',
+  '212.8.45.77',
+]
 
 const OWNERS = OWNER_COLORS.length
 const TRAVEL_S = 1.4
@@ -65,9 +91,11 @@ export interface PoolScene {
   notes: Note[]
   traces: Trace[]
   requests: Request[]
+  /** Whether each recent withdrawal was caught by timing, newest last. */
+  outcomes: boolean[]
 }
 
-export function createPoolScene(): PoolScene {
+export function createPoolScene(design: PoolDesign): PoolScene {
   const scene: PoolScene = {
     time: 0,
     spawnIn: 0,
@@ -75,29 +103,32 @@ export function createPoolScene(): PoolScene {
     notes: [],
     traces: [],
     requests: [],
+    outcomes: [],
   }
-  for (let i = 0; i < 6 * 30; i++) stepPoolScene(scene, 1 / 30)
+  for (let i = 0; i < 6 * 30; i++) stepPoolScene(scene, 1 / 30, design)
   return scene
 }
 
-export function stepPoolScene(scene: PoolScene, dt: number) {
+export function stepPoolScene(
+  scene: PoolScene,
+  dt: number,
+  design: PoolDesign,
+) {
   scene.time += dt
-  scene.spawnIn -= dt
+  scene.spawnIn = Math.min(scene.spawnIn - dt, spawnInterval(design.traffic))
   if (scene.spawnIn <= 0) {
-    // Traffic swells and fades, so the pool is sometimes busy and sometimes
-    // nearly empty, which is when timing gives withdrawals away.
-    const busy = 0.5 + 0.5 * Math.sin((scene.time * Math.PI * 2) / 26)
-    scene.spawnIn = 1.7 - busy * 1.2 + Math.random() * 0.3
+    scene.spawnIn = spawnInterval(design.traffic) * (0.7 + Math.random() * 0.6)
+    const owner = Math.floor(Math.random() * OWNERS)
     scene.notes.push({
       id: scene.nextId++,
-      owner: Math.floor(Math.random() * OWNERS),
+      owner,
       phase: 'in',
       t: 0,
       stay: 2.5 + Math.random() * 5,
       slot: { x: 0.12 + Math.random() * 0.76, y: 0.1 + Math.random() * 0.8 },
       sincePool: 0,
-      inIp: torExit(),
-      outIp: torExit(),
+      inIp: requestIp(owner, design),
+      outIp: '',
     })
     const added = scene.notes[scene.notes.length - 1]
     if (added) scene.requests.push({ side: 'in', ip: added.inIp, age: 0 })
@@ -111,13 +142,16 @@ export function stepPoolScene(scene: PoolScene, dt: number) {
       note.t = 0
     } else if (note.phase === 'pool' && note.t >= note.stay) {
       const waiting = scene.notes.filter((n) => n.phase === 'pool')
+      const caught = waiting.length <= CAUGHT_AT
       scene.traces.push({
-        kind: waiting.length <= 2 ? 'caught' : 'fan',
+        kind: caught ? 'caught' : 'fan',
         owner: note.owner,
         candidates: waiting.map((n) => n.owner),
         age: 0,
-        life: waiting.length <= 2 ? 2.6 : 1.8,
+        life: caught ? 2.6 : 1.8,
       })
+      scene.outcomes = [...scene.outcomes, caught].slice(-SAMPLE_SIZE)
+      note.outIp = requestIp(note.owner, design)
       scene.requests.push({ side: 'out', ip: note.outIp, age: 0 })
       note.phase = 'out'
       note.t = 0
@@ -145,6 +179,15 @@ export function stepPoolScene(scene: PoolScene, dt: number) {
   scene.traces = scene.traces.filter((t) => t.age < t.life)
 }
 
+/** Seconds between deposits: from one every 3 s to three a second. */
+function spawnInterval(traffic: number) {
+  return 3 - traffic * 2.65
+}
+
+function requestIp(owner: number, design: PoolDesign) {
+  return design.publicRpc ? (HOME_IPS[owner] ?? '') : torExit()
+}
+
 function countWaiting(scene: PoolScene) {
   return scene.notes.filter((n) => n.phase === 'pool').length
 }
@@ -156,18 +199,31 @@ interface DrawOptions {
   /** Seconds since the lens changed, for the sweep between views. */
   lensAge: number
   tokens: ThemeTokens
+  design: PoolDesign
 }
 
 export function drawPoolScene(
   ctx: CanvasRenderingContext2D,
   scene: PoolScene,
-  { width, height, lens, lensAge, tokens }: DrawOptions,
+  { width, height, lens, lensAge, tokens, design }: DrawOptions,
 ) {
   const l = getLayout(width, height)
   ctx.clearRect(0, 0, width, height)
 
-  // Zones
+  const insider = lens === 'privilegedInsider'
+  const future = lens === 'futureAdversary'
   const network = lens === 'networkObserver'
+  const readsChain =
+    lens === 'publicObserver' || lens === 'chainAnalyst' || future
+  // What links this adversary can make, given the pool's design.
+  const seesInside = insider && design.viewingKeys
+  const breaksNotes = future && design.ellipticCurves
+  const namedLinks = readsChain && design.namesDeposit
+  const ipLinks = network && design.publicRpc
+  const links = seesInside || breaksNotes || namedLinks || ipLinks
+  const linkLabel = namedLinks ? 'named' : ipLinks ? 'same IP' : undefined
+
+  // Zones
   for (const band of [l.leftBand, l.rightBand]) {
     ctx.fillStyle = network
       ? alpha(tokens.brand, 0.1)
@@ -195,7 +251,7 @@ export function drawPoolScene(
         const y = l.bottom - 14 - (fromBottom + enter - 1) * 16
         ctx.fillStyle = alpha(tokens.brand, (1 - entry.age / LOG_S) * enter)
         ctx.fillText(
-          `${entry.ip} → ${side === 'in' ? 'RPC' : 'relayer'}`,
+          `${entry.ip} → ${side === 'in' || design.publicRpc ? 'RPC' : 'relayer'}`,
           band.x + 10,
           y,
         )
@@ -203,14 +259,12 @@ export function drawPoolScene(
     }
   }
 
-  const insider = lens === 'privilegedInsider'
-  const future = lens === 'futureAdversary'
   ctx.beginPath()
   ctx.roundRect(l.pool.x, l.top, l.pool.width, l.bottom - l.top, 14)
-  ctx.fillStyle = insider ? alpha(tokens.brand, 0.1) : tokens.surface
+  ctx.fillStyle = seesInside ? alpha(tokens.brand, 0.1) : tokens.surface
   ctx.fill()
-  ctx.lineWidth = insider ? 2 : 1
-  ctx.strokeStyle = insider ? tokens.brand : tokens.divider
+  ctx.lineWidth = seesInside ? 2 : 1
+  ctx.strokeStyle = seesInside ? tokens.brand : tokens.divider
   ctx.stroke()
   ctx.lineWidth = 1
 
@@ -244,7 +298,7 @@ export function drawPoolScene(
     ctx.fill()
 
     const link = scene.traces.find((t) => t.kind === 'link' && t.owner === i)
-    const known = link && (insider || future)
+    const known = link && links
     ctx.beginPath()
     ctx.arc(l.recipientX, l.rowY(i), 10, 0, Math.PI * 2)
     ctx.fillStyle = known
@@ -287,17 +341,22 @@ export function drawPoolScene(
         align: 'right',
       })
     }
-    if ((insider || future) && trace.kind === 'link') {
+    if (links && trace.kind === 'link') {
       const color = OWNER_COLORS[trace.owner] ?? tokens.secondary
       ctx.strokeStyle = alpha(color, 0.8 * fade)
       ctx.lineWidth = 2
       line(ctx, { x: l.senderX + 12, y: l.rowY(trace.owner) }, to)
       ctx.lineWidth = 1
+      if (linkLabel) {
+        tag(ctx, linkLabel, to.x - 18, to.y - 18, {
+          color: '#ffffff',
+          background: CAUGHT_COLOR,
+          opacity: fade,
+          align: 'right',
+        })
+      }
     }
-    if (
-      trace.kind === 'unknown' &&
-      (lens === 'publicObserver' || lens === 'networkObserver')
-    ) {
+    if (!links && trace.kind === 'unknown' && lens !== 'chainAnalyst') {
       tag(ctx, '?', to.x, to.y - 20 - 6 * (1 - fade), {
         color: tokens.secondary,
         background: tokens.surface,
@@ -311,8 +370,13 @@ export function drawPoolScene(
   for (const note of scene.notes) {
     const p = notePosition(note, l, scene.time)
     const ownerColor = OWNER_COLORS[note.owner] ?? tokens.secondary
-    const cracked = note.sincePool > CRACK_S
-    const revealed = note.phase === 'in' || insider || (future && cracked)
+    const cracked = breaksNotes && note.sincePool > CRACK_S
+    const left = note.phase === 'out' || note.phase === 'done'
+    const revealed =
+      note.phase === 'in' ||
+      seesInside ||
+      cracked ||
+      ((namedLinks || ipLinks) && left)
     const opacity = note.phase === 'done' ? 1 - note.t / FADE_S : 1
 
     if (note.phase === 'in' || note.phase === 'out') {
