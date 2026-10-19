@@ -8,12 +8,11 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { withProjectIcon } from '~/utils/withProjectIcon'
-import type { TransferType } from './components/InteropTransferTypePage'
 import type { InteropQuery } from './InteropRouter'
 import { TRANSFER_TYPE_DISPLAY } from './utils/display'
 import { getInitialInteropSelection } from './utils/getInitialInteropSelection'
 import { mapInteropChainsToWithIcons } from './utils/mapInteropChainsToWithIcons'
-import type { InteropSelection } from './utils/types'
+import type { InteropSelection, TransferType } from './utils/types'
 
 const TRANSFER_TYPE_PAGES = {
   lockAndMint: {

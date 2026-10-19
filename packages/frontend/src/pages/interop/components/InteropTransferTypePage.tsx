@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import {
   type DehydratedState,
   HydrationBoundary,
@@ -18,7 +17,7 @@ import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
-import type { InteropSelection } from '../utils/types'
+import type { InteropSelection, TransferType } from '../utils/types'
 import { AllProtocolsCard } from './AllProtocolsCard'
 import { MultiChainSelector } from './chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from './chain-selector/types'
@@ -28,11 +27,6 @@ import { TopProtocolsByTransfers } from './widgets/protocols/TopProtocolsByTrans
 import { TopProtocolsByVolume } from './widgets/protocols/TopProtocolsByVolume'
 import { TopRoutesWidget } from './widgets/TopRoutesWidget'
 import { TopTokenWidget } from './widgets/TopTokenWidget'
-
-export type TransferType = Extract<
-  KnownInteropBridgeType,
-  'lockAndMint' | 'burnAndMint' | 'nonMinting'
->
 
 export interface InteropTransferTypePageProps extends AppLayoutProps {
   queryState: DehydratedState
