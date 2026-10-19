@@ -151,12 +151,9 @@ export function createPrivacyModule({
         new PrivacyAnonymitySetIndexer(
           {
             chain: blockTimestampConfig.chain,
-            parents: [hourlyIndexer],
+            parents: [blockTimestampIndexer],
             indexerService,
-            blockTimestampProvider: providers.blockTimestamp,
-            blockProvider: providers.block.getBlockProvider(
-              blockTimestampConfig.chain,
-            ),
+            blockProvider,
             logsProvider: providers.logs.getLogsProvider(
               blockTimestampConfig.chain,
             ),
