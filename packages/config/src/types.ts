@@ -1217,6 +1217,7 @@ export type PrivacyCategoryId =
   | 'shieldedLedger'
   | 'stealthAddress'
   | 'confidentialAmounts'
+  | 'secretBallot'
 
 export interface PrivacyCategory {
   id: PrivacyCategoryId

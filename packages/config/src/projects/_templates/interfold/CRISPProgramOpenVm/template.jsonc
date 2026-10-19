@@ -57,6 +57,23 @@
     "availabilityFinalizationWindow": {
       "description": "Immutable window after voting in which input availability must be finalized.",
       "type": "RISK_PARAMETER"
+    },
+    // The ballot verifiers are private immutables, readable only from the
+    // constructor arguments.
+    "constructorArgs": {
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "ballotVerifier": {
+      "description": "Immutable verifier of ballot proofs for rounds whose voters are listed in a Merkle tree.",
+      "type": "CODE_CHANGE",
+      "copy": "constructorArgs",
+      "edit": ["get", "_honkVerifier"]
+    },
+    "onchainBallotVerifier": {
+      "description": "Immutable verifier of ballot proofs for rounds that read voting power from the token at the snapshot, as DAO votes do.",
+      "type": "CODE_CHANGE",
+      "copy": "constructorArgs",
+      "edit": ["get", "_onchainHonkVerifier"]
     }
   }
 }

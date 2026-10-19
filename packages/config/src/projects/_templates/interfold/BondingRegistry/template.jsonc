@@ -32,8 +32,7 @@
       ]
     },
     "activeOperators": {
-      "description": "Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.",
-      "type": "PERMISSION",
+      "description": "Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation. The committee role itself is on CiphernodeRegistry.registeredCiphernodes.",
       "handler": {
         "type": "event",
         "select": "operator",
@@ -45,13 +44,7 @@
           "event": "OperatorActivationChanged",
           "where": ["=", "#active", false]
         }
-      },
-      "permissions": [
-        {
-          "type": "member",
-          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties."
-        }
-      ]
+      }
     },
     "bondOwners": {
       "description": "Latest collateral owner for each operator key, reconstructed from ownership events. The owner controls that operator's collateral and exits (operators self-administer this via propose/accept); one address can own several operator positions, but only one of them can be selected into any committee requested after the bond-owner cap was introduced.",
