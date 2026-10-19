@@ -229,7 +229,11 @@ function ExpandButton(props: {
       onClick={props.onClick}
       className="flex w-full min-w-0 flex-1 cursor-pointer items-center gap-1 px-2 py-0.5 text-left hover:bg-aux-brown"
     >
-      {props.open ? <IconChevronDown /> : <IconChevronRight />}
+      {props.open ? (
+        <IconChevronDown className="shrink-0" />
+      ) : (
+        <IconChevronRight className="shrink-0" />
+      )}
       {props.children}
     </button>
   )
