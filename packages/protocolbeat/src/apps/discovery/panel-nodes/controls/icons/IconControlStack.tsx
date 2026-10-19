@@ -1,16 +1,14 @@
-import { Icon } from '../../../../../icons/Icon'
+import { ControlIcon } from './ControlIcon'
 
+// Stack layout places nodes in columns by depth, so the icon is a tree that
+// grows to the right.
 export function IconControlStack(props: { className?: string }) {
   return (
-    <Icon
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M8 2.5L13 5.5L8 8.5L3 5.5L8 2.5Z" />
-      <path d="M3.5 8L8 10.75L12.5 8" />
-      <path d="M3.5 11L8 13.75L12.5 11" />
-    </Icon>
+    <ControlIcon {...props}>
+      <rect x="1.5" y="6.25" width="4" height="3.5" rx=".75" />
+      <rect x="10.5" y="2" width="4" height="3.5" rx=".75" />
+      <rect x="10.5" y="10.5" width="4" height="3.5" rx=".75" />
+      <path d="M5.5 8H8M8 3.75v8.5M8 3.75h2.5M8 12.25h2.5" />
+    </ControlIcon>
   )
 }

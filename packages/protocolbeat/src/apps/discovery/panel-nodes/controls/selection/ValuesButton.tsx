@@ -1,5 +1,5 @@
 import { useStore } from '../../store/store'
-import { IconControlBars } from '../icons/IconControlBars'
+import { IconControlListChecks } from '../icons/IconControlListChecks'
 import { ValuesDialog } from './node-values/ValuesDialog'
 import { selectOnlySelectedNode } from './selectOnlySelectedNode'
 
@@ -14,7 +14,7 @@ export function ValuesButton() {
   return (
     <ValuesDialog.Root>
       <ValuesDialog.Trigger label="Visible values" disabled={fieldCount === 0}>
-        <IconControlBars />
+        <IconControlListChecks />
         {fieldCount > 0 && (
           <span className="text-[11px] text-coffee-400 tabular-nums leading-none">
             {visibleFieldCount}/{fieldCount}

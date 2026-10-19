@@ -16,7 +16,6 @@ import { TextArea } from '../../../../../components/TextArea'
 import { IS_READONLY } from '../../../../../config/readonly'
 import { IconDownload } from '../../../../../icons/IconDownload'
 import { IconFileUp } from '../../../../../icons/IconFileUp'
-import { IconFolder } from '../../../../../icons/IconFolder'
 import { cn } from '../../../../../utils/cn'
 import type { ApplyLayoutMode } from '../../store/actions/applyStoredLayout'
 import { useStore } from '../../store/store'
@@ -25,6 +24,7 @@ import {
   buildStoredNodeLayout,
   type StoredNodeLayout,
 } from '../../store/utils/storage'
+import { IconControlBookmark } from '../icons/IconControlBookmark'
 import { ToolbarButton } from '../ToolbarButton'
 
 interface PendingLayout {
@@ -233,7 +233,7 @@ export function LayoutLibrary() {
             description="Load, import or export node positions, colors and hidden fields."
             disabled={!projectId}
           >
-            <IconFolder />
+            <IconControlBookmark />
           </ToolbarButton>
         </Dialog.Trigger>
         <Dialog.Body>
