@@ -1,10 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type {
-  CallParameters,
-  HttpClient,
-  IRpcClient,
-  MulticallV3Response,
-} from '@l2beat/shared'
+import type { CallParameters, HttpClient, IRpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import {
@@ -20,6 +15,7 @@ import {
   type InteropConfigStore,
 } from '../../engine/config/InteropConfigStore'
 import { reconcileNetworks } from '../../engine/config/reconcileNetworks'
+import { callWithOptionalMulticall } from '../callWithOptionalMulticall'
 
 export interface CCIPNetwork {
   chain: string
@@ -384,7 +380,7 @@ async function getRouterOnRampRoutes(
     }),
   )
 
-  const results = await callRouter(rpc, calls, latestBlockNumber)
+  const results = await callWithOptionalMulticall(rpc, calls, latestBlockNumber)
 
   const onRamps: Record<string, EthereumAddress> = {}
   for (const [index, result] of results.entries()) {
@@ -439,39 +435,6 @@ async function getRouterOffRamps(
     bySource[sourceChain] = addresses
   }
   return bySource
-}
-
-async function callRouter(
-  rpc: Pick<IRpcClient, 'call' | 'isMulticallDeployed' | 'multicall'>,
-  calls: CallParameters[],
-  blockNumber: number,
-): Promise<MulticallV3Response[]> {
-  if (rpc.isMulticallDeployed(blockNumber)) {
-    return await rpc.multicall(calls, blockNumber)
-  }
-
-  const results: MulticallV3Response[] = []
-  for (const call of calls) {
-    try {
-      const data = await rpc.call(call, blockNumber)
-      results.push({ success: true, data })
-    } catch (error) {
-      if (!isCallRevertedError(error)) {
-        throw error
-      }
-      results.push({ success: false, data: Bytes.EMPTY })
-    }
-  }
-  return results
-}
-
-function isCallRevertedError(error: unknown): boolean {
-  if (!(error instanceof Error)) {
-    return false
-  }
-
-  const message = error.message.toLowerCase()
-  return message.includes('revert') || message.includes('call_exception')
 }
 
 function sortUnique(addresses: EthereumAddress[]): EthereumAddress[] {

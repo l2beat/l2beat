@@ -1,4 +1,4 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
+import type { InMemoryCache, KnownInteropBridgeType } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
@@ -8,12 +8,29 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { withProjectIcon } from '~/utils/withProjectIcon'
-import type { InteropQuery } from '../InteropRouter'
-import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
-import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
-import type { InteropSelection } from '../utils/types'
+import type { InteropQuery } from './InteropRouter'
+import { TRANSFER_TYPE_DISPLAY } from './utils/display'
+import { getInitialInteropSelection } from './utils/getInitialInteropSelection'
+import { mapInteropChainsToWithIcons } from './utils/mapInteropChainsToWithIcons'
+import type { InteropSelection } from './utils/types'
 
-export async function getInteropBurnAndMintData(
+const TRANSFER_TYPE_PAGES = {
+  lockAndMint: {
+    page: 'InteropLockAndMintPage',
+    image: '/meta-images/interop/lock-&-mint/opengraph-image.png',
+  },
+  burnAndMint: {
+    page: 'InteropBurnAndMintPage',
+    image: '/meta-images/interop/burn-&-mint/opengraph-image.png',
+  },
+  nonMinting: {
+    page: 'InteropNonMintingPage',
+    image: '/meta-images/interop/non-minting/opengraph-image.png',
+  },
+} as const
+
+export async function getInteropTransferTypeData(
+  type: KnownInteropBridgeType,
   req: Request<unknown, unknown, unknown, InteropQuery>,
   manifest: Manifest,
   cache: InMemoryCache,
@@ -31,7 +48,7 @@ export async function getInteropBurnAndMintData(
     {
       key: [
         'interop',
-        'burnAndMint',
+        type,
         'prefetch',
         initialSelection.from.join(','),
         initialSelection.to.join(','),
@@ -39,7 +56,7 @@ export async function getInteropBurnAndMintData(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    async () => getCachedData(initialSelection),
+    async () => getCachedData(type, initialSelection),
   )
 
   const interopChainsWithIcons = mapInteropChainsToWithIcons(
@@ -51,18 +68,18 @@ export async function getInteropBurnAndMintData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        name: 'Burn & Mint',
+        name: TRANSFER_TYPE_DISPLAY[type].label,
         title: 'Interoperability - L2BEAT',
         description:
           'Compare interoperability protocols across the Ethereum ecosystem. Track bridge volumes, transfer times & sizes, and explore how Non-minting, Lock & Mint, and Burn & Mint mechanisms affect cross-chain risk.',
         url: req.originalUrl,
         openGraph: {
-          image: '/meta-images/interop/burn-&-mint/opengraph-image.png',
+          image: TRANSFER_TYPE_PAGES[type].image,
         },
       }),
     },
     ssr: {
-      page: 'InteropBurnAndMintPage',
+      page: TRANSFER_TYPE_PAGES[type].page,
       props: {
         ...appLayoutProps,
         ...queryState,
@@ -76,7 +93,10 @@ export async function getInteropBurnAndMintData(
   }
 }
 
-async function getCachedData(initialSelection: InteropSelection) {
+async function getCachedData(
+  type: KnownInteropBridgeType,
+  initialSelection: InteropSelection,
+) {
   const helpers = getSsrHelpers()
   const [protocols] = await Promise.all([
     ps.getProjects({
@@ -86,7 +106,7 @@ async function getCachedData(initialSelection: InteropSelection) {
       ? helpers.queryClient.prefetchQuery(
           helpers.trpc.interop.dashboard.queryOptions({
             ...initialSelection,
-            type: 'burnAndMint',
+            type,
           }),
         )
       : undefined,
