@@ -84,6 +84,9 @@ export class ApiServer {
 }
 
 function isClientDisconnect(error: NodeJS.ErrnoException, ctx: Koa.Context) {
+  if (ctx.res.errored) {
+    return false
+  }
   if (!ctx.req.socket.destroyed) {
     return false
   }

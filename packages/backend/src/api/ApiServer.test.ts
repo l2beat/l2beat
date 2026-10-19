@@ -3,7 +3,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
 import { createServer, get, type Server } from 'http'
 import type { AddressInfo } from 'net'
-import { Readable } from 'stream'
+import { PassThrough, pipeline, Readable } from 'stream'
 import { ApiServer } from './ApiServer'
 
 describe(ApiServer.name, () => {
@@ -17,21 +17,19 @@ describe(ApiServer.name, () => {
   it('logs a client that resets the connection mid-stream as info', async () => {
     const logger = mockLogger()
     const router = new Router()
-    router.get('/stream', (ctx) => {
-      ctx.compress = false
-      ctx.body = Readable.from(chunks())
+    const socketClosed = new Promise<void>((resolve) => {
+      router.get('/stream', (ctx) => {
+        ctx.req.socket.once('close', resolve)
+        ctx.compress = false
+        ctx.body = Readable.from(chunks())
+      })
     })
     const url = await listen(logger, router)
 
-    await new Promise<void>((resolve) => {
-      get(`${url}/stream`, (response) => {
-        response.once('data', () => {
-          response.socket.resetAndDestroy()
-          resolve()
-        })
-      })
+    get(`${url}/stream`, (response) => {
+      response.once('data', () => response.socket.resetAndDestroy())
     })
-    await waitUntilLogged(logger.info, 'Client disconnected')
+    await socketClosed
 
     expect(logger.info).toHaveBeenCalledWith('Client disconnected', {
       code: expect.a(String),
@@ -45,13 +43,50 @@ describe(ApiServer.name, () => {
     const logger = mockLogger()
     const router = new Router()
     router.get('/upstream', () => {
-      throw Object.assign(new Error('read ECONNRESET'), { code: 'ECONNRESET' })
+      throw upstreamReset()
     })
     const url = await listen(logger, router)
 
     const response = await fetch(`${url}/upstream`)
 
     expect(response.status).toEqual(500)
+    expect(logger.error).toHaveBeenCalledWith(
+      'Request failed',
+      expect.a(Error),
+      expect.a(Object),
+    )
+    expect(logger.info).not.toHaveBeenCalledWith(
+      'Client disconnected',
+      expect.anything(),
+    )
+  })
+
+  it('logs a disconnect error as error when the server destroys the response', async () => {
+    const logger = mockLogger()
+    const router = new Router()
+    const socketClosed = new Promise<void>((resolve) => {
+      router.get('/stream', (ctx) => {
+        ctx.req.socket.once('close', resolve)
+        ctx.compress = false
+        ctx.body = pipeline(
+          Readable.from(failAfterFirstChunk(upstreamReset())),
+          new PassThrough(),
+          (error) => {
+            if (error) {
+              ctx.res.destroy(error)
+            }
+          },
+        )
+      })
+    })
+    const url = await listen(logger, router)
+
+    get(`${url}/stream`, (response) => {
+      response.resume()
+      response.on('error', () => {})
+    })
+    await socketClosed
+
     expect(logger.error).toHaveBeenCalledWith(
       'Request failed',
       expect.a(Error),
@@ -82,6 +117,10 @@ function mockLogger() {
   return logger
 }
 
+function upstreamReset() {
+  return Object.assign(new Error('read ECONNRESET'), { code: 'ECONNRESET' })
+}
+
 async function* chunks() {
   for (let index = 0; index < 1000; index++) {
     yield Buffer.alloc(64 * 1024)
@@ -89,14 +128,8 @@ async function* chunks() {
   }
 }
 
-async function waitUntilLogged(
-  log: { calls: { args: unknown[] }[] },
-  message: string,
-) {
-  for (let attempt = 0; attempt < 100; attempt++) {
-    if (log.calls.some((call) => call.args[0] === message)) {
-      return
-    }
-    await new Promise((resolve) => setTimeout(resolve, 10))
-  }
+async function* failAfterFirstChunk(error: Error) {
+  yield Buffer.alloc(64 * 1024)
+  await new Promise((resolve) => setImmediate(resolve))
+  throw error
 }
