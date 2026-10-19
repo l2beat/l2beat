@@ -32,6 +32,7 @@ import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
+import { attachModulesRouter } from './modules'
 import { ProviderCache } from './ProviderCache'
 import { searchCode } from './searchCode'
 import { TvlCache } from './TvlCache'
@@ -306,6 +307,7 @@ export function createDiscoveryUiApp({
     attachAnalyzeRouter(app, configReader)
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
+    attachModulesRouter(app, configReader, paths.discovery)
 
     app.get('/api/config/health', (_, res) => {
       const response = getConfigHealth(

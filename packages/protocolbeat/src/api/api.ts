@@ -435,3 +435,19 @@ async function readErrorMessage(res: Response): Promise<string> {
     return res.statusText
   }
 }
+
+export async function updateModuleEntrypoints(
+  module: string,
+  remove: string[],
+) {
+  const res = await fetch(`/api/modules/${module}/entrypoints`, {
+    method: 'POST',
+    body: JSON.stringify({ remove }),
+    headers: { 'Content-Type': 'application/json' },
+  })
+  if (!res.ok) {
+    throw new Error('Module entrypoints update failed', {
+      cause: { status: res.status },
+    })
+  }
+}

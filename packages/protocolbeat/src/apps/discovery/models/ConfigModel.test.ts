@@ -1,3 +1,4 @@
+import { ChainSpecificAddress, formatJson } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { ConfigModel } from './ConfigModel'
 
@@ -140,6 +141,39 @@ describe('ConfigModel', () => {
       const model = ConfigModel.fromRawJsonc(jsonc)
 
       expect(model.hasComments()).toEqual(false)
+    })
+  })
+
+  describe('initial addresses', () => {
+    const A = ChainSpecificAddress(
+      'eth:0x0000000000000000000000000000000000000001',
+    )
+    const B = ChainSpecificAddress(
+      'eth:0x0000000000000000000000000000000000000002',
+    )
+
+    it('replaces them and keeps the comments elsewhere', () => {
+      const model = ConfigModel.fromRawJsonc(`{
+        // Top comment
+        "name": "shared-test",
+        "initialAddresses": ["${A}"]
+      }`)
+
+      const updated = model.setInitialAddresses([A, B])
+
+      expect(updated.getInitialAddresses()).toEqual([A, B])
+      expect(model.getInitialAddresses()).toEqual([A])
+      expect(updated.toFileContents()).toInclude('Top comment')
+    })
+
+    it('writes the repository format when there are no comments', () => {
+      const model = ConfigModel.fromRawJsonc(
+        `{ "name": "shared-test", "initialAddresses": ["${A}"] }`,
+      )
+
+      expect(model.setInitialAddresses([]).toFileContents()).toEqual(
+        formatJson({ name: 'shared-test', initialAddresses: [] }),
+      )
     })
   })
 })

@@ -3,7 +3,9 @@ import type {
   DiscoveryConfigSchema,
   FieldConfigSchema,
 } from '@l2beat/discovery'
+import { type ChainSpecificAddress, formatJson } from '@l2beat/shared-pure'
 import { assign, parse, stringify } from 'comment-json'
+import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
 import { ContractConfigModel } from './ContractConfigModel'
 import { clone } from './cloneWithComments'
 import { hasCommentsRecursive } from './hasComments'
@@ -46,8 +48,25 @@ export class ConfigModel {
     return stringify(this.peek(), null, 2)
   }
 
+  // Without comments to keep, the file is written in the repository's format.
+  toFileContents(): string {
+    const text = this.toString()
+    if (this.hasComments()) {
+      return text
+    }
+    return formatJson(JSON.parse(removeJSONTrailingCommas(text)))
+  }
+
   diff(other: ConfigModel) {
     return stringify(this.peek()) !== stringify(other.peek())
+  }
+
+  getInitialAddresses(): ChainSpecificAddress[] {
+    return [...(this.config.initialAddresses ?? [])]
+  }
+
+  setInitialAddresses(addresses: ChainSpecificAddress[]) {
+    return this.patch({ initialAddresses: addresses })
   }
 
   setIgnoreMethods(id: string, methods: string[]) {

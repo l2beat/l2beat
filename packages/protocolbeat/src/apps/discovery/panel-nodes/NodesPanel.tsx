@@ -21,7 +21,7 @@ import { Viewport } from './view/Viewport'
 
 // Leaf ids of every node that is selected or sits inside a selected one, so a
 // member selected inside an opened group still resolves to its address.
-function selectedLeafIds(
+export function selectedLeafIds(
   nodes: readonly Node[],
   selected: ReadonlySet<string>,
 ): string[] {

@@ -1,4 +1,5 @@
 import { TooltipProvider } from '../../../../components/Tooltip'
+import { IS_READONLY } from '../../../../config/readonly'
 import { useStore } from '../store/store'
 import { AutoLayoutMenu } from './canvas/AutoLayoutMenu'
 import { HistoryButtons } from './canvas/HistoryButtons'
@@ -10,6 +11,7 @@ import { AlignMenu } from './selection/AlignMenu'
 import { ColorButton } from './selection/ColorButton'
 import { GroupButtons } from './selection/GroupButtons'
 import { HideButton } from './selection/HideButton'
+import { ModuleButton } from './selection/ModuleButton'
 import { SelectionName } from './selection/SelectionName'
 import { ValuesButton } from './selection/ValuesButton'
 import { Toolbar, ToolbarSection } from './Toolbar'
@@ -33,6 +35,7 @@ export function Controls() {
             <ToolbarSection label="Arrange">
               <GroupButtons />
               <AlignMenu />
+              {!IS_READONLY && <ModuleButton />}
             </ToolbarSection>
           </Toolbar>
         )}
