@@ -225,17 +225,23 @@ function formatReport(
 
 function getErrorMessage(error: unknown): string {
   if (!(error instanceof Error)) {
-    return String(error).split('\n')[0]
+    return firstLine(String(error))
   }
-  const message = error.message.split('\n')[0]
   if (error.cause === undefined) {
-    return message
+    return firstLine(error.message)
   }
-  const cause = inspect(error.cause, {
-    depth: 4,
-    breakLength: Number.POSITIVE_INFINITY,
-  })
-  return `${message} ${cause}`
+  return `${firstLine(error.message)} ${describeCause(error.cause)}`
+}
+
+function describeCause(cause: unknown): string {
+  if (cause instanceof Error) {
+    return `(cause: ${firstLine(cause.message)})`
+  }
+  return inspect(cause, { depth: 4, breakLength: Number.POSITIVE_INFINITY })
+}
+
+function firstLine(text: string): string {
+  return text.split('\n')[0]
 }
 
 function colorMap(toColor: string, value: number, multiplier = 1): string {
