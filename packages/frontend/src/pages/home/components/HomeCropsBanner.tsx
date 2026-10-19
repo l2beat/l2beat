@@ -53,11 +53,17 @@ export function HomeCropsBanner({
         >
           <GardenFlowers flowers={FLOWERS} motion="grow" />
         </GardenLandscape>
-        <div className="relative flex max-w-[54%] flex-col gap-2">
+        <div className="relative flex max-w-[54%] flex-col gap-1.5">
           {/* The whole card is the link; the sentence says what CROPS is. */}
-          <h2 className={cn(HOME_TEXT.title, HOME_BANNER_TITLE_CLASS)}>
-            The Infinite Garden
-          </h2>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <h2 className={cn(HOME_TEXT.title, HOME_BANNER_TITLE_CLASS)}>
+              The Infinite Garden
+            </h2>
+            <span className="flex items-center gap-2">
+              <HomeStackedIcons items={projects} max={6} />
+              <span className={HOME_TEXT.meta}>{projects.length} projects</span>
+            </span>
+          </div>
           <p className={HOME_TEXT.body}>
             Protocols that hold to CROPS:{' '}
             {CROP_COLUMNS.map((crop, index) => (
@@ -73,10 +79,6 @@ export function HomeCropsBanner({
               </span>
             ))}
           </p>
-          <span className="flex items-center gap-2">
-            <HomeStackedIcons items={projects} max={6} />
-            <span className={HOME_TEXT.meta}>{projects.length} projects</span>
-          </span>
         </div>
       </a>
     </HomeCard>

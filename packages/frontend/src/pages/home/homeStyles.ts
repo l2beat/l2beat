@@ -33,9 +33,10 @@ export const HOME_UNDERLINE_CLASS =
 
 /**
  * A card that is one link (the garden, the mandate): no chevron, the title
- * underlines and the card's drawing answers the hover instead.
+ * underlines and the card's drawing answers the hover instead. Less padded
+ * than the cards under it, so the banners stay a strip above the data.
  */
-export const HOME_BANNER_CLASS = 'group relative block overflow-hidden'
+export const HOME_BANNER_CLASS = 'group relative block overflow-hidden md:py-5'
 export const HOME_BANNER_TITLE_CLASS =
   'underline-offset-4 group-hover:underline'
 

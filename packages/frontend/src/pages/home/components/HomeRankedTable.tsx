@@ -34,9 +34,9 @@ export interface HomeRankedTableColumn<T> {
   /** Above the column, so the rows need no label of their own. */
   header?: string
   /**
-   * The narrowest table that still shows the column, e.g. for the 7-day
-   * change or a secondary figure, so names keep their room. A hidden column's
-   * track just collapses and the others keep their places.
+   * The narrowest table that still shows the column, e.g. for a secondary
+   * figure, so names keep their room. A hidden column's track just collapses
+   * and the others keep their places.
    */
   minTableWidth?: 360 | 480 | 640
 }
@@ -194,25 +194,34 @@ export function HomeRankedValue({
   )
 }
 
-/** The 7-day change; an em dash keeps the column when there is none. */
-export function HomeRankedChange({ change }: { change: number | undefined }) {
-  if (change === undefined) {
-    return (
-      <span className={cn(HOME_TEXT.value, 'text-secondary')}>{EM_DASH}</span>
-    )
-  }
+/**
+ * A value with its 7-day change after it, in one column: the change in the
+ * KPIs' small print, in a slot of its own width so the values stay aligned.
+ * In a narrow table only the value shows.
+ */
+export function HomeRankedValueWithChange({
+  value,
+  change,
+}: {
+  value: number | undefined
+  change: number | undefined
+}) {
   return (
-    <Tooltip>
-      {/* A flex box: as a plain button it would set its own 16px line box
-          around the 14px figure, dropping it below the others and making
-          the row taller than the rows beside it. */}
-      <TooltipTrigger className="flex">
-        <HomeChange
-          value={change}
-          className={cn(HOME_TEXT.value, 'font-medium')}
-        />
-      </TooltipTrigger>
-      <TooltipContent>Compared to 7 days ago</TooltipContent>
-    </Tooltip>
+    <span className="flex items-baseline gap-1.5">
+      <HomeRankedValue value={value} />
+      <span className="flex @max-[360px]:hidden min-w-13 justify-end">
+        {change !== undefined && (
+          <Tooltip>
+            <TooltipTrigger className="flex">
+              <HomeChange
+                value={change}
+                className="font-medium text-label-value-13"
+              />
+            </TooltipTrigger>
+            <TooltipContent>Compared to 7 days ago</TooltipContent>
+          </Tooltip>
+        )}
+      </span>
+    </span>
   )
 }

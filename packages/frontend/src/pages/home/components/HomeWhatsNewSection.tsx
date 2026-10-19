@@ -1,15 +1,16 @@
 import { pluralize } from '@l2beat/shared-pure'
+import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { formatPublicationDate } from '~/utils/dates'
 import type { HomeRecentProject } from '../getHomeData'
 import type { HomeResearchItem } from '../getHomeResearch'
 import {
+  HOME_BANNER_TITLE_CLASS,
   HOME_ICON_CLASS,
   HOME_ROW_CLASS,
   HOME_ROW_LINES_CLASS,
   HOME_TEXT,
   HOME_THUMBNAIL_CLASS,
-  HOME_UNDERLINE_CLASS,
 } from '../homeStyles'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
@@ -53,7 +54,10 @@ export function HomeWhatsNewProjects({
   )
 }
 
-/** Project changes of the last 7 days; opens the list of them. */
+/**
+ * Project changes of the last 7 days: the whole card opens the list of them,
+ * its icons a glimpse of which projects changed.
+ */
 export function HomeProjectChangesSection({
   count,
   projects,
@@ -63,13 +67,62 @@ export function HomeProjectChangesSection({
   projects: HomeRecentChangesProject[]
   className?: string
 }) {
+  const title = (
+    <span className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
+      <h2 className={cn(HOME_TEXT.title, HOME_BANNER_TITLE_CLASS)}>
+        Project changes
+      </h2>
+      <span className={HOME_TEXT.meta}>Last 7 days</span>
+    </span>
+  )
+  if (count === 0) {
+    return (
+      <HomeCard
+        className={cn('flex items-center justify-between gap-3', className)}
+      >
+        {title}
+        <span className={HOME_TEXT.meta}>None this week</span>
+      </HomeCard>
+    )
+  }
+  const rest = projects.length - CHANGED_PROJECT_ICONS
   return (
-    <HomeCard className={cn('flex flex-col gap-3', className)}>
-      <HomeCardHeader title="Project changes" subtitle="Last 7 days" />
-      <ProjectChanges count={count} projects={projects} />
-    </HomeCard>
+    <RecentChangesDialog
+      trigger={
+        <HomeCard
+          asChild
+          className={cn(
+            'group flex w-full items-center gap-3 text-left',
+            className,
+          )}
+        >
+          <button type="button">
+            {title}
+            <span className="sr-only">
+              {count} {pluralize(count, 'change')} in {projects.length}{' '}
+              {pluralize(projects.length, 'project')}
+            </span>
+            <span className="ml-auto flex shrink-0 items-center gap-1.5">
+              <HomeStackedIcons
+                items={projects}
+                max={CHANGED_PROJECT_ICONS}
+                className="size-6"
+              />
+              {rest > 0 && (
+                <span className="font-semibold text-label-value-15 tabular-nums">
+                  +{rest}
+                </span>
+              )}
+            </span>
+            <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-colors group-hover:fill-primary" />
+          </button>
+        </HomeCard>
+      }
+    />
   )
 }
+
+const CHANGED_PROJECT_ICONS = 3
 
 /** Our latest research, as on the Research tab of /publications. */
 export function HomeLatestArticlesSection({
@@ -138,51 +191,6 @@ function NewProjects({ projects }: { projects: HomeRecentProject[] }) {
     </ul>
   )
 }
-
-function ProjectChanges({
-  count,
-  projects,
-}: {
-  count: number
-  projects: HomeRecentChangesProject[]
-}) {
-  if (count === 0) {
-    return <span className={HOME_TEXT.meta}>No changes this week</span>
-  }
-  const named = projects.slice(0, NAMED_CHANGED_PROJECTS)
-  const rest = projects.length - named.length
-  return (
-    <div className="flex flex-col gap-1.5">
-      <RecentChangesDialog
-        trigger={
-          <button
-            type="button"
-            className="group flex w-fit items-center gap-2 text-left"
-          >
-            <HomeStackedIcons items={projects} max={4} />
-            <span
-              className={cn(
-                HOME_UNDERLINE_CLASS,
-                'group-hover:decoration-current',
-                HOME_TEXT.row,
-              )}
-            >
-              {count} {pluralize(count, 'change')} in {projects.length}{' '}
-              {pluralize(projects.length, 'project')}
-            </span>
-          </button>
-        }
-      />
-      {/* Which projects, so the card says something before it is opened. */}
-      <p className={HOME_TEXT.meta}>
-        {named.map((project) => project.name).join(', ')}
-        {rest > 0 && ` and ${rest} more`}
-      </p>
-    </div>
-  )
-}
-
-const NAMED_CHANGED_PROJECTS = 3
 
 function Research({ items }: { items: HomeResearchItem[] }) {
   if (items.length === 0) {

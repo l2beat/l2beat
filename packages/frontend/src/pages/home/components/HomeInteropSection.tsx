@@ -151,8 +151,8 @@ const CORNER_ROUTES_COUNT = 3
 
 /**
  * The interop page's general stats: volume, transfers and routes, then the
- * top chain, token and protocol, in columns like the KPI pairs. The busiest
- * bridges are listed apart, in TopBridges.
+ * top chain, token and protocol. The busiest bridges are listed apart, in
+ * TopBridges.
  */
 function Stats({
   data,
@@ -169,87 +169,82 @@ function Stats({
     : undefined
 
   return (
-    <div className={cn('flex flex-col gap-6', className)}>
-      <div className={STAT_ROW_CLASS}>
-        <Figure
-          label="Volume"
-          value={formatCurrency(stats.totalVolume, 'usd')}
-        />
-        <Figure
-          label="Transfers"
-          value={formatInteger(stats.totalTransferCount)}
-        />
-        <Figure
-          label="Active routes"
-          value={formatInteger(stats.activeFlows)}
-        />
-      </div>
-      <div className={STAT_ROW_CLASS}>
-        <Top
-          label="Top chain"
-          href={topChain?.href}
-          value={
-            stats.topChain && stats.totalVolume > 0
-              ? `${formatPercent(stats.topChain.totalVolume / stats.totalVolume)} of volume`
-              : undefined
-          }
-        >
-          {topChain && (
-            <>
-              <img src={topChain.iconUrl} alt="" className={HOME_ICON_CLASS} />
-              <span className={cn('truncate', HOME_TEXT.row)}>
-                {topChain.name}
-              </span>
-            </>
-          )}
-        </Top>
-        <Top
-          label="Top token"
-          href={stats.topToken && getInteropTokenUrl(stats.topToken)}
-          value={stats.topToken && formatCurrency(stats.topToken.volume, 'usd')}
-        >
-          {stats.topToken && (
-            <>
-              <img
-                src={stats.topToken.iconUrl}
-                alt=""
-                className={HOME_ICON_CLASS}
-              />
-              <span className={cn('truncate', HOME_TEXT.row)}>
-                {stats.topToken.symbol}
-              </span>
-            </>
-          )}
-        </Top>
-        <Top
-          label="Top protocol"
-          href={
-            stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
-          }
-          value={
-            stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
-          }
-        >
-          {stats.topProtocol && (
-            <>
-              <img
-                src={stats.topProtocol.iconUrl}
-                alt=""
-                className={HOME_ICON_CLASS}
-              />
-              <span className={cn('truncate', HOME_TEXT.row)}>
-                {stats.topProtocol.name}
-              </span>
-            </>
-          )}
-        </Top>
-      </div>
+    <div className={cn(STATS_GRID_CLASS, className)}>
+      <Figure label="Volume" value={formatCurrency(stats.totalVolume, 'usd')} />
+      <Figure
+        label="Transfers"
+        value={formatInteger(stats.totalTransferCount)}
+      />
+      <Figure label="Active routes" value={formatInteger(stats.activeFlows)} />
+      <Top
+        label="Top chain"
+        href={topChain?.href}
+        value={
+          stats.topChain && stats.totalVolume > 0
+            ? `${formatPercent(stats.topChain.totalVolume / stats.totalVolume)} of volume`
+            : undefined
+        }
+      >
+        {topChain && (
+          <>
+            <img src={topChain.iconUrl} alt="" className={HOME_ICON_CLASS} />
+            <span className={cn('truncate', HOME_TEXT.row)}>
+              {topChain.name}
+            </span>
+          </>
+        )}
+      </Top>
+      <Top
+        label="Top token"
+        href={stats.topToken && getInteropTokenUrl(stats.topToken)}
+        value={stats.topToken && formatCurrency(stats.topToken.volume, 'usd')}
+      >
+        {stats.topToken && (
+          <>
+            <img
+              src={stats.topToken.iconUrl}
+              alt=""
+              className={HOME_ICON_CLASS}
+            />
+            <span className={cn('truncate', HOME_TEXT.row)}>
+              {stats.topToken.symbol}
+            </span>
+          </>
+        )}
+      </Top>
+      <Top
+        label="Top protocol"
+        href={
+          stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
+        }
+        value={
+          stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
+        }
+      >
+        {stats.topProtocol && (
+          <>
+            <img
+              src={stats.topProtocol.iconUrl}
+              alt=""
+              className={HOME_ICON_CLASS}
+            />
+            <span className={cn('truncate', HOME_TEXT.row)}>
+              {stats.topProtocol.name}
+            </span>
+          </>
+        )}
+      </Top>
     </div>
   )
 }
 
-/** Three columns set apart by space, on the same tracks in both rows. */
-const STAT_ROW_CLASS = 'grid grid-cols-3 gap-x-4 sm:gap-x-6'
+/**
+ * Two rows of three on shared tracks, spread from edge to edge: the first
+ * column flush left, the last flush right, so the figures span the width the
+ * graph under them is centred in.
+ */
+const STATS_GRID_CLASS =
+  'grid grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 sm:gap-x-6'
 
 function Figure({ label, value }: { label: string; value: string }) {
   return (

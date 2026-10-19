@@ -7,7 +7,11 @@ import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
 import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
-import { HomeRankedTable, HomeRankedValue } from './HomeRankedTable'
+import {
+  HomeRankedTable,
+  HomeRankedValue,
+  HomeRankedValueWithChange,
+} from './HomeRankedTable'
 
 export function HomePrivacyCard({
   data,
@@ -98,7 +102,12 @@ export function HomePrivacyCard({
             id: 'tvl',
             header: 'TVL',
             align: 'right',
-            cell: (protocol) => <HomeRankedValue value={protocol.tvl} />,
+            cell: (protocol) => (
+              <HomeRankedValueWithChange
+                value={protocol.tvl}
+                change={protocol.tvlChange}
+              />
+            ),
           },
           {
             id: 'deposited30d',

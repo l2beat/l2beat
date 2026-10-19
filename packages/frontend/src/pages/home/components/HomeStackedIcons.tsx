@@ -9,9 +9,12 @@ import { HOME_ICON_CLASS } from '../homeStyles'
 export function HomeStackedIcons({
   items,
   max,
+  className,
 }: {
   items: { name: string; iconUrl: string }[]
   max: number
+  /** For the icons, e.g. a size. */
+  className?: string
 }) {
   const visible = items.slice(0, max)
   return (
@@ -22,10 +25,9 @@ export function HomeStackedIcons({
           src={item.iconUrl}
           alt=""
           title={item.name}
-          className={cn(
-            HOME_ICON_CLASS,
-            'relative bg-surface-primary ring-2 ring-surface-primary',
-          )}
+          // White discs with a shadow, so icons drawn on a transparent
+          // ground stay apart where they overlap.
+          className={cn(HOME_ICON_CLASS, 'relative bg-white shadow', className)}
           style={{ zIndex: visible.length - index }}
         />
       ))}

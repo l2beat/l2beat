@@ -20,7 +20,7 @@ export function HomeMandateBanner({ className }: { className?: string }) {
     <HomeCard asChild className={cn(HOME_BANNER_CLASS, className)}>
       <a href={MANDATE_HREF}>
         {/* Lifts toward the reader on hover, as if picked up. */}
-        <MandateCharter className="-right-2 -bottom-5 group-hover:-translate-y-1.5 pointer-events-none absolute w-36 rotate-[-7deg] transition-[rotate,translate] duration-300 ease-out group-hover:rotate-[-3deg] lg:max-xl:w-28" />
+        <MandateCharter className="-right-2 -bottom-5 group-hover:-translate-y-1.5 pointer-events-none absolute w-32 rotate-[-7deg] transition-[rotate,translate] duration-300 ease-out group-hover:rotate-[-3deg] lg:max-xl:w-28" />
         {/* The title runs above the drawing; the line under it keeps clear
             of it, on the left. */}
         <div className="relative flex flex-col gap-1.5">

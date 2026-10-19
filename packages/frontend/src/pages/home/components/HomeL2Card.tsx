@@ -12,9 +12,9 @@ import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeDomainCard, HomeKpiRow } from './HomeDomainCard'
 import { HomeKpiTile } from './HomeKpiTile'
 import {
-  HomeRankedChange,
   HomeRankedTable,
   HomeRankedValue,
+  HomeRankedValueWithChange,
 } from './HomeRankedTable'
 import { HomeRiskRosette } from './HomeRiskRosette'
 import { HomeStageBadge } from './HomeStageBadge'
@@ -134,14 +134,12 @@ export function HomeL2Card({
             id: 'tvs',
             header: 'TVS',
             align: 'right',
-            cell: (project) => <HomeRankedValue value={project.tvs} />,
-          },
-          {
-            id: 'tvsChange',
-            header: '7d',
-            align: 'right',
-            minTableWidth: 360,
-            cell: (project) => <HomeRankedChange change={project.tvsChange} />,
+            cell: (project) => (
+              <HomeRankedValueWithChange
+                value={project.tvs}
+                change={project.tvsChange}
+              />
+            ),
           },
           {
             id: 'uops',
