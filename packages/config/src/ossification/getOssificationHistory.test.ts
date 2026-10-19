@@ -457,6 +457,38 @@ describe(getOssificationHistory.name, () => {
       expect(changes(history)).toEqual([])
     })
 
+    it('keeps a retired contract that a config edit dropped from discovery', () => {
+      const history = derive({
+        changes: [
+          ...update('u1', RUN_1, T0, ADDRESS_B, [implementation]),
+          ...update('u2', RUN_2, RUN_1, ADDRESS_B, [
+            {
+              section: 'config-related-changes',
+              status: 'deleted',
+              template: 'x/B',
+            },
+          ]),
+        ],
+        judgement: judgement({ 'x/B': true }),
+        patch: patch({
+          events: [
+            {
+              timestamp: RUN_2,
+              type: 'state',
+              contract: ADDRESS_B,
+              transaction: TX_3,
+              reason: 'x',
+            },
+          ],
+        }),
+      })
+      expect(rows(history)).toEqual([['A', T0, 0, 0]])
+      expect(changes(history)).toEqual([
+        ['code', RUN_1, T0, 'u1'],
+        ['state', RUN_2, RUN_2, undefined],
+      ])
+    })
+
     it('takes no deployment and no change from config edits', () => {
       const config: Partial<DiffHistoryChange> = {
         section: 'config-related-changes',

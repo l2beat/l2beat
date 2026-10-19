@@ -6,6 +6,7 @@ import {
   type DiffHistoryBlock,
   type DiffHistoryFieldChange,
   parseDiffHistoryBlocks,
+  parseDiffHistoryStatuses,
 } from './parseDiffHistoryBlocks'
 import { parseUpgrade, type Upgrade } from './upgradeHistory'
 
@@ -46,6 +47,10 @@ export function getDiffHistoryChanges(
   return entry.sections.flatMap(({ kind, body }) => {
     if (kind === 'watched-changes') {
       const blocks = parseDiffHistoryBlocks(body)
+      return toChanges(blocks, entry.chain, { ...base, section: kind })
+    }
+    if (kind === 'config-related-changes') {
+      const blocks = parseDiffHistoryStatuses(body)
       return toChanges(blocks, entry.chain, { ...base, section: kind })
     }
     return []
