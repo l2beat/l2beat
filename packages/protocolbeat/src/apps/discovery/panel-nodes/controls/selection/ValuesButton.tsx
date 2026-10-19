@@ -1,13 +1,10 @@
 import { useStore } from '../../store/store'
 import { IconControlBars } from '../icons/IconControlBars'
 import { ValuesDialog } from './node-values/ValuesDialog'
+import { selectOnlySelectedNode } from './selectOnlySelectedNode'
 
 export function ValuesButton() {
-  const selectedNode = useStore((state) =>
-    state.selected.length === 1
-      ? state.nodes.find((node) => node.id === state.selected[0])
-      : undefined,
-  )
+  const selectedNode = useStore(selectOnlySelectedNode)
   const fieldCount = selectedNode?.fields.length ?? 0
   const visibleFieldCount =
     selectedNode?.fields.filter(

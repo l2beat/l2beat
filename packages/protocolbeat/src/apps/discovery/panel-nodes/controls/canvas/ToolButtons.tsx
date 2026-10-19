@@ -5,7 +5,6 @@ import type { Tool } from '../../store/State'
 import { useStore } from '../../store/store'
 import { HAND_TOOL_KEY, SELECT_TOOL_KEY } from '../../store/utils/constants'
 import { effectiveTool } from '../../store/utils/tool'
-import { ControlGroup } from '../ControlGroup'
 import { ToolbarButton } from '../ToolbarButton'
 
 const TOOLS: {
@@ -31,25 +30,21 @@ const TOOLS: {
   },
 ]
 
-export function ToolControls() {
+export function ToolButtons() {
   // Holding space borrows the hand tool, so highlight it while the key is down.
   const active = useStore(effectiveTool)
   const setTool = useStore((state) => state.setTool)
 
-  return (
-    <ControlGroup>
-      {TOOLS.map(({ tool, shortcut, label, description, icon }) => (
-        <ToolbarButton
-          key={tool}
-          label={label}
-          description={description}
-          shortcut={[shortcut]}
-          active={active === tool}
-          onClick={() => setTool(tool)}
-        >
-          {icon}
-        </ToolbarButton>
-      ))}
-    </ControlGroup>
-  )
+  return TOOLS.map(({ tool, shortcut, label, description, icon }) => (
+    <ToolbarButton
+      key={tool}
+      label={label}
+      description={description}
+      shortcut={[shortcut]}
+      active={active === tool}
+      onClick={() => setTool(tool)}
+    >
+      {icon}
+    </ToolbarButton>
+  ))
 }

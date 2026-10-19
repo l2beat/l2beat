@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Popover,
   PopoverContent,
@@ -52,17 +52,10 @@ export function ColorButton() {
   const selected = useStore((state) => state.selected)
   const nodes = useStore((state) => state.nodes)
   const colorSelected = useStore((state) => state.colorSelected)
-  const selectionExists = selected.length > 0
   const selectionColorState = useMemo(
     () => getSelectionColorState(nodes, selected),
     [nodes, selected],
   )
-
-  useEffect(() => {
-    if (!selectionExists) {
-      setOpen(false)
-    }
-  }, [selectionExists])
 
   function changeColor(color: number) {
     colorSelected(color)
@@ -72,7 +65,7 @@ export function ColorButton() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <ToolbarButton label="Color" disabled={!selectionExists}>
+        <ToolbarButton label="Color">
           <IconControlPalette />
           {selectionColorState.kind !== 'none' && (
             <span

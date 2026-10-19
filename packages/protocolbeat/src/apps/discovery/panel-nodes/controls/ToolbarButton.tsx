@@ -6,9 +6,9 @@ import {
 } from 'react'
 import { Kbd } from '../../../../components/Kbd'
 import {
-  Tooltip,
   TooltipContent,
   TooltipPortal,
+  TooltipRoot,
   TooltipTrigger,
 } from '../../../../components/Tooltip'
 import { cn } from '../../../../utils/cn'
@@ -45,7 +45,7 @@ export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
     const ownsOpenPopup = props['data-state'] === 'open'
 
     return (
-      <Tooltip
+      <TooltipRoot
         delayDuration={TOOLTIP_DELAY_MS}
         open={tooltipOpen && !ownsOpenPopup}
         onOpenChange={setTooltipOpen}
@@ -84,7 +84,7 @@ export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
             )}
           </TooltipContent>
         </TooltipPortal>
-      </Tooltip>
+      </TooltipRoot>
     )
   },
 )
