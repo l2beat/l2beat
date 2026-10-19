@@ -54,6 +54,7 @@ function update(
 ): DiffHistoryChange[] {
   return records.map((record) => ({
     entryId,
+    section: 'watched-changes',
     timestamp,
     ...(previous === undefined ? {} : { previous }),
     address: ChainSpecificAddress(address),
@@ -454,6 +455,27 @@ describe(getOssificationHistory.name, () => {
       })
       expect(rows(history)).toEqual([['A', T0, 0, 0]])
       expect(changes(history)).toEqual([])
+    })
+
+    it('takes no deployment and no change from config edits', () => {
+      const config: Partial<DiffHistoryChange> = {
+        section: 'config-related-changes',
+      }
+      const history = derive({
+        changes: [
+          ...update('u1', RUN_1, T0, ADDRESS_A, [{ ...config, ...owner }]),
+          ...update('u1', RUN_1, T0, ADDRESS_B, [
+            { ...config, status: 'created', template: 'x/B' },
+            { ...config, ...implementation },
+          ]),
+          ...update('u2', RUN_2, RUN_1, ADDRESS_B, [
+            { status: 'deleted', template: 'x/B' },
+          ]),
+        ],
+        judgement: judgement({ 'x/B': true }, ['owner']),
+      })
+      expect(changes(history)).toEqual([])
+      expect(history?.deployments).toEqual([T0])
     })
 
     it('ignores changes recorded after the contract left', () => {

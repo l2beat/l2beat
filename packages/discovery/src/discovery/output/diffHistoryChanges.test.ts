@@ -72,6 +72,7 @@ describe(getDiffHistoryChanges.name, () => {
     ])
     expect(changes[0]).toEqual({
       entryId: parsed!.id,
+      section: 'watched-changes',
       timestamp: 1777994288,
       previous: 1777900000,
       address: ChainSpecificAddress(`eth:${ADDRESS}`),
@@ -102,6 +103,7 @@ describe(getDiffHistoryChanges.name, () => {
     const [change] = getDiffHistoryChanges(parser.parse(md)[0]!)
     expect(change).toEqual({
       entryId: parser.parse(md)[0]!.id,
+      section: 'watched-changes',
       timestamp: Math.floor(Date.parse('Tue, 05 May 2026 15:19:12 GMT') / 1000),
       address: ChainSpecificAddress(`arb1:${ADDRESS}`),
       addressType: 'Contract',

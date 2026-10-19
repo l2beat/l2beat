@@ -3,6 +3,7 @@ import { getChainShortName } from '../../config/config.discovery'
 import type { DiffHistoryEntry } from './DiffHistoryParser'
 import type { DiscoveryDiff } from './diffDiscovery'
 import {
+  type DiffHistoryBlock,
   type DiffHistoryFieldChange,
   parseDiffHistoryBlocks,
 } from './parseDiffHistoryBlocks'
@@ -17,6 +18,7 @@ export type DiffHistoryChangeKind =
 
 export interface DiffHistoryChange {
   entryId: string
+  section: 'watched-changes' | 'config-related-changes'
   timestamp: number
   previous?: number
   address: ChainSpecificAddress
@@ -41,26 +43,40 @@ export function getDiffHistoryChanges(
       ? { previous: entry.comparing.at.value }
       : {}),
   }
-  return entry.sections
-    .filter((section) => section.kind === 'watched-changes')
-    .flatMap((section) => parseDiffHistoryBlocks(section.body))
-    .flatMap((block) => {
-      const contract = {
-        ...base,
-        address: resolveAddress(block.address, entry.chain),
-        addressType: block.addressType,
-        ...(block.template === undefined ? {} : { template: block.template }),
-      }
-      return [
-        ...(block.type === undefined
-          ? []
-          : [{ ...contract, status: block.type }]),
-        ...(block.diff ?? []).map((field) => ({
-          ...contract,
-          ...classify(field),
-        })),
-      ]
-    })
+  return entry.sections.flatMap(({ kind, body }) => {
+    if (kind === 'watched-changes') {
+      const blocks = parseDiffHistoryBlocks(body)
+      return toChanges(blocks, entry.chain, { ...base, section: kind })
+    }
+    return []
+  })
+}
+
+function toChanges(
+  blocks: DiffHistoryBlock[],
+  chain: string | null,
+  base: Pick<
+    DiffHistoryChange,
+    'entryId' | 'section' | 'timestamp' | 'previous'
+  >,
+): DiffHistoryChange[] {
+  return blocks.flatMap((block) => {
+    const contract = {
+      ...base,
+      address: resolveAddress(block.address, chain),
+      addressType: block.addressType,
+      ...(block.template === undefined ? {} : { template: block.template }),
+    }
+    return [
+      ...(block.type === undefined
+        ? []
+        : [{ ...contract, status: block.type }]),
+      ...(block.diff ?? []).map((field) => ({
+        ...contract,
+        ...classify(field),
+      })),
+    ]
+  })
 }
 
 function resolveAddress(raw: string, chain: string | null) {
