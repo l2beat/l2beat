@@ -1,13 +1,12 @@
 import { ControlGroup } from './ControlGroup'
 import { ClusterLayoutButton } from './canvas/ClusterLayoutButton'
-import { HideNodesButton } from './canvas/HideNodesButton'
 import { LayoutLibrary } from './canvas/LayoutLibrary'
 import { RedoButton } from './canvas/RedoButton'
 import { Settings } from './canvas/Settings'
-import { ShowButton } from './canvas/ShowButton'
 import { StackLayoutButton } from './canvas/StackLayoutButton'
 import { ToolControls } from './canvas/ToolControls'
 import { UndoButton } from './canvas/UndoButton'
+import { VisibilityMenu } from './canvas/VisibilityMenu'
 import { AlignControls } from './selection/AlignControls'
 import { ColorButton } from './selection/ColorButton'
 import { GroupControls } from './selection/GroupControls'
@@ -27,8 +26,7 @@ export function Controls() {
           <StackLayoutButton />
         </ControlGroup>
         <ControlGroup>
-          <ShowButton />
-          <HideNodesButton />
+          <VisibilityMenu />
         </ControlGroup>
         <ControlGroup>
           <GroupControls />

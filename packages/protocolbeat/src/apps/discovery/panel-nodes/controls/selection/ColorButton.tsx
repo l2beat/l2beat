@@ -86,7 +86,7 @@ export function ColorButton() {
         side="top"
         align="center"
         sideOffset={10}
-        className="w-max max-w-[calc(100vw-2rem)] p-3"
+        className="w-max max-w-[calc(100vw-2rem)] border-coffee-600 p-3"
       >
         <ColorPicker
           selectedCount={selected.length}
