@@ -15,6 +15,8 @@ export function createFlatSourcesModule({
   const controller = new FlatSourcesController(db)
 
   return {
-    routers: [createFlatSourcesRouter(controller)],
+    routers: [
+      createFlatSourcesRouter(controller, logger.for('FlatSourcesRouter')),
+    ],
   }
 }

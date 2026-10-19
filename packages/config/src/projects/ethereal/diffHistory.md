@@ -1,3 +1,205 @@
+Generated with discovered.json: 0x18a6c89c628254e7b03b37f7957a9855fbc36b0a
+
+# Diff at Fri, 16 Oct 2026 09:37:46 GMT:
+
+- id: 92af6c93
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1783426843
+- current timestamp: 1783426843
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783426843 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x75c070fe237817Bd027d402327069e9cd07De078) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.challengeManager:
++        {"severity":"HIGH"}
+      fieldMeta.validatorWhitelistDisabled:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (arb1:0xA4444d9536595d35967206b86067a90aD053e1EF) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedOutboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedDelayedInboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.executors.severity:
+-        "LOW"
++        "MEDIUM"
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SafeL2 (ethereal:0x3F93bCc6201558aE2d7528a85575cF07679Bb50e) [GnosisSafe] {
+    +++ description: None
+      deployerAddress:
+-        "ethereal:0xb93C042c688F1Cf038bab03C4F832F2630Bb7d8F"
+      sinceTimestamp:
+-        1760472215
+      sinceBlock:
+-        17902
+    }
+```
+
+```diff
+    contract CollateralManager (ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA) [ethereal/ExchangeGatewayRegistryContracts] {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      sourceHashes.0:
+-        "0x7e9156bdbe2b0f1e2fca8925f034693bdf5abaae1b868270c2a4f44956e1ea6a"
++        "0x78583307d6ee104deeacfc05854f42b8e5262cbd2faffb3e165c1078e44ac4ce"
+    }
+```
+
+```diff
+    contract OrbitNativeOFTAdapter (ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3) [layerzero/OrbitNativeOFTAdapter] {
+    +++ description: An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precompile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.
+      sourceHashes.0:
+-        "0xdc7fa9200a150735467f7b832663c27d5df9487fe7a30b8b8abc3d3e833081ff"
++        "0x7a71d39ddb79529955d66cf5907e1b5f505eed9105f5fc34e2fe0f5ccb6cdbf9"
+    }
+```
+
+```diff
+    contract PythLazer (ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481) [ethereal/PythLazer] {
+    +++ description: Used to verify offchain signed oracle data.
+      deployerAddress:
+-        "ethereal:0x78357316239040e19fC823372cC179ca75e64b81"
+      sinceTimestamp:
+-        1758743720
+      sinceBlock:
+-        64
+    }
+```
+
+Generated with discovered.json: 0x9ca10e35f96940fccb4c22f77477041a1fdea0da
+
+# Diff at Sun, 04 Oct 2026 05:55:32 GMT:
+
+- id: 04efca9c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1783426843
+- current timestamp: 1783426843
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783426843 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.isUsingFeeToken:
+-        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
+-        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x75c070fe237817Bd027d402327069e9cd07De078) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.confirmPeriodBlocks.severity:
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x349cca1acea6f5e073b65021aae2fd0f740ea52f
 
 # Diff at Tue, 29 Sep 2026 17:49:56 GMT:

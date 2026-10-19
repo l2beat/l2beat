@@ -67,7 +67,14 @@ export const mantle: ScalingProject = opStackL2({
       },
     ],
   },
-  ossificationHistory: discovery.getOssificationHistory(genesisTimestamp),
+  ossificationHistory: discovery.getOssificationHistory(genesisTimestamp, {
+    // OPSuccinctL2OutputOracle verifier set to the SP1VerifierGateway 0x3B60 (tx
+    // 0xa29314393be594bcb4caad62ff4a282f108031aa8c58ff649bbfe82453903365). Before,
+    // from 1767768479, it called the immutable SP1Verifier v5.0.0 0x0459 directly,
+    // so no shared-sp1 change reached it. The Groth16 gateway it used from
+    // 1758005207 is not critical.
+    'shared-sp1': UnixTime(1777434335),
+  }),
   nonTemplateProofSystem: {
     type: 'Validity',
     zkCatalogIds: [ProjectId('sp1hypercube')],
@@ -127,16 +134,7 @@ export const mantle: ScalingProject = opStackL2({
       },
     },
   ],
-  daTracking: [
-    {
-      type: 'eigen-da',
-      customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1738821600),
-      untilTimestamp: UnixTime(1776322715), // Arsia upgrade: EigenDA code path removed, DA is Ethereum only
-    },
-    getOpStackDaTracking(discovery, { sinceBlock: 19434945 }),
-  ],
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19434945 })],
   associatedTokens: ['MNT'],
   additionalBadges: [BADGES.Stack.OPSuccinct],
   milestones: [

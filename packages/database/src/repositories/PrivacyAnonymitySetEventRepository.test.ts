@@ -56,6 +56,26 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
     ])
   })
 
+  it('counts deposits into the given project buckets within the half-open window', async () => {
+    await repository.upsertMany([
+      event('aaaaaaaaaaaa', 1, START - 1, 'alice', 10n),
+      event('aaaaaaaaaaaa', 2, START, 'alice', 10n),
+      event('aaaaaaaaaaaa', 3, START + UnixTime.HOUR, 'alice', 10n),
+      event('aaaaaaaaaaaa', 4, START + UnixTime.DAY, 'alice', 10n),
+      event('bbbbbbbbbbbb', 5, START, 'bob', 10n, 'project-b'),
+      { ...event('cccccccccccc', 6, START, 'carol', 10n), bucketId: 'other' },
+    ])
+
+    expect(
+      await repository.getDepositCount(
+        'project-a',
+        ['bucket-a'],
+        START,
+        START + UnixTime.DAY,
+      ),
+    ).toEqual(2)
+  })
+
   it('trims only the selected configuration and inclusive time range', async () => {
     await repository.upsertMany([
       event('aaaaaaaaaaaa', 1, START, 'alice', 1n),

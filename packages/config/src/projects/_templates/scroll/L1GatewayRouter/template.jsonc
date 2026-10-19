@@ -4,14 +4,17 @@
   "critical": true,
   "category": "bridge-canonical",
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "ethGateway": {
       "severity": "HIGH"
     },
     "defaultERC20Gateway": {
       "severity": "HIGH"
     },
+    // per-token routing of new deposits: a listing does not change existing custody
     "gateways": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": "newGateway",

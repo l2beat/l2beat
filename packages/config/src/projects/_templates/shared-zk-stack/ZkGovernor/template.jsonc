@@ -11,6 +11,9 @@
     "quorum"
   ],
   "fields": {
+    "proposalThreshold": {
+      "severity": "HIGH"
+    },
     "currentQuorum": {
       "severity": "HIGH",
       "handler": {
@@ -20,6 +23,7 @@
       }
     },
     "currentQuorum_MTokens": {
+      "severity": "HIGH", // formatted twin of currentQuorum
       "handler": {
         "type": "call",
         "method": "quorum",

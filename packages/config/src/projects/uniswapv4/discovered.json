@@ -103,7 +103,6 @@
       ],
       "proxyType": "immutable",
       "description": "Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after 2d and remains executable for a 14d grace period. The delay can be changed only through the timelock itself and must remain between 2d and 1mo. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.",
-      "critical": true,
       "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
       "sinceTimestamp": 1600107105,
       "sinceBlock": 10861678,
@@ -121,6 +120,7 @@
         "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "delayFormatted": { "severity": "HIGH" },
         "admin": { "severity": "HIGH" },
         "pendingAdmin": {
           "severity": "HIGH",
@@ -199,7 +199,6 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most 2% of supply per mint, with a minimum interval of 1y. Votes count only when delegated.",
-      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
       "sinceTimestamp": 1600107086,
@@ -235,7 +234,6 @@
       ],
       "proxyType": "call implementation proxy",
       "description": "Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of 1,000,000 UNI can create proposals. Voting begins 13,140 blocks after proposal creation and lasts 40,320 blocks; success requires more for-votes than against-votes and at least 40,000,000 UNI voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.",
-      "critical": true,
       "ignoreInWatchMode": ["proposalCount"],
       "deployerAddress": "eth:0xCf2a39493f5193e8eE0D0e8DBf78a92a4EF293c4",
       "sinceTimestamp": 1629421922,
@@ -270,7 +268,9 @@
         "votingTokenSymbol": "UNI"
       },
       "fieldMeta": {
-        "implementation": { "severity": "HIGH" },
+        "proposalThresholdFmt": { "severity": "HIGH" },
+        "votingDelayFmt": { "severity": "HIGH" },
+        "votingPeriodFmt": { "severity": "HIGH" },
         "admin": { "severity": "HIGH" },
         "pendingAdmin": {
           "severity": "HIGH",
@@ -289,7 +289,6 @@
           "description": "Delegated voting tokens required to submit a proposal."
         },
         "quorumVotes": {
-          "severity": "HIGH",
           "description": "For-votes required for a proposal to pass."
         }
       },
@@ -388,6 +387,7 @@
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93": "ProxyAdmin"
       }

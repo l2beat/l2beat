@@ -169,6 +169,7 @@
         "disputeGameFactory": "eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76",
         "eip1559Denominator": 250,
         "eip1559Elasticity": 2,
+        "enabledFeatures": [],
         "gasLimit": 30000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0x9BdA922e6f1bD53c24F9bCFb88B9638199A82CEb",
@@ -235,10 +236,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x15C1dAED5443A77b4DcF6FE35cAFcCEBb0c6da0E": "Proxy",
@@ -463,6 +470,7 @@
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
       }
@@ -584,8 +592,9 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" }
+        "RespectedGameString": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
+        "blacklistedGames": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x63e956115F7618A95Bb968ecEF2E72e99cdBA80F": "Proxy",
@@ -1022,6 +1031,7 @@
         "$immutable": true,
         "owner": "eth:0xd35FeF329Bb6569baa373BDa702F3dfF59D57321"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xC24C700BC65a3b15De13e489e155c81F621B1856": "AddressManager"
       },
@@ -1190,6 +1200,7 @@
         "isUpgrading": false,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xd35FeF329Bb6569baa373BDa702F3dfF59D57321": "ProxyAdmin"
       }
@@ -1221,6 +1232,7 @@
         "$immutable": true,
         "owner": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },
@@ -1329,6 +1341,7 @@
         "wethFromDGF": "eth:0x378B79fA4336111818Bb97162374EDF4C289D966"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "game1337": { "severity": "HIGH" },
         "game621": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
@@ -1349,7 +1362,6 @@
         "game9AnchorStateRegistry": { "severity": "HIGH" },
         "game9Weth": { "severity": "HIGH" },
         "game5AnchorStateRegistry": { "severity": "HIGH" },
-        "game5Proposer": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -2680,7 +2692,7 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 26104708 },
   "permissionsConfigHash": "0x3fc1cc893991b40446cf379f138421c1e3e428e8284f9287962cfeb12cfabd37",

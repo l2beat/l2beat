@@ -1,0 +1,14 @@
+{
+  "ZkMoneyPortal.sol": {
+    "hash": "0x4abb439f2218670904cdae29f2663f412a1ca4d63284a05120c764dc8eed141e",
+    "address": "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449",
+    "chain": "ethereum",
+    "blockNumber": 26081203
+  },
+  "ZkMoneyPortal_sUSDS.sol": {
+    "hash": "0x7020e3729f66f6c8ddada17eeb82b33ae8b7f623c0ffb3bb6c921bf966a7f6a8",
+    "address": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
+    "chain": "ethereum",
+    "blockNumber": 26182145
+  }
+}

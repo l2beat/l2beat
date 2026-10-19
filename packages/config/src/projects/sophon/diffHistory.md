@@ -1,3 +1,391 @@
+Generated with discovered.json: 0xfac49f5b7ab389d7e08db474948eb59edc3fc705
+
+# Diff at Fri, 16 Oct 2026 10:36:23 GMT:
+
+- id: a83e6cd5
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791458527
+- current timestamp: 1792144211
+
+## Description
+
+SophonChainAdminMultisig (owner of the chain admin) added a signer and lowered the threshold: 3 of 5 became 2 of 6. Avail Multisig 1 swapped one signer.
+
+## Watched changes
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
++        "eth:0x50d0667992467421f3B359C8138928C0157cB444"
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x3b6036d410cA018661324766680674921a8b2d89"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 6 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x305999dae133b1b9dc888ac90ba837efa21e7db2
+
+# Diff at Fri, 16 Oct 2026 09:37:50 GMT:
+
+- id: 70d7700c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791458527
+- current timestamp: 1791458527
+
+## Description
+
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791458527 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getAdmin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x9a875dceecda9b7942803eafaf99989a09d855dc
+
+# Diff at Thu, 08 Oct 2026 13:08:15 GMT:
+
+- id: f9f51fe7
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@3975f74b769e77d0d6f407f5175b3ea295b337f1 block: 1791458527
+- current timestamp: 1791458527
+
+## Description
+
+Vector contracts are now discovered here instead of referenced from the vector project, which was removed with the rest of the alt-DA projects.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791458527 (main branch discovery), not current.
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      type:
+-        "Reference"
++        "Contract"
+      targetType:
+-        "Contract"
+      targetProject:
+-        "vector"
+      template:
++        "succinct/SP1Vector"
+      sourceHashes:
++        ["0x0940bdd2da00547eb0c190e7c4c5648e1147c96389d9771c2749b98270fc6315","0xe7fda3c09c3912281f605cde13565f94a164de607ec5784e028531883f3a6077"]
+      proxyType:
++        "EIP1967 proxy"
+      description:
++        "The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum."
+      deployerAddress:
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
++        1720128227
+      sinceBlock:
++        20235805
+      values:
++        {"$admin":"eth:0x0000000000000000000000000000000000000000","$implementation":"eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D","$pastUpgrades":[["2024-07-04T21:23:47.000Z","0x6c2c609d7a13fbdad53b1530d34d740ffa36653f29b5f14220429d7c0d6a3ffc",["eth:0x2434564f3524b44258B11643729343Ef57D60989"]],["2024-07-20T01:29:35.000Z","0x13d7977b9fca12882ea6ba47ce1b20a87de540c358b5e260584e0d921e786f5e",["eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"]]],"$upgradeCount":2,"accessControl":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]}},"checkRelayer":true,"DEFAULT_ADMIN_ROLE":"0x0000000000000000000000000000000000000000000000000000000000000000","frozen":false,"gateway_deprecated":"eth:0x0000000000000000000000000000000000000000","GUARDIAN_ROLE":"0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041","guardians":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],"headerRangeCommitmentTreeSize":2048,"headerRangeFunctionId_deprecated":"0x0000000000000000000000000000000000000000000000000000000000000000","isRelayerApproved":true,"latestAuthoritySetId":895,"latestBlock":3538176,"relayers":["eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"],"rotateFunctionId_deprecated":"0x0000000000000000000000000000000000000000000000000000000000000000","TIMELOCK_ROLE":"0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05","timelocks":["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],"vectorXProgramVkey":"0x005f3914526e9f0d261b56a3613985801d3060584f95874548c70fda5f81efdb","verifier":"eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e","VERSION":"2.0.0"}
+    }
+```
+
+```diff
+    contract AvailBridgeV1 (eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a) [avail/AvailBridgeV1] {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      type:
+-        "Reference"
++        "Contract"
+      targetType:
+-        "Contract"
+      targetProject:
+-        "vector"
+      template:
++        "avail/AvailBridgeV1"
+      sourceHashes:
++        ["0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413","0x3903ac9a0d6e9221ce37976cf87cacfc141984011d05bf62c9bfffc3479f77c0"]
+      proxyType:
++        "EIP1967 proxy"
+      description:
++        "Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum."
+      deployerAddress:
++        "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42"
+      sinceTimestamp:
++        1720568903
+      sinceBlock:
++        20272316
+      values:
++        {"$admin":"eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B","$implementation":"eth:0x737539737b44493F65c17eAfE165197b6410d254","$pastUpgrades":[["2024-07-09T23:48:23.000Z","0x980ea7f295336624f103c47b5ec482f90c2c90f4b7d05140ceb5d40aa077963c",["eth:0x737539737b44493F65c17eAfE165197b6410d254"]]],"$upgradeCount":1,"accessControl":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x45828180bbE489350D621d002968A0585406d487"]},"PAUSER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"]}},"avail":"eth:0xEeB4d8400AEefafC1B2953e0094134A887C76Bd8","DEFAULT_ADMIN_ROLE":"0x0000000000000000000000000000000000000000000000000000000000000000","defaultAdmin":"eth:0x45828180bbE489350D621d002968A0585406d487","defaultAdminAC":["eth:0x45828180bbE489350D621d002968A0585406d487"],"defaultAdminDelay":0,"defaultAdminDelayIncreaseWait":432000,"feePerByte":0,"feeRecipient":"eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666","fees":0,"messageId":1885,"owner":"eth:0x45828180bbE489350D621d002968A0585406d487","paused":false,"pauserAC":["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],"pendingDefaultAdmin":{"newAdmin":"eth:0x0000000000000000000000000000000000000000","schedule":0},"pendingDefaultAdminDelay":{"newDelay":0,"schedule":0},"vectorx":"eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"}
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 2 (eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    external contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe]
+    +++ description: None
+```
+
+Generated with discovered.json: 0xfebf248a6f82216524bfae1472df39b8f817c213
+
+# Diff at Thu, 08 Oct 2026 11:23:09 GMT:
+
+- id: 305978a8
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ea0f844d485c4192528096e99c5cace57e234c4c block: 1790944832
+- current timestamp: 1791458527
+
+## Description
+
+EOA 7702-delegated smart contract wallet implementation became verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790944832 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845) {
+    +++ description: None
+      unverified:
+-        true
+      values.CUSTOM_STORAGE_ROOT:
++        "0x653ff6dcbda533c3c7d8ffb646da3e510d0de40f237170c4da3f874472aecb00"
+      values.eip712Domain:
++        {"fields":"0x0f","name":"SmartWallet","version":"1.1.0","chainId":1,"verifyingContract":"eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
+      values.entryPoint:
++        "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032"
+      values.getOwnerKeys:
++        []
+      values.IMPLEMENTATION:
++        "eth:0xe40ccB2D94975c51bff0C004eFDfd9B3a5796fA4"
+      values.namespace:
++        "SmartWallet.ERC7201.CustomStorage"
+      values.ownerAt:
++        []
+      values.ownerCount:
++        0
+      sourceHashes:
++        ["0x75edcc789e2feb6dd3863127fde1296f7df029e9ba2e9a8aa0ea96c257bc9432"]
+    }
+```
+
+Generated with discovered.json: 0x2a19221d459c0a812ffc3663e510f19fc96adb49
+
+# Diff at Mon, 05 Oct 2026 08:44:05 GMT:
+
+- id: 834dafa3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@50466fc671947969db5d8bc59484f0d565783dfc block: 1790944832
+- current timestamp: 1790944832
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790944832 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getProtocolVersion.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPermanentRollupString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      fieldMeta.tokenMultiplierSetter:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x4592e5ace0db6cb53b7fb0c239895d9175bb679b
+
+# Diff at Fri, 02 Oct 2026 12:42:30 GMT:
+
+- id: 524b0aad
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@11a44108bd8b596f3d406b83540ae9f7826e9817 block: 1789917662
+- current timestamp: 1790944832
+
+## Description
+
+Executed this proposal: https://www.tally.xyz/gov/zksync/proposal/49883493212277767948924829453899549013679463473253620701602979414799679547598?govId=eip155%3A324%3A0x76705327e682F2d96943280D99464Ab61219e34f. Now each chain admin can increase the execution delay of its chain (`increaseChainExecutionDelay`), the owner can set it freely (`setChainExecutionDelay`). The effective delay for Sophon is tracked in `executionDelaySophon` (still 3h).
+
+Also adds a new `UPGRADER_ROLE` that can call `upgradeChainFromVersion()` through the VTL (forwarded to the diamond). Currently nobody holds the role for Sophon yet (tracked in `upgraderVTL`).
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      template:
+-        "shared-zk-stack/ValidatorTimelock_post29"
++        "shared-zk-stack/ValidatorTimelock_v31"
+      sourceHashes.1:
+-        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
++        "0x51d6000b0e4437a2b99d13d332658fffb3da867cd56b05cbcb4bf4f954ff12ff"
+      description:
+-        "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h."
++        "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days."
+      values.$implementation:
+-        "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8"
++        "eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35"
+      values.$pastUpgrades.1:
++        ["2026-10-01T12:28:47.000Z","0xdc4278c8b23d99f974a206dcaa1c1e20272c49095fa31eac842210ae97b435a8",["eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35"]]
+      values.$upgradeCount:
+-        1
++        2
++++ severity: HIGH
+      values.executionDelaySophon:
++        10800
++++ severity: HIGH
+      values.executionDelaySophon_fmt:
++        "3h"
+      values.MAX_EXECUTION_DELAY:
++        2592000
+      values.OPTIONAL_UPGRADER_ADMIN_ROLE:
++        "0xa1426e789273bde4307f3302768d8e4eb615f0f4dea304f29cccd58ff644d640"
+      values.UPGRADER_ROLE:
++        "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3"
+      errors:
+-        {"executionDelaySophon":"Processing error occurred.","executionDelaySophon_fmt":"Processing error occurred."}
+      fieldMeta.executionDelay.description:
++        "Ecosystem-wide minimum execution delay (in seconds), set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
+      fieldMeta.executionDelay_fmt.description:
++        "Ecosystem-wide minimum execution delay, set by the owner. The delay enforced for a chain is the maximum of this value and the chain-specific delay."
+      implementationNames.eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8:
+-        "ValidatorTimelock"
+      implementationNames.eth:0x556DdC1617D7620f56317d2F2002FE440EA9Ad35:
++        "ValidatorTimelock"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ValidatorTimelock/ValidatorTimelock.sol        | 6126 ++++++++++----------
+ 1 file changed, 3210 insertions(+), 2916 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917662 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.upgraderVTL:
++        {}
+      fieldMeta.executionDelaySophon:
++        {"severity":"HIGH"}
+      fieldMeta.executionDelaySophon_fmt:
++        {"severity":"HIGH"}
+      errors:
++        {"executionDelaySophon":"Processing error occurred.","executionDelaySophon_fmt":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x2ca83a5b6c05056516f14ab8180ce33850d1502c
 
 # Diff at Wed, 23 Sep 2026 05:49:49 GMT:

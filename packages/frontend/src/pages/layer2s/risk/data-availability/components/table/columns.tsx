@@ -49,7 +49,7 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
         meta: {
           align: 'right',
           tooltip:
-            'The data posted by the project to the DA layer over the past day, together with a % change compared to 7D ago.',
+            'The data posted by the project to Ethereum over the past day, together with a % change compared to 7D ago. It leaves out data posted to other DA layers.',
         },
       }),
       (row) => ({
@@ -75,20 +75,13 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
           return ctx.row.original.dataAvailability
             .slice(1)
             .map((da) => (
-              <TableValueCell
-                key={da.layer.value}
-                value={da.layer}
-                href={da.daHref?.summary}
-              />
+              <TableValueCell key={da.layer.value} value={da.layer} />
             ))
         },
       },
       cell: (ctx) => {
         const firstDa = ctx.row.original.dataAvailability[0]
-        const firstDaHref = firstDa?.daHref
-        return (
-          <TableValueCell value={firstDa?.layer} href={firstDaHref?.summary} />
-        )
+        return <TableValueCell value={firstDa?.layer} />
       },
       sortDescFirst: true,
       sortUndefined: 'last',
@@ -102,20 +95,13 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
           return ctx.row.original.dataAvailability
             .slice(1)
             .map((da) => (
-              <TableValueCell
-                key={da.layer.value}
-                value={da.bridge}
-                href={da.daHref?.risk}
-              />
+              <TableValueCell key={da.layer.value} value={da.bridge} />
             ))
         },
       },
       cell: (ctx) => {
         const firstDa = ctx.row.original.dataAvailability[0]
-        const firstDaHref = firstDa?.daHref
-        return (
-          <TableValueCell value={firstDa?.bridge} href={firstDaHref?.risk} />
-        )
+        return <TableValueCell value={firstDa?.bridge} />
       },
       sortDescFirst: true,
       sortUndefined: 'last',
@@ -129,26 +115,25 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
         }
 
         return (
-          <TableLink href={firstDaRisk.daHref?.risk}>
-            <CombinedGrissiniCell
-              daLayerRisks={firstDaRisk.daLayer}
-              daBridgeRisks={firstDaRisk.daBridge}
-            />
-          </TableLink>
+          <CombinedGrissiniCell
+            daLayerRisks={firstDaRisk.daLayer}
+            daBridgeRisks={firstDaRisk.daBridge}
+          />
         )
       },
       meta: {
         align: 'center',
         additionalRows: (ctx) => {
           return (
-            ctx.row.original.risks?.slice(1).map((risk, i) => (
-              <TableLink key={i} href={risk.daHref?.risk}>
+            ctx.row.original.risks
+              ?.slice(1)
+              .map((risk, i) => (
                 <CombinedGrissiniCell
+                  key={i}
                   daLayerRisks={risk.daLayer}
                   daBridgeRisks={risk.daBridge}
                 />
-              </TableLink>
-            )) ?? []
+              )) ?? []
           )
         },
       },

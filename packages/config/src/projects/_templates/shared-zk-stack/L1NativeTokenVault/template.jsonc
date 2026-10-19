@@ -5,7 +5,7 @@
   "ignoreRelatives": ["WETH_TOKEN", "bridgedTokenBeacon"],
   "fields": {
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

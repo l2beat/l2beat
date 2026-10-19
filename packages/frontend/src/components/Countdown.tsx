@@ -69,21 +69,6 @@ export function Countdown({
   )
 }
 
-export function TextCountdown({ expiresAt }: { expiresAt: number }) {
-  const [secondsLeft, setSecondsLeft] = useState(expiresAt - UnixTime.now())
-
-  useInterval(() => {
-    setSecondsLeft((timeLeft) => timeLeft - 1)
-  }, 1000)
-
-  const { days, hours, minutes, seconds } = getTimeParts(secondsLeft)
-  return (
-    <span suppressHydrationWarning>
-      {days} days {hours} hours {minutes} minutes {seconds} seconds
-    </span>
-  )
-}
-
 export const MemoizedTimePart = memo(TimePart)
 function TimePart({
   children,

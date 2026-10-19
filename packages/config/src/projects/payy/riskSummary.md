@@ -1,6 +1,6 @@
 ## Funds can be stolen if
-1. the proof system is broken and a malicious validator is registered, allowing forged spends or withdrawals.
-2. the PayyMultisig upgrades the Rollup contract or directly overwrites the state root to a malicious version.
+1. the verifier or the circuits accept an invalid withdrawal.
+2. the PayyMultisig upgrades the RollupV1 contract or overwrites the state root, which takes effect without delay.
 <br>
 ## Funds can be lost if
 1. a user loses the note data or the keys required to spend their notes.
@@ -8,5 +8,8 @@
 3. the operators stop including withdrawals in proven state updates, as there is no forced exit mechanism.
 <br>
 ## Privacy can be lost if
-1. the Payy-operated note registry, note lookup or wallet backup services are compromised or their records are disclosed, revealing which addresses receive and hold which notes and who transacted with whom.
-
+1. anyone with Payy's block data follows which notes fund which, from a deposit address to a withdrawal address (see public observer).
+2. a path without splits or merges reveals every amount between a deposit and a withdrawal (see chain analyst).
+3. the closed-source Payy app sends user data to third parties, which Payy can change at any time (see network observer).
+4. Payy's backend, which ties each wallet to its KYC record, deposit address and notes, leaks or uses this data (see privileged insider).
+5. the public per-transaction proofs, which are not zero-knowledge, are opened in the future (see future adversary).

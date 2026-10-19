@@ -20,16 +20,11 @@
   },
   "fields": {
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "retirementTimestamp": {
-      "severity": "HIGH"
-    },
-    "disputeGameFactory": {
-      "severity": "HIGH"
-    },
-    "systemConfig": {
-      "severity": "HIGH"
+      // guardian emergency action that does not change the rules, like a pause
+      "severity": "MEDIUM"
     },
     "paused": {
       "severity": "MEDIUM"
@@ -39,6 +34,7 @@
       "severity": "HIGH"
     },
     "RespectedGameString": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "expectRevert": true,

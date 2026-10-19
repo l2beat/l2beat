@@ -2,6 +2,7 @@ import { utils } from 'ethers'
 
 export const erc20Interface = new utils.Interface([
   'event Transfer(address indexed from, address indexed to, uint256 value)',
+  'function balanceOf(address account) view returns (uint256)',
 ])
 
 /** topic0 of the standard ERC-20 Transfer(address,address,uint256) event. */

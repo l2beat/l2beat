@@ -166,6 +166,32 @@ export class PrivacyFlowEventRepository extends BaseRepository {
     }))
   }
 
+  /**
+   * Skips zero-amount deposits, which the anonymity set extractor drops too,
+   * so this count and the deposits in PrivacyAnonymitySetEvent match.
+   */
+  async getNonZeroDepositCount(
+    projectId: string,
+    bucketIds: string[],
+    fromInclusive: UnixTime,
+    toExclusive: UnixTime,
+  ): Promise<number> {
+    if (bucketIds.length === 0) return 0
+
+    const row = await this.db
+      .selectFrom('PrivacyFlowEvent')
+      .select((eb) => eb.fn.sum('count').as('depositCount'))
+      .where('projectId', '=', projectId)
+      .where('bucketId', 'in', bucketIds)
+      .where('direction', '=', 'deposit')
+      .where('amount', '>', '0')
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
+      .executeTakeFirstOrThrow()
+
+    return Number(row.depositCount ?? 0)
+  }
+
   async deleteByConfigInBlockRange(
     configurationId: string,
     fromInclusive: number,

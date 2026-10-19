@@ -1,10 +1,13 @@
 import { formatInteger } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { ChevronIcon } from '~/icons/Chevron'
+import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
-import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { L2Icon } from '~/icons/pages/L2'
+import { OssificationIcon } from '~/icons/pages/Ossification'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
+import { TokensIcon } from '~/icons/pages/Tokens'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { cn } from '~/utils/cn'
 import type { HomeProjectCounts } from '../getHomeProjectCounts'
@@ -17,7 +20,8 @@ interface TileMetric {
 
 interface Tile {
   label: string
-  metric: TileMetric
+  /** Absent when no single number matches what the linked page lists */
+  metric?: TileMetric
   secondaryMetric?: TileMetric
   href: string
   icon: React.ReactNode
@@ -54,13 +58,41 @@ export function HomeStatsStrip({
       icon: <PrivacyIcon className="size-5 stroke-green-450" />,
       iconBgClassName: 'bg-green-450/10',
     },
-    {
-      label: 'Data Availability',
-      metric: { count: counts.dataAvailability, unit: 'projects' },
-      href: '/data-availability/summary',
-      icon: <DataAvailabilityIcon className="size-5 fill-blue-500" />,
-      iconBgClassName: 'bg-blue-500/10',
-    },
+    ...(env.CLIENT_SIDE_TOKENS_PAGE
+      ? [
+          {
+            label: 'Tokens',
+            metric:
+              counts.tokens !== undefined
+                ? { count: counts.tokens, unit: 'tokens' }
+                : undefined,
+            href: '/tokens',
+            icon: <TokensIcon className="size-5 stroke-yellow-700" />,
+            iconBgClassName: 'bg-yellow-700/10',
+          },
+        ]
+      : []),
+    ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
+      ? [
+          {
+            label: 'Ossification',
+            metric: { count: counts.ossification, unit: 'projects' },
+            href: '/ossification',
+            icon: <OssificationIcon className="size-5 stroke-sky-600" />,
+            iconBgClassName: 'bg-sky-600/10',
+          },
+        ]
+      : []),
+    ...(env.CLIENT_SIDE_BLOBS_PAGE
+      ? [
+          {
+            label: 'Blobs',
+            href: '/blobs',
+            icon: <BlobsIcon className="size-5 fill-blue-500" />,
+            iconBgClassName: 'bg-blue-500/10',
+          },
+        ]
+      : []),
     {
       label: 'ZK Catalog',
       metric: { count: counts.zkCatalog, unit: 'projects' },
@@ -81,7 +113,7 @@ export function HomeStatsStrip({
 
   return (
     <HomeCard className={className}>
-      <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-1 xl:gap-0 xl:divide-y xl:divide-divider">
+      <ul className="grid auto-rows-fr grid-cols-2 gap-1.5 md:grid-cols-4 xl:auto-rows-auto xl:grid-cols-1 xl:gap-0 xl:divide-y xl:divide-divider">
         {tiles.map((tile) => (
           <li key={tile.label}>
             <StatTile tile={tile} />
@@ -97,7 +129,7 @@ function StatTile({ tile }: { tile: Tile }) {
     <a
       href={tile.href}
       className={cn(
-        'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-2',
+        'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-1.5',
         'transition-colors duration-200 hover:border-link-stroke',
         'xl:-mx-3 xl:gap-2 xl:rounded-md xl:border-0 xl:px-3 xl:py-2 xl:hover:border-transparent',
       )}
@@ -114,20 +146,26 @@ function StatTile({ tile }: { tile: Tile }) {
         <span className="truncate font-medium text-label-value-12 text-secondary leading-tight transition-colors group-hover:text-link xl:flex-1 xl:text-label-value-14 xl:text-primary xl:group-hover:text-link">
           {tile.label}
         </span>
-        <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-16 leading-tight xl:text-label-value-14">
-          <TileMetricValue
-            metric={tile.metric}
-            className={tile.secondaryMetric ? 'hidden sm:inline' : undefined}
-          />
-          {tile.secondaryMetric && (
-            <>
-              <span className="hidden font-medium text-label-value-12 text-secondary sm:inline">
-                ·
-              </span>
-              <TileMetricValue metric={tile.secondaryMetric} />
-            </>
-          )}
-        </span>
+        {tile.metric && (
+          <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-14 leading-tight">
+            <TileMetricValue
+              metric={tile.metric}
+              className={
+                tile.secondaryMetric
+                  ? 'hidden sm:max-md:inline xl:inline'
+                  : undefined
+              }
+            />
+            {tile.secondaryMetric && (
+              <>
+                <span className="hidden font-medium text-label-value-12 text-secondary sm:max-md:inline xl:inline">
+                  ·
+                </span>
+                <TileMetricValue metric={tile.secondaryMetric} />
+              </>
+            )}
+          </span>
+        )}
       </div>
       <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
     </a>

@@ -44,7 +44,7 @@ export function BlockNumberInput({
         type="button"
         onClick={getLatestBlock}
         disabled={isLoading}
-        className="ms-2 rounded-lg border border-blue-700 bg-blue-700 p-2.5 font-medium text-sm text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700"
+        className="ms-2 rounded-lg border border-blue-700 bg-blue-700 p-2.5 font-medium text-sm text-white hover:bg-blue-800 focus:outline-hidden focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700"
       >
         {!isLoading ? (
           <svg

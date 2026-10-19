@@ -30,14 +30,14 @@ function hasMarkdownVersion(path: string) {
 
 export const LIST_PAGES_WITH_MARKDOWN = [
   '/layer2s/summary',
-  '/data-availability/summary',
   '/zk-catalog',
   '/privacy/summary',
   '/interop/summary',
-  // Behind the same flag as the pages: advertised while off, these would be
+  // Behind the same flags as the pages: advertised while off, these would be
   // 404s. Everything that lists markdown pages filters by this registry, so
-  // the flag is read here only.
+  // the flags are read here only.
   ...(env.CLIENT_SIDE_DEFI_ENABLED ? (['/defi/summary'] as const) : []),
+  ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED ? (['/ossification'] as const) : []),
 ] as const satisfies ListPagePath[]
 
 /**
@@ -46,7 +46,7 @@ export const LIST_PAGES_WITH_MARKDOWN = [
  */
 export const PROJECT_PAGES_WITH_MARKDOWN = [
   '/layer2s/projects/:slug',
-  '/data-availability/projects/:layer/:bridge',
+  '/projects/ethereum',
   '/privacy/projects/:slug',
   '/interop/protocols/:slug',
   '/zk-catalog/:slug',
@@ -55,11 +55,12 @@ export const PROJECT_PAGES_WITH_MARKDOWN = [
 ] as const
 
 export type ListPageWithMarkdown = (typeof LIST_PAGES_WITH_MARKDOWN)[number]
-export type ProjectPageWithMarkdown =
-  (typeof PROJECT_PAGES_WITH_MARKDOWN)[number]
 
 /** Static pages plus the flagged ones `STATIC_PAGE_PATHS` cannot list unconditionally. */
-type ListPagePath = (typeof STATIC_PAGE_PATHS)[number] | '/defi/summary'
+type ListPagePath =
+  | (typeof STATIC_PAGE_PATHS)[number]
+  | '/defi/summary'
+  | '/ossification'
 
 const PAGES_WITH_MARKDOWN: readonly string[] = [
   ...LIST_PAGES_WITH_MARKDOWN,

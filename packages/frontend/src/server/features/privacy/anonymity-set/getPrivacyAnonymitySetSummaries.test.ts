@@ -110,12 +110,33 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
     expect(result).toEqual({
       status: 'available',
       value: 3,
-      label: '≥1 ETH',
       syncingLabels: ['≥200 DAI'],
-      bucketType: 'pool',
-      chain: 'ethereum',
-      formattedAmount: '1',
-      token: 'ETH',
+      series: series[0]!,
+    })
+  })
+
+  it('attaches coverage to an available summary', () => {
+    const project = makeProject()
+    const series = getPrivacyAnonymitySetSeries(project)
+    const configurations = series.map((item) =>
+      configuration(item.configurationId, CURRENT_DAY),
+    )
+
+    const result = getPrivacyAnonymitySetSummary(
+      project,
+      series,
+      configurations,
+      [senderDay('eth', 'a', 10n)],
+      CURRENT_DAY,
+      { attributed: 8, total: 10 },
+    )
+
+    expect(result).toEqual({
+      status: 'available',
+      value: 1,
+      syncingLabels: [],
+      coverage: { attributed: 8, total: 10 },
+      series: series[0]!,
     })
   })
 
@@ -137,12 +158,46 @@ describe(getPrivacyAnonymitySetSummary.name, () => {
     expect(result).toEqual({
       status: 'available',
       value: 2,
-      label: '≥1 ETH',
       syncingLabels: [],
-      bucketType: 'pool',
-      chain: 'ethereum',
-      formattedAmount: '1',
-      token: 'ETH',
+      series: series[0]!,
+    })
+  })
+
+  it('counts registrants of a key-registrations set', () => {
+    const project = makeProject({
+      tokens: [],
+      anonymitySet: {
+        type: 'key-registrations',
+        registry: ChainSpecificAddress.fromLong(
+          'ethereum',
+          EthereumAddress(`0x${'33'.repeat(20)}`),
+        ),
+        sinceTimestamp: UnixTime(0),
+        event: `0x${'44'.repeat(32)}`,
+        extractor: 'umbraStealthKeyChanged',
+      },
+    })
+    const series = getPrivacyAnonymitySetSeries(project)
+    const configurations = series.map((item) =>
+      configuration(item.configurationId, CURRENT_DAY),
+    )
+
+    const result = getPrivacyAnonymitySetSummary(
+      project,
+      series,
+      configurations,
+      [
+        senderDay('key-registrations', 'a', 0n),
+        senderDay('key-registrations', 'b', 0n),
+      ],
+      CURRENT_DAY,
+    )
+
+    expect(result).toEqual({
+      status: 'available',
+      value: 2,
+      syncingLabels: [],
+      series: series[0]!,
     })
   })
 })
@@ -159,6 +214,7 @@ function makeProject({
 } = {}): PrivacyAnonymitySetProject {
   return {
     id: ProjectId('project'),
+    name: 'Project',
     privacyInfo: mockObject<ProjectPrivacyInfo>({ tokens, anonymitySet }),
   }
 }

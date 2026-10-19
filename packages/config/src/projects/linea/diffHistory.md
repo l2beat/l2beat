@@ -1,3 +1,406 @@
+Generated with discovered.json: 0x8a602cb0e24e1efbae2697f13f3319e6a0408601
+
+# Diff at Fri, 16 Oct 2026 05:36:51 GMT:
+
+- id: 7c2fce36
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791897274
+- current timestamp: 1791897274
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791897274 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.customContractSetters:
++        {"severity":"MEDIUM"}
+      fieldMeta.reserveTokenSetters:
++        {"severity":"MEDIUM"}
+      fieldMeta.reserveTokenRemovers:
++        {"severity":"MEDIUM"}
+      fieldMeta.messageServiceSetters:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        {"untilTimestamp":1742317187}
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1USDCBridge (eth:0x504A330327A089d8364C4ab3811Ee26976d388ce) [linea/L1USDCBridge] {
+    +++ description: L1 side of the old and now unused USDC bridge.
+      critical:
++        {"untilTimestamp":1742317187}
+    }
+```
+
+```diff
+    contract AddressFilter (eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E) [linea/AddressFilter] {
+    +++ description: Blocklist consulted by the LineaRollup forced-transaction path: an address on this list cannot force-include transactions from L1, so the contract gates the escape hatch.
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ severity: MEDIUM
+      values.verifierSetters:
++        ["eth:0xd6B95c960779c72B8C6752119849318E5d550574"]
+      fieldMeta.limitInWei.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifierSetters:
++        {"severity":"MEDIUM"}
+      fieldMeta.ethStakerAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.yieldManagerSetterAC:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract Timelock (eth:0xd6B95c960779c72B8C6752119849318E5d550574) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.proposerAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.cancellerAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.executorAC:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      fieldMeta.yieldStakingManagerAC.severity:
++        "MEDIUM"
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.customContractSetters:
++        {"severity":"MEDIUM"}
+      fieldMeta.reserveTokenSetters:
++        {"severity":"MEDIUM"}
+      fieldMeta.reserveTokenRemovers:
++        {"severity":"MEDIUM"}
+      fieldMeta.messageServiceSetters:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) [linea/L2MessageService_v1_0] {
+    +++ description: None
+      fieldMeta.limitInWei.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.$admin:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract L2USDCBridge (linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A) [linea/OldL2USDCBridge] {
+    +++ description: L2 side of the old and now unused USDC bridge.
+      critical:
++        {"untilTimestamp":1742317187}
+    }
+```
+
+```diff
+    contract L2Timelock (linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.proposerAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.cancellerAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.executorAC:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        {"untilTimestamp":1742317187}
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0xe20c6953addc969cb2919b2b99d389dc66983055
+
+# Diff at Tue, 13 Oct 2026 13:15:49 GMT:
+
+- id: 26ef3899
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f86fa8ee6214e9cba302685affb910adddc04f2d block: 1791455017
+- current timestamp: 1791897274
+
+## Description
+
+ETH withdrawal reserve was topped-up, so withdrawal reserve is above minimum again.
+
+## Watched changes
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: True when the LineaRollup ETH balance (the withdrawal reserve backing L2 exits) is below the effective minimum reserve. While true, no more ETH can be moved to the YieldManager or staked, and anyone can permissionlessly trigger unstaking from yield providers (with beacon chain proofs) and replenish the reserve up to the target. Refilling a deficit depends on beacon chain withdrawal latency.
++++ severity: MEDIUM
+      values.isWithdrawalReserveBelowMinimum:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0xdf75e523538932e3ffd982720e6f36c49afb21f3
+
+# Diff at Thu, 08 Oct 2026 12:03:29 GMT:
+
+- id: 4cedd31d
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ea0f844d485c4192528096e99c5cace57e234c4c block: 1789919089
+- current timestamp: 1791455017
+
+## Description
+
+Upgraded Linea type 1 verifier, it is not yet reproduced from the sources.
+
+Also, because of ETH withdrawals from Linea, withdraw reserves are below the limits. Staking stops and anyone can unstake some Lido-staked positions.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierFull (eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.1:
+-        "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77"
++        "eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: True when the LineaRollup ETH balance (the withdrawal reserve backing L2 exits) is below the effective minimum reserve. While true, no more ETH can be moved to the YieldManager or staked, and anyone can permissionlessly trigger unstaking from yield providers (with beacon chain proofs) and replenish the reserve up to the target. Refilling a deficit depends on beacon chain withdrawal latency.
++++ severity: MEDIUM
+      values.isWithdrawalReserveBelowMinimum:
+-        false
++        true
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierFull (eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...rifierFull-eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532.sol} | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789919089 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierFull (eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77) [N/A] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
+Generated with discovered.json: 0xf0baf8ad4317589f252201c23ca7883a465ad374
+
+# Diff at Sun, 04 Oct 2026 05:55:33 GMT:
+
+- id: 7de71404
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789919089
+- current timestamp: 1789919089
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789919089 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.pauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.unpauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract AddressFilter (eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E) [linea/AddressFilter] {
+    +++ description: Blocklist consulted by the LineaRollup forced-transaction path: an address on this list cannot force-include transactions from L1, so the contract gates the escape hatch.
+      fieldMeta.filteredAddresses.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Delay (eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436) [gnosisSafeModules/ZodiacDelay] {
+    +++ description: A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.
+      critical:
+-        true
+    }
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      fieldMeta.pauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.unpauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      fieldMeta.pauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.unpauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.pauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.unpauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) [linea/L2MessageService_v1_0] {
+    +++ description: None
+      fieldMeta.pauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.unpauseTypeToRole.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.limitInWei.description:
+-        "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
++        "The cap on the total amount of ether (value plus postman fee) that can be sent from L2 to L1 via sendMessage per period given by periodInSeconds."
+    }
+```
+
 Generated with discovered.json: 0x4ad2cd3b3504a2297c4e0e2a628c0e487dad488e
 
 # Diff at Wed, 23 Sep 2026 05:55:55 GMT:

@@ -65,7 +65,7 @@
       "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
     },
     "getAdmin": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -115,6 +115,7 @@
       }
     },
     "isPermanentRollupString": {
+      "severity": "HIGH",
       "handler": {
         "type": "storage",
         "slot": 57,
@@ -131,8 +132,9 @@
       "severity": "HIGH"
     },
     "getProtocolVersion": {
+      // a version label: it only changes with a diamondCut, which counts
       "description": "Protocol version, increments with each protocol upgrade.",
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "getVerifierParams": {
       "description": "Verifier parameters used for proving batches.",

@@ -30,8 +30,9 @@
       "critical": true,
       "ignoreRelatives": ["OVM_L1CrossDomainMessenger"],
       "fields": {
+        // Not HIGH: this mapping is the L1CrossDomainMessenger implementation,
+        // already counted as a code change of that ResolvedDelegateProxy.
         "OVM_L1CrossDomainMessenger": {
-          "severity": "HIGH",
           "handler": {
             "type": "call",
             "method": "getAddress",
@@ -45,33 +46,22 @@
     "eth:0x0D5058007D566E60b5473c63A4d43e87F31f348c": {
       "ignoreDiscovery": true
     },
-    // Replaced as the system controller by the joint Ronin/Conduit Safe.
-    "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": {
-      "critical": {
-        "sinceTimestamp": 1771964639,
-        "untilTimestamp": 1779285407
-      },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
-    // Effective controller of both ProxyAdmins, the DGF and SystemConfig.
+    // Effective controller of both ProxyAdmins, the DGF and SystemConfig since
+    // 2026-05-20, and guardian since 2026-06-09 (both took over from the
+    // 4-of-12 Conduit Multisig 1). Safes are actor containers, not critical.
+    // Both handovers set a new threshold and replaced the authority, so they
+    // are reviewed mechanism changes in ossification.json.
     "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": {
-      "description": "5-of-6 joint Ronin/Conduit Safe.",
-      "critical": { "sinceTimestamp": 1779285407 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
+      "description": "5-of-6 joint Ronin/Conduit Safe."
     },
     // Legacy MainchainGateway uses overloaded view methods that the default
     // handler can't probe (need explicit indices/length). Ignore them — the
     // ones we care about (admin, impl, paused, depositCount) come through.
-    // Out of the ossification perimeter (externally-bridged TVS, not the
-    // canonical bridge); its important state is watched at MEDIUM so changes
-    // still surface without touching the clock.
+    // Critical: it holds the funded escrow, and Ronin governs both sides
+    // (MainchainBridgeManager here, RoninBridgeManager as admin of
+    // RoninGatewayV3, same operator set).
     "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": {
+      "critical": true,
       "description": "Legacy multi-sig-secured Ronin bridge contract holding the L1 side of deposits made before the April 2025 Chainlink CCIP migration. Still custodies residual user balances (ETH backing legacy WETH on Ronin, the deprecated WBTC contract, and dust). Withdrawals authorised by the Ronin BridgeOperator stake-weighted threshold via MainchainBridgeManager.",
       "ignoreMethods": [
         "checkHighTierVoteWeightThreshold",
@@ -82,21 +72,60 @@
       "fields": {
         "$admin": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
-        "getThreshold": { "severity": "MEDIUM" },
-        "getHighTierVoteWeightThreshold": { "severity": "MEDIUM" }
+        "emergencyPauser": { "severity": "MEDIUM" },
+        "getThreshold": { "severity": "HIGH" },
+        "getHighTierVoteWeightThreshold": { "severity": "HIGH" },
+        // operator weights that validate withdrawal signatures (setContract)
+        "bridgeManager": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getContract",
+            "args": [11]
+          }
+        },
+        // DEFAULT_ADMIN, WITHDRAWAL_UNLOCKER and MIGRATOR role holders
+        "accessControl": {
+          "severity": "MEDIUM",
+          "handler": { "type": "accessControl" }
+        }
       }
     },
     "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": {
       "description": "Governance and proxy-admin contract for the legacy MainchainGateway bridge. Holds the operator/governor set, tallies stake-weighted votes for bridge proposals (operator rotations, threshold changes, withdrawals).",
       "ignoreMethods": ["checkThreshold", "globalProposalRelayed", "round"],
+      // Validates the operator signatures of MainchainGateway withdrawals. Not
+      // HIGH: minimumVoteWeight and getTotalWeight move with the operator set.
+      "critical": true,
       "fields": {
         "$admin": { "severity": "MEDIUM" },
-        "getThreshold": { "severity": "MEDIUM" },
-        "getBridgeOperators": { "severity": "MEDIUM" }
+        "getThreshold": { "severity": "HIGH" },
+        "getBridgeOperators": { "severity": "MEDIUM" },
+        "getGovernors": { "severity": "MEDIUM" },
+        "getFullBridgeOperatorInfos": { "severity": "MEDIUM" }
       }
     },
     "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": {
-      "description": "Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency."
+      "description": "Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency.",
+      "critical": true,
+      "fields": {
+        "emergency": { "severity": "MEDIUM" },
+        // pause-only roles (SENTRY) and their admin
+        "accessControl": {
+          "severity": "MEDIUM",
+          "handler": { "type": "accessControl" }
+        }
+      }
+    },
+    // 2-of-3 legacy multisig, DEFAULT_ADMIN of MainchainGateway and
+    // PauseEnforcer. Do not follow its past transaction targets.
+    "eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96": {
+      "ignoreMethods": [
+        "getConfirmationCount",
+        "getConfirmations",
+        "isConfirmed",
+        "transactions"
+      ]
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "ignoreInWatchMode": ["totalSupply"]
@@ -138,19 +167,25 @@
         "untilTimestamp": 1788777107
       }
     },
-    // Active Kailua proof path (bob precedent): KailuaGame/KailuaTreasury (game
-    // type 1337, the respected game type) verify state roots through the
-    // KailuaVerifier, which routes RISC Zero receipts through the shared
-    // RiscZeroVerifierRouter. Permanently paused verifier routes are
-    // intentionally not flagged (base precedent).
+    // Kailua proof path, critical while game type 1337 was respected: from the
+    // cutover (2026-07-01, tx 0x07bf7a19) until the guardian set the respected
+    // game type back to 1 (2026-09-07, tx 0x7f1b7013). KailuaGame/KailuaTreasury
+    // verify state roots through the KailuaVerifier, which routes RISC Zero
+    // receipts through the shared RiscZeroVerifierRouter. The six Kailua games
+    // still in progress at the switch (DGF index 230-235) stay proper and
+    // respected (retirementTimestamp was not bumped), but their root claims are
+    // fixed and match the canonical Ronin output roots (checked 2026-10-03), so
+    // no later Kailua/RISC Zero change can create an invalid withdrawal claim.
+    // Permanently paused verifier routes are intentionally not flagged (all
+    // were paused before the cutover).
     "eth:0x296e7aD6D441b0627768bC0650179a4206479444": {
       "critical": {
         "sinceTimestamp": 1782901175,
         "untilTimestamp": 1788777107
       }
     },
-    // Active RISC Zero verification path: unpaused emergency stops and the
-    // verifiers they wrap (groth16 verifiers plus the set verifier).
+    // RISC Zero verification path of that period: unpaused emergency stops and
+    // the verifiers they wrap (groth16 verifiers plus the set verifier).
     "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": {
       "critical": {
         "sinceTimestamp": 1782901175,
@@ -229,9 +264,6 @@
     },
     // ProxyAdmin: can upgrade the SuperchainConfig fork that holds Ronin's pause authority.
     "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34": {
-      "critical": true
-    },
-    "eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959": {
       "critical": true
     },
     // Permissioned game and its proof dependencies before the September 2026

@@ -1092,9 +1092,28 @@ export class ProjectDiscovery {
     return result
   }
 
+  /**
+   * @param projectStart changes before it are not the project's own.
+   * @param moduleAdoptions per shared module name, when the project started to
+   *   depend on it. The module's earlier changes are not the project's own.
+   */
   getOssificationHistory(
     projectStart?: UnixTime,
+    moduleAdoptions: Record<string, UnixTime> = {},
   ): OssificationHistory | undefined {
+    const modules = this.discoveries.slice(1).map((d) => d.name)
+    for (const name of Object.keys(moduleAdoptions)) {
+      assert(
+        modules.includes(name),
+        `${this.projectName} does not reference the module ${name}`,
+      )
+    }
+    const startOf = (name: string) => {
+      const adoption = moduleAdoptions[name]
+      if (adoption === undefined) return projectStart
+      if (projectStart === undefined) return adoption
+      return UnixTime(Math.max(adoption, projectStart))
+    }
     return mergeOssificationHistories(
       this.discoveries
         .map((discovery) =>
@@ -1102,7 +1121,7 @@ export class ProjectDiscovery {
             discovery,
             this.reachableAddresses,
             this.configReader,
-            projectStart,
+            startOf(discovery.name),
           ),
         )
         .filter(notUndefined),

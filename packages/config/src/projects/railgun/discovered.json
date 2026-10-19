@@ -85,7 +85,7 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Controller that can operate any Railgun proxy administered by this ProxyAdmin.",
           "type": "PERMISSION"
         }
@@ -130,6 +130,7 @@
       },
       "fieldMeta": {
         "owner": {
+          "severity": "MEDIUM",
           "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
           "type": "PERMISSION"
         },
@@ -141,7 +142,8 @@
           "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
         },
         "state": {
-          "description": "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
+          "severity": "HIGH",
+          "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING."
         }
       },
       "implementationNames": {
@@ -301,6 +303,7 @@
       },
       "fieldMeta": {
         "owner": {
+          "severity": "MEDIUM",
           "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
           "type": "PERMISSION"
         },
@@ -312,7 +315,8 @@
           "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator."
         },
         "state": {
-          "description": "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
+          "severity": "HIGH",
+          "description": "Current workflow phase: SETTING (0), WAITING (1) or COMMITTING (2). COMMITTING is entered only through governance (the Delegator) and lets the owner push the staged keys, including empty keys that delete a circuit, to the smart wallet without further governance until the owner returns the helper to SETTING."
         }
       },
       "implementationNames": {
@@ -663,7 +667,7 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current controller of the Delegator. The owner bypasses the permission bitmap and can call any target through this contract.",
           "type": "PERMISSION"
         },
@@ -873,7 +877,7 @@
       },
       "fieldMeta": {
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Current governance-controlled minter of the RAIL token.",
           "type": "PERMISSION"
         },
@@ -1171,7 +1175,7 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet proxy.",
           "type": "PERMISSION"
         },
@@ -1180,7 +1184,7 @@
           "type": "CODE_CHANGE"
         },
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Governance-controlled owner of the smart wallet logic.",
           "type": "PERMISSION"
         },
@@ -1189,7 +1193,7 @@
           "description": "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
         },
         "shieldFee": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Basis-point fee charged on shield operations.",
           "type": "RISK_PARAMETER"
         },
@@ -1238,6 +1242,7 @@
           "description": "Number of token blocklist removals, including removals later reverted."
         },
         "verificationKeyChangeCount": {
+          "severity": "HIGH",
           "description": "Number of SNARK verification key changes, including keys later replaced or restored."
         },
         "ZERO_VALUE": {

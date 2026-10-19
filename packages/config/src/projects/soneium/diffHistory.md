@@ -1,3 +1,143 @@
+Generated with discovered.json: 0x253ddcb1d825eeda404d2d7e315e20394ad8b62d
+
+# Diff at Fri, 16 Oct 2026 09:37:50 GMT:
+
+- id: 23f7848e
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791965773
+- current timestamp: 1791965773
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791965773 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        ["0x4554485f4c4f434b424f58000000000000000000000000000000000000000000"]
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xB24bFEeCE1B3b7A44559F4Cbc21BeD312b130b70) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0xd95bab6edb140a991347a6adaf860a541bec806c
+
+# Diff at Wed, 14 Oct 2026 08:17:42 GMT:
+
+- id: c0fbf0ac
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1790862358
+- current timestamp: 1791965773
+
+## Description
+
+SystemConfig `minBaseFee` 0 → 13000000, set by the Soneium Multisig.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        0
++        13000000
+    }
+```
+
+Generated with discovered.json: 0x37d6274609c2e523aa741168bc12cb8a85a20905
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: 9791e527
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790862358
+- current timestamp: 1790862358
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862358 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x4890928941e62e273dA359374b105F803329F473) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x6354f627e97971c1d8fd070469bf67f8a8a2c401
 
 # Diff at Thu, 01 Oct 2026 13:47:05 GMT:

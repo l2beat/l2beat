@@ -2,9 +2,10 @@ import type { Project } from '@l2beat/config'
 import { measureOssification } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getRowBackgroundColor } from '~/components/table/utils/rowType'
-import { env } from '~/env'
+import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { ps } from '~/server/projects'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import {
@@ -21,8 +22,8 @@ export interface OssificationEntry
       'slug' | 'name' | 'icon' | 'backgroundColor' | 'statuses'
     > {
   category: OssificationCategory
-  /** Project page; absent for DeFi projects while DeFi pages are disabled */
-  href?: string
+  /** Project page; absent for DeFi projects without one */
+  href?: `/${string}`
 }
 
 type OssificationEntryProject = Project<
@@ -30,7 +31,21 @@ type OssificationEntryProject = Project<
   'scalingInfo' | 'scalingRisks' | 'privacyInfo' | 'defiInfo' | 'tvsConfig'
 >
 
-export async function getOssificationEntries(): Promise<OssificationEntry[]> {
+const cache = new FrontendInMemoryCache('getOssificationEntries')
+
+/** Shared by the page and its markdown version, which would otherwise each read every value series. */
+export function getCachedOssificationEntries(): Promise<OssificationEntry[]> {
+  return cache.get(
+    {
+      key: ['ossification', 'entries'],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    getOssificationEntries,
+  )
+}
+
+async function getOssificationEntries(): Promise<OssificationEntry[]> {
   const projects = await ps.getProjects({
     select: ['ossificationHistory', 'statuses'],
     optional: [
@@ -102,7 +117,7 @@ function getPlacement(
   if (project.defiInfo) {
     return {
       category: 'DeFi',
-      ...(env.CLIENT_SIDE_DEFI_ENABLED && {
+      ...(hasDefiProjectPage(project) && {
         href: `/defi/projects/${project.slug}`,
       }),
     }

@@ -1,3 +1,68 @@
+Generated with discovered.json: 0x786a4aa2b68f41cae56af073d3257f2eefe2aaf1
+
+# Diff at Fri, 16 Oct 2026 05:36:50 GMT:
+
+- id: bbce6733
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791380927
+- current timestamp: 1791380927
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791380927 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x06A56487494aa080deC7Bf69128EdA9225784553. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+Generated with discovered.json: 0x95da12fd6cb9beac7fa6366a0d2ed1ccd6a92ece
+
+# Diff at Wed, 07 Oct 2026 13:53:19 GMT:
+
+- id: e7ac748c
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1790851094
+- current timestamp: 1791380927
+
+## Description
+
+StVaultsCommittee: member rotated.
+
+VettedGate: tree root updated via Easy Track.
+
+## Watched changes
+
+```diff
+    contract StVaultsCommittee (eth:0x18A1065c81b0Cc356F1b1C843ddd5E14e4AefffF) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x4D55af0756B43Ee0C1052e585a185A47771b022e"
++        "eth:0x2d55aD2742d98961D0c6E68C6372a19614357708"
+    }
+```
+
+```diff
+    contract VettedGate (eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8) [lido/VettedGate] {
+    +++ description: Merkle-gated node-operator onboarding contract. Eligible addresses can create an operator using the configured bond curve, or an existing operator owner can consume a proof to claim that curve.
+      values.treeCid:
+-        "bafkreiakdug6tbysfvwm5hoizdvmex4wxh3kfkjq6pfxxjp5cv4mrokdiq"
++        "bafkreidkgkmkpnnobwka66vaoyfovywzx7r7mnctmithx4jwbuz3fsqvs4"
+      values.treeRoot:
+-        "0xb61a11aaa84f3956f54784f7e8548ff165cab8a4866f3950ea7edbc9cd19464e"
++        "0x7c6873dce3c3fcdfc559326d5494d601c4f3a63119890642b4e04ca5a8caf384"
+    }
+```
+
 Generated with discovered.json: 0x56160c326fe673bf98b2a55da427abcfdc301948
 
 # Diff at Thu, 01 Oct 2026 12:52:03 GMT:

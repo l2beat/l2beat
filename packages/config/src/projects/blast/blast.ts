@@ -19,6 +19,8 @@ export const blast: ScalingProject = opStackL2({
     name: 'Blast',
     slug: 'blast',
     architectureImage: 'blast',
+    headerWarning:
+      'Blast is winding down. See the [announcement](https://x.com/blast/status/2106032805280891073) and withdraw your funds to Ethereum by October 26, 2026.',
     description:
       'Blast is an EVM-compatible Optimistic Rollup supporting native yield. It invests funds deposited into the L1 bridge into various DeFi protocols transferring yield back to the L2.',
     links: {
@@ -70,7 +72,7 @@ export const blast: ScalingProject = opStackL2({
           },
           {
             title: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-            url: 'https://etherscan.io/address/0x1C90963D451316E3DBFdD5A30354EE56C29016EB#code',
+            url: 'https://etherscan.io/address/0x550893B7041E91A090e7d03Cf437029Fe0f68ABc#code',
           },
         ],
         risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],

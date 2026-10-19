@@ -1,4 +1,8 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 
 import { BADGES } from '../../common/badges'
@@ -22,6 +26,8 @@ export const sxnetwork: ScalingProject = orbitStackL2({
     name: 'SX Network',
     aliases: ['SX Bet'],
     slug: 'sxnetwork',
+    headerWarning:
+      'The SX token is being sunset and SX Network is planned to be deprecated. See the [announcement](https://blog.sx.bet/news/sunsetting-the-sx-token-and-new-infrastructure-plans/).',
     description:
       "SX Network is an Orbit stack Optimium, built to scale the SX team's existing sports betting platform.",
     links: {
@@ -47,12 +53,22 @@ export const sxnetwork: ScalingProject = orbitStackL2({
   chainConfig: {
     name: 'sxnetwork',
     chainId: 4162,
+    explorerUrl: 'https://explorerl2.sx.technology',
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 7208281,
+        version: '3',
+      },
+    ],
     apis: [
       {
         type: 'rpc',
         url: 'https://rpc-rollup.sx.technology',
         callsPerMinute: 100,
       },
+      { type: 'blockscout', url: 'https://explorerl2.sx.technology/api' },
     ],
     gasTokens: ['SX'],
   },

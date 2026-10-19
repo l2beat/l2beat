@@ -121,6 +121,7 @@
         "$immutable": true,
         "owner": "eth:0xF3b7697c9C0CbdE923f34991F2D19cC1c66612bD"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x0a1B34aA2047AD1AbEF8aC085b1a7802Ed9dbCF0": "AddressManager"
       },
@@ -641,6 +642,7 @@
         "disputeGameFactory": "eth:0x657c1b0e31FFc69A02B207Be20699bDFF938c7E7",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
+        "enabledFeatures": [],
         "gasLimit": 30000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0x3a30AEd8fa7717aC2D8454D82c125cF6B875061a",
@@ -707,10 +709,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x525a2744134805516a45B8abb6Aa0aA1dA3809F6": "Proxy",
@@ -821,6 +829,7 @@
         "wethFromDGF": "eth:0x32F1a0d76d222eDcF856968AC7d6fB7Ba5685607"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "game1337": { "severity": "HIGH" },
         "game621": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
@@ -841,7 +850,6 @@
         "game9AnchorStateRegistry": { "severity": "HIGH" },
         "game9Weth": { "severity": "HIGH" },
         "game5AnchorStateRegistry": { "severity": "HIGH" },
-        "game5Proposer": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -1084,6 +1092,7 @@
         "isUpgrading": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5": "ProxyAdmin"
       }
@@ -1266,8 +1275,9 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" }
+        "RespectedGameString": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
+        "blacklistedGames": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xe412DfF37688441b0b3CEC2C081ABC483d87C639": "Proxy",
@@ -1316,6 +1326,7 @@
         "isUpgrading": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xF3b7697c9C0CbdE923f34991F2D19cC1c66612bD": "ProxyAdmin"
       }
@@ -2152,7 +2163,7 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 25846617 },
   "permissionsConfigHash": "0xfdcb6e476c5700174e3276aeaf8e4b1532f3485442e758c3d97c1d36f988d4b5",

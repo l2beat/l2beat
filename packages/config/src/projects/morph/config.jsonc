@@ -16,6 +16,11 @@
     "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535": "L1USDCGatewayLegacy"
   },
   "overrides": {
+    // Since the Submitter cutover the Rollup no longer calls L1Staking: it only relays
+    // the L2 sequencer set.
+    "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7": {
+      "critical": { "untilTimestamp": 1790063675 }
+    },
     // ProxyAdmin of all core Morph proxies (Rollup, messenger, queue, staking, gateways); owned by the TimelockController.
     "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": {
       "critical": true
@@ -26,13 +31,21 @@
     },
     // Upgrade timelock (currently 0s min delay) between Morph Multisig 1 and the core ProxyAdmin.
     "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530": {
-      "critical": true
+      "critical": true,
+      "fields": {
+        "$admin": { "severity": "MEDIUM" }
+      }
     },
     // Active zk verifier (SP1) routed to by the MultipleVersionRollupVerifier for all
-    // batches from the Submitter cutover onwards. The superseded route (eth:0x9774CE99...)
-    // only covers long-finalized batches and is intentionally not flagged.
+    // batches from the Submitter cutover onwards.
     "eth:0x651cA600813fC0126225b727EDbA617949b1d1c9": {
       "critical": true
+    },
+    // SP1 verifier of an older guest program, still latestVerifier[1] from batch
+    // 53283. The Rollup accepts batch versions <= 2, also in the permissionless
+    // commitBatchWithProof, so new version-1 batches prove against it.
+    "eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624": {
+      "critical": { "sinceTimestamp": 1779354407 }
     },
     // SP1 verifier used by version-2 batches until the current verifier was registered.
     "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692": {
@@ -40,24 +53,9 @@
         "sinceTimestamp": 1780559831,
         "untilTimestamp": 1790063627
       }
-    },
-    // Controller of the original core contracts and current proposer/canceller,
-    // staking, queue, forced-transaction and legacy-gateway authority paths.
-    "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": {
-      "critical": { "sinceTimestamp": 1729764539 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
-    },
-    // Current upgrade executor and controller of the rollup, verifier router,
-    // canonical messenger/router and active USDC/custom-token escrows.
-    "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": {
-      "critical": { "sinceTimestamp": 1737455087 },
-      "fields": {
-        "$threshold": { "severity": "HIGH" },
-        "GnosisSafe_modules": { "severity": "HIGH" }
-      }
     }
+    // Morph Multisig 1 and 2 are actor containers and not critical. Their
+    // mechanism changes are reviewed events in ossification.json on the
+    // contracts they control.
   }
 }

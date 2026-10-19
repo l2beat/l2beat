@@ -1,19 +1,19 @@
 {
   "events": [
     {
-      "timestamp": 1710467267,
-      "type": "state",
-      "contract": "eth:0xca35F8338054739D138884685e08b39EE2217794",
-      "transaction": "0x667a55493b70812eedb69586be570fa87bb305ff046ebd1419cdc71163f770ac",
-      "reason": "Configured ProxyAdmin's AddressManager and legacy upgrade routing for L1CrossDomainMessenger and L1StandardBridge (setAddressManager, setProxyType and setImplementationName)."
-    },
-    {
       "timestamp": 1710490775,
       "type": "code",
       "contract": "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
       "transaction": "0xa5fff128e999954c7dfe8e3360d0844e439425124922e85cd32fdcf2e3582247",
       "updateId": "5dc1a14e",
       "reason": "Upgraded L1StandardBridge to its current implementation through the legacy L1ChugSplashProxy path (upgradeAndCall followed by upgrade); this proxy exposes no $pastUpgrades history."
+    },
+    {
+      "timestamp": 1739846111,
+      "type": "state",
+      "contract": "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
+      "transaction": "0x72264d0f04b80f709e99bf02189e18fdfa33f6736468e0f9d5a83684a8577dd8",
+      "reason": "Transferred ownership of the MantleTokenProxyAdmin (upgrades the MNT token) from the MantleSecurityMultisig to the TimelockController eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F, putting a 1-day delay into the MNT upgrade path (OwnershipTransferred)."
     },
     {
       "timestamp": 1758610559,
@@ -29,7 +29,7 @@
       "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
       "transaction": "0xbcdfdc035616b46bff079879503b1608dd115f9435e7009612d49b931213a56b",
       "updateId": "58e087bc",
-      "reason": "Rotated the OP Succinct aggregation and range verification keys, rollup-config hash and verifier (AggregationVkeyUpdated, RangeVkeyCommitmentUpdated, RollupConfigHashUpdated and VerifierUpdated)."
+      "reason": "Rotated the OP Succinct aggregation and range verification keys and rollup-config hash, and switched the verifier from the SP1 Groth16 gateway eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B to the SP1Verifier v5.0.0 eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459 (AggregationVkeyUpdated, RangeVkeyCommitmentUpdated, RollupConfigHashUpdated and VerifierUpdated)."
     },
     {
       "timestamp": 1769160827,
@@ -61,7 +61,7 @@
       "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
       "transaction": "0xa29314393be594bcb4caad62ff4a282f108031aa8c58ff649bbfe82453903365",
       "updateId": "d64f0885",
-      "reason": "Rotated the OP Succinct aggregation and range verification keys and verifier (AggregationVkeyUpdated, RangeVkeyCommitmentUpdated and VerifierUpdated)."
+      "reason": "Rotated the OP Succinct aggregation and range verification keys and switched the verifier from the SP1Verifier v5.0.0 eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459 to the SP1VerifierGateway eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e (AggregationVkeyUpdated, RangeVkeyCommitmentUpdated and VerifierUpdated)."
     },
     {
       "timestamp": 1781079551,

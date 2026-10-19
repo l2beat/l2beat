@@ -1,8 +1,9 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
+import { INTEROP_TRANSFER_RETENTION } from '@l2beat/database'
+import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
-import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
+import { getLatestInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
+import { findInteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
 import { getAggregatedInteropSnapshotTimestamp } from '~/server/features/layer2s/interop/utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
@@ -59,6 +60,7 @@ export async function getInteropTokenPageData(
         },
         tokenEntry: data.tokenEntry,
         tokenData: data.tokenData,
+        lastSyncedAt: data.lastSyncedAt,
         apiSelection: data.apiSelection,
         interopChains: interopChainsWithIcons,
         initialSelection: ALL_CHAINS_SELECTION,
@@ -110,7 +112,6 @@ function getCachedInteropTokenPage(
       getCachedData({
         slug,
         initialSelection: ALL_CHAINS_SELECTION,
-        activeInteropChainIds: interopChainsWithIcons.map((chain) => chain.id),
         interopChainsWithIcons,
       }),
   )
@@ -119,38 +120,33 @@ function getCachedInteropTokenPage(
 async function getCachedData({
   slug,
   initialSelection,
-  activeInteropChainIds,
   interopChainsWithIcons,
 }: {
   slug: string
   initialSelection: InteropSelection
-  activeInteropChainIds: string[]
   interopChainsWithIcons: InteropChainWithIcon[]
 }) {
-  const [abstractTokens, snapshotTimestamp, interopProjects] =
-    await Promise.all([
-      getInteropAbstractTokens(activeInteropChainIds),
-      getAggregatedInteropSnapshotTimestamp(),
-      ps.getProjects({ select: ['interopConfig'] }),
-    ])
-  const token = abstractTokens.find((token) => token.id === slug)
+  const [token, snapshotTimestamp, interopProjects] = await Promise.all([
+    findInteropAbstractToken(slug),
+    getAggregatedInteropSnapshotTimestamp(),
+    ps.getProjects({ select: ['interopConfig'] }),
+  ])
   if (!token) return undefined
 
   const apiSelection = initialSelection
 
-  const [tokenData, relationsGraph] = await Promise.all([
-    getInteropTokenData(
-      { tokenId: token.id, ...apiSelection },
-      { snapshotTimestamp, interopProjects },
-    ),
+  const [{ tokenData, lastSyncedAt }, relationsGraph] = await Promise.all([
+    getLatestInteropTokenData(token.id, { snapshotTimestamp, interopProjects }),
     getRelationsGraph(token.id),
   ])
 
-  const tokenEntry = getInteropTokenEntry(
-    token.id,
-    interopChainsWithIcons,
+  const tokenEntry = getInteropTokenEntry({
+    token,
+    interopChains: interopChainsWithIcons,
     relationsGraph,
-  )
+    lastSyncedAt,
+    hasRawTransfers: hasRawTransfers(tokenData?.snapshotTimestamp),
+  })
 
   return {
     token: {
@@ -159,8 +155,19 @@ async function getCachedData({
     },
     tokenEntry,
     tokenData,
+    lastSyncedAt,
     apiSelection,
   }
+}
+
+/**
+ * Raw transfers are cleaned up long before aggregates, so a stale snapshot may
+ * have no transfers left to list next to its aggregated numbers.
+ */
+function hasRawTransfers(snapshotTimestamp: number | undefined) {
+  if (snapshotTimestamp === undefined) return false
+  const snapshotWindowStart = snapshotTimestamp - UnixTime.DAY
+  return snapshotWindowStart >= UnixTime.now() - INTEROP_TRANSFER_RETENTION
 }
 
 /** The page stays useful without its deployments section, so a failed build only hides it. */

@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SwapEscrow",
+  "category": "core",
+  "description": "SwapEscrow implementation. A clone swaps via the Curve 3pool (and Uniswap for ETH) with a slippage bound of {{STABLE_MAX_SLIPPAGE_BPS}} bps for stablecoins and {{ETH_MAX_SLIPPAGE_BPS}} bps against the Chainlink ETH/USD price for ETH. If the swap cannot execute, only the recovery key committed in the clone's address can move the funds.",
+  "ignoreMethods": [
+    "nonce",
+    "recipient",
+    "recoveryCommitment",
+    "relayerTip",
+    "route"
+  ],
+  "ignoreRelatives": [
+    "DAI",
+    "ETH_USD_FEED",
+    "THREE_POOL",
+    "UNISWAP_UNIVERSAL_ROUTER",
+    "USDC",
+    "USDT",
+    "WETH"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "timestamp": 1790862352,
-  "configHash": "0x2c1bd7f05a41f7bd0efb53da6c070cbc3ac95a07fd962110eafe7bee4a80f556",
+  "configHash": "0x55a86964380128fa1022cec42d10fffe8ef876cbbb1f5a09526f1e1b2c7b7893",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -209,6 +209,7 @@
         "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
         "game1337": { "severity": "HIGH" },
         "game621": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
@@ -229,7 +230,6 @@
         "game9AnchorStateRegistry": { "severity": "HIGH" },
         "game9Weth": { "severity": "HIGH" },
         "game5AnchorStateRegistry": { "severity": "HIGH" },
-        "game5Proposer": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" },
         "anchorStateRegistryFromDGF": { "severity": "HIGH" },
         "chainIdFromDGF": { "severity": "HIGH" }
@@ -401,7 +401,10 @@
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
-      "fieldMeta": { "addressManager": { "severity": "LOW" } },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "addressManager": { "severity": "LOW" }
+      },
       "implementationNames": {
         "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
       }
@@ -786,6 +789,9 @@
         "disputeGameFactory": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
+        "enabledFeatures": [
+          "0x4554485f4c4f434b424f58000000000000000000000000000000000000000000"
+        ],
         "gasLimit": 30000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
@@ -852,10 +858,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364": "Proxy",
@@ -1359,6 +1371,7 @@
         "$immutable": true,
         "owner": "eth:0xd56045E68956FCe2576E680c95a4750cf8241f79"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x9b7C9BbD6d540A8A4dEDd935819fC4408Ba71153": "AddressManager"
       },
@@ -1383,7 +1396,16 @@
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1764596735,
       "sinceBlock": 23919014,
-      "values": { "$immutable": true, "version": "1.10.1" },
+      "values": {
+        "$immutable": true,
+        "upgradeSafeFallbackOwner": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+        "upgradeSafeLivenessResponsePeriod": 2592000,
+        "version": "1.10.1"
+      },
+      "fieldMeta": {
+        "upgradeSafeLivenessResponsePeriod": { "severity": "HIGH" },
+        "upgradeSafeFallbackOwner": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": "SaferSafes"
       }
@@ -1650,6 +1672,7 @@
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xd56045E68956FCe2576E680c95a4750cf8241f79": "ProxyAdmin"
       }
@@ -1681,6 +1704,7 @@
         "$immutable": true,
         "owner": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },
@@ -1784,8 +1808,9 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "blacklistedGames": { "severity": "HIGH" }
+        "RespectedGameString": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
+        "blacklistedGames": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2": "Proxy",
@@ -1855,14 +1880,14 @@
         "$upgradeCount": 2,
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
-        "l1CrossDomainMessenger": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
+        "l1CrossDomainMessenger": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621347",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
-        "otherMessenger": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
+        "OTHER_MESSENGER": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
+        "otherMessenger": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "paused": false,
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
@@ -1877,7 +1902,8 @@
       "implementationNames": {
         "ink:0x4200000000000000000000000000000000000007": "Proxy",
         "ink:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96": "L2CrossDomainMessenger"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "GasPriceOracle",
@@ -1965,11 +1991,11 @@
           ]
         ],
         "$upgradeCount": 2,
-        "l1TokenBridge": "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0",
+        "l1TokenBridge": "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0",
         "messenger": "ink:0x4200000000000000000000000000000000000007",
         "MESSENGER": "ink:0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0",
-        "otherBridge": "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0",
+        "OTHER_BRIDGE": "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0",
+        "otherBridge": "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0",
         "paused": false,
         "proxyAdmin": "ink:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
@@ -1979,7 +2005,8 @@
       "implementationNames": {
         "ink:0x4200000000000000000000000000000000000010": "Proxy",
         "ink:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1": "L2StandardBridge"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "SequencerFeeVault",
@@ -2328,7 +2355,7 @@
         "owner": "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
         "version": "1.0.0"
       },
-      "fieldMeta": { "addressManager": { "severity": "HIGH" } },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "ink:0x4200000000000000000000000000000000000018": "Proxy",
         "ink:0x893c2CEEb71D38514daF67728d3Ff1b213FC4B5F": "L2ProxyAdmin"
@@ -2501,18 +2528,8 @@
       "proxyType": "EOA"
     },
     {
-      "address": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "SuperchainProxyAdminOwner_L2Alias",
       "address": "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -4133,10 +4150,10 @@
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xd82fdc4cca4e4480df42ce9cc0c0bf9b71ade8dbc73dd8c46519a0d37c93735c",
+    "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L2ProxyAdmin_karst": "0x70d00d08dd524425b6612b13b16781498c13da3b7e3fac0a5ccd63078eeb5644",
-    "opstack/Layer2/L2StandardBridge": "0x43f9de36085fd31eaccaa3249b87da157440022278c664ab18e5a9d4fa8174af",
+    "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -4148,10 +4165,10 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SuperFaultDisputeGame": "0xe700487053704fb924edde231c30f9f105c368a6cc367633f117d07672f2fd74",
     "opstack/SuperPermissionedDisputeGame": "0xa146247ae93d5a2d8d731791462cda682c3558bd36eceef57df055c8d7cfdfd9",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 26097852, "ink": 57363941 },
-  "permissionsConfigHash": "0xd69698c3f40a689e4c19f71253945c349c824205612f4c006722f4a20e6c5bea",
+  "permissionsConfigHash": "0x5a939d173c3f4cf84a2fb13b7186b4651f36eb2ed70162b10975d12984421e20",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [

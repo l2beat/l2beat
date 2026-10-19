@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x928859b37ec2368534e76e7b6fbdaaec499e92f4
+
+# Diff at Fri, 16 Oct 2026 09:37:51 GMT:
+
+- id: 70367984
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1745000255
+- current timestamp: 1745000255
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745000255 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x9e48d6bBca781c23392Ec459BfB3657C40a794A8) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A) [opstack/OptimismPortalAdminWithdraw] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled.
+      fieldMeta:
++        {"guardian":{"severity":"MEDIUM"},"GUARDIAN":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x3df55caab92c9313abfef9477a1f713f96984323
 
 # Diff at Wed, 23 Sep 2026 05:50:38 GMT:

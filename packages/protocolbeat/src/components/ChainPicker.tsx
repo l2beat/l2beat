@@ -106,7 +106,7 @@ function ChainList(props: {
           setQuery(e.target.value)
           setHighlighted(0)
         }}
-        className="border-coffee-600 border-b bg-transparent px-3 py-2 text-sm placeholder:text-coffee-400/60 focus:outline-none"
+        className="border-coffee-600 border-b bg-transparent px-3 py-2 text-sm placeholder:text-coffee-400/60 focus:outline-hidden"
       />
       <ul
         ref={listRef}

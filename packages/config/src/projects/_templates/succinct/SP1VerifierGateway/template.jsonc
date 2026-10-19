@@ -2,9 +2,11 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
   "fields": {
+    // Not HIGH: a freeze only removes a verifier, like a kill switch. New
+    // routes reset the clock through allVerifiers.
     "activeVerifiers": {
       "description": "Verifiers that are routed to by their selector and not frozen.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "event",
         "select": ["selector", "verifier"],
@@ -16,8 +18,10 @@
         }
       }
     },
+    // Only grows, on RouteAdded: a new route is a new verifier.
     "allVerifiers": {
       "description": "All verifiers that were ever routed to by this gateway.",
+      "severity": "HIGH",
       "handler": {
         "ignoreRelative": true,
         "type": "event",
@@ -27,8 +31,9 @@
         }
       }
     },
+    // role holder: mechanism changes are reviewed events
     "owner": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

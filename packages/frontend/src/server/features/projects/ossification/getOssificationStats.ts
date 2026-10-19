@@ -20,9 +20,8 @@ export interface OssificationStats {
   score: number
   isUnverified: boolean
   criticalChangesPerYear: number
-  clusteredEventCount: number
   contractCount: number
-  /** USD·years; null without a value series */
+  /** USD·years; null without a value series or with unverified contracts */
   exposure: number | null
   valueSource: OssificationValueSource | null
   /** Absent for DeFi, which has no exit window in config yet */
@@ -38,11 +37,12 @@ type OssificationExitWindow = Pick<
 interface OssificationTimeline {
   from: number
   to: number
+  /** Start of the clock, the unchanged period */
   clockStart: number
-  /** Perimeter resets inside the window, up to the clock start */
-  resets: number[]
-  /** Critical changes inside the window, up to the clock start */
-  criticalChanges: number
+  /** Start of the first clock, possibly before `from` */
+  genesis: number
+  /** 24h-clustered critical changes inside the window */
+  criticalChanges: number[]
   /** Evenly spread from `from` to `to`, see sampleTimeline */
   values: (number | null)[] | null
 }
@@ -57,11 +57,8 @@ export async function getOssificationStats(
   ossification: OssificationResult,
   now: UnixTime,
 ): Promise<OssificationStats> {
-  const clockStart = ossification.projectClockStart
+  const clockStart = ossification.clockStart
   const from = now - TIMELINE_WINDOW
-  // Later ones belong to contracts that have left the perimeter.
-  const isInTimeline = (timestamp: number) =>
-    timestamp >= from && timestamp <= clockStart
   // One read covers both the exposure since the clock start and the timeline.
   const series = await getOssificationSeries(
     project,
@@ -73,11 +70,10 @@ export async function getOssificationStats(
     score: ossification.score,
     isUnverified,
     criticalChangesPerYear: ossification.criticalChangesPerYear,
-    clusteredEventCount: ossification.clusteredEventCount,
     contractCount: ossification.contracts.length,
-    exposure: isUnverified
-      ? 0
-      : series
+    // Unaudited code has withstood nothing we can vouch for.
+    exposure:
+      series && !isUnverified
         ? calculateExposure(series.points, clockStart, now)
         : null,
     valueSource: series?.source ?? null,
@@ -86,8 +82,8 @@ export async function getOssificationStats(
       from,
       to: now,
       clockStart,
-      resets: ossification.perimeterResets.filter(isInTimeline),
-      criticalChanges: ossification.criticalChanges.filter(isInTimeline).length,
+      genesis: ossification.genesis,
+      criticalChanges: ossification.criticalChanges.filter((t) => t >= from),
       values: series ? sampleTimeline(series.points, from, now) : null,
     },
   }

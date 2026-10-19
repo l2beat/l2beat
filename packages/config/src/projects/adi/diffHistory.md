@@ -1,3 +1,194 @@
+Generated with discovered.json: 0xe361022bdc8aa96fede5cd48c76f946be45d8a20
+
+# Diff at Fri, 16 Oct 2026 09:21:34 GMT:
+
+- id: 470fb271
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1792059502
+- current timestamp: 1792059502
+
+## Description
+
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792059502 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getAdmin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (eth:0x0A0F8912162Ff83A036883dbaDA42efF647a3065) [shared-zk-stack/L1NativeTokenVault] {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9 act through it.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xB272B188855128c10a933Edb62CC64c22B1f3754 act through it.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x34f56Ba641aC59E897c6179ffeCAe9769fbfC90C) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1Nullifier (eth:0x5E5a72077dFB354Dfe61200b8f31fa491F9B9Cea) [shared-zk-stack/L1Nullifier] {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract BridgeHub (eth:0x7a38c18a229Ef8a0AE7104Ba272A46280f2d59Cb) [shared-zk-stack/BridgeHub] {
+    +++ description: [FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. The main registry (hub) for chain contracts (supports more than ADI chain) and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      fieldMeta.admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8140aBB60c9AfB5241D90af948Cfa7644b2D3217) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L1ChainAssetHandler (eth:0x924E0145347243a94C5C69e372Ca52c77f8e6CF1) [shared-zk-stack/ChainAssetHandler] {
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1AssetRouter (eth:0xf25227EFAD2046d19777A4CA540b5C016Df7fe7A) [shared-zk-stack/L1AssetRouter] {
+    +++ description: Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0x2044f28bdbb037a94e790db36c6988275eb38730
+
+# Diff at Thu, 15 Oct 2026 10:19:41 GMT:
+
+- id: 3478b789
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cca6ff908b0e5396df35a6f7980a9d0244c0366e block: 1789042187
+- current timestamp: 1792059502
+
+## Description
+
+The zksynceraValidators handler now decodes the diamond initialize signature without blobVersionedHashRetriever, so the ValidatorTimelock shows up as validator of the diamond.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789042187 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.validators.0:
++        "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","role":".validators"}]
+    }
+```
+
+Generated with discovered.json: 0x6cc18d56b8804d9a45117971241ac2b38bb0a07b
+
+# Diff at Sun, 04 Oct 2026 05:55:30 GMT:
+
+- id: 323a23c2
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1789042187
+- current timestamp: 1789042187
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789042187 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getProtocolVersion.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPermanentRollupString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9 act through it.
+      fieldMeta.tokenMultiplierSetter:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xB272B188855128c10a933Edb62CC64c22B1f3754 act through it.
+      fieldMeta.tokenMultiplierSetter:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xc76cfb7b248471e047464fc561f3aae0ddc7f220
 
 # Diff at Wed, 23 Sep 2026 05:45:09 GMT:

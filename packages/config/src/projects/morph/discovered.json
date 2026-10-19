@@ -1,7 +1,7 @@
 {
   "name": "morph",
   "timestamp": 1790851283,
-  "configHash": "0xf07a36f1b491a8376d4ad3e89896e4d07aef718b80cbfb64f59fef943ce1c550",
+  "configHash": "0xaa5554055d00a20e9290f7e7b8f32d7e1a06c323c8a9fb56f82221ee2b5ea422",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -34,7 +34,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Staking registry of the L2 sequencer set. It relays staker additions and removals to the L2 Staking contract through the messenger, which determines the L2 block-producing sequencer set. The Rollup does not reference it: L1 batch submission and slashing are authorized through the Submitter contract, so the stake, challenge-deposit and reward parameters here are not enforced by the Rollup.",
-      "critical": true,
+      "critical": { "untilTimestamp": 1790063675 },
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307471,
       "sinceBlock": 20996843,
@@ -83,14 +83,12 @@
       "fieldMeta": {
         "rewardPercentage": { "severity": "HIGH" },
         "messenger": { "severity": "HIGH" },
-        "OTHER_STAKING": { "severity": "HIGH" },
-        "MESSENGER": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "rollupContract": { "severity": "HIGH" },
         "stakingValue": { "severity": "HIGH" },
         "challengeDeposit": { "severity": "HIGH" },
         "withdrawalLockBlocks": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7": "TransparentUpgradeableProxy",
@@ -147,6 +145,10 @@
         "messenger": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": "TransparentUpgradeableProxy",
@@ -206,6 +208,8 @@
         "withdrawPaused": false
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "withdrawPaused": { "severity": "MEDIUM" },
         "depositPaused": { "severity": "MEDIUM" },
         "circleCaller": { "severity": "HIGH" }
@@ -232,6 +236,7 @@
         "$immutable": true,
         "owner": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": "ProxyAdmin"
       }
@@ -304,7 +309,9 @@
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
       "fieldMeta": {
-        "maxGasLimit": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
+        "maxGasLimit": { "severity": "MEDIUM" },
         "whitelistChecker": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -354,6 +361,10 @@
         "messenger": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8": "TransparentUpgradeableProxy",
@@ -468,10 +479,16 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
+        "defaultAdminAC": { "severity": "MEDIUM" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
         "Executor": {
+          "severity": "MEDIUM",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
-        }
+        },
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530": "TransparentUpgradeableProxy",
@@ -518,7 +535,10 @@
         "rollup": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "verifierVersions": [1, 2]
       },
-      "fieldMeta": { "latestVerifier": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "latestVerifier": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1": "MultipleVersionRollupVerifier"
       }
@@ -633,9 +653,11 @@
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
       },
       "fieldMeta": {
-        "erc20Gateways": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "erc20Gateways": { "severity": "MEDIUM" },
         "ethGateway": { "severity": "HIGH" },
-        "defaultERC20Gateway": { "severity": "HIGH" }
+        "defaultERC20Gateway": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "TransparentUpgradeableProxy",
@@ -790,7 +812,7 @@
       },
       "fieldMeta": {
         "rollupDelayPeriod": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "verifier": { "severity": "HIGH" },
         "finalizationPeriodSeconds": { "severity": "HIGH" },
         "proofWindow": { "severity": "HIGH" },
@@ -800,7 +822,7 @@
         },
         "messageQueue": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "getMinDelayFormatted": {
           "severity": "HIGH",
           "description": "commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now"
@@ -839,6 +861,7 @@
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17": "ProxyAdmin"
       }
@@ -878,6 +901,7 @@
       ],
       "proxyType": "immutable",
       "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
+      "critical": { "sinceTimestamp": 1779354407 },
       "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
       "sinceTimestamp": 1779335891,
       "sinceBlock": 25141074,
@@ -944,6 +968,8 @@
         }
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "tokenMapping": {
           "severity": "HIGH",
           "description": "L1-to-L2 token mapping used to validate custom-token deposits and withdrawals."
@@ -1008,7 +1034,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1729764539 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x05e1d4694041aF987Af6F8402D902686018E2136",
       "sinceTimestamp": 1729598531,
@@ -1030,10 +1055,6 @@
         "multisigThreshold": "3 of 5 (60%)",
         "nonce": 82,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": "SafeProxy",
@@ -1122,8 +1143,9 @@
         "paused": false
       },
       "fieldMeta": {
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "feeVault": {
-          "severity": "HIGH",
           "description": "Recipient of fees charged for forced transactions."
         },
         "paused": {
@@ -1189,6 +1211,8 @@
         "withdrawPaused": false
       },
       "fieldMeta": {
+        "owner": { "severity": "MEDIUM" },
+        "$admin": { "severity": "MEDIUM" },
         "withdrawPaused": { "severity": "MEDIUM" },
         "depositPaused": { "severity": "MEDIUM" },
         "circleCaller": { "severity": "HIGH" }
@@ -1256,12 +1280,10 @@
         "xDomainMessageSender": "eth:0x000000000000000000000000000000000000dEaD"
       },
       "fieldMeta": {
-        "maxReplayTimes": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "rollup": { "severity": "HIGH" },
-        "feeVault": {
-          "severity": "HIGH",
-          "description": "Recipient of L1-to-L2 message fees."
-        },
+        "feeVault": { "description": "Recipient of L1-to-L2 message fees." },
         "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
@@ -1304,7 +1326,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": { "sinceTimestamp": 1737455087 },
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3",
       "sinceTimestamp": 1730976923,
@@ -1327,10 +1348,6 @@
         "multisigThreshold": "4 of 6 (67%)",
         "nonce": 28,
         "VERSION": "1.4.1"
-      },
-      "fieldMeta": {
-        "GnosisSafe_modules": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": "SafeProxy",
@@ -1383,8 +1400,8 @@
         "challengeDeposit": { "severity": "HIGH" },
         "rewardPercentage": { "severity": "HIGH" },
         "rollupContract": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xf2d50000C994565A4742059802fdbb0BEE1CBef6": "TransparentUpgradeableProxy",
@@ -1425,6 +1442,7 @@
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "whitelisted": ["eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7"]
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": "Whitelist"
       }
@@ -2210,15 +2228,15 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "morph/EnforcedTxGateway": "0x37699e8c11b3ed60504c6a044cd8f58173d704817714bcebca46e9d9f2b5992d",
-    "morph/L1CrossDomainMessenger": "0xf66ddf5ce5fa8c5b0f18919ee7ae17e403572d3bcfbfe68d909663db409bcef1",
-    "morph/L1CustomERC20Gateway": "0x60abd9f42109eff1820df39adc6f9adf37da3029ba43f9004a0d693afe0095e8",
-    "morph/L1ETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "morph/L1GatewayRouter": "0x031336dd53fa5ca6d56bda69789d3a5edc31428b6c350f5d2a04a85065cf0082",
-    "morph/L1MessageQueueWithGasPriceOracle": "0xe06fb1811818c14539933654af4001ae8f74f302c402c5774c67cadf9e771754",
-    "morph/L1Staking": "0x249f873d18898ec0a956947154c9d1aa3ffc4d2e9af19b72b2cf91b622107a7f",
-    "morph/L1StandardERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "morph/L1USDCGateway": "0x5faf61712035a74283bf02017d022d39fe950f5c328c174dcd60a1d081a79a80",
+    "morph/EnforcedTxGateway": "0x8ce6cf32c80ca3f330c3e6dc852adec7d198fdeba87dc02dfd1ba76efe26f30a",
+    "morph/L1CrossDomainMessenger": "0x60b8f98f4c87aeac04aa9ff9a42a57ff5d75bfca47ffcab4281e09627e6e5661",
+    "morph/L1CustomERC20Gateway": "0xe930ea73c820f46be2b671a51d8883d359fa3d9c9a560dcdfbbf224b524aa672",
+    "morph/L1ETHGateway": "0x1cd118d276f3b369b3a2d9d4d533b3b40dd53694347be69d78ea8f7202858537",
+    "morph/L1GatewayRouter": "0x4a088edec7387c0163da479037445494df7841c17224601deaee08a1bc2aef74",
+    "morph/L1MessageQueueWithGasPriceOracle": "0x9e691b2c031705d98eab57ab6681155cd3b13da949a75ed7d5193430defa0748",
+    "morph/L1Staking": "0xdce8958f85e0c333831f4b8490e6ab461e3d71bd66d6ba02548df0cdbb882e95",
+    "morph/L1StandardERC20Gateway": "0x1cd118d276f3b369b3a2d9d4d533b3b40dd53694347be69d78ea8f7202858537",
+    "morph/L1USDCGateway": "0xbd6a9233099340a7b1591183df5bd54e2611736dad7bd7f8e2f8dfa021d7af61",
     "morph/MultipleVersionRollupVerifier": "0x18c849e277165d1e348f720058cc03de059801204ee5e7f09bb2a9de7fac1d8c",
     "morph/Rollup": "0x83006bbc6dde7d81dc75d1d565f36ca9fb7ed17e3be90a44e620315c59caef0e",
     "morph/Submitter": "0xa0126b53b7bb00dd8892d83986d54516cb6051c024366115390d43961e5c26a8",

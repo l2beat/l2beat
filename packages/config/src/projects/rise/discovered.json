@@ -1,6 +1,6 @@
 {
   "name": "rise",
-  "timestamp": 1785249452,
+  "timestamp": 1790947041,
   "configHash": "0x374a009191527785f3d74b365ecb6cb8186eb942799dcf3dd036447652f735f0",
   "entries": [
     {
@@ -85,7 +85,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -260,6 +260,7 @@
         "isUpgrading": false,
         "owner": "eth:0x9196464e3F828A50233C20732fa6898F4317002c"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x4ebc046b1cfc12659A19E124b0ea8a382777E542": "ProxyAdmin"
       }
@@ -301,13 +302,13 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0xF7A67c5e48D05b9C1258B9D9Af93B321a6354abF",
+        "anchorGame": "eth:0xB64d53C4B763287e25a5eD86aB69CAD89d3E881D",
         "disputeGameFactory": "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3",
         "disputeGameFinalityDelaySeconds": 302400,
         "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
-          "0xbb7c16550138626bf019e2a47f2e9299195b7d1421fdacbdff8d51bca2b13816",
-          17146900
+          "0x6715b72b96686913b108f5fd7193e9fa2d3b5e54a7fde6e64094fd1589c1af89",
+          22176100
         ],
         "initVersion": 1,
         "paused": false,
@@ -321,12 +322,11 @@
         "version": "3.5.0"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "disputeGameFactory": { "severity": "HIGH" },
-        "systemConfig": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "respectedGameType": { "severity": "HIGH" },
+        "RespectedGameString": { "severity": "HIGH" },
         "disputeGameFinalityDelaySeconds_fmt": {
           "description": "Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals."
         }
@@ -453,7 +453,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xBf60dBc272833cD25f0426983c3175C32C8E5A7a",
-        "gameCount": 9438,
+        "gameCount": 11021,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x2e7758aAD2B6D3D1Fd2C937D9B322378fC644633",
@@ -476,8 +476,8 @@
         "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
@@ -589,7 +589,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 617545,
-          "prevBlockNum": 25631368
+          "prevBlockNum": 26100057
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -795,7 +795,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620506",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621193",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -842,6 +842,7 @@
         "isUpgrading": false,
         "owner": "eth:0x9196464e3F828A50233C20732fa6898F4317002c"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xCf32d8c4Be30cA330c1150916A71A651bADd70d5": "ProxyAdmin"
       }
@@ -882,7 +883,8 @@
         "disputeGameFactory": "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3",
         "eip1559Denominator": 1,
         "eip1559Elasticity": 1,
-        "gasLimit": 1500000000,
+        "enabledFeatures": [],
+        "gasLimit": 2250000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0xC0de1d9B1cD2Caf782355C66a6A8e5948e63c9c6",
           "l1ERC721Bridge": "eth:0x01A6274B9607ac024e8c191E491d0b25ad14c217",
@@ -942,10 +944,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xD3CAf2A473dBB5bc2E8FB7F328e01AB9B726a24f": "Proxy",
@@ -971,6 +979,7 @@
         "$immutable": true,
         "owner": "eth:0xCf32d8c4Be30cA330c1150916A71A651bADd70d5"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xdE3a0F0122f702e018e04C6D0824B724E8Be8e16": "AddressManager"
       },
@@ -1080,7 +1089,7 @@
         "DISPUTE_GAME_FACTORY": "eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3",
         "FALLBACK_TIMEOUT": 1209600,
         "FALLBACK_TIMEOUT_fmt": "14d",
-        "getLastProposalTimestamp": 1785246983,
+        "getLastProposalTimestamp": 1790945963,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9196464e3F828A50233C20732fa6898F4317002c",
         "proposers": ["eth:0xa069F839728264E2EADa60d98Bb303859de154bA"]
@@ -1090,15 +1099,15 @@
           "description": "Formatted fallback timeout after which proposing becomes permissionless."
         },
         "owner": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Address that can update the proposer and challenger allowlists and transfer ownership."
         },
         "challengers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Addresses allowed to challenge dispute games."
         },
         "proposers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Addresses allowed to propose dispute games."
         }
       },
@@ -1985,7 +1994,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13_opsuccinct": "0x9acdb60fbb0da6e8878bc00d658e692486e9f08b6a1cb2c654655e427a9744bd",
+    "opstack/AnchorStateRegistry_post13_opsuccinct": "0x38281242097d8213ff3effa91070b14c9916bbf03f358eed826fde878c0a214b",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DisputeGameFactory": "0xc7fc61755f1890ab4865a9ed9c9fa80ff6360d23cda9433fd6313aadf9a7f141",
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
@@ -1997,14 +2006,14 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba",
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
     "succinct/OPSuccinct/AccessManager": "0x4dfa9533d437cf2efb76347ce42e28eaa3a388c509f141d483bf9c9ab7c799b0",
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
-  "usedBlockNumbers": { "ethereum": 25631963 },
+  "usedBlockNumbers": { "ethereum": 26104882 },
   "permissionsConfigHash": "0x63b6dd2ed4f8a8096b2a1b39fff9e07d57a9f258813dc0a41af4831dd594c0fb",
   "modelledAgainst": {
-    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
+    "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"
   },
   "permissions": {
     "eth:0x03B85FAa108C10F6EFfec1d91954DE99dA32FB46": {

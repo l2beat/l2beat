@@ -5,11 +5,13 @@
   "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits. It checkpoints bond ownership so that committee sortition admits at most one operator key per bond owner, and applies an owner-set admission policy (cooldown and pause) to future committees.",
   "ignoreMethods": ["admissionPolicyAt"],
   "ignoreInWatchMode": [
+    "activeOperators",
     "bondOwners",
     "bondingAssetConfigurationVersion",
     "ciphernodeBonds",
     "committeeOwnerCapacity",
     "eligibilityConfigurationVersion",
+    "numActiveOperators",
     "numRegisteredOperators",
     "reservedSlashedTicketBalance",
     "slashedCiphernodeBond",

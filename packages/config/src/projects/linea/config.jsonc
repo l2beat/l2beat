@@ -18,24 +18,20 @@
       // Actor shell: proposer, executor and canceller on the L2Timelock.
       "canActIndependently": true
     },
-    // active PLONK verifiers referenced by LineaRollup.verifiers: a code change lets forged proofs finalize arbitrary state and drain the bridge
-    "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": {
+    // active PLONK verifiers referenced by LineaRollup.verifiers (proof types 1 and 0): a code change lets forged proofs finalize arbitrary state and drain the bridge.
+    // Replaced verifiers drop out of discovery and need no override: every rotation is a HIGH `verifiers` change (reviewed events) on LineaRollup.
+    "eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532": {
       "critical": true
     },
     "eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F": {
       "critical": true
     },
-    // former proof-type-0 verifier, replaced by 0xAFF2... in tx 0xbe5ba386... (VerifierAddressChanged, 2026-09-04)
-    "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc": {
-      "critical": { "untilTimestamp": 1788510683 }
-    },
-    // 90-day module on the secondary proposer Safe; its delay and authority
-    // path directly constrain L1 upgrades.
-    "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": {
-      "critical": true
-    },
-    // Immutable public forwarding mechanism used for the six-month liveness
-    // recovery path in LineaRollup.
+    // Not critical: the Zodiac Delay eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436 only lets the
+    // Security Council act as Linea Multisig 2 after 90 days. Multisig 2 is a PROPOSER on the 0s
+    // Timelock whose only EXECUTOR is the Security Council itself, and its TokenBridge roles are a
+    // subset of the Council's, so the module neither adds nor constrains any upgrade or custody path.
+    // Immutable public forwarding mechanism: LineaRollup.livenessRecoveryOperator, which gets
+    // OPERATOR_ROLE after six months without finalization (permissionless liveness recovery).
     "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D": {
       "critical": true
     },
@@ -62,6 +58,20 @@
     // beacon controlling the BridgedToken implementation of all canonical bridged tokens on Linea
     "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0": {
       "critical": true
+    },
+    // old canonical USDC bridge and its ProxyAdmins, governed on both sides, until the
+    // native USDC migration drained the L1 escrow (block 22075113)
+    "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": {
+      "critical": { "untilTimestamp": 1742317187 }
+    },
+    "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": {
+      "critical": { "untilTimestamp": 1742317187 }
+    },
+    "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A": {
+      "critical": { "untilTimestamp": 1742317187 }
+    },
+    "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c": {
+      "critical": { "untilTimestamp": 1742317187 }
     }
   }
 }

@@ -7,7 +7,7 @@
   "fields": {
     "owner": {
       "description": "Current governance-controlled minter of the RAIL token.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "type": "PERMISSION",
       "permissions": [
         {

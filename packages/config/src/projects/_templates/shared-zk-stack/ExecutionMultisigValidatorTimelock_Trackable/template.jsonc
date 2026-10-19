@@ -9,6 +9,7 @@
       "severity": "HIGH"
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -141,6 +142,7 @@
     },
     "threshold": { "severity": "HIGH" },
     "$threshold": {
+      "severity": "HIGH",
       "copy": "threshold"
     }
   }

@@ -8,20 +8,17 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { anonymitySetCoverageNote } from '~/components/projects/sections/sectionCopy'
 import { UserIcon } from '~/icons/User'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSummaries'
-import {
-  getAnonymitySetDescription,
-  getAnonymitySetSteps,
-  getAnonymitySetSyncingNote,
-} from './anonymitySetTooltip'
+import { getAnonymitySetSyncingNote } from './anonymitySetTooltip'
 
 interface Props {
   anonymitySet: PrivacyAnonymitySetSummary
-  projectName: string
 }
 
-export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
+export function AnonymitySetCell({ anonymitySet }: Props) {
   if (anonymitySet.status === 'syncing') {
     return (
       <Badge type="gray" size="small">
@@ -56,16 +53,19 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
           </button>
         </TooltipTrigger>
         <TooltipContent className="max-w-[320px]">
-          The anonymity set is too small and exact data fetching is not enabled
-          yet.
+          Too few users to track exactly.
         </TooltipContent>
       </Tooltip>
     )
   }
 
+  const { series } = anonymitySet
   const displayValue = formatInteger(anonymitySet.value)
-  const steps = getAnonymitySetSteps(anonymitySet, projectName)
   const syncingNote = getAnonymitySetSyncingNote(anonymitySet)
+  const coverageNote = anonymitySetCoverageNote(
+    anonymitySet.coverage,
+    ANONYMITY_SET_WINDOW_DAYS,
+  )
 
   return (
     <Tooltip>
@@ -73,23 +73,30 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
         <button
           type="button"
           className="inline-flex flex-col items-end justify-center text-right"
-          aria-label={`${displayValue}, ${anonymitySet.label}`}
+          aria-label={
+            series.headlineLabel === undefined
+              ? displayValue
+              : `${displayValue}, ${series.headlineLabel}`
+          }
         >
           <span className="font-medium text-xs leading-[15px] md:text-sm md:leading-[1.2]">
             {displayValue}
           </span>
-          <span className="whitespace-pre-line text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
-            {anonymitySet.label}
-          </span>
+          {series.headlineLabel !== undefined && (
+            <span className="whitespace-pre-line text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
+              {series.headlineLabel}
+            </span>
+          )}
         </button>
       </TooltipTrigger>
       <TooltipContent className="max-w-[380px]">
         <span className="font-medium text-base">{displayValue}</span>
-        <p className="mt-1 text-primary">
-          {getAnonymitySetDescription(anonymitySet)}
-        </p>
+        <p className="mt-1 text-primary">{series.description}</p>
         {syncingNote !== undefined && (
           <p className="mt-2 text-secondary">{syncingNote}</p>
+        )}
+        {coverageNote !== undefined && (
+          <p className="mt-2 text-secondary">{coverageNote}</p>
         )}
         <Callout
           className="mt-2 px-3 py-2"
@@ -102,17 +109,14 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
                   How to mix with {displayValue} users:
                 </span>
                 <ol className="ml-4 list-decimal space-y-1">
-                  {steps.map((step) => (
+                  {series.steps.map((step) => (
                     <li key={step}>{step}</li>
                   ))}
                 </ol>
               </div>
               <p className="border-purple-450/30 border-t pt-2">
-                Practical privacy also depends on the timing of deposits and
-                withdrawals, the underlying network and browser used to interact
-                with the frontend (if used), and the RPC providers used to send
-                transactions and query public blockchain state. Users are
-                advised to research OPSEC best practices.
+                Network, browser and RPC choices matter too. See the onchain
+                privacy best practices.
               </p>
             </div>
           }

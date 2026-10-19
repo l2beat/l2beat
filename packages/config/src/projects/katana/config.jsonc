@@ -119,20 +119,31 @@
       "ignoreDiscovery": true
     },
     // ---- Ossification perimeter ----
-    // Katana's OP-stack deployment has asset bridging disabled: custody and
-    // messaging run through the Agglayer shared bridge, and state validity is
-    // enforced by the AggchainFEP + AgglayerManager/Gateway pessimistic-proof
-    // path. The OP dispute-game withdrawal stack (games, ASR, DelayedWETH,
-    // MIPS/PreimageOracle, messengers, token bridges) secures nothing here, so
-    // the critical flags inherited from the shared opstack templates are
-    // removed. The portal stays critical as the forced-transaction
-    // (self-sequencing) entry, and the SystemConfig governs derivation.
-    // TODO(ossification): the reviewed perimeter excluded the OP dispute-game/bridging stack
-    // (AnchorStateRegistry eth:0xA7A26BbA..., AddressManager eth:0xaA8a6256..., DisputeGameFactory
-    // eth:0xb41151Bf..., L1StandardBridge eth:0x6463dEE3..., L1CrossDomainMessenger eth:0x1fb8cdFc...,
-    // L2CrossDomainMessenger katana:0x42..07, L2StandardBridge katana:0x42..10 and the L1 token escrows).
-    // The critical flag cannot be switched off per address any more, so these contracts inherit the
-    // opstack template flags for now (conservative: extra resets of the ossification clock).
+    // Custody and messaging run through the Agglayer shared bridge (AgglayerBridge in
+    // shared-polygon-cdk, AgglayerBridgeL2 + L2 GER manager here). State validity is the
+    // AggchainFEP (OP Succinct) proof wrapped in the pessimistic proof that the
+    // AgglayerManager verifies through the AgglayerGateway and its SP1 verifiers (module).
+    // The forked OptimismPortal2 rejects ETH deposits and direct L1StandardBridge /
+    // L1ERC721Bridge deposits. The L2ToL1MessagePasser predeploy reverted every
+    // withdrawal ("Withdrawals are disabled", L2 upgrade 0x8ff7fb4b, 2025-05-08 23:42)
+    // until the Karst L2 hardfork (2026-09-23 16:00:01 UTC) replaced it with the standard
+    // implementation: withdrawals can be initiated on L2 again, but the DisputeGameFactory
+    // has created no games, so none can be proven on L1. The portal, L1StandardBridge,
+    // L1CrossDomainMessenger and DelayedWETH hold 0 ETH, and no token was ever sent to
+    // the L1StandardBridge. The OP dispute-game / messenger / token
+    // bridge stack therefore protects no assets today, but it stays critical through the
+    // shared opstack templates: the critical flag has no per-address "false", ERC20
+    // deposits through L1StandardBridge -> L1CrossDomainMessenger are not blocked by the
+    // portal check, and OPCM upgrades swapped the portal fork for other versions before
+    // (all deposits were disabled from 2025-05-08 23:31 until the 2026-05-22 upgrade
+    // 0x46d8e0a3 re-enabled zero-value forced transactions). Conservative and without
+    // effect on the score: every L1 change to this stack so far shipped in the same OPCM
+    // transaction as a portal / SystemConfig upgrade, and the Karst replacement of its L2
+    // predeploys falls within 24 hours of an AggchainFEP config change.
+    // The vault-bridge tokens (vbETH, vbUSDC, vbUSDT, vbWBTC, vbUSDS) hold the backing of
+    // the vb* assets on Katana and are upgradeable by Katana vaultBridge multisigs, so they
+    // and their ProxyAdmins are critical (escrow rule). Their MigrationManager is not: it
+    // holds no funds and each vbToken checks every completeMigration against received assets.
     // SuperchainConfig fork: its guardian can pause the portal and with it the
     // forced-transaction path (the only censorship-resistance mechanism).
     "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": {
@@ -160,6 +171,22 @@
     // ProxyAdmin (L2): can upgrade the AgglayerBridgeL2 and the L2 GER manager.
     "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
       "critical": true
+    },
+    // ProxyAdmins of the vault-bridge tokens.
+    "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951": {
+      "critical": true // vbETH
+    },
+    "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30": {
+      "critical": true // vbUSDC
+    },
+    "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010": {
+      "critical": true // vbUSDT
+    },
+    "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69": {
+      "critical": true // vbWBTC
+    },
+    "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832": {
+      "critical": true // vbUSDS
     },
     "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666": {
       "fields": {

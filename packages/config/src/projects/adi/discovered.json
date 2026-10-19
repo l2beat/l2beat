@@ -1,6 +1,6 @@
 {
   "name": "adi",
-  "timestamp": 1789042187,
+  "timestamp": 1792059502,
   "configHash": "0xb7c0037bb81c1363b02ae6e551d609a25259612d1e55482208f60fcc234e49b7",
   "entries": [
     {
@@ -261,7 +261,7 @@
           "eth:0xFB630a206E6D7485cB9DFa929859E1a977F0a211",
           4
         ],
-        "getFirstUnprocessedPriorityTx": 454,
+        "getFirstUnprocessedPriorityTx": 492,
         "getL2BootloaderBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2DefaultAccountBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2EvmEmulatorBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
@@ -270,7 +270,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0xaf2583d7e08c058be4464eec38c7242fdd1effc773924fd47fcd155846b98cb6",
+        "getPriorityTreeRoot": "0xd108797c011ba2533715f23ec80fd9917caa0ea41ec85b9254722663d1bc30c2",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018882,
@@ -278,13 +278,13 @@
         "getRollupDAManager": "eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA",
         "getSemverProtocolVersion": [0, 30, 2],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 14015,
-        "getTotalBatchesExecuted": 14015,
-        "getTotalBatchesVerified": 14015,
-        "getTotalBlocksCommitted": 14015,
-        "getTotalBlocksExecuted": 14015,
-        "getTotalBlocksVerified": 14015,
-        "getTotalPriorityTxs": 454,
+        "getTotalBatchesCommitted": 15761,
+        "getTotalBatchesExecuted": 15761,
+        "getTotalBatchesVerified": 15761,
+        "getTotalBlocksCommitted": 15761,
+        "getTotalBlocksExecuted": 15761,
+        "getTotalBlocksVerified": 15761,
+        "getTotalPriorityTxs": 492,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xccbdfd7f9A8e60d0C1e79fa620205d14121e7a39",
         "getVerifierParams": {
@@ -296,7 +296,7 @@
         "isPermanentRollup": 0,
         "isPermanentRollupString": ".",
         "isPriorityQueueActive": false,
-        "validators": []
+        "validators": ["eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186"]
       },
       "fieldMeta": {
         "getL2EvmEmulatorBytecodeHash": { "severity": "HIGH" },
@@ -311,7 +311,7 @@
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
         },
-        "getAdmin": { "severity": "HIGH" },
+        "getAdmin": { "severity": "MEDIUM" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -324,6 +324,7 @@
           "severity": "HIGH",
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
+        "isPermanentRollupString": { "severity": "HIGH" },
         "getDAValidatorPair": {
           "severity": "HIGH",
           "description": "l1da, l2da"
@@ -333,7 +334,7 @@
           "description": "0 - Rollup, 1 - Validium"
         },
         "getProtocolVersion": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Protocol version, increments with each protocol upgrade."
         },
         "getVerifierParams": {
@@ -446,7 +447,7 @@
         "WETH_TOKEN": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "bridgedTokenBeacon": { "severity": "HIGH" }
       },
@@ -482,8 +483,7 @@
         ]
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "tokenMultiplierSetter": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -530,8 +530,7 @@
         "upgradeTimestamps": []
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "tokenMultiplierSetter": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -562,6 +561,7 @@
         "$immutable": true,
         "owner": "eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x34f56Ba641aC59E897c6179ffeCAe9769fbfC90C": "ProxyAdmin"
       }
@@ -689,7 +689,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "l1AssetRouter": { "severity": "HIGH" },
         "legacyBridge": { "severity": "HIGH" }
@@ -797,8 +797,8 @@
         "sharedBridge": "eth:0xf25227EFAD2046d19777A4CA540b5C016Df7fe7A"
       },
       "fieldMeta": {
-        "admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "migrationPaused": { "severity": "MEDIUM" },
         "assetRouter": { "severity": "HIGH" },
@@ -836,6 +836,7 @@
         "$immutable": true,
         "owner": "eth:0x8253F33026c49A430963FE3991441c02175bda95"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x8140aBB60c9AfB5241D90af948Cfa7644b2D3217": "ProxyAdmin"
       }
@@ -918,7 +919,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "migrationPaused": { "severity": "MEDIUM" },
         "paused": {
           "severity": "LOW",
@@ -960,7 +961,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1361,7 +1362,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "legacyBridge": { "severity": "HIGH" },
         "nativeTokenVault": { "severity": "HIGH" }
@@ -2758,8 +2759,8 @@
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
-  "usedBlockNumbers": { "ethereum": 25946896 },
-  "permissionsConfigHash": "0x57a1a932a1267dc61518955e07494a61cfac6cacc6ed521a7822e5dd3409ecc3",
+  "usedBlockNumbers": { "ethereum": 26197265 },
+  "permissionsConfigHash": "0xe821763999e3186c038db416403f6edcd8c0acae97b6982d6d458d69ce337260",
   "permissions": {
     "eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8": {
       "directlyReceivedPermissions": [
@@ -3026,6 +3027,16 @@
           "permission": "act",
           "from": "eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7",
           "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "role": ".validators"
         }
       ]
     },

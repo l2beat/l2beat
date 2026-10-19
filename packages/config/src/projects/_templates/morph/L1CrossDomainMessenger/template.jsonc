@@ -6,10 +6,10 @@
   "ignoreMethods": ["prevReplayIndex"],
   "ignoreInWatchMode": ["messageNonce"],
   "fields": {
-    "maxReplayTimes": {
-      "severity": "HIGH"
-    },
+    "$admin": { "severity": "MEDIUM" },
+    "maxReplayTimes": {},
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -22,7 +22,6 @@
       "severity": "HIGH"
     },
     "feeVault": {
-      "severity": "HIGH",
       "description": "Recipient of L1-to-L2 message fees."
     },
     "paused": {

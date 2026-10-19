@@ -52,10 +52,8 @@ export const r0ar: ScalingProject = opStackL2({
   },
   discovery,
   daTracking: [
-    getOpStackDaTracking(discovery, {
-      sinceBlock: 20912148,
-      untilBlock: 25994773, // Last blob batch before the archive cutoff.
-    }),
+    // Left open after the archive: the chain kept posting blobs.
+    getOpStackDaTracking(discovery, { sinceBlock: 20912148 }),
   ],
   genesisTimestamp,
   isNodeAvailable: 'UnderReview',

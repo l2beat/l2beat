@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x32576f2c634f40bad7e6537b5565230ec9db0609
+
+# Diff at Fri, 16 Oct 2026 05:36:49 GMT:
+
+- id: c2fd7f06
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791381140
+- current timestamp: 1791381140
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791381140 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x29b1C223be35CCB6bfBd43154528cD0B881756e9) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xf4718766a7fc8c81F788669B0985FAC03D064D29. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x73Df4a005332525fB0A0B2cf067352a9b706f233. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0xf4af50fdb3e4403cd6d8ea8c1ec9d5317d106f47
+
+# Diff at Wed, 07 Oct 2026 13:54:24 GMT:
+
+- id: 33e3ca7c
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1790850991
+- current timestamp: 1791381140
+
+## Description
+
+Liquifier: 24h timed pause by a guardian, lifted early by the operating multisig.
+
+## Watched changes
+
+```diff
+    contract Liquifier (eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F) [etherfi/Liquifier] {
+    +++ description: Accepts whitelisted liquid staking tokens and restaked positions in exchange for eETH, later unwinding them to ETH.
+      values.pausedUntil:
+-        1790894891
++        0
+    }
+```
+
 Generated with discovered.json: 0x2fbe4952c5f4bf0aef668ba8f04ae06432e1948d
 
 # Diff at Thu, 01 Oct 2026 11:10:31 GMT:

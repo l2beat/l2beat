@@ -1,26 +1,36 @@
-Privacy Pools is a non-custodial privacy protocol on Ethereum built around asset-specific pools and private withdrawals, adding compliance by whitelisting all legitimate deposits. A deposit creates a commitment, which is represented by secret and nullifier, and a later withdrawal uses a zero-knowledge proof to spend that commitment, either partially or in full, without revealing the matching deposit. Losing the secret and the nullifier would effectively mean losing deposited tokens.
+Privacy Pools lets the user withdraw ETH or ERC-20 tokens in full or in parts, to an address with no visible link to their deposit. Only deposits that 0xbow's association set provider (ASP) currently approves can leave privately. Depositors, recipients, amounts and timing stay public.
 
-Privacy Pools are controlled by a {{multisigStats}} multisig, which has authority to stop deposits and manage the deposit whitelist, but users always have an option to publicly withdraw deposited tokens, linking their withdrawal to their deposit.
+Users trust 0xbow, which runs the ASP and hosts the website, and the {{multisigStats}} multisig that can upgrade the Entrypoint without delay. The ASP can withhold approval for any deposit or remove it at any time. Exiting is permissionless: the depositing address can always ragequit its funds from the immutable pools, in public.
 
-### Privacy considerations
+### Flow
 
-Privacy Pools protocol supports [relayed withdrawals](https://etherscan.io/address/0x15e355024de1cdc74addea7ebdf98418ba5b1a2c#code#F1#L133), in which relayer processes withdrawals on user's behalf for a fee, which enables sending funds to fresh addresses.
+1. **Deposit.** You send funds through the Entrypoint, which keeps the vetting fee and adds a commitment to the asset's pool. Your address and the amount are public.
+2. **Approval.** The ASP adds the deposit's label to its approved list, usually within hours. It posts the list's root onchain and the list itself on IPFS.
+3. **Withdraw.** The website proves that you own an approved, unspent deposit without revealing which. A relayer submits the proof and pays the gas for a fee from the withdrawal. What you leave in the pool stays behind as a change note.
 
-Practical privacy also depends on the timing and amounts of deposits and withdrawals, underlying network and browser used to interact with Privacy Pools frontend (if used), RPC providers used to send transactions and query public blockchain state. The official frontend accepts a user-supplied RPC endpoint per network and scans pools whole, so with an own node no third party learns which notes are queried. Without one, all reads go through infrastructure operated by 0xbow. Users are advised to research [OPSEC best practice](/publications/privacy-best-practices).
+### Keys
 
-### Fees
+All notes derive from one recovery phrase. The website creates a random one or derives it from a signature of the user's wallet. Losing it loses the funds.
 
-Privacy Pools charges a mandatory onchain vetting fee on deposits and caps relayed-withdrawal fees per asset:
-{{feeSummary}}
+### App
 
-The vetting fees are accumulated in the Entrypoint and can be withdrawn by its owner. Relayer fees are paid on withdrawals to the selected relayer and cannot exceed the per-asset cap; relayers can still choose their own quote below that cap and users can self-relay to not pay the fee.
+The ratings assume the website at [privacypools.com](https://privacypools.com), built from [public source](https://github.com/0xbow-io/privacy-pools-website) and hosted by 0xbow. It accepts the user's own RPC endpoint and a sign-in with the recovery phrase alone. It offers two relayers, Fast Relay and Cloaked Relay, while anyone can relay onchain. Over Tor, Fast Relay often refuses the connection and the website switches to Cloaked Relay. Accounts from the older 12-word key method send their deposit labels to 0xbow while they migrate.
+
+### Exits
+
+**Ragequit.** The depositing address can take out a note's funds at any time, approved or not, directly from the pool. It reveals which deposit the funds belong to, and for a change note, the withdrawal that left it.
 
 ### Compliance
 
-The main feature of Privacy Pools is compliance, which is enforced through the ASP. Association set is a whitelist of deposits that are allowed to be withdrawn from the protocol. This set is managed in real time by the provider, which is currently a single entity. The full association set is published via IPFS, only its Merkle root is posted onchain. User's deposit could be excluded from the whitelist at any moment, in this case the user can still ragequit, i.e. publicly withdraw deposited funds and link them to their deposit.
+The ASP screens each depositing address before approving its deposit, under 0xbow's own due diligence. It may ask for a Proof of Association, which 0xbow's [separate app](https://tornado.0xbow.io) creates for Tornado Cash withdrawals. Every withdrawal must prove against the ASP's latest list, so a later list can revoke an earlier approval. A deposit without approval can leave only by ragequit.
 
-ASP is designed to vouch that withdrawals from Privacy Pools are not related to any known illegal activity.
+### Fees
+
+Deposits pay a vetting fee, which the Entrypoint owner can withdraw. Relayers set their own fee per withdrawal, within a cap per asset:
+{{feeSummary}}
+
+A withdrawal the user submits directly pays no relayer fee.
 
 ### Anonymity set
 
-The anonymity set consists of all whitelisted deposits of the same token with the value greater than the withdrawal amount. Note that only deposits approved by the ASP add to the anonymity set. To maximize the anonymity set, users are recommended to withdraw smaller amounts and deposit popular tokens.
+Each pool has its own set: the approved deposits whose notes still hold at least the withdrawn amount. Deposits the ASP has not approved never count. Smaller withdrawals from larger pools hide among more deposits.

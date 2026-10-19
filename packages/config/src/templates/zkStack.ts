@@ -51,7 +51,6 @@ import type {
   ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectTechnologyChoice,
-  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -125,10 +124,7 @@ export interface ZkStackConfigCommon {
   daAttestedByIndependentParty?: boolean
   daVerifierSecureOnL1?: boolean
   daVerifier7DayExitWindow?: boolean
-  daVerifier30DayExitWindow?: boolean
   daCommitteeDecentralized?: boolean
-  /** Override for the static economic-security check derived from the DA layer. */
-  daMechanismEconomicSecurity?: boolean
   daVerifierLink?: string
   proverSourceLink?: string
   securityCouncilReference?: string
@@ -138,10 +134,6 @@ export interface ZkStackConfigCommon {
   stage1Principle?: boolean | 'UnderReview'
   /** Stage 1: is the chain's own Security Council / ChainAdmin properly set up? */
   hasProperSecurityCouncil?: boolean
-}
-
-export type Upgradeability = {
-  upgradableBy?: ProjectUpgradeableActor[]
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
@@ -199,10 +191,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       diamondContract.name ?? 'ZKsync',
       'getSettlementLayer',
     ) === 'eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9'
-  let executionDelayS = templateVars.discovery.getContractValue<number>(
-    'ValidatorTimelock',
-    'executionDelay',
-  )
+  let executionDelayS = getEffectiveExecutionDelay(templateVars.discovery)
   if (settlesOnGateway) {
     // add gateway VTL delay (usually 0)
     executionDelayS += Number(
@@ -432,15 +421,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                 programHashesReproducible:
                   programHashesReproducible(l2BootloaderHash),
               },
-              stage2: {
-                fraudProofSystemIsPermissionless: null,
-                delayWith30DExitWindow: false,
-                proofSystemOverriddenOnlyInCaseOfABug: null,
-                daVerifier30DayExitWindow:
-                  templateVars.daVerifier30DayExitWindow ?? null,
-                daMechanismEconomicSecurity:
-                  templateVars.daMechanismEconomicSecurity ?? null,
-              },
             },
             {
               nodeSourceLink: 'https://github.com/matter-labs/zksync-era',
@@ -644,6 +624,30 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     scopeOfAssessment: templateVars.scopeOfAssessment,
     discoveryInfo: getDiscoveryInfo([templateVars.discovery]),
   }
+}
+
+/**
+ * The v31 ValidatorTimelock enforces max(executionDelay, chainExecutionDelay)
+ * per chain. Each project reads it with `getExecutionDelay(diamond)` into an
+ * `executionDelay<Chain>` field, named per chain so its history is kept.
+ */
+function getEffectiveExecutionDelay(discovery: ProjectDiscovery): number {
+  const timelock = discovery.getContract('ValidatorTimelock')
+  const chainFields = Object.keys(timelock.values ?? {}).filter((key) =>
+    /^executionDelay[A-Z][A-Za-z0-9]*$/.test(key),
+  )
+  assert(
+    chainFields.length <= 1,
+    `Expected at most one chain-specific execution delay field in ${discovery.projectName}`,
+  )
+  if (timelock.template?.endsWith('ValidatorTimelock_v31')) {
+    assert(
+      chainFields.length === 1,
+      `Add an executionDelay<Chain> field calling getExecutionDelay(diamond) to the ValidatorTimelock override of ${discovery.projectName}`,
+    )
+  }
+  const field = chainFields[0] ?? 'executionDelay'
+  return discovery.getContractValue<number>('ValidatorTimelock', field)
 }
 
 function getTechnologyOperator(

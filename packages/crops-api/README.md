@@ -46,7 +46,7 @@ a person has to do this once:
 3. Add the GitHub repository secrets `CLOUDFLARE_API_TOKEN` and
    `CLOUDFLARE_ACCOUNT_ID`.
 4. Deploy staging once so the Worker exists:
-   `CLOUDFLARE_API_TOKEN=... CLOUDFLARE_ACCOUNT_ID=... pnpm exec wrangler deploy --env staging`.
+   `CLOUDFLARE_API_TOKEN=... CLOUDFLARE_ACCOUNT_ID=... pnpm wrangler deploy --env staging`.
 5. In the dashboard open Workers & Pages → `crops-api-staging` → Settings →
    Domains & Routes → Add → Custom domain, enter `crops-staging.l2beat.com`.
    Cloudflare creates the proxied DNS record and issues the certificate

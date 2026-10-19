@@ -1,3 +1,246 @@
+Generated with discovered.json: 0xb24d7a8fa2dc59ea89f5c9b9167b556655441369
+
+# Diff at Fri, 16 Oct 2026 09:37:51 GMT:
+
+- id: bed9f26f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790862365
+- current timestamp: 1790862365
+
+## Description
+
+Ossification review: perimeter and severity changes in config, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862365 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.disputeGameFinalityDelaySeconds.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x2F12d621a16e2d3285929C9996f478508951dFe4) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x8098F676033A377b9Defe302e9fE6877cD63D575) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        ["0x4554485f4c4f434b424f58000000000000000000000000000000000000000000"]
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (unichain:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0x0cdbd65d54558271cb2fa3a22595a02a7a5028e8
+
+# Diff at Wed, 07 Oct 2026 14:48:17 GMT:
+
+- id: 173ec68a
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5edde6f8ac69ac3c111b5c401ecf044f7c546310 block: 1790862365
+- current timestamp: 1790862365
+
+## Description
+
+The L1 counterpart fields of the L2CrossDomainMessenger and L2StandardBridge are formatted as Ethereum addresses (opstack/Layer2 template change), which removes the L1 addresses previously indexed as L2 EOAs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862365 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (unichain:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      values.l1CrossDomainMessenger:
+-        "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
++        "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
+      values.OTHER_MESSENGER:
+-        "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
++        "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
+      values.otherMessenger:
+-        "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
++        "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2StandardBridge (unichain:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      values.l1TokenBridge:
+-        "unichain:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
++        "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
+      values.OTHER_BRIDGE:
+-        "unichain:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
++        "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
+      values.otherBridge:
+-        "unichain:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
++        "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+Generated with discovered.json: 0xa80d74d1d53bae1c1a814dce071ddc463d72da2e
+
+# Diff at Sun, 04 Oct 2026 05:55:37 GMT:
+
+- id: daa44208
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790862365
+- current timestamp: 1790862365
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862365 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        true
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.retirementTimestamp.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.blacklistedGames.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x2F12d621a16e2d3285929C9996f478508951dFe4) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.game5Proposer:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        {"sinceTimestamp":1783362755}
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        true
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Unichain Multisig 2 (eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        true
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      critical:
+-        true
+      fieldMeta:
+-        {"GnosisSafe_modules":{"severity":"HIGH"},"$threshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (unichain:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      fieldMeta:
+-        {"addressManager":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xce28dfd9537905567b136b895cb008fa836dde5b
 
 # Diff at Thu, 01 Oct 2026 13:47:11 GMT:

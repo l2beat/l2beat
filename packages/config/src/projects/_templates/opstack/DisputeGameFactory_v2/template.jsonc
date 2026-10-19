@@ -50,6 +50,7 @@
   },
   "fields": {
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -332,8 +333,8 @@
       },
       "edit": ["format", "AnchorStateRegistryFromGame5Args"]
     },
+    // proposer identity, like proposerFromDGF
     "game5Proposer": {
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",

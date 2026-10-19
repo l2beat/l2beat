@@ -97,30 +97,37 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     const canStick = canSlideWithScroller()
 
     let columns: Columns = { widths: [], pinnedCount: 0 }
-    const update = () => {
-      columns = measureColumns(thead)
-      // The table's own pinned cells use these whether the header sticks or
-      // not.
-      publishPinnedColumns(root, columns)
-      const isAligned = [track, pinned].every((copy) =>
-        alignColumns(table, copy, columns.widths),
-      )
-      const isReady = canStick && isAligned
-      root.toggleAttribute(READY_ATTRIBUTE, isReady)
-      if (isReady) {
-        publishLayout(root, scroller, table, thead)
+    const measure: Measure = () => {
+      const nextColumns = measureColumns(thead)
+      const tableWidth = table.getBoundingClientRect().width
+      const layout = canStick
+        ? measureLayout(root, scroller, table, thead)
+        : undefined
+
+      return () => {
+        columns = nextColumns
+        // The table's own pinned cells use these whether the header sticks
+        // or not.
+        publishPinnedColumns(root, columns)
+        const isAligned = [track, pinned].every((copy) =>
+          alignColumns(copy, columns.widths, tableWidth),
+        )
+        const isReady = layout !== undefined && isAligned
+        root.toggleAttribute(READY_ATTRIBUTE, isReady)
+        if (isReady) {
+          publishLayout(root, layout)
+        }
       }
     }
+    const update = () => measure()()
 
-    const resizeObserver = new ResizeObserver(update)
+    let stopObserving = () => {}
     const observeLayout = () => {
-      resizeObserver.disconnect()
-      resizeObserver.observe(root)
-      resizeObserver.observe(scroller)
-      resizeObserver.observe(table)
-      for (const cell of getColumnCells(thead)) {
-        resizeObserver.observe(cell)
-      }
+      stopObserving()
+      stopObserving = observeResizes(
+        [root, scroller, table, ...getColumnCells(thead)],
+        measure,
+      )
     }
     // Hiding or reordering columns swaps the header cells being observed, and
     // sorting or loading rows changes which row is last.
@@ -137,7 +144,7 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
     )
 
     return () => {
-      resizeObserver.disconnect()
+      stopObserving()
       mutationObserver.disconnect()
       stopForwarding()
       root.removeAttribute(READY_ATTRIBUTE)
@@ -160,6 +167,40 @@ export function useStickyTableHeader(enabled: boolean): StickyTableRefs {
   }
 }
 
+/** Reads a table's layout and returns the writes that apply it. */
+type Measure = () => () => void
+
+let sharedResizeObserver: ResizeObserver | undefined
+const measureByTarget = new Map<Element, Measure>()
+
+/**
+ * One observer for all sticky tables, so a resize measures every table before
+ * updating any. With an observer each, every table but the first would
+ * measure after the previous one's writes and force a layout of its own, on
+ * every step of a window drag.
+ */
+function observeResizes(targets: Element[], measure: Measure) {
+  sharedResizeObserver ??= new ResizeObserver((entries) => {
+    const measures = new Set(
+      entries.map((entry) => measureByTarget.get(entry.target)),
+    )
+    const writes = [...measures].map((measure) => measure?.())
+    for (const write of writes) {
+      write?.()
+    }
+  })
+  for (const target of targets) {
+    measureByTarget.set(target, measure)
+    sharedResizeObserver.observe(target)
+  }
+  return () => {
+    for (const target of targets) {
+      measureByTarget.delete(target)
+      sharedResizeObserver?.unobserve(target)
+    }
+  }
+}
+
 /**
  * Without a scroll-driven animation the copy could only follow the scroller
  * from a scroll listener, which visibly trails sideways scrolling. A header
@@ -173,27 +214,37 @@ function canSlideWithScroller() {
  * Lengths the CSS needs to place the copy and to stop it when the table's
  * last row reaches it, so it never covers that row.
  */
-function publishLayout(
+interface Layout {
+  headerHeight: number
+  bottomGap: number
+  maxScroll: number
+}
+
+/**
+ * None of these depend on the variables `publishLayout` sets: the copy's
+ * height and bottom gap are given back by the scroller's negative margin.
+ */
+function measureLayout(
   root: HTMLElement,
   scroller: HTMLElement,
   table: HTMLTableElement,
   thead: HTMLTableSectionElement,
-) {
+): Layout {
   const lastRow = getLastRow(table)
   const stop = lastRow
     ? lastRow.getBoundingClientRect().top + getBorderWidthAbove(lastRow)
     : table.getBoundingClientRect().bottom
-  setVariable(root, HEIGHT_VARIABLE, thead.getBoundingClientRect().height)
-  setVariable(
-    root,
-    BOTTOM_GAP_VARIABLE,
-    root.getBoundingClientRect().bottom - stop,
-  )
-  setVariable(
-    root,
-    MAX_SCROLL_VARIABLE,
-    scroller.scrollWidth - scroller.clientWidth,
-  )
+  return {
+    headerHeight: thead.getBoundingClientRect().height,
+    bottomGap: root.getBoundingClientRect().bottom - stop,
+    maxScroll: scroller.scrollWidth - scroller.clientWidth,
+  }
+}
+
+function publishLayout(root: HTMLElement, layout: Layout) {
+  setVariable(root, HEIGHT_VARIABLE, layout.headerHeight)
+  setVariable(root, BOTTOM_GAP_VARIABLE, layout.bottomGap)
+  setVariable(root, MAX_SCROLL_VARIABLE, layout.maxScroll)
 }
 
 /**
@@ -248,9 +299,9 @@ function getColumnCells(thead: HTMLTableSectionElement) {
  * the real header keeps showing.
  */
 function alignColumns(
-  table: HTMLTableElement,
   copy: HTMLTableElement,
   widths: number[],
+  tableWidth: number,
 ) {
   const cols = copy.querySelectorAll('col')
   if (widths.length === 0 || widths.length !== cols.length) return false
@@ -258,7 +309,7 @@ function alignColumns(
   cols.forEach((col, i) => {
     col.style.width = `${widths[i]}px`
   })
-  copy.style.width = `${table.getBoundingClientRect().width}px`
+  copy.style.width = `${tableWidth}px`
   return true
 }
 

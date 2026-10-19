@@ -45,7 +45,7 @@ export function TableFilter({ filter, possibleValues }: Props) {
       </div>
       <VerticalSeparator className="h-[30px]" />
       <button
-        className="flex h-full items-center justify-center text-nowrap rounded-none px-2 font-medium focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
+        className="flex h-full items-center justify-center text-nowrap rounded-none px-2 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
         onClick={() => {
           dispatch({
             type: 'setInversed',
@@ -61,7 +61,7 @@ export function TableFilter({ filter, possibleValues }: Props) {
       </TableFilterInternalContextProvider>
       <VerticalSeparator className="h-[30px]" />
       <button
-        className="h-full rounded-r-lg pr-2.5 pl-2 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
+        className="h-full rounded-r-lg pr-2.5 pl-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
         onClick={() => dispatch({ type: 'remove', payload: { id: filter.id } })}
       >
         <div className="inline-flex size-3 items-center justify-center rounded-sm bg-brand">

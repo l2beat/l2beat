@@ -1,3 +1,307 @@
+Generated with discovered.json: 0x48188645253047733ca152d5439ac80ce241e3f8
+
+# Diff at Fri, 16 Oct 2026 09:21:40 GMT:
+
+- id: 4c72e219
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0c0baf3ef2385a4ce2c4bd7adc3603685e604314 block: 1791896958
+- current timestamp: 1791896958
+
+## Description
+
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791896958 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) [shared-zk-stack/BridgeHub] {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      fieldMeta.admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1AssetRouter (eth:0x8829AD80E425C646DAB305381ff105169FeEcE56) [shared-zk-stack/L1AssetRouter] {
+    +++ description: Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) [shared-zk-stack/L1NativeTokenVault] {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) [shared-zk-stack/ChainTypeManager] {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract L1Nullifier (eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) [shared-zk-stack/L1Nullifier] {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ChainAssetHandler (eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076) [shared-zk-stack/ChainAssetHandler] {
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RollupDAManager (eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45) [shared-zk-stack/RollupDAManager] {
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProtocolTimelockController (zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714) [shared-zk-stack/TimelockController] {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+      fieldMeta.Executor:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      fieldMeta.proposalThreshold:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      fieldMeta.proposalThreshold:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract GovOpsTimelockController (zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a) [shared-zk-stack/TimelockController] {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+      fieldMeta.Executor:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ZkTokenTimelockController (zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d) [shared-zk-stack/TimelockController] {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.timelockAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+      fieldMeta.Executor:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      fieldMeta.proposalThreshold:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xd4b6c516c47c173e99097864cc12900a58e1c479
+
+# Diff at Tue, 13 Oct 2026 13:10:32 GMT:
+
+- id: 6dc9c682
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f86fa8ee6214e9cba302685affb910adddc04f2d block: 1790592210
+- current timestamp: 1791896958
+
+## Description
+
+Created new governance proposal ZIP-18: https://www.tally.xyz/gov/zksync/proposal/39818012355511486328740463691883430307761328158522613751057493126514636439545?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f. It resubmits an earlier proposal, rebased to the current code version.
+
+Onchain payload is verified to correspond to the proposal description.
+
+Reminder: this proposal adds the possibility of forced L1 -> L2 transactions and aligns contracts closer to zkOS, simplifying proving with Airbender prover.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        18
++        19
+    }
+```
+
+Generated with discovered.json: 0xf9d534b0f099d7d4676462bff63a853841c43ee6
+
+# Diff at Sun, 04 Oct 2026 05:55:36 GMT:
+
+- id: 1b3d3378
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d93c5b9cfdcdcc765058a84ce4841fd148b2ec6d block: 1790592210
+- current timestamp: 1790592210
+
+## Description
+
+Ossification review: critical flags and field severities.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790592210 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+      fieldMeta.tokenMultiplierSetter:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      fieldMeta.protocolFrozenUntil.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) [shared-zk-stack/ZkToken] {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      critical:
+-        true
++        {"sinceTimestamp":1726123295}
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      fieldMeta.currentQuorum_MTokens:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      fieldMeta.currentQuorum_MTokens:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      fieldMeta.currentQuorum_MTokens:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x6943c4d7df455c8fc4e3ec1528a13c0f6ee16481
 
 # Diff at Mon, 28 Sep 2026 13:34:42 GMT:

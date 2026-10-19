@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "zkapi",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x4386FDbdA35D995beB3BF8625118Ec5982ec81fe",
+    "eth:0xc6B55e86668d8c446B3D81273AAb9CBb20F28c7f"
+  ],
+  "names": {
+    "eth:0x4386FDbdA35D995beB3BF8625118Ec5982ec81fe": "ZkApiVault",
+    "eth:0x8e92013Dd7cc86f75b539DBD3814B2e603e0F9C1": "Groth16ProofAdapter",
+    "eth:0xc6B55e86668d8c446B3D81273AAb9CBb20F28c7f": "Bn254Poseidon"
+  }
+}

@@ -5,6 +5,8 @@
   "critical": true,
   "ignoreRelatives": ["tokenMapping"],
   "fields": {
+    "owner": { "severity": "MEDIUM" },
+    "$admin": { "severity": "MEDIUM" },
     "tokenMapping": {
       "severity": "HIGH",
       "description": "L1-to-L2 token mapping used to validate custom-token deposits and withdrawals.",

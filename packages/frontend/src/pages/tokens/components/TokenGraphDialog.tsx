@@ -12,11 +12,15 @@ import {
   Legend,
   TokenRelationsGraphView,
 } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/TokenRelationsGraphView'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTiles'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 
-const DIAGRAM_CLASS_NAME = 'h-[min(60vh,720px)]'
+// The graph fills the full-screen dialog; on mobile it shares the space with
+// the details panel below it.
+const FILL_CLASS_NAME = 'flex min-h-0 flex-1 flex-col'
+const DIAGRAM_CLASS_NAME = 'h-full'
 
 export function TokenGraphDialog({
   tile,
@@ -39,11 +43,13 @@ export function TokenGraphDialog({
       onOpenChange={(open) => !open && onClose()}
     >
       <DialogContent
-        className="bg-surface-primary max-md:overflow-y-auto md:max-w-[min(1400px,95vw)]"
-        fullScreenMobile
+        className="flex flex-col gap-3 bg-surface-primary p-4 max-md:pt-0"
+        fullScreen
       >
         <DialogClose />
-        <DialogTitle className="flex items-center gap-2">
+        {/* The title row is a sticky bar at the very top because iOS Safari only
+            re-tints its status bar from a sticky or fixed bar at the top. */}
+        <DialogTitle className="flex flex-wrap items-center gap-x-2 gap-y-1 pr-8 max-md:sticky max-md:top-0 max-md:bg-surface-primary max-md:pt-4">
           {tile && (
             <img
               src={tile.iconUrl}
@@ -59,20 +65,32 @@ export function TokenGraphDialog({
               Issued by <span className="capitalize">{tile.issuer}</span>
             </span>
           )}
+          {tile?.href && (
+            <a
+              href={tile.href}
+              title={`Open the full ${tile.symbol} page`}
+              className="group flex items-center gap-1 rounded-full bg-brand/10 py-1 pr-2 pl-2.5 font-medium text-brand text-label-value-12 transition-colors hover:bg-brand hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            >
+              Token page
+              <ArrowRightIcon className="size-3 fill-current transition-transform group-hover:translate-x-0.5" />
+            </a>
+          )}
         </DialogTitle>
         <DialogDescription className="sr-only">
           Which deployments of this token back which others.
         </DialogDescription>
 
         {isPending ? (
-          <div>
+          <div className={FILL_CLASS_NAME}>
             <div className="mb-3 flex min-h-8 items-center">
               <Legend />
             </div>
-            <Skeleton className={cn(DIAGRAM_CLASS_NAME, 'rounded-lg')} />
+            <div className="min-h-0 flex-1">
+              <Skeleton className={cn(DIAGRAM_CLASS_NAME, 'rounded-lg')} />
+            </div>
           </div>
         ) : isError ? (
-          <div className="flex flex-col items-center gap-3 py-8 text-label-value-14 text-secondary">
+          <div className="flex flex-1 flex-col items-center justify-center gap-3 py-8 text-label-value-14 text-secondary">
             Could not load the graph.
             <Button variant="outline" size="sm" onClick={() => refetch()}>
               Try again
@@ -82,21 +100,13 @@ export function TokenGraphDialog({
           <TokenRelationsGraphView
             graph={data}
             diagramClassName={DIAGRAM_CLASS_NAME}
+            className={FILL_CLASS_NAME}
             embedded
           />
         ) : (
-          <p className="py-8 text-center text-label-value-14 text-secondary">
+          <p className="flex flex-1 items-center justify-center py-8 text-center text-label-value-14 text-secondary">
             No deployments found for this token.
           </p>
-        )}
-
-        {tile?.href && (
-          <a
-            href={tile.href}
-            className="font-bold text-brand text-label-value-14 hover:underline"
-          >
-            Open the full {tile.symbol} page
-          </a>
         )}
       </DialogContent>
     </Dialog>

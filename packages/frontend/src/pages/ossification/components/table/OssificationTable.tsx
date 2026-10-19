@@ -65,7 +65,7 @@ const columns = [
     },
   }),
   columnHelper.accessor('score', {
-    header: 'Ossification %\nlast reset',
+    header: 'Ossification %\nsince',
     cell: (ctx) => (
       <TwoRowCell>
         <TwoRowCell.First>
@@ -90,7 +90,6 @@ const columns = [
       <OssificationTimelineChart
         timeline={ctx.row.original.timeline}
         valueSource={ctx.row.original.valueSource}
-        className="ml-auto"
       />
     ),
     meta: {

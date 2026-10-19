@@ -37,6 +37,10 @@ CONFIG_ALCHEMY_API_KEY=
 
 There is a handy script for it: `pnpm tokens:verify`
 
+### How to review a privacy project?
+
+Follow the [privacy review checklist](README.privacy.md).
+
 ### Tests dependencies
 
 In some tests rpc calls to ethereum network are performed through Alchemy. In order to remove default mainnet url flakiness out of the equation it is possible to use a dedicated key through `CONFIG_ALCHEMY_API_KEY` environment variable (`.env` file is supported).

@@ -365,12 +365,13 @@
         "wethFromGame": "eth:0x6b18508c693b9c45A23eAf382E07ADd81D4d4819"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "retirementTimestamp": { "severity": "MEDIUM" },
         "disputeGameFactory": { "severity": "HIGH" },
         "systemConfig": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
-        "respectedGameType": { "severity": "HIGH" }
+        "respectedGameType": { "severity": "HIGH" },
+        "RespectedGameString": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0df4Aa3C6CCCd0efdDC37324BC251511ff6034F8": "Proxy",
@@ -450,6 +451,7 @@
         "$immutable": true,
         "owner": "eth:0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x287bBa8116F2fc5a642bfD6027EBf5AD6522655C": "AddressManager"
       },
@@ -619,6 +621,7 @@
         "isUpgrading": false,
         "owner": "eth:0x1b99D8a4CE6883FA9Fc3538Ea518a4628aaC6135"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f": "ProxyAdmin"
       }
@@ -811,10 +814,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x58b51fb9FeeD00DD846f91D265Eba3cdd855A413": "Proxy",
@@ -1002,6 +1011,7 @@
         "isUpgrading": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5": "ProxyAdmin"
       }
@@ -1167,8 +1177,8 @@
         "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },

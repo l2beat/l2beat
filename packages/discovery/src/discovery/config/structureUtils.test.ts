@@ -1,7 +1,7 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { StructureContract } from './StructureConfig'
-import { makeEntryStructureConfig } from './structureUtils'
+import { makeEntryStructureConfig, withTemplate } from './structureUtils'
 
 describe(makeEntryStructureConfig.name, () => {
   describe('pushValues', () => {
@@ -122,22 +122,24 @@ describe(makeEntryStructureConfig.name, () => {
       expect(config.fields.a?.edit).toEqual(['get', '#'])
     })
 
-    it('crashes when a template handler meets an override copy on one field', () => {
-      expect(() =>
-        mergeTemplateIntoOverride(
-          { fields: { a: { copy: 'b' } } },
-          { fields: { a: { handler: { type: 'storage', slot: 1 } } } },
-        ),
-      ).toThrow('handler and copy cannot both be defined')
+    it('replaces a template handler with an override copy on one field', () => {
+      const config = mergeTemplateIntoOverride(
+        { fields: { a: { copy: 'b' } } },
+        { fields: { a: { handler: { type: 'storage', slot: 1 } } } },
+      )
+
+      expect(config.fields.a?.copy).toEqual('b')
+      expect(config.fields.a?.handler).toEqual(undefined)
     })
 
-    it('crashes when a template copy meets an override handler on one field', () => {
-      expect(() =>
-        mergeTemplateIntoOverride(
-          { fields: { a: { handler: { type: 'storage', slot: 1 } } } },
-          { fields: { a: { copy: 'b' } } },
-        ),
-      ).toThrow('handler and copy cannot both be defined')
+    it('replaces a template copy with an override handler on one field', () => {
+      const config = mergeTemplateIntoOverride(
+        { fields: { a: { handler: { type: 'storage', slot: 1 } } } },
+        { fields: { a: { copy: 'b' } } },
+      )
+
+      expect(config.fields.a?.handler).toEqual({ type: 'storage', slot: 1 })
+      expect(config.fields.a?.copy).toEqual(undefined)
     })
 
     it('replaces a redefined template type wholesale instead of merging its keys', () => {
@@ -249,6 +251,64 @@ describe(makeEntryStructureConfig.name, () => {
       expect(config.fields?.sequencerInbox?.template).toEqual('from override')
     })
 
+    describe('discoverLibraries', () => {
+      function resolveDiscoverLibraries(
+        project: boolean | undefined,
+        override: Record<string, unknown>,
+        template: Record<string, unknown>,
+      ) {
+        const config = makeEntryStructureConfig(
+          {
+            discoverLibraries: project,
+            overrides: {
+              [ADDRESS.toString()]: StructureContract.parse(override),
+            },
+          },
+          ADDRESS,
+        )
+        config.pushValues(StructureContract.parse(template))
+        return config.discoverLibraries
+      }
+
+      it('takes the template value when the override does not set it', () => {
+        const result = resolveDiscoverLibraries(
+          undefined,
+          {},
+          { discoverLibraries: true },
+        )
+
+        expect(result).toEqual(true)
+      })
+
+      it('takes the template value over the project value', () => {
+        const result = resolveDiscoverLibraries(
+          false,
+          {},
+          { discoverLibraries: true },
+        )
+
+        expect(result).toEqual(true)
+      })
+
+      it('keeps an override false over a template true', () => {
+        const result = resolveDiscoverLibraries(
+          undefined,
+          { discoverLibraries: false },
+          { discoverLibraries: true },
+        )
+
+        expect(result).toEqual(false)
+      })
+
+      it('falls back to the project value when neither side sets it', () => {
+        expect(resolveDiscoverLibraries(true, {}, {})).toEqual(true)
+      })
+
+      it('defaults to false when nothing sets it', () => {
+        expect(resolveDiscoverLibraries(undefined, {}, {})).toEqual(false)
+      })
+    })
+
     it('merges a contract field that is itself named handler', () => {
       const config = mergeTemplateIntoOverride(
         { fields: { handler: { template: 'from override' } } },
@@ -268,5 +328,40 @@ describe(makeEntryStructureConfig.name, () => {
       })
       expect(config.fields?.handler?.template).toEqual('from override')
     })
+  })
+})
+
+describe(withTemplate.name, () => {
+  const ADDRESS = ChainSpecificAddress.random()
+
+  it('pushes the template onto a copy and leaves the original config untouched', () => {
+    const config = makeEntryStructureConfig(
+      {
+        types: { Global: { typeCaster: 'FormatSeconds' } },
+        overrides: {
+          [ADDRESS.toString()]: StructureContract.parse({
+            ignoreMethods: ['fromOverride'],
+            fields: { own: { severity: 'HIGH' } as never },
+          }),
+        },
+      },
+      ADDRESS,
+    )
+    const before = structuredClone({ ...config, pushValues: undefined })
+
+    const merged = withTemplate(
+      config,
+      StructureContract.parse({
+        ignoreMethods: ['fromTemplate'],
+        fields: { added: { handler: { type: 'hardcoded', value: 1 } } },
+        types: { Local: { typeCaster: 'FormatSeconds' } },
+      }),
+    )
+
+    expect(merged.address).toEqual(ADDRESS)
+    expect(merged.ignoreMethods).toEqual(['fromTemplate', 'fromOverride'])
+    expect(Object.keys(merged.fields)).toEqual(['added', 'own'])
+    expect(Object.keys(merged.types)).toEqual(['Local', 'Global'])
+    expect({ ...config, pushValues: undefined }).toEqual(before)
   })
 })

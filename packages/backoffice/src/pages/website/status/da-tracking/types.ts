@@ -1,10 +1,9 @@
 export interface DaTrackingStatusRow {
   configId: string
-  type: 'baseLayer' | 'ethereum' | 'celestia' | 'avail' | 'eigen-da'
+  type: 'baseLayer' | 'ethereum'
   projectId: string
   daLayer: string
-  since: number
-  sinceUnit: 'block' | 'timestamp'
+  sinceBlock: number
   latestTimestamp: number | undefined
   ageSeconds: number | undefined
   details: string

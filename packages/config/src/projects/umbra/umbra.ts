@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import { CROP_NOTES } from '../../common/crops'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
@@ -16,6 +17,8 @@ const UMBRA_ANNOUNCEMENT_EVENT =
   '0x29877766fa2bfe3b90008d6d92f965eca91cbc5757ed775740e460799fb92219'
 const UMBRA_TOKEN_WITHDRAWAL_EVENT =
   '0x30eb3583ad09933b693a45452ab07512244cdbc5868701aa004c27b7b267c249'
+const STEALTH_KEY_CHANGED_EVENT =
+  '0xe879dede910dd3b22239a11044df83c95adcd4b54003516f42866cc1fe4f0a19'
 
 const ETH_TOKEN_PLACEHOLDER = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
 
@@ -28,6 +31,7 @@ const TRACKED_TOKENS = [
 ]
 
 const umbraCore = discovery.getContract('Umbra')
+const stealthKeyRegistry = discovery.getContract('StealthKeyRegistry')
 
 const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((address) => {
   const resolved = getTokenByAddress(address)
@@ -89,8 +93,10 @@ export const umbra: BaseProject = {
   },
   display: {
     description:
-      'A stealth-address payment protocol that hides the recipient behind a fresh address for every transfer.',
-    detailedDescription: readProjectMarkdown('umbra', 'detailedDescription'),
+      'A stealth-address payment protocol for an existing wallet: the user registers once, and anyone can pay them at a fresh address.',
+    detailedDescription: readProjectMarkdown('umbra', 'detailedDescription', {
+      toll: `${Number(formatEther(discovery.getContractValue<number>('Umbra', 'toll')))} ETH`,
+    }),
     links: {
       websites: ['https://app.umbra.cash'],
       documentation: ['https://app.umbra.cash/faq'],
@@ -109,25 +115,37 @@ export const umbra: BaseProject = {
     category: PRIVACY_CATEGORIES.stealthAddress,
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
+    anonymitySet: {
+      type: 'key-registrations',
+      registry: stealthKeyRegistry.address,
+      sinceTimestamp: UnixTime(stealthKeyRegistry.sinceTimestamp ?? 0),
+      event: STEALTH_KEY_CHANGED_EVENT,
+      extractor: 'umbraStealthKeyChanged',
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'The core contracts are immutable. The owner can change the toll for future payments, but cannot stop recipients from accessing payments that have already been sent.',
+        'The contracts are immutable. The toll applies only to new payments, so recipients can always withdraw what they received.',
       walkawayTest: { passed: true },
     },
     reproducibility: {
       value: 'Reproducible',
       sentiment: 'good',
       description:
-        'The immutable core contracts, cryptographic library, and frontend are published and can be built and run locally.',
+        'The contracts, the umbra-js library and the frontend are open source and build locally. The indexer and the relayer API behind the hosted app are closed.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.anyAmount,
       PRIVACY_ATTRIBUTES.stealthAddresses,
     ],
-    adversaries: umbraAdversaries,
+    adversaries: umbraAdversaries(
+      discovery.getContractValue<number>(
+        'StealthKeyRegistry',
+        'registeredAddresses',
+      ),
+    ),
     riskSummary: readProjectMarkdown('umbra', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),
@@ -141,7 +159,7 @@ export const umbra: BaseProject = {
         CROP_NOTES.passesWalkawayTest(
           'nobody can stop a recipient from claiming a payment already sent to them, and withdrawals can always be self-relayed.',
         ),
-        'Nobody can censor an individual user - the owner can only raise the ETH toll on contract-routed payments, which applies to everyone equally and cannot touch payment or withdrawal logic.',
+        'The contracts censor nobody - the owner can only raise the ETH toll on contract-routed payments, which applies to everyone equally. The hosted app refuses sanctioned and blocklisted addresses.',
       ],
       missing: [
         'ERC-20 stealth transfers are currently relayed only by Umbra Cash relayer, privacy guarantees are weakened if it censors withdrawals.',
@@ -157,11 +175,11 @@ export const umbra: BaseProject = {
     privacy: {
       sentiment: 'warning',
       points: [
-        'Recipient privacy with no protocol-level compliance mechanism, no privileged view key, and no way for anyone to retroactively deanonymize a payment.',
+        'Recipient privacy with no protocol-level compliance mechanism and no privileged view key.',
       ],
       missing: [
         'Only who controls the receiving address is hidden - the sender, the amount and the stealth address stay public.',
-        'The number of registered stealth transfer recipients is not large enough to provide a high degree of anonymity.',
+        "The hosted app sends the operator the user's wallet address and withdrawal addresses in one session.",
       ],
     },
     security: {

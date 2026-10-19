@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import { LIST_PAGES_WITH_MARKDOWN } from '~/utils/getMarkdownAlternatePath'
@@ -116,16 +117,41 @@ describe(createMarkdownAlternatesRouter.name, () => {
     )
   })
 
-  // The HTML summary shows them in its Custom tab, linked to the project.
-  it('lists every active custom DA solution', async () => {
-    const custom = await ps.getProjects({
-      where: ['customDa'],
-      whereNot: ['archivedAt'],
+  describe('ossification', () => {
+    const originalMock = env.MOCK
+
+    // Mock mode serves the value series without a database.
+    before(() => {
+      env.MOCK = true
     })
 
-    const paths = await getLinkPaths('/data-availability/summary.md')
+    after(() => {
+      env.MOCK = originalMock
+    })
 
-    expect(paths).toInclude(...custom.map((p) => `/layer2s/projects/${p.slug}`))
+    // The HTML page lists active projects with an ossification history that
+    // have a project page: scaling, privacy or DeFi.
+    it('lists exactly the projects of the ossification page', async () => {
+      const projects = await ps.getProjects({
+        where: ['ossificationHistory'],
+        whereNot: ['archivedAt'],
+        optional: ['scalingInfo', 'privacyInfo', 'defiInfo'],
+      })
+      const expected = projects.flatMap((p) =>
+        p.scalingInfo
+          ? [`/layer2s/projects/${p.slug}`]
+          : p.privacyInfo
+            ? [`/privacy/projects/${p.slug}`]
+            : p.defiInfo
+              ? [`/defi/projects/${p.slug}`]
+              : [],
+      )
+
+      const paths = await getLinkPaths('/ossification.md')
+
+      expect(expected.length).toBeGreaterThan(0)
+      expect(paths.toSorted()).toEqual(expected.toSorted())
+    })
   })
 })
 

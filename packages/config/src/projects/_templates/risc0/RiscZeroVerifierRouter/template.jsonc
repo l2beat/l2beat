@@ -3,6 +3,7 @@
   "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner ({{owner}}).",
   "fields": {
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",
@@ -14,8 +15,10 @@
     // mapping, so the leaf verifiers are discovered and tracked independent of the owner. Selectors
     // are maintained by hand from the owner timelock's executed addVerifier calls; an unset/removed
     // selector reads back as the zero/tombstone address and is not followed.
+    // MEDIUM: a listed selector can only move to the tombstone (removal, no reset). Additions
+    // arrive with a new selector here and are recorded as reviewed events in ossification.json.
     "verifier_310fe598": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function verifiers(bytes4) view returns (address)",
@@ -23,7 +26,7 @@
       }
     },
     "verifier_9f39696c": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function verifiers(bytes4) view returns (address)",
@@ -31,7 +34,7 @@
       }
     },
     "verifier_f536085a": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function verifiers(bytes4) view returns (address)",
@@ -39,7 +42,7 @@
       }
     },
     "verifier_bb001d44": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function verifiers(bytes4) view returns (address)",
@@ -47,7 +50,7 @@
       }
     },
     "verifier_73c457ba": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function verifiers(bytes4) view returns (address)",
@@ -55,7 +58,7 @@
       }
     },
     "verifier_242f9d5b": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function verifiers(bytes4) view returns (address)",

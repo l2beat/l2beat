@@ -13,9 +13,8 @@
     "state"
   ],
   "fields": {
-    "VOTE_SUCCESS_DENOMINATOR": {
-      "severity": "HIGH"
-    },
+    // Solidity constant: only changes with an implementation upgrade.
+    "VOTE_SUCCESS_DENOMINATOR": {},
     "voteSuccessNumerator": {
       "severity": "HIGH"
     },
@@ -47,10 +46,10 @@
       "severity": "HIGH"
     },
     "owner": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }

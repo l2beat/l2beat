@@ -20,9 +20,8 @@
     "quorum"
   ],
   "fields": {
-    "ROTATION_CUT_OFF_BLOCKS": {
-      "severity": "HIGH"
-    },
+    // Solidity constant: only changes with an implementation upgrade.
+    "ROTATION_CUT_OFF_BLOCKS": {},
     "firstNominationStartDate": {
       "severity": "HIGH"
     },
@@ -32,8 +31,9 @@
     "nomineeVettingDuration": {
       "severity": "HIGH"
     },
+    // Role holder (the vetting address), not a rule change.
     "nomineeVetter": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "securityCouncilMemberElectionGovernor": {
       "severity": "HIGH"
@@ -60,10 +60,10 @@
       "severity": "HIGH"
     },
     "owner": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     }
   }
 }
