@@ -1,9 +1,8 @@
 import { ControlGroup } from './ControlGroup'
-import { ClusterLayoutButton } from './canvas/ClusterLayoutButton'
+import { AutoLayoutMenu } from './canvas/AutoLayoutMenu'
 import { LayoutLibrary } from './canvas/LayoutLibrary'
 import { RedoButton } from './canvas/RedoButton'
 import { Settings } from './canvas/Settings'
-import { StackLayoutButton } from './canvas/StackLayoutButton'
 import { ToolControls } from './canvas/ToolControls'
 import { UndoButton } from './canvas/UndoButton'
 import { VisibilityMenu } from './canvas/VisibilityMenu'
@@ -22,8 +21,7 @@ export function Controls() {
         <ControlGroup>
           <UndoButton />
           <RedoButton />
-          <ClusterLayoutButton />
-          <StackLayoutButton />
+          <AutoLayoutMenu />
         </ControlGroup>
         <ControlGroup>
           <VisibilityMenu />
