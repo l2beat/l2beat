@@ -23,7 +23,10 @@ import {
   get$PastUpgrades,
 } from '../utils/extractors'
 import { codeIsEOA } from './bytecode'
-import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
+import {
+  getFollowedParameters,
+  getRelativesWithSuggestedTemplates,
+} from './getRelativesWithSuggestedTemplates'
 import type { TemplateService } from './TemplateService'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA | Reference
@@ -44,6 +47,7 @@ interface AnalyzedCommon {
   extendedTemplate?: ExtendedTemplate
   ignoreInWatchMode?: string[]
   relatives: AddressesWithTemplates
+  followedFields: string[]
   usedTypes?: DiscoveryCustomType[]
 }
 
@@ -175,12 +179,19 @@ export class AddressAnalyzer {
       ...beacons,
       ...pastUpgrades.flatMap((e) => e[2]),
     ]
+    const parameters = handlerResults
+      .concat(proxyResults)
+      .concat(libraryResults)
     const relatives = getRelativesWithSuggestedTemplates(
-      handlerResults.concat(proxyResults).concat(libraryResults),
+      parameters,
       config.ignoreRelatives,
       ignoredAddresses,
       config.fields,
     )
+    const followedFields = getFollowedParameters(
+      parameters,
+      config.ignoreRelatives,
+    ).map((param) => param.field)
 
     const mergedValues = {
       ...proxy.values,
@@ -212,6 +223,7 @@ export class AddressAnalyzer {
       extendedTemplate,
       ignoreInWatchMode: config.ignoreInWatchMode,
       relatives,
+      followedFields,
       usedTypes,
     } as Analysis
 

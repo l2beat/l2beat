@@ -17,11 +17,11 @@
  * one of 33 objects".
  */
 import type { ImpDefinition, Parser } from '@l2beat/validate'
-import { Reference } from '../../handlers/reference'
-import { SingleSlot } from '../../handlers/storageCommon'
-import { BytesFromString, NumberFromString } from '../../handlers/types'
-import { StorageHandlerDefinition } from '../../handlers/user/StorageHandler'
-import { closest, levenshtein } from '../closest'
+import { Reference } from '../handlers/reference'
+import { SingleSlot } from '../handlers/storageCommon'
+import { BytesFromString, NumberFromString } from '../handlers/types'
+import { StorageHandlerDefinition } from '../handlers/user/StorageHandler'
+import { closest, levenshtein } from '../utils/closest'
 
 export interface SchemaProblem {
   path: string

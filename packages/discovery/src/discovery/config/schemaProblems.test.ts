@@ -1,6 +1,6 @@
 import { v } from '@l2beat/validate'
 import { expect } from 'earl'
-import { StorageHandlerDefinition } from '../../handlers/user/StorageHandler'
+import { StorageHandlerDefinition } from '../handlers/user/StorageHandler'
 import { appendKey, schemaProblems } from './schemaProblems'
 
 describe(schemaProblems.name, () => {
