@@ -1,4 +1,4 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
+import type { InMemoryCache, KnownInteropBridgeType } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
@@ -12,7 +12,7 @@ import type { InteropQuery } from './InteropRouter'
 import { TRANSFER_TYPE_DISPLAY } from './utils/display'
 import { getInitialInteropSelection } from './utils/getInitialInteropSelection'
 import { mapInteropChainsToWithIcons } from './utils/mapInteropChainsToWithIcons'
-import type { InteropSelection, TransferType } from './utils/types'
+import type { InteropSelection } from './utils/types'
 
 const TRANSFER_TYPE_PAGES = {
   lockAndMint: {
@@ -30,7 +30,7 @@ const TRANSFER_TYPE_PAGES = {
 } as const
 
 export async function getInteropTransferTypeData(
-  type: TransferType,
+  type: KnownInteropBridgeType,
   req: Request<unknown, unknown, unknown, InteropQuery>,
   manifest: Manifest,
   cache: InMemoryCache,
@@ -94,7 +94,7 @@ export async function getInteropTransferTypeData(
 }
 
 async function getCachedData(
-  type: TransferType,
+  type: KnownInteropBridgeType,
   initialSelection: InteropSelection,
 ) {
   const helpers = getSsrHelpers()

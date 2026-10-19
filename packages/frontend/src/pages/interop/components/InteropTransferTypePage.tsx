@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import {
   type DehydratedState,
   HydrationBoundary,
@@ -17,7 +18,7 @@ import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
-import type { InteropSelection, TransferType } from '../utils/types'
+import type { InteropSelection } from '../utils/types'
 import { AllProtocolsCard } from './AllProtocolsCard'
 import { MultiChainSelector } from './chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from './chain-selector/types'
@@ -44,7 +45,7 @@ export function InteropTransferTypePage({
   initialSelection,
   protocols,
   ...props
-}: InteropTransferTypePageProps & { type: TransferType }) {
+}: InteropTransferTypePageProps & { type: KnownInteropBridgeType }) {
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
@@ -72,7 +73,7 @@ function Content({
   onboardingInteropChains,
   protocols,
 }: {
-  type: TransferType
+  type: KnownInteropBridgeType
   interopChains: InteropChainWithIcon[]
   onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
@@ -111,7 +112,7 @@ function Widgets({
   type,
   interopChains,
 }: {
-  type: TransferType
+  type: KnownInteropBridgeType
   interopChains: InteropChainWithIcon[]
 }) {
   const trpc = useTRPC()
@@ -167,7 +168,7 @@ function Widgets({
   )
 }
 
-function HeaderWithDescription({ type }: { type: TransferType }) {
+function HeaderWithDescription({ type }: { type: KnownInteropBridgeType }) {
   const display = TRANSFER_TYPE_DISPLAY[type]
   return (
     <MainPageHeader description={display.description}>
