@@ -36,10 +36,10 @@ import {
   type StructureContract,
   TemplateStructureContract,
 } from '../config/StructureConfig'
+import { schemaProblems } from '../config/schemaProblems'
 import { generateStructureHash } from '../output/structureOutput'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
-import { schemaProblems } from '../templatizer/draft/schemaProblems'
 import { readJsonc } from '../utils/readJsonc'
 
 export const TEMPLATES_PATH = path.join('_templates')
