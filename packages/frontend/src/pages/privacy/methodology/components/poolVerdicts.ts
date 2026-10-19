@@ -25,10 +25,10 @@ export function getPoolVerdicts(
   design: PoolDesign,
   caughtShare: number,
 ): Record<Lens, PoolVerdict> {
-  const publicObserver: PoolVerdict = design.namesDeposit
+  const publicObserver: PoolVerdict = design.linksDeposit
     ? {
         sentiment: 'bad',
-        sees: 'Each withdrawal names the deposit it spends, so anyone can follow the link.',
+        sees: 'Each withdrawal can be linked to the deposit it spends, so anyone can follow the link.',
       }
     : {
         sentiment: 'good',

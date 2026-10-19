@@ -7,7 +7,6 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { CategoryMachinesFigure } from './components/CategoryMachinesFigure'
 import { CrowdFigure } from './components/CrowdFigure'
 import { PoolLensFigure } from './components/PoolLensFigure'
-import { SummaryFoldFigure } from './components/SummaryFoldFigure'
 import type { PrivacyMethodologyFigureData } from './getPrivacyMethodologyFigureData'
 import type { PrivacyMethodologySections } from './getPrivacyMethodologySections'
 
@@ -33,8 +32,6 @@ export function PrivacyMethodologyPage({ sections, figures, ...props }: Props) {
             <Section>{sections.adversaries}</Section>
             <Section>{sections.categories}</Section>
             <CategoryMachinesFigure data={figures} />
-            <Section>{sections.summaryTable}</Section>
-            <SummaryFoldFigure data={figures} />
             <Section>{sections.columns}</Section>
           </main>
         </PrimaryCard>

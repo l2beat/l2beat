@@ -59,13 +59,9 @@ export function getPrivacyMethodologySections() {
       'Categories describe how a protocol tries to hide data. Pools, shielded ledgers and anonymous access usually promise to hide a link. Stealth addresses hide a recipient. Confidential amounts hide an amount. A project keeps its category even when it fails that promise.',
     ]),
 
-    summaryTable: joinBlocks([
-      heading(2, 'Summary table'),
-      'The [privacy summary](/privacy/summary) folds the adversaries into one colour. Any red rating makes it red, otherwise the majority wins and a tie is green. The future adversary is left out, as it grades a future cryptographic break, not the protocol today.',
-    ]),
-
     columns: joinBlocks([
-      'The other columns show:',
+      heading(2, 'Summary table'),
+      'Next to the adversary ratings, the [privacy summary](/privacy/summary) shows:',
       bulletList([
         `**Anonymity set**: For link privacy, ${lowerFirst(ANONYMITY_SET_TOOLTIPS.deposits)} For recipient privacy, ${lowerFirst(ANONYMITY_SET_TOOLTIPS['key-registrations'])}`,
         `**Trusted setup**: ${COLUMNS.trustedSetup} Risks follow the ${TRUSTED_SETUP_FRAMEWORK_LINK}.`,

@@ -33,7 +33,7 @@ const INTERVAL_MS = 9000
 const REVEAL_MS = 2800
 
 const INITIAL_DESIGN: PoolDesign = {
-  namesDeposit: false,
+  linksDeposit: false,
   traffic: 0.38,
   publicRpc: false,
   viewingKeys: true,
@@ -233,13 +233,13 @@ function DesignControl({
     case 'publicObserver':
       control = (
         <Choice
-          label="Withdrawals name their deposit"
-          value={design.namesDeposit}
+          label="Withdrawals can be linked to their deposit"
+          value={design.linksDeposit}
           options={[
             [false, 'No'],
             [true, 'Yes'],
           ]}
-          onChange={(namesDeposit) => onChange({ namesDeposit })}
+          onChange={(linksDeposit) => onChange({ linksDeposit })}
         />
       )
       break
@@ -310,9 +310,6 @@ function DesignControl({
       key={lens}
       className="motion-safe:fade-in mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-md border border-brand/40 border-dashed bg-brand/5 px-3 py-2 motion-safe:animate-in"
     >
-      <span className="font-bold text-brand text-label-value-12 uppercase">
-        Pool design
-      </span>
       {control}
       {children}
     </div>

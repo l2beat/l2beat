@@ -84,51 +84,111 @@ function LiveSvg({
   )
 }
 
-/** A coin that follows `path`, in `color` until `hideAt` (0..1), grey after. */
+interface Stop {
+  x: number
+  y: number
+  /** When it is here, 0..1 of the loop; strictly increasing. */
+  at: number
+}
+
+/**
+ * A coin that travels through `stops`, shown from the first stop to the
+ * last. It is in `color` until `greyAt` and dissolves into grey after.
+ * The motion is timed by `keyPoints`, which works in every browser; plain
+ * `keyTimes` on a path with several segments does not.
+ */
 function Coin({
-  path,
+  stops,
   color,
-  hideAt,
+  greyAt,
+  dur,
   begin = 0,
-  dur = DUR,
   r = 5,
 }: {
-  path: string
+  stops: Stop[]
   color: string
-  hideAt: number
+  greyAt?: number
+  dur: number
   begin?: number
-  dur?: number
   r?: number
 }) {
-  const times = `0;${hideAt};${Math.min(hideAt + 0.04, 1)};1`
-  const fade = (values: string) => (
-    <animate
-      attributeName="opacity"
-      values={values}
-      keyTimes={times}
-      dur={`${dur}s`}
-      begin={`${begin}s`}
-      repeatCount="indefinite"
-    />
-  )
+  const first = stops[0]
+  const last = stops[stops.length - 1]
+  if (!first || !last) return null
+  const frames = [
+    ...(first.at > 0 ? [{ ...first, at: 0 }] : []),
+    ...stops,
+    ...(last.at < 1 ? [{ ...last, at: 1 }] : []),
+  ]
+  const lengths = frames.map((f, i) => {
+    const prev = frames[i - 1]
+    return prev ? Math.hypot(f.x - prev.x, f.y - prev.y) : 0
+  })
+  const total = lengths.reduce((a, b) => a + b, 0) || 1
+  let travelled = 0
+  const keyPoints = lengths.map((length) => {
+    travelled += length
+    return (travelled / total).toFixed(4)
+  })
+  const timing = { dur: `${dur}s`, begin: `${begin}s` }
   return (
     <g>
       <animateMotion
-        path={path}
-        dur={`${dur}s`}
-        begin={`${begin}s`}
-        repeatCount="indefinite"
+        path={`M ${frames.map((f) => `${f.x} ${f.y}`).join(' L ')}`}
+        keyPoints={keyPoints.join(';')}
+        keyTimes={frames.map((f) => f.at).join(';')}
         calcMode="spline"
-        keySplines="0.45 0 0.55 1"
-        keyTimes="0;1"
+        keySplines={frames
+          .slice(1)
+          .map(() => '0.45 0 0.55 1')
+          .join(';')}
+        repeatCount="indefinite"
+        {...timing}
       />
       <circle r={r} fill={color} opacity={0}>
-        {fade('1;1;0;0')}
+        <Shown from={first.at} to={greyAt ?? last.at} {...timing} />
       </circle>
-      <circle r={r} fill={GREY} opacity={0}>
-        {fade('0;0;1;1')}
-      </circle>
+      {greyAt !== undefined && (
+        <circle r={r} fill={GREY} opacity={0}>
+          <Shown from={greyAt - 0.06} to={last.at} {...timing} />
+        </circle>
+      )}
     </g>
+  )
+}
+
+/** Fades its parent in at `from` and out at `to`, 0..1 of the loop. */
+function Shown({
+  from,
+  to,
+  dur,
+  begin = '0s',
+}: {
+  from: number
+  to: number
+  dur: string
+  begin?: string
+}) {
+  const ramp = 0.04
+  const frames: [number, number][] =
+    from > 0
+      ? [
+          [0, 0],
+          [from, 0],
+          [from + ramp, 1],
+        ]
+      : [[0, 1]]
+  if (to < 1) frames.push([to - ramp, 1], [to, 0], [1, 0])
+  else frames.push([1, 1])
+  return (
+    <animate
+      attributeName="opacity"
+      values={frames.map((f) => f[1]).join(';')}
+      keyTimes={frames.map((f) => f[0]).join(';')}
+      dur={dur}
+      begin={begin}
+      repeatCount="indefinite"
+    />
   )
 }
 
@@ -146,83 +206,226 @@ function Box({ x, width }: { x: number; width: number }) {
   )
 }
 
-function PoolMachine() {
-  const loop = 'A 14 14 0 1 1 114 55 A 14 14 0 1 1 86 55'
+function Label({
+  x,
+  y,
+  children,
+  anchor = 'middle',
+}: {
+  x: number
+  y: number
+  children: ReactNode
+  anchor?: 'start' | 'middle' | 'end'
+}) {
+  return (
+    <text x={x} y={y} textAnchor={anchor} fontSize={7} fill={GREY}>
+      {children}
+    </text>
+  )
+}
+
+const ROWS = [28, 55, 82]
+
+/** Senders on the left in their colours, fresh addresses on the right. */
+function Ends({ senders }: { senders: (string | undefined)[] }) {
   return (
     <>
-      <Box x={66} width={68} />
-      <Coin
-        path={`M 8 28 L 86 55 ${loop} L 192 82`}
-        color={BLUE}
-        hideAt={0.3}
-      />
-      <Coin
-        path={`M 8 55 L 86 55 ${loop} L 192 28`}
-        color={PINK}
-        hideAt={0.3}
-        begin={-1.5}
-      />
-      <Coin
-        path={`M 8 82 L 86 55 ${loop} L 192 55`}
-        color={ORANGE}
-        hideAt={0.3}
-        begin={-3}
-      />
+      {senders.map(
+        (color, i) =>
+          color && (
+            <circle key={color} cx={12} cy={ROWS[i]} r={5} fill={color} />
+          ),
+      )}
+      {ROWS.map((y) => (
+        <circle
+          key={y}
+          cx={188}
+          cy={y}
+          r={5}
+          fill="none"
+          stroke="var(--divider)"
+          strokeWidth={1.5}
+        />
+      ))}
+      <Label x={4} y={104} anchor="start">
+        senders
+      </Label>
+      <Label x={196} y={104} anchor="end">
+        recipients
+      </Label>
     </>
   )
 }
 
-function LedgerMachine() {
-  const nodes = [
-    { x: 82, y: 36 },
-    { x: 118, y: 36 },
-    { x: 100, y: 76 },
-  ]
+/** Points on a circle around (100, 55), from `start` through `turn` radians. */
+function orbit(
+  radius: number,
+  start: number,
+  turn: number,
+  from: number,
+  to: number,
+): Stop[] {
+  const steps = 12
+  return Array.from({ length: steps + 1 }, (_, i) => {
+    const a = start + (turn * i) / steps
+    return {
+      x: 100 + Math.cos(a) * radius,
+      y: 55 + Math.sin(a) * radius,
+      at: from + ((to - from) * i) / steps,
+    }
+  })
+}
+
+/** Faint arms that turn with the coins, so the pool reads as a mixer. */
+function Swirl({ dur }: { dur: number }) {
+  const arms = [0, 1, 2].map((arm) => {
+    const points = Array.from({ length: 16 }, (_, i) => {
+      const s = i / 15
+      const a = (arm * Math.PI * 2) / 3 - s * 2.6
+      const r = 4 + s * 26
+      return `${(100 + Math.cos(a) * r).toFixed(1)} ${(55 + Math.sin(a) * r).toFixed(1)}`
+    })
+    return `M ${points.join(' L ')}`
+  })
   return (
-    <>
-      <Box x={58} width={84} />
-      {nodes.map((n) => (
-        <circle
-          key={`${n.x}-${n.y}`}
-          cx={n.x}
-          cy={n.y}
-          r={9}
+    <g opacity={0.5}>
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        from="0 100 55"
+        to="360 100 55"
+        dur={`${dur}s`}
+        repeatCount="indefinite"
+      />
+      {arms.map((d) => (
+        <path
+          key={d}
+          d={d}
           fill="none"
           stroke="var(--divider)"
           strokeWidth={2}
+          strokeLinecap="round"
         />
       ))}
-      <Coin
-        path="M 8 30 L 82 36 L 100 76 L 118 36 L 192 70"
-        color={TEAL}
-        hideAt={0.25}
-        dur={5}
-      />
-      <Coin
-        path="M 8 80 L 100 76 L 82 36 L 118 36 L 192 30"
-        color={VIOLET}
-        hideAt={0.25}
-        dur={5}
-        begin={-2.5}
-      />
+    </g>
+  )
+}
+
+function PoolMachine() {
+  const dur = 6
+  const coins = [
+    { color: BLUE, from: 0, to: 2, radius: 20, begin: 0 },
+    { color: PINK, from: 1, to: 0, radius: 13, begin: -2 },
+    { color: ORANGE, from: 2, to: 1, radius: 25, begin: -4 },
+  ]
+  return (
+    <>
+      <Box x={64} width={72} />
+      <Swirl dur={dur} />
+      <Ends senders={[BLUE, PINK, ORANGE]} />
+      {coins.map(({ color, from, to, radius, begin }) => (
+        <Coin
+          key={color}
+          color={color}
+          greyAt={0.22}
+          dur={dur}
+          begin={begin}
+          stops={[
+            { x: 12, y: ROWS[from] ?? 55, at: 0.02 },
+            ...orbit(radius, Math.PI, Math.PI * 3, 0.18, 0.66),
+            { x: 188, y: ROWS[to] ?? 55, at: 0.84 },
+            { x: 188, y: ROWS[to] ?? 55, at: 0.92 },
+          ]}
+        />
+      ))}
     </>
   )
 }
 
+/** A deposit splits; one part pays someone inside, both leave separately. */
+function LedgerMachine() {
+  const dur = 7
+  const timing = { dur: `${dur}s` }
+  return (
+    <>
+      <Box x={50} width={100} />
+      <Ends senders={[undefined, TEAL, undefined]} />
+      <Coin
+        color={TEAL}
+        greyAt={0.14}
+        dur={dur}
+        r={6}
+        stops={[
+          { x: 12, y: 55, at: 0.02 },
+          { x: 72, y: 55, at: 0.14 },
+          { x: 72, y: 55, at: 0.26 },
+        ]}
+      />
+      <Coin
+        color={GREY}
+        dur={dur}
+        r={4.5}
+        stops={[
+          { x: 72, y: 55, at: 0.24 },
+          { x: 76, y: 36, at: 0.32 },
+          { x: 76, y: 36, at: 0.56 },
+          { x: 188, y: 28, at: 0.7 },
+          { x: 188, y: 28, at: 0.78 },
+        ]}
+      />
+      <Coin
+        color={GREY}
+        dur={dur}
+        r={4.5}
+        stops={[
+          { x: 72, y: 55, at: 0.24 },
+          { x: 76, y: 74, at: 0.32 },
+          { x: 76, y: 74, at: 0.36 },
+          { x: 126, y: 74, at: 0.48 },
+          { x: 126, y: 74, at: 0.74 },
+          { x: 188, y: 82, at: 0.88 },
+          { x: 188, y: 82, at: 0.96 },
+        ]}
+      />
+      <g opacity={0}>
+        <Shown from={0.24} to={0.4} {...timing} />
+        <Label x={94} y={57}>
+          split
+        </Label>
+      </g>
+      <g opacity={0}>
+        <Shown from={0.36} to={0.56} {...timing} />
+        <Label x={101} y={88}>
+          transfer
+        </Label>
+      </g>
+      <g opacity={0}>
+        <Shown from={0.56} to={0.72} {...timing} />
+        <Label x={100} y={23}>
+          partial withdrawal
+        </Label>
+      </g>
+    </>
+  )
+}
+
+/** A proof from one of the members gets in; the service cannot tell whose. */
 function AccessMachine() {
+  const dur = DUR
+  const timing = { dur: `${dur}s` }
   const members = [
-    { x: 22, y: 34, color: BLUE },
-    { x: 46, y: 34, color: PINK },
-    { x: 22, y: 76, color: TEAL },
-    { x: 46, y: 76, color: ORANGE },
+    { x: 22, y: 38, color: BLUE },
+    { x: 46, y: 38, color: PINK },
+    { x: 22, y: 72, color: TEAL },
+    { x: 46, y: 72, color: ORANGE },
   ]
   return (
     <>
       <rect
         x={8}
-        y={18}
+        y={20}
         width={52}
-        height={74}
+        height={70}
         rx={12}
         fill="none"
         stroke="var(--divider)"
@@ -232,48 +435,57 @@ function AccessMachine() {
         <circle key={m.color} cx={m.x} cy={m.y} r={7} fill={m.color}>
           <animate
             attributeName="r"
-            values="7;8.5;7"
-            dur={`${DUR}s`}
-            keyTimes="0;0.15;0.3"
+            values="7;8.5;7;7"
+            keyTimes="0;0.08;0.16;1"
             repeatCount="indefinite"
+            {...timing}
           />
         </circle>
       ))}
-      <rect x={124} y={14} width={5} height={30} rx={2} fill="var(--divider)">
-        <animate
-          attributeName="fill"
-          values="var(--divider);var(--divider);#22c55e;var(--divider)"
-          keyTimes="0;0.5;0.6;1"
-          dur={`${DUR}s`}
-          repeatCount="indefinite"
-        />
-      </rect>
-      <rect x={124} y={66} width={5} height={30} rx={2} fill="var(--divider)">
-        <animate
-          attributeName="fill"
-          values="var(--divider);var(--divider);#22c55e;var(--divider)"
-          keyTimes="0;0.5;0.6;1"
-          dur={`${DUR}s`}
-          repeatCount="indefinite"
-        />
-      </rect>
+      <Label x={34} y={104}>
+        members
+      </Label>
       <rect
-        x={158}
+        x={150}
         y={34}
-        width={36}
+        width={42}
         height={42}
         rx={8}
         fill="var(--surface-secondary)"
         stroke="var(--divider)"
       />
-      <g>
+      <rect
+        x={150}
+        y={34}
+        width={42}
+        height={42}
+        rx={8}
+        fill="none"
+        stroke="#22c55e"
+        strokeWidth={2}
+        opacity={0}
+      >
+        <Shown from={0.7} to={0.98} {...timing} />
+      </rect>
+      <Label x={171} y={104}>
+        service
+      </Label>
+      <g opacity={0}>
+        <Shown from={0.72} to={0.98} {...timing} />
+        <Label x={171} y={26}>
+          one of 4 ✓
+        </Label>
+      </g>
+      <g opacity={0}>
+        <Shown from={0.12} to={0.72} {...timing} />
         <animateMotion
-          path="M 62 55 L 176 55"
-          dur={`${DUR}s`}
-          repeatCount="indefinite"
+          path="M 62 55 L 171 55"
+          keyPoints="0;0;1;1"
+          keyTimes="0;0.16;0.7;1"
           calcMode="spline"
-          keySplines="0.45 0 0.55 1"
-          keyTimes="0;1"
+          keySplines="0 0 1 1;0.45 0 0.55 1;0 0 1 1"
+          repeatCount="indefinite"
+          {...timing}
         />
         <circle r={8} fill="var(--brand)" />
         <path
@@ -284,74 +496,84 @@ function AccessMachine() {
           strokeLinecap="round"
           strokeLinejoin="round"
         />
+        <text y={-13} textAnchor="middle" fontSize={7} fill={GREY}>
+          proof
+        </text>
       </g>
     </>
   )
 }
 
+/** Each payment lands on a fresh address; none points to the recipient. */
 function StealthMachine() {
-  const slots = [26, 55, 84]
   const dur = DUR * 1.5
+  const timing = { dur: `${dur}s` }
+  const payments = [
+    { color: BLUE, y: 28, address: '0x7a…', start: 0 },
+    { color: PINK, y: 55, address: '0x3f…', start: 1 / 3 },
+    { color: ORANGE, y: 82, address: '0xc1…', start: 2 / 3 },
+  ]
   return (
     <>
-      <circle cx={16} cy={55} r={8} fill={VIOLET} />
-      <rect
-        x={150}
-        y={10}
-        width={44}
-        height={90}
-        rx={10}
-        fill="none"
-        stroke="var(--divider)"
-        strokeDasharray="4 3"
-      />
-      <text x={172} y={106} textAnchor="middle" fontSize={8} fill={GREY}>
-        whose?
-      </text>
-      {slots.map((y, i) => {
-        const start = i / 3
+      {payments.map(({ color, y, address, start }) => {
         const land = start + 0.18
         return (
-          <g key={y}>
-            <rect
-              x={162}
-              y={y - 8}
-              width={20}
-              height={16}
-              rx={4}
-              fill="var(--surface-secondary)"
-              stroke={GREY}
-              opacity={0}
-            >
-              <animate
-                attributeName="opacity"
-                values="0;0;1;1;0"
-                keyTimes={`0;${land};${land + 0.02};0.97;1`}
-                dur={`${dur}s`}
-                repeatCount="indefinite"
-              />
-            </rect>
+          <g key={address}>
+            <circle cx={12} cy={y} r={5} fill={color} />
             <g opacity={0}>
-              <animate
-                attributeName="opacity"
-                values="0;1;1;0;0"
-                keyTimes={`0;${start + 0.001};${land};${land + 0.001};1`}
-                dur={`${dur}s`}
-                repeatCount="indefinite"
+              <Shown from={land} to={0.98} {...timing} />
+              <rect
+                x={106}
+                y={y - 8}
+                width={36}
+                height={16}
+                rx={4}
+                fill="var(--surface-secondary)"
+                stroke="var(--divider)"
               />
-              <animateMotion
-                path={`M 24 55 L 172 ${y}`}
-                dur={`${dur}s`}
-                repeatCount="indefinite"
-                keyPoints="0;0;1;1"
-                keyTimes={`0;${start};${land};1`}
-                calcMode="linear"
+              <text x={124} y={y + 3} textAnchor="middle" fontSize={7}>
+                <tspan fill={GREY}>{address}</tspan>
+              </text>
+              <line
+                x1={144}
+                y1={y}
+                x2={174}
+                y2={55}
+                stroke="var(--divider)"
+                strokeDasharray="2 3"
               />
-              <circle r={5} fill={VIOLET} />
             </g>
+            <Coin
+              color={color}
+              dur={dur}
+              stops={[
+                { x: 12, y, at: start + 0.001 },
+                { x: 100, y, at: land },
+              ]}
+            />
           </g>
         )
       })}
+      <circle cx={184} cy={55} r={9} fill={VIOLET} />
+      <text
+        x={184}
+        y={58}
+        textAnchor="middle"
+        fontSize={9}
+        fontWeight={700}
+        fill="white"
+      >
+        ?
+      </text>
+      <Label x={4} y={104} anchor="start">
+        payers
+      </Label>
+      <Label x={124} y={104}>
+        fresh addresses
+      </Label>
+      <Label x={196} y={104} anchor="end">
+        whose?
+      </Label>
     </>
   )
 }
@@ -410,6 +632,12 @@ function ConfidentialMachine() {
           ▒▒▒ ETH
         </text>
       </g>
+      <Label x={22} y={104}>
+        sender
+      </Label>
+      <Label x={178} y={104}>
+        recipient
+      </Label>
     </>
   )
 }

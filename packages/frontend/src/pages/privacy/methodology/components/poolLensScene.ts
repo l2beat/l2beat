@@ -12,8 +12,8 @@ export type Lens = PrivacyAdversaryId
 
 /** The protocol choices the reader can change, one per adversary. */
 export interface PoolDesign {
-  /** A withdrawal names the deposit it spends, in public. */
-  namesDeposit: boolean
+  /** A withdrawal can be linked to the deposit it spends, in public. */
+  linksDeposit: boolean
   /** 0 (quiet) to 1 (busy). */
   traffic: number
   /** The client sends requests from the user's own IP to a public RPC. */
@@ -36,6 +36,10 @@ export const OWNER_COLORS = [
   '#f97316',
 ]
 const CAUGHT_COLOR = '#ef4444'
+/** The future adversary's quantum attack. */
+const QUANTUM_CYAN = '#22d3ee'
+const QUANTUM_VIOLET = '#a78bfa'
+const QUANTUM_SPARKS = [QUANTUM_CYAN, QUANTUM_VIOLET, '#f0abfc']
 const HOME_IPS = [
   '84.21.7.13',
   '91.66.3.140',
@@ -51,16 +55,22 @@ const FADE_S = 0.8
 const LOG_S = 9
 /** How long an archived note resists the future adversary. */
 const CRACK_S = 0.9
+/** How long a cracked note sparkles. */
+const BURST_S = 0.8
+/** How long a note takes to dissolve into the swirl. */
+const MIX_S = 0.9
 
 interface Note {
   id: number
   owner: number
+  /** The fresh address it leaves to, never on the owner's own row. */
+  recipient: number
   phase: 'in' | 'pool' | 'out' | 'done'
   /** Seconds in the current phase. */
   t: number
   stay: number
-  /** Resting place inside the pool, 0..1 on both axes. */
-  slot: { x: number; y: number }
+  /** Its ring in the swirl, 0 (centre) to 1 (rim), and where on it it starts. */
+  orbit: { radius: number; angle: number }
   /** Seconds since the note reached the pool, kept after it leaves. */
   sincePool: number
   inIp: string
@@ -77,6 +87,7 @@ interface Request {
 interface Trace {
   kind: 'fan' | 'caught' | 'link' | 'unknown'
   owner: number
+  recipient: number
   candidates: number[]
   age: number
   life: number
@@ -122,10 +133,15 @@ export function stepPoolScene(
     scene.notes.push({
       id: scene.nextId++,
       owner,
+      recipient:
+        (owner + 1 + Math.floor(Math.random() * (OWNERS - 1))) % OWNERS,
       phase: 'in',
       t: 0,
       stay: 2.5 + Math.random() * 5,
-      slot: { x: 0.12 + Math.random() * 0.76, y: 0.1 + Math.random() * 0.8 },
+      orbit: {
+        radius: 0.3 + Math.random() * 0.62,
+        angle: Math.random() * Math.PI * 2,
+      },
       sincePool: 0,
       inIp: requestIp(owner, design),
       outIp: '',
@@ -146,6 +162,7 @@ export function stepPoolScene(
       scene.traces.push({
         kind: caught ? 'caught' : 'fan',
         owner: note.owner,
+        recipient: note.recipient,
         candidates: waiting.map((n) => n.owner),
         age: 0,
         life: caught ? 2.6 : 1.8,
@@ -157,11 +174,13 @@ export function stepPoolScene(
       note.phase = 'out'
       note.t = 0
     } else if (note.phase === 'out' && note.t >= TRAVEL_S) {
+      const { owner, recipient } = note
       scene.traces.push(
-        { kind: 'link', owner: note.owner, candidates: [], age: 0, life: 2 },
+        { kind: 'link', owner, recipient, candidates: [], age: 0, life: 2 },
         {
           kind: 'unknown',
-          owner: note.owner,
+          owner,
+          recipient,
           candidates: [],
           age: 0,
           life: 1.4,
@@ -196,7 +215,7 @@ function requestIp(owner: number, design: PoolDesign) {
  */
 export function estimateCaughtShare(traffic: number) {
   const design: PoolDesign = {
-    namesDeposit: false,
+    linksDeposit: false,
     traffic,
     publicRpc: false,
     viewingKeys: false,
@@ -239,10 +258,16 @@ export function drawPoolScene(
   // What links this adversary can make, given the pool's design.
   const seesInside = insider && design.viewingKeys
   const breaksNotes = future && design.ellipticCurves
-  const namedLinks = readsChain && design.namesDeposit
+  const publicLinks = readsChain && design.linksDeposit
   const ipLinks = network && design.publicRpc
-  const links = seesInside || breaksNotes || namedLinks || ipLinks
-  const linkLabel = namedLinks ? 'named' : ipLinks ? 'same IP' : undefined
+  const links = seesInside || breaksNotes || publicLinks || ipLinks
+  const linkLabel = publicLinks
+    ? 'linked'
+    : ipLinks
+      ? 'same IP'
+      : breaksNotes
+        ? 'key broken'
+        : undefined
 
   // Zones
   for (const band of [l.leftBand, l.rightBand]) {
@@ -288,6 +313,8 @@ export function drawPoolScene(
   ctx.strokeStyle = seesInside ? tokens.brand : tokens.divider
   ctx.stroke()
   ctx.lineWidth = 1
+  drawSwirl(ctx, l, scene.time, tokens)
+  if (future) drawQuantumScan(ctx, l, scene.time)
 
   // Headings
   ctx.font = '600 10px Roboto, sans-serif'
@@ -318,15 +345,18 @@ export function drawPoolScene(
     ctx.fillStyle = color
     ctx.fill()
 
-    const link = scene.traces.find((t) => t.kind === 'link' && t.owner === i)
-    const known = link && links
+    const link = scene.traces.find(
+      (t) => t.kind === 'link' && t.recipient === i,
+    )
+    const linkColor = link && links ? OWNER_COLORS[link.owner] : undefined
     ctx.beginPath()
     ctx.arc(l.recipientX, l.rowY(i), 10, 0, Math.PI * 2)
-    ctx.fillStyle = known
-      ? alpha(color, 0.25 + 0.75 * (1 - link.age / link.life))
-      : tokens.surface
+    ctx.fillStyle =
+      link && linkColor
+        ? alpha(linkColor, 0.25 + 0.75 * (1 - link.age / link.life))
+        : tokens.surface
     ctx.fill()
-    ctx.strokeStyle = known ? color : tokens.divider
+    ctx.strokeStyle = linkColor ?? tokens.divider
     ctx.lineWidth = 2
     ctx.stroke()
     ctx.lineWidth = 1
@@ -335,7 +365,7 @@ export function drawPoolScene(
   // Traces
   for (const trace of scene.traces) {
     const fade = 1 - trace.age / trace.life
-    const to = { x: l.recipientX, y: l.rowY(trace.owner) }
+    const to = { x: l.recipientX, y: l.rowY(trace.recipient) }
     if (lens === 'chainAnalyst' && trace.kind === 'fan') {
       ctx.setLineDash([3, 4])
       ctx.strokeStyle = alpha(tokens.secondary, 0.45 * fade)
@@ -365,10 +395,15 @@ export function drawPoolScene(
     }
     if (links && trace.kind === 'link') {
       const color = OWNER_COLORS[trace.owner] ?? tokens.secondary
-      ctx.strokeStyle = alpha(color, 0.8 * fade)
-      ctx.lineWidth = 2
-      line(ctx, { x: l.senderX + 12, y: l.rowY(trace.owner) }, to)
-      ctx.lineWidth = 1
+      const from = { x: l.senderX + 12, y: l.rowY(trace.owner) }
+      if (breaksNotes) {
+        drawQuantumBeam(ctx, from, to, color, scene.time, fade)
+      } else {
+        ctx.strokeStyle = alpha(color, 0.8 * fade)
+        ctx.lineWidth = 2
+        line(ctx, from, to)
+        ctx.lineWidth = 1
+      }
       if (linkLabel) {
         tag(ctx, linkLabel, to.x - 18, to.y - 18, {
           color: '#ffffff',
@@ -404,8 +439,14 @@ export function drawPoolScene(
       note.phase === 'in' ||
       seesInside ||
       cracked ||
-      ((namedLinks || ipLinks) && left)
+      ((publicLinks || ipLinks) && left)
     const opacity = note.phase === 'done' ? 1 - note.t / FADE_S : 1
+    // A hidden coin dissolves into the swirl instead of turning grey at once.
+    const tint = revealed
+      ? 1
+      : note.phase === 'pool'
+        ? Math.max(0, 1 - note.t / MIX_S)
+        : 0
 
     if (note.phase === 'in' || note.phase === 'out') {
       for (let k = 1; k <= 5; k++) {
@@ -424,26 +465,24 @@ export function drawPoolScene(
     ctx.globalAlpha = opacity
     ctx.beginPath()
     ctx.arc(p.x, p.y, 6, 0, Math.PI * 2)
-    if (revealed) {
+    ctx.fillStyle = alpha(tokens.secondary, 0.6)
+    ctx.fill()
+    if (tint > 0) {
+      ctx.globalAlpha = opacity * tint
       ctx.shadowColor = ownerColor
       ctx.shadowBlur = 10
       ctx.fillStyle = ownerColor
-    } else {
-      ctx.fillStyle = alpha(tokens.secondary, 0.6)
+      ctx.fill()
+      ctx.shadowBlur = 0
+      ctx.globalAlpha = opacity
     }
-    ctx.fill()
-    ctx.shadowBlur = 0
 
     if (future && note.phase !== 'in') {
-      if (!cracked) drawLock(ctx, p.x, p.y, tokens.surface)
-      else if (note.sincePool < CRACK_S + 0.4) {
-        const k = (note.sincePool - CRACK_S) / 0.4
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, 6 + k * 10, 0, Math.PI * 2)
-        ctx.strokeStyle = alpha(ownerColor, 1 - k)
-        ctx.lineWidth = 2
-        ctx.stroke()
-        ctx.lineWidth = 1
+      if (!cracked) {
+        drawLock(ctx, p.x, p.y, tokens.surface)
+        if (!design.ellipticCurves) drawShieldGlint(ctx, p, l, scene.time)
+      } else if (note.sincePool < CRACK_S + BURST_S) {
+        drawQuantumBurst(ctx, p, (note.sincePool - CRACK_S) / BURST_S, note.id)
       }
     }
 
@@ -495,32 +534,244 @@ function getLayout(width: number, height: number) {
   const rightStart = pool.x + pool.width + 12
   const rightBand = { x: rightStart, width: recipientX - 18 - rightStart }
   const rowY = (i: number) => top + ((i + 0.5) * (bottom - top)) / OWNERS
-  return { top, bottom, senderX, recipientX, pool, leftBand, rightBand, rowY }
+  const swirl = {
+    x: pool.x + pool.width / 2,
+    y: (top + bottom) / 2,
+    rx: pool.width / 2 - 14,
+    ry: (bottom - top) / 2 - 14,
+  }
+  return {
+    top,
+    bottom,
+    senderX,
+    recipientX,
+    pool,
+    swirl,
+    leftBand,
+    rightBand,
+    rowY,
+  }
 }
 
 type Layout = ReturnType<typeof getLayout>
 
 function notePosition(note: Note, l: Layout, time: number) {
-  const slot = {
-    x: l.pool.x + note.slot.x * l.pool.width,
-    y: l.top + note.slot.y * (l.bottom - l.top),
-  }
+  const orbit = orbitPosition(note, l, time)
   if (note.phase === 'in' || note.phase === 'out') {
     const from =
-      note.phase === 'in' ? { x: l.senderX, y: l.rowY(note.owner) } : slot
+      note.phase === 'in' ? { x: l.senderX, y: l.rowY(note.owner) } : orbit
     const to =
-      note.phase === 'in' ? slot : { x: l.recipientX, y: l.rowY(note.owner) }
+      note.phase === 'in'
+        ? orbit
+        : { x: l.recipientX, y: l.rowY(note.recipient) }
     const k = easeInOut(Math.min(note.t / TRAVEL_S, 1))
     return {
       x: from.x + (to.x - from.x) * k,
       y: from.y + (to.y - from.y) * k - Math.sin(Math.PI * k) * 14,
     }
   }
-  if (note.phase === 'done') return { x: l.recipientX, y: l.rowY(note.owner) }
-  return {
-    x: slot.x + Math.sin(time * 1.3 + note.id) * 2.5,
-    y: slot.y + Math.cos(time * 1.1 + note.id * 2) * 2.5,
+  if (note.phase === 'done') {
+    return { x: l.recipientX, y: l.rowY(note.recipient) }
   }
+  return orbit
+}
+
+/** Where a note is in the swirl: inner rings turn faster, like a whirlpool. */
+function orbitPosition(note: Note, l: Layout, time: number) {
+  const { radius, angle } = note.orbit
+  const r = radius + 0.05 * Math.sin(time * 0.9 + note.id)
+  const a = angle + time * swirlSpeed(radius)
+  return {
+    x: l.swirl.x + Math.cos(a) * l.swirl.rx * r,
+    y: l.swirl.y + Math.sin(a) * l.swirl.ry * r,
+  }
+}
+
+/** Radians a second at this ring of the swirl. */
+function swirlSpeed(radius: number) {
+  return 0.45 + 1.1 * (1 - radius)
+}
+
+/** Faint arms turning at the middle ring's speed. */
+function drawSwirl(
+  ctx: CanvasRenderingContext2D,
+  l: Layout,
+  time: number,
+  tokens: ThemeTokens,
+) {
+  ctx.save()
+  ctx.lineCap = 'round'
+  for (let arm = 0; arm < 3; arm++) {
+    for (let i = 0; i < 40; i++) {
+      const s0 = i / 40
+      const s1 = (i + 1) / 40
+      const point = (s: number) => {
+        const r = 0.08 + 0.92 * s
+        const a = (arm * Math.PI * 2) / 3 + time * swirlSpeed(0.6) - s * 2.6
+        return {
+          x: l.swirl.x + Math.cos(a) * l.swirl.rx * r,
+          y: l.swirl.y + Math.sin(a) * l.swirl.ry * r,
+        }
+      }
+      // Each arm fades in from the centre and out at the rim.
+      ctx.strokeStyle = alpha(
+        tokens.secondary,
+        (tokens.isDark ? 0.16 : 0.12) * Math.sin(Math.PI * s0),
+      )
+      ctx.lineWidth = 1 + 2 * s0
+      line(ctx, point(s0), point(s1))
+    }
+  }
+  ctx.restore()
+}
+
+/** The height of the future adversary's scan across the pool. */
+function quantumScanY(l: Layout, time: number) {
+  const k = (time % 3.2) / 3.2
+  return l.top + k * (l.bottom - l.top)
+}
+
+function drawQuantumScan(
+  ctx: CanvasRenderingContext2D,
+  l: Layout,
+  time: number,
+) {
+  const y = quantumScanY(l, time)
+  ctx.save()
+  const gradient = ctx.createLinearGradient(0, y - 18, 0, y + 2)
+  gradient.addColorStop(0, alpha(QUANTUM_CYAN, 0))
+  gradient.addColorStop(1, alpha(QUANTUM_CYAN, 0.22))
+  ctx.fillStyle = gradient
+  ctx.fillRect(l.pool.x + 1, y - 18, l.pool.width - 2, 20)
+  ctx.shadowColor = QUANTUM_CYAN
+  ctx.shadowBlur = 8
+  ctx.strokeStyle = alpha(QUANTUM_CYAN, 0.7)
+  line(ctx, { x: l.pool.x + 6, y }, { x: l.pool.x + l.pool.width - 6, y })
+  ctx.restore()
+}
+
+/** A post-quantum note: the scan glances off its shield. */
+function drawShieldGlint(
+  ctx: CanvasRenderingContext2D,
+  p: { x: number; y: number },
+  l: Layout,
+  time: number,
+) {
+  const near = 1 - Math.abs(p.y - quantumScanY(l, time)) / 16
+  if (near <= 0) return
+  ctx.save()
+  ctx.globalAlpha *= near
+  ctx.shadowColor = QUANTUM_CYAN
+  ctx.shadowBlur = 10
+  ctx.strokeStyle = QUANTUM_CYAN
+  ctx.lineWidth = 1.5
+  ctx.beginPath()
+  for (let i = 0; i <= 6; i++) {
+    const a = (i * Math.PI) / 3 + Math.PI / 6
+    const x = p.x + Math.cos(a) * 10
+    const y = p.y + Math.sin(a) * 10
+    if (i === 0) ctx.moveTo(x, y)
+    else ctx.lineTo(x, y)
+  }
+  ctx.stroke()
+  ctx.restore()
+}
+
+/** An elliptic-curve note breaking open, `k` from 0 to 1. */
+function drawQuantumBurst(
+  ctx: CanvasRenderingContext2D,
+  p: { x: number; y: number },
+  k: number,
+  seed: number,
+) {
+  ctx.save()
+  ctx.globalAlpha *= 1 - k
+  ctx.shadowColor = QUANTUM_VIOLET
+  ctx.shadowBlur = 12
+  ctx.beginPath()
+  ctx.arc(p.x, p.y, 6 + k * 14, 0, Math.PI * 2)
+  ctx.strokeStyle = QUANTUM_CYAN
+  ctx.lineWidth = 2 * (1 - k) + 0.5
+  ctx.stroke()
+  for (let i = 0; i < 7; i++) {
+    const a = (i * Math.PI * 2) / 7 + seed
+    const d = 4 + easeOut(k) * (14 + (i % 3) * 5)
+    sparkle(
+      ctx,
+      p.x + Math.cos(a) * d,
+      p.y + Math.sin(a) * d,
+      3.2 * (1 - k) + 0.8,
+      QUANTUM_SPARKS[i % QUANTUM_SPARKS.length] ?? QUANTUM_CYAN,
+    )
+  }
+  ctx.restore()
+}
+
+/** The link a quantum attack recovers: a shimmering, sparkling beam. */
+function drawQuantumBeam(
+  ctx: CanvasRenderingContext2D,
+  from: { x: number; y: number },
+  to: { x: number; y: number },
+  color: string,
+  time: number,
+  fade: number,
+) {
+  const dx = to.x - from.x
+  const dy = to.y - from.y
+  const length = Math.hypot(dx, dy) || 1
+  const at = (s: number, wave: number) => ({
+    x: from.x + dx * s - (dy / length) * wave,
+    y: from.y + dy * s + (dx / length) * wave,
+  })
+  ctx.save()
+  ctx.globalAlpha *= fade
+  const gradient = ctx.createLinearGradient(from.x, from.y, to.x, to.y)
+  gradient.addColorStop(0, color)
+  gradient.addColorStop(0.5, QUANTUM_CYAN)
+  gradient.addColorStop(1, color)
+  ctx.strokeStyle = gradient
+  ctx.shadowColor = QUANTUM_VIOLET
+  ctx.shadowBlur = 10
+  for (const [phase, width] of [
+    [0, 2],
+    [Math.PI, 1],
+  ] as const) {
+    ctx.lineWidth = width
+    ctx.beginPath()
+    for (let i = 0; i <= 48; i++) {
+      const s = i / 48
+      const wave =
+        Math.sin(Math.PI * s) * 4 * Math.sin(s * 22 - time * 9 + phase)
+      const point = at(s, wave)
+      if (i === 0) ctx.moveTo(point.x, point.y)
+      else ctx.lineTo(point.x, point.y)
+    }
+    ctx.stroke()
+  }
+  for (let i = 0; i < 4; i++) {
+    const s = (time * 0.7 + i / 4) % 1
+    const point = at(s, 0)
+    sparkle(ctx, point.x, point.y, 3.5, '#ffffff')
+  }
+  ctx.restore()
+}
+
+/** A four-pointed star. */
+function sparkle(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  size: number,
+  color: string,
+) {
+  ctx.beginPath()
+  ctx.moveTo(x, y - size)
+  ctx.quadraticCurveTo(x, y, x + size, y)
+  ctx.quadraticCurveTo(x, y, x, y + size)
+  ctx.quadraticCurveTo(x, y, x - size, y)
+  ctx.quadraticCurveTo(x, y, x, y - size)
+  ctx.fillStyle = color
+  ctx.fill()
 }
 
 function drawLock(
@@ -581,6 +832,10 @@ function line(
 
 function inside(x: number, band: { x: number; width: number }) {
   return x >= band.x && x <= band.x + band.width
+}
+
+function easeOut(k: number) {
+  return 1 - (1 - k) ** 3
 }
 
 function easeInOut(k: number) {
