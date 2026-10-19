@@ -17,6 +17,7 @@ import {
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import groupBy from 'lodash/groupBy'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -86,10 +87,10 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       configurations: configurations.length,
     })
 
-    const records = await this.fetchEventsForConfigurations(
-      configurations,
-      from,
-      adjustedTo,
+    const records = await withCoreFeatureRpcMetricsContext(
+      'privacy.anonymitySet',
+      { chain: this.$.chain },
+      () => this.fetchEventsForConfigurations(configurations, from, adjustedTo),
     )
 
     this.logger.info('Fetched privacy anonymity set events', {
