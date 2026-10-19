@@ -1,7 +1,10 @@
-import { IconEyeClosed } from '../../../../icons/IconEyeClosed'
-import { useStore } from '../store/store'
-import { getGraphProjection, isHideable } from '../store/utils/graphProjection'
-import { ControlDropdownButton } from './ControlDropdownButton'
+import { IconEyeClosed } from '../../../../../icons/IconEyeClosed'
+import { useStore } from '../../store/store'
+import {
+  getGraphProjection,
+  isHideable,
+} from '../../store/utils/graphProjection'
+import { ControlDropdownButton } from '../ControlDropdownButton'
 
 export function HideNodesButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)

@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
-import { Checkbox } from '../../../../components/Checkbox'
-import { Dialog } from '../../../../components/Dialog'
-import { IconGear } from '../../../../icons/IconGear'
-import { useStore } from '../store/store'
-import { ControlButton } from './ControlButton'
+import { Checkbox } from '../../../../../components/Checkbox'
+import { Dialog } from '../../../../../components/Dialog'
+import { IconGear } from '../../../../../icons/IconGear'
+import { useStore } from '../../store/store'
+import { ControlButton } from '../ControlButton'
 
 export function Settings({ className }: { className?: string }) {
   const preferences = useStore((state) => state.userPreferences)

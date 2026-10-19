@@ -1,6 +1,6 @@
-import { IconUndo } from '../../../../icons/IconUndo'
-import { useStore } from '../store/store'
-import { ControlButton } from './ControlButton'
+import { IconUndo } from '../../../../../icons/IconUndo'
+import { useStore } from '../../store/store'
+import { ControlButton } from '../ControlButton'
 
 export function UndoButton({ className }: { className?: string }) {
   const undo = useStore((state) => state.undo)

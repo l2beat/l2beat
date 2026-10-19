@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import { useState } from 'react'
-import { Checkbox } from '../../../../../components/Checkbox'
-import { IconEyeClosed } from '../../../../../icons/IconEyeClosed'
-import { IconFoldVertical } from '../../../../../icons/IconFoldVertical'
-import { IconUnfoldVertical } from '../../../../../icons/IconUnfoldVertical'
+import { Checkbox } from '../../../../../../components/Checkbox'
+import { IconEyeClosed } from '../../../../../../icons/IconEyeClosed'
+import { IconFoldVertical } from '../../../../../../icons/IconFoldVertical'
+import { IconUnfoldVertical } from '../../../../../../icons/IconUnfoldVertical'
 import type { ExpandedField } from './buildFieldTree'
 import {
   type DisplayedFieldState,

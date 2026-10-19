@@ -1,13 +1,13 @@
-import { cn } from '../../../../utils/cn'
-import { useStore } from '../store/store'
-import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
-import { clusterLayout } from '../store/utils/clusterLayout'
-import { getGraphProjection } from '../store/utils/graphProjection'
-import { containerBoxes } from '../store/utils/renderGraph'
-import { ControlButton } from './ControlButton'
-import { IconControlCluster } from './icons/IconControlCluster'
+import clsx from 'clsx'
+import { useStore } from '../../store/store'
+import { centerLocationsInViewport } from '../../store/utils/centerLocationsInViewport'
+import { getGraphProjection } from '../../store/utils/graphProjection'
+import { containerBoxes } from '../../store/utils/renderGraph'
+import { stackAutoLayout } from '../../store/utils/stackLayout'
+import { ControlButton } from '../ControlButton'
+import { IconControlStack } from '../icons/IconControlStack'
 
-export function ClusterLayoutButton({ className }: { className?: string }) {
+export function StackLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const layout = useStore((state) => state.layout)
   const selected = useStore((state) => state.selected)
@@ -28,7 +28,7 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
   return (
     <ControlButton
       onClick={() => {
-        let locations = clusterLayout(
+        let locations = stackAutoLayout(
           visibleNodes,
           considerAllNodes,
           projection.visibleEdges,
@@ -44,10 +44,10 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
         }
         layout(locations)
       }}
-      className={cn('px-3 py-2.5', className)}
+      className={clsx('px-3 py-2.5', className)}
     >
       <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
-        <IconControlCluster />
+        <IconControlStack />
       </span>
     </ControlButton>
   )

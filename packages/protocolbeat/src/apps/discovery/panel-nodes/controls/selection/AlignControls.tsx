@@ -1,6 +1,6 @@
-import { useStore } from '../store/store'
-import { ControlButton } from './ControlButton'
-import { ControlGroup } from './ControlGroup'
+import { useStore } from '../../store/store'
+import { ControlButton } from '../ControlButton'
+import { ControlGroup } from '../ControlGroup'
 import {
   IconAlignBottom,
   IconAlignLeft,
@@ -8,7 +8,7 @@ import {
   IconAlignTop,
   IconDistributeHorizontal,
   IconDistributeVertical,
-} from './icons/AlignIcons'
+} from '../icons/AlignIcons'
 
 // Alignment needs at least two nodes; distribution needs a node to respace
 // between the two outermost ones.

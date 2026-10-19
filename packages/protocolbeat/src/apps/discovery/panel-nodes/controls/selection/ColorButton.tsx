@@ -3,14 +3,14 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '../../../../components/Popover'
-import { cn } from '../../../../utils/cn'
-import type { Node as DiscoveryNode } from '../store/State'
-import { useStore } from '../store/store'
-import { SELECTABLE_COLORS } from '../view/colors/colors'
-import { oklchColorToCSS } from '../view/colors/oklch'
-import { ControlButton } from './ControlButton'
-import { IconControlPalette } from './icons/IconControlPalette'
+} from '../../../../../components/Popover'
+import { cn } from '../../../../../utils/cn'
+import type { Node as DiscoveryNode } from '../../store/State'
+import { useStore } from '../../store/store'
+import { SELECTABLE_COLORS } from '../../view/colors/colors'
+import { oklchColorToCSS } from '../../view/colors/oklch'
+import { ControlButton } from '../ControlButton'
+import { IconControlPalette } from '../icons/IconControlPalette'
 
 const AUTO_SWATCH_BACKGROUND =
   'conic-gradient(#9ED110, #50B517, #179067, #476EAF, #9F49AC, #CC42A2, #FF3BA7, #FF5800, #FF8100, #FEAC00, #FFCC00, #EDE604, #9ED110)'

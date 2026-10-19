@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import { useStore } from '../store/store'
-import { IconControlBars } from './icons/IconControlBars'
+import { useStore } from '../../store/store'
+import { IconControlBars } from '../icons/IconControlBars'
 import { ValuesDialog } from './node-values/ValuesDialog'
 
 export function ValuesButton({ className }: { className?: string }) {

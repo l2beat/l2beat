@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react'
-import { IconCursor } from '../../../../icons/IconCursor'
-import { IconHand } from '../../../../icons/IconHand'
-import type { Tool } from '../store/State'
-import { useStore } from '../store/store'
-import { HAND_TOOL_KEY, SELECT_TOOL_KEY } from '../store/utils/constants'
-import { effectiveTool } from '../store/utils/tool'
-import { ControlButton } from './ControlButton'
-import { ControlGroup } from './ControlGroup'
+import { IconCursor } from '../../../../../icons/IconCursor'
+import { IconHand } from '../../../../../icons/IconHand'
+import type { Tool } from '../../store/State'
+import { useStore } from '../../store/store'
+import { HAND_TOOL_KEY, SELECT_TOOL_KEY } from '../../store/utils/constants'
+import { effectiveTool } from '../../store/utils/tool'
+import { ControlButton } from '../ControlButton'
+import { ControlGroup } from '../ControlGroup'
 
 const TOOLS: {
   tool: Tool

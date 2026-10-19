@@ -1,7 +1,7 @@
-import { IconEyeClosed } from '../../../../icons/IconEyeClosed'
-import { cn } from '../../../../utils/cn'
-import { useStore } from '../store/store'
-import { ControlButton } from './ControlButton'
+import { IconEyeClosed } from '../../../../../icons/IconEyeClosed'
+import { cn } from '../../../../../utils/cn'
+import { useStore } from '../../store/store'
+import { ControlButton } from '../ControlButton'
 
 export function HideButton({ className }: { className?: string }) {
   const selectionExists = useStore((state) => state.selected.length > 0)

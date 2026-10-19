@@ -1,7 +1,7 @@
-import { useStore } from '../store/store'
-import { getGraphProjection } from '../store/utils/graphProjection'
-import { ControlDropdownButton } from './ControlDropdownButton'
-import { IconControlEye } from './icons/IconControlEye'
+import { useStore } from '../../store/store'
+import { getGraphProjection } from '../../store/utils/graphProjection'
+import { ControlDropdownButton } from '../ControlDropdownButton'
+import { IconControlEye } from '../icons/IconControlEye'
 
 export function ShowButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)

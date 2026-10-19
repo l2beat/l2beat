@@ -5,27 +5,27 @@ import {
   getProjectLayout,
   listProjectLayouts,
   saveProjectLayout,
-} from '../../../../api/api'
-import { Button } from '../../../../components/Button'
-import { Checkbox } from '../../../../components/Checkbox'
-import { InlineCode } from '../../../../components/Code'
-import { Dialog } from '../../../../components/Dialog'
-import { Input, InputDescription } from '../../../../components/Input'
-import { Tabs } from '../../../../components/Tabs'
-import { TextArea } from '../../../../components/TextArea'
-import { IS_READONLY } from '../../../../config/readonly'
-import { IconDownload } from '../../../../icons/IconDownload'
-import { IconFileUp } from '../../../../icons/IconFileUp'
-import { IconFolder } from '../../../../icons/IconFolder'
-import { cn } from '../../../../utils/cn'
-import type { ApplyLayoutMode } from '../store/actions/applyStoredLayout'
-import { useStore } from '../store/store'
-import { type LayoutMetadata, migrateLayout } from '../store/utils/layout'
+} from '../../../../../api/api'
+import { Button } from '../../../../../components/Button'
+import { Checkbox } from '../../../../../components/Checkbox'
+import { InlineCode } from '../../../../../components/Code'
+import { Dialog } from '../../../../../components/Dialog'
+import { Input, InputDescription } from '../../../../../components/Input'
+import { Tabs } from '../../../../../components/Tabs'
+import { TextArea } from '../../../../../components/TextArea'
+import { IS_READONLY } from '../../../../../config/readonly'
+import { IconDownload } from '../../../../../icons/IconDownload'
+import { IconFileUp } from '../../../../../icons/IconFileUp'
+import { IconFolder } from '../../../../../icons/IconFolder'
+import { cn } from '../../../../../utils/cn'
+import type { ApplyLayoutMode } from '../../store/actions/applyStoredLayout'
+import { useStore } from '../../store/store'
+import { type LayoutMetadata, migrateLayout } from '../../store/utils/layout'
 import {
   buildStoredNodeLayout,
   type StoredNodeLayout,
-} from '../store/utils/storage'
-import { ControlButton } from './ControlButton'
+} from '../../store/utils/storage'
+import { ControlButton } from '../ControlButton'
 
 interface PendingLayout {
   sourceLabel: string

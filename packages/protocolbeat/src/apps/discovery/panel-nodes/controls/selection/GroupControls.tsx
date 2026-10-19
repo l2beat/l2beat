@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { IconGroup } from '../../../../icons/IconGroup'
-import { IconUngroup } from '../../../../icons/IconUngroup'
-import { useStore } from '../store/store'
-import { ControlButton } from './ControlButton'
+import { IconGroup } from '../../../../../icons/IconGroup'
+import { IconUngroup } from '../../../../../icons/IconUngroup'
+import { useStore } from '../../store/store'
+import { ControlButton } from '../ControlButton'
 
 export function GroupControls() {
   const selected = useStore((state) => state.selected)

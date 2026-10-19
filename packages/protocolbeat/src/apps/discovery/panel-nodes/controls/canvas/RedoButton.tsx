@@ -1,6 +1,6 @@
-import { IconUndo } from '../../../../icons/IconUndo'
-import { useStore } from '../store/store'
-import { ControlButton } from './ControlButton'
+import { IconUndo } from '../../../../../icons/IconUndo'
+import { useStore } from '../../store/store'
+import { ControlButton } from '../ControlButton'
 
 export function RedoButton({ className }: { className?: string }) {
   const redo = useStore((state) => state.redo)
