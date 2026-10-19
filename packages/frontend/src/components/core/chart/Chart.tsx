@@ -229,7 +229,7 @@ function SimpleChartContainer({
 }
 SimpleChartContainer.displayName = 'Chart'
 
-function ChartTooltip(props: RechartsPrimitive.TooltipProps<number, string>) {
+function ChartTooltip(props: RechartsPrimitive.TooltipProps) {
   const coordinate = RechartsPrimitive.useActiveTooltipCoordinate()
   const plotArea = RechartsPrimitive.usePlotArea()
   const showOnLeft =
