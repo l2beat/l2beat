@@ -7,7 +7,7 @@ import { alpha } from './canvasColor'
  */
 
 /** Seconds a deposit takes to cross the visible history. */
-const WINDOW_S = 9
+const WINDOW_S = 6
 const FAN_S = 2.4
 const MY_FAN_S = 6
 
@@ -81,7 +81,8 @@ export function addDeposit(scene: CrowdScene, mine: boolean) {
 /** The reader's withdrawal; returns how many deposits it hides among. */
 export function withdrawMine(scene: CrowdScene, source: number) {
   const candidates = scene.deposits.map((d) => d.id)
-  scene.withdrawals.push({ age: 0, candidates, source })
+  // Only the reader's own fan stays on screen, so labels never overlap.
+  scene.withdrawals = [{ age: 0, candidates, source }]
   return candidates.length
 }
 
@@ -89,9 +90,13 @@ export function hasDeposit(scene: CrowdScene, id: number) {
   return scene.deposits.some((d) => d.id === id)
 }
 
-/** Candidates of the newest withdrawal, for the live counter. */
-export function latestSetSize(scene: CrowdScene) {
-  return scene.withdrawals.at(-1)?.candidates.length
+/** How many deposits a withdrawal made now would hide among. */
+export function crowdSize(scene: CrowdScene) {
+  return scene.deposits.length
+}
+
+export function isShowingMine(scene: CrowdScene) {
+  return scene.withdrawals.some((w) => w.source !== undefined)
 }
 
 export function drawCrowdScene(

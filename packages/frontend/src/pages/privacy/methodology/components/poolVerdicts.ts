@@ -2,13 +2,11 @@ import type { PrivacyAdversarySentiment } from '@l2beat/config'
 import type { Lens, PoolDesign } from './poolLensScene'
 
 export interface PoolVerdict {
-  /** Undefined until the simulation has run long enough to tell. */
-  sentiment: PrivacyAdversarySentiment | undefined
+  sentiment: PrivacyAdversarySentiment
   sees: string
+  /** The earlier adversary this verdict comes from, when it is worse. */
+  inheritedFrom?: Lens
 }
-
-/** Withdrawals the chain analyst needs to watch before it can judge. */
-const MIN_SAMPLES = 6
 
 const SEVERITY: Record<PrivacyAdversarySentiment, number> = {
   good: 0,
@@ -18,13 +16,14 @@ const SEVERITY: Record<PrivacyAdversarySentiment, number> = {
 
 /**
  * The verdicts follow from the pool's design and, for the chain analyst,
- * from how many withdrawals timing actually caught. The public observer,
- * chain analyst and future adversary see the same public data with
- * increasing ability, so each one is at least as bad as the one before.
+ * from the share of withdrawals timing gives away (`caughtShare`). The
+ * public observer, chain analyst and future adversary see the same public
+ * data with increasing ability, so each one is at least as bad as the one
+ * before.
  */
 export function getPoolVerdicts(
   design: PoolDesign,
-  outcomes: boolean[],
+  caughtShare: number,
 ): Record<Lens, PoolVerdict> {
   const publicObserver: PoolVerdict = design.namesDeposit
     ? {
@@ -36,12 +35,16 @@ export function getPoolVerdicts(
         sees: 'Every deposit and every withdrawal, but nothing that ties one to the other.',
       }
 
-  const chainAnalyst = atLeast(publicObserver, timing(outcomes), {
-    sees: 'Every link the public observer can follow, at least.',
-  })
+  const chainAnalyst = atLeast(
+    publicObserver,
+    'publicObserver',
+    timing(caughtShare),
+    'Every link the public observer can follow, at least.',
+  )
 
   const futureAdversary = atLeast(
     chainAnalyst,
+    'chainAnalyst',
     design.ellipticCurves
       ? {
           sentiment: 'bad',
@@ -51,7 +54,7 @@ export function getPoolVerdicts(
           sentiment: 'good',
           sees: 'The archived pool, years later, but the post-quantum protection on each note still holds.',
         },
-    { sees: 'Everything the chain analyst finds today, at least.' },
+    'Everything the chain analyst finds today, at least.',
   )
 
   return {
@@ -79,43 +82,31 @@ export function getPoolVerdicts(
   }
 }
 
-function timing(outcomes: boolean[]): PoolVerdict {
-  if (outcomes.length < MIN_SAMPLES) {
-    return {
-      sentiment: undefined,
-      sees: `Timing. ${outcomes.length} of ${MIN_SAMPLES} withdrawals watched so far.`,
-    }
-  }
-  const caught = outcomes.filter(Boolean).length
-  const share = `${caught} of the last ${outcomes.length} withdrawals`
-  if (caught === 0) {
+function timing(caughtShare: number): PoolVerdict {
+  const inHundred = Math.round(caughtShare * 100)
+  if (caughtShare < 0.01) {
     return {
       sentiment: 'good',
-      sees: `Timing, but enough coins are always waiting: ${share} stood out.`,
+      sees: 'Timing, but enough coins are always waiting: fewer than 1 in 100 withdrawals stands out.',
     }
   }
   return {
-    sentiment: caught * 4 <= outcomes.length ? 'warning' : 'bad',
-    sees: `Timing. Too few coins were waiting for ${share}, which gave their deposits away.`,
+    sentiment: caughtShare < 0.25 ? 'warning' : 'bad',
+    sees: `Timing. Too few coins are waiting for about ${inHundred} in 100 withdrawals, which gives their deposits away.`,
   }
 }
 
-/** `own`, unless `before` is worse, which then explains it. */
+/** `own`, unless the earlier adversary's verdict is worse. */
 function atLeast(
   before: PoolVerdict,
+  beforeLens: Lens,
   own: PoolVerdict,
-  inherited: { sees: string },
+  inheritedSees: string,
 ): PoolVerdict {
-  // Unknown before means unknown here, unless this one is already the worst.
-  if (before.sentiment === undefined && own.sentiment !== 'bad') {
-    return { sentiment: undefined, sees: before.sees }
+  if (SEVERITY[before.sentiment] <= SEVERITY[own.sentiment]) return own
+  return {
+    sentiment: before.sentiment,
+    sees: inheritedSees,
+    inheritedFrom: beforeLens,
   }
-  if (
-    before.sentiment &&
-    (own.sentiment === undefined ||
-      SEVERITY[before.sentiment] > SEVERITY[own.sentiment])
-  ) {
-    return { sentiment: before.sentiment, sees: inherited.sees }
-  }
-  return own
 }

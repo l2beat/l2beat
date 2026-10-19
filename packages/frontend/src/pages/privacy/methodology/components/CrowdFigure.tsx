@@ -9,9 +9,10 @@ import {
   addDeposit,
   type CrowdScene,
   createCrowdScene,
+  crowdSize,
   drawCrowdScene,
   hasDeposit,
-  latestSetSize,
+  isShowingMine,
   stepCrowdScene,
   withdrawMine,
 } from './crowdScene'
@@ -20,7 +21,7 @@ import { useFigureAutoplay } from './useFigureAutoplay'
 
 /** Deposits per second, from a quiet pool to a busy one. */
 function toRate(traffic: number) {
-  return 0.08 + traffic * 4.6
+  return 0.15 + traffic * 7
 }
 
 export function CrowdFigure() {
@@ -34,7 +35,8 @@ export function CrowdFigure() {
   const [traffic, setTraffic] = useState(0.5)
   const trafficRef = useRef(traffic)
   trafficRef.current = traffic
-  const [setSize, setSetSize] = useState<number>()
+  const [crowd, setCrowd] = useState(0)
+  const [lost, setLost] = useState(false)
   const [mine, setMine] = useState<number>()
   const [result, setResult] = useState<number>()
 
@@ -48,15 +50,19 @@ export function CrowdFigure() {
   useInterval(
     () => {
       clock.current += 0.1
-      setTraffic(0.5 - 0.5 * Math.cos(clock.current / 4))
+      setTraffic(0.5 - 0.5 * Math.cos(clock.current / 7))
     },
     playing ? 100 : null,
   )
 
   useInterval(
     () => {
-      setSetSize(latestSetSize(scene()))
-      if (mine !== undefined && !hasDeposit(scene(), mine)) setMine(undefined)
+      setCrowd(crowdSize(scene()))
+      if (result !== undefined && !isShowingMine(scene())) setResult(undefined)
+      if (mine !== undefined && !hasDeposit(scene(), mine)) {
+        setMine(undefined)
+        setLost(true)
+      }
     },
     animate ? 250 : null,
   )
@@ -76,8 +82,8 @@ export function CrowdFigure() {
     if (!animate) draw()
   }, [animate, size, tokens])
 
-  const shown = result ?? setSize
-  const linked = shown !== undefined && shown <= 1
+  const shown = result ?? crowd
+  const linked = shown <= 1
 
   return (
     <MethodologyFigure caption="A live pool. Every withdrawal could have come from any deposit before it, so it fans out to all of them. Turn the traffic down and see how quickly a withdrawal stands alone; make a deposit and withdraw it to see your own crowd.">
@@ -95,7 +101,9 @@ export function CrowdFigure() {
             <p className="font-medium text-label-value-13 text-secondary">
               {result !== undefined
                 ? 'Your withdrawal hides among'
-                : 'Latest withdrawal hides among'}
+                : shown === 0
+                  ? 'No deposits to hide among'
+                  : 'A withdrawal now would hide among'}
             </p>
             <p
               className={cn(
@@ -103,7 +111,7 @@ export function CrowdFigure() {
                 linked ? 'text-negative' : 'text-brand',
               )}
             >
-              {shown ?? '–'}
+              {shown}
               <span className="ml-2 font-medium text-label-value-14 text-secondary">
                 {shown === 1 ? 'deposit' : 'deposits'}
               </span>
@@ -128,21 +136,29 @@ export function CrowdFigure() {
               aria-label="Pool traffic"
             />
           </label>
-          <button
-            type="button"
-            onClick={() => {
-              if (mine === undefined) {
-                setResult(undefined)
-                setMine(addDeposit(scene(), true))
-              } else {
-                setResult(withdrawMine(scene(), mine))
-                setMine(undefined)
-              }
-            }}
-            className="rounded-full bg-brand px-4 py-2 font-bold text-label-value-14 text-white transition-transform hover:scale-[1.03] active:scale-95"
-          >
-            {mine === undefined ? 'Make a deposit' : 'Withdraw it'}
-          </button>
+          <div className="flex flex-col items-start gap-1 sm:items-end">
+            <button
+              type="button"
+              onClick={() => {
+                if (mine === undefined) {
+                  setResult(undefined)
+                  setLost(false)
+                  setMine(addDeposit(scene(), true))
+                } else {
+                  setResult(withdrawMine(scene(), mine))
+                  setMine(undefined)
+                }
+              }}
+              className="rounded-full bg-brand px-4 py-2 font-bold text-label-value-14 text-primary-invert transition-transform hover:scale-[1.03] active:scale-95"
+            >
+              {mine === undefined ? 'Make a deposit' : 'Withdraw it'}
+            </button>
+            {lost && (
+              <span className="text-label-value-12 text-secondary">
+                Your deposit drifted out of view. Make another.
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </MethodologyFigure>

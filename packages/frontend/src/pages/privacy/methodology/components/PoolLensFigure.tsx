@@ -9,7 +9,6 @@ import type { RosetteValue } from '~/components/rosette/types'
 import { SentimentText } from '~/components/SentimentText'
 import { useAnimationFrame } from '~/hooks/useAnimationFrame'
 import { useElementSize } from '~/hooks/useElementSize'
-import { useInterval } from '~/hooks/useInterval'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { cn } from '~/utils/cn'
 import { prepareCanvas } from '~/utils/prepareCanvas'
@@ -20,6 +19,7 @@ import { type FigureData, MethodologyFigure } from './MethodologyFigure'
 import {
   createPoolScene,
   drawPoolScene,
+  estimateCaughtShare,
   type Lens,
   type PoolDesign,
   type PoolScene,
@@ -50,6 +50,19 @@ export function PoolLensFigure({ data }: { data: FigureData }) {
   )
 }
 
+const caughtShares = new Map<number, number>()
+
+/** Same traffic, same answer: the estimate is a random run. */
+function cachedCaughtShare(traffic: number) {
+  const key = Math.round(traffic * 50) / 50
+  let share = caughtShares.get(key)
+  if (share === undefined) {
+    share = estimateCaughtShare(key)
+    caughtShares.set(key, share)
+  }
+  return share
+}
+
 function PoolLens({ data }: { data: FigureData }) {
   const { step, pick, playing, animate, reducedMotion, containerProps } =
     useFigureAutoplay(data.adversaries.length, INTERVAL_MS)
@@ -63,18 +76,11 @@ function PoolLens({ data }: { data: FigureData }) {
     return sceneRef.current
   }
 
-  // The chain analyst's verdict is measured, so it follows the simulation.
-  const [outcomes, setOutcomes] = useState<boolean[]>([])
-  useInterval(
-    () => {
-      const next = scene().outcomes
-      setOutcomes((current) =>
-        current.join() === next.join() ? current : next,
-      )
-    },
-    animate ? 300 : null,
+  const caughtShare = useMemo(
+    () => cachedCaughtShare(design.traffic),
+    [design.traffic],
   )
-  const verdicts = getPoolVerdicts(design, outcomes)
+  const verdicts = getPoolVerdicts(design, caughtShare)
 
   // A verdict is the conclusion of watching a view, so it shows only after
   // the reader has seen the pool through those eyes for a moment.
@@ -96,7 +102,6 @@ function PoolLens({ data }: { data: FigureData }) {
 
   const change = (next: Partial<PoolDesign>) => {
     pick(step)
-    if (next.traffic !== undefined) scene().outcomes = []
     setDesign((current) => ({ ...current, ...next }))
   }
 
@@ -115,7 +120,7 @@ function PoolLens({ data }: { data: FigureData }) {
               className={cn(
                 'flex items-center gap-1.5 rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13 transition-colors',
                 i === step
-                  ? 'border-brand bg-brand text-white'
+                  ? 'border-brand bg-brand text-primary-invert'
                   : 'border-divider bg-surface-primary text-secondary hover:border-brand/50 hover:text-primary',
               )}
             >
@@ -130,7 +135,7 @@ function PoolLens({ data }: { data: FigureData }) {
                   aria-hidden
                   className={cn(
                     'size-4 rounded-full border-2 border-dashed',
-                    i === step ? 'border-white/70' : 'border-divider',
+                    i === step ? 'border-primary-invert/70' : 'border-divider',
                   )}
                 />
               )}
@@ -146,7 +151,25 @@ function PoolLens({ data }: { data: FigureData }) {
         intervalMs={INTERVAL_MS}
         className="mt-3"
       />
-      <DesignControl lens={adversary.id} design={design} onChange={change} />
+      <DesignControl lens={adversary.id} design={design} onChange={change}>
+        {verdict.inheritedFrom && seen.has(adversary.id) && (
+          <InheritedNote
+            label={adversary.label}
+            from={
+              data.adversaries.find((a) => a.id === verdict.inheritedFrom)
+                ?.label ?? ''
+            }
+            sentiment={verdict.sentiment}
+            onGo={() =>
+              pick(
+                data.adversaries.findIndex(
+                  (a) => a.id === verdict.inheritedFrom,
+                ),
+              )
+            }
+          />
+        )}
+      </DesignControl>
       <PoolCanvas
         lens={adversary.id}
         design={design}
@@ -198,10 +221,12 @@ function DesignControl({
   lens,
   design,
   onChange,
+  children,
 }: {
   lens: Lens
   design: PoolDesign
   onChange: (next: Partial<PoolDesign>) => void
+  children?: ReactNode
 }) {
   let control: ReactNode
   switch (lens) {
@@ -289,7 +314,37 @@ function DesignControl({
         Pool design
       </span>
       {control}
+      {children}
     </div>
+  )
+}
+
+/** Why a verdict is worse than its own setting would make it. */
+function InheritedNote({
+  label,
+  from,
+  sentiment,
+  onGo,
+}: {
+  label: string
+  from: string
+  sentiment: PrivacyAdversarySentiment
+  onGo: () => void
+}) {
+  return (
+    <p className="basis-full text-label-value-13 text-secondary">
+      <SentimentText sentiment={sentiment} vibrant className="font-bold">
+        {`${PRIVACY_ADVERSARY_VERDICT[sentiment]} anyway:`}
+      </SentimentText>{' '}
+      the {label.toLowerCase()} sees everything the {from.toLowerCase()} sees.{' '}
+      <button
+        type="button"
+        onClick={onGo}
+        className="font-semibold text-brand underline underline-offset-2"
+      >
+        Look at the {from.toLowerCase()} →
+      </button>
+    </p>
   )
 }
 
@@ -318,7 +373,7 @@ function Choice<T extends boolean>({
             className={cn(
               'rounded-full border px-2.5 py-0.5 font-semibold text-label-value-12 transition-colors',
               option === value
-                ? 'border-brand bg-brand text-white'
+                ? 'border-brand bg-brand text-primary-invert'
                 : 'border-divider bg-surface-primary text-secondary hover:border-brand/50',
             )}
           >

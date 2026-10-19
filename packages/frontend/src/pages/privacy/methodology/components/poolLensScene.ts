@@ -24,8 +24,6 @@ export interface PoolDesign {
   ellipticCurves: boolean
 }
 
-/** Withdrawals the chain analyst's verdict is measured over. */
-const SAMPLE_SIZE = 12
 /** A withdrawal with this many coins waiting, itself included, is caught. */
 const CAUGHT_AT = 2
 
@@ -91,8 +89,9 @@ export interface PoolScene {
   notes: Note[]
   traces: Trace[]
   requests: Request[]
-  /** Whether each recent withdrawal was caught by timing, newest last. */
-  outcomes: boolean[]
+  withdrawals: number
+  /** Withdrawals that timing gave away. */
+  caught: number
 }
 
 export function createPoolScene(design: PoolDesign): PoolScene {
@@ -103,7 +102,8 @@ export function createPoolScene(design: PoolDesign): PoolScene {
     notes: [],
     traces: [],
     requests: [],
-    outcomes: [],
+    withdrawals: 0,
+    caught: 0,
   }
   for (let i = 0; i < 6 * 30; i++) stepPoolScene(scene, 1 / 30, design)
   return scene
@@ -150,7 +150,8 @@ export function stepPoolScene(
         age: 0,
         life: caught ? 2.6 : 1.8,
       })
-      scene.outcomes = [...scene.outcomes, caught].slice(-SAMPLE_SIZE)
+      scene.withdrawals++
+      if (caught) scene.caught++
       note.outIp = requestIp(note.owner, design)
       scene.requests.push({ side: 'out', ip: note.outIp, age: 0 })
       note.phase = 'out'
@@ -186,6 +187,26 @@ function spawnInterval(traffic: number) {
 
 function requestIp(owner: number, design: PoolDesign) {
   return design.publicRpc ? (HOME_IPS[owner] ?? '') : torExit()
+}
+
+/**
+ * The share of withdrawals that timing gives away at this traffic, from a
+ * long run of the same pool, so the verdict holds still while the live
+ * scene shows the catches.
+ */
+export function estimateCaughtShare(traffic: number) {
+  const design: PoolDesign = {
+    namesDeposit: false,
+    traffic,
+    publicRpc: false,
+    viewingKeys: false,
+    ellipticCurves: false,
+  }
+  const scene = createPoolScene(design)
+  scene.withdrawals = 0
+  scene.caught = 0
+  for (let i = 0; i < 800 * 10; i++) stepPoolScene(scene, 1 / 10, design)
+  return scene.withdrawals === 0 ? 1 : scene.caught / scene.withdrawals
 }
 
 function countWaiting(scene: PoolScene) {
@@ -329,7 +350,8 @@ export function drawPoolScene(
         align: 'right',
       })
     }
-    if (lens === 'chainAnalyst' && trace.kind === 'caught') {
+    // The future adversary inherits every catch the chain analyst makes.
+    if ((lens === 'chainAnalyst' || future) && trace.kind === 'caught') {
       ctx.strokeStyle = alpha(CAUGHT_COLOR, fade)
       ctx.lineWidth = 2
       line(ctx, { x: l.senderX + 12, y: l.rowY(trace.owner) }, to)
@@ -356,7 +378,13 @@ export function drawPoolScene(
         })
       }
     }
-    if (!links && trace.kind === 'unknown' && lens !== 'chainAnalyst') {
+    // The chain analyst and future adversary mark withdrawals with timing catches instead.
+    if (
+      !links &&
+      trace.kind === 'unknown' &&
+      lens !== 'chainAnalyst' &&
+      !future
+    ) {
       tag(ctx, '?', to.x, to.y - 20 - 6 * (1 - fade), {
         color: tokens.secondary,
         background: tokens.surface,
