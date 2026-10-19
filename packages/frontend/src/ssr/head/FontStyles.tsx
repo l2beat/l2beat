@@ -15,10 +15,10 @@ export function FontStyles({
           (source) => `
   @font-face {
     font-family: '${font.name}';
-    font-style: normal;
+    font-style: ${source.style ?? 'normal'};
     font-weight: ${source.weight};
     font-display: swap;
-    src: url('${manifest.getUrl(source.path)}') format('woff2');
+    src: url('${manifest.getUrl(source.path)}') format('woff2');${source.unicodeRange ? `\n    unicode-range: ${source.unicodeRange};` : ''}
   }`,
         )
         .join(''),
