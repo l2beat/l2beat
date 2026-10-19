@@ -1,18 +1,21 @@
 import { IconUndo } from '../../../../../icons/IconUndo'
+import { useIsomorphicKeys } from '../../../hooks/useIsomorphicKeys'
 import { useStore } from '../../store/store'
-import { ControlButton } from '../ControlButton'
+import { ToolbarButton } from '../ToolbarButton'
 
-export function UndoButton({ className }: { className?: string }) {
+export function UndoButton() {
   const undo = useStore((state) => state.undo)
-  const past = useStore((state) => state.history.past)
+  const canUndo = useStore((state) => state.history.past.length > 0)
+  const { ctrlKey } = useIsomorphicKeys()
 
   return (
-    <ControlButton
-      disabled={past.length === 0}
+    <ToolbarButton
+      label="Undo"
+      shortcut={[ctrlKey, 'Z']}
+      disabled={!canUndo}
       onClick={undo}
-      className={className}
     >
       <IconUndo />
-    </ControlButton>
+    </ToolbarButton>
   )
 }

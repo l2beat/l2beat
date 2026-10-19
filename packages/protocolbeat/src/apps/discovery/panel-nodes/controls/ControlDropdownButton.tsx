@@ -6,7 +6,7 @@ import {
 } from '../../../../components/Popover'
 import { IconChevronDown } from '../../../../icons/IconChevronDown'
 import { cn } from '../../../../utils/cn'
-import { ControlButton } from './ControlButton'
+import { ToolbarButton } from './ToolbarButton'
 
 interface DropdownOption {
   label: string
@@ -28,25 +28,20 @@ export function ControlDropdownButton(props: {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <ControlButton
+        <ToolbarButton
+          label={props.label}
           disabled={props.disabled}
-          className={cn('h-full px-3 py-2.5', props.className)}
+          className={props.className}
         >
-          <span className="flex items-center gap-2">
-            <span className="flex items-center gap-2">
-              <span className="shrink-0 text-coffee-300">{props.icon}</span>
-              <span className="font-medium text-sm leading-none">
-                {props.label}
-              </span>
-            </span>
-            <IconChevronDown
-              className={cn(
-                'shrink-0 text-coffee-300 transition-transform',
-                open && 'rotate-180',
-              )}
-            />
-          </span>
-        </ControlButton>
+          <span className="shrink-0 text-coffee-400">{props.icon}</span>
+          {props.label}
+          <IconChevronDown
+            className={cn(
+              'shrink-0 text-coffee-400 transition-transform',
+              open && 'rotate-180',
+            )}
+          />
+        </ToolbarButton>
       </PopoverTrigger>
       <PopoverContent
         side="top"

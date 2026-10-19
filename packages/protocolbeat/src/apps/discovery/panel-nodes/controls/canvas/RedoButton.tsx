@@ -1,18 +1,21 @@
 import { IconUndo } from '../../../../../icons/IconUndo'
+import { useIsomorphicKeys } from '../../../hooks/useIsomorphicKeys'
 import { useStore } from '../../store/store'
-import { ControlButton } from '../ControlButton'
+import { ToolbarButton } from '../ToolbarButton'
 
-export function RedoButton({ className }: { className?: string }) {
+export function RedoButton() {
   const redo = useStore((state) => state.redo)
-  const future = useStore((state) => state.history.future)
+  const canRedo = useStore((state) => state.history.future.length > 0)
+  const { ctrlKey } = useIsomorphicKeys()
 
   return (
-    <ControlButton
-      disabled={future.length === 0}
+    <ToolbarButton
+      label="Redo"
+      shortcut={[ctrlKey, 'Shift', 'Z']}
+      disabled={!canRedo}
       onClick={redo}
-      className={className}
     >
       <IconUndo className="scale-x-[-1]" />
-    </ControlButton>
+    </ToolbarButton>
   )
 }

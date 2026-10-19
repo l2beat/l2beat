@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import { IconGroup } from '../../../../../icons/IconGroup'
 import { IconUngroup } from '../../../../../icons/IconUngroup'
+import { useIsomorphicKeys } from '../../../hooks/useIsomorphicKeys'
 import { useStore } from '../../store/store'
-import { ControlButton } from '../ControlButton'
+import { ToolbarButton } from '../ToolbarButton'
 
 export function GroupControls() {
   const selected = useStore((state) => state.selected)
   const nodes = useStore((state) => state.nodes)
   const groupSelected = useStore((state) => state.groupSelected)
   const ungroupSelected = useStore((state) => state.ungroupSelected)
+  const { altKey } = useIsomorphicKeys()
 
   const selectedSet = new Set(selected)
   const canGroup = selected.length > 1
@@ -25,16 +27,13 @@ export function GroupControls() {
   return (
     <>
       {canGroup && (
-        <ControlButton
-          title="Group"
-          aria-label="Group"
+        <ToolbarButton
+          label="Group"
+          shortcut={[altKey, 'G']}
           onClick={() => groupSelected()}
-          className="px-3 py-2.5"
         >
-          <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
-            <IconGroup />
-          </span>
-        </ControlButton>
+          <IconGroup />
+        </ToolbarButton>
       )}
       {selectedGroup && (
         <GroupNameInput
@@ -44,16 +43,13 @@ export function GroupControls() {
         />
       )}
       {canUngroup && (
-        <ControlButton
-          title="Ungroup"
-          aria-label="Ungroup"
+        <ToolbarButton
+          label="Ungroup"
+          shortcut={[altKey, 'Shift', 'G']}
           onClick={() => ungroupSelected()}
-          className="px-3 py-2.5"
         >
-          <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
-            <IconUngroup />
-          </span>
-        </ControlButton>
+          <IconUngroup />
+        </ToolbarButton>
       )}
     </>
   )

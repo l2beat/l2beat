@@ -16,6 +16,8 @@ export function Tooltip(props: RadixTooltip.TooltipProps) {
   )
 }
 
+export const TooltipPortal = RadixTooltip.Portal
+
 export function TooltipTrigger(props: RadixTooltip.TooltipTriggerProps) {
   return (
     <RadixTooltip.Trigger {...props}>{props.children}</RadixTooltip.Trigger>

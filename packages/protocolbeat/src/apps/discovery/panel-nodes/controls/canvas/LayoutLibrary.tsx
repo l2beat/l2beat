@@ -25,7 +25,7 @@ import {
   buildStoredNodeLayout,
   type StoredNodeLayout,
 } from '../../store/utils/storage'
-import { ControlButton } from '../ControlButton'
+import { ToolbarButton } from '../ToolbarButton'
 
 interface PendingLayout {
   sourceLabel: string
@@ -51,7 +51,7 @@ const DESCRIPTION_CLAMP_STYLE: Record<2 | 4, CSSProperties> = {
   },
 }
 
-export function LayoutLibrary(props?: { className?: string }) {
+export function LayoutLibrary() {
   const queryClient = useQueryClient()
   const inputRef = useRef<HTMLInputElement>(null)
   const [open, setOpen] = useState(false)
@@ -228,14 +228,13 @@ export function LayoutLibrary(props?: { className?: string }) {
     <>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Trigger asChild>
-          <ControlButton
-            className={props?.className}
+          <ToolbarButton
+            label="Saved layouts"
+            description="Load, import or export node positions, colors and hidden fields."
             disabled={!projectId}
-            aria-label="Layout manager"
-            title="Layout manager"
           >
             <IconFolder />
-          </ControlButton>
+          </ToolbarButton>
         </Dialog.Trigger>
         <Dialog.Body>
           <Dialog.Title>Layout manager</Dialog.Title>

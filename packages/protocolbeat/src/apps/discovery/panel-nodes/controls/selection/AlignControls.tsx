@@ -1,5 +1,4 @@
 import { useStore } from '../../store/store'
-import { ControlButton } from '../ControlButton'
 import { ControlGroup } from '../ControlGroup'
 import {
   IconAlignBottom,
@@ -9,6 +8,7 @@ import {
   IconDistributeHorizontal,
   IconDistributeVertical,
 } from '../icons/AlignIcons'
+import { ToolbarButton } from '../ToolbarButton'
 
 // Alignment needs at least two nodes; distribution needs a node to respace
 // between the two outermost ones.
@@ -63,18 +63,14 @@ export function AlignControls() {
   return (
     <ControlGroup>
       {buttons.map((button) => (
-        <ControlButton
+        <ToolbarButton
           key={button.title}
-          title={button.title}
-          aria-label={button.title}
+          label={button.title}
           disabled={button.disabled}
           onClick={button.onClick}
-          className="px-3 py-2.5"
         >
-          <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
-            {button.icon}
-          </span>
-        </ControlButton>
+          {button.icon}
+        </ToolbarButton>
       ))}
     </ControlGroup>
   )

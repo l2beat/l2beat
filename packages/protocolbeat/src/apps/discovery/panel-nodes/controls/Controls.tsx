@@ -35,8 +35,8 @@ export function Controls() {
           <HideButton />
           <ColorButton />
           <ValuesButton />
-          <Settings className="px-2.5" />
-          <LayoutLibrary className="px-2.5" />
+          <Settings />
+          <LayoutLibrary />
         </ControlGroup>
       </div>
     </div>

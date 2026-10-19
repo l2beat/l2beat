@@ -1,21 +1,19 @@
 import { IconEyeClosed } from '../../../../../icons/IconEyeClosed'
-import { cn } from '../../../../../utils/cn'
 import { useStore } from '../../store/store'
-import { ControlButton } from '../ControlButton'
+import { ToolbarButton } from '../ToolbarButton'
 
-export function HideButton({ className }: { className?: string }) {
+export function HideButton() {
   const selectionExists = useStore((state) => state.selected.length > 0)
   const hideSelected = useStore((state) => state.hideSelected)
 
   return (
-    <ControlButton
+    <ToolbarButton
+      label="Hide"
+      shortcut={['Del']}
       disabled={!selectionExists}
       onClick={hideSelected}
-      className={cn('px-3 py-2.5', className)}
     >
-      <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
-        <IconEyeClosed />
-      </span>
-    </ControlButton>
+      <IconEyeClosed />
+    </ToolbarButton>
   )
 }
