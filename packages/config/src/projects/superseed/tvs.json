@@ -19,7 +19,8 @@
             "chain": "ethereum",
             "escrowAddress": "0x2c2150aa5c75A24fB93d4fD2F2a895D618054f07",
             "decimals": 18,
-            "sinceTimestamp": 1726179731
+            "sinceTimestamp": 1726179731,
+            "untilTimestamp": 1786752000
           },
           {
             "type": "balanceOfEscrow",
@@ -27,7 +28,8 @@
             "chain": "ethereum",
             "escrowAddress": "0x8b0576E39F1233679109F9b40cFcC2a7E0901Ede",
             "decimals": 18,
-            "sinceTimestamp": 1726179731
+            "sinceTimestamp": 1726179731,
+            "untilTimestamp": 1786752000
           }
         ]
       },
@@ -74,6 +76,7 @@
         "apiId": "superseed",
         "decimals": 18,
         "sinceTimestamp": 1746403200,
+        "untilTimestamp": 1786752000,
         "address": "0x6EA1fFcbD7F5D210dB07D9E773862B0512fA219B",
         "chain": "superseed"
       },
