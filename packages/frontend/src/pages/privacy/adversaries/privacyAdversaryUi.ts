@@ -7,7 +7,10 @@ import type {
   TableReadyValue,
 } from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
-import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
+import type {
+  PrivacyAdversariesSummary,
+  PrivacyAdversarySummaryCell,
+} from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
   "Ethereum is public by default. Each protocol is rated on its main privacy promise, like hiding who paid, who received, how much, or which deposit became which withdrawal. Against each adversary, the colour says whether it holds for a careful user with the app's own settings: green yes, yellow only with significant extra work, red no."
@@ -55,27 +58,34 @@ export function getPrivacyAdversaryDescription(
 
 /**
  * All adversaries folded into one value: the homepage dot colour and the
- * summary table sort key. The future adversary is left out: it grades a
- * future cryptographic break, not today's protocol. Any red cell makes it
- * red, otherwise the majority colour wins and a tie is green. Within a colour,
- * fewer red and yellow cells sort first.
+ * summary table sort key. Within a colour, fewer red and yellow cells sort
+ * first.
  */
 export function getPrivacyAdversariesTableValue(
   adversaries: PrivacyAdversariesSummary,
 ): TableReadyValue {
-  const graded = adversaries.cells.filter((c) => c.id !== 'futureAdversary')
-  const bad = graded.filter((c) => c.sentiment === 'bad').length
-  const warnings = graded.filter((c) => c.sentiment === 'warning').length
+  const { sentiment, bad, warnings } = foldPrivacyAdversaries(adversaries.cells)
   return {
     value: adversaries.promiseLabel,
-    sentiment:
-      bad > 0
-        ? 'bad'
-        : warnings > graded.length - warnings
-          ? 'warning'
-          : 'good',
+    sentiment,
     orderHint: -(bad * 10 + warnings),
   }
+}
+
+/**
+ * The future adversary is left out: it grades a future cryptographic break,
+ * not today's protocol. Any red cell makes it red, otherwise the majority
+ * colour wins and a tie is green.
+ */
+export function foldPrivacyAdversaries(
+  cells: Pick<PrivacyAdversarySummaryCell, 'id' | 'sentiment'>[],
+) {
+  const graded = cells.filter((c) => c.id !== 'futureAdversary')
+  const bad = graded.filter((c) => c.sentiment === 'bad').length
+  const warnings = graded.filter((c) => c.sentiment === 'warning').length
+  const sentiment: PrivacyAdversarySentiment =
+    bad > 0 ? 'bad' : warnings > graded.length - warnings ? 'warning' : 'good'
+  return { sentiment, bad, warnings }
 }
 
 /** How each slice of the rosette words its sentiment. */

@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { LiveIndicator } from '~/components/LiveIndicator'
+import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -13,7 +14,6 @@ import {
   formatWhole,
 } from './blocks/format'
 import { mixColors, readableColor } from './color'
-import { useThemeTokens } from './hooks'
 import { LIVE_POSTERS_ID } from './LivePosters'
 import { anyLanding, useLandedTotal } from './landings'
 import { type Arrival, Pop, RollingNumber } from './liveMotion'

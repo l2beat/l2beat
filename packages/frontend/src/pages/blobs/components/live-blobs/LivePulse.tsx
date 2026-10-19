@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import type {
   LiveBlobs,
   Pulse,
@@ -19,7 +20,6 @@ import {
 import { cn } from '~/utils/cn'
 import { PulseSkeleton } from './blocks/BeltFrame'
 import { formatClock } from './blocks/format'
-import { usePrefersReducedMotion } from './hooks'
 import { earliestView } from './lookBack'
 import type { BlockLimits } from './model'
 

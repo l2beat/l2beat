@@ -2,7 +2,8 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getPrivacyMethodologyMarkdown } from './getPrivacyMethodologyMarkdown'
+import { getPrivacyMethodologyFigureData } from './getPrivacyMethodologyFigureData'
+import { getPrivacyMethodologySections } from './getPrivacyMethodologySections'
 
 export async function getPrivacyMethodologyData(
   manifest: Manifest,
@@ -27,7 +28,8 @@ export async function getPrivacyMethodologyData(
       page: 'PrivacyMethodologyPage',
       props: {
         ...appLayoutProps,
-        content: getPrivacyMethodologyMarkdown(),
+        sections: getPrivacyMethodologySections(),
+        figures: getPrivacyMethodologyFigureData(),
       },
     },
   }
