@@ -9,6 +9,7 @@ import { IconShape } from '../../../icons/IconShape'
 import { useConfigModels } from '../hooks/useConfigModels'
 import { useModelUtils } from '../hooks/useModelUtils'
 import { useProjectData } from '../hooks/useProjectData'
+import { UsageDisplay } from '../usage/UsageDisplay'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { ContractConfigDialog } from './contract-config-dialog/ContractConfigDialog'
@@ -40,6 +41,7 @@ export function ValuesPanel() {
           project={project}
           selected={selected}
           blockNumber={selected.blockNumber}
+          sourceProject={selected.sourceProject}
         />
       )}
     </div>
@@ -50,10 +52,12 @@ function Display({
   project,
   blockNumber,
   selected,
+  sourceProject,
 }: {
   project: string
   selected: ApiProjectContract | ApiAddressEntry
   blockNumber: number
+  sourceProject: string
 }) {
   const { configModel, templateModel, canModify } = useConfigModels()
   const canModifyTemplate = canModify && templateModel.hasTemplate
@@ -131,6 +135,15 @@ function Display({
             }}
           />
         </WithHeadline>
+        {!IS_READONLY && (
+          <WithHeadline headline="Used in">
+            <UsageDisplay
+              address={selected.address}
+              openedProject={project}
+              sourceProject={sourceProject}
+            />
+          </WithHeadline>
+        )}
         {'proxyType' in selected && selected.proxyType && (
           <WithHeadline headline="Proxy Type">
             <p className="text-aux-cyan">{selected.proxyType}</p>

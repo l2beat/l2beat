@@ -14,7 +14,7 @@ export function findSelected(
         if (blockNumber === undefined) {
           throw new Error(`Block number for ${contract.chain} is undefined`)
         }
-        return { ...contract, blockNumber }
+        return { ...contract, blockNumber, sourceProject: chain.project }
       }
     }
     for (const contract of chain.discoveredContracts) {
@@ -23,7 +23,7 @@ export function findSelected(
         if (blockNumber === undefined) {
           throw new Error(`Block number for ${contract.chain} is undefined`)
         }
-        return { ...contract, blockNumber }
+        return { ...contract, blockNumber, sourceProject: chain.project }
       }
     }
     for (const eoa of chain.eoas) {
@@ -32,7 +32,7 @@ export function findSelected(
         if (blockNumber === undefined) {
           throw new Error(`Block number for ${eoa.chain} is undefined`)
         }
-        return { ...eoa, blockNumber }
+        return { ...eoa, blockNumber, sourceProject: chain.project }
       }
     }
   }
