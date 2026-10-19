@@ -153,7 +153,7 @@ export function HomeSparkline({
                   label={
                     <ExtremeLabel
                       value={formatValue(range[key])}
-                      side={key === 'max' ? 'above' : 'below'}
+                      extreme={key}
                     />
                   }
                 />
@@ -243,30 +243,32 @@ function getExtremes(data: HomeSparklineDataPoint[]): [number, number] {
 }
 
 /**
- * A hairline's value at its right end, above the line for the high and below
- * it for the low. Recharts passes the line's `viewBox`.
+ * A hairline's value, in opposite corners of the plot: the high above the
+ * right end of its line, the low below the left end of its. Recharts passes
+ * the line's `viewBox`.
  */
 function ExtremeLabel({
   value,
-  side,
+  extreme,
   viewBox,
 }: {
   value: string
-  side: 'above' | 'below'
+  extreme: 'max' | 'min'
   viewBox?: { x: number; y: number; width: number }
 }) {
   if (!viewBox) return null
+  const high = extreme === 'max'
   return (
     <text
-      x={viewBox.x + viewBox.width}
+      x={high ? viewBox.x + viewBox.width : viewBox.x}
       // Placed by the baseline, which Safari aligns reliably: a cap height
       // under the gap for the low label.
       y={
-        side === 'above'
+        high
           ? viewBox.y - LABEL_GAP
           : viewBox.y + LABEL_GAP + LABEL_FONT_SIZE * 0.75
       }
-      textAnchor="end"
+      textAnchor={high ? 'end' : 'start'}
       fontSize={LABEL_FONT_SIZE}
       fill="var(--secondary)"
     >
