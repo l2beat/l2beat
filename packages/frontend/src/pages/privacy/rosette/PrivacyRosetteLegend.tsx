@@ -1,16 +1,32 @@
+import type { PrivacyAdversarySentiment } from '@l2beat/config'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import type { RosetteValue } from '~/components/rosette/types'
 import { cn } from '~/utils/cn'
 import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
-import {
-  PRIVACY_ADVERSARY_VERDICT,
-  PRIVACY_ADVERSARY_VERDICT_DESCRIPTION,
-} from '../adversaries/privacyAdversaryUi'
+import { PRIVACY_ADVERSARY_VERDICT } from '../adversaries/privacyAdversaryUi'
 import { PRIVACY_METHODOLOGY_PATH } from '../methodology/paths'
 
-const SENTIMENTS = ['good', 'warning', 'bad'] as const
+const LEGEND: {
+  sentiment: PrivacyAdversarySentiment
+  description: string
+}[] = [
+  {
+    sentiment: 'good',
+    description:
+      "The promise holds for a careful user with the app's own settings.",
+  },
+  {
+    sentiment: 'warning',
+    description:
+      'The promise holds only with significant extra work, like a custom build or your own servers.',
+  },
+  {
+    sentiment: 'bad',
+    description: 'The promise breaks, and no reasonable effort prevents that.',
+  },
+]
 
 const EXAMPLE_ROSETTE: RosetteValue[] = (
   ['good', 'warning', 'good', 'bad', 'good'] as const
@@ -44,7 +60,7 @@ export function PrivacyRosetteLegend({ className }: { className?: string }) {
           </p>
         </div>
         <ul className="grid min-w-0 flex-1 gap-x-6 gap-y-2 md:grid-cols-3">
-          {SENTIMENTS.map((sentiment) => (
+          {LEGEND.map(({ sentiment, description }) => (
             <li
               key={sentiment}
               className="flex items-start gap-1.5 text-paragraph-12 text-secondary"
@@ -59,7 +75,7 @@ export function PrivacyRosetteLegend({ className }: { className?: string }) {
                 <span className="font-medium text-primary">
                   {PRIVACY_ADVERSARY_VERDICT[sentiment]}:
                 </span>{' '}
-                {PRIVACY_ADVERSARY_VERDICT_DESCRIPTION[sentiment]}
+                {description}
               </span>
             </li>
           ))}
