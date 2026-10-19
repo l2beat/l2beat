@@ -7,7 +7,7 @@ Run `l2b` from `packages/config`. Its `.env` holds RPC keys: never read or print
 ## Go one level at a time
 
 1. `l2b discover <project> --dev --max-depth 0` analyzes only the initial addresses. `--dev` runs on the block saved in `discovered.json` (the latest block when there is none yet), so every later run reads the same block from the cache and takes about a second.
-2. The output ends with `maxDepth N reached`: every contract and field that leads one level deeper, with the addresses it leads to. For each field decide whether those addresses belong to the project:
+2. Near its end, before the permission modelling lines, the output prints `maxDepth N reached` and every contract and field that leads one level deeper, with the addresses it leads to. For each field decide whether those addresses belong to the project:
    - yes: leave it, the next level analyzes them;
    - no (token lists, registries of instances, addresses on another chain, unrelated protocols): add the field to `ignoreRelatives` of the contract's template, or of its entry in `overrides` of `config.jsonc` when only this project should skip it. To skip one address wherever it is referenced, set `ignoreDiscovery: true` on it in `overrides` (templates cannot).
 3. Write or extend the templates of the contracts at this level (below), rerun the same depth and check the result.
