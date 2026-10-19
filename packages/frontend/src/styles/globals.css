@@ -66,6 +66,14 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* A home KPI pair (HomeKpiRow) too narrow for two tiles of 230px: each KPI
+   becomes a row, the figure beside a wider, shorter sparkline. */
+@custom-variant kpi-rows {
+  @container kpis (width < 496px) {
+    @slot;
+  }
+}
+
 /* The home interop section's body, a size container from lg (see
    HomeInteropSection): stacked like on phones when it is clearly taller than
    wide or too narrow for the corners, otherwise the figures in the corners. */

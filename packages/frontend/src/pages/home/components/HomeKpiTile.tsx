@@ -6,8 +6,9 @@ import { HOME_TEXT } from '../homeStyles'
 import { HomeChange } from './HomeChange'
 
 /**
- * One headline figure with its change, e.g. "1.39 TiB +4.89% 1y" (the change
- * under the figure in a narrow tile), and a sparkline underneath.
+ * One headline figure with its change, e.g. "1.39 TiB +4.89% 1y", and a
+ * sparkline underneath. Where a `HomeKpiRow` stacks its KPIs (`kpi-rows`),
+ * the figure goes smaller, with the change under it, beside the sparkline.
  */
 export function HomeKpiTile({
   label,
@@ -31,47 +32,46 @@ export function HomeKpiTile({
 }) {
   const hasChange = change !== undefined && Number.isFinite(change)
   return (
-    // A container: in a tile under 220px the change moves under the figure
-    // rather than being cut off. Both tiles of a pair are the same width, so
-    // they switch together and their charts stay level.
-    <div className={cn('@container flex min-w-0 flex-col', className)}>
-      <span
-        className={cn(
-          'flex min-w-0 items-baseline justify-between gap-2',
-          HOME_TEXT.meta,
-        )}
-      >
-        <span className="truncate">{label}</span>
-        {labelAccessory && (
-          <span className="shrink-0 tabular-nums">{labelAccessory}</span>
-        )}
-      </span>
-      <span className="mt-2 flex min-w-0 @max-[220px]:flex-col @max-[220px]:items-start items-baseline gap-x-2 gap-y-1 whitespace-nowrap">
-        <span className="flex items-baseline gap-x-1.5">
-          <span
-            className={cn(
-              HOME_TEXT.number,
-              // Only for the narrowest phones; elsewhere the figure keeps
-              // its size and the change makes way.
-              '@max-[150px]:text-heading-24',
+    <div
+      className={cn(
+        'grid min-w-0 grid-cols-1 kpi-rows:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-x-6 gap-y-4',
+        className,
+      )}
+    >
+      <div className="flex min-w-0 flex-col">
+        {/* Beside a chart the label has a narrow column, so the accessory
+            wraps under it there instead of cutting it off. */}
+        <span
+          className={cn(
+            'flex min-w-0 kpi-rows:flex-wrap items-baseline justify-between gap-x-2',
+            HOME_TEXT.meta,
+          )}
+        >
+          <span className="kpi-rows:shrink-0 truncate">{label}</span>
+          {labelAccessory && (
+            <span className="shrink-0 tabular-nums">{labelAccessory}</span>
+          )}
+        </span>
+        <span className="mt-2 flex min-w-0 kpi-rows:flex-col kpi-rows:items-start items-baseline gap-x-2 gap-y-1 whitespace-nowrap">
+          <span className="flex items-baseline gap-x-1.5">
+            <span className={cn(HOME_TEXT.number, 'kpi-rows:text-heading-24')}>
+              {value ?? EM_DASH}
+            </span>
+            {value !== undefined && unit && (
+              <span className="font-medium kpi-rows:text-label-value-15 text-label-value-20 text-secondary">
+                {unit}
+              </span>
             )}
-          >
-            {value ?? EM_DASH}
           </span>
-          {value !== undefined && unit && (
-            <span className="font-medium text-label-value-20 text-secondary">
-              {unit}
+          {value !== undefined && hasChange && (
+            <span className="flex items-baseline gap-1 font-medium text-label-value-13">
+              <HomeChange value={change} />
+              <span className="text-secondary">{HOME_CHART_PERIOD_LABEL}</span>
             </span>
           )}
         </span>
-        {value !== undefined && hasChange && (
-          <span className="flex items-baseline gap-1 font-medium text-label-value-13">
-            <HomeChange value={change} />
-            <span className="text-secondary">{HOME_CHART_PERIOD_LABEL}</span>
-          </span>
-        )}
-      </span>
-      <div className="mt-4 flex min-h-0 flex-1 flex-col">{chart}</div>
+      </div>
+      {chart}
     </div>
   )
 }

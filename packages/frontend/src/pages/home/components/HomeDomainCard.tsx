@@ -38,7 +38,10 @@ export function HomeDomainCard({
   )
 }
 
-/** Two KPIs side by side, set apart by space alone. */
+/**
+ * Two KPIs side by side, set apart by space alone; one under the other where
+ * the side-by-side tiles would be too narrow (see `kpi-rows`).
+ */
 export function HomeKpiRow({
   className,
   children,
@@ -47,8 +50,10 @@ export function HomeKpiRow({
   children: ReactNode
 }) {
   return (
-    <div className={cn('grid grid-cols-2 gap-x-6 lg:gap-x-8', className)}>
-      {children}
+    <div className={cn('@container/kpis min-w-0', className)}>
+      <div className="grid grid-cols-2 kpi-rows:grid-cols-1 gap-6 lg:gap-x-8">
+        {children}
+      </div>
     </div>
   )
 }
