@@ -194,6 +194,8 @@ export const interfold: BaseProject = {
         'The contracts, ciphernode software, circuits, CRISP server and app are open source. The two contracts that verify ballot proofs are unverified.',
     },
     attributes: [PRIVACY_ATTRIBUTES.fhe, PRIVACY_ATTRIBUTES.zk],
+    // Ballot proofs are Noir/UltraHonk, verified with Barretenberg's Aztec Ignition setup.
+    zkCatalogId: ProjectId('barretenberg'),
     adversaries: interfoldAdversaries(
       voteCommittee.decryptionThreshold,
       voteCommittee.members,
