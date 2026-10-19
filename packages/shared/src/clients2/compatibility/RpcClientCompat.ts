@@ -265,6 +265,7 @@ export class RpcClientCompat implements IRpcClient {
       return logs.map(toEVMLog)
     } catch (e) {
       if (
+        from < to &&
         e instanceof Error &&
         e.message.startsWith('RPC call failed') &&
         isLimitExceededError(e)
