@@ -1,7 +1,7 @@
-import { IconGroup } from '../../../../../icons/IconGroup'
-import { IconUngroup } from '../../../../../icons/IconUngroup'
 import { useIsomorphicKeys } from '../../../hooks/useIsomorphicKeys'
 import { useStore } from '../../store/store'
+import { IconControlGroup } from '../icons/IconControlGroup'
+import { IconControlUngroup } from '../icons/IconControlUngroup'
 import { ToolbarButton } from '../ToolbarButton'
 
 export function GroupButtons() {
@@ -23,7 +23,7 @@ export function GroupButtons() {
         disabled={!canGroup}
         onClick={groupSelected}
       >
-        <IconGroup />
+        <IconControlGroup />
       </ToolbarButton>
       <ToolbarButton
         label="Ungroup"
@@ -31,7 +31,7 @@ export function GroupButtons() {
         disabled={!canUngroup}
         onClick={ungroupSelected}
       >
-        <IconUngroup />
+        <IconControlUngroup />
       </ToolbarButton>
     </>
   )

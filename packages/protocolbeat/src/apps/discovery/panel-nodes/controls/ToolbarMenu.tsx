@@ -5,8 +5,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '../../../../components/Popover'
-import { IconChevronDown } from '../../../../icons/IconChevronDown'
 import { cn } from '../../../../utils/cn'
+import { IconControlChevronDown } from './icons/IconControlChevronDown'
 import { ToolbarButton } from './ToolbarButton'
 
 export interface ToolbarMenuItem {
@@ -36,7 +36,7 @@ export function ToolbarMenu(props: {
           className="pr-1.5 pl-2.5"
         >
           {props.label}
-          <IconChevronDown
+          <IconControlChevronDown
             className={cn(
               'shrink-0 text-coffee-400 transition-transform',
               open && 'rotate-180',

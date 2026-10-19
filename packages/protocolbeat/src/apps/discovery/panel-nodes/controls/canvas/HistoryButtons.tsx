@@ -1,6 +1,6 @@
-import { IconUndo } from '../../../../../icons/IconUndo'
 import { useIsomorphicKeys } from '../../../hooks/useIsomorphicKeys'
 import { useStore } from '../../store/store'
+import { IconControlUndo } from '../icons/IconControlUndo'
 import { ToolbarButton } from '../ToolbarButton'
 
 export function HistoryButtons() {
@@ -18,7 +18,7 @@ export function HistoryButtons() {
         disabled={!canUndo}
         onClick={undo}
       >
-        <IconUndo />
+        <IconControlUndo />
       </ToolbarButton>
       <ToolbarButton
         label="Redo"
@@ -26,7 +26,7 @@ export function HistoryButtons() {
         disabled={!canRedo}
         onClick={redo}
       >
-        <IconUndo className="scale-x-[-1]" />
+        <IconControlUndo className="scale-x-[-1]" />
       </ToolbarButton>
     </>
   )

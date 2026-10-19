@@ -1,6 +1,6 @@
-import { IconEyeClosed } from '../../../../../icons/IconEyeClosed'
 import { useIsomorphicKeys } from '../../../hooks/useIsomorphicKeys'
 import { useStore } from '../../store/store'
+import { IconControlEyeOff } from '../icons/IconControlEyeOff'
 import { ToolbarButton } from '../ToolbarButton'
 
 export function HideButton() {
@@ -13,7 +13,7 @@ export function HideButton() {
       shortcut={[isMac ? 'Delete' : 'Del']}
       onClick={hideSelected}
     >
-      <IconEyeClosed />
+      <IconControlEyeOff />
     </ToolbarButton>
   )
 }

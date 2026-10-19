@@ -1,10 +1,10 @@
-import { IconEyeClosed } from '../../../../../icons/IconEyeClosed'
 import { useStore } from '../../store/store'
 import {
   getGraphProjection,
   isHideable,
 } from '../../store/utils/graphProjection'
 import { IconControlEye } from '../icons/IconControlEye'
+import { IconControlEyeOff } from '../icons/IconControlEyeOff'
 import { ToolbarMenu } from '../ToolbarMenu'
 
 export function VisibilityMenu() {
@@ -35,7 +35,7 @@ export function VisibilityMenu() {
           },
           {
             label: 'Hide unreachable nodes',
-            icon: <IconEyeClosed />,
+            icon: <IconControlEyeOff />,
             count: visibleUnreachableCount,
             disabled: visibleUnreachableCount === 0,
             onSelect: hideUnreachable,

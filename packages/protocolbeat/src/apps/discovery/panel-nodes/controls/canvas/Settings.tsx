@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 import { Checkbox } from '../../../../../components/Checkbox'
 import { Dialog } from '../../../../../components/Dialog'
-import { IconGear } from '../../../../../icons/IconGear'
 import { useStore } from '../../store/store'
+import { IconControlGear } from '../icons/IconControlGear'
 import { ToolbarButton } from '../ToolbarButton'
 
 export function Settings() {
@@ -37,7 +37,7 @@ export function Settings() {
     <Dialog.Root>
       <Dialog.Trigger asChild>
         <ToolbarButton label="Nodes panel settings">
-          <IconGear />
+          <IconControlGear />
         </ToolbarButton>
       </Dialog.Trigger>
       <Dialog.Body>
