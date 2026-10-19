@@ -20,6 +20,23 @@ export interface ApiProjectResponse {
   entries: ApiProjectChain[]
 }
 
+export interface ApiAddressUsageResponse {
+  sharedAddresses: Record<string, ApiAddressUsage[]>
+  moduleConsumers: Record<string, string[]>
+  entrypoints: Record<string, ApiEntrypointInfo>
+}
+
+export interface ApiAddressUsage {
+  project: string
+  name?: string
+  viaModule?: string
+}
+
+export interface ApiEntrypointInfo {
+  project: string
+  name?: string
+}
+
 export type ApiTvlResponse = ApiTvlEntry[]
 
 export interface ApiTvlEntry {
