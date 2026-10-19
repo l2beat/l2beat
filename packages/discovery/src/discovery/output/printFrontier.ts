@@ -22,6 +22,9 @@ export function findFrontierReferrers(
     }
     const fields: FrontierReferrer['fields'] = []
     for (const [field, value] of Object.entries(analysis.values)) {
+      if (!analysis.followedFields.includes(field)) {
+        continue
+      }
       const addresses = toAddressArray(value).filter(
         (address) => frontier.has(address) && address in analysis.relatives,
       )

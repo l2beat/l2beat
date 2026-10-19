@@ -25,6 +25,7 @@ describe(findFrontierReferrers.name, () => {
             [D.toString()]: new Set(),
             [OWNER.toString()]: new Set(),
           },
+          followedFields: ['router', 'tokens', 'owner'],
         },
         {
           ...EMPTY_ANALYZED_CONTRACT,
@@ -52,6 +53,30 @@ describe(findFrontierReferrers.name, () => {
           { field: 'router', addresses: [B] },
           { field: 'tokens', addresses: [C, D] },
         ],
+      },
+    ])
+  })
+
+  it('leaves out an ignored field that holds an address a followed field leads to', () => {
+    const referrers = findFrontierReferrers(
+      [
+        {
+          ...EMPTY_ANALYZED_CONTRACT,
+          address: HUB,
+          name: 'Hub',
+          values: { router: B, backupRouter: B },
+          relatives: { [B.toString()]: new Set() },
+          followedFields: ['router'],
+        },
+      ],
+      [B],
+    )
+
+    expect(referrers).toEqual([
+      {
+        address: HUB,
+        name: 'Hub',
+        fields: [{ field: 'router', addresses: [B] }],
       },
     ])
   })
