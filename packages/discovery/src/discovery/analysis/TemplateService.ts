@@ -36,7 +36,7 @@ import {
   type StructureContract,
   TemplateStructureContract,
 } from '../config/StructureConfig'
-import { schemaProblems } from '../config/schemaProblems'
+import { isPlainObject, schemaProblems } from '../config/schemaProblems'
 import { generateStructureHash } from '../output/structureOutput'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
@@ -647,14 +647,18 @@ function templateProblems(
   templateJsonc: unknown,
   failure: { path: string; message: string },
 ): string[] {
-  const { $schema: _, ...template } = templateJsonc as Record<string, unknown>
+  const parserReason = `At ${failure.path || '@'}: ${failure.message}`
+  if (!isPlainObject(templateJsonc)) {
+    return [parserReason]
+  }
+  const { $schema: _, ...template } = templateJsonc
   const problems = schemaProblems(ContractLayer, template, '')
   const lines = problems.map((problem) => `${problem.path}: ${problem.message}`)
   const walkFoundTheFailure = problems.some(
     (problem) => !problem.message.startsWith('unexpected key'),
   )
   if (!walkFoundTheFailure) {
-    lines.push(`At ${failure.path || '@'}: ${failure.message}`)
+    lines.push(parserReason)
   }
   return lines
 }

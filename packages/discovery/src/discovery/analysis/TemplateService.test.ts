@@ -155,7 +155,7 @@ describe(TemplateService.prototype.loadContractTemplate.name, () => {
     rmSync(rootPath, { recursive: true, force: true })
   })
 
-  function writeTemplate(templateId: string, template: object) {
+  function writeTemplate(templateId: string, template: unknown) {
     const path = join(rootPath, '_templates', templateId)
     mkdirSync(path, { recursive: true })
     writeFileSync(join(path, 'template.jsonc'), JSON.stringify(template))
@@ -188,6 +188,12 @@ describe(TemplateService.prototype.loadContractTemplate.name, () => {
       expect.includes('name: unexpected key'),
       'At @: ignoreDiscovery cannot be set in a template',
     ])
+  })
+
+  it('reports only the reason of the parser for a template that is not an object', () => {
+    writeTemplate('empty', null)
+
+    expect(loadProblems('empty')).toEqual(['At @: Expected object, got null.'])
   })
 
   it('reports every mistake of a template at its path', () => {
