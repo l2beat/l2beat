@@ -53,5 +53,13 @@
     "facet:0x4200000000000000000000000000000000000016": {
       "ignoreInWatchMode": ["messageNonce"]
     }
+  },
+  "types": {
+    "FacetAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": {
+        "prefix": "facet"
+      }
+    }
   }
 }

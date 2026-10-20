@@ -1,7 +1,7 @@
 {
   "name": "celo",
   "timestamp": 1791966035,
-  "configHash": "0x2716114fb784c28a4a3800e367d765065599986053f4539ee3d66fda138e5bc0",
+  "configHash": "0x749869cb5a22490e200f1f361a1703ef06c71fd1e17e7e4a74cb1ee4fba185ad",
   "entries": [
     {
       "name": "L2CrossDomainMessenger",
@@ -347,8 +347,8 @@
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "eth:0x4200000000000000000000000000000000000007",
-        "otherMessenger": "eth:0x4200000000000000000000000000000000000007",
+        "OTHER_MESSENGER": "celo:0x4200000000000000000000000000000000000007",
+        "otherMessenger": "celo:0x4200000000000000000000000000000000000007",
         "paused": false,
         "portal": "eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC",
         "PORTAL": "eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC",
@@ -370,6 +370,9 @@
         "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95": "ResolvedDelegateProxy",
         "eth:0xE45D2d835d0b2D3C7f4fEe1eaa19A068d0ba8A88": "L1CrossDomainMessenger"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "celo" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1504,11 +1507,11 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "initVersion": 3,
-        "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "celo:0x4200000000000000000000000000000000000010",
         "messenger": "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
         "MESSENGER": "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
-        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
-        "otherBridge": "eth:0x4200000000000000000000000000000000000010",
+        "OTHER_BRIDGE": "celo:0x4200000000000000000000000000000000000010",
+        "otherBridge": "celo:0x4200000000000000000000000000000000000010",
         "paused": false,
         "proxyAdmin": "eth:0x783A434532Ee94667979213af1711505E8bFE374",
         "proxyAdminOwner": "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112",
@@ -1521,6 +1524,9 @@
         "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe": "L1ChugSplashProxy",
         "eth:0xfA707F45A23370d9154AF4457401274E38FA2d8A": "L1StandardBridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "celo" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {

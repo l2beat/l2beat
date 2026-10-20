@@ -1,16 +1,5 @@
+import { interopLaneKey } from '@l2beat/shared-pure'
 import type { PromotionRule, RuleViolation } from './types'
-
-interface Lane {
-  id: string
-  bridgeType: string
-  srcChain: string
-  dstChain: string
-}
-
-/** Deterministic lane identity; must not include magnitudes or timestamps. */
-export function laneScope(lane: Lane): string {
-  return `${lane.id}|${lane.bridgeType}|${lane.srcChain}|${lane.dstChain}`
-}
 
 function laneValueUsd(transfer: {
   srcValueUsd?: number
@@ -35,7 +24,7 @@ export function maxLaneVolumeRule(thresholdUsd: number): PromotionRule {
         if (value > thresholdUsd) {
           violations.push({
             rule: 'maxLaneVolume',
-            scope: laneScope(transfer),
+            scope: interopLaneKey(transfer),
             value,
             threshold: thresholdUsd,
             message: `lane ${transfer.id} ${transfer.bridgeType} ${transfer.srcChain}->${transfer.dstChain} volume ${formatUsd(value)} exceeds ${formatUsd(thresholdUsd)}`,

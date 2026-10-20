@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "nova",
+  "maxAddresses": 200,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
@@ -173,6 +174,21 @@
             }
           ]
         }
+      }
+    },
+    "eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "NovaAddress"] }
+      }
+    },
+    "eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "NovaAddress"] }
+      }
+    },
+    "eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "NovaAddress"] }
       }
     }
   }

@@ -2,8 +2,6 @@ import { formatBytes } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
-import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
-import { CombinedGrissiniCell } from '~/components/rosette/grissini/CombinedGrissiniCell'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
@@ -105,38 +103,6 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
       },
       sortDescFirst: true,
       sortUndefined: 'last',
-    }),
-    columnHelper.display({
-      header: 'Risks',
-      cell: (ctx) => {
-        const firstDaRisk = ctx.row.original.risks?.[0]
-        if (!firstDaRisk) {
-          return <NotApplicableBadge />
-        }
-
-        return (
-          <CombinedGrissiniCell
-            daLayerRisks={firstDaRisk.daLayer}
-            daBridgeRisks={firstDaRisk.daBridge}
-          />
-        )
-      },
-      meta: {
-        align: 'center',
-        additionalRows: (ctx) => {
-          return (
-            ctx.row.original.risks
-              ?.slice(1)
-              .map((risk, i) => (
-                <CombinedGrissiniCell
-                  key={i}
-                  daLayerRisks={risk.daLayer}
-                  daBridgeRisks={risk.daBridge}
-                />
-              )) ?? []
-          )
-        },
-      },
     }),
     columnHelper.display({
       header: 'Type of data',

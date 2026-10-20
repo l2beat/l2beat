@@ -435,3 +435,39 @@ async function readErrorMessage(res: Response): Promise<string> {
     return res.statusText
   }
 }
+
+export async function updateModuleEntrypoints(
+  module: string,
+  change: { create: boolean; remove: string[] },
+) {
+  const res = await fetch(`/api/modules/${module}/entrypoints`, {
+    method: 'POST',
+    body: JSON.stringify(change),
+    headers: { 'Content-Type': 'application/json' },
+  })
+  if (!res.ok) {
+    throw new Error('Module entrypoints update failed', {
+      cause: { status: res.status, error: await readErrorMessage(res) },
+    })
+  }
+}
+
+export async function getModules(): Promise<string[]> {
+  const res = await fetch('/api/modules')
+  if (!res.ok) {
+    throw new Error('Module list request failed', {
+      cause: { status: res.status },
+    })
+  }
+  return (await res.json()) as string[]
+}
+
+export async function getStaleModuleConsumers(): Promise<string[]> {
+  const res = await fetch('/api/modules/stale-consumers')
+  if (!res.ok) {
+    throw new Error('Stale module consumers request failed', {
+      cause: { status: res.status },
+    })
+  }
+  return (await res.json()) as string[]
+}

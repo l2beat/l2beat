@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf4f0acf6ca3e4539ae929aa7f9cc51be74115dd3
+Generated with discovered.json: 0xe685148c8e1c2a6226b02a2b605c13a90ec1a827
 
-# Diff at Tue, 20 Oct 2026 09:05:38 GMT:
+# Diff at Tue, 20 Oct 2026 12:48:47 GMT:
 
-- id: 04d4d436
+- id: 63eef459
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@9417c9f8ea024cc7ebc3d153bed576e95746815a block: 1791966035
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1791966035
 - current timestamp: 1791966035
 
 ## Description
@@ -301,6 +301,56 @@ discovery. Values are for block 1791966035 (main branch discovery), not current.
 +   Status: CREATED
     external contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15)
     +++ description: None
+```
+
+Generated with discovered.json: 0x1ddd4c11e813075853ef1c9302191008ecf66d48
+
+# Diff at Tue, 20 Oct 2026 07:51:28 GMT:
+
+- id: c8f4a626
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1791966035
+- current timestamp: 1791966035
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966035 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.OTHER_MESSENGER:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "celo:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "celo:0x4200000000000000000000000000000000000007"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"celo"}}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.l2TokenBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "celo:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "celo:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "celo:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"celo"}}]
+    }
 ```
 
 Generated with discovered.json: 0x36cf8933a6fd446db8bd01047d5612288bd33f07

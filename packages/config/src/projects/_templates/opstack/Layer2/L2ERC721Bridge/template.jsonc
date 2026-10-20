@@ -1,5 +1,9 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2ERC721Bridge",
-  "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token."
+  "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.",
+  "fields": {
+    "otherBridge": { "edit": ["format", "EthereumAddress"] },
+    "OTHER_BRIDGE": { "edit": ["format", "EthereumAddress"] }
+  }
 }

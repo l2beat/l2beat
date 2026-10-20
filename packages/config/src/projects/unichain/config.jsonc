@@ -135,6 +135,33 @@
       "manualSourcePaths": {
         "unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": "https://unichain.blockscout.com/address/0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
       }
+    },
+    "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA": {
+      "fields": {
+        "l2TokenBridge": { "edit": ["format", "UnichainAddress"] },
+        "OTHER_BRIDGE": { "edit": ["format", "UnichainAddress"] },
+        "otherBridge": { "edit": ["format", "UnichainAddress"] }
+      }
+    },
+    "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6": {
+      "fields": {
+        "OTHER_MESSENGER": { "edit": ["format", "UnichainAddress"] },
+        "otherMessenger": { "edit": ["format", "UnichainAddress"] }
+      }
+    },
+    "eth:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf": {
+      "fields": {
+        "OTHER_BRIDGE": { "edit": ["format", "UnichainAddress"] },
+        "otherBridge": { "edit": ["format", "UnichainAddress"] }
+      }
+    }
+  },
+  "types": {
+    "UnichainAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": {
+        "prefix": "unichain"
+      }
     }
   }
 }

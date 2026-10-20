@@ -246,7 +246,11 @@
         "l2Counterpart",
         "l2Dai"
       ],
-      "category": "bridge-external"
+      "category": "bridge-external",
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "ArbitrumAddress"] },
+        "l2Counterpart": { "edit": ["format", "ArbitrumAddress"] }
+      }
     },
     "eth:0x9E40625F52829Cf04bC4839F186D621ee33b0E67": {
       "fields": {
@@ -369,7 +373,8 @@
           "severity": "HIGH"
         },
         "counterpartGateway": {
-          "severity": "HIGH"
+          "severity": "HIGH",
+          "edit": ["format", "ArbitrumAddress"]
         },
         "$admin": {
           "severity": "MEDIUM"
@@ -395,7 +400,8 @@
           "severity": "HIGH"
         },
         "counterpartGateway": {
-          "severity": "HIGH"
+          "severity": "HIGH",
+          "edit": ["format", "ArbitrumAddress"]
         },
         "$admin": {
           "severity": "MEDIUM"
@@ -487,6 +493,21 @@
         "arbOneGateway": { "severity": "HIGH" },
         "novaGateway": { "severity": "HIGH" },
         "$admin": { "severity": "MEDIUM" }
+      }
+    },
+    "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "ArbitrumAddress"] }
+      }
+    },
+    "eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "ArbitrumAddress"] }
+      }
+    },
+    "eth:0xcEe284F754E854890e311e3280b767F80797180d": {
+      "fields": {
+        "counterpartGateway": { "edit": ["format", "ArbitrumAddress"] }
       }
     }
   }

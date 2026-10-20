@@ -185,6 +185,19 @@
           ]
         }
       }
+    },
+    "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95": {
+      "fields": {
+        "OTHER_MESSENGER": { "edit": ["format", "CeloAddress"] },
+        "otherMessenger": { "edit": ["format", "CeloAddress"] }
+      }
+    },
+    "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe": {
+      "fields": {
+        "l2TokenBridge": { "edit": ["format", "CeloAddress"] },
+        "OTHER_BRIDGE": { "edit": ["format", "CeloAddress"] },
+        "otherBridge": { "edit": ["format", "CeloAddress"] }
+      }
     }
   }
 }

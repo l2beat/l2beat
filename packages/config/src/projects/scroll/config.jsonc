@@ -617,6 +617,13 @@
     "eth:0x7966FE0De13e3B81533470640Ac489223476B254": {
       // ZkEvmVerifierPostFeynman: registered verifier version 10 (latest, OpenVM v2.0.0)
       "critical": { "sinceTimestamp": 1790041547 }
+    },
+    "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9": {
+      "fields": {
+        "counterpart": {
+          "edit": ["format", "EthereumAddress"]
+        }
+      }
     }
   }
 }

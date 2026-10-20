@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "timestamp": 1790862365,
-  "configHash": "0x8af2a7831176497b59a2dd6fb7344614343bf3dcdfdb9750dec5ca1bc1ae314d",
+  "configHash": "0xeebf6be6f7968dbb19af22a6b1f61c114b0a6289f1e2dae9fe77e599f6f8681e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1130,11 +1130,11 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "initVersion": 3,
-        "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "unichain:0x4200000000000000000000000000000000000010",
         "messenger": "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSENGER": "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
-        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
-        "otherBridge": "eth:0x4200000000000000000000000000000000000010",
+        "OTHER_BRIDGE": "unichain:0x4200000000000000000000000000000000000010",
+        "otherBridge": "unichain:0x4200000000000000000000000000000000000010",
         "paused": false,
         "proxyAdmin": "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
@@ -1147,6 +1147,9 @@
         "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA": "L1ChugSplashProxy",
         "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": "L1StandardBridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "unichain" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1428,8 +1431,8 @@
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "eth:0x4200000000000000000000000000000000000007",
-        "otherMessenger": "eth:0x4200000000000000000000000000000000000007",
+        "OTHER_MESSENGER": "unichain:0x4200000000000000000000000000000000000007",
+        "otherMessenger": "unichain:0x4200000000000000000000000000000000000007",
         "paused": false,
         "portal": "eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2",
         "PORTAL": "eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2",
@@ -1451,6 +1454,9 @@
         "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6": "ResolvedDelegateProxy",
         "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": "L1CrossDomainMessenger"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "unichain" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1938,8 +1944,8 @@
         "initVersion": 3,
         "messenger": "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSENGER": "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
-        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000014",
-        "otherBridge": "eth:0x4200000000000000000000000000000000000014",
+        "OTHER_BRIDGE": "unichain:0x4200000000000000000000000000000000000014",
+        "otherBridge": "unichain:0x4200000000000000000000000000000000000014",
         "paused": false,
         "proxyAdmin": "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
@@ -1951,6 +1957,9 @@
         "eth:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf": "Proxy",
         "eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e": "L1ERC721Bridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "unichain" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -2350,8 +2359,8 @@
         "$upgradeCount": 2,
         "messenger": "unichain:0x4200000000000000000000000000000000000007",
         "MESSENGER": "unichain:0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "unichain:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
-        "otherBridge": "unichain:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
+        "OTHER_BRIDGE": "eth:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
+        "otherBridge": "eth:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
         "paused": false,
         "proxyAdmin": "unichain:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
@@ -2360,7 +2369,8 @@
       "implementationNames": {
         "unichain:0x4200000000000000000000000000000000000014": "Proxy",
         "unichain:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833": "L2ERC721Bridge"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "L1Block",
@@ -2837,11 +2847,6 @@
     },
     {
       "address": "unichain:0xb4E696eAFAB6B13AB18D40fAE1a962700C84BefB",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "unichain:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -4681,7 +4686,7 @@
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
-    "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/L2ERC721Bridge": "0x134c37b08d464eb53a9ae063f26e795155695ec752fda38644e23175466793ca",
     "opstack/Layer2/L2ProxyAdmin_karst": "0x70d00d08dd524425b6612b13b16781498c13da3b7e3fac0a5ccd63078eeb5644",
     "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
@@ -4699,7 +4704,7 @@
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
   "usedBlockNumbers": { "ethereum": 26097853, "unichain": 60114006 },
-  "permissionsConfigHash": "0x1b5bf486162c23c95dc1ecfdf26afdf46bf014df9cd1747f29dc5c839ea75723",
+  "permissionsConfigHash": "0x82e1634ea87482dd492efd5f3963445376580517bda46aa106111f97cff71510",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [

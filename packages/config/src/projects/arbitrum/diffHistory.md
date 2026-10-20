@@ -1,3 +1,170 @@
+Generated with discovered.json: 0xd0663fb5f355af579d050a668689f0371c1089db
+
+# Diff at Tue, 20 Oct 2026 07:51:26 GMT:
+
+- id: 5e5f16e0
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1790601621
+- current timestamp: 1790601621
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790601621 (main branch discovery), not current.
+
+```diff
+    contract L2CustomGateway (arb1:0x096760F208390250649E3e8763348E783AEF5562) [orbitstack/layer2/L2CustomGateway] {
+    +++ description: Counterpart to the L1CustomGateway. Mints and burns custom ERC20 tokens on L2 for deposits and withdrawals through the L1CustomGateway escrow.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "arb1:0xcEe284F754E854890e311e3280b767F80797180d"
++        "eth:0xcEe284F754E854890e311e3280b767F80797180d"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe) [orbitstack/layer2/L2ERC20Gateway] {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
++        "eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2DAIGateway (arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) [orbitstack/layer2/L2DAIGateway] {
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+      values.counterpartGateway:
+-        "arb1:0xD3B5b60020504bc3489D6949d545893982BA3011"
++        "eth:0xD3B5b60020504bc3489D6949d545893982BA3011"
+      values.l1Counterpart:
+-        "arb1:0xD3B5b60020504bc3489D6949d545893982BA3011"
++        "eth:0xD3B5b60020504bc3489D6949d545893982BA3011"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2GatewayRouter (arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) [orbitstack/layer2/L2GatewayRouter] {
+    +++ description: Router managing token <–> gateway mapping on L2.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "arb1:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
++        "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2WethGateway (arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) [orbitstack/layer2/L2WethGateway] {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "arb1:0xd92023E9d9911199a6711321D1277285e6d4e2db"
++        "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2ARBGateway (arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E) [orbitstack/layer2/L2ARBGateway] {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27"
++        "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "eth:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb1"}}]
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) [orbitstack/ERC20Gateway2] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "eth:0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
++        "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb1"}}]
+    }
+```
+
+```diff
+    contract L1ARBGateway (eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27) [N/A] {
+    +++ description: Canonical reverse gateway for ARB transfers between Ethereum and Arbitrum One.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "eth:0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
++        "arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb1"}}]
+    }
+```
+
+```diff
+    contract L1CustomGateway (eth:0xcEe284F754E854890e311e3280b767F80797180d) [orbitstack/CustomGateway2] {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "eth:0x096760F208390250649E3e8763348E783AEF5562"
++        "arb1:0x096760F208390250649E3e8763348E783AEF5562"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb1"}}]
+    }
+```
+
+```diff
+    contract L1DaiGateway (eth:0xD3B5b60020504bc3489D6949d545893982BA3011) [orbitstack/L1DaiGateway] {
+    +++ description: Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.
+      values.counterpartGateway:
+-        "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65"
++        "arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65"
+      values.l2Counterpart:
+-        "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65"
++        "arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb1"}}]
+    }
+```
+
+```diff
+    contract L1WethGateway (eth:0xd92023E9d9911199a6711321D1277285e6d4e2db) [N/A] {
+    +++ description: Canonical WETH gateway escrowing L1 WETH and releasing it for withdrawals proven through the Arbitrum bridge.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "eth:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
++        "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb1"}}]
+    }
+```
+
 Generated with discovered.json: 0x89a21412ef46f7310aa022f9712dde1a14622a1f
 
 # Diff at Fri, 16 Oct 2026 09:37:44 GMT:

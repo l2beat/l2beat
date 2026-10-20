@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xf612a0cf850ceb202243a948c3d304d497abf760
+
+# Diff at Tue, 20 Oct 2026 07:51:29 GMT:
+
+- id: 77120d8b
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1780407005
+- current timestamp: 1780407005
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780407005 (main branch discovery), not current.
+
+```diff
+    contract L1Bridge (eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E) [facet/L1ETHBridge] {
+    +++ description: An immutable ETH bridge built on top of a Rollup contract. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
+      values.l2Bridge:
+-        "eth:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4"
++        "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"facet"}}]
+    }
+```
+
+```diff
+    contract L2Bridge (facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4) [facet/L2ERC20Bridge] {
+    +++ description: ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.
+      values.l1Bridge:
+-        "facet:0x4E2eBa30a786c0643699b92234d74a71e958C08E"
++        "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
 Generated with discovered.json: 0x89f8d5e5be2f982ccfc191ca7579aced4b1a87b7
 
 # Diff at Fri, 16 Oct 2026 05:36:49 GMT:
