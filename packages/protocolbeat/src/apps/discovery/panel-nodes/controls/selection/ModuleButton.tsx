@@ -266,7 +266,7 @@ async function applyModuleChange(
   if (!(await discover(change.module, isDiscovered))) {
     return
   }
-  const consumers = await rediscoverStaleConsumers()
+  const consumers = await rediscoverStaleConsumers(projects.length)
   if (consumers === undefined) {
     return
   }
@@ -294,14 +294,26 @@ async function applyModuleChange(
 }
 
 // A rediscovered consumer can itself be a module whose own consumers then go
-// stale, so this repeats until nothing is left, bounded by the module depth.
-async function rediscoverStaleConsumers(): Promise<string[] | undefined> {
+// stale, so this repeats until nothing is left. A chain of modules is never
+// longer than the number of projects, and a round that leaves exactly the same
+// projects stale would never end.
+async function rediscoverStaleConsumers(
+  projectCount: number,
+): Promise<string[] | undefined> {
   const rediscovered = new Set<string>()
-  for (let round = 0; round < MODULE_DEPTH_MAX; round++) {
+  let previous = ''
+  for (let round = 0; round <= projectCount; round++) {
     const stale = await getStaleModuleConsumers()
     if (stale.length === 0) {
       return [...rediscovered]
     }
+    const current = stale.join(',')
+    if (current === previous) {
+      throw new Error('Rediscovery does not refresh stale consumers', {
+        cause: { stale },
+      })
+    }
+    previous = current
     for (const consumer of stale) {
       if (!(await discover(consumer, true))) {
         return undefined
@@ -375,7 +387,6 @@ function groupByOwner(
 }
 
 const MODULE_CHANGE_TOAST = 'module-change'
-const MODULE_DEPTH_MAX = 4
 const PROJECT_NAME_CHARACTERS = 'abcdefghijklmnopqrstuvwxyz0123456789-'
 
 function plural(count: number, word: string): string {
