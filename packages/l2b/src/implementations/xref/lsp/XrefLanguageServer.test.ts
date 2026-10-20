@@ -233,24 +233,24 @@ contract Caller {
     (path) => files[path] ?? '',
   )
 
-  it('lists the declaration in every copy when asked', () => {
+  function references(path: string, text: string, snippet: string) {
     const sent: (RpcMessage & Record<string, unknown>)[] = []
     const server = new XrefLanguageServer(
       () => workspace,
       (message) => sent.push(message),
       () => {},
     )
-    const line = caller.split('\n').findIndex((l) => l.includes('target.ping'))
+    const line = text.split('\n').findIndex((l) => l.includes(snippet))
     server.receive(
       JSON.stringify({
         jsonrpc: '2.0',
         id: 1,
         method: 'textDocument/references',
         params: {
-          textDocument: { uri: 'file:///p/rollup/.flat/Caller.sol' },
+          textDocument: { uri: `file://${path}` },
           position: {
             line,
-            character: caller.split('\n')[line]?.indexOf('ping'),
+            character: text.split('\n')[line]?.indexOf('ping'),
           },
           context: { includeDeclaration: true },
         },
@@ -260,11 +260,30 @@ contract Caller {
       uri: string
       range: { start: { line: number } }
     }[]
+    return result.map((l) => `${l.uri}:${l.range.start.line}`)
+  }
+  const callerLine = caller
+    .split('\n')
+    .findIndex((l) => l.includes('target.ping'))
 
-    expect(result.map((l) => `${l.uri}:${l.range.start.line}`)).toEqual([
+  it('lists the declaration in every copy when asked', () => {
+    expect(
+      references('/p/rollup/.flat/Caller.sol', caller, 'target.ping'),
+    ).toEqual([
       'file:///p/rollup/.flat/Proxy/Admin.1.sol:1',
       'file:///p/rollup/.flat/Proxy/User.2.sol:1',
-      `file:///p/rollup/.flat/Caller.sol:${line}`,
+      `file:///p/rollup/.flat/Caller.sol:${callerLine}`,
     ])
+  })
+
+  it('lists every copy when starting on the declaration', () => {
+    const admin = files['/p/rollup/.flat/Proxy/Admin.1.sol'] ?? ''
+
+    expect(
+      references('/p/rollup/.flat/Proxy/Admin.1.sol', admin, 'function ping'),
+    ).toInclude(
+      'file:///p/rollup/.flat/Proxy/Admin.1.sol:1',
+      'file:///p/rollup/.flat/Proxy/User.2.sol:1',
+    )
   })
 })
