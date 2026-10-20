@@ -72,16 +72,6 @@ export function CrowdFigure() {
     return sceneRef.current
   }
 
-  // Until the reader takes over, the pool goes quiet and busy by itself.
-  const clock = useRef(0)
-  useInterval(
-    () => {
-      clock.current += 0.1
-      setTraffic(autoTraffic(clock.current))
-    },
-    playing ? 100 : null,
-  )
-
   useInterval(
     () => {
       setCrowd(crowdSize(scene()))
@@ -100,7 +90,14 @@ export function CrowdFigure() {
     const ctx = prepareCanvas(canvas, size.width, size.height)
     if (ctx) drawCrowdScene(ctx, scene(), { ...size, tokens })
   }
+  // Until the reader takes over, the pool goes quiet and busy by itself.
+  const clock = useRef(0)
   useAnimationFrame((dt) => {
+    if (playing) {
+      clock.current += dt
+      trafficRef.current = autoTraffic(clock.current)
+      setTraffic(trafficRef.current)
+    }
     stepCrowdScene(scene(), dt, toRate(trafficRef.current))
     draw()
   }, animate)
@@ -153,7 +150,7 @@ export function CrowdFigure() {
               type="range"
               min={0}
               max={1}
-              step={0.01}
+              step="any"
               value={traffic}
               onChange={(e) => {
                 pick(0)

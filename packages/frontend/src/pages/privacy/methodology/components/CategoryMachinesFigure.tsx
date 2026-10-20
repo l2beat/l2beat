@@ -2,6 +2,7 @@ import type { PrivacyField } from '@l2beat/config'
 import { type ReactNode, useEffect, useRef } from 'react'
 import { useIsOnScreen } from '~/hooks/useIsOnScreen'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
+import { cn } from '~/utils/cn'
 import { byId, type FigureData, MethodologyFigure } from './MethodologyFigure'
 import { OWNER_COLORS } from './poolLensScene'
 
@@ -40,13 +41,18 @@ export function CategoryMachinesFigure({ data }: { data: FigureData }) {
   const running = onScreen && !reducedMotion
   return (
     <MethodologyFigure caption="Five mechanisms, each running on made-up payments. A coin keeps its owner's colour where the chain shows who it belongs to, and turns grey where the mechanism hides it.">
-      <div ref={ref} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {MACHINES.map(({ category, hides, scene }) => {
+      {/* Three cards over two, so no slot stays empty. */}
+      <div ref={ref} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+        {MACHINES.map(({ category, hides, scene }, i) => {
           const { label, description } = byId(data.categories, category)
           return (
             <div
               key={category}
-              className="flex flex-col rounded-lg border border-divider bg-surface-primary p-3"
+              className={cn(
+                'flex flex-col rounded-lg border border-divider bg-surface-primary p-3',
+                i < 3 ? 'lg:col-span-2' : 'lg:col-span-3',
+                i === MACHINES.length - 1 && 'sm:col-span-2',
+              )}
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="font-bold text-label-value-14">{label}</span>
@@ -78,7 +84,12 @@ function LiveSvg({
     else ref.current?.pauseAnimations()
   }, [running])
   return (
-    <svg ref={ref} viewBox="0 0 200 110" className="my-2 w-full" aria-hidden>
+    <svg
+      ref={ref}
+      viewBox="0 0 200 110"
+      className="my-2 h-36 w-full"
+      aria-hidden
+    >
       {children}
     </svg>
   )
@@ -95,7 +106,9 @@ interface Stop {
  * A coin that travels through `stops`, shown from the first stop to the
  * last. It is in `color` until `greyAt` and dissolves into grey after.
  * The motion is timed by `keyPoints`, which works in every browser; plain
- * `keyTimes` on a path with several segments does not.
+ * `keyTimes` on a path with several segments does not. Each segment starts
+ * and ends at its neighbours' speeds, so the coin glides through stops and
+ * eases into and out of rests.
  */
 function Coin({
   stops,
@@ -124,6 +137,10 @@ function Coin({
     const prev = frames[i - 1]
     return prev ? Math.hypot(f.x - prev.x, f.y - prev.y) : 0
   })
+  const speeds = frames.map((f, i) => {
+    const prev = frames[i - 1]
+    return prev && f.at > prev.at ? (lengths[i] ?? 0) / (f.at - prev.at) : 0
+  })
   const total = lengths.reduce((a, b) => a + b, 0) || 1
   let travelled = 0
   const keyPoints = lengths.map((length) => {
@@ -138,9 +155,18 @@ function Coin({
         keyPoints={keyPoints.join(';')}
         keyTimes={frames.map((f) => f.at).join(';')}
         calcMode="spline"
-        keySplines={frames
+        keySplines={speeds
           .slice(1)
-          .map(() => '0.45 0 0.55 1')
+          .map((speed, i) => {
+            if (!speed) return '0 0 1 1'
+            // With control points a third in, an offset of slope / 3 sets
+            // the speed at each end, relative to this segment's average.
+            const start = (speeds[i] ?? 0) / speed / 3
+            const end = (speeds[i + 2] ?? 0) / speed / 3
+            return [1 / 3, Math.min(1, start), 2 / 3, Math.max(0, 1 - end)]
+              .map((n) => n.toFixed(3))
+              .join(' ')
+          })
           .join(';')}
         repeatCount="indefinite"
         {...timing}
@@ -265,7 +291,7 @@ function orbit(
   from: number,
   to: number,
 ): Stop[] {
-  const steps = 12
+  const steps = 36
   return Array.from({ length: steps + 1 }, (_, i) => {
     const a = start + (turn * i) / steps
     return {
