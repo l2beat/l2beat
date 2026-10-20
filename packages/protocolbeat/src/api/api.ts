@@ -461,3 +461,13 @@ export async function getModules(): Promise<string[]> {
   }
   return (await res.json()) as string[]
 }
+
+export async function getStaleModuleConsumers(): Promise<string[]> {
+  const res = await fetch('/api/modules/stale-consumers')
+  if (!res.ok) {
+    throw new Error('Stale module consumers request failed', {
+      cause: { status: res.status },
+    })
+  }
+  return (await res.json()) as string[]
+}

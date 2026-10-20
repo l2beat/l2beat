@@ -11,6 +11,7 @@ import {
   createConfigFile,
   getModules,
   getProjects,
+  getStaleModuleConsumers,
   readConfigFile,
   updateConfigFile,
   updateModuleEntrypoints,
@@ -117,6 +118,7 @@ function AddToModule(props: {
 }) {
   const [name, setName] = useState('shared-')
   const isValidName =
+    name.startsWith('shared-') &&
     name.length > 'shared-'.length &&
     !props.modules.includes(name) &&
     [...name].every((c) => PROJECT_NAME_CHARACTERS.includes(c))
@@ -125,7 +127,7 @@ function AddToModule(props: {
     <div className="flex flex-col gap-2 text-xs">
       <Header
         title={`Add ${props.contracts.length} ${plural(props.contracts.length, 'contract')} to a module`}
-        hint="They become initial addresses of the module, then the module and this project are rediscovered."
+        hint="They become initial addresses of the module. The module and every project using them are rediscovered."
       />
       {props.modules
         .filter((module) => module !== props.project)
@@ -181,7 +183,7 @@ function RemoveFromModule(props: {
         title={`${contracts.length} selected ${plural(contracts.length, 'contract')} of ${owner}`}
         hint={
           props.isDirect
-            ? `${owner} stops discovering ${them} and this project discovers ${them} itself again. Both are rediscovered.`
+            ? `${owner} stops discovering ${them} and the projects using ${them} discover ${them} themselves again. All of them are rediscovered.`
             : `This project reaches ${owner} through another module. Change it from the module that references ${owner}.`
         }
       />
@@ -215,14 +217,18 @@ function Header(props: { title: string; hint: string }) {
   )
 }
 
+// Held from the first config write to the last discovery, so a second change
+// can not read a config the first one is about to overwrite.
+let isModuleChangeRunning = false
+
 function useModuleChange(project: string) {
   const queryClient = useQueryClient()
   return async (change: ModuleChange) => {
-    const terminal = useTerminalStore.getState()
-    if (terminal.command.inFlight) {
+    if (isModuleChangeRunning || useTerminalStore.getState().command.inFlight) {
       toast.error('Another command is running')
       return
     }
+    isModuleChangeRunning = true
     try {
       await applyModuleChange(project, change, queryClient)
     } catch (error) {
@@ -230,13 +236,16 @@ function useModuleChange(project: string) {
         id: MODULE_CHANGE_TOAST,
         description: describeError(error),
       })
+    } finally {
+      isModuleChangeRunning = false
     }
   }
 }
 
 // The module is registered before its discovery, so if that discovery fails
-// the module is listed and picking it again retries. The project goes last:
-// it only references the module's contracts once their entrypoints exist.
+// the module is listed and picking it again retries. Every consumer goes
+// after it: they only reference the module's contracts once their entrypoints
+// exist.
 async function applyModuleChange(
   project: string,
   change: ModuleChange,
@@ -257,7 +266,8 @@ async function applyModuleChange(
   if (!(await discover(change.module, isDiscovered))) {
     return
   }
-  if (!(await discover(project, true))) {
+  const consumers = await rediscoverStaleConsumers()
+  if (consumers === undefined) {
     return
   }
   await queryClient.invalidateQueries({ queryKey: ['projects'] })
@@ -275,9 +285,31 @@ async function applyModuleChange(
     })
     return
   }
-  toast.success(`Updated ${change.module} and rediscovered ${project}`, {
-    id: MODULE_CHANGE_TOAST,
-  })
+  toast.success(
+    `Updated ${change.module} and rediscovered ${consumers.length} ${plural(consumers.length, 'project')}`,
+    {
+      id: MODULE_CHANGE_TOAST,
+    },
+  )
+}
+
+// A rediscovered consumer can itself be a module whose own consumers then go
+// stale, so this repeats until nothing is left, bounded by the module depth.
+async function rediscoverStaleConsumers(): Promise<string[] | undefined> {
+  const rediscovered = new Set<string>()
+  for (let round = 0; round < MODULE_DEPTH_MAX; round++) {
+    const stale = await getStaleModuleConsumers()
+    if (stale.length === 0) {
+      return [...rediscovered]
+    }
+    for (const consumer of stale) {
+      if (!(await discover(consumer, true))) {
+        return undefined
+      }
+      rediscovered.add(consumer)
+    }
+  }
+  throw new Error('Consumers are still stale after rediscovery')
 }
 
 // The terminal ignores a command while another one runs, so the check has to
@@ -343,6 +375,7 @@ function groupByOwner(
 }
 
 const MODULE_CHANGE_TOAST = 'module-change'
+const MODULE_DEPTH_MAX = 4
 const PROJECT_NAME_CHARACTERS = 'abcdefghijklmnopqrstuvwxyz0123456789-'
 
 function plural(count: number, word: string): string {

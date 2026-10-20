@@ -307,7 +307,7 @@ export function createDiscoveryUiApp({
     attachAnalyzeRouter(app, configReader)
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
-    attachModulesRouter(app, configReader, paths.discovery)
+    attachModulesRouter(app, configReader, templateService, paths.discovery)
 
     app.get('/api/config/health', (_, res) => {
       const response = getConfigHealth(

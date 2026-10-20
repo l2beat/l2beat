@@ -1,4 +1,8 @@
-import { type ConfigReader, readJsonc } from '@l2beat/discovery'
+import {
+  type ConfigReader,
+  readJsonc,
+  type TemplateService,
+} from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
@@ -24,6 +28,7 @@ const updateEntrypointsSchema = z.object({
 export function attachModulesRouter(
   app: Express,
   configReader: ConfigReader,
+  templateService: TemplateService,
   projectsPath: string,
 ) {
   const globalPath = join(projectsPath, 'globalEntrypoints.jsonc')
@@ -34,6 +39,24 @@ export function attachModulesRouter(
     res.json(
       readGlobalEntrypoints().import.map((path) => basename(dirname(path))),
     )
+  })
+
+  // Consumers that still copy a contract that became a module entrypoint, or
+  // reference one that is gone, have to be rediscovered after a module change.
+  app.get('/api/modules/stale-consumers', (_req, res) => {
+    templateService.reload()
+    // Archived projects too: the entrypoint invariants cover every discovery.
+    const stale = configReader
+      .readAllDiscoveredProjects()
+      .filter((project) =>
+        templateService
+          .discoveryNeedsRefresh(
+            configReader.readDiscovery(project),
+            configReader.readConfig(project),
+          )
+          .some((reason) => reason.type === 'ENTRYPOINTS_CHANGED'),
+      )
+    res.json(stale)
   })
 
   app.post('/api/modules/:project/entrypoints', (req, res) => {
@@ -51,10 +74,12 @@ export function attachModulesRouter(
     const globalEntrypoints = readGlobalEntrypoints()
     const importPath = `../projects/${module}/entrypoints.json`
     const isRegistered = globalEntrypoints.import.includes(importPath)
-    // Only a just created project may become a module, never one that is
-    // already discovered on its own.
+    // Only a just created shared- project may become a module, never one that
+    // is already discovered on its own.
     const canBecomeModule =
-      body.data.create && !configReader.hasDiscovery(module)
+      body.data.create &&
+      module.startsWith('shared-') &&
+      !configReader.hasDiscovery(module)
     if (!isRegistered && !canBecomeModule) {
       res.status(400).json({ error: 'Project is not a module' })
       return
