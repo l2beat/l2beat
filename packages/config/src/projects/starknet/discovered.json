@@ -334,7 +334,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
-      "critical": true,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137600,
       "sinceBlock": 15090980,
@@ -563,7 +562,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "critical": true,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689267,
       "sinceBlock": 17968760,
@@ -817,7 +815,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.",
-      "critical": true,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1757941367,
       "sinceBlock": 23368649,
@@ -915,7 +912,7 @@
         "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": "ProxyV5",
         "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff": "StarknetTokenBridge"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
@@ -967,7 +964,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
-      "critical": { "untilTimestamp": 1768848971 },
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1750859519,
       "sinceBlock": 22781865,
@@ -1297,7 +1293,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "critical": true,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137615,
       "sinceBlock": 15090981,
@@ -1469,7 +1464,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "critical": true,
       "deployerAddress": "eth:0xCd7F67F78E76b2797678dAde0246466459b5D259",
       "sinceTimestamp": 1685452751,
       "sinceBlock": 17371995,
@@ -2096,7 +2090,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1685880791,
       "sinceBlock": 17407168,
@@ -2288,7 +2281,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "critical": true,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689279,
       "sinceBlock": 17968761,
@@ -2434,7 +2426,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "critical": true,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689255,
       "sinceBlock": 17968759,
@@ -2580,7 +2571,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1688046071,
       "sinceBlock": 17585317,
@@ -2712,7 +2702,7 @@
           }
         }
       ],
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "MultiBridge",
@@ -2725,7 +2715,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.",
-      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1707322643,
       "sinceBlock": 19177451,
@@ -2875,7 +2864,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "critical": true,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137639,
       "sinceBlock": 15090984,
@@ -3101,7 +3089,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "critical": true,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1698061847,
       "sinceBlock": 18412782,
@@ -5051,8 +5038,7 @@
           "from": "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
           "role": ".$admin"
         }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
     },
     "eth:0x59232aC80E6d403b6381393e52f4665ECA328558": {
       "receivedPermissions": [
@@ -5253,8 +5239,7 @@
           "from": "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e",
           "role": ".$admin"
         }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
     },
     "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": {
       "receivedPermissions": [

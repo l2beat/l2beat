@@ -79,22 +79,6 @@
       "reason": "Starkware Multisig 1 removed the EOA proxy governor eth:0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263, which could upgrade the Starknet core alone (upgrade delay 0). Two minutes earlier (tx 0x617e74011b3a7a90d33271619ae3d145d1fda2487c282e14c8042825852eaf28) the EOA Starknet governor eth:0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E was removed. Single-key upgrade and program-hash paths removed."
     },
     {
-      "timestamp": 1738274723,
-      "type": "state",
-      "contract": "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-      "transaction": "0xb8480764f1143fe4396d6ae4565251ce9c79668983d06dc217782442b2071e7e",
-      "updateId": "199b326f",
-      "reason": "Governance of the UNI escrow moved from the StarkWare EOA 0xF689…e86b to Starkware Multisig 2: this tx revoked the EOA's remaining roles after the Safe was granted them (RoleRevoked)."
-    },
-    {
-      "timestamp": 1738274783,
-      "type": "state",
-      "contract": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-      "transaction": "0x1750bf27bb76277a1bcad197af285348e25813a80f5382b4aaadbbfeba714a4c",
-      "updateId": "199b326f",
-      "reason": "Governance of the MultiBridge escrow moved from the StarkWare EOA 0x5751…f21A to Starkware Multisig 2: this tx revoked the EOA's remaining roles after the Safe was granted them (RoleRevoked)."
-    },
-    {
       "timestamp": 1738274867,
       "type": "state",
       "contract": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
