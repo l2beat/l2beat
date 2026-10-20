@@ -98,6 +98,20 @@ const editorTheme = EditorView.theme(
       color: colors.coffee['200'],
     },
     '.cm-panel.cm-search [name=close]': { color: colors.coffee['200'] },
+    '.cm-tooltip': {
+      backgroundColor: colors.coffee['800'],
+      border: `1px solid ${colors.coffee['600']}`,
+      color: colors.coffee['200'],
+    },
+    '.cm-tooltip-autocomplete > ul > li[aria-selected]': {
+      backgroundColor: colors.coffee['600'],
+      color: colors.coffee['200'],
+    },
+    '.cm-completionDetail': { color: colors.coffee['400'] },
+    '.cm-completionMatchedText': {
+      color: colors.aux.yellow,
+      textDecoration: 'none',
+    },
   },
   { dark: true },
 )
@@ -111,6 +125,10 @@ const highlightStyle = HighlightStyle.define([
   { tag: tags.operator, color: colors.aux.green, fontWeight: 'bold' },
   { tag: tags.number, color: colors.aux.teal },
   { tag: tags.string, color: colors.aux.yellow },
+  { tag: tags.propertyName, color: colors.coffee['200'] },
+  { tag: tags.squareBracket, color: colors.aux.green },
+  { tag: tags.definitionOperator, color: colors.aux.pink },
+  { tag: [tags.bool, tags.null], color: colors.aux.orange, fontWeight: 'bold' },
 ])
 
 export const theme = [editorTheme, syntaxHighlighting(highlightStyle)]

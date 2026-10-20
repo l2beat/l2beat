@@ -4,8 +4,8 @@ import type {
   EditorContentCallback,
   EditorSaveCallback,
 } from '../../../../../components/editor/code/editor'
-import { useMonacoJsonEditorStore } from '../../../../../components/editor/monaco-json/store'
-import { MonacoJsonEditorView } from '../../../../../components/editor/views/lazy'
+import { useCodeStore } from '../../../../../components/editor/store'
+import { JsonEditorView } from '../../../../../components/editor/views/lazy'
 
 type HandlerEditorProps = {
   context: 'config' | 'template'
@@ -24,7 +24,7 @@ export function HandlerEditor({
   onSave,
   onChange,
 }: HandlerEditorProps) {
-  const editor = useMonacoJsonEditorStore((store) => store.editors[editorKey])
+  const editor = useCodeStore((store) => store.editors[editorKey])
 
   const file = useMemo(() => {
     return {
@@ -40,15 +40,12 @@ export function HandlerEditor({
     return editor?.createUri(file)
   }, [file, editor])
 
-  // monaco schema synchronization
   useEffect(() => {
     if (selectedHandler && editor && uri) {
-      const uriString = uri.toString()
-
       // Upsert schema for this specific handler without overwriting other schemas
       editor.upsertJsonSchema({
-        uri: uriString,
-        fileMatch: [uriString],
+        uri,
+        fileMatch: [uri],
         schema:
           selectedHandler.schema === null ? undefined : selectedHandler.schema,
       })
@@ -56,13 +53,14 @@ export function HandlerEditor({
 
     return () => {
       if (editor && uri) {
-        editor.removeJsonSchema(uri.toString())
+        editor.removeJsonSchema(uri)
       }
     }
   }, [selectedHandler, uri, editor])
 
   return (
-    <MonacoJsonEditorView
+    <JsonEditorView
+      features={{ lineSelection: false, rangeHighlight: false }}
       editorId={editorKey}
       disableTabs
       callbacks={{

@@ -19,8 +19,10 @@
     "test:e2e": "pnpm build && playwright test"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "^6.20.3",
     "@codemirror/commands": "^6.11.1",
     "@codemirror/language": "^6.13.1",
+    "@codemirror/lint": "^6.9.7",
     "@codemirror/merge": "^6.12.2",
     "@codemirror/search": "^6.7.2",
     "@codemirror/state": "^6.7.6",
@@ -53,6 +55,7 @@
     "react-router": "^7.0.2",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
+    "vscode-json-languageservice": "^5.7.2",
     "zustand": "^5.0.0"
   },
   "devDependencies": {

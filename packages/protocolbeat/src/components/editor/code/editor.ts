@@ -34,6 +34,7 @@ import {
 } from '@codemirror/view'
 import { assert } from '@l2beat/shared-pure'
 import { indentGuides } from '../indentGuides'
+import type { JsonSchemaConfig, JsonSupport } from '../languages/json'
 import { solidity } from '../languages/solidity'
 import {
   type EditorPlugin,
@@ -83,7 +84,11 @@ export class Editor {
   private saveCallback: ((content: string) => string) | null = null
   private disposed = false
 
-  constructor(element: HTMLElement) {
+  // JSON support comes from the JSON views, so code views load without it.
+  constructor(
+    element: HTMLElement,
+    private readonly json?: JsonSupport,
+  ) {
     this.view = new EditorView({
       parent: element,
       state: EditorState.create({ extensions: this.base }),
@@ -99,6 +104,22 @@ export class Editor {
 
   getPlugin<V extends EditorPlugin>(clazz: EditorPluginClass<EditorView, V>) {
     return this.plugins.get(clazz)
+  }
+
+  // Without an authority, which the JSON language service lowercases before
+  // matching a schema's `fileMatch` against it.
+  createUri(file: EditorFile): string {
+    return `inmemory:/${file.id}/${file.name}`
+  }
+
+  upsertJsonSchema(config: JsonSchemaConfig) {
+    assert(this.json !== undefined, 'Editor without JSON support')
+    this.json.upsertSchema(config)
+  }
+
+  removeJsonSchema(uri: string) {
+    assert(this.json !== undefined, 'Editor without JSON support')
+    this.json.removeSchema(uri)
   }
 
   setFile(file: EditorFile) {
@@ -200,10 +221,18 @@ export class Editor {
       extensions: [
         this.base,
         this.readOnly.of(EditorState.readOnly.of(file.readOnly)),
-        languageExtension(file.language),
+        this.languageExtension(file),
         this.plugins.extensions(),
       ],
     })
+  }
+
+  private languageExtension(file: EditorFile): Extension {
+    if (file.language === 'json') {
+      assert(this.json !== undefined, 'JSON file in an editor without JSON')
+      return this.json.extension(this.createUri(file))
+    }
+    return file.language === 'solidity' ? solidity : []
   }
 
   private baseExtensions(): Extension {
@@ -255,13 +284,6 @@ export class Editor {
 
 function fileKey(file: EditorFile): string {
   return `${file.id}.${file.language}`
-}
-
-function languageExtension(
-  language: EditorSupportedLanguage | undefined,
-): Extension {
-  assert(language !== 'json', 'JSON files open in MonacoJsonEditor')
-  return language === 'solidity' ? solidity : []
 }
 
 function captureViewState(view: EditorView): FileViewState {

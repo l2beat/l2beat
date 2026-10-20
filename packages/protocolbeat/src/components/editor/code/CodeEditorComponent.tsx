@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import type { JsonSupport } from '../languages/json'
 import { useCodeStore } from '../store'
 import { Editor } from './editor'
 import { LineSelector } from './plugins/lineSelector'
@@ -10,11 +11,13 @@ type CodeEditorComponentProps = {
     lineSelection: boolean
     rangeHighlight: boolean
   }
+  json?: JsonSupport
 }
 
 export function CodeEditorComponent({
   features,
   editorKey,
+  json,
 }: CodeEditorComponentProps) {
   const editorElement = useRef<HTMLDivElement>(null)
   const { setEditor, removeEditor } = useCodeStore()
@@ -26,7 +29,7 @@ export function CodeEditorComponent({
       return
     }
 
-    const editor = new Editor(element)
+    const editor = new Editor(element, json)
 
     if (features.lineSelection) {
       editor.usePlugin(LineSelector)
