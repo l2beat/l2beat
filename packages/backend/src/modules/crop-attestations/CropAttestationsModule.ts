@@ -30,6 +30,12 @@ export function createCropAttestationsModule({
   })
   const rpc = providers.clients.getRpcClient(source.network)
 
+  const { githubToken } = config.cropAttestations
+  if (githubToken === undefined) {
+    logger.info('CROPS API deploys disabled: no GitHub token is set')
+  }
+  const http = new HttpClient()
+
   const sync = new CropAttestationSync(
     {
       db,
@@ -43,34 +49,22 @@ export function createCropAttestationsModule({
           attester: attester.address,
           startBlock: attester.sinceBlock,
         }),
+      deployer:
+        githubToken === undefined
+          ? undefined
+          : new CropsApiDeployer(
+              db,
+              () => triggerCropsApiDeploy(http, githubToken),
+              logger,
+            ),
       intervalMs: INTERVAL_MS,
     },
     logger,
   )
 
-  const { githubToken } = config.cropAttestations
-  const http = new HttpClient()
-  const deployer =
-    githubToken === undefined
-      ? undefined
-      : new CropsApiDeployer(
-          {
-            db,
-            chainId: source.chainId,
-            attester: attester.address,
-            deploy: () => triggerCropsApiDeploy(http, githubToken),
-            intervalMs: INTERVAL_MS,
-          },
-          logger,
-        )
-  if (!deployer) {
-    logger.info('CROPS API deploys disabled: no GitHub token is set')
-  }
-
   return {
     start: () => {
       sync.start()
-      deployer?.start()
     },
   }
 }

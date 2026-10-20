@@ -1,54 +1,40 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { TimeLoop } from '../../tools/TimeLoop'
 
 const DEPLOYED_KEY = 'cropsApiAttestationUid'
 
-export interface CropsApiDeployerDeps {
-  db: Database
-  chainId: number
-  attester: string
-  /** Republishes the CROPS API, which reads the attestation from the chain. */
-  deploy: () => Promise<void>
-  intervalMs: number
-}
-
 /**
- * Redeploys the CROPS API while the stored attestation differs from the one
- * it was last deployed with. That one is kept in the database, so a deploy
- * that failed or was cut short by a restart runs again on the next pass.
+ * Redeploys the CROPS API until it carries the current attestation. The one it
+ * was last deployed with is kept in the database, so a deploy that failed or
+ * was cut short by a restart runs again on the next call.
  */
-export class CropsApiDeployer extends TimeLoop {
-  protected logger: Logger
+export class CropsApiDeployer {
+  private readonly logger: Logger
 
   constructor(
-    private readonly $: CropsApiDeployerDeps,
+    private readonly db: Database,
+    /** Republishes the CROPS API, which reads the attestation from the chain. */
+    private readonly deploy: () => Promise<void>,
     logger: Logger,
   ) {
-    super({ intervalMs: $.intervalMs })
     this.logger = logger.for(this)
   }
 
-  async run() {
-    const { db, chainId, attester } = this.$
-    const [current, deployed] = await Promise.all([
-      db.cropAttestation.find(chainId, attester),
-      db.appState.findByKey(DEPLOYED_KEY),
-    ])
-    const uid = current?.uid
+  async ensureDeployed(uid: string | undefined) {
+    const deployed = await this.db.appState.findByKey(DEPLOYED_KEY)
     if (deployed?.value === uid) {
       return
     }
-    await this.$.deploy()
+    await this.deploy()
     if (uid === undefined) {
-      await db.appState.deleteByKey(DEPLOYED_KEY)
+      await this.db.appState.deleteByKey(DEPLOYED_KEY)
     } else {
-      await db.appState.insert({
+      await this.db.appState.insert({
         key: DEPLOYED_KEY,
         value: uid,
         updatedBy: 'CropsApiDeployer',
       })
     }
-    this.logger.info('CROPS API deploy triggered', { uid })
+    this.logger.info('Deploy triggered', { uid })
   }
 }
