@@ -156,8 +156,8 @@ const CORNER_BRIDGES_COUNT = 3
 
 /**
  * The interop page's general stats: volume, transfers and routes, then the
- * top chain and token. The busiest bridges, the top protocol among them, are
- * listed apart: under the graph in TopBridges, or in a corner beside it.
+ * top chain, token and protocol. The busiest bridges are listed apart: under
+ * the graph in TopBridges, or in a corner beside it.
  */
 function Stats({
   data,
@@ -213,6 +213,28 @@ function Stats({
             />
             <span className={cn('truncate', HOME_TEXT.row)}>
               {stats.topToken.symbol}
+            </span>
+          </>
+        )}
+      </Top>
+      <Top
+        label="Top protocol"
+        href={
+          stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
+        }
+        value={
+          stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
+        }
+      >
+        {stats.topProtocol && (
+          <>
+            <img
+              src={stats.topProtocol.iconUrl}
+              alt=""
+              className={HOME_ICON_CLASS}
+            />
+            <span className={cn('truncate', HOME_TEXT.row)}>
+              {stats.topProtocol.name}
             </span>
           </>
         )}
@@ -331,8 +353,8 @@ function TopBridges({
 
 /**
  * The figures in the four corners the graph's ring leaves free: totals top
- * left, routes and the top chain top right, the top token bottom left,
- * the busiest bridges bottom right.
+ * left, routes and the top chain top right, the top token and protocol
+ * bottom left, the busiest bridges bottom right.
  */
 function CornerStats({
   data,
@@ -398,6 +420,28 @@ function CornerStats({
               />
               <span className={cn('truncate', HOME_TEXT.row)}>
                 {stats.topToken.symbol}
+              </span>
+            </>
+          )}
+        </Top>
+        <Top
+          label="Top protocol"
+          href={
+            stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
+          }
+          value={
+            stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
+          }
+        >
+          {stats.topProtocol && (
+            <>
+              <img
+                src={stats.topProtocol.iconUrl}
+                alt=""
+                className={HOME_ICON_CLASS}
+              />
+              <span className={cn('truncate', HOME_TEXT.row)}>
+                {stats.topProtocol.name}
               </span>
             </>
           )}
