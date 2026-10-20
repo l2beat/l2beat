@@ -6,7 +6,7 @@ describe('splitCode', () => {
     it('omits a declaration whose only difference is in comments', () => {
       // When the user toggles "remove unchanged sections" and is also
       // ignoring comments, declarations that differ only in comments
-      // are visually unchanged in the diff — the customDiffProvider
+      // are visually unchanged in the diff — computeDiff
       // filters their line changes out. If splitCode keeps them, the
       // user sees a large block of identical-looking content polluting
       // the compressed view.

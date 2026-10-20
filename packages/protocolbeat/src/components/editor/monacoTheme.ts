@@ -29,21 +29,9 @@ const jsonTokenColoringRules: editor.ITokenThemeRule[] = [
   { token: 'string.escape.json', foreground: colors.aux.red },
 ]
 
-const solidityTokenColoringRules: editor.ITokenThemeRule[] = [
-  { token: '', foreground: colors.coffee['200'] },
-  { token: 'comment', foreground: colors.coffee['400'] },
-  { token: 'comment.keyword', foreground: colors.aux.blue },
-  { token: 'keyword', foreground: colors.aux.orange },
-  { token: 'keyword.typename', foreground: colors.aux.red },
-  { token: 'delimiter', foreground: colors.coffee['400'] },
-  { token: 'operator', foreground: colors.aux.green, fontStyle: 'bold' },
-  { token: 'number', foreground: colors.aux.teal },
-  { token: 'string', foreground: colors.aux.yellow },
-]
-
 export const theme: editor.IStandaloneThemeData = {
   base: 'vs-dark',
   inherit: true,
-  rules: [...jsonTokenColoringRules, ...solidityTokenColoringRules],
+  rules: jsonTokenColoringRules,
   colors: editorColoring,
 }

@@ -1,6 +1,13 @@
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
-import type { ToMonaco } from '../../monacoInit'
-import type { EditorPlugin } from '../../pluginStore'
+import type { EditorView } from '@codemirror/view'
+import { assert } from '@l2beat/shared-pure'
+import type { EditorPlugin } from '../../plugin'
+import {
+  nextSelectedLines,
+  scrollToSelectedLines,
+  selectedLines,
+  setSelectedLines,
+} from '../../selectedLines'
+import type { DiffEditor } from '../diffEditor'
 
 export interface LineSelection {
   side: 'left' | 'right'
@@ -9,16 +16,19 @@ export interface LineSelection {
   anchorLine: number
 }
 
-type ForType = 'diff'
+type LineSelectionListener = (selection: LineSelection | null) => void
 
-export class LineSelector implements EditorPlugin<ForType> {
+// Keeps the selection itself, because the diff editor builds new views when
+// its texts or settings change, and the selection carries over to them.
+export class LineSelector implements EditorPlugin {
+  readonly extension = selectedLines({
+    onLineNumberClick: (view, lineNumber, shiftKey) =>
+      this.handleLineClick(this.sideOf(view), lineNumber, shiftKey),
+    onContentClick: () => this.clearSelection(),
+  })
   private selectedLines: LineSelection | null = null
-  private leftDecorationIds: string[] = []
-  private rightDecorationIds: string[] = []
-  private selectionChangeListeners: Array<
-    (selection: LineSelection | null) => void
-  > = []
-  private disposables: monaco.IDisposable[] = []
+  private selectionChangeListeners: LineSelectionListener[] = []
+  private readonly buildSubscription: { dispose(): void }
 
   static encode(selection: LineSelection): string {
     const prefix = selection.side === 'left' ? 'L' : 'R'
@@ -43,23 +53,16 @@ export class LineSelector implements EditorPlugin<ForType> {
     return { side, startLine, endLine, anchorLine: endLine }
   }
 
-  constructor(readonly editor: ToMonaco<ForType>) {}
-
-  activate() {
-    this.setupLineSelectionHandlers()
+  constructor(readonly editor: DiffEditor) {
+    this.buildSubscription = editor.onBuild(() => this.render())
   }
 
   dispose() {
-    for (const d of this.disposables) {
-      d.dispose()
-    }
-    this.disposables = []
-    this.leftDecorationIds = []
-    this.rightDecorationIds = []
+    this.buildSubscription.dispose()
     this.selectionChangeListeners = []
   }
 
-  onSelectionChange(listener: (selection: LineSelection | null) => void) {
+  onSelectionChange(listener: LineSelectionListener) {
     this.selectionChangeListeners.push(listener)
 
     return () => {
@@ -72,67 +75,24 @@ export class LineSelector implements EditorPlugin<ForType> {
 
   setSelection(selection: LineSelection | null) {
     this.selectedLines = selection
-    this.updateLineDecorations()
-    this.notifySelectionChange()
+    this.render()
+    this.selectionChangeListeners.forEach((listener) => {
+      listener(this.selectedLines)
+    })
   }
 
   scrollToSelection() {
-    if (!this.selectedLines) {
+    const mergeView = this.editor.view
+    if (!this.selectedLines || mergeView === undefined) {
       return
     }
-
-    const { side } = this.selectedLines
-
-    const editor =
-      side === 'left'
-        ? this.editor.getOriginalEditor()
-        : this.editor.getModifiedEditor()
-
-    const range = new monaco.Range(
-      this.selectedLines.startLine,
-      1,
-      this.selectedLines.endLine,
-      1,
+    scrollToSelectedLines(
+      this.selectedLines.side === 'left' ? mergeView.a : mergeView.b,
     )
-
-    editor.revealRangeInCenter(range)
   }
 
   clearSelection() {
-    this.selectedLines = null
-    this.updateLineDecorations()
-    this.notifySelectionChange()
-  }
-
-  private setupLineSelectionHandlers() {
-    const editors = [
-      {
-        key: 'left',
-        editor: this.editor.getOriginalEditor(),
-      },
-      {
-        key: 'right',
-        editor: this.editor.getModifiedEditor(),
-      },
-    ] as const
-
-    for (const editor of editors) {
-      this.disposables.push(
-        editor.editor.onMouseDown((e) => {
-          if (
-            e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS
-          ) {
-            this.handleLineClick(
-              editor.key,
-              e.target.position?.lineNumber ?? 0,
-              e.event.shiftKey,
-            )
-          } else {
-            this.clearSelection()
-          }
-        }),
-      )
-    }
+    this.setSelection(null)
   }
 
   private handleLineClick(
@@ -140,85 +100,39 @@ export class LineSelector implements EditorPlugin<ForType> {
     lineNumber: number,
     shiftKey: boolean,
   ) {
-    if (!lineNumber) {
-      return
-    }
-
-    if (!this.selectedLines || !shiftKey || this.selectedLines.side !== side) {
-      this.selectedLines = {
-        side,
-        startLine: lineNumber,
-        endLine: lineNumber,
-        anchorLine: lineNumber,
-      }
-    } else {
-      this.selectedLines = {
-        side,
-        startLine: Math.min(this.selectedLines.anchorLine, lineNumber),
-        endLine: Math.max(this.selectedLines.anchorLine, lineNumber),
-        anchorLine: lineNumber,
-      }
-    }
-
-    this.updateLineDecorations()
-    this.notifySelectionChange()
-  }
-
-  private notifySelectionChange() {
-    this.selectionChangeListeners.forEach((listener) => {
-      listener(this.selectedLines)
+    const current =
+      this.selectedLines?.side === side ? this.selectedLines : null
+    this.setSelection({
+      side,
+      ...nextSelectedLines(current, lineNumber, shiftKey),
     })
   }
 
-  private updateLineDecorations() {
-    this.leftDecorationIds = this.editor
-      .getOriginalEditor()
-      .deltaDecorations(this.leftDecorationIds, [])
-    this.rightDecorationIds = this.editor
-      .getModifiedEditor()
-      .deltaDecorations(this.rightDecorationIds, [])
+  private sideOf(view: EditorView): 'left' | 'right' {
+    const mergeView = this.editor.view
+    assert(mergeView !== undefined, 'Click without a merge view')
+    if (view === mergeView.a) {
+      return 'left'
+    }
+    assert(view === mergeView.b, 'Click in a view of another editor')
+    return 'right'
+  }
 
-    if (!this.selectedLines) {
+  private render() {
+    const mergeView = this.editor.view
+    if (mergeView === undefined) {
       return
     }
-
-    const decorations: monaco.editor.IModelDeltaDecoration[] = []
-    const isMultiLine =
-      this.selectedLines.startLine !== this.selectedLines.endLine
-
-    for (
-      let line = this.selectedLines.startLine;
-      line <= this.selectedLines.endLine;
-      line++
-    ) {
-      let className = 'selected-line-highlight'
-
-      if (!isMultiLine) {
-        className = 'selected-line-highlight-single'
-      } else if (line === this.selectedLines.startLine) {
-        className = 'selected-line-highlight-first'
-      } else if (line === this.selectedLines.endLine) {
-        className = 'selected-line-highlight-last'
-      }
-
-      decorations.push({
-        range: new monaco.Range(line, 1, line, 1),
-        options: {
-          isWholeLine: true,
-          className,
-          marginClassName: 'selected-line-margin',
-        },
-      })
-    }
-
-    if (this.selectedLines.side === 'left') {
-      this.leftDecorationIds = this.editor
-        .getOriginalEditor()
-        .deltaDecorations([], decorations)
-    } else {
-      this.rightDecorationIds = this.editor
-        .getModifiedEditor()
-        .deltaDecorations([], decorations)
-    }
+    const selection = this.selectedLines
+    mergeView.a.dispatch({
+      effects: setSelectedLines.of(
+        selection?.side === 'left' ? selection : null,
+      ),
+    })
+    mergeView.b.dispatch({
+      effects: setSelectedLines.of(
+        selection?.side === 'right' ? selection : null,
+      ),
+    })
   }
 }

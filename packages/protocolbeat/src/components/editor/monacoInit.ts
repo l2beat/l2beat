@@ -3,25 +3,11 @@ import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import 'monaco-editor/esm/vs/editor/edcore.main'
 import 'monaco-editor/esm/vs/language/json/monaco.contribution'
-// @ts-expect-error - internal Monaco module, not in public types
-import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices'
 
-import { getSharedDiffProvider } from './diff/customDiffProvider'
 import { jsonDiagnostics } from './languages/json'
-import * as solidity from './languages/solidityMonarch'
 import { theme } from './monacoTheme'
 
 let initialized = false
-
-const customDiffProviderFactory = {
-  createDiffProvider(_options: unknown) {
-    return getSharedDiffProvider()
-  },
-}
-
-const serviceOverrides = {
-  diffProviderFactoryService: customDiffProviderFactory,
-}
 
 export type EditorType = 'code' | 'diff'
 export type ToMonaco<T> = T extends 'code'
@@ -141,16 +127,6 @@ function init() {
       return new editorWorker()
     },
   }
-
-  // Must run before any monaco.languages.* / monaco.editor.* call —
-  // those internally call StandaloneServices.get(), which auto-initializes
-  // with empty overrides if we haven't initialized yet, locking out our
-  // override permanently (standaloneServices.js:716-718).
-  StandaloneServices.initialize(serviceOverrides)
-
-  monaco.languages.register({ id: 'solidity' })
-  monaco.languages.setMonarchTokensProvider('solidity', solidity.language)
-  monaco.languages.setLanguageConfiguration('solidity', solidity.configuration)
 
   monaco.languages.json.jsonDefaults.setDiagnosticsOptions(jsonDiagnostics)
 

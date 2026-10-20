@@ -11,7 +11,6 @@ import { IconShare } from '../../../icons/IconShare'
 import { IconSplit } from '../../../icons/IconSplit'
 import { IconSwap } from '../../../icons/IconSwap'
 import { IconTick } from '../../../icons/IconTick'
-import { setIgnoreComments } from '../diff/customDiffProvider'
 import { DiffEditorComponent } from '../diff/DiffEditorComponent'
 import { useDiffEditorSettings } from '../diff/hooks/useDiffEditorSettings'
 import { LineSelector } from '../diff/plugins/lineSelector'
@@ -70,8 +69,8 @@ export function DiffView(props: DiffViewProps) {
   }, [fold, editor])
 
   useEffect(() => {
-    setIgnoreComments(ignoreComments)
-  }, [ignoreComments])
+    editor?.setIgnoreComments(ignoreComments)
+  }, [ignoreComments, editor])
 
   useEffect(() => {
     if (!editor) {
