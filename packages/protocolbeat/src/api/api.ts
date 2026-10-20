@@ -446,8 +446,6 @@ export async function updateModuleEntrypoints(
     headers: { 'Content-Type': 'application/json' },
   })
   if (!res.ok) {
-    throw new Error('Module entrypoints update failed', {
-      cause: { status: res.status },
-    })
+    throw new Error(await readErrorMessage(res))
   }
 }
