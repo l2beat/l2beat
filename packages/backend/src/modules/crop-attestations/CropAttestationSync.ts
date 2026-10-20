@@ -10,19 +10,18 @@ export interface CropAttestationSyncDeps {
   attester: string
   /** The attester's current attestation, read from EAS. */
   readCurrent: () => Promise<CropAttestation | undefined>
-  /** Called once the current attestation changes. */
-  onChange: () => Promise<void>
+  /** Republishes the CROPS API. Unset where this backend should not. */
+  deployApi: (() => Promise<void>) | undefined
   intervalMs: number
 }
 
 /**
- * Keeps the attester's current attestation in the database, for the frontend.
+ * Keeps the attester's current attestation in the database, for the frontend,
+ * and redeploys the CROPS API until it carries the same one.
  * A failed read keeps the last stored one; its `updatedAt` shows how old it is.
  */
 export class CropAttestationSync extends TimeLoop {
   protected logger: Logger
-  /** Survives a failed `onChange`, so the next run retries it. */
-  private changePending = false
 
   constructor(
     private readonly $: CropAttestationSyncDeps,
@@ -33,17 +32,13 @@ export class CropAttestationSync extends TimeLoop {
   }
 
   async run() {
-    if (await this.sync()) {
-      this.changePending = true
-    }
-    if (this.changePending) {
-      await this.$.onChange()
-      this.changePending = false
+    const current = await this.sync()
+    if (this.$.deployApi) {
+      await this.deployApi(this.$.deployApi, current?.uid ?? '')
     }
   }
 
-  /** Returns whether the current attestation changed. */
-  private async sync(): Promise<boolean> {
+  private async sync(): Promise<CropAttestation | undefined> {
     const { db, chainId, attester } = this.$
     const current = await this.$.readCurrent()
     if (!current) {
@@ -54,9 +49,8 @@ export class CropAttestationSync extends TimeLoop {
           attester,
         })
       }
-      return deleted > 0
+      return
     }
-    const stored = await db.cropAttestation.find(chainId, attester)
     await db.cropAttestation.upsert({
       chainId,
       attester,
@@ -68,13 +62,25 @@ export class CropAttestationSync extends TimeLoop {
       blockNumber: current.blockNumber,
       updatedAt: UnixTime.now(),
     })
-    if (stored?.uid === current.uid) {
-      return false
+    return current
+  }
+
+  /**
+   * Stored in the database rather than memory, so a deploy that failed or was
+   * cut short by a restart runs again on the next pass.
+   */
+  private async deployApi(deploy: () => Promise<void>, uid: string) {
+    const { db } = this.$
+    const deployed = await db.appState.findByKey('cropsApiAttestationUid')
+    if (deployed?.value === uid) {
+      return
     }
-    this.logger.info('New attestation', {
-      uid: current.uid,
-      revision: current.revision,
+    await deploy()
+    await db.appState.insert({
+      key: 'cropsApiAttestationUid',
+      value: uid,
+      updatedBy: 'CropAttestationSync',
     })
-    return true
+    this.logger.info('CROPS API deploy triggered', { uid })
   }
 }

@@ -25,7 +25,7 @@ on:
     branches:
       - main
   # New attestations reach the chain without a commit. The backend dispatches
-  # this workflow when it sees one; the daily run catches a lost dispatch.
+  # this workflow when it sees one; the daily run catches a run that failed.
   schedule:
     - cron: "17 3 * * *"
 

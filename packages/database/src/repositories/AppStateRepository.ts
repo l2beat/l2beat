@@ -4,7 +4,11 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AppState } from '../kysely/generated/types'
 
-const KEYS = ['interopAggregatesTimestampOverride', 'example'] as const
+const KEYS = [
+  'interopAggregatesTimestampOverride',
+  'cropsApiAttestationUid',
+  'example',
+] as const
 
 export type AppStateKey = v.infer<typeof AppStateKey>
 export const AppStateKey = v.enum(KEYS)
@@ -14,6 +18,11 @@ export const AppStatePair = v.union([
   v.object({
     key: v.literal('interopAggregatesTimestampOverride'),
     value: v.union([v.string().transform((v) => Number(v)), v.number()]),
+  }),
+  // The attestation the CROPS API was last deployed with; empty for none.
+  v.object({
+    key: v.literal('cropsApiAttestationUid'),
+    value: v.string(),
   }),
   v.object({
     key: v.literal('example'),

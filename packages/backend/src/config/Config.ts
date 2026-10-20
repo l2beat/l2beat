@@ -346,5 +346,5 @@ export interface CropAttestationsConfig {
    * GitHub token allowed to run the crops-api deploy workflow. Set only where
    * a change should republish the API, i.e. production.
    */
-  readonly cropsApiDeployToken: string | undefined
+  readonly githubToken: string | undefined
 }

@@ -29,7 +29,7 @@ export function createCropAttestationsModule({
   })
   const rpc = providers.clients.getRpcClient(source.network)
   const http = new HttpClient()
-  const { cropsApiDeployToken } = config.cropAttestations
+  const { githubToken } = config.cropAttestations
 
   const sync = new CropAttestationSync(
     {
@@ -44,14 +44,10 @@ export function createCropAttestationsModule({
           attester: attester.address,
           startBlock: attester.sinceBlock,
         }),
-      onChange: async () => {
-        if (!cropsApiDeployToken) {
-          logger.info('crops-api not redeployed: no deploy token is set')
-          return
-        }
-        await triggerCropsApiDeploy(http, cropsApiDeployToken)
-        logger.info('crops-api deploy triggered')
-      },
+      deployApi:
+        githubToken !== undefined
+          ? () => triggerCropsApiDeploy(http, githubToken)
+          : undefined,
       intervalMs: INTERVAL_MS,
     },
     logger,
