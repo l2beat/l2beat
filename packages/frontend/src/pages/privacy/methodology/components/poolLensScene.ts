@@ -67,6 +67,8 @@ const CRACK_S = 0.9
 const BURST_S = 0.8
 /** How long a note takes to lose its colour in the drum. */
 const MIX_S = 0.9
+/** Old deposits that stay in the pool for good. */
+const DORMANT = 6
 
 interface Note {
   id: number
@@ -77,6 +79,11 @@ interface Note {
   /** Seconds in the current phase. */
   t: number
   stay: number
+  /**
+   * An old deposit that never leaves. Timing ignores it: people tend to
+   * withdraw soon after they deposit, so an analyst discounts old deposits.
+   */
+  dormant: boolean
   /** Where it tumbles in the drum. */
   coin: DrumCoin
   /** Seconds since the note reached the pool, kept after it leaves. */
@@ -124,6 +131,17 @@ export function createPoolScene(design: PoolDesign): PoolScene {
     withdrawals: 0,
     caught: 0,
   }
+  for (let i = 0; i < DORMANT; i++) {
+    scene.notes.push({
+      ...newNote(scene, design),
+      phase: 'pool',
+      t: MIX_S,
+      stay: Number.POSITIVE_INFINITY,
+      dormant: true,
+      // Long since cracked, if the future adversary can crack it.
+      sincePool: CRACK_S + BURST_S,
+    })
+  }
   for (let i = 0; i < 6 * 30; i++) stepPoolScene(scene, 1 / 30, design)
   return scene
 }
@@ -137,22 +155,9 @@ export function stepPoolScene(
   scene.spawnIn = Math.min(scene.spawnIn - dt, spawnInterval(design.traffic))
   if (scene.spawnIn <= 0) {
     scene.spawnIn = spawnInterval(design.traffic) * (0.7 + Math.random() * 0.6)
-    const owner = Math.floor(Math.random() * OWNERS)
-    scene.notes.push({
-      id: scene.nextId++,
-      owner,
-      recipient:
-        (owner + 1 + Math.floor(Math.random() * (OWNERS - 1))) % OWNERS,
-      phase: 'in',
-      t: 0,
-      stay: 2.5 + Math.random() * 5,
-      coin: dropCoin(),
-      sincePool: 0,
-      inIp: requestIp(owner, design),
-      outIp: '',
-    })
-    const added = scene.notes[scene.notes.length - 1]
-    if (added) scene.requests.push({ side: 'in', ip: added.inIp, age: 0 })
+    const note = newNote(scene, design)
+    scene.notes.push(note)
+    scene.requests.push({ side: 'in', ip: note.inIp, age: 0 })
   }
 
   for (const note of scene.notes) {
@@ -162,7 +167,7 @@ export function stepPoolScene(
       note.phase = 'pool'
       note.t = 0
     } else if (note.phase === 'pool' && note.t >= note.stay) {
-      const waiting = scene.notes.filter((n) => n.phase === 'pool')
+      const waiting = scene.notes.filter(isWaiting)
       const caught = waiting.length <= CAUGHT_AT
       scene.traces.push({
         kind: caught ? 'caught' : 'fan',
@@ -208,6 +213,23 @@ export function stepPoolScene(
   scene.traces = scene.traces.filter((t) => t.age < t.life)
 }
 
+function newNote(scene: PoolScene, design: PoolDesign): Note {
+  const owner = Math.floor(Math.random() * OWNERS)
+  return {
+    id: scene.nextId++,
+    owner,
+    recipient: (owner + 1 + Math.floor(Math.random() * (OWNERS - 1))) % OWNERS,
+    phase: 'in',
+    t: 0,
+    stay: 2.5 + Math.random() * 5,
+    dormant: false,
+    coin: dropCoin(),
+    sincePool: 0,
+    inIp: requestIp(owner, design),
+    outIp: '',
+  }
+}
+
 /** Seconds between deposits: from one every 3 s to three a second. */
 function spawnInterval(traffic: number) {
   return 3 - traffic * 2.65
@@ -237,8 +259,13 @@ export function estimateCaughtShare(traffic: number) {
   return scene.withdrawals === 0 ? 1 : scene.caught / scene.withdrawals
 }
 
+/** A recent deposit still in the pool: one timing counts. */
+function isWaiting(note: Note) {
+  return note.phase === 'pool' && !note.dormant
+}
+
 function countWaiting(scene: PoolScene) {
-  return scene.notes.filter((n) => n.phase === 'pool').length
+  return scene.notes.filter(isWaiting).length
 }
 
 interface DrawOptions {
@@ -449,7 +476,13 @@ export function drawPoolScene(
       seesInside ||
       cracked ||
       ((publicLinks || ipLinks) && left)
-    const opacity = note.phase === 'done' ? 1 - note.t / FADE_S : 1
+    // The chain analyst discounts dormant deposits, so they fade in its view.
+    const opacity =
+      note.phase === 'done'
+        ? 1 - note.t / FADE_S
+        : note.dormant && lens === 'chainAnalyst'
+          ? 0.35
+          : 1
     // A hidden coin loses its colour as it tumbles, not all at once.
     const tint = revealed
       ? 1
