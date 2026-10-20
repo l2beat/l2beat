@@ -1,7 +1,6 @@
 import { ConfigReader } from '@l2beat/discovery'
 import { existsSync, readdirSync, statSync } from 'fs'
 import { join } from 'path'
-import { getReferencedProjects } from '../../discovery/getReferencedProjects'
 import { type FlatLocation, FlatWorkspace } from '../FlatWorkspace'
 import { encodeMessage, MessageReader } from './framing'
 import { createWorkspaceCache, type LoadedWorkspace } from './workspaceCache'
@@ -29,11 +28,9 @@ export function runLanguageServer() {
 // file, so every top-level entry counts, not just the folder.
 function loadWorkspace(location: FlatLocation): LoadedWorkspace {
   const configReader = new ConfigReader(location.projectsDirectory)
-  const projects = [
-    location.project,
-    ...getReferencedProjects(configReader.readDiscovery(location.project)),
-  ]
-  const inputs = projects.map((p) => configReader.getProjectPath(p))
+  const inputs = configReader
+    .readDiscoveryWithReferences(location.project)
+    .map((d) => configReader.getProjectPath(d.name))
   const stamp = stampOf(inputs)
   return {
     workspace: FlatWorkspace.fromProject(configReader, location.project),
