@@ -2,7 +2,11 @@ import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
 } from '@l2beat/database'
-import { type KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
+import {
+  interopLaneKey,
+  type KnownInteropBridgeType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { transferTouchesChain } from './transferTouchesChain'
 
@@ -32,7 +36,7 @@ export async function getCarriedFrom({
   const db = getDb()
   const timestamp = UnixTime(snapshotTimestamp)
   const types = type ? [type] : undefined
-  const [transfers, tokens] = await Promise.all([
+  const [transfers, token] = await Promise.all([
     db.aggregatedInteropTransfer.getByChainsAndTimestamp(
       timestamp,
       from,
@@ -40,17 +44,13 @@ export async function getCarriedFrom({
       types,
       protocolIds,
     ),
-    tokenId
-      ? db.aggregatedInteropToken.getByChainsAndTimestamp(
-          timestamp,
-          from,
-          to,
-          types,
-          protocolIds,
-        )
-      : undefined,
+    tokenId === undefined
+      ? undefined
+      : db.aggregatedInteropToken
+          .getByChainsAndTimestamp(timestamp, from, to, types, protocolIds)
+          .then((rows) => ({ id: tokenId, rows })),
   ])
-  return findCarriedFrom(transfers, { anchorChain, tokenId, tokens })
+  return findCarriedFrom(transfers, { anchorChain, token })
 }
 
 /**
@@ -59,35 +59,27 @@ export async function getCarriedFrom({
  */
 export function findCarriedFrom(
   transfers: AggregatedInteropTransferRecord[],
-  scope: {
+  {
+    anchorChain,
+    token,
+  }: {
     anchorChain?: string
-    tokenId?: string
-    tokens?: AggregatedInteropTokenRecord[]
+    token?: { id: string; rows: AggregatedInteropTokenRecord[] }
   },
 ): UnixTime | undefined {
   const tokenLanes =
-    scope.tokenId !== undefined
-      ? new Set(
-          (scope.tokens ?? [])
-            .filter((token) => token.abstractTokenId === scope.tokenId)
-            .map(laneKey),
-        )
-      : undefined
+    token &&
+    new Set(
+      token.rows
+        .filter((row) => row.abstractTokenId === token.id)
+        .map(interopLaneKey),
+    )
   const sources = transfers.flatMap((transfer) =>
     transfer.carriedFrom !== undefined &&
-    transferTouchesChain(transfer, scope.anchorChain) &&
-    (tokenLanes === undefined || tokenLanes.has(laneKey(transfer)))
+    transferTouchesChain(transfer, anchorChain) &&
+    (tokenLanes === undefined || tokenLanes.has(interopLaneKey(transfer)))
       ? [transfer.carriedFrom]
       : [],
   )
   return sources.length > 0 ? UnixTime(Math.min(...sources)) : undefined
-}
-
-function laneKey(lane: {
-  id: string
-  bridgeType: string
-  srcChain: string
-  dstChain: string
-}): string {
-  return `${lane.id}:${lane.bridgeType}:${lane.srcChain}:${lane.dstChain}`
 }

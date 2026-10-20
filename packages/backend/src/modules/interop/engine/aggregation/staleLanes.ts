@@ -1,5 +1,12 @@
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import {
+  type InteropBridgeType,
+  type InteropLane,
+  interopLaneKey,
+  type KnownInteropBridgeType,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import type { LaggingChainsByPlugin } from '../sync/InteropSyncersManager'
 import type { AggregationResult } from './InteropAggregationService'
 
 /**
@@ -12,14 +19,6 @@ export const MAX_CARRY_FORWARD_AGE = UnixTime.DAY
 /** `${projectId}:${bridgeType}` -> chains on which those transfers lag. */
 export type StaleChains = Map<string, Set<string>>
 
-/** Every aggregate table is keyed by a lane, so all of them carry forward alike. */
-interface Lane {
-  id: string
-  bridgeType: string
-  srcChain: string
-  dstChain: string
-}
-
 /**
  * A plugin's transfers aggregate under the bridge type its project config gives
  * it, or under `unknown` for one-sided transfers the classifier cannot type, so
@@ -28,15 +27,19 @@ interface Lane {
  * shows its previous numbers for an hour.
  */
 export function getStaleChains(
-  configs: { id: string; plugins: { plugin: string; bridgeType: string }[] }[],
-  laggingChainsByPlugin: Map<string, Set<string>>,
+  configs: {
+    id: string
+    plugins: { plugin: string; bridgeType: KnownInteropBridgeType }[]
+  }[],
+  laggingChainsByPlugin: LaggingChainsByPlugin,
 ): StaleChains {
   const result: StaleChains = new Map()
   for (const config of configs) {
     for (const { plugin, bridgeType } of config.plugins) {
       const laggingChains = laggingChainsByPlugin.get(plugin)
       if (!laggingChains) continue
-      for (const type of [bridgeType, 'unknown']) {
+      const types: InteropBridgeType[] = [bridgeType, 'unknown']
+      for (const type of types) {
         const key = projectBridgeKey(config.id, type)
         result.set(key, new Set([...(result.get(key) ?? []), ...laggingChains]))
       }
@@ -59,16 +62,20 @@ export function carryForwardStaleLanes(
   stale: StaleChains,
   timestamp: UnixTime,
 ): AggregationResult {
-  const carried = previous.aggregatedTransfers.filter(
-    (row) =>
-      isLaneStale(row, stale) &&
-      !row.isPartial &&
-      computedAt(row) >= timestamp - MAX_CARRY_FORWARD_AGE,
+  const carriedLanes = new Set(
+    previous.aggregatedTransfers
+      .filter(
+        (row) =>
+          isLaneStale(row, stale) &&
+          !row.isPartial &&
+          computedAt(row) >= timestamp - MAX_CARRY_FORWARD_AGE,
+      )
+      .map(interopLaneKey),
   )
-  const carriedLanes = new Set(carried.map(laneKey))
-  const isCarried = (row: Lane) => carriedLanes.has(laneKey(row))
+  const isCarried = (row: InteropLane) => carriedLanes.has(interopLaneKey(row))
 
-  function merge<T extends Lane & { timestamp: UnixTime }>(
+  // Every aggregate table is keyed by a lane, so all of them carry forward alike.
+  function merge<T extends InteropLane & { timestamp: UnixTime }>(
     freshRows: T[],
     previousRows: T[],
   ): T[] {
@@ -83,7 +90,10 @@ export function carryForwardStaleLanes(
       fresh.aggregatedTransfers.map((row) =>
         isLaneStale(row, stale) ? { ...row, isPartial: true } : row,
       ),
-      carried.map((row) => ({ ...row, carriedFrom: computedAt(row) })),
+      previous.aggregatedTransfers.map((row) => ({
+        ...row,
+        carriedFrom: computedAt(row),
+      })),
     ),
     aggregatedTokens: merge(fresh.aggregatedTokens, previous.aggregatedTokens),
     aggregatedDeployedTokens: merge(
@@ -97,7 +107,7 @@ export function carryForwardStaleLanes(
   }
 }
 
-function isLaneStale(lane: Lane, stale: StaleChains): boolean {
+function isLaneStale(lane: InteropLane, stale: StaleChains): boolean {
   const chains = stale.get(projectBridgeKey(lane.id, lane.bridgeType))
   return (
     chains !== undefined &&
@@ -110,10 +120,6 @@ function computedAt(row: AggregatedInteropTransferRecord): UnixTime {
   return row.carriedFrom ?? row.timestamp
 }
 
-function projectBridgeKey(id: string, bridgeType: string): string {
+function projectBridgeKey(id: string, bridgeType: InteropBridgeType): string {
   return `${id}:${bridgeType}`
-}
-
-function laneKey(lane: Lane): string {
-  return `${projectBridgeKey(lane.id, lane.bridgeType)}:${lane.srcChain}:${lane.dstChain}`
 }

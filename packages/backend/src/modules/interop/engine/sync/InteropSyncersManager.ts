@@ -40,8 +40,11 @@ export type PluginSyncStatus = {
   toTimestamp?: number
   lastError?: string
   resyncRequestedFrom?: number
-  carriesLanesForward: boolean
+  isLagging: boolean
 }
+
+/** Plugin name -> chains on which its captured data lags. */
+export type LaggingChainsByPlugin = Map<string, Set<string>>
 
 type LaggingSyncer = { syncer: InteropEventSyncer } & (
   | { reason: 'pendingWipeOrResync' | 'noSyncedRange' }
@@ -141,7 +144,7 @@ export class InteropSyncersManager {
   async getLaggingChainsByPlugin(
     target: UnixTime,
     tolerance: number,
-  ): Promise<Map<string, Set<string>>> {
+  ): Promise<LaggingChainsByPlugin> {
     const lagging = this.findLaggingSyncers(
       await this.loadSyncerIndexes(),
       target,
@@ -149,7 +152,7 @@ export class InteropSyncersManager {
     )
     this.logLaggingSyncers(lagging, target, target - tolerance)
 
-    const result = new Map<string, Set<string>>()
+    const result: LaggingChainsByPlugin = new Map()
     for (const { syncer } of lagging) {
       for (const plugin of syncer.cluster.plugins) {
         const chains = result.get(plugin.name) ?? new Set()
@@ -194,7 +197,7 @@ export class InteropSyncersManager {
 
     for (const byChain of this.syncers.values()) {
       for (const syncer of byChain.values()) {
-        const key = keyOf(syncer)
+        const key = syncerKeyOf(syncer)
         const state = stateByKey.get(key)
         const range = rangeByKey.get(key)
         if (state?.wipeRequired || state?.resyncRequestedFrom != null) {
@@ -220,17 +223,16 @@ export class InteropSyncersManager {
     target: UnixTime,
     threshold: UnixTime,
   ) {
-    const missing = lagging.flatMap((s) =>
-      s.reason === 'noSyncedRange' ? [keyOf(s.syncer)] : [],
-    )
-    const stale = lagging.flatMap((s) =>
-      s.reason === 'behind'
-        ? [{ syncer: keyOf(s.syncer), toTimestamp: s.toTimestamp }]
-        : [],
-    )
-    const pending = lagging.flatMap((s) =>
-      s.reason === 'pendingWipeOrResync' ? [keyOf(s.syncer)] : [],
-    )
+    const missing: string[] = []
+    const stale: { syncer: string; toTimestamp: UnixTime }[] = []
+    const pending: string[] = []
+    for (const s of lagging) {
+      const syncer = syncerKeyOf(s.syncer)
+      if (s.reason === 'noSyncedRange') missing.push(syncer)
+      else if (s.reason === 'behind')
+        stale.push({ syncer, toTimestamp: s.toTimestamp })
+      else pending.push(syncer)
+    }
 
     if (missing.length > 0) {
       this.logger.error('Syncers have no synced range', { target, missing })
@@ -343,8 +345,9 @@ export class InteropSyncersManager {
   /**
    * `aggregationTarget` and `freshnessTolerance` should mirror what the
    * aggregating indexer passes to `getLaggingChainsByPlugin` so that
-   * `carriesLanesForward` reflects whether a row makes it carry its lanes
-   * forward from the previous snapshot instead of aggregating them.
+   * `isLagging` reflects whether the indexer treats a row's lanes as stale:
+   * carried forward from the previous snapshot, or saved partial when there
+   * is nothing to carry.
    */
   async getPluginSyncStatuses(
     aggregationTarget: UnixTime,
@@ -357,7 +360,7 @@ export class InteropSyncersManager {
         indexes,
         aggregationTarget,
         freshnessTolerance,
-      ).map((s) => keyOf(s.syncer)),
+      ).map((s) => syncerKeyOf(s.syncer)),
     )
     const seen = new Set<string>()
     const rows: PluginSyncStatus[] = []
@@ -379,7 +382,7 @@ export class InteropSyncersManager {
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,
         resyncRequestedFrom: state?.resyncRequestedFrom ?? undefined,
-        carriesLanesForward: lagging.has(key),
+        isLagging: lagging.has(key),
       })
     }
 
@@ -399,14 +402,14 @@ export class InteropSyncersManager {
         chainStatus: this.getChainStatus(state.pluginName, state.chain),
         syncMode: formatSyncMode(syncer),
         lastError: state.lastError ?? undefined,
-        carriesLanesForward: lagging.has(key),
+        isLagging: lagging.has(key),
       })
     }
 
     for (const chain of this.syncers.values()) {
       for (const syncer of chain.values()) {
         const clusterName = syncer.cluster.name
-        const key = keyOf(syncer)
+        const key = syncerKeyOf(syncer)
         if (seen.has(key)) {
           continue
         }
@@ -416,7 +419,7 @@ export class InteropSyncersManager {
           chain: syncer.chain,
           chainStatus: 'active',
           syncMode: formatSyncMode(syncer),
-          carriesLanesForward: lagging.has(key),
+          isLagging: lagging.has(key),
         })
       }
     }
@@ -443,6 +446,6 @@ function syncerKey(cluster: string, chain: string): string {
   return `${cluster}:${chain}`
 }
 
-function keyOf(syncer: InteropEventSyncer): string {
+function syncerKeyOf(syncer: InteropEventSyncer): string {
   return syncerKey(syncer.cluster.name, syncer.chain)
 }

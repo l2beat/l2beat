@@ -44,12 +44,12 @@ describe(findCarriedFrom.name, () => {
     ]
     const tokens = [token('ethereum', 'base', 'usdc')]
 
-    expect(findCarriedFrom(transfers, { tokenId: 'usdc', tokens })).toEqual(
-      UnixTime(900),
-    )
-    expect(findCarriedFrom(transfers, { tokenId: 'eth', tokens })).toEqual(
-      undefined,
-    )
+    expect(
+      findCarriedFrom(transfers, { token: { id: 'usdc', rows: tokens } }),
+    ).toEqual(UnixTime(900))
+    expect(
+      findCarriedFrom(transfers, { token: { id: 'eth', rows: tokens } }),
+    ).toEqual(undefined)
   })
 
   function lane(

@@ -172,7 +172,23 @@ export function TransferDetailsDialog({
     manualFiltering: true,
   })
 
-  if (breakpoint === 'xs' || breakpoint === 'sm') {
+  const isMobile = breakpoint === 'xs' || breakpoint === 'sm'
+  const transferList =
+    carriedFrom !== undefined ? (
+      <CarriedForwardNotice
+        carriedFrom={carriedFrom}
+        className={isMobile ? 'mx-4' : undefined}
+      />
+    ) : (
+      <BasicTable
+        table={table}
+        isLoading={isLoading}
+        skeletonCount={8}
+        tableWrapperClassName="pb-0"
+      />
+    )
+
+  if (isMobile) {
     return (
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent>
@@ -185,19 +201,7 @@ export function TransferDetailsDialog({
             onScroll={(e) => handleScroll(e.currentTarget)}
             className="max-h-[60vh] overflow-x-auto overflow-y-auto"
           >
-            {carriedFrom !== undefined ? (
-              <CarriedForwardNotice
-                carriedFrom={carriedFrom}
-                className="mx-4"
-              />
-            ) : (
-              <BasicTable
-                table={table}
-                isLoading={isLoading}
-                skeletonCount={8}
-                tableWrapperClassName="pb-0"
-              />
-            )}
+            {transferList}
             {isFetchingNextPage && (
               <div className="px-4 py-2 text-center font-medium text-label-value-14 text-secondary">
                 Loading more transfers...
@@ -223,16 +227,7 @@ export function TransferDetailsDialog({
           className="max-h-[460px] overflow-x-auto overflow-y-auto"
         >
           <div className="mx-6">
-            {carriedFrom !== undefined ? (
-              <CarriedForwardNotice carriedFrom={carriedFrom} />
-            ) : (
-              <BasicTable
-                table={table}
-                isLoading={isLoading}
-                skeletonCount={8}
-                tableWrapperClassName="pb-0"
-              />
-            )}
+            {transferList}
             {isFetchingNextPage && (
               <div className="py-2 text-center font-medium text-label-value-14 text-secondary">
                 Loading more transfers...

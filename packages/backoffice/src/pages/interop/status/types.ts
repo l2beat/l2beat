@@ -7,5 +7,5 @@ export interface PluginStatusRow {
   toTimestamp?: number
   lastError?: string
   resyncRequestedFrom?: number
-  carriesLanesForward: boolean
+  isLagging: boolean
 }

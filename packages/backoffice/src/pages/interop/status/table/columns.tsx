@@ -98,9 +98,9 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
           : 'n/a',
     },
   }),
-  columnHelper.accessor((row) => (row.carriesLanesForward ? 'yes' : 'no'), {
-    id: 'carriesLanesForward',
-    header: 'Carries lanes forward',
+  columnHelper.accessor((row) => (row.isLagging ? 'yes' : 'no'), {
+    id: 'isLagging',
+    header: 'Lagging',
     enableGlobalFilter: false,
     cell: ({ getValue }) => {
       const value = getValue()
@@ -112,7 +112,7 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
       )
     },
     meta: {
-      csvHeader: 'Carries lanes forward',
+      csvHeader: 'Lagging',
       filter: { kind: 'select' },
     },
   }),

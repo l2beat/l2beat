@@ -545,7 +545,7 @@ describe(InteropSyncersManager.name, () => {
         lastError: 'boom',
         resyncRequestedFrom: UnixTime(123),
         // pending resync
-        carriesLanesForward: true,
+        isLagging: true,
       })
       expect(bEth?.syncMode).toEqual('following-starting')
       expect(bEth?.toBlock).toEqual(undefined)
@@ -611,10 +611,7 @@ describe(InteropSyncersManager.name, () => {
 
       const result = await manager.getPluginSyncStatuses(target, tolerance)
       const byKey = Object.fromEntries(
-        result.map((r) => [
-          `${r.pluginName}:${r.chain}`,
-          r.carriesLanesForward,
-        ]),
+        result.map((r) => [`${r.pluginName}:${r.chain}`, r.isLagging]),
       )
 
       expect(byKey).toEqual({

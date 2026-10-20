@@ -62,20 +62,16 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
 
-    const fresh = this.$.aggregationService.aggregate(
-      transfers,
-      this.$.configs,
-      to,
-    )
     const {
       aggregatedTransfers,
       aggregatedTokens,
       aggregatedDeployedTokens,
       aggregatedTokensPairs,
-    } =
-      staleChains.size === 0
-        ? fresh
-        : await this.carryFromPreviousSnapshot(fresh, staleChains, to)
+    } = await this.carryStaleLanesForward(
+      this.$.aggregationService.aggregate(transfers, this.$.configs, to),
+      staleChains,
+      to,
+    )
 
     let promotion: ReconcileResult | undefined
     await this.$.db.transaction(async () => {
@@ -132,11 +128,14 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     return to
   }
 
-  private async carryFromPreviousSnapshot(
+  private async carryStaleLanesForward(
     fresh: AggregationResult,
     staleChains: StaleChains,
     to: UnixTime,
   ): Promise<AggregationResult> {
+    if (staleChains.size === 0) {
+      return fresh
+    }
     // A blocked snapshot may hold the very data that got it blocked, so only a
     // promoted one is a carry source. Otherwise one bad lane, copied while its
     // syncer catches up, would keep blocking every lane after it.
