@@ -34,7 +34,7 @@ export function StagesPage({ content, lastUpdated, ...props }: Props) {
             .
           </p>
           <main>
-            <Article className="extended-char-set [&>h2:first-child]:mt-8">
+            <Article className="[&>h2:first-child]:mt-8">
               {content.content}
             </Article>
           </main>

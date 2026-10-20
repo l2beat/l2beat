@@ -1,7 +1,6 @@
 import type React from 'react'
 
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { cn } from '~/utils/cn'
 import { PlainLink } from './PlainLink'
 
 interface LinkWithThumbnailProps {
@@ -12,17 +11,13 @@ interface LinkWithThumbnailProps {
   height: number
   href: string
   topAccessory?: React.ReactNode
-  className?: string
 }
 
 export function LinkWithThumbnail(props: LinkWithThumbnailProps) {
   return (
     <PlainLink
       href={props.href}
-      className={cn(
-        'group flex gap-6 rounded-md bg-surface-primary transition-colors hover:bg-surface-secondary',
-        props.className,
-      )}
+      className="group flex gap-6 rounded-md bg-surface-primary transition-colors hover:bg-surface-secondary"
     >
       <img
         src={props.src}

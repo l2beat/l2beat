@@ -1,6 +1,6 @@
 import type { ImageParams } from '~/utils/project/getImageParams'
 import type { PublicationEntry } from '../utils/getPublicationEntry'
-import { PublicationTag } from './PublicationsList'
+import { PublicationTag } from './PublicationTag'
 
 export function PublicationHeader<
   T extends {

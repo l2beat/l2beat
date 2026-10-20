@@ -9,7 +9,7 @@ import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
 import type { UpcomingProjectUpdateEntry } from '~/server/features/monthly-reports/getUpcomingEntries'
-import { PublicationTag } from '../components/PublicationsList'
+import { PublicationTag } from '../components/PublicationTag'
 import { EcosystemUpdateSection } from './components/ecosystems/EcosystemUpdateSection'
 import { UpcomingProjectUpdateSection } from './components/upcoming/UpcomingProjectUpdateSection'
 
