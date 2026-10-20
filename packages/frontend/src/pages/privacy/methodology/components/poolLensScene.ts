@@ -1,6 +1,14 @@
 import type { PrivacyAdversaryId } from '@l2beat/config'
 import type { ThemeTokens } from '~/hooks/useThemeTokens'
 import { alpha } from './canvasColor'
+import {
+  type DrumCoin,
+  drawDrum,
+  drawDrumGlare,
+  dropCoin,
+  drumPoint,
+  tumble,
+} from './poolDrum'
 
 /**
  * A made-up pool that never stops: senders deposit, coins wait inside, and
@@ -57,7 +65,7 @@ const LOG_S = 9
 const CRACK_S = 0.9
 /** How long a cracked note sparkles. */
 const BURST_S = 0.8
-/** How long a note takes to dissolve into the swirl. */
+/** How long a note takes to lose its colour in the drum. */
 const MIX_S = 0.9
 
 interface Note {
@@ -69,8 +77,8 @@ interface Note {
   /** Seconds in the current phase. */
   t: number
   stay: number
-  /** Its ring in the swirl, 0 (centre) to 1 (rim), and where on it it starts. */
-  orbit: { radius: number; angle: number }
+  /** Where it tumbles in the drum. */
+  coin: DrumCoin
   /** Seconds since the note reached the pool, kept after it leaves. */
   sincePool: number
   inIp: string
@@ -138,10 +146,7 @@ export function stepPoolScene(
       phase: 'in',
       t: 0,
       stay: 2.5 + Math.random() * 5,
-      orbit: {
-        radius: 0.3 + Math.random() * 0.62,
-        angle: Math.random() * Math.PI * 2,
-      },
+      coin: dropCoin(),
       sincePool: 0,
       inIp: requestIp(owner, design),
       outIp: '',
@@ -191,6 +196,10 @@ export function stepPoolScene(
     }
   }
   scene.notes = scene.notes.filter((n) => n.phase !== 'done' || n.t < FADE_S)
+  tumble(
+    scene.notes.filter((n) => n.phase === 'pool').map((n) => n.coin),
+    dt,
+  )
 
   for (const request of scene.requests) request.age += dt
   scene.requests = scene.requests.filter((r) => r.age < LOG_S)
@@ -313,7 +322,7 @@ export function drawPoolScene(
   ctx.strokeStyle = seesInside ? tokens.brand : tokens.divider
   ctx.stroke()
   ctx.lineWidth = 1
-  drawSwirl(ctx, l, scene.time, tokens)
+  drawDrum(ctx, l.drum, scene.time, tokens)
   if (future) drawQuantumScan(ctx, l, scene.time)
 
   // Headings
@@ -431,7 +440,7 @@ export function drawPoolScene(
 
   // Coins
   for (const note of scene.notes) {
-    const p = notePosition(note, l, scene.time)
+    const p = notePosition(note, l)
     const ownerColor = OWNER_COLORS[note.owner] ?? tokens.secondary
     const cracked = breaksNotes && note.sincePool > CRACK_S
     const left = note.phase === 'out' || note.phase === 'done'
@@ -441,7 +450,7 @@ export function drawPoolScene(
       cracked ||
       ((publicLinks || ipLinks) && left)
     const opacity = note.phase === 'done' ? 1 - note.t / FADE_S : 1
-    // A hidden coin dissolves into the swirl instead of turning grey at once.
+    // A hidden coin loses its colour as it tumbles, not all at once.
     const tint = revealed
       ? 1
       : note.phase === 'pool'
@@ -453,7 +462,6 @@ export function drawPoolScene(
         const past = notePosition(
           { ...note, t: Math.max(0, note.t - k * 0.035) },
           l,
-          scene.time,
         )
         ctx.globalAlpha = (opacity * 0.12 * (6 - k)) / 5
         ctx.beginPath()
@@ -500,6 +508,7 @@ export function drawPoolScene(
     }
     ctx.globalAlpha = 1
   }
+  drawDrumGlare(ctx, l.drum, tokens)
 
   if (lens === 'chainAnalyst') {
     const waiting = countWaiting(scene)
@@ -534,11 +543,10 @@ function getLayout(width: number, height: number) {
   const rightStart = pool.x + pool.width + 12
   const rightBand = { x: rightStart, width: recipientX - 18 - rightStart }
   const rowY = (i: number) => top + ((i + 0.5) * (bottom - top)) / OWNERS
-  const swirl = {
+  const drum = {
     x: pool.x + pool.width / 2,
     y: (top + bottom) / 2,
-    rx: pool.width / 2 - 14,
-    ry: (bottom - top) / 2 - 14,
+    r: Math.min(pool.width, bottom - top) / 2 - 10,
   }
   return {
     top,
@@ -546,7 +554,7 @@ function getLayout(width: number, height: number) {
     senderX,
     recipientX,
     pool,
-    swirl,
+    drum,
     leftBand,
     rightBand,
     rowY,
@@ -555,14 +563,14 @@ function getLayout(width: number, height: number) {
 
 type Layout = ReturnType<typeof getLayout>
 
-function notePosition(note: Note, l: Layout, time: number) {
-  const orbit = orbitPosition(note, l, time)
+function notePosition(note: Note, l: Layout) {
+  const inDrum = drumPoint(l.drum, note.coin)
   if (note.phase === 'in' || note.phase === 'out') {
     const from =
-      note.phase === 'in' ? { x: l.senderX, y: l.rowY(note.owner) } : orbit
+      note.phase === 'in' ? { x: l.senderX, y: l.rowY(note.owner) } : inDrum
     const to =
       note.phase === 'in'
-        ? orbit
+        ? inDrum
         : { x: l.recipientX, y: l.rowY(note.recipient) }
     const k = easeInOut(Math.min(note.t / TRAVEL_S, 1))
     return {
@@ -573,56 +581,7 @@ function notePosition(note: Note, l: Layout, time: number) {
   if (note.phase === 'done') {
     return { x: l.recipientX, y: l.rowY(note.recipient) }
   }
-  return orbit
-}
-
-/** Where a note is in the swirl: inner rings turn faster, like a whirlpool. */
-function orbitPosition(note: Note, l: Layout, time: number) {
-  const { radius, angle } = note.orbit
-  const r = radius + 0.05 * Math.sin(time * 0.9 + note.id)
-  const a = angle + time * swirlSpeed(radius)
-  return {
-    x: l.swirl.x + Math.cos(a) * l.swirl.rx * r,
-    y: l.swirl.y + Math.sin(a) * l.swirl.ry * r,
-  }
-}
-
-/** Radians a second at this ring of the swirl. */
-function swirlSpeed(radius: number) {
-  return 0.45 + 1.1 * (1 - radius)
-}
-
-/** Faint arms turning at the middle ring's speed. */
-function drawSwirl(
-  ctx: CanvasRenderingContext2D,
-  l: Layout,
-  time: number,
-  tokens: ThemeTokens,
-) {
-  ctx.save()
-  ctx.lineCap = 'round'
-  for (let arm = 0; arm < 3; arm++) {
-    for (let i = 0; i < 40; i++) {
-      const s0 = i / 40
-      const s1 = (i + 1) / 40
-      const point = (s: number) => {
-        const r = 0.08 + 0.92 * s
-        const a = (arm * Math.PI * 2) / 3 + time * swirlSpeed(0.6) - s * 2.6
-        return {
-          x: l.swirl.x + Math.cos(a) * l.swirl.rx * r,
-          y: l.swirl.y + Math.sin(a) * l.swirl.ry * r,
-        }
-      }
-      // Each arm fades in from the centre and out at the rim.
-      ctx.strokeStyle = alpha(
-        tokens.secondary,
-        (tokens.isDark ? 0.16 : 0.12) * Math.sin(Math.PI * s0),
-      )
-      ctx.lineWidth = 1 + 2 * s0
-      line(ctx, point(s0), point(s1))
-    }
-  }
-  ctx.restore()
+  return inDrum
 }
 
 /** The height of the future adversary's scan across the pool. */
