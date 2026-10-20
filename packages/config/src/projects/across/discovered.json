@@ -1,7 +1,7 @@
 {
   "name": "across",
   "timestamp": 1792144273,
-  "configHash": "0x618d1a49eb3199ff7d4e43dbfa8e8c569d53cef596a92f9f5620533ac4191365",
+  "configHash": "0x802eca24737a56a57db179eeb74d95aed98b8c4ae6701fab332cccb33af959cb",
   "entries": [
     {
       "name": "VotingV2",
@@ -1800,7 +1800,7 @@
           "4663": "eth:0xD29C85F15DF544bA632C9E25829fd29d767d7978",
           "5042": "eth:0x9b4A302A548c7e313c2b74C461db7b84d3074A84",
           "Ethereum": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "OP Mainnet": "eth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "OP Mainnet": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
           "BNB Smart Chain": "eth:0x4e8E101924eDE233C13e2D8622DC8aED2872d505",
           "Unichain": "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
           "Polygon PoS": "eth:0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
@@ -3515,7 +3515,7 @@
         "UPDATE_BYTES32_DEPOSIT_DETAILS_HASH": "0x8d1994e2bbbd77564cdca06dd819e7ee2a5efa06c80dcb59a4a7b6e39edc538f",
         "usdcToken": "oeth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
         "V5_MAGIC_PREFIX": "0x89ae4bc75915265a3f10e926c3894a29534f1d6362ee8959cb0e5be00f3527fd",
-        "withdrawalRecipient": "oeth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+        "withdrawalRecipient": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "wrappedNativeToken": "oeth:0x4200000000000000000000000000000000000006"
       },
       "fieldMeta": { "crossDomainAdmin": { "severity": "HIGH" } },
@@ -5313,7 +5313,7 @@
     "acrossv3/AdapterStore": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "acrossv3/BondToken": "0x9bbb4f401a9c199b2f0dd48f9f1279e769c7040bdbc6ff1619b1eca5cf91a19a",
     "acrossv3/Gateway": "0x56cc0be8aad3e683cb015ed223cebc088c729c7882a854d28adc6c9c90f18787",
-    "acrossv3/HubPool": "0xed3f6b3c97e9d6042f5a132e86f60abf0188b0f2fda0bdbf031d9b7d4a5671e4",
+    "acrossv3/HubPool": "0x7972f36c70ab9460bb67178e7c5a2e6f614ab4f16aa941a0d8555eaaa319f38c",
     "acrossv3/HubPoolStore": "0x3642c36edf2d3a762a4ba62c17f663d8b14f65861115a98004718b3c91ba7ac8",
     "acrossv3/SpokePool": "0xd2c45bd751481b9731d9e2aaefffabb5b88ec371fa1126436433d53ae1449a93",
     "acrossv3/universalAdapter": "0x0fe89d590abc56ee5cbf6e99497eeaeeecb6fff890d94a83dfd30ead4463b7e8",

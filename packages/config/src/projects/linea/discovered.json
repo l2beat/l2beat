@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "timestamp": 1791897274,
-  "configHash": "0xa9ed31f02d0119e7d4d556613de8f6bbde8b0a5cf8987f93eecc61ea1de7b876",
+  "configHash": "0xca5148c8039334499a50a18e7061105593f054dcc1b152929b51648f59d5f352",
   "entries": [
     {
       "name": "TokenBridge",
@@ -1519,11 +1519,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "linea:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "linea:0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1727,7 +1722,7 @@
           "7": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
           "8": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"
         },
-        "remoteSender": "linea:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+        "remoteSender": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
         "REMOVE_RESERVED_TOKEN_ROLE": "0x19bf281d118073c159a713666aba52e0d403520cd01e03f42e0f62a0b3bd4a35",
         "reserveTokenRemovers": [
           "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD",
@@ -1797,9 +1792,7 @@
         "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9": "TransparentUpgradeableProxy",
         "linea:0x4a496167F187A97379e763f693A499cE1182848b": "TokenBridge"
       },
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "linea" } }
-      ]
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "linea:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
@@ -3663,7 +3656,7 @@
     "linea/YieldManager": "0x81618822c5f6142492897bb40b0042b6b278e7a79970835861b25e4ff087d3c0"
   },
   "usedBlockNumbers": { "ethereum": 26183799, "linea": 32312277 },
-  "permissionsConfigHash": "0xf49cfea4e29aeafa5d92e463f33237818af544e2270838009fb197034328d471",
+  "permissionsConfigHash": "0x61cc88eb073cbac8ae4b81319c8130e6ee7697427403f2417d885c80adb4a2d1",
   "permissions": {
     "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0": {
       "receivedPermissions": [

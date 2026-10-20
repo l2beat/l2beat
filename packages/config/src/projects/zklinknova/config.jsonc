@@ -171,6 +171,96 @@
     },
     "eth:0xAd16eDCF7DEB7e90096A259c81269d811544B6B6": {
       "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"]
+    },
+    "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "eth:0x273D59aed2d793167c162E64b9162154B07583C0": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "ArbitrumAddress"] }
+      }
+    },
+    "eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "BlastAddress"] }
+      }
+    },
+    "eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "BaseAddress"] }
+      }
+    },
+    "eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "MantapacificAddress"] }
+      }
+    },
+    "eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "OptimismAddress"] }
+      }
+    },
+    "eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "LineaAddress"] }
+      }
+    },
+    "eth:0x986c905087a663db3C81ad319b94c1E9dd388e92": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "ScrollAddress"] }
+      }
+    },
+    "eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "MantleAddress"] }
+      }
+    },
+    "eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "ZkSyncAddress"] }
+      }
+    },
+    "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "EthereumAddress"] }
+      }
+    },
+    "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535": {
+      "fields": {
+        "getRemoteGateway": { "edit": ["format", "EthereumAddress"] }
+      }
     }
   }
 }

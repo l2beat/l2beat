@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x9701a5a643a1fa6fd428f1a5b76e6aeee6ddd8d7
+
+# Diff at Tue, 20 Oct 2026 07:51:34 GMT:
+
+- id: f34726ce
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1791897274
+- current timestamp: 1791897274
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791897274 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
++++ description: The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here.
+      values.remoteSender:
+-        "linea:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      usedTypes.0.arg.prefix:
+-        "linea"
++        "eth"
+    }
+```
+
 Generated with discovered.json: 0x8a602cb0e24e1efbae2697f13f3319e6a0408601
 
 # Diff at Fri, 16 Oct 2026 05:36:51 GMT:

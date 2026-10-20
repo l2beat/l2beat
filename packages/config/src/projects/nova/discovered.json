@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "timestamp": 1788792011,
-  "configHash": "0x82658dd6bcec77284dbacc5e1e9109874fcf45b2faea01530f373607a179804d",
+  "configHash": "0xf60db6e9ce35343083791350a34b5604643af1b3aed21d62221f91be9e6e798a",
   "entries": [
     {
       "name": "ArbFilteredTransactionsManager",
@@ -82,7 +82,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpartGateway": "arb-nova:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
+        "counterpartGateway": "eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
         "defaultGateway": "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
         "router": "arb-nova:0x0000000000000000000000000000000000000000"
       },
@@ -96,6 +96,9 @@
         "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8": "TransparentUpgradeableProxy",
         "arb-nova:0x8f377770289863DF73Fe665B74460579F82321fb": "L2GatewayRouter"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -221,7 +224,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "counterpartGateway": "arb-nova:0xE4E2121b479017955Be0b175305B35f312330BaE",
+        "counterpartGateway": "eth:0xE4E2121b479017955Be0b175305B35f312330BaE",
         "l1Weth": "arb-nova:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2Weth": "arb-nova:0x722E8BdD2ce80A4422E880164f2079488e115365",
         "router": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
@@ -237,6 +240,9 @@
         "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD": "TransparentUpgradeableProxy",
         "arb-nova:0xbe04Ab2728c924D678f9FC833E379688c6eFA317": "L2WethGateway"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -450,7 +456,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "counterpartGateway": "arb-nova:0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+        "counterpartGateway": "eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
         "exitNum": 2417,
         "router": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
@@ -463,6 +469,9 @@
         "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4": "TransparentUpgradeableProxy",
         "arb-nova:0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f": "L2CustomGateway"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -545,7 +554,7 @@
         "$upgradeCount": 2,
         "beaconProxyFactory": "arb-nova:0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
-        "counterpartGateway": "arb-nova:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+        "counterpartGateway": "eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
         "exitNum": 1104,
         "router": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
@@ -560,6 +569,9 @@
         "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257": "TransparentUpgradeableProxy",
         "arb-nova:0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8": "L2ERC20Gateway"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -605,11 +617,6 @@
     {
       "name": "gzeon-OffchainLabs",
       "address": "arb-nova:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb-nova:0xE4E2121b479017955Be0b175305B35f312330BaE",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -878,11 +885,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "CustomGateway",
       "address": "eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
       "type": "Contract",
@@ -912,7 +914,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "counterpartGateway": "eth:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
+        "counterpartGateway": "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "inbox": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "router": "eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
@@ -922,6 +924,9 @@
         "eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f": "TransparentUpgradeableProxy",
         "eth:0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45": "L1CustomGateway"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "arb-nova" } }
+      ],
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1009,6 +1014,25 @@
       "address": "eth:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "OneStepProver0",
+      "address": "eth:0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731",
+      "type": "Contract",
+      "template": "orbitstack/OneStepProver0",
+      "sourceHashes": [
+        "0x165bc2eea08646ff24d665db74c1cd2deedc703052ceccac716f25eea2c23d80"
+      ],
+      "proxyType": "immutable",
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
+      "sinceTimestamp": 1734397379,
+      "sinceBlock": 21418842,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731": "OneStepProver0"
+      }
     },
     {
       "address": "eth:0x375906ADFD34D93236084F462BB2dB0D92129Fe1",
@@ -1344,6 +1368,25 @@
       "proxyType": "EOA"
     },
     {
+      "name": "OneStepProverHostIo",
+      "address": "eth:0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf",
+      "type": "Contract",
+      "template": "orbitstack/OneStepProverHostIo",
+      "sourceHashes": [
+        "0x130f30b3e9318970d22dad0a549e532b9a19290ebaaad3a0ce20352ff33cc104"
+      ],
+      "proxyType": "immutable",
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
+      "sinceTimestamp": 1734397775,
+      "sinceBlock": 21418875,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf": "OneStepProverHostIo"
+      }
+    },
+    {
       "name": "L1Escrow",
       "address": "eth:0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
       "type": "Contract",
@@ -1391,6 +1434,25 @@
       "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "OneStepProverMath",
+      "address": "eth:0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921",
+      "type": "Contract",
+      "template": "orbitstack/OneStepProverMath",
+      "sourceHashes": [
+        "0x5bd5c472d09dfca8febfe8da2a09b7c0a1a11653ed9a4908ce4719abc68caf2b"
+      ],
+      "proxyType": "immutable",
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
+      "sinceTimestamp": 1734397631,
+      "sinceBlock": 21418863,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921": "OneStepProverMath"
       }
     },
     {
@@ -1446,7 +1508,7 @@
         ],
         "$upgradeCount": 2,
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
-        "counterpartGateway": "eth:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
+        "counterpartGateway": "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
         "inbox": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "l2BeaconProxyFactory": "eth:0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "router": "eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
@@ -1456,6 +1518,9 @@
         "eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf": "TransparentUpgradeableProxy",
         "eth:0xb4299A1F5f26fF6a98B7BA35572290C359fde900": "L1ERC20Gateway"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "arb-nova" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1508,11 +1573,6 @@
     {
       "name": "Michael Lewellen - blockaid",
       "address": "eth:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1746,7 +1806,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "counterpartGateway": "eth:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
+        "counterpartGateway": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
         "defaultGateway": "eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
         "inbox": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
@@ -1766,12 +1826,10 @@
         "eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48": "TransparentUpgradeableProxy",
         "eth:0x52595021fA01B3E14EC6C88953AFc8E35dFf423c": "L1GatewayRouter"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "arb-nova" } }
+      ],
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "eth:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "BatchPosterManagerMultisig",
@@ -1882,6 +1940,25 @@
       "address": "eth:0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "OneStepProverMemory",
+      "address": "eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b",
+      "type": "Contract",
+      "template": "orbitstack/OneStepProverMemory",
+      "sourceHashes": [
+        "0xa7a92329b6a7a74a22b00e80ded5f76b2d46cddfc3fef149bd93c941f577388b"
+      ],
+      "proxyType": "immutable",
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
+      "sinceTimestamp": 1734397511,
+      "sinceBlock": 21418853,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b": "OneStepProverMemory"
+      }
     },
     {
       "name": "ValidatorWallet",
@@ -6834,6 +6911,9 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731": [
+      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge, bytes32 initialWasmModuleRoot), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
+    ],
     "eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -7470,6 +7550,9 @@
       "function totalDelayedMessagesRead() view returns (uint256)",
       "function updateRollupAddress()"
     ],
+    "eth:0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf": [
+      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge, bytes32 initialWasmModuleRoot) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
+    ],
     "eth:0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3": [
       "constructor()",
       "event Approve(address indexed token, address indexed spender, uint256 value)",
@@ -7490,6 +7573,9 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921": [
+      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge, bytes32 initialWasmModuleRoot), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
     "eth:0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -7687,6 +7773,9 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b": [
+      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge, bytes32 initialWasmModuleRoot), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
+    ],
     "eth:0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -7764,13 +7853,17 @@
     "orbitstack/ERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/GatewayRouter": "0x3f608903046fc1b5b8774f2c0c5290ea1fab17ef34c70963e60f1208cc74413c",
     "orbitstack/Inbox": "0x2ef8ae6338e1c68033f26b7ee0d8639f2f7f14e155442e53a9e7eca3bf0b27cc",
-    "orbitstack/layer2/L2CustomGateway": "0xeb6ce10ad3041abd191c5f8648c90e90d5d9d6ea5382313e9d3003e5ee9a8e60",
-    "orbitstack/layer2/L2ERC20Gateway": "0x1a26cb8221105f4a04299a7c042cfad5cded90834bd9dc99485bb78bdd081959",
-    "orbitstack/layer2/L2GatewayRouter": "0xc4fc25b7309589b6ec4d08fa06b83113797e29b3b962cbd0e3aa1ec9be9bec0a",
+    "orbitstack/layer2/L2CustomGateway": "0x61dba68f0103d0afc3f698f3a73a5c7decab2a253175c90bce8d49cded8bc487",
+    "orbitstack/layer2/L2ERC20Gateway": "0x18e5e25a70faa80b417afed45a1722f39e931dd610f8272de5021436c92ccc5c",
+    "orbitstack/layer2/L2GatewayRouter": "0x4e191c4c5cb42661837f1491f353bd09f394a491a61d09ba5a8502f9bfc8257d",
     "orbitstack/layer2/L2SecurityCouncilEmergency": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
     "orbitstack/layer2/L2SurplusFee": "0x35909e6c98ff9dc33cebb87d3a2b06a219f78e429c555102d9be6eaa65d55fa4",
-    "orbitstack/layer2/L2WethGateway": "0xb702a317100e881e78f290c3dab401a3c751db5bcb4a6a89214405772ea222cc",
+    "orbitstack/layer2/L2WethGateway": "0x29778232b1e477447d6c9c557d5f3e94d630c09c2bed8d821ff67d48f5412673",
     "orbitstack/OneStepProofEntry": "0xd3e9a13fdc78d7892cbae612ab2c51643757e7e24b08d5d92312de2057607a4f",
+    "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProverHostIo": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0xd86f8d49c3e4b3d566c849db6a9c98da4aa341ea5e037697ed99cd4f21837e7b",
     "orbitstack/RollupEventInbox": "0x4dc4c522a20e3a47a8ee3f421365820efc114453c7d3dbe378e7eecbae4782a7",
     "orbitstack/RollupProxyBoLD": "0x009e68c43361deb42db402ecdcfa53a64be18ee341013be167072e2e3963e805",
@@ -7780,7 +7873,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "ethereum": 25926132, "nova": 85273856 },
-  "permissionsConfigHash": "0xfae1e7766acc3faac34e24c6e0606fcee15e71349e5791917818cdc6fc20d2e6",
+  "permissionsConfigHash": "0xd0fb0ee3d1126d7c0ef3d62a07ed44f26061b4803a3bbab030b3761b8e7dd880",
   "permissions": {
     "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482": {
       "directlyReceivedPermissions": [

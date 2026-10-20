@@ -3,6 +3,7 @@
   "name": "L1StandardBridge",
   "description": "Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.",
   "fields": {
+    "l2TokenBridge": { "edit": ["format", "MetisAddress"] },
     "proxiableUUID": {
       "handler": {
         "type": "call",

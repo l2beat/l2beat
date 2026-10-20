@@ -90,10 +90,18 @@
     // L2 side of the canonical bridge (Mantle forks of the OP predeploys, untemplated).
     "mantle:0x4200000000000000000000000000000000000007": {
       "critical": true,
-      "ignoreMethods": ["xDomainMessageSender"]
+      "ignoreMethods": ["xDomainMessageSender"],
+      "fields": {
+        "l1CrossDomainMessenger": { "edit": ["format", "EthereumAddress"] },
+        "OTHER_MESSENGER": { "edit": ["format", "EthereumAddress"] }
+      }
     },
     "mantle:0x4200000000000000000000000000000000000010": {
-      "critical": true
+      "critical": true,
+      "fields": {
+        "l1TokenBridge": { "edit": ["format", "EthereumAddress"] },
+        "OTHER_BRIDGE": { "edit": ["format", "EthereumAddress"] }
+      }
     },
     "mantle:0x4200000000000000000000000000000000000016": {
       "critical": true
@@ -127,6 +135,17 @@
     "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": {
       "fields": {
         "paused": { "severity": "MEDIUM" }
+      }
+    },
+    "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120": {
+      "fields": {
+        "OTHER_MESSENGER": { "edit": ["format", "MantleAddress"] }
+      }
+    },
+    "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": {
+      "fields": {
+        "l2TokenBridge": { "edit": ["format", "MantleAddress"] },
+        "OTHER_BRIDGE": { "edit": ["format", "MantleAddress"] }
       }
     }
   }
