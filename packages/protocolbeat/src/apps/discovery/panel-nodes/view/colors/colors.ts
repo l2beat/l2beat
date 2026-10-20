@@ -27,9 +27,28 @@ export function getColor({
   colorSourceId?: string
   hueShift: number
 }): { color: string; isDark: boolean } {
+  const chain = color === 0 ? (colorSourceId ?? id).split(':')[0] : undefined
+  const key = `${color}:${hueShift}:${chain ?? ''}`
+  let cached = colorCache.get(key)
+  if (cached === undefined) {
+    cached = computeColor(color, chain ?? '', hueShift)
+    colorCache.set(key, cached)
+  }
+  return cached
+}
+
+// The renderers ask for every node's color on every frame they rebuild, and
+// a project has only a few distinct ones.
+const colorCache = new Map<string, { color: string; isDark: boolean }>()
+
+function computeColor(
+  color: number,
+  chain: string,
+  hueShift: number,
+): { color: string; isDark: boolean } {
   const result =
     color === 0
-      ? getChainColor((colorSourceId ?? id).split(':')[0] ?? '')
+      ? getChainColor(chain)
       : (SELECTABLE_COLORS[color - 1] ?? { color: colors.white, isDark: false })
 
   const colorCopy = {
