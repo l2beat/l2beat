@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { CropAttestationRecord, Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import type { CropAttestation } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -22,7 +22,7 @@ describe(CropAttestationSync.name, () => {
     const repository = mockObject<Database['cropAttestation']>({
       upsert: mockFn().resolvesTo(undefined),
     })
-    const sync = createSync(withRepository(repository), async () => CURRENT)
+    const sync = createSync(repository, async () => CURRENT)
 
     const before = UnixTime.now()
     await sync.run()
@@ -45,7 +45,7 @@ describe(CropAttestationSync.name, () => {
     const repository = mockObject<Database['cropAttestation']>({
       delete: mockFn().resolvesTo(1),
     })
-    const sync = createSync(withRepository(repository), async () => undefined)
+    const sync = createSync(repository, async () => undefined)
 
     await sync.run()
 
@@ -57,7 +57,7 @@ describe(CropAttestationSync.name, () => {
       upsert: mockFn().resolvesTo(undefined),
       delete: mockFn().resolvesTo(0),
     })
-    const sync = createSync(withRepository(repository), async () => {
+    const sync = createSync(repository, async () => {
       throw new Error('RPC down')
     })
 
@@ -65,100 +65,20 @@ describe(CropAttestationSync.name, () => {
     expect(repository.upsert).not.toHaveBeenCalled()
     expect(repository.delete).not.toHaveBeenCalled()
   })
-
-  it('deploys the API once per new attestation', async () => {
-    const deployApi = mockFn().resolvesTo(undefined)
-    let current = CURRENT
-    const sync = createSync(storedInMemory(), async () => current, deployApi)
-
-    await sync.run()
-    await sync.run()
-    expect(deployApi).toHaveBeenCalledTimes(1)
-
-    current = { ...CURRENT, uid: '0x02', revision: 2 }
-    await sync.run()
-    expect(deployApi).toHaveBeenCalledTimes(2)
-  })
-
-  it('deploys the API when the attestation goes away', async () => {
-    const deployApi = mockFn().resolvesTo(undefined)
-    let current: CropAttestation | undefined = CURRENT
-    const sync = createSync(storedInMemory(), async () => current, deployApi)
-    await sync.run()
-
-    current = undefined
-    await sync.run()
-    await sync.run()
-
-    expect(deployApi).toHaveBeenCalledTimes(2)
-  })
-
-  it('retries a failed deploy, even after a restart', async () => {
-    const deployApi = mockFn()
-      .rejectsWithOnce(new Error('GitHub down'))
-      .resolvesTo(undefined)
-    const db = storedInMemory()
-    await expect(
-      createSync(db, async () => CURRENT, deployApi).run(),
-    ).toBeRejectedWith('GitHub down')
-
-    const restarted = createSync(db, async () => CURRENT, deployApi)
-    await restarted.run()
-    await restarted.run()
-
-    expect(deployApi).toHaveBeenCalledTimes(2)
-  })
 })
 
-/** Keeps what the sync writes, so later runs and restarts see it. */
-function storedInMemory(): Database {
-  let row: CropAttestationRecord | undefined
-  let deployedUid: string | undefined
-  return mockObject<Database>({
-    cropAttestation: mockObject<Database['cropAttestation']>({
-      upsert: async (record) => {
-        row = record
-      },
-      delete: async () => {
-        const deleted = row ? 1 : 0
-        row = undefined
-        return deleted
-      },
-    }),
-    appState: mockObject<Database['appState']>({
-      // Generic in the key, so typed loosely: only this key is ever read.
-      findByKey: mockFn().executes(async () =>
-        deployedUid === undefined ? undefined : { value: deployedUid },
-      ),
-      insert: async (record) => {
-        deployedUid = record.value as string
-      },
-      deleteByKey: async () => {
-        deployedUid = undefined
-        return 1
-      },
-    }),
-  })
-}
-
 function createSync(
-  db: Database,
+  cropAttestation: Database['cropAttestation'],
   readCurrent: () => Promise<CropAttestation | undefined>,
-  deployApi?: () => Promise<void>,
 ) {
   return new CropAttestationSync(
     {
-      db,
+      db: mockObject<Database>({ cropAttestation }),
       chainId: CHAIN_ID,
       attester: ATTESTER,
       readCurrent,
-      deployApi,
       intervalMs: 1000,
     },
     Logger.SILENT,
   )
-}
-
-function withRepository(cropAttestation: Database['cropAttestation']) {
-  return mockObject<Database>({ cropAttestation })
 }

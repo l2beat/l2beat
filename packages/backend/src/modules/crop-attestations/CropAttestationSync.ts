@@ -10,14 +10,11 @@ export interface CropAttestationSyncDeps {
   attester: string
   /** The attester's current attestation, read from EAS. */
   readCurrent: () => Promise<CropAttestation | undefined>
-  /** Republishes the CROPS API. Unset where this backend should not. */
-  deployApi: (() => Promise<void>) | undefined
   intervalMs: number
 }
 
 /**
- * Keeps the attester's current attestation in the database, for the frontend,
- * and redeploys the CROPS API until it carries the same one.
+ * Keeps the attester's current attestation in the database, for the frontend.
  * A failed read keeps the last stored one; its `updatedAt` shows how old it is.
  */
 export class CropAttestationSync extends TimeLoop {
@@ -32,13 +29,6 @@ export class CropAttestationSync extends TimeLoop {
   }
 
   async run() {
-    const current = await this.sync()
-    if (this.$.deployApi) {
-      await this.deployApi(this.$.deployApi, current?.uid)
-    }
-  }
-
-  private async sync(): Promise<CropAttestation | undefined> {
     const { db, chainId, attester } = this.$
     const current = await this.$.readCurrent()
     if (!current) {
@@ -62,32 +52,5 @@ export class CropAttestationSync extends TimeLoop {
       blockNumber: current.blockNumber,
       updatedAt: UnixTime.now(),
     })
-    return current
-  }
-
-  /**
-   * Stored in the database rather than memory, so a deploy that failed or was
-   * cut short by a restart runs again on the next pass.
-   */
-  private async deployApi(
-    deploy: () => Promise<void>,
-    uid: string | undefined,
-  ) {
-    const { db } = this.$
-    const deployed = await db.appState.findByKey('cropsApiAttestationUid')
-    if (deployed?.value === uid) {
-      return
-    }
-    await deploy()
-    if (uid === undefined) {
-      await db.appState.deleteByKey('cropsApiAttestationUid')
-    } else {
-      await db.appState.insert({
-        key: 'cropsApiAttestationUid',
-        value: uid,
-        updatedBy: 'CropAttestationSync',
-      })
-    }
-    this.logger.info('CROPS API deploy triggered', { uid })
   }
 }
