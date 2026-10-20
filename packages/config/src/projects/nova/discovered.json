@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "timestamp": 1788792011,
-  "configHash": "0x6cfc2839308b4062c5b110830dbb3bda5c647f0c1d7a4dd6f682cb50009af1f7",
+  "configHash": "0xd8d8e1d040764818d580b8d0494bba6aa10b154e9ff466d0485c6aaad9ca9e73",
   "entries": [
     {
       "name": "ArbFilteredTransactionsManager",
@@ -135,9 +135,7 @@
         "PER_RECIPIENT_GAS": 100000,
         "recipientsData": [
           {
-            "recipients": [
-              "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
-            ],
+            "recipients": ["eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"],
             "weights": [10000]
           },
           {
@@ -288,7 +286,7 @@
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
             "members": [
-              "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+              "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
               "arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
             ]
           }
@@ -297,7 +295,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": [
-          "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+          "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
         ],
         "transactionFilteringPrecompile": "arb-nova:0x0000000000000000000000000000000000000074"
@@ -354,7 +352,7 @@
         "recipientsData": [
           {
             "recipients": [
-              "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+              "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
               "arb-nova:0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895",
               "arb-nova:0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd",
               "arb-nova:0x02C2599aa929e2509741b44F3a13029745aB1AB2",
@@ -650,12 +648,6 @@
       "implementationNames": {
         "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9": "ProxyAdmin"
       }
-    },
-    {
-      "name": "L1Timelock",
-      "address": "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L2ArbitrumToken",
@@ -7873,7 +7865,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "ethereum": 25926132, "nova": 85273856 },
-  "permissionsConfigHash": "0xd0fb0ee3d1126d7c0ef3d62a07ed44f26061b4803a3bbab030b3761b8e7dd880",
+  "permissionsConfigHash": "0x2d17370b95871c1ef8db79ea903f2d9e60c04fd6018369a05aafe0dd38fee518",
   "permissions": {
     "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482": {
       "directlyReceivedPermissions": [
@@ -8001,83 +7993,6 @@
           "permission": "upgrade",
           "from": "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
           "role": "admin"
-        }
-      ]
-    },
-    "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a": {
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
-            },
-            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
-            },
-            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
-            },
-            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
-            },
-            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
-            },
-            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
-            },
-            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
-          "role": ".executors"
         }
       ]
     },
@@ -8494,6 +8409,72 @@
         },
         {
           "permission": "upgrade",
+          "from": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
           "role": "admin",
           "via": [
@@ -8601,6 +8582,11 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "role": ".executors"
+        },
         {
           "permission": "act",
           "from": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",

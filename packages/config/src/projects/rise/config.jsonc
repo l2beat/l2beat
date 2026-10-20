@@ -4,9 +4,7 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0xad92Fa18EB74E46Db844240623124BF46589db4C",
-    // EigenDA's canonical cert verifier router: RISE's range program resolves
-    // the verifier through hokulea's EigenLabs address fetcher, which maps
-    // mainnet to this router. Nothing on-chain points to it.
+    // EigenDA's canonical cert verifier router, used by RISE's range program; nothing on-chain points to it
     "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12"
   ],
   "names": {

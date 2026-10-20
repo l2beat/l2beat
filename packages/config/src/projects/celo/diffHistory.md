@@ -1,15 +1,15 @@
-Generated with discovered.json: 0xe685148c8e1c2a6226b02a2b605c13a90ec1a827
+Generated with discovered.json: 0x9cb258d81cfa843d5de40db0338652f58709a3c0
 
-# Diff at Tue, 20 Oct 2026 12:48:47 GMT:
+# Diff at Tue, 20 Oct 2026 15:56:47 GMT:
 
-- id: 63eef459
+- id: 938fbaf0
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1791966035
+- comparing to: main@6335acf52e72d6f0fec94066e4a7cfcd2462ff8a block: 1791966035
 - current timestamp: 1791966035
 
 ## Description
 
-Celo's own EigenDA cert verifier router is now discovered: a proxy under Celo's ProxyAdmin and CeloProxyAdminOwner that routes certificates to EigenDA's canonical verifier until block 25,624,000 and to Celo's own verifier after it. EigenDA's contracts are references to the shared-eigenda module.
+Config-only rerun on the same block number. Celo's own EigenDA cert verifier router is now discovered: a proxy under Celo's ProxyAdmin and CeloProxyAdminOwner that routes certificates to EigenDA's canonical verifier until block 25,624,000 and to Celo's own verifier after it. EigenDA's contracts are references to the shared-eigenda module.
 
 ## Config/verification related changes
 
@@ -22,7 +22,7 @@ discovery. Values are for block 1791966035 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.0:
 +        {"permission":"interact","from":"eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08","description":"can add cert verifiers to the router, changing which contract validates DA certificates from a chosen block onwards.","role":".owner"}
-      receivedPermissions.6:
+      receivedPermissions.10:
 +        {"permission":"upgrade","from":"eth:0x2ea418AE1852bfC79e18B37E55F278F9c598AA08","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]}
     }
 ```
@@ -301,6 +301,51 @@ discovery. Values are for block 1791966035 (main branch discovery), not current.
 +   Status: CREATED
     external contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15)
     +++ description: None
+```
+
+Generated with discovered.json: 0x70c5ae3fda97fec92ad9d04132adc35ab0dbdc43
+
+# Diff at Tue, 20 Oct 2026 12:40:05 GMT:
+
+- id: 63481975
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1791966035
+- current timestamp: 1791966035
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966035 (main branch discovery), not current.
+
+```diff
+    contract L2ProxyAdmin (celo:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin] {
+    +++ description: Administration contract for other contract proxies.
++++ severity: MEDIUM
+      values.owner:
+-        "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223"
++        "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112"
+    }
+```
+
+```diff
+    contract CeloProxyAdminOwner (eth:0x4092A77bAF58fef0309452cEaCb09221e556E112) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"celo:0x4200000000000000000000000000000000000018","role":".owner"}
+    }
 ```
 
 Generated with discovered.json: 0x1ddd4c11e813075853ef1c9302191008ecf66d48

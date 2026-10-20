@@ -1,7 +1,7 @@
 {
   "name": "celo",
   "timestamp": 1791966035,
-  "configHash": "0x749869cb5a22490e200f1f361a1703ef06c71fd1e17e7e4a74cb1ee4fba185ad",
+  "configHash": "0xb2550ece7d466304c41ff06447f18562d9815848865222dd780382a305f12b57",
   "entries": [
     {
       "name": "L2CrossDomainMessenger",
@@ -138,19 +138,13 @@
         "$upgradeCount": 0,
         "addressManager": "celo:0x0000000000000000000000000000000000000000",
         "isUpgrading": false,
-        "owner": "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223"
+        "owner": "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112"
       },
       "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "celo:0x4200000000000000000000000000000000000018": "Proxy",
         "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "ProxyAdmin"
       }
-    },
-    {
-      "name": "CeloProxyAdminOwner - L2 Alias",
-      "address": "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -3812,7 +3806,7 @@
     "tokens/CELO": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82"
   },
   "usedBlockNumbers": { "celo": 80065277, "ethereum": 26189504 },
-  "permissionsConfigHash": "0xd36bbc6afb31ebd3c606b07e3c1ea77b55fbe9abbd6bb3d6fb7121aaa8289d4f",
+  "permissionsConfigHash": "0xb36afb4d91ae5f7ddf81d32802eece4b18fb2cac142336a4b988e07f643c0eb7",
   "modelledAgainst": {
     "shared-eigenda": "0x1666d662d36428e6c9cc77823b016e58fd3728a21fdf0cf004e089ccb7c5f8f3",
     "shared-eigenlayer": "0x7d4dc86bbe2849d7de33af96e2466d994b8f5133949b99100967a503dd0d98a7",
@@ -3840,49 +3834,6 @@
           "permission": "upgrade",
           "from": "celo:0x4200000000000000000000000000000000000018",
           "role": "admin"
-        }
-      ]
-    },
-    "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223": {
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "celo:0x4200000000000000000000000000000000000007",
-          "role": "admin",
-          "via": [
-            { "address": "celo:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "celo:0x4200000000000000000000000000000000000010",
-          "role": "admin",
-          "via": [
-            { "address": "celo:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "celo:0x4200000000000000000000000000000000000016",
-          "role": "admin",
-          "via": [
-            { "address": "celo:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "celo:0x4200000000000000000000000000000000000018",
-          "role": "admin",
-          "via": [
-            { "address": "celo:0x4200000000000000000000000000000000000018" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "celo:0x4200000000000000000000000000000000000018",
-          "role": ".owner"
         }
       ]
     },
@@ -4217,6 +4168,38 @@
         },
         {
           "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000007",
+          "role": "admin",
+          "via": [
+            { "address": "celo:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000010",
+          "role": "admin",
+          "via": [
+            { "address": "celo:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000016",
+          "role": "admin",
+          "via": [
+            { "address": "celo:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "celo:0x4200000000000000000000000000000000000018",
+          "role": "admin",
+          "via": [
+            { "address": "celo:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x057898f3C43F129a17517B9056D23851F124b19f",
           "role": "admin",
           "via": [
@@ -4321,6 +4304,11 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "celo:0x4200000000000000000000000000000000000018",
+          "role": ".owner"
+        },
         {
           "permission": "act",
           "from": "eth:0x783A434532Ee94667979213af1711505E8bFE374",

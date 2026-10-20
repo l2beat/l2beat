@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x0b2afcc9493de5a584b31f95e82855a9620c76cb
+
+# Diff at Tue, 20 Oct 2026 12:40:09 GMT:
+
+- id: dc17d4ad
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1791217049
+- current timestamp: 1791217049
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791217049 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"zircuit:0x4200000000000000000000000000000000000015","role":"admin","via":[{"address":"zircuit:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"zircuit:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"zircuit:0x4200000000000000000000000000000000000018"}]}
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"zircuit:0x4200000000000000000000000000000000000018","role":".owner"}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (zircuit:0x4200000000000000000000000000000000000018) [N/A] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
+      values.owner:
+-        "zircuit:0x5b5A62275DF8c60A80D3a25FAeC5aA7De116b857"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+    }
+```
+
 Generated with discovered.json: 0xd6a3068968cbd331d8a38a5a41b4584e88a0011c
 
 # Diff at Fri, 16 Oct 2026 09:37:52 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1791538610,
-  "configHash": "0xa7e1b9421c608d0654ec27d4555ce0a8106a94de7b43721a0b055b4bbb7870a0",
+  "configHash": "0x1962f9f33d5f18e0c52e9e7c368d5593c25f5d2a4acb206784e20e3498a11b53",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -415,7 +415,7 @@
         "$upgradeCount": 0,
         "addressManager": "base:0x0000000000000000000000000000000000000000",
         "isUpgrading": false,
-        "owner": "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
+        "owner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
       },
       "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
@@ -573,12 +573,6 @@
         "base:0x4200000000000000000000000000000000000021": "Proxy",
         "base:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": "EAS"
       }
-    },
-    {
-      "name": "Base Governance Multisig - L2 Alias",
-      "address": "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2",
@@ -4802,7 +4796,7 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "base": 52374631, "ethereum": 26153997 },
-  "permissionsConfigHash": "0x54d08d7c1e91799494608468e8fac7736becbd28d5c10eda7d0467391f6a1558",
+  "permissionsConfigHash": "0xf6ec625d76247d98bfbe9b347f14325ebcf445c00661dd0ba8bf8281b1b779b4",
   "permissions": {
     "base:0x4200000000000000000000000000000000000018": {
       "directlyReceivedPermissions": [
@@ -4875,129 +4869,6 @@
           "permission": "upgrade",
           "from": "base:0x4200000000000000000000000000000000000021",
           "role": "admin"
-        }
-      ]
-    },
-    "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d": {
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000007",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000010",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000011",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000012",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000013",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000014",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000015",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000016",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000017",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000018",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000019",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x420000000000000000000000000000000000001A",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000020",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4200000000000000000000000000000000000021",
-          "role": "admin",
-          "via": [
-            { "address": "base:0x4200000000000000000000000000000000000018" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "base:0x4200000000000000000000000000000000000018",
-          "role": ".owner"
         }
       ]
     },
@@ -5159,6 +5030,118 @@
         },
         {
           "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000007",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000010",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000011",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000012",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000013",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000014",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000015",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000016",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000017",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000018",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000019",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x420000000000000000000000000000000000001A",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000020",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000021",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84",
           "role": "admin",
           "via": [
@@ -5271,6 +5254,11 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "base:0x4200000000000000000000000000000000000018",
+          "role": ".owner"
+        },
         {
           "permission": "act",
           "from": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",

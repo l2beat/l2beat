@@ -2,11 +2,6 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "shared-eigenda",
   "import": ["../globalConfig.jsonc"],
-  // EigenDA's Ethereum contracts, shared by every L2 that verifies EigenDA
-  // certificates: the canonical cert verifier router and its verifiers, the
-  // BLS signature verifier (EigenDAServiceManager), the threshold and relay
-  // registries and the EigenDA multisigs behind them. L2s reference these
-  // entries; their own routers and verifiers live in their own discovery.
   "initialAddresses": [
     "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0", // EigenDAServiceManager
     "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12", // EigenDACertVerifierRouter (canonical)

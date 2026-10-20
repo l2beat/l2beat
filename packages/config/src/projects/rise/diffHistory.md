@@ -9,7 +9,7 @@ Generated with discovered.json: 0x20d74b5fbe94af99f6baa27f99a3d72b7e9a5586
 
 ## Description
 
-The EigenDA cert verifier router RISE's range program verifies DA certificates against (hokulea's EigenLabs address fetcher maps mainnet to EigenDA's canonical router) is now referenced from the shared-eigenda module.
+Config-only rerun on the same block number. The EigenDA cert verifier router RISE's range program verifies DA certificates against (hokulea's EigenLabs address fetcher maps mainnet to EigenDA's canonical router) is now referenced from the shared-eigenda module.
 
 ## Config/verification related changes
 

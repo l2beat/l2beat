@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "timestamp": 1790601621,
-  "configHash": "0x4dd2fc2f75c610256211c5e2e0cdbe36f93d9af538bf6fb7f43133451018e8bd",
+  "configHash": "0x91593737f4ec409090e26bedb18c0fd9ab4ceeee8a7766fa0db01b451cc499c8",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -1533,7 +1533,7 @@
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
             "members": [
-              "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+              "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
               "arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
             ]
           }
@@ -1547,7 +1547,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": [
-          "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+          "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
         ],
         "transactionFilteringPrecompile": "arb1:0x0000000000000000000000000000000000000074"
@@ -1914,12 +1914,6 @@
     },
     {
       "address": "arb1:0xf3b0B40e54Be009C852dBD3577F34D1D27bC07F6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "L1Timelock_l2alias",
-      "address": "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -10860,7 +10854,7 @@
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "arbitrum": 509717370, "ethereum": 26076213 },
-  "permissionsConfigHash": "0x84954f603c117833b8dcd4148f5b73623f54f49401e1e5611185e0c834006ee4",
+  "permissionsConfigHash": "0x56eab11a2bda71ffddd6358ffaa716274cac2319cb8a78765faf2f44def4003f",
   "permissions": {
     "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": {
       "directlyReceivedPermissions": [
@@ -11079,8 +11073,53 @@
         {
           "permission": "interact",
           "from": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "delay": 691200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "via": [
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "description": "propose transactions.",
           "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
         },
         {
           "permission": "interact",
@@ -11105,6 +11144,28 @@
           "from": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
           "description": "schedule a proposal to rotate a Security Council member (same member, new address).",
           "role": ".memberRotatorAC"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "set the minimum period between Security Council member key rotations.",
+          "role": ".minRotationPeriodSetterAC",
+          "via": [
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
         },
         {
           "permission": "interact",
@@ -11174,6 +11235,358 @@
           "role": ".timelockAdminAC",
           "via": [
             { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x096760F208390250649E3e8763348E783AEF5562",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
             {
               "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
               "delay": 259200
@@ -11758,6 +12171,29 @@
         {
           "permission": "interact",
           "from": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "delay": 691200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "via": [
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
@@ -11766,6 +12202,50 @@
           "from": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "description": "propose transactions.",
           "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "set the minimum period between Security Council member key rotations.",
+          "role": ".minRotationPeriodSetterAC",
+          "via": [
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
         },
         {
           "permission": "interact",
@@ -11835,6 +12315,358 @@
           "role": ".timelockAdminAC",
           "via": [
             { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x096760F208390250649E3e8763348E783AEF5562",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
             {
               "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
               "delay": 259200
@@ -12255,189 +13087,6 @@
         }
       ]
     },
-    "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "delay": 691200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "via": [
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "description": "manage all access control roles.",
-          "role": ".defaultAdminAC",
-          "via": [
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "description": "set the minimum period between Security Council member key rotations.",
-          "role": ".minRotationPeriodSetterAC",
-          "via": [
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x096760F208390250649E3e8763348E783AEF5562",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e" },
-            { "address": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
-          "role": ".executors"
-        }
-      ]
-    },
     "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A": {
       "receivedPermissions": [
         {
@@ -12643,6 +13292,11 @@
     },
     "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "role": ".executors"
+        },
         {
           "permission": "act",
           "from": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",

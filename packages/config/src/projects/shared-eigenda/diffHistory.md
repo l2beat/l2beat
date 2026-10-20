@@ -8,7 +8,7 @@ Generated with discovered.json: 0x2adab79244a22c2cbe29b2db78bf01917f61477e
 
 ## Description
 
-EigenDA's Ethereum contracts become a shared module: the canonical cert verifier router, its verifiers, the BLS signature verifier and the registries, discovered once and referenced by the L2s that verify EigenDA certificates. The entries below this one were carried over from the eigenda project, which held this discovery until #13122.
+EigenDA's Ethereum contracts become a shared module: the canonical cert verifier router, its verifiers, the BLS signature verifier and the registries, discovered once and referenced by the L2s that verify EigenDA certificates.
 
 ## Initial discovery
 

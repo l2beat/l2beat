@@ -9,7 +9,7 @@ Generated with discovered.json: 0xc96ac60ed069f5d06666c58dfd9dbb8f253c70ca
 
 ## Description
 
-EigenDA's contracts are now references to the shared-eigenda module instead of being discovered here.
+Config-only rerun on the same block number. EigenDA's contracts are now references to the shared-eigenda module instead of being discovered here.
 
 ## Config/verification related changes
 
