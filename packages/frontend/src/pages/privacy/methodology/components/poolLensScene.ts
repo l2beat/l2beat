@@ -69,8 +69,6 @@ const LOG_S = 9
 const CRACK_S = 0.9
 /** How long a cracked note sparkles. */
 const BURST_S = 0.8
-/** Old deposits that stay in the pool for good. */
-const DORMANT = 6
 
 interface Note {
   id: number
@@ -81,11 +79,6 @@ interface Note {
   /** Seconds in the current phase. */
   t: number
   stay: number
-  /**
-   * An old deposit that never leaves. Timing ignores it: people tend to
-   * withdraw soon after they deposit, so an analyst discounts old deposits.
-   */
-  dormant: boolean
   /** Shown from the deposit until just after the withdrawal leaves it. */
   envelope: Envelope
   /** Seconds since the note reached the pool, kept after it leaves. */
@@ -135,17 +128,6 @@ export function createPoolScene(design: PoolDesign): PoolScene {
     withdrawals: 0,
     caught: 0,
   }
-  for (let i = 0; i < DORMANT; i++) {
-    scene.notes.push({
-      ...newNote(scene, design),
-      phase: 'pool',
-      t: SEAL_S,
-      stay: Number.POSITIVE_INFINITY,
-      dormant: true,
-      // Long since cracked, if the future adversary can crack it.
-      sincePool: CRACK_S + BURST_S,
-    })
-  }
   for (let i = 0; i < 6 * 30; i++) stepPoolScene(scene, 1 / 30, design)
   return scene
 }
@@ -171,7 +153,7 @@ export function stepPoolScene(
       note.phase = 'pool'
       note.t = 0
     } else if (note.phase === 'pool' && note.t >= note.stay) {
-      const waiting = scene.notes.filter(isWaiting)
+      const waiting = scene.notes.filter((n) => n.phase === 'pool')
       const caught = waiting.length <= CAUGHT_AT
       scene.traces.push({
         kind: caught ? 'caught' : 'fan',
@@ -234,7 +216,6 @@ function newNote(scene: PoolScene, design: PoolDesign): Note {
     phase: 'in',
     t: 0,
     stay: 2.5 + Math.random() * 5,
-    dormant: false,
     envelope: {
       slot: pickSlot(
         scene.notes.filter(hasEnvelope).map((n) => n.envelope.slot),
@@ -302,13 +283,8 @@ export function estimateCaughtShare(traffic: number) {
   return scene.withdrawals === 0 ? 1 : scene.caught / scene.withdrawals
 }
 
-/** A recent deposit still in the pool: one timing counts. */
-function isWaiting(note: Note) {
-  return note.phase === 'pool' && !note.dormant
-}
-
 function countWaiting(scene: PoolScene) {
-  return scene.notes.filter(isWaiting).length
+  return scene.notes.filter((n) => n.phase === 'pool').length
 }
 
 interface DrawOptions {
@@ -526,13 +502,7 @@ export function drawPoolScene(
           note.phase === 'pool' && (seesInside || cracked)
             ? OWNER_COLORS[note.owner]
             : undefined,
-        opacity:
-          note.phase === 'out'
-            ? 1 - note.t / EMPTY_S
-            : // The chain analyst discounts dormant deposits.
-              note.dormant && lens === 'chainAnalyst'
-              ? 0.35
-              : 1,
+        opacity: note.phase === 'out' ? 1 - note.t / EMPTY_S : 1,
       },
       tokens,
     )

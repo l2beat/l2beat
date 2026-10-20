@@ -320,18 +320,6 @@ function PoolMachine() {
           ]}
         />
       ))}
-      {/* An old deposit that stays sealed, swapping out and back. */}
-      <Envelope
-        dur={dur}
-        stops={[
-          { ...d, at: 0.4 },
-          { x: 100, y: 64, at: 0.45 },
-          { ...a, at: 0.5 },
-          { ...a, at: 0.86 },
-          { x: 100, y: 48, at: 0.91 },
-          { ...d, at: 0.96 },
-        ]}
-      />
       <Envelope
         dur={dur}
         shown={[0.04, 0.84]}
@@ -380,18 +368,17 @@ function PoolMachine() {
 
 /**
  * An envelope that moves through `stops`, shows between `shown` and is sealed
- * between `sealed`, all 0..1 of the loop. Without them it is always there and
- * always sealed.
+ * between `sealed`, all 0..1 of the loop.
  */
 function Envelope({
   stops,
-  shown = [0, 1],
-  sealed = [0, 1],
+  shown,
+  sealed,
   dur,
 }: {
   stops: Stop[]
-  shown?: [number, number]
-  sealed?: [number, number]
+  shown: [number, number]
+  sealed: [number, number]
   dur: number
 }) {
   const first = stops[0]
@@ -400,7 +387,6 @@ function Envelope({
   const frames = [{ ...first, at: 0 }, ...stops, { ...last, at: 1 }]
   const timing = { dur: `${dur}s`, repeatCount: 'indefinite' }
   const [sealAt, openAt] = sealed
-  const opens = sealAt > 0 || openAt < 1
   // Closed, flipping open around the top edge while unsealed.
   const flap: [number, string][] = [
     [0, '1 -1'],
@@ -445,15 +431,13 @@ function Envelope({
         />
         <g transform="translate(0 -7)">
           <g>
-            {opens && (
-              <animateTransform
-                attributeName="transform"
-                type="scale"
-                values={flap.map((f) => f[1]).join(';')}
-                keyTimes={flap.map((f) => f[0]).join(';')}
-                {...timing}
-              />
-            )}
+            <animateTransform
+              attributeName="transform"
+              type="scale"
+              values={flap.map((f) => f[1]).join(';')}
+              keyTimes={flap.map((f) => f[0]).join(';')}
+              {...timing}
+            />
             <path
               d="M -10 0 L 10 0 L 0 9 Z"
               fill="var(--surface-primary)"
