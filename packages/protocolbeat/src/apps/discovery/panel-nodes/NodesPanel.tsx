@@ -47,9 +47,6 @@ export function NodesPanel() {
   }
   const response = useQuery(useProjectQueryOptions(project))
 
-  useLoadNodes(response.data, project)
-  useSynchronizeSelection()
-
   if (response.isLoading) {
     return <LoadingState />
   }
@@ -60,11 +57,23 @@ export function NodesPanel() {
   return (
     <div className="h-full w-full overflow-x-hidden">
       <div className="relative h-full w-full flex-1">
+        <NodesSync data={response.data} project={project} />
         <Viewport />
         <Controls />
       </div>
     </div>
   )
+}
+
+// Keeps the selection subscriptions out of NodesPanel, so a click does not
+// rerender the viewport and the toolbar around it.
+function NodesSync(props: {
+  data: ApiProjectResponse | undefined
+  project: string
+}) {
+  useLoadNodes(props.data, props.project)
+  useSynchronizeSelection()
+  return null
 }
 
 function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
