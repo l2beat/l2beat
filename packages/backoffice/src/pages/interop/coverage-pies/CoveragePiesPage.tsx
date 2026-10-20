@@ -123,10 +123,7 @@ function CoveragePieCard(props: { chart: CoveragePieChart }) {
               <PieChart>
                 <Tooltip content={<CoveragePieTooltip />} />
                 <Pie
-                  data={chart.slices.map((slice) => ({
-                    ...slice,
-                    fill: slice.color,
-                  }))}
+                  data={chart.slices}
                   dataKey="count"
                   nameKey="label"
                   innerRadius={72}
@@ -152,7 +149,7 @@ function CoveragePieCard(props: { chart: CoveragePieChart }) {
             >
               <span
                 className="mt-1 size-2.5 shrink-0 rounded-[3px]"
-                style={{ backgroundColor: slice.color }}
+                style={{ backgroundColor: slice.fill }}
               />
               <div className="min-w-0">
                 <p className="font-medium leading-5">{slice.label}</p>
