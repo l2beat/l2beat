@@ -22,7 +22,7 @@ import type {
 } from '@mradomski/fast-solidity-parser'
 import type { FlatEntry, FlatWorkspace } from './FlatWorkspace'
 import { acceptsArguments, type SourceIndex, typeKey } from './SourceIndex'
-import { resolveName, type Scope } from './scope'
+import { isAssigned, resolveName, type Scope } from './scope'
 
 export interface Receiver {
   type: TypeName | undefined
@@ -153,6 +153,11 @@ function unwindIdentifier(
     declaration.node.typeName,
     declaration.node,
   )
+  // Within a function that writes it, the variable holds what it wrote.
+  const callable = context.scope.callable
+  if (callable !== undefined && isAssigned(callable, identifier.name)) {
+    return { base: { ...UNKNOWN, type } }
+  }
   if (declaration.isState) {
     const address = discoveredAddress(entry.values, identifier.name)
     if (address !== undefined) {

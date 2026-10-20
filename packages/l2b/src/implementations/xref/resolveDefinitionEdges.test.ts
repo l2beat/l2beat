@@ -118,6 +118,25 @@ contract Derived is Base {
         target.ping();
         g(1);
     }
+
+    IPing public pinger;
+    mapping(address => uint256) public items;
+
+    modifier pinging() {
+        pinger.ping();
+        _;
+    }
+
+    function guarded() external pinging {}
+
+    function repoint() external {
+        pinger = IPing(0x3333333333333333333333333333333333333333);
+        pinger.ping();
+        this.items(address(0));
+        this.items();
+    }
+
+    function\tspaced() internal {}
 }
 `
 
@@ -161,7 +180,10 @@ describe(`${resolveDefinition.name} edge cases`, () => {
         ['function f(uint256 a)', 'function f(uint256 a, uint256 b)'],
         ['/p/.flat/Full.sol'],
       ),
-      entry('Derived', '5', [], ['/p/.flat/Derived.sol']),
+      {
+        ...entry('Derived', '5', [], ['/p/.flat/Derived.sol']),
+        values: { pinger: ChainSpecificAddress(`eth:0x${'2'.repeat(40)}`) },
+      },
     ],
     (path) => FILES[path] ?? '',
   )
@@ -287,6 +309,42 @@ describe(`${resolveDefinition.name} edge cases`, () => {
     const calls = listCalls(workspace, derived, 'g')
 
     expect(calls.map((c) => c.result.symbol)).toEqual(['super.g', 'a.f'])
+  })
+
+  it('includes the calls of applied modifiers', () => {
+    const derived = workspace.entries.find((e) => e.name === 'Derived')
+    assert(derived !== undefined)
+    const calls = listCalls(workspace, derived, 'guarded')
+
+    expect(calls.map((c) => c.result.definitions[0]?.path)).toEqual([
+      '/p/.flat/Target/Proxy.p.sol',
+    ])
+  })
+
+  it('does not trust discovered values a function overwrites', () => {
+    expect(resolveDerived('pinger.ping();\n        _', 'ping(')).toEqual([
+      'Proxy.ping:2',
+    ])
+    const written = resolveDefinition(
+      workspace,
+      '/p/.flat/Derived.sol',
+      DERIVED.indexOf('pinger.ping();\n        this') + 'pinger.'.length,
+    )
+    expect(written.receiver?.address).toEqual(undefined)
+  })
+
+  it('matches public getters by their number of keys', () => {
+    expect(resolveDerived('this.items(address(0))', 'items')).toEqual([
+      `Derived.items:${derivedAt('mapping(address => uint256) public items')}`,
+    ])
+    expect(resolveDerived('this.items();', 'items')).toEqual([])
+  })
+
+  it('finds a declaration name after any whitespace', () => {
+    const declaration = 'spaced() internal'
+    expect(resolveDerived(declaration, 'spaced')).toEqual([
+      `Derived.spaced:${derivedAt(declaration)}`,
+    ])
   })
 
   it('answers a declaration with itself', () => {

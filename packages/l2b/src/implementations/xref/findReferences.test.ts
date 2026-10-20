@@ -1,7 +1,8 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { type FlatEntry, FlatWorkspace } from './FlatWorkspace'
-import { findReferences, wordOccurrences } from './findReferences'
+import { findReferences } from './findReferences'
+import { wordOccurrences } from './SourceIndex'
 
 const ROLLUP = `interface IBridge {
     function count() external view returns (uint256);
