@@ -59,11 +59,11 @@ export const apechain: ScalingProject = orbitStackL3({
   customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
-      title: 'ApeChain switches from DAC to Arbitrum One calldata',
+      title: 'ApeChain switches from DAC to Arbitrum calldata',
       url: 'https://arbiscan.io/tx/0xd28af3043834f4f3cce0675747078d53142435b3feb27697a932110105da3f28',
       date: '2026-07-01T00:00:00Z',
       description:
-        'ApeChain stops posting data via the AnyTrust DAC and starts posting batches directly to Arbitrum One as calldata.',
+        'ApeChain stops using the AnyTrust DAC and posts batches to Arbitrum One as calldata.',
       type: 'general',
     },
     {
