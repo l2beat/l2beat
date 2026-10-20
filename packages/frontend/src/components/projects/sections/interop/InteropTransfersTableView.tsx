@@ -11,6 +11,7 @@ import {
 } from '~/components/Pagination'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
+import { CarriedForwardNotice } from '~/pages/interop/components/CarriedForwardNotice'
 import {
   getTransferColumns,
   type TransferRow,
@@ -66,6 +67,7 @@ export function InteropTransfersTableView({
     () => transfersData?.pages.flatMap((page) => page.items) ?? [],
     [transfersData],
   )
+  const carriedFrom = transfersData?.pages[0]?.carriedFrom
   const fetchedPageCount = Math.ceil(fetchedItems.length / TRANSFERS_PER_PAGE)
   const loadedPageCount = Math.max(1, fetchedPageCount)
   const pageCount = loadedPageCount + (hasNextPage ? 1 : 0)
@@ -131,6 +133,10 @@ export function InteropTransfersTableView({
 
   if (isEmptySelection) {
     return <EmptySelectionNotice />
+  }
+
+  if (carriedFrom !== undefined) {
+    return <CarriedForwardNotice carriedFrom={carriedFrom} className="mb-3" />
   }
 
   return (

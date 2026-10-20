@@ -11,6 +11,7 @@ import {
 } from '~/components/Pagination'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
+import { CarriedForwardNotice } from '~/pages/interop/components/CarriedForwardNotice'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   getTransferColumns,
@@ -73,6 +74,7 @@ export function InteropTokenTransfersSection({
     () => transfersData?.pages.flatMap((page) => page.items) ?? [],
     [transfersData],
   )
+  const carriedFrom = transfersData?.pages[0]?.carriedFrom
   const fetchedPageCount = Math.ceil(fetchedItems.length / TRANSFERS_PER_PAGE)
   const loadedPageCount = Math.max(1, fetchedPageCount)
   const pageCount = loadedPageCount + (hasNextPage ? 1 : 0)
@@ -157,6 +159,8 @@ export function InteropTokenTransfersSection({
       </div>
       {isEmptySelection ? (
         <EmptySelectionNotice />
+      ) : carriedFrom !== undefined ? (
+        <CarriedForwardNotice carriedFrom={carriedFrom} className="mb-3" />
       ) : (
         <BasicTable
           skeletonCount={TRANSFERS_PER_PAGE}
