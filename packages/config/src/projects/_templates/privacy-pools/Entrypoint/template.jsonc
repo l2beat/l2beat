@@ -14,8 +14,10 @@
   ],
   "ignoreRelatives": ["accessControl"],
   "fields": {
+    // Raw twin of ownerRoleMembers and aspPostmen, same severity.
     "accessControl": {
       "description": "Current role membership map for the Entrypoint's owner and postman roles.",
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -30,11 +32,11 @@
     },
     "registeredPools": {
       "description": "Current set of pool contracts registered in the Entrypoint, derived from PoolRegistered and PoolRemoved events.",
-      // Ossification: registering a pool adopts a new custody contract for a new
-      // asset (registerPool reverts for an asset or scope that already has one),
-      // so it is a perimeter reset at the pool's deployment, not a change of an
-      // existing pool. Removal only stops deposits and relayed withdrawals for one
-      // asset (direct withdrawals and ragequits keep working): review, no reset.
+      // Not HIGH: registerPool reverts for an asset or scope that already has a
+      // pool, so a registration adds a pool and never changes an existing one.
+      // New pool code resets only through a reviewed event at its first custody.
+      // Removal only stops deposits and relayed withdrawals for one asset (direct
+      // withdrawals and ragequits keep working): review, no reset.
       "severity": "MEDIUM",
       "handler": {
         "type": "event",
@@ -44,6 +46,7 @@
       }
     },
     "ownerRoleMembers": {
+      "severity": "MEDIUM",
       "description": "Addresses with OWNER_ROLE.",
       "type": "PERMISSION",
       "handler": {

@@ -421,7 +421,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F": "TransparentUpgradeableProxy",
@@ -497,8 +497,9 @@
         "executors": ["eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": "TransparentUpgradeableProxy",
@@ -601,8 +602,9 @@
         "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x655761AD5FC251F414D6993A73184B0669F278c8": "TransparentUpgradeableProxy",
@@ -625,6 +627,7 @@
         "$immutable": true,
         "owner": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df": "ProxyAdmin"
       }
@@ -733,10 +736,11 @@
         "sequencerReportedSubMessageCount": 919356
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "allowedOutboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Can make calls as the bridge, steal all funds."
         },
         "outboxHistory": {
@@ -744,7 +748,7 @@
           "description": "All Outboxes that were ever set as allowed in the bridge."
         },
         "allowedDelayedInboxList": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
         },
         "inboxHistory": {
@@ -865,7 +869,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474": "TransparentUpgradeableProxy",
@@ -927,11 +931,13 @@
         "whitelist": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "whitelist": { "severity": "HIGH" },
         "router": { "severity": "HIGH" },
         "inbox": { "severity": "HIGH" },
         "counterpartGateway": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60": "TransparentUpgradeableProxy",
@@ -1137,7 +1143,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
         "maxTimeVariation": {
           "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
@@ -1972,7 +1978,10 @@
         "implementation": "kinto:0xbFE260680514e0D669fdC5A5f7334b97a5513d9D",
         "owner": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
-      "fieldMeta": { "implementation": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "kinto:0x87f0eE85bF3198654900a422832157abBba30828": "UpgradeableBeacon"
       }

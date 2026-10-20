@@ -19,6 +19,11 @@ import { getErrorMessage, parseJsonc } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { ContractConfigSchema } from '../../../schemas/schemas'
 import { StructureContract } from '../../config/StructureConfig'
+import {
+  isPlainObject,
+  schemaProblems,
+  show,
+} from '../../config/schemaProblems'
 import type { Handler } from '../../handlers/Handler'
 import { getUserHandler, UserHandlerDefinition } from '../../handlers/user'
 import {
@@ -33,7 +38,6 @@ import { mergeTemplate } from '../write/mergeTemplate'
 import { checkNames } from './checkNames'
 import type { Draft } from './Draft'
 import { type Finding, Findings, fieldPath, joinPath } from './Finding'
-import { isPlainObject, schemaProblems, show } from './schemaProblems'
 
 export interface ValidationContext {
   facts: ContractFacts

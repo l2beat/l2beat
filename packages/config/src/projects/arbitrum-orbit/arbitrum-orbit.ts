@@ -41,7 +41,7 @@ export const arbitrumOrbit: BaseProject = {
       url: 'https://x.com/arbitrum/status/1912945720237367449',
       date: '2025-04-17T00:00:00.00Z',
       description:
-        'Arbitrum launches Timeboost - a new transaction ordering policy for Arbitrum chains',
+        'Arbitrum launches Timeboost - a new transaction ordering policy for Arbitrum chains.',
       type: 'general',
     },
   ],

@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x5a90594f59d6e61ecf67ebc702ae4130e89cb5cb
+Generated with discovered.json: 0x20d74b5fbe94af99f6baa27f99a3d72b7e9a5586
 
-# Diff at Wed, 14 Oct 2026 21:24:00 GMT:
+# Diff at Tue, 20 Oct 2026 08:59:34 GMT:
 
-- id: 422bba0c
+- id: 4d55ae4b
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1790947041
-- current timestamp: 1792013014
+- comparing to: main@9417c9f8ea024cc7ebc3d153bed576e95746815a block: 1790947041
+- current timestamp: 1790947041
 
 ## Description
 
@@ -21,7 +21,7 @@ discovery. Values are for block 1790947041 (main branch discovery), not current.
     external contract (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","description":"can add and remove strategies","role":".owner"},{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer","role":".owner"},{"permission":"upgrade","from":"eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
++        [{"permission":"interact","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","description":"can add and remove strategies","role":".owner"},{"permission":"interact","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","description":"can add cert verifiers to the router, changing which contract validates DA certificates from a chosen block onwards.","role":".owner"},{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer","role":".owner"},{"permission":"interact","from":"eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15","description":"can add blob versions with their coding parameters, which define what the cert verifiers accept as a valid blob.","role":".owner"},{"permission":"upgrade","from":"eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
       directlyReceivedPermissions:
 +        [{"permission":"act","from":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99","role":".owner"}]
     }
@@ -259,6 +259,92 @@ discovery. Values are for block 1790947041 (main branch discovery), not current.
 +   Status: CREATED
     external contract EigenDACertVerifierRouter (eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12)
     +++ description: None
+```
+
+Generated with discovered.json: 0x58a11c42d49034fc96f80792f73336418becb7e0
+
+# Diff at Fri, 16 Oct 2026 09:37:50 GMT:
+
+- id: e7b22fe2
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790947041
+- current timestamp: 1790947041
+
+## Description
+
+Ossification review: ASR opsuccinct pointers without severity, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790947041 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x4ebc046b1cfc12659A19E124b0ea8a382777E542) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x551A672d703966D83C3EC3ea0e844f43c3373c91) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x6A4139810986CF13408330e14C4ac9Daf0511aA3) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xCf32d8c4Be30cA330c1150916A71A651bADd70d5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xD3CAf2A473dBB5bc2E8FB7F328e01AB9B726a24f) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE3a0F0122f702e018e04C6D0824B724E8Be8e16) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
 ```
 
 Generated with discovered.json: 0xf12d98f038e4ea29e1fcab6c1f037e421ffcb2a5

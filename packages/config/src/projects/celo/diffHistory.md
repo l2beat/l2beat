@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x46691cb0e0bda32f46d5779594787c9f6edda6ef
+Generated with discovered.json: 0xf4f0acf6ca3e4539ae929aa7f9cc51be74115dd3
 
-# Diff at Thu, 15 Oct 2026 11:44:36 GMT:
+# Diff at Tue, 20 Oct 2026 09:05:38 GMT:
 
-- id: dd17d9cb
+- id: 04d4d436
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@fbbee67f0035830d2f7f5b390f99b2881a93af3f block: 1791966035
+- comparing to: main@9417c9f8ea024cc7ebc3d153bed576e95746815a block: 1791966035
 - current timestamp: 1791966035
 
 ## Description
@@ -16,54 +16,6 @@ Celo's own EigenDA cert verifier router is now discovered: a proxy under Celo's 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1791966035 (main branch discovery), not current.
-
-```diff
-    contract L2CrossDomainMessenger (celo:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
-    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
-      deployerAddress:
-+        "celo:0x0000000000000000000000000000000000000000"
-      sinceTimestamp:
-+        1587571205
-      sinceBlock:
-+        0
-    }
-```
-
-```diff
-    contract L2StandardBridge (celo:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
-    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
-      deployerAddress:
-+        "celo:0x0000000000000000000000000000000000000000"
-      sinceTimestamp:
-+        1587571205
-      sinceBlock:
-+        0
-    }
-```
-
-```diff
-    contract L2ToL1MessagePasser (celo:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
-    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
-      deployerAddress:
-+        "celo:0x0000000000000000000000000000000000000000"
-      sinceTimestamp:
-+        1587571205
-      sinceBlock:
-+        0
-    }
-```
-
-```diff
-    contract L2ProxyAdmin (celo:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin] {
-    +++ description: Administration contract for other contract proxies.
-      deployerAddress:
-+        "celo:0x0000000000000000000000000000000000000000"
-      sinceTimestamp:
-+        1587571205
-      sinceBlock:
-+        0
-    }
-```
 
 ```diff
     contract CeloProxyAdminOwner (eth:0x4092A77bAF58fef0309452cEaCb09221e556E112) [GnosisSafe] {
@@ -87,7 +39,7 @@ discovery. Values are for block 1791966035 (main branch discovery), not current.
     external contract (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","description":"can add and remove strategies","role":".owner"},{"permission":"interact","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","description":"can add cert verifiers to the router, changing which contract validates DA certificates from a chosen block onwards.","role":".owner"},{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer","role":".owner"},{"permission":"upgrade","from":"eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
++        [{"permission":"interact","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","description":"can add and remove strategies","role":".owner"},{"permission":"interact","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","description":"can add cert verifiers to the router, changing which contract validates DA certificates from a chosen block onwards.","role":".owner"},{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer","role":".owner"},{"permission":"interact","from":"eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15","description":"can add blob versions with their coding parameters, which define what the cert verifiers accept as a valid blob.","role":".owner"},{"permission":"upgrade","from":"eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]},{"permission":"upgrade","from":"eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}]
       directlyReceivedPermissions:
 +        [{"permission":"act","from":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99","role":".owner"}]
     }
@@ -349,6 +301,246 @@ discovery. Values are for block 1791966035 (main branch discovery), not current.
 +   Status: CREATED
     external contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15)
     +++ description: None
+```
+
+Generated with discovered.json: 0x36cf8933a6fd446db8bd01047d5612288bd33f07
+
+# Diff at Fri, 16 Oct 2026 09:37:45 GMT:
+
+- id: 6bffcdf6
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791966035
+- current timestamp: 1791966035
+
+## Description
+
+Ossification review: retired fault-proof contracts, SaferSafes liveness fields, ASR opsuccinct pointers without severity, role holders MEDIUM.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966035 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (celo:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      deployerAddress:
++        "celo:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
++        1587571205
+      sinceBlock:
++        0
+    }
+```
+
+```diff
+    contract L2StandardBridge (celo:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      deployerAddress:
++        "celo:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
++        1587571205
+      sinceBlock:
++        0
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (celo:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      deployerAddress:
++        "celo:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
++        1587571205
+      sinceBlock:
++        0
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (celo:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin] {
+    +++ description: Administration contract for other contract proxies.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+      deployerAddress:
++        "celo:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
++        1587571205
+      sinceBlock:
++        0
+    }
+```
+
+```diff
+    contract Celo native asset Token (eth:0x057898f3C43F129a17517B9056D23851F124b19f) [tokens/CELO] {
+    +++ description: None
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      critical:
+-        true
++        {"untilTimestamp":1765362251}
+    }
+```
+
+```diff
+    contract CeloSuperchainConfig (eth:0x25035d2233d099f0BA710ca1e5a3834842870C66) [N/A] {
+    +++ description: None
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F) [opstack/FaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      critical:
+-        true
++        {"untilTimestamp":1765362251}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      critical:
+-        true
++        {"untilTimestamp":1765362251}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x783A434532Ee94667979213af1711505E8bFE374) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.disputeGameFactory:
+-        {"severity":"HIGH"}
+      fieldMeta.systemConfig:
+-        {"severity":"HIGH"}
+      fieldMeta.RespectedGameString:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
+-        true
++        {"untilTimestamp":1765362251}
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      critical:
+-        true
++        {"untilTimestamp":1765362251}
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
++++ severity: MEDIUM
+      values.upgradeSafeFallbackOwner:
++        "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
++++ severity: HIGH
+      values.upgradeSafeLivenessResponsePeriod:
++        2592000
+      fieldMeta:
++        {"upgradeSafeLivenessResponsePeriod":{"severity":"HIGH"},"upgradeSafeFallbackOwner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
+-        true
++        {"untilTimestamp":1765362251}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
 ```
 
 Generated with discovered.json: 0x44fe30ed4d80479415ba3be8264700d4cb6bf2f3

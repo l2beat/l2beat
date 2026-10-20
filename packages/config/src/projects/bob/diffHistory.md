@@ -1,3 +1,121 @@
+Generated with discovered.json: 0xdea54daf56b3547e2a02c4ba8b0ea05d20207bce
+
+# Diff at Fri, 16 Oct 2026 09:37:44 GMT:
+
+- id: 05a3ae32
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791965825
+- current timestamp: 1791965825
+
+## Description
+
+Ossification review: RISC Zero router selectors MEDIUM (a removal does not reset), role holders MEDIUM.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791965825 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      fieldMeta.verifier_310fe598.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_9f39696c.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_f536085a.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_bb001d44.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_73c457ba.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_242f9d5b.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract KailuaVerifier (eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d) [N/A] {
+    +++ description: None
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xF2dc77c697e892542cC53336178a78Bb313DFDC7) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x8ad1de589a4c5ca7e7beebb2211b35e3fba8a251
 
 # Diff at Wed, 14 Oct 2026 08:18:19 GMT:

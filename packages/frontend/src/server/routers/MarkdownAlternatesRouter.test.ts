@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import { LIST_PAGES_WITH_MARKDOWN } from '~/utils/getMarkdownAlternatePath'
@@ -114,6 +115,43 @@ describe(createMarkdownAlternatesRouter.name, () => {
     expect(paths.toSorted()).toEqual(
       active.map((p) => `/zk-catalog/${p.slug}`).toSorted(),
     )
+  })
+
+  describe('ossification', () => {
+    const originalMock = env.MOCK
+
+    // Mock mode serves the value series without a database.
+    before(() => {
+      env.MOCK = true
+    })
+
+    after(() => {
+      env.MOCK = originalMock
+    })
+
+    // The HTML page lists active projects with an ossification history that
+    // have a project page: scaling, privacy or DeFi.
+    it('lists exactly the projects of the ossification page', async () => {
+      const projects = await ps.getProjects({
+        where: ['ossificationHistory'],
+        whereNot: ['archivedAt'],
+        optional: ['scalingInfo', 'privacyInfo', 'defiInfo'],
+      })
+      const expected = projects.flatMap((p) =>
+        p.scalingInfo
+          ? [`/layer2s/projects/${p.slug}`]
+          : p.privacyInfo
+            ? [`/privacy/projects/${p.slug}`]
+            : p.defiInfo
+              ? [`/defi/projects/${p.slug}`]
+              : [],
+      )
+
+      const paths = await getLinkPaths('/ossification.md')
+
+      expect(expected.length).toBeGreaterThan(0)
+      expect(paths.toSorted()).toEqual(expected.toSorted())
+    })
   })
 })
 

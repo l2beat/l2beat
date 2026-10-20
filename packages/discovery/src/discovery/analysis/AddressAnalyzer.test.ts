@@ -197,6 +197,7 @@ describe(AddressAnalyzer.name, () => {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
         },
+        followedFields: ['owner', '$implementation', '$admin'],
       })
     })
 
@@ -315,6 +316,7 @@ describe(AddressAnalyzer.name, () => {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
         },
+        followedFields: ['owner', '$implementation', '$admin'],
       })
     })
 
@@ -427,6 +429,7 @@ describe(AddressAnalyzer.name, () => {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
         },
+        followedFields: ['owner', '$implementation', '$admin'],
       })
     })
 

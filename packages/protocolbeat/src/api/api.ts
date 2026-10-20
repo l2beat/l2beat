@@ -4,6 +4,7 @@ import {
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
 import type {
+  ApiAddressUsageResponse,
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
@@ -30,6 +31,17 @@ export async function getProjects(): Promise<ApiProjectsResponse> {
   }
   const data = await res.json()
   return data as ApiProjectsResponse
+}
+
+export async function getAddressUsage(): Promise<ApiAddressUsageResponse> {
+  const res = await fetch('/api/address-usage')
+  if (!res.ok) {
+    throw new Error('Failed to fetch address usage', {
+      cause: { status: res.status },
+    })
+  }
+  const data = await res.json()
+  return data as ApiAddressUsageResponse
 }
 
 export async function getProject(

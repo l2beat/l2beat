@@ -94,7 +94,8 @@ export class LivenessRepository extends BaseRepository {
         )
         .where('Liveness.configurationId', 'in', configurationIds)
         .selectAll('Liveness')
-        .orderBy('timestamp', 'desc')
+        .distinctOn(['Liveness.timestamp', 'Liveness.configurationId'])
+        .orderBy('Liveness.timestamp', 'desc')
         .execute(),
       this.db
         .selectFrom('Liveness')
@@ -102,6 +103,8 @@ export class LivenessRepository extends BaseRepository {
         .where('configurationId', 'in', configurationIds)
         .where('timestamp', '>=', UnixTime.toDate(from))
         .where('timestamp', '<', UnixTime.toDate(to))
+        .distinctOn(['timestamp', 'configurationId'])
+        .orderBy('timestamp', 'desc')
         .execute(),
     ])
 

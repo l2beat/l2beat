@@ -67,6 +67,7 @@
       ]
     },
     "defaultAdminAC": {
+      "severity": "MEDIUM",
       // assuming they also have ADD_ROLLUP_TYPE, ADD_EXISTING_ROLLUP, UPDATE_ROLLUP roles
       "handler": {
         "type": "accessControl",
@@ -80,6 +81,7 @@
       ]
     },
     "tweakParametersAC": {
+      "severity": "MEDIUM",
       // assuming they also have UPDATE_ROLLUP, OBSOLETE_ROLLUP_TYPE, STOP_EMERGENCY, TRUSTED_AGGREGATOR_ADMIN, SET_FEE roles
       "handler": {
         "type": "accessControl",
@@ -96,6 +98,7 @@
       ]
     },
     "createRollupAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -111,6 +114,7 @@
       ]
     },
     "emergencyCouncilAdminAC": {
+      "severity": "MEDIUM",
       // assuming they also have the EMERGENCY_COUNCIL role
       "handler": {
         "type": "accessControl",
@@ -126,8 +130,10 @@
         }
       ]
     },
+    // a pause state. The instant upgrades it unlocks show as the HIGH
+    // Timelock getMinDelay dropping to 0.
     "isEmergencyState": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."
     },
     "emergencyStateCount": {

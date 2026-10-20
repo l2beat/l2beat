@@ -5,6 +5,7 @@
   "description": "Escrows canonical ERC1155 tokens and mints or burns their bridged representations. An immutable resolver selects the local bridge, counterpart vaults and default bridged token implementation. Releases authenticate the bridge and source vault.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "owner": {
       "severity": "MEDIUM",
       "permissions": [

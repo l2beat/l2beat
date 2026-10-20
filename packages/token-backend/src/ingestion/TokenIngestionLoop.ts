@@ -128,6 +128,11 @@ export class TokenIngestionLoop {
 
   private async drainPendingQueue() {
     const startedAt = Date.now()
+    let entry = await this.tokenDb.tokenIngestionQueue.findNextPending()
+    if (!entry) {
+      return
+    }
+
     const outcomeCounts = createOutcomeCounts()
     const seenAddresses = new Set<string>()
     const reprocessedAddresses = new Set<string>()
@@ -137,7 +142,6 @@ export class TokenIngestionLoop {
     // may have just discovered addresses from new transfers, and the drain must
     // plan against a transfer index fresh enough to include that evidence.
     const transferIndex = await this.processor.refreshInteropTransferIndex()
-    let entry = await this.tokenDb.tokenIngestionQueue.findNextPending()
 
     while (entry && processed < this.maxProcessedPerRun) {
       const addressKey = queueAddressKey(entry)

@@ -19,6 +19,8 @@
   },
   // Custody criticality is set by templates. DAI setup finished before the first deposit.
   // The sUSDS portal's ownership was renounced on 2026-10-08, after four deposits.
+  // SkyEscrow, SwapEscrow and OxideAccount stay out, like routers: immutable
+  // app-path helpers that hold funds only in transit or gate deposit recovery.
   "overrides": {
     "eth:0x5C412Ba5B338F3e5E2a1332069bdd3Aae6ae6b8a": {
       // Created by the verified factory. Its executable bytecode was reproduced

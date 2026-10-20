@@ -4,6 +4,7 @@ import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyPr
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getPrivacyMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
+import { getWebPageStructuredData } from '~/ssr/head/structured-data/getWebPageStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
@@ -73,11 +74,12 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
       manifest,
       metadata: getMetadata(manifest, {
         name: details.name,
-        title: `${details.name} - Privacy Dashboard - L2BEAT`,
+        title: `${details.name} Privacy Review & Risks - L2BEAT`,
         description: getPrivacyMetadataDescription({
           name: details.name,
           category: details.category.label,
           description: details.display.description,
+          promise: details.adversaries.promise.text,
         }),
         // Derived from the slug, not the request URL: the cache entry is
         // shared by every request for the project, including the .md one.
@@ -85,6 +87,12 @@ async function loadPrivacyProjectPage(manifest: Manifest, slug: string) {
         openGraph: {
           image: `/meta-images/privacy/projects/${details.slug}/opengraph-image.png`,
         },
+        structuredData: (page) => [
+          getWebPageStructuredData(page, {
+            name: `${details.name} privacy review`,
+            about: details.name,
+          }),
+        ],
       }),
     },
     props: {

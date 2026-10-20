@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1792014182,
+  "timestamp": 1791537732,
   "configHash": "0x0c5352058982822b68d9c047dcbefb6a95049530e9d5935baa65530ff25b8c6c",
   "entries": [
     {
@@ -52,7 +52,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 14842800,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x90c7787EA25C16e6d800D18bc5af707f8b958594",
+        "lastResolved": "eth:0x85Be92bae2eE287078DDb421D277DfC83Ab8a04F",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -192,6 +192,7 @@
         "isUpgrading": false,
         "owner": "eth:0x92e0E0B15e3e99b32c9ED9AD284F939553C7b7d6"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x15fCB0120D414f246ead019cA4BdF97447cd8d90": "ProxyAdmin"
       }
@@ -237,6 +238,7 @@
         "disputeGameFactory": "eth:0x8546840adF796875cD9AAcc5B3B048f6B2c9D563",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
+        "enabledFeatures": [],
         "gasLimit": 60000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0x6C7198250087B29A8040eC63903Bc130f4831Cc9",
@@ -290,10 +292,16 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "MEDIUM" },
         "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "enabledFeatures": {
+          "severity": "HIGH",
+          "description": "Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."
+        },
+        "isCustomGasToken": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E": "Proxy",
@@ -595,7 +603,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 6,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -639,7 +647,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292671285",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292671151",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -704,7 +712,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 26193266
+          "prevBlockNum": 26153912
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -778,7 +786,7 @@
         "game1337": "eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 8285,
+        "gameCount": 8153,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -798,8 +806,8 @@
         "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "MEDIUM" },
+        "owner": { "severity": "MEDIUM" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
@@ -955,12 +963,13 @@
         "verifier_f536085a": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
-        "verifier_310fe598": { "severity": "HIGH" },
-        "verifier_9f39696c": { "severity": "HIGH" },
-        "verifier_f536085a": { "severity": "HIGH" },
-        "verifier_bb001d44": { "severity": "HIGH" },
-        "verifier_73c457ba": { "severity": "HIGH" },
-        "verifier_242f9d5b": { "severity": "HIGH" }
+        "owner": { "severity": "MEDIUM" },
+        "verifier_310fe598": { "severity": "MEDIUM" },
+        "verifier_9f39696c": { "severity": "MEDIUM" },
+        "verifier_f536085a": { "severity": "MEDIUM" },
+        "verifier_bb001d44": { "severity": "MEDIUM" },
+        "verifier_73c457ba": { "severity": "MEDIUM" },
+        "verifier_242f9d5b": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x910b159F79288DD706789ec7768E979d4D88C057": "RiscZeroVerifierRouter"
@@ -1026,6 +1035,7 @@
         "$immutable": true,
         "owner": "eth:0x15fCB0120D414f246ead019cA4BdF97447cd8d90"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x9754fD3D63B3EAC3fd62b6D54DE4f61b00D6E0Df": "AddressManager"
       },
@@ -1089,6 +1099,7 @@
         "isUpgrading": false,
         "owner": "eth:0x92e0E0B15e3e99b32c9ED9AD284F939553C7b7d6"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xab48b73a9e59aF01AfE91e18cA0774295581d07A": "ProxyAdmin"
       }
@@ -2521,15 +2532,15 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba",
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
     "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
     "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 26193502 },
+  "usedBlockNumbers": { "ethereum": 26153924 },
   "permissionsConfigHash": "0x1e84a8524ac413cc2ef798fb9847982f15380d2e6c2196afad45ef56d2706a4b",
   "modelledAgainst": {
-    "shared-eigenda": "0x011f5440f51cd8d539ef6e211e82731f779cfaab6b700cd98791046e2786c9d2",
+    "shared-eigenda": "0x1666d662d36428e6c9cc77823b016e58fd3728a21fdf0cf004e089ccb7c5f8f3",
     "shared-eigenlayer": "0x7d4dc86bbe2849d7de33af96e2466d994b8f5133949b99100967a503dd0d98a7"
   },
   "permissions": {
@@ -2543,8 +2554,20 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
+          "description": "can add cert verifiers to the router, changing which contract validates DA certificates from a chosen block onwards.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+          "description": "can add blob versions with their coding parameters, which define what the cert verifiers accept as a valid blob.",
           "role": ".owner"
         },
         {

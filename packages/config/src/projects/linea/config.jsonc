@@ -58,6 +58,20 @@
     // beacon controlling the BridgedToken implementation of all canonical bridged tokens on Linea
     "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0": {
       "critical": true
+    },
+    // old canonical USDC bridge and its ProxyAdmins, governed on both sides, until the
+    // native USDC migration drained the L1 escrow (block 22075113)
+    "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": {
+      "critical": { "untilTimestamp": 1742317187 }
+    },
+    "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": {
+      "critical": { "untilTimestamp": 1742317187 }
+    },
+    "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A": {
+      "critical": { "untilTimestamp": 1742317187 }
+    },
+    "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c": {
+      "critical": { "untilTimestamp": 1742317187 }
     }
   }
 }

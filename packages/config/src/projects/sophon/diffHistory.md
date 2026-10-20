@@ -1,3 +1,110 @@
+Generated with discovered.json: 0xfac49f5b7ab389d7e08db474948eb59edc3fc705
+
+# Diff at Fri, 16 Oct 2026 10:36:23 GMT:
+
+- id: a83e6cd5
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1791458527
+- current timestamp: 1792144211
+
+## Description
+
+SophonChainAdminMultisig (owner of the chain admin) added a signer and lowered the threshold: 3 of 5 became 2 of 6. Avail Multisig 1 swapped one signer.
+
+## Watched changes
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
++        "eth:0x50d0667992467421f3B359C8138928C0157cB444"
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x3b6036d410cA018661324766680674921a8b2d89"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 6 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x305999dae133b1b9dc888ac90ba837efa21e7db2
+
+# Diff at Fri, 16 Oct 2026 09:37:50 GMT:
+
+- id: 70d7700c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791458527
+- current timestamp: 1791458527
+
+## Description
+
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791458527 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getAdmin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x9a875dceecda9b7942803eafaf99989a09d855dc
 
 # Diff at Thu, 08 Oct 2026 13:08:15 GMT:

@@ -81,7 +81,9 @@ export type PrivacyFlowIndexerConfig = {
   sinceTimestamp: UnixTime
   priceId: string
   decimals: number
-} & Exclude<
+} & EvmPrivacyFlowExtractorConfig
+
+export type EvmPrivacyFlowExtractorConfig = Exclude<
   PrivacyFlowExtractorConfig,
   { extractor: 'strk20Deposit' | 'strk20Withdrawal' }
 >

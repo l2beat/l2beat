@@ -68,8 +68,12 @@ export const mantle: ScalingProject = opStackL2({
     ],
   },
   ossificationHistory: discovery.getOssificationHistory(genesisTimestamp, {
-    // OPSuccinctL2OutputOracle verifier set to the SP1 Groth16 gateway (tx 0xf9fc68ef)
-    'shared-sp1': UnixTime(1758005207),
+    // OPSuccinctL2OutputOracle verifier set to the SP1VerifierGateway 0x3B60 (tx
+    // 0xa29314393be594bcb4caad62ff4a282f108031aa8c58ff649bbfe82453903365). Before,
+    // from 1767768479, it called the immutable SP1Verifier v5.0.0 0x0459 directly,
+    // so no shared-sp1 change reached it. The Groth16 gateway it used from
+    // 1758005207 is not critical.
+    'shared-sp1': UnixTime(1777434335),
   }),
   nonTemplateProofSystem: {
     type: 'Validity',

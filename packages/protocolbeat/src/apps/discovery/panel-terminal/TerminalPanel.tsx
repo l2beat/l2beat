@@ -80,6 +80,9 @@ export function TerminalPanel() {
                 queryClient.invalidateQueries({
                   queryKey: ['config-sync-status', project],
                 })
+                queryClient.invalidateQueries({
+                  queryKey: ['address-usage'],
+                })
               })
             }}
             disabled={command.inFlight}

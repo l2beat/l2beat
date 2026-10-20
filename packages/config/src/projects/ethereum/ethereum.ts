@@ -65,10 +65,7 @@ export const ethereum: BaseProject = {
         'https://eth.blockscout.com/',
         'https://beaconcha.in/',
       ],
-      socialMedia: [
-        'https://x.com/ethereum',
-        'https://discord.com/invite/ethereum-org',
-      ],
+      socialMedia: ['https://x.com/ethereum', 'https://discord.gg/MWpjbnsfNE'],
     },
     badges: [],
   },
@@ -615,7 +612,7 @@ export const ethereum: BaseProject = {
       url: 'https://blog.ethereum.org/2025/11/06/fusaka-mainnet-announcement',
       date: '2025-12-09T00:00:00Z',
       description:
-        'First Blob Parameter Only fork after Fusaka increases blob limits: target from 6 to 10 blobs and max from 9 to 15 blobs.',
+        'First Blob Parameter Only fork after Fusaka: blob target from 6 to 10, max from 9 to 15.',
       type: 'general',
     },
     {
@@ -623,7 +620,7 @@ export const ethereum: BaseProject = {
       url: 'https://github.com/ethereum/pm/issues/1772',
       date: '2026-01-07T00:00:00Z',
       description:
-        'Second Blob Parameter Only fork increases blob limits: target from 10 to 14 blobs and max from 15 to 21 blobs.',
+        'Second Blob Parameter Only fork: blob target from 10 to 14, max from 15 to 21.',
       type: 'general',
     },
   ],

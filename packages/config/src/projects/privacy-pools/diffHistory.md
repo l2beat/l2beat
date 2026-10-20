@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x263d36dc127498e35b6f897b00b17e460367a79a
+
+# Diff at Fri, 16 Oct 2026 05:36:52 GMT:
+
+- id: b7517154
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1791570511
+- current timestamp: 1791570511
+
+## Description
+
+Ossification review: role holders MEDIUM, new pools classified as asset-plumbing variants (no reset).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791570511 (main branch discovery), not current.
+
+```diff
+    contract PrivacyPoolsEntrypoint (eth:0x6818809EefCe719E480a7526D76bD3e561526b46) [privacy-pools/Entrypoint] {
+    +++ description: Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management.
+      fieldMeta.accessControl.severity:
++        "MEDIUM"
+      fieldMeta.ownerRoleMembers.severity:
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x08adbda1d55919b3a8510da943818d5ff391bf5c
 
 # Diff at Fri, 09 Oct 2026 18:29:46 GMT:

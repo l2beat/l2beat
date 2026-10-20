@@ -155,19 +155,66 @@ describe(TemplateService.prototype.loadContractTemplate.name, () => {
     rmSync(rootPath, { recursive: true, force: true })
   })
 
-  function writeTemplate(templateId: string, template: object) {
+  function writeTemplate(templateId: string, template: unknown) {
     const path = join(rootPath, '_templates', templateId)
     mkdirSync(path, { recursive: true })
     writeFileSync(join(path, 'template.jsonc'), JSON.stringify(template))
   }
 
+  function loadProblems(templateId: string): unknown {
+    const templateService = new TemplateService(rootPath)
+    try {
+      templateService.loadContractTemplate(templateId)
+    } catch (error) {
+      expect(error).toBeA(Error)
+      expect((error as Error).message).toEqual('Invalid template.jsonc')
+      return ((error as Error).cause as { problems: unknown }).problems
+    }
+    throw new Error('Template loaded')
+  }
+
   it('rejects a template that sets ignoreDiscovery', () => {
     writeTemplate('ignoring', { ignoreDiscovery: true })
-    const templateService = new TemplateService(rootPath)
 
-    expect(() => templateService.loadContractTemplate('ignoring')).toThrow(
-      'ignoreDiscovery cannot be set in a template',
-    )
+    expect(loadProblems('ignoring')).toEqual([
+      expect.includes('ignoreDiscovery cannot be set in a template'),
+    ])
+  })
+
+  it('keeps the reason of the parser when the walk finds only unknown keys', () => {
+    writeTemplate('named', { name: 'Rollup', ignoreDiscovery: true })
+
+    expect(loadProblems('named')).toEqual([
+      expect.includes('name: unexpected key'),
+      'At @: ignoreDiscovery cannot be set in a template',
+    ])
+  })
+
+  it('reports only the reason of the parser for a template that is not an object', () => {
+    writeTemplate('empty', null)
+
+    expect(loadProblems('empty')).toEqual(['At @: Expected object, got null.'])
+  })
+
+  it('reports every mistake of a template at its path', () => {
+    writeTemplate('typos', {
+      $schema: '../schema.json',
+      ignoreMethod: ['a'],
+      fields: {
+        owner: { handler: { type: 'call', methd: 'owner', args: [] } },
+        slot: { handler: { type: 'storag', slot: 3 } },
+      },
+    })
+
+    expect(loadProblems('typos')).toEqual([
+      expect.includes(
+        'ignoreMethod: unexpected key (did you mean "ignoreMethods"?)',
+      ),
+      expect.includes(
+        'fields.owner.handler.methd: unexpected key (did you mean "method"?)',
+      ),
+      expect.includes('fields.slot.handler.type: expected one of'),
+    ])
   })
 })
 

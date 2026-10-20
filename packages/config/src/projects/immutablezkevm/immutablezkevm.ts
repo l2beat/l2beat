@@ -72,7 +72,7 @@ export const immutablezkevm: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://rpc.immutable.com',
-        callsPerMinute: 500,
+        callsPerMinute: 350,
       },
     ],
   },

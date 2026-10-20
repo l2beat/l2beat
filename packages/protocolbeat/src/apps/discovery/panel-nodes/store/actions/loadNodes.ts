@@ -1,4 +1,3 @@
-import { stackAutoLayout } from '../../controls/StackLayoutButton'
 import type { Node, State } from '../State'
 import { NODE_WIDTH } from '../utils/constants'
 import {
@@ -7,6 +6,7 @@ import {
   mapGraphItems,
 } from '../utils/graphProjection'
 import { reconcileCompressedRows } from '../utils/rows'
+import { stackAutoLayout } from '../utils/stackLayout'
 import {
   type NodeLocations,
   recallNodeLayout,

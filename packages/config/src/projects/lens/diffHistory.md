@@ -1,3 +1,110 @@
+Generated with discovered.json: 0xcf2799255bbc6f222d3db01487db2b2ac29ba42b
+
+# Diff at Fri, 16 Oct 2026 10:35:42 GMT:
+
+- id: 3e47563b
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d86f6d9efd21b822dadfa4bb3cc3726c79b200fd block: 1790944827
+- current timestamp: 1792144197
+
+## Description
+
+The Lens execution delay in the ValidatorTimelock went from 3h to 1d via the new chain-specific delay. Lens batches now wait at least 1d between commitment and execution. Avail Multisig 1 swapped one signer.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
++++ severity: HIGH
+      values.executionDelayLens:
+-        10800
++        86400
++++ severity: HIGH
+      values.executionDelayLens_fmt:
+-        "3h"
++        "1d"
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
++        "eth:0x50d0667992467421f3B359C8138928C0157cB444"
+    }
+```
+
+Generated with discovered.json: 0xa8ac85ca907c7d83f9fd41a64325a731b1ba332f
+
+# Diff at Fri, 16 Oct 2026 09:37:47 GMT:
+
+- id: 95fc53f3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1790944827
+- current timestamp: 1790944827
+
+## Description
+
+Ossification review: template severities (role holders MEDIUM, including the ZK stack owners and chain admin).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790944827 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.Executor.severity:
++        "MEDIUM"
+      fieldMeta.defaultAdminAC:
++        {"severity":"MEDIUM"}
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+      fieldMeta.Proposer:
++        {"severity":"MEDIUM"}
+      fieldMeta.Canceller:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract LensZkEvmAdmin (eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x4968A0E4b025eD7d095753E54058377969b41abC act through it.
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Diamond (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getAdmin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x089162f9f3b08bb9725ab00e0b3398da85cb33e8
 
 # Diff at Mon, 05 Oct 2026 10:54:18 GMT:

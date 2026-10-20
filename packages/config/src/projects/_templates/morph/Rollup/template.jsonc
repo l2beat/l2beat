@@ -28,7 +28,7 @@
       "severity": "HIGH"
     },
     "$admin": {
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     // The verifier route deciding which zk proofs are accepted in challenges.
     "verifier": {

@@ -5,6 +5,7 @@
   "ignoreRelatives": ["usdc"],
   "fields": {
     "networkGovernor": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

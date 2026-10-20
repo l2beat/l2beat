@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x00ee859d143454f55623b99deaf361973e8ccb3d
+
+# Diff at Fri, 16 Oct 2026 05:36:48 GMT:
+
+- id: 14472253
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1779355836
+- current timestamp: 1779355836
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779355836 (main branch discovery), not current.
+
+```diff
+    contract SentinelProxyAdmin (eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x338f34604fed3f5bd3e6c986a89a75ad6ed74ffe
 
 # Diff at Wed, 23 Sep 2026 05:45:35 GMT:

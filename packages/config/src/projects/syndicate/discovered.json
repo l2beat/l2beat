@@ -340,11 +340,13 @@
         "whitelist": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "MEDIUM" },
         "whitelist": { "severity": "HIGH" },
         "router": { "severity": "HIGH" },
         "inbox": { "severity": "HIGH" },
         "counterpartGateway": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x534Eb1F79C8df3aB1E507e408EeF4e99D53A1239": "TransparentUpgradeableProxy",
@@ -396,7 +398,7 @@
         "allowListEnabled": { "severity": "HIGH" },
         "sequencerInbox": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x5EA55Fd41D42Eb307D281bdE78E4e7572A35ea13": "",
@@ -526,6 +528,7 @@
         "$immutable": true,
         "owner": "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c"
       },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x817BE2d0f28b594D7023dAdf2b3Aa54327180c66": "ProxyAdmin"
       }
@@ -563,7 +566,7 @@
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x82E761873714cDe47C594aA6F23E6b1844CD98dB": "",
@@ -845,8 +848,9 @@
         "rollup": "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A"
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "bridge": { "severity": "HIGH" },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xf555Bc86D1C953414F676479Bf7C979b1A737E8C": "",
@@ -907,8 +911,9 @@
         ]
       },
       "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "executors": { "severity": "LOW" }
+        "$admin": { "severity": "MEDIUM" },
+        "accessControl": { "severity": "MEDIUM" },
+        "executors": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xFA4d1D308f4B4f6E6F836Db2B77Db549606A460c": "",
@@ -1650,13 +1655,13 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
     "orbitstack/ERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/GatewayRouter": "0x158482b47e53cd684e16e1958fafbba9719c7bcb319f6710653b4ca535034350",
+    "orbitstack/GatewayRouter": "0x3f608903046fc1b5b8774f2c0c5290ea1fab17ef34c70963e60f1208cc74413c",
     "orbitstack/Inbox": "0x2ef8ae6338e1c68033f26b7ee0d8639f2f7f14e155442e53a9e7eca3bf0b27cc",
     "orbitstack/OneStepProofEntry": "0xd3e9a13fdc78d7892cbae612ab2c51643757e7e24b08d5d92312de2057607a4f",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/Outbox": "0xcd1388fa7046469178a9f3a8fc23db0f37c9d4ba90a3e02f702bea5e6396af03",
+    "orbitstack/Outbox": "0xd86f8d49c3e4b3d566c849db6a9c98da4aa341ea5e037697ed99cd4f21837e7b",
     "orbitstack/RollupEventInbox": "0x4dc4c522a20e3a47a8ee3f421365820efc114453c7d3dbe378e7eecbae4782a7",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"

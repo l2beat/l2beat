@@ -16,11 +16,13 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl"
       }
     },
     "timelockAdminAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
@@ -34,6 +36,7 @@
       ]
     },
     "proposerAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
@@ -46,6 +49,7 @@
       ]
     },
     "cancellerAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
@@ -58,6 +62,7 @@
       ]
     },
     "executorAC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"

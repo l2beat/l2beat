@@ -1,4 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": ["tokenByIndex"]
+  "description": "NFT that represents each validator slot. The holder controls the validator.",
+  "ignoreMethods": ["tokenByIndex"],
+  "ignoreInWatchMode": ["totalSupply"],
+  "category": "non-critical"
 }

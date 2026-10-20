@@ -14,13 +14,17 @@ const parser = new DiffHistoryParser()
 const ADDRESS = '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f'
 const TX = `0x${'1'.repeat(64)}`
 
-function entry(header: string[], blocks: string[]): string {
+function entry(
+  header: string[],
+  blocks: string[],
+  section = '## Watched changes',
+): string {
   return [
     '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
     '',
     ...header,
     '',
-    '## Watched changes',
+    section,
     '',
     ...blocks,
     '',
@@ -72,6 +76,7 @@ describe(getDiffHistoryChanges.name, () => {
     ])
     expect(changes[0]).toEqual({
       entryId: parsed!.id,
+      section: 'watched-changes',
       timestamp: 1777994288,
       previous: 1777900000,
       address: ChainSpecificAddress(`eth:${ADDRESS}`),
@@ -102,6 +107,7 @@ describe(getDiffHistoryChanges.name, () => {
     const [change] = getDiffHistoryChanges(parser.parse(md)[0]!)
     expect(change).toEqual({
       entryId: parser.parse(md)[0]!.id,
+      section: 'watched-changes',
       timestamp: Math.floor(Date.parse('Tue, 05 May 2026 15:19:12 GMT') / 1000),
       address: ChainSpecificAddress(`arb1:${ADDRESS}`),
       addressType: 'Contract',
@@ -109,7 +115,31 @@ describe(getDiffHistoryChanges.name, () => {
     })
   })
 
-  it('reads every watched change of every project', function () {
+  it('marks changes a config edit caused and skips other sections', () => {
+    const deleted = [
+      '```diff',
+      '-   Status: DELETED',
+      `    contract B (eth:${ADDRESS})`,
+      '    +++ description: None',
+      '```',
+    ].join('\n')
+    const config = entry(
+      ['- current timestamp: 1777994288'],
+      [deleted],
+      '## Config/verification related changes',
+    )
+    const initial = entry(
+      ['- current timestamp: 1777994288'],
+      [deleted],
+      '## Initial discovery',
+    )
+    const [change] = getDiffHistoryChanges(parser.parse(config)[0]!)
+    expect(change?.section).toEqual('config-related-changes')
+    expect(change?.status).toEqual('deleted')
+    expect(getDiffHistoryChanges(parser.parse(initial)[0]!)).toEqual([])
+  })
+
+  it('reads every change of every project', function () {
     this.timeout(60_000)
     const root = getDiscoveryPaths().discovery
     let changes = 0

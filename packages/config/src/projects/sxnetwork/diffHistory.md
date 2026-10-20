@@ -1,3 +1,192 @@
+Generated with discovered.json: 0x6dd3e4fb3ef194d4c4ba8c8184d3141e2cc3a742
+
+# Diff at Fri, 16 Oct 2026 09:37:51 GMT:
+
+- id: b100622c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791533547
+- current timestamp: 1791533547
+
+## Description
+
+Ossification review: orbitstack template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791533547 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.executors.severity:
+-        "LOW"
++        "MEDIUM"
+      fieldMeta.accessControl:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0x5F00446D785421d65B50c192D7129e3C3906438A) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.defaultGateway:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract Bridge (eth:0xa104C0426e95a5538e89131DbB4163d230C35f86) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedOutboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.allowedDelayedInboxList.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Outbox (eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract Inbox (eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract ArbFilteredTransactionsManager (sxr:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.
+      deployerAddress:
++        "sxr:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
++        1720173479
+      sinceBlock:
++        0
+      fieldMeta:
++        {"transactionFilterers":{"severity":"MEDIUM"}}
+    }
+```
+
+Generated with discovered.json: 0x2693379e4f0646cdc12b4672c7693da0dac0a831
+
+# Diff at Mon, 12 Oct 2026 12:12:04 GMT:
+
+- id: da86a7d5
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc9f5581c70968e9dc5db1fc5cc83d8a0b243555 block: 1790892129
+- current timestamp: 1791533547
+
+## Description
+
+RollupProxy: ArbOS v40 → v61 wasm module root, executed by the Caldera multisig.
+ArbFilteredTransactionsManager: transaction-filtering precompile live with ArbOS 61, no filterers set.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v40 wasmModuleRoot"
++        "ArbOS v61 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
++++ severity: HIGH
+      values.wasmModuleRoot:
+-        "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a"
++        "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
+    }
+```
+
+```diff
+    contract ArbFilteredTransactionsManager (sxr:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS transaction-filtering precompile (0x..74), available from ArbOS 60. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. With no filterers set, no transaction hashes can be added or removed; hashes added earlier stay filtered.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      values.transactionFilterers:
+-        "EXPECT_REVERT"
++        []
+      values.$immutable:
++        true
+      sourceHashes:
++        ["0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"]
+      implementationNames:
++        {"sxr:0x0000000000000000000000000000000000000074":""}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790892129 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.transactionFilteringPrecompile:
++        "sxr:0x0000000000000000000000000000000000000074"
+    }
+```
+
 Generated with discovered.json: 0x75b6dc8482f8446b3874bd75db4ce13e60de6e78
 
 # Diff at Sun, 04 Oct 2026 05:55:37 GMT:

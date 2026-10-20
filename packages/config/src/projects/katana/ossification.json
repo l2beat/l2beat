@@ -29,6 +29,41 @@
       "reason": "Upgraded AgglayerBridgeL2 from its genesis implementation 0x5ac4182a to 0xd4ac5935 through the L2Timelock. The reinitializer set the proxied-tokens manager and the emergency unpauser to the Katana Foundation Engineering Safe (Upgraded, AcceptProxiedTokensManagerRole). This first $pastUpgrades entry is a real upgrade, not the initialization."
     },
     {
+      "timestamp": 1748345483,
+      "type": "state",
+      "contract": "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e",
+      "transaction": "0x7fc8e167ed80c264b0034c717ee3d72671138f295d00e7f3b0ba79a0995d7907",
+      "reason": "Mechanism change: Katana vaultBridge Multisig 3, which owns the vbUSDC ProxyAdmin and holds its DEFAULT_ADMIN_ROLE, raised its threshold from 1 to 2 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1748352971,
+      "type": "state",
+      "contract": "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
+      "transaction": "0x854c6d88d6efdf7b53ea4b250c3bf2abb09dad64d5c3fc06bdfe60dd08bb35b8",
+      "reason": "Mechanism change: Katana vaultBridge Multisig 1, which owns the vbETH ProxyAdmin and holds its DEFAULT_ADMIN_ROLE, raised its threshold from 1 to 2 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1748352971,
+      "type": "state",
+      "contract": "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
+      "transaction": "0x854c6d88d6efdf7b53ea4b250c3bf2abb09dad64d5c3fc06bdfe60dd08bb35b8",
+      "reason": "Mechanism change: Katana vaultBridge Multisig 1, which owns the vbUSDT ProxyAdmin and holds its DEFAULT_ADMIN_ROLE, raised its threshold from 1 to 2 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1748352971,
+      "type": "state",
+      "contract": "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
+      "transaction": "0x854c6d88d6efdf7b53ea4b250c3bf2abb09dad64d5c3fc06bdfe60dd08bb35b8",
+      "reason": "Mechanism change: Katana vaultBridge Multisig 1, which owns the vbWBTC ProxyAdmin and holds its DEFAULT_ADMIN_ROLE, raised its threshold from 1 to 2 (ChangedThreshold)."
+    },
+    {
+      "timestamp": 1748432759,
+      "type": "state",
+      "contract": "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
+      "transaction": "0xd78de5d871101cf98f9047d6a6768f2cccc01ce1c3bd1f5570c08ff225de04ef",
+      "reason": "Mechanism change: Katana vaultBridge Multisig 2, which owns the vbUSDS ProxyAdmin and holds its DEFAULT_ADMIN_ROLE, raised its threshold from 1 to 2 (ChangedThreshold)."
+    },
+    {
       "timestamp": 1750690439,
       "type": "state",
       "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
@@ -111,6 +146,20 @@
       "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
       "transaction": "0x3241d31373f1edd41dbbc3df54c500cf7d61c092d7dc1f338b7ce4c09b792927",
       "reason": "Disabled optimistic mode and restored proof-based state finalization (DisableOptimisticMode)."
+    },
+    {
+      "timestamp": 1771942288,
+      "type": "state",
+      "contract": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+      "transaction": "0x7d5a83ca0c02f0b3cbc94693ca43f91967e42361b3412ba5bd417d398f314239",
+      "reason": "Mechanism change: granted all L2Timelock roles (admin, proposer, executor, canceller) to Polygon Multisig 2 katana:0xd0673F98, a second Safe that can schedule L2 bridge upgrades next to the Katana Foundation Engineering Safe (RoleGranted)."
+    },
+    {
+      "timestamp": 1772182351,
+      "type": "state",
+      "contract": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+      "transaction": "0x055ba9d2ab8aab96227daa317908bbe73abb5c1440062755a5d840fec0c60522",
+      "reason": "Mechanism change: the Katana Foundation Engineering Safe katana:0x4e981bAe, an L2Timelock admin, proposer and executor, lowered its threshold from 3 to 2 (ChangedThreshold)."
     },
     {
       "timestamp": 1772552963,

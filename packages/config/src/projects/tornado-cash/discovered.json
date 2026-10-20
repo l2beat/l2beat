@@ -145,6 +145,7 @@
           "description": "Fixed token amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
@@ -219,6 +220,7 @@
           "description": "Fixed ETH amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
@@ -275,6 +277,7 @@
           "description": "Fixed token amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
@@ -379,6 +382,7 @@
           "description": "Fixed token amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
@@ -609,6 +613,7 @@
           "description": "Fixed token amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
@@ -663,6 +668,7 @@
           "description": "Fixed ETH amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
@@ -1916,6 +1922,7 @@
           "description": "Fixed ETH amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
@@ -1983,6 +1990,7 @@
           "description": "Fixed ETH amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
@@ -2497,6 +2505,7 @@
           "description": "Fixed token amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
@@ -2606,6 +2615,7 @@
           "description": "Fixed token amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {
@@ -2698,6 +2708,7 @@
           "description": "Fixed token amount accepted by this pool."
         },
         "operator": {
+          "severity": "MEDIUM",
           "description": "Legacy operator role retained from the trusted-setup phase."
         },
         "operatorRenounced": {

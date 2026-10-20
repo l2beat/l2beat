@@ -1,3 +1,46 @@
+Generated with discovered.json: 0xca9a2c4987bcdb01faa0c8adaa0de4f83f13e2f5
+
+# Diff at Fri, 16 Oct 2026 05:36:53 GMT:
+
+- id: 8c42d089
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08ad19bbcc6e7887cc77644c264a2a97a221bc94 block: 1788943774
+- current timestamp: 1788943774
+
+## Description
+
+Ossification review: template severities (role holders and $admin MEDIUM, aligned raw and formatted twins).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788943774 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x0fCE0A591D96BB76883323eF555867111E2050a9) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xc946787cFd6c155886C673BF9815C841c1718903. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
 Generated with discovered.json: 0x100ce4bbafb9d1eb94fecd45558210e38f653b58
 
 # Diff at Wed, 23 Sep 2026 05:49:23 GMT:

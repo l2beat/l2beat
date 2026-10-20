@@ -6,6 +6,7 @@ import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
+import { IS_READONLY } from '../../../config/readonly'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconEyeClosed } from '../../../icons/IconEyeClosed'
@@ -18,6 +19,7 @@ import { useStore as useNodesStore } from '../panel-nodes/store/store'
 import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
+import { UsageBadge } from '../usage/UsageBadge'
 
 export function ListPanel() {
   const { project } = useParams()
@@ -39,6 +41,7 @@ export function ListPanel() {
             key={`${chain.project}-${i}`}
             entry={chain}
             first={i === 0}
+            openedProject={project}
           />
         ))}
       </ol>
@@ -46,7 +49,11 @@ export function ListPanel() {
   )
 }
 
-function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
+function ListItemChain(props: {
+  entry: ApiProjectChain
+  first: boolean
+  openedProject: string
+}) {
   const [open, setOpen] = useState(true)
 
   function onFocus() {
@@ -79,12 +86,16 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
               onFocus={onFocus}
               entries={props.entry.initialContracts}
               chain={chain}
+              openedProject={props.openedProject}
+              sourceProject={props.entry.project}
             />
             <ListItemContracts
               title="Discovered"
               onFocus={onFocus}
               entries={props.entry.discoveredContracts}
               chain={chain}
+              openedProject={props.openedProject}
+              sourceProject={props.entry.project}
             />
             <ListItemContracts
               startClosed
@@ -92,6 +103,8 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
               onFocus={onFocus}
               entries={props.entry.eoas}
               chain={chain}
+              openedProject={props.openedProject}
+              sourceProject={props.entry.project}
             />
           </>
         )}
@@ -106,6 +119,8 @@ function ListItemContracts(props: {
   onFocus?: () => void
   startClosed?: boolean
   chain: string
+  openedProject: string
+  sourceProject: string
 }) {
   const [open, setOpen] = useState(!props.startClosed)
   const selected = usePanelStore((state) => state.selected)
@@ -152,7 +167,12 @@ function ListItemContracts(props: {
           {filteredEntries
             .toSorted((a, b) => b.type.localeCompare(a.type))
             .map((entry) => (
-              <AddressEntry key={entry.address} entry={entry} />
+              <AddressEntry
+                key={entry.address}
+                entry={entry}
+                openedProject={props.openedProject}
+                sourceProject={props.sourceProject}
+              />
             ))}
         </ol>
       )}
@@ -160,7 +180,15 @@ function ListItemContracts(props: {
   )
 }
 
-function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
+function AddressEntry({
+  entry,
+  openedProject,
+  sourceProject,
+}: {
+  entry: ApiAddressEntry
+  openedProject: string
+  sourceProject: string
+}) {
   const isSelected = usePanelStore((state) =>
     state.selected.includes(entry.address),
   )
@@ -191,7 +219,15 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
       <span className="overflow-hidden text-ellipsis tabular-nums">
         {entry.name ?? toShortenedAddress(entry.address)}
       </span>
-      <div className="mr-1 ml-auto flex gap-1 text-coffee-400">
+      <div className="mr-1 ml-auto flex items-center gap-1 text-coffee-400">
+        {!IS_READONLY && (
+          <UsageBadge
+            address={entry.address}
+            openedProject={openedProject}
+            sourceProject={sourceProject}
+            isSelected={isSelected}
+          />
+        )}
         {isHidden && <IconEyeClosed />}
         {!entry.isReachable && <IconUnlinked />}
       </div>

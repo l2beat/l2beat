@@ -1,11 +1,11 @@
-Generated with discovered.json: 0x155ff0cb4ec4bbce11067daf82ad914953345935
+Generated with discovered.json: 0xc96ac60ed069f5d06666c58dfd9dbb8f253c70ca
 
-# Diff at Wed, 14 Oct 2026 21:43:38 GMT:
+# Diff at Tue, 20 Oct 2026 08:59:35 GMT:
 
-- id: 4381e186
+- id: 53ca02eb
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@54e2fac6e37e04c70f7a26682917ed70a7c5e994 block: 1791537732
-- current timestamp: 1792014182
+- comparing to: main@9417c9f8ea024cc7ebc3d153bed576e95746815a block: 1791537732
+- current timestamp: 1791537732
 
 ## Description
 
@@ -212,6 +212,111 @@ discovery. Values are for block 1791537732 (main branch discovery), not current.
 +        "Contract"
       targetProject:
 +        "shared-eigenda"
+    }
+```
+
+Generated with discovered.json: 0xb2760f2d4cb82dbb3a16f47d71aceeacca43c7a9
+
+# Diff at Fri, 16 Oct 2026 09:37:48 GMT:
+
+- id: 9aa95c45
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e45e14a922cef8b526f3f802ae97d6b7542cacb7 block: 1791537732
+- current timestamp: 1791537732
+
+## Description
+
+Ossification review: RISC Zero router selectors MEDIUM, template severities (role holders MEDIUM).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791537732 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x15fCB0120D414f246ead019cA4BdF97447cd8d90) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+      fieldMeta.enabledFeatures:
++        {"severity":"HIGH","description":"Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP)."}
+      fieldMeta.isCustomGasToken:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x8546840adF796875cD9AAcc5B3B048f6B2c9D563) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.$admin.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x910b159F79288DD706789ec7768E979d4D88C057) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97).
+      fieldMeta.verifier_310fe598.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_9f39696c.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_f536085a.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_bb001d44.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_73c457ba.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.verifier_242f9d5b.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.owner:
++        {"severity":"MEDIUM"}
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x9754fD3D63B3EAC3fd62b6D54DE4f61b00D6E0Df) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xab48b73a9e59aF01AfE91e18cA0774295581d07A) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"MEDIUM"}}
     }
 ```
 

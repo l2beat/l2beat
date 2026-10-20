@@ -319,6 +319,7 @@
       },
       "fieldMeta": {
         "accessControl": {
+          "severity": "MEDIUM",
           "description": "Current role membership map for the Entrypoint's owner and postman roles."
         },
         "associationSets": {
@@ -330,6 +331,7 @@
           "description": "Current set of pool contracts registered in the Entrypoint, derived from PoolRegistered and PoolRemoved events."
         },
         "ownerRoleMembers": {
+          "severity": "MEDIUM",
           "description": "Addresses with OWNER_ROLE.",
           "type": "PERMISSION"
         },

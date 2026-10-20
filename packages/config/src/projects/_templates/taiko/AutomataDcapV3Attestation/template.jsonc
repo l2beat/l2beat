@@ -2,6 +2,7 @@
   "critical": true,
   "description": "Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.",
   "fields": {
+    "$admin": { "severity": "MEDIUM" },
     "paused": { "severity": "MEDIUM" },
     "proxiableUUID": {
       "handler": {
@@ -44,6 +45,7 @@
       }
     },
     "owner": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

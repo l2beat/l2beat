@@ -2,14 +2,7 @@ import { formatNumberWithCommas } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { useState } from 'react'
-import {
-  Cell,
-  Label,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-} from 'recharts'
+import { Label, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
@@ -140,12 +133,6 @@ function CoveragePieCard(props: { chart: CoveragePieChart }) {
                   strokeWidth={2}
                   isAnimationActive={false}
                 >
-                  {chart.slices.map((slice) => (
-                    <Cell
-                      key={`${chart.id}-${slice.label}`}
-                      fill={slice.color}
-                    />
-                  ))}
                   <Label content={renderCenterLabel(chart)} />
                 </Pie>
               </PieChart>
@@ -162,7 +149,7 @@ function CoveragePieCard(props: { chart: CoveragePieChart }) {
             >
               <span
                 className="mt-1 size-2.5 shrink-0 rounded-[3px]"
-                style={{ backgroundColor: slice.color }}
+                style={{ backgroundColor: slice.fill }}
               />
               <div className="min-w-0">
                 <p className="font-medium leading-5">{slice.label}</p>

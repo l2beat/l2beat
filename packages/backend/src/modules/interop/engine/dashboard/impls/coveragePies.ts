@@ -78,7 +78,7 @@ export interface InteropCoveragePieSlice {
   isSupported: boolean
   count: number
   pctOfTotal: number
-  color: string
+  fill: string
 }
 
 export interface InteropCoveragePieChart {
@@ -115,7 +115,7 @@ function hsl(h: number, s: number, l: number): string {
 }
 
 function addColors(
-  rows: Omit<InteropCoveragePieSlice, 'color'>[],
+  rows: Omit<InteropCoveragePieSlice, 'fill'>[],
 ): InteropCoveragePieSlice[] {
   const supported = rows.filter((row) => row.isSupported)
   const unsupported = rows.filter((row) => !row.isSupported)
@@ -128,7 +128,7 @@ function addColors(
       const t =
         supported.length <= 1 ? 0.5 : supportedIndex / (supported.length - 1)
       supportedIndex++
-      return { ...row, color: hsl(136, 65, 30 + t * 40) }
+      return { ...row, fill: hsl(136, 65, 30 + t * 40) }
     }
 
     const t =
@@ -136,7 +136,7 @@ function addColors(
         ? 0.5
         : unsupportedIndex / (unsupported.length - 1)
     unsupportedIndex++
-    return { ...row, color: hsl(0, 75, 30 + t * 40) }
+    return { ...row, fill: hsl(0, 75, 30 + t * 40) }
   })
 }
 
@@ -191,7 +191,7 @@ function buildChartData(
   const smallSupported = small.filter((row) => row.isSupported)
   const smallUnsupported = small.filter((row) => !row.isSupported)
 
-  const collapsed: Omit<InteropCoveragePieSlice, 'color'>[] = [...large]
+  const collapsed: Omit<InteropCoveragePieSlice, 'fill'>[] = [...large]
 
   if (smallSupported.length > 0) {
     const count = smallSupported.reduce((acc, row) => acc + row.count, 0)
