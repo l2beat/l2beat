@@ -605,7 +605,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "16d 20h",
+        "timeSinceLastL2beatInteraction": "21d 13h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -2599,8 +2599,8 @@
         "$upgradeCount": 3,
         "messenger": "oeth:0x4200000000000000000000000000000000000007",
         "MESSENGER": "oeth:0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "oeth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
-        "otherBridge": "oeth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
+        "OTHER_BRIDGE": "eth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
+        "otherBridge": "eth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
         "paused": false,
         "proxyAdmin": "oeth:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
@@ -2609,7 +2609,8 @@
       "implementationNames": {
         "oeth:0x4200000000000000000000000000000000000014": "Proxy",
         "oeth:0x716eAd0Cf3e7FF86A02D4F8cb41a6D14922fA833": "L2ERC721Bridge"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "L1Block",
@@ -5185,7 +5186,7 @@
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
-    "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/L2ERC721Bridge": "0x134c37b08d464eb53a9ae063f26e795155695ec752fda38644e23175466793ca",
     "opstack/Layer2/L2ProxyAdmin_karst": "0x70d00d08dd524425b6612b13b16781498c13da3b7e3fac0a5ccd63078eeb5644",
     "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",

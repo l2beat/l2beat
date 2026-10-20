@@ -8,5 +8,8 @@
     "ethToken",
     "INBOX",
     "L2_ETH_ADDRESS"
-  ]
+  ],
+  "fields": {
+    "getRemoteGateway": { "edit": ["format", "EthereumAddress"] }
+  }
 }

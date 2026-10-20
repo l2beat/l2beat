@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1791538610,
-  "configHash": "0x1d732eca1b5e3f09f93bdb6ed4eab9d16463d8b6227f488ecb0cb0a31cddd84b",
+  "configHash": "0xa7e1b9421c608d0654ec27d4555ce0a8106a94de7b43721a0b055b4bbb7870a0",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -254,14 +254,15 @@
         "$upgradeCount": 0,
         "messenger": "base:0x4200000000000000000000000000000000000007",
         "MESSENGER": "base:0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "base:0x608d94945A64503E642E6370Ec598e519a2C1E53",
-        "otherBridge": "base:0x608d94945A64503E642E6370Ec598e519a2C1E53",
+        "OTHER_BRIDGE": "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53",
+        "otherBridge": "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53",
         "version": "1.1.0"
       },
       "implementationNames": {
         "base:0x4200000000000000000000000000000000000014": "Proxy",
         "base:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014": "L2ERC721Bridge"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "L1Block",
@@ -572,11 +573,6 @@
         "base:0x4200000000000000000000000000000000000021": "Proxy",
         "base:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": "EAS"
       }
-    },
-    {
-      "address": "base:0x608d94945A64503E642E6370Ec598e519a2C1E53",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Base Governance Multisig - L2 Alias",
@@ -1029,11 +1025,11 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "initVersion": 3,
-        "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "base:0x4200000000000000000000000000000000000010",
         "messenger": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSENGER": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
-        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
-        "otherBridge": "eth:0x4200000000000000000000000000000000000010",
+        "OTHER_BRIDGE": "base:0x4200000000000000000000000000000000000010",
+        "otherBridge": "base:0x4200000000000000000000000000000000000010",
         "paused": false,
         "proxyAdmin": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
@@ -1046,6 +1042,9 @@
         "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35": "L1ChugSplashProxy",
         "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A": "L1StandardBridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "base" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1569,8 +1568,8 @@
         "initVersion": 3,
         "messenger": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSENGER": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
-        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000014",
-        "otherBridge": "eth:0x4200000000000000000000000000000000000014",
+        "OTHER_BRIDGE": "base:0x4200000000000000000000000000000000000014",
+        "otherBridge": "base:0x4200000000000000000000000000000000000014",
         "paused": false,
         "proxyAdmin": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
@@ -1582,6 +1581,9 @@
         "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53": "Proxy",
         "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9": "L1ERC721Bridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "base" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -2194,8 +2196,8 @@
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "eth:0x4200000000000000000000000000000000000007",
-        "otherMessenger": "eth:0x4200000000000000000000000000000000000007",
+        "OTHER_MESSENGER": "base:0x4200000000000000000000000000000000000007",
+        "otherMessenger": "base:0x4200000000000000000000000000000000000007",
         "paused": false,
         "portal": "eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
         "PORTAL": "eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
@@ -2217,6 +2219,9 @@
         "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa": "ResolvedDelegateProxy",
         "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0": "L1CrossDomainMessenger"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "base" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -4779,7 +4784,7 @@
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/L2CrossDomainMessenger": "0x6b2f3325184c69786aa4c8225442dd9b795b30aab09628af226705b0b5a30644",
-    "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/L2ERC721Bridge": "0x134c37b08d464eb53a9ae063f26e795155695ec752fda38644e23175466793ca",
     "opstack/Layer2/L2StandardBridge": "0x424b2343f5b2cefc1794c1fb948f48409ba0376f49d8694d66914f6127164b5b",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -4797,7 +4802,7 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "base": 52374631, "ethereum": 26153997 },
-  "permissionsConfigHash": "0xd7b4381bf501db9f82c102402aab61d5ec5f07e1cc785630a169790dc8744969",
+  "permissionsConfigHash": "0x54d08d7c1e91799494608468e8fac7736becbd28d5c10eda7d0467391f6a1558",
   "permissions": {
     "base:0x4200000000000000000000000000000000000018": {
       "directlyReceivedPermissions": [

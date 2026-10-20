@@ -209,6 +209,25 @@
       "fields": {
         "getRegisteredSigners": { "severity": "LOW" }
       }
+    },
+    "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35": {
+      "fields": {
+        "l2TokenBridge": { "edit": ["format", "BaseAddress"] },
+        "OTHER_BRIDGE": { "edit": ["format", "BaseAddress"] },
+        "otherBridge": { "edit": ["format", "BaseAddress"] }
+      }
+    },
+    "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53": {
+      "fields": {
+        "OTHER_BRIDGE": { "edit": ["format", "BaseAddress"] },
+        "otherBridge": { "edit": ["format", "BaseAddress"] }
+      }
+    },
+    "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa": {
+      "fields": {
+        "OTHER_MESSENGER": { "edit": ["format", "BaseAddress"] },
+        "otherMessenger": { "edit": ["format", "BaseAddress"] }
+      }
     }
   }
 }

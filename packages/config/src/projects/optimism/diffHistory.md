@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xd3dbabc4291b7ed8840aba4001204089672d4ff0
+
+# Diff at Tue, 20 Oct 2026 07:51:39 GMT:
+
+- id: 62cf1a70
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1790862344
+- current timestamp: 1790862344
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862344 (main branch discovery), not current.
+
+```diff
+    contract L2ERC721Bridge (oeth:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      values.OTHER_BRIDGE:
+-        "oeth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
++        "eth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      values.otherBridge:
+-        "oeth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
++        "eth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
 Generated with discovered.json: 0x79cb0cf620691452f6ba3f5b1c91488d6cb4253d
 
 # Diff at Fri, 16 Oct 2026 09:37:49 GMT:
