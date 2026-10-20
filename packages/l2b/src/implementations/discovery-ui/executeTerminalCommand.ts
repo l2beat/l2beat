@@ -13,6 +13,7 @@ export function executeTerminalCommand(command: string, res: Response): void {
 
   const proc = spawn(command, {
     shell: true,
+    detached: true,
     env: {
       ...process.env,
       TERM: 'screen-256color',
@@ -43,6 +44,15 @@ export function executeTerminalCommand(command: string, res: Response): void {
   })
 
   res.on('close', () => {
-    proc.kill()
+    if (proc.pid === undefined || proc.exitCode !== null) {
+      return
+    }
+    try {
+      process.kill(-proc.pid, 'SIGTERM')
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'ESRCH') {
+        throw error
+      }
+    }
   })
 }
