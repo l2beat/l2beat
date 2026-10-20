@@ -31,11 +31,12 @@ export function PrivacyMethodologyPage({
         <MainPageHeader>Publication</MainPageHeader>
         <PrimaryCard className="md:p-8">
           <PublicationHeader publication={publication} />
-          <main className="mx-auto mt-8 max-w-[720px] md:pt-8">
+          {/* Text keeps the article column; figures span the card. */}
+          <main className="mt-8 md:pt-8">
             <img
               {...publication.thumbnail}
               alt={`${publication.title} publication thumbnail`}
-              className="mb-12 w-full rounded-lg"
+              className="mx-auto mb-12 w-full max-w-[720px] rounded-lg"
             />
             <Section>{sections.intro}</Section>
             <PoolLensFigure data={figures} />
@@ -56,7 +57,7 @@ export function PrivacyMethodologyPage({
 /** One stretch of text between figures; the figures keep their own spacing. */
 function Section({ children }: { children: string }) {
   return (
-    <Article className="[&>*:last-child]:mb-6 [&>h2:first-child]:mt-10">
+    <Article className="mx-auto max-w-[720px] [&>*:last-child]:mb-6 [&>h2:first-child]:mt-10">
       {children}
     </Article>
   )
