@@ -24,16 +24,13 @@ on:
   push:
     branches:
       - main
-  # New attestations reach the chain without a commit. The backend dispatches
-  # this workflow when it sees one; the daily run catches a run that failed.
-  schedule:
-    - cron: "17 3 * * *"
 
 jobs:
   affected:
-    # Jobs below run whenever this one doesn't succeed, so a forced run, a
-    # scheduled run or a detection error still deploys.
-    if: github.event.inputs.force != 'true' && github.event_name != 'schedule'
+    # Jobs below run whenever this one doesn't succeed, so a forced run or a
+    # detection error still deploys. The backend forces a run when the
+    # attestation changes, which reaches the chain without a commit.
+    if: github.event.inputs.force != 'true'
     uses: ./.github/workflows/affected-packages.yml
 
   deploy:
@@ -59,7 +56,7 @@ jobs:
       - name: Generate site
         run: pnpm --filter @l2beat/crops-api generate
         env:
-          CROPS_ATTESTATIONS_RPC_URL: https://eth-mainnet.g.alchemy.com/v2/${{ secrets.CONFIG_ALCHEMY_API_KEY }}
+          CROPS_ATTESTATIONS_RPC_URL: ${{ secrets.CROPS_ATTESTATIONS_RPC_URL }}
 
       - name: Deploy with Wrangler
         run: pnpm --filter @l2beat/crops-api wrangler deploy --env "$ENVIRONMENT"

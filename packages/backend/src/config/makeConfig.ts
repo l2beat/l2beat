@@ -143,7 +143,7 @@ export async function makeConfig(
     ecosystems:
       flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
     cropAttestations: flags.isEnabled('crop-attestations') && {
-      githubToken: env.optionalString('CROPS_API_DEPLOY_GITHUB_TOKEN'),
+      githubToken: env.optionalString('GITHUB_TOKEN'),
     },
     chainConfig: await getChainConfig(ps, env),
     beaconApi: {
