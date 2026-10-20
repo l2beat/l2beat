@@ -29,6 +29,7 @@ import {
   acceptsArguments,
   declarationName,
   NUMBER_LITERAL,
+  parameterSignature,
   type SourceIndex,
   type TextPosition,
   typeKey,
@@ -323,7 +324,9 @@ export function definitionsInEntry(
   member: string,
   arity: number | undefined,
   resolution: Resolution,
+  reach: 'external' | 'all' = 'external',
 ): Definition[] {
+  const lookup = reach === 'external' ? externalMembers : memberDefinitions
   const definitions: Definition[] = []
   for (const path of entry.sourcePaths) {
     if (isProxySource(path) && definitions.length > 0) {
@@ -334,8 +337,7 @@ export function definitionsInEntry(
     if (main === undefined) {
       continue
     }
-    const reachable = externalMembers(index, main, member, arity)
-    for (const definition of reachable) {
+    for (const definition of lookup(index, main, member, arity)) {
       definitions.push({ ...definition, resolution, entries: [entry] })
     }
   }
@@ -471,15 +473,23 @@ function staticDefinitions(
   }
   const lineage =
     index.contracts.get(index.dispatchContract(contract))?.linearization ?? []
+  // Per overload, the nearest base implementing it.
+  const bySignature = new Map<string, FunctionDefinition>()
   for (const base of lineage.slice(lineage.indexOf(contract) + 1)) {
-    const implemented = (index.contracts.get(base)?.node.subNodes ?? []).find(
-      (node) => isImplementation(node, member, arity),
-    )
-    if (implemented !== undefined) {
-      return [inFileDefinition(index, implemented, member)]
+    for (const node of index.contracts.get(base)?.node.subNodes ?? []) {
+      if (!isImplementation(node, member, arity)) {
+        continue
+      }
+      const fn = node as FunctionDefinition
+      const signature = parameterSignature(fn)
+      if (!bySignature.has(signature)) {
+        bySignature.set(signature, fn)
+      }
     }
   }
-  return []
+  return [...bySignature.values()].map((fn) =>
+    inFileDefinition(index, fn, member),
+  )
 }
 
 function enumValue(

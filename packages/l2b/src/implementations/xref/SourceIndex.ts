@@ -75,7 +75,7 @@ export class SourceIndex {
       if (fn.name !== name || (arity !== undefined && fnArity !== arity)) {
         continue
       }
-      const signature = fn.parameters.map((p) => typeKey(p.typeName)).join()
+      const signature = parameterSignature(fn)
       const found = bySignature.get(signature)
       if (found === undefined || (found.body === null && fn.body !== null)) {
         bySignature.set(signature, fn)
@@ -163,21 +163,6 @@ export class SourceIndex {
     )
   }
 
-  usingForBindings(contractName: string): UsingFor[] {
-    const declarations = [
-      ...this.topLevel,
-      ...this.members(contractName),
-    ].filter((node) => node.type === 'UsingForDeclaration')
-    return declarations.map((node) => {
-      const declaration = node as UsingForDeclaration
-      return {
-        library: declaration.libraryName ?? undefined,
-        functions: declaration.functions,
-        type: typeKey(declaration.typeName),
-      }
-    })
-  }
-
   pathAt(offset: number): BaseASTNode[] {
     const path = [this.root]
     let node: BaseASTNode | undefined = this.root
@@ -190,13 +175,39 @@ export class SourceIndex {
     return path
   }
 
+  // Since 0.7 a contract does not inherit using directives, before it did.
+  // Code that compiles finds the function among its own directives first.
   boundFunctions(
     contractName: string,
     receiverType: string | undefined,
     name: string,
     arity: number | undefined,
   ): FunctionDefinition[] {
-    const bindings = this.usingForBindings(contractName).filter(
+    const own = this.contracts.get(contractName)?.node.subNodes ?? []
+    const found = this.functionsBoundBy(
+      [...this.topLevel, ...own],
+      receiverType,
+      name,
+      arity,
+    )
+    if (found.length > 0) {
+      return found
+    }
+    return this.functionsBoundBy(
+      this.members(contractName),
+      receiverType,
+      name,
+      arity,
+    )
+  }
+
+  private functionsBoundBy(
+    nodes: BaseASTNode[],
+    receiverType: string | undefined,
+    name: string,
+    arity: number | undefined,
+  ): FunctionDefinition[] {
+    const bindings = usingForBindings(nodes).filter(
       (b) =>
         b.type === undefined ||
         receiverType === undefined ||
@@ -476,4 +487,21 @@ function computeLineStarts(text: string): number[] {
     index = text.indexOf('\n', index + 1)
   }
   return starts
+}
+
+function usingForBindings(nodes: BaseASTNode[]): UsingFor[] {
+  return nodes
+    .filter((node) => node.type === 'UsingForDeclaration')
+    .map((node) => {
+      const declaration = node as UsingForDeclaration
+      return {
+        library: declaration.libraryName ?? undefined,
+        functions: declaration.functions,
+        type: typeKey(declaration.typeName),
+      }
+    })
+}
+
+export function parameterSignature(fn: FunctionDefinition): string {
+  return fn.parameters.map((p) => typeKey(p.typeName)).join()
 }

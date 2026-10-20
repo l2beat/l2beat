@@ -26,6 +26,7 @@ export function listCalls(
     functionName,
     undefined,
     'in-file',
+    'all',
   ).filter((d) => d.declaration.type === 'FunctionDefinition')
 
   const sites: CallSite[] = []
