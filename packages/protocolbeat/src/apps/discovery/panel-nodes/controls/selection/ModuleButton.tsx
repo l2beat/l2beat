@@ -9,6 +9,7 @@ import { Link, useParams } from 'react-router'
 import { toast } from 'sonner'
 import {
   createConfigFile,
+  getModules,
   getProjects,
   readConfigFile,
   updateConfigFile,
@@ -54,6 +55,7 @@ export function ModuleButton() {
   const nodes = useStore((state) => state.nodes)
   const response = useQuery(useProjectQueryOptions(project))
   const usage = useAddressUsage()
+  const modules = useQuery({ queryKey: ['modules'], queryFn: getModules })
   const run = useModuleChange(project)
 
   const owned = response.data
@@ -71,7 +73,7 @@ export function ModuleButton() {
         <ToolbarButton
           label="Shared module"
           description="Move contracts into a shared module or back out"
-          disabled={owned.length === 0 || !usage.data}
+          disabled={owned.length === 0 || !usage.data || !modules.data}
         >
           <IconControlFolder />
         </ToolbarButton>
@@ -86,7 +88,7 @@ export function ModuleButton() {
         {owned.length === 1 && owned[0]?.owner === project && (
           <AddToModule
             project={project}
-            modules={Object.keys(moduleConsumers).sort()}
+            modules={modules.data ?? []}
             contracts={owned[0].contracts}
             onAdd={(module, isNew, add) =>
               apply({ module, isNew, add, remove: [] })
@@ -226,29 +228,35 @@ function useModuleChange(project: string) {
     } catch (error) {
       toast.error(`Updating ${change.module} failed`, {
         id: MODULE_CHANGE_TOAST,
-        description: error instanceof Error ? error.message : undefined,
+        description: describeError(error),
       })
     }
   }
 }
 
-// Nothing outside the module's config changes until the module is
-// discovered, so a failed discovery can be retried. The project goes last: it
-// only references the module's contracts once their entrypoints exist.
+// The module is registered before its discovery, so if that discovery fails
+// the module is listed and picking it again retries. The project goes last:
+// it only references the module's contracts once their entrypoints exist.
 async function applyModuleChange(
   project: string,
   change: ModuleChange,
   queryClient: QueryClient,
 ) {
   toast.loading(`Updating ${change.module}`, { id: MODULE_CHANGE_TOAST })
-  await writeModuleConfig(change, queryClient)
-  if (!(await discover(change.module, !change.isNew))) {
-    return
-  }
+  await writeModuleConfig(change)
   await updateModuleEntrypoints(change.module, {
     create: change.isNew,
     remove: change.remove,
   })
+  void queryClient.invalidateQueries({ queryKey: ['modules'] })
+  const projects = await queryClient.fetchQuery({
+    queryKey: ['projects'],
+    queryFn: getProjects,
+  })
+  const isDiscovered = projects.some((p) => p.name === change.module)
+  if (!(await discover(change.module, isDiscovered))) {
+    return
+  }
   if (!(await discover(project, true))) {
     return
   }
@@ -290,32 +298,25 @@ async function discover(project: string, devMode: boolean): Promise<boolean> {
   return ok
 }
 
-// A new module whose first discovery failed has a config but no discovery
-// yet; creating it again overwrites that config, never a discovered project.
-async function writeModuleConfig(
-  change: ModuleChange,
-  queryClient: QueryClient,
-) {
+async function writeModuleConfig(change: ModuleChange) {
   if (change.isNew) {
-    const projects = await queryClient.fetchQuery({
-      queryKey: ['projects'],
-      queryFn: getProjects,
-    })
-    const isDiscovered = projects.some((p) => p.name === change.module)
-    await createConfigFile(change.module, change.add, !isDiscovered)
+    await createConfigFile(change.module, change.add, false)
     return
   }
   const { config } = await readConfigFile(change.module)
-  const model = ConfigModel.fromRawJsonc(config)
-  const removed = new Set(change.remove)
-  const kept = model
-    .getInitialAddresses()
-    .filter((address) => !removed.has(address))
-  const added = change.add
-    .map(ChainSpecificAddress)
-    .filter((address) => !kept.includes(address))
-  const updated = model.setInitialAddresses([...kept, ...added])
+  const updated = ConfigModel.fromRawJsonc(config).updateInitialAddresses({
+    add: change.add.map(ChainSpecificAddress),
+    remove: change.remove.map(ChainSpecificAddress),
+  })
   await updateConfigFile(change.module, updated.toFileContents())
+}
+
+function describeError(error: unknown): string | undefined {
+  if (!(error instanceof Error)) {
+    return undefined
+  }
+  const cause = error.cause as { error?: string } | undefined
+  return cause?.error ?? error.message
 }
 
 function groupByOwner(

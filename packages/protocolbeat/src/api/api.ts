@@ -446,6 +446,18 @@ export async function updateModuleEntrypoints(
     headers: { 'Content-Type': 'application/json' },
   })
   if (!res.ok) {
-    throw new Error(await readErrorMessage(res))
+    throw new Error('Module entrypoints update failed', {
+      cause: { status: res.status, error: await readErrorMessage(res) },
+    })
   }
+}
+
+export async function getModules(): Promise<string[]> {
+  const res = await fetch('/api/modules')
+  if (!res.ok) {
+    throw new Error('Module list request failed', {
+      cause: { status: res.status },
+    })
+  }
+  return (await res.json()) as string[]
 }

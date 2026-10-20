@@ -61,11 +61,23 @@ export class ConfigModel {
     return stringify(this.peek()) !== stringify(other.peek())
   }
 
-  getInitialAddresses(): ChainSpecificAddress[] {
-    return [...(this.config.initialAddresses ?? [])]
-  }
-
-  setInitialAddresses(addresses: ChainSpecificAddress[]) {
+  // Edits the comment-aware array in place, so comments between the
+  // addresses (e.g. commented-out ones) stay where they were.
+  updateInitialAddresses(change: {
+    add: ChainSpecificAddress[]
+    remove: ChainSpecificAddress[]
+  }) {
+    const addresses = clone(this.config.initialAddresses)
+    for (let index = addresses.length - 1; index >= 0; index--) {
+      if (change.remove.includes(addresses[index] as ChainSpecificAddress)) {
+        addresses.splice(index, 1)
+      }
+    }
+    for (const address of change.add) {
+      if (!addresses.includes(address)) {
+        addresses.push(address)
+      }
+    }
     return this.patch({ initialAddresses: addresses })
   }
 

@@ -151,19 +151,42 @@ describe('ConfigModel', () => {
     const B = ChainSpecificAddress(
       'eth:0x0000000000000000000000000000000000000002',
     )
+    const C = ChainSpecificAddress(
+      'eth:0x0000000000000000000000000000000000000003',
+    )
 
-    it('replaces them and keeps the comments elsewhere', () => {
+    // Module configs like shared-sp1 keep commented-out addresses in the array.
+    it('adds and removes them without dropping comments inside the array', () => {
       const model = ConfigModel.fromRawJsonc(`{
         // Top comment
         "name": "shared-test",
-        "initialAddresses": ["${A}"]
+        "initialAddresses": [
+          "${A}",
+          // "${C}",
+          "${B}"
+        ]
       }`)
 
-      const updated = model.setInitialAddresses([A, B])
+      const text = model
+        .updateInitialAddresses({ add: [C], remove: [A] })
+        .toFileContents()
 
-      expect(updated.getInitialAddresses()).toEqual([A, B])
-      expect(model.getInitialAddresses()).toEqual([A])
-      expect(updated.toFileContents()).toInclude('Top comment')
+      expect(text).toInclude('Top comment')
+      expect(text).toInclude(`// "${C}"`)
+      expect(text).not.toInclude(`"${A}"`)
+      expect(text.indexOf(`// "${C}"`)).toBeLessThan(text.indexOf(`"${B}"`))
+      expect(text.lastIndexOf(`"${C}"`)).toBeGreaterThan(text.indexOf(`"${B}"`))
+    })
+
+    it('leaves the model it was called on unchanged', () => {
+      const model = ConfigModel.fromRawJsonc(
+        `{ "name": "shared-test", "initialAddresses": ["${A}"] }`,
+      )
+
+      model.updateInitialAddresses({ add: [B], remove: [A] })
+
+      expect(model.toFileContents()).toInclude(`"${A}"`)
+      expect(model.toFileContents()).not.toInclude(`"${B}"`)
     })
 
     it('writes the repository format when there are no comments', () => {
@@ -171,9 +194,9 @@ describe('ConfigModel', () => {
         `{ "name": "shared-test", "initialAddresses": ["${A}"] }`,
       )
 
-      expect(model.setInitialAddresses([]).toFileContents()).toEqual(
-        formatJson({ name: 'shared-test', initialAddresses: [] }),
-      )
+      expect(
+        model.updateInitialAddresses({ add: [], remove: [A] }).toFileContents(),
+      ).toEqual(formatJson({ name: 'shared-test', initialAddresses: [] }))
     })
   })
 })

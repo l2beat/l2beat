@@ -1,28 +1,14 @@
-import {
-  type ConfigReader,
-  generateEntrypointsCommand,
-  readJsonc,
-} from '@l2beat/discovery'
+import { type ConfigReader, readJsonc } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
 import { existsSync, writeFileSync } from 'fs'
-import { join } from 'path'
+import { basename, dirname, join } from 'path'
 import { projectParamsSchema } from './main'
 
 const GlobalEntrypoints = z.object({ import: z.array(z.string()) })
 const EntrypointsFile = z.object({
-  entrypoints: z
-    .record(
-      z.string(),
-      z.object({
-        name: z.string().optional(),
-        type: z.string(),
-        project: z.string(),
-        isLegacy: z.boolean().optional(),
-      }),
-    )
-    .optional(),
+  entrypoints: z.record(z.string(), z.unknown()).optional(),
 })
 
 const updateEntrypointsSchema = z.object({
@@ -32,17 +18,25 @@ const updateEntrypointsSchema = z.object({
 
 // A module is a project whose entrypoints.json is imported by
 // globalEntrypoints.jsonc. Discovery only regenerates an existing file and
-// keeps vanished contracts as legacy entrypoints, so after the module is
-// discovered the UI creates the file for a new module and drops the removed
-// contracts the module no longer reaches. One it still reaches stays.
+// keeps vanished contracts as legacy entrypoints, so before the module is
+// rediscovered the UI registers a new module with an empty file and drops the
+// contracts a researcher removed. One the module still reaches comes back.
 export function attachModulesRouter(
   app: Express,
   configReader: ConfigReader,
   projectsPath: string,
 ) {
   const globalPath = join(projectsPath, 'globalEntrypoints.jsonc')
+  const readGlobalEntrypoints = () =>
+    GlobalEntrypoints.parse(readJsonc(globalPath))
 
-  app.post('/api/modules/:project/entrypoints', async (req, res) => {
+  app.get('/api/modules', (_req, res) => {
+    res.json(
+      readGlobalEntrypoints().import.map((path) => basename(dirname(path))),
+    )
+  })
+
+  app.post('/api/modules/:project/entrypoints', (req, res) => {
     const params = projectParamsSchema.safeParse(req.params)
     const body = updateEntrypointsSchema.safeParse(req.body)
     if (!params.success || !body.success) {
@@ -50,15 +44,18 @@ export function attachModulesRouter(
       return
     }
     const module = params.data.project
-    if (!configReader.hasDiscovery(module)) {
-      res.status(400).json({ error: 'Module is not discovered' })
+    if (!configReader.projectConfigExists(module)) {
+      res.status(400).json({ error: 'Unknown project' })
       return
     }
-
-    const globalEntrypoints = GlobalEntrypoints.parse(readJsonc(globalPath))
+    const globalEntrypoints = readGlobalEntrypoints()
     const importPath = `../projects/${module}/entrypoints.json`
     const isRegistered = globalEntrypoints.import.includes(importPath)
-    if (!isRegistered && !body.data.create) {
+    // Only a just created project may become a module, never one that is
+    // already discovered on its own.
+    const canBecomeModule =
+      body.data.create && !configReader.hasDiscovery(module)
+    if (!isRegistered && !canBecomeModule) {
       res.status(400).json({ error: 'Project is not a module' })
       return
     }
@@ -67,20 +64,13 @@ export function attachModulesRouter(
       configReader.getProjectPath(module),
       'entrypoints.json',
     )
-    if (!existsSync(entrypointsPath)) {
-      await generateEntrypointsCommand(configReader, module)
+    const { entrypoints = {} } = existsSync(entrypointsPath)
+      ? EntrypointsFile.parse(readJsonc(entrypointsPath))
+      : {}
+    for (const address of body.data.remove) {
+      delete entrypoints[address]
     }
-    if (body.data.remove.length > 0) {
-      const { entrypoints = {} } = EntrypointsFile.parse(
-        readJsonc(entrypointsPath),
-      )
-      for (const address of body.data.remove) {
-        if (entrypoints[address]?.isLegacy) {
-          delete entrypoints[address]
-        }
-      }
-      writeJson(entrypointsPath, { entrypoints })
-    }
+    writeJson(entrypointsPath, { entrypoints })
 
     if (!isRegistered) {
       globalEntrypoints.import.push(importPath)

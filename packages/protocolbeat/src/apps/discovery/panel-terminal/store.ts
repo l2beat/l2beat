@@ -9,6 +9,9 @@ import {
 interface CommandState {
   inFlight: boolean
   stream?: EventSource
+  // Settles the promise of the running command, also when it is killed:
+  // closing an EventSource by hand does not fire its error handler.
+  settle?: (ok: boolean) => void
 
   devMode: boolean
 }
@@ -44,8 +47,14 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
   killCommand: () =>
     set((state) => {
       state.command.stream?.close()
+      state.command.settle?.(false)
       return {
-        command: { ...state.command, stream: undefined, inFlight: false },
+        command: {
+          ...state.command,
+          stream: undefined,
+          settle: undefined,
+          inFlight: false,
+        },
       }
     }),
   matchFlat: (project: string, address: string) => {
@@ -80,6 +89,7 @@ function executeStreaming(
 ) {
   return new Promise<boolean>((resolve) => {
     if (get().command.inFlight) {
+      resolve(false)
       return
     }
 
@@ -90,7 +100,12 @@ function executeStreaming(
       set((state) => {
         const { command } = state
 
-        const newCommand = { ...command, stream: cmd(), inFlight: true }
+        const newCommand = {
+          ...command,
+          stream: cmd(),
+          settle: resolve,
+          inFlight: true,
+        }
         stream = newCommand.stream
         return { command: newCommand }
       })
@@ -122,7 +137,12 @@ function executeStreaming(
       stream.onerror = () => {
         stream?.close()
         set((state) => ({
-          command: { ...state.command, stream: undefined, inFlight: false },
+          command: {
+            ...state.command,
+            stream: undefined,
+            settle: undefined,
+            inFlight: false,
+          },
         }))
         // Exit code 0 means success, anything else is failure
         // If no exit code was captured, assume failure
@@ -132,7 +152,12 @@ function executeStreaming(
       console.log('Catch error', error)
       set((state) => ({ output: state.output + `Error: ${error}` }))
       set((state) => ({
-        command: { ...state.command, stream: undefined, inFlight: false },
+        command: {
+          ...state.command,
+          stream: undefined,
+          settle: undefined,
+          inFlight: false,
+        },
       }))
       resolve(false)
     }
