@@ -3,8 +3,8 @@ import { LoadingState } from '../../LoadingState'
 import type { DiffViewProps } from './DiffView'
 import type { EditorViewProps } from './EditorView'
 
-// Monaco is most of the bundle, so it loads with the first editor on screen
-// instead of with every page.
+// The editors are a large part of the bundle, so they load with the first
+// editor on screen instead of with every page.
 const LazyEditorView = lazy(() =>
   import('./EditorView').then((module) => ({ default: module.EditorView })),
 )

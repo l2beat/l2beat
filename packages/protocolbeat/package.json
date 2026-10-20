@@ -49,7 +49,6 @@
     "fuzzysort": "^3.1.0",
     "markdown-it": "^14.1.0",
     "mocha": "^10.2.0",
-    "monaco-editor": "^0.52.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.0.2",

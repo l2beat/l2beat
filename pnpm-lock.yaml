@@ -999,9 +999,6 @@ importers:
       mocha:
         specifier: ^10.2.0
         version: 10.7.3
-      monaco-editor:
-        specifier: ^0.52.0
-        version: 0.52.0
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -5698,9 +5695,6 @@ packages:
 
   mockdate@3.0.5:
     resolution: {integrity: sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==}
-
-  monaco-editor@0.52.0:
-    resolution: {integrity: sha512-OeWhNpABLCeTqubfqLMXGsqf6OmPU6pHM85kF3dhy6kq5hnhuVS1p3VrEW/XhWHc71P2tHyS5JFySD8mgs1crw==}
 
   mortice@3.3.1:
     resolution: {integrity: sha512-t3oESfijIPGsmsdLEKjF+grHfrbnKSXflJtgb1wY14cjxZpS6GnhHRXTxxzCAoCCnq1YYfpEPwY3gjiCPhOufQ==}
@@ -11617,8 +11611,6 @@ snapshots:
   mock-fs@5.4.0: {}
 
   mockdate@3.0.5: {}
-
-  monaco-editor@0.52.0: {}
 
   mortice@3.3.1:
     dependencies:
