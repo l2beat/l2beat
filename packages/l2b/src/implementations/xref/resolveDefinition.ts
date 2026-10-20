@@ -127,7 +127,10 @@ function resolveNode(
 
   const call = callOf(ancestors)
   if (node.type === 'MemberAccess') {
-    return resolveMember(context, node as MemberAccess, call)
+    const selector = isSelectorOf(ancestors[ancestors.length - 2], node)
+      ? resolveSelector(context, node as MemberAccess)
+      : undefined
+    return selector ?? resolveMember(context, node as MemberAccess, call)
   }
   if (node.type === 'Identifier') {
     const name = (node as Identifier).name
@@ -157,6 +160,41 @@ function resolveNode(
     )
   }
   return { symbol: '', receiver: undefined, definitions: [] }
+}
+
+function isSelectorOf(
+  parent: BaseASTNode | undefined,
+  node: BaseASTNode,
+): boolean {
+  const access = parent as MemberAccess | undefined
+  return (
+    access?.type === 'MemberAccess' &&
+    access.memberName === 'selector' &&
+    access.expression === node
+  )
+}
+
+// `token.transfer.selector` calls nothing, it names the function of the type.
+function resolveSelector(
+  context: ReceiverContext,
+  access: MemberAccess,
+): DefinitionResult | undefined {
+  const { index } = context.scope
+  const receiver = evaluateReceiver(context, access.expression)
+  const typeName = receiver.staticContract ?? contractName(receiver.type)
+  if (typeName === undefined || !index.contracts.has(typeName)) {
+    return undefined
+  }
+  return {
+    symbol: `${sourceText(index, access.expression)}.${access.memberName}`,
+    receiver,
+    definitions: memberDefinitions(
+      index,
+      typeName,
+      access.memberName,
+      undefined,
+    ),
+  }
 }
 
 // `f({ amount: x })`: the label names a parameter of whatever `f` resolves to,
