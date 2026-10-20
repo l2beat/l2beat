@@ -22,7 +22,8 @@ export function MethodologyFigure({
   return (
     <figure
       className={cn(
-        'mb-8 rounded-lg border border-divider bg-surface-secondary p-4 md:p-6',
+        // On phones the figure spans the card, so the scene gets every pixel.
+        '-mx-4 mb-8 border-divider border-y bg-surface-secondary p-4 md:mx-0 md:rounded-lg md:border-x md:p-6',
         className,
       )}
     >

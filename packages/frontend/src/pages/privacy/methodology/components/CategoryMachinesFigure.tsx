@@ -55,9 +55,9 @@ export function CategoryMachinesFigure({ data }: { data: FigureData }) {
                 i === 4 && 'sm:col-start-2 lg:col-start-auto',
               )}
             >
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
                 <span className="font-bold text-label-value-14">{label}</span>
-                <span className="rounded-full bg-brand/10 px-2 py-0.5 font-semibold text-brand text-label-value-12">
+                <span className="whitespace-nowrap rounded-full bg-brand/10 px-2 py-0.5 font-semibold text-brand text-label-value-12">
                   hides the {byId(data.fields, hides).label.toLowerCase()}
                 </span>
               </div>

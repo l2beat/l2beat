@@ -418,11 +418,14 @@ export function drawPoolScene(
   ctx.textAlign = 'right'
   ctx.fillText('RECIPIENTS', width - 2, 14)
   ctx.textAlign = 'center'
-  ctx.fillText(
-    insider ? "POOL · OPERATOR'S VIEW" : future ? 'POOL · YEAR 2040' : 'POOL',
-    l.pool.x + l.pool.width / 2,
-    14,
-  )
+  // The chain analyst's heading counts the waiting coins, drawn last.
+  if (lens !== 'chainAnalyst') {
+    ctx.fillText(
+      insider ? "POOL · OPERATOR'S VIEW" : future ? 'POOL · YEAR 2040' : 'POOL',
+      l.pool.x + l.pool.width / 2,
+      14,
+    )
+  }
   if (l.leftBand.width > 90) {
     ctx.fillStyle = network ? tokens.brand : tokens.secondary
     ctx.fillText('NETWORK', l.leftBand.x + l.leftBand.width / 2, 14)
@@ -628,8 +631,8 @@ export function drawPoolScene(
     }
 
     if (network) {
-      const inLeft = note.phase === 'in' && inside(p.x, l.leftBand)
-      const inRight = note.phase === 'out' && inside(p.x, l.rightBand)
+      const inLeft = note.phase === 'in' && p.x < l.pool.x
+      const inRight = note.phase === 'out' && p.x > l.pool.x + l.pool.width
       if (inLeft || inRight) {
         tag(ctx, inLeft ? note.inIp : note.outIp, p.x, p.y - 14, {
           color: tokens.brand,
@@ -644,7 +647,8 @@ export function drawPoolScene(
 
   if (lens === 'chainAnalyst') {
     const waiting = countWaiting(scene)
-    tag(ctx, `${waiting} waiting`, l.pool.x + l.pool.width / 2, l.bottom - 12, {
+    // In the heading, clear of the stamps on the envelopes below.
+    tag(ctx, `POOL · ${waiting} WAITING`, l.pool.x + l.pool.width / 2, 14, {
       color: waiting <= 2 ? '#ffffff' : tokens.secondary,
       background: waiting <= 2 ? CAUGHT_COLOR : tokens.surface,
       opacity: 1,
@@ -675,7 +679,7 @@ function getLayout(width: number, height: number) {
   const rightStart = pool.x + pool.width + 12
   const rightBand = { x: rightStart, width: recipientX - 18 - rightStart }
   const rowY = (i: number) => top + ((i + 0.5) * (bottom - top)) / OWNERS
-  // Room above for open flaps, and below for the chain analyst's count.
+  // Room above for open flaps, and below for the chain analyst's readings.
   const tray = {
     x: pool.x + 6,
     y: top + 16,
@@ -935,8 +939,10 @@ function tag(
   ctx.globalAlpha *= o.opacity
   ctx.font = '600 10px Roboto, sans-serif'
   const w = ctx.measureText(text).width + 10
-  const left =
+  const aligned =
     o.align === 'center' ? x - w / 2 : o.align === 'right' ? x - w : x
+  // Kept inside the canvas, which is narrow on phones.
+  const left = Math.max(2, Math.min(ctx.canvas.clientWidth - w - 2, aligned))
   ctx.beginPath()
   ctx.roundRect(left, y - 8, w, 16, 8)
   ctx.fillStyle = o.background
@@ -957,10 +963,6 @@ function line(
   ctx.moveTo(from.x, from.y)
   ctx.lineTo(to.x, to.y)
   ctx.stroke()
-}
-
-function inside(x: number, band: { x: number; width: number }) {
-  return x >= band.x && x <= band.x + band.width
 }
 
 function easeOut(k: number) {

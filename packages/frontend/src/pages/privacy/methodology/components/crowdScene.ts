@@ -151,8 +151,8 @@ export function drawCrowdScene(
   ctx.textAlign = 'right'
   ctx.fillText('NOW', width - 2, height - 8)
 
-  // Fans
-  for (const w of scene.withdrawals) {
+  // Fans, oldest first
+  scene.withdrawals.forEach((w, i) => {
     const mine = w.source !== undefined
     const life = mine ? MY_FAN_S : FAN_S
     const fade = Math.min(1, (1 - w.age / life) * 2)
@@ -193,17 +193,20 @@ export function drawCrowdScene(
       ctx.stroke()
       ctx.lineWidth = 1
     }
-    ctx.globalAlpha = fade
     ctx.font = '700 11px Roboto, sans-serif'
+    // On a narrow canvas withdrawals sit close together; an older label gives
+    // way to the newer one that would cover it.
+    const next = scene.withdrawals[i + 1]
+    if (next) {
+      const nextLabel = ctx.measureText(withdrawalLabel(next)).width
+      if (wx + 11 > x(next.age) - 12 - nextLabel - 6) return
+    }
+    ctx.globalAlpha = fade
     ctx.textAlign = 'right'
     ctx.fillStyle = single ? '#ef4444' : tokens.brand
-    ctx.fillText(
-      single ? 'linked' : `1 of ${w.candidates.length}`,
-      wx - 12,
-      withdrawY,
-    )
+    ctx.fillText(withdrawalLabel(w), wx - 12, withdrawY)
     ctx.globalAlpha = 1
-  }
+  })
 
   // Deposits
   for (const d of scene.deposits) {
@@ -230,4 +233,8 @@ export function drawCrowdScene(
     }
     ctx.globalAlpha = 1
   }
+}
+
+function withdrawalLabel(w: Withdrawal) {
+  return w.candidates.length <= 1 ? 'linked' : `1 of ${w.candidates.length}`
 }

@@ -96,6 +96,19 @@ function PoolLens({ data }: { data: FigureData }) {
   const shown = (id: Lens) =>
     seen.has(id) ? verdicts[id].sentiment : undefined
 
+  const tabsRef = useRef<HTMLDivElement>(null)
+  // On phones the tabs scroll sideways; keep the current one in view without
+  // moving the page, which scrollIntoView would do.
+  useEffect(() => {
+    const list = tabsRef.current
+    const tab = list?.children[step]
+    if (!list || !(tab instanceof HTMLElement)) return
+    list.scrollTo({
+      left: tab.offsetLeft - (list.clientWidth - tab.offsetWidth) / 2,
+      behavior: reducedMotion ? 'instant' : 'smooth',
+    })
+  }, [step, reducedMotion])
+
   if (!adversary) return null
   const verdict = verdicts[adversary.id]
   const sentiment = shown(adversary.id)
@@ -107,7 +120,11 @@ function PoolLens({ data }: { data: FigureData }) {
 
   return (
     <div {...containerProps}>
-      <div role="tablist" className="flex flex-wrap gap-1.5">
+      <div
+        ref={tabsRef}
+        role="tablist"
+        className="scrollbar-hide -mx-4 relative flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0"
+      >
         {data.adversaries.map(({ id, label }, i) => {
           const tabSentiment = shown(id)
           return (
@@ -118,7 +135,7 @@ function PoolLens({ data }: { data: FigureData }) {
               aria-selected={i === step}
               onClick={() => pick(i)}
               className={cn(
-                'flex items-center gap-1.5 rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13 transition-colors',
+                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13 transition-colors',
                 i === step
                   ? 'border-brand bg-brand text-primary-invert'
                   : 'border-divider bg-surface-primary text-secondary hover:border-brand/50 hover:text-primary',
@@ -176,7 +193,9 @@ function PoolLens({ data }: { data: FigureData }) {
         scene={scene}
         running={animate}
       />
-      <div className="mt-3 flex items-center gap-4">
+      {/* On phones the rosette floats, so the text keeps the full width below it. */}
+      <div className="mt-3 flow-root sm:flex sm:items-center sm:gap-4">
+        <VerdictRosette data={data} shown={shown} selected={adversary.label} />
         <div
           key={adversary.id}
           className="motion-safe:fade-in motion-safe:slide-in-from-bottom-1 min-w-0 flex-1 motion-safe:animate-in motion-safe:duration-300"
@@ -210,7 +229,6 @@ function PoolLens({ data }: { data: FigureData }) {
             {adversary.label} {adversary.text}
           </p>
         </div>
-        <VerdictRosette data={data} shown={shown} selected={adversary.label} />
       </div>
     </div>
   )
@@ -359,7 +377,11 @@ function Choice<T extends boolean>({
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
       <span className="font-semibold text-label-value-13">{label}</span>
-      <div role="radiogroup" aria-label={label} className="flex gap-1">
+      <div
+        role="radiogroup"
+        aria-label={label}
+        className="flex flex-wrap gap-1"
+      >
         {options.map(([option, text]) => (
           <button
             key={text}
@@ -368,7 +390,7 @@ function Choice<T extends boolean>({
             aria-checked={option === value}
             onClick={() => onChange(option)}
             className={cn(
-              'rounded-full border px-2.5 py-0.5 font-semibold text-label-value-12 transition-colors',
+              'whitespace-nowrap rounded-full border px-2.5 py-0.5 font-semibold text-label-value-12 transition-colors',
               option === value
                 ? 'border-brand bg-brand text-primary-invert'
                 : 'border-divider bg-surface-primary text-secondary hover:border-brand/50',
@@ -480,7 +502,7 @@ function VerdictRosette({
   return (
     <PizzaRosetteIcon
       values={values}
-      className="hidden size-20 shrink-0 sm:block"
+      className="float-right mb-1 ml-3 size-16 shrink-0 sm:order-last sm:float-none sm:mb-0 sm:ml-0 sm:size-20"
       background={false}
       disableSectionLinking
     />
