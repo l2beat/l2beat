@@ -2046,6 +2046,9 @@ interface InteropConfigBase {
   /** Permissions displayed on the interop project page. For canonical bridges,
    * this is intentionally a different (narrower) set than the chain page. */
   permissions?: Record<string, ProjectPermissions>
+  /** Milestones displayed on the interop project page. For canonical bridges,
+   * these are separate from the chain's milestones. */
+  milestones?: Milestone[]
 }
 
 export type InteropConfig =

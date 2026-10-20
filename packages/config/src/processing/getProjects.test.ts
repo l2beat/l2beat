@@ -632,10 +632,12 @@ describe('getProjects', () => {
         milestone,
       })),
       ...projects.flatMap((p) =>
-        (p.milestones ?? []).map((milestone) => ({
-          label: `${milestone.title} (${p.id})`,
-          milestone,
-        })),
+        [...(p.milestones ?? []), ...(p.interopConfig?.milestones ?? [])].map(
+          (milestone) => ({
+            label: `${milestone.title} (${p.id})`,
+            milestone,
+          }),
+        ),
       ),
     ]
 
