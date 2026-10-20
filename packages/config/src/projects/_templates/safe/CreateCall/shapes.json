@@ -1,0 +1,20 @@
+{
+  "CreateCall.sol": {
+    "hash": "0x93d47a0f2d5f7a3f639d31d464b8107b910b13b38832f3d7ccd9f8508178936f",
+    "address": "eth:0x9b35Af71d77eaf8d7e40252370304687390A1A52",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  },
+  "CreateCall_v1_3_0.sol": {
+    "hash": "0x7bf47571f915e9dfa538f05a3c2ba271289ce703e2f5cc49a19d48ea3a44d4fb",
+    "address": "eth:0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  },
+  "CreateCall_v1_5_0.sol": {
+    "hash": "0x2a2c3495253d9cf35074d4aa25f8e6b8b71f32589a42d2c0ff343aede4405bc0",
+    "address": "eth:0x2Ef5ECfbea521449E4De05EDB1ce63B75eDA90B4",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "SafeProxyFactory.sol": {
+    "hash": "0xfda4d35a812abea3459a31690c18bb447cf8a61398f614756032e400b165f794",
+    "address": "eth:0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  },
+  "GnosisSafeProxyFactory.sol": {
+    "hash": "0x9260c410435b49ca893b5c7b6ed1c9c0ca69519d850be6302a776f35d2c75822",
+    "address": "eth:0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  },
+  "SafeProxyFactory_v1_5_0.sol": {
+    "hash": "0xbf5b822276748072c1b653477b64b6ba78dd14e285da7654dc87f67558abc79c",
+    "address": "eth:0x14F2982D601c9458F93bd70B218933A6f8165e7b",
+    "chain": "ethereum",
+    "blockNumber": 26175472
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Library that Safe accounts delegatecall to deploy contracts with CREATE or CREATE2."
+}
