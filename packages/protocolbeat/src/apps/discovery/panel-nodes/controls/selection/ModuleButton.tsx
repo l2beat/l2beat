@@ -253,6 +253,7 @@ async function applyModuleChange(
 ) {
   toast.loading(`Updating ${change.module}`, { id: MODULE_CHANGE_TOAST })
   await writeModuleConfig(change)
+  await releaseFromSourceModule(project, change.add, queryClient)
   await updateModuleEntrypoints(change.module, {
     create: change.isNew,
     remove: change.remove,
@@ -291,6 +292,23 @@ async function applyModuleChange(
       id: MODULE_CHANGE_TOAST,
     },
   )
+}
+
+// Contracts moved out of a project that is itself a module are still its
+// entrypoints, so the target module would only reference them. Dropping them
+// first lets the target discover them, and the source then references them.
+async function releaseFromSourceModule(
+  project: string,
+  addresses: string[],
+  queryClient: QueryClient,
+) {
+  const modules = await queryClient.fetchQuery({
+    queryKey: ['modules'],
+    queryFn: getModules,
+  })
+  if (addresses.length > 0 && modules.includes(project)) {
+    await updateModuleEntrypoints(project, { create: false, remove: addresses })
+  }
 }
 
 // A rediscovered consumer can itself be a module whose own consumers then go
