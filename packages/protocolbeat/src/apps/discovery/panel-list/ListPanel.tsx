@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { Link, useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
@@ -75,6 +75,14 @@ function ListItemChain(props: {
             {!open && <IconChevronRight />}
             {`${props.entry.project} on ${chain}`}
           </button>
+          {props.entry.project !== props.openedProject && (
+            <Link
+              to={`/ui/p/${props.entry.project}`}
+              className="mr-2 whitespace-nowrap text-coffee-400 text-xs underline hover:text-coffee-100"
+            >
+              open
+            </Link>
+          )}
           <span className="whitespace-nowrap text-coffee-400 text-xs italic group-hover:text-coffee-200">
             @ {blockNumber}
           </span>
