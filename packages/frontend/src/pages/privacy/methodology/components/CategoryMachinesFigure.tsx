@@ -41,8 +41,8 @@ export function CategoryMachinesFigure({ data }: { data: FigureData }) {
   const running = onScreen && !reducedMotion
   return (
     <MethodologyFigure caption="Five mechanisms, each running on made-up payments. A coin keeps its owner's colour where the chain shows who it belongs to, and turns grey where the mechanism hides it.">
-      {/* Three cards over two, so no slot stays empty. */}
-      <div ref={ref} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+      {/* Equal cards; a short last row sits centred. */}
+      <div ref={ref} className="grid gap-3 sm:grid-cols-4 lg:grid-cols-6">
         {MACHINES.map(({ category, hides, scene }, i) => {
           const { label, description } = byId(data.categories, category)
           return (
@@ -50,8 +50,9 @@ export function CategoryMachinesFigure({ data }: { data: FigureData }) {
               key={category}
               className={cn(
                 'flex flex-col rounded-lg border border-divider bg-surface-primary p-3',
-                i < 3 ? 'lg:col-span-2' : 'lg:col-span-3',
-                i === MACHINES.length - 1 && 'sm:col-span-2',
+                'sm:col-span-2',
+                i === 3 && 'lg:col-start-2',
+                i === 4 && 'sm:col-start-2 lg:col-start-auto',
               )}
             >
               <div className="flex items-center justify-between gap-2">
