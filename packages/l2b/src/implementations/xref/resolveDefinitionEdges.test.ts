@@ -1,6 +1,7 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { type FlatEntry, FlatWorkspace } from './FlatWorkspace'
+import { listCalls } from './listCalls'
 import { resolveDefinition } from './resolveDefinition'
 
 const EDGE = `address constant TARGET = 0x2222222222222222222222222222222222222222;
@@ -67,8 +68,61 @@ contract Edge {
 }
 `
 
+const DERIVED = `library L1 {
+    function f(uint256 a) internal pure returns (uint256) {
+        return a;
+    }
+}
+
+library L2 {
+    function f(uint256 a) internal pure returns (uint256) {
+        return a;
+    }
+}
+
+interface IPing {
+    function ping() external;
+}
+
+contract Base {
+    using L1 for uint256;
+
+    function hidden() private pure returns (uint256) {
+        return 1;
+    }
+
+    function g(uint256 a) internal virtual returns (uint256) {
+        return hidden() + a.f();
+    }
+
+    function g(address a) internal virtual returns (uint256) {
+        return 2;
+    }
+}
+
+contract Derived is Base {
+    using L2 for uint256;
+
+    function hidden() private pure returns (uint256) {
+        return 3;
+    }
+
+    function g(uint256 a) internal override returns (uint256) {
+        return super.g(address(0)) + a.f();
+    }
+
+    function run() external {
+        IPing target = IPing(0x2222222222222222222222222222222222222222);
+        target = IPing(0x3333333333333333333333333333333333333333);
+        target.ping();
+        g(1);
+    }
+}
+`
+
 const FILES: Record<string, string> = {
   '/p/.flat/Edge.sol': EDGE,
+  '/p/.flat/Derived.sol': DERIVED,
   '/p/.flat/Target/Impl.1.sol': `contract Impl {
     function ping() internal {}
 }
@@ -106,6 +160,7 @@ describe(`${resolveDefinition.name} edge cases`, () => {
         ['function f(uint256 a)', 'function f(uint256 a, uint256 b)'],
         ['/p/.flat/Full.sol'],
       ),
+      entry('Derived', '5', [], ['/p/.flat/Derived.sol']),
     ],
     (path) => FILES[path] ?? '',
   )
@@ -119,6 +174,16 @@ describe(`${resolveDefinition.name} edge cases`, () => {
     )
   const declaredAt = (declaration: string) =>
     EDGE.slice(0, EDGE.indexOf(declaration)).split('\n').length
+  const resolveDerived = (snippet: string, symbol: string) =>
+    lines(
+      resolveDefinition(
+        workspace,
+        '/p/.flat/Derived.sol',
+        DERIVED.indexOf(snippet) + snippet.indexOf(symbol),
+      ),
+    )
+  const derivedAt = (declaration: string) =>
+    DERIVED.slice(0, DERIVED.indexOf(declaration)).split('\n').length
 
   it('ignores locals of blocks that have ended', () => {
     expect(resolve('value += 1', 'value')).toEqual([
@@ -173,6 +238,48 @@ describe(`${resolveDefinition.name} edge cases`, () => {
     expect(
       result.definitions.map((d) => `${d.label}:${d.position.line}`),
     ).toEqual(['Full.f:2'])
+  })
+
+  it('picks the super overload by argument type', () => {
+    expect(resolveDerived('super.g(address(0))', 'g')).toEqual([
+      `Base.g:${derivedAt('function g(address a)')}`,
+    ])
+  })
+
+  it('keeps private calls in the contract that declares them', () => {
+    expect(resolveDerived('hidden() + a.f()', 'hidden')).toEqual([
+      `Base.hidden:${derivedAt('function hidden() private pure returns (uint256) {\n        return 1')}`,
+    ])
+  })
+
+  it('prefers the using directives of the contract over inherited ones', () => {
+    expect(resolveDerived('address(0)) + a.f()', 'f')).toEqual([
+      `L2.f:${derivedAt('library L2') + 1}`,
+    ])
+    expect(resolveDerived('hidden() + a.f()', 'f')).toEqual([
+      `L1.f:${derivedAt('library L1') + 1}`,
+    ])
+  })
+
+  it('does not follow an initializer of a reassigned local', () => {
+    const result = resolveDefinition(
+      workspace,
+      '/p/.flat/Derived.sol',
+      DERIVED.indexOf('target.ping') + 'target.'.length,
+    )
+
+    expect(result.receiver?.address).toEqual(undefined)
+    expect(result.definitions.map((d) => d.path)).not.toInclude(
+      '/p/.flat/Target/Proxy.p.sol',
+    )
+  })
+
+  it('lists the calls of internal functions', () => {
+    const derived = workspace.entries.find((e) => e.name === 'Derived')
+    assert(derived !== undefined)
+    const calls = listCalls(workspace, derived, 'g')
+
+    expect(calls.map((c) => c.result.symbol)).toEqual(['super.g', 'a.f'])
   })
 
   it('answers a declaration with itself', () => {

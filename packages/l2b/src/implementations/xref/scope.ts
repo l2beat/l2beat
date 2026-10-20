@@ -1,11 +1,14 @@
 import type {
   BaseASTNode,
+  BinaryOperation,
   CatchClause,
   ContractDefinition,
   Expression,
   FunctionDefinition,
+  Identifier,
   ModifierDefinition,
   TryStatement,
+  TupleExpression,
   VariableDeclaration,
   VariableDeclarationStatement,
 } from '@mradomski/fast-solidity-parser'
@@ -69,6 +72,10 @@ export function resolveName(
         isState: true,
         initialValue: variable.expression,
       }
+    }
+    const privateFunctions = ownPrivateFunctions(index, contract, name, arity)
+    if (privateFunctions.length > 0) {
+      return { kind: 'functions', nodes: privateFunctions }
     }
     const dispatch = index.dispatchContract(contract)
     const functions = index.findFunctions(dispatch, name, arity)
@@ -148,8 +155,11 @@ function findLocal(scope: Scope, name: string): Declaration | undefined {
       const variable = variables.find((v) => v?.name === name)
       const start = statement.range?.[0] ?? 0
       if (variable && start < offset && start > foundStart) {
+        // A later write may reach the use instead of the initializer.
         const initialValue =
-          variables.length === 1 ? statement.initialValue : null
+          variables.length === 1 && !isAssigned(callable, name)
+            ? statement.initialValue
+            : null
         found = {
           kind: 'variable',
           node: variable,
@@ -191,4 +201,59 @@ function findLocal(scope: Scope, name: string): Declaration | undefined {
     }
   }
   return undefined
+}
+
+// Private functions are bound statically, a derived contract cannot override
+// them.
+function ownPrivateFunctions(
+  index: SourceIndex,
+  contract: string,
+  name: string,
+  arity: number | undefined,
+): FunctionDefinition[] {
+  const members = index.contracts.get(contract)?.node.subNodes ?? []
+  return members.filter((node): node is FunctionDefinition => {
+    const fn = node as FunctionDefinition
+    return (
+      node.type === 'FunctionDefinition' &&
+      fn.name === name &&
+      fn.visibility === 'private' &&
+      (arity === undefined || fn.parameters.length === arity)
+    )
+  })
+}
+
+function isAssigned(
+  callable: FunctionDefinition | ModifierDefinition,
+  name: string,
+): boolean {
+  const stack: BaseASTNode[] = callable.body ? [callable.body] : []
+  while (stack.length > 0) {
+    const node = stack.pop()
+    if (node === undefined) {
+      continue
+    }
+    if (node.type === 'BinaryOperation') {
+      const operation = node as BinaryOperation
+      if (operation.operator === '=' && writesTo(operation.left, name)) {
+        return true
+      }
+    }
+    stack.push(...childrenOf(node))
+  }
+  return false
+}
+
+function writesTo(target: BaseASTNode, name: string): boolean {
+  if (target.type === 'Identifier') {
+    return (target as Identifier).name === name
+  }
+  if (target.type === 'TupleExpression') {
+    return (target as TupleExpression).components.some(
+      (component) =>
+        component?.type === 'Identifier' &&
+        (component as Identifier).name === name,
+    )
+  }
+  return false
 }
