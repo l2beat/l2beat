@@ -14,8 +14,11 @@ import { externalLinks } from '~/consts/externalLinks'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { formatPublicationDate } from '~/utils/dates'
-import type { PublicationEntry } from '../utils/getPublicationEntry'
-import { getPublicationTagLabel } from './PublicationTag'
+import { isExternalUrl } from '~/utils/isExternalUrl'
+import {
+  getPublicationTagLabel,
+  type PublicationEntry,
+} from '../utils/getPublicationEntry'
 
 export function PublicationsList({
   publications,
@@ -105,7 +108,6 @@ function PublicationsGrid({
 }
 
 function PublicationCard({ publication }: { publication: PublicationEntry }) {
-  const isExternal = publication.url.startsWith('http')
   return (
     <PlainLink
       href={publication.url}
@@ -136,7 +138,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
           {formatPublicationDate(UnixTime.toDate(publication.publishedOn))}
         </span>
         <span className="ml-auto grid size-7 place-items-center rounded-full text-secondary transition-colors group-hover:bg-brand group-hover:text-pure-white">
-          {isExternal ? (
+          {isExternalUrl(publication.url) ? (
             <CustomLinkIcon className="size-3.5 fill-current" />
           ) : (
             <ArrowRightIcon className="size-3.5 fill-current" />

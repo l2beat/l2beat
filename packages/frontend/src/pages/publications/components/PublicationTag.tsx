@@ -1,4 +1,7 @@
-import type { PublicationEntry } from '../utils/getPublicationEntry'
+import {
+  getPublicationTagLabel,
+  type PublicationEntry,
+} from '../utils/getPublicationEntry'
 
 export function PublicationTag({ tag }: { tag: PublicationEntry['tag'] }) {
   return (
@@ -6,8 +9,4 @@ export function PublicationTag({ tag }: { tag: PublicationEntry['tag'] }) {
       {getPublicationTagLabel(tag)}
     </div>
   )
-}
-
-export function getPublicationTagLabel(tag: PublicationEntry['tag']) {
-  return tag === 'monthly-update' ? 'Monthly Update' : tag
 }
