@@ -1,3 +1,162 @@
+Generated with discovered.json: 0x66260a5dcb7c4a2fa2fa2729fc911f7c07da00c2
+
+# Diff at Tue, 20 Oct 2026 12:40:08 GMT:
+
+- id: aae47fba
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1790862365
+- current timestamp: 1790862365
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790862365 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000002","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"unichain:0x420000000000000000000000000000000000000F","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000011","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000012","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000013","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000014","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000015","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000017","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.25:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.26:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000019","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"unichain:0x420000000000000000000000000000000000001A","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.28:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000020","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.29:
++        {"permission":"upgrade","from":"unichain:0x4200000000000000000000000000000000000021","role":"admin","via":[{"address":"unichain:0x4200000000000000000000000000000000000018"}]}
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"unichain:0x4200000000000000000000000000000000000018","role":".owner"}
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (unichain:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L2StandardBridge (unichain:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (unichain:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (unichain:0x4200000000000000000000000000000000000012) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (unichain:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L1Block (unichain:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (unichain:0x4200000000000000000000000000000000000017) [opstack/Layer2/OptimismMintableERC721Factory] {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (unichain:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin_karst] {
+    +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
++++ severity: MEDIUM
+      values.owner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract BaseFeeVault (unichain:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault_karst] {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L1FeeVault (unichain:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault_karst] {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      values.proxyAdminOwner:
+-        "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract L1Splitter (unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) [unichain/L1Splitter] {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15).
+      values.owner:
+-        "unichain:0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2"
++        "eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1"
+    }
+```
+
 Generated with discovered.json: 0x3c5318fcea74a171ae90e860e3f3f367cfcbb32d
 
 # Diff at Tue, 20 Oct 2026 07:51:46 GMT:

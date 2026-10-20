@@ -1,7 +1,7 @@
 {
   "name": "facet",
   "timestamp": 1780407005,
-  "configHash": "0x91aeb82bd849a55e8e6ba30e7e6c96c6fcee40ae515b9d9ad5b6f14250e971aa",
+  "configHash": "0xd3f25051ceca451b1d57333ca1c0b572c2fa3b157fcc5772f94dd4ae521be0df",
   "entries": [
     {
       "name": "Inbox",
@@ -473,7 +473,7 @@
       "sinceBlock": 1722346,
       "values": {
         "$immutable": true,
-        "aliasedL1Bridge": "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F",
+        "aliasedL1Bridge": "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
         "decimals": 18,
         "l1Bridge": "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
         "MESSAGE_PASSER": "facet:0x4200000000000000000000000000000000000016",
@@ -518,11 +518,6 @@
         "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1017,7 +1012,7 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 25230004, "facet": 3880205 },
-  "permissionsConfigHash": "0xb13d15e6971e834f76c2d0a9770c48c9242dc8c483f9157e811869a0ea16bdc3",
+  "permissionsConfigHash": "0xc99f1584e6cc2a69c3aa47c6510215a360d90219f6a13baaf2c5f078e8a8330c",
   "permissions": {
     "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": {
       "directlyReceivedPermissions": [
