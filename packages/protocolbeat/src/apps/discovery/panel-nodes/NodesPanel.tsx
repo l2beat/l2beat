@@ -223,11 +223,13 @@ function useSynchronizeSelection() {
 
 function toNodeFields(input: ApiField[]): Field[] {
   const implementation = input.find((x) => x.name === '$implementation')
-  const bannedKeys: string[] = ['$pastUpgrades']
-  const bannedValues: string[] = getAddresses(implementation?.value)
-  const fields = input.flatMap((x) =>
-    getNodeFields(x.name, x.value, bannedKeys, bannedValues),
-  )
+  const bannedValues = new Set(getAddresses(implementation?.value))
+  const fields: Field[] = []
+  for (const field of input) {
+    if (field.name !== PAST_UPGRADES_FIELD) {
+      collectNodeFields(field.name, field.value, bannedValues, fields)
+    }
+  }
   const names = new Set<string>()
   return fields.filter((field) => {
     if (names.has(field.name)) return false
@@ -236,38 +238,37 @@ function toNodeFields(input: ApiField[]): Field[] {
   })
 }
 
-function getNodeFields(
-  path: string,
-  value: FieldValue,
-  bannedKeys: string[],
-  bannedValues: string[],
-): Field[] {
-  if (bannedKeys.includes(path)) {
-    return []
-  }
+const PAST_UPGRADES_FIELD = '$pastUpgrades'
 
-  if (value.type === 'object') {
-    return value.values.flatMap(([key, value]) => {
-      const entryPath = `${path}.${extractFieldValue(key)}`
-      const valueIsComplex = value.type === 'object' || value.type === 'array'
-      const keyPath = valueIsComplex ? `${entryPath}.#key` : `${entryPath}#key`
-      return [
-        getNodeFields(entryPath, value, bannedKeys, bannedValues),
-        getNodeFields(keyPath, key, bannedKeys, bannedValues),
-      ].flat()
-    })
-  }
-  if (value.type === 'array') {
-    return value.values.flatMap((value, i) =>
-      getNodeFields(`${path}[${i}]`, value, bannedKeys, bannedValues),
-    )
-  }
-  if (value.type === 'address') {
-    if (bannedValues.includes(value.address)) {
-      return []
-    }
-    return [
-      {
+// Depth first and in order: an object entry's value, then its key, then the
+// next entry. Pushed in reverse so the stack pops them in that order.
+function collectNodeFields(
+  rootPath: string,
+  rootValue: FieldValue,
+  bannedValues: ReadonlySet<string>,
+  out: Field[],
+) {
+  const stack: [string, FieldValue][] = [[rootPath, rootValue]]
+  for (let item = stack.pop(); item !== undefined; item = stack.pop()) {
+    const [path, value] = item
+    if (value.type === 'object') {
+      for (let i = value.values.length - 1; i >= 0; i--) {
+        const [key, entryValue] = value.values[i] as [FieldValue, FieldValue]
+        const entryPath = `${path}.${extractFieldValue(key)}`
+        const valueIsComplex =
+          entryValue.type === 'object' || entryValue.type === 'array'
+        stack.push([
+          valueIsComplex ? `${entryPath}.#key` : `${entryPath}#key`,
+          key,
+        ])
+        stack.push([entryPath, entryValue])
+      }
+    } else if (value.type === 'array') {
+      for (let i = value.values.length - 1; i >= 0; i--) {
+        stack.push([`${path}[${i}]`, value.values[i] as FieldValue])
+      }
+    } else if (value.type === 'address' && !bannedValues.has(value.address)) {
+      out.push({
         name: path,
         target: value.address,
         box: { x: 0, y: 0, width: 0, height: 0 },
@@ -275,10 +276,9 @@ function getNodeFields(
           from: { direction: 'left', x: 0, y: 0 },
           to: { direction: 'left', x: 0, y: 0 },
         },
-      },
-    ]
+      })
+    }
   }
-  return []
 }
 
 function extractFieldValue(value: FieldValue): string {
