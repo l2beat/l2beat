@@ -107,7 +107,7 @@ function Content({
           body is about as wide as tall. Clearly taller than
           wide, or too narrow for the corners, it stacks as on phones: the
           figures, the graph as a square (smaller when the height runs out, so
-          nothing spills), then as many top bridges as the height left holds.
+          nothing spills), then as many top protocols as the height left holds.
           Below lg it stacks too, the graph a fixed-size square. */}
       <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0 lg:[container:interop-body/size]">
         {data && (
@@ -131,7 +131,7 @@ function Content({
         </div>
         {data && (
           <>
-            <TopBridges
+            <TopProtocols
               protocols={data.stats.topProtocols}
               className="interop-corners:hidden interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden"
             />
@@ -144,15 +144,15 @@ function Content({
 }
 
 const GRAPH_CHAINS_COUNT = 9
-/** Bridges under the graph; stacked from lg, as many as the height holds. */
-const TOP_BRIDGES_COUNT = 5
-/** The busiest bridges, in a corner beside the graph. */
-const CORNER_BRIDGES_COUNT = 3
+/** Protocols under the graph; stacked from lg, as many as the height holds. */
+const TOP_PROTOCOLS_COUNT = 5
+/** The busiest protocols, in a corner beside the graph. */
+const CORNER_PROTOCOLS_COUNT = 3
 
 /**
  * The interop page's general stats: volume, transfers and routes, then the
- * top chain, token and protocol. The busiest bridges are listed apart: under
- * the graph in TopBridges, or in a corner beside it.
+ * top chain, token and protocol. The busiest protocols are listed apart: under
+ * the graph in TopProtocols, or in a corner beside it.
  */
 function Stats({
   data,
@@ -282,8 +282,8 @@ function Top({
   )
 }
 
-/** The busiest bridges over the last 24h, ranked like the other cards. */
-function TopBridges({
+/** The busiest protocols over the last 24h, ranked like the other cards. */
+function TopProtocols({
   protocols,
   className,
 }: {
@@ -295,7 +295,7 @@ function TopBridges({
   }
   return (
     <div className={cn('flex min-w-0 flex-col gap-2', className)}>
-      <h3 className={HOME_TEXT.sectionTitle}>Top bridges</h3>
+      <h3 className={HOME_TEXT.sectionTitle}>Top protocols</h3>
       {/* Stacked from lg, the list takes the height left and shows as many
           whole rows as fit. */}
       <ol
@@ -310,7 +310,7 @@ function TopBridges({
             className={cn(
               'flex w-full items-center gap-2',
               HOME_ROW_CLASS,
-              index >= TOP_BRIDGES_COUNT && 'interop-stacked:flex hidden',
+              index >= TOP_PROTOCOLS_COUNT && 'interop-stacked:flex hidden',
             )}
           >
             <span
@@ -348,7 +348,7 @@ function TopBridges({
 /**
  * The figures in the four corners the graph's ring leaves free: totals top
  * left, routes and the top chain top right, the top token and protocol
- * bottom left, the busiest bridges bottom right.
+ * bottom left, the busiest protocols bottom right.
  */
 function CornerStats({
   data,
@@ -361,7 +361,7 @@ function CornerStats({
   const topChain = stats.topChain
     ? chains.find((c) => c.id === stats.topChain?.chainId)
     : undefined
-  const bridges = stats.topProtocols.slice(0, CORNER_BRIDGES_COUNT)
+  const protocols = stats.topProtocols.slice(0, CORNER_PROTOCOLS_COUNT)
 
   return (
     <div className="pointer-events-none absolute inset-0 interop-corners:block hidden">
@@ -441,13 +441,13 @@ function CornerStats({
           )}
         </Top>
       </div>
-      {bridges.length > 0 && (
+      {protocols.length > 0 && (
         <div
           className={cn(CORNER_CLASS, 'right-0 bottom-0 items-end text-right')}
         >
-          <span className={HOME_TEXT.meta}>Top bridges</span>
+          <span className={HOME_TEXT.meta}>Top protocols</span>
           <ol className="flex max-w-full flex-col items-end gap-2">
-            {bridges.map(({ slug, name, iconUrl, volume }) => (
+            {protocols.map(({ slug, name, iconUrl, volume }) => (
               <li key={slug} className="max-w-full">
                 <a
                   href={`/interop/protocols/${slug}`}
