@@ -238,6 +238,11 @@ function unwindVariable(
         ? { base: 'self', getter }
         : { stop: stop('unknown', 'private immutable') }
     }
+    // The function may have overwritten what the chain held before the call.
+    const callable = context.source.ast.enclosingCallable(context.call)
+    if (callable && context.source.ast.isWrittenIn(callable, variable.id)) {
+      return { stop: stop('unknown', 'written in function') }
+    }
     return { base: 'storage', variable }
   }
   const { ast } = context.source

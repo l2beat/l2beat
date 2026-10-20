@@ -1,5 +1,6 @@
 import type { FlatWorkspace } from '../FlatWorkspace'
-import { findReferences, wordOccurrences } from '../findReferences'
+import { findReferences } from '../findReferences'
+import { wordOccurrences } from '../SourceIndex'
 import type { OracleSite, TruthTarget } from './oracle'
 
 export interface ReferenceScore {

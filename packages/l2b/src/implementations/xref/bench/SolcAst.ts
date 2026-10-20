@@ -57,6 +57,8 @@ export class SolcAst {
   private readonly characterAtByte: number[] | undefined
   readonly contracts: ContractNode[] = []
   readonly assigned = new Set<number>()
+  // `${callable id}:${variable id}` for every write inside a function body.
+  private readonly callableWrites = new Set<string>()
   readonly mainContract: ContractNode | undefined
 
   constructor(
@@ -75,8 +77,12 @@ export class SolcAst {
         node.nodeType === 'Assignment' ||
         node.nodeType === 'UnaryOperation'
       ) {
+        const callable = this.enclosingCallable(node)
         for (const id of assignedIdentifiers(node as ExpressionNode)) {
           this.assigned.add(id)
+          if (callable !== undefined) {
+            this.callableWrites.add(`${callable.id}:${id}`)
+          }
         }
       }
       for (const child of this.children(node)) {
@@ -115,6 +121,22 @@ export class SolcAst {
       current = this.parent(current)
     }
     return current as T | undefined
+  }
+
+  enclosingCallable(node: SolcNode): SolcNode | undefined {
+    let current = this.parent(node)
+    while (
+      current !== undefined &&
+      current.nodeType !== 'FunctionDefinition' &&
+      current.nodeType !== 'ModifierDefinition'
+    ) {
+      current = this.parent(current)
+    }
+    return current
+  }
+
+  isWrittenIn(callable: SolcNode, variableId: number): boolean {
+    return this.callableWrites.has(`${callable.id}:${variableId}`)
   }
 
   all(nodeType: string): SolcNode[] {
