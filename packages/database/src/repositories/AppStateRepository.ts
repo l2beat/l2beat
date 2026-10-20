@@ -19,7 +19,7 @@ export const AppStatePair = v.union([
     key: v.literal('interopAggregatesTimestampOverride'),
     value: v.union([v.string().transform((v) => Number(v)), v.number()]),
   }),
-  // The attestation the CROPS API was last deployed with; empty for none.
+  // The attestation the CROPS API was last deployed with; missing for none.
   v.object({
     key: v.literal('cropsApiAttestationUid'),
     value: v.string(),

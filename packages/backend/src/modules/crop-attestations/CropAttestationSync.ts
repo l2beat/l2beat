@@ -34,7 +34,7 @@ export class CropAttestationSync extends TimeLoop {
   async run() {
     const current = await this.sync()
     if (this.$.deployApi) {
-      await this.deployApi(this.$.deployApi, current?.uid ?? '')
+      await this.deployApi(this.$.deployApi, current?.uid)
     }
   }
 
@@ -69,18 +69,25 @@ export class CropAttestationSync extends TimeLoop {
    * Stored in the database rather than memory, so a deploy that failed or was
    * cut short by a restart runs again on the next pass.
    */
-  private async deployApi(deploy: () => Promise<void>, uid: string) {
+  private async deployApi(
+    deploy: () => Promise<void>,
+    uid: string | undefined,
+  ) {
     const { db } = this.$
     const deployed = await db.appState.findByKey('cropsApiAttestationUid')
     if (deployed?.value === uid) {
       return
     }
     await deploy()
-    await db.appState.insert({
-      key: 'cropsApiAttestationUid',
-      value: uid,
-      updatedBy: 'CropAttestationSync',
-    })
+    if (uid === undefined) {
+      await db.appState.deleteByKey('cropsApiAttestationUid')
+    } else {
+      await db.appState.insert({
+        key: 'cropsApiAttestationUid',
+        value: uid,
+        updatedBy: 'CropAttestationSync',
+      })
+    }
     this.logger.info('CROPS API deploy triggered', { uid })
   }
 }

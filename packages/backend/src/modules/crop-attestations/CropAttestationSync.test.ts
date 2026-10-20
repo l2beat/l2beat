@@ -133,6 +133,10 @@ function storedInMemory(): Database {
       insert: async (record) => {
         deployedUid = record.value as string
       },
+      deleteByKey: async () => {
+        deployedUid = undefined
+        return 1
+      },
     }),
   })
 }
