@@ -2,7 +2,7 @@
 
 ### Wrapping and minting
 
-There is no onchain deposit. Users stake ETH on Coinbase's exchange and wrap the resulting staked-ETH balance into {{symbol}}, which Coinbase mints to them; unwrapping burns {{symbol}} and credits the balance back on the exchange. Minting goes through a rate-limited relay, one of the token's {{minterCount}} configured minters: {{mintCallerCount}} Coinbase keys may mint through it, the most permissive up to {{maxMintAllowance}} {{symbol}} over {{maxMintInterval}}. No ETH is attached to a mint. The contracts never hold ETH and do not track beacon-chain balances, so backing rests on Coinbase's records and custody.
+There is no onchain deposit. According to Coinbase, users wrap the staked-ETH balance they hold on its exchange into {{symbol}} and unwrap it back; onchain this appears only as mints and burns by Coinbase keys, and nothing ties a mint to staked ETH. Minting goes through a rate-limited relay, one of the token's {{minterCount}} configured minters. {{mintCallerCount}} Coinbase keys may mint through it, to any address: the largest single allowance is {{maxMintAllowance}} {{symbol}} over {{maxMintInterval}}, and the fastest-refilling key can sustain about {{maxMintPerDay}} {{symbol}} per day. No ETH is attached to a mint. The contracts never hold ETH and do not track beacon-chain balances, so backing rests on Coinbase's records and custody.
 
 ![cbETH minting flow](/images/architecture/cbeth-deposits.png#center)
 
@@ -12,7 +12,7 @@ A Coinbase key reports the ETH-per-{{symbol}} rate through a limiter that curren
 
 ### Redeeming
 
-{{symbol}} cannot be redeemed for ETH onchain. The only exit is unwrapping on Coinbase's exchange, subject to Coinbase's terms and the beacon-chain unstaking queue, or selling on the secondary market. Pausing or blacklisting can stop a holder from transferring at all.
+{{symbol}} cannot be redeemed for ETH onchain. The only exit is custodial redemption through Coinbase, on its terms and timelines, or selling on the secondary market. Pausing or blacklisting can stop a holder from transferring at all.
 
 ![cbETH exchange rate and exit flow](/images/architecture/cbeth-withdrawals.png#center)
 

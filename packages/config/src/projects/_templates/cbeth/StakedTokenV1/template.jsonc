@@ -56,7 +56,7 @@
         "add": { "event": "MinterConfigured" },
         "remove": { "event": "event MinterRemoved(address indexed minter)" }
       },
-      "description": "Remaining mint allowance per minter as last configured by the masterMinter. A minter with a zero allowance can still burn."
+      "description": "Mint allowance per minter as last configured by the masterMinter; the live remaining allowance decreases with every mint. A minter with a zero allowance can still burn."
     },
     "pauser": {
       "severity": "HIGH",

@@ -14,47 +14,56 @@ const duration = (seconds: number): string =>
   formatSeconds(seconds, { fullUnit: true })
 
 // Both relays share the same rate-limit code: every whitelisted caller has an
-// allowance (1e18 scale) that refills linearly over its interval. The page
-// quotes the most permissive caller, since that is the effective bound.
+// allowance (1e18 scale) that refills linearly over its interval. Two numbers
+// describe such a set of callers: the largest single allowance (the biggest
+// burst one key can push before waiting) and the fastest refill (the highest
+// sustained rate), which can belong to different callers.
 type CallerLimit = {
   caller: string
   amount: string | number
   interval: number
 }
 
-const mostPermissive = (contract: string): CallerLimit => {
+const units = (raw: string | number): number => Number(BigInt(raw)) / 1e18
+
+const callerLimits = (contract: string): CallerLimit[] => {
   const limits = discovery.getContractValue<CallerLimit[]>(
     contract,
     'callerLimits',
   )
-  const top = limits.reduce<CallerLimit | undefined>(
-    (best, l) =>
-      best === undefined || BigInt(l.amount) > BigInt(best.amount) ? l : best,
-    undefined,
-  )
-  if (top === undefined) {
-    throw new Error(`cbeth: ${contract} has no configured caller`)
+  if (limits.length === 0) {
+    throw new Error('cbeth: a rate-limited relay has no configured caller')
   }
-  return top
+  return limits
 }
 
-const units = (raw: string | number): number => Number(BigInt(raw)) / 1e18
+const largestBurst = (limits: CallerLimit[]): CallerLimit =>
+  limits.reduce((best, l) =>
+    BigInt(l.amount) > BigInt(best.amount) ? l : best,
+  )
+
+const fastestRefillPerDay = (limits: CallerLimit[]): number =>
+  Math.max(...limits.map((l) => (units(l.amount) * 86400) / l.interval))
 
 // Exchange-rate relay: the cap is a cumulative absolute change in the
 // ETH-per-token rate. It is rendered in ETH per token and as a multiple of
 // the current rate, so the page says how binding it is.
-const rateCap = mostPermissive('ExchangeRateUpdater')
+const rateCap = largestBurst(callerLimits('ExchangeRateUpdater'))
 const rateCapEth = `${Number.parseFloat(units(rateCap.amount).toFixed(4))}`
 const rateCapInterval = duration(rateCap.interval)
 const exchangeRate = Number(value('cbETH', 'exchangeRate'))
 const rateCapMultiple = `${Number.parseFloat((units(rateCap.amount) / exchangeRate).toFixed(1))}×`
 
 // Mint relay: the cap is an amount of tokens per interval.
-const mintCap = mostPermissive('MintForwarder')
+const mintLimits = callerLimits('MintForwarder')
+const mintCap = largestBurst(mintLimits)
 const maxMintAllowance = Math.round(units(mintCap.amount)).toLocaleString(
   'en-US',
 )
 const maxMintInterval = duration(mintCap.interval)
+const maxMintPerDay = Math.round(
+  fastestRefillPerDay(mintLimits),
+).toLocaleString('en-US')
 const mintCallerCount = discovery.getContractValue<string[]>(
   'MintForwarder',
   'callers',
@@ -89,6 +98,7 @@ export const cbeth: BaseProject = {
       mintCallerCount,
       maxMintAllowance,
       maxMintInterval,
+      maxMintPerDay,
     }),
     links: {
       websites: ['https://www.coinbase.com/cbeth'],

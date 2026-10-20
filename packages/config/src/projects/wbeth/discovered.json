@@ -1,6 +1,6 @@
 {
   "name": "wbeth",
-  "timestamp": 1792491674,
+  "timestamp": 1792513199,
   "configHash": "0x7ad15a182713907fda47d613cde8413976b7732c26150ca7043569a7950fe6bb",
   "entries": [
     {
@@ -115,7 +115,7 @@
         "0x9da1385c5bc89e1e0c1b0f00884026599427a7ffcd22ab976f0f74da6da35170"
       ],
       "proxyType": "immutable",
-      "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. This is the only bound on the exchange rate anywhere in the system, and the token owner can bypass it by repointing the oracle.",
+      "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.",
       "deployerAddress": "eth:0x86Fd4673527F9d5999C5e490Ab98766c0CFA8801",
       "sinceTimestamp": 1681902335,
       "sinceBlock": 17080242,
@@ -539,7 +539,7 @@
     "wbeth/UnwrapTokenV1ETH": "0x89f75c83a04007813f7a6e064a17bc2bef63b03fe5ab3ec6bdd7372578154b14",
     "wbeth/WrapTokenV3ETH": "0x49732aee04baa0e994a33265af990039b9b2e38aeff872b635d167a9a49c1b68"
   },
-  "usedBlockNumbers": { "ethereum": 26233162 },
+  "usedBlockNumbers": { "ethereum": 26234951 },
   "permissionsConfigHash": "0x4d6a4316ed6e3de3f6f04524c793416970bd092fa74e8590b67c407245bd9232",
   "permissions": {
     "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7": {

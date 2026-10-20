@@ -3,7 +3,7 @@
   "displayName": "ExchangeRateUpdater",
   "category": "core",
   "canActIndependently": false,
-  "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. This is the only bound on the exchange rate anywhere in the system, and the token owner can bypass it by repointing the oracle.",
+  "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.",
   "fields": {
     "owner": {
       "severity": "HIGH",

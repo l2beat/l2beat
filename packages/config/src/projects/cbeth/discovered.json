@@ -93,7 +93,7 @@
         "0x9da1385c5bc89e1e0c1b0f00884026599427a7ffcd22ab976f0f74da6da35170"
       ],
       "proxyType": "immutable",
-      "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. This is the only bound on the exchange rate anywhere in the system, and the token owner can bypass it by repointing the oracle.",
+      "description": "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.",
       "deployerAddress": "eth:0xbf6877B0Cc4136Bc4BB0fCDb689e78720b2428A7",
       "sinceTimestamp": 1643910274,
       "sinceBlock": 14134435,
@@ -210,7 +210,7 @@
           "description": "Addresses allowed to mint tokens within the allowance the masterMinter set, and to burn their own balance."
         },
         "minterAllowances": {
-          "description": "Remaining mint allowance per minter as last configured by the masterMinter. A minter with a zero allowance can still burn."
+          "description": "Mint allowance per minter as last configured by the masterMinter; the live remaining allowance decreases with every mint. A minter with a zero allowance can still burn."
         },
         "pauser": { "severity": "HIGH" },
         "blacklister": { "severity": "HIGH" },

@@ -1,11 +1,11 @@
-Generated with discovered.json: 0xd5cabbaaf6ddb5d274d821e8b2be112240fa03a9
+Generated with discovered.json: 0x36abbe18de075bf49fb354f3145826b8ccfdf9d8
 
-# Diff at Tue, 20 Oct 2026 10:22:22 GMT:
+# Diff at Tue, 20 Oct 2026 16:21:01 GMT:
 
 - id: d23d83b2
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1791381204
-- current timestamp: 1792491674
+- current timestamp: 1792513199
 
 ## Description
 
@@ -28,13 +28,13 @@ discovery. Values are for block 1791381204 (main branch discovery), not current.
 
 ```diff
     contract ExchangeRateUpdater (eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06) [shared-wrapped-tokens/ExchangeRateUpdater] {
-    +++ description: Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. This is the only bound on the exchange rate anywhere in the system, and the token owner can bypass it by repointing the oracle.
+    +++ description: Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.
       template:
 -        "wbeth/ExchangeRateUpdater"
 +        "shared-wrapped-tokens/ExchangeRateUpdater"
       description:
 -        "Rate-limited relay that is the token's registered oracle. Whitelisted callers write the wBETH exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. This is the only bound on the exchange rate anywhere in the system, and it can be bypassed by the token owner repointing the oracle."
-+        "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. This is the only bound on the exchange rate anywhere in the system, and the token owner can bypass it by repointing the oracle."
++        "Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle."
       fieldMeta.callerLimits.description:
 -        "Per-caller cap on the cumulative absolute rate change (1e18 scale) and the number of seconds over which that allowance refills."
 +        "Per-caller cap on the cumulative absolute rate change (1e18 scale) and the number of seconds over which that allowance refills, as last configured."

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x274150f53f25164ebc468d4a62233d410d59c900
+Generated with discovered.json: 0x0a246cfd097afec3c6b9f0d2f30636173427d13d
 
-# Diff at Tue, 20 Oct 2026 10:21:24 GMT:
+# Diff at Tue, 20 Oct 2026 16:20:58 GMT:
 
 - id: 55eab8a8
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -21,7 +21,7 @@ Initial discovery of Coinbase's cbETH: the token, its rate-limited oracle relay 
 ```diff
 +   Status: CREATED
     contract ExchangeRateUpdater (eth:0x9b37180d847B27ADC13C2277299045C1237Ae281) [shared-wrapped-tokens/ExchangeRateUpdater]
-    +++ description: Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. This is the only bound on the exchange rate anywhere in the system, and the token owner can bypass it by repointing the oracle.
+    +++ description: Rate-limited relay registered as the token's oracle. Whitelisted callers write the exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. Apart from the token's own minimum-value check, this is the only bound on the exchange rate, and the token owner can bypass it by repointing the oracle.
 ```
 
 ```diff
