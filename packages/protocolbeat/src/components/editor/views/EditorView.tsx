@@ -7,7 +7,7 @@ import { RangeHighlightPlugin } from '../code/plugins/range'
 import { EditorFileTabs } from '../components/EditorFileTabs'
 import { type EditorFile, type Range, useCodeStore } from '../store'
 
-type EditorViewProps = {
+export type EditorViewProps = {
   editorId: string
   callbacks?: EditorCallbacks
   files: EditorFile[]
