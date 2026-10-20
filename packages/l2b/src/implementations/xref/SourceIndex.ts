@@ -331,9 +331,24 @@ export function acceptsArguments(
       if (key === NUMBER_LITERAL) {
         return parameter.startsWith('uint') || parameter.startsWith('int')
       }
-      return key === undefined || parameter === key
+      return key === undefined || parameter === key || widens(key, parameter)
     })
   )
+}
+
+// Integers convert implicitly to a wider integer of the same signedness.
+function widens(from: string, to: string): boolean {
+  for (const prefix of ['uint', 'int']) {
+    if (from.startsWith(prefix) && to.startsWith(prefix)) {
+      return bitsOf(from, prefix) <= bitsOf(to, prefix)
+    }
+  }
+  return false
+}
+
+function bitsOf(type: string, prefix: string): number {
+  const bits = type.slice(prefix.length)
+  return bits === '' ? 256 : Number(bits)
 }
 
 export function declarationName(node: BaseASTNode): string | undefined {
