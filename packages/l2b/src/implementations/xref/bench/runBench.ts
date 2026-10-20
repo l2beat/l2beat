@@ -17,7 +17,6 @@ import {
 import { createHash } from 'crypto'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { dirname, join, sep } from 'path'
-import { getProjectDiscoveries } from '../../discovery/getProjectDiscoveries'
 import { FlatWorkspace } from '../FlatWorkspace'
 import {
   type CompiledSource,
@@ -179,7 +178,7 @@ function createProviders(
   // discovery holds use the project's block for their chain.
   const byChainBlock = new Map<string, Snapshot>()
   const byAddress = new Map<ChainSpecificAddress, Snapshot>()
-  for (const discovery of getProjectDiscoveries(configReader, project)) {
+  for (const discovery of configReader.readDiscoveryWithReferences(project)) {
     for (const [chain, block] of Object.entries(discovery.usedBlockNumbers)) {
       if (!byChainBlock.has(chain)) {
         byChainBlock.set(chain, { block, timestamp: discovery.timestamp })
@@ -228,7 +227,7 @@ function fingerprintOf(
 ): string {
   const hash = createHash('sha256')
   hash.update(ORACLE_VERSION)
-  for (const discovery of getProjectDiscoveries(configReader, project)) {
+  for (const discovery of configReader.readDiscoveryWithReferences(project)) {
     hash.update(JSON.stringify(discovery.entries))
     hash.update(
       JSON.stringify([discovery.usedBlockNumbers, discovery.timestamp]),
