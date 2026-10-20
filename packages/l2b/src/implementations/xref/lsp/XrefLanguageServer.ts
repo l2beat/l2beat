@@ -148,7 +148,7 @@ export class XrefLanguageServer {
     const { workspace, path, offset } = located
     const result = findReferences(workspace, path, offset)
     const declarations = params.context?.includeDeclaration
-      ? result.targets.map(toLocation)
+      ? result.targets.flatMap((t) => declarationLocations(workspace, t))
       : []
     const references = result.references.flatMap((reference) =>
       [reference.path, ...reference.copies].map((copy) =>
@@ -191,6 +191,23 @@ export class XrefLanguageServer {
     }
     this.send({ jsonrpc: '2.0', id: id ?? null, result: result ?? null })
   }
+}
+
+// A declaration folded from identical copies sits at the same spot in each.
+function declarationLocations(
+  workspace: FlatWorkspace,
+  target: Definition,
+): LspLocation[] {
+  const start = target.declaration.range?.[0] ?? 0
+  const nameOffset = workspace.source(target.path).offsetOf(target.position)
+  const length = target.label.length - target.label.lastIndexOf('.') - 1
+  const copies = target.copies.map((copy) => {
+    const position = workspace
+      .source(copy.path)
+      .positionOf(copy.start + nameOffset - start)
+    return rangeAt(copy.path, position, length)
+  })
+  return [toLocation(target), ...copies]
 }
 
 function toLocation(definition: Definition): LspLocation {

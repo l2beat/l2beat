@@ -171,3 +171,89 @@ describe(XrefLanguageServer.name, () => {
     expect(clean.exits).toEqual([0])
   })
 })
+
+describe(`${XrefLanguageServer.name} with identical implementation code`, () => {
+  const core = `abstract contract Core {
+    function ping() external view returns (uint256) {
+        return 1;
+    }
+}
+`
+  const caller = `interface IProxy {
+    function ping() external view returns (uint256);
+}
+
+contract Caller {
+    IProxy public target;
+
+    function run() external view returns (uint256) {
+        return target.ping();
+    }
+}
+`
+  const files: Record<string, string> = {
+    '/p/rollup/.flat/Proxy/Admin.1.sol': `${core}\ncontract Admin is Core {}\n`,
+    '/p/rollup/.flat/Proxy/User.2.sol': `${core}\ncontract User is Core {}\n`,
+    '/p/rollup/.flat/Caller.sol': caller,
+  }
+  const proxy = ChainSpecificAddress(`eth:0x${'5'.repeat(40)}`)
+  const workspace = new FlatWorkspace(
+    [
+      {
+        name: 'Proxy',
+        address: proxy,
+        type: 'Contract',
+        values: {},
+        abi: [],
+        sourcePaths: [
+          '/p/rollup/.flat/Proxy/Admin.1.sol',
+          '/p/rollup/.flat/Proxy/User.2.sol',
+        ],
+      },
+      {
+        name: 'Caller',
+        address: ChainSpecificAddress(`eth:0x${'6'.repeat(40)}`),
+        type: 'Contract',
+        values: { target: proxy },
+        abi: [],
+        sourcePaths: ['/p/rollup/.flat/Caller.sol'],
+      },
+    ],
+    (path) => files[path] ?? '',
+  )
+
+  it('lists the declaration in every copy when asked', () => {
+    const sent: (RpcMessage & Record<string, unknown>)[] = []
+    const server = new XrefLanguageServer(
+      () => workspace,
+      (message) => sent.push(message),
+      () => {},
+    )
+    const line = caller.split('\n').findIndex((l) => l.includes('target.ping'))
+    server.receive(
+      JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'textDocument/references',
+        params: {
+          textDocument: { uri: 'file:///p/rollup/.flat/Caller.sol' },
+          position: {
+            line,
+            character: caller.split('\n')[line]?.indexOf('ping'),
+          },
+          context: { includeDeclaration: true },
+        },
+      }),
+    )
+    const result = sent[0]?.result as {
+      uri: string
+      range: { start: { line: number } }
+    }[]
+
+    expect(result.map((l) => `${l.uri}:${l.range.start.line}`)).toEqual([
+      'file:///p/rollup/.flat/Proxy/Admin.1.sol:1',
+      'file:///p/rollup/.flat/Proxy/User.2.sol:1',
+      `file:///p/rollup/.flat/Caller.sol:${line}`,
+    ])
+  })
+})
