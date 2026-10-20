@@ -6,7 +6,7 @@ import {
   type Resolution,
   resolveDefinition,
 } from './resolveDefinition'
-import type { TextPosition } from './SourceIndex'
+import { type TextPosition, wordOccurrences } from './SourceIndex'
 
 export interface Reference {
   path: string
@@ -253,33 +253,6 @@ function referenceAt(
     copies: [],
     elsewhere: exact === undefined,
   }
-}
-
-export function wordOccurrences(text: string, word: string): number[] {
-  const offsets: number[] = []
-  let at = text.indexOf(word)
-  while (at !== -1) {
-    const before = text[at - 1]
-    const after = text[at + word.length]
-    if (!isIdentifierCharacter(before) && !isIdentifierCharacter(after)) {
-      offsets.push(at)
-    }
-    at = text.indexOf(word, at + word.length)
-  }
-  return offsets
-}
-
-function isIdentifierCharacter(character: string | undefined): boolean {
-  if (character === undefined) {
-    return false
-  }
-  return (
-    (character >= 'a' && character <= 'z') ||
-    (character >= 'A' && character <= 'Z') ||
-    (character >= '0' && character <= '9') ||
-    character === '_' ||
-    character === '$'
-  )
 }
 
 function declarationKeys(

@@ -277,13 +277,12 @@ export class SourceIndex {
     return offset
   }
 
+  // The first whole word after the keyword, whatever whitespace is between.
   nameOffset(node: BaseASTNode, name: string): number {
     assert(node.range !== undefined)
-    const offset = this.text.indexOf(` ${name}`, node.range[0]) + 1
-    if (offset <= 0 || offset > node.range[1]) {
-      return node.range[0]
-    }
-    return offset
+    const text = this.text.slice(node.range[0], node.range[1] + 1)
+    const [first] = wordOccurrences(text, name)
+    return node.range[0] + (first ?? 0)
   }
 }
 
@@ -504,4 +503,31 @@ function usingForBindings(nodes: BaseASTNode[]): UsingFor[] {
 
 export function parameterSignature(fn: FunctionDefinition): string {
   return fn.parameters.map((p) => typeKey(p.typeName)).join()
+}
+
+export function wordOccurrences(text: string, word: string): number[] {
+  const offsets: number[] = []
+  let at = text.indexOf(word)
+  while (at !== -1) {
+    const before = text[at - 1]
+    const after = text[at + word.length]
+    if (!isIdentifierCharacter(before) && !isIdentifierCharacter(after)) {
+      offsets.push(at)
+    }
+    at = text.indexOf(word, at + word.length)
+  }
+  return offsets
+}
+
+function isIdentifierCharacter(character: string | undefined): boolean {
+  if (character === undefined) {
+    return false
+  }
+  return (
+    (character >= 'a' && character <= 'z') ||
+    (character >= 'A' && character <= 'Z') ||
+    (character >= '0' && character <= '9') ||
+    character === '_' ||
+    character === '$'
+  )
 }

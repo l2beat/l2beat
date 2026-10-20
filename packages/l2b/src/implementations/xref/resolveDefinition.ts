@@ -1,12 +1,15 @@
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
+  ArrayTypeName,
   BaseASTNode,
   EnumDefinition,
   FunctionCall,
   FunctionDefinition,
   Identifier,
+  Mapping,
   MemberAccess,
   ModifierInvocation,
+  TypeName,
   UserDefinedTypeName,
   UsingForDeclaration,
   VariableDeclaration,
@@ -625,7 +628,11 @@ function memberDefinitions(
 ): Definition[] {
   const declared = index.findFunctions(contract, member, arity)
   const variable = index.findStateVariable(contract, member)
-  const getter = variable?.visibility === 'public' ? [variable] : []
+  const getter =
+    variable?.visibility === 'public' &&
+    (arity === undefined || getterArity(variable.typeName) === arity)
+      ? [variable]
+      : []
   const implemented = declared.filter((fn) => fn.body !== null)
   const hasImplementation = implemented.length > 0 || getter.length > 0
   const functions = hasImplementation ? implemented : declared
@@ -635,6 +642,20 @@ function memberDefinitions(
     nodes.push(other)
   }
   return nodes.map((node) => inFileDefinition(index, node, member))
+}
+
+// A public mapping or array getter takes one argument per key or index.
+function getterArity(type: TypeName | null): number {
+  let arity = 0
+  let current = type
+  while (current?.type === 'Mapping' || current?.type === 'ArrayTypeName') {
+    arity++
+    current =
+      current.type === 'Mapping'
+        ? (current as Mapping).valueType
+        : (current as ArrayTypeName).baseTypeName
+  }
+  return arity
 }
 
 function declaresMember(

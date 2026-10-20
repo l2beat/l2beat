@@ -223,7 +223,7 @@ function ownPrivateFunctions(
   })
 }
 
-function isAssigned(
+export function isAssigned(
   callable: FunctionDefinition | ModifierDefinition,
   name: string,
 ): boolean {
