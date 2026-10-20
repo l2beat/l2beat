@@ -40,7 +40,7 @@ export function CategoryMachinesFigure({ data }: { data: FigureData }) {
   const reducedMotion = usePrefersReducedMotion()
   const running = onScreen && !reducedMotion
   return (
-    <MethodologyFigure caption="Five mechanisms, each running on made-up payments. A coin keeps its owner's colour where the chain shows who it belongs to, and turns grey where the mechanism hides it.">
+    <MethodologyFigure>
       {/* Equal cards; a short last row sits centred. */}
       <div ref={ref} className="grid gap-3 sm:grid-cols-4 lg:grid-cols-6">
         {MACHINES.map(({ category, hides, scene }, i) => {

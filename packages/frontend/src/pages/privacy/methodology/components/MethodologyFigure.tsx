@@ -15,7 +15,7 @@ export function MethodologyFigure({
   className,
   children,
 }: {
-  caption: string
+  caption?: string
   className?: string
   children: ReactNode
 }) {
@@ -28,9 +28,11 @@ export function MethodologyFigure({
       )}
     >
       {children}
-      <figcaption className="mt-4 text-paragraph-13 text-secondary">
-        {caption}
-      </figcaption>
+      {caption && (
+        <figcaption className="mt-4 text-paragraph-13 text-secondary">
+          {caption}
+        </figcaption>
+      )}
     </figure>
   )
 }
