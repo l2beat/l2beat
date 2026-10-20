@@ -24,6 +24,9 @@ const RELEASES_URL = 'https://binaries.soliditylang.org/bin/list.json'
 const PRAGMA = 'pragma solidity '
 const ENCODER_PRAGMA = '\npragma experimental ABIEncoderV2;\n'
 
+// A flat solc rejects, as opposed to a compiler that failed to load.
+export class FlatCompileError extends Error {}
+
 interface SolcJs {
   compile(input: string): string
 }
@@ -43,13 +46,19 @@ export class SolcCompilers {
   async compile(text: string): Promise<CompiledFlat> {
     const { version, source } = takeExactPragma(text)
     const longVersion = this.releases.get(version)
-    assert(longVersion !== undefined, 'Unknown solc version')
+    if (longVersion === undefined) {
+      throw new FlatCompileError('Unknown solc version')
+    }
     const solc = await this.load(longVersion)
     const input = {
       language: 'Solidity',
       sources: { [SOURCE_NAME]: { content: source } },
       settings: {
-        outputSelection: { '*': { '': ['ast'], '*': ['storageLayout'] } },
+        // Compilers before 0.5.13 lack storageLayout; abi makes them still
+        // return the contracts.
+        outputSelection: {
+          '*': { '': ['ast'], '*': ['abi', 'storageLayout'] },
+        },
       },
     }
     const output = JSON.parse(solc.compile(JSON.stringify(input)))
@@ -93,11 +102,15 @@ export function takeExactPragma(text: string): {
   source: string
 } {
   const start = text.indexOf(PRAGMA)
-  assert(start !== -1, 'Flat has no pragma')
+  if (start === -1) {
+    throw new FlatCompileError('Flat has no pragma')
+  }
   const end = text.indexOf(';', start)
   const written = text.slice(start + PRAGMA.length, end).trim()
   const version = written.startsWith('.') ? `0${written}` : written
-  assert(isExactVersion(version), 'Flat pragma is not an exact version')
+  if (!isExactVersion(version)) {
+    throw new FlatCompileError('Flat pragma is not an exact version')
+  }
   const commented = `//${text.slice(start + 2, end + 1)}`
   // The flattener drops `pragma experimental ABIEncoderV2`; appending it
   // restores it without moving anything.
@@ -120,7 +133,7 @@ function isExactVersion(version: string): boolean {
 function toCompiledFlat(output: SolidityOutput): CompiledFlat {
   const errors = (output.errors ?? []).filter((e) => e.severity === 'error')
   if (errors.length > 0) {
-    throw new Error('Flat does not compile', {
+    throw new FlatCompileError('Flat does not compile', {
       cause: { message: errors[0]?.formattedMessage },
     })
   }
@@ -128,7 +141,7 @@ function toCompiledFlat(output: SolidityOutput): CompiledFlat {
   assert(ast !== undefined, 'Compiler returned no AST')
   const storage = new Map<string, StorageSlot[]>()
   for (const [name, contract] of Object.entries(
-    output.contracts[SOURCE_NAME] ?? {},
+    output.contracts?.[SOURCE_NAME] ?? {},
   )) {
     const layout = contract.storageLayout as
       | { storage: StorageSlot[] }

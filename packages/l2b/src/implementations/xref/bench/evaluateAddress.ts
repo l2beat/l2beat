@@ -132,6 +132,10 @@ function unwindCall(context: EvaluationContext, call: ExpressionNode): Unwound {
     return { stop: stop('unknown', 'call') }
   }
   const fn = declaration as FunctionNode
+  // Called over RPC it would see another msg.sender than the real caller.
+  if (fn.body && readsTransaction(context, fn.body)) {
+    return { stop: stop('dynamic', 'reads msg or tx') }
+  }
   const selector = selectorOf(fn)
   if (selector !== undefined) {
     return { base: 'self', getter: selector }
@@ -175,6 +179,22 @@ function stopUnlessInput(
     stack.push(...ast.children(node))
   }
   return { stop: stop('unknown', reason) }
+}
+
+function readsTransaction(context: EvaluationContext, body: SolcNode): boolean {
+  const { ast } = context.source
+  const stack: SolcNode[] = [body]
+  while (stack.length > 0) {
+    const node = stack.pop() as ExpressionNode
+    if (
+      node.nodeType === 'Identifier' &&
+      (node.name === 'msg' || node.name === 'tx')
+    ) {
+      return true
+    }
+    stack.push(...ast.children(node))
+  }
+  return false
 }
 
 function isInput(

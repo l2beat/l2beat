@@ -16,7 +16,7 @@ export interface FunctionNode extends SolcNode {
   functionSelector?: string
   visibility: string
   parameters: { parameters: VariableNode[] }
-  body?: { statements: SolcNode[] } | null
+  body?: (SolcNode & { statements: SolcNode[] }) | null
 }
 
 export interface VariableNode extends SolcNode {
@@ -145,7 +145,8 @@ export function sourceRange(node: SolcNode): [number, number] {
 function assignedIdentifiers(assignment: ExpressionNode): number[] {
   if (assignment.nodeType === 'UnaryOperation') {
     const { operator, subExpression } = assignment
-    const changes = operator === '++' || operator === '--'
+    const changes =
+      operator === '++' || operator === '--' || operator === 'delete'
     const id = subExpression?.referencedDeclaration
     return changes && typeof id === 'number' ? [id] : []
   }

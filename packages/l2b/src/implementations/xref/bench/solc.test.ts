@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { takeExactPragma } from './solc'
+import { FlatCompileError, takeExactPragma } from './solc'
 
 describe(takeExactPragma.name, () => {
   it('reads versions the flattener writes without the leading zero', () => {
@@ -24,5 +24,12 @@ describe(takeExactPragma.name, () => {
       'pragma solidity 0.7.6;\npragma experimental ABIEncoderV2;\ncontract A {}\n'
 
     expect(takeExactPragma(text).source.length).toEqual(text.length)
+  })
+
+  it('reports flats it cannot place as compile failures', () => {
+    expect(() => takeExactPragma('pragma solidity ^0.8.0;\n')).toThrow(
+      FlatCompileError,
+    )
+    expect(() => takeExactPragma('contract A {}\n')).toThrow(FlatCompileError)
   })
 })

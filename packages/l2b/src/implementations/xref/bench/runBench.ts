@@ -28,7 +28,7 @@ import {
 import { SolcAst } from './SolcAst'
 import { type JudgedSite, judgeSites } from './score'
 import { type ReferenceScore, scoreReferences } from './scoreReferences'
-import { fetchSolcReleases, SolcCompilers } from './solc'
+import { FlatCompileError, fetchSolcReleases, SolcCompilers } from './solc'
 
 export interface BenchResult {
   project: string
@@ -48,7 +48,7 @@ interface OracleCache {
 }
 
 // Bump when the oracle changes, so cached ground truth is rebuilt.
-const ORACLE_VERSION = '9'
+const ORACLE_VERSION = '10'
 
 export async function runBench(
   configReader: ConfigReader,
@@ -148,7 +148,10 @@ async function createOracle(
           ast: new SolcAst(output.ast, text),
           storage: output.storage,
         }),
-        () => {
+        (error) => {
+          if (!(error instanceof FlatCompileError)) {
+            throw error
+          }
           onCompileFailure(path)
           return undefined
         },
@@ -171,11 +174,21 @@ function createProviders(
   paths: DiscoveryPaths,
   project: string,
 ): (address: ChainSpecificAddress) => Promise<IProvider> {
-  const blocks = new Map<string, { block: number; timestamp: number }>()
+  // An address is read at the block of the discovery that holds it; a module
+  // can be discovered at another block than the project. Addresses no
+  // discovery holds use the project's block for their chain.
+  const byChainBlock = new Map<string, Snapshot>()
+  const byAddress = new Map<ChainSpecificAddress, Snapshot>()
   for (const discovery of getProjectDiscoveries(configReader, project)) {
     for (const [chain, block] of Object.entries(discovery.usedBlockNumbers)) {
-      if (!blocks.has(chain)) {
-        blocks.set(chain, { block, timestamp: discovery.timestamp })
+      if (!byChainBlock.has(chain)) {
+        byChainBlock.set(chain, { block, timestamp: discovery.timestamp })
+      }
+    }
+    for (const entry of discovery.entries) {
+      const block = discovery.usedBlockNumbers[Address.longChain(entry.address)]
+      if (entry.type !== 'Reference' && block !== undefined) {
+        byAddress.set(entry.address, { block, timestamp: discovery.timestamp })
       }
     }
   }
@@ -185,20 +198,26 @@ function createProviders(
     new SQLiteCache(paths.cache),
     Logger.SILENT,
   )
-  const byChain = new Map<string, Promise<IProvider>>()
+  const providers = new Map<string, Promise<IProvider>>()
   return (address) => {
     const chain = Address.longChain(address)
-    let provider = byChain.get(chain)
+    const at = byAddress.get(address) ?? byChainBlock.get(chain)
+    assert(at !== undefined, 'No discovered block for chain')
+    const key = `${chain}:${at.block}`
+    let provider = providers.get(key)
     if (provider === undefined) {
-      const at = blocks.get(chain)
-      assert(at !== undefined, 'No discovered block for chain')
       provider = allProviders
         .get(chain, UnixTime(at.timestamp))
         .then((p) => p.switchBlock(at.block))
-      byChain.set(chain, provider)
+      providers.set(key, provider)
     }
     return provider
   }
+}
+
+interface Snapshot {
+  block: number
+  timestamp: number
 }
 
 function fingerprintOf(
@@ -211,6 +230,9 @@ function fingerprintOf(
   hash.update(ORACLE_VERSION)
   for (const discovery of getProjectDiscoveries(configReader, project)) {
     hash.update(JSON.stringify(discovery.entries))
+    hash.update(
+      JSON.stringify([discovery.usedBlockNumbers, discovery.timestamp]),
+    )
   }
   for (const path of [...ownPaths].sort()) {
     hash.update(path)
