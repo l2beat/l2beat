@@ -526,7 +526,6 @@ export function drawPoolScene(
           note.phase === 'pool' && (seesInside || cracked)
             ? OWNER_COLORS[note.owner]
             : undefined,
-        heart: !future,
         opacity:
           note.phase === 'out'
             ? 1 - note.t / EMPTY_S

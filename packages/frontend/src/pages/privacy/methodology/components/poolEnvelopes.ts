@@ -79,8 +79,6 @@ interface EnvelopeLook {
   pop: number
   /** The owner's colour, for an adversary who can read the envelope. */
   tint?: string
-  /** A heart on the seal; off when something else marks it. */
-  heart: boolean
   opacity: number
 }
 
@@ -139,35 +137,8 @@ export function drawEnvelope(
   ctx.stroke()
   if (look.seal >= 0.5) flap()
 
-  const mark = Math.max(0, (look.seal - 0.6) / 0.4)
-  if (look.heart && mark > 0) {
-    ctx.fillStyle = tokens.brand
-    heart(ctx, p.x, tipY, w * 0.13 * mark)
-  }
   ctx.restore()
   return { x: p.x, y: tipY }
-}
-
-function heart(ctx: CanvasRenderingContext2D, x: number, y: number, r: number) {
-  ctx.beginPath()
-  ctx.moveTo(x, y + r)
-  ctx.bezierCurveTo(
-    x - r * 1.6,
-    y - r * 0.2,
-    x - r * 0.6,
-    y - r * 1.4,
-    x,
-    y - r * 0.5,
-  )
-  ctx.bezierCurveTo(
-    x + r * 0.6,
-    y - r * 1.4,
-    x + r * 1.6,
-    y - r * 0.2,
-    x,
-    y + r,
-  )
-  ctx.fill()
 }
 
 function slotPoint(tray: Tray, slot: number) {

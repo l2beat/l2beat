@@ -284,88 +284,187 @@ function Ends({ senders }: { senders: (string | undefined)[] }) {
   )
 }
 
-/** Points on a circle around (100, 55), from `start` through `turn` radians. */
-function orbit(
-  radius: number,
-  start: number,
-  turn: number,
-  from: number,
-  to: number,
-): Stop[] {
-  const steps = 36
-  return Array.from({ length: steps + 1 }, (_, i) => {
-    const a = start + (turn * i) / steps
-    return {
-      x: 100 + Math.cos(a) * radius,
-      y: 55 + Math.sin(a) * radius,
-      at: from + ((to - from) * i) / steps,
-    }
-  })
-}
-
-/** Faint arms that turn with the coins, so the pool reads as a mixer. */
-function Swirl({ dur }: { dur: number }) {
-  const arms = [0, 1, 2].map((arm) => {
-    const points = Array.from({ length: 16 }, (_, i) => {
-      const s = i / 15
-      const a = (arm * Math.PI * 2) / 3 - s * 2.6
-      const r = 4 + s * 26
-      return `${(100 + Math.cos(a) * r).toFixed(1)} ${(55 + Math.sin(a) * r).toFixed(1)}`
-    })
-    return `M ${points.join(' L ')}`
-  })
-  return (
-    <g opacity={0.5}>
-      <animateTransform
-        attributeName="transform"
-        type="rotate"
-        from="0 100 55"
-        to="360 100 55"
-        dur={`${dur}s`}
-        repeatCount="indefinite"
-      />
-      {arms.map((d) => (
-        <path
-          key={d}
-          d={d}
-          fill="none"
-          stroke="var(--divider)"
-          strokeWidth={2}
-          strokeLinecap="round"
-        />
-      ))}
-    </g>
-  )
-}
-
+/**
+ * Each deposit is sealed in an identical envelope; the sealed envelopes swap
+ * places; each withdrawal opens one and leaves to someone else.
+ */
 function PoolMachine() {
-  const dur = 6
-  const coins = [
-    { color: BLUE, from: 0, to: 2, radius: 20, begin: 0 },
-    { color: PINK, from: 1, to: 0, radius: 13, begin: -2 },
-    { color: ORANGE, from: 2, to: 1, radius: 25, begin: -4 },
+  const dur = 7
+  // Four slots in the pool, two by two.
+  const a = { x: 86, y: 40 }
+  const b = { x: 114, y: 40 }
+  const c = { x: 86, y: 72 }
+  const d = { x: 114, y: 72 }
+  const deposits = [
+    { color: BLUE, row: 0, slot: a, arrive: 0.16 },
+    { color: PINK, row: 1, slot: b, arrive: 0.24 },
+    { color: ORANGE, row: 2, slot: c, arrive: 0.32 },
+  ]
+  const withdrawals = [
+    { from: b, row: 1, at: 0.7 },
+    { from: d, row: 2, at: 0.74 },
+    { from: c, row: 0, at: 0.82 },
   ]
   return (
     <>
       <Box x={64} width={72} />
-      <Swirl dur={dur} />
       <Ends senders={[BLUE, PINK, ORANGE]} />
-      {coins.map(({ color, from, to, radius, begin }) => (
+      {deposits.map(({ color, row, slot, arrive }) => (
         <Coin
           key={color}
           color={color}
-          greyAt={0.22}
           dur={dur}
-          begin={begin}
           stops={[
-            { x: 12, y: ROWS[from] ?? 55, at: 0.02 },
-            ...orbit(radius, Math.PI, Math.PI * 3, 0.18, 0.66),
-            { x: 188, y: ROWS[to] ?? 55, at: 0.84 },
-            { x: 188, y: ROWS[to] ?? 55, at: 0.92 },
+            { x: 12, y: ROWS[row] ?? 55, at: arrive - 0.14 },
+            { ...slot, at: arrive },
+          ]}
+        />
+      ))}
+      {/* An old deposit that stays sealed, swapping out and back. */}
+      <Envelope
+        dur={dur}
+        stops={[
+          { ...d, at: 0.4 },
+          { x: 100, y: 64, at: 0.45 },
+          { ...a, at: 0.5 },
+          { ...a, at: 0.86 },
+          { x: 100, y: 48, at: 0.91 },
+          { ...d, at: 0.96 },
+        ]}
+      />
+      <Envelope
+        dur={dur}
+        shown={[0.04, 0.84]}
+        sealed={[0.17, 0.72]}
+        stops={[
+          { ...a, at: 0.4 },
+          { x: 100, y: 48, at: 0.45 },
+          { ...d, at: 0.5 },
+        ]}
+      />
+      <Envelope
+        dur={dur}
+        shown={[0.12, 0.92]}
+        sealed={[0.25, 0.8]}
+        stops={[
+          { ...b, at: 0.55 },
+          { x: 100, y: 48, at: 0.6 },
+          { ...c, at: 0.65 },
+        ]}
+      />
+      <Envelope
+        dur={dur}
+        shown={[0.2, 0.8]}
+        sealed={[0.33, 0.68]}
+        stops={[
+          { ...c, at: 0.55 },
+          { x: 100, y: 64, at: 0.6 },
+          { ...b, at: 0.65 },
+        ]}
+      />
+      {withdrawals.map(({ from, row, at }) => (
+        <Coin
+          key={row}
+          color={GREY}
+          dur={dur}
+          stops={[
+            { ...from, at },
+            { x: 188, y: ROWS[row] ?? 55, at: at + 0.12 },
+            { x: 188, y: ROWS[row] ?? 55, at: at + 0.16 },
           ]}
         />
       ))}
     </>
+  )
+}
+
+/**
+ * An envelope that moves through `stops`, shows between `shown` and is sealed
+ * between `sealed`, all 0..1 of the loop. Without them it is always there and
+ * always sealed.
+ */
+function Envelope({
+  stops,
+  shown = [0, 1],
+  sealed = [0, 1],
+  dur,
+}: {
+  stops: Stop[]
+  shown?: [number, number]
+  sealed?: [number, number]
+  dur: number
+}) {
+  const first = stops[0]
+  const last = stops[stops.length - 1]
+  if (!first || !last) return null
+  const frames = [{ ...first, at: 0 }, ...stops, { ...last, at: 1 }]
+  const timing = { dur: `${dur}s`, repeatCount: 'indefinite' }
+  const [sealAt, openAt] = sealed
+  const opens = sealAt > 0 || openAt < 1
+  // Closed, flipping open around the top edge while unsealed.
+  const flap: [number, string][] = [
+    [0, '1 -1'],
+    [sealAt, '1 -1'],
+    [sealAt + 0.03, '1 1'],
+    [openAt, '1 1'],
+    [openAt + 0.03, '1 -1'],
+    [1, '1 -1'],
+  ]
+  return (
+    <g opacity={0}>
+      <Shown from={shown[0]} to={shown[1]} dur={timing.dur} />
+      <g>
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          values={frames.map((f) => `${f.x} ${f.y}`).join(';')}
+          keyTimes={frames.map((f) => f.at).join(';')}
+          calcMode="spline"
+          keySplines={frames
+            .slice(1)
+            .map(() => '0.45 0 0.55 1')
+            .join(';')}
+          {...timing}
+        />
+        <ellipse cy={9} rx={8} ry={1.5} fill={GREY} opacity={0.12} />
+        <rect
+          x={-10}
+          y={-7}
+          width={20}
+          height={14}
+          rx={2.5}
+          fill="var(--surface-primary)"
+          stroke={GREY}
+          strokeOpacity={0.4}
+        />
+        <path
+          d="M -10 7 L 0 1 L 10 7"
+          fill="none"
+          stroke={GREY}
+          strokeOpacity={0.2}
+        />
+        <g transform="translate(0 -7)">
+          <g>
+            {opens && (
+              <animateTransform
+                attributeName="transform"
+                type="scale"
+                values={flap.map((f) => f[1]).join(';')}
+                keyTimes={flap.map((f) => f[0]).join(';')}
+                {...timing}
+              />
+            )}
+            <path
+              d="M -10 0 L 10 0 L 0 9 Z"
+              fill="var(--surface-primary)"
+              stroke={GREY}
+              strokeOpacity={0.4}
+              strokeLinejoin="round"
+            />
+          </g>
+        </g>
+      </g>
+    </g>
   )
 }
 
