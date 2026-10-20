@@ -20,8 +20,10 @@ export class ConfigModel {
     return new ConfigModel(parsed)
   }
 
-  constructor(config: DiscoveryConfigSchema) {
-    this.config = clone(config)
+  // Takes ownership of `config`: both callers hand over a fresh parse or a
+  // fresh clone, so cloning again here only doubled the parse cost.
+  private constructor(config: DiscoveryConfigSchema) {
+    this.config = config
 
     for (const [address, contractConfig] of Object.entries(
       this.config.overrides ?? {},
