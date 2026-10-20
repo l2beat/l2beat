@@ -1,11 +1,10 @@
-import clsx from 'clsx'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Button } from '../../../../../components/Button'
-import { Dialog } from '../../../../../components/Dialog'
-import { Input } from '../../../../../components/Input'
-import type { Node } from '../../store/State'
-import { useStore } from '../../store/store'
-import { ControlButton } from '../ControlButton'
+import { Button } from '../../../../../../components/Button'
+import { Dialog } from '../../../../../../components/Dialog'
+import { Input } from '../../../../../../components/Input'
+import type { Node } from '../../../store/State'
+import { useStore } from '../../../store/store'
+import { ToolbarButton } from '../../ToolbarButton'
 import { buildFieldTree, type ExpandedField } from './buildFieldTree'
 import { FieldNode } from './FieldNode'
 import {
@@ -24,29 +23,16 @@ function ValuesDialogRoot({ children }: { children: React.ReactNode }) {
   return <Dialog.Root>{children}</Dialog.Root>
 }
 
-function ValuesDialogTrigger({
-  disabled,
-  className,
-  title,
-  ariaLabel,
-  children,
-}: {
+function ValuesDialogTrigger(props: {
   disabled: boolean
-  className?: string
-  title?: string
-  ariaLabel?: string
+  label: string
   children: React.ReactNode
 }) {
   return (
-    <Dialog.Trigger asChild disabled={disabled}>
-      <ControlButton
-        disabled={disabled}
-        className={clsx('relative', className)}
-        title={title}
-        aria-label={ariaLabel}
-      >
-        {children}
-      </ControlButton>
+    <Dialog.Trigger asChild disabled={props.disabled}>
+      <ToolbarButton label={props.label} disabled={props.disabled}>
+        {props.children}
+      </ToolbarButton>
     </Dialog.Trigger>
   )
 }

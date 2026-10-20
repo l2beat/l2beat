@@ -1,5 +1,5 @@
 import { expect, mockObject } from 'earl'
-import type { Field } from '../../store/State'
+import type { Field } from '../../../store/State'
 import { buildFieldTree, type ExpandedField } from './buildFieldTree'
 import {
   getFieldState,

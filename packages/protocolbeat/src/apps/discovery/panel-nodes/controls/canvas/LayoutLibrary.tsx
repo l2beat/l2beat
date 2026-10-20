@@ -5,27 +5,27 @@ import {
   getProjectLayout,
   listProjectLayouts,
   saveProjectLayout,
-} from '../../../../api/api'
-import { Button } from '../../../../components/Button'
-import { Checkbox } from '../../../../components/Checkbox'
-import { InlineCode } from '../../../../components/Code'
-import { Dialog } from '../../../../components/Dialog'
-import { Input, InputDescription } from '../../../../components/Input'
-import { Tabs } from '../../../../components/Tabs'
-import { TextArea } from '../../../../components/TextArea'
-import { IS_READONLY } from '../../../../config/readonly'
-import { IconDownload } from '../../../../icons/IconDownload'
-import { IconFileUp } from '../../../../icons/IconFileUp'
-import { IconFolder } from '../../../../icons/IconFolder'
-import { cn } from '../../../../utils/cn'
-import type { ApplyLayoutMode } from '../store/actions/applyStoredLayout'
-import { useStore } from '../store/store'
-import { type LayoutMetadata, migrateLayout } from '../store/utils/layout'
+} from '../../../../../api/api'
+import { Button } from '../../../../../components/Button'
+import { Checkbox } from '../../../../../components/Checkbox'
+import { InlineCode } from '../../../../../components/Code'
+import { Dialog } from '../../../../../components/Dialog'
+import { Input, InputDescription } from '../../../../../components/Input'
+import { Tabs } from '../../../../../components/Tabs'
+import { TextArea } from '../../../../../components/TextArea'
+import { IS_READONLY } from '../../../../../config/readonly'
+import { IconDownload } from '../../../../../icons/IconDownload'
+import { IconFileUp } from '../../../../../icons/IconFileUp'
+import { cn } from '../../../../../utils/cn'
+import type { ApplyLayoutMode } from '../../store/actions/applyStoredLayout'
+import { useStore } from '../../store/store'
+import { type LayoutMetadata, migrateLayout } from '../../store/utils/layout'
 import {
   buildStoredNodeLayout,
   type StoredNodeLayout,
-} from '../store/utils/storage'
-import { ControlButton } from './ControlButton'
+} from '../../store/utils/storage'
+import { IconControlBookmark } from '../icons/IconControlBookmark'
+import { ToolbarButton } from '../ToolbarButton'
 
 interface PendingLayout {
   sourceLabel: string
@@ -51,7 +51,7 @@ const DESCRIPTION_CLAMP_STYLE: Record<2 | 4, CSSProperties> = {
   },
 }
 
-export function LayoutLibrary(props?: { className?: string }) {
+export function LayoutLibrary() {
   const queryClient = useQueryClient()
   const inputRef = useRef<HTMLInputElement>(null)
   const [open, setOpen] = useState(false)
@@ -228,14 +228,13 @@ export function LayoutLibrary(props?: { className?: string }) {
     <>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Trigger asChild>
-          <ControlButton
-            className={props?.className}
+          <ToolbarButton
+            label="Saved layouts"
+            description="Load, import or export node positions, colors and hidden fields."
             disabled={!projectId}
-            aria-label="Layout manager"
-            title="Layout manager"
           >
-            <IconFolder />
-          </ControlButton>
+            <IconControlBookmark />
+          </ToolbarButton>
         </Dialog.Trigger>
         <Dialog.Body>
           <Dialog.Title>Layout manager</Dialog.Title>

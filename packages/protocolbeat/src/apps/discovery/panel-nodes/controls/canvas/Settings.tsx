@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
-import { Checkbox } from '../../../../components/Checkbox'
-import { Dialog } from '../../../../components/Dialog'
-import { IconGear } from '../../../../icons/IconGear'
-import { useStore } from '../store/store'
-import { ControlButton } from './ControlButton'
+import { Checkbox } from '../../../../../components/Checkbox'
+import { Dialog } from '../../../../../components/Dialog'
+import { useStore } from '../../store/store'
+import { IconControlGear } from '../icons/IconControlGear'
+import { ToolbarButton } from '../ToolbarButton'
 
-export function Settings({ className }: { className?: string }) {
+export function Settings() {
   const preferences = useStore((state) => state.userPreferences)
   const setPreferences = useStore((state) => state.setPreferences)
 
@@ -36,9 +36,9 @@ export function Settings({ className }: { className?: string }) {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <ControlButton className={className}>
-          <IconGear />
-        </ControlButton>
+        <ToolbarButton label="Nodes panel settings">
+          <IconControlGear />
+        </ToolbarButton>
       </Dialog.Trigger>
       <Dialog.Body>
         <Dialog.Title className="m-0 font-medium text-lg">

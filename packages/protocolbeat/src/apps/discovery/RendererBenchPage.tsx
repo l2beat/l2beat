@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { stackAutoLayout } from './panel-nodes/controls/StackLayoutButton'
 import type { Node } from './panel-nodes/store/State'
 import { useStore } from './panel-nodes/store/store'
 import {
@@ -9,6 +8,7 @@ import {
   NODE_WIDTH,
 } from './panel-nodes/store/utils/constants'
 import { getGraphProjection } from './panel-nodes/store/utils/graphProjection'
+import { stackAutoLayout } from './panel-nodes/store/utils/stackLayout'
 import { Viewport, type ViewportRenderer } from './panel-nodes/view/Viewport'
 
 const GRID_HGAP = 80

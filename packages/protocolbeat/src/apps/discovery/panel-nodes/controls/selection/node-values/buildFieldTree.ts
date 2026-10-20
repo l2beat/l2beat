@@ -1,5 +1,5 @@
 import { partition } from '@l2beat/shared-pure'
-import type { Field } from '../../store/State'
+import type { Field } from '../../../store/State'
 
 export type SimpleField = {
   type: 'simple'
