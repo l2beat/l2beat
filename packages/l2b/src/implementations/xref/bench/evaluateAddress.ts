@@ -117,6 +117,10 @@ function unwindCall(context: EvaluationContext, call: ExpressionNode): Unwound {
     if (isFixedBytes(call) || isFixedBytes(argument)) {
       return { stop: stop('unknown', 'fixed bytes conversion') }
     }
+    // A packed narrow integer shares its slot with neighbours.
+    if (isNarrowInteger(argument)) {
+      return { stop: stop('unknown', 'narrow integer conversion') }
+    }
     return { next: argument }
   }
   const callee = unwrapOptions(call.expression as ExpressionNode)
@@ -177,7 +181,9 @@ function stopUnlessInput(
     const declaredBy = local ? ast.parent(local) : undefined
     const initialValue = (declaredBy as { initialValue?: SolcNode } | undefined)
       ?.initialValue
-    if (local?.stateVariable === false && initialValue) {
+    // A reassigned local may no longer hold its initializer.
+    const reassigned = local !== undefined && ast.assigned.has(local.id)
+    if (local?.stateVariable === false && initialValue && !reassigned) {
       stack.push(initialValue)
     }
     stack.push(...ast.children(node))
@@ -185,16 +191,26 @@ function stopUnlessInput(
   return { stop: stop('unknown', reason) }
 }
 
+// Through the internal functions it calls too.
 function readsTransaction(context: EvaluationContext, body: SolcNode): boolean {
   const { ast } = context.source
+  const visited = new Set<number>()
   const stack: SolcNode[] = [body]
   while (stack.length > 0) {
     const node = stack.pop() as ExpressionNode
+    if (visited.has(node.id)) {
+      continue
+    }
+    visited.add(node.id)
     if (
       node.nodeType === 'Identifier' &&
       (node.name === 'msg' || node.name === 'tx')
     ) {
       return true
+    }
+    const called = ast.node<FunctionNode>(node.referencedDeclaration)
+    if (called?.nodeType === 'FunctionDefinition' && called.body) {
+      stack.push(called.body)
     }
     stack.push(...ast.children(node))
   }
@@ -216,10 +232,7 @@ function isInput(
   ) {
     return false
   }
-  return (
-    ast.parent(declaration)?.nodeType === 'ParameterList' ||
-    ast.assigned.has(declaration.id)
-  )
+  return ast.parent(declaration)?.nodeType === 'ParameterList'
 }
 
 function unwindVariable(
@@ -377,4 +390,14 @@ function isFixedBytes(expression: ExpressionNode): boolean {
   const type = expression.typeDescriptions?.typeIdentifier ?? ''
   const size = type.slice('t_bytes'.length, 't_bytes'.length + 1)
   return type.startsWith('t_bytes') && size >= '0' && size <= '9'
+}
+
+function isNarrowInteger(expression: ExpressionNode): boolean {
+  const type = expression.typeDescriptions?.typeIdentifier ?? ''
+  const prefix = type.startsWith('t_uint') ? 't_uint' : 't_int'
+  if (!type.startsWith(prefix)) {
+    return false
+  }
+  const bits = Number(type.slice(prefix.length))
+  return Number.isInteger(bits) && bits > 0 && bits < 160
 }

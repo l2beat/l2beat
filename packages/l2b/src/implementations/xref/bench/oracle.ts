@@ -255,6 +255,11 @@ async function classifyCall(
   if (selector === undefined) {
     return { path, offset, call: 'external', truth: unknown('no selector') }
   }
+  // A constructor ran once at deployment, against state long gone.
+  const fn = ast.enclosing<FunctionNode>(call, 'FunctionDefinition')
+  if (fn?.kind === 'constructor') {
+    return { path, offset, call: 'external', truth: unknown('constructor') }
+  }
   const context = { oracle, entry, source, caller, call }
   const evaluated = await evaluateAddress(
     context,

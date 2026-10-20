@@ -115,11 +115,21 @@ export function takeExactPragma(text: string): {
   // The flattener drops `pragma experimental ABIEncoderV2`; appending it
   // restores it without moving anything.
   const hasEncoder = text.includes('ABIEncoderV2') || text.includes('abicoder')
-  const encoder = version.startsWith('0.8.') || hasEncoder ? '' : ENCODER_PRAGMA
+  const encoder =
+    hasEncoder || !supportsEncoderPragma(version) ? '' : ENCODER_PRAGMA
   return {
     version,
     source: text.slice(0, start) + commented + text.slice(end + 1) + encoder,
   }
+}
+
+// From 0.4.19, when it appeared, to 0.8, which made it the default.
+function supportsEncoderPragma(version: string): boolean {
+  const [, minor = 0, patch = 0] = version.split('.').map(Number)
+  if (minor === 4) {
+    return patch >= 19
+  }
+  return minor >= 5 && minor < 8
 }
 
 function isExactVersion(version: string): boolean {

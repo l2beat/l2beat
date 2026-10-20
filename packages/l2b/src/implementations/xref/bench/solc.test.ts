@@ -19,6 +19,13 @@ describe(takeExactPragma.name, () => {
     expect(source.endsWith('pragma experimental ABIEncoderV2;\n')).toEqual(true)
   })
 
+  it('adds the encoder only for compilers that know it as experimental', () => {
+    for (const version of ['0.4.11', '0.8.20']) {
+      const text = `pragma solidity ${version};\ncontract A {}\n`
+      expect(takeExactPragma(text).source.length).toEqual(text.length)
+    }
+  })
+
   it('leaves the encoder alone when the flat already picks one', () => {
     const text =
       'pragma solidity 0.7.6;\npragma experimental ABIEncoderV2;\ncontract A {}\n'
