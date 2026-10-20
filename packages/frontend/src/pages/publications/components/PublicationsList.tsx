@@ -108,7 +108,7 @@ function PublicationCard({ publication }: { publication: PublicationEntry }) {
       href={publication.url}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between gap-2">
           <PublicationTag tag={publication.tag} />
           <span className="font-medium text-brand text-label-value-12">
             {formatPublicationDate(UnixTime.toDate(publication.publishedOn))}

@@ -1,4 +1,6 @@
 import type { ImageParams } from '~/utils/project/getImageParams'
+import type { PublicationEntry } from '../utils/getPublicationEntry'
+import { PublicationTag } from './PublicationsList'
 
 export function PublicationHeader<
   T extends {
@@ -12,14 +14,18 @@ export function PublicationHeader<
       role: string | undefined
     }
     publishedOn: string
+    tag: PublicationEntry['tag']
   },
 >({ publication }: { publication: T }) {
   return (
     <div>
-      <p className="text-brand text-subtitle-12 uppercase">
-        {publication.readTimeInMinutes} min read • Published on{' '}
-        {publication.publishedOn}
-      </p>
+      <div className="flex items-center gap-2">
+        <PublicationTag tag={publication.tag} />
+        <p className="text-brand text-subtitle-12 uppercase">
+          {publication.readTimeInMinutes} min read • Published on{' '}
+          {publication.publishedOn}
+        </p>
+      </div>
       <h1 className="mt-2 text-heading-24 md:text-heading-32">
         {publication.title}
       </h1>
