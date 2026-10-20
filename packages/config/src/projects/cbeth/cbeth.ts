@@ -1,0 +1,121 @@
+import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
+
+const discovery = new ProjectDiscovery('cbeth')
+
+const value = (contract: string, key: string): string =>
+  String(discovery.getContractValue<string | number>(contract, key))
+
+const duration = (seconds: number): string =>
+  formatSeconds(seconds, { fullUnit: true })
+
+// Both relays share the same rate-limit code: every whitelisted caller has an
+// allowance (1e18 scale) that refills linearly over its interval. The page
+// quotes the most permissive caller, since that is the effective bound.
+type CallerLimit = {
+  caller: string
+  amount: string | number
+  interval: number
+}
+
+const mostPermissive = (contract: string): CallerLimit => {
+  const limits = discovery.getContractValue<CallerLimit[]>(
+    contract,
+    'callerLimits',
+  )
+  const top = limits.reduce<CallerLimit | undefined>(
+    (best, l) =>
+      best === undefined || BigInt(l.amount) > BigInt(best.amount) ? l : best,
+    undefined,
+  )
+  if (top === undefined) {
+    throw new Error(`cbeth: ${contract} has no configured caller`)
+  }
+  return top
+}
+
+const units = (raw: string | number): number => Number(BigInt(raw)) / 1e18
+
+// Exchange-rate relay: the cap is a cumulative absolute change in the
+// ETH-per-token rate. It is rendered in ETH per token and as a multiple of
+// the current rate, so the page says how binding it is.
+const rateCap = mostPermissive('ExchangeRateUpdater')
+const rateCapEth = `${Number.parseFloat(units(rateCap.amount).toFixed(4))}`
+const rateCapInterval = duration(rateCap.interval)
+const exchangeRate = Number(value('cbETH', 'exchangeRate'))
+const rateCapMultiple = `${Number.parseFloat((units(rateCap.amount) / exchangeRate).toFixed(1))}×`
+
+// Mint relay: the cap is an amount of tokens per interval.
+const mintCap = mostPermissive('MintForwarder')
+const maxMintAllowance = Math.round(units(mintCap.amount)).toLocaleString(
+  'en-US',
+)
+const maxMintInterval = duration(mintCap.interval)
+const mintCallerCount = discovery.getContractValue<string[]>(
+  'MintForwarder',
+  'callers',
+).length
+const minterCount = discovery.getContractValue<string[]>(
+  'cbETH',
+  'minters',
+).length
+
+export const cbeth: BaseProject = {
+  id: ProjectId('cbeth'),
+  slug: 'cbeth',
+  name: 'Coinbase Wrapped Staked ETH',
+  shortName: 'cbETH',
+  addedAt: UnixTime(0),
+  discoveryInfo: getDiscoveryInfo([discovery]),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
+  display: {
+    description: `Coinbase Wrapped Staked ETH (${value('cbETH', 'symbol')}) is a liquid staking token for ETH issued by Coinbase. It is minted and redeemed only through Coinbase's exchange against staked ETH in Coinbase custody: the contracts hold no ETH and have no deposit or redemption function. Coinbase sets the exchange rate, controls supply and custody, and can mint, pause, blacklist or upgrade without delay.`,
+    detailedDescription: readProjectMarkdown('cbeth', 'detailedDescription', {
+      symbol: value('cbETH', 'symbol'),
+      rateCapEth,
+      rateCapInterval,
+      rateCapMultiple,
+      minterCount,
+      mintCallerCount,
+      maxMintAllowance,
+      maxMintInterval,
+    }),
+    links: {
+      websites: ['https://www.coinbase.com/cbeth'],
+      documentation: ['https://www.coinbase.com/cbeth/whitepaper'],
+      repositories: ['https://github.com/coinbase/wrapped-tokens-os'],
+      socialMedia: ['https://x.com/CoinbaseAssets'],
+    },
+    references: [
+      {
+        title:
+          'OpenZeppelin audit of the Coinbase liquid staking token (August 2022)',
+        url: 'https://blog.openzeppelin.com/coinbase-liquid-staking-token-audit',
+      },
+    ],
+    badges: [],
+  },
+  defiInfo: {
+    category: 'Liquid Staking',
+    tvl: { source: 'l2beat' },
+  },
+  // The contracts call no bridge, price feed or other protocol; the two relays
+  // only call the token. Coinbase's off-chain custody and validator operation
+  // are trust assumptions covered in the permissions and description above.
+  externalDependencies: [],
+  permissions: discovery.getDiscoveredPermissions(),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [],
+  },
+}

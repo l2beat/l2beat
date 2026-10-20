@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "cbeth",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "cbeth-cbETH",
+      "priceId": "coinbase-wrapped-staked-eth",
+      "symbol": "cbETH",
+      "name": "Coinbase Wrapped Staked ETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1643901537
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

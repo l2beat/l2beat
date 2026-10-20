@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "canActIndependently": false,
+  "description": "Rate-limited minting relay registered as a minter of the token. Whitelisted callers mint tokens to any address through it, each within an allowance that caps the amount per refill interval; the allowance refills linearly. No ETH is attached to a mint, so minted tokens are backed only by the issuer's off-chain records.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "whitelist or remove callers and set each caller's mint allowance and refill interval, with no delay."
+        }
+      ]
+    },
+    "callers": {
+      "handler": {
+        "type": "event",
+        "select": "caller",
+        "add": { "event": "CallerConfigured" },
+        "remove": { "event": "CallerRemoved" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to mint tokens through this contract.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint tokens to any address with no on-chain backing, up to its allowance per refill interval."
+        }
+      ]
+    },
+    "callerLimits": {
+      "handler": {
+        "type": "event",
+        "select": ["caller", "amount", "interval"],
+        "dedupBy": "caller",
+        "add": { "event": "CallerConfigured" },
+        "remove": { "event": "CallerRemoved" }
+      },
+      "description": "Per-caller cap on the amount minted (token units) and the number of seconds over which that allowance refills, as last configured."
+    },
+    "tokenContract": {
+      "description": "The token this contract mints."
+    }
+  }
+}
