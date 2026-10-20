@@ -56,87 +56,67 @@ export function moveEnvelope(envelope: Envelope, dt: number) {
   if (envelope.move.t >= 1) envelope.move = undefined
 }
 
-/** Where an envelope sits, hopping between slots; `bob` lifts it a little. */
-export function envelopePoint(tray: Tray, envelope: Envelope, bob = 0) {
+/** Where an envelope sits, hopping between slots. */
+export function envelopePoint(tray: Tray, envelope: Envelope) {
   const at = slotPoint(tray, envelope.slot)
-  if (!envelope.move) return { x: at.x, y: at.y - bob }
+  if (!envelope.move) return at
   const from = slotPoint(tray, envelope.move.from)
   const k = easeInOut(envelope.move.t)
   return {
     x: from.x + (at.x - from.x) * k,
-    y: from.y + (at.y - from.y) * k - Math.sin(Math.PI * k) * 14 - bob,
+    y: from.y + (at.y - from.y) * k - Math.sin(Math.PI * k) * 14,
   }
 }
 
 export function envelopeWidth(tray: Tray) {
-  return Math.min(38, (tray.width / COLS) * 0.78)
+  return Math.min(32, (tray.width / COLS) * 0.7)
 }
 
 interface EnvelopeLook {
   /** 0 open, 1 sealed. */
   seal: number
-  /** 0 to 1: a little swell as it seals. */
-  pop: number
   /** The owner's colour, for an adversary who can read the envelope. */
   tint?: string
   opacity: number
 }
 
-/** Draws an envelope and returns where its seal is. */
+/**
+ * Draws an envelope as a line icon, in one even stroke like the site's icons,
+ * and returns where its seal is.
+ */
 export function drawEnvelope(
   ctx: CanvasRenderingContext2D,
   p: { x: number; y: number },
-  width: number,
+  w: number,
   look: EnvelopeLook,
   tokens: ThemeTokens,
 ) {
-  const scale = 1 + 0.18 * look.pop
-  const w = width * scale
   const h = w * 0.68
-  const tipY = p.y - h / 2 + h * 0.62 * (2 * look.seal - 1)
-  const paper = tokens.isDark ? tokens.surfaceSecondary : '#ffffff'
-  const edge = alpha(tokens.secondary, 0.35)
+  const top = p.y - h / 2
+  // The flap folds down over the envelope when sealed and up when open.
+  const tipY = top + h * 0.55 * (2 * look.seal - 1)
   ctx.save()
   ctx.globalAlpha *= look.opacity
+  ctx.lineWidth = 1.6
   ctx.lineJoin = 'round'
-  ctx.lineWidth = 1
+  ctx.lineCap = 'round'
+  ctx.strokeStyle = look.tint ?? tokens.secondary
 
   ctx.beginPath()
-  ctx.ellipse(p.x, p.y + h / 2 + 2, w * 0.42, 2, 0, 0, Math.PI * 2)
-  ctx.fillStyle = alpha(tokens.secondary, 0.12)
+  ctx.roundRect(p.x - w / 2, top, w, h, 3)
+  ctx.fillStyle = tokens.surface
   ctx.fill()
-
-  const paint = () => {
-    ctx.fillStyle = paper
+  if (look.tint) {
+    ctx.fillStyle = alpha(look.tint, 0.2)
     ctx.fill()
-    if (look.tint) {
-      ctx.fillStyle = alpha(look.tint, 0.35)
-      ctx.fill()
-    }
-    ctx.strokeStyle = edge
-    ctx.stroke()
   }
-  const flap = () => {
-    ctx.beginPath()
-    ctx.moveTo(p.x - w / 2, p.y - h / 2)
-    ctx.lineTo(p.x + w / 2, p.y - h / 2)
-    ctx.lineTo(p.x, tipY)
-    ctx.closePath()
-    paint()
-  }
-  // An open flap stands behind the envelope; a closed one folds over it.
-  if (look.seal < 0.5) flap()
-  ctx.beginPath()
-  ctx.roundRect(p.x - w / 2, p.y - h / 2, w, h, 3.5)
-  paint()
-  ctx.beginPath()
-  ctx.moveTo(p.x - w / 2, p.y + h / 2)
-  ctx.lineTo(p.x, p.y + h * 0.05)
-  ctx.lineTo(p.x + w / 2, p.y + h / 2)
-  ctx.strokeStyle = alpha(tokens.secondary, 0.2)
   ctx.stroke()
-  if (look.seal >= 0.5) flap()
 
+  ctx.beginPath()
+  ctx.moveTo(p.x - w / 2 + 1, top + 1)
+  ctx.lineTo(p.x, tipY)
+  ctx.lineTo(p.x + w / 2 - 1, top + 1)
+  ctx.stroke()
   ctx.restore()
   return { x: p.x, y: tipY }
 }

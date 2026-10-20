@@ -486,7 +486,7 @@ export function drawPoolScene(
   // Envelopes, lowest last so they overlap like a stack
   const envelopes = scene.notes
     .filter(hasEnvelope)
-    .map((note) => ({ note, p: envelopeAt(note, l, scene.time) }))
+    .map((note) => ({ note, p: envelopePoint(l.tray, note.envelope) }))
     .sort((a, b) => a.p.y - b.p.y)
   for (const { note, p } of envelopes) {
     const cracked = breaksNotes && note.sincePool > CRACK_S
@@ -497,7 +497,6 @@ export function drawPoolScene(
       envelopeWidth(l.tray),
       {
         seal,
-        pop: popAfterSealing(note),
         tint:
           note.phase === 'pool' && (seesInside || cracked)
             ? OWNER_COLORS[note.owner]
@@ -523,7 +522,7 @@ export function drawPoolScene(
   // Coins, outside their envelopes
   for (const note of scene.notes) {
     if (note.phase === 'pool') continue
-    const p = notePosition(note, l, scene.time)
+    const p = notePosition(note, l)
     const ownerColor = OWNER_COLORS[note.owner] ?? tokens.secondary
     const cracked = breaksNotes && note.sincePool > CRACK_S
     const left = note.phase === 'out' || note.phase === 'done'
@@ -539,7 +538,6 @@ export function drawPoolScene(
         const past = notePosition(
           { ...note, t: Math.max(0, note.t - k * 0.035) },
           l,
-          scene.time,
         )
         ctx.globalAlpha = (opacity * 0.12 * (6 - k)) / 5
         ctx.beginPath()
@@ -640,8 +638,8 @@ function getLayout(width: number, height: number) {
 
 type Layout = ReturnType<typeof getLayout>
 
-function notePosition(note: Note, l: Layout, time: number) {
-  const inPool = envelopeAt(note, l, time)
+function notePosition(note: Note, l: Layout) {
+  const inPool = envelopePoint(l.tray, note.envelope)
   if (note.phase === 'in' || note.phase === 'out') {
     const from =
       note.phase === 'in' ? { x: l.senderX, y: l.rowY(note.owner) } : inPool
@@ -659,18 +657,6 @@ function notePosition(note: Note, l: Layout, time: number) {
     return { x: l.recipientX, y: l.rowY(note.recipient) }
   }
   return inPool
-}
-
-/** A sealed envelope bobs gently, each to its own beat. */
-function envelopeAt(note: Note, l: Layout, time: number) {
-  const bob = sealed(note) * 1.5 * Math.sin(time * 2 + note.id)
-  return envelopePoint(l.tray, note.envelope, bob)
-}
-
-/** 0 to 1 and back, just after the envelope seals. */
-function popAfterSealing(note: Note) {
-  const k = (note.t - SEAL_S) / 0.3
-  return note.phase === 'pool' && k > 0 && k < 1 ? Math.sin(Math.PI * k) : 0
 }
 
 /** The height of the future adversary's scan across the pool. */

@@ -412,24 +412,18 @@ function Envelope({
             .join(';')}
           {...timing}
         />
-        <ellipse cy={9} rx={8} ry={1.5} fill={GREY} opacity={0.12} />
+        {/* A line icon, in one even stroke like the site's icons */}
         <rect
-          x={-10}
-          y={-7}
-          width={20}
-          height={14}
-          rx={2.5}
+          x={-9}
+          y={-6}
+          width={18}
+          height={12}
+          rx={2}
           fill="var(--surface-primary)"
           stroke={GREY}
-          strokeOpacity={0.4}
+          strokeWidth={1.2}
         />
-        <path
-          d="M -10 7 L 0 1 L 10 7"
-          fill="none"
-          stroke={GREY}
-          strokeOpacity={0.2}
-        />
-        <g transform="translate(0 -7)">
+        <g transform="translate(0 -6)">
           <g>
             <animateTransform
               attributeName="transform"
@@ -439,10 +433,11 @@ function Envelope({
               {...timing}
             />
             <path
-              d="M -10 0 L 10 0 L 0 9 Z"
-              fill="var(--surface-primary)"
+              d="M -8.4 0.6 L 0 6.6 L 8.4 0.6"
+              fill="none"
               stroke={GREY}
-              strokeOpacity={0.4}
+              strokeWidth={1.2}
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
           </g>
