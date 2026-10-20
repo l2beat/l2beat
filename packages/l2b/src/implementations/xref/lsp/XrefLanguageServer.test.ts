@@ -160,6 +160,17 @@ describe(XrefLanguageServer.name, () => {
     })
   })
 
+  it('answers messages that are not objects as invalid', () => {
+    const { server, sent } = start()
+    server.receive('null')
+    server.receive('3')
+
+    expect(sent.map((m) => m.error)).toEqual([
+      { code: -32600, message: 'Invalid Request' },
+      { code: -32600, message: 'Invalid Request' },
+    ])
+  })
+
   it('exits cleanly only after shutdown', () => {
     const early = start()
     early.server.receive(JSON.stringify({ jsonrpc: '2.0', method: 'exit' }))

@@ -35,6 +35,7 @@ interface LspLocation {
 
 const METHOD_NOT_FOUND = -32601
 const PARSE_ERROR = -32700
+const INVALID_REQUEST = -32600
 const INTERNAL_ERROR = -32603
 
 const RESOLUTION_LABELS: Record<Definition['resolution'], string> = {
@@ -66,13 +67,22 @@ export class XrefLanguageServer {
   ) {}
 
   receive(body: string) {
-    let message: RpcMessage
+    let parsed: unknown
     try {
-      message = JSON.parse(body) as RpcMessage
+      parsed = JSON.parse(body)
     } catch {
       this.reply(null, undefined, new RpcError(PARSE_ERROR, 'Parse error'))
       return
     }
+    if (typeof parsed !== 'object' || parsed === null) {
+      this.reply(
+        null,
+        undefined,
+        new RpcError(INVALID_REQUEST, 'Invalid Request'),
+      )
+      return
+    }
+    const message = parsed as RpcMessage
     if (message.method === 'exit') {
       this.exit(this.shutdownRequested ? 0 : 1)
       return
