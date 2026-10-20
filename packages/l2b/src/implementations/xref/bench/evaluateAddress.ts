@@ -1,3 +1,4 @@
+import { isRevert } from '@l2beat/discovery'
 import {
   Bytes,
   ChainSpecificAddress,
@@ -7,6 +8,7 @@ import type { FlatEntry } from '../FlatWorkspace'
 import {
   type CompiledSource,
   deployedContract,
+  dispatchedFunction,
   type Oracle,
   selectorOf,
   type Truth,
@@ -139,7 +141,14 @@ function unwindCall(context: EvaluationContext, call: ExpressionNode): Unwound {
   if (declaration?.nodeType !== 'FunctionDefinition') {
     return { stop: stop('unknown', 'call') }
   }
-  const fn = declaration as FunctionNode
+  const fn = dispatchedFunction(
+    context.source.ast,
+    declaration as FunctionNode,
+    context.caller,
+  )
+  if (fn === undefined) {
+    return { stop: stop('unknown', 'no implementation') }
+  }
   // Called over RPC it would see another msg.sender than the real caller.
   if (fn.body && readsTransaction(context, fn.body)) {
     return { stop: stop('dynamic', 'reads msg or tx') }
@@ -253,7 +262,7 @@ function unwindVariable(
     }
     // The function may have overwritten what the chain held before the call.
     const callable = context.source.ast.enclosingCallable(context.call)
-    if (callable && context.source.ast.isWrittenIn(callable, variable.id)) {
+    if (callable && context.source.ast.isWrittenDuring(callable, variable.id)) {
       return { stop: stop('unknown', 'written in function') }
     }
     return { base: 'storage', variable }
@@ -273,7 +282,7 @@ function unwindVariable(
   if (initialValue && statement.declarations?.length === 1) {
     return { next: initialValue }
   }
-  return { stop: stop('dynamic', 'local') }
+  return { stop: stop('unknown', 'local') }
 }
 
 function unwindLiteral(
@@ -329,7 +338,10 @@ async function applyGetters(
     let result: Bytes
     try {
       result = await provider.callUnbatched(current, Bytes.fromHex(selector))
-    } catch {
+    } catch (error) {
+      if (!isRevert(error)) {
+        throw error
+      }
       return stop('unknown', 'getter reverted')
     }
     if (result.length < 32) {

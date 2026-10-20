@@ -1,5 +1,5 @@
 import type { IProvider } from '@l2beat/discovery'
-import type { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import {
   type FlatEntry,
@@ -66,10 +66,7 @@ export async function oracleSites(
     if (call.kind !== 'functionCall' || call.expression === undefined) {
       continue
     }
-    const caller = source.ast.enclosing<ContractNode>(
-      call,
-      'ContractDefinition',
-    )
+    const caller = callerOf(source.ast, call)
     // Code of contracts the flat declares but does not deploy never runs here.
     if (
       caller === undefined ||
@@ -83,8 +80,17 @@ export async function oracleSites(
       sites.push(site)
     }
   }
-  sites.push(...referenceSites(source))
+  sites.push(...referenceSites(source), ...labelSites(source))
   return sites
+}
+
+// A free function runs as part of the contract that calls it.
+function callerOf(ast: SolcAst, node: SolcNode): ContractNode | undefined {
+  const contract = ast.enclosing<ContractNode>(node, 'ContractDefinition')
+  if (contract !== undefined) {
+    return contract
+  }
+  return ast.enclosing(node, 'FunctionDefinition') && ast.mainContract
 }
 
 const REFERENCE_NODES = [
@@ -103,23 +109,104 @@ const REFERENCED_DECLARATIONS = [
   'ErrorDefinition',
   'UserDefinedValueTypeDefinition',
   'FunctionDefinition',
+  'ModifierDefinition',
 ]
 
-// A function named without a call, like a function pointer, is virtual too.
+// A function named without a call, like a function pointer, is virtual too,
+// and so is a modifier.
 function referenceTruth(
   source: CompiledSource,
   node: ExpressionNode,
   declaration: SolcNode,
 ): Truth {
-  const caller = source.ast.enclosing<ContractNode>(node, 'ContractDefinition')
+  const caller = callerOf(source.ast, node)
+  if (caller === undefined) {
+    return known(source, [declaration])
+  }
   if (
     node.nodeType === 'Identifier' &&
-    declaration.nodeType === 'FunctionDefinition' &&
-    caller !== undefined
+    declaration.nodeType === 'FunctionDefinition'
   ) {
     return dispatch(source, declaration as FunctionNode, caller)
   }
+  if (declaration.nodeType === 'ModifierDefinition') {
+    const name = (declaration as FunctionNode).name
+    const found = deployedContract(source.ast, caller)
+      .linearizedBaseContracts.flatMap(
+        (id) => source.ast.node<ContractNode>(id)?.nodes ?? [],
+      )
+      .find(
+        (member) =>
+          member.nodeType === 'ModifierDefinition' &&
+          (member as FunctionNode).name === name,
+      )
+    return found ? known(source, [found]) : unknown('no modifier')
+  }
   return known(source, [declaration])
+}
+
+// `f({ amount: x })`: the label refers to a parameter of the called function,
+// event or error, or to a field of the struct.
+function labelSites(source: CompiledSource): OracleSite[] {
+  const { ast, path } = source
+  const sites: OracleSite[] = []
+  for (const call of ast.all('FunctionCall') as ExpressionNode[]) {
+    const names = call.names ?? []
+    const locations = call.nameLocations ?? []
+    if (locations.length !== names.length) {
+      continue
+    }
+    const fields = labelledFields(source, call)
+    for (const [i, name] of names.entries()) {
+      const location = locations[i]
+      assert(location !== undefined)
+      const field = fields?.find((f) => f.name === name)
+      sites.push({
+        path,
+        offset: ast.character(Number(location.split(':')[0])),
+        call: 'reference',
+        truth: field ? known(source, [field]) : unknown('label of a call'),
+      })
+    }
+  }
+  return sites
+}
+
+// Only where the callee is fixed without reading the chain.
+function labelledFields(
+  source: CompiledSource,
+  call: ExpressionNode,
+): VariableNode[] | undefined {
+  const { ast } = source
+  const callee = unwrapOptions(call.expression as ExpressionNode)
+  const declaration = ast.node(callee.referencedDeclaration) as
+    | (FunctionNode & { members?: VariableNode[] })
+    | undefined
+  if (declaration?.nodeType === 'StructDefinition') {
+    return declaration.members
+  }
+  if (
+    declaration?.nodeType === 'EventDefinition' ||
+    declaration?.nodeType === 'ErrorDefinition'
+  ) {
+    return declaration.parameters.parameters
+  }
+  const caller = callerOf(ast, call)
+  if (declaration?.nodeType !== 'FunctionDefinition' || !caller) {
+    return undefined
+  }
+  if (callee.nodeType === 'Identifier') {
+    return dispatchedFunction(ast, declaration, caller)?.parameters.parameters
+  }
+  const owner = ast.parent(declaration) as ContractNode | undefined
+  const receiver = callee.expression?.typeDescriptions?.typeIdentifier ?? ''
+  if (
+    owner?.contractKind === 'library' ||
+    receiver.startsWith('t_type$_t_contract')
+  ) {
+    return declaration.parameters.parameters
+  }
+  return undefined
 }
 
 function referenceSites(source: CompiledSource): OracleSite[] {
@@ -277,30 +364,39 @@ function dispatch(
   fn: FunctionNode,
   caller: ContractNode,
 ): Truth {
-  const owner = source.ast.parent(fn) as ContractNode | undefined
+  const found = dispatchedFunction(source.ast, fn, caller)
+  return found ? known(source, [found]) : unknown('no implementation')
+}
+
+export function dispatchedFunction(
+  ast: SolcAst,
+  fn: FunctionNode,
+  caller: ContractNode,
+): FunctionNode | undefined {
+  const owner = ast.parent(fn) as ContractNode | undefined
   // Private functions cannot be overridden.
   if (
     owner?.nodeType !== 'ContractDefinition' ||
     owner.contractKind === 'library' ||
     fn.visibility === 'private'
   ) {
-    return known(source, [fn])
+    return fn
   }
-  const deployed = deployedContract(source.ast, caller)
+  const deployed = deployedContract(ast, caller)
   for (const id of deployed.linearizedBaseContracts) {
     // Before 0.6 overriding is implicit, so the AST has no base functions:
     // an equal signature further down the linearization is the override.
-    const found = implementedFunctions(source.ast, id).find(
+    const found = implementedFunctions(ast, id).find(
       (candidate) =>
         candidate.id === fn.id ||
-        overrides(source.ast, candidate, fn.id) ||
+        overrides(ast, candidate, fn.id) ||
         signatureOf(candidate) === signatureOf(fn),
     )
     if (found !== undefined) {
-      return known(source, [found])
+      return found
     }
   }
-  return unknown('no implementation')
+  return undefined
 }
 
 // `super` follows the linearization of the deployed contract, which can put

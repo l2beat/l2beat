@@ -48,6 +48,9 @@ export interface ExpressionNode extends SolcNode {
   leftHandSide?: ExpressionNode
   operator?: string
   subExpression?: ExpressionNode
+  names?: string[]
+  // Written since 0.8.16.
+  nameLocations?: string[]
 }
 
 // Positions in solc are UTF-8 byte offsets; the editor works in UTF-16.
@@ -135,8 +138,32 @@ export class SolcAst {
     return current
   }
 
-  isWrittenIn(callable: SolcNode, variableId: number): boolean {
-    return this.callableWrites.has(`${callable.id}:${variableId}`)
+  // Through applied modifiers and every function it may call.
+  isWrittenDuring(callable: SolcNode, variableId: number): boolean {
+    const visited = new Set<number>()
+    const stack: SolcNode[] = [callable]
+    while (stack.length > 0) {
+      const node = stack.pop()
+      assert(node !== undefined)
+      if (visited.has(node.id)) {
+        continue
+      }
+      visited.add(node.id)
+      if (this.callableWrites.has(`${node.id}:${variableId}`)) {
+        return true
+      }
+      const referenced = this.node(
+        (node as ExpressionNode).referencedDeclaration,
+      )
+      if (
+        referenced?.nodeType === 'FunctionDefinition' ||
+        referenced?.nodeType === 'ModifierDefinition'
+      ) {
+        stack.push(referenced)
+      }
+      stack.push(...this.children(node))
+    }
+    return false
   }
 
   all(nodeType: string): SolcNode[] {

@@ -121,6 +121,7 @@ export {
   get$Implementations,
   toAddressArray,
 } from './discovery/utils/extractors'
+export { isRevert } from './discovery/utils/isRevert'
 export { getReachableEntries } from './discovery/utils/reachable'
 export { readJsonc } from './discovery/utils/readJsonc'
 export { sortBySeverity } from './discovery/utils/sortDiffs'

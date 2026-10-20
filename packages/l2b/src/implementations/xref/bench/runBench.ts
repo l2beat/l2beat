@@ -47,7 +47,7 @@ interface OracleCache {
 }
 
 // Bump when the oracle changes, so cached ground truth is rebuilt.
-const ORACLE_VERSION = '14'
+const ORACLE_VERSION = '15'
 
 export async function runBench(
   configReader: ConfigReader,
