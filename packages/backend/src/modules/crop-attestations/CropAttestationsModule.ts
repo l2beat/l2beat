@@ -6,8 +6,6 @@ import { CropsApiDeployer } from './CropsApiDeployer'
 import { triggerCropsApiDeploy } from './triggerCropsApiDeploy'
 
 const INTERVAL_MS = 5 * 60 * 1000
-/** Only reads the database, so it can look often. */
-const DEPLOY_INTERVAL_MS = 60 * 1000
 
 export function createCropAttestationsModule({
   config,
@@ -61,7 +59,7 @@ export function createCropAttestationsModule({
             chainId: source.chainId,
             attester: attester.address,
             deploy: () => triggerCropsApiDeploy(http, githubToken),
-            intervalMs: DEPLOY_INTERVAL_MS,
+            intervalMs: INTERVAL_MS,
           },
           logger,
         )
