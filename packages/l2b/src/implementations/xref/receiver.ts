@@ -5,6 +5,7 @@ import type {
   BaseASTNode,
   ElementaryTypeName,
   Expression,
+  FileLevelConstant,
   FunctionCall,
   FunctionDefinition,
   Identifier,
@@ -135,6 +136,14 @@ function unwindIdentifier(
       NAMED_TYPES.includes(declaration.node.type))
   ) {
     return { base: { ...UNKNOWN, staticContract: identifier.name } }
+  }
+  if (
+    declaration?.kind === 'other' &&
+    declaration.node.type === 'FileLevelConstant'
+  ) {
+    const constant = declaration.node as FileLevelConstant
+    const step: Step = { kind: 'cast', type: constant.typeName }
+    return { step, next: constant.initialValue }
   }
   if (declaration?.kind !== 'variable') {
     return { base: UNKNOWN }

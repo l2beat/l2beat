@@ -168,15 +168,14 @@ export class SourceIndex {
       ...this.topLevel,
       ...this.members(contractName),
     ].filter((node) => node.type === 'UsingForDeclaration')
-    const bindings: UsingFor[] = []
-    for (const node of declarations) {
+    return declarations.map((node) => {
       const declaration = node as UsingForDeclaration
-      if (declaration.libraryName !== null) {
-        const type = typeKey(declaration.typeName)
-        bindings.push({ library: declaration.libraryName, type })
+      return {
+        library: declaration.libraryName ?? undefined,
+        functions: declaration.functions,
+        type: typeKey(declaration.typeName),
       }
-    }
-    return bindings
+    })
   }
 
   pathAt(offset: number): BaseASTNode[] {
@@ -197,20 +196,46 @@ export class SourceIndex {
     name: string,
     arity: number | undefined,
   ): FunctionDefinition[] {
-    const libraries = new Set(
-      this.usingForBindings(contractName)
-        .filter(
-          (b) =>
-            b.type === undefined ||
-            receiverType === undefined ||
-            b.type === receiverType,
-        )
-        .map((b) => b.library),
+    const bindings = this.usingForBindings(contractName).filter(
+      (b) =>
+        b.type === undefined ||
+        receiverType === undefined ||
+        b.type === receiverType,
     )
     const boundArity = arity === undefined ? undefined : arity + 1
-    return [...libraries].flatMap((library) =>
-      this.findFunctions(library, name, boundArity),
-    )
+    const found = new Set<FunctionDefinition>()
+    for (const binding of bindings) {
+      const fromLibrary = binding.library
+        ? this.findFunctions(binding.library, name, boundArity)
+        : []
+      const listed = binding.functions.flatMap((path) => {
+        const dot = path.lastIndexOf('.')
+        if (path.slice(dot + 1) !== name) {
+          return []
+        }
+        return dot === -1
+          ? this.findFreeFunctions(name, boundArity)
+          : this.findFunctions(path.slice(0, dot), name, boundArity)
+      })
+      for (const fn of [...fromLibrary, ...listed]) {
+        found.add(fn)
+      }
+    }
+    return [...found]
+  }
+
+  findFreeFunctions(
+    name: string,
+    arity: number | undefined,
+  ): FunctionDefinition[] {
+    return this.topLevel.filter((node): node is FunctionDefinition => {
+      const fn = node as FunctionDefinition
+      return (
+        node.type === 'FunctionDefinition' &&
+        fn.name === name &&
+        (arity === undefined || fn.parameters.length === arity)
+      )
+    })
   }
 
   positionOf(offset: number): TextPosition {
@@ -251,7 +276,9 @@ export class SourceIndex {
 }
 
 export interface UsingFor {
-  library: string
+  library: string | undefined
+  // `using {L.f, g} for T` binds single functions instead of a library.
+  functions: string[]
   // Undefined for `using L for *`.
   type: string | undefined
 }
@@ -267,8 +294,11 @@ export function typeKey(type: TypeName | null | undefined): string | undefined {
       return path.slice(path.lastIndexOf('.') + 1)
     }
     case 'ArrayTypeName': {
-      const base = typeKey((type as ArrayTypeName).baseTypeName)
-      return base === undefined ? undefined : `${base}[]`
+      const array = type as ArrayTypeName
+      const base = typeKey(array.baseTypeName)
+      const length = array.length as { type?: string; number?: string } | null
+      const size = length?.type === 'NumberLiteral' ? length.number : ''
+      return base === undefined ? undefined : `${base}[${size}]`
     }
     case 'Mapping':
       return 'mapping'

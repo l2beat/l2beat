@@ -152,9 +152,15 @@ function openWorkspace(project: string): FlatWorkspace {
 
 function findEntry(workspace: FlatWorkspace, contract: string): FlatEntry {
   const address = ChainSpecificAddress.tryParse(contract)
-  const matches = workspace.entries.filter(
-    (e) => e.address === address || e.name === contract,
+  const named = workspace.entries.filter(
+    (e) =>
+      e.address === address ||
+      e.name === contract ||
+      e.aliases?.includes(contract),
   )
+  // The project's own name for a module contract wins over the module's.
+  const aliased = named.filter((e) => e.aliases?.includes(contract))
+  const matches = aliased.length > 0 ? aliased : named
   assert(matches.length > 0, 'Contract not found in discovery')
   assert(matches.length === 1, 'Contract name is ambiguous, use its address')
   const entry = matches[0]
