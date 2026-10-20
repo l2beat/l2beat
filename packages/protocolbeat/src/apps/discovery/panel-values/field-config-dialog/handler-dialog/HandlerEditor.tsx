@@ -4,8 +4,8 @@ import type {
   EditorContentCallback,
   EditorSaveCallback,
 } from '../../../../../components/editor/code/editor'
-import { useCodeStore } from '../../../../../components/editor/store'
-import { EditorView } from '../../../../../components/editor/views/lazy'
+import { useMonacoJsonEditorStore } from '../../../../../components/editor/monaco-json/store'
+import { MonacoJsonEditorView } from '../../../../../components/editor/views/lazy'
 
 type HandlerEditorProps = {
   context: 'config' | 'template'
@@ -24,7 +24,7 @@ export function HandlerEditor({
   onSave,
   onChange,
 }: HandlerEditorProps) {
-  const editor = useCodeStore((store) => store.editors[editorKey])
+  const editor = useMonacoJsonEditorStore((store) => store.editors[editorKey])
 
   const file = useMemo(() => {
     return {
@@ -62,8 +62,7 @@ export function HandlerEditor({
   }, [selectedHandler, uri, editor])
 
   return (
-    <EditorView
-      features={{ lineSelection: false, rangeHighlight: false }}
+    <MonacoJsonEditorView
       editorId={editorKey}
       disableTabs
       callbacks={{

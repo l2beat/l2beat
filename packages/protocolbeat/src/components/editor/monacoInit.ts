@@ -8,8 +8,8 @@ import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/brows
 
 import { getSharedDiffProvider } from './diff/customDiffProvider'
 import { jsonDiagnostics } from './languages/json'
-import * as solidity from './languages/solidity'
-import { theme } from './theme'
+import * as solidity from './languages/solidityMonarch'
+import { theme } from './monacoTheme'
 
 let initialized = false
 
