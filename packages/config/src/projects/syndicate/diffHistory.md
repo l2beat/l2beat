@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd17221ecb1a898faa60b361387f2608c8f78234d
+Generated with discovered.json: 0x7056e2ca32efa78e3bfecaae6dcacde1c75ae8f1
 
-# Diff at Wed, 14 Oct 2026 21:46:18 GMT:
+# Diff at Tue, 20 Oct 2026 08:44:26 GMT:
 
 - id: 3db5b7bf
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -120,6 +120,14 @@ discovery. Values are for block 1781595301 (main branch discovery), not current.
 ```
 
 ```diff
+    EOA (eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xab26536B7CaA4928708152272967FF1B32Fbf96a","description":"can add blob versions with their coding parameters, which define what the cert verifiers accept as a valid blob.","role":".owner"}
+    }
+```
+
+```diff
     external contract EigenDAServiceManager (eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
     +++ description: None
       type:
@@ -149,6 +157,18 @@ discovery. Values are for block 1781595301 (main branch discovery), not current.
 +        "Contract"
       targetProject:
 +        "shared-eigenda"
+    }
+```
+
+```diff
+    contract EigenDAThresholdRegistry (eth:0xab26536B7CaA4928708152272967FF1B32Fbf96a) [eigenlayer/EigenDAThresholdRegistry] {
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
++++ description: Blob versions and their coding parameters (max operators, chunk count, coding rate) that cert verifiers check certificates against, indexed by version.
++++ severity: HIGH
+      values.versionedBlobParams:
++        []
+      fieldMeta.versionedBlobParams:
++        {"severity":"HIGH","description":"Blob versions and their coding parameters (max operators, chunk count, coding rate) that cert verifiers check certificates against, indexed by version."}
     }
 ```
 

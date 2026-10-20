@@ -1128,7 +1128,10 @@
         "owner": "eth:0x002721B4790d97dC140a049936aA710152Ba92D5",
         "quorumAdversaryThresholdPercentages": "0x212121",
         "quorumConfirmationThresholdPercentages": "0x373737",
-        "quorumNumbersRequired": "0x0001"
+        "quorumNumbersRequired": "0x0001",
+        "versionedBlobParams": [
+          { "version": 0, "versionedBlobParams": [3537, 8192, 8] }
+        ]
       },
       "fieldMeta": {
         "getQuorumAdversaryThresholdPercentage": {
@@ -1142,6 +1145,10 @@
         "quorumNumbersRequired": {
           "severity": "HIGH",
           "type": "RISK_PARAMETER"
+        },
+        "versionedBlobParams": {
+          "severity": "HIGH",
+          "description": "Blob versions and their coding parameters (max operators, chunk count, coding rate) that cert verifiers check certificates against, indexed by version."
         }
       },
       "implementationNames": {
@@ -1929,7 +1936,7 @@
     "eigenlayer/EigenDAPauserRegistry": "0x650c2bb1c48c3b4074538696cc4c8cc5a1610e60b132f774c9b120c619c34086",
     "eigenlayer/EigenDARelayRegistry": "0x0d507fbf4a396f03440bf549c0390245960539ae8aee2eac66ed61a0d5e37737",
     "eigenlayer/EigenDAServiceManager": "0x43be05ba9f6891eb189c2895b180400592e5a6628f6148b82760ee4bfb6ce1c6",
-    "eigenlayer/EigenDAThresholdRegistry": "0x60726ce29319c0806396dbbc935f55a813ae0b3ae4e7af1019d742c45d281915",
+    "eigenlayer/EigenDAThresholdRegistry": "0x219df3d53ac7f8dd7c9c9c6679ec198d0f32c7129bbdf3cafbf1f7f58a8647cb",
     "eigenlayer/EjectionManager": "0xbf1efcdc54104ebb9105e95373588d3451b5a97a4fcfdc4cbab5c69278a04a8b",
     "eigenlayer/IndexRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/PaymentVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1940,7 +1947,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 26193460 },
-  "permissionsConfigHash": "0x68d69c21e1d9fabe1399ed463c4b1eb18edfd532468afd0cfd1839e2e259b167",
+  "permissionsConfigHash": "0x1666d662d36428e6c9cc77823b016e58fd3728a21fdf0cf004e089ccb7c5f8f3",
   "modelledAgainst": {
     "shared-eigenlayer": "0x7d4dc86bbe2849d7de33af96e2466d994b8f5133949b99100967a503dd0d98a7"
   },
@@ -1963,6 +1970,12 @@
           "permission": "interact",
           "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+          "description": "can add blob versions with their coding parameters, which define what the cert verifiers accept as a valid blob.",
           "role": ".owner"
         },
         {

@@ -710,7 +710,8 @@
         "owner": "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c",
         "quorumAdversaryThresholdPercentages": "0x212121",
         "quorumConfirmationThresholdPercentages": "0x373737",
-        "quorumNumbersRequired": "0x0001"
+        "quorumNumbersRequired": "0x0001",
+        "versionedBlobParams": []
       },
       "fieldMeta": {
         "getQuorumAdversaryThresholdPercentage": {
@@ -724,6 +725,10 @@
         "quorumNumbersRequired": {
           "severity": "HIGH",
           "type": "RISK_PARAMETER"
+        },
+        "versionedBlobParams": {
+          "severity": "HIGH",
+          "description": "Blob versions and their coding parameters (max operators, chunk count, coding rate) that cert verifiers check certificates against, indexed by version."
         }
       },
       "implementationNames": {
@@ -1640,7 +1645,7 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/EigenDAThresholdRegistry": "0x60726ce29319c0806396dbbc935f55a813ae0b3ae4e7af1019d742c45d281915",
+    "eigenlayer/EigenDAThresholdRegistry": "0x219df3d53ac7f8dd7c9c9c6679ec198d0f32c7129bbdf3cafbf1f7f58a8647cb",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
@@ -1657,9 +1662,9 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25328619 },
-  "permissionsConfigHash": "0xf7a301059d27821c3c30a6bf343834144dd6a3b4a7a4e9ebf190a542dd33d909",
+  "permissionsConfigHash": "0xa503513e710ed281e7f4a7f0c2a4b8109a45033f25b33294f09e2c8cc1b3d906",
   "modelledAgainst": {
-    "shared-eigenda": "0x011f5440f51cd8d539ef6e211e82731f779cfaab6b700cd98791046e2786c9d2",
+    "shared-eigenda": "0x1666d662d36428e6c9cc77823b016e58fd3728a21fdf0cf004e089ccb7c5f8f3",
     "shared-eigenlayer": "0x7d4dc86bbe2849d7de33af96e2466d994b8f5133949b99100967a503dd0d98a7"
   },
   "permissions": {
@@ -1673,8 +1678,20 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
+          "description": "can add cert verifiers to the router, changing which contract validates DA certificates from a chosen block onwards.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+          "description": "can add blob versions with their coding parameters, which define what the cert verifiers accept as a valid blob.",
           "role": ".owner"
         },
         {
@@ -2566,6 +2583,12 @@
     },
     "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xab26536B7CaA4928708152272967FF1B32Fbf96a",
+          "description": "can add blob versions with their coding parameters, which define what the cert verifiers accept as a valid blob.",
+          "role": ".owner"
+        },
         {
           "permission": "upgrade",
           "from": "eth:0xab26536B7CaA4928708152272967FF1B32Fbf96a",
