@@ -4,6 +4,7 @@ import type { CropAttestation } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { CropAttestationSync } from './CropAttestationSync'
+import type { CropsApiDeployer } from './CropsApiDeployer'
 
 const CHAIN_ID = 1
 const ATTESTER = '0x19BEC50A4e61B0e1540C37cEB3F62f56AAfb74DB'
@@ -65,11 +66,31 @@ describe(CropAttestationSync.name, () => {
     expect(repository.upsert).not.toHaveBeenCalled()
     expect(repository.delete).not.toHaveBeenCalled()
   })
+
+  it('has the CROPS API deployed with what it read', async () => {
+    const repository = mockObject<Database['cropAttestation']>({
+      upsert: mockFn().resolvesTo(undefined),
+      delete: mockFn().resolvesTo(1),
+    })
+    const deployer = mockObject<CropsApiDeployer>({
+      ensureDeployed: mockFn().resolvesTo(undefined),
+    })
+    let current: CropAttestation | undefined = CURRENT
+    const sync = createSync(repository, async () => current, deployer)
+
+    await sync.run()
+    current = undefined
+    await sync.run()
+
+    expect(deployer.ensureDeployed).toHaveBeenNthCalledWith(1, CURRENT.uid)
+    expect(deployer.ensureDeployed).toHaveBeenNthCalledWith(2, undefined)
+  })
 })
 
 function createSync(
   cropAttestation: Database['cropAttestation'],
   readCurrent: () => Promise<CropAttestation | undefined>,
+  deployer?: CropsApiDeployer,
 ) {
   return new CropAttestationSync(
     {
@@ -77,6 +98,7 @@ function createSync(
       chainId: CHAIN_ID,
       attester: ATTESTER,
       readCurrent,
+      deployer,
       intervalMs: 1000,
     },
     Logger.SILENT,
