@@ -1,4 +1,8 @@
-import { type ConfigReader, readJsonc } from '@l2beat/discovery'
+import {
+  type ConfigReader,
+  generateEntrypointsCommand,
+  readJsonc,
+} from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
@@ -8,17 +12,29 @@ import { projectParamsSchema } from './main'
 
 const GlobalEntrypoints = z.object({ import: z.array(z.string()) })
 const EntrypointsFile = z.object({
-  entrypoints: z.record(z.string(), z.unknown()).optional(),
+  entrypoints: z
+    .record(
+      z.string(),
+      z.object({
+        name: z.string().optional(),
+        type: z.string(),
+        project: z.string(),
+        isLegacy: z.boolean().optional(),
+      }),
+    )
+    .optional(),
 })
 
 const updateEntrypointsSchema = z.object({
+  create: z.boolean(),
   remove: z.array(z.string().transform(ChainSpecificAddress)),
 })
 
 // A module is a project whose entrypoints.json is imported by
 // globalEntrypoints.jsonc. Discovery only regenerates an existing file and
-// keeps vanished contracts as legacy entrypoints, so the UI creates the file
-// for a new module and drops the contracts a researcher removed on purpose.
+// keeps vanished contracts as legacy entrypoints, so after the module is
+// discovered the UI creates the file for a new module and drops the removed
+// contracts the module no longer reaches. One it still reaches stays.
 export function attachModulesRouter(
   app: Express,
   configReader: ConfigReader,
@@ -26,7 +42,7 @@ export function attachModulesRouter(
 ) {
   const globalPath = join(projectsPath, 'globalEntrypoints.jsonc')
 
-  app.post('/api/modules/:project/entrypoints', (req, res) => {
+  app.post('/api/modules/:project/entrypoints', async (req, res) => {
     const params = projectParamsSchema.safeParse(req.params)
     const body = updateEntrypointsSchema.safeParse(req.body)
     if (!params.success || !body.success) {
@@ -34,15 +50,15 @@ export function attachModulesRouter(
       return
     }
     const module = params.data.project
-    if (!configReader.projectConfigExists(module)) {
-      res.status(400).json({ error: 'Unknown project' })
+    if (!configReader.hasDiscovery(module)) {
+      res.status(400).json({ error: 'Module is not discovered' })
       return
     }
 
     const globalEntrypoints = GlobalEntrypoints.parse(readJsonc(globalPath))
     const importPath = `../projects/${module}/entrypoints.json`
     const isRegistered = globalEntrypoints.import.includes(importPath)
-    if (!isRegistered && configReader.hasDiscovery(module)) {
+    if (!isRegistered && !body.data.create) {
       res.status(400).json({ error: 'Project is not a module' })
       return
     }
@@ -51,13 +67,20 @@ export function attachModulesRouter(
       configReader.getProjectPath(module),
       'entrypoints.json',
     )
-    const entrypoints = existsSync(entrypointsPath)
-      ? (EntrypointsFile.parse(readJsonc(entrypointsPath)).entrypoints ?? {})
-      : {}
-    for (const address of body.data.remove) {
-      delete entrypoints[address]
+    if (!existsSync(entrypointsPath)) {
+      await generateEntrypointsCommand(configReader, module)
     }
-    writeJson(entrypointsPath, { entrypoints })
+    if (body.data.remove.length > 0) {
+      const { entrypoints = {} } = EntrypointsFile.parse(
+        readJsonc(entrypointsPath),
+      )
+      for (const address of body.data.remove) {
+        if (entrypoints[address]?.isLegacy) {
+          delete entrypoints[address]
+        }
+      }
+      writeJson(entrypointsPath, { entrypoints })
+    }
 
     if (!isRegistered) {
       globalEntrypoints.import.push(importPath)

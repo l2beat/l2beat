@@ -1,5 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { utimesSync, writeFileSync } from 'fs'
 import mockFs from 'mock-fs'
 import { ConfigReader } from './ConfigReader'
 
@@ -48,6 +49,18 @@ describe('resolveImports', () => {
     const reader = new ConfigReader('/base')
     const result = reader.resolveImports('/base', ['nested.jsonc'], new Set())
     expect(result).toEqual([{ maxAddresses: 456 }, { maxDepth: 7 }])
+  })
+
+  // DiscoUI keeps one reader alive while discovery rewrites entrypoints.json.
+  it('rereads an import that changed on disk since it was cached', () => {
+    const reader = new ConfigReader('/base')
+    reader.resolveImports('/base', ['valid.jsonc'], new Set())
+
+    writeFileSync('/base/valid.jsonc', JSON.stringify({ maxDepth: 5 }))
+    utimesSync('/base/valid.jsonc', new Date(2030, 0, 1), new Date(2030, 0, 1))
+    const result = reader.resolveImports('/base', ['valid.jsonc'], new Set())
+
+    expect(result).toEqual([{ maxDepth: 5 }])
   })
 })
 

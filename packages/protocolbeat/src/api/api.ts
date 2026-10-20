@@ -438,11 +438,11 @@ async function readErrorMessage(res: Response): Promise<string> {
 
 export async function updateModuleEntrypoints(
   module: string,
-  remove: string[],
+  change: { create: boolean; remove: string[] },
 ) {
   const res = await fetch(`/api/modules/${module}/entrypoints`, {
     method: 'POST',
-    body: JSON.stringify({ remove }),
+    body: JSON.stringify(change),
     headers: { 'Content-Type': 'application/json' },
   })
   if (!res.ok) {

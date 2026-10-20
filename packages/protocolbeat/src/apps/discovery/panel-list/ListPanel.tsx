@@ -75,7 +75,7 @@ function ListItemChain(props: {
             {!open && <IconChevronRight />}
             {`${props.entry.project} on ${chain}`}
           </button>
-          {!props.first && (
+          {props.entry.project !== props.openedProject && (
             <Link
               to={`/ui/p/${props.entry.project}`}
               className="mr-2 whitespace-nowrap text-coffee-400 text-xs underline hover:text-coffee-100"
