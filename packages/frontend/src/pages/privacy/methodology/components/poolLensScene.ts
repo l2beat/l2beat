@@ -12,6 +12,7 @@ import {
   SEAL_S,
   SHUFFLE_EVERY_S,
   shuffleEnvelopes,
+  stampPoint,
 } from './poolEnvelopes'
 
 /**
@@ -69,6 +70,10 @@ const LOG_S = 9
 const CRACK_S = 0.9
 /** How long a cracked note sparkles. */
 const BURST_S = 0.8
+/** How long the chain analyst's magnifier takes to reach a stamp. */
+const MAGNIFIER_MOVE_S = 0.4
+/** How long it stays on a stamp to read it. */
+const MAGNIFIER_READ_S = 0.9
 
 interface Note {
   id: number
@@ -83,6 +88,8 @@ interface Note {
   envelope: Envelope
   /** Seconds since the note reached the pool, kept after it leaves. */
   sincePool: number
+  /** The chain analyst has read its stamp. */
+  read: boolean
   inIp: string
   outIp: string
 }
@@ -108,6 +115,8 @@ export interface PoolScene {
   spawnIn: number
   nextId: number
   shuffleIn: number
+  /** The chain analyst's magnifier, moving between notes' stamps. */
+  magnifier: { from?: number; to?: number; since: number }
   notes: Note[]
   traces: Trace[]
   requests: Request[]
@@ -122,6 +131,7 @@ export function createPoolScene(design: PoolDesign): PoolScene {
     spawnIn: 0,
     nextId: 0,
     shuffleIn: SHUFFLE_EVERY_S,
+    magnifier: { since: 0 },
     notes: [],
     traces: [],
     requests: [],
@@ -199,6 +209,7 @@ export function stepPoolScene(
         .map((n) => n.envelope),
     )
   }
+  moveMagnifier(scene)
 
   for (const request of scene.requests) request.age += dt
   scene.requests = scene.requests.filter((r) => r.age < LOG_S)
@@ -222,6 +233,7 @@ function newNote(scene: PoolScene, design: PoolDesign): Note {
       ),
     },
     sincePool: 0,
+    read: false,
     inIp: requestIp(owner, design),
     outIp: '',
   }
@@ -252,6 +264,32 @@ function sealed(note: Note) {
     0,
     Math.min(1, note.t / SEAL_S, (note.stay - note.t) / SEAL_S),
   )
+}
+
+/**
+ * Reads the stamp it sits on, then moves to another sealed envelope, unread
+ * ones first. It also moves on when its envelope opens.
+ */
+function moveMagnifier(scene: PoolScene) {
+  const { to, since } = scene.magnifier
+  const target = scene.notes.find((n) => n.id === to)
+  const reading = target !== undefined && sealed(target) === 1
+  const elapsed = scene.time - since
+  if (reading && elapsed >= MAGNIFIER_MOVE_S) target.read = true
+  if (reading && elapsed < MAGNIFIER_MOVE_S + MAGNIFIER_READ_S) return
+  const choices = scene.notes.filter(
+    (n) => n.phase === 'pool' && sealed(n) === 1 && n.id !== to,
+  )
+  const unread = choices.filter((n) => !n.read)
+  const next = (unread.length > 0 ? unread : choices)[
+    Math.floor(Math.random() * (unread.length || choices.length))
+  ]
+  if (!next) return
+  scene.magnifier = {
+    from: target && hasEnvelope(target) ? to : undefined,
+    to: next.id,
+    since: scene.time,
+  }
 }
 
 /** Seconds between deposits: from one every 3 s to three a second. */
@@ -501,10 +539,29 @@ export function drawPoolScene(
           note.phase === 'pool' && (seesInside || cracked)
             ? OWNER_COLORS[note.owner]
             : undefined,
+        stamp:
+          lens === 'chainAnalyst' && note.read
+            ? tokens.brand
+            : alpha(tokens.secondary, 0.35),
         opacity: note.phase === 'out' ? 1 - note.t / EMPTY_S : 1,
       },
       tokens,
     )
+    if (lens === 'chainAnalyst' && note.read && note.phase === 'pool') {
+      tag(
+        ctx,
+        `${Math.round(note.sincePool)}s ago`,
+        p.x,
+        // Just under the envelope, which is 0.68 of its width tall.
+        p.y + envelopeWidth(l.tray) * 0.34 + 10,
+        {
+          color: tokens.brand,
+          background: alpha(tokens.brand, 0.12),
+          opacity: 1,
+          align: 'center',
+        },
+      )
+    }
     if (future && note.phase === 'pool') {
       if (!cracked && seal > 0.6) {
         ctx.beginPath()
@@ -518,6 +575,8 @@ export function drawPoolScene(
       }
     }
   }
+
+  if (lens === 'chainAnalyst') drawMagnifier(ctx, scene, l, tokens)
 
   // Coins, outside their envelopes
   for (const note of scene.notes) {
@@ -657,6 +716,42 @@ function notePosition(note: Note, l: Layout) {
     return { x: l.recipientX, y: l.rowY(note.recipient) }
   }
   return inPool
+}
+
+/** The chain analyst's magnifier, gliding from one stamp to the next. */
+function drawMagnifier(
+  ctx: CanvasRenderingContext2D,
+  scene: PoolScene,
+  l: Layout,
+  tokens: ThemeTokens,
+) {
+  const { from, to, since } = scene.magnifier
+  const stampOf = (id: number | undefined) => {
+    const note = scene.notes.find((n) => n.id === id && hasEnvelope(n))
+    if (!note) return undefined
+    return stampPoint(
+      envelopePoint(l.tray, note.envelope),
+      envelopeWidth(l.tray),
+    )
+  }
+  const end = stampOf(to)
+  if (!end) return
+  const start = stampOf(from) ?? end
+  const k = easeInOut(Math.min(1, (scene.time - since) / MAGNIFIER_MOVE_S))
+  const x = start.x + (end.x - start.x) * k
+  const y = start.y + (end.y - start.y) * k
+  ctx.save()
+  ctx.strokeStyle = tokens.brand
+  ctx.fillStyle = alpha(tokens.brand, 0.08)
+  ctx.lineWidth = 2
+  ctx.beginPath()
+  ctx.arc(x, y, 11, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.stroke()
+  ctx.lineWidth = 3
+  ctx.lineCap = 'round'
+  line(ctx, { x: x + 8, y: y + 8 }, { x: x + 14, y: y + 14 })
+  ctx.restore()
 }
 
 /** The height of the future adversary's scan across the pool. */

@@ -442,6 +442,16 @@ function Envelope({
             />
           </g>
         </g>
+        {/* The stamp: the envelope's metadata, always on it */}
+        <rect
+          x={3.5}
+          y={1}
+          width={3.4}
+          height={3.4}
+          rx={0.7}
+          fill={GREY}
+          opacity={0.35}
+        />
       </g>
     </g>
   )

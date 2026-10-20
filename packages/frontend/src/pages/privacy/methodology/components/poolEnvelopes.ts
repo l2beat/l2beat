@@ -77,6 +77,8 @@ interface EnvelopeLook {
   seal: number
   /** The owner's colour, for an adversary who can read the envelope. */
   tint?: string
+  /** The stamp's colour. Every envelope carries one: its metadata. */
+  stamp: string
   opacity: number
 }
 
@@ -117,8 +119,20 @@ export function drawEnvelope(
   ctx.lineTo(p.x, tipY)
   ctx.lineTo(p.x + w / 2 - 1, top + 1)
   ctx.stroke()
+
+  const stamp = stampPoint(p, w)
+  const size = w * 0.19
+  ctx.beginPath()
+  ctx.roundRect(stamp.x - size / 2, stamp.y - size / 2, size, size, 1)
+  ctx.fillStyle = look.stamp
+  ctx.fill()
   ctx.restore()
   return { x: p.x, y: tipY }
+}
+
+/** The stamp sits in the lower right, clear of the flap's crease. */
+export function stampPoint(p: { x: number; y: number }, w: number) {
+  return { x: p.x + w * 0.29, y: p.y + w * 0.15 }
 }
 
 function slotPoint(tray: Tray, slot: number) {
