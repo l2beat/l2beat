@@ -47,7 +47,7 @@ export interface Config {
   readonly chains: { name: string; chainId: number | undefined }[]
   readonly daBeat: DaBeatConfig | false
   readonly ecosystems: EcosystemsConfig | false
-  readonly cropAttestationsEnabled: boolean
+  readonly cropAttestations: CropAttestationsConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
     readonly url: string | undefined
@@ -339,4 +339,12 @@ export interface LiveBlobsTrackingConfig {
 export interface BlockSyncModuleConfig {
   delayFromTipInSeconds: number
   ethereumWsUrl?: string
+}
+
+export interface CropAttestationsConfig {
+  /**
+   * GitHub token allowed to run the crops-api deploy workflow. Set only where
+   * a change should republish the API, i.e. production.
+   */
+  readonly cropsApiDeployToken: string | undefined
 }

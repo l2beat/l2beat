@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { CropAttestationRecord, Database } from '@l2beat/database'
 import type { CropAttestation } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -20,6 +20,7 @@ const CURRENT: CropAttestation = {
 describe(CropAttestationSync.name, () => {
   it('stores the current attestation of the configured attester', async () => {
     const repository = mockObject<Database['cropAttestation']>({
+      find: mockFn().resolvesTo(undefined),
       upsert: mockFn().resolvesTo(undefined),
     })
     const sync = createSync(repository, async () => CURRENT)
@@ -65,11 +66,68 @@ describe(CropAttestationSync.name, () => {
     expect(repository.upsert).not.toHaveBeenCalled()
     expect(repository.delete).not.toHaveBeenCalled()
   })
+
+  it('reports a new attestation once', async () => {
+    const onChange = mockFn().resolvesTo(undefined)
+    let current = CURRENT
+    const sync = createSync(storedInMemory(), async () => current, onChange)
+
+    await sync.run()
+    await sync.run()
+    expect(onChange).toHaveBeenCalledTimes(1)
+
+    current = { ...CURRENT, uid: '0x02', revision: 2 }
+    await sync.run()
+    expect(onChange).toHaveBeenCalledTimes(2)
+  })
+
+  it('reports the attestation going away', async () => {
+    const onChange = mockFn().resolvesTo(undefined)
+    let current: CropAttestation | undefined = CURRENT
+    const sync = createSync(storedInMemory(), async () => current, onChange)
+    await sync.run()
+
+    current = undefined
+    await sync.run()
+    await sync.run()
+
+    expect(onChange).toHaveBeenCalledTimes(2)
+  })
+
+  it('retries a failed report on the next run', async () => {
+    const onChange = mockFn()
+      .rejectsWithOnce(new Error('GitHub down'))
+      .resolvesTo(undefined)
+    const sync = createSync(storedInMemory(), async () => CURRENT, onChange)
+
+    await expect(sync.run()).toBeRejectedWith('GitHub down')
+    await sync.run()
+    await sync.run()
+
+    expect(onChange).toHaveBeenCalledTimes(2)
+  })
 })
+
+/** Holds the one row the sync keeps, so runs see what earlier runs stored. */
+function storedInMemory(): Database['cropAttestation'] {
+  let row: CropAttestationRecord | undefined
+  return mockObject<Database['cropAttestation']>({
+    find: async () => row,
+    upsert: async (record) => {
+      row = record
+    },
+    delete: async () => {
+      const deleted = row ? 1 : 0
+      row = undefined
+      return deleted
+    },
+  })
+}
 
 function createSync(
   cropAttestation: Database['cropAttestation'],
   readCurrent: () => Promise<CropAttestation | undefined>,
+  onChange: () => Promise<void> = async () => {},
 ) {
   return new CropAttestationSync(
     {
@@ -77,6 +135,7 @@ function createSync(
       chainId: CHAIN_ID,
       attester: ATTESTER,
       readCurrent,
+      onChange,
       intervalMs: 1000,
     },
     Logger.SILENT,

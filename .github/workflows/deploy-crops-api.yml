@@ -24,9 +24,10 @@ on:
   push:
     branches:
       - main
-  # Picks up new attestations, which reach the chain without a commit.
+  # New attestations reach the chain without a commit. The backend dispatches
+  # this workflow when it sees one; the daily run catches a lost dispatch.
   schedule:
-    - cron: "17 * * * *"
+    - cron: "17 3 * * *"
 
 jobs:
   affected:
