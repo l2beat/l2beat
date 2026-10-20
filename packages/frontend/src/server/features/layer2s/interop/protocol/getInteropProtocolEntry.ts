@@ -128,6 +128,20 @@ export async function getInteropProtocolEntry(
     })
   }
 
+  const milestones = project.interopConfig.milestones ?? []
+  if (milestones.length > 0) {
+    sections.push({
+      type: 'MilestonesAndIncidentsSection',
+      props: {
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
+        milestones: milestones.toSorted(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        ),
+      },
+    })
+  }
+
   const updatesSection = await getUpdatesSection(
     helpers,
     project.id,

@@ -28,14 +28,6 @@ const stakeDistribution = readStakeDistribution(stakeDistributionJson)
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
-const upgrades = {
-  upgradableBy: [{ name: 'PolygonMultisig', delay: 'no' }],
-}
-
-const delayString = formatSeconds(
-  discovery.getContractValue('Timelock', 'getMinDelay'),
-)
-
 const upgradeDelay = discovery.getContractValue<number>(
   'Timelock',
   'getMinDelay',
@@ -141,7 +133,6 @@ export const polygonpos: ScalingProject = {
           'eth:0x401F6c983eA34274ec46f84D70b31C151321188b',
         ),
         tokens: '*',
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // ERC20Predicate
@@ -150,7 +141,6 @@ export const polygonpos: ScalingProject = {
         ),
         premintedTokens: ['TRADE'],
         tokens: '*',
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // MintableERC20Predicate
@@ -158,7 +148,6 @@ export const polygonpos: ScalingProject = {
           'eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4',
         ),
         tokens: '*',
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // EtherPredicate
@@ -166,7 +155,6 @@ export const polygonpos: ScalingProject = {
           'eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
         ),
         tokens: ['ETH'],
-        ...upgrades,
       }),
       discovery.getEscrowDetails({
         // ERC20EscrowPredicate for TOWER token
@@ -174,7 +162,6 @@ export const polygonpos: ScalingProject = {
           'eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4',
         ),
         tokens: '*',
-        ...upgrades,
       }),
       // ...other predicates up until PolygonERC20MintBurnPredicate do not hold funds
       discovery.getEscrowDetails({
@@ -361,91 +348,10 @@ export const polygonpos: ScalingProject = {
     ],
   },
   contracts: {
-    addresses: {
-      ethereum: [
-        discovery.getContractDetails('RootChain', {
-          description:
-            'Contract storing Polygon PoS chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails(
-          'StateSender',
-          'Smart contract allowing whitelisted addresses to send messages to contracts on Polygon PoS chain.',
-        ),
-        discovery.getContractDetails('RootChainManager', {
-          description:
-            'Main configuration contract to manage tokens, token types, escrows (predicates) for given token types.\
-          It also serves as an entry point for deposits and withdrawals effectively acting as a token router.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails('StakeManager', {
-          description:
-            'Main configuration contract to manage stakers and their voting power and validate checkpoint signatures.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails(
-          'StakingInfo',
-          'Contains logging and getter functions about staking on Polygon.',
-        ),
-        discovery.getContractDetails('ValidatorPass', {
-          description:
-            'Gates entry into the validator set. Only approved validators can join.',
-        }),
-        discovery.getContractDetails('Registry', {
-          description:
-            'Maintains the addresses of the contracts used in the system.',
-        }),
-        discovery.getContractDetails('DepositManager', {
-          description:
-            'Contract to deposit and escrow ETH, ERC20 or ERC721 tokens. Currently only used for POL.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails('WithdrawManager', {
-          description:
-            "Contract handling users' withdrawal finalization for tokens escrowed in DepositManager.",
-          ...upgrades,
-        }),
-        discovery.getContractDetails('ERC20PredicateBurnOnly', {
-          description:
-            'Contract used to initiate ERC20 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
-        }),
-        discovery.getContractDetails('ERC721PredicateBurnOnly', {
-          description:
-            'Contract used to initiate ERC721 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
-        }),
-
-        discovery.getContractDetails('EventsHub', {
-          description: 'Contains events used by other contracts in the system.',
-          ...upgrades,
-        }),
-
-        discovery.getContractDetails(
-          'ExitNFT',
-          'NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).',
-        ),
-        discovery.getContractDetails(
-          'Timelock',
-          `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,
-        ),
-      ],
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: {
-    ethereum: {
-      actors: [
-        discovery.getMultisigPermission(
-          'PolygonMultisig',
-          'Can propose and execute code upgrades. Can arbitrarily moves tokens out of the ERC20 escrow without a contract upgrade.',
-        ),
-        discovery.getPermissionDetails(
-          'Validator entry approvers',
-          discovery.getPermissionedAccounts('ValidatorPass', 'passIssuerAC'),
-          'Can approve new validators to join the Polygon PoS validator set. The Governance contract acts for the Polygon Multisig.',
-        ),
-      ],
-    },
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
     {

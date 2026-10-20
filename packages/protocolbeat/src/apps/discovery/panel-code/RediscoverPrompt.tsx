@@ -29,6 +29,7 @@ export function RediscoverPrompt() {
             queryClient.invalidateQueries({
               queryKey: ['projects', project],
             })
+            queryClient.invalidateQueries({ queryKey: ['address-usage'] })
           })
         }}
         disabled={command.inFlight}

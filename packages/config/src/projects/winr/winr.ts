@@ -186,7 +186,7 @@ export const winr: ScalingProject = orbitStackL3({
       url: 'https://arbiscan.io/tx/0xe3dc71cb07fe7af204af6862884be9162b11cc7455660ff2be9562a12afd604c',
       date: '2025-05-12T00:00:00Z',
       description:
-        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge',
+        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge.',
       type: 'general',
     },
     {

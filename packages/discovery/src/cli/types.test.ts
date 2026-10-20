@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { PositiveInteger } from './types'
+import { NonNegativeInteger, PositiveInteger } from './types'
 
 describe('PositiveInteger', () => {
   it('takes a count of one or more', async () => {
@@ -18,5 +18,23 @@ describe('PositiveInteger', () => {
       )
     }
     await expect(PositiveInteger.from('three')).toBeRejectedWith('Not a number')
+  })
+})
+
+describe('NonNegativeInteger', () => {
+  it('takes zero and up', async () => {
+    expect(await NonNegativeInteger.from('0')).toEqual(0)
+    expect(await NonNegativeInteger.from('3')).toEqual(3)
+  })
+
+  it('rejects a negative, a fraction and a word', async () => {
+    for (const raw of ['-1', '0.5']) {
+      await expect(NonNegativeInteger.from(raw)).toBeRejectedWith(
+        'Expected a non-negative integer',
+      )
+    }
+    await expect(NonNegativeInteger.from('two')).toBeRejectedWith(
+      'Not a number',
+    )
   })
 })

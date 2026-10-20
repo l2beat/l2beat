@@ -21,6 +21,8 @@ const TOPIC_B =
 const POOL = EthereumAddress('0x3333333333333333333333333333333333333333')
 const USER = EthereumAddress('0x4444444444444444444444444444444444444444')
 const POOL_TOPIC = `0x${'00'.repeat(12)}${POOL.slice(2).toLowerCase()}`
+const OTHER_POOL = EthereumAddress('0x5555555555555555555555555555555555555555')
+const OTHER_POOL_TOPIC = `0x${'00'.repeat(12)}${OTHER_POOL.slice(2).toLowerCase()}`
 
 describe(PrivacyFlowIndexer.name, () => {
   describe(PrivacyFlowIndexer.prototype.multiUpdate.name, () => {
@@ -886,14 +888,14 @@ describe(PrivacyFlowIndexer.name, () => {
         50,
         150,
         [ADDRESS_B.toString()],
-        [[ERC20_TRANSFER_TOPIC], null, POOL_TOPIC],
+        [[ERC20_TRANSFER_TOPIC], null, [POOL_TOPIC]],
       )
       expect(logsProvider.getLogs).toHaveBeenNthCalledWith(
         3,
         50,
         150,
         [ADDRESS_B.toString()],
-        [[ERC20_TRANSFER_TOPIC], POOL_TOPIC],
+        [[ERC20_TRANSFER_TOPIC], [POOL_TOPIC]],
       )
 
       const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
@@ -905,6 +907,89 @@ describe(PrivacyFlowIndexer.name, () => {
         ['config-withdrawal', 'withdrawal', 7n],
       ])
     })
+  })
+
+  it('queries configurations filtering the same topic positions together', async () => {
+    const from = UnixTime.toStartOf(UnixTime(0), 'day')
+    const to = from + 5 * UnixTime.HOUR
+    const blockTimestamp = from + UnixTime.HOUR
+    const configs = [
+      withTopics(
+        flowConfig({
+          id: 'config-pool',
+          address: ADDRESS_A,
+          event: TOPIC_A,
+          priceId: 'ethereum',
+          decimals: 0,
+          fixedAmount: '7',
+        }),
+        [POOL_TOPIC],
+      ),
+      withTopics(
+        flowConfig({
+          id: 'config-other-pool',
+          address: ADDRESS_A,
+          event: TOPIC_A,
+          priceId: 'ethereum',
+          decimals: 0,
+          fixedAmount: '5',
+        }),
+        [OTHER_POOL_TOPIC],
+      ),
+    ]
+    const logsProvider = mockObject<LogsProvider>({
+      getLogs: mockFn().returnsOnce([
+        fixedLog(POOL_TOPIC, '0xtx1', blockTimestamp),
+        fixedLog(OTHER_POOL_TOPIC, '0xtx2', blockTimestamp),
+      ]),
+    })
+    const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      upsertMany: mockFn().returnsOnce(undefined),
+    })
+    const indexer = new PrivacyFlowIndexer(
+      {
+        chain: 'ethereum',
+        configurations: configs,
+        blockProvider: mockObject<BlockProvider>({}),
+        logsProvider,
+        db: mockDatabase({
+          privacyBlockTimestamp: mockObject<Database['privacyBlockTimestamp']>({
+            findBlockNumberByChainAndTimestamp: mockFn()
+              .returnsOnce(50)
+              .returnsOnce(150),
+          }),
+          privacyPrice: mockObject<Database['privacyPrice']>({
+            getPricesByPriceIdsInRange: mockFn().returnsOnce([
+              {
+                priceId: 'ethereum',
+                timestamp: UnixTime.toStartOf(blockTimestamp, 'hour'),
+                priceUsd: 1,
+                configurationId: 'price-1',
+              },
+            ]),
+          }),
+          privacyFlowEvent: privacyFlowEventRepo,
+        }),
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+      },
+      Logger.SILENT,
+    )
+
+    const updateFn = await indexer.multiUpdate(from, to, configs)
+    await updateFn()
+
+    expect(logsProvider.getLogs).toHaveBeenOnlyCalledWith(
+      50,
+      150,
+      [ADDRESS_A.toString()],
+      [[TOPIC_A], [POOL_TOPIC, OTHER_POOL_TOPIC]],
+    )
+    const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
+    expect(records?.map((r) => [r.configurationId, r.amount])).toEqual([
+      ['config-pool', 7n],
+      ['config-other-pool', 5n],
+    ])
   })
 
   describe(PrivacyFlowIndexer.prototype.trimData.name, () => {
@@ -1115,6 +1200,33 @@ function transferLog(
     address: ADDRESS_B.toString(),
     topics: encoded.topics,
     data: encoded.data,
+    blockNumber: 100,
+    blockHash: '0x',
+    transactionHash,
+    logIndex: 0,
+    blockTimestamp,
+  }
+}
+
+function withTopics(
+  configuration: Configuration<PrivacyFlowIndexerConfig>,
+  topics: PrivacyLogTopicFilter,
+): Configuration<PrivacyFlowIndexerConfig> {
+  return {
+    ...configuration,
+    properties: { ...configuration.properties, topics },
+  }
+}
+
+function fixedLog(
+  topic1: string,
+  transactionHash: string,
+  blockTimestamp: number,
+): Log {
+  return {
+    address: ADDRESS_A.toString(),
+    topics: [TOPIC_A, topic1],
+    data: '0x',
     blockNumber: 100,
     blockHash: '0x',
     transactionHash,

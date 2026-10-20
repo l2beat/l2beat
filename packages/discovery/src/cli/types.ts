@@ -43,3 +43,16 @@ export const PositiveInteger: Type<string, number> = extendType(number, {
   displayName: 'positive integer',
   description: 'a positive integer',
 })
+
+export const NonNegativeInteger: Type<string, number> = extendType(number, {
+  from(value): Promise<number> {
+    if (!Number.isInteger(value) || value < 0) {
+      return Promise.reject(
+        new Error('Expected a non-negative integer', { cause: { value } }),
+      )
+    }
+    return Promise.resolve(value)
+  },
+  displayName: 'non-negative integer',
+  description: 'a non-negative integer',
+})

@@ -20,6 +20,7 @@ import { DiffoveryController } from './diffovery/DiffoveryController'
 import { FlatSourceClient } from './diffovery/FlatSourceClient'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
+import { buildAddressUsage, readUsageSources } from './getAddressUsage'
 import {
   getCodeFromDisk,
   getCodeFromEtherscan,
@@ -313,6 +314,10 @@ export function createDiscoveryUiApp({
         configHealthService,
       )
       res.json(response)
+    })
+
+    app.get('/api/address-usage', (_req, res) => {
+      res.json(buildAddressUsage(readUsageSources(configReader)))
     })
 
     app.get('/api/handlers', (_req, res) => {

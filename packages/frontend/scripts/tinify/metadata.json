@@ -1620,5 +1620,7 @@
   "static/icons/zkapi.png": "786c2a0ddf6c5deea8a56bb4085e43bd",
   "static/meta-images/privacy/projects/zkapi/opengraph-image.png": "14ca4ef75b4765d2d260746ac83f7859",
   "static/meta-images/zk-catalog/projects/zkapi/opengraph-image.png": "a3fc9515fe5b792b978f60351717a2b2",
-  "static/meta-images/blobs/opengraph-image.png": "1a8282b24faef59d4082d191b9fe7c51"
+  "static/meta-images/blobs/opengraph-image.png": "1a8282b24faef59d4082d191b9fe7c51",
+  "static/icons/interfold-crisp.png": "f1f5d0717b879ee7f9279c16a2ccbe14",
+  "static/meta-images/privacy/projects/interfold-crisp/opengraph-image.png": "cafe857b052a8b0d5e02489bdbf68fc2"
 }
