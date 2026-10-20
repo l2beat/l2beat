@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xc257e4081670ca84a395fe4868a370650c4ff5ac
+
+# Diff at Tue, 20 Oct 2026 10:37:26 GMT:
+
+- id: 4af8ffd4
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1791896958
+- current timestamp: 1792492581
+
+## Description
+
+Queued and executed ZIP-18 (resubmission of v31 upgrade).
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        17
++        18
+    }
+```
+
 Generated with discovered.json: 0x48188645253047733ca152d5439ac80ce241e3f8
 
 # Diff at Fri, 16 Oct 2026 09:21:40 GMT:

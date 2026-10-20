@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x5eed46199ca30f8b6e7e7a781b942682ca5cc4ca
+
+# Diff at Tue, 20 Oct 2026 10:35:55 GMT:
+
+- id: 278775b5
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1792144211
+- current timestamp: 1792492486
+
+## Description
+
+Sophon chain admin ms increased execution delay from 3 hours to 1 day (following governance proposal ZIP-17).
+
+Also added a new ms member.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
++++ severity: HIGH
+      values.executionDelaySophon:
+-        10800
++        86400
++++ severity: HIGH
+      values.executionDelaySophon_fmt:
+-        "3h"
++        "1d"
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x1b3CfD17505Bb60a39CbAc152Db73d9343Cf2FDe"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 7 (29%)"
+    }
+```
+
 Generated with discovered.json: 0xfac49f5b7ab389d7e08db474948eb59edc3fc705
 
 # Diff at Fri, 16 Oct 2026 10:36:23 GMT:

@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1792157951,
+      "type": "state",
+      "contract": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+      "transaction": "0xc137dd8e214c9e539183f9cb415187320e1798fac1337e9f731061ff11b3a706",
+      "updateId": "278775b5",
+      "reason": "Raised the Sophon execution delay in the ValidatorTimelock from 3h to 1d (following ZIP-17); executed by the SophonChainAdminMultisig."
+    }
+  ]
+}

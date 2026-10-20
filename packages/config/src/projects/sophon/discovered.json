@@ -1,6 +1,6 @@
 {
   "name": "sophon",
-  "timestamp": 1792144211,
+  "timestamp": 1792492486,
   "configHash": "0x46970e39aa456aadca06617d044b80040ccef9f242d5f52a429ea033bcf6debe",
   "entries": [
     {
@@ -113,8 +113,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 910,
-        "latestBlock": 3598208,
+        "latestAuthoritySetId": 914,
+        "latestBlock": 3615488,
         "relayers": ["eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -173,7 +173,7 @@
         "feePerByte": 0,
         "feeRecipient": "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1885,
+        "messageId": 1886,
         "owner": "eth:0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
@@ -361,7 +361,7 @@
           ]
         ],
         "$upgradeCount": 13,
-        "baseTokenGasPriceMultiplierDenominator": 990639,
+        "baseTokenGasPriceMultiplierDenominator": 735949,
         "baseTokenGasPriceMultiplierNominator": 1000000000000,
         "facetAddresses": [
           "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
@@ -495,12 +495,12 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 39713,
-        "getTotalBatchesExecuted": 39711,
-        "getTotalBatchesVerified": 39713,
-        "getTotalBlocksCommitted": 39713,
-        "getTotalBlocksExecuted": 39711,
-        "getTotalBlocksVerified": 39713,
+        "getTotalBatchesCommitted": 39744,
+        "getTotalBatchesExecuted": 39736,
+        "getTotalBatchesVerified": 39744,
+        "getTotalBlocksCommitted": 39744,
+        "getTotalBlocksExecuted": 39736,
+        "getTotalBlocksVerified": 39744,
         "getTotalPriorityTxs": 10212,
         "getTransactionFilterer": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
@@ -643,6 +643,11 @@
       }
     },
     {
+      "address": "eth:0x1b3CfD17505Bb60a39CbAc152Db73d9343Cf2FDe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x1B5a420Dc78290b0F30ED12634Fa9b068A22F96c",
       "type": "EOA",
       "proxyType": "EOA"
@@ -688,8 +693,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "executionDelay": 10800,
         "executionDelay_fmt": "3h",
-        "executionDelaySophon": 10800,
-        "executionDelaySophon_fmt": "3h",
+        "executionDelaySophon": 86400,
+        "executionDelaySophon_fmt": "1d",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getName": "ValidatorTimelock",
         "MAX_EXECUTION_DELAY": 2592000,
@@ -1192,6 +1197,7 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x1b3CfD17505Bb60a39CbAc152Db73d9343Cf2FDe",
           "eth:0x3b6036d410cA018661324766680674921a8b2d89",
           "eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845",
           "eth:0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336",
@@ -1203,8 +1209,8 @@
         "domainSeparator": "0x4ee440c593310d163ce5ee409e8b60941e58aa6b74d5cf7b249e342d0e5189fd",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 55,
+        "multisigThreshold": "2 of 7 (29%)",
+        "nonce": 57,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2159,8 +2165,8 @@
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c",
     "succinct/SP1Vector": "0x726d693de65ff63629181e9a27ee8342d7521ac412c6676152f27dd13bb195ad"
   },
-  "usedBlockNumbers": { "ethereum": 26204306 },
-  "permissionsConfigHash": "0x4cc3e2799d8ee21e8a51a31903b8752a81741011fe8f5985de9a764ff5f14799",
+  "usedBlockNumbers": { "ethereum": 26233229 },
+  "permissionsConfigHash": "0x69ef2970db91d98d170edf468e144828f2dffbb25d7cc43ee6588594167a7b98",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b",
     "shared-zk-stack": "0xfbe7658b1ab3d2cd567584766c4ba39c8fee8e807017ea7b090d3429baf5a073"

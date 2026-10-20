@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1791897274,
+  "timestamp": 1792492813,
   "configHash": "0xa9ed31f02d0119e7d4d556613de8f6bbde8b0a5cf8987f93eecc61ea1de7b876",
   "entries": [
     {
@@ -334,11 +334,6 @@
       }
     },
     {
-      "address": "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ProxyAdmin",
       "address": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
       "type": "Contract",
@@ -518,6 +513,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x741aAf7dB0f4960Be696CF1727b970F2FA39028c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Delay",
       "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
       "type": "Contract",
@@ -651,11 +651,6 @@
       }
     },
     {
-      "address": "eth:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xaa8fCd4955e46C0f6A58f84c5c969660b49e4CF2",
       "type": "EOA",
       "proxyType": "EOA"
@@ -679,6 +674,11 @@
       "implementationNames": {
         "eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F": "PlonkVerifierFull"
       }
+    },
+    {
+      "address": "eth:0xb275d362C8c1A226eb538FC2349ed9FA00C83AF8",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xB4dAebe4D01f467701F95f0196fc29033c54dBcb",
@@ -708,10 +708,10 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
+          "eth:0x741aAf7dB0f4960Be696CF1727b970F2FA39028c",
           "eth:0x727833aB68F32a7f2ab96f15aD67336660eCBBD0",
           "eth:0x7E55b79A01BD9125CD213Bc9F533d21Eb3bD68c5",
-          "eth:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451",
+          "eth:0xb275d362C8c1A226eb538FC2349ed9FA00C83AF8",
           "eth:0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2"
         ],
         "$threshold": 3,
@@ -721,7 +721,7 @@
           "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 20,
+        "nonce": 21,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -949,9 +949,9 @@
         "CONTRACT_VERSION": "8.0",
         "COOLDOWN_DURATION": 172800,
         "COOLDOWN_DURATION_fmt": "2d",
-        "currentFinalizedShnarf": "0x9e60d60e3cee1ebb192ea6ca1187f2c4e1b5dc5b7dd032e81eba8fd1c9e3503b",
-        "currentFinalizedState": "0xd344885456b3cdf7702c7ecbcbd4f7acbe29813a72f7baa6a712a7225f7a5612",
-        "currentPeriodAmountInWei": "323684858351309000",
+        "currentFinalizedShnarf": "0x8e596955ce909fb42a022db27b5931432164db01249e5457ae9c8007915cf6ab",
+        "currentFinalizedState": "0xdf72c8a696d53bb44897588359d40f6082752a6ca840c5d4ac868f524ff8bd77",
+        "currentPeriodAmountInWei": "13874042443490121258",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
@@ -1802,11 +1802,6 @@
       ]
     },
     {
-      "address": "linea:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "linea:0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1936,8 +1931,8 @@
         "allUnpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "CONTRACT_VERSION": "1.0",
         "COOLDOWN_DURATION": 172800,
-        "currentPeriodAmountInWei": 6400000000000000,
-        "currentPeriodEnd": 1791969298,
+        "currentPeriodAmountInWei": "2588208478456226710",
+        "currentPeriodEnd": 1792506304,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -1961,11 +1956,11 @@
         "l1l2Unpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "l2l1Pausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "l2l1Unpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
-        "lastAnchoredL1MessageNumber": 810775,
+        "lastAnchoredL1MessageNumber": 811128,
         "limitInWei": "8000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 108558,
+        "nextMessageNumber": 108623,
         "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_DURATION": 172800,
@@ -2045,6 +2040,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "linea:0x741aAf7dB0f4960Be696CF1727b970F2FA39028c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "linea:0x7E55b79A01BD9125CD213Bc9F533d21Eb3bD68c5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2104,7 +2104,7 @@
       "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
-      "address": "linea:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451",
+      "address": "linea:0xb275d362C8c1A226eb538FC2349ed9FA00C83AF8",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2131,10 +2131,10 @@
         "$immutable": false,
         "$implementation": "linea:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
         "$members": [
-          "linea:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
+          "linea:0x741aAf7dB0f4960Be696CF1727b970F2FA39028c",
           "linea:0x727833aB68F32a7f2ab96f15aD67336660eCBBD0",
           "linea:0x7E55b79A01BD9125CD213Bc9F533d21Eb3bD68c5",
-          "linea:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451",
+          "linea:0xb275d362C8c1A226eb538FC2349ed9FA00C83AF8",
           "linea:0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2"
         ],
         "$threshold": 3,
@@ -2142,7 +2142,7 @@
         "getChainId": 59144,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3662,8 +3662,8 @@
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/YieldManager": "0x81618822c5f6142492897bb40b0042b6b278e7a79970835861b25e4ff087d3c0"
   },
-  "usedBlockNumbers": { "ethereum": 26183799, "linea": 32312277 },
-  "permissionsConfigHash": "0xf49cfea4e29aeafa5d92e463f33237818af544e2270838009fb197034328d471",
+  "usedBlockNumbers": { "ethereum": 26233257, "linea": 32376073 },
+  "permissionsConfigHash": "0x385f836ee7650d4ac2d2de55e74e6fcc485b1c051a279aee356394f29eae8070",
   "permissions": {
     "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0": {
       "receivedPermissions": [
