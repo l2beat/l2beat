@@ -2,13 +2,17 @@ import type { PrivacyAdversaryId } from '@l2beat/config'
 import type { ThemeTokens } from '~/hooks/useThemeTokens'
 import { alpha } from './canvasColor'
 import {
-  type DrumCoin,
-  drawDrum,
-  drawDrumGlare,
-  dropCoin,
-  drumPoint,
-  tumble,
-} from './poolDrum'
+  drawEnvelope,
+  EMPTY_S,
+  type Envelope,
+  envelopePoint,
+  envelopeWidth,
+  moveEnvelope,
+  pickSlot,
+  SEAL_S,
+  SHUFFLE_EVERY_S,
+  shuffleEnvelopes,
+} from './poolEnvelopes'
 
 /**
  * A made-up pool that never stops: senders deposit, coins wait inside, and
@@ -65,8 +69,6 @@ const LOG_S = 9
 const CRACK_S = 0.9
 /** How long a cracked note sparkles. */
 const BURST_S = 0.8
-/** How long a note takes to lose its colour in the drum. */
-const MIX_S = 0.9
 /** Old deposits that stay in the pool for good. */
 const DORMANT = 6
 
@@ -84,8 +86,8 @@ interface Note {
    * withdraw soon after they deposit, so an analyst discounts old deposits.
    */
   dormant: boolean
-  /** Where it tumbles in the drum. */
-  coin: DrumCoin
+  /** Shown from the deposit until just after the withdrawal leaves it. */
+  envelope: Envelope
   /** Seconds since the note reached the pool, kept after it leaves. */
   sincePool: number
   inIp: string
@@ -112,6 +114,7 @@ export interface PoolScene {
   time: number
   spawnIn: number
   nextId: number
+  shuffleIn: number
   notes: Note[]
   traces: Trace[]
   requests: Request[]
@@ -125,6 +128,7 @@ export function createPoolScene(design: PoolDesign): PoolScene {
     time: 0,
     spawnIn: 0,
     nextId: 0,
+    shuffleIn: SHUFFLE_EVERY_S,
     notes: [],
     traces: [],
     requests: [],
@@ -135,7 +139,7 @@ export function createPoolScene(design: PoolDesign): PoolScene {
     scene.notes.push({
       ...newNote(scene, design),
       phase: 'pool',
-      t: MIX_S,
+      t: SEAL_S,
       stay: Number.POSITIVE_INFINITY,
       dormant: true,
       // Long since cracked, if the future adversary can crack it.
@@ -201,10 +205,18 @@ export function stepPoolScene(
     }
   }
   scene.notes = scene.notes.filter((n) => n.phase !== 'done' || n.t < FADE_S)
-  tumble(
-    scene.notes.filter((n) => n.phase === 'pool').map((n) => n.coin),
-    dt,
-  )
+  for (const note of scene.notes) moveEnvelope(note.envelope, dt)
+  scene.shuffleIn -= dt
+  if (scene.shuffleIn <= 0) {
+    scene.shuffleIn = SHUFFLE_EVERY_S
+    const movers = scene.notes.filter(canShuffle)
+    shuffleEnvelopes(
+      movers.map((n) => n.envelope),
+      scene.notes
+        .filter((n) => hasEnvelope(n) && !movers.includes(n))
+        .map((n) => n.envelope),
+    )
+  }
 
   for (const request of scene.requests) request.age += dt
   scene.requests = scene.requests.filter((r) => r.age < LOG_S)
@@ -223,11 +235,42 @@ function newNote(scene: PoolScene, design: PoolDesign): Note {
     t: 0,
     stay: 2.5 + Math.random() * 5,
     dormant: false,
-    coin: dropCoin(),
+    envelope: {
+      slot: pickSlot(
+        scene.notes.filter(hasEnvelope).map((n) => n.envelope.slot),
+      ),
+    },
     sincePool: 0,
     inIp: requestIp(owner, design),
     outIp: '',
   }
+}
+
+function hasEnvelope(note: Note) {
+  return (
+    note.phase === 'in' ||
+    note.phase === 'pool' ||
+    (note.phase === 'out' && note.t < EMPTY_S)
+  )
+}
+
+/** Sealed, and not about to open: it can swap places. */
+function canShuffle(note: Note) {
+  return (
+    note.phase === 'pool' &&
+    !note.envelope.move &&
+    note.t > SEAL_S &&
+    note.t < note.stay - 1
+  )
+}
+
+/** 0 open, 1 sealed: it closes behind its coin and opens to let it out. */
+function sealed(note: Note) {
+  if (note.phase !== 'pool') return 0
+  return Math.max(
+    0,
+    Math.min(1, note.t / SEAL_S, (note.stay - note.t) / SEAL_S),
+  )
 }
 
 /** Seconds between deposits: from one every 3 s to three a second. */
@@ -349,7 +392,6 @@ export function drawPoolScene(
   ctx.strokeStyle = seesInside ? tokens.brand : tokens.divider
   ctx.stroke()
   ctx.lineWidth = 1
-  drawDrum(ctx, l.drum, scene.time, tokens)
   if (future) drawQuantumScan(ctx, l, scene.time)
 
   // Headings
@@ -465,9 +507,54 @@ export function drawPoolScene(
     }
   }
 
-  // Coins
+  // Envelopes, lowest last so they overlap like a stack
+  const envelopes = scene.notes
+    .filter(hasEnvelope)
+    .map((note) => ({ note, p: envelopeAt(note, l, scene.time) }))
+    .sort((a, b) => a.p.y - b.p.y)
+  for (const { note, p } of envelopes) {
+    const cracked = breaksNotes && note.sincePool > CRACK_S
+    const seal = sealed(note)
+    const sealPoint = drawEnvelope(
+      ctx,
+      p,
+      envelopeWidth(l.tray),
+      {
+        seal,
+        pop: popAfterSealing(note),
+        tint:
+          note.phase === 'pool' && (seesInside || cracked)
+            ? OWNER_COLORS[note.owner]
+            : undefined,
+        heart: !future,
+        opacity:
+          note.phase === 'out'
+            ? 1 - note.t / EMPTY_S
+            : // The chain analyst discounts dormant deposits.
+              note.dormant && lens === 'chainAnalyst'
+              ? 0.35
+              : 1,
+      },
+      tokens,
+    )
+    if (future && note.phase === 'pool') {
+      if (!cracked && seal > 0.6) {
+        ctx.beginPath()
+        ctx.arc(sealPoint.x, sealPoint.y, 5, 0, Math.PI * 2)
+        ctx.fillStyle = tokens.secondary
+        ctx.fill()
+        drawLock(ctx, sealPoint.x, sealPoint.y, tokens.surface)
+        if (!design.ellipticCurves) drawShieldGlint(ctx, p, l, scene.time)
+      } else if (cracked && note.sincePool < CRACK_S + BURST_S) {
+        drawQuantumBurst(ctx, p, (note.sincePool - CRACK_S) / BURST_S, note.id)
+      }
+    }
+  }
+
+  // Coins, outside their envelopes
   for (const note of scene.notes) {
-    const p = notePosition(note, l)
+    if (note.phase === 'pool') continue
+    const p = notePosition(note, l, scene.time)
     const ownerColor = OWNER_COLORS[note.owner] ?? tokens.secondary
     const cracked = breaksNotes && note.sincePool > CRACK_S
     const left = note.phase === 'out' || note.phase === 'done'
@@ -476,25 +563,14 @@ export function drawPoolScene(
       seesInside ||
       cracked ||
       ((publicLinks || ipLinks) && left)
-    // The chain analyst discounts dormant deposits, so they fade in its view.
-    const opacity =
-      note.phase === 'done'
-        ? 1 - note.t / FADE_S
-        : note.dormant && lens === 'chainAnalyst'
-          ? 0.35
-          : 1
-    // A hidden coin loses its colour as it tumbles, not all at once.
-    const tint = revealed
-      ? 1
-      : note.phase === 'pool'
-        ? Math.max(0, 1 - note.t / MIX_S)
-        : 0
+    const opacity = note.phase === 'done' ? 1 - note.t / FADE_S : 1
 
     if (note.phase === 'in' || note.phase === 'out') {
       for (let k = 1; k <= 5; k++) {
         const past = notePosition(
           { ...note, t: Math.max(0, note.t - k * 0.035) },
           l,
+          scene.time,
         )
         ctx.globalAlpha = (opacity * 0.12 * (6 - k)) / 5
         ctx.beginPath()
@@ -508,14 +584,12 @@ export function drawPoolScene(
     ctx.arc(p.x, p.y, 6, 0, Math.PI * 2)
     ctx.fillStyle = alpha(tokens.secondary, 0.6)
     ctx.fill()
-    if (tint > 0) {
-      ctx.globalAlpha = opacity * tint
+    if (revealed) {
       ctx.shadowColor = ownerColor
       ctx.shadowBlur = 10
       ctx.fillStyle = ownerColor
       ctx.fill()
       ctx.shadowBlur = 0
-      ctx.globalAlpha = opacity
     }
 
     if (future && note.phase !== 'in') {
@@ -541,7 +615,6 @@ export function drawPoolScene(
     }
     ctx.globalAlpha = 1
   }
-  drawDrumGlare(ctx, l.drum, tokens)
 
   if (lens === 'chainAnalyst') {
     const waiting = countWaiting(scene)
@@ -576,10 +649,12 @@ function getLayout(width: number, height: number) {
   const rightStart = pool.x + pool.width + 12
   const rightBand = { x: rightStart, width: recipientX - 18 - rightStart }
   const rowY = (i: number) => top + ((i + 0.5) * (bottom - top)) / OWNERS
-  const drum = {
-    x: pool.x + pool.width / 2,
-    y: (top + bottom) / 2,
-    r: Math.min(pool.width, bottom - top) / 2 - 10,
+  // Room above for open flaps, and below for the chain analyst's count.
+  const tray = {
+    x: pool.x + 6,
+    y: top + 16,
+    width: pool.width - 12,
+    height: bottom - top - 40,
   }
   return {
     top,
@@ -587,7 +662,7 @@ function getLayout(width: number, height: number) {
     senderX,
     recipientX,
     pool,
-    drum,
+    tray,
     leftBand,
     rightBand,
     rowY,
@@ -596,14 +671,14 @@ function getLayout(width: number, height: number) {
 
 type Layout = ReturnType<typeof getLayout>
 
-function notePosition(note: Note, l: Layout) {
-  const inDrum = drumPoint(l.drum, note.coin)
+function notePosition(note: Note, l: Layout, time: number) {
+  const inPool = envelopeAt(note, l, time)
   if (note.phase === 'in' || note.phase === 'out') {
     const from =
-      note.phase === 'in' ? { x: l.senderX, y: l.rowY(note.owner) } : inDrum
+      note.phase === 'in' ? { x: l.senderX, y: l.rowY(note.owner) } : inPool
     const to =
       note.phase === 'in'
-        ? inDrum
+        ? inPool
         : { x: l.recipientX, y: l.rowY(note.recipient) }
     const k = easeInOut(Math.min(note.t / TRAVEL_S, 1))
     return {
@@ -614,7 +689,19 @@ function notePosition(note: Note, l: Layout) {
   if (note.phase === 'done') {
     return { x: l.recipientX, y: l.rowY(note.recipient) }
   }
-  return inDrum
+  return inPool
+}
+
+/** A sealed envelope bobs gently, each to its own beat. */
+function envelopeAt(note: Note, l: Layout, time: number) {
+  const bob = sealed(note) * 1.5 * Math.sin(time * 2 + note.id)
+  return envelopePoint(l.tray, note.envelope, bob)
+}
+
+/** 0 to 1 and back, just after the envelope seals. */
+function popAfterSealing(note: Note) {
+  const k = (note.t - SEAL_S) / 0.3
+  return note.phase === 'pool' && k > 0 && k < 1 ? Math.sin(Math.PI * k) : 0
 }
 
 /** The height of the future adversary's scan across the pool. */
