@@ -925,6 +925,31 @@ Using this value you can determine if the data is posted an L1 or to a DAC.
 }
 ```
 
+### TimelockController scheduled transactions handler
+
+Lists the operations of an OpenZeppelin `TimelockController` that are scheduled and neither executed nor cancelled. It replays `CallScheduled`, `CallExecuted` and `Cancelled`, groups the calls of a batch under their operation id, decodes every call against the target's verified ABI (falling back to the proxy implementation's ABI, and to the raw selector when neither knows it), and reads `getTimestamp(id)` for the moment the operation becomes executable. Executed and cancelled operations are left out so the field shows what can still happen to the project rather than its whole history.
+
+**Parameters:**
+
+- `type` - the literal: `"timelockControllerScheduledTransactions"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "scheduledOperations": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "timelockControllerScheduledTransactions"
+      }
+    }
+  }
+}
+```
+
+Each entry has `id`, `scheduledAtBlock`, `delay`, `readyAt` (unix seconds), `ready` (whether the delay has elapsed at the discovery block), `predecessor` and `calls`, where every call has `target`, `value`, `function` and `inputs`. A call that could not be decoded keeps `function` as the selector, `inputs.calldata` as the raw data and `decodingFailed: true`.
+
 ### Optimism DA handler
 
 Downloads the last ten transactions submitted to L1 by a sequencer and compares the calldata length to see if it looks like the rollup is posting data to an external DA, like Celestia.

@@ -103,6 +103,10 @@ import {
 } from './StarkWareNamedStorageHandler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
 import {
+  TimelockControllerScheduledTransactionsHandler,
+  TimelockControllerScheduledTransactionsHandlerDefinition,
+} from './TimelockControllerScheduledTransactionsHandler'
+import {
   TradableDefinition,
   TradableHandler,
 } from './TradableHandler/TradableHandler'
@@ -148,6 +152,7 @@ const DEFINITIONS = [
   ZKsyncEraValidatorsHandlerDefinition,
   OrbitPostsBlobsDefinition,
   PolygonCDKScheduledTransactionsHandlerDefinition,
+  TimelockControllerScheduledTransactionsHandlerDefinition,
   ERC20DataDefinition,
   TradableDefinition,
   YieldFiMintersDefinition,
@@ -192,6 +197,8 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   orbitPostsBlobs: OrbitPostsBlobsDefinition,
   polygoncdkScheduledTransactions:
     PolygonCDKScheduledTransactionsHandlerDefinition,
+  timelockControllerScheduledTransactions:
+    TimelockControllerScheduledTransactionsHandlerDefinition,
   ERC20Data: ERC20DataDefinition,
   tradable: TradableDefinition,
   YieldFiMinters: YieldFiMintersDefinition,
@@ -261,6 +268,8 @@ export function getUserHandler(
       return new OrbitPostsBlobsHandler(field, definition)
     case 'polygoncdkScheduledTransactions':
       return new PolygonCDKScheduledTransactionHandler(field, abi)
+    case 'timelockControllerScheduledTransactions':
+      return new TimelockControllerScheduledTransactionsHandler(field)
     case 'ERC20Data':
       return new ERC20DataHandler(field, definition)
     case 'tradable':

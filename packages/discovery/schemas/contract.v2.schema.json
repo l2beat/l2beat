@@ -532,6 +532,14 @@
               {
                 "type": "object",
                 "properties": {
+                  "type": { "const": "timelockControllerScheduledTransactions" }
+                },
+                "additionalProperties": false,
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
                   "type": { "const": "ERC20Data" },
                   "overrides": {
                     "type": "object",
