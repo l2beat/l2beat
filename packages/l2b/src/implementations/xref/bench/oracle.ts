@@ -324,7 +324,8 @@ async function classifyCall(
     const truth = superDispatch(source, declaration as FunctionNode, caller)
     return { path, offset, call: 'super', truth }
   }
-  if (owner?.contractKind === 'library') {
+  // `using {f} for T` binds free functions too.
+  if (owner?.contractKind === 'library' || owner?.nodeType === 'SourceUnit') {
     return {
       path,
       offset,
@@ -342,9 +343,11 @@ async function classifyCall(
   if (selector === undefined) {
     return { path, offset, call: 'external', truth: unknown('no selector') }
   }
-  // A constructor ran once at deployment, against state long gone.
+  // A constructor, state initializers included, ran once at deployment,
+  // against state long gone.
   const fn = ast.enclosing<FunctionNode>(call, 'FunctionDefinition')
-  if (fn?.kind === 'constructor') {
+  const state = ast.enclosing<VariableNode>(call, 'VariableDeclaration')
+  if (fn?.kind === 'constructor' || (!fn && state?.stateVariable)) {
     return { path, offset, call: 'external', truth: unknown('constructor') }
   }
   const context = { oracle, entry, source, caller, call }
