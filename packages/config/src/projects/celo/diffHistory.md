@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x1b8c0abcbd344c63112a817b94ee3194a6039525
+
+# Diff at Tue, 20 Oct 2026 12:06:04 GMT:
+
+- id: 63481975
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64afdbecb1185d6409a6adff76ae54f6cea78a55 block: 1791966035
+- current timestamp: 1791966035
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966035 (main branch discovery), not current.
+
+```diff
+    contract L2ProxyAdmin (celo:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin] {
+    +++ description: Administration contract for other contract proxies.
++++ severity: MEDIUM
+      values.owner:
+-        "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223"
++        "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112"
+    }
+```
+
+```diff
+    contract CeloProxyAdminOwner (eth:0x4092A77bAF58fef0309452cEaCb09221e556E112) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"celo:0x4200000000000000000000000000000000000018","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x1ddd4c11e813075853ef1c9302191008ecf66d48
 
 # Diff at Tue, 20 Oct 2026 07:51:28 GMT:

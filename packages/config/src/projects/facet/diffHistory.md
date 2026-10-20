@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xbd147e9f57a1938ec14557459b2f0988159ed137
+
+# Diff at Tue, 20 Oct 2026 12:05:56 GMT:
+
+- id: d5a9ebb6
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64afdbecb1185d6409a6adff76ae54f6cea78a55 block: 1780407005
+- current timestamp: 1780407005
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780407005 (main branch discovery), not current.
+
+```diff
+    contract L2Bridge (facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4) [facet/L2ERC20Bridge] {
+    +++ description: ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.
+      values.aliasedL1Bridge:
+-        "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F"
++        "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E"
+    }
+```
+
 Generated with discovered.json: 0xf612a0cf850ceb202243a948c3d304d497abf760
 
 # Diff at Tue, 20 Oct 2026 07:51:29 GMT:

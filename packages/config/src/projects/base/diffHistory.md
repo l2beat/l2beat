@@ -1,3 +1,68 @@
+Generated with discovered.json: 0xbf98de12d14e0e787f127055de2c13c8cf28760d
+
+# Diff at Tue, 20 Oct 2026 12:05:53 GMT:
+
+- id: c4a2de3d
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64afdbecb1185d6409a6adff76ae54f6cea78a55 block: 1791538610
+- current timestamp: 1791538610
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791538610 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (base:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
++++ severity: MEDIUM
+      values.owner:
+-        "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
++        "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000011","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000012","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000013","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000014","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000015","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000017","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000019","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"base:0x420000000000000000000000000000000000001A","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000020","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"base:0x4200000000000000000000000000000000000021","role":"admin","via":[{"address":"base:0x4200000000000000000000000000000000000018"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"base:0x4200000000000000000000000000000000000018","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x67a6245dc85527b7b1743bb70bc3189eb32d19f6
 
 # Diff at Tue, 20 Oct 2026 07:51:27 GMT:

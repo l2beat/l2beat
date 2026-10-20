@@ -1,3 +1,131 @@
+Generated with discovered.json: 0x3e30300039ddee2cc4dab26adc20faae4890a6e4
+
+# Diff at Tue, 20 Oct 2026 12:05:53 GMT:
+
+- id: 58e861e2
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64afdbecb1185d6409a6adff76ae54f6cea78a55 block: 1790601621
+- current timestamp: 1790601621
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790601621 (main branch discovery), not current.
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) [orbitstack/layer2/L2SecurityCouncilPropose] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"set the minimum period between Security Council member key rotations.","role":".minRotationPeriodSetterAC","via":[{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"arb1:0x096760F208390250649E3e8763348E783AEF5562","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"arb1:0x912CE59144191C1204E64559FE8253a0e49E6548","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.25:
++        {"permission":"upgrade","from":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.26:
++        {"permission":"upgrade","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++++ severity: MEDIUM
+      values.executors.0:
+-        "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      receivedPermissions.0:
++        {"permission":"interact","from":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"set the minimum period between Security Council member key rotations.","role":".minRotationPeriodSetterAC","via":[{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"arb1:0x096760F208390250649E3e8763348E783AEF5562","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"arb1:0x912CE59144191C1204E64559FE8253a0e49E6548","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","role":"admin","via":[{"address":"arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","role":".executors"}
+    }
+```
+
 Generated with discovered.json: 0xd0663fb5f355af579d050a668689f0371c1089db
 
 # Diff at Tue, 20 Oct 2026 07:51:26 GMT:

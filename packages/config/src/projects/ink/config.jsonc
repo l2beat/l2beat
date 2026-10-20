@@ -19,7 +19,6 @@
     "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
   ],
   "names": {
-    "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias",
     "ink:0x4200000000000000000000000000000000000017": "OptimismMintableERC721Factory",
     "eth:0x4cBFBA0AfEb3a36878eb52fAE78335751076250C": "FaultDisputeGame"
   },
@@ -99,6 +98,56 @@
         "l2TokenBridge": { "edit": ["format", "InkAddress"] },
         "OTHER_BRIDGE": { "edit": ["format", "InkAddress"] },
         "otherBridge": { "edit": ["format", "InkAddress"] }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000007": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000010": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000011": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000012": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000014": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000015": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000017": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000019": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "ink:0x420000000000000000000000000000000000001A": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "ink:0x4200000000000000000000000000000000000018": {
+      "fields": {
+        "owner": { "edit": ["format", "UndoL2Alias"] }
       }
     }
   },

@@ -45,7 +45,8 @@
             "method": "function owner() view returns (address)",
             "args": []
           },
-          "permissions": [{ "type": "act" }]
+          "permissions": [{ "type": "act" }],
+          "edit": ["format", "UndoL2Alias"]
         },
         "isUpgrading": {
           "handler": {

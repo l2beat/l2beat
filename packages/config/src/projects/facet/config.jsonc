@@ -48,7 +48,10 @@
       ]
     },
     "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": {
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreInWatchMode": ["totalSupply"],
+      "fields": {
+        "aliasedL1Bridge": { "edit": ["format", "UndoL2Alias"] }
+      }
     },
     "facet:0x4200000000000000000000000000000000000016": {
       "ignoreInWatchMode": ["messageNonce"]

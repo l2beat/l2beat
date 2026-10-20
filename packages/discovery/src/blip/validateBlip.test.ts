@@ -179,7 +179,7 @@ describe(validateBlip.name, () => {
     it('validates "if" operation', () => {
       expect(validateBlip(['if'])).toBeFalsy() // Too few arguments
       expect(validateBlip(['if', true])).toBeFalsy() // Too few arguments
-      expect(validateBlip(['if', true, 'then'])).toBeFalsy() // Too few arguments
+      expect(validateBlip(['if', true, 'then'])).toBeTruthy() // Valid without else
       expect(validateBlip(['if', true, 'then', 'else'])).toBeTruthy() // Valid
       expect(
         validateBlip(['if', ['=', 1, 1], ['get', 'prop'], false]),

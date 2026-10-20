@@ -102,6 +102,30 @@
               "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2."
             }
           ]
+        },
+        "executors": {
+          "edit": [
+            "map",
+            [
+              "if",
+              ["=", "robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0"],
+              ["format", "UndoL2Alias"]
+            ]
+          ]
+        },
+        "accessControl": {
+          "edit": [
+            "set",
+            ["EXECUTOR_ROLE", "members"],
+            [
+              "map",
+              [
+                "if",
+                ["=", "robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0"],
+                ["format", "UndoL2Alias"]
+              ]
+            ]
+          ]
         }
       }
     },

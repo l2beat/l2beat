@@ -43,8 +43,7 @@
     "oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": "MintManagerOwner",
     "oeth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge",
     "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": "MintManager",
-    "oeth:0x4200000000000000000000000000000000000002": "DeployerWhitelist",
-    "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner - L2 Alias"
+    "oeth:0x4200000000000000000000000000000000000002": "DeployerWhitelist"
   },
   "overrides": {
     // Safes (SuperchainProxyAdminOwner, OpFoundationUpgradeSafe, Security
@@ -364,6 +363,61 @@
             }
           ]
         }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000007": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000010": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000011": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000012": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000014": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000015": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000017": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000019": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "oeth:0x420000000000000000000000000000000000001A": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "oeth:0x420000000000000000000000000000000000001b": {
+      "fields": {
+        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+      }
+    },
+    "oeth:0x4200000000000000000000000000000000000018": {
+      "fields": {
+        "owner": { "edit": ["format", "UndoL2Alias"] }
       }
     }
   }

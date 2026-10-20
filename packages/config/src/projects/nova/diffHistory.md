@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x4413d16306c002be027788dcb946d314d157ee13
+
+# Diff at Tue, 20 Oct 2026 12:05:59 GMT:
+
+- id: a36faca7
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64afdbecb1185d6409a6adff76ae54f6cea78a55 block: 1788792011
+- current timestamp: 1788792011
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788792011 (main branch discovery), not current.
+
+```diff
+    contract L2SurplusFee (arb-nova:0x509386DbF5C0BE6fd68Df97A05fdB375136c32De) [orbitstack/layer2/L2SurplusFee] {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      values.recipientsData.0.recipients.0:
+-        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++++ severity: MEDIUM
+      values.executors.0:
+-        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+    }
+```
+
+```diff
+    contract L2BaseFee (arb-nova:0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f) [orbitstack/layer2/L2SurplusFee] {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      values.recipientsData.0.recipients.0:
+-        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","role":"admin","via":[{"address":"arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD","role":"admin","via":[{"address":"arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","role":".executors"}
+    }
+```
+
 Generated with discovered.json: 0xa9784a22b2a253f2aa6aca6f897cdf5b9735b3e3
 
 # Diff at Tue, 20 Oct 2026 10:30:56 GMT:

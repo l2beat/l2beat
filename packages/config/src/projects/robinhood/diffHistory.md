@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xe430380481f2b90be2f48de06c6812f83dfde2aa
+
+# Diff at Tue, 20 Oct 2026 12:06:01 GMT:
+
+- id: ec5cb19b
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64afdbecb1185d6409a6adff76ae54f6cea78a55 block: 1790671700
+- current timestamp: 1790671700
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1790671700 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09","role":".executors"}
+    }
+```
+
+```diff
+    contract Robinhood Multisig 1 (eth:0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09","description":"Can add or remove transaction filterers and change ArbOS configuration on the L2.","role":".chainOwners","via":[{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09","role":"admin","via":[{"address":"robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF"},{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","role":"admin","via":[{"address":"robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF"},{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"}]}
+    }
+```
+
+```diff
+    contract Robinhood Multisig 2 (eth:0xbFc2b53552513174A0B006D4799B39871fe0CA1d) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"interact","from":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09","description":"Can add or remove transaction filterers and change ArbOS configuration on the L2.","role":".chainOwners","via":[{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09","role":"admin","via":[{"address":"robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF"},{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173","role":"admin","via":[{"address":"robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF"},{"address":"robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"},{"address":"eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"},{"address":"eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465","delay":604800}]}
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0"
++        "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"
++++ severity: MEDIUM
+      values.executors.0:
+-        "robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0"
++        "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"
+    }
+```
+
 Generated with discovered.json: 0xd96276bf0e718dcab2ca53c130f2ec4b13ecb763
 
 # Diff at Fri, 16 Oct 2026 09:37:50 GMT:

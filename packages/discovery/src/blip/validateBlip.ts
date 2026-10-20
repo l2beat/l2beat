@@ -72,10 +72,8 @@ export function validateBlip(input: unknown): boolean {
       return input.length === 2 && typeof input[1] === 'string'
     case 'if':
       return (
-        input.length === 4 &&
-        validateBlip(input[1]) &&
-        validateBlip(input[2]) &&
-        validateBlip(input[3])
+        (input.length === 3 || input.length === 4) &&
+        input.slice(1).every((e) => validateBlip(e))
       )
     case 'delete':
       return (
