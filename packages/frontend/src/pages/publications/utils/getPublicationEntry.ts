@@ -16,7 +16,10 @@ export interface PublicationEntry extends FilterableEntry {
   thumbnail: ImageParams
   url: string
   tag: 'governance' | 'monthly-update' | ExternalPublicationTag
-  customCtaText?: string
+}
+
+export function getPublicationTagLabel(tag: PublicationEntry['tag']) {
+  return tag === 'monthly-update' ? 'Monthly Update' : tag
 }
 
 export function getPublicationEntryFromGovernance(
@@ -118,7 +121,6 @@ export function getPublicationEntryFromExternalPublication(
     publishedOn: UnixTime.fromDate(externalPublication.data.publishedOn),
     url: externalPublication.data.url,
     tag: externalPublication.data.tag,
-    customCtaText: externalPublication.data.ctaText,
     filterable: [
       {
         id: 'contentCategory',

@@ -1,4 +1,3 @@
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -20,13 +19,7 @@ export function PublicationPage({ publication, ...props }: Props) {
         <MainPageHeader>Publication</MainPageHeader>
         <PrimaryCard className="md:p-8">
           <PublicationHeader publication={publication} />
-          <HorizontalSeparator className="my-8" />
           <div className="mx-auto mt-8 max-w-[720px] md:pt-8">
-            {publication.description && (
-              <p className="mb-12 font-light font-roboto-serif text-xl leading-[1.6] opacity-80">
-                {publication.description}
-              </p>
-            )}
             <img
               {...publication.thumbnail}
               alt={`${publication.title} publication thumbnail`}
