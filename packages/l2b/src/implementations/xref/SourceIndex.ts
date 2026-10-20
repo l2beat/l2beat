@@ -260,8 +260,9 @@ export class SourceIndex {
   offsetOf(position: TextPosition): number {
     const lineStart = this.lineStarts[position.line - 1]
     assert(lineStart !== undefined, 'Line out of range')
+    const nextLineStart = this.lineStarts[position.line] ?? this.text.length + 1
     const offset = lineStart + position.column - 1
-    assert(offset <= this.text.length, 'Column out of range')
+    assert(offset < nextLineStart, 'Column out of range')
     return offset
   }
 

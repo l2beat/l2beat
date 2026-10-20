@@ -34,4 +34,16 @@ contract Timelock is AccessControl, IReceiver {}
     expect(index.positionOf(offset)).toEqual({ line: 3, column: 10 })
     expect(index.offsetOf({ line: 3, column: 10 })).toEqual(offset)
   })
+
+  it('rejects a column past the end of its line', () => {
+    const index = new SourceIndex('/p/.flat/Timelock.sol', source)
+    const lineLength = 'contract ERC165 is IERC165 {}'.length
+
+    expect(index.offsetOf({ line: 2, column: lineLength + 1 })).toEqual(
+      source.indexOf('\ncontract AccessControl'),
+    )
+    expect(() => index.offsetOf({ line: 2, column: lineLength + 2 })).toThrow(
+      'Column out of range',
+    )
+  })
 })
