@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
@@ -55,10 +55,7 @@ function ListItemChain(props: {
   openedProject: string
 }) {
   const [open, setOpen] = useState(true)
-
-  function onFocus() {
-    setOpen(true)
-  }
+  const onFocus = useCallback(() => setOpen(true), [])
 
   return Object.entries(props.entry.blockNumbers).map(
     ([chain, blockNumber]) => (
@@ -131,23 +128,29 @@ function ListItemContracts(props: {
   sourceProject: string
 }) {
   const [open, setOpen] = useState(!props.startClosed)
-  const selected = usePanelStore((state) => state.selected)
-
-  const filteredEntries = props.entries.filter(
-    (entry) => entry.chain === props.chain,
+  const sortedEntries = useMemo(
+    () =>
+      props.entries
+        .filter((entry) => entry.chain === props.chain)
+        .sort((a, b) => b.type.localeCompare(a.type)),
+    [props.entries, props.chain],
   )
+  const addresses = useMemo(
+    () => new Set(sortedEntries.map((entry) => entry.address)),
+    [sortedEntries],
+  )
+  const selectedHere = usePanelStore((state) =>
+    state.selected.find((address) => addresses.has(address)),
+  )
+  const { onFocus } = props
   useEffect(() => {
-    const selectedSet = new Set<string>(selected)
-    for (const { address } of filteredEntries) {
-      if (selectedSet.has(address)) {
-        setOpen(true)
-        props.onFocus?.()
-        break
-      }
+    if (selectedHere !== undefined) {
+      setOpen(true)
+      onFocus?.()
     }
-  }, [filteredEntries, selected, props.onFocus])
+  }, [selectedHere, onFocus])
 
-  if (filteredEntries.length === 0) {
+  if (sortedEntries.length === 0) {
     return null
   }
   return (
@@ -172,23 +175,21 @@ function ListItemContracts(props: {
       </button>
       {open && (
         <ol>
-          {filteredEntries
-            .toSorted((a, b) => b.type.localeCompare(a.type))
-            .map((entry) => (
-              <AddressEntry
-                key={entry.address}
-                entry={entry}
-                openedProject={props.openedProject}
-                sourceProject={props.sourceProject}
-              />
-            ))}
+          {sortedEntries.map((entry) => (
+            <AddressEntry
+              key={entry.address}
+              entry={entry}
+              openedProject={props.openedProject}
+              sourceProject={props.sourceProject}
+            />
+          ))}
         </ol>
       )}
     </>
   )
 }
 
-function AddressEntry({
+const AddressEntry = memo(function AddressEntry({
   entry,
   openedProject,
   sourceProject,
@@ -241,4 +242,4 @@ function AddressEntry({
       </div>
     </li>
   )
-}
+})
