@@ -35,14 +35,16 @@ export interface HomeRankedTableColumn<T> {
   header?: string
   /**
    * The narrowest table that still shows the column, e.g. for a secondary
-   * figure, so names keep their room. A hidden column's track just collapses
-   * and the others keep their places.
+   * figure, so names keep their room. A hidden column takes its track with
+   * it, so the others close up to the table's right edge.
    */
-  minTableWidth?: 360 | 480 | 640
+  minTableWidth?: MinTableWidth
 }
 
+type MinTableWidth = 360 | 480 | 640
+
 /** Literal classes, so Tailwind sees them. */
-const HIDE_BELOW: Record<360 | 480 | 640, string> = {
+const HIDE_BELOW: Record<MinTableWidth, string> = {
   360: '@max-[360px]:hidden',
   480: '@max-[480px]:hidden',
   640: '@max-[640px]:hidden',
@@ -76,25 +78,20 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
   if (rows.length === 0) {
     return null
   }
-  const rest = columns.map(() => 'auto').join(' ')
-  // Names and middle columns never go below their content here, so this
-  // waits for a table wide enough to fit the longest of them.
-  const restWide = columns
-    .map((column) => (column.middle ? 'minmax(max-content,1fr)' : 'auto'))
-    .join(' ')
+  const columnsStyle = Object.fromEntries(
+    TIERS.map((width) => [
+      `--ranked-columns-${width}`,
+      getGridColumns(columns, width),
+    ]),
+  ) as CSSProperties
   return (
     // A container: in a narrow card the secondary columns give way, so names
     // keep their room; in a wide one the middle columns move in from the
     // figures.
     <div className={cn('@container min-w-0', className)}>
       <div
-        className="grid @min-[480px]:grid-cols-(--ranked-columns-wide) grid-cols-(--ranked-columns) content-start @min-[480px]:gap-x-5 gap-x-4"
-        style={
-          {
-            '--ranked-columns': `auto minmax(0,1fr) ${rest}`,
-            '--ranked-columns-wide': `auto minmax(max-content,1fr) ${restWide}`,
-          } as CSSProperties
-        }
+        className="grid @min-[360px]:grid-cols-(--ranked-columns-360) @min-[480px]:grid-cols-(--ranked-columns-480) @min-[640px]:grid-cols-(--ranked-columns-640) grid-cols-(--ranked-columns-0) content-start @min-[480px]:gap-x-5 gap-x-4"
+        style={columnsStyle}
       >
         <div className="col-span-full grid grid-cols-subgrid items-baseline pb-2">
           <h3 className={cn('col-span-2', HOME_TEXT.sectionTitle)}>{title}</h3>
@@ -146,6 +143,35 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
       </div>
     </div>
   )
+}
+
+/** The table widths where columns hide or show, each with its own tracks. */
+const TIERS = [0, 360, 480, 640] as const
+
+/**
+ * The tracks of a table at least `width` wide: the rank, the name, then only
+ * the columns shown at that width. A track left for a hidden column would
+ * take the next column's cells and leave an empty one, and its gap, at the
+ * right edge.
+ */
+function getGridColumns<T>(
+  columns: HomeRankedTableColumn<T>[],
+  width: (typeof TIERS)[number],
+) {
+  const shown = columns.filter(
+    (column) => !column.minTableWidth || width >= column.minTableWidth,
+  )
+  if (width < 480) {
+    return ['auto minmax(0,1fr)', ...shown.map(() => 'auto')].join(' ')
+  }
+  // Names and middle columns never go below their content here, so this
+  // waits for a table wide enough to fit the longest of them.
+  return [
+    'auto minmax(max-content,1fr)',
+    ...shown.map((column) =>
+      column.middle ? 'minmax(max-content,1fr)' : 'auto',
+    ),
+  ].join(' ')
 }
 
 function Name({ row }: { row: HomeRankedTableRow }) {

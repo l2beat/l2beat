@@ -36,14 +36,16 @@ export function CropsMiniBanner({
         className,
       )}
     >
+      {/* In a tile narrower than the sidebar's 178px (the home menu on a
+          phone), the subtitle would run into the hills, so only the sun
+          stays, in the corner the title leaves free. */}
       <GardenLandscape
         flat
         className="left-[68%]"
         lightClassName="top-[38%] left-[58%] size-12"
+        ridgesClassName="h-full @max-[177px]/crops:hidden"
       >
-        {/* A menu tile is narrower than the sidebar and the subtitle reaches
-            the flowers there, so it keeps only the hills. */}
-        <span className="@max-[165px]/crops:hidden">
+        <span className="@max-[177px]/crops:hidden">
           <GardenFlowers flowers={FLOWERS} motion="still" />
         </span>
       </GardenLandscape>

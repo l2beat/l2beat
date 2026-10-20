@@ -72,7 +72,7 @@ export function HomeProjectChangesSection({
       <h2 className={cn(HOME_TEXT.title, HOME_BANNER_TITLE_CLASS)}>
         Project changes
       </h2>
-      <span className={HOME_TEXT.meta}>Last 7 days</span>
+      <span className={HOME_TEXT.subtitle}>Last 7 days</span>
     </span>
   )
   if (count === 0) {
@@ -214,11 +214,13 @@ function Research({ items }: { items: HomeResearchItem[] }) {
                 loading="lazy"
                 className={HOME_THUMBNAIL_CLASS}
               />
-              <span className="flex min-w-0 flex-col gap-0.5">
+              <span className="flex min-w-0 flex-col">
+                {/* Room between the lines when a title takes two. */}
                 <span
                   className={cn(
                     'line-clamp-2 underline-offset-2 group-hover:underline',
                     HOME_TEXT.row,
+                    'leading-5',
                   )}
                 >
                   {item.shortTitle ?? item.title}

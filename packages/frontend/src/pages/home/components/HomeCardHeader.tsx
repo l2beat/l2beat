@@ -28,7 +28,7 @@ export function HomeCardHeader({
     >
       <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
         <h2 className={cn('shrink-0', HOME_TEXT.title)}>{title}</h2>
-        {subtitle && <span className={HOME_TEXT.meta}>{subtitle}</span>}
+        {subtitle && <span className={HOME_TEXT.subtitle}>{subtitle}</span>}
       </div>
       {link && (
         <a

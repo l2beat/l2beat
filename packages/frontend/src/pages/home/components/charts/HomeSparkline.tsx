@@ -135,6 +135,9 @@ export function HomeSparkline({
                   stroke="var(--divider)"
                   // Softer than the page's hairlines: a reference, not a frame.
                   strokeOpacity={0.5}
+                  // On a whole pixel the 1px line would straddle two and blur
+                  // at 1x; crisp edges keep it one device pixel sharp.
+                  shapeRendering="crispEdges"
                   zIndex={BEHIND_SERIES}
                   label={
                     <ExtremeLabel

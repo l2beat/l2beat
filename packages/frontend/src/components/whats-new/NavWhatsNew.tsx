@@ -34,13 +34,15 @@ export function NavWhatsNew({ onNavigate }: { onNavigate: () => void }) {
           setSeen(true)
           onNavigate()
         }}
-        className="group mt-1 flex flex-col gap-2 px-1.5"
+        className="group @container mt-1 flex flex-col gap-2 px-1.5"
       >
+        {/* 16:9, its height rounded down to a whole pixel so the text under
+            it stays on the pixel grid (plain 16:9 without CSS round()). */}
         <img
           src={item.imageSrc}
           alt={item.imageAlt}
           loading="lazy"
-          className="aspect-video w-full rounded-md object-cover object-top-left"
+          className="aspect-video h-[round(down,56.25cqw,1px)] w-full rounded-md object-cover object-top-left"
         />
         <span className="flex flex-col gap-0.5">
           <span className="font-medium text-sm underline-offset-2 group-hover:underline">

@@ -71,8 +71,9 @@ export function HomePage({
         >
           <MainPageHeader>Home</MainPageHeader>
           {/* Cards as on every other page: 16px apart from md, edge to edge
-              with a line between them below it. */}
-          <div className="@container/home flex flex-col md:gap-4 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
+              with a line between them below it. The last one leaves its line
+              to the footer's. */}
+          <div className="@container/home flex flex-col md:gap-4 [&>.primary-card:last-child]:max-md:border-b-0 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
             {/* Below lg, where the sidebar hides behind the menu button, its
                 menu opens the page instead of the CROPS banner. */}
             <HomeStatsStrip counts={projectCounts} className="lg:hidden" />

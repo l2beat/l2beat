@@ -124,8 +124,9 @@ function Content({
             hasEnoughChains={hasEnoughChains}
             hasEnoughProtocols={hasEnoughProtocols}
             isLoading={isLoading}
-            // Chain labels hang below the bubbles; pb keeps them in the section.
-            className="pb-6 max-lg:order-none"
+            // Chain labels hang below the bubbles; pb keeps them in the
+            // section, and on phones px keeps the outer ones off its edges.
+            className="pb-6 max-sm:px-2 max-lg:order-none"
             maxSizeClassName="max-w-[460px] lg:max-w-none"
           />
         </div>

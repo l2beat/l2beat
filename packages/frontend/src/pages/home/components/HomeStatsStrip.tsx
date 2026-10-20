@@ -91,8 +91,9 @@ export function HomeStatsStrip({
           </li>
         ))}
       </ul>
-      {/* The full width between them, evenly where the names allow. */}
-      <ul className="flex gap-2">
+      {/* The full width between them, evenly where the names allow; two to a
+          row on phones, where four names do not fit across. */}
+      <ul className="grid grid-cols-2 gap-2 sm:flex [&>li:last-child:nth-child(odd)]:max-sm:col-span-2">
         {more.map((item) => (
           <li key={item.label} className="flex-1">
             <MoreLink item={item} />
@@ -112,14 +113,14 @@ function StatTile({ tile }: { tile: Tile }) {
       <div className="flex min-w-0 flex-1 flex-col justify-center">
         <span
           className={cn(
-            'truncate font-medium text-label-value-13 text-secondary leading-tight transition-colors',
+            'truncate font-medium text-label-value-13 text-secondary leading-4 transition-colors',
             tile.href && 'group-hover:text-link',
           )}
         >
           {tile.label}
         </span>
         {tile.metric ? (
-          <span className="font-semibold text-label-value-16 leading-tight">
+          <span className="font-semibold text-label-value-16 leading-5">
             <TileMetricValue metric={tile.metric} />
           </span>
         ) : (
@@ -154,7 +155,7 @@ function MoreLink({ item }: { item: MoreItem }) {
   return (
     <a
       href={item.href}
-      className="group flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-divider px-2.5 py-1.5 font-medium text-label-value-15 transition-colors duration-200 hover:border-link-stroke"
+      className="group flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-divider px-2.5 py-1.5 font-medium text-label-value-15 leading-4 transition-colors duration-200 hover:border-link-stroke"
     >
       {item.label}
       <ChevronIcon className="-rotate-90 size-2 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
