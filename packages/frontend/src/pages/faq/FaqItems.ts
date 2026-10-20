@@ -138,7 +138,7 @@ const items: { question: string; answer: string | string[] }[] = [
     answer: [
       'We analyze privacy protocols on Ethereum through the CROPS principles: censorship resistance, open source, privacy and security. For each protocol the [Privacy page](/privacy/summary) shows how well it protects you against different adversaries.',
       'We also check whether a protocol passes the **walkaway test**, meaning users can still fully use it if every centralized participant disappears.',
-      'The [privacy methodology](/privacy/methodology) explains the adversaries, the verdicts and every column of the Privacy page.',
+      'The [privacy methodology](/publications/privacy-methodology) explains the adversaries, the verdicts and every column of the Privacy page.',
     ],
   },
   {

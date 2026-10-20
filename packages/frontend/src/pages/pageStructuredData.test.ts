@@ -25,28 +25,24 @@ describe('page structured data', () => {
     ])
   })
 
-  it('privacy methodology page sits under Privacy in its breadcrumbs', async () => {
+  it('privacy methodology publication emits an Article', async () => {
+    const post = getCollectionEntry('other-publications', 'privacy-methodology')
+    if (!post) throw new Error('privacy-methodology is missing')
+
     const data = await getPrivacyMethodologyData(
       manifest,
-      '/privacy/methodology',
+      post,
+      '/publications/privacy-methodology',
     )
 
-    expect(data.head.metadata.structuredData).toEqual([
+    expect(data.ssr.page).toEqual('PrivacyMethodologyPage')
+    expect(getTypes(data.head.metadata)).toEqual(['BreadcrumbList', 'Article'])
+    expect(data.head.metadata.structuredData[1]).toEqual(
       expect.subset({
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          expect.subset({ name: 'Home' }),
-          expect.subset({
-            name: 'Privacy',
-            item: 'https://l2beat.com/privacy/summary',
-          }),
-          expect.subset({
-            name: 'Privacy methodology',
-            item: 'https://l2beat.com/privacy/methodology',
-          }),
-        ],
+        url: 'https://l2beat.com/publications/privacy-methodology',
+        headline: 'How we assess privacy protocols',
       }),
-    ])
+    )
   })
 
   it('governance publication page emits an Article of the real post', async () => {

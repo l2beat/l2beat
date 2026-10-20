@@ -239,12 +239,6 @@ const PAGE_SECTIONS: LinkListSection[] = [
         description:
           'Reviews and comparison of privacy protocols on Ethereum and its layer 2s: what each one hides, anonymity set sizes and trust assumptions.',
       },
-      {
-        name: 'Privacy methodology',
-        path: staticPagePath('/privacy/methodology'),
-        description:
-          'How privacy protocols are assessed: the promise each one makes, the adversaries it is tested against, the private, at risk and exposed verdicts, and the other columns.',
-      },
     ],
   },
   {

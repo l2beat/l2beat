@@ -9,8 +9,6 @@ import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
-import { getPrivacyMethodologyData } from './methodology/getPrivacyMethodologyData'
-import { PRIVACY_METHODOLOGY_PATH } from './methodology/paths'
 import {
   getPrivacyProjectData,
   getPrivacyProjectMarkdown,
@@ -37,12 +35,6 @@ export function createPrivacyRouter(
       },
       () => getPrivacySummaryData(manifest, req.originalUrl, cache),
     )
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get(PRIVACY_METHODOLOGY_PATH, async (req, res) => {
-    const data = await getPrivacyMethodologyData(manifest, req.originalUrl)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

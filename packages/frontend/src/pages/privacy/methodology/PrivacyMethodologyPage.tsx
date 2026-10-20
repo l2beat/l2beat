@@ -4,6 +4,8 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { PublicationHeader } from '~/pages/publications/components/PublicationHeader'
+import type { OtherPublicationEntry } from '~/pages/publications/other-publications/utils/getOtherPublicationEntry'
 import { CategoryMachinesFigure } from './components/CategoryMachinesFigure'
 import { CrowdFigure } from './components/CrowdFigure'
 import { PoolLensFigure } from './components/PoolLensFigure'
@@ -11,20 +13,30 @@ import type { PrivacyMethodologyFigureData } from './getPrivacyMethodologyFigure
 import type { PrivacyMethodologySections } from './getPrivacyMethodologySections'
 
 interface Props extends AppLayoutProps {
+  publication: OtherPublicationEntry
   sections: PrivacyMethodologySections
   figures: PrivacyMethodologyFigureData
 }
 
-export function PrivacyMethodologyPage({ sections, figures, ...props }: Props) {
+/** Laid out like any publication, with live figures between the sections. */
+export function PrivacyMethodologyPage({
+  publication,
+  sections,
+  figures,
+  ...props
+}: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader>Privacy methodology</MainPageHeader>
+        <MainPageHeader>Publication</MainPageHeader>
         <PrimaryCard className="md:p-8">
-          <h1 className="mb-4 text-heading-24 md:text-heading-32">
-            How we assess privacy protocols
-          </h1>
-          <main>
+          <PublicationHeader publication={publication} />
+          <main className="mx-auto mt-8 max-w-[720px] md:pt-8">
+            <img
+              {...publication.thumbnail}
+              alt={`${publication.title} publication thumbnail`}
+              className="mb-12 w-full rounded-lg"
+            />
             <Section>{sections.intro}</Section>
             <PoolLensFigure data={figures} />
             <Section>{sections.ratings}</Section>

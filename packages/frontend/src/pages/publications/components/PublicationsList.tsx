@@ -15,10 +15,8 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { formatPublicationDate } from '~/utils/dates'
 import { isExternalUrl } from '~/utils/isExternalUrl'
-import {
-  getPublicationTagLabel,
-  type PublicationEntry,
-} from '../utils/getPublicationEntry'
+import type { PublicationEntry } from '../utils/getPublicationEntry'
+import { getPublicationTagLabel } from './PublicationTag'
 
 export function PublicationsList({
   publications,

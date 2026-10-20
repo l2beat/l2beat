@@ -1,33 +1,26 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getMetadata } from '~/ssr/head/getMetadata'
+import type { CollectionEntry } from '~/content/getCollection'
+import { getOtherPublicationData } from '~/pages/publications/other-publications/getOtherPublicationData'
+import { getOtherPublicationEntry } from '~/pages/publications/other-publications/utils/getOtherPublicationEntry'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getPrivacyMethodologyFigureData } from './getPrivacyMethodologyFigureData'
 import { getPrivacyMethodologySections } from './getPrivacyMethodologySections'
 
+/** A publication like any other, but with live figures between its sections. */
 export async function getPrivacyMethodologyData(
   manifest: Manifest,
+  entry: CollectionEntry<'other-publications'>,
   url: string,
 ): Promise<RenderData> {
-  const appLayoutProps = await getAppLayoutProps()
-
+  const { head } = await getOtherPublicationData(manifest, entry, url)
   return {
-    head: {
-      manifest,
-      metadata: getMetadata(manifest, {
-        name: 'Privacy methodology',
-        description:
-          'How L2BEAT assesses privacy protocols on Ethereum: the privacy promise, the adversaries it is tested against, the verdicts and the other columns.',
-        url,
-        openGraph: {
-          image: '/meta-images/privacy/summary/opengraph-image.png',
-        },
-      }),
-    },
+    head,
     ssr: {
       page: 'PrivacyMethodologyPage',
       props: {
-        ...appLayoutProps,
+        ...(await getAppLayoutProps()),
+        publication: getOtherPublicationEntry(entry),
         sections: getPrivacyMethodologySections(),
         figures: getPrivacyMethodologyFigureData(),
       },
