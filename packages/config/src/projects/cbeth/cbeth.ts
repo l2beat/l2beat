@@ -126,6 +126,20 @@ export const cbeth: BaseProject = {
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [],
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: 'the proxy admin key upgrades the token to malicious code, or a minting key mints unbacked supply; each is a single key acting with no delay.',
+        isCritical: true,
+      },
+      {
+        category: 'Funds can lose value if',
+        text: 'the rate key or the oracle owner misreports the exchange rate; the relay cap does not bind at current values and the token only checks that the rate is non-zero.',
+      },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the pauser halts transfers or the blacklister freezes an address, both with no delay, or if Coinbase declines or delays custodial redemption, the only exit for the token.',
+      },
+    ],
   },
 }
