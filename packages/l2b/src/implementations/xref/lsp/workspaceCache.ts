@@ -23,12 +23,25 @@ export function createWorkspaceCache(
   function workspaceOf(location: FlatLocation): FlatWorkspace {
     const key = join(location.projectsDirectory, location.project)
     const cached = cache.get(key)
-    if (cached !== undefined && cached.stamp === cached.currentStamp()) {
+    if (cached !== undefined && isFresh(cached)) {
       return cached.workspace
     }
+    cache.delete(key)
     const loaded = load(location)
     cache.set(key, loaded)
     return loaded.workspace
+  }
+
+  // The project read before may be gone, e.g. after a branch switch.
+  function workspaceIfLoadable(
+    location: FlatLocation,
+  ): FlatWorkspace | undefined {
+    try {
+      return workspaceOf(location)
+    } catch (error) {
+      console.error(error)
+      return undefined
+    }
   }
 
   return (path) => {
@@ -37,12 +50,21 @@ export function createWorkspaceCache(
       return undefined
     }
     if (current !== undefined) {
-      const workspace = workspaceOf(current)
-      if (workspace.entryOfPath(path) !== undefined) {
+      const workspace = workspaceIfLoadable(current)
+      if (workspace?.entryOfPath(path) !== undefined) {
         return workspace
       }
     }
     current = location
     return workspaceOf(location)
+  }
+}
+
+// An input that cannot be read anymore has changed too.
+function isFresh(loaded: LoadedWorkspace): boolean {
+  try {
+    return loaded.stamp === loaded.currentStamp()
+  } catch {
+    return false
   }
 }

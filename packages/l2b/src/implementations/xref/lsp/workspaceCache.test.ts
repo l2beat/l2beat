@@ -1,4 +1,4 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { type FlatLocation, FlatWorkspace } from '../FlatWorkspace'
 import { createWorkspaceCache } from './workspaceCache'
@@ -67,6 +67,46 @@ describe(createWorkspaceCache.name, () => {
     workspaceFor(ROLLUP_PATH)
 
     expect(loads).toEqual(['rollup', 'rollup'])
+  })
+
+  it('reloads a project whose inputs cannot be read anymore', () => {
+    let readable = true
+    const loads: string[] = []
+    const workspaceFor = createWorkspaceCache((location: FlatLocation) => {
+      loads.push(location.project)
+      return {
+        workspace: workspaces[location.project] as FlatWorkspace,
+        stamp: '',
+        currentStamp: () => {
+          assert(readable, 'Input removed')
+          return ''
+        },
+      }
+    })
+    workspaceFor(ROLLUP_PATH)
+    readable = false
+
+    expect(workspaceFor(ROLLUP_PATH)).toEqual(workspaces.rollup)
+    expect(loads).toEqual(['rollup', 'rollup'])
+  })
+
+  it('moves on from a project that cannot be loaded anymore', () => {
+    let rollupLoadable = true
+    const workspaceFor = createWorkspaceCache((location: FlatLocation) => {
+      assert(location.project !== 'rollup' || rollupLoadable, 'Removed')
+      return {
+        workspace: workspaces[location.project] as FlatWorkspace,
+        stamp: '',
+        currentStamp: () => {
+          assert(location.project !== 'rollup' || rollupLoadable, 'Removed')
+          return ''
+        },
+      }
+    })
+    workspaceFor(ROLLUP_PATH)
+    rollupLoadable = false
+
+    expect(workspaceFor(OTHER_PATH)).toEqual(workspaces.other)
   })
 
   it('ignores files outside a .flat directory', () => {

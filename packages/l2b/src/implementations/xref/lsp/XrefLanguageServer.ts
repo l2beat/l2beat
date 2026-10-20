@@ -1,9 +1,11 @@
+import { assert } from '@l2beat/shared-pure'
 import { fileURLToPath, pathToFileURL } from 'url'
 import type { FlatWorkspace } from '../FlatWorkspace'
 import { findReferences } from '../findReferences'
 import {
   type Definition,
   type DefinitionResult,
+  declarationAt,
   describeAddress,
   resolveDefinition,
 } from '../resolveDefinition'
@@ -203,21 +205,44 @@ export class XrefLanguageServer {
   }
 }
 
-// A declaration folded from identical copies sits at the same spot in each.
+// Implementations of one contract often repeat code, and go to definition
+// folds what reads the same into copies. A search that starts on the
+// declaration has not folded anything yet, so the copies are found here.
 function declarationLocations(
   workspace: FlatWorkspace,
   target: Definition,
 ): LspLocation[] {
-  const start = target.declaration.range?.[0] ?? 0
-  const nameOffset = workspace.source(target.path).offsetOf(target.position)
+  const range = target.declaration.range
+  assert(range !== undefined)
+  const nameOffset =
+    workspace.source(target.path).offsetOf(target.position) - range[0]
   const length = target.label.length - target.label.lastIndexOf('.') - 1
-  const copies = target.copies.map((copy) => {
-    const position = workspace
-      .source(copy.path)
-      .positionOf(copy.start + nameOffset - start)
-    return rangeAt(copy.path, position, length)
+  const starts = new Map([[target.path, range[0]]])
+  for (const copy of target.copies) {
+    starts.set(copy.path, copy.start)
+  }
+  const text = workspace.text(target.path).slice(range[0], range[1] + 1)
+  const entry = workspace.entryOfPath(target.path)
+  for (const path of entry?.sourcePaths ?? []) {
+    const start = workspace.text(path).indexOf(text)
+    const copy = declarationAt(workspace.source(path), start + nameOffset)
+    if (start !== -1 && copy?.label === target.label && !starts.has(path)) {
+      starts.set(path, start)
+    }
+  }
+  const startByContent = new Map(
+    [...starts].map(([path, start]) => [workspace.contentId(path), start]),
+  )
+  for (const path of workspace.sourcePaths) {
+    const start = startByContent.get(workspace.contentId(path))
+    if (start !== undefined && !starts.has(path)) {
+      starts.set(path, start)
+    }
+  }
+  return [...starts].map(([path, start]) => {
+    const position = workspace.source(path).positionOf(start + nameOffset)
+    return rangeAt(path, position, length)
   })
-  return [toLocation(target), ...copies]
 }
 
 function toLocation(definition: Definition): LspLocation {
