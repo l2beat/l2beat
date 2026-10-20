@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 import { HOME_TEXT, HOME_UNDERLINE_CLASS } from '../homeStyles'
 
@@ -13,7 +14,7 @@ export function HomeCardHeader({
   className,
 }: {
   title: string
-  subtitle?: string
+  subtitle?: ReactNode
   /** Named for what it opens, e.g. "All 14 projects". */
   link?: { href: string; label: string }
   className?: string

@@ -13,10 +13,8 @@ import {
   InteropFlowsProvider,
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
-import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import type {
-  Flow,
   FlowProtocol,
   InteropFlowsData,
 } from '~/server/features/layer2s/interop/getInteropFlows'
@@ -78,8 +76,7 @@ function Content({
     ),
   )
 
-  // Only the busiest chains: past about nine, the home graph's ring (343px
-  // across on phones) leaves each chain too little arc for its label. The
+  // The graph draws only the busiest of these (see maxGraphChains). The
   // figures still cover every selected chain, as on the interop page.
   const graphChains = useMemo(() => {
     const activeIds = new Set(
@@ -87,11 +84,9 @@ function Content({
         .filter((chain) => chain.totalVolume > 0)
         .map((chain) => chain.chainId),
     )
-    return chains
-      .filter(
-        (chain) => selectedChains.includes(chain.id) && activeIds.has(chain.id),
-      )
-      .slice(0, GRAPH_CHAINS_COUNT)
+    return chains.filter(
+      (chain) => selectedChains.includes(chain.id) && activeIds.has(chain.id),
+    )
   }, [chains, selectedChains, data?.chainData])
 
   return (
@@ -107,7 +102,8 @@ function Content({
           figures go in the corners its ring leaves free. Clearly taller than
           wide, or too narrow for the corners, it stacks as on phones: the
           figures, the graph as a square (smaller when the height runs out, so
-          nothing spills), then as many top bridges as the height left holds.
+          nothing spills), then as many top bridges as the height left holds,
+          at least three.
           Below lg it stacks too, the graph a fixed-size square. */}
       <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0 lg:[container:interop-body/size]">
         {data && (
@@ -127,13 +123,14 @@ function Content({
             // Chain labels hang below the bubbles; pb keeps them in the section.
             className="pb-6 max-lg:order-none"
             maxSizeClassName="max-w-[460px] lg:max-w-none"
+            maxChainsForSize={maxGraphChains}
           />
         </div>
         {data && (
           <>
             <TopBridges
               protocols={data.stats.topProtocols}
-              className="interop-corners:hidden interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden"
+              className="interop-corners:hidden interop-stacked:flex-1 interop-stacked:basis-0"
             />
             <CornerStats data={data} chains={chains} />
           </>
@@ -143,16 +140,24 @@ function Content({
   )
 }
 
-const GRAPH_CHAINS_COUNT = 9
+/**
+ * Each chain needs about 38px of the graph's width for its label: nine on a
+ * 343px phone, fewer where the graph is squeezed. Never more than nine, even
+ * where there is room.
+ */
+function maxGraphChains(size: number) {
+  return Math.min(9, Math.floor(size / 38))
+}
+
 /** Bridges under the graph; stacked from lg, as many as the height holds. */
 const TOP_BRIDGES_COUNT = 5
-/** The busiest routes, in a corner beside the graph. */
-const CORNER_ROUTES_COUNT = 3
+/** The busiest bridges, in a corner beside the graph. */
+const CORNER_BRIDGES_COUNT = 3
 
 /**
  * The interop page's general stats: volume, transfers and routes, then the
- * top chain, token and protocol. The busiest bridges are listed apart, in
- * TopBridges.
+ * top chain and token. The busiest bridges, the top protocol among them, are
+ * listed apart: under the graph in TopBridges, or in a corner beside it.
  */
 function Stats({
   data,
@@ -212,28 +217,6 @@ function Stats({
           </>
         )}
       </Top>
-      <Top
-        label="Top protocol"
-        href={
-          stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
-        }
-        value={
-          stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
-        }
-      >
-        {stats.topProtocol && (
-          <>
-            <img
-              src={stats.topProtocol.iconUrl}
-              alt=""
-              className={HOME_ICON_CLASS}
-            />
-            <span className={cn('truncate', HOME_TEXT.row)}>
-              {stats.topProtocol.name}
-            </span>
-          </>
-        )}
-      </Top>
     </div>
   )
 }
@@ -282,59 +265,6 @@ function Top({
   )
 }
 
-/** The `count` busiest routes, each direction its own, with their links. */
-function useTopRoutes(
-  flows: Flow[],
-  chains: InteropChainWithIcon[],
-  count: number,
-) {
-  return useMemo(
-    () =>
-      flows
-        .toSorted((a, b) => b.volume - a.volume)
-        .slice(0, count)
-        .flatMap((flow) => {
-          const src = chains.find((c) => c.id === flow.srcChain)
-          const dst = chains.find((c) => c.id === flow.dstChain)
-          return src && dst
-            ? [
-                {
-                  src,
-                  dst,
-                  volume: flow.volume,
-                  href: buildInteropUrl('/interop/summary', {
-                    from: [src.id],
-                    to: [dst.id],
-                  }),
-                },
-              ]
-            : []
-        }),
-    [flows, chains, count],
-  )
-}
-
-function RouteIcons({
-  src,
-  dst,
-}: {
-  src: InteropChainWithIcon
-  dst: InteropChainWithIcon
-}) {
-  return (
-    <span className="-space-x-1 flex shrink-0">
-      {[src, dst].map((chain) => (
-        <img
-          key={chain.id}
-          src={chain.iconUrl}
-          alt=""
-          className={cn(HOME_ICON_CLASS, 'ring-2 ring-surface-primary')}
-        />
-      ))}
-    </span>
-  )
-}
-
 /** The busiest bridges over the last 24h, ranked like the other cards. */
 function TopBridges({
   protocols,
@@ -350,10 +280,11 @@ function TopBridges({
     <div className={cn('flex min-w-0 flex-col gap-2', className)}>
       <h3 className={HOME_TEXT.sectionTitle}>Top bridges</h3>
       {/* Stacked from lg, the list takes the height left and shows as many
-          whole rows as fit. */}
+          whole rows as fit, never fewer than three: the graph shrinks to
+          leave them room. */}
       <ol
         className={cn(
-          'interop-stacked:home-fill-rows interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden',
+          'interop-stacked:home-fill-rows interop-stacked:min-h-[120px] interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden',
           HOME_ROW_LINES_CLASS,
         )}
       >
@@ -400,8 +331,8 @@ function TopBridges({
 
 /**
  * The figures in the four corners the graph's ring leaves free: totals top
- * left, routes and the top chain top right, the top token and protocol
- * bottom left, the busiest routes bottom right.
+ * left, routes and the top chain top right, the top token bottom left,
+ * the busiest bridges bottom right.
  */
 function CornerStats({
   data,
@@ -414,7 +345,7 @@ function CornerStats({
   const topChain = stats.topChain
     ? chains.find((c) => c.id === stats.topChain?.chainId)
     : undefined
-  const routes = useTopRoutes(data.flows, chains, CORNER_ROUTES_COUNT)
+  const bridges = stats.topProtocols.slice(0, CORNER_BRIDGES_COUNT)
 
   return (
     <div className="pointer-events-none absolute inset-0 interop-corners:block hidden">
@@ -471,51 +402,30 @@ function CornerStats({
             </>
           )}
         </Top>
-        <Top
-          label="Top protocol"
-          href={
-            stats.topProtocol && `/interop/protocols/${stats.topProtocol.slug}`
-          }
-          value={
-            stats.topProtocol && formatCurrency(stats.topProtocol.volume, 'usd')
-          }
-        >
-          {stats.topProtocol && (
-            <>
-              <img
-                src={stats.topProtocol.iconUrl}
-                alt=""
-                className={HOME_ICON_CLASS}
-              />
-              <span className={cn('truncate', HOME_TEXT.row)}>
-                {stats.topProtocol.name}
-              </span>
-            </>
-          )}
-        </Top>
       </div>
-      {routes.length > 0 && (
+      {bridges.length > 0 && (
         <div
           className={cn(CORNER_CLASS, 'right-0 bottom-0 items-end text-right')}
         >
-          <span className={HOME_TEXT.meta}>Top routes</span>
-          <ol className="flex flex-col items-end gap-2">
-            {routes.map(({ src, dst, volume, href }) => (
-              <li key={`${src.id}-${dst.id}`}>
+          <span className={HOME_TEXT.meta}>Top bridges</span>
+          <ol className="flex max-w-full flex-col items-end gap-2">
+            {bridges.map(({ slug, name, iconUrl, volume }) => (
+              <li key={slug} className="max-w-full">
                 <a
-                  href={href}
-                  title={`${src.name} → ${dst.name}`}
-                  // The icons stand for the chains; say them.
-                  aria-label={`${src.name} to ${dst.name}: ${formatCurrency(volume, 'usd')}`}
-                  className="group flex items-center gap-2"
+                  href={`/interop/protocols/${slug}`}
+                  title={name}
+                  className="group flex min-w-0 items-center gap-2"
                 >
-                  <RouteIcons src={src} dst={dst} />
+                  <img src={iconUrl} alt="" className={HOME_ICON_CLASS} />
                   <span
                     className={cn(
-                      'underline-offset-2 group-hover:underline',
-                      HOME_TEXT.value,
+                      'truncate underline-offset-2 group-hover:underline',
+                      HOME_TEXT.row,
                     )}
                   >
+                    {name}
+                  </span>
+                  <span className={cn('shrink-0', HOME_TEXT.value)}>
                     {formatCurrency(volume, 'usd')}
                   </span>
                 </a>

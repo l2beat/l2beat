@@ -1,10 +1,12 @@
 import { formatActivityCount, formatBytes, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
+import { LiveIndicator } from '~/components/LiveIndicator'
+import { env } from '~/env'
 import { ETHEREUM_PROJECT_PATH } from '~/pages/ethereum/paths'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { HOME_CHART_HEIGHT_CLASS } from '../homeStyles'
+import { HOME_CHART_HEIGHT_CLASS, HOME_UNDERLINE_CLASS } from '../homeStyles'
 import type { HomeSparklineDataPoint } from './charts/HomeSparkline'
 import { HomeSparkline } from './charts/HomeSparkline'
 import { HomeCard } from './HomeCard'
@@ -50,6 +52,7 @@ export function HomeEthereumCard({
     <HomeCard className={cn('flex min-w-0 flex-col gap-5', className)}>
       <HomeCardHeader
         title="Ethereum"
+        subtitle={env.CLIENT_SIDE_BLOBS_PAGE && <LiveBlobsLink />}
         link={{ href: ETHEREUM_PROJECT_PATH, label: 'Project page' }}
       />
       <HomeKpiRow>
@@ -93,6 +96,22 @@ export function HomeEthereumCard({
         />
       </HomeKpiRow>
     </HomeCard>
+  )
+}
+
+/** Where the blobs behind these figures land, block by block. */
+function LiveBlobsLink() {
+  return (
+    <a
+      href="/blobs"
+      className={cn(
+        'inline-flex items-center gap-1.5 hover:text-primary hover:decoration-current',
+        HOME_UNDERLINE_CLASS,
+      )}
+    >
+      <LiveIndicator />
+      Blobs live
+    </a>
   )
 }
 
