@@ -12,6 +12,7 @@ import type {
   ApiConfigSyncStatusResponse,
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
+  ApiDefinitionResponse,
   ApiDiffHistoryResponse,
   ApiHandlersResponse,
   ApiListTemplatesResponse,
@@ -20,6 +21,7 @@ import type {
   ApiProjectLayoutsResponse,
   ApiProjectResponse,
   ApiProjectsResponse,
+  ApiReferencesResponse,
   ApiTemplateFileResponse,
   ApiTvlResponse,
 } from './types'
@@ -74,6 +76,42 @@ export async function getCode(
   }
   const data = await res.json()
   return data as ApiCodeResponse
+}
+
+export async function getDefinition(
+  project: string,
+  address: string,
+  sourceIndex: number,
+  offset: number,
+): Promise<ApiDefinitionResponse> {
+  const query = new URLSearchParams({
+    address,
+    source: sourceIndex.toString(),
+    offset: offset.toString(),
+  })
+  const res = await fetch(`/api/projects/${project}/definition?${query}`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return (await res.json()) as ApiDefinitionResponse
+}
+
+export async function getReferences(
+  project: string,
+  address: string,
+  sourceIndex: number,
+  offset: number,
+): Promise<ApiReferencesResponse> {
+  const query = new URLSearchParams({
+    address,
+    source: sourceIndex.toString(),
+    offset: offset.toString(),
+  })
+  const res = await fetch(`/api/projects/${project}/references?${query}`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return (await res.json()) as ApiReferencesResponse
 }
 
 export async function searchCode(

@@ -332,6 +332,46 @@ export interface ApiCodeResponse {
   sources: { name: string; declarations: ApiCodeSegment[] }[]
 }
 
+export interface ApiDefinition {
+  address: string
+  name: string
+  label: string
+  resolution: 'discovered-value' | 'abi-match' | 'in-file'
+  fileName: string
+  line: number
+  sourceIndex: number
+  offset: number
+  length: number
+  alsoIn: number
+}
+
+export interface ApiDefinitionResponse {
+  symbol: string
+  receiver: { address: string; name: string | undefined } | undefined
+  definitions: ApiDefinition[]
+}
+
+export interface ApiReference {
+  address: string
+  name: string
+  fileName: string
+  line: number
+  sourceIndex: number
+  offset: number
+  length: number
+  resolution: ApiDefinition['resolution']
+  isCall: boolean
+  elsewhere: boolean
+  text: string
+  copies: number
+}
+
+export interface ApiReferencesResponse {
+  symbol: string
+  definitions: ApiDefinition[]
+  references: ApiReference[]
+}
+
 export interface ApiCodeSearchResponse {
   matches: {
     name: string | undefined
