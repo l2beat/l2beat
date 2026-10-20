@@ -82,12 +82,13 @@ export function resolveName(
       return { kind: 'other', node: member, name }
     }
   }
+  const freeFunctions = index.findFreeFunctions(name, arity)
+  if (freeFunctions.length > 0) {
+    return { kind: 'functions', nodes: freeFunctions }
+  }
   const topLevel = index.findTopLevel(name)
   if (topLevel?.type === 'ContractDefinition') {
     return { kind: 'contract', node: topLevel as ContractDefinition }
-  }
-  if (topLevel?.type === 'FunctionDefinition') {
-    return { kind: 'functions', nodes: [topLevel as FunctionDefinition] }
   }
   if (topLevel !== undefined) {
     return { kind: 'other', node: topLevel, name }
@@ -117,6 +118,8 @@ function clauseParameter(
   return undefined
 }
 
+const BLOCKS = ['Block', 'ForStatement', 'UncheckedStatement']
+
 function encloses(node: BaseASTNode, offset: number): boolean {
   const range = node.range
   return range !== undefined && range[0] <= offset && offset <= range[1]
@@ -133,6 +136,10 @@ function findLocal(scope: Scope, name: string): Declaration | undefined {
   while (stack.length > 0) {
     const node = stack.pop()
     if (node === undefined || (node.range?.[0] ?? 0) > offset) {
+      continue
+    }
+    // A block the cursor is not in has ended, and so have its locals.
+    if (BLOCKS.includes(node.type) && !encloses(node, offset)) {
       continue
     }
     if (node.type === 'VariableDeclarationStatement') {

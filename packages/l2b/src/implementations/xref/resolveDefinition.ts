@@ -27,6 +27,7 @@ import {
 } from './receiver'
 import {
   acceptsArguments,
+  declarationName,
   NUMBER_LITERAL,
   type SourceIndex,
   type TextPosition,
@@ -66,6 +67,11 @@ export function resolveDefinition(
   offset: number,
 ): DefinitionResult {
   const index = workspace.source(path)
+  const declaration = declarationAt(index, offset)
+  if (declaration !== undefined) {
+    const definitions = [declaration]
+    return { symbol: declaration.label, receiver: undefined, definitions }
+  }
   const ancestors = index.pathAt(offset)
   const node = ancestors[ancestors.length - 1]
   const parent = ancestors[ancestors.length - 2]
@@ -73,6 +79,36 @@ export function resolveDefinition(
     return resolveNamedArgument(workspace, path, parent as FunctionCall, node)
   }
   return resolveNode(workspace, path, offset)
+}
+
+// The cursor on a declaration's own name.
+export function declarationAt(
+  index: SourceIndex,
+  offset: number,
+): Definition | undefined {
+  const ancestors = index.pathAt(offset)
+  const node = ancestors[ancestors.length - 1]
+  const parent = ancestors[ancestors.length - 2]
+  if (node === undefined) {
+    return undefined
+  }
+  const variable = parent as VariableDeclaration | undefined
+  if (parent?.type === 'VariableDeclaration' && variable?.identifier === node) {
+    return inFileDefinition(index, parent, variable.name ?? '')
+  }
+  const name =
+    node.type === 'EnumValue'
+      ? (node as unknown as { name: string }).name
+      : declarationName(node)
+  if (name === undefined) {
+    return undefined
+  }
+  const definition = inFileDefinition(index, node, name)
+  const start = index.offsetOf(definition.position)
+  if (offset < start || offset >= start + name.length) {
+    return undefined
+  }
+  return definition
 }
 
 function resolveNode(
@@ -298,7 +334,8 @@ export function definitionsInEntry(
     if (main === undefined) {
       continue
     }
-    for (const definition of memberDefinitions(index, main, member, arity)) {
+    const reachable = externalMembers(index, main, member, arity)
+    for (const definition of reachable) {
       definitions.push({ ...definition, resolution, entries: [entry] })
     }
   }
@@ -341,15 +378,19 @@ function abiMatchDefinitions(
   arity: number | undefined,
 ): Definition[] {
   const { workspace, scope } = context
-  const interfaceNames = new Set(
-    scope.index
-      .members(typeName)
-      .filter((node) => node.type === 'FunctionDefinition')
-      .map((node) => (node as FunctionDefinition).name)
-      .filter((name): name is string => name !== null && name !== '')
+  const interfaceFunctions = scope.index
+    .members(typeName)
+    .filter((node): node is FunctionDefinition => {
+      const name = (node as FunctionDefinition).name
       // Optimism interfaces declare their constructor as a function.
-      .filter((name) => name !== '__constructor__'),
-  )
+      return (
+        node.type === 'FunctionDefinition' &&
+        name !== null &&
+        name !== '' &&
+        name !== '__constructor__'
+      )
+    })
+    .map((fn) => ({ name: fn.name ?? '', arity: fn.parameters.length }))
   let scoreMax = 0
   let candidates: FlatEntry[] = []
   // A contract can only call contracts on its own chain.
@@ -366,12 +407,13 @@ function abiMatchDefinitions(
     if (!abiHasFunction(functions, member, arity)) {
       continue
     }
-    const names = new Set(functions.map((f) => f.name))
-    const shared = [...interfaceNames].filter((name) => names.has(name))
+    const shared = interfaceFunctions.filter((f) =>
+      abiHasFunction(functions, f.name, f.arity),
+    )
     const nominal = inheritsFrom(workspace, entry, typeName)
     // The flattener prunes interfaces to used members, so a structural match
     // has to expose all of them. Declaring the interface outranks both.
-    if (!nominal && shared.length < interfaceNames.size) {
+    if (!nominal && shared.length < interfaceFunctions.length) {
       continue
     }
     const score = (nominal ? NOMINAL_SCORE : 0) + shared.length
@@ -512,6 +554,19 @@ function argumentTypes(
       ? NUMBER_LITERAL
       : typeKey(evaluateReceiver(context, argument).type),
   )
+}
+
+// What an external call can reach: public and external functions, getters.
+function externalMembers(
+  index: SourceIndex,
+  contract: string,
+  member: string,
+  arity: number | undefined,
+): Definition[] {
+  return memberDefinitions(index, contract, member, arity).filter((d) => {
+    const visibility = (d.declaration as FunctionDefinition).visibility
+    return visibility !== 'internal' && visibility !== 'private'
+  })
 }
 
 function memberDefinitions(

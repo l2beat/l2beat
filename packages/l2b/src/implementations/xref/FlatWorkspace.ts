@@ -20,6 +20,8 @@ export interface FlatEntry {
   abi: string[]
   // Implementations first: calls land there, the proxy only answers the rest.
   sourcePaths: string[]
+  // The name the project gives this entry when it references it from a module.
+  aliases?: string[]
 }
 
 export class FlatWorkspace {
@@ -51,7 +53,17 @@ export class FlatWorkspace {
   ): FlatWorkspace {
     const entries: FlatEntry[] = []
     const seen = new Set<ChainSpecificAddress>()
-    for (const discovery of getProjectDiscoveries(configReader, project)) {
+    const discoveries = getProjectDiscoveries(configReader, project)
+    const aliases = new Map<ChainSpecificAddress, string[]>()
+    for (const entry of discoveries[0]?.entries ?? []) {
+      if (entry.type === 'Reference' && entry.name !== undefined) {
+        aliases.set(entry.address, [
+          ...(aliases.get(entry.address) ?? []),
+          entry.name,
+        ])
+      }
+    }
+    for (const discovery of discoveries) {
       for (const entry of discovery.entries) {
         if (entry.type === 'Reference' || seen.has(entry.address)) {
           continue
@@ -67,6 +79,7 @@ export class FlatWorkspace {
           values,
           abi: abiAddresses.flatMap((a) => discovery.abis[a] ?? []),
           sourcePaths: orderImplementationsFirst(paths),
+          aliases: aliases.get(entry.address) ?? [],
         })
       }
     }

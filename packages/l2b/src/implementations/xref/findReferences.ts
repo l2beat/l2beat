@@ -1,16 +1,12 @@
-import type {
-  BaseASTNode,
-  VariableDeclaration,
-} from '@mradomski/fast-solidity-parser'
 import type { FlatEntry, FlatWorkspace } from './FlatWorkspace'
 import {
   callOf,
   type Definition,
-  inFileDefinition,
+  declarationAt,
   type Resolution,
   resolveDefinition,
 } from './resolveDefinition'
-import { declarationName, type TextPosition } from './SourceIndex'
+import type { TextPosition } from './SourceIndex'
 
 export interface Reference {
   path: string
@@ -37,7 +33,7 @@ export function findReferences(
   path: string,
   offset: number,
 ): ReferencesResult {
-  const declaration = declarationAt(workspace, path, offset)
+  const declaration = declarationAt(workspace.source(path), offset)
   if (declaration !== undefined) {
     return {
       symbol: declaration.label,
@@ -257,46 +253,6 @@ function referenceAt(
     copies: [],
     elsewhere: exact === undefined,
   }
-}
-
-function declarationAt(
-  workspace: FlatWorkspace,
-  path: string,
-  offset: number,
-): Definition | undefined {
-  const index = workspace.source(path)
-  const ancestors = index.pathAt(offset)
-  const node = ancestors[ancestors.length - 1]
-  const parent = ancestors[ancestors.length - 2]
-  if (node === undefined) {
-    return undefined
-  }
-  const variable = parent as VariableDeclaration | undefined
-  if (parent?.type === 'VariableDeclaration' && variable?.identifier === node) {
-    return inFileDefinition(index, parent, variable.name ?? '')
-  }
-  const name =
-    node.type === 'EnumValue'
-      ? (node as unknown as { name: string }).name
-      : declarationName(node)
-  if (name === undefined) {
-    return undefined
-  }
-  const start = nameStart(workspace, path, node, name)
-  if (offset < start || offset >= start + name.length) {
-    return undefined
-  }
-  return inFileDefinition(index, node, name)
-}
-
-function nameStart(
-  workspace: FlatWorkspace,
-  path: string,
-  node: BaseASTNode,
-  name: string,
-): number {
-  const index = workspace.source(path)
-  return index.offsetOf(inFileDefinition(index, node, name).position)
 }
 
 export function wordOccurrences(text: string, word: string): number[] {
