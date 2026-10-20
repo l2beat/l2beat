@@ -48,7 +48,6 @@ export class ConfigModel {
     return stringify(this.peek(), null, 2)
   }
 
-  // Without comments to keep, the file is written in the repository's format.
   toFileContents(): string {
     const text = this.toString()
     if (this.hasComments()) {
@@ -61,8 +60,6 @@ export class ConfigModel {
     return stringify(this.peek()) !== stringify(other.peek())
   }
 
-  // Edits the comment-aware array in place, so comments between the
-  // addresses (e.g. commented-out ones) stay where they were.
   updateInitialAddresses(change: {
     add: ChainSpecificAddress[]
     remove: ChainSpecificAddress[]

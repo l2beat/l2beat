@@ -1,5 +1,5 @@
 import {
-  type ConfigReader,
+  ConfigReader,
   readJsonc,
   type TemplateService,
 } from '@l2beat/discovery'
@@ -20,11 +20,6 @@ const updateEntrypointsSchema = z.object({
   remove: z.array(z.string().transform(ChainSpecificAddress)),
 })
 
-// A module is a project whose entrypoints.json is imported by
-// globalEntrypoints.jsonc. Discovery only regenerates an existing file and
-// keeps vanished contracts as legacy entrypoints, so before the module is
-// rediscovered the UI registers a new module with an empty file and drops the
-// contracts a researcher removed. One the module still reaches comes back.
 export function attachModulesRouter(
   app: Express,
   configReader: ConfigReader,
@@ -41,18 +36,16 @@ export function attachModulesRouter(
     )
   })
 
-  // Consumers that still copy a contract that became a module entrypoint, or
-  // reference one that is gone, have to be rediscovered after a module change.
+  // A fresh reader: the shared one caches the entrypoints discovery rewrote.
   app.get('/api/modules/stale-consumers', (_req, res) => {
-    templateService.reload()
-    // Archived projects too: the entrypoint invariants cover every discovery.
-    const stale = configReader
+    const reader = new ConfigReader(projectsPath)
+    const stale = reader
       .readAllDiscoveredProjects()
       .filter((project) =>
         templateService
           .discoveryNeedsRefresh(
-            configReader.readDiscovery(project),
-            configReader.readConfig(project),
+            reader.readDiscovery(project),
+            reader.readConfig(project),
           )
           .some((reason) => reason.type === 'ENTRYPOINTS_CHANGED'),
       )
@@ -67,19 +60,11 @@ export function attachModulesRouter(
       return
     }
     const module = params.data.project
-    if (!configReader.projectConfigExists(module)) {
-      res.status(400).json({ error: 'Unknown project' })
-      return
-    }
     const globalEntrypoints = readGlobalEntrypoints()
     const importPath = `../projects/${module}/entrypoints.json`
     const isRegistered = globalEntrypoints.import.includes(importPath)
-    // Only a just created shared- project may become a module, never one that
-    // is already discovered on its own.
     const canBecomeModule =
-      body.data.create &&
-      module.startsWith('shared-') &&
-      !configReader.hasDiscovery(module)
+      body.data.create && !configReader.hasDiscovery(module)
     if (!isRegistered && !canBecomeModule) {
       res.status(400).json({ error: 'Project is not a module' })
       return

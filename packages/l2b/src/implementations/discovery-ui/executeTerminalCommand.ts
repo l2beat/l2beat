@@ -11,11 +11,8 @@ export function executeTerminalCommand(command: string, res: Response): void {
   res.setHeader('Cache-Control', 'no-cache')
   res.setHeader('Connection', 'keep-alive')
 
-  // A process group of its own, so Terminate reaches the command the shell
-  // started and not only the shell.
   const proc = spawn(command, {
     shell: true,
-    detached: true,
     env: {
       ...process.env,
       TERM: 'screen-256color',
@@ -46,16 +43,6 @@ export function executeTerminalCommand(command: string, res: Response): void {
   })
 
   res.on('close', () => {
-    if (proc.pid === undefined || proc.exitCode !== null) {
-      return
-    }
-    try {
-      process.kill(-proc.pid, 'SIGTERM')
-    } catch (error) {
-      // The group can exit between the check above and the kill.
-      if ((error as NodeJS.ErrnoException).code !== 'ESRCH') {
-        throw error
-      }
-    }
+    proc.kill()
   })
 }

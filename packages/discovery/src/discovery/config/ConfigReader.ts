@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { createHash } from 'crypto'
-import { existsSync, readdirSync, readFileSync, statSync } from 'fs'
+import { existsSync, readdirSync, readFileSync } from 'fs'
 import uniq from 'lodash/uniq'
 import path from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
@@ -20,7 +20,6 @@ const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 const JustImport = v.object({ import: v.array(v.string()).optional() })
 
 type ParsedLayer = { imports: string[]; layer: ConfigLayer }
-type CachedLayer = { modifiedAtMs: number; parsed: ParsedLayer }
 
 function parseLayer(contents: unknown, label: string): ParsedLayer {
   const importResult = JustImport.safeValidate(contents)
@@ -37,7 +36,7 @@ function parseLayer(contents: unknown, label: string): ParsedLayer {
 }
 
 export class ConfigReader {
-  private importedCache = new Map<string, CachedLayer>()
+  private importedCache = new Map<string, ParsedLayer>()
 
   constructor(private rootPath: string) {}
 
@@ -218,7 +217,11 @@ export class ConfigReader {
       }
       visited.add(resolvedPath)
 
-      const parsed = this.readImportedLayer(resolvedPath, importPath)
+      let parsed = this.importedCache.get(resolvedPath)
+      if (parsed === undefined) {
+        parsed = parseLayer(readJsonc(resolvedPath), importPath)
+        this.importedCache.set(resolvedPath, parsed)
+      }
 
       const importBasePath = path.dirname(resolvedPath)
       layers.push(
@@ -227,20 +230,6 @@ export class ConfigReader {
       )
     }
     return layers
-  }
-
-  // A long-lived reader (DiscoUI) sees imports rewritten while it runs, e.g.
-  // entrypoints.json after a module is rediscovered, so the cache is keyed on
-  // the file's mtime.
-  private readImportedLayer(resolvedPath: string, label: string): ParsedLayer {
-    const modifiedAtMs = statSync(resolvedPath).mtimeMs
-    const cached = this.importedCache.get(resolvedPath)
-    if (cached !== undefined && cached.modifiedAtMs === modifiedAtMs) {
-      return cached.parsed
-    }
-    const parsed = parseLayer(readJsonc(resolvedPath), label)
-    this.importedCache.set(resolvedPath, { modifiedAtMs, parsed })
-    return parsed
   }
 
   projectConfigExists(project: string): boolean {

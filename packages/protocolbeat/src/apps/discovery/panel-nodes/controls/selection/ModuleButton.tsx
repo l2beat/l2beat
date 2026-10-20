@@ -168,8 +168,6 @@ function AddToModule(props: {
   )
 }
 
-// A module reached only through another module is discovered by that one, so
-// removing from it would not hand the contracts back to this project.
 function RemoveFromModule(props: {
   owned: Owned
   isDirect: boolean | undefined
@@ -217,18 +215,13 @@ function Header(props: { title: string; hint: string }) {
   )
 }
 
-// Held from the first config write to the last discovery, so a second change
-// can not read a config the first one is about to overwrite.
-let isModuleChangeRunning = false
-
 function useModuleChange(project: string) {
   const queryClient = useQueryClient()
   return async (change: ModuleChange) => {
-    if (isModuleChangeRunning || useTerminalStore.getState().command.inFlight) {
+    if (useTerminalStore.getState().command.inFlight) {
       toast.error('Another command is running')
       return
     }
-    isModuleChangeRunning = true
     try {
       await applyModuleChange(project, change, queryClient)
     } catch (error) {
@@ -236,16 +229,10 @@ function useModuleChange(project: string) {
         id: MODULE_CHANGE_TOAST,
         description: describeError(error),
       })
-    } finally {
-      isModuleChangeRunning = false
     }
   }
 }
 
-// The module is registered before its discovery, so if that discovery fails
-// the module is listed and picking it again retries. Every consumer goes
-// after it: they only reference the module's contracts once their entrypoints
-// exist.
 async function applyModuleChange(
   project: string,
   change: ModuleChange,
@@ -253,7 +240,16 @@ async function applyModuleChange(
 ) {
   toast.loading(`Updating ${change.module}`, { id: MODULE_CHANGE_TOAST })
   await writeModuleConfig(change)
-  await releaseFromSourceModule(project, change.add, queryClient)
+  const modules = await queryClient.fetchQuery({
+    queryKey: ['modules'],
+    queryFn: getModules,
+  })
+  if (change.add.length > 0 && modules.includes(project)) {
+    await updateModuleEntrypoints(project, {
+      create: false,
+      remove: change.add,
+    })
+  }
   await updateModuleEntrypoints(change.module, {
     create: change.isNew,
     remove: change.remove,
@@ -288,50 +284,19 @@ async function applyModuleChange(
   }
   toast.success(
     `Updated ${change.module} and rediscovered ${consumers.length} ${plural(consumers.length, 'project')}`,
-    {
-      id: MODULE_CHANGE_TOAST,
-    },
+    { id: MODULE_CHANGE_TOAST },
   )
 }
 
-// Contracts moved out of a project that is itself a module are still its
-// entrypoints, so the target module would only reference them. Dropping them
-// first lets the target discover them, and the source then references them.
-async function releaseFromSourceModule(
-  project: string,
-  addresses: string[],
-  queryClient: QueryClient,
-) {
-  const modules = await queryClient.fetchQuery({
-    queryKey: ['modules'],
-    queryFn: getModules,
-  })
-  if (addresses.length > 0 && modules.includes(project)) {
-    await updateModuleEntrypoints(project, { create: false, remove: addresses })
-  }
-}
-
-// A rediscovered consumer can itself be a module whose own consumers then go
-// stale, so this repeats until nothing is left. A chain of modules is never
-// longer than the number of projects, and a round that leaves exactly the same
-// projects stale would never end.
 async function rediscoverStaleConsumers(
   projectCount: number,
 ): Promise<string[] | undefined> {
   const rediscovered = new Set<string>()
-  let previous = ''
-  for (let round = 0; round <= projectCount; round++) {
+  for (let round = 0; round < projectCount; round++) {
     const stale = await getStaleModuleConsumers()
     if (stale.length === 0) {
       return [...rediscovered]
     }
-    const current = stale.join(',')
-    if (current === previous) {
-      throw new Error('Rediscovery does not refresh stale consumers', {
-        cause: { stale },
-      })
-    }
-    previous = current
     for (const consumer of stale) {
       if (!(await discover(consumer, true))) {
         return undefined
@@ -342,13 +307,8 @@ async function rediscoverStaleConsumers(
   throw new Error('Consumers are still stale after rediscovery')
 }
 
-// The terminal ignores a command while another one runs, so the check has to
-// sit right before each discovery, not only at the start.
 async function discover(project: string, devMode: boolean): Promise<boolean> {
   const terminal = useTerminalStore.getState()
-  if (terminal.command.inFlight) {
-    throw new Error('Another command is running')
-  }
   toast.loading(`Discovering ${project}`, { id: MODULE_CHANGE_TOAST })
   terminal.setDevMode(devMode)
   const ok = await terminal.discover(project)
