@@ -45,7 +45,7 @@ export class GoToDefinitionPlugin implements EditorPlugin<ForType> {
       this.editor.addAction({
         id: 'l2beat.goBack',
         label: 'Go Back',
-        keybindings: [monaco.KeyMod.WinCtrl | monaco.KeyCode.Minus],
+        keybindings: [controlKey() | monaco.KeyCode.Minus],
         contextMenuGroupId: 'navigation',
         contextMenuOrder: 3,
         run: () => this.handlers?.goBack(),
@@ -125,4 +125,12 @@ function isLinkGesture(
     e.target.type === monaco.editor.MouseTargetType.CONTENT_TEXT &&
     e.target.position !== null
   )
+}
+
+// Control on every platform, as WinCtrl is the Windows key outside macOS and
+// Cmd+- on macOS zooms the page.
+function controlKey(): number {
+  return navigator.platform.includes('Mac')
+    ? monaco.KeyMod.WinCtrl
+    : monaco.KeyMod.CtrlCmd
 }

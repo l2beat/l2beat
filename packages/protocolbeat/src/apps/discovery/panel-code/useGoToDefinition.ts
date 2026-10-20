@@ -60,6 +60,12 @@ export function useGoToDefinition(
     open(target)
   }
 
+  // Locations and listed results hold addresses of the previous project.
+  useEffect(() => {
+    history.current = []
+    setLookup(undefined)
+  }, [project])
+
   useEffect(() => {
     if (plugin === undefined) {
       return
