@@ -72,11 +72,6 @@
     },
     "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c": {
       "critical": { "untilTimestamp": 1742317187 }
-    },
-    "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9": {
-      "fields": {
-        "remoteSender": { "edit": ["format", "EthereumAddress"] }
-      }
     }
   }
 }

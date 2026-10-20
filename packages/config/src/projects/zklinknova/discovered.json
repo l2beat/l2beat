@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "timestamp": 1753687799,
-  "configHash": "0x4b7ee79f0b2d67191b1c1635c199763da40822bb9a44d477595dbb85b691e496",
+  "configHash": "0xe8468c909306e65d07d49278e1b993944640bf8ffcac28b5520f497949fd5f2b",
   "entries": [
     {
       "address": "arb1:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -1220,7 +1220,8 @@
       "implementationNames": {
         "eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c": "ERC1967Proxy",
         "eth:0x65c7B3E1B877131986247B49474834b0347eF332": "EthereumGateway"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "ScrollL1Gateway",
@@ -5726,7 +5727,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "zklinknova/secondaryGateway": "0x7c6cdb315edbc57a3856f61b3448217c343a401013f0f46fcc72d9a900b7ec6b",
+    "zklinknova/secondaryGateway": "0xdff892d353756c5918ff4e31c9c98b20bbe315b0a6e419a7d34b24bb636ce776",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
   "usedBlockNumbers": {

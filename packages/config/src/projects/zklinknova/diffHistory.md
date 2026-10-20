@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8790034f9856e3f64d6126e801e9ad41b572853b
+Generated with discovered.json: 0x01f181f47126a43806e0df5ab3daf638fb98cb1b
 
-# Diff at Tue, 20 Oct 2026 07:51:47 GMT:
+# Diff at Tue, 20 Oct 2026 11:00:16 GMT:
 
 - id: 14e0bcba
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1753687799
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bea09ad019b915aab11cbc66c4845cbfca1ee6fd block: 1753687799
 - current timestamp: 1753687799
 
 ## Description
@@ -113,6 +113,14 @@ discovery. Values are for block 1753687799 (main branch discovery), not current.
 +        "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
       usedTypes:
 +        [{"typeCaster":"ChainPrefix","arg":{"prefix":"linea"}}]
+    }
+```
+
+```diff
+    contract EthereumL1Gateway (eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c) [zklinknova/secondaryGateway] {
+    +++ description: None
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
     }
 ```
 

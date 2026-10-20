@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "timestamp": 1788792011,
-  "configHash": "0xf60db6e9ce35343083791350a34b5604643af1b3aed21d62221f91be9e6e798a",
+  "configHash": "0x6cfc2839308b4062c5b110830dbb3bda5c647f0c1d7a4dd6f682cb50009af1f7",
   "entries": [
     {
       "name": "ArbFilteredTransactionsManager",

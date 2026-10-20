@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "nova",
+  "maxAddresses": 200,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",

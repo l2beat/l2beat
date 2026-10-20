@@ -1,7 +1,7 @@
 {
   "name": "across",
   "timestamp": 1792144273,
-  "configHash": "0x802eca24737a56a57db179eeb74d95aed98b8c4ae6701fab332cccb33af959cb",
+  "configHash": "0x618d1a49eb3199ff7d4e43dbfa8e8c569d53cef596a92f9f5620533ac4191365",
   "entries": [
     {
       "name": "VotingV2",
@@ -5315,7 +5315,7 @@
     "acrossv3/Gateway": "0x56cc0be8aad3e683cb015ed223cebc088c729c7882a854d28adc6c9c90f18787",
     "acrossv3/HubPool": "0x7972f36c70ab9460bb67178e7c5a2e6f614ab4f16aa941a0d8555eaaa319f38c",
     "acrossv3/HubPoolStore": "0x3642c36edf2d3a762a4ba62c17f663d8b14f65861115a98004718b3c91ba7ac8",
-    "acrossv3/SpokePool": "0xd2c45bd751481b9731d9e2aaefffabb5b88ec371fa1126436433d53ae1449a93",
+    "acrossv3/SpokePool": "0xa1c9857ca03a473435a17081ca419544f22a9a0396a478ea0a17e893ade8d3bf",
     "acrossv3/universalAdapter": "0x0fe89d590abc56ee5cbf6e99497eeaeeecb6fff890d94a83dfd30ead4463b7e8",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "uma/AddressWhitelist": "0x69e6632f3173e459b6788df25788c8e5a53fc171a191bcdc60dbf6573a17ef38",
