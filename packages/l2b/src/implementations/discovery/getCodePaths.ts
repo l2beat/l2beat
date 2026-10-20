@@ -1,4 +1,9 @@
-import { type ConfigReader, get$Implementations } from '@l2beat/discovery'
+import {
+  type ConfigReader,
+  type DiscoveryOutput,
+  type EntryParameters,
+  get$Implementations,
+} from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { readdirSync } from 'fs'
 import { join } from 'path'
@@ -23,35 +28,36 @@ export function getCodePaths(
       continue
     }
 
-    const similar = discovery.entries.filter(
-      (x) => x.name === entry.name && x.type !== 'Reference',
-    )
-    const hasImplementations = get$Implementations(entry.values).length > 0
-
-    const name =
-      similar.length > 1 ? `${entry.name}-${entry.address}` : `${entry.name}`
-    const root = join(configReader.getProjectPath(discovery.name), '.flat')
-
-    if (!hasImplementations) {
-      return {
-        entryName: entry.name,
-        codePaths: [
-          { name: `${entry.name}.sol`, path: join(root, name + '.sol') },
-        ],
-      }
-    }
-
-    const codePaths = listFilesRecursively(join(root, name)).sort((a, b) =>
-      compareFiles(a.name, b.name),
-    )
-
     return {
       entryName: entry.name,
-      codePaths,
+      codePaths: getEntryCodePaths(configReader, discovery, entry),
     }
   }
 
   return { entryName: undefined, codePaths: [] }
+}
+
+export function getEntryCodePaths(
+  configReader: ConfigReader,
+  discovery: DiscoveryOutput,
+  entry: EntryParameters,
+): CodePathResult['codePaths'] {
+  const similar = discovery.entries.filter(
+    (x) => x.name === entry.name && x.type !== 'Reference',
+  )
+  const hasImplementations = get$Implementations(entry.values).length > 0
+
+  const name =
+    similar.length > 1 ? `${entry.name}-${entry.address}` : `${entry.name}`
+  const root = join(configReader.getProjectPath(discovery.name), '.flat')
+
+  if (!hasImplementations) {
+    return [{ name: `${entry.name}.sol`, path: join(root, name + '.sol') }]
+  }
+
+  return listFilesRecursively(join(root, name)).sort((a, b) =>
+    compareFiles(a.name, b.name),
+  )
 }
 
 function listFilesRecursively(
