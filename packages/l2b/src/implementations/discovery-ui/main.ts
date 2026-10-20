@@ -40,6 +40,7 @@ import {
   attachTemplateRouter,
   listTemplateFilesSchema,
 } from './templates/router'
+import { attachXrefRouter } from './xref/router'
 
 const safeStringSchema = z
   .string()
@@ -308,6 +309,7 @@ export function createDiscoveryUiApp({
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
     attachModulesRouter(app, configReader, templateService, paths.discovery)
+    attachXrefRouter(app, configReader)
 
     app.get('/api/config/health', (_, res) => {
       const response = getConfigHealth(

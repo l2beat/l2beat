@@ -20,6 +20,7 @@ type EditorViewProps = {
   features?: {
     lineSelection: boolean
     rangeHighlight: boolean
+    goToDefinition?: boolean
   }
   onActiveFileChange?: (file: EditorFile | undefined) => void
 }

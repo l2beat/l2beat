@@ -13,7 +13,11 @@ import { useProjectData } from '../hooks/useProjectData'
 import { getDefaultSourceIndex, hasSourceCode } from '../utils/sourceCode'
 import { CarveCopyDialog } from './CarveCopyDialog'
 import { joinDeclarations } from './declarations'
+import { LookupPanel } from './LookupPanel'
 import { RediscoverPrompt } from './RediscoverPrompt'
+import { useGoToDefinition } from './useGoToDefinition'
+
+const EDITOR_ID = 'code-panel'
 
 export function CodePanel() {
   const { project, selectedAddress, projectResponse, selected } =
@@ -51,6 +55,16 @@ export function CodePanel() {
   )
 
   const showRediscoverInfo = codeResponse.isError && !IS_READONLY
+
+  const activeSourceIndex = codeResponse.data?.sources.findIndex(
+    (source) => source.name === activeFile?.name,
+  )
+  const definition = useGoToDefinition(
+    EDITOR_ID,
+    project,
+    selectedAddress,
+    activeSourceIndex === -1 ? undefined : activeSourceIndex,
+  )
 
   const range = selectedAddress ? getRange(selectedAddress) : undefined
 
@@ -91,14 +105,25 @@ export function CodePanel() {
           />
         </div>
       )}
+      {definition.lookup && (
+        <LookupPanel
+          lookup={definition.lookup}
+          onPick={definition.navigate}
+          onDismiss={definition.dismiss}
+        />
+      )}
       <EditorView
-        editorId="code-panel"
+        editorId={EDITOR_ID}
         files={files}
         range={rangeInfo}
         initialFileIndex={getDefaultSourceIndex(
           codeResponse.data?.sources ?? [],
         )}
-        features={{ lineSelection: false, rangeHighlight: true }}
+        features={{
+          lineSelection: false,
+          rangeHighlight: true,
+          goToDefinition: !IS_READONLY,
+        }}
         onActiveFileChange={setActiveFile}
       />
     </div>
