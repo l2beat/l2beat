@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Wrapped ETH of the legacy plasma bridge. The DepositManager wraps ETH deposits here, so this contract holds that ETH.",
+  "category": "core",
+  "ignoreInWatchMode": ["totalSupply"]
+}
