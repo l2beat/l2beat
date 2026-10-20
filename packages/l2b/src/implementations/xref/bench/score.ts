@@ -48,7 +48,12 @@ function judge(
   site: OracleSite,
   result: DefinitionResult,
 ): Verdict {
-  const implemented = result.definitions.filter(isImplementation)
+  // Naming a function, as in `token.transfer.selector`, runs no code, so an
+  // interface declaration is a full answer.
+  const implemented =
+    site.call === 'reference'
+      ? result.definitions
+      : result.definitions.filter(isImplementation)
   const { truth } = site
   switch (truth.kind) {
     case 'unknown':

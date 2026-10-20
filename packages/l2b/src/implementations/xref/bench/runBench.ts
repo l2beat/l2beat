@@ -47,7 +47,7 @@ interface OracleCache {
 }
 
 // Bump when the oracle changes, so cached ground truth is rebuilt.
-const ORACLE_VERSION = '10'
+const ORACLE_VERSION = '12'
 
 export async function runBench(
   configReader: ConfigReader,
@@ -55,11 +55,7 @@ export async function runBench(
   project: string,
 ): Promise<BenchResult> {
   const workspace = FlatWorkspace.fromProject(configReader, project)
-  const projectFlats = join(configReader.getProjectPath(project), '.flat') + sep
-  const ownPaths = workspace.entries.flatMap((entry) =>
-    entry.sourcePaths.filter((path) => path.startsWith(projectFlats)),
-  )
-  const fingerprint = fingerprintOf(configReader, project, ownPaths, workspace)
+  const fingerprint = fingerprintOf(configReader, project, workspace)
   const cachePath = join(dirname(paths.cache), 'xref-oracle', `${project}.json`)
   let cache = readCache(cachePath, fingerprint)
   if (cache === undefined) {
@@ -222,7 +218,6 @@ interface Snapshot {
 function fingerprintOf(
   configReader: ConfigReader,
   project: string,
-  ownPaths: string[],
   workspace: FlatWorkspace,
 ): string {
   const hash = createHash('sha256')
@@ -233,7 +228,7 @@ function fingerprintOf(
       JSON.stringify([discovery.usedBlockNumbers, discovery.timestamp]),
     )
   }
-  for (const path of [...ownPaths].sort()) {
+  for (const path of [...workspace.sourcePaths].sort()) {
     hash.update(path)
     hash.update(workspace.source(path).text)
   }

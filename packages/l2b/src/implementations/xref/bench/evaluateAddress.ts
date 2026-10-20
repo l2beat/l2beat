@@ -113,6 +113,10 @@ function unwindCall(context: EvaluationContext, call: ExpressionNode): Unwound {
   const args = call.arguments ?? []
   const argument = args[0]
   if (call.kind === 'typeConversion' && argument !== undefined) {
+    // bytes20(bytes32) keeps the high bytes, reading the slot takes the low.
+    if (isFixedBytes(call) || isFixedBytes(argument)) {
+      return { stop: stop('unknown', 'fixed bytes conversion') }
+    }
     return { next: argument }
   }
   const callee = unwrapOptions(call.expression as ExpressionNode)
@@ -242,7 +246,7 @@ function unwindVariable(
     return { stop: stop('dynamic', 'parameter') }
   }
   if (ast.assigned.has(variable.id)) {
-    return { stop: stop('dynamic', 'reassigned local') }
+    return { stop: stop('unknown', 'reassigned local') }
   }
   const statement = parent as
     | { declarations?: unknown[]; initialValue?: ExpressionNode | null }
@@ -362,4 +366,10 @@ function toAddress(origin: ChainSpecificAddress, bytes: Bytes): Evaluated {
 
 function stop(kind: 'dynamic' | 'unknown', reason: string): Evaluated {
   return { kind, reason }
+}
+
+function isFixedBytes(expression: ExpressionNode): boolean {
+  const type = expression.typeDescriptions?.typeIdentifier ?? ''
+  const size = type.slice('t_bytes'.length, 't_bytes'.length + 1)
+  return type.startsWith('t_bytes') && size >= '0' && size <= '9'
 }

@@ -102,7 +102,25 @@ const REFERENCED_DECLARATIONS = [
   'EventDefinition',
   'ErrorDefinition',
   'UserDefinedValueTypeDefinition',
+  'FunctionDefinition',
 ]
+
+// A function named without a call, like a function pointer, is virtual too.
+function referenceTruth(
+  source: CompiledSource,
+  node: ExpressionNode,
+  declaration: SolcNode,
+): Truth {
+  const caller = source.ast.enclosing<ContractNode>(node, 'ContractDefinition')
+  if (
+    node.nodeType === 'Identifier' &&
+    declaration.nodeType === 'FunctionDefinition' &&
+    caller !== undefined
+  ) {
+    return dispatch(source, declaration as FunctionNode, caller)
+  }
+  return known(source, [declaration])
+}
 
 function referenceSites(source: CompiledSource): OracleSite[] {
   const { ast, path } = source
@@ -114,37 +132,75 @@ function referenceSites(source: CompiledSource): OracleSite[] {
         declaration === undefined ||
         !REFERENCED_DECLARATIONS.includes(declaration.nodeType) ||
         ast.parent(node)?.nodeType === 'UserDefinedTypeName' ||
-        isCallee(ast, node)
+        isCallee(ast, node, declaration)
       ) {
         continue
       }
-      const offset = referenceOffset(ast, node)
       sites.push({
         path,
-        offset,
+        offset: referenceOffset(ast, node),
         call: 'reference',
-        truth: known(source, [declaration]),
+        truth: referenceTruth(source, node, declaration),
       })
     }
   }
   return sites
 }
 
-// Getter calls like `token.owner()` are scored with the other calls.
-function isCallee(ast: SolcAst, node: ExpressionNode): boolean {
-  if (node.nodeType !== 'MemberAccess') {
+// Calls, getter calls like `token.owner()` included, are scored apart.
+function isCallee(
+  ast: SolcAst,
+  node: ExpressionNode,
+  declaration: SolcNode,
+): boolean {
+  const calledByName =
+    node.nodeType === 'Identifier' &&
+    declaration.nodeType === 'FunctionDefinition'
+  if (node.nodeType !== 'MemberAccess' && !calledByName) {
     return false
   }
+  let callee: ExpressionNode = node
   let parent = ast.parent(node) as ExpressionNode | undefined
   if (parent?.nodeType === 'FunctionCallOptions') {
+    callee = parent
     parent = ast.parent(parent) as ExpressionNode | undefined
   }
-  return parent?.nodeType === 'FunctionCall' && parent.kind === 'functionCall'
+  // Before 0.7 options were calls of their own: `t.deposit.value(1)()`.
+  while (isLegacyOption(parent)) {
+    const options = ast.parent(parent) as ExpressionNode | undefined
+    if (options?.nodeType !== 'FunctionCall') {
+      break
+    }
+    callee = options
+    parent = ast.parent(options) as ExpressionNode | undefined
+  }
+  return (
+    parent?.nodeType === 'FunctionCall' &&
+    parent.kind === 'functionCall' &&
+    parent.expression === callee
+  )
+}
+
+function isLegacyOption(
+  node: ExpressionNode | undefined,
+): node is ExpressionNode {
+  return (
+    node?.nodeType === 'MemberAccess' &&
+    (node.memberName === 'value' || node.memberName === 'gas')
+  )
 }
 
 function referenceOffset(ast: SolcAst, node: ExpressionNode): number {
-  const named = node as ExpressionNode & { pathNode?: { name?: string } }
-  const name = named.memberName ?? named.name ?? named.pathNode?.name ?? ''
+  const named = node as ExpressionNode & {
+    pathNode?: { name?: string }
+    namePath?: string
+  }
+  const name =
+    named.memberName ??
+    named.name ??
+    named.pathNode?.name ??
+    named.namePath ??
+    ''
   const last = name.slice(name.lastIndexOf('.') + 1)
   const [byteStart, byteLength] = sourceRange(node)
   if (node.nodeType === 'Identifier') {
@@ -217,9 +273,11 @@ function dispatch(
   caller: ContractNode,
 ): Truth {
   const owner = source.ast.parent(fn) as ContractNode | undefined
+  // Private functions cannot be overridden.
   if (
     owner?.nodeType !== 'ContractDefinition' ||
-    owner.contractKind === 'library'
+    owner.contractKind === 'library' ||
+    fn.visibility === 'private'
   ) {
     return known(source, [fn])
   }

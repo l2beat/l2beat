@@ -129,6 +129,9 @@ function queryDeclaration(
   target: TruthTarget,
   name: string,
 ): { sites: Set<string>; elsewhere: number } | undefined {
+  if (name === '') {
+    return undefined
+  }
   const text = workspace.text(target.path).slice(target.start, target.end)
   for (const relative of wordOccurrences(text, name)) {
     const result = findReferences(
