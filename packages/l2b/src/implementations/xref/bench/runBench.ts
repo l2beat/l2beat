@@ -47,7 +47,7 @@ interface OracleCache {
 }
 
 // Bump when the oracle changes, so cached ground truth is rebuilt.
-const ORACLE_VERSION = '16'
+const ORACLE_VERSION = '17'
 
 export async function runBench(
   configReader: ConfigReader,
@@ -182,7 +182,12 @@ function createProviders(
     }
     for (const entry of discovery.entries) {
       const block = discovery.usedBlockNumbers[Address.longChain(entry.address)]
-      if (entry.type !== 'Reference' && block !== undefined) {
+      // The first discovery owns the entry, as in the workspace.
+      if (
+        entry.type !== 'Reference' &&
+        block !== undefined &&
+        !byAddress.has(entry.address)
+      ) {
         byAddress.set(entry.address, { block, timestamp: discovery.timestamp })
       }
     }
