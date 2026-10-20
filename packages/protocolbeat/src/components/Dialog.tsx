@@ -60,14 +60,23 @@ export function DialogOverlay({
   )
 }
 
+// A modal Radix dialog sets `pointer-events: none` on <body>, which restyles
+// every element of a large page on open and on close. Dialogs opened often
+// pass `modal={false}` to the root and `nonModal` here, and get a plain
+// overlay that blocks the page and closes the dialog when clicked.
 function DialogBody({
   children,
   className,
   noCloseButton,
+  nonModal,
   ...props
-}: RadixDialog.DialogContentProps & { noCloseButton?: boolean }) {
+}: RadixDialog.DialogContentProps & {
+  noCloseButton?: boolean
+  nonModal?: boolean
+}) {
+  const Overlay = nonModal ? PlainOverlay : DialogOverlay
   return (
-    <DialogOverlay>
+    <Overlay>
       <RadixDialog.Content
         className={cn(
           '-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-25 max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-6 shadow-(--shadow-6) focus:outline-hidden',
@@ -89,7 +98,16 @@ function DialogBody({
           </Dialog.Close>
         )}
       </RadixDialog.Content>
-    </DialogOverlay>
+    </Overlay>
+  )
+}
+
+function PlainOverlay(props: { children: React.ReactNode }) {
+  return (
+    <RadixDialog.Portal>
+      <div className="fixed inset-0 z-20 bg-coffee-900/60" />
+      {props.children}
+    </RadixDialog.Portal>
   )
 }
 
