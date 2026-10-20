@@ -13,6 +13,7 @@ import type {
   Mapping,
   MemberAccess,
   NameValueExpression,
+  NewExpression,
   StateVariableDeclarationVariable,
   StructDefinition,
   TupleExpression,
@@ -184,6 +185,9 @@ function unwindCall(context: ReceiverContext, call: FunctionCall): Unwound {
   }
   if (callee.type === 'ElementaryTypeName' && argument !== undefined) {
     return { step: { kind: 'cast', type: callee as TypeName }, next: argument }
+  }
+  if (callee.type === 'NewExpression') {
+    return { base: { ...UNKNOWN, type: (callee as NewExpression).typeName } }
   }
   if (callee.type !== 'Identifier') {
     return { base: UNKNOWN }

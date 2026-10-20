@@ -159,8 +159,14 @@ interface IB {
     function go() external;
 }
 
+contract Spawned {
+    function go() external {}
+}
+
 contract Base {
     address private target;
+
+    function helper(address a) internal {}
 
     event Changed(address account);
 
@@ -188,6 +194,15 @@ contract Overloads is Base {
     function source() internal returns (address) {}
 
     function target() internal returns (address) {}
+
+    function helper(uint256 a) private {}
+
+    function clear(address account) external {
+        delete pinger;
+        pinger.ping();
+        helper(account);
+        new Spawned().go();
+    }
 
     modifier repoint() override {
         pinger = IPing(0x3333333333333333333333333333333333333333);
@@ -458,6 +473,24 @@ describe(`${resolveDefinition.name} edge cases`, () => {
   it('answers a redeclared event or modifier with the most derived one', () => {
     expect(lines(resolveOverloads('external repoint', 'repoint'))).toEqual([
       `Overloads.repoint:${overloadsAt('modifier repoint() override')}`,
+    ])
+  })
+
+  it('matches private overloads together with inherited ones', () => {
+    expect(lines(resolveOverloads('helper(account)', 'helper'))).toEqual([
+      `Base.helper:${overloadsAt('function helper(address')}`,
+    ])
+  })
+
+  it('does not trust discovered values a function deletes', () => {
+    const result = resolveOverloads('pinger.ping();\n        helper', 'ping(')
+
+    expect(result.receiver?.address).toEqual(undefined)
+  })
+
+  it('types a receiver by the contract it creates', () => {
+    expect(lines(resolveOverloads('new Spawned().go()', 'go'))).toEqual([
+      `Spawned.go:${overloadsAt('function go() external {}')}`,
     ])
   })
 

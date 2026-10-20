@@ -9,10 +9,11 @@ import type {
   ModifierDefinition,
   TryStatement,
   TupleExpression,
+  UnaryOperation,
   VariableDeclaration,
   VariableDeclarationStatement,
 } from '@mradomski/fast-solidity-parser'
-import { childrenOf, type SourceIndex } from './SourceIndex'
+import { childrenOf, parameterSignature, type SourceIndex } from './SourceIndex'
 
 export interface Scope {
   index: SourceIndex
@@ -76,11 +77,14 @@ export function resolveName(
       }
     }
     const privateFunctions = ownPrivateFunctions(index, contract, name, arity)
-    if (privateFunctions.length > 0) {
-      return { kind: 'functions', nodes: privateFunctions }
-    }
+    const privateSignatures = privateFunctions.map(parameterSignature)
     const dispatch = index.dispatchContract(contract)
-    const functions = index.findFunctions(dispatch, name, arity)
+    const functions = [
+      ...privateFunctions,
+      ...index
+        .findFunctions(dispatch, name, arity)
+        .filter((fn) => !privateSignatures.includes(parameterSignature(fn))),
+    ]
     if (functions.length > 0) {
       return { kind: 'functions', nodes: functions }
     }
@@ -266,6 +270,15 @@ function isAssigned(
     if (node.type === 'BinaryOperation') {
       const operation = node as BinaryOperation
       if (operation.operator === '=' && writesTo(operation.left, name)) {
+        return true
+      }
+    }
+    if (node.type === 'UnaryOperation') {
+      const operation = node as UnaryOperation
+      if (
+        operation.operator === 'delete' &&
+        writesTo(operation.subExpression, name)
+      ) {
         return true
       }
     }
