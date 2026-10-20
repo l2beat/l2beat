@@ -115,7 +115,10 @@ export function useGoToDefinition(
         }
       },
     })
-    return () => plugin.setHandlers(undefined)
+    return () => {
+      plugin.setHandlers(undefined)
+      latestLookup.current++
+    }
   }, [plugin, project, address, sourceIndex])
 
   return { lookup, navigate, dismiss: () => setLookup(undefined) }

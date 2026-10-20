@@ -91,7 +91,9 @@ export async function getDefinition(
   })
   const res = await fetch(`/api/projects/${project}/definition?${query}`)
   if (!res.ok) {
-    throw new Error(res.statusText)
+    throw new Error('Code lookup failed', {
+      cause: { status: res.status },
+    })
   }
   return (await res.json()) as ApiDefinitionResponse
 }
@@ -109,7 +111,9 @@ export async function getReferences(
   })
   const res = await fetch(`/api/projects/${project}/references?${query}`)
   if (!res.ok) {
-    throw new Error(res.statusText)
+    throw new Error('Code lookup failed', {
+      cause: { status: res.status },
+    })
   }
   return (await res.json()) as ApiReferencesResponse
 }
