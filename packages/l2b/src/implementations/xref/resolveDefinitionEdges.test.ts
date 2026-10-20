@@ -41,6 +41,14 @@ contract Edge {
         return a[0];
     }
 
+    function at(bytes32[] memory a, uint256 i) internal pure returns (bytes32) {
+        return a[i];
+    }
+
+    function at(address[] memory a, uint256 i) internal pure returns (address) {
+        return a[i];
+    }
+
     function run(bool flag, IOverloaded other) external {
         if (flag) {
             uint256 value = 1;
@@ -51,6 +59,10 @@ contract Edge {
         uint256(1).inc();
         IPing(TARGET).ping();
         other.f(1);
+        bytes32[] memory hashes;
+        for (uint32 i = 0; i < 2; ++i) {
+            at(hashes, i);
+        }
     }
 }
 `
@@ -125,6 +137,12 @@ describe(`${resolveDefinition.name} edge cases`, () => {
       workspace.source('/p/.flat/Edge.sol').findFunctions('Edge', 'pick', 1)
         .length,
     ).toEqual(2)
+  })
+
+  it('passes narrower integers to wider parameters', () => {
+    expect(resolve('at(hashes, i)', 'at')).toEqual([
+      `Edge.at:${declaredAt('function at(bytes32[]')}`,
+    ])
   })
 
   it('binds functions listed in a using directive', () => {
