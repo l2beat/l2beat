@@ -1,48 +1,56 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import type { HttpClient } from '@l2beat/shared'
 import { expect, mockFn, mockObject } from 'earl'
 import { CropsApiDeployer } from './CropsApiDeployer'
 
 describe(CropsApiDeployer.name, () => {
   it('deploys once per new attestation', async () => {
-    const deploy = mockFn().resolvesTo(undefined)
-    const deployer = new CropsApiDeployer(inMemory(), deploy, Logger.SILENT)
+    const http = github()
+    const deployer = createDeployer(inMemory(), http)
 
     await deployer.ensureDeployed('0x01')
     await deployer.ensureDeployed('0x01')
-    expect(deploy).toHaveBeenCalledTimes(1)
+    expect(http.fetchRaw).toHaveBeenCalledTimes(1)
 
     await deployer.ensureDeployed('0x02')
-    expect(deploy).toHaveBeenCalledTimes(2)
+    expect(http.fetchRaw).toHaveBeenCalledTimes(2)
   })
 
   it('deploys when the attestation goes away', async () => {
-    const deploy = mockFn().resolvesTo(undefined)
-    const deployer = new CropsApiDeployer(inMemory(), deploy, Logger.SILENT)
+    const http = github()
+    const deployer = createDeployer(inMemory(), http)
     await deployer.ensureDeployed('0x01')
 
     await deployer.ensureDeployed(undefined)
     await deployer.ensureDeployed(undefined)
 
-    expect(deploy).toHaveBeenCalledTimes(2)
+    expect(http.fetchRaw).toHaveBeenCalledTimes(2)
   })
 
-  it('retries a failed deploy, even after a restart', async () => {
+  it('retries a deploy GitHub rejected, even after a restart', async () => {
     const db = inMemory()
-    const deploy = mockFn()
-      .rejectsWithOnce(new Error('GitHub down'))
-      .resolvesTo(undefined)
+    const http = github(500)
     await expect(
-      new CropsApiDeployer(db, deploy, Logger.SILENT).ensureDeployed('0x01'),
-    ).toBeRejectedWith('GitHub down')
+      createDeployer(db, http).ensureDeployed('0x01'),
+    ).toBeRejectedWith('crops-api deploy dispatch failed')
 
-    const restarted = new CropsApiDeployer(db, deploy, Logger.SILENT)
+    const restarted = createDeployer(db, http)
     await restarted.ensureDeployed('0x01')
     await restarted.ensureDeployed('0x01')
 
-    expect(deploy).toHaveBeenCalledTimes(2)
+    expect(http.fetchRaw).toHaveBeenCalledTimes(2)
   })
 })
+
+/** GitHub answering the dispatch, first with `firstStatus`, then with 204. */
+function github(firstStatus = 204) {
+  return mockObject<HttpClient>({
+    fetchRaw: mockFn()
+      .resolvesToOnce(new Response(null, { status: firstStatus }))
+      .resolvesTo(new Response(null, { status: 204 })),
+  })
+}
 
 /** Keeps the deployed uid, so later calls and restarts see it. */
 function inMemory() {
@@ -62,4 +70,8 @@ function inMemory() {
       },
     }),
   })
+}
+
+function createDeployer(db: Database, http: HttpClient) {
+  return new CropsApiDeployer(db, http, 'token', Logger.SILENT)
 }

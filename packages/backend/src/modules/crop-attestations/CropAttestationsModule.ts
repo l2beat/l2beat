@@ -3,7 +3,6 @@ import { HttpClient, readCurrentCropAttestation } from '@l2beat/shared'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { CropAttestationSync } from './CropAttestationSync'
 import { CropsApiDeployer } from './CropsApiDeployer'
-import { triggerCropsApiDeploy } from './triggerCropsApiDeploy'
 
 const INTERVAL_MS = 5 * 60 * 1000
 
@@ -31,10 +30,12 @@ export function createCropAttestationsModule({
   const rpc = providers.clients.getRpcClient(source.network)
 
   const { githubToken } = config.cropAttestations
-  if (githubToken === undefined) {
+  let deployer: CropsApiDeployer | undefined
+  if (githubToken) {
+    deployer = new CropsApiDeployer(db, new HttpClient(), githubToken, logger)
+  } else {
     logger.info('CROPS API deploys disabled: no GitHub token is set')
   }
-  const http = new HttpClient()
 
   const sync = new CropAttestationSync(
     {
@@ -49,14 +50,7 @@ export function createCropAttestationsModule({
           attester: attester.address,
           startBlock: attester.sinceBlock,
         }),
-      deployer:
-        githubToken === undefined
-          ? undefined
-          : new CropsApiDeployer(
-              db,
-              () => triggerCropsApiDeploy(http, githubToken),
-              logger,
-            ),
+      deployer,
       intervalMs: INTERVAL_MS,
     },
     logger,
