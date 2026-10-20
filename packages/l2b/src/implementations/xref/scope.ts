@@ -1,9 +1,11 @@
+import { assert } from '@l2beat/shared-pure'
 import type {
   BaseASTNode,
   BinaryOperation,
   CatchClause,
   ContractDefinition,
   Expression,
+  FunctionCall,
   FunctionDefinition,
   Identifier,
   ModifierDefinition,
@@ -231,17 +233,68 @@ function ownPrivateFunctions(
   })
 }
 
-// Applied modifiers run in the same call, so their writes count too.
+const writtenDuringCall = new WeakMap<BaseASTNode, Set<string>>()
+
+// Applied modifiers and the internal functions it calls run in the same call,
+// so their writes count too.
 export function isWrittenInCall(scope: Scope, name: string): boolean {
   const callable = scope.callable
   if (callable === undefined) {
     return false
   }
-  const modifiers =
-    callable.type === 'FunctionDefinition'
-      ? appliedModifiers(scope, callable)
-      : []
-  return [callable, ...modifiers].some((c) => isAssigned(c, name))
+  let names = writtenDuringCall.get(callable)
+  if (names === undefined) {
+    names = namesWrittenDuring(scope, callable)
+    writtenDuringCall.set(callable, names)
+  }
+  return names.has(name)
+}
+
+function namesWrittenDuring(
+  scope: Scope,
+  callable: FunctionDefinition | ModifierDefinition,
+): Set<string> {
+  const names = new Set<string>()
+  const visited = new Set<BaseASTNode>()
+  const callables = [callable]
+  while (callables.length > 0) {
+    const current = callables.pop()
+    assert(current !== undefined)
+    if (visited.has(current)) {
+      continue
+    }
+    visited.add(current)
+    if (current.type === 'FunctionDefinition') {
+      callables.push(...appliedModifiers(scope, current))
+    }
+    const nodes: BaseASTNode[] = current.body ? [current.body] : []
+    while (nodes.length > 0) {
+      const node = nodes.pop()
+      assert(node !== undefined)
+      for (const written of writtenNames(node)) {
+        names.add(written)
+      }
+      if (node.type === 'FunctionCall') {
+        callables.push(...internalCallees(scope, node as FunctionCall))
+      }
+      nodes.push(...childrenOf(node))
+    }
+  }
+  return names
+}
+
+function internalCallees(
+  scope: Scope,
+  call: FunctionCall,
+): FunctionDefinition[] {
+  if (call.expression.type !== 'Identifier') {
+    return []
+  }
+  const name = (call.expression as Identifier).name
+  const declaration = resolveName(scope, name, call.arguments.length)
+  return declaration?.kind === 'functions'
+    ? declaration.nodes.filter((fn) => fn.body !== null)
+    : []
 }
 
 function appliedModifiers(
@@ -264,39 +317,35 @@ function isAssigned(
   const stack: BaseASTNode[] = callable.body ? [callable.body] : []
   while (stack.length > 0) {
     const node = stack.pop()
-    if (node === undefined) {
-      continue
-    }
-    if (node.type === 'BinaryOperation') {
-      const operation = node as BinaryOperation
-      if (operation.operator === '=' && writesTo(operation.left, name)) {
-        return true
-      }
-    }
-    if (node.type === 'UnaryOperation') {
-      const operation = node as UnaryOperation
-      if (
-        operation.operator === 'delete' &&
-        writesTo(operation.subExpression, name)
-      ) {
-        return true
-      }
+    assert(node !== undefined)
+    if (writtenNames(node).includes(name)) {
+      return true
     }
     stack.push(...childrenOf(node))
   }
   return false
 }
 
-function writesTo(target: BaseASTNode, name: string): boolean {
-  if (target.type === 'Identifier') {
-    return (target as Identifier).name === name
+function writtenNames(node: BaseASTNode): string[] {
+  if (node.type === 'BinaryOperation') {
+    const operation = node as BinaryOperation
+    return operation.operator === '=' ? targetNames(operation.left) : []
   }
-  if (target.type === 'TupleExpression') {
-    return (target as TupleExpression).components.some(
-      (component) =>
-        component?.type === 'Identifier' &&
-        (component as Identifier).name === name,
-    )
+  if (node.type === 'UnaryOperation') {
+    const operation = node as UnaryOperation
+    return operation.operator === 'delete'
+      ? targetNames(operation.subExpression)
+      : []
   }
-  return false
+  return []
+}
+
+function targetNames(target: BaseASTNode): string[] {
+  const targets =
+    target.type === 'TupleExpression'
+      ? (target as TupleExpression).components
+      : [target]
+  return targets.flatMap((t) =>
+    t?.type === 'Identifier' ? [(t as Identifier).name] : [],
+  )
 }

@@ -272,8 +272,12 @@ function applyCall(
   call: FunctionCall,
 ): Receiver {
   const { workspace, scope } = context
-  if (receiver.staticContract !== undefined && member === 'wrap') {
-    return { ...UNKNOWN, type: userType(receiver.staticContract) }
+  const { staticContract } = receiver
+  if (member === 'wrap' && staticContract !== undefined) {
+    const named = scope.index.findType(staticContract, scope.contract)
+    if (named?.type === 'TypeDefinition') {
+      return { ...UNKNOWN, type: userType(staticContract) }
+    }
   }
   const arity = call.arguments.length
   const owner = receiver.staticContract ?? contractName(receiver.type)
@@ -290,8 +294,30 @@ function applyCall(
     target && arity === 0 ? discoveredAddress(target.values, member) : undefined
   const type =
     returnType(scope.index, declared) ??
+    (owner ? getterType(scope.index, owner, member, arity) : undefined) ??
     (target ? returnTypeInEntry(workspace, target, member, arity) : undefined)
   return { ...UNKNOWN, type, address }
+}
+
+// A public variable's getter takes one argument per key or index.
+function getterType(
+  index: SourceIndex,
+  owner: string,
+  member: string,
+  arity: number,
+): TypeName | undefined {
+  const variable = index.findStateVariable(owner, member)
+  if (variable?.visibility !== 'public') {
+    return undefined
+  }
+  let type: TypeName | undefined = variable.typeName ?? undefined
+  for (let i = 0; i < arity; i++) {
+    type = elementType(type)
+  }
+  if (type === undefined || elementType(type) !== undefined) {
+    return undefined
+  }
+  return qualifiedType(index, type, variable)
 }
 
 function boundFunction(

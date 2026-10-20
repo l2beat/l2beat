@@ -163,6 +163,14 @@ contract Spawned {
     function go() external {}
 }
 
+contract Factory {
+    Spawned public child;
+}
+
+library Helpers {
+    function wrap(uint256 a) internal returns (Spawned) {}
+}
+
 contract Base {
     address private target;
 
@@ -196,6 +204,17 @@ contract Overloads is Base {
     function target() internal returns (address) {}
 
     function helper(uint256 a) private {}
+
+    function setPinger() internal {
+        pinger = IPing(0x3333333333333333333333333333333333333333);
+    }
+
+    function relay(Factory factory) external {
+        setPinger();
+        pinger.ping();
+        factory.child().go();
+        Helpers.wrap(1).go();
+    }
 
     function clear(address account) external {
         delete pinger;
@@ -492,6 +511,21 @@ describe(`${resolveDefinition.name} edge cases`, () => {
     expect(lines(resolveOverloads('new Spawned().go()', 'go'))).toEqual([
       `Spawned.go:${overloadsAt('function go() external {}')}`,
     ])
+  })
+
+  it('does not trust discovered values an internal call overwrites', () => {
+    const result = resolveOverloads(
+      'setPinger();\n        pinger.ping(',
+      'ping(',
+    )
+
+    expect(result.receiver?.address).toEqual(undefined)
+  })
+
+  it('types a receiver by a public getter or a library wrap function', () => {
+    const go = `Spawned.go:${overloadsAt('function go() external {}')}`
+    expect(lines(resolveOverloads('factory.child().go()', 'go'))).toEqual([go])
+    expect(lines(resolveOverloads('Helpers.wrap(1).go()', 'go'))).toEqual([go])
   })
 
   it('reaches the proxy when no implementation overload fits', () => {
