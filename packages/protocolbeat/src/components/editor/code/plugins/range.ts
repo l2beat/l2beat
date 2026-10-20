@@ -42,6 +42,7 @@ export class RangeHighlightPlugin implements EditorPlugin<ForType> {
       }
 
       this.clearHighlight()
+      this.editor.setPosition(start)
       this.editor.revealRangeInCenter(range)
 
       if (!options?.highlight) {

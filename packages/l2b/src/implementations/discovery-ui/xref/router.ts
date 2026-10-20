@@ -1,4 +1,4 @@
-import type { ConfigReader } from '@l2beat/discovery'
+import { type ConfigReader, getReachableEntries } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
@@ -32,6 +32,22 @@ const positionSchema = z.object({
   offset: nonNegativeInteger,
 })
 
+// The panel lists only entries reachable from the project, like getProject,
+// so answers pointing anywhere else could not be opened.
+function selectableWorkspace(configReader: ConfigReader, project: string) {
+  const discoveries = configReader.readDiscoveryWithReferences(project)
+  const entries = discoveries
+    .flatMap((d) => d.entries)
+    .filter((e) => e.type !== 'Reference')
+  const entrypoints = (discoveries[0]?.entries ?? []).map((e) => e.address)
+  const reachable = new Set(
+    getReachableEntries(entries, entrypoints).map((e) => e.address),
+  )
+  return FlatWorkspace.fromProject(configReader, project).restrictedTo(
+    reachable,
+  )
+}
+
 export function attachXrefRouter(app: Express, configReader: ConfigReader) {
   const lookups = [
     { path: 'definition', lookup: definitionAt },
@@ -47,10 +63,7 @@ export function attachXrefRouter(app: Express, configReader: ConfigReader) {
       }
       const { address, source, offset } = query.data
       try {
-        const workspace = FlatWorkspace.fromProject(
-          configReader,
-          params.data.project,
-        )
+        const workspace = selectableWorkspace(configReader, params.data.project)
         res.json(lookup(workspace, address, source, offset))
       } catch (error) {
         console.error(error)

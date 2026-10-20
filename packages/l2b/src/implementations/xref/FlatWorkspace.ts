@@ -85,6 +85,11 @@ export class FlatWorkspace {
     return new FlatWorkspace(entries, (path) => readFileSync(path, 'utf-8'))
   }
 
+  restrictedTo(addresses: Set<ChainSpecificAddress>): FlatWorkspace {
+    const entries = this.entries.filter((e) => addresses.has(e.address))
+    return new FlatWorkspace(entries, this.readFile)
+  }
+
   entryAt(address: ChainSpecificAddress): FlatEntry | undefined {
     return this.byAddress.get(address)
   }
