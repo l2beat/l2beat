@@ -59,6 +59,7 @@ contract Edge {
         twice(1, 2);
         uint256(1).inc();
         IPing(TARGET).ping();
+        IPing(TARGET).ping.selector;
         other.f(1);
         bytes32[] memory hashes;
         for (uint32 i = 0; i < 2; ++i) {
@@ -225,6 +226,12 @@ describe(`${resolveDefinition.name} edge cases`, () => {
 
     expect(result.definitions.map((d) => `${d.label} ${d.path}`)).toEqual([
       'Proxy.ping /p/.flat/Target/Proxy.p.sol',
+    ])
+  })
+
+  it('answers a selector with the function of the static type', () => {
+    expect(resolve('IPing(TARGET).ping.selector', 'ping')).toEqual([
+      `IPing.ping:${declaredAt('function ping() external;')}`,
     ])
   })
 
