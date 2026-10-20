@@ -56,9 +56,17 @@
     "eth:0xF3eeE0f5E721b8c0073C8d85bf26A3d6EC293A0E": "VotingEscrowLockNFT",
     "eth:0x8095C0B90Be4abCBF5CA7371f588fe1637E02b7f": "VotingEscrowExitQueue",
     "eth:0x0A32454FC578e3CAFeE86F6E03f267b25ad0bAf0": "VotingEscrowGaugeVoter",
-    "eth:0x56ce4D8006292Abf418291FaE813C1E3769240A4": "AragonExecutor"
+    "eth:0x56ce4D8006292Abf418291FaE813C1E3769240A4": "AragonExecutor",
+    "eth:0x6E1eC1e74162D9c141e12B593Cad390aEfFb6bD0": "CrispBallotVerifier",
+    "eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8": "CrispOnchainBallotVerifier"
   },
   "overrides": {
+    "eth:0x6E1eC1e74162D9c141e12B593Cad390aEfFb6bD0": {
+      "description": "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds whose voters are listed in a Merkle tree."
+    },
+    "eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8": {
+      "description": "Unverified Honk verifier that CRISPProgram uses for ballot proofs in rounds that read voting power from the token, which includes every DAO vote."
+    },
     "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": {
       "fields": {
         "daoExecutors": {
@@ -847,7 +855,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "change the settings of the unverified CRISP token-voting plugin used as the IPP voting stage."
+              "description": "change the settings of the CRISP token-voting plugin used as the IPP voting stage, including the committee size of future votes."
             }
           ]
         },
