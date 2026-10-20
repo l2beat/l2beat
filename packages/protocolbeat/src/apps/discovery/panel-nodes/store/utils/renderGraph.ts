@@ -71,9 +71,22 @@ export function isFieldConnectionLive(
   field: Field,
   liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>,
 ): boolean {
-  if (node.hiddenFields.includes(field.name)) return false
+  if (hiddenFieldSet(node.hiddenFields).has(field.name)) return false
   if (node.subnodes.length === 0) return true
   return liveGroupTargets.get(node.id)?.has(field.target) ?? false
+}
+
+// Renderers ask about every field of every node, and nodes with large arrays
+// hide hundreds of fields. Nodes never mutate their hiddenFields in place.
+const hiddenFieldSets = new WeakMap<readonly string[], ReadonlySet<string>>()
+
+function hiddenFieldSet(hiddenFields: readonly string[]): ReadonlySet<string> {
+  let set = hiddenFieldSets.get(hiddenFields)
+  if (set === undefined) {
+    set = new Set(hiddenFields)
+    hiddenFieldSets.set(hiddenFields, set)
+  }
+  return set
 }
 
 function getLiveGroupTargets(
