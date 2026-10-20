@@ -21,7 +21,34 @@ import { useFigureAutoplay } from './useFigureAutoplay'
 
 /** Deposits per second, from a quiet pool to a busy one. */
 function toRate(traffic: number) {
-  return 0.15 + traffic * 7
+  return 0.1 + traffic * 7
+}
+
+const BUSY = 0.85
+const QUIET = 0
+const LOOP_S = 13
+/** The autoplay loop as [seconds, traffic] keyframes; it starts busy. */
+const AUTOPLAY: [number, number][] = [
+  [3, BUSY],
+  [4.5, QUIET],
+  // Long enough for the crowd to drain out of view and a withdrawal to stand
+  // alone.
+  [11.5, QUIET],
+  [LOOP_S, BUSY],
+]
+
+function autoTraffic(time: number) {
+  const t = time % LOOP_S
+  let [t0, v0] = [0, BUSY]
+  for (const [t1, v1] of AUTOPLAY) {
+    if (t <= t1) {
+      const k = (t - t0) / (t1 - t0)
+      return v0 + (v1 - v0) * (0.5 - 0.5 * Math.cos(Math.PI * k))
+    }
+    t0 = t1
+    v0 = v1
+  }
+  return BUSY
 }
 
 export function CrowdFigure() {
@@ -32,7 +59,7 @@ export function CrowdFigure() {
   const size = useElementSize(boxRef)
   const tokens = useThemeTokens()
 
-  const [traffic, setTraffic] = useState(0.5)
+  const [traffic, setTraffic] = useState(BUSY)
   const trafficRef = useRef(traffic)
   trafficRef.current = traffic
   const [crowd, setCrowd] = useState(0)
@@ -45,12 +72,12 @@ export function CrowdFigure() {
     return sceneRef.current
   }
 
-  // Until the reader takes over, traffic swells and fades by itself.
+  // Until the reader takes over, the pool goes quiet and busy by itself.
   const clock = useRef(0)
   useInterval(
     () => {
       clock.current += 0.1
-      setTraffic(0.5 - 0.5 * Math.cos(clock.current / 7))
+      setTraffic(autoTraffic(clock.current))
     },
     playing ? 100 : null,
   )

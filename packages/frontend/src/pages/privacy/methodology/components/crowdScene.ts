@@ -68,7 +68,7 @@ export function stepCrowdScene(scene: CrowdScene, dt: number, rate: number) {
         source: undefined,
       })
     }
-    scene.withdrawIn = 2.2 + Math.random() * 1.6
+    scene.withdrawIn = 1.2 + Math.random() * 0.8
   }
 }
 
