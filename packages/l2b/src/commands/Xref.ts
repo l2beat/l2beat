@@ -1,7 +1,21 @@
 import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { boolean, command, flag, positional, string, subcommands } from 'cmd-ts'
-import { relative, resolve } from 'path'
+import {
+  boolean,
+  command,
+  flag,
+  positional,
+  restPositionals,
+  string,
+  subcommands,
+} from 'cmd-ts'
+import { mkdirSync, writeFileSync } from 'fs'
+import { dirname, join, relative, resolve } from 'path'
+import {
+  formatBench,
+  formatFindings,
+} from '../implementations/xref/bench/report'
+import { runBench } from '../implementations/xref/bench/runBench'
 import {
   type FlatEntry,
   FlatWorkspace,
@@ -135,6 +149,36 @@ const XrefCalls = command({
   },
 })
 
+const XrefBench = command({
+  name: 'bench',
+  description:
+    'Score xref against ground truth from solc and the chain at the discovered block.',
+  args: {
+    projects: restPositionals({ type: string, displayName: 'projects' }),
+  },
+  handler: async ({ projects }) => {
+    const paths = getDiscoveryPaths()
+    const configReader = new ConfigReader(paths.discovery)
+    const results = []
+    for (const project of projects) {
+      const result = await runBench(configReader, paths, project)
+      const findingsPath = join(
+        dirname(paths.cache),
+        'xref-oracle',
+        `${project}-findings.tsv`,
+      )
+      mkdirSync(dirname(findingsPath), { recursive: true })
+      writeFileSync(findingsPath, formatFindings(result))
+      writeFileSync(
+        findingsPath.replace('-findings.tsv', '-references.txt'),
+        result.references.samples.join('\n'),
+      )
+      results.push(result)
+    }
+    console.log(formatBench(results))
+  },
+})
+
 const XrefLsp = command({
   name: 'lsp',
   description:
@@ -152,6 +196,7 @@ export const Xref = subcommands({
     refs: XrefReferences,
     calls: XrefCalls,
     lsp: XrefLsp,
+    bench: XrefBench,
   },
 })
 
