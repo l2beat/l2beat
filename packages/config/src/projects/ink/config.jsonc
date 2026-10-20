@@ -102,52 +102,112 @@
     },
     "ink:0x4200000000000000000000000000000000000007": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "ink:0x4200000000000000000000000000000000000010": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "ink:0x4200000000000000000000000000000000000011": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "ink:0x4200000000000000000000000000000000000012": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "ink:0x4200000000000000000000000000000000000014": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "ink:0x4200000000000000000000000000000000000015": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "ink:0x4200000000000000000000000000000000000017": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "ink:0x4200000000000000000000000000000000000019": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "ink:0x420000000000000000000000000000000000001A": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "ink:0x4200000000000000000000000000000000000018": {
       "fields": {
-        "owner": { "edit": ["format", "UndoL2Alias"] }
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     }
   },

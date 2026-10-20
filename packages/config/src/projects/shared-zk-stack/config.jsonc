@@ -100,7 +100,13 @@
       // Upgrade admin of the ZK token proxy.
       "critical": true,
       "fields": {
-        "owner": { "edit": ["format", "UndoL2Alias"] }
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": {
@@ -115,7 +121,11 @@
               "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to {{isProposeGuarded}}."
             }
           ],
-          "edit": ["format", "UndoL2Alias"]
+          "edit": [
+            "if",
+            ["=", "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D"],
+            ["format", "UndoL2Alias"]
+          ]
         },
         "VETO_GUARDIAN": {
           "permissions": [
@@ -124,7 +134,11 @@
               "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
             }
           ],
-          "edit": ["format", "UndoL2Alias"]
+          "edit": [
+            "if",
+            ["=", "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9"],
+            ["format", "UndoL2Alias"]
+          ]
         }
       }
     },
@@ -142,7 +156,11 @@
               "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
             }
           ],
-          "edit": ["format", "UndoL2Alias"]
+          "edit": [
+            "if",
+            ["=", "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9"],
+            ["format", "UndoL2Alias"]
+          ]
         }
       }
     }

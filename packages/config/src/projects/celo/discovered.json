@@ -1,7 +1,7 @@
 {
   "name": "celo",
   "timestamp": 1791966035,
-  "configHash": "0xac9067d4f8eb209d59e53e3b4e47aceba4e97a5efbc79b985c65921c530bb175",
+  "configHash": "0xcd2868593114f093ce696e5aa906798f0ad7945aca92f3fedaba545e3d3a0445",
   "entries": [
     {
       "name": "L2CrossDomainMessenger",

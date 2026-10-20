@@ -38,7 +38,13 @@
     "celo:0x4200000000000000000000000000000000000018": {
       "critical": { "sinceTimestamp": 1742960663 },
       "fields": {
-        "owner": { "edit": ["format", "UndoL2Alias"] }
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753": {

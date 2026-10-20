@@ -135,7 +135,13 @@
         "unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": "https://unichain.blockscout.com/address/0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
       },
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA": {
@@ -159,52 +165,112 @@
     },
     "unichain:0x4200000000000000000000000000000000000007": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "unichain:0x4200000000000000000000000000000000000010": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "unichain:0x4200000000000000000000000000000000000011": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "unichain:0x4200000000000000000000000000000000000012": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "unichain:0x4200000000000000000000000000000000000014": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "unichain:0x4200000000000000000000000000000000000017": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "unichain:0x4200000000000000000000000000000000000019": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "unichain:0x420000000000000000000000000000000000001A": {
       "fields": {
-        "proxyAdminOwner": { "edit": ["format", "UndoL2Alias"] }
+        "proxyAdminOwner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "unichain:0x4200000000000000000000000000000000000018": {
       "fields": {
-        "owner": { "edit": ["format", "UndoL2Alias"] }
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     },
     "unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003": {
       "fields": {
-        "owner": { "edit": ["format", "UndoL2Alias"] }
+        "owner": {
+          "edit": [
+            "if",
+            ["=", "unichain:0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2"],
+            ["format", "UndoL2Alias"]
+          ]
+        }
       }
     }
   },

@@ -46,7 +46,11 @@
             "args": []
           },
           "permissions": [{ "type": "act" }],
-          "edit": ["format", "UndoL2Alias"]
+          "edit": [
+            "if",
+            ["=", "zircuit:0x5b5A62275DF8c60A80D3a25FAeC5aA7De116b857"],
+            ["format", "UndoL2Alias"]
+          ]
         },
         "isUpgrading": {
           "handler": {
