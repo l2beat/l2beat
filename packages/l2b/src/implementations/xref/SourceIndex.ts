@@ -10,6 +10,7 @@ import {
   type TypeName,
   type UserDefinedTypeName,
   type UsingForDeclaration,
+  type VariableDeclaration,
 } from '@mradomski/fast-solidity-parser'
 
 export interface TextPosition {
@@ -93,20 +94,27 @@ export class SourceIndex {
     return contractName
   }
 
+  // A base's private variable is invisible to the contracts deriving from it.
   findStateVariable(
     contractName: string,
     name: string,
   ): StateVariableDeclarationVariable | undefined {
-    for (const member of this.members(contractName)) {
-      if (member.type !== 'StateVariableDeclaration') {
-        continue
-      }
-      const declaration = member as unknown as {
-        variables: StateVariableDeclarationVariable[]
-      }
-      const variable = declaration.variables.find((v) => v.name === name)
-      if (variable !== undefined) {
-        return variable
+    const linearization = this.contracts.get(contractName)?.linearization ?? []
+    for (const owner of linearization) {
+      for (const member of this.contracts.get(owner)?.node.subNodes ?? []) {
+        if (member.type !== 'StateVariableDeclaration') {
+          continue
+        }
+        const declaration = member as unknown as {
+          variables: StateVariableDeclarationVariable[]
+        }
+        const variable = declaration.variables.find((v) => v.name === name)
+        if (variable === undefined) {
+          continue
+        }
+        if (variable.visibility !== 'private' || owner === contractName) {
+          return variable
+        }
       }
     }
     return undefined
@@ -117,16 +125,33 @@ export class SourceIndex {
     name: string,
     arity?: number,
   ): BaseASTNode | undefined {
-    for (const member of this.members(contractName)) {
+    return this.findMembers(contractName, name, arity)[0]
+  }
+
+  // A redeclared event or an overriding modifier hides the base one.
+  findMembers(
+    contractName: string,
+    name: string,
+    arity: number | undefined,
+  ): BaseASTNode[] {
+    const signatures = new Set<string>()
+    return this.members(contractName).filter((member) => {
       if (declarationName(member) !== name) {
-        continue
+        return false
       }
-      const parameters = (member as { parameters?: unknown[] }).parameters
-      if (arity === undefined || parameters?.length === arity) {
-        return member
+      const parameters =
+        (member as { parameters?: VariableDeclaration[] | null }).parameters ??
+        []
+      if (arity !== undefined && parameters.length !== arity) {
+        return false
       }
-    }
-    return undefined
+      const signature = parameters.map((p) => typeKey(p.typeName)).join()
+      if (signatures.has(signature)) {
+        return false
+      }
+      signatures.add(signature)
+      return true
+    })
   }
 
   contractOf(node: BaseASTNode): string | undefined {
@@ -326,26 +351,45 @@ const ELEMENTARY_ALIASES: Record<string, string> = {
 
 export const NUMBER_LITERAL = 'number literal'
 
+// Named arguments are all of them or, for a bound library call, all but the
+// receiver.
+export interface CallArguments {
+  keys: (string | undefined)[]
+  names: string[]
+}
+
 export function acceptsArguments(
   node: BaseASTNode,
-  argumentKeys: (string | undefined)[],
+  args: CallArguments,
 ): boolean {
-  if (node.type !== 'FunctionDefinition') {
+  const parameters = (node as { parameters?: VariableDeclaration[] | null })
+    .parameters
+  if (!PARAMETERIZED.includes(node.type) || !parameters) {
     return true
   }
-  const parameters = (node as FunctionDefinition).parameters
-  return (
-    parameters.length === argumentKeys.length &&
-    parameters.every((p, i) => {
-      const key = argumentKeys[i]
-      const parameter = typeKey(p.typeName) ?? ''
-      if (key === NUMBER_LITERAL) {
-        return parameter.startsWith('uint') || parameter.startsWith('int')
-      }
-      return key === undefined || parameter === key || widens(key, parameter)
-    })
-  )
+  if (parameters.length !== args.keys.length) {
+    return false
+  }
+  const positional = args.keys.length - args.names.length
+  return parameters.every((p, i) => {
+    const named = args.names.indexOf(p.name ?? '')
+    if (i >= positional && named === -1) {
+      return false
+    }
+    const key = i < positional ? args.keys[i] : args.keys[positional + named]
+    const parameter = typeKey(p.typeName) ?? ''
+    if (key === NUMBER_LITERAL) {
+      return parameter.startsWith('uint') || parameter.startsWith('int')
+    }
+    return key === undefined || parameter === key || widens(key, parameter)
+  })
 }
+
+const PARAMETERIZED = [
+  'FunctionDefinition',
+  'EventDefinition',
+  'CustomErrorDefinition',
+]
 
 // Integers convert implicitly to a wider integer of the same signedness.
 function widens(from: string, to: string): boolean {
