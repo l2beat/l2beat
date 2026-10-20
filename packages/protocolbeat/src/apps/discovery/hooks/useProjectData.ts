@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router'
 import { findSelected } from '../../../utils/findSelected'
-import { usePanelStore } from '../store/panel-store'
 import { useProjectQueryOptions } from './projectQuery'
+import { useDeferredSelection } from './useDeferredSelection'
 
 export function useProjectData() {
   const { project } = useParams()
-  const selectedAddresses = usePanelStore((state) => state.selected)
+  const selectedAddresses = useDeferredSelection()
 
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
