@@ -21,8 +21,13 @@ import type {
   VariableDeclaration,
 } from '@mradomski/fast-solidity-parser'
 import type { FlatEntry, FlatWorkspace } from './FlatWorkspace'
-import { acceptsArguments, type SourceIndex, typeKey } from './SourceIndex'
-import { isAssigned, resolveName, type Scope } from './scope'
+import {
+  acceptsArguments,
+  type CallArguments,
+  type SourceIndex,
+  typeKey,
+} from './SourceIndex'
+import { isWrittenInCall, resolveName, type Scope } from './scope'
 
 export interface Receiver {
   type: TypeName | undefined
@@ -39,7 +44,7 @@ export interface ReceiverContext {
 
 type Step =
   | { kind: 'cast'; type: TypeName | undefined }
-  | { kind: 'call'; member: string; arguments: Expression[] }
+  | { kind: 'call'; member: string; call: FunctionCall }
   | { kind: 'index' }
   | { kind: 'field'; member: string }
 
@@ -154,8 +159,7 @@ function unwindIdentifier(
     declaration.node,
   )
   // Within a function that writes it, the variable holds what it wrote.
-  const callable = context.scope.callable
-  if (callable !== undefined && isAssigned(callable, identifier.name)) {
+  if (isWrittenInCall(context.scope, identifier.name)) {
     return { base: { ...UNKNOWN, type } }
   }
   if (declaration.isState) {
@@ -175,11 +179,7 @@ function unwindCall(context: ReceiverContext, call: FunctionCall): Unwound {
   const argument = call.arguments.length === 1 ? call.arguments[0] : undefined
   if (callee.type === 'MemberAccess') {
     const access = callee as MemberAccess
-    const step: Step = {
-      kind: 'call',
-      member: access.memberName,
-      arguments: call.arguments,
-    }
+    const step: Step = { kind: 'call', member: access.memberName, call }
     return { step, next: access.expression }
   }
   if (callee.type === 'ElementaryTypeName' && argument !== undefined) {
@@ -201,7 +201,8 @@ function unwindCall(context: ReceiverContext, call: FunctionCall): Unwound {
       call.arguments.length === 0
         ? discoveredAddress(context.entry.values, name)
         : undefined
-    const chosen = pickOverload(context, declaration.nodes, call.arguments)
+    const args = declaredArguments(context, call)
+    const chosen = pickOverload(context, declaration.nodes, args)
     const type = returnType(context.scope.index, chosen)
     return { base: { ...UNKNOWN, type, address } }
   }
@@ -232,7 +233,7 @@ function applyStep(
     case 'cast':
       return { ...receiver, type: step.type ?? receiver.type }
     case 'call':
-      return applyCall(context, receiver, step.member, step.arguments)
+      return applyCall(context, receiver, step.member, step.call)
     case 'index':
       return { ...UNKNOWN, type: elementType(receiver.type) }
     case 'field':
@@ -264,19 +265,19 @@ function applyCall(
   context: ReceiverContext,
   receiver: Receiver,
   member: string,
-  args: Expression[],
+  call: FunctionCall,
 ): Receiver {
   const { workspace, scope } = context
   if (receiver.staticContract !== undefined && member === 'wrap') {
     return { ...UNKNOWN, type: userType(receiver.staticContract) }
   }
-  const arity = args.length
+  const arity = call.arguments.length
   const owner = receiver.staticContract ?? contractName(receiver.type)
   const candidates = owner
     ? scope.index.findFunctions(owner, member, arity)
     : []
   const declared =
-    pickOverload(context, candidates, args) ??
+    pickOverload(context, candidates, declaredArguments(context, call)) ??
     boundFunction(scope, receiver, member, arity)
   const target = receiver.address
     ? workspace.entryAt(receiver.address)
@@ -437,17 +438,31 @@ export function qualifiedType(
 }
 
 // Overloads that differ only in parameter types: compare with the types the
-// arguments are declared with. Deeper expressions count as unknown.
+// arguments are declared with. Deeper expressions count as unknown, and when
+// they leave the return type ambiguous, so is the result.
 function pickOverload(
   context: ReceiverContext,
   candidates: FunctionDefinition[],
-  args: Expression[],
+  args: CallArguments,
 ): FunctionDefinition | undefined {
   if (candidates.length < 2) {
     return candidates[0]
   }
-  const keys = args.map((arg) => typeKey(declaredType(context.scope, arg)))
-  return candidates.find((fn) => acceptsArguments(fn, keys)) ?? candidates[0]
+  const compatible = candidates.filter((fn) => acceptsArguments(fn, args))
+  const returnTypes = new Set(
+    compatible.map((fn) => typeKey(returnType(context.scope.index, fn))),
+  )
+  return returnTypes.size === 1 ? compatible[0] : undefined
+}
+
+function declaredArguments(
+  context: ReceiverContext,
+  call: FunctionCall,
+): CallArguments {
+  const keys = call.arguments.map((argument) =>
+    typeKey(declaredType(context.scope, argument)),
+  )
+  return { keys, names: call.identifiers.map((label) => label.name) }
 }
 
 function declaredType(

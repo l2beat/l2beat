@@ -30,6 +30,7 @@ import {
 } from './receiver'
 import {
   acceptsArguments,
+  type CallArguments,
   declarationName,
   NUMBER_LITERAL,
   parameterSignature,
@@ -139,8 +140,8 @@ function resolveNode(
     const name = (node as Identifier).name
     const declaration = resolveName(context.scope, name, call?.arguments.length)
     const result = inFileResult(index, name, declaration)
-    const keys = call ? argumentTypes(context, call) : undefined
-    return { ...result, definitions: pickOverloads(result.definitions, keys) }
+    const args = call ? callArguments(context, call) : undefined
+    return { ...result, definitions: pickOverloads(result.definitions, args) }
   }
   if (node.type === 'UserDefinedTypeName') {
     return resolveTypeName(context, node as UserDefinedTypeName, offset)
@@ -304,11 +305,11 @@ function resolveMember(
   const arity = call?.arguments.length
   const receiver = evaluateReceiver(context, access.expression)
   const symbol = `${sourceText(scope.index, access.expression)}.${member}`
-  const keys = call ? argumentTypes(context, call) : undefined
+  const args = call ? callArguments(context, call) : undefined
   const result = (definitions: Definition[]) => ({
     symbol,
     receiver,
-    definitions: pickOverloads(definitions, keys),
+    definitions: pickOverloads(definitions, args),
   })
 
   if (receiver.staticContract !== undefined) {
@@ -341,6 +342,8 @@ function resolveMember(
       member,
       arity,
       'discovered-value',
+      'external',
+      args,
     )
     if (found.length > 0) {
       return result(found)
@@ -366,11 +369,16 @@ export function definitionsInEntry(
   arity: number | undefined,
   resolution: Resolution,
   reach: 'external' | 'all' = 'external',
+  args?: CallArguments,
 ): Definition[] {
   const lookup = reach === 'external' ? externalMembers : memberDefinitions
   const definitions: Definition[] = []
   for (const path of entry.sourcePaths) {
-    if (isProxySource(path) && definitions.length > 0) {
+    // The proxy's own function answers only what the implementation cannot.
+    if (
+      isProxySource(path) &&
+      definitions.some((d) => !args || acceptsArguments(d.declaration, args))
+    ) {
       break
     }
     const index = workspace.source(path)
@@ -575,36 +583,38 @@ function libraryDefinitions(
   if (call === undefined) {
     return candidates
   }
-  return pickOverloads(candidates, [
-    receiverKey,
-    ...argumentTypes(context, call),
-  ])
+  const args = callArguments(context, call)
+  return pickOverloads(candidates, {
+    keys: [receiverKey, ...args.keys],
+    names: args.names,
+  })
 }
 
 // Same-arity overloads: keep the ones whose parameters match every argument
 // type we know. If none match, the guess is ours to make, so keep them all.
 function pickOverloads(
   definitions: Definition[],
-  argumentKeys: (string | undefined)[] | undefined,
+  args: CallArguments | undefined,
 ): Definition[] {
-  if (argumentKeys === undefined || definitions.length < 2) {
+  if (args === undefined || definitions.length < 2) {
     return definitions
   }
   const compatible = definitions.filter((d) =>
-    acceptsArguments(d.declaration, argumentKeys),
+    acceptsArguments(d.declaration, args),
   )
   return compatible.length > 0 ? compatible : definitions
 }
 
-function argumentTypes(
+function callArguments(
   context: ReceiverContext,
   call: FunctionCall,
-): (string | undefined)[] {
-  return call.arguments.map((argument) =>
+): CallArguments {
+  const keys = call.arguments.map((argument) =>
     argument.type === 'NumberLiteral'
       ? NUMBER_LITERAL
       : typeKey(evaluateReceiver(context, argument).type),
   )
+  return { keys, names: call.identifiers.map((label) => label.name) }
 }
 
 // What an external call can reach: public and external functions, getters.
@@ -686,7 +696,7 @@ function declarationNodes(declaration: Declaration | undefined): BaseASTNode[] {
   if (declaration === undefined) {
     return []
   }
-  if (declaration.kind === 'functions') {
+  if (declaration.kind === 'functions' || declaration.kind === 'overloads') {
     return declaration.nodes
   }
   return [declaration.node]

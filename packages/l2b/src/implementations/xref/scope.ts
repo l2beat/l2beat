@@ -30,6 +30,8 @@ export type Declaration =
     }
   | { kind: 'functions'; nodes: FunctionDefinition[] }
   | { kind: 'contract'; node: ContractDefinition }
+  // Same-arity overloads of an event or error.
+  | { kind: 'overloads'; nodes: BaseASTNode[]; name: string }
   | { kind: 'other'; node: BaseASTNode; name: string }
 
 export function scopeAt(
@@ -82,9 +84,11 @@ export function resolveName(
     if (functions.length > 0) {
       return { kind: 'functions', nodes: functions }
     }
-    const member =
-      index.findMember(contract, name, arity) ??
-      index.findMember(contract, name)
+    const members = index.findMembers(contract, name, arity)
+    if (members.length > 1) {
+      return { kind: 'overloads', nodes: members, name }
+    }
+    const member = members[0] ?? index.findMember(contract, name)
     if (member !== undefined) {
       return { kind: 'other', node: member, name }
     }
@@ -223,7 +227,33 @@ function ownPrivateFunctions(
   })
 }
 
-export function isAssigned(
+// Applied modifiers run in the same call, so their writes count too.
+export function isWrittenInCall(scope: Scope, name: string): boolean {
+  const callable = scope.callable
+  if (callable === undefined) {
+    return false
+  }
+  const modifiers =
+    callable.type === 'FunctionDefinition'
+      ? appliedModifiers(scope, callable)
+      : []
+  return [callable, ...modifiers].some((c) => isAssigned(c, name))
+}
+
+function appliedModifiers(
+  scope: Scope,
+  fn: FunctionDefinition,
+): ModifierDefinition[] {
+  return fn.modifiers.flatMap((invocation) => {
+    const declaration = resolveName(scope, invocation.name, undefined)
+    return declaration?.kind === 'other' &&
+      declaration.node.type === 'ModifierDefinition'
+      ? [declaration.node as ModifierDefinition]
+      : []
+  })
+}
+
+function isAssigned(
   callable: FunctionDefinition | ModifierDefinition,
   name: string,
 ): boolean {

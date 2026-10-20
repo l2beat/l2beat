@@ -140,6 +140,72 @@ contract Derived is Base {
 }
 `
 
+const OVERLOADS = `address constant MIXED = 0x7777777777777777777777777777777777777777;
+
+interface IPing {
+    function ping() external;
+}
+
+interface IMixed {
+    function f(address a) external;
+    function f(uint256 a) external;
+}
+
+interface IA {
+    function go() external;
+}
+
+interface IB {
+    function go() external;
+}
+
+contract Base {
+    address private target;
+
+    event Changed(address account);
+
+    modifier repoint() virtual {
+        _;
+    }
+}
+
+contract Overloads is Base {
+    event Changed(uint256 value);
+    event Changed(address account);
+    error Failed(uint256 code);
+    error Failed(address account);
+
+    IPing public pinger;
+
+    function named(uint256 a, address b) internal {}
+
+    function named(address a, uint256 b) internal {}
+
+    function make(uint256 a) internal returns (IA) {}
+
+    function make(address a) internal returns (IB) {}
+
+    function source() internal returns (address) {}
+
+    function target() internal returns (address) {}
+
+    modifier repoint() override {
+        pinger = IPing(0x3333333333333333333333333333333333333333);
+        _;
+    }
+
+    function run(address account) external repoint {
+        named({b: account, a: 1});
+        emit Changed(account);
+        IMixed(MIXED).f(account);
+        make(source()).go();
+        target();
+        pinger.ping();
+        revert Failed(account);
+    }
+}
+`
+
 const FILES: Record<string, string> = {
   '/p/.flat/Edge.sol': EDGE,
   '/p/.flat/Derived.sol': DERIVED,
@@ -149,6 +215,15 @@ const FILES: Record<string, string> = {
 `,
   '/p/.flat/Target/Proxy.p.sol': `contract Proxy {
     function ping() external {}
+}
+`,
+  '/p/.flat/Overloads.sol': OVERLOADS,
+  '/p/.flat/Mixed/Impl.1.sol': `contract MixedImpl {
+    function f(uint256 a) external {}
+}
+`,
+  '/p/.flat/Mixed/Proxy.p.sol': `contract MixedProxy {
+    function f(address a) external {}
 }
 `,
   '/p/.flat/Half.sol': `contract Half {
@@ -184,6 +259,16 @@ describe(`${resolveDefinition.name} edge cases`, () => {
         ...entry('Derived', '5', [], ['/p/.flat/Derived.sol']),
         values: { pinger: ChainSpecificAddress(`eth:0x${'2'.repeat(40)}`) },
       },
+      {
+        ...entry('Overloads', '6', [], ['/p/.flat/Overloads.sol']),
+        values: { pinger: ChainSpecificAddress(`eth:0x${'2'.repeat(40)}`) },
+      },
+      entry(
+        'Mixed',
+        '7',
+        [],
+        ['/p/.flat/Mixed/Impl.1.sol', '/p/.flat/Mixed/Proxy.p.sol'],
+      ),
     ],
     (path) => FILES[path] ?? '',
   )
@@ -207,6 +292,14 @@ describe(`${resolveDefinition.name} edge cases`, () => {
     )
   const derivedAt = (declaration: string) =>
     DERIVED.slice(0, DERIVED.indexOf(declaration)).split('\n').length
+  const resolveOverloads = (snippet: string, symbol: string) =>
+    resolveDefinition(
+      workspace,
+      '/p/.flat/Overloads.sol',
+      OVERLOADS.indexOf(snippet) + snippet.indexOf(symbol),
+    )
+  const overloadsAt = (declaration: string) =>
+    OVERLOADS.slice(0, OVERLOADS.indexOf(declaration)).split('\n').length
 
   it('ignores locals of blocks that have ended', () => {
     expect(resolve('value += 1', 'value')).toEqual([
@@ -345,6 +438,54 @@ describe(`${resolveDefinition.name} edge cases`, () => {
     expect(resolveDerived(declaration, 'spaced')).toEqual([
       `Derived.spaced:${derivedAt(declaration)}`,
     ])
+  })
+
+  it('matches named arguments to parameters by label', () => {
+    expect(lines(resolveOverloads('named({b', 'named'))).toEqual([
+      `Overloads.named:${overloadsAt('function named(uint256 a')}`,
+    ])
+  })
+
+  it('picks event and error overloads by argument type', () => {
+    expect(lines(resolveOverloads('emit Changed', 'Changed'))).toEqual([
+      `Overloads.Changed:${overloadsAt('event Changed(address account);\n    error')}`,
+    ])
+    expect(lines(resolveOverloads('revert Failed', 'Failed'))).toEqual([
+      `Overloads.Failed:${overloadsAt('error Failed(address')}`,
+    ])
+  })
+
+  it('answers a redeclared event or modifier with the most derived one', () => {
+    expect(lines(resolveOverloads('external repoint', 'repoint'))).toEqual([
+      `Overloads.repoint:${overloadsAt('modifier repoint() override')}`,
+    ])
+  })
+
+  it('reaches the proxy when no implementation overload fits', () => {
+    const result = resolveOverloads('IMixed(MIXED).f(', 'f(')
+
+    expect(result.definitions.map((d) => d.path)).toEqual([
+      '/p/.flat/Mixed/Proxy.p.sol',
+    ])
+  })
+
+  it('leaves the type of an ambiguous overload unknown', () => {
+    const result = resolveOverloads('make(source()).go()', 'go')
+
+    expect(result.receiver?.type).toEqual(undefined)
+    expect(result.definitions).toEqual([])
+  })
+
+  it('does not see private state of a base contract', () => {
+    expect(lines(resolveOverloads('target();', 'target'))).toEqual([
+      `Overloads.target:${overloadsAt('function target()')}`,
+    ])
+  })
+
+  it('does not trust discovered values an applied modifier overwrites', () => {
+    const result = resolveOverloads('pinger.ping();\n        revert', 'ping(')
+
+    expect(result.receiver?.address).toEqual(undefined)
   })
 
   it('answers a declaration with itself', () => {
