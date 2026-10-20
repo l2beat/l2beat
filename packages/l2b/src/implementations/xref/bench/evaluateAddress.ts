@@ -149,9 +149,9 @@ function unwindCall(context: EvaluationContext, call: ExpressionNode): Unwound {
   if (fn === undefined) {
     return { stop: stop('unknown', 'no implementation') }
   }
-  // Called over RPC it would see another msg.sender than the real caller.
+  // Called over RPC it would see another msg.sender or block than the real call.
   if (fn.body && readsTransaction(context, fn.body)) {
-    return { stop: stop('dynamic', 'reads msg or tx') }
+    return { stop: stop('dynamic', 'reads the transaction') }
   }
   const selector = selectorOf(fn)
   if (selector !== undefined) {
@@ -211,10 +211,7 @@ function readsTransaction(context: EvaluationContext, body: SolcNode): boolean {
       continue
     }
     visited.add(node.id)
-    if (
-      node.nodeType === 'Identifier' &&
-      (node.name === 'msg' || node.name === 'tx')
-    ) {
+    if (node.nodeType === 'Identifier' && isTransactionContext(node)) {
       return true
     }
     const called = ast.node<FunctionNode>(node.referencedDeclaration)
@@ -230,7 +227,7 @@ function isInput(
   context: EvaluationContext,
   identifier: ExpressionNode,
 ): boolean {
-  if (identifier.name === 'msg' || identifier.name === 'tx') {
+  if (isTransactionContext(identifier)) {
     return true
   }
   const { ast } = context.source
@@ -393,6 +390,12 @@ function toAddress(origin: ChainSpecificAddress, bytes: Bytes): Evaluated {
   }
   return { kind: 'address', address }
 }
+
+function isTransactionContext(identifier: ExpressionNode): boolean {
+  return TRANSACTION_CONTEXT.includes(identifier.name ?? '')
+}
+
+const TRANSACTION_CONTEXT = ['msg', 'tx', 'block']
 
 function stop(kind: 'dynamic' | 'unknown', reason: string): Evaluated {
   return { kind, reason }

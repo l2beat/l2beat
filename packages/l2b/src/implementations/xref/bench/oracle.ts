@@ -581,10 +581,19 @@ function isCallable(node: SolcNode | undefined): node is SolcNode {
 }
 
 export function unwrapOptions(expression: ExpressionNode): ExpressionNode {
-  if (expression.nodeType === 'FunctionCallOptions' && expression.expression) {
-    return expression.expression
+  let current = expression
+  if (current.nodeType === 'FunctionCallOptions' && current.expression) {
+    current = current.expression
   }
-  return expression
+  // Before 0.7 options were calls of their own: `t.deposit.value(1)()`.
+  while (
+    current.nodeType === 'FunctionCall' &&
+    isLegacyOption(current.expression) &&
+    current.expression.expression
+  ) {
+    current = current.expression.expression
+  }
+  return current
 }
 
 function known(source: CompiledSource, nodes: SolcNode[]): Truth {
