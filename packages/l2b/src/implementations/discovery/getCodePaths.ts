@@ -7,7 +7,6 @@ import {
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { readdirSync } from 'fs'
 import { join } from 'path'
-import { getProjectDiscoveries } from './getProjectDiscoveries'
 
 export interface CodePathResult {
   entryName: string | undefined
@@ -19,7 +18,7 @@ export function getCodePaths(
   project: string,
   address: ChainSpecificAddress,
 ): CodePathResult {
-  const discoveries = getProjectDiscoveries(configReader, project)
+  const discoveries = configReader.readDiscoveryWithReferences(project)
 
   for (const discovery of discoveries) {
     const entry = discovery.entries.find((x) => x.address === address)

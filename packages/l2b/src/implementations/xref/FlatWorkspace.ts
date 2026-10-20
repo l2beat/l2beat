@@ -9,7 +9,6 @@ import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { resolve, sep } from 'path'
 import { getEntryCodePaths } from '../discovery/getCodePaths'
-import { getProjectDiscoveries } from '../discovery/getProjectDiscoveries'
 import { SourceIndex } from './SourceIndex'
 
 export interface FlatEntry {
@@ -53,7 +52,7 @@ export class FlatWorkspace {
   ): FlatWorkspace {
     const entries: FlatEntry[] = []
     const seen = new Set<ChainSpecificAddress>()
-    const discoveries = getProjectDiscoveries(configReader, project)
+    const discoveries = configReader.readDiscoveryWithReferences(project)
     const aliases = new Map<ChainSpecificAddress, string[]>()
     for (const entry of discoveries[0]?.entries ?? []) {
       if (entry.type === 'Reference' && entry.name !== undefined) {
