@@ -34,7 +34,10 @@ export const CROP_ATTESTATION_SOURCE: CropAttestationSource = {
   schema: 'string[] projectIds,uint64 reviewedAt,uint32 revision',
   schemaUid:
     '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb',
-  attester: null,
+  attester: {
+    address: '0xa34C25578519beaa7A5F24e38BBa89A34594e4ee',
+    sinceBlock: 26233201,
+  },
 }
 
 /** The `attestations` stamp the CROPS API and the CROPS pages carry. */
