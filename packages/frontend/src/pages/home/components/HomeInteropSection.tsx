@@ -76,7 +76,8 @@ function Content({
     ),
   )
 
-  // The graph draws only the busiest of these (see maxGraphChains). The
+  // Only the busiest chains: past about nine, the home graph's ring (343px
+  // across on phones) leaves each chain too little arc for its label. The
   // figures still cover every selected chain, as on the interop page.
   const graphChains = useMemo(() => {
     const activeIds = new Set(
@@ -84,9 +85,11 @@ function Content({
         .filter((chain) => chain.totalVolume > 0)
         .map((chain) => chain.chainId),
     )
-    return chains.filter(
-      (chain) => selectedChains.includes(chain.id) && activeIds.has(chain.id),
-    )
+    return chains
+      .filter(
+        (chain) => selectedChains.includes(chain.id) && activeIds.has(chain.id),
+      )
+      .slice(0, GRAPH_CHAINS_COUNT)
   }, [chains, selectedChains, data?.chainData])
 
   return (
@@ -98,12 +101,13 @@ function Content({
       />
       {/* From lg the section is as tall as the column beside it, so its body
           is a size container (it never sets the height itself). Roughly
-          square, the graph fills it, the largest square it fits, and the
-          figures go in the corners its ring leaves free. Clearly taller than
+          square, the graph fills it, the largest square it fits with 48px
+          spare at either side, and the figures go in the corners its ring
+          leaves free; without that spare they run into the ring where the
+          body is about as wide as tall. Clearly taller than
           wide, or too narrow for the corners, it stacks as on phones: the
           figures, the graph as a square (smaller when the height runs out, so
-          nothing spills), then as many top bridges as the height left holds,
-          at least three.
+          nothing spills), then as many top bridges as the height left holds.
           Below lg it stacks too, the graph a fixed-size square. */}
       <div className="relative flex min-w-0 flex-col gap-5 lg:min-h-[480px] lg:flex-1 lg:basis-0 lg:[container:interop-body/size]">
         {data && (
@@ -113,7 +117,7 @@ function Content({
             className="interop-corners:hidden"
           />
         )}
-        <div className="pointer-events-none interop-corners:absolute interop-corners:inset-0 flex interop-stacked:aspect-square interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center">
+        <div className="pointer-events-none interop-corners:absolute interop-corners:inset-x-12 interop-corners:inset-y-0 flex interop-stacked:aspect-square interop-corners:min-h-0 interop-stacked:min-h-0 min-h-[360px] interop-stacked:w-full min-w-0 interop-stacked:shrink flex-col items-center">
           <FlowsGraphPanel
             activeChains={graphChains}
             data={data}
@@ -123,14 +127,13 @@ function Content({
             // Chain labels hang below the bubbles; pb keeps them in the section.
             className="pb-6 max-lg:order-none"
             maxSizeClassName="max-w-[460px] lg:max-w-none"
-            maxChainsForSize={maxGraphChains}
           />
         </div>
         {data && (
           <>
             <TopBridges
               protocols={data.stats.topProtocols}
-              className="interop-corners:hidden interop-stacked:flex-1 interop-stacked:basis-0"
+              className="interop-corners:hidden interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden"
             />
             <CornerStats data={data} chains={chains} />
           </>
@@ -140,15 +143,7 @@ function Content({
   )
 }
 
-/**
- * Each chain needs about 38px of the graph's width for its label: nine on a
- * 343px phone, fewer where the graph is squeezed. Never more than nine, even
- * where there is room.
- */
-function maxGraphChains(size: number) {
-  return Math.min(9, Math.floor(size / 38))
-}
-
+const GRAPH_CHAINS_COUNT = 9
 /** Bridges under the graph; stacked from lg, as many as the height holds. */
 const TOP_BRIDGES_COUNT = 5
 /** The busiest bridges, in a corner beside the graph. */
@@ -302,11 +297,10 @@ function TopBridges({
     <div className={cn('flex min-w-0 flex-col gap-2', className)}>
       <h3 className={HOME_TEXT.sectionTitle}>Top bridges</h3>
       {/* Stacked from lg, the list takes the height left and shows as many
-          whole rows as fit, never fewer than three: the graph shrinks to
-          leave them room. */}
+          whole rows as fit. */}
       <ol
         className={cn(
-          'interop-stacked:home-fill-rows interop-stacked:min-h-[120px] interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden',
+          'interop-stacked:home-fill-rows interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden',
           HOME_ROW_LINES_CLASS,
         )}
       >

@@ -20,8 +20,6 @@ interface FlowsGraphPanelProps {
   topChainId?: string
   className?: string
   maxSizeClassName?: string
-  /** How many of `activeChains` a graph `size` px across has room for. */
-  maxChainsForSize?: (size: number) => number
 }
 
 export function FlowsGraphPanel({
@@ -34,7 +32,6 @@ export function FlowsGraphPanel({
   topChainId,
   className,
   maxSizeClassName = 'max-w-[max(min(70svh,calc(100svh-20rem)),30rem)]',
-  maxChainsForSize,
 }: FlowsGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
@@ -42,10 +39,6 @@ export function FlowsGraphPanel({
   const size =
     width && height ? getSteppedSize(Math.min(width, height)) : undefined
   const isSmallScreen = size ? size <= 500 : false
-  const visibleChains =
-    size && maxChainsForSize
-      ? activeChains.slice(0, maxChainsForSize(size))
-      : activeChains
 
   return (
     <div
@@ -77,8 +70,8 @@ export function FlowsGraphPanel({
             <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
           ) : (
             <FlowsGraph
-              interopChains={visibleChains}
-              visibleChainIds={visibleChains.map((chain) => chain.id)}
+              interopChains={activeChains}
+              visibleChainIds={activeChains.map((chain) => chain.id)}
               data={data}
               size={size}
               isSmallScreen={isSmallScreen}

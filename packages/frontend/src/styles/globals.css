@@ -78,13 +78,13 @@
    HomeInteropSection): stacked like on phones when it is clearly taller than
    wide or too narrow for the corners, otherwise the figures in the corners. */
 @custom-variant interop-stacked {
-  @container interop-body (aspect-ratio <= 4 / 5) or (width <= 640px) {
+  @container interop-body (aspect-ratio <= 4 / 5) or (width <= 500px) {
     @slot;
   }
 }
 /* Exactly the opposite, so one of the two always holds. */
 @custom-variant interop-corners {
-  @container interop-body (aspect-ratio > 4 / 5) and (width > 640px) {
+  @container interop-body (aspect-ratio > 4 / 5) and (width > 500px) {
     @slot;
   }
 }
