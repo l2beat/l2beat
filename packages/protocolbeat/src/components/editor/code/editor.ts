@@ -12,7 +12,6 @@ import {
   highlightSelectionMatches,
   openSearchPanel,
   SearchQuery,
-  search,
   searchKeymap,
   setSearchQuery,
 } from '@codemirror/search'
@@ -42,6 +41,7 @@ import {
   type EditorPluginClass,
   EditorPluginStore,
 } from '../plugin'
+import { centeredSearch } from '../search'
 import type { EditorFile } from '../store'
 import { theme } from '../theme'
 
@@ -175,6 +175,9 @@ export class Editor {
     this.activeFileKey = key
     const cached = viewStateCache.get(key)
     if (cached === undefined) {
+      this.view.dispatch({
+        effects: EditorView.scrollIntoView(0, { y: 'start' }),
+      })
       return
     }
     if (existing === undefined) {
@@ -217,7 +220,7 @@ export class Editor {
       bracketMatching(),
       highlightSelectionMatches({ highlightWordAroundCursor: true }),
       history(),
-      search({ top: true }),
+      centeredSearch,
       scrollPastEnd(),
       theme,
       keymap.of([

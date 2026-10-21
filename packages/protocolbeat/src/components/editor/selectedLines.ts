@@ -147,9 +147,11 @@ export function scrollToSelectedLines(view: EditorView) {
   }
   view.dispatch({
     effects: EditorView.scrollIntoView(
+      // The head is the start, so a range taller than the view shows its
+      // first line rather than its last.
       EditorSelection.range(
-        view.state.doc.line(lines.startLine).from,
         view.state.doc.line(lines.endLine).from,
+        view.state.doc.line(lines.startLine).from,
       ),
       { y: 'center' },
     ),
