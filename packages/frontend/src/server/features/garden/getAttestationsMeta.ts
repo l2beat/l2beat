@@ -20,7 +20,7 @@ export async function getAttestationsMeta(): Promise<CropsAttestationsMeta> {
   if (env.MOCK) {
     return getMockAttestationsMeta()
   }
-  const record = await getDb().cropAttestation.findCurrent()
+  const record = await getDb().cropAttestation.find()
   return getCropsAttestationsMeta(record, record)
 }
 

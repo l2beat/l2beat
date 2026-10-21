@@ -3,7 +3,6 @@ import type { CropAttestationSource } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { CropAttestation } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { createHash } from 'crypto'
 import { TimeLoop } from '../../tools/TimeLoop'
 import type { CropsApiDeployer } from './CropsApiDeployer'
 
@@ -32,7 +31,6 @@ export interface CropAttestationSyncDeps {
  */
 export class CropAttestationSync extends TimeLoop {
   protected logger: Logger
-  private readonly configId: string
 
   constructor(
     private readonly $: CropAttestationSyncDeps,
@@ -40,37 +38,28 @@ export class CropAttestationSync extends TimeLoop {
   ) {
     super({ intervalMs: $.intervalMs })
     this.logger = logger.for(this)
-    this.configId = createCropAttestationConfigId($.source)
   }
 
   async run() {
     const current = await this.$.readCurrent()
     await this.store(current)
-    const removed = await this.$.db.cropAttestation.deleteAllExcept(
-      this.configId,
-    )
-    if (removed > 0) {
-      this.logger.info('Removed the attestations of a previous source', {
-        removed,
-      })
-    }
     await this.$.deployer?.ensureDeployed(current?.uid)
   }
 
   private async store(current: CropAttestation | undefined) {
     const { db, source } = this.$
     if (!current) {
-      const deleted = await db.cropAttestation.delete(this.configId)
+      const deleted = await db.cropAttestation.deleteAll()
       if (deleted > 0) {
-        // Expected only after the attester revokes everything; otherwise suspect the RPC.
+        // Expected after the attester revokes everything, or a switch to a source
+        // with no attestation yet; otherwise suspect the RPC.
         this.logger.warn('The attester no longer has an attestation', {
           attester: source.attester,
         })
       }
       return
     }
-    await db.cropAttestation.upsert({
-      configId: this.configId,
+    await db.cropAttestation.replace({
       ...source,
       uid: current.uid,
       revision: current.revision,
@@ -81,21 +70,4 @@ export class CropAttestationSync extends TimeLoop {
       updatedAt: UnixTime.now(),
     })
   }
-}
-
-/** Changes with any field of the source, as the row stores them all. */
-export function createCropAttestationConfigId(
-  source: CropAttestationSyncSource,
-): string {
-  const input = [
-    source.network,
-    source.chainId,
-    source.eas,
-    source.explorer,
-    source.schema,
-    source.schemaUid,
-    source.attester,
-  ]
-  const hash = createHash('sha1').update(JSON.stringify(input)).digest('hex')
-  return hash.slice(0, 12)
 }

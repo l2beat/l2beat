@@ -6,7 +6,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import {
   CropAttestationSync,
   type CropAttestationSyncSource,
-  createCropAttestationConfigId,
 } from './CropAttestationSync'
 import type { CropsApiDeployer } from './CropsApiDeployer'
 
@@ -20,7 +19,6 @@ const SOURCE: CropAttestationSyncSource = {
     '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb',
   attester: '0x19BEC50A4e61B0e1540C37cEB3F62f56AAfb74DB',
 }
-const CONFIG_ID = createCropAttestationConfigId(SOURCE)
 
 const CURRENT: CropAttestation = {
   uid: '0x2f31d8c9018e2718ea82f4df9612ff7f95534cd0f41d44337f5d75e92adad112',
@@ -34,16 +32,14 @@ const CURRENT: CropAttestation = {
 describe(CropAttestationSync.name, () => {
   it('stores the current attestation with its source', async () => {
     const repository = mockObject<Database['cropAttestation']>({
-      upsert: mockFn().resolvesTo(undefined),
-      deleteAllExcept: mockFn().resolvesTo(0),
+      replace: mockFn().resolvesTo(undefined),
     })
     const sync = createSync(repository, async () => CURRENT)
 
     const before = UnixTime.now()
     await sync.run()
 
-    expect(repository.upsert).toHaveBeenOnlyCalledWith({
-      configId: CONFIG_ID,
+    expect(repository.replace).toHaveBeenOnlyCalledWith({
       ...SOURCE,
       uid: CURRENT.uid,
       revision: 1,
@@ -53,54 +49,40 @@ describe(CropAttestationSync.name, () => {
       blockNumber: 11921020,
       updatedAt: expect.a(Number),
     })
-    expect(repository.upsert.calls[0].args[0].updatedAt >= before).toEqual(true)
+    expect(repository.replace.calls[0].args[0].updatedAt >= before).toEqual(
+      true,
+    )
   })
 
   it('removes the stored attestation when the attester has none', async () => {
     const repository = mockObject<Database['cropAttestation']>({
-      delete: mockFn().resolvesTo(1),
-      deleteAllExcept: mockFn().resolvesTo(0),
+      deleteAll: mockFn().resolvesTo(1),
     })
     const sync = createSync(repository, async () => undefined)
 
     await sync.run()
 
-    expect(repository.delete).toHaveBeenOnlyCalledWith(CONFIG_ID)
-  })
-
-  it('removes the attestations of a previous source', async () => {
-    const repository = mockObject<Database['cropAttestation']>({
-      upsert: mockFn().resolvesTo(undefined),
-      deleteAllExcept: mockFn().resolvesTo(1),
-    })
-    const sync = createSync(repository, async () => CURRENT)
-
-    await sync.run()
-
-    expect(repository.deleteAllExcept).toHaveBeenOnlyCalledWith(CONFIG_ID)
+    expect(repository.deleteAll).toHaveBeenOnlyCalledWith()
   })
 
   it('keeps the stored attestation when the read fails', async () => {
     const repository = mockObject<Database['cropAttestation']>({
-      upsert: mockFn().resolvesTo(undefined),
-      delete: mockFn().resolvesTo(0),
-      deleteAllExcept: mockFn().resolvesTo(0),
+      replace: mockFn().resolvesTo(undefined),
+      deleteAll: mockFn().resolvesTo(0),
     })
     const sync = createSync(repository, async () => {
       throw new Error('RPC down')
     })
 
     await expect(sync.run()).toBeRejectedWith('RPC down')
-    expect(repository.upsert).not.toHaveBeenCalled()
-    expect(repository.delete).not.toHaveBeenCalled()
-    expect(repository.deleteAllExcept).not.toHaveBeenCalled()
+    expect(repository.replace).not.toHaveBeenCalled()
+    expect(repository.deleteAll).not.toHaveBeenCalled()
   })
 
   it('has the CROPS API deployed with what it read', async () => {
     const repository = mockObject<Database['cropAttestation']>({
-      upsert: mockFn().resolvesTo(undefined),
-      delete: mockFn().resolvesTo(1),
-      deleteAllExcept: mockFn().resolvesTo(0),
+      replace: mockFn().resolvesTo(undefined),
+      deleteAll: mockFn().resolvesTo(1),
     })
     const deployer = mockObject<CropsApiDeployer>({
       ensureDeployed: mockFn().resolvesTo(undefined),
