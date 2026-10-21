@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import type { JsonSupport } from '../languages/json'
 import { useCodeStore } from '../store'
 import { Editor } from './editor'
+import { GoToDefinitionPlugin } from './plugins/goToDefinition'
 import { LineSelector } from './plugins/lineSelector'
 import { RangeHighlightPlugin } from './plugins/range'
 
@@ -10,6 +11,7 @@ type CodeEditorComponentProps = {
   features: {
     lineSelection: boolean
     rangeHighlight: boolean
+    goToDefinition?: boolean
   }
   json?: JsonSupport
 }
@@ -37,6 +39,10 @@ export function CodeEditorComponent({
 
     if (features.rangeHighlight) {
       editor.usePlugin(RangeHighlightPlugin)
+    }
+
+    if (features.goToDefinition) {
+      editor.usePlugin(GoToDefinitionPlugin)
     }
 
     setEditor(editorKey, editor)
