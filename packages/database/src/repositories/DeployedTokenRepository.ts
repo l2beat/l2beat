@@ -229,6 +229,15 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByAddress(address: string): Promise<DeployedTokenRecord[]> {
+    const rows = await this.db
+      .selectFrom('DeployedToken')
+      .selectAll()
+      .where('address', '=', address.toLowerCase())
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async getAll(): Promise<DeployedTokenRecord[]> {
     const rows = await this.db.selectFrom('DeployedToken').selectAll().execute()
     return rows.map(toRecord)

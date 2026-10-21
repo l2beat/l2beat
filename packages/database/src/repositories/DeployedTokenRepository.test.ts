@@ -612,6 +612,34 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
     })
   })
 
+  describe(DeployedTokenRepository.prototype.getByAddress.name, () => {
+    it('returns records on every chain, matching the address case-insensitively', async () => {
+      await chains.insert(mockChain({ name: 'ethereum', chainId: 1 }))
+      await chains.insert(mockChain({ name: 'arbitrum', chainId: 42161 }))
+
+      const onEthereum = deployedToken({
+        chain: 'ethereum',
+        address: '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      })
+      const onArbitrum = deployedToken({
+        chain: 'arbitrum',
+        address: '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      })
+      const other = deployedToken({
+        chain: 'ethereum',
+        address: '0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+      })
+      await repository.insert(onEthereum)
+      await repository.insert(onArbitrum)
+      await repository.insert(other)
+
+      const result = await repository.getByAddress(
+        '0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      )
+      expect(result).toEqualUnsorted([onEthereum, onArbitrum])
+    })
+  })
+
   describe(DeployedTokenRepository.prototype.deleteByPrimaryKeys.name, () => {
     it('removes selected records', async () => {
       const chainRecord1 = mockChain({ name: 'ethereum', chainId: 1 })

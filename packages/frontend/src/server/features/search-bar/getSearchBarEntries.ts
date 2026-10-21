@@ -4,6 +4,7 @@ import { getActiveInteropAbstractTokens } from '~/server/features/layer2s/intero
 import { ps } from '~/server/projects'
 import { getLogger } from '../../utils/logger'
 import type { SearchBarProjectEntry, SearchBarTokenEntry } from './types'
+import { getAbstractTokensByAddress } from './utils/getAbstractTokensByAddress'
 import { getSearchBarProjectEntries } from './utils/getSearchBarProjectEntries'
 import { getSearchBarTokenEntries } from './utils/getSearchBarTokenEntries'
 import { toSearchBarProject } from './utils/toSearchBarProject'
@@ -33,6 +34,11 @@ function formatSearchResult(entry: SearchBarSearchEntry) {
 export async function getSearchBarEntries(search: string) {
   const logger = getLogger().for('getSearchBarEntries')
 
+  const trimmed = search.trim()
+  const address = EthereumAddress.checkIgnoringCase(trimmed)
+    ? EthereumAddress(trimmed)
+    : undefined
+
   const [projects, tokens] = await Promise.all([
     ps.getProjects({
       optional: [
@@ -47,27 +53,34 @@ export async function getSearchBarEntries(search: string) {
         'aliases',
       ],
     }),
-    getActiveInteropAbstractTokens(),
+    address
+      ? getAbstractTokensByAddress(address)
+      : getActiveInteropAbstractTokens(),
   ])
 
   const searchBarEntries = projects.flatMap((p) =>
     getSearchBarProjectEntries(p),
   )
 
-  if (EthereumAddress.check(search)) {
-    const matched = searchBarEntries
-      .filter((entry) =>
-        entry.projectAddresses?.includes(EthereumAddress(search)),
-      )
-      .map((entry, index, list) => ({
+  if (address) {
+    // Tokens first: a bridge escrow lists the token contracts it holds, but
+    // whoever pastes a token address is most likely looking for the token.
+    const tokenMatches = getSearchBarTokenEntries(tokens)
+    const projectMatches = searchBarEntries.filter((entry) =>
+      entry.projectAddresses?.includes(address),
+    )
+    const matched = [...tokenMatches, ...projectMatches].map(
+      (entry, index, list) => ({
         ...entry,
         searchMatchKind: 'direct' as const,
         searchScore: list.length - index,
-      }))
+      }),
+    )
 
     logger.info('Search bar result', {
       search,
-      projectIds: matched.map((r) => r.id),
+      projectIds: projectMatches.map((r) => r.id),
+      tokenIds: tokenMatches.map((r) => r.id),
       type: 'address',
     })
     return matched.map(formatSearchResult)
