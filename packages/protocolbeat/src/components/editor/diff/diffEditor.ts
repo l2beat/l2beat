@@ -1,4 +1,4 @@
-import { type Chunk, MergeView } from '@codemirror/merge'
+import { MergeView } from '@codemirror/merge'
 import { highlightSelectionMatches, searchKeymap } from '@codemirror/search'
 import {
   EditorState,
@@ -66,9 +66,9 @@ export class DiffEditor {
   private folding = false
   private lastDiff: Diff | undefined
   private unchangedRegions: UnchangedRegion[] = []
-  // Where each kept change starts on the right side, to tell the merge
-  // view's chunks of kept changes from those of filtered out ones.
-  private shownChunkStarts: number[] = []
+  // Where each kept change starts on the right side. The merge view's chunks
+  // also hold filtered out changes, so navigation goes by these instead.
+  private changeStarts: number[] = []
   // Scroll position per pair of texts, to come back to after a toggle.
   private readonly scrollTops = new Map<string, number>()
   private builtTextsKey: string | undefined
@@ -109,18 +109,31 @@ export class DiffEditor {
     this.scheduleBuild()
   }
 
+  // Keeps the line at the top of the view in place, or the bar that hides
+  // it. Scrolling by position would also scroll sideways to a bar, which is
+  // as wide as the longest line.
   setFolding(folding: boolean) {
     this.folding = folding
-    const topPosition = this.topVisiblePosition()
-    this.applyFolding()
-    if (topPosition !== undefined) {
-      this.mergeView?.b.dispatch({
-        effects: EditorView.scrollIntoView(topPosition, {
-          y: 'start',
-          x: 'start',
-        }),
-      })
+    const mergeView = this.mergeView
+    if (mergeView === undefined) {
+      return
     }
+    const scroller = mergeView.dom
+    const view = mergeView.b
+    const topPosition = view.lineBlockAtHeight(
+      scroller.getBoundingClientRect().top - view.documentTop,
+    ).from
+    this.applyFolding()
+    view.requestMeasure({
+      read: () =>
+        view.documentTop -
+        scroller.getBoundingClientRect().top +
+        scroller.scrollTop +
+        view.lineBlockAt(topPosition).top,
+      write: (scrollTop) => {
+        scroller.scrollTop = scrollTop
+      },
+    })
   }
 
   onComputedDiff(listener: (diff: Diff) => void): Disposable {
@@ -137,11 +150,11 @@ export class DiffEditor {
   }
 
   toNextDiff() {
-    this.goToChunk(1)
+    this.goToChange(1)
   }
 
   toPreviousDiff() {
-    this.goToChunk(-1)
+    this.goToChange(-1)
   }
 
   dispose() {
@@ -158,26 +171,20 @@ export class DiffEditor {
 
   // Moves the cursor of the right side to the next or previous change,
   // wrapping around, and centers it like Monaco does.
-  private goToChunk(direction: 1 | -1) {
+  private goToChange(direction: 1 | -1) {
     const mergeView = this.mergeView
-    if (mergeView === undefined) {
-      return
-    }
-    const chunks = mergeView.chunks.filter((chunk) =>
-      this.shownChunkStarts.some(
-        (start) => chunk.fromB <= start && start <= chunk.toB,
-      ),
-    )
-    if (chunks.length === 0) {
+    if (mergeView === undefined || this.changeStarts.length === 0) {
       return
     }
     const view = mergeView.b
     const head = view.state.selection.main.head
-    const chunk =
-      direction === 1 ? nextChunk(chunks, head) : previousChunk(chunks, head)
+    const target =
+      direction === 1
+        ? nextStart(this.changeStarts, head)
+        : previousStart(this.changeStarts, head)
     view.dispatch({
-      selection: { anchor: chunk.fromB },
-      effects: EditorView.scrollIntoView(chunk.fromB, { y: 'center' }),
+      selection: { anchor: target },
+      effects: EditorView.scrollIntoView(target, { y: 'center' }),
     })
   }
 
@@ -228,7 +235,7 @@ export class DiffEditor {
       },
     })
     const rightDoc = this.mergeView.b.state.doc
-    this.shownChunkStarts = computed.lineChanges.map((change) =>
+    this.changeStarts = computed.lineChanges.map((change) =>
       lineStart(rightDoc, change.modified.startLineNumber),
     )
     this.unchangedRegions = collapsibleRegions(
@@ -247,16 +254,6 @@ export class DiffEditor {
     for (const listener of this.diffListeners) {
       listener(this.lastDiff)
     }
-  }
-
-  private topVisiblePosition(): number | undefined {
-    const mergeView = this.mergeView
-    if (mergeView === undefined) {
-      return undefined
-    }
-    const scrollerTop = mergeView.dom.getBoundingClientRect().top
-    return mergeView.b.lineBlockAtHeight(scrollerTop - mergeView.b.documentTop)
-      .from
   }
 
   private applyFolding() {
@@ -304,23 +301,23 @@ function lineStart(doc: Text, lineNumber: number): number {
   return lineNumber > doc.lines ? doc.length : doc.line(lineNumber).from
 }
 
-function nextChunk(chunks: readonly Chunk[], position: number): Chunk {
-  for (const chunk of chunks) {
-    if (chunk.fromB > position) {
-      return chunk
+function nextStart(starts: number[], position: number): number {
+  for (const start of starts) {
+    if (start > position) {
+      return start
     }
   }
-  return chunks[0] as Chunk
+  return starts[0] as number
 }
 
-function previousChunk(chunks: readonly Chunk[], position: number): Chunk {
-  for (let index = chunks.length - 1; index >= 0; index--) {
-    const chunk = chunks[index] as Chunk
-    if (chunk.fromB < position) {
-      return chunk
+function previousStart(starts: number[], position: number): number {
+  for (let index = starts.length - 1; index >= 0; index--) {
+    const start = starts[index] as number
+    if (start < position) {
+      return start
     }
   }
-  return chunks[chunks.length - 1] as Chunk
+  return starts[starts.length - 1] as number
 }
 
 // Monaco's ILineChange shape, which the inline diff copy reads: line numbers
