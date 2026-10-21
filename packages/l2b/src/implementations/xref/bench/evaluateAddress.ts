@@ -238,7 +238,20 @@ function isInput(
   ) {
     return false
   }
-  return ast.parent(declaration)?.nodeType === 'ParameterList'
+  return isParameter(context, declaration)
+}
+
+function isParameter(
+  context: EvaluationContext,
+  variable: VariableNode,
+): boolean {
+  const { ast } = context.source
+  const list = ast.parent(variable)
+  if (list?.nodeType !== 'ParameterList') {
+    return false
+  }
+  const owner = ast.parent(list) as { returnParameters?: SolcNode } | undefined
+  return owner?.returnParameters !== list
 }
 
 function unwindVariable(
@@ -265,10 +278,10 @@ function unwindVariable(
     return { base: 'storage', variable }
   }
   const { ast } = context.source
-  const parent = ast.parent(variable)
-  if (parent?.nodeType === 'ParameterList') {
+  if (isParameter(context, variable)) {
     return { stop: stop('dynamic', 'parameter') }
   }
+  const parent = ast.parent(variable)
   if (ast.assigned.has(variable.id)) {
     return { stop: stop('unknown', 'reassigned local') }
   }
