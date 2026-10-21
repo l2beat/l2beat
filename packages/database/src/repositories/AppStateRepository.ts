@@ -6,7 +6,7 @@ import type { AppState } from '../kysely/generated/types'
 
 const KEYS = [
   'interopAggregatesTimestampOverride',
-  'cropsApiAttestationUid',
+  'cropsApiDispatchedUid',
   'example',
 ] as const
 
@@ -19,9 +19,9 @@ export const AppStatePair = v.union([
     key: v.literal('interopAggregatesTimestampOverride'),
     value: v.union([v.string().transform((v) => Number(v)), v.number()]),
   }),
-  // The attestation the CROPS API was last deployed with; missing for none.
+  // The attestation the CROPS API deploy was last dispatched for; '' for none.
   v.object({
-    key: v.literal('cropsApiAttestationUid'),
+    key: v.literal('cropsApiDispatchedUid'),
     value: v.string(),
   }),
   v.object({
