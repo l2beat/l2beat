@@ -46,6 +46,18 @@ const reportWaitDelay = formatSeconds(
   { fullUnit: true },
 )
 
+// stETH held by EtherFiRestaker as a share of the ETH backing eETH
+const stethSharePct = `${
+  Number(
+    (discovery.getContractValueBigInt(
+      'EtherFiRestaker',
+      'getTotalPooledEther',
+    ) *
+      1000n) /
+      discovery.getContractValueBigInt('LiquidityPool', 'getTotalPooledEther'),
+  ) / 10
+}%`
+
 export const etherfi: BaseProject = {
   id: ProjectId('etherfi'),
   slug: 'etherfi',
@@ -99,13 +111,12 @@ export const etherfi: BaseProject = {
       name: 'EigenLayer',
       icon: 'eigenlayer',
       description:
-        "Holds the native stake of EigenPod-backed nodes: their validators' withdrawal credentials point at an EigenLayer EigenPod, so that ETH sits inside EigenLayer contracts. The pods and EigenLayer's DelegationManager, EigenPodManager and StrategyManager are upgradeable by EigenLayer governance, through its timelock or at once by its community multisig, and since the slashing release an AVS can slash delegated stake, but only stake an operator has allocated to it; the pods are delegated to operators ether.fi runs itself. Exits from these pods also wait out EigenLayer's roughly 14-day withdrawal delay. A node created without a pod is itself its validators' withdrawal address and requests exits directly through the EIP-7002 system contract, outside EigenLayer.",
+        "Holds the native stake of EigenPod-backed nodes: their validators' withdrawal credentials point at an EigenLayer EigenPod, so that ETH sits inside EigenLayer contracts. The pods and EigenLayer's DelegationManager, EigenPodManager and StrategyManager are upgradeable by EigenLayer governance, through its timelock or at once by its community multisig, and since the slashing release an AVS can slash delegated stake, but only stake an operator has allocated to it. Exits from these pods also wait out EigenLayer's roughly 14-day withdrawal delay. A node created without a pod is itself its validators' withdrawal address and requests exits directly through the EIP-7002 system contract, outside EigenLayer.",
     },
     {
       type: 'tracked',
       projectId: ProjectId('lido'),
-      description:
-        'About a fifth of the backing is stETH taken through the Liquifier and held by EtherFiRestaker rather than native ETH. A stETH depeg or a Lido failure directly impairs that share of eETH.',
+      description: `${stethSharePct} of the backing is stETH taken through the Liquifier and held by EtherFiRestaker rather than native ETH. A stETH depeg or a Lido failure directly impairs that share of eETH.`,
     },
     {
       type: 'not-tracked',
