@@ -29,11 +29,10 @@ export function useTemplateModel({ templateId, files }: Props) {
     setTemplateModel(ContractConfigModel.fromRawJsonc(files.template))
   }
 
-  const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
-    queryClient.invalidateQueries({
-      queryKey: ['config-sync-status'],
-    }),
-  )
+  const debouncedInvalidateProject = useDebouncedCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ['config-sync-status'] })
+    queryClient.invalidateQueries({ queryKey: ['projects'] })
+  })
 
   const toggleIgnoreMethods = (fieldName: string) => {
     const current = templateModel.ignoreMethods ?? []
@@ -139,7 +138,7 @@ export function useTemplateModel({ templateId, files }: Props) {
       await queryClient.invalidateQueries({
         queryKey: ['templates', templateId],
       })
-      debouncedInvalidateSyncStatus()
+      debouncedInvalidateProject()
     },
     onError: (error) => {
       toast.error(`Failed to save template file - ${templateId}`, {
