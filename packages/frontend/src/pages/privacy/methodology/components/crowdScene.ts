@@ -1,5 +1,5 @@
 import type { ThemeTokens } from '~/hooks/useThemeTokens'
-import { alpha } from './canvasColor'
+import { toRgba } from '~/utils/color'
 
 /**
  * Deposits scroll from "now" into the past; every withdrawal could have come
@@ -123,7 +123,7 @@ export function drawCrowdScene(
   )
 
   // Lanes and the present
-  ctx.fillStyle = alpha(tokens.divider, 0.25)
+  ctx.fillStyle = toRgba(tokens.divider, 0.25)
   ctx.beginPath()
   ctx.roundRect(
     left,
@@ -134,7 +134,7 @@ export function drawCrowdScene(
   )
   ctx.fill()
   ctx.setLineDash([3, 4])
-  ctx.strokeStyle = alpha(tokens.secondary, 0.6)
+  ctx.strokeStyle = toRgba(tokens.secondary, 0.6)
   ctx.beginPath()
   ctx.moveTo(now, 12)
   ctx.lineTo(now, height - 18)
@@ -166,10 +166,10 @@ export function drawCrowdScene(
     for (const { id, p } of live) {
       const own = id === w.source
       ctx.strokeStyle = own
-        ? alpha(tokens.brand, fade)
+        ? toRgba(tokens.brand, fade)
         : single
-          ? alpha('#ef4444', 0.8 * fade)
-          : alpha(
+          ? toRgba('#ef4444', 0.8 * fade)
+          : toRgba(
               mine ? tokens.secondary : tokens.brand,
               (mine ? 0.3 : 0.28) * fade,
             )
@@ -183,10 +183,10 @@ export function drawCrowdScene(
 
     ctx.beginPath()
     ctx.arc(wx, withdrawY, 7, 0, Math.PI * 2)
-    ctx.fillStyle = alpha(single ? '#ef4444' : tokens.brand, fade)
+    ctx.fillStyle = toRgba(single ? '#ef4444' : tokens.brand, fade)
     ctx.fill()
     if (mine) {
-      ctx.strokeStyle = alpha(tokens.brand, fade)
+      ctx.strokeStyle = toRgba(tokens.brand, fade)
       ctx.lineWidth = 2
       ctx.beginPath()
       ctx.arc(wx, withdrawY, 11, 0, Math.PI * 2)
@@ -217,7 +217,7 @@ export function drawCrowdScene(
     ctx.globalAlpha = Math.min(enter, leave)
     ctx.beginPath()
     ctx.arc(p.x, p.y, d.mine ? 7 : 4.5 * (0.6 + 0.4 * enter), 0, Math.PI * 2)
-    ctx.fillStyle = d.mine ? tokens.brand : alpha(tokens.secondary, 0.75)
+    ctx.fillStyle = d.mine ? tokens.brand : toRgba(tokens.secondary, 0.75)
     ctx.fill()
     if (d.mine) {
       ctx.beginPath()

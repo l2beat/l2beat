@@ -1,5 +1,7 @@
 import type { PrivacyAdversarySentiment } from '@l2beat/config'
+import * as Tabs from '@radix-ui/react-tabs'
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { PizzaRosetteIcon } from '~/components/rosette/pizza/PizzaRosetteIcon'
 import {
   RosetteTooltipContextProvider,
@@ -10,12 +12,14 @@ import { SentimentText } from '~/components/SentimentText'
 import { useAnimationFrame } from '~/hooks/useAnimationFrame'
 import { useElementSize } from '~/hooks/useElementSize'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
+import { useTracking } from '~/hooks/useTracking'
 import { cn } from '~/utils/cn'
 import { prepareCanvas } from '~/utils/prepareCanvas'
 import { PRIVACY_ADVERSARY_VERDICT } from '../../adversaries/privacyAdversaryUi'
 import { PrivacySentimentDot } from '../../PrivacySentimentDot'
+import type { PrivacyMethodologyFigureData } from '../getPrivacyMethodologyFigureData'
 import { FigureProgress } from './FigureProgress'
-import { type FigureData, MethodologyFigure } from './MethodologyFigure'
+import { MethodologyFigure } from './MethodologyFigure'
 import {
   createPoolScene,
   drawPoolScene,
@@ -40,7 +44,11 @@ const INITIAL_DESIGN: PoolDesign = {
   ellipticCurves: true,
 }
 
-export function PoolLensFigure({ data }: { data: FigureData }) {
+export function PoolLensFigure({
+  data,
+}: {
+  data: PrivacyMethodologyFigureData
+}) {
   return (
     <MethodologyFigure>
       <RosetteTooltipContextProvider>
@@ -63,9 +71,10 @@ function cachedCaughtShare(traffic: number) {
   return share
 }
 
-function PoolLens({ data }: { data: FigureData }) {
+function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
   const { step, pick, playing, animate, reducedMotion, containerProps } =
     useFigureAutoplay(data.adversaries.length, INTERVAL_MS)
+  const { track } = useTracking()
   const adversary = data.adversaries[step] ?? data.adversaries[0]
   const lens = adversary?.id
 
@@ -119,20 +128,26 @@ function PoolLens({ data }: { data: FigureData }) {
   }
 
   return (
-    <div {...containerProps}>
-      <div
+    <Tabs.Root
+      {...containerProps}
+      value={adversary.id}
+      onValueChange={(id) => {
+        pick(data.adversaries.findIndex((a) => a.id === id))
+        track('tabsChanged', { name: 'privacyPoolAdversary', value: id })
+      }}
+    >
+      <Tabs.List
         ref={tabsRef}
-        role="tablist"
         className="scrollbar-hide -mx-4 relative flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0"
       >
         {data.adversaries.map(({ id, label }, i) => {
           const tabSentiment = shown(id)
           return (
-            <button
+            <Tabs.Trigger
               key={id}
-              type="button"
-              role="tab"
-              aria-selected={i === step}
+              value={id}
+              // Tabs only report a change; picking the current one still
+              // stops the autoplay.
               onClick={() => pick(i)}
               className={cn(
                 'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13 transition-colors',
@@ -157,10 +172,10 @@ function PoolLens({ data }: { data: FigureData }) {
                 />
               )}
               {label}
-            </button>
+            </Tabs.Trigger>
           )
         })}
-      </div>
+      </Tabs.List>
       <FigureProgress
         steps={data.adversaries.length}
         step={step}
@@ -168,69 +183,77 @@ function PoolLens({ data }: { data: FigureData }) {
         intervalMs={INTERVAL_MS}
         className="mt-3"
       />
-      <DesignControl lens={adversary.id} design={design} onChange={change}>
-        {verdict.inheritedFrom && seen.has(adversary.id) && (
-          <InheritedNote
-            label={adversary.label}
-            from={
-              data.adversaries.find((a) => a.id === verdict.inheritedFrom)
-                ?.label ?? ''
-            }
-            sentiment={verdict.sentiment}
-            onGo={() =>
-              pick(
-                data.adversaries.findIndex(
-                  (a) => a.id === verdict.inheritedFrom,
-                ),
-              )
-            }
+      {/* One panel that follows the tab, so the canvas is never remounted.
+          It holds controls, so it needs no tab stop of its own. */}
+      <Tabs.Content value={adversary.id} tabIndex={-1} className="outline-none">
+        <DesignControl lens={adversary.id} design={design} onChange={change}>
+          {verdict.inheritedFrom && seen.has(adversary.id) && (
+            <InheritedNote
+              label={adversary.label}
+              from={
+                data.adversaries.find((a) => a.id === verdict.inheritedFrom)
+                  ?.label ?? ''
+              }
+              sentiment={verdict.sentiment}
+              onGo={() =>
+                pick(
+                  data.adversaries.findIndex(
+                    (a) => a.id === verdict.inheritedFrom,
+                  ),
+                )
+              }
+            />
+          )}
+        </DesignControl>
+        <PoolCanvas
+          lens={adversary.id}
+          design={design}
+          scene={scene}
+          running={animate}
+        />
+        {/* On phones the rosette floats, so the text keeps the full width below it. */}
+        <div className="mt-3 flow-root sm:flex sm:items-center sm:gap-4">
+          <VerdictRosette
+            data={data}
+            shown={shown}
+            selected={adversary.label}
           />
-        )}
-      </DesignControl>
-      <PoolCanvas
-        lens={adversary.id}
-        design={design}
-        scene={scene}
-        running={animate}
-      />
-      {/* On phones the rosette floats, so the text keeps the full width below it. */}
-      <div className="mt-3 flow-root sm:flex sm:items-center sm:gap-4">
-        <VerdictRosette data={data} shown={shown} selected={adversary.label} />
-        <div
-          key={adversary.id}
-          className="motion-safe:fade-in motion-safe:slide-in-from-bottom-1 min-w-0 flex-1 motion-safe:animate-in motion-safe:duration-300"
-        >
-          <p className="flex flex-wrap items-baseline gap-x-2 font-bold text-label-value-16">
-            {adversary.label} sees
-            {sentiment ? (
-              <SentimentText
-                key={sentiment}
-                sentiment={sentiment}
-                vibrant
-                className="motion-safe:fade-in font-bold text-label-value-14 motion-safe:animate-in"
-              >
-                {`→ ${PRIVACY_ADVERSARY_VERDICT[sentiment]}`}
-              </SentimentText>
-            ) : (
-              <span className="font-medium text-label-value-14 text-secondary motion-safe:animate-pulse">
-                watching…
-              </span>
-            )}
-          </p>
-          <p
-            className={cn(
-              'mt-1 text-paragraph-14 transition-opacity duration-500',
-              !seen.has(adversary.id) && 'opacity-0',
-            )}
+          <div
+            key={adversary.id}
+            className="motion-safe:fade-in motion-safe:slide-in-from-bottom-1 min-w-0 flex-1 motion-safe:animate-in motion-safe:duration-300"
           >
-            {verdict.sees}
-          </p>
-          <p className="mt-1 text-paragraph-13 text-secondary">
-            {adversary.label} {adversary.text}
-          </p>
+            <p className="flex flex-wrap items-baseline gap-x-2 font-bold text-label-value-16">
+              {adversary.label} sees
+              {sentiment ? (
+                <SentimentText
+                  key={sentiment}
+                  sentiment={sentiment}
+                  vibrant
+                  className="motion-safe:fade-in font-bold text-label-value-14 motion-safe:animate-in"
+                >
+                  {`→ ${PRIVACY_ADVERSARY_VERDICT[sentiment]}`}
+                </SentimentText>
+              ) : (
+                <span className="font-medium text-label-value-14 text-secondary motion-safe:animate-pulse">
+                  watching…
+                </span>
+              )}
+            </p>
+            <p
+              className={cn(
+                'mt-1 text-paragraph-14 transition-opacity duration-500',
+                !seen.has(adversary.id) && 'opacity-0',
+              )}
+            >
+              {verdict.sees}
+            </p>
+            <p className="mt-1 text-paragraph-13 text-secondary">
+              {adversary.label} {adversary.text}
+            </p>
+          </div>
         </div>
-      </div>
-    </div>
+      </Tabs.Content>
+    </Tabs.Root>
   )
 }
 
@@ -251,6 +274,7 @@ function DesignControl({
     case 'publicObserver':
       control = (
         <Choice
+          name="privacyPoolLinkage"
           label="Withdrawals can be linked to their deposit"
           value={design.linksDeposit}
           options={[
@@ -286,6 +310,7 @@ function DesignControl({
     case 'networkObserver':
       control = (
         <Choice
+          name="privacyPoolConnection"
           label="The client connects through"
           value={design.publicRpc}
           options={[
@@ -299,6 +324,7 @@ function DesignControl({
     case 'privilegedInsider':
       control = (
         <Choice
+          name="privacyPoolViewingKeys"
           label="The operator holds viewing keys"
           value={design.viewingKeys}
           options={[
@@ -312,6 +338,7 @@ function DesignControl({
     case 'futureAdversary':
       control = (
         <Choice
+          name="privacyPoolNoteCrypto"
           label="Notes are protected by"
           value={design.ellipticCurves}
           options={[
@@ -363,43 +390,34 @@ function InheritedNote({
   )
 }
 
-function Choice<T extends boolean>({
+function Choice({
+  name,
   label,
   value,
   options,
   onChange,
 }: {
+  name: string
   label: string
-  value: T
-  options: [T, string][]
-  onChange: (value: T) => void
+  value: boolean
+  options: [boolean, string][]
+  onChange: (value: boolean) => void
 }) {
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
       <span className="font-semibold text-label-value-13">{label}</span>
-      <div
-        role="radiogroup"
+      <RadioGroup
+        name={name}
         aria-label={label}
-        className="flex flex-wrap gap-1"
+        value={String(value)}
+        onValueChange={(next) => onChange(next === 'true')}
       >
         {options.map(([option, text]) => (
-          <button
-            key={text}
-            type="button"
-            role="radio"
-            aria-checked={option === value}
-            onClick={() => onChange(option)}
-            className={cn(
-              'whitespace-nowrap rounded-full border px-2.5 py-0.5 font-semibold text-label-value-12 transition-colors',
-              option === value
-                ? 'border-brand bg-brand text-primary-invert'
-                : 'border-divider bg-surface-primary text-secondary hover:border-brand/50',
-            )}
-          >
+          <RadioGroupItem key={text} value={String(option)}>
             {text}
-          </button>
+          </RadioGroupItem>
         ))}
-      </div>
+      </RadioGroup>
     </div>
   )
 }
@@ -469,7 +487,7 @@ function VerdictRosette({
   shown,
   selected,
 }: {
-  data: FigureData
+  data: PrivacyMethodologyFigureData
   shown: (id: Lens) => PrivacyAdversarySentiment | undefined
   selected: string
 }) {

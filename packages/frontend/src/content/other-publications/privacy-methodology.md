@@ -7,4 +7,4 @@ authorId: l2beat_research
 tag: Research
 ---
 
-<!-- PrivacyMethodologyPage renders this publication: the privacy framework text from @l2beat/config, with live figures. -->
+<!-- PrivacyMethodologyPage renders this publication: sections from getPrivacyMethodologySections, with live figures. -->
