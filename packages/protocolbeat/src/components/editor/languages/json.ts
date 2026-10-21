@@ -162,11 +162,12 @@ interface ParsedDocument {
 }
 
 // Lint, completion, hover and folding all read the same document version.
+// Every empty document is the same Text, so the URI is checked as well.
 const parsedDocuments = new WeakMap<Text, ParsedDocument>()
 
 function parse(doc: Text, documentUri: string): ParsedDocument {
   let parsed = parsedDocuments.get(doc)
-  if (parsed === undefined) {
+  if (parsed === undefined || parsed.text.uri !== documentUri) {
     const text = TextDocument.create(documentUri, 'json', 0, doc.toString())
     parsed = { text, json: languageService.parseJSONDocument(text) }
     parsedDocuments.set(doc, parsed)
@@ -242,9 +243,16 @@ async function complete(
     first.textEdit !== undefined && 'range' in first.textEdit
       ? parsed.text.offsetAt(first.textEdit.range.start)
       : context.pos
+  const docLength = context.state.doc.length
   return {
     from,
-    options: list.items.map(toCompletion),
+    options: list.items.map((item) => {
+      const editEnd =
+        item.textEdit !== undefined && 'range' in item.textEdit
+          ? parsed.text.offsetAt(item.textEdit.range.end)
+          : context.pos
+      return toCompletion(item, editEnd, docLength)
+    }),
     validFor: isCompletionText,
   }
 }
@@ -269,7 +277,14 @@ function isWordCharacter(character: string): boolean {
   )
 }
 
-function toCompletion(item: CompletionItem): Completion {
+// The edit replaces the whole token under the cursor, not just up to it.
+// Typing while the list stays open only inserts before the edit's end, so
+// the end moves by however much the document grew.
+function toCompletion(
+  item: CompletionItem,
+  editEnd: number,
+  docLength: number,
+): Completion {
   const insertText = item.textEdit?.newText ?? item.insertText ?? item.label
   const isSnippet = item.insertTextFormat === InsertTextFormat.Snippet
   return {
@@ -278,8 +293,8 @@ function toCompletion(item: CompletionItem): Completion {
     detail: item.detail,
     info: documentationText(item.documentation),
     type: completionType(item.kind),
-    apply: (view, completion, from, to) => {
-      const end = view.state.sliceDoc(to, to + 1) === '"' ? to + 1 : to
+    apply: (view, completion, from) => {
+      const end = editEnd + view.state.doc.length - docLength
       if (isSnippet) {
         snippet(toSnippetTemplate(insertText))(view, completion, from, end)
       } else {
