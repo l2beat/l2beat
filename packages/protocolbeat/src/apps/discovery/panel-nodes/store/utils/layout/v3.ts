@@ -14,7 +14,7 @@ const NodeColors = v.record(v.string(), v.number())
 const NodeHiddenFields = v.record(v.string(), v.array(v.string()))
 const HiddenNodes = v.array(v.string())
 
-export const LayoutMetadata = v.object({
+const LayoutMetadata = v.object({
   description: v.string().optional(),
 })
 

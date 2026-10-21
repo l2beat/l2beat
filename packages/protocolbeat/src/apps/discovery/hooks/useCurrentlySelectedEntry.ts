@@ -18,6 +18,6 @@ export function useCurrentlySelectedEntry() {
   }
 }
 
-export function getFields(entry: ApiProjectContract | ApiAddressEntry) {
+function getFields(entry: ApiProjectContract | ApiAddressEntry) {
   return 'fields' in entry ? entry.fields : []
 }
