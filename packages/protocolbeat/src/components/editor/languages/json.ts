@@ -1,4 +1,5 @@
 import {
+  acceptCompletion,
   autocompletion,
   type Completion,
   type CompletionContext,
@@ -10,7 +11,13 @@ import {
 import { indentWithTab } from '@codemirror/commands'
 import { foldService, indentOnInput } from '@codemirror/language'
 import { type Diagnostic, forceLinting, linter } from '@codemirror/lint'
-import type { EditorState, Extension, Text } from '@codemirror/state'
+import {
+  type EditorState,
+  type Extension,
+  Prec,
+  StateEffect,
+  type Text,
+} from '@codemirror/state'
 import { EditorView, hoverTooltip, keymap, ViewPlugin } from '@codemirror/view'
 import MarkdownIt from 'markdown-it'
 import {
@@ -94,10 +101,15 @@ export const json: JsonSupport = {
     jsonSyntax,
     closeBrackets(),
     indentOnInput(),
+    Prec.high(keymap.of([{ key: 'Tab', run: acceptCompletion }])),
     keymap.of([...closeBracketsKeymap, indentWithTab]),
     foldService.of(foldJson),
     linter((view) => validate(view.state, documentUri), {
       delay: LINT_DELAY_MS,
+      needsRefresh: (update) =>
+        update.transactions.some((transaction) =>
+          transaction.effects.some((effect) => effect.is(schemasChanged)),
+        ),
     }),
     autocompletion({
       override: [(context) => complete(context, documentUri)],
@@ -126,11 +138,14 @@ function withoutSchema(uri: string): SchemaConfiguration[] {
   )
 }
 
+const schemasChanged = StateEffect.define<null>()
+
 // Schemas are global, like Monaco's, so every open JSON editor revalidates.
 function configureSchemas(extraSchemas: SchemaConfiguration[]) {
   schemas = [...BASE_SCHEMAS, ...extraSchemas]
   languageService.configure({ validate: true, allowComments: true, schemas })
   for (const view of jsonViews) {
+    view.dispatch({ effects: schemasChanged.of(null) })
     forceLinting(view)
   }
 }
@@ -244,6 +259,11 @@ async function complete(
       ? parsed.text.offsetAt(first.textEdit.range.start)
       : context.pos
   const docLength = context.state.doc.length
+  // Labels are quoted. Inside a string the typed text starts with its quote
+  // too, but outside one it starts with a letter, and CodeMirror matches a
+  // single typed character only against a label's first. There the labels
+  // match without quotes, and typing a quote asks for quoted ones again.
+  const quoted = context.state.sliceDoc(from, from + 1) === '"'
   return {
     from,
     options: list.items.map((item) => {
@@ -251,9 +271,10 @@ async function complete(
         item.textEdit !== undefined && 'range' in item.textEdit
           ? parsed.text.offsetAt(item.textEdit.range.end)
           : context.pos
-      return toCompletion(item, editEnd, docLength)
+      return toCompletion(item, editEnd, docLength, quoted)
     }),
-    validFor: isCompletionText,
+    validFor: (text) =>
+      isCompletionText(text) && text.startsWith('"') === quoted,
   }
 }
 
@@ -284,11 +305,13 @@ function toCompletion(
   item: CompletionItem,
   editEnd: number,
   docLength: number,
+  quoted: boolean,
 ): Completion {
   const insertText = item.textEdit?.newText ?? item.insertText ?? item.label
   const isSnippet = item.insertTextFormat === InsertTextFormat.Snippet
+  const filterLabel = item.filterText ?? item.label
   return {
-    label: item.filterText ?? item.label,
+    label: quoted ? filterLabel : withoutQuotes(filterLabel),
     displayLabel: item.label,
     detail: item.detail,
     info: documentationText(item.documentation),
@@ -296,7 +319,12 @@ function toCompletion(
     apply: (view, completion, from) => {
       const end = editEnd + view.state.doc.length - docLength
       if (isSnippet) {
-        snippet(toSnippetTemplate(insertText))(view, completion, from, end)
+        snippet(withFinalStop(toSnippetTemplate(insertText)))(
+          view,
+          completion,
+          from,
+          end,
+        )
       } else {
         view.dispatch({
           changes: { from, to: end, insert: insertText },
@@ -305,6 +333,12 @@ function toCompletion(
       }
     },
   }
+}
+
+function withoutQuotes(text: string): string {
+  const start = text.startsWith('"') ? 1 : 0
+  const end = text.length > start && text.endsWith('"') ? -1 : text.length
+  return text.slice(start, end)
 }
 
 function completionType(kind: CompletionItemKind | undefined): string {
@@ -318,6 +352,16 @@ function completionType(kind: CompletionItemKind | undefined): string {
     return 'enum'
   }
   return 'text'
+}
+
+// LSP snippets end at the text's end when they name no final stop. Without
+// one, CodeMirror leaves the cursor where the completion started and keeps
+// Tab on the last field.
+function withFinalStop(template: string): string {
+  if (template.includes('${0}') || template.includes('${0:')) {
+    return template
+  }
+  return `${template}\${0}`
 }
 
 // LSP writes tab stops as `$1` and escapes with backslashes; CodeMirror only
