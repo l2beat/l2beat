@@ -147,7 +147,6 @@ function executeStreaming(
         resolve(exitCode === 0)
       }
     } catch (error) {
-      console.log('Catch error', error)
       set((state) => ({ output: state.output + `Error: ${error}` }))
       set((state) => ({
         command: {
