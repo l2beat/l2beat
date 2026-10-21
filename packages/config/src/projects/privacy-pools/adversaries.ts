@@ -58,9 +58,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The website works in Tor Browser and scans every pool whole, matching notes locally without revealing the user's deposits to third parties.",
       exposureContinued:
-        "The relayer receives amount and asset for a quote and the recipient once the user confirms. With a wallet sign-in on the default RPC, Alchemy sees the wallet and then the polling for the user's withdrawal, tying the two by timing.",
+        'The relayer receives amount and asset for a quote and the recipient once the user confirms. The website finds a relayed withdrawal in bulk reads of new blocks, so no request names its hash. A wallet sign-in still shows the RPC the wallet in the session that waits for the withdrawal, which can pair the two by timing on a quiet pool.',
       advice:
-        "Withdraw in a new Tor Browser session, signed in with the user's recovery phrase so no wallet address is queried. Before signing in, set the user's own node as the Ethereum endpoint.",
+        "Withdraw in a new Tor Browser session, signed in with the user's recovery phrase so no wallet address is queried.",
       sources: [
         {
           title: 'Sign-in with a recovery phrase needs no wallet',
@@ -71,8 +71,8 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
           url: WEBSITE + 'utils/dataService.ts#L11-L34',
         },
         {
-          title: 'A custom endpoint takes over reads and scans',
-          url: WEBSITE + 'config/chainData.ts#L660-L689',
+          title: 'Relayed withdrawals confirmed without naming the hash',
+          url: WEBSITE + 'utils/relayedReceipt.ts#L1-L44',
         },
         {
           title: 'Recipient sent to the relayer on confirm',

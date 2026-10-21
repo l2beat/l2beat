@@ -113,6 +113,11 @@ export const umbra: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
+    referenceClient: {
+      name: 'Umbra app',
+      repository: 'https://github.com/ScopeLift/umbra-protocol',
+      commit: '947c4f3b9b89f6cf5d69b2d43d3cffec673da655',
+    },
     trackedOn: ['ethereum'],
     tokens: privacyTokens,
     anonymitySet: {

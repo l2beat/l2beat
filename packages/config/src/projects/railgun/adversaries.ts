@@ -10,6 +10,9 @@ const ENGINE =
 // most private released open-source client we found.
 const RAILOXIDE =
   'https://github.com/triamazikamno/railoxide/blob/8773f4ecb00c6ac7cf164ba1f989eb77dd4b0ec5/'
+// The wallet library RailOxide pins in its Cargo.toml.
+const RAILGUN_RUST =
+  'https://github.com/triamazikamno/railgun-rust/blob/b602c7d516a3f58bd83911a0a704a53fa0dc0c47/'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'private',
@@ -44,10 +47,14 @@ export function railgunAdversaries(upgradeDelay: string) {
         exposureShort:
           'The candidates for an unshield are the shields of the same token.',
         exposureContinued:
-          'In-pool transfers break a one-to-one match, while timing and exact amounts narrow it.',
+          "In-pool transfers break a one-to-one match, while timing and exact amounts narrow it. RailOxide shows the payer's 0zk address to every payee.",
         advice: `${S.commonAmounts} ${S.freshExit}`,
         interior: INTERIOR,
         sources: [
+          {
+            title: 'RailOxide marks every note sender as visible',
+            url: `${RAILGUN_RUST}crates/railgun-wallet/src/notes.rs#L26-L48`,
+          },
           {
             title: 'A Tattered Cloak of Invisibility (arXiv:2606.25926)',
             url: 'https://arxiv.org/abs/2606.25926',

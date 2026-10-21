@@ -63,6 +63,11 @@ export const zcashNearIntents: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    referenceClient: {
+      name: 'Zodl',
+      repository: 'https://github.com/zodl-inc/zodl-ios',
+      commit: '75b83d7601573e165e2dacdfaffb69750dadd05f',
+    },
     trackedOn: ['ethereum'],
     tokens: [],
     zkCatalogId: ProjectId('zcash'),
