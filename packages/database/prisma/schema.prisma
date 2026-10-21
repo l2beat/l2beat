@@ -562,10 +562,8 @@ model InteropTransfer {
 }
 
 /// The current CROPS attestation, as the backend last read it from EAS, with the
-/// source it was read from. The backend keeps only its current source's row.
+/// source it was read from. Holds at most one row, which the backend replaces.
 model CropAttestation {
-  /// Hash of the source fields below, network to attester
-  configId    String   @db.VarChar(12)
   network     String   @db.VarChar(255)
   chainId     Int
   eas         String   @db.VarChar(42)
@@ -582,7 +580,7 @@ model CropAttestation {
   /// When the backend last read it, so a stalled read is visible
   updatedAt   DateTime @db.Timestamp(6)
 
-  @@id([configId])
+  @@id([uid])
 }
 
 model EcosystemToken {

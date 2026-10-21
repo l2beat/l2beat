@@ -4,8 +4,6 @@ import { BaseRepository } from '../BaseRepository'
 import type { CropAttestation } from '../kysely/generated/types'
 
 export interface CropAttestationRecord {
-  /** Hash of the source the attestation was read from. */
-  configId: string
   network: string
   chainId: number
   /** EAS contract address. */
@@ -41,55 +39,28 @@ function toRow(record: CropAttestationRecord): Insertable<CropAttestation> {
 }
 
 /**
- * The current attestation of the backend's attestation source, with the source
- * it was read from, so readers need no config of their own. The backend keeps
- * only its current source's row, and replaces it as it changes.
+ * The current attestation, with the source it was read from, so readers need
+ * no config of their own. Holds at most one row: the backend replaces it.
  */
 export class CropAttestationRepository extends BaseRepository {
-  /** Newest first, in case a previous source's row is not removed yet. */
-  async findCurrent(): Promise<CropAttestationRecord | undefined> {
+  async find(): Promise<CropAttestationRecord | undefined> {
     const row = await this.db
       .selectFrom('CropAttestation')
       .selectAll()
-      .orderBy('updatedAt', 'desc')
       .limit(1)
       .executeTakeFirst()
     return row && toRecord(row)
   }
 
-  async upsert(record: CropAttestationRecord): Promise<void> {
-    await this.db
-      .insertInto('CropAttestation')
-      .values(toRow(record))
-      .onConflict((oc) =>
-        oc.column('configId').doUpdateSet((eb) => ({
-          uid: eb.ref('excluded.uid'),
-          revision: eb.ref('excluded.revision'),
-          reviewedAt: eb.ref('excluded.reviewedAt'),
-          projectIds: eb.ref('excluded.projectIds'),
-          txHash: eb.ref('excluded.txHash'),
-          blockNumber: eb.ref('excluded.blockNumber'),
-          updatedAt: eb.ref('excluded.updatedAt'),
-        })),
-      )
-      .execute()
-  }
-
-  async delete(configId: string): Promise<number> {
-    const result = await this.db
-      .deleteFrom('CropAttestation')
-      .where('configId', '=', configId)
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
-  }
-
-  /** Removes the rows of every other source, left behind when the source changes. */
-  async deleteAllExcept(configId: string): Promise<number> {
-    const result = await this.db
-      .deleteFrom('CropAttestation')
-      .where('configId', '!=', configId)
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
+  /** Replaces whatever is stored, whichever source it came from. */
+  async replace(record: CropAttestationRecord): Promise<void> {
+    await this.transaction(async () => {
+      await this.db.deleteFrom('CropAttestation').execute()
+      await this.db
+        .insertInto('CropAttestation')
+        .values(toRow(record))
+        .execute()
+    })
   }
 
   async deleteAll(): Promise<number> {

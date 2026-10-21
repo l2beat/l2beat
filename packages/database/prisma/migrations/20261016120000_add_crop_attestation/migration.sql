@@ -1,6 +1,5 @@
 -- CreateTable
 CREATE TABLE "CropAttestation" (
-    "configId" VARCHAR(12) NOT NULL,
     "network" VARCHAR(255) NOT NULL,
     "chainId" INTEGER NOT NULL,
     "eas" VARCHAR(42) NOT NULL,
@@ -16,5 +15,5 @@ CREATE TABLE "CropAttestation" (
     "blockNumber" INTEGER NOT NULL,
     "updatedAt" TIMESTAMP(6) NOT NULL,
 
-    CONSTRAINT "CropAttestation_pkey" PRIMARY KEY ("configId")
+    CONSTRAINT "CropAttestation_pkey" PRIMARY KEY ("uid")
 );
