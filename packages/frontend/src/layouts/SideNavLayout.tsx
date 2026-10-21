@@ -103,11 +103,7 @@ export function SideNavLayout({
           logoLink="/"
           sideLinks={navSecondaryLinks}
         />
-        <NavSidebar
-          logoLink="/"
-          groups={navGroups}
-          sideLinks={navSecondaryLinks}
-        />
+        <NavSidebar logoLink="/" groups={navGroups} />
         <div
           className={cn(
             contentWrapperVariants({ variant }),

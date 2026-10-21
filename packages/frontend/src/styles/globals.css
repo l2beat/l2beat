@@ -212,6 +212,8 @@
   --chart-ethereum: #2a5bd8;
   --chart-ethereum-secondary: #53a3ff;
   --chart-pink: #ef43b3;
+  /* The nav's selected item: the chart pink, deep enough to read as text. */
+  --nav-active: #bc1080;
   --chart-cyan: #36a3a3;
   --chart-yellow: #ab8000;
   --chart-emerald: #0ce97e;
@@ -286,6 +288,7 @@
   --chart-ethereum: #3387ff;
   --chart-ethereum-secondary: #5d82cf;
   --chart-pink: #ecb0fb;
+  --nav-active: var(--chart-pink);
   --chart-cyan: #40cbe3;
   --chart-yellow: #e7c34e;
   --chart-emerald: #0ce97e;
@@ -613,6 +616,7 @@
   --color-link-stroke: var(--link-stroke);
   --color-chart-ethereum: var(--chart-ethereum);
   --color-chart-pink: var(--chart-pink);
+  --color-nav-active: var(--nav-active);
   --color-chart-fuchsia: var(--chart-fuchsia);
   --color-chart-lime: var(--chart-lime);
   --color-chart-sky: var(--chart-sky);
