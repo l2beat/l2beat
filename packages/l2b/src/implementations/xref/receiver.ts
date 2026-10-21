@@ -410,10 +410,30 @@ export function contractName(type: TypeName | undefined): string | undefined {
 }
 
 export function unwrapCallOptions(expression: Expression): Expression {
-  if (expression.type === 'NameValueExpression') {
-    return (expression as NameValueExpression).expression
+  let current = expression
+  for (;;) {
+    if (current.type === 'NameValueExpression') {
+      current = (current as NameValueExpression).expression
+    } else if (isLegacyCallOption(current)) {
+      const option = (current as FunctionCall).expression as MemberAccess
+      current = option.expression
+    } else {
+      return current
+    }
   }
-  return expression
+}
+
+// Before 0.7, `target.pay.value(amount)()` set what `{value: amount}` sets now.
+export function isLegacyCallOption(node: BaseASTNode): boolean {
+  if (node.type !== 'FunctionCall') {
+    return false
+  }
+  const call = node as FunctionCall
+  if (call.expression.type !== 'MemberAccess' || call.arguments.length !== 1) {
+    return false
+  }
+  const option = (call.expression as MemberAccess).memberName
+  return option === 'value' || option === 'gas'
 }
 
 function returnType(

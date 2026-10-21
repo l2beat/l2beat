@@ -190,6 +190,8 @@ contract Overloads is Base {
     error Failed(address account);
 
     IPing public pinger;
+    IPing private spare = IPing(0x4444444444444444444444444444444444444444);
+    IPing private immutable pinned = IPing(0x5555555555555555555555555555555555555555);
 
     function named(uint256 a, address b) internal {}
 
@@ -221,6 +223,13 @@ contract Overloads is Base {
         pinger.ping();
         helper(account);
         new Spawned().go();
+    }
+
+    function legacy() external {
+        spare.ping();
+        pinned.ping();
+        pinger.ping.value(1)();
+        pinger.ping.gas(5).value(1)();
     }
 
     modifier repoint() override {
@@ -553,6 +562,32 @@ describe(`${resolveDefinition.name} edge cases`, () => {
     const result = resolveOverloads('pinger.ping();\n        revert', 'ping(')
 
     expect(result.receiver?.address).toEqual(undefined)
+  })
+
+  it('follows the initializer of immutable state only', () => {
+    const spare = resolveOverloads('spare.ping()', 'ping')
+    const pinned = resolveOverloads('pinned.ping()', 'ping')
+
+    expect(spare.receiver?.address).toEqual(undefined)
+    expect(pinned.receiver?.address).toEqual(
+      ChainSpecificAddress(`eth:0x${'5'.repeat(40)}`),
+    )
+  })
+
+  it('sees through legacy value and gas options', () => {
+    const ping = 'Proxy.ping:2'
+    expect(lines(resolveOverloads('ping.value(1)()', 'ping'))).toEqual([ping])
+    expect(lines(resolveOverloads('ping.gas(5)', 'ping'))).toEqual([ping])
+    const overloads = workspace.entries.find((e) => e.name === 'Overloads')
+    assert(overloads !== undefined)
+    const calls = listCalls(workspace, overloads, 'legacy')
+
+    expect(calls.map((c) => c.result.symbol)).toEqual([
+      'spare.ping',
+      'pinned.ping',
+      'pinger.ping',
+      'pinger.ping',
+    ])
   })
 
   it('answers a declaration with itself', () => {
