@@ -57,7 +57,7 @@ export function getPrivacyMethodologySections() {
 
     categories: joinBlocks([
       heading(2, 'Categories'),
-      'Categories describe how a protocol tries to hide data. Pools, shielded ledgers and anonymous access usually promise to hide a link. Stealth addresses hide a recipient. Confidential amounts hide an amount. A project keeps its category even when it fails that promise.',
+      'Categories describe how a protocol tries to hide data. Pools, shielded ledgers and anonymous access usually promise to hide a link. Stealth addresses hide a recipient. Confidential amounts hide an amount. Secret ballots hide how each voter voted. A project keeps its category even when it fails that promise.',
     ]),
 
     columns: joinBlocks([

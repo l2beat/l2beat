@@ -2,7 +2,6 @@ import type { PrivacyField } from '@l2beat/config'
 import { type ReactNode, useEffect, useRef } from 'react'
 import { useIsOnScreen } from '~/hooks/useIsOnScreen'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
-import { cn } from '~/utils/cn'
 import type { PrivacyMethodologyFigureData } from '../getPrivacyMethodologyFigureData'
 import { MethodologyFigure } from './MethodologyFigure'
 import { OWNER_COLORS } from './poolLensScene'
@@ -21,7 +20,8 @@ const DUR = 4.5
 
 const MACHINES: {
   category: CategoryId
-  hides: PrivacyField
+  /** A ballot is not one of the fields a transfer has. */
+  hides: PrivacyField | 'vote'
   scene: ReactNode
 }[] = [
   { category: 'pool', hides: 'linkage', scene: <PoolMachine /> },
@@ -33,6 +33,7 @@ const MACHINES: {
     hides: 'amount',
     scene: <ConfidentialMachine />,
   },
+  { category: 'secretBallot', hides: 'vote', scene: <BallotMachine /> },
 ]
 
 export function CategoryMachinesFigure({
@@ -46,24 +47,21 @@ export function CategoryMachinesFigure({
   const running = onScreen && !reducedMotion
   return (
     <MethodologyFigure>
-      {/* Equal cards; a short last row sits centred. */}
-      <div ref={ref} className="grid gap-3 sm:grid-cols-4 lg:grid-cols-6">
-        {MACHINES.map(({ category, hides, scene }, i) => {
+      <div ref={ref} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {MACHINES.map(({ category, hides, scene }) => {
           const { label, description } = byId(data.categories, category)
           return (
             <div
               key={category}
-              className={cn(
-                'flex flex-col rounded-lg border border-divider bg-surface-primary p-3',
-                'sm:col-span-2',
-                i === 3 && 'lg:col-start-2',
-                i === 4 && 'sm:col-start-2 lg:col-start-auto',
-              )}
+              className="flex flex-col rounded-lg border border-divider bg-surface-primary p-3"
             >
               <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
                 <span className="font-bold text-label-value-14">{label}</span>
                 <span className="whitespace-nowrap rounded-full bg-brand/10 px-2 py-0.5 font-semibold text-brand text-label-value-12">
-                  hides the {byId(data.fields, hides).label.toLowerCase()}
+                  hides the{' '}
+                  {hides === 'vote'
+                    ? 'vote'
+                    : byId(data.fields, hides).label.toLowerCase()}
                 </span>
               </div>
               <LiveSvg running={running}>{scene}</LiveSvg>
@@ -763,6 +761,89 @@ function ConfidentialMachine() {
       </Label>
       <Label x={178} y={104}>
         recipient
+      </Label>
+    </>
+  )
+}
+
+/**
+ * Voters stay public; each ballot travels sealed into the box, and only the
+ * tally comes out.
+ */
+function BallotMachine() {
+  const voters = [BLUE, PINK, ORANGE]
+  return (
+    <>
+      <Box x={78} width={64} />
+      {voters.map((color, i) => (
+        <circle key={color} cx={12} cy={ROWS[i]} r={5} fill={color} />
+      ))}
+      {voters.map((color, i) => {
+        const begin = i * 0.12
+        const y = ROWS[i] ?? 55
+        return (
+          <g key={color} opacity={0}>
+            <animateMotion
+              path={`M 20 ${y} L 110 55`}
+              keyPoints="0;0;1;1"
+              keyTimes={`0;${begin};${begin + 0.3};1`}
+              calcMode="linear"
+              dur={`${DUR}s`}
+              repeatCount="indefinite"
+            />
+            <Shown from={begin} to={begin + 0.32} dur={`${DUR}s`} />
+            <rect
+              x={-9}
+              y={-6}
+              width={18}
+              height={12}
+              rx={2}
+              fill="var(--brand)"
+              opacity={0.85}
+            />
+            <text
+              y={3}
+              textAnchor="middle"
+              fontSize={7}
+              fontWeight={700}
+              fill="var(--primary-invert)"
+            >
+              ▒▒
+            </text>
+          </g>
+        )
+      })}
+      <g opacity={0}>
+        <Shown from={0.6} to={0.95} dur={`${DUR}s`} />
+        <text
+          x={180}
+          y={48}
+          textAnchor="middle"
+          fontSize={9}
+          fontWeight={700}
+          fill="var(--brand)"
+        >
+          Yes 2
+        </text>
+        <text
+          x={180}
+          y={66}
+          textAnchor="middle"
+          fontSize={9}
+          fontWeight={700}
+          fill="var(--brand)"
+        >
+          No 1
+        </text>
+      </g>
+      <Label x={4} y={104} anchor="start">
+        voters
+      </Label>
+      <Label x={110} y={104}>
+        sealed ballots
+      </Label>
+      <Label x={196} y={104} anchor="end">
+        tally
       </Label>
     </>
   )

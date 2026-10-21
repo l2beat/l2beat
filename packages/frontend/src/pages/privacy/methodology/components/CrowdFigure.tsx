@@ -72,17 +72,15 @@ export function CrowdFigure() {
     return sceneRef.current
   }
 
-  useInterval(
-    () => {
-      setCrowd(crowdSize(scene()))
-      if (result !== undefined && !isShowingMine(scene())) setResult(undefined)
-      if (mine !== undefined && !hasDeposit(scene(), mine)) {
-        setMine(undefined)
-        setLost(true)
-      }
-    },
-    animate ? 250 : null,
-  )
+  const sync = () => {
+    setCrowd(crowdSize(scene()))
+    if (result !== undefined && !isShowingMine(scene())) setResult(undefined)
+    if (mine !== undefined && !hasDeposit(scene(), mine)) {
+      setMine(undefined)
+      setLost(true)
+    }
+  }
+  useInterval(sync, animate ? 250 : null)
 
   const draw = () => {
     const canvas = canvasRef.current
@@ -101,10 +99,14 @@ export function CrowdFigure() {
     stepCrowdScene(scene(), dt, toRate(trafficRef.current))
     draw()
   }, animate)
+  // Without animation the frame is still, so every input redraws it and
+  // refreshes the count.
   // biome-ignore lint/correctness/useExhaustiveDependencies: redraw on any input change
   useEffect(() => {
-    if (!animate) draw()
-  }, [animate, size, tokens])
+    if (animate) return
+    draw()
+    sync()
+  }, [animate, size, tokens, traffic, mine, result])
 
   const shown = result ?? crowd
   const linked = shown <= 1
@@ -154,7 +156,14 @@ export function CrowdFigure() {
               value={traffic}
               onChange={(e) => {
                 pick(0)
-                setTraffic(Number(e.target.value))
+                const next = Number(e.target.value)
+                // A still frame jumps to how the pool looks at that traffic.
+                if (!animate) {
+                  sceneRef.current = createCrowdScene(toRate(next))
+                  setMine(undefined)
+                  setResult(undefined)
+                }
+                setTraffic(next)
               }}
               className="mt-1 w-full accent-brand"
               aria-label="Pool traffic"
