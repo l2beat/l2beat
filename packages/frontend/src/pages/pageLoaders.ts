@@ -112,6 +112,7 @@ export const pageLoaders = {
   DonatePage: async () => (await import('./donate/DonatePage')).DonatePage,
   MultisigReportPage: async () =>
     (await import('./multisig-report/MultisigReportPage')).MultisigReportPage,
+  MandatePage: async () => (await import('./mandate/MandatePage')).MandatePage,
   TermsOfServicePage: async () =>
     (await import('./terms-of-service/TermsOfServicePage')).TermsOfServicePage,
   NotFoundPage: async () =>
