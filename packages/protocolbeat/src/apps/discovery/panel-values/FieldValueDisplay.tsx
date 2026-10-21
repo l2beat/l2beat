@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import type { ReactNode } from 'react'
+import { memo, type ReactNode } from 'react'
 import type { FieldValue } from '../../../api/types'
 import { AddressDisplay } from './AddressDisplay'
 
@@ -11,7 +11,9 @@ export interface FieldValueDisplayProps {
   value: FieldValue
 }
 
-export function FieldValueDisplay({
+// Values come straight from the project query and never change in place, while
+// the fields around them rerender whenever the config or template loads.
+export const FieldValueDisplay = memo(function FieldValueDisplay({
   name,
   topLevel,
   value,
@@ -134,4 +136,4 @@ export function FieldValueDisplay({
       {blockDisplay}
     </li>
   )
-}
+})

@@ -12,7 +12,20 @@ export function ProjectPage() {
   if (!project) {
     throw new Error('Missing project!')
   }
-  const response = useQuery(useProjectQueryOptions(project))
+
+  return (
+    <>
+      <Title title={`DiscoUI - ${project}`} />
+      <SelectFirstWhenMissing project={project} />
+      <MultiView project={project} />
+    </>
+  )
+}
+
+// Subscribes to the selection on its own, so a click does not rerender the
+// whole page.
+function SelectFirstWhenMissing(props: { project: string }) {
+  const response = useQuery(useProjectQueryOptions(props.project))
   const select = usePanelStore((state) => state.select)
   const selectedAddresses = usePanelStore((state) => state.selected)
   useEffect(() => {
@@ -27,11 +40,5 @@ export function ProjectPage() {
       }
     }
   }, [response.data, select, selectedAddresses])
-
-  return (
-    <>
-      <Title title={`DiscoUI - ${project}`} />
-      <MultiView project={project} />
-    </>
-  )
+  return null
 }
