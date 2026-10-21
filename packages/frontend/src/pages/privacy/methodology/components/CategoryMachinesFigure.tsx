@@ -528,17 +528,22 @@ function EnvelopeIcon({
   )
 }
 
-/** A redaction bar: a value that is there but cannot be read. */
-function Redacted({ x, y, width }: { x: number; y: number; width: number }) {
+/** An encrypted amount: a padlock where the number would be, centred on `x`. */
+function HiddenAmount({ x, y }: { x: number; y: number }) {
   return (
-    <rect
-      x={x}
-      y={y - 3.5}
-      width={width}
-      height={7}
-      rx={1.5}
-      fill="var(--primary)"
-    />
+    <g transform={`translate(${x - 15} ${y - 6})`}>
+      <rect width={30} height={12} rx={6} fill="var(--surface-secondary)" />
+      <rect x={5.5} y={5} width={6} height={4.6} rx={1} fill={GREY} />
+      <path
+        d="M 6.9 5 V 3.9 a 1.6 1.6 0 0 1 3.2 0 V 5"
+        fill="none"
+        stroke={GREY}
+        strokeWidth={1}
+      />
+      <text x={14.5} y={8.6} fontSize={7.5} fontWeight={600} fill={GREY}>
+        ETH
+      </text>
+    </g>
   )
 }
 
@@ -779,14 +784,8 @@ function ConfidentialMachine() {
     <>
       <circle cx={22} cy={62} r={9} fill={BLUE} />
       <circle cx={178} cy={62} r={9} fill={ORANGE} />
-      <Redacted x={8} y={84} width={16} />
-      <text x={27} y={87} fontSize={8} fill={GREY}>
-        ETH
-      </text>
-      <Redacted x={164} y={84} width={16} />
-      <text x={183} y={87} fontSize={8} fill={GREY}>
-        ETH
-      </text>
+      <HiddenAmount x={22} y={84} />
+      <HiddenAmount x={178} y={84} />
       <line
         x1={34}
         y1={62}
@@ -809,10 +808,7 @@ function ConfidentialMachine() {
           keySplines="0 0 1 1;0.45 0 0.55 1;0 0 1 1"
         />
         <circle r={5} fill={BLUE} />
-        <Redacted x={-14} y={-15} width={16} />
-        <text x={5} y={-12} fontSize={8} fontWeight={700} fill="var(--primary)">
-          ETH
-        </text>
+        <HiddenAmount x={0} y={-14} />
       </g>
       <Label x={22} y={104}>
         sender
