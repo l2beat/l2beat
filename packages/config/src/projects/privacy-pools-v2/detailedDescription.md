@@ -1,4 +1,4 @@
-Privacy Pools v2 lets the user shield ETH, USDC or USDT in one pool, then send, swap, earn Aave yield and withdraw without a visible link to the deposit. Only deposits that 0xbow's association set provider (ASP) approves can be spent privately. Depositors, recipients, amounts and timing at the pool's edges stay public.
+Privacy Pools v2 lets you shield ETH, USDC or USDT in one pool, then send, swap, earn Aave yield and withdraw without a visible link to the deposit. Only deposits that 0xbow's association set provider (ASP) approves can be spent privately. Depositors, recipients, amounts and timing at the pool's edges stay public.
 
 Users trust 0xbow, which runs the ASP, the only relayer and the website, and one key that can upgrade every core contract without delay. The ASP can withhold or revoke approval for any deposit. Exiting is permissionless: a note's owner can always ragequit it from the vault, losing their privacy.
 
