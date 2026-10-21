@@ -90,13 +90,15 @@
     // L2 side of the canonical bridge (Mantle forks of the OP predeploys, untemplated).
     "mantle:0x4200000000000000000000000000000000000007": {
       "critical": true,
-      "ignoreMethods": ["xDomainMessageSender"]
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
     },
     "mantle:0x4200000000000000000000000000000000000010": {
       "critical": true
     },
     "mantle:0x4200000000000000000000000000000000000016": {
-      "critical": true
+      "critical": true,
+      "ignoreInWatchMode": ["messageNonce"]
     },
     // L2ProxyAdmin: upgrades the L2 predeploys. Its implementation is unverified on
     // Mantle but byte-identical to the verified Base L2 ProxyAdmin implementation

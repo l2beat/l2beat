@@ -1,3 +1,70 @@
+Generated with discovered.json: 0xc93997cbdde13e50c0ecfc38b0f6615b71cafbdd
+
+# Diff at Tue, 20 Oct 2026 11:17:10 GMT:
+
+- id: 7b811d57
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1791966035
+- current timestamp: 1792495058
+
+## Description
+
+L2 predeploys: genesis placeholders for deployer and deployment block dropped again (re-added by #13349). Metadata only.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966035 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (celo:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      deployerAddress:
+-        "celo:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
+-        1587571205
+      sinceBlock:
+-        0
+    }
+```
+
+```diff
+    contract L2StandardBridge (celo:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      deployerAddress:
+-        "celo:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
+-        1587571205
+      sinceBlock:
+-        0
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (celo:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      deployerAddress:
+-        "celo:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
+-        1587571205
+      sinceBlock:
+-        0
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (celo:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin] {
+    +++ description: Administration contract for other contract proxies.
+      deployerAddress:
+-        "celo:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
+-        1587571205
+      sinceBlock:
+-        0
+    }
+```
+
 Generated with discovered.json: 0x36cf8933a6fd446db8bd01047d5612288bd33f07
 
 # Diff at Fri, 16 Oct 2026 09:37:45 GMT:
