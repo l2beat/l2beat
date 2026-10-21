@@ -9,6 +9,7 @@ import {
 } from '../implementations/xref/FlatWorkspace'
 import { findReferences } from '../implementations/xref/findReferences'
 import { listCalls } from '../implementations/xref/listCalls'
+import { runLanguageServer } from '../implementations/xref/lsp/runLanguageServer'
 import {
   type Definition,
   type DefinitionResult,
@@ -134,6 +135,14 @@ const XrefCalls = command({
   },
 })
 
+const XrefLsp = command({
+  name: 'lsp',
+  description:
+    'Language server over stdio: go to definition and hover across .flat files.',
+  args: {},
+  handler: () => runLanguageServer(),
+})
+
 export const Xref = subcommands({
   name: 'xref',
   description:
@@ -142,6 +151,7 @@ export const Xref = subcommands({
     def: XrefDefinition,
     refs: XrefReferences,
     calls: XrefCalls,
+    lsp: XrefLsp,
   },
 })
 
