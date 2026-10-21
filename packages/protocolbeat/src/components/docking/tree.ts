@@ -42,7 +42,7 @@ export function newSplit(
   }
 }
 
-export function cloneTree(root: LayoutNode): LayoutNode {
+function cloneTree(root: LayoutNode): LayoutNode {
   return structuredClone(root)
 }
 
@@ -94,7 +94,7 @@ export function findFirstLeaf(root: LayoutNode): LeafNode {
   assert(false, 'tree has no leaves')
 }
 
-export function findParent(
+function findParent(
   root: LayoutNode,
   match: (node: LayoutNode) => boolean,
 ): { parent: SplitNode; index: number } | undefined {
@@ -114,10 +114,7 @@ function isSplitId(splitId: NodeId): (node: LayoutNode) => boolean {
   return (node) => node.kind === 'split' && node.id === splitId
 }
 
-export function findSplit(
-  root: LayoutNode,
-  splitId: NodeId,
-): SplitNode | undefined {
+function findSplit(root: LayoutNode, splitId: NodeId): SplitNode | undefined {
   for (const node of iterNodes(root)) {
     if (node.kind === 'split' && node.id === splitId) return node
   }
