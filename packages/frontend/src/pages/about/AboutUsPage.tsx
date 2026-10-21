@@ -1,5 +1,6 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { ChevronIcon } from '~/icons/Chevron'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -14,6 +15,7 @@ export function AboutUsPage(props: AppLayoutProps) {
             Learn about L2BEAT and its mission
           </p>
           <Details />
+          <MoreAboutUs />
         </PrimaryCard>
       </SideNavLayout>
     </AppLayout>
@@ -67,6 +69,43 @@ function Details() {
           projects.
         </p>
       </div>
+    </div>
+  )
+}
+
+const MORE_ABOUT_US = [
+  {
+    title: 'Governance',
+    description:
+      'The L2BEAT Governance Team: the latest insights, analyses, and updates.',
+    href: '/governance',
+  },
+  {
+    title: 'Donate',
+    description:
+      "Support L2BEAT's independent research & development with a donation.",
+    href: '/donate',
+  },
+]
+
+function MoreAboutUs() {
+  return (
+    <div className="mt-8 grid gap-4 border-divider border-t pt-6 md:grid-cols-2">
+      {MORE_ABOUT_US.map((item) => (
+        <a
+          key={item.href}
+          href={item.href}
+          className="group flex items-center gap-4 rounded-lg border border-divider p-4 transition-colors hover:bg-surface-secondary/50"
+        >
+          <span className="flex min-w-0 flex-1 flex-col gap-1">
+            <span className="font-bold text-lg group-hover:text-link">
+              {item.title}
+            </span>
+            <span className="text-secondary text-sm">{item.description}</span>
+          </span>
+          <ChevronIcon className="-rotate-90 size-3 shrink-0 fill-secondary transition-colors group-hover:fill-link" />
+        </a>
+      ))}
     </div>
   )
 }

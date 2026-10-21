@@ -1,37 +1,45 @@
 import type { ReactNode } from 'react'
-import { ViewDetailsLink } from '~/components/ViewDetailsLink'
 import { cn } from '~/utils/cn'
+import { HOME_TEXT, HOME_UNDERLINE_CLASS } from '../homeStyles'
 
+/**
+ * Every card's title row: the title and a subtitle on the left, and where the
+ * card leads, in words, opposite them. The title stays plain, so each card
+ * has one link and one name for it.
+ */
 export function HomeCardHeader({
   title,
-  badge,
-  href,
-  linkLabel = 'View details',
-  timeframe,
+  subtitle,
+  link,
   className,
 }: {
   title: string
-  badge?: ReactNode
-  href?: string
-  linkLabel?: string
-  timeframe?: string
+  subtitle?: ReactNode
+  /** Named for what it opens, e.g. "All 14 projects". */
+  link?: { href: string; label: string }
   className?: string
 }) {
   return (
-    <div className={cn('flex items-center justify-between gap-3', className)}>
-      <div className="flex items-center gap-2">
-        <h2 className="font-bold text-xl">{title}</h2>
-        {badge}
+    <div
+      className={cn(
+        'flex min-w-0 items-baseline justify-between gap-x-4',
+        className,
+      )}
+    >
+      <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
+        <h2 className={cn('shrink-0', HOME_TEXT.title)}>{title}</h2>
+        {subtitle && <span className={HOME_TEXT.subtitle}>{subtitle}</span>}
       </div>
-      {(timeframe !== undefined || href) && (
-        <div className="flex items-center gap-3">
-          {timeframe !== undefined && (
-            <span className="font-medium text-[13px] text-secondary leading-none">
-              {timeframe}
-            </span>
+      {link && (
+        <a
+          href={link.href}
+          className={cn(
+            'shrink-0 whitespace-nowrap font-medium text-label-value-13 text-secondary hover:text-primary hover:decoration-current',
+            HOME_UNDERLINE_CLASS,
           )}
-          {href && <ViewDetailsLink href={href} label={linkLabel} />}
-        </div>
+        >
+          {link.label}
+        </a>
       )}
     </div>
   )

@@ -66,6 +66,112 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* A home KPI pair (HomeKpiRow) too narrow for two tiles of 230px: each KPI
+   becomes a row, the figure beside a wider, shorter sparkline. */
+@custom-variant kpi-rows {
+  @container kpis (width < 496px) {
+    @slot;
+  }
+}
+
+/* The home interop section's body, a size container from lg (see
+   HomeInteropSection): stacked like on phones when it is clearly taller than
+   wide or too narrow for the corners, otherwise the figures in the corners. */
+@custom-variant interop-stacked {
+  @container interop-body (aspect-ratio <= 4 / 5) or (width <= 500px) {
+    @slot;
+  }
+}
+/* Exactly the opposite, so one of the two always holds. */
+@custom-variant interop-corners {
+  @container interop-body (aspect-ratio > 4 / 5) and (width > 500px) {
+    @slot;
+  }
+}
+
+/* A home list of 40px rows (HOME_ROW_CLASS) that shows as many whole rows as
+   its height holds, up to 15. The rest are dropped, not clipped, so they take
+   no focus and are not read out. Its height must come from its parent: a size
+   container cannot take it from its rows. */
+@utility home-fill-rows {
+  container: home-rows / size;
+  @container home-rows (height < 80px) {
+    & > :nth-child(n + 2) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 120px) {
+    & > :nth-child(n + 3) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 160px) {
+    & > :nth-child(n + 4) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 200px) {
+    & > :nth-child(n + 5) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 240px) {
+    & > :nth-child(n + 6) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 280px) {
+    & > :nth-child(n + 7) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 320px) {
+    & > :nth-child(n + 8) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 360px) {
+    & > :nth-child(n + 9) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 400px) {
+    & > :nth-child(n + 10) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 440px) {
+    & > :nth-child(n + 11) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 480px) {
+    & > :nth-child(n + 12) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 520px) {
+    & > :nth-child(n + 13) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 560px) {
+    & > :nth-child(n + 14) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 600px) {
+    & > :nth-child(n + 15) {
+      display: none;
+    }
+  }
+  @container home-rows (height < 640px) {
+    & > :nth-child(n + 16) {
+      display: none;
+    }
+  }
+}
+
 :root {
   /* Prevent horizontal overscroll on mobile to avoid unwanted scrolling when swiping on charts.
      Not applied on desktop to preserve MacOS swipe-back gesture. */
@@ -106,6 +212,8 @@
   --chart-ethereum: #2a5bd8;
   --chart-ethereum-secondary: #53a3ff;
   --chart-pink: #ef43b3;
+  /* The nav's selected item: the chart pink, deep enough to read as text. */
+  --nav-active: #bc1080;
   --chart-cyan: #36a3a3;
   --chart-yellow: #ab8000;
   --chart-emerald: #0ce97e;
@@ -180,6 +288,7 @@
   --chart-ethereum: #3387ff;
   --chart-ethereum-secondary: #5d82cf;
   --chart-pink: #ecb0fb;
+  --nav-active: var(--chart-pink);
   --chart-cyan: #40cbe3;
   --chart-yellow: #e7c34e;
   --chart-emerald: #0ce97e;
@@ -505,6 +614,8 @@
   --color-link: var(--link);
   --color-link-stroke: var(--link-stroke);
   --color-chart-ethereum: var(--chart-ethereum);
+  --color-chart-pink: var(--chart-pink);
+  --color-nav-active: var(--nav-active);
   --color-chart-fuchsia: var(--chart-fuchsia);
   --color-chart-lime: var(--chart-lime);
   --color-chart-sky: var(--chart-sky);
@@ -910,6 +1021,16 @@
   --garden-moon: #e9e4c8;
   --garden-sky: #0e1830;
   --garden-sprout: #3f6b3a;
+}
+
+/* The heartbeat that signs the mandate on the home page, drawn once. */
+@keyframes mandate-sign {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* Referenced from inline styles in CropPlant, CropsBed and the page backdrops. */

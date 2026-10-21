@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -8,18 +8,20 @@ import { getFullySyncedActivityRange } from '../layer2s/activity/utils/getFullyS
 import { getSummedTvsValues } from '../layer2s/tvs/utils/getSummedTvsValues'
 import { getTvsProjects } from '../layer2s/tvs/utils/getTvsProjects'
 import { createTvsProjectsFilter } from '../layer2s/tvs/utils/projectFilterUtils'
-import { computeSeriesChange } from './computeSeriesChange'
+import {
+  computeSeriesChange,
+  computeWeeklyAverageChange,
+} from './computeSeriesChange'
 
 export interface HomeL2Charts {
   tvs: {
+    /** [timestamp, rollups, validiumsAndOptimiums] */
     chart: [number, number | null, number | null][]
-    syncedUntil: number
     change: number | undefined
   }
   activity: {
-    /** [timestamp, rollupsUops, validiumsAndOptimiumsUops, ethereumUops] */
-    chart: [number, number | null, number | null, number | null][]
-    syncedUntil: number
+    /** [timestamp, rollupsUops, validiumsAndOptimiumsUops] */
+    chart: [number, number | null, number | null][]
     change: number | undefined
   }
 }
@@ -65,12 +67,7 @@ async function getHomeTvsChart(
   ])
 
   const chart = mergeSeriesByTimestamp(rollupValues, validiumAndOptimiumValues)
-
-  const syncedUntil =
-    chart.findLast(([_, r, v]) => r !== null || v !== null)?.[0] ??
-    UnixTime.now()
-
-  return { chart, syncedUntil, change: computeSummedSeriesChange(chart) }
+  return { chart, change: computeSeriesChange(sumSeries(chart)) }
 }
 
 async function getHomeActivityChart(
@@ -94,43 +91,22 @@ async function getHomeActivityChart(
     .map((p) => p.id)
 
   const adjustedRange = await getFullySyncedActivityRange(range)
-  const [rollupEntries, validiumAndOptimiumEntries, ethereumRecords] =
-    await Promise.all([
-      db.activity.getSummedByTimestamp(rollups, adjustedRange),
-      db.activity.getSummedByTimestamp(validiumsAndOptimiums, adjustedRange),
-      db.activity.getByProjectsAndTimeRange(
-        [ProjectId.ETHEREUM],
-        adjustedRange,
-      ),
-    ])
+  const [rollupEntries, validiumAndOptimiumEntries] = await Promise.all([
+    db.activity.getSummedByTimestamp(rollups, adjustedRange),
+    db.activity.getSummedByTimestamp(validiumsAndOptimiums, adjustedRange),
+  ])
 
   const toSeries = (entries: { timestamp: number; uopsCount: number }[]) =>
     entries.map((entry) => ({
       timestamp: entry.timestamp,
       value: entry.uopsCount,
     }))
-  const l2Chart = mergeSeriesByTimestamp(
+  const chart = mergeSeriesByTimestamp(
     toSeries(rollupEntries),
     toSeries(validiumAndOptimiumEntries),
   )
 
-  const ethereumByTimestamp = new Map<number, number>(
-    ethereumRecords.map((r) => [r.timestamp, r.uopsCount ?? r.count]),
-  )
-  const chart: HomeL2Charts['activity']['chart'] = l2Chart.map(
-    ([timestamp, rollupsUops, vAndOUops]) => [
-      timestamp,
-      rollupsUops,
-      vAndOUops,
-      ethereumByTimestamp.get(timestamp) ?? null,
-    ],
-  )
-
-  return {
-    chart,
-    syncedUntil: adjustedRange[1],
-    change: computeSummedSeriesChange(l2Chart),
-  }
+  return { chart, change: computeWeeklyAverageChange(sumSeries(chart)) }
 }
 
 export function mergeSeriesByTimestamp(
@@ -154,13 +130,12 @@ export function mergeSeriesByTimestamp(
     .map(([timestamp, [a, b]]) => [timestamp, a, b])
 }
 
-function computeSummedSeriesChange(
+/** Rollups and validiums & optimiums together; null where neither has data. */
+function sumSeries(
   chart: [number, number | null, number | null][],
-): number | undefined {
-  return computeSeriesChange(
-    chart.map(([_, rollups, vAndO]) =>
-      rollups !== null || vAndO !== null ? (rollups ?? 0) + (vAndO ?? 0) : null,
-    ),
+): (number | null)[] {
+  return chart.map(([_, rollups, vAndO]) =>
+    rollups !== null || vAndO !== null ? (rollups ?? 0) + (vAndO ?? 0) : null,
   )
 }
 
@@ -171,12 +146,10 @@ function getMockHomeL2Charts(range: ChartRange): HomeL2Charts {
   return {
     tvs: {
       chart: timestamps.map((timestamp) => [+timestamp, 3000, 2000]),
-      syncedUntil: adjustedRange[1],
       change: 0,
     },
     activity: {
-      chart: timestamps.map((timestamp) => [+timestamp, 14000, 10000, 8000]),
-      syncedUntil: adjustedRange[1],
+      chart: timestamps.map((timestamp) => [+timestamp, 14000, 10000]),
       change: 0,
     },
   }

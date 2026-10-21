@@ -1,17 +1,14 @@
 import { formatInteger } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ChevronIcon } from '~/icons/Chevron'
-import { BlobsIcon } from '~/icons/pages/Blobs'
-import { BridgesIcon } from '~/icons/pages/Bridges'
-import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { L2Icon } from '~/icons/pages/L2'
-import { OssificationIcon } from '~/icons/pages/Ossification'
+import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
-import { TokensIcon } from '~/icons/pages/Tokens'
-import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { cn } from '~/utils/cn'
 import type { HomeProjectCounts } from '../getHomeProjectCounts'
+import { CropsMiniBanner } from './CropsMiniBanner'
 import { HomeCard } from './HomeCard'
+import { SoonBadge } from './SoonBadge'
 
 interface TileMetric {
   count: number
@@ -20,14 +17,25 @@ interface TileMetric {
 
 interface Tile {
   label: string
-  /** Absent when no single number matches what the linked page lists */
+  /** None for a section that is not out yet. */
   metric?: TileMetric
-  secondaryMetric?: TileMetric
-  href: string
+  href?: string
   icon: React.ReactNode
-  iconBgClassName: string
 }
 
+interface MoreItem {
+  label: string
+  href: string
+}
+
+/** The charts' pink, so the menu's sections match the cards below. */
+const ICON_CLASS = 'size-5 stroke-chart-pink'
+
+/**
+ * The desktop sidebar's menu, for the screens where it hides behind the menu
+ * button, in its order: the garden and the domains as tiles, then the rest a
+ * size down, as small boxes.
+ */
 export function HomeStatsStrip({
   counts,
   className,
@@ -35,88 +43,60 @@ export function HomeStatsStrip({
   counts: HomeProjectCounts
   className?: string
 }) {
-  const tiles: Tile[] = [
-    {
-      label: 'Layer 2s',
-      metric: { count: counts.l2, unit: 'projects' },
-      href: '/layer2s/summary',
-      icon: <L2Icon className="size-5 stroke-pink-100" />,
-      iconBgClassName: 'bg-pink-100/10',
-    },
-    {
-      label: 'Interop',
-      metric: { count: counts.interop, unit: 'chains' },
-      secondaryMetric: { count: counts.interopProtocols, unit: 'protocols' },
-      href: '/interop/summary',
-      icon: <BridgesIcon className="size-5 stroke-orange-500" />,
-      iconBgClassName: 'bg-orange-500/10',
-    },
+  const domains: Tile[] = [
     {
       label: 'Privacy',
       metric: { count: counts.privacy, unit: 'projects' },
       href: '/privacy',
-      icon: <PrivacyIcon className="size-5 stroke-green-450" />,
-      iconBgClassName: 'bg-green-450/10',
-    },
-    ...(env.CLIENT_SIDE_TOKENS_PAGE
-      ? [
-          {
-            label: 'Tokens',
-            metric:
-              counts.tokens !== undefined
-                ? { count: counts.tokens, unit: 'tokens' }
-                : undefined,
-            href: '/tokens',
-            icon: <TokensIcon className="size-5 stroke-yellow-700" />,
-            iconBgClassName: 'bg-yellow-700/10',
-          },
-        ]
-      : []),
-    ...(env.CLIENT_SIDE_OSSIFICATION_ENABLED
-      ? [
-          {
-            label: 'Ossification',
-            metric: { count: counts.ossification, unit: 'projects' },
-            href: '/ossification',
-            icon: <OssificationIcon className="size-5 stroke-sky-600" />,
-            iconBgClassName: 'bg-sky-600/10',
-          },
-        ]
-      : []),
-    ...(env.CLIENT_SIDE_BLOBS_PAGE
-      ? [
-          {
-            label: 'Blobs',
-            href: '/blobs',
-            icon: <BlobsIcon className="size-5 fill-blue-500" />,
-            iconBgClassName: 'bg-blue-500/10',
-          },
-        ]
-      : []),
-    {
-      label: 'ZK Catalog',
-      metric: { count: counts.zkCatalog, unit: 'projects' },
-      href: '/zk-catalog',
-      icon: (
-        <ZkCatalogIcon className="size-5 stroke-purple-500 dark:stroke-purple-450" />
-      ),
-      iconBgClassName: 'bg-purple-500/10 dark:bg-purple-450/10',
+      icon: <PrivacyIcon className={ICON_CLASS} />,
     },
     {
-      label: 'Ecosystems',
-      metric: { count: counts.ecosystems, unit: 'ecosystems' },
-      href: '/ecosystems/agglayer',
-      icon: <EcosystemsIcon className="size-5 stroke-teal-500" />,
-      iconBgClassName: 'bg-teal-500/10',
+      label: 'Layer 2s',
+      metric: { count: counts.l2, unit: 'projects' },
+      href: '/layer2s/summary',
+      icon: <L2Icon className={ICON_CLASS} />,
+    },
+    {
+      label: 'Liquid staking',
+      icon: <LiquidStakingIcon className="size-5 stroke-secondary" />,
     },
   ]
 
+  const more: MoreItem[] = [
+    // ZK Catalog is the only Security page out so far.
+    { label: 'Security', href: '/zk-catalog' },
+    { label: 'Interop', href: '/interop/summary' },
+    ...(env.CLIENT_SIDE_TOKENS_PAGE
+      ? [{ label: 'Tokens', href: '/tokens' }]
+      : []),
+    ...(env.CLIENT_SIDE_BLOBS_PAGE ? [{ label: 'Blobs', href: '/blobs' }] : []),
+  ]
+
   return (
-    <HomeCard className={className}>
-      <ul className="grid auto-rows-fr grid-cols-2 gap-1.5 md:grid-cols-4 xl:auto-rows-auto xl:grid-cols-1 xl:gap-0 xl:divide-y xl:divide-divider">
-        {tiles.map((tile) => (
+    <HomeCard className={cn('flex flex-col gap-2', className)}>
+      <ul
+        className={cn(
+          'grid grid-cols-2 gap-2',
+          env.CLIENT_SIDE_GARDEN_ENABLED ? 'md:grid-cols-4' : 'md:grid-cols-3',
+        )}
+      >
+        {env.CLIENT_SIDE_GARDEN_ENABLED && (
+          <li>
+            <CropsMiniBanner className="h-full rounded-lg" />
+          </li>
+        )}
+        {domains.map((tile) => (
           <li key={tile.label}>
             <StatTile tile={tile} />
+          </li>
+        ))}
+      </ul>
+      {/* The full width between them, evenly where the names allow; two to a
+          row on phones, where four names do not fit across. */}
+      <ul className="grid grid-cols-2 gap-2 sm:flex [&>li:last-child:nth-child(odd)]:max-sm:col-span-2">
+        {more.map((item) => (
+          <li key={item.label} className="flex-1">
+            <MoreLink item={item} />
           </li>
         ))}
       </ul>
@@ -125,64 +105,69 @@ export function HomeStatsStrip({
 }
 
 function StatTile({ tile }: { tile: Tile }) {
+  const content = (
+    <>
+      <div className="flex shrink-0 transition-transform duration-200 group-hover:scale-110">
+        {tile.icon}
+      </div>
+      <div className="flex min-w-0 flex-1 flex-col justify-center">
+        <span
+          className={cn(
+            'truncate font-medium text-label-value-13 text-secondary leading-4 transition-colors',
+            tile.href && 'group-hover:text-link',
+          )}
+        >
+          {tile.label}
+        </span>
+        {tile.metric ? (
+          <span className="font-semibold text-label-value-16 leading-5">
+            <TileMetricValue metric={tile.metric} />
+          </span>
+        ) : (
+          <SoonBadge className="mt-0.5 w-fit" />
+        )}
+      </div>
+      {tile.href && (
+        <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
+      )}
+    </>
+  )
+  const className =
+    'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-2'
+  if (!tile.href) {
+    return <div className={className}>{content}</div>
+  }
   return (
     <a
       href={tile.href}
       className={cn(
-        'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-1.5',
+        className,
         'transition-colors duration-200 hover:border-link-stroke',
-        'xl:-mx-3 xl:gap-2 xl:rounded-md xl:border-0 xl:px-3 xl:py-2 xl:hover:border-transparent',
       )}
     >
-      <div
-        className={cn(
-          'flex size-6 shrink-0 items-center justify-center rounded-md transition-transform duration-200 group-hover:scale-110 xl:size-7 xl:rounded [&>svg]:xl:size-4',
-          tile.iconBgClassName,
-        )}
-      >
-        {tile.icon}
-      </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center xl:flex-row xl:items-baseline xl:gap-2 2xl:gap-3">
-        <span className="truncate font-medium text-label-value-12 text-secondary leading-tight transition-colors group-hover:text-link xl:flex-1 xl:text-label-value-14 xl:text-primary xl:group-hover:text-link">
-          {tile.label}
-        </span>
-        {tile.metric && (
-          <span className="flex flex-wrap items-baseline gap-x-1 font-bold text-label-value-14 leading-tight">
-            <TileMetricValue
-              metric={tile.metric}
-              className={
-                tile.secondaryMetric
-                  ? 'hidden sm:max-md:inline xl:inline'
-                  : undefined
-              }
-            />
-            {tile.secondaryMetric && (
-              <>
-                <span className="hidden font-medium text-label-value-12 text-secondary sm:max-md:inline xl:inline">
-                  ·
-                </span>
-                <TileMetricValue metric={tile.secondaryMetric} />
-              </>
-            )}
-          </span>
-        )}
-      </div>
-      <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
+      {content}
     </a>
   )
 }
 
-function TileMetricValue({
-  metric,
-  className,
-}: {
-  metric: TileMetric
-  className?: string
-}) {
+/** A secondary section: a small box with just its name. */
+function MoreLink({ item }: { item: MoreItem }) {
   return (
-    <span className={cn('whitespace-nowrap', className)}>
+    <a
+      href={item.href}
+      className="group flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-divider px-2.5 py-1.5 font-medium text-label-value-15 leading-4 transition-colors duration-200 hover:border-link-stroke"
+    >
+      {item.label}
+      <ChevronIcon className="-rotate-90 size-2 shrink-0 fill-secondary transition-[fill,translate] group-hover:translate-x-0.5 group-hover:fill-link" />
+    </a>
+  )
+}
+
+function TileMetricValue({ metric }: { metric: TileMetric }) {
+  return (
+    <span className="whitespace-nowrap">
       {formatInteger(metric.count)}{' '}
-      <span className="font-medium text-label-value-12 text-secondary">
+      <span className="font-medium text-label-value-13 text-secondary">
         {metric.unit}
       </span>
     </span>

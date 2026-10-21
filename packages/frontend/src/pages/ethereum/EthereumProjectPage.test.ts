@@ -93,7 +93,7 @@ function renderPage(): string {
       queryState: { mutations: [], queries: [] },
       terms: [],
       recentlyAddedProjects: [],
-      recentChangelogEntriesIds: [],
+      whatsNewItem: undefined,
       whatsNew: undefined,
       countdowns: PROJECT_COUNTDOWNS,
     }),

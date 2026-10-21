@@ -107,7 +107,7 @@ describe(getInteropFlowAggregates.name, () => {
       },
     })
     expect(result.topToken).toEqual({ id: 'eth', volume: 30 })
-    expect(result.topProtocol).toEqual({ id: 'main', volume: 150 })
+    expect(result.topProtocols).toEqual([{ id: 'main', volume: 150 }])
     expect(result.tokenIds.toSorted()).toEqual(['dai', 'eth', 'usdc', 'usdt'])
   })
 })

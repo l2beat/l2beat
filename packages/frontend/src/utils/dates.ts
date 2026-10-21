@@ -172,10 +172,14 @@ export function getNextDateForDayOfWeek(
   return currentDate
 }
 
+/**
+ * In UTC: publication dates are calendar days, stored as midnight UTC, and
+ * the same date must render on the server and in every visitor's timezone.
+ */
 export const formatPublicationDate = (date: Date) => {
-  const monthName = String(date.getMonth() + 1).padStart(2, '0')
+  const monthName = String(date.getUTCMonth() + 1).padStart(2, '0')
   const monthRecord = MONTHS[monthName]
   assert(monthRecord !== undefined, `Invalid month: ${monthName}`)
 
-  return `${date.getDate()} ${monthRecord.shortName} ${date.getFullYear()}`
+  return `${date.getUTCDate()} ${monthRecord.shortName} ${date.getUTCFullYear()}`
 }

@@ -1,7 +1,8 @@
 import { cn } from '~/utils/cn'
 import type { SvgIconProps } from '../SvgIcon'
 
-export function OssificationIcon({ className, ...props }: SvgIconProps) {
+/** A drop over a ledge: liquid staking. Drawn like the other page icons. */
+export function LiquidStakingIcon({ className, ...props }: SvgIconProps) {
   return (
     <svg
       width="20"
@@ -12,10 +13,11 @@ export function OssificationIcon({ className, ...props }: SvgIconProps) {
       {...props}
     >
       <path
-        d="M6.62 11.47L11.47 6.62A2.35 2.35 0 1 1 15.21 4.79A2.35 2.35 0 1 1 13.38 8.53L8.53 13.38A2.35 2.35 0 1 1 4.79 15.21A2.35 2.35 0 1 1 6.62 11.47Z"
+        d="M10 2.5c-2.6 3.1-4.4 5.6-4.4 7.9a4.4 4.4 0 0 0 8.8 0c0-2.3-1.8-4.8-4.4-7.9z"
         strokeWidth="1.7"
         strokeLinejoin="round"
       />
+      <path d="M3 17.5h14" strokeWidth="1.7" strokeLinecap="round" />
     </svg>
   )
 }
