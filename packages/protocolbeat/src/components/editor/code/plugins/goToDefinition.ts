@@ -1,8 +1,13 @@
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
-import type { ToMonaco } from '../../monacoInit'
-import type { EditorPlugin } from '../../pluginStore'
-
-type ForType = 'code'
+import { StateEffect } from '@codemirror/state'
+import {
+  Decoration,
+  type DecorationSet,
+  EditorView,
+  keymap,
+  ViewPlugin,
+  type ViewUpdate,
+} from '@codemirror/view'
+import type { EditorPlugin } from '../../plugin'
 
 export interface DefinitionHandlers {
   goToDefinition(offset: number): void
@@ -10,127 +15,131 @@ export interface DefinitionHandlers {
   goBack(): void
 }
 
-export class GoToDefinitionPlugin implements EditorPlugin<ForType> {
-  private handlers: DefinitionHandlers | undefined
-  private readonly disposables: monaco.IDisposable[] = []
-  private readonly underline: monaco.editor.IEditorDecorationsCollection
+interface WordRange {
+  from: number
+  to: number
+}
 
-  constructor(readonly editor: ToMonaco<ForType>) {
-    this.underline = editor.createDecorationsCollection()
-  }
+const setUnderline = StateEffect.define<WordRange | null>()
 
-  activate() {
-    this.disposables.push(
-      this.editor.addAction({
-        id: 'l2beat.goToDefinition',
-        label: 'Go to Definition',
-        keybindings: [monaco.KeyCode.F12],
-        contextMenuGroupId: 'navigation',
-        contextMenuOrder: 1,
-        run: () => this.goToDefinitionAt(this.editor.getPosition()),
-      }),
-      this.editor.addAction({
-        id: 'l2beat.findReferences',
-        label: 'Find All References',
-        keybindings: [monaco.KeyMod.Shift | monaco.KeyCode.F12],
-        contextMenuGroupId: 'navigation',
-        contextMenuOrder: 2,
-        run: () => {
-          const offset = this.cursorOffset()
-          if (offset !== undefined) {
-            this.handlers?.findReferences(offset)
+const underlineMark = Decoration.mark({ class: 'underline cursor-pointer' })
+
+const underliner = ViewPlugin.fromClass(
+  class {
+    decorations: DecorationSet = Decoration.none
+    range: WordRange | null = null
+
+    update(update: ViewUpdate) {
+      this.decorations = this.decorations.map(update.changes)
+      for (const transaction of update.transactions) {
+        for (const effect of transaction.effects) {
+          if (effect.is(setUnderline)) {
+            this.range = effect.value
+            this.decorations =
+              effect.value === null
+                ? Decoration.none
+                : Decoration.set(
+                    underlineMark.range(effect.value.from, effect.value.to),
+                  )
           }
-        },
-      }),
-      this.editor.addAction({
-        id: 'l2beat.goBack',
-        label: 'Go Back',
-        keybindings: [controlKey() | monaco.KeyCode.Minus],
-        contextMenuGroupId: 'navigation',
-        contextMenuOrder: 3,
-        run: () => this.handlers?.goBack(),
-      }),
-      this.editor.onMouseDown((e) => {
-        if (isLinkGesture(e)) {
-          e.event.preventDefault()
-          this.goToDefinitionAt(e.target.position)
         }
-      }),
-      this.editor.onMouseMove((e) => {
-        this.underlineWordAt(isLinkGesture(e) ? e.target.position : null)
-      }),
-      this.editor.onMouseLeave(() => this.underlineWordAt(null)),
-      this.editor.onKeyUp(() => this.underlineWordAt(null)),
-    )
-  }
+      }
+    }
+  },
+  { decorations: (plugin) => plugin.decorations },
+)
+
+export class GoToDefinitionPlugin implements EditorPlugin {
+  // Control on every platform, as Cmd+- on macOS zooms the page.
+  readonly extension = [
+    underliner,
+    keymap.of([
+      {
+        key: 'F12',
+        run: () => this.run((offset) => this.handlers?.goToDefinition(offset)),
+      },
+      {
+        key: 'Shift-F12',
+        run: () => this.run((offset) => this.handlers?.findReferences(offset)),
+      },
+      {
+        key: 'Ctrl--',
+        run: () => {
+          this.handlers?.goBack()
+          return true
+        },
+      },
+    ]),
+    EditorView.domEventHandlers({
+      mousedown: (event, view) => {
+        const word = linkedWord(view, event)
+        if (word === undefined) {
+          return false
+        }
+        event.preventDefault()
+        this.underline(null)
+        this.handlers?.goToDefinition(word.offset)
+        return true
+      },
+      mousemove: (event, view) => {
+        this.underline(linkedWord(view, event)?.range ?? null)
+        return false
+      },
+      mouseleave: () => {
+        this.underline(null)
+        return false
+      },
+      keyup: () => {
+        this.underline(null)
+        return false
+      },
+    }),
+  ]
+  private handlers: DefinitionHandlers | undefined
+
+  constructor(readonly view: EditorView) {}
 
   dispose() {
     this.handlers = undefined
-    this.underline.clear()
-    for (const disposable of this.disposables) {
-      disposable.dispose()
-    }
-    this.disposables.length = 0
   }
 
   setHandlers(handlers: DefinitionHandlers | undefined) {
     this.handlers = handlers
   }
 
-  cursorOffset(): number | undefined {
-    const position = this.editor.getPosition()
-    return position === null
-      ? undefined
-      : this.editor.getModel()?.getOffsetAt(position)
+  cursorOffset(): number {
+    return this.view.state.selection.main.head
   }
 
-  private goToDefinitionAt(position: monaco.Position | null) {
-    const model = this.editor.getModel()
-    if (position === null || model === null) {
-      return
-    }
-    this.underlineWordAt(null)
-    this.handlers?.goToDefinition(model.getOffsetAt(position))
+  private run(action: (offset: number) => void): boolean {
+    this.underline(null)
+    action(this.cursorOffset())
+    return true
   }
 
-  private underlineWordAt(position: monaco.Position | null) {
-    const word =
-      position === null
-        ? null
-        : this.editor.getModel()?.getWordAtPosition(position)
-    if (position === null || !word) {
-      this.underline.clear()
+  private underline(range: WordRange | null) {
+    const current = this.view.plugin(underliner)?.range ?? null
+    if (range?.from === current?.from && range?.to === current?.to) {
       return
     }
-    const range = new monaco.Range(
-      position.lineNumber,
-      word.startColumn,
-      position.lineNumber,
-      word.endColumn,
-    )
-    this.underline.set([
-      { range, options: { inlineClassName: 'underline cursor-pointer' } },
-    ])
+    this.view.dispatch({ effects: setUnderline.of(range) })
   }
 }
 
-function isLinkGesture(
-  e: monaco.editor.IEditorMouseEvent,
-): e is monaco.editor.IEditorMouseEvent & {
-  target: { position: monaco.Position }
-} {
-  const held = e.event.metaKey || e.event.ctrlKey
-  return (
-    held &&
-    e.target.type === monaco.editor.MouseTargetType.CONTENT_TEXT &&
-    e.target.position !== null
-  )
-}
-
-// Control on every platform, as WinCtrl is the Windows key outside macOS and
-// Cmd+- on macOS zooms the page.
-function controlKey(): number {
-  return navigator.platform.includes('Mac')
-    ? monaco.KeyMod.WinCtrl
-    : monaco.KeyMod.CtrlCmd
+function linkedWord(
+  view: EditorView,
+  event: MouseEvent,
+): { offset: number; range: WordRange } | undefined {
+  if (!event.metaKey && !event.ctrlKey) {
+    return undefined
+  }
+  const offset = view.posAtCoords({ x: event.clientX, y: event.clientY })
+  if (offset === null) {
+    return undefined
+  }
+  const word = view.state.wordAt(offset)
+  if (word === null) {
+    return undefined
+  }
+  return { offset, range: { from: word.from, to: word.to } }
 }
