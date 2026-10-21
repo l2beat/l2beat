@@ -42,21 +42,24 @@ export function ListPanel() {
     return <ErrorState />
   }
   return (
-    <div
-      tabIndex={0}
-      onKeyDown={selectWithArrows}
-      className="h-full w-full overflow-x-hidden outline-hidden focus-visible:ring-1 focus-visible:ring-autumn-300 focus-visible:ring-inset"
-    >
-      <ol>
-        {response.data.entries.map((chain, i) => (
-          <ListItemChain
-            key={`${chain.project}-${i}`}
-            entry={chain}
-            first={i === 0}
-            openedProject={project}
-          />
-        ))}
-      </ol>
+    <div className="relative h-full w-full">
+      <div
+        tabIndex={0}
+        onKeyDown={selectWithArrows}
+        className="peer h-full w-full overflow-x-hidden outline-hidden"
+      >
+        <ol>
+          {response.data.entries.map((chain, i) => (
+            <ListItemChain
+              key={`${chain.project}-${i}`}
+              entry={chain}
+              first={i === 0}
+              openedProject={project}
+            />
+          ))}
+        </ol>
+      </div>
+      <div className="pointer-events-none absolute inset-0 z-10 hidden ring-1 ring-autumn-300 ring-inset peer-focus-visible:block" />
     </div>
   )
 }
