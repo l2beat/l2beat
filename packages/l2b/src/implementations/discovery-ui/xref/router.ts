@@ -1,4 +1,8 @@
-import { type ConfigReader, getReachableEntries } from '@l2beat/discovery'
+import {
+  attachPermissions,
+  type ConfigReader,
+  getReachableEntries,
+} from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
@@ -36,6 +40,7 @@ const positionSchema = z.object({
 // so answers pointing anywhere else could not be opened.
 function selectableWorkspace(configReader: ConfigReader, project: string) {
   const discoveries = configReader.readDiscoveryWithReferences(project)
+  attachPermissions(discoveries)
   const entries = discoveries
     .flatMap((d) => d.entries)
     .filter((e) => e.type !== 'Reference')
