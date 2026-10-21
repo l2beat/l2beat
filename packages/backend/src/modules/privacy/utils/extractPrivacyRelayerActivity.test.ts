@@ -200,7 +200,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
       RECIPIENT,
       1_000n,
       RECIPIENT,
-      0n,
+      10n,
       0n,
     ])
     expect(

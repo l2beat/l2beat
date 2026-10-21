@@ -537,7 +537,9 @@ describe('getProjects', () => {
         const client = privacyInfo.referenceClient
         if (!client) continue
         if (!/^[0-9a-f]{40}$/.test(client.commit)) {
-          problems.push(`${project.id}: commit is not a full hash`)
+          problems.push(
+            `${project.id}: reference client commit is not a full hash`,
+          )
         }
         const pinned = ['blob', 'tree'].map(
           (kind) => `${client.repository}/${kind}/${client.commit}/`,
@@ -548,7 +550,9 @@ describe('getProjects', () => {
             if (!('url' in source)) continue
             if (!source.url.startsWith(`${client.repository}/`)) continue
             if (!pinned.some((prefix) => source.url.startsWith(prefix))) {
-              problems.push(`${project.id} ${adversaryId}: ${source.url}`)
+              problems.push(
+                `${project.id} ${adversaryId}: unpinned ${source.url}`,
+              )
             }
           }
         }

@@ -2,24 +2,21 @@ import { EthereumAddress, type Log } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { PrivacyRpcContext, PrivacyRpcLog } from '../types'
 
-/**
- * Privacy Pools v2 PoolVault events. The vault holds every asset, so each
- * event indexes the asset and the value that crossed the pool boundary.
- */
-export const privacyPoolsV2Interface = new utils.Interface([
+// The PoolVault holds every asset, so each event indexes the asset and the
+// value that crossed the pool boundary.
+const poolVaultInterface = new utils.Interface([
   'event Deposited(uint256 outputCommitment, address indexed asset, uint256 depositedValue, address indexed caller)',
   'event Transacted(uint256[] outputCommitments, uint256[] nullifierHashes, address indexed asset, uint256 withdrawnValue, address indexed caller)',
   'event Ragequit(address indexed ragequitter, address indexed asset, uint256 value, uint256 commitment, uint256 nullifierHash, uint256 label)',
-])
-
-const poolVaultInterface = new utils.Interface([
   'function transact((uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, (address processor, bytes data) _transactParams, (bytes32 hint, bytes data)[] _noteData)',
 ])
+
+const TRANSACTED_TOPIC = poolVaultInterface.getEventTopic('Transacted')
 
 const PAYOUT_ROUTING =
   'tuple(address recipient, address feeRecipient, uint256 feeAmount, uint256 nativeGas)'
 
-export interface PrivacyPoolsV2Event {
+interface PrivacyPoolsV2Event {
   asset: EthereumAddress
   amount: bigint
 }
@@ -27,7 +24,7 @@ export interface PrivacyPoolsV2Event {
 export function extractPrivacyPoolsV2Event(
   log: PrivacyRpcLog,
 ): PrivacyPoolsV2Event {
-  const parsedLog = privacyPoolsV2Interface.parseLog(log)
+  const parsedLog = poolVaultInterface.parseLog(log)
   const asset = EthereumAddress(parsedLog.args.asset)
   switch (parsedLog.name) {
     case 'Deposited':
@@ -45,16 +42,15 @@ export function extractPrivacyPoolsV2Event(
 
 /**
  * A relayed private transfer pays the relayer's fee out of the vault, so its
- * Transacted looks like a withdrawal. The relayer calls the vault itself and
- * binds PayoutRouting{recipient: feeRecipient, feeAmount: 0} as the data. A
- * withdrawal reaches the vault through a processor contract, self-relays
- * included, or binds other data.
+ * Transacted looks like a withdrawal. Its relayer calls the vault directly and
+ * binds PayoutRouting{recipient: feeRecipient, feeAmount: 0}; a withdrawal
+ * goes through a processor (self-relays included) or binds other data.
  */
 export async function isPrivacyPoolsV2RelayedTransfer(
   log: Log,
   context: PrivacyRpcContext,
 ): Promise<boolean> {
-  if (privacyPoolsV2Interface.parseLog(log).name !== 'Transacted') {
+  if (log.topics[0] !== TRANSACTED_TOPIC) {
     return false
   }
 
