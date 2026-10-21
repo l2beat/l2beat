@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { CropAttestation } from '../kysely/generated/types'
 
@@ -55,6 +55,9 @@ export class CropAttestationRepository extends BaseRepository {
   /** Replaces whatever is stored, whichever source it came from. */
   async replace(record: CropAttestationRecord): Promise<void> {
     await this.transaction(async () => {
+      // Two writers at once would each delete nothing and insert their own row.
+      // Readers take a weaker lock, so they still see the old row meanwhile.
+      await sql`LOCK TABLE "CropAttestation" IN EXCLUSIVE MODE`.execute(this.db)
       await this.db.deleteFrom('CropAttestation').execute()
       await this.db
         .insertInto('CropAttestation')

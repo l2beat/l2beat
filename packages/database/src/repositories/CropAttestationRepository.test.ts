@@ -22,6 +22,16 @@ describeDatabase(CropAttestationRepository.name, (db) => {
     )
   })
 
+  it('keeps one attestation when replaced concurrently', async () => {
+    for (let i = 0; i < 20; i++) {
+      await Promise.all([
+        repository.replace(attestation(1, ['umbra'])),
+        repository.replace(attestation(2, ['safe'])),
+      ])
+      expect(await repository.deleteAll()).toEqual(1)
+    }
+  })
+
   it('finds nothing when empty', async () => {
     expect(await repository.find()).toEqual(undefined)
   })
