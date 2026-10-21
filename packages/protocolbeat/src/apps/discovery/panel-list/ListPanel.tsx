@@ -45,7 +45,7 @@ export function ListPanel() {
     <div
       tabIndex={0}
       onKeyDown={selectWithArrows}
-      className="h-full w-full overflow-x-hidden outline-none"
+      className="h-full w-full overflow-x-hidden outline-hidden focus-visible:ring-1 focus-visible:ring-autumn-300 focus-visible:ring-inset"
     >
       <ol>
         {response.data.entries.map((chain, i) => (
