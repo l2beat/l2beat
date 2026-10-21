@@ -2,6 +2,7 @@ import {
   PRIVACY_ADVERSARIES,
   PRIVACY_ADVERSARY_ORDER,
 } from '@l2beat/config/build/common/privacyAdversaries'
+import lowerFirst from 'lodash/lowerFirst'
 import { externalLinks } from '~/consts/externalLinks'
 import { ANONYMITY_SET_TOOLTIPS } from '~/server/features/privacy/anonymity-set/anonymitySetTooltips'
 import {
@@ -72,8 +73,4 @@ export function getPrivacyMethodologySections() {
       `Feedback on the framework is welcome in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the L2BEAT forum.`,
     ]),
   }
-}
-
-function lowerFirst(text: string) {
-  return `${text.charAt(0).toLowerCase()}${text.slice(1)}`
 }

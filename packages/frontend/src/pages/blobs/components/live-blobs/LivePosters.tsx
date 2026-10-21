@@ -24,6 +24,7 @@ import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/L
 import { BUCKET_SLOTS } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
+import { readableColor } from '~/utils/color'
 import { Activity } from './Activity'
 import {
   BLOB_KIB,
@@ -32,7 +33,6 @@ import {
   formatWhole,
 } from './blocks/format'
 import { useChainClock } from './chainClock'
-import { readableColor } from './color'
 import { anyLanding, type Landing, useLandedTotal } from './landings'
 import {
   FLASH_CLASS_NAME,

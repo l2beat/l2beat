@@ -1,6 +1,6 @@
 import type { PrivacyAdversaryId } from '@l2beat/config'
 import type { ThemeTokens } from '~/hooks/useThemeTokens'
-import { alpha } from './canvasColor'
+import { toRgba } from '~/utils/color'
 import {
   drawEnvelope,
   EMPTY_S,
@@ -365,14 +365,14 @@ export function drawPoolScene(
   // Zones
   for (const band of [l.leftBand, l.rightBand]) {
     ctx.fillStyle = network
-      ? alpha(tokens.brand, 0.1)
-      : alpha(tokens.divider, tokens.isDark ? 0.5 : 0.3)
+      ? toRgba(tokens.brand, 0.1)
+      : toRgba(tokens.divider, tokens.isDark ? 0.5 : 0.3)
     ctx.beginPath()
     ctx.roundRect(band.x, l.top, band.width, l.bottom - l.top, 8)
     ctx.fill()
     if (network) {
       ctx.setLineDash([4, 4])
-      ctx.strokeStyle = alpha(tokens.brand, 0.6)
+      ctx.strokeStyle = toRgba(tokens.brand, 0.6)
       ctx.stroke()
       ctx.setLineDash([])
     }
@@ -388,7 +388,7 @@ export function drawPoolScene(
         const fromBottom = entries.length - 1 - i
         const enter = Math.min(entry.age / 0.3, 1)
         const y = l.bottom - 14 - (fromBottom + enter - 1) * 16
-        ctx.fillStyle = alpha(tokens.brand, (1 - entry.age / LOG_S) * enter)
+        ctx.fillStyle = toRgba(tokens.brand, (1 - entry.age / LOG_S) * enter)
         ctx.fillText(
           `${entry.ip} → ${side === 'in' || design.publicRpc ? 'RPC' : 'relayer'}`,
           band.x + 10,
@@ -400,7 +400,7 @@ export function drawPoolScene(
 
   ctx.beginPath()
   ctx.roundRect(l.pool.x, l.top, l.pool.width, l.bottom - l.top, 14)
-  ctx.fillStyle = seesInside ? alpha(tokens.brand, 0.1) : tokens.surface
+  ctx.fillStyle = seesInside ? toRgba(tokens.brand, 0.1) : tokens.surface
   ctx.fill()
   ctx.lineWidth = seesInside ? 2 : 1
   ctx.strokeStyle = seesInside ? tokens.brand : tokens.divider
@@ -448,7 +448,7 @@ export function drawPoolScene(
     ctx.arc(l.recipientX, l.rowY(i), 10, 0, Math.PI * 2)
     ctx.fillStyle =
       link && linkColor
-        ? alpha(linkColor, 0.25 + 0.75 * (1 - link.age / link.life))
+        ? toRgba(linkColor, 0.25 + 0.75 * (1 - link.age / link.life))
         : tokens.surface
     ctx.fill()
     ctx.strokeStyle = linkColor ?? tokens.divider
@@ -463,7 +463,7 @@ export function drawPoolScene(
     const to = { x: l.recipientX, y: l.rowY(trace.recipient) }
     if (lens === 'chainAnalyst' && trace.kind === 'fan') {
       ctx.setLineDash([3, 4])
-      ctx.strokeStyle = alpha(tokens.secondary, 0.45 * fade)
+      ctx.strokeStyle = toRgba(tokens.secondary, 0.45 * fade)
       for (const owner of new Set(trace.candidates)) {
         line(ctx, { x: l.senderX + 12, y: l.rowY(owner) }, to)
       }
@@ -477,7 +477,7 @@ export function drawPoolScene(
     }
     // The future adversary inherits every catch the chain analyst makes.
     if ((lens === 'chainAnalyst' || future) && trace.kind === 'caught') {
-      ctx.strokeStyle = alpha(CAUGHT_COLOR, fade)
+      ctx.strokeStyle = toRgba(CAUGHT_COLOR, fade)
       ctx.lineWidth = 2
       line(ctx, { x: l.senderX + 12, y: l.rowY(trace.owner) }, to)
       ctx.lineWidth = 1
@@ -494,7 +494,7 @@ export function drawPoolScene(
       if (breaksNotes) {
         drawQuantumBeam(ctx, from, to, color, scene.time, fade)
       } else {
-        ctx.strokeStyle = alpha(color, 0.8 * fade)
+        ctx.strokeStyle = toRgba(color, 0.8 * fade)
         ctx.lineWidth = 2
         line(ctx, from, to)
         ctx.lineWidth = 1
@@ -545,7 +545,7 @@ export function drawPoolScene(
         stamp:
           lens === 'chainAnalyst' && note.read
             ? tokens.brand
-            : alpha(tokens.secondary, 0.35),
+            : toRgba(tokens.secondary, 0.35),
         opacity: note.phase === 'out' ? 1 - note.t / EMPTY_S : 1,
       },
       tokens,
@@ -559,7 +559,7 @@ export function drawPoolScene(
         p.y + envelopeWidth(l.tray) * 0.34 + 10,
         {
           color: tokens.brand,
-          background: alpha(tokens.brand, 0.12),
+          background: toRgba(tokens.brand, 0.12),
           opacity: 1,
           align: 'center',
         },
@@ -611,7 +611,7 @@ export function drawPoolScene(
     ctx.globalAlpha = opacity
     ctx.beginPath()
     ctx.arc(p.x, p.y, 6, 0, Math.PI * 2)
-    ctx.fillStyle = alpha(tokens.secondary, 0.6)
+    ctx.fillStyle = toRgba(tokens.secondary, 0.6)
     ctx.fill()
     if (revealed) {
       ctx.shadowColor = ownerColor
@@ -660,9 +660,9 @@ export function drawPoolScene(
   if (lensAge < 0.6) {
     const x = (lensAge / 0.6) * (width + 120) - 60
     const gradient = ctx.createLinearGradient(x - 60, 0, x + 60, 0)
-    gradient.addColorStop(0, alpha(tokens.brand, 0))
-    gradient.addColorStop(0.5, alpha(tokens.brand, 0.22))
-    gradient.addColorStop(1, alpha(tokens.brand, 0))
+    gradient.addColorStop(0, toRgba(tokens.brand, 0))
+    gradient.addColorStop(0.5, toRgba(tokens.brand, 0.22))
+    gradient.addColorStop(1, toRgba(tokens.brand, 0))
     ctx.fillStyle = gradient
     ctx.fillRect(x - 60, 0, 120, height)
   }
@@ -746,7 +746,7 @@ function drawMagnifier(
   const y = start.y + (end.y - start.y) * k
   ctx.save()
   ctx.strokeStyle = tokens.brand
-  ctx.fillStyle = alpha(tokens.brand, 0.08)
+  ctx.fillStyle = toRgba(tokens.brand, 0.08)
   ctx.lineWidth = 2
   ctx.beginPath()
   ctx.arc(x, y, 11, 0, Math.PI * 2)
@@ -772,13 +772,13 @@ function drawQuantumScan(
   const y = quantumScanY(l, time)
   ctx.save()
   const gradient = ctx.createLinearGradient(0, y - 18, 0, y + 2)
-  gradient.addColorStop(0, alpha(QUANTUM_CYAN, 0))
-  gradient.addColorStop(1, alpha(QUANTUM_CYAN, 0.22))
+  gradient.addColorStop(0, toRgba(QUANTUM_CYAN, 0))
+  gradient.addColorStop(1, toRgba(QUANTUM_CYAN, 0.22))
   ctx.fillStyle = gradient
   ctx.fillRect(l.pool.x + 1, y - 18, l.pool.width - 2, 20)
   ctx.shadowColor = QUANTUM_CYAN
   ctx.shadowBlur = 8
-  ctx.strokeStyle = alpha(QUANTUM_CYAN, 0.7)
+  ctx.strokeStyle = toRgba(QUANTUM_CYAN, 0.7)
   line(ctx, { x: l.pool.x + 6, y }, { x: l.pool.x + l.pool.width - 6, y })
   ctx.restore()
 }

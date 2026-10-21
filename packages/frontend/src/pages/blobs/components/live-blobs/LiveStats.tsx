@@ -6,6 +6,7 @@ import { ChevronIcon } from '~/icons/Chevron'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
+import { mixColors, readableColor } from '~/utils/color'
 import {
   BLOB_KIB,
   describeWindow,
@@ -13,7 +14,6 @@ import {
   formatKib,
   formatWhole,
 } from './blocks/format'
-import { mixColors, readableColor } from './color'
 import { LIVE_POSTERS_ID } from './LivePosters'
 import { anyLanding, useLandedTotal } from './landings'
 import { type Arrival, Pop, RollingNumber } from './liveMotion'

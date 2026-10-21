@@ -1,5 +1,5 @@
 import type { ThemeTokens } from '~/hooks/useThemeTokens'
-import { alpha } from './canvasColor'
+import { toRgba } from '~/utils/color'
 
 /**
  * The pool keeps each deposit in a sealed envelope, the way a note's
@@ -22,7 +22,7 @@ export interface Envelope {
   move?: { from: number; t: number }
 }
 
-export interface Tray {
+interface Tray {
   x: number
   y: number
   width: number
@@ -109,7 +109,7 @@ export function drawEnvelope(
   ctx.fillStyle = tokens.surface
   ctx.fill()
   if (look.tint) {
-    ctx.fillStyle = alpha(look.tint, 0.2)
+    ctx.fillStyle = toRgba(look.tint, 0.2)
     ctx.fill()
   }
   ctx.stroke()

@@ -3,10 +3,11 @@ import { type ReactNode, useEffect, useRef } from 'react'
 import { useIsOnScreen } from '~/hooks/useIsOnScreen'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import { cn } from '~/utils/cn'
-import { byId, type FigureData, MethodologyFigure } from './MethodologyFigure'
+import type { PrivacyMethodologyFigureData } from '../getPrivacyMethodologyFigureData'
+import { MethodologyFigure } from './MethodologyFigure'
 import { OWNER_COLORS } from './poolLensScene'
 
-type CategoryId = FigureData['categories'][number]['id']
+type CategoryId = PrivacyMethodologyFigureData['categories'][number]['id']
 
 const [BLUE, TEAL, VIOLET, PINK, ORANGE] = OWNER_COLORS as [
   string,
@@ -34,7 +35,11 @@ const MACHINES: {
   },
 ]
 
-export function CategoryMachinesFigure({ data }: { data: FigureData }) {
+export function CategoryMachinesFigure({
+  data,
+}: {
+  data: PrivacyMethodologyFigureData
+}) {
   const ref = useRef<HTMLDivElement>(null)
   const onScreen = useIsOnScreen(ref)
   const reducedMotion = usePrefersReducedMotion()
@@ -69,6 +74,12 @@ export function CategoryMachinesFigure({ data }: { data: FigureData }) {
       </div>
     </MethodologyFigure>
   )
+}
+
+function byId<T extends { id: string }>(items: T[], id: T['id']): T {
+  const item = items.find((i) => i.id === id)
+  if (!item) throw new Error('Unknown figure item', { cause: { id } })
+  return item
 }
 
 /** SMIL keeps the loops off the main thread; paused off screen. */
@@ -576,7 +587,7 @@ function AccessMachine() {
         height={42}
         rx={8}
         fill="none"
-        stroke="#22c55e"
+        stroke="var(--positive)"
         strokeWidth={2}
         opacity={0}
       >

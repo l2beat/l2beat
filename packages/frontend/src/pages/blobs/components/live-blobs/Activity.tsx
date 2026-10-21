@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
-import { toRgba } from './color'
+import { toRgba } from '~/utils/color'
 
 // thin enough for a whole day of bars to fit a table column
 const BAR_WIDTH = 2

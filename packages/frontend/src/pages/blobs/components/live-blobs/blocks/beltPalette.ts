@@ -1,5 +1,5 @@
 import type { ThemeTokens } from '~/hooks/useThemeTokens'
-import { mixColors, readableColor, toRgba } from '../color'
+import { mixColors, readableColor, toRgba } from '~/utils/color'
 import type { LivePoster } from '../model'
 
 /** Canvas cannot read CSS variables, so the belt's colors are worked out here */
