@@ -144,6 +144,8 @@ const OVERLOADS = `address constant MIXED = 0x7777777777777777777777777777777777
 
 interface IPing {
     function ping() external;
+    function value(uint256 a) external;
+    function value(address a) external;
 }
 
 interface IMixed {
@@ -230,6 +232,7 @@ contract Overloads is Base {
         pinned.ping();
         pinger.ping.value(1)();
         pinger.ping.gas(5).value(1)();
+        pinger.value(address(this));
     }
 
     modifier repoint() override {
@@ -587,6 +590,10 @@ describe(`${resolveDefinition.name} edge cases`, () => {
       'pinned.ping',
       'pinger.ping',
       'pinger.ping',
+      'pinger.value',
+    ])
+    expect(lines(resolveOverloads('pinger.value(address', 'value'))).toEqual([
+      `IPing.value:${overloadsAt('function value(address')}`,
     ])
   })
 

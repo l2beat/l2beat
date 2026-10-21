@@ -734,18 +734,19 @@ function nameOffset(
 
 export function callOf(ancestors: BaseASTNode[]): FunctionCall | undefined {
   const callee = ancestors[ancestors.length - 1]
-  let index = ancestors.length - 2
-  while (index >= 0 && isCallOptionPart(ancestors[index])) {
-    index--
+  for (let index = ancestors.length - 2; index >= 0; index--) {
+    const node = ancestors[index]
+    if (
+      node.type === 'FunctionCall' &&
+      unwrapCallOptions((node as FunctionCall).expression) === callee
+    ) {
+      return node as FunctionCall
+    }
+    if (!isCallOptionPart(node)) {
+      return undefined
+    }
   }
-  const call = ancestors[index]
-  if (call?.type !== 'FunctionCall') {
-    return undefined
-  }
-  const functionCall = call as FunctionCall
-  return unwrapCallOptions(functionCall.expression) === callee
-    ? functionCall
-    : undefined
+  return undefined
 }
 
 function isCallOptionPart(node: BaseASTNode): boolean {
