@@ -89,6 +89,9 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
     [design.traffic],
   )
   const verdicts = getPoolVerdicts(design, caughtShare)
+  // A verdict colours its tab and slice only once its tab has been shown.
+  const [visited, setVisited] = useState<ReadonlySet<number>>(new Set([0]))
+  if (!visited.has(step)) setVisited(new Set(visited).add(step))
 
   const tabsRef = useRef<HTMLDivElement>(null)
   // On phones the tabs scroll sideways; keep the current one in view without
@@ -140,11 +143,15 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
                   : 'border-divider bg-surface-primary text-secondary hover:border-brand/50 hover:text-primary',
               )}
             >
-              <PrivacySentimentDot
-                key={verdicts[id].sentiment}
-                sentiment={verdicts[id].sentiment}
-                className="motion-safe:zoom-in-50 motion-safe:fade-in motion-safe:animate-in"
-              />
+              {visited.has(i) ? (
+                <PrivacySentimentDot
+                  key={verdicts[id].sentiment}
+                  sentiment={verdicts[id].sentiment}
+                  className="motion-safe:zoom-in-50 motion-safe:fade-in motion-safe:animate-in"
+                />
+              ) : (
+                <span className="size-5 shrink-0 rounded-full border-2 border-current opacity-40" />
+              )}
               {label}
             </Tabs.Trigger>
           )
@@ -165,6 +172,7 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
           <VerdictRosette
             data={data}
             verdicts={verdicts}
+            visited={visited}
             selected={adversary.label}
           />
           <div
@@ -430,23 +438,33 @@ function PoolCanvas({
 function VerdictRosette({
   data,
   verdicts,
+  visited,
   selected,
 }: {
   data: PrivacyMethodologyFigureData
   verdicts: PoolVerdicts
+  visited: ReadonlySet<number>
   selected: string
 }) {
   const rosette = useRosetteTooltipContext()
   const setSelected = rosette?.setSelectedRisk
-  const key = data.adversaries.map(({ id }) => verdicts[id].sentiment).join()
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `key` stands for the verdicts
+  const shown = data.adversaries.map(({ id }, i) =>
+    visited.has(i) ? verdicts[id].sentiment : undefined,
+  )
+  const key = shown.join()
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `key` stands for the shown verdicts
   const values: RosetteValue[] = useMemo(
     () =>
-      data.adversaries.map(({ id, label }) => ({
-        name: label,
-        value: PRIVACY_ADVERSARY_VERDICT[verdicts[id].sentiment],
-        sentiment: verdicts[id].sentiment,
-      })),
+      data.adversaries.map(({ label }, i) => {
+        const sentiment = shown[i]
+        return sentiment
+          ? {
+              name: label,
+              value: PRIVACY_ADVERSARY_VERDICT[sentiment],
+              sentiment,
+            }
+          : { name: label, value: 'Not seen yet', sentiment: 'neutral' }
+      }),
     [data, key],
   )
   const value = values.find((v) => v.name === selected)
