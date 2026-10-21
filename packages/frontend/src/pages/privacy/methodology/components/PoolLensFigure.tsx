@@ -137,18 +137,14 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
               // stops the autoplay.
               onClick={() => pick(i)}
               className={cn(
-                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13 transition-[color,background-color,border-color,scale] duration-150 ease-out active:scale-[0.97]',
+                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13',
                 current
                   ? 'border-brand bg-brand text-primary-invert'
                   : 'border-divider bg-surface-primary text-secondary hover:border-brand/50 hover:text-primary',
               )}
             >
               {visited.has(i) ? (
-                <PrivacySentimentDot
-                  key={verdicts[id].sentiment}
-                  sentiment={verdicts[id].sentiment}
-                  className="motion-safe:zoom-in-50 motion-safe:fade-in motion-safe:animate-in"
-                />
+                <PrivacySentimentDot sentiment={verdicts[id].sentiment} />
               ) : (
                 <span className="size-5 shrink-0 rounded-full border-2 border-current opacity-40" />
               )}
