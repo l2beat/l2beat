@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PPYieldToken",
+  "category": "core",
+  "description": "ERC-4626 share token over an Aave v3 aToken, the asset the pool holds for a yield deposit. The admin's fee applies to the yield only.",
+  "ignoreInWatchMode": [
+    "accumulatedFees",
+    "claimableFees",
+    "exchangeRate",
+    "lastCheckpointBalance",
+    "totalAssets",
+    "totalSupply"
+  ],
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "previewDeposit",
+    "previewMint",
+    "previewRedeem",
+    "previewWithdraw"
+  ],
+  "ignoreRelatives": ["asset", "rewardsController"],
+  "fields": {
+    "feeBps": {
+      "description": "Share of the accrued yield the admin keeps, in basis points.",
+      "severity": "MEDIUM",
+      "type": "RISK_PARAMETER"
+    },
+    "paused": {
+      "description": "Pauses minting. Redeeming to the aToken stays open.",
+      "severity": "MEDIUM"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken."
+        }
+      ]
+    }
+  }
+}

@@ -1,15 +1,24 @@
 import type { PrivacyFlowExtractorConfig } from '@l2beat/config'
-import { assertUnreachable, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  EthereumAddress,
+  type Log,
+} from '@l2beat/shared-pure'
 import { type BigNumber, utils } from 'ethers'
 import type {
   EvmPrivacyFlowExtractorConfig,
   PrivacyFlowExtractResult,
+  PrivacyRpcContext,
   PrivacyRpcLog,
 } from '../types'
 import { zkApiInterface } from '../zkapi/abi'
 import { zkMoneyInterface } from '../zkmoney/abi'
 import { erc20Interface } from './erc20'
 import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
+import {
+  extractPrivacyPoolsV2Event,
+  isPrivacyPoolsV2RelayedTransfer,
+} from './extractPrivacyPoolsV2Event'
 
 const ERC20_TOKEN_TYPE = 0
 
@@ -44,6 +53,8 @@ export function extractPrivacyFlow<T extends EvmPrivacyFlowExtractorConfig>(
         count: 1,
         amount: extractPrivacyPoolsEvent(log).amount,
       }
+    case 'privacyPoolsV2Value':
+      return extractPrivacyPoolsV2Value(source, log)
     case 'railgunShield':
       return extractRailgunShield(source, log)
     case 'railgunUnshield':
@@ -81,6 +92,44 @@ export function extractPrivacyFlow<T extends EvmPrivacyFlowExtractorConfig>(
     default:
       return assertUnreachable(source)
   }
+}
+
+/**
+ * Flows whose classification needs the transaction behind the log. Every
+ * other extractor reads the log alone.
+ */
+export async function extractPrivacyFlowWithContext<
+  T extends EvmPrivacyFlowExtractorConfig,
+>(
+  source: T,
+  log: Log,
+  context: PrivacyRpcContext,
+): Promise<PrivacyFlowExtractResult | undefined> {
+  const result = extractPrivacyFlow(source, log)
+  if (
+    result !== undefined &&
+    source.extractor === 'privacyPoolsV2Value' &&
+    (await isPrivacyPoolsV2RelayedTransfer(log, context))
+  ) {
+    return undefined
+  }
+  return result
+}
+
+// The vault serves every asset, so a bucket keeps only its own asset's logs.
+// A pure private transfer has no withdrawn value and crosses no boundary.
+function extractPrivacyPoolsV2Value(
+  source: Extract<
+    PrivacyFlowExtractorConfig,
+    { extractor: 'privacyPoolsV2Value' }
+  >,
+  log: PrivacyRpcLog,
+): PrivacyFlowExtractResult | undefined {
+  const result = extractPrivacyPoolsV2Event(log)
+  if (result.asset !== source.params.tokenAddress || result.amount === 0n) {
+    return undefined
+  }
+  return { count: 1, amount: result.amount }
 }
 
 // Zero-value and self transfers move nothing across the pool boundary, so

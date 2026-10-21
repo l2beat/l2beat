@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PrivacyPoolRelay",
+  "category": "core",
+  "description": "Withdrawal processor that submits the transact proof and pays the recipient and the relayer's fee, capped per asset.",
+  "ignoreRelatives": ["ANNOUNCER"],
+  "fields": {
+    "MAX_BATCH": {
+      "description": "Maximum number of transact proofs one batch withdrawal may carry."
+    }
+  }
+}

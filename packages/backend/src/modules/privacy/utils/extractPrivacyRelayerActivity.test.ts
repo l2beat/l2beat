@@ -14,6 +14,19 @@ const privacyPoolsInterface = new utils.Interface([
   'event WithdrawalRelayed(address indexed _relayer, address indexed _recipient, address indexed _asset, uint256 _amount, uint256 _feeAmount)',
 ])
 
+const privacyPoolsV2RelayInterface = new utils.Interface([
+  'event Relayed(address indexed _asset, address indexed _recipient, uint256 _recipientAmount, address indexed _feeRecipient, uint256 _fee, uint256 _gasFunding)',
+  'event RelayedBatch(address indexed _asset, address indexed _recipient, uint256 _recipientAmount, address indexed _feeRecipient, uint256 _fee, uint256 _gasFunding, uint256 _count)',
+])
+
+const privacyPoolsV2RouterInterface = new utils.Interface([
+  'event WithdrawnToUnderlying(address indexed _asset, address indexed _underlying, address indexed _recipient, uint256 _sharesOut, uint256 _underlyingToRecipient, address _feeRecipient, uint256 _feeShares, uint256 _underlyingFee, uint256 _gasFunding)',
+])
+
+const privacyPoolsV2SwapsInterface = new utils.Interface([
+  'event Executed(address indexed inputToken, address indexed outputToken, uint256 inputAmount, address feeRecipient, uint256 feeAmount)',
+])
+
 const tornadoCashInterface = new utils.Interface([
   'event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)',
 ])
@@ -62,6 +75,141 @@ describe(extractPrivacyRelayerActivity.name, () => {
     expect(result).toEqual({
       relayerAddress: RELAYER,
     })
+  })
+
+  it('extracts the Privacy Pools v2 fee recipient of a relayed withdrawal', async () => {
+    const asset = EthereumAddress('0x4444444444444444444444444444444444444444')
+    const log = encodeLog(privacyPoolsV2RelayInterface, 'Relayed', [
+      asset,
+      RECIPIENT,
+      1_000n,
+      RELAYER,
+      10n,
+      0n,
+    ])
+    expect(
+      await extractPrivacyRelayerActivity(
+        config('privacyPoolsV2Relayed'),
+        log,
+        context(),
+      ),
+    ).toEqual({ relayerAddress: RELAYER })
+  })
+
+  it('extracts the Privacy Pools v2 fee recipient of a batch withdrawal', async () => {
+    const asset = EthereumAddress('0x4444444444444444444444444444444444444444')
+    const log = encodeLog(privacyPoolsV2RelayInterface, 'RelayedBatch', [
+      asset,
+      RECIPIENT,
+      3_000n,
+      RELAYER,
+      30n,
+      0n,
+      3n,
+    ])
+    expect(
+      await extractPrivacyRelayerActivity(
+        config('privacyPoolsV2RelayedBatch'),
+        log,
+        context(),
+      ),
+    ).toEqual({ relayerAddress: RELAYER })
+  })
+
+  it('ignores a Privacy Pools v2 self-relay, which names the caller with no fee', async () => {
+    const asset = EthereumAddress('0x4444444444444444444444444444444444444444')
+    const relayed = encodeLog(privacyPoolsV2RelayInterface, 'Relayed', [
+      asset,
+      RECIPIENT,
+      1_000n,
+      RELAYER,
+      0n,
+      0n,
+    ])
+    const batch = encodeLog(privacyPoolsV2RelayInterface, 'RelayedBatch', [
+      asset,
+      RECIPIENT,
+      3_000n,
+      RELAYER,
+      0n,
+      0n,
+      3n,
+    ])
+    const yieldExit = encodeLog(
+      privacyPoolsV2RouterInterface,
+      'WithdrawnToUnderlying',
+      [asset, asset, RECIPIENT, 1_000n, 1_000n, RELAYER, 0n, 0n, 0n],
+    )
+    const swap = encodeLog(privacyPoolsV2SwapsInterface, 'Executed', [
+      asset,
+      asset,
+      1_000n,
+      RELAYER,
+      0n,
+    ])
+    for (const [extractor, log] of [
+      ['privacyPoolsV2Relayed', relayed],
+      ['privacyPoolsV2RelayedBatch', batch],
+      ['privacyPoolsV2RouterWithdrawal', yieldExit],
+      ['privacyPoolsV2SwapExecuted', swap],
+    ] as const) {
+      expect(
+        await extractPrivacyRelayerActivity(config(extractor), log, context()),
+      ).toEqual(undefined)
+    }
+  })
+
+  it('extracts the Privacy Pools v2 fee recipient of a yield exit', async () => {
+    const asset = EthereumAddress('0x4444444444444444444444444444444444444444')
+    const log = encodeLog(
+      privacyPoolsV2RouterInterface,
+      'WithdrawnToUnderlying',
+      [asset, asset, RECIPIENT, 1_000n, 990n, RELAYER, 10n, 10n, 0n],
+    )
+    expect(
+      await extractPrivacyRelayerActivity(
+        config('privacyPoolsV2RouterWithdrawal'),
+        log,
+        context(),
+      ),
+    ).toEqual({ relayerAddress: RELAYER })
+  })
+
+  it('extracts the Privacy Pools v2 fee recipient of a swap', async () => {
+    const asset = EthereumAddress('0x4444444444444444444444444444444444444444')
+    const log = encodeLog(privacyPoolsV2SwapsInterface, 'Executed', [
+      asset,
+      asset,
+      1_000n,
+      RELAYER,
+      10n,
+    ])
+    expect(
+      await extractPrivacyRelayerActivity(
+        config('privacyPoolsV2SwapExecuted'),
+        log,
+        context(),
+      ),
+    ).toEqual({ relayerAddress: RELAYER })
+  })
+
+  it('ignores a Privacy Pools v2 withdrawal whose fee goes to its recipient', async () => {
+    const asset = EthereumAddress('0x4444444444444444444444444444444444444444')
+    const log = encodeLog(privacyPoolsV2RelayInterface, 'Relayed', [
+      asset,
+      RECIPIENT,
+      1_000n,
+      RECIPIENT,
+      0n,
+      0n,
+    ])
+    expect(
+      await extractPrivacyRelayerActivity(
+        config('privacyPoolsV2Relayed'),
+        log,
+        context(),
+      ),
+    ).toEqual(undefined)
   })
 
   it('extracts Tornado Cash relayer', async () => {
@@ -120,7 +268,13 @@ describe(extractPrivacyRelayerActivity.name, () => {
 })
 
 function config(
-  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal',
+  extractor:
+    | 'privacyPoolsWithdrawalRelayed'
+    | 'privacyPoolsV2Relayed'
+    | 'privacyPoolsV2RelayedBatch'
+    | 'privacyPoolsV2RouterWithdrawal'
+    | 'privacyPoolsV2SwapExecuted'
+    | 'tornadoCashWithdrawal',
 ): PrivacyRelayerActivityIndexerConfig {
   return {
     id: 'test-id',

@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { PrivacyFlowExtractorConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import type { BlockProvider, LogsProvider } from '@l2beat/shared'
+import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
@@ -87,6 +87,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider,
           logsProvider,
@@ -171,6 +172,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
@@ -214,6 +216,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: [placeholder],
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
@@ -260,6 +263,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider: mockObject<LogsProvider>({}),
@@ -367,6 +371,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider,
           logsProvider,
@@ -441,6 +446,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
@@ -519,6 +525,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
@@ -589,6 +596,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
@@ -662,6 +670,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: [badConfig],
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
@@ -754,6 +763,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: [configA, configB],
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
@@ -859,6 +869,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: configs,
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider,
@@ -949,6 +960,7 @@ describe(PrivacyFlowIndexer.name, () => {
     const indexer = new PrivacyFlowIndexer(
       {
         chain: 'ethereum',
+        rpcClient: mockObject<IRpcClient>({}),
         configurations: configs,
         blockProvider: mockObject<BlockProvider>({}),
         logsProvider,
@@ -1010,6 +1022,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: [placeholder],
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider: mockObject<LogsProvider>({}),
@@ -1056,6 +1069,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
+          rpcClient: mockObject<IRpcClient>({}),
           configurations: [placeholder],
           blockProvider: mockObject<BlockProvider>({}),
           logsProvider: mockObject<LogsProvider>({}),

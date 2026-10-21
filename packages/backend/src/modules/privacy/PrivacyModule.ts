@@ -187,6 +187,9 @@ export function createPrivacyModule({
             logsProvider: providers.logs.getLogsProvider(
               blockTimestampConfig.chain,
             ),
+            rpcClient: providers.clients.getRpcClient(
+              blockTimestampConfig.chain,
+            ),
             configurations: flowConfigs.map((flowConfig) => ({
               id: flowConfig.id,
               minHeight: flowConfig.sinceTimestamp,

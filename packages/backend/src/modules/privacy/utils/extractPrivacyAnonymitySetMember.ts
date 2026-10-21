@@ -47,7 +47,10 @@ export function extractPrivacyAnonymitySetMember(
         sender: result.depositor,
       })
     }
+    // Yield deposits reach the vault through a router, so the Entrypoint's
+    // depositor is the router and only the transaction sender names the user.
     case 'fixedAmount':
+    case 'privacyPoolsV2Value':
     case 'railgunShield': {
       const result = extractPrivacyFlow(source, log)
       if (result === undefined) return undefined

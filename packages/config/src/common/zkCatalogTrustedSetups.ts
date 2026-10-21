@@ -132,6 +132,15 @@ export const TRUSTED_SETUPS = {
       'Trusted setup for two Groth16 Privacy Pools circuits. It was built on top of 80 phase 1 contributions, with 513 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyPools.md'),
   },
+  PrivacyPoolsV2: {
+    id: 'PrivacyPoolsV2',
+    name: 'Privacy Pools v2',
+    risk: 'yellow',
+    participantCount: 80,
+    shortDescription:
+      'Trusted setup for the 27 Groth16 Privacy Pools v2 circuits. It was built on top of 80 phase 1 contributions, with 500 phase 2 contributions per circuit from 597 participants and a RANDAO beacon. Proving system could be broken if either phase 1 or 2 is compromised.',
+    longDescription: readMarkdown('common/trustedSetups/PrivacyPoolsV2.md'),
+  },
   PrivacyBoostv1: {
     id: 'PrivacyBoostv1',
     name: 'Privacy Boost',

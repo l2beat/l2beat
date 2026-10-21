@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ASPRegistry",
+  "critical": true,
+  "category": "core",
+  "description": "Publishes the association set provider's approved-label roots with their IPFS CIDs, and receives the data that ties each deposit to its label, encrypted to the ASP.",
+  "ignoreInWatchMode": ["latestASPRoot", "latestIPFSCID"],
+  "ignoreMethods": ["associationSets", "proxiableUUID"]
+}

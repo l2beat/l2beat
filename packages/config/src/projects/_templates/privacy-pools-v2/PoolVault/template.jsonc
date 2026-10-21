@@ -1,0 +1,317 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PoolVault",
+  "critical": true,
+  "category": "core",
+  "description": "Holds every pool asset and the state tree of note commitments and spent nullifiers.",
+  "ignoreInWatchMode": ["currentRootIndex"],
+  "ignoreMethods": [
+    "commitments",
+    "isKnownRoot",
+    "proxiableUUID",
+    "roots",
+    "spentNullifiers"
+  ],
+  "fields": {
+    "aspRegistry": {
+      "description": "Registry whose latest root every transact proof must match.",
+      "severity": "HIGH"
+    },
+    "keystore": {
+      "description": "Registry of account auth policies and viewing keys whose roots transact and ragequit proofs must match.",
+      "severity": "HIGH"
+    },
+    "depositVerifier": {
+      "severity": "HIGH"
+    },
+    "ragequitVerifier": {
+      "severity": "HIGH"
+    },
+    "maxStateTreeSize": {
+      "description": "Capacity of the state tree in leaves. A full tree stops deposits, transacts and ragequits.",
+      "severity": "LOW"
+    },
+    "rootHistorySize": {
+      "description": "Number of recent state roots a transact proof may be built against."
+    },
+    "paused": {
+      "description": "Pauses deposits and transacts. Ragequit stays open.",
+      "severity": "MEDIUM"
+    },
+    "transactVerifier1x1": {
+      "description": "Groth16 verifier and selector for transact proofs spending 1 note and creating 1 note.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xcc69885fda6bcc1a4ace058b4a62bf5e179ea78fd58a1ccd71c22cc9b688792f"
+        ]
+      }
+    },
+    "transactVerifier1x2": {
+      "description": "Groth16 verifier and selector for transact proofs spending 1 note and creating 2 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e0"
+        ]
+      }
+    },
+    "transactVerifier1x3": {
+      "description": "Groth16 verifier and selector for transact proofs spending 1 note and creating 3 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xa15bc60c955c405d20d9149c709e2460f1c2d9a497496a7f46004d1772c3054c"
+        ]
+      }
+    },
+    "transactVerifier1x4": {
+      "description": "Groth16 verifier and selector for transact proofs spending 1 note and creating 4 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xabd6e7cb50984ff9c2f3e18a2660c3353dadf4e3291deeb275dae2cd1e44fe05"
+        ]
+      }
+    },
+    "transactVerifier1x5": {
+      "description": "Groth16 verifier and selector for transact proofs spending 1 note and creating 5 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x1471eb6eb2c5e789fc3de43f8ce62938c7d1836ec861730447e2ada8fd81017b"
+        ]
+      }
+    },
+    "transactVerifier2x1": {
+      "description": "Groth16 verifier and selector for transact proofs spending 2 notes and creating 1 note.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xd9d16d34ffb15ba3a3d852f0d403e2ce1d691fb54de27ac87cd2f993f3ec330f"
+        ]
+      }
+    },
+    "transactVerifier2x2": {
+      "description": "Groth16 verifier and selector for transact proofs spending 2 notes and creating 2 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x679795a0195a1b76cdebb7c51d74e058aee92919b8c3389af86ef24535e8a28c"
+        ]
+      }
+    },
+    "transactVerifier2x3": {
+      "description": "Groth16 verifier and selector for transact proofs spending 2 notes and creating 3 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xc3a24b0501bd2c13a7e57f2db4369ec4c223447539fc0724a9d55ac4a06ebd4d"
+        ]
+      }
+    },
+    "transactVerifier2x4": {
+      "description": "Groth16 verifier and selector for transact proofs spending 2 notes and creating 4 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x91da3fd0782e51c6b3986e9e672fd566868e71f3dbc2d6c2cd6fbb3e361af2a7"
+        ]
+      }
+    },
+    "transactVerifier2x5": {
+      "description": "Groth16 verifier and selector for transact proofs spending 2 notes and creating 5 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x89832631fb3c3307a103ba2c84ab569c64d6182a18893dcd163f0f1c2090733a"
+        ]
+      }
+    },
+    "transactVerifier3x1": {
+      "description": "Groth16 verifier and selector for transact proofs spending 3 notes and creating 1 note.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x7dfe757ecd65cbd7922a9c0161e935dd7fdbcc0e999689c7d31633896b1fc60b"
+        ]
+      }
+    },
+    "transactVerifier3x2": {
+      "description": "Groth16 verifier and selector for transact proofs spending 3 notes and creating 2 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x88601476d11616a71c5be67555bd1dff4b1cbf21533d2669b768b61518cfe1c3"
+        ]
+      }
+    },
+    "transactVerifier3x3": {
+      "description": "Groth16 verifier and selector for transact proofs spending 3 notes and creating 3 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xcbc4e5fb02c3d1de23a9f1e014b4d2ee5aeaea9505df5e855c9210bf472495af"
+        ]
+      }
+    },
+    "transactVerifier3x4": {
+      "description": "Groth16 verifier and selector for transact proofs spending 3 notes and creating 4 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x2e174c10e159ea99b867ce3205125c24a42d128804e4070ed6fcc8cc98166aa0"
+        ]
+      }
+    },
+    "transactVerifier3x5": {
+      "description": "Groth16 verifier and selector for transact proofs spending 3 notes and creating 5 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xa9bc9a3a348c357ba16b37005d7e6b3236198c0e939f4af8c5f19b8deeb8ebc0"
+        ]
+      }
+    },
+    "transactVerifier4x1": {
+      "description": "Groth16 verifier and selector for transact proofs spending 4 notes and creating 1 note.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xedc95719e9a3b28dd8e80877cb5880a9be7de1a13fc8b05e7999683b6b567643"
+        ]
+      }
+    },
+    "transactVerifier4x2": {
+      "description": "Groth16 verifier and selector for transact proofs spending 4 notes and creating 2 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xee60d0579bcffd98e668647d59fec1ff86a7fb340ce572e844f234ae73a6918f"
+        ]
+      }
+    },
+    "transactVerifier4x3": {
+      "description": "Groth16 verifier and selector for transact proofs spending 4 notes and creating 3 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x83ec6a1f0257b830b5e016457c9cf1435391bf56cc98f369a58a54fe93772465"
+        ]
+      }
+    },
+    "transactVerifier4x4": {
+      "description": "Groth16 verifier and selector for transact proofs spending 4 notes and creating 4 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x1a1e6821cde7d0159c0d293177871e09677b4e42307c7db3ba94f8648a5a050f"
+        ]
+      }
+    },
+    "transactVerifier4x5": {
+      "description": "Groth16 verifier and selector for transact proofs spending 4 notes and creating 5 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x3eec716f11ba9e820c81ca75eb978ffb45831ef8b7a53e5e422c26008e1ca6d5"
+        ]
+      }
+    },
+    "transactVerifier5x1": {
+      "description": "Groth16 verifier and selector for transact proofs spending 5 notes and creating 1 note.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xe2689cd4a84e23ad2f564004f1c9013e9589d260bde6380aba3ca7e09e4df40c"
+        ]
+      }
+    },
+    "transactVerifier5x2": {
+      "description": "Groth16 verifier and selector for transact proofs spending 5 notes and creating 2 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0xb98b78633099fa36ed8b8680c4f8092689e1e04080eb9cbb077ca38a14d7e384"
+        ]
+      }
+    },
+    "transactVerifier5x3": {
+      "description": "Groth16 verifier and selector for transact proofs spending 5 notes and creating 3 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x405aad32e1adbac89bb7f176e338b8fc6e994ca210c9bb7bdca249b465942250"
+        ]
+      }
+    },
+    "transactVerifier5x4": {
+      "description": "Groth16 verifier and selector for transact proofs spending 5 notes and creating 4 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x04cde762ef08b6b6c5ded8e8c4c0b3f4e5c9ad7342c88fcc93681b4588b73f05"
+        ]
+      }
+    },
+    "transactVerifier5x5": {
+      "description": "Groth16 verifier and selector for transact proofs spending 5 notes and creating 5 notes.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes32) view returns ((address addr, bytes4 selector))",
+        "args": [
+          "0x458b30c2d72bfd2c6317304a4594ecbafe5f729d3111b65fdc3a33bd48e5432d"
+        ]
+      }
+    }
+  }
+}

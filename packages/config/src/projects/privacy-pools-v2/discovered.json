@@ -1,0 +1,2458 @@
+{
+  "name": "privacy-pools-v2",
+  "timestamp": 1792559137,
+  "configHash": "0xf647f1f34542945fee2c1f62d5fe26cb052a5ff3b22294cfb07cf4871d2fa966",
+  "entries": [
+    {
+      "name": "PrivacyPoolRelay",
+      "address": "eth:0x01a8Fa4dbb60187aD8d3c3d08E7Fb8C14198A461",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PrivacyPoolRelay",
+      "sourceHashes": [
+        "0x08960c816e9777e18d5d018f033a1cab68b0546a16b5956ceceea5036f3b0360"
+      ],
+      "proxyType": "immutable",
+      "description": "Withdrawal processor that submits the transact proof and pays the recipient and the relayer's fee, capped per asset.",
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788288047,
+      "sinceBlock": 25884289,
+      "values": {
+        "$immutable": true,
+        "ANNOUNCER": "eth:0x55649E01B5Df198D18D95b5cc5051630cfD45564",
+        "ENTRYPOINT": "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3",
+        "MAX_BATCH": 10,
+        "POOL": "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed"
+      },
+      "fieldMeta": {
+        "MAX_BATCH": {
+          "description": "Maximum number of transact proofs one batch withdrawal may carry."
+        }
+      },
+      "implementationNames": {
+        "eth:0x01a8Fa4dbb60187aD8d3c3d08E7Fb8C14198A461": "PrivacyPoolRelay"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Transact4x5Verifier",
+      "address": "eth:0x01b4954E3b3C1F68785f60D7465c38C31266bfab",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x469de3170ac21275204a9b2aa7737977143126b4f4d294f419530c587e1f5031"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x01b4954E3b3C1F68785f60D7465c38C31266bfab": "Transact4x5Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact1x2Verifier",
+      "address": "eth:0x0e13d94235d8a0d8f9fC3B63BB41D666eF0677Ed",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0xf0c9fcfcadd776767888bde701d4924f015ea1d918766b223a3c04d43a7d70ff"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x0e13d94235d8a0d8f9fC3B63BB41D666eF0677Ed": "Transact1x2Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "PoolVault",
+      "address": "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PoolVault",
+      "sourceHashes": [
+        "0xa3a188e65fc0885e5fb907ee0794b5ca81470d468b3876a16374f366c9abd1c7",
+        "0x1833407a9d88532c5126ef2a7fbfc122b405038bb4897affddfee54c8ed00924"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Holds every pool asset and the state tree of note commitments and spent nullifiers.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRootIndex"],
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788287903,
+      "sinceBlock": 25884277,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x5F89cD5c3610c2AD870B1b33126d209fECdb69c7",
+        "$pastUpgrades": [
+          [
+            "2026-09-01T18:38:23.000Z",
+            "0x2739363102ee08c72a6dd6c96e3c3241bff7507f23a71498c51b25dd5224f0c9",
+            ["eth:0x5F89cD5c3610c2AD870B1b33126d209fECdb69c7"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ACCESS_ROUTER": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+        "aspRegistry": "eth:0x259C0BEa1d783c202509BD3b2688d23b8AEf58B0",
+        "currentRootIndex": 15,
+        "depositVerifier": "eth:0xEe96Ca04d2Ab2eC9A8803eb78F39b2875dFF6fdf",
+        "keystore": "eth:0x6E463391c79b7e1A88eF26E0B023f9A6C9938a71",
+        "maxStateTreeSize": 4194304,
+        "paused": false,
+        "ragequitVerifier": "eth:0x5a06582115953E2cAbeD8e6A0EeAE35BA430118f",
+        "rootHistorySize": 16,
+        "transactVerifier1x1": {
+          "addr": "eth:0x21347145497569b34efAB7d73952208866520042",
+          "selector": "0xc9219a7a"
+        },
+        "transactVerifier1x2": {
+          "addr": "eth:0x0e13d94235d8a0d8f9fC3B63BB41D666eF0677Ed",
+          "selector": "0xc542c93b"
+        },
+        "transactVerifier1x3": {
+          "addr": "eth:0xC5E1D9D9CF12E796Ec8E072646c6BF29A1e55382",
+          "selector": "0xf3bb70f6"
+        },
+        "transactVerifier1x4": {
+          "addr": "eth:0x3ee4A00e0ba1AC0Ef8aD3e4b541CA42FBB4592c3",
+          "selector": "0xb9c6ea87"
+        },
+        "transactVerifier1x5": {
+          "addr": "eth:0xfa0138C5dE45E520AbA349BE38a827DAb470f70A",
+          "selector": "0x8cbac0fa"
+        },
+        "transactVerifier2x1": {
+          "addr": "eth:0x338625F2199675D2aC4Fbf7A89567864ac990710",
+          "selector": "0xc542c93b"
+        },
+        "transactVerifier2x2": {
+          "addr": "eth:0xAc716f21626994c4264eA457Fe208071050611B5",
+          "selector": "0xf3bb70f6"
+        },
+        "transactVerifier2x3": {
+          "addr": "eth:0xB8aa00333b8D6958da72A15D59179BbDD1e49064",
+          "selector": "0xb9c6ea87"
+        },
+        "transactVerifier2x4": {
+          "addr": "eth:0xF1C6c55B70EC3Df923f5E9bcd64aee5c3073C42c",
+          "selector": "0x8cbac0fa"
+        },
+        "transactVerifier2x5": {
+          "addr": "eth:0x62Cf8963300F284016daE0cD19f5D9BC60846a46",
+          "selector": "0xf143a75e"
+        },
+        "transactVerifier3x1": {
+          "addr": "eth:0x579f6734d35937b8432BA8FfC17C3120eb657c82",
+          "selector": "0xf3bb70f6"
+        },
+        "transactVerifier3x2": {
+          "addr": "eth:0x76D574559765fd4b90903fFa682964Ae7e7e878a",
+          "selector": "0xb9c6ea87"
+        },
+        "transactVerifier3x3": {
+          "addr": "eth:0xAeCDf3E27A602f23cEc2E5CE250093b3E806D041",
+          "selector": "0x8cbac0fa"
+        },
+        "transactVerifier3x4": {
+          "addr": "eth:0xe0aec1eE10eBfCDcB09b6e5a7ea6Ae34D066219d",
+          "selector": "0xf143a75e"
+        },
+        "transactVerifier3x5": {
+          "addr": "eth:0xFdF4EbC7645E1F4c04aE33285b6e3f78e4A3a275",
+          "selector": "0x8d15f88f"
+        },
+        "transactVerifier4x1": {
+          "addr": "eth:0x909ECAF2A4959726a2BC3d82Fc837B8D3F1c61d3",
+          "selector": "0xb9c6ea87"
+        },
+        "transactVerifier4x2": {
+          "addr": "eth:0x454F1Da26DD4c7c89a849019BeC4c7C7C404d3A4",
+          "selector": "0x8cbac0fa"
+        },
+        "transactVerifier4x3": {
+          "addr": "eth:0x95dEC97ac78E8C0FfDc6315FDc0A0791238b93A3",
+          "selector": "0xf143a75e"
+        },
+        "transactVerifier4x4": {
+          "addr": "eth:0x4Cb752CEF56a5095321Ed72699cD7A699D48F4b5",
+          "selector": "0x8d15f88f"
+        },
+        "transactVerifier4x5": {
+          "addr": "eth:0x01b4954E3b3C1F68785f60D7465c38C31266bfab",
+          "selector": "0xf054a9a3"
+        },
+        "transactVerifier5x1": {
+          "addr": "eth:0x61573Cf3c3A20C9739b68B8e742Ca51971387Cb5",
+          "selector": "0x8cbac0fa"
+        },
+        "transactVerifier5x2": {
+          "addr": "eth:0x8ABfb288dAc87392EaFdD59F6809825fcA0e8b85",
+          "selector": "0xf143a75e"
+        },
+        "transactVerifier5x3": {
+          "addr": "eth:0x20D4B794A2A1ae7A34AF184172dd931d3ff2Fa32",
+          "selector": "0x8d15f88f"
+        },
+        "transactVerifier5x4": {
+          "addr": "eth:0x766c2F31483935CD55355fcE00fc5eDB82A15acC",
+          "selector": "0xf054a9a3"
+        },
+        "transactVerifier5x5": {
+          "addr": "eth:0x7BeE2554970A749D7671424DFa3fAbE15d7e4BD8",
+          "selector": "0xc82febf5"
+        },
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "aspRegistry": {
+          "severity": "HIGH",
+          "description": "Registry whose latest root every transact proof must match."
+        },
+        "keystore": {
+          "severity": "HIGH",
+          "description": "Registry of account auth policies and viewing keys whose roots transact and ragequit proofs must match."
+        },
+        "depositVerifier": { "severity": "HIGH" },
+        "ragequitVerifier": { "severity": "HIGH" },
+        "maxStateTreeSize": {
+          "severity": "LOW",
+          "description": "Capacity of the state tree in leaves. A full tree stops deposits, transacts and ragequits."
+        },
+        "rootHistorySize": {
+          "description": "Number of recent state roots a transact proof may be built against."
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Pauses deposits and transacts. Ragequit stays open."
+        },
+        "transactVerifier1x1": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 1 note and creating 1 note."
+        },
+        "transactVerifier1x2": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 1 note and creating 2 notes."
+        },
+        "transactVerifier1x3": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 1 note and creating 3 notes."
+        },
+        "transactVerifier1x4": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 1 note and creating 4 notes."
+        },
+        "transactVerifier1x5": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 1 note and creating 5 notes."
+        },
+        "transactVerifier2x1": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 2 notes and creating 1 note."
+        },
+        "transactVerifier2x2": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 2 notes and creating 2 notes."
+        },
+        "transactVerifier2x3": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 2 notes and creating 3 notes."
+        },
+        "transactVerifier2x4": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 2 notes and creating 4 notes."
+        },
+        "transactVerifier2x5": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 2 notes and creating 5 notes."
+        },
+        "transactVerifier3x1": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 3 notes and creating 1 note."
+        },
+        "transactVerifier3x2": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 3 notes and creating 2 notes."
+        },
+        "transactVerifier3x3": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 3 notes and creating 3 notes."
+        },
+        "transactVerifier3x4": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 3 notes and creating 4 notes."
+        },
+        "transactVerifier3x5": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 3 notes and creating 5 notes."
+        },
+        "transactVerifier4x1": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 4 notes and creating 1 note."
+        },
+        "transactVerifier4x2": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 4 notes and creating 2 notes."
+        },
+        "transactVerifier4x3": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 4 notes and creating 3 notes."
+        },
+        "transactVerifier4x4": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 4 notes and creating 4 notes."
+        },
+        "transactVerifier4x5": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 4 notes and creating 5 notes."
+        },
+        "transactVerifier5x1": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 5 notes and creating 1 note."
+        },
+        "transactVerifier5x2": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 5 notes and creating 2 notes."
+        },
+        "transactVerifier5x3": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 5 notes and creating 3 notes."
+        },
+        "transactVerifier5x4": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 5 notes and creating 4 notes."
+        },
+        "transactVerifier5x5": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier and selector for transact proofs spending 5 notes and creating 5 notes."
+        }
+      },
+      "implementationNames": {
+        "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed": "ERC1967Proxy",
+        "eth:0x5F89cD5c3610c2AD870B1b33126d209fECdb69c7": "PoolVault"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x092263c43e0500d50f12d33174a170711530c16ebc9fd883982f9533c87b497f",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "PPRouterUSDT",
+      "address": "eth:0x13a0b86bac3e0C29bd64fED7BCD2EE84f371f41C",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PPRouter",
+      "sourceHashes": [
+        "0xcfaf827458e4c0e28f72da92aba9c853ab88b80c9b70789610ef8e14953c2c83"
+      ],
+      "proxyType": "immutable",
+      "description": "Yield router for one share token. It wraps deposits of the underlying into shares, and unwraps withdrawn shares to pay the recipient and the relayer fee.",
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788527387,
+      "sinceBlock": 25904163,
+      "values": {
+        "$immutable": true,
+        "A_TOKEN": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
+        "DUST_RECIPIENT": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "ENTRYPOINT": "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3",
+        "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+        "POOL_VAULT": "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+        "UNDERLYING": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "VAULT": "eth:0xA4cF419558Ef36CC6FfB666195684dC963910426",
+        "ZAP": "eth:0xDC3D922df81FC7B7f58229431ED91acB0482f3A5"
+      },
+      "fieldMeta": {
+        "DUST_RECIPIENT": {
+          "description": "Address that can skim aToken dust left in the router."
+        },
+        "NATIVE_MODE": {
+          "description": "If true, the router takes ETH, wraps it and supplies WETH."
+        }
+      },
+      "implementationNames": {
+        "eth:0x13a0b86bac3e0C29bd64fED7BCD2EE84f371f41C": "PPRouter"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Transact5x3Verifier",
+      "address": "eth:0x20D4B794A2A1ae7A34AF184172dd931d3ff2Fa32",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0xfb2f7e5572e1d50f11e054b782e9fcfe3fb7acd13bcb034b392d3277babd3590"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x20D4B794A2A1ae7A34AF184172dd931d3ff2Fa32": "Transact5x3Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact1x1Verifier",
+      "address": "eth:0x21347145497569b34efAB7d73952208866520042",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x213395380548487e7a89aa2f4d5dfbd4e05ba4ad4046bfe2de5e2a0ec3f53852"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x21347145497569b34efAB7d73952208866520042": "Transact1x1Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "ASPRegistry",
+      "address": "eth:0x259C0BEa1d783c202509BD3b2688d23b8AEf58B0",
+      "type": "Contract",
+      "template": "privacy-pools-v2/ASPRegistry",
+      "sourceHashes": [
+        "0xa3a188e65fc0885e5fb907ee0794b5ca81470d468b3876a16374f366c9abd1c7",
+        "0x854dff37f3810a5b7389a406fc4f1369d4c2638d7fd2afce8aa786e5b3994f99"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Publishes the association set provider's approved-label roots with their IPFS CIDs, and receives the data that ties each deposit to its label, encrypted to the ASP.",
+      "critical": true,
+      "ignoreInWatchMode": ["latestASPRoot", "latestIPFSCID"],
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788287435,
+      "sinceBlock": 25884238,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x046991310B099e86af239d3A4F3AB3e196F24EC7",
+        "$pastUpgrades": [
+          [
+            "2026-09-01T18:30:35.000Z",
+            "0xc4c8179cb77006b5190cba6d0ecae70485773ad0abd596fc1f96bdc2cb4120aa",
+            ["eth:0x046991310B099e86af239d3A4F3AB3e196F24EC7"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ACCESS_ROUTER": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+        "latestASPRoot": "16086732631330803285393241283410959465578446079588764650303694345872680708117",
+        "latestIPFSCID": "0x6261666b72656964676833646c336d736435783373707172353232783774637437646735767075616c757278347a3763346d71776e6164686c7079",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x259C0BEa1d783c202509BD3b2688d23b8AEf58B0": "ERC1967Proxy",
+        "eth:0x046991310B099e86af239d3A4F3AB3e196F24EC7": "ASPRegistry"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Transact2x1Verifier",
+      "address": "eth:0x338625F2199675D2aC4Fbf7A89567864ac990710",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x82ab2c0bd0458898527016d899f5603c1c804e3eabb768208644e399185eb183"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x338625F2199675D2aC4Fbf7A89567864ac990710": "Transact2x1Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "PPYieldTokenZapETH",
+      "address": "eth:0x33c1eEf370bBb447414156CFc4fDABD434776EAf",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PPYieldTokenZap",
+      "sourceHashes": [
+        "0x8fc9a133b986909edc6d46d3a6d496baf20c80b7ee26d4081579cb42827603ff"
+      ],
+      "proxyType": "immutable",
+      "description": "Converts between a share token and its underlying in one call, through Aave v3.",
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1789501763,
+      "sinceBlock": 25985057,
+      "values": {
+        "$immutable": true,
+        "A_TOKEN": "eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8",
+        "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+        "UNDERLYING": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "VAULT": "eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7"
+      },
+      "implementationNames": {
+        "eth:0x33c1eEf370bBb447414156CFc4fDABD434776EAf": "PPYieldTokenZap"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Transact1x4Verifier",
+      "address": "eth:0x3ee4A00e0ba1AC0Ef8aD3e4b541CA42FBB4592c3",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0xcb0d1028f9207ce6657e4248568ed115c2af5bf9a54b4a1053f3fcb139f3e1f4"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x3ee4A00e0ba1AC0Ef8aD3e4b541CA42FBB4592c3": "Transact1x4Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "AccessRouter",
+      "address": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+      "type": "Contract",
+      "template": "privacy-pools-v2/AccessRouter",
+      "sourceHashes": [
+        "0x4c6f79a820a8e31499599c32091490d4e01b08c3da0d318ee45604ea6e8ab391"
+      ],
+      "proxyType": "immutable",
+      "description": "Role registry the Privacy Pools v2 core contracts check. No role has a delay.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788287315,
+      "sinceBlock": 25884228,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "OPS_ADMIN_ROLE",
+            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+          },
+          "ENTRYPOINT_MANAGER_ROLE": {
+            "adminRole": "OPS_ADMIN_ROLE",
+            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+          },
+          "POSTMAN_ROLE": {
+            "adminRole": "OPS_ADMIN_ROLE",
+            "members": ["eth:0xa05B43E1dcdCe0c6A40471a602038BC346900758"]
+          },
+          "OPS_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+          },
+          "UPGRADER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+          },
+          "UNPAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+          },
+          "DEPOSITOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3"]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdmins": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"],
+        "depositors": ["eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3"],
+        "entrypointManagers": [
+          "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"
+        ],
+        "opsAdmins": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"],
+        "pausers": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"],
+        "postmen": ["eth:0xa05B43E1dcdCe0c6A40471a602038BC346900758"],
+        "unpausers": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"],
+        "upgraders": ["eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92"]
+      },
+      "fieldMeta": {
+        "accessControl": { "severity": "HIGH" },
+        "defaultAdmins": { "severity": "HIGH", "type": "PERMISSION" },
+        "opsAdmins": { "severity": "HIGH", "type": "PERMISSION" },
+        "upgraders": { "severity": "HIGH", "type": "PERMISSION" },
+        "pausers": { "severity": "MEDIUM", "type": "PERMISSION" },
+        "unpausers": { "severity": "MEDIUM", "type": "PERMISSION" },
+        "entrypointManagers": { "severity": "MEDIUM", "type": "PERMISSION" },
+        "depositors": { "severity": "MEDIUM", "type": "PERMISSION" },
+        "postmen": { "severity": "MEDIUM", "type": "PERMISSION" }
+      },
+      "implementationNames": {
+        "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160": "AccessRouter"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Transact4x2Verifier",
+      "address": "eth:0x454F1Da26DD4c7c89a849019BeC4c7C7C404d3A4",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x3bc018d0ecce717a47802863a34c14d9678954e5e6935465ba481a6a71bdfa69"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x454F1Da26DD4c7c89a849019BeC4c7C7C404d3A4": "Transact4x2Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact4x4Verifier",
+      "address": "eth:0x4Cb752CEF56a5095321Ed72699cD7A699D48F4b5",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x61033d519bd2eb7938ed053edbde4cf5519621f6d0aa5cbd692eb72bd6b53e60"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x4Cb752CEF56a5095321Ed72699cD7A699D48F4b5": "Transact4x4Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact3x1Verifier",
+      "address": "eth:0x579f6734d35937b8432BA8FfC17C3120eb657c82",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0xd2ecc1d1879329c6e4226e6ca849259451af0cf44b028ee0ed9b785d55d3e154"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x579f6734d35937b8432BA8FfC17C3120eb657c82": "Transact3x1Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "RagequitVerifier",
+      "address": "eth:0x5a06582115953E2cAbeD8e6A0EeAE35BA430118f",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0xb6d47a972a1ecd95d0916a42a55e731750098f7deb1d83d4c9aa28384eeb64b0"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x5a06582115953E2cAbeD8e6A0EeAE35BA430118f": "RagequitVerifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact5x1Verifier",
+      "address": "eth:0x61573Cf3c3A20C9739b68B8e742Ca51971387Cb5",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x790ac69656f57ff19e847e1efae871f0f1ac47fca0f9e0eec5ec53a6e61132b7"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x61573Cf3c3A20C9739b68B8e742Ca51971387Cb5": "Transact5x1Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact2x5Verifier",
+      "address": "eth:0x62Cf8963300F284016daE0cD19f5D9BC60846a46",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x0934671b442243650b9ccfc5d99075c0372b0eca7f2eac4d203888eb01c46b55"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x62Cf8963300F284016daE0cD19f5D9BC60846a46": "Transact2x5Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "ppETH",
+      "address": "eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PPYieldToken",
+      "sourceHashes": [
+        "0x6856ffe56f3395af8daf0b10c1605349bf670168bb6a74298b41c0982afd05ed"
+      ],
+      "proxyType": "immutable",
+      "description": "ERC-4626 share token over an Aave v3 aToken, the asset the pool holds for a yield deposit. The admin's fee applies to the yield only.",
+      "ignoreInWatchMode": [
+        "accumulatedFees",
+        "claimableFees",
+        "exchangeRate",
+        "lastCheckpointBalance",
+        "totalAssets",
+        "totalSupply"
+      ],
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1789501751,
+      "sinceBlock": 25985056,
+      "values": {
+        "$immutable": true,
+        "accumulatedFees": 43691062687341,
+        "admin": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "asset": "eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8",
+        "claimableFees": 43902347781447,
+        "decimals": 18,
+        "exchangeRate": "1001084772068871520",
+        "feeBps": 2000,
+        "lastCheckpointBalance": "670531725602841143",
+        "MAX_BPS": 10000,
+        "MAX_FEE_BPS": 2000,
+        "name": "Privacy Pool ETH",
+        "owner": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "paused": false,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "rewardsController": "eth:0x0000000000000000000000000000000000000000",
+        "symbol": "ppETH",
+        "totalAssets": "670488879680530226",
+        "totalSupply": "669762340201098050"
+      },
+      "fieldMeta": {
+        "feeBps": {
+          "severity": "MEDIUM",
+          "description": "Share of the accrued yield the admin keeps, in basis points.",
+          "type": "RISK_PARAMETER"
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Pauses minting. Redeeming to the aToken stays open."
+        }
+      },
+      "implementationNames": {
+        "eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7": "PPYieldToken"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Keystore",
+      "address": "eth:0x6E463391c79b7e1A88eF26E0B023f9A6C9938a71",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Keystore",
+      "sourceHashes": [
+        "0xa3a188e65fc0885e5fb907ee0794b5ca81470d468b3876a16374f366c9abd1c7",
+        "0x6432af329137aad9bf0ff91620b22fa40ba2c3ef6a4763e7bed782d1d714e53a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Account registry of Privacy Pools v2: one leaf per account with its nullifying key hash and auth policy, plus an optional X25519 viewing public key.",
+      "critical": true,
+      "ignoreInWatchMode": ["currentRoot"],
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788287351,
+      "sinceBlock": 25884231,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x7b915008ffa267271e9E328430FE328eA02C5F04",
+        "$pastUpgrades": [
+          [
+            "2026-09-01T18:29:11.000Z",
+            "0x50b876488cdaab2020765918b7270329ab4d9194f34126ed5192e33402c1753e",
+            ["eth:0x7b915008ffa267271e9E328430FE328eA02C5F04"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ACCESS_ROUTER": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+        "currentRoot": "15675003796490042866189185782679939822238633777298329760637074252008448306422",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "PrivacyPoolsKeystore",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x6E463391c79b7e1A88eF26E0B023f9A6C9938a71",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "keystoreRootLiveness": 1200,
+        "maxKeystoreTreeSize": 262144,
+        "SET_AUTH_POLICY_TYPEHASH": "0xd85fd5759a3a1b27d83a1de7b4fca2d706b8791f9ca13fdd12a48f7f2877fc4b",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "keystoreRootLiveness": {
+          "severity": "MEDIUM",
+          "description": "Seconds a superseded keystore root stays valid for proofs."
+        },
+        "maxKeystoreTreeSize": {
+          "severity": "LOW",
+          "description": "Capacity of the keystore tree in accounts."
+        }
+      },
+      "implementationNames": {
+        "eth:0x6E463391c79b7e1A88eF26E0B023f9A6C9938a71": "ERC1967Proxy",
+        "eth:0x7b915008ffa267271e9E328430FE328eA02C5F04": "Keystore"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Transact5x4Verifier",
+      "address": "eth:0x766c2F31483935CD55355fcE00fc5eDB82A15acC",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x027746bc8db4fbd8301a836ffa11929a683272f1b760f9697bdee3081ca5aa42"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x766c2F31483935CD55355fcE00fc5eDB82A15acC": "Transact5x4Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact3x2Verifier",
+      "address": "eth:0x76D574559765fd4b90903fFa682964Ae7e7e878a",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0xcfa96956374894c966c29c7a1b26864438b5df2c469e310750d30e01fd5ac189"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x76D574559765fd4b90903fFa682964Ae7e7e878a": "Transact3x2Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "PPRouterETH",
+      "address": "eth:0x77613D670BB9fD48A9898D0eac8ebf21B566F960",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PPRouter",
+      "sourceHashes": [
+        "0x1833edd17bd3a1aff48baf62325b33ec2c7ecfc521111a485eed4662515867bc"
+      ],
+      "proxyType": "immutable",
+      "description": "Yield router for one share token. It wraps deposits of the underlying into shares, and unwraps withdrawn shares to pay the recipient and the relayer fee.",
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1789501787,
+      "sinceBlock": 25985059,
+      "values": {
+        "$immutable": true,
+        "A_TOKEN": "eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8",
+        "DUST_RECIPIENT": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "ENTRYPOINT": "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3",
+        "NATIVE_MODE": true,
+        "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+        "POOL_VAULT": "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+        "UNDERLYING": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "VAULT": "eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7",
+        "ZAP": "eth:0x33c1eEf370bBb447414156CFc4fDABD434776EAf"
+      },
+      "fieldMeta": {
+        "DUST_RECIPIENT": {
+          "description": "Address that can skim aToken dust left in the router."
+        },
+        "NATIVE_MODE": {
+          "description": "If true, the router takes ETH, wraps it and supplies WETH."
+        }
+      },
+      "implementationNames": {
+        "eth:0x77613D670BB9fD48A9898D0eac8ebf21B566F960": "PPRouter"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Transact5x5Verifier",
+      "address": "eth:0x7BeE2554970A749D7671424DFa3fAbE15d7e4BD8",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x9ad19f7cb80262dcc7c66b7be5a6d9ad431df0f8e61df4d978026a63e832457a"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x7BeE2554970A749D7671424DFa3fAbE15d7e4BD8": "Transact5x5Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact5x2Verifier",
+      "address": "eth:0x8ABfb288dAc87392EaFdD59F6809825fcA0e8b85",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x08353966f4f4440000a98e09b70d4612253cc278dc9ed79ebedc032027f10982"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x8ABfb288dAc87392EaFdD59F6809825fcA0e8b85": "Transact5x2Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact4x1Verifier",
+      "address": "eth:0x909ECAF2A4959726a2BC3d82Fc837B8D3F1c61d3",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0xdde3663dce9e9fbc15dc8b1e23d4147f64f9ddff409144a5cb90e547ff64e3d5"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x909ECAF2A4959726a2BC3d82Fc837B8D3F1c61d3": "Transact4x1Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact4x3Verifier",
+      "address": "eth:0x95dEC97ac78E8C0FfDc6315FDc0A0791238b93A3",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x01b49160e8222658939bf644d9a64c94056a48443f0b04af32f79823ad4fd5f9"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x95dEC97ac78E8C0FfDc6315FDc0A0791238b93A3": "Transact4x3Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "PPYieldTokenZapUSDC",
+      "address": "eth:0x9Ea986BcDF6784D85B518b15bEEE1E65b585817B",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PPYieldTokenZap",
+      "sourceHashes": [
+        "0x8fc9a133b986909edc6d46d3a6d496baf20c80b7ee26d4081579cb42827603ff"
+      ],
+      "proxyType": "immutable",
+      "description": "Converts between a share token and its underlying in one call, through Aave v3.",
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788511163,
+      "sinceBlock": 25902813,
+      "values": {
+        "$immutable": true,
+        "A_TOKEN": "eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c",
+        "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+        "UNDERLYING": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "VAULT": "eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6"
+      },
+      "implementationNames": {
+        "eth:0x9Ea986BcDF6784D85B518b15bEEE1E65b585817B": "PPYieldTokenZap"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xa05B43E1dcdCe0c6A40471a602038BC346900758",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ppUSDT",
+      "address": "eth:0xA4cF419558Ef36CC6FfB666195684dC963910426",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PPYieldToken",
+      "sourceHashes": [
+        "0x6856ffe56f3395af8daf0b10c1605349bf670168bb6a74298b41c0982afd05ed"
+      ],
+      "proxyType": "immutable",
+      "description": "ERC-4626 share token over an Aave v3 aToken, the asset the pool holds for a yield deposit. The admin's fee applies to the yield only.",
+      "ignoreInWatchMode": [
+        "accumulatedFees",
+        "claimableFees",
+        "exchangeRate",
+        "lastCheckpointBalance",
+        "totalAssets",
+        "totalSupply"
+      ],
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788527363,
+      "sinceBlock": 25904161,
+      "values": {
+        "$immutable": true,
+        "accumulatedFees": 135307,
+        "admin": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "asset": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
+        "claimableFees": 147664,
+        "decimals": 18,
+        "exchangeRate": 1003785,
+        "feeBps": 2000,
+        "lastCheckpointBalance": 125002993,
+        "MAX_BPS": 10000,
+        "MAX_FEE_BPS": 2000,
+        "name": "Privacy Pool USDT",
+        "owner": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "paused": false,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "rewardsController": "eth:0x0000000000000000000000000000000000000000",
+        "symbol": "ppUSDT",
+        "totalAssets": 124917117,
+        "totalSupply": "124446018645133392460"
+      },
+      "fieldMeta": {
+        "feeBps": {
+          "severity": "MEDIUM",
+          "description": "Share of the accrued yield the admin keeps, in basis points.",
+          "type": "RISK_PARAMETER"
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Pauses minting. Redeeming to the aToken stays open."
+        }
+      },
+      "implementationNames": {
+        "eth:0xA4cF419558Ef36CC6FfB666195684dC963910426": "PPYieldToken"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Transact2x2Verifier",
+      "address": "eth:0xAc716f21626994c4264eA457Fe208071050611B5",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0xc333f9ea09a1aa27bd02a96b7f99165f27e86cec1321aaa87c926b8bc945a28c"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xAc716f21626994c4264eA457Fe208071050611B5": "Transact2x2Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact3x3Verifier",
+      "address": "eth:0xAeCDf3E27A602f23cEc2E5CE250093b3E806D041",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x8fdc19379659a83c54b1c5d1ba7deb56668cbee1ea57ae3d90eb2f7365084f36"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xAeCDf3E27A602f23cEc2E5CE250093b3E806D041": "Transact3x3Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact2x3Verifier",
+      "address": "eth:0xB8aa00333b8D6958da72A15D59179BbDD1e49064",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0xc6edff9a784ebc36b74cd68225ff021931f9a206ff7ee57269495658ae071fad"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xB8aa00333b8D6958da72A15D59179BbDD1e49064": "Transact2x3Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "ppUSDC",
+      "address": "eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PPYieldToken",
+      "sourceHashes": [
+        "0x6856ffe56f3395af8daf0b10c1605349bf670168bb6a74298b41c0982afd05ed"
+      ],
+      "proxyType": "immutable",
+      "description": "ERC-4626 share token over an Aave v3 aToken, the asset the pool holds for a yield deposit. The admin's fee applies to the yield only.",
+      "ignoreInWatchMode": [
+        "accumulatedFees",
+        "claimableFees",
+        "exchangeRate",
+        "lastCheckpointBalance",
+        "totalAssets",
+        "totalSupply"
+      ],
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788511139,
+      "sinceBlock": 25902811,
+      "values": {
+        "$immutable": true,
+        "accumulatedFees": 539932,
+        "admin": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "asset": "eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c",
+        "claimableFees": 567965,
+        "decimals": 18,
+        "exchangeRate": 1004120,
+        "feeBps": 2000,
+        "lastCheckpointBalance": 16964839191,
+        "MAX_BPS": 10000,
+        "MAX_FEE_BPS": 2000,
+        "name": "Privacy Pool USDC",
+        "owner": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "paused": false,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "rewardsController": "eth:0x0000000000000000000000000000000000000000",
+        "symbol": "ppUSDC",
+        "totalAssets": 16964411393,
+        "totalSupply": "16894796773549280817288"
+      },
+      "fieldMeta": {
+        "feeBps": {
+          "severity": "MEDIUM",
+          "description": "Share of the accrued yield the admin keeps, in basis points.",
+          "type": "RISK_PARAMETER"
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Pauses minting. Redeeming to the aToken stays open."
+        }
+      },
+      "implementationNames": {
+        "eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6": "PPYieldToken"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Transact1x3Verifier",
+      "address": "eth:0xC5E1D9D9CF12E796Ec8E072646c6BF29A1e55382",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x45c1857849b9e7ad9584791aca00713be0db09cca94f8289070665dff9980475"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xC5E1D9D9CF12E796Ec8E072646c6BF29A1e55382": "Transact1x3Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Entrypoint",
+      "address": "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Entrypoint",
+      "sourceHashes": [
+        "0xa3a188e65fc0885e5fb907ee0794b5ca81470d468b3876a16374f366c9abd1c7",
+        "0xf4196803475027d8037f6f8eac04b6b9cc7245bc02484eb4fa74171c52a9e416"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Deposit gate of Privacy Pools v2. It checks each deposit against its asset's configuration and keeps the vetting fee.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788287987,
+      "sinceBlock": 25884284,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0xCe641ED02c54b074BE5d04CE345D1CedEaAF39eD",
+        "$pastUpgrades": [
+          [
+            "2026-09-01T18:39:47.000Z",
+            "0xc7da6f4506e754f905c2cbd291f86910f2057ad3b2f726081acb93893c5f9b46",
+            ["eth:0xCe641ED02c54b074BE5d04CE345D1CedEaAF39eD"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ACCESS_ROUTER": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+        "assetConfigs": {
+          "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE": [
+            true,
+            4000000000000000,
+            0,
+            "500000000000000000"
+          ],
+          "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": [
+            false,
+            10000000,
+            0,
+            1200000000
+          ],
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": [
+            false,
+            10000000,
+            0,
+            1200000000
+          ],
+          "eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6": [
+            true,
+            "10000000000000000000",
+            0,
+            "1200000000000000000000"
+          ],
+          "eth:0xA4cF419558Ef36CC6FfB666195684dC963910426": [
+            true,
+            "10000000000000000000",
+            0,
+            "1200000000000000000000"
+          ],
+          "eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7": [
+            true,
+            4000000000000000,
+            0,
+            "500000000000000000"
+          ]
+        },
+        "poolVault": "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": {
+        "poolVault": { "severity": "HIGH" },
+        "assetConfigs": {
+          "severity": "MEDIUM",
+          "description": "Per-asset configuration: enabled, minimum deposit, vetting fee in basis points and the maximum relayer fee per withdrawal.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3": "ERC1967Proxy",
+        "eth:0xCe641ED02c54b074BE5d04CE345D1CedEaAF39eD": "Entrypoint"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RelaySwaps",
+      "address": "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "description": "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof. The deployed build does not match the published source.",
+      "deployerAddress": "eth:0x0967755AfA2016866D12EefB820705026842dCe8",
+      "sinceTimestamp": 1789704851,
+      "sinceBlock": 26001921,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8": ""
+      }
+    },
+    {
+      "name": "PPYieldTokenZapUSDT",
+      "address": "eth:0xDC3D922df81FC7B7f58229431ED91acB0482f3A5",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PPYieldTokenZap",
+      "sourceHashes": [
+        "0x8fc9a133b986909edc6d46d3a6d496baf20c80b7ee26d4081579cb42827603ff"
+      ],
+      "proxyType": "immutable",
+      "description": "Converts between a share token and its underlying in one call, through Aave v3.",
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788527375,
+      "sinceBlock": 25904162,
+      "values": {
+        "$immutable": true,
+        "A_TOKEN": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
+        "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+        "UNDERLYING": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "VAULT": "eth:0xA4cF419558Ef36CC6FfB666195684dC963910426"
+      },
+      "implementationNames": {
+        "eth:0xDC3D922df81FC7B7f58229431ED91acB0482f3A5": "PPYieldTokenZap"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Transact3x4Verifier",
+      "address": "eth:0xe0aec1eE10eBfCDcB09b6e5a7ea6Ae34D066219d",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0xf07d5ab0079318e473185b7abd8165d41dcb306162c1fe830baa4159aff8dd61"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xe0aec1eE10eBfCDcB09b6e5a7ea6Ae34D066219d": "Transact3x4Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "PPRouterUSDC",
+      "address": "eth:0xe76E793d776c1e207aD7a7fa7C57d27420d85110",
+      "type": "Contract",
+      "template": "privacy-pools-v2/PPRouter",
+      "sourceHashes": [
+        "0xcfaf827458e4c0e28f72da92aba9c853ab88b80c9b70789610ef8e14953c2c83"
+      ],
+      "proxyType": "immutable",
+      "description": "Yield router for one share token. It wraps deposits of the underlying into shares, and unwraps withdrawn shares to pay the recipient and the relayer fee.",
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1788511199,
+      "sinceBlock": 25902816,
+      "values": {
+        "$immutable": true,
+        "A_TOKEN": "eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c",
+        "DUST_RECIPIENT": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+        "ENTRYPOINT": "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3",
+        "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+        "POOL_VAULT": "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+        "UNDERLYING": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "VAULT": "eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6",
+        "ZAP": "eth:0x9Ea986BcDF6784D85B518b15bEEE1E65b585817B"
+      },
+      "fieldMeta": {
+        "DUST_RECIPIENT": {
+          "description": "Address that can skim aToken dust left in the router."
+        },
+        "NATIVE_MODE": {
+          "description": "If true, the router takes ETH, wraps it and supplies WETH."
+        }
+      },
+      "implementationNames": {
+        "eth:0xe76E793d776c1e207aD7a7fa7C57d27420d85110": "PPRouter"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "DepositVerifier",
+      "address": "eth:0xEe96Ca04d2Ab2eC9A8803eb78F39b2875dFF6fdf",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x6d0d48a78e29d21c6e7e9ec5850ccef58c80e0e27852dab40709b586465b148c"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xEe96Ca04d2Ab2eC9A8803eb78F39b2875dFF6fdf": "DepositVerifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact2x4Verifier",
+      "address": "eth:0xF1C6c55B70EC3Df923f5E9bcd64aee5c3073C42c",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x736e00f1d879150320c8625548a90604dfe1f898d7c568a8998d973471d5c214"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xF1C6c55B70EC3Df923f5E9bcd64aee5c3073C42c": "Transact2x4Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact1x5Verifier",
+      "address": "eth:0xfa0138C5dE45E520AbA349BE38a827DAb470f70A",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x5c7a5a7e129f3357c81dd856af007aedfe1b028b5dc6c2d9ac9c902e4309005d"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xfa0138C5dE45E520AbA349BE38a827DAb470f70A": "Transact1x5Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "Transact3x5Verifier",
+      "address": "eth:0xFdF4EbC7645E1F4c04aE33285b6e3f78e4A3a275",
+      "type": "Contract",
+      "template": "privacy-pools-v2/Groth16Verifier",
+      "sourceHashes": [
+        "0x4d7e7fc8526b9cf6de3855dc7bc1dba39b110d382cdb9ea23dd5966d9d55f489"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for one Privacy Pools v2 circuit, with that circuit's trusted-setup verification key hard-coded.",
+      "critical": true,
+      "deployerAddress": "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92",
+      "sinceTimestamp": 1792504655,
+      "sinceBlock": 26234240,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xFdF4EbC7645E1F4c04aE33285b6e3f78e4A3a275": "Transact3x5Verifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    }
+  ],
+  "abis": {
+    "eth:0x01a8Fa4dbb60187aD8d3c3d08E7Fb8C14198A461": [
+      "constructor(address _pool, address _entrypoint, address _announcer)",
+      "error PrivacyPoolRelay_AnnouncementRecipientMismatch()",
+      "error PrivacyPoolRelay_BatchLengthMismatch()",
+      "error PrivacyPoolRelay_BatchTooLarge()",
+      "error PrivacyPoolRelay_EmptyBatch()",
+      "error PrivacyPoolRelay_FeeExceedsMax()",
+      "error PrivacyPoolRelay_FeeExceedsWithdrawal()",
+      "error PrivacyPoolRelay_InconsistentAsset()",
+      "error PrivacyPoolRelay_InconsistentRecipient()",
+      "error PrivacyPoolRelay_NativeGasMismatch()",
+      "error PrivacyPoolRelay_OnlyPoolCanSendETH()",
+      "error PrivacyPoolRelay_RootHistoryTooSmall()",
+      "error PrivacyPoolRelay_ZeroAnnouncer()",
+      "error PrivacyPoolRelay_ZeroEntrypoint()",
+      "error PrivacyPoolRelay_ZeroPool()",
+      "error PrivacyPoolRelay_ZeroRecipient()",
+      "error PrivacyPoolRelay_ZeroWithdrawal()",
+      "error ProofLib_TokenIdNotCanonical(uint256 _raw)",
+      "event Relayed(address indexed _asset, address indexed _recipient, uint256 _recipientAmount, address indexed _feeRecipient, uint256 _fee, uint256 _gasFunding)",
+      "event RelayedBatch(address indexed _asset, address indexed _recipient, uint256 _recipientAmount, address indexed _feeRecipient, uint256 _fee, uint256 _gasFunding, uint256 _count)",
+      "function ANNOUNCER() view returns (address)",
+      "function ENTRYPOINT() view returns (address)",
+      "function MAX_BATCH() pure returns (uint256 _maxBatch)",
+      "function POOL() view returns (address)",
+      "function registerAndRelay(address _account, uint256 _authDigest, uint256 _nullifyingKeyHash, uint256 _deadline, bytes _signature, tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, tuple(address processor, bytes data) _transactParams, tuple(bytes32 hint, bytes data)[] _noteData) payable",
+      "function relay(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, tuple(address processor, bytes data) _transactParams, tuple(bytes32 hint, bytes data)[] _noteData) payable",
+      "function relayAndAnnounce(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, tuple(address processor, bytes data) _transactParams, tuple(bytes32 hint, bytes data)[] _noteData, tuple(uint256 schemeId, address stealthAddress, bytes ephemeralPubKey, bytes metadata) _announcement) payable",
+      "function relayBatch(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals)[] _proofs, tuple(address processor, bytes data)[] _transactParams, tuple(bytes32 hint, bytes data)[][] _noteData) payable"
+    ],
+    "eth:0x01b4954E3b3C1F68785f60D7465c38C31266bfab": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[15] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x046991310B099e86af239d3A4F3AB3e196F24EC7": [
+      "constructor(address _accessRouter)",
+      "error ASPRegistry_EmptyASPRoot()",
+      "error ASPRegistry_EmptyAssociationSet()",
+      "error ASPRegistry_EmptyIPFSCID()",
+      "error ASPRegistry_RootOutOfField()",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error Permissioned_InvalidAccessRouter()",
+      "error Permissioned_NotAuthorized()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event ASPRootUpdated(uint256 indexed _root, bytes _ipfsCID)",
+      "event Initialized(uint64 version)",
+      "event LabelRegistered(bytes _ciphertext)",
+      "event Upgraded(address indexed implementation)",
+      "function ACCESS_ROUTER() view returns (address)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function associationSets(uint256 _index) view returns (tuple(uint256 root, bytes ipfsCID) _data)",
+      "function initialize()",
+      "function latestASPRoot() view returns (uint256 _root)",
+      "function latestIPFSCID() view returns (bytes _ipfsCID)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerLabel(bytes _ciphertext)",
+      "function updateASPRoot(uint256 _aspRoot, bytes _ipfsCID)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x0e13d94235d8a0d8f9fC3B63BB41D666eF0677Ed": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[9] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x13a0b86bac3e0C29bd64fED7BCD2EE84f371f41C": [
+      "constructor(address _vault, address _pool, address _underlying, address _entrypoint, address _dustRecipient, address _zap, address _poolVault)",
+      "error FailedCall()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error PPRouter_AssetMismatch(address _proofAsset)",
+      "error PPRouter_BelowMinUnderlying(uint256 _underlyingOut, uint256 _minUnderlyingOut)",
+      "error PPRouter_FeeExceedsMax()",
+      "error PPRouter_FeeExceedsWithdrawal()",
+      "error PPRouter_InvalidProcessor()",
+      "error PPRouter_NativeGasMismatch()",
+      "error PPRouter_SharesNotReceived()",
+      "error PPRouter_SharesStranded()",
+      "error PPRouter_SlippageExceeded(uint256 _required, uint256 _maxUnderlyingIn)",
+      "error PPRouter_ZeroAddress()",
+      "error PPRouter_ZeroRecipient()",
+      "error PPRouter_ZeroValue()",
+      "error PPRouter_ZeroWithdrawal()",
+      "error ProofLib_TokenIdNotCanonical(uint256 _raw)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Deposited(address indexed _payer, address indexed _asset, uint256 _value, uint256 _underlyingIn, uint256 _total)",
+      "event Skimmed(address indexed _to, uint256 _amount)",
+      "event WithdrawnToUnderlying(address indexed _asset, address indexed _underlying, address indexed _recipient, uint256 _sharesOut, uint256 _underlyingToRecipient, address _feeRecipient, uint256 _feeShares, uint256 _underlyingFee, uint256 _gasFunding)",
+      "function A_TOKEN() view returns (address)",
+      "function DUST_RECIPIENT() view returns (address)",
+      "function ENTRYPOINT() view returns (address)",
+      "function POOL() view returns (address)",
+      "function POOL_VAULT() view returns (address)",
+      "function UNDERLYING() view returns (address)",
+      "function VAULT() view returns (address)",
+      "function ZAP() view returns (address)",
+      "function depositExactShares(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[4] pubSignals) _proof, tuple(bytes32 hint, bytes data) _noteData, bytes _aspCiphertext, uint256 _maxUnderlyingIn) returns (uint256 _underlyingIn)",
+      "function quote(uint256 _value) view returns (uint256 _underlyingNeeded, uint256 _total)",
+      "function quoteWithdraw(uint256 _shares) view returns (uint256 _underlyingOut)",
+      "function skim() returns (uint256 _amount)",
+      "function withdrawToUnderlying(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, tuple(address processor, bytes data) _transactParams, tuple(bytes32 hint, bytes data)[] _noteData, uint256 _minUnderlyingOut) payable returns (uint256 _underlyingToRecipient, uint256 _underlyingFee)"
+    ],
+    "eth:0x20D4B794A2A1ae7A34AF184172dd931d3ff2Fa32": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[14] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x21347145497569b34efAB7d73952208866520042": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[8] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x259C0BEa1d783c202509BD3b2688d23b8AEf58B0": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x338625F2199675D2aC4Fbf7A89567864ac990710": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[9] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x33c1eEf370bBb447414156CFc4fDABD434776EAf": [
+      "constructor(address _vault, address _pool, address _underlying)",
+      "error PPYieldTokenZap_InsufficientWrap(uint256 _received, uint256 _needed)",
+      "error PPYieldTokenZap_SlippageExceeded(uint256 _required, uint256 _maxUnderlyingIn)",
+      "error PPYieldTokenZap_ZeroAddress()",
+      "error PPYieldTokenZap_ZeroAmount()",
+      "error SafeERC20FailedOperation(address token)",
+      "event ZappedIn(address indexed _sender, address indexed _receiver, uint256 _underlyingIn, uint256 _shares)",
+      "event ZappedInExact(address indexed _sender, address indexed _receiver, uint256 _underlyingIn, uint256 _shares)",
+      "event ZappedOut(address indexed _sender, address indexed _receiver, uint256 _shares, uint256 _underlyingOut)",
+      "function A_TOKEN() view returns (address)",
+      "function POOL() view returns (address)",
+      "function UNDERLYING() view returns (address)",
+      "function VAULT() view returns (address)",
+      "function buyFixedYieldToken(uint256 _shares, address _receiver, uint256 _maxUnderlyingIn) returns (uint256 _underlyingIn)",
+      "function depositUnderlying(uint256 _underlyingAmount, address _receiver) returns (uint256 _shares)",
+      "function quoteBuy(uint256 _shares) view returns (uint256 _underlyingNeeded)",
+      "function redeemToUnderlying(uint256 _shares, address _receiver) returns (uint256 _underlyingOut)"
+    ],
+    "eth:0x3ee4A00e0ba1AC0Ef8aD3e4b541CA42FBB4592c3": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[11] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160": [
+      "constructor(address _defaultAdmin, address _opsAdmin, bytes32[] _opsAdminRoles, address _upgrader, address[] _pausers, address[] _unpausers, address _entrypointManager, address _postman)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AccessRouter_AdminRoleEscalation(bytes32 role)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "eth:0x454F1Da26DD4c7c89a849019BeC4c7C7C404d3A4": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[12] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x4Cb752CEF56a5095321Ed72699cD7A699D48F4b5": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[14] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x579f6734d35937b8432BA8FfC17C3120eb657c82": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[10] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x5a06582115953E2cAbeD8e6A0EeAE35BA430118f": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[7] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x5F89cD5c3610c2AD870B1b33126d209fECdb69c7": [
+      "constructor(address _accessRouter)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error Permissioned_InvalidAccessRouter()",
+      "error Permissioned_NotAuthorized()",
+      "error PoolVault_CommitmentAlreadyUsed()",
+      "error PoolVault_CommitmentNotFound()",
+      "error PoolVault_InvalidASPRoot()",
+      "error PoolVault_InvalidDepositProof()",
+      "error PoolVault_InvalidMaxTreeSize()",
+      "error PoolVault_InvalidOwnerAddress()",
+      "error PoolVault_InvalidProcessor()",
+      "error PoolVault_InvalidRagequitProof()",
+      "error PoolVault_InvalidTransactProof()",
+      "error PoolVault_InvalidValue()",
+      "error PoolVault_NullifierAlreadySpent()",
+      "error PoolVault_ProofContextMismatch()",
+      "error PoolVault_StateTreeFull()",
+      "error PoolVault_TokenIdMustBeZeroOnInternalTransfer()",
+      "error PoolVault_UnexpectedETHAmount()",
+      "error PoolVault_UnknownKeystoreRoot()",
+      "error PoolVault_UnknownStateRoot()",
+      "error PoolVault_ZeroValueRagequit()",
+      "error ProofLib_TokenIdNotCanonical(uint256 _raw)",
+      "error ReentrancyGuardReentrantCall()",
+      "error RootBuffer_InvalidSize()",
+      "error TransactVerifierRouter_InvalidZeroParameter()",
+      "error TransactVerifierRouter_UnsupportedCircuitConfiguration(uint256 _nullifiersSpent, uint256 _commitmentsCreated)",
+      "error TransactVerifierRouter_VerifierCallReverted(bytes _error)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event AspRegistrySet(address indexed _previous, address indexed _current)",
+      "event DepositVerifierSet(address indexed _previous, address indexed _current)",
+      "event Deposited(uint256 outputCommitment, address indexed asset, uint256 depositedValue, address indexed caller)",
+      "event Initialized(uint64 version)",
+      "event KeystoreSet(address indexed _previous, address indexed _current)",
+      "event LeafInserted(uint256 _newLeaf, uint256 _root, uint256 _leafIndex)",
+      "event LeafUpdated(uint256 _newLeaf, uint256 _root, uint256 _leafIndex)",
+      "event LeavesInserted(uint256[] _newLeaves, uint256 _root, uint256 _startIndex)",
+      "event MaxStateTreeSizeUpdated(uint256 _previousSize, uint256 _newSize)",
+      "event Note(bytes32 indexed hint, bytes data)",
+      "event Paused(address account)",
+      "event Ragequit(address indexed ragequitter, address indexed asset, uint256 value, uint256 commitment, uint256 nullifierHash, uint256 label)",
+      "event RagequitVerifierSet(address indexed _previous, address indexed _current)",
+      "event Transacted(uint256[] outputCommitments, uint256[] nullifierHashes, address indexed asset, uint256 withdrawnValue, address indexed caller)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event VerifierConfigured(uint256 _nullifiersSpent, uint256 _commitmentsCreated, address _verifier, bytes4 _selector)",
+      "function ACCESS_ROUTER() view returns (address)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function aspRegistry() view returns (address _aspRegistry)",
+      "function commitments(uint256 _commitmentHash) view returns (uint256 _createdAt)",
+      "function currentRootIndex() view returns (uint32 _index)",
+      "function deposit(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[4] pubSignals) _proof, tuple(bytes32 hint, bytes data) _noteData) payable",
+      "function depositVerifier() view returns (address _verifier)",
+      "function initialize(uint32 _rootHistorySize, tuple(uint8 n, uint8 m, tuple(address addr, bytes4 selector) verifier)[] _verifierConfigs, address _aspRegistry, address _keystore, address _ragequitVerifier, address _depositVerifier, uint256 _maxStateTreeSize)",
+      "function isKnownRoot(uint256 _root) view returns (bool _isKnown)",
+      "function keystore() view returns (address _keystore)",
+      "function maxStateTreeSize() view returns (uint256 _maxSize)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function ragequit(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[7] pubSignals) _proof)",
+      "function ragequitVerifier() view returns (address _verifier)",
+      "function rootHistorySize() view returns (uint32 _size)",
+      "function roots(uint256 _index) view returns (uint256 _root)",
+      "function setAspRegistry(address _aspRegistry)",
+      "function setDepositVerifier(address _depositVerifier)",
+      "function setKeystore(address _keystore)",
+      "function setMaxStateTreeSize(uint256 _maxStateTreeSize)",
+      "function setRagequitVerifier(address _ragequitVerifier)",
+      "function setVerifier(uint8 _nullifiersSpent, uint8 _commitmentsCreated, tuple(address addr, bytes4 selector) _settings)",
+      "function spentNullifiers(uint256 _nullifierHash) view returns (uint256 _spentAt)",
+      "function transact(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, tuple(address processor, bytes data) _transactParams, tuple(bytes32 hint, bytes data)[] _noteData)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifiers(bytes32 _key) view returns (tuple(address addr, bytes4 selector) _verifier)"
+    ],
+    "eth:0x61573Cf3c3A20C9739b68B8e742Ca51971387Cb5": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[12] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x62Cf8963300F284016daE0cD19f5D9BC60846a46": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[13] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
+    "eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7": [
+      "constructor(address _aToken, uint256 _initialFeeBps, address _admin, string _name, string _symbol)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)",
+      "error ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PPYieldToken_CannotRescueAsset()",
+      "error PPYieldToken_FeeTooHigh()",
+      "error PPYieldToken_RenounceDisabled()",
+      "error PPYieldToken_RewardsControllerNotSet()",
+      "error PPYieldToken_UnsupportedDecimals()",
+      "error PPYieldToken_ZeroAddress()",
+      "error PPYieldToken_ZeroAssets()",
+      "error PPYieldToken_ZeroShares()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
+      "event FeeUpdated(uint256 _oldFeeBps, uint256 _newFeeBps)",
+      "event FeesClaimed(address indexed _recipient, uint256 _amount)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RewardsControllerUpdated(address indexed _oldController, address indexed _newController)",
+      "event TokenRescued(address indexed _token, address indexed _to, uint256 _amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
+      "function MAX_BPS() view returns (uint256)",
+      "function MAX_FEE_BPS() view returns (uint256)",
+      "function acceptOwnership()",
+      "function accumulatedFees() view returns (uint256)",
+      "function admin() view returns (address _admin)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function asset() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function claimFees(address _recipient) returns (uint256 _claimed)",
+      "function claimFees() returns (uint256 _claimed)",
+      "function claimRewards(address[] _assets, address _to) returns (address[] _rewardsList, uint256[] _claimedAmounts)",
+      "function claimableFees() view returns (uint256 _claimableFees)",
+      "function convertToAssets(uint256 shares) view returns (uint256)",
+      "function convertToShares(uint256 assets) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function deposit(uint256 assets, address receiver) returns (uint256)",
+      "function exchangeRate() view returns (uint256 _exchangeRate)",
+      "function feeBps() view returns (uint256)",
+      "function lastCheckpointBalance() view returns (uint256)",
+      "function maxDeposit(address _receiver) view returns (uint256 _maxAssets)",
+      "function maxMint(address _receiver) view returns (uint256 _maxShares)",
+      "function maxRedeem(address owner) view returns (uint256)",
+      "function maxWithdraw(address owner) view returns (uint256)",
+      "function mint(uint256 shares, address receiver) returns (uint256)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool _paused)",
+      "function pendingOwner() view returns (address)",
+      "function previewDeposit(uint256 assets) view returns (uint256)",
+      "function previewMint(uint256 shares) view returns (uint256)",
+      "function previewRedeem(uint256 shares) view returns (uint256)",
+      "function previewWithdraw(uint256 assets) view returns (uint256)",
+      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
+      "function renounceOwnership() view",
+      "function rescueToken(address _token, address _to, uint256 _amount)",
+      "function rewardsController() view returns (address)",
+      "function setFeeBps(uint256 _newFeeBps)",
+      "function setRewardsController(address _rewardsController)",
+      "function symbol() view returns (string)",
+      "function totalAssets() view returns (uint256 _totalAssets)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)"
+    ],
+    "eth:0x6E463391c79b7e1A88eF26E0B023f9A6C9938a71": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x766c2F31483935CD55355fcE00fc5eDB82A15acC": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[15] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x76D574559765fd4b90903fFa682964Ae7e7e878a": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[11] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x77613D670BB9fD48A9898D0eac8ebf21B566F960": [
+      "constructor(address _vault, address _pool, address _underlying, address _entrypoint, address _dustRecipient, address _zap, address _poolVault, bool _nativeMode)",
+      "error FailedCall()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error PPRouter_AssetMismatch(address _proofAsset)",
+      "error PPRouter_BelowMinUnderlying(uint256 _underlyingOut, uint256 _minUnderlyingOut)",
+      "error PPRouter_DirectEthTransfer()",
+      "error PPRouter_FeeExceedsMax()",
+      "error PPRouter_FeeExceedsWithdrawal()",
+      "error PPRouter_InvalidProcessor()",
+      "error PPRouter_NativeGasMismatch()",
+      "error PPRouter_NotNativeMode()",
+      "error PPRouter_SharesNotReceived()",
+      "error PPRouter_SharesStranded()",
+      "error PPRouter_SlippageExceeded(uint256 _required, uint256 _maxUnderlyingIn)",
+      "error PPRouter_ZeroAddress()",
+      "error PPRouter_ZeroRecipient()",
+      "error PPRouter_ZeroValue()",
+      "error PPRouter_ZeroWithdrawal()",
+      "error ProofLib_TokenIdNotCanonical(uint256 _raw)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Deposited(address indexed _payer, address indexed _asset, uint256 _value, uint256 _underlyingIn, uint256 _total)",
+      "event Skimmed(address indexed _to, uint256 _amount)",
+      "event WithdrawnToUnderlying(address indexed _asset, address indexed _underlying, address indexed _recipient, uint256 _sharesOut, uint256 _underlyingToRecipient, address _feeRecipient, uint256 _feeShares, uint256 _underlyingFee, uint256 _gasFunding)",
+      "function A_TOKEN() view returns (address)",
+      "function DUST_RECIPIENT() view returns (address)",
+      "function ENTRYPOINT() view returns (address)",
+      "function NATIVE_MODE() view returns (bool)",
+      "function POOL() view returns (address)",
+      "function POOL_VAULT() view returns (address)",
+      "function UNDERLYING() view returns (address)",
+      "function VAULT() view returns (address)",
+      "function ZAP() view returns (address)",
+      "function depositExactShares(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[4] pubSignals) _proof, tuple(bytes32 hint, bytes data) _noteData, bytes _aspCiphertext, uint256 _maxUnderlyingIn) returns (uint256 _underlyingIn)",
+      "function depositExactSharesNative(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[4] pubSignals) _proof, tuple(bytes32 hint, bytes data) _noteData, bytes _aspCiphertext) payable returns (uint256 _underlyingIn)",
+      "function quote(uint256 _value) view returns (uint256 _underlyingNeeded, uint256 _total)",
+      "function quoteWithdraw(uint256 _shares) view returns (uint256 _underlyingOut)",
+      "function skim() returns (uint256 _amount)",
+      "function withdrawToUnderlying(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, tuple(address processor, bytes data) _transactParams, tuple(bytes32 hint, bytes data)[] _noteData, uint256 _minUnderlyingOut) payable returns (uint256 _underlyingToRecipient, uint256 _underlyingFee)"
+    ],
+    "eth:0x7b915008ffa267271e9E328430FE328eA02C5F04": [
+      "constructor(address _accessRouter)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error Keystore_AuthPolicyAlreadySet()",
+      "error Keystore_AuthPolicyNotSet()",
+      "error Keystore_InvalidMaxTreeSize()",
+      "error Keystore_InvalidNullifyingKeyHash()",
+      "error Keystore_InvalidSignature()",
+      "error Keystore_KeystoreTreeFull()",
+      "error Keystore_OutOfScalarField()",
+      "error Keystore_SignatureExpired()",
+      "error NotInitializing()",
+      "error Permissioned_InvalidAccessRouter()",
+      "error Permissioned_NotAuthorized()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event AuthPolicySet(address indexed _account, uint256 _nullifyingKeyHash, uint256 _authDigest)",
+      "event AuthPolicyUpdated(address indexed _account, uint256 _oldAuthDigest, uint256 _authDigest)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event KeystoreRootLivenessUpdated(uint256 _previousLiveness, uint256 _newLiveness)",
+      "event LeafInserted(uint256 _newLeaf, uint256 _root, uint256 _leafIndex)",
+      "event LeafUpdated(uint256 _newLeaf, uint256 _root, uint256 _leafIndex)",
+      "event LeavesInserted(uint256[] _newLeaves, uint256 _root, uint256 _startIndex)",
+      "event MaxKeystoreTreeSizeUpdated(uint256 _previousSize, uint256 _newSize)",
+      "event RootSuperseded(uint256 indexed _oldRoot, uint256 indexed _newRoot, uint256 _oldRootValidUntil)",
+      "event Upgraded(address indexed implementation)",
+      "event ViewingKeySet(address indexed _account, bytes32 _oldViewingKey, bytes32 _newViewingKey)",
+      "function ACCESS_ROUTER() view returns (address)",
+      "function SET_AUTH_POLICY_TYPEHASH() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function currentRoot() view returns (uint256 _root)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function initialize(uint256 _keystoreRootLiveness, uint256 _maxKeystoreTreeSize)",
+      "function initializeEIP712()",
+      "function isKnownRoot(uint256 _root) view returns (bool _isKnown)",
+      "function keystoreRootLiveness() view returns (uint256 _liveness)",
+      "function maxKeystoreTreeSize() view returns (uint256 _maxSize)",
+      "function nullifyingKeys(address _account) view returns (uint256 _nullifyingKeyHash)",
+      "function previousRoots(uint256 _root) view returns (uint256 _validUntil)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function setAuthPolicy(uint256 _authDigest, uint256 _nullifyingKeyHash)",
+      "function setAuthPolicyWithSig(address _account, uint256 _authDigest, uint256 _nullifyingKeyHash, uint256 _deadline, bytes _signature)",
+      "function setKeystoreRootLiveness(uint256 _keystoreRootLiveness)",
+      "function setMaxKeystoreTreeSize(uint256 _maxKeystoreTreeSize)",
+      "function setViewingKey(bytes32 _viewingKey)",
+      "function updateAuthPolicy(uint256 _oldAuthDigest, uint256 _updatedAuthDigest, uint256[] _siblingNodes)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function viewingKeys(address _account) view returns (bytes32 _viewingKey)"
+    ],
+    "eth:0x7BeE2554970A749D7671424DFa3fAbE15d7e4BD8": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[16] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x8ABfb288dAc87392EaFdD59F6809825fcA0e8b85": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[13] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x909ECAF2A4959726a2BC3d82Fc837B8D3F1c61d3": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[11] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x95dEC97ac78E8C0FfDc6315FDc0A0791238b93A3": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[13] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x9Ea986BcDF6784D85B518b15bEEE1E65b585817B": [
+      "constructor(address _vault, address _pool, address _underlying)",
+      "error PPYieldTokenZap_InsufficientWrap(uint256 _received, uint256 _needed)",
+      "error PPYieldTokenZap_SlippageExceeded(uint256 _required, uint256 _maxUnderlyingIn)",
+      "error PPYieldTokenZap_ZeroAddress()",
+      "error PPYieldTokenZap_ZeroAmount()",
+      "error SafeERC20FailedOperation(address token)",
+      "event ZappedIn(address indexed _sender, address indexed _receiver, uint256 _underlyingIn, uint256 _shares)",
+      "event ZappedInExact(address indexed _sender, address indexed _receiver, uint256 _underlyingIn, uint256 _shares)",
+      "event ZappedOut(address indexed _sender, address indexed _receiver, uint256 _shares, uint256 _underlyingOut)",
+      "function A_TOKEN() view returns (address)",
+      "function POOL() view returns (address)",
+      "function UNDERLYING() view returns (address)",
+      "function VAULT() view returns (address)",
+      "function buyFixedYieldToken(uint256 _shares, address _receiver, uint256 _maxUnderlyingIn) returns (uint256 _underlyingIn)",
+      "function depositUnderlying(uint256 _underlyingAmount, address _receiver) returns (uint256 _shares)",
+      "function quoteBuy(uint256 _shares) view returns (uint256 _underlyingNeeded)",
+      "function redeemToUnderlying(uint256 _shares, address _receiver) returns (uint256 _underlyingOut)"
+    ],
+    "eth:0xA4cF419558Ef36CC6FfB666195684dC963910426": [
+      "constructor(address _aToken, uint256 _initialFeeBps, address _admin, string _name, string _symbol)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)",
+      "error ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PPYieldToken_CannotRescueAsset()",
+      "error PPYieldToken_FeeTooHigh()",
+      "error PPYieldToken_RenounceDisabled()",
+      "error PPYieldToken_RewardsControllerNotSet()",
+      "error PPYieldToken_UnsupportedDecimals()",
+      "error PPYieldToken_ZeroAddress()",
+      "error PPYieldToken_ZeroAssets()",
+      "error PPYieldToken_ZeroShares()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
+      "event FeeUpdated(uint256 _oldFeeBps, uint256 _newFeeBps)",
+      "event FeesClaimed(address indexed _recipient, uint256 _amount)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RewardsControllerUpdated(address indexed _oldController, address indexed _newController)",
+      "event TokenRescued(address indexed _token, address indexed _to, uint256 _amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
+      "function MAX_BPS() view returns (uint256)",
+      "function MAX_FEE_BPS() view returns (uint256)",
+      "function acceptOwnership()",
+      "function accumulatedFees() view returns (uint256)",
+      "function admin() view returns (address _admin)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function asset() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function claimFees(address _recipient) returns (uint256 _claimed)",
+      "function claimFees() returns (uint256 _claimed)",
+      "function claimRewards(address[] _assets, address _to) returns (address[] _rewardsList, uint256[] _claimedAmounts)",
+      "function claimableFees() view returns (uint256 _claimableFees)",
+      "function convertToAssets(uint256 shares) view returns (uint256)",
+      "function convertToShares(uint256 assets) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function deposit(uint256 assets, address receiver) returns (uint256)",
+      "function exchangeRate() view returns (uint256 _exchangeRate)",
+      "function feeBps() view returns (uint256)",
+      "function lastCheckpointBalance() view returns (uint256)",
+      "function maxDeposit(address _receiver) view returns (uint256 _maxAssets)",
+      "function maxMint(address _receiver) view returns (uint256 _maxShares)",
+      "function maxRedeem(address owner) view returns (uint256)",
+      "function maxWithdraw(address owner) view returns (uint256)",
+      "function mint(uint256 shares, address receiver) returns (uint256)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool _paused)",
+      "function pendingOwner() view returns (address)",
+      "function previewDeposit(uint256 assets) view returns (uint256)",
+      "function previewMint(uint256 shares) view returns (uint256)",
+      "function previewRedeem(uint256 shares) view returns (uint256)",
+      "function previewWithdraw(uint256 assets) view returns (uint256)",
+      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
+      "function renounceOwnership() view",
+      "function rescueToken(address _token, address _to, uint256 _amount)",
+      "function rewardsController() view returns (address)",
+      "function setFeeBps(uint256 _newFeeBps)",
+      "function setRewardsController(address _rewardsController)",
+      "function symbol() view returns (string)",
+      "function totalAssets() view returns (uint256 _totalAssets)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)"
+    ],
+    "eth:0xAc716f21626994c4264eA457Fe208071050611B5": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[10] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xAeCDf3E27A602f23cEc2E5CE250093b3E806D041": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[12] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xB8aa00333b8D6958da72A15D59179BbDD1e49064": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[11] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6": [
+      "constructor(address _aToken, uint256 _initialFeeBps, address _admin, string _name, string _symbol)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)",
+      "error ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PPYieldToken_CannotRescueAsset()",
+      "error PPYieldToken_FeeTooHigh()",
+      "error PPYieldToken_RenounceDisabled()",
+      "error PPYieldToken_RewardsControllerNotSet()",
+      "error PPYieldToken_UnsupportedDecimals()",
+      "error PPYieldToken_ZeroAddress()",
+      "error PPYieldToken_ZeroAssets()",
+      "error PPYieldToken_ZeroShares()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
+      "event FeeUpdated(uint256 _oldFeeBps, uint256 _newFeeBps)",
+      "event FeesClaimed(address indexed _recipient, uint256 _amount)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RewardsControllerUpdated(address indexed _oldController, address indexed _newController)",
+      "event TokenRescued(address indexed _token, address indexed _to, uint256 _amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
+      "function MAX_BPS() view returns (uint256)",
+      "function MAX_FEE_BPS() view returns (uint256)",
+      "function acceptOwnership()",
+      "function accumulatedFees() view returns (uint256)",
+      "function admin() view returns (address _admin)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function asset() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function claimFees(address _recipient) returns (uint256 _claimed)",
+      "function claimFees() returns (uint256 _claimed)",
+      "function claimRewards(address[] _assets, address _to) returns (address[] _rewardsList, uint256[] _claimedAmounts)",
+      "function claimableFees() view returns (uint256 _claimableFees)",
+      "function convertToAssets(uint256 shares) view returns (uint256)",
+      "function convertToShares(uint256 assets) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function deposit(uint256 assets, address receiver) returns (uint256)",
+      "function exchangeRate() view returns (uint256 _exchangeRate)",
+      "function feeBps() view returns (uint256)",
+      "function lastCheckpointBalance() view returns (uint256)",
+      "function maxDeposit(address _receiver) view returns (uint256 _maxAssets)",
+      "function maxMint(address _receiver) view returns (uint256 _maxShares)",
+      "function maxRedeem(address owner) view returns (uint256)",
+      "function maxWithdraw(address owner) view returns (uint256)",
+      "function mint(uint256 shares, address receiver) returns (uint256)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool _paused)",
+      "function pendingOwner() view returns (address)",
+      "function previewDeposit(uint256 assets) view returns (uint256)",
+      "function previewMint(uint256 shares) view returns (uint256)",
+      "function previewRedeem(uint256 shares) view returns (uint256)",
+      "function previewWithdraw(uint256 assets) view returns (uint256)",
+      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
+      "function renounceOwnership() view",
+      "function rescueToken(address _token, address _to, uint256 _amount)",
+      "function rewardsController() view returns (address)",
+      "function setFeeBps(uint256 _newFeeBps)",
+      "function setRewardsController(address _rewardsController)",
+      "function symbol() view returns (string)",
+      "function totalAssets() view returns (uint256 _totalAssets)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)"
+    ],
+    "eth:0xC5E1D9D9CF12E796Ec8E072646c6BF29A1e55382": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[10] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xCe641ED02c54b074BE5d04CE345D1CedEaAF39eD": [
+      "constructor(address _accessRouter)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error Entrypoint_AssetNotEnabled()",
+      "error Entrypoint_BelowMinAmount()",
+      "error Entrypoint_InvalidETHAmount()",
+      "error Entrypoint_InvalidFeeBPS()",
+      "error Entrypoint_InvalidMinAmount()",
+      "error Entrypoint_UnexpectedETHAmount()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error Permissioned_InvalidAccessRouter()",
+      "error Permissioned_NotAuthorized()",
+      "error ProofLib_TokenIdNotCanonical(uint256 _raw)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event AssetConfigurationSet(address indexed _asset, tuple(bool enabled, uint256 minAmount, uint256 vettingFeeBPS, uint256 maxRelayFee) _config)",
+      "event Deposited(address indexed _asset, address indexed _depositor, uint256 _value, uint256 _fee)",
+      "event Initialized(uint64 version)",
+      "event PoolVaultSet(address indexed _previous, address indexed _current)",
+      "event Swept(address indexed _asset, address indexed _recipient, uint256 _amount)",
+      "event Upgraded(address indexed implementation)",
+      "function ACCESS_ROUTER() view returns (address)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function assets(address _asset) view returns (tuple(bool enabled, uint256 minAmount, uint256 vettingFeeBPS, uint256 maxRelayFee) _config)",
+      "function deposit(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[4] pubSignals) _proof, tuple(bytes32 hint, bytes data) _noteData, bytes _aspCiphertext) payable",
+      "function initialize(address _poolVault)",
+      "function poolVault() view returns (address _poolVault)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function setAssetConfiguration(address _asset, tuple(bool enabled, uint256 minAmount, uint256 vettingFeeBPS, uint256 maxRelayFee) _config)",
+      "function setPoolVault(address _poolVault)",
+      "function sweep(address _asset, address _recipient)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xDC3D922df81FC7B7f58229431ED91acB0482f3A5": [
+      "constructor(address _vault, address _pool, address _underlying)",
+      "error PPYieldTokenZap_InsufficientWrap(uint256 _received, uint256 _needed)",
+      "error PPYieldTokenZap_SlippageExceeded(uint256 _required, uint256 _maxUnderlyingIn)",
+      "error PPYieldTokenZap_ZeroAddress()",
+      "error PPYieldTokenZap_ZeroAmount()",
+      "error SafeERC20FailedOperation(address token)",
+      "event ZappedIn(address indexed _sender, address indexed _receiver, uint256 _underlyingIn, uint256 _shares)",
+      "event ZappedInExact(address indexed _sender, address indexed _receiver, uint256 _underlyingIn, uint256 _shares)",
+      "event ZappedOut(address indexed _sender, address indexed _receiver, uint256 _shares, uint256 _underlyingOut)",
+      "function A_TOKEN() view returns (address)",
+      "function POOL() view returns (address)",
+      "function UNDERLYING() view returns (address)",
+      "function VAULT() view returns (address)",
+      "function buyFixedYieldToken(uint256 _shares, address _receiver, uint256 _maxUnderlyingIn) returns (uint256 _underlyingIn)",
+      "function depositUnderlying(uint256 _underlyingAmount, address _receiver) returns (uint256 _shares)",
+      "function quoteBuy(uint256 _shares) view returns (uint256 _underlyingNeeded)",
+      "function redeemToUnderlying(uint256 _shares, address _receiver) returns (uint256 _underlyingOut)"
+    ],
+    "eth:0xe0aec1eE10eBfCDcB09b6e5a7ea6Ae34D066219d": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[13] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xe76E793d776c1e207aD7a7fa7C57d27420d85110": [
+      "constructor(address _vault, address _pool, address _underlying, address _entrypoint, address _dustRecipient, address _zap, address _poolVault)",
+      "error FailedCall()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error PPRouter_AssetMismatch(address _proofAsset)",
+      "error PPRouter_BelowMinUnderlying(uint256 _underlyingOut, uint256 _minUnderlyingOut)",
+      "error PPRouter_FeeExceedsMax()",
+      "error PPRouter_FeeExceedsWithdrawal()",
+      "error PPRouter_InvalidProcessor()",
+      "error PPRouter_NativeGasMismatch()",
+      "error PPRouter_SharesNotReceived()",
+      "error PPRouter_SharesStranded()",
+      "error PPRouter_SlippageExceeded(uint256 _required, uint256 _maxUnderlyingIn)",
+      "error PPRouter_ZeroAddress()",
+      "error PPRouter_ZeroRecipient()",
+      "error PPRouter_ZeroValue()",
+      "error PPRouter_ZeroWithdrawal()",
+      "error ProofLib_TokenIdNotCanonical(uint256 _raw)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event Deposited(address indexed _payer, address indexed _asset, uint256 _value, uint256 _underlyingIn, uint256 _total)",
+      "event Skimmed(address indexed _to, uint256 _amount)",
+      "event WithdrawnToUnderlying(address indexed _asset, address indexed _underlying, address indexed _recipient, uint256 _sharesOut, uint256 _underlyingToRecipient, address _feeRecipient, uint256 _feeShares, uint256 _underlyingFee, uint256 _gasFunding)",
+      "function A_TOKEN() view returns (address)",
+      "function DUST_RECIPIENT() view returns (address)",
+      "function ENTRYPOINT() view returns (address)",
+      "function POOL() view returns (address)",
+      "function POOL_VAULT() view returns (address)",
+      "function UNDERLYING() view returns (address)",
+      "function VAULT() view returns (address)",
+      "function ZAP() view returns (address)",
+      "function depositExactShares(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[4] pubSignals) _proof, tuple(bytes32 hint, bytes data) _noteData, bytes _aspCiphertext, uint256 _maxUnderlyingIn) returns (uint256 _underlyingIn)",
+      "function quote(uint256 _value) view returns (uint256 _underlyingNeeded, uint256 _total)",
+      "function quoteWithdraw(uint256 _shares) view returns (uint256 _underlyingOut)",
+      "function skim() returns (uint256 _amount)",
+      "function withdrawToUnderlying(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[][] pubSignals) _proof, tuple(address processor, bytes data) _transactParams, tuple(bytes32 hint, bytes data)[] _noteData, uint256 _minUnderlyingOut) payable returns (uint256 _underlyingToRecipient, uint256 _underlyingFee)"
+    ],
+    "eth:0xEe96Ca04d2Ab2eC9A8803eb78F39b2875dFF6fdf": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[4] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xF1C6c55B70EC3Df923f5E9bcd64aee5c3073C42c": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[12] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xfa0138C5dE45E520AbA349BE38a827DAb470f70A": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[12] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xFdF4EbC7645E1F4c04aE33285b6e3f78e4A3a275": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[14] _pubSignals) view returns (bool)"
+    ]
+  },
+  "usedTemplates": {
+    "privacy-pools-v2/AccessRouter": "0xbbc8e616c9e254b03691ccff0c79aa7631d66a6eb6a5143b3cb8750c163d6b40",
+    "privacy-pools-v2/ASPRegistry": "0x2cd410a27781b87502e29d76c2cd6c359c2980762e59a1af146ef4e3b779ee23",
+    "privacy-pools-v2/Entrypoint": "0x2b1b18656ab882737ae02892542c034ef4c9a0232d84e90dab17a36b48697ed7",
+    "privacy-pools-v2/Groth16Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "privacy-pools-v2/Keystore": "0x2273ea1154a70923fe05454aef181968f780ad809a6cf8e27f90729aa7dfc24f",
+    "privacy-pools-v2/PoolVault": "0x67cfd3ffef3e1c3c846d4b6aa9447056623e83591465a9e792ebad356ab51414",
+    "privacy-pools-v2/PPRouter": "0xecc15d7996363881067c8df1ac30232b2476c5ca1bcd9f3433705e87046fe5b6",
+    "privacy-pools-v2/PPYieldToken": "0x2288bee46e2141a6f874ddff0f93c93405a5448fcee10edc4bd028938a6b28fd",
+    "privacy-pools-v2/PPYieldTokenZap": "0xc99b241b2299aecb27ac8219a82de42b8d858f2bcce1bacb06ad267078501f24",
+    "privacy-pools-v2/PrivacyPoolRelay": "0x221ac8c5121c455f70bfa922fe255937c533ef583893255f7918b5f5de546360"
+  },
+  "usedBlockNumbers": { "ethereum": 26238765 },
+  "permissionsConfigHash": "0x846ed1bdd0682dca918daee986baa6132c514b7b1805ba89105cd5a6fcbf8968",
+  "permissions": {
+    "eth:0x12Dbd6335d7f529F8922420Ba9c15c9E7A324c92": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+          "description": "enable or disable assets, set minimum deposits, vetting fees and relayer fee caps, and sweep fees held by the Entrypoint.",
+          "role": ".entrypointManagers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+          "description": "grant and revoke the ops admin, upgrader, unpauser and depositor roles.",
+          "role": ".defaultAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+          "description": "grant and revoke the pauser, entrypoint manager and postman roles.",
+          "role": ".opsAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+          "description": "pause deposits and transacts in the PoolVault.",
+          "role": ".pausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+          "description": "unpause the PoolVault.",
+          "role": ".unpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+          "description": "upgrade the PoolVault, Entrypoint, Keystore and ASPRegistry, and replace the vault's verifiers, registries and tree limits.",
+          "role": ".upgraders"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7",
+          "description": "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA4cF419558Ef36CC6FfB666195684dC963910426",
+          "description": "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6",
+          "description": "set the yield fee up to 20%, claim fees, pause minting, set the Aave rewards controller and rescue tokens other than the backing aToken.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xa05B43E1dcdCe0c6A40471a602038BC346900758": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+          "description": "publish the approved-label root every private spend must match.",
+          "role": ".postmen"
+        }
+      ]
+    },
+    "eth:0xca1e072236D231130059eeA6Bfceb7F4e9a1F0C3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",
+          "description": "deposit into the PoolVault on behalf of users.",
+          "role": ".depositors"
+        }
+      ]
+    }
+  }
+}
