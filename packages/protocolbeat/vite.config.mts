@@ -3,6 +3,20 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv } from 'vite'
 
+const EDITOR_PACKAGES = [
+  'monaco-editor',
+  '@codemirror/',
+  '@lezer/',
+  '@marijn/find-cluster-break',
+  'crelt',
+  'style-mod',
+  'w3c-keyname',
+]
+
+function isEditorPackage(id: string): boolean {
+  return EDITOR_PACKAGES.some((name) => id.includes(`node_modules/${name}`))
+}
+
 // https://vitejs.dev/config/
 // biome-ignore lint/style/noDefaultExport: Vite requires default export
 export default defineConfig(({ mode }) => {
@@ -21,10 +35,10 @@ export default defineConfig(({ mode }) => {
             groups: [
               {
                 name(id) {
-                  // Monaco stays out of the groups: a group also captures
-                  // what its modules import, like the dynamic import helper
-                  // the app shares, which would make Monaco load eagerly.
-                  if (id.includes('node_modules/monaco-editor')) {
+                  // Editor packages stay out of the groups: a group also
+                  // captures what its modules import, like the dynamic import
+                  // helper the app shares, which would make them load eagerly.
+                  if (isEditorPackage(id)) {
                     return null
                   }
                   if (id.includes('node_modules')) {

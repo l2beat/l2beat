@@ -19,8 +19,14 @@
     "test:e2e": "pnpm build && playwright test"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/search": "^6.7.2",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.14",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
+    "@lezer/highlight": "^1.2.5",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-select": "^2.2.6",

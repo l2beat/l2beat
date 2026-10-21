@@ -16,12 +16,11 @@ export function CodeEditorComponent({
   features,
   editorKey,
 }: CodeEditorComponentProps) {
-  const monacoEl = useRef<HTMLDivElement>(null)
-  const resizeObserverRef = useRef<ResizeObserver | null>(null)
+  const editorElement = useRef<HTMLDivElement>(null)
   const { setEditor, removeEditor } = useCodeStore()
 
   useEffect(() => {
-    const element = monacoEl.current
+    const element = editorElement.current
 
     if (!element) {
       return
@@ -39,14 +38,7 @@ export function CodeEditorComponent({
 
     setEditor(editorKey, editor)
 
-    const resizeObserver = new ResizeObserver(() => {
-      editor.resize()
-    })
-    resizeObserver.observe(element)
-    resizeObserverRef.current = resizeObserver
-
     return () => {
-      resizeObserver.disconnect()
       removeEditor(editorKey, editor)
       editor.dispose()
     }
@@ -54,8 +46,8 @@ export function CodeEditorComponent({
 
   return (
     <div
-      className="h-full w-full"
-      ref={monacoEl}
+      className="h-full min-h-0 w-full"
+      ref={editorElement}
       onKeyDown={(event) => event.stopPropagation()}
       onKeyUp={(event) => event.stopPropagation()}
     />

@@ -63,7 +63,7 @@ export function EditorView(props: EditorViewProps) {
             if (isNewContentOk) {
               setDirtyFile(props.editorId, activeFile.id, false)
             }
-            return activeFile.content
+            return isNewContentOk ? content : activeFile.content
           })
 
           changeDisposable = editor.onChange((content) => {
