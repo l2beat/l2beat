@@ -81,14 +81,19 @@ export class LineSelector implements EditorPlugin {
     })
   }
 
+  // The merge view pads the sides to align them in the next frame, which
+  // moves the lines, so the scroll waits for it.
   scrollToSelection() {
     const mergeView = this.editor.view
     if (!this.selectedLines || mergeView === undefined) {
       return
     }
-    scrollToSelectedLines(
-      this.selectedLines.side === 'left' ? mergeView.a : mergeView.b,
-    )
+    const view = this.selectedLines.side === 'left' ? mergeView.a : mergeView.b
+    requestAnimationFrame(() => {
+      if (this.editor.view === mergeView) {
+        scrollToSelectedLines(view)
+      }
+    })
   }
 
   clearSelection() {

@@ -20,7 +20,13 @@ export const diffTheme = EditorView.theme({
   '&.cm-merge-b .cm-changedText': { background: INSERTED_TEXT },
   '&.cm-merge-a .cm-changedLineGutter': { background: colors.aux.red },
   '&.cm-merge-b .cm-changedLineGutter': { background: colors.aux.green },
-  '.cm-mergeSpacer, .cm-diff-gap': diagonalFill,
+  '&.cm-merge-a .cm-changedLine.cm-filteredLine, &.cm-merge-b .cm-changedLine.cm-filteredLine':
+    { backgroundColor: 'transparent' },
+  '&.cm-merge-a .cm-filteredLine .cm-changedText, &.cm-merge-b .cm-filteredLine .cm-changedText':
+    { background: 'none' },
+  '&.cm-merge-a .cm-changedLineGutter.cm-filteredLine, &.cm-merge-b .cm-changedLineGutter.cm-filteredLine':
+    { background: 'none' },
+  '.cm-mergeSpacer': diagonalFill,
   '.cm-collapsedLines': {
     color: colors.coffee['400'],
     background: colors.coffee['800'],

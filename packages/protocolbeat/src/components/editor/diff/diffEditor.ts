@@ -1,17 +1,20 @@
 import { type Chunk, MergeView } from '@codemirror/merge'
+import { highlightSelectionMatches, searchKeymap } from '@codemirror/search'
 import {
-  highlightSelectionMatches,
-  search,
-  searchKeymap,
-} from '@codemirror/search'
-import { EditorState, type Extension, type Range } from '@codemirror/state'
+  EditorState,
+  type Extension,
+  type Range,
+  RangeSet,
+  type Text,
+} from '@codemirror/state'
 import {
   Decoration,
   drawSelection,
   EditorView,
+  GutterMarker,
+  gutterLineClass,
   keymap,
   lineNumbers,
-  WidgetType,
 } from '@codemirror/view'
 import { assert } from '@l2beat/shared-pure'
 import { cyrb64 } from '../hashes/cyrb-hash'
@@ -22,6 +25,7 @@ import {
   type EditorPluginClass,
   EditorPluginStore,
 } from '../plugin'
+import { centeredSearch } from '../search'
 import { theme } from '../theme'
 import {
   clearCollapseEffect,
@@ -62,6 +66,9 @@ export class DiffEditor {
   private folding = false
   private lastDiff: Diff | undefined
   private unchangedRegions: UnchangedRegion[] = []
+  // Where each kept change starts on the right side, to tell the merge
+  // view's chunks of kept changes from those of filtered out ones.
+  private shownChunkStarts: number[] = []
   // Scroll position per pair of texts, to come back to after a toggle.
   private readonly scrollTops = new Map<string, number>()
   private builtTextsKey: string | undefined
@@ -104,7 +111,16 @@ export class DiffEditor {
 
   setFolding(folding: boolean) {
     this.folding = folding
+    const topPosition = this.topVisiblePosition()
     this.applyFolding()
+    if (topPosition !== undefined) {
+      this.mergeView?.b.dispatch({
+        effects: EditorView.scrollIntoView(topPosition, {
+          y: 'start',
+          x: 'start',
+        }),
+      })
+    }
   }
 
   onComputedDiff(listener: (diff: Diff) => void): Disposable {
@@ -144,15 +160,21 @@ export class DiffEditor {
   // wrapping around, and centers it like Monaco does.
   private goToChunk(direction: 1 | -1) {
     const mergeView = this.mergeView
-    if (mergeView === undefined || mergeView.chunks.length === 0) {
+    if (mergeView === undefined) {
+      return
+    }
+    const chunks = mergeView.chunks.filter((chunk) =>
+      this.shownChunkStarts.some(
+        (start) => chunk.fromB <= start && start <= chunk.toB,
+      ),
+    )
+    if (chunks.length === 0) {
       return
     }
     const view = mergeView.b
     const head = view.state.selection.main.head
     const chunk =
-      direction === 1
-        ? nextChunk(mergeView.chunks, head)
-        : previousChunk(mergeView.chunks, head)
+      direction === 1 ? nextChunk(chunks, head) : previousChunk(chunks, head)
     view.dispatch({
       selection: { anchor: chunk.fromB },
       effects: EditorView.scrollIntoView(chunk.fromB, { y: 'center' }),
@@ -186,13 +208,13 @@ export class DiffEditor {
       a: {
         doc: texts.left,
         extensions: this.sideExtensions(
-          gapDecorations(computed.alignmentGaps, 'original', texts.left),
+          filteredLines(computed.filteredChanges, 'original', texts.left),
         ),
       },
       b: {
         doc: texts.right,
         extensions: this.sideExtensions(
-          gapDecorations(computed.alignmentGaps, 'modified', texts.right),
+          filteredLines(computed.filteredChanges, 'modified', texts.right),
         ),
       },
       parent: this.element,
@@ -205,8 +227,13 @@ export class DiffEditor {
         },
       },
     })
+    const rightDoc = this.mergeView.b.state.doc
+    this.shownChunkStarts = computed.lineChanges.map((change) =>
+      lineStart(rightDoc, change.modified.startLineNumber),
+    )
     this.unchangedRegions = collapsibleRegions(
       computed.lineChanges,
+      computed.filteredChanges,
       this.mergeView.a.state.doc.lines,
       this.mergeView.b.state.doc.lines,
     )
@@ -220,6 +247,16 @@ export class DiffEditor {
     for (const listener of this.diffListeners) {
       listener(this.lastDiff)
     }
+  }
+
+  private topVisiblePosition(): number | undefined {
+    const mergeView = this.mergeView
+    if (mergeView === undefined) {
+      return undefined
+    }
+    const scrollerTop = mergeView.dom.getBoundingClientRect().top
+    return mergeView.b.lineBlockAtHeight(scrollerTop - mergeView.b.documentTop)
+      .from
   }
 
   private applyFolding() {
@@ -244,23 +281,27 @@ export class DiffEditor {
     }
   }
 
-  private sideExtensions(gaps: Extension): Extension {
+  private sideExtensions(filtered: Extension): Extension {
     return [
       lineNumbers(),
       drawSelection(),
       highlightSelectionMatches({ highlightWordAroundCursor: true }),
-      search({ top: true }),
+      centeredSearch,
       keymap.of(searchKeymap),
       EditorState.readOnly.of(true),
       solidity,
       indentGuides,
       theme,
       diffTheme,
-      gaps,
+      filtered,
       collapseUnchanged,
       this.plugins.extensions(),
     ]
   }
+}
+
+function lineStart(doc: Text, lineNumber: number): number {
+  return lineNumber > doc.lines ? doc.length : doc.line(lineNumber).from
 }
 
 function nextChunk(chunks: readonly Chunk[], position: number): Chunk {
@@ -311,61 +352,47 @@ function lineCount(range: LineRange): number {
   return range.endLineNumberExclusive - range.startLineNumber
 }
 
-class GapWidget extends WidgetType {
-  constructor(readonly lineCount: number) {
-    super()
-  }
-
-  override eq(other: GapWidget) {
-    return other.lineCount === this.lineCount
-  }
-
-  override toDOM(view: EditorView) {
-    const element = document.createElement('div')
-    element.className = 'cm-diff-gap'
-    element.style.height = `${this.lineCount * view.defaultLineHeight}px`
-    return element
-  }
-}
-
-// For each filtered out range, pads the side with fewer lines below it, so
-// the lines after it stay level with their counterparts. The merge view
-// aligns by measured heights, so it keeps these instead of undoing them.
-function gapDecorations(
-  gaps: LineRangeMapping[],
+// Filtered out changes are chunks to the merge view, so it keeps the sides
+// aligned around them. Their lines get a class that undoes the change
+// highlight.
+function filteredLines(
+  changes: LineRangeMapping[],
   side: 'original' | 'modified',
   text: string,
 ): Extension {
-  const other = side === 'original' ? 'modified' : 'original'
-  const lineEnds = lineEndOffsets(text)
-  const widgets: Range<Decoration>[] = []
-  for (const gap of gaps) {
-    const missingLines = lineCount(gap[other]) - lineCount(gap[side])
-    if (missingLines <= 0) {
-      continue
+  const starts = lineStartOffsets(text)
+  const lines: Range<Decoration>[] = []
+  const gutterLines: Range<GutterMarker>[] = []
+  for (const change of changes) {
+    const range = change[side]
+    for (
+      let line = range.startLineNumber;
+      line < range.endLineNumberExclusive;
+      line++
+    ) {
+      const start = starts[line - 1] as number
+      lines.push(filteredLine.range(start))
+      gutterLines.push(filteredGutterLine.range(start))
     }
-    const widget = new GapWidget(missingLines)
-    const afterLine = Math.min(
-      gap[side].endLineNumberExclusive - 1,
-      lineEnds.length,
-    )
-    widgets.push(
-      afterLine === 0
-        ? Decoration.widget({ widget, block: true, side: -1 }).range(0)
-        : Decoration.widget({ widget, block: true, side: 1 }).range(
-            lineEnds[afterLine - 1] as number,
-          ),
-    )
   }
-  return EditorView.decorations.of(Decoration.set(widgets, true))
+  return [
+    EditorView.decorations.of(Decoration.set(lines)),
+    gutterLineClass.of(RangeSet.of(gutterLines)),
+  ]
 }
 
-function lineEndOffsets(text: string): number[] {
-  const ends: number[] = []
+const filteredLine = Decoration.line({ class: 'cm-filteredLine' })
+
+const filteredGutterLine = new (class extends GutterMarker {
+  override elementClass = 'cm-filteredLine'
+})()
+
+function lineStartOffsets(text: string): number[] {
+  const starts: number[] = []
   let start = 0
   for (const line of text.split('\n')) {
-    ends.push(start + line.length)
+    starts.push(start)
     start += line.length + 1
   }
-  return ends
+  return starts
 }

@@ -10,6 +10,7 @@ import {
   EditorView,
   WidgetType,
 } from '@codemirror/view'
+import { assert } from '@l2beat/shared-pure'
 import type { LineRange, LineRangeMapping } from './utils/diffFilter'
 
 // Like Monaco's hidden unchanged regions: three lines of context around a
@@ -25,31 +26,49 @@ export interface UnchangedRegion {
   modified: LineRange
 }
 
+interface LinePair {
+  original: number
+  modified: number
+}
+
+// Context is counted in lines that sit level on both sides, so the shown
+// context matches across the sides, and a filtered out range with sides of
+// different lengths is either hidden whole or shown whole. A range at the
+// end of the hidden part stays shown, because its padding belongs to the
+// line below it.
 export function collapsibleRegions(
   lineChanges: LineRangeMapping[],
+  gaps: LineRangeMapping[],
   originalLineCount: number,
   modifiedLineCount: number,
 ): UnchangedRegion[] {
   const regions: UnchangedRegion[] = []
-  let original = 1
-  let modified = 1
+  let start: LinePair = { original: 1, modified: 1 }
+  let gapIndex = 0
   for (let index = 0; index <= lineChanges.length; index++) {
     const change = lineChanges[index]
-    const isFirst = index === 0
-    const isLast = change === undefined
+    const end: LinePair = {
+      original: change?.original.startLineNumber ?? originalLineCount + 1,
+      modified: change?.modified.startLineNumber ?? modifiedLineCount + 1,
+    }
+    const inside: LineRangeMapping[] = []
+    while (gapIndex < gaps.length && endsBefore(gaps[gapIndex], end)) {
+      inside.push(gaps[gapIndex] as LineRangeMapping)
+      gapIndex++
+    }
+    const hiddenStart = skipForward(
+      start,
+      inside,
+      index === 0 ? 0 : CONTEXT_LINES,
+    )
+    const hiddenEnd = skipBackward(
+      end,
+      inside,
+      change === undefined ? 0 : CONTEXT_LINES,
+    )
     const region = {
-      original: hiddenPart(
-        original,
-        change?.original.startLineNumber ?? originalLineCount + 1,
-        isFirst,
-        isLast,
-      ),
-      modified: hiddenPart(
-        modified,
-        change?.modified.startLineNumber ?? modifiedLineCount + 1,
-        isFirst,
-        isLast,
-      ),
+      original: lineRange(hiddenStart.original, hiddenEnd.original),
+      modified: lineRange(hiddenStart.modified, hiddenEnd.modified),
     }
     if (
       lineCount(region.original) >= MIN_HIDDEN_LINES &&
@@ -58,25 +77,82 @@ export function collapsibleRegions(
       regions.push(region)
     }
     if (change !== undefined) {
-      original = change.original.endLineNumberExclusive
-      modified = change.modified.endLineNumberExclusive
+      start = {
+        original: change.original.endLineNumberExclusive,
+        modified: change.modified.endLineNumberExclusive,
+      }
     }
   }
   return regions
 }
 
-function hiddenPart(
-  start: number,
-  endExclusive: number,
-  isFirst: boolean,
-  isLast: boolean,
-): LineRange {
-  return {
-    startLineNumber: isFirst ? start : start + CONTEXT_LINES,
-    endLineNumberExclusive: isLast
-      ? endExclusive
-      : endExclusive - CONTEXT_LINES,
+function endsBefore(gap: LineRangeMapping | undefined, end: LinePair) {
+  return (
+    gap !== undefined &&
+    gap.original.endLineNumberExclusive <= end.original &&
+    gap.modified.endLineNumberExclusive <= end.modified
+  )
+}
+
+function skipForward(
+  start: LinePair,
+  gaps: LineRangeMapping[],
+  levelLines: number,
+): LinePair {
+  let position = start
+  let remaining = levelLines
+  for (const gap of gaps) {
+    const level = gap.original.startLineNumber - position.original
+    assert(
+      level === gap.modified.startLineNumber - position.modified,
+      'Gap off level',
+    )
+    if (level >= remaining) {
+      break
+    }
+    remaining -= level
+    position = {
+      original: gap.original.endLineNumberExclusive,
+      modified: gap.modified.endLineNumberExclusive,
+    }
   }
+  return {
+    original: position.original + remaining,
+    modified: position.modified + remaining,
+  }
+}
+
+function skipBackward(
+  end: LinePair,
+  gaps: LineRangeMapping[],
+  levelLines: number,
+): LinePair {
+  let position = end
+  let remaining = levelLines
+  for (let index = gaps.length - 1; index >= 0; index--) {
+    const gap = gaps[index] as LineRangeMapping
+    const level = position.original - gap.original.endLineNumberExclusive
+    assert(
+      level === position.modified - gap.modified.endLineNumberExclusive,
+      'Gap off level',
+    )
+    if (level > remaining) {
+      break
+    }
+    remaining -= level
+    position = {
+      original: gap.original.startLineNumber,
+      modified: gap.modified.startLineNumber,
+    }
+  }
+  return {
+    original: position.original - remaining,
+    modified: position.modified - remaining,
+  }
+}
+
+function lineRange(start: number, endExclusive: number): LineRange {
+  return { startLineNumber: start, endLineNumberExclusive: endExclusive }
 }
 
 function lineCount(range: LineRange): number {
