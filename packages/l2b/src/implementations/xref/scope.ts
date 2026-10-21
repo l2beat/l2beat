@@ -75,7 +75,10 @@ export function resolveName(
         kind: 'variable',
         node: variable,
         isState: true,
-        initialValue: variable.expression,
+        initialValue:
+          variable.isDeclaredConst || variable.isImmutable
+            ? variable.expression
+            : null,
       }
     }
     const privateFunctions = ownPrivateFunctions(index, contract, name, arity)

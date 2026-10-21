@@ -23,6 +23,7 @@ import {
 import {
   contractName,
   evaluateReceiver,
+  isLegacyCallOption,
   type Receiver,
   type ReceiverContext,
   structField,
@@ -733,11 +734,11 @@ function nameOffset(
 
 export function callOf(ancestors: BaseASTNode[]): FunctionCall | undefined {
   const callee = ancestors[ancestors.length - 1]
-  const parent = ancestors[ancestors.length - 2]
-  const call =
-    parent?.type === 'NameValueExpression'
-      ? ancestors[ancestors.length - 3]
-      : parent
+  let index = ancestors.length - 2
+  while (index >= 0 && isCallOptionPart(ancestors[index])) {
+    index--
+  }
+  const call = ancestors[index]
   if (call?.type !== 'FunctionCall') {
     return undefined
   }
@@ -745,6 +746,17 @@ export function callOf(ancestors: BaseASTNode[]): FunctionCall | undefined {
   return unwrapCallOptions(functionCall.expression) === callee
     ? functionCall
     : undefined
+}
+
+function isCallOptionPart(node: BaseASTNode): boolean {
+  if (node.type === 'NameValueExpression' || isLegacyCallOption(node)) {
+    return true
+  }
+  if (node.type !== 'MemberAccess') {
+    return false
+  }
+  const option = (node as MemberAccess).memberName
+  return option === 'value' || option === 'gas'
 }
 
 function nodeText(index: SourceIndex, node: BaseASTNode): string {
