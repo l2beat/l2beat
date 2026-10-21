@@ -23,17 +23,46 @@ const MACHINES: {
   /** A ballot is not one of the fields a transfer has. */
   hides: PrivacyField | 'vote'
   scene: ReactNode
+  /** The frame shown under reduced motion, in seconds into the loop. */
+  still: number
 }[] = [
-  { category: 'pool', hides: 'linkage', scene: <PoolMachine /> },
-  { category: 'shieldedLedger', hides: 'linkage', scene: <LedgerMachine /> },
-  { category: 'anonymousAccess', hides: 'linkage', scene: <AccessMachine /> },
-  { category: 'stealthAddress', hides: 'recipient', scene: <StealthMachine /> },
+  // Three identical sealed envelopes
+  { category: 'pool', hides: 'linkage', scene: <PoolMachine />, still: 2.7 },
+  // Mid transfer, after the split
+  {
+    category: 'shieldedLedger',
+    hides: 'linkage',
+    scene: <LedgerMachine />,
+    still: 3.2,
+  },
+  // The service has accepted "one of 4"
+  {
+    category: 'anonymousAccess',
+    hides: 'linkage',
+    scene: <AccessMachine />,
+    still: 3.6,
+  },
+  // Every payment on its own fresh address
+  {
+    category: 'stealthAddress',
+    hides: 'recipient',
+    scene: <StealthMachine />,
+    still: 6.3,
+  },
+  // The amount on its way, scrambled
   {
     category: 'confidentialAmounts',
     hides: 'amount',
     scene: <ConfidentialMachine />,
+    still: 1.8,
   },
-  { category: 'secretBallot', hides: 'vote', scene: <BallotMachine /> },
+  // Only the tally is out
+  {
+    category: 'secretBallot',
+    hides: 'vote',
+    scene: <BallotMachine />,
+    still: 3.6,
+  },
 ]
 
 export function CategoryMachinesFigure({
@@ -48,7 +77,7 @@ export function CategoryMachinesFigure({
   return (
     <MethodologyFigure>
       <div ref={ref} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {MACHINES.map(({ category, hides, scene }) => {
+        {MACHINES.map(({ category, hides, scene, still }) => {
           const { label, description } = byId(data.categories, category)
           return (
             <div
@@ -64,7 +93,12 @@ export function CategoryMachinesFigure({
                     : byId(data.fields, hides).label.toLowerCase()}
                 </span>
               </div>
-              <LiveSvg running={running}>{scene}</LiveSvg>
+              <LiveSvg
+                running={running}
+                still={reducedMotion ? still : undefined}
+              >
+                {scene}
+              </LiveSvg>
               <p className="text-paragraph-12 text-secondary">{description}</p>
             </div>
           )
@@ -80,19 +114,26 @@ function byId<T extends { id: string }>(items: T[], id: T['id']): T {
   return item
 }
 
-/** SMIL keeps the loops off the main thread; paused off screen. */
+/**
+ * SMIL keeps the loops off the main thread; paused off screen. Under reduced
+ * motion it holds the `still` frame, as the start of most loops is empty.
+ */
 function LiveSvg({
   running,
+  still,
   children,
 }: {
   running: boolean
+  still?: number
   children: ReactNode
 }) {
   const ref = useRef<SVGSVGElement>(null)
   useEffect(() => {
-    if (running) ref.current?.unpauseAnimations()
-    else ref.current?.pauseAnimations()
-  }, [running])
+    const svg = ref.current
+    if (running) svg?.unpauseAnimations()
+    else svg?.pauseAnimations()
+    if (still !== undefined) svg?.setCurrentTime(still)
+  }, [running, still])
   return (
     <svg
       ref={ref}
@@ -721,14 +762,18 @@ function ConfidentialMachine() {
         stroke="var(--divider)"
         strokeDasharray="3 4"
       />
-      <g>
+      {/* Fades out at the recipient and back in at the sender, so the loop
+          never jumps back across the line. */}
+      <g opacity={0}>
+        <Shown from={0.02} to={0.94} dur={`${DUR * 0.8}s`} />
         <animateMotion
           path="M 34 62 L 166 62"
           dur={`${DUR * 0.8}s`}
           repeatCount="indefinite"
+          keyPoints="0;0;1;1"
+          keyTimes="0;0.06;0.86;1"
           calcMode="spline"
-          keySplines="0.45 0 0.55 1"
-          keyTimes="0;1"
+          keySplines="0 0 1 1;0.45 0 0.55 1;0 0 1 1"
         />
         <circle r={5} fill={BLUE} />
         <rect
@@ -749,8 +794,8 @@ function ConfidentialMachine() {
         >
           <animate
             attributeName="opacity"
-            values="1;0.35;1"
-            dur="0.6s"
+            values="1;0.5;1"
+            dur="1.4s"
             repeatCount="indefinite"
           />
           ▒▒▒ ETH
@@ -787,7 +832,8 @@ function BallotMachine() {
               path={`M 20 ${y} L 110 55`}
               keyPoints="0;0;1;1"
               keyTimes={`0;${begin};${begin + 0.3};1`}
-              calcMode="linear"
+              calcMode="spline"
+              keySplines="0 0 1 1;0.45 0 0.55 1;0 0 1 1"
               dur={`${DUR}s`}
               repeatCount="indefinite"
             />

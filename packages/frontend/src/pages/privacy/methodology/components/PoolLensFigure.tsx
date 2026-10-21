@@ -150,7 +150,7 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
               // stops the autoplay.
               onClick={() => pick(i)}
               className={cn(
-                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13 transition-colors',
+                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border py-1 pr-3 pl-1.5 font-semibold text-label-value-13 transition-[color,background-color,border-color,scale] duration-150 ease-out active:scale-[0.97]',
                 i === step
                   ? 'border-brand bg-brand text-primary-invert'
                   : 'border-divider bg-surface-primary text-secondary hover:border-brand/50 hover:text-primary',
@@ -160,13 +160,14 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
                 <PrivacySentimentDot
                   key={tabSentiment}
                   sentiment={tabSentiment}
-                  className="motion-safe:zoom-in-0 size-4 motion-safe:animate-in"
+                  className="motion-safe:zoom-in-50 motion-safe:fade-in motion-safe:animate-in"
                 />
               ) : (
                 <span
                   aria-hidden
                   className={cn(
-                    'size-4 rounded-full border-2 border-dashed',
+                    // As big as the verdict dot, so the tab keeps its size.
+                    'size-5 shrink-0 rounded-full border-2 border-dashed',
                     i === step ? 'border-primary-invert/70' : 'border-divider',
                   )}
                 />
@@ -186,25 +187,7 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
       {/* One panel that follows the tab, so the canvas is never remounted.
           It holds controls, so it needs no tab stop of its own. */}
       <Tabs.Content value={adversary.id} tabIndex={-1} className="outline-none">
-        <DesignControl lens={adversary.id} design={design} onChange={change}>
-          {verdict.inheritedFrom && seen.has(adversary.id) && (
-            <InheritedNote
-              label={adversary.label}
-              from={
-                data.adversaries.find((a) => a.id === verdict.inheritedFrom)
-                  ?.label ?? ''
-              }
-              sentiment={verdict.sentiment}
-              onGo={() =>
-                pick(
-                  data.adversaries.findIndex(
-                    (a) => a.id === verdict.inheritedFrom,
-                  ),
-                )
-              }
-            />
-          )}
-        </DesignControl>
+        <DesignControl lens={adversary.id} design={design} onChange={change} />
         <PoolCanvas
           lens={adversary.id}
           design={design}
@@ -247,6 +230,23 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
             >
               {verdict.sees}
             </p>
+            {verdict.inheritedFrom && seen.has(adversary.id) && (
+              <InheritedNote
+                label={adversary.label}
+                from={
+                  data.adversaries.find((a) => a.id === verdict.inheritedFrom)
+                    ?.label ?? ''
+                }
+                sentiment={verdict.sentiment}
+                onGo={() =>
+                  pick(
+                    data.adversaries.findIndex(
+                      (a) => a.id === verdict.inheritedFrom,
+                    ),
+                  )
+                }
+              />
+            )}
             <p className="mt-1 text-paragraph-13 text-secondary">
               {adversary.label} {adversary.text}
             </p>
@@ -262,12 +262,10 @@ function DesignControl({
   lens,
   design,
   onChange,
-  children,
 }: {
   lens: Lens
   design: PoolDesign
   onChange: (next: Partial<PoolDesign>) => void
-  children?: ReactNode
 }) {
   let control: ReactNode
   switch (lens) {
@@ -353,10 +351,10 @@ function DesignControl({
   return (
     <div
       key={lens}
-      className="motion-safe:fade-in mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-md border border-brand/40 border-dashed bg-brand/5 px-3 py-2 motion-safe:animate-in"
+      // As tall for a slider as for a choice, so the scene below never moves.
+      className="motion-safe:fade-in mt-3 flex min-h-[50px] flex-wrap items-center gap-x-3 gap-y-2 rounded-md border border-brand/40 border-dashed bg-brand/5 px-3 py-2 motion-safe:animate-in"
     >
       {control}
-      {children}
     </div>
   )
 }
@@ -374,7 +372,7 @@ function InheritedNote({
   onGo: () => void
 }) {
   return (
-    <p className="basis-full text-label-value-13 text-secondary">
+    <p className="motion-safe:fade-in mt-1 text-label-value-13 text-secondary motion-safe:animate-in">
       <SentimentText sentiment={sentiment} vibrant className="font-bold">
         {`${PRIVACY_ADVERSARY_VERDICT[sentiment]} anyway:`}
       </SentimentText>{' '}
