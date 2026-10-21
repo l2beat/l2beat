@@ -5,6 +5,7 @@ import { createShape, listTemplates } from '../../../../api/api'
 import { Button } from '../../../../components/Button'
 import { Dialog } from '../../../../components/Dialog'
 import { Input } from '../../../../components/Input'
+import { invalidateProjectPayloads } from '../../hooks/projectQuery'
 import {
   DialogContext,
   type DialogStep,
@@ -110,6 +111,7 @@ function TemplateDialogBody({
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['templates'] })
+      await invalidateProjectPayloads(queryClient)
     },
   })
 

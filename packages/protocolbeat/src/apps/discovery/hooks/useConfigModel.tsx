@@ -6,6 +6,7 @@ import { useDebouncedCallback } from '../../../utils/debounce'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ConfigModel } from '../models/ConfigModel'
 import type { FieldConfigModel } from '../models/FieldConfigModel'
+import { invalidateProjectPayloads } from './projectQuery'
 
 type Props = {
   project: string
@@ -24,10 +25,13 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     setConfigModel(ConfigModel.fromRawJsonc(config ?? '{}'))
   }
 
-  const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
-    queryClient.invalidateQueries({
-      queryKey: ['config-sync-status', project],
-    }),
+  const debouncedInvalidateProject = useDebouncedCallback(
+    (savedProject: string) => {
+      queryClient.invalidateQueries({
+        queryKey: ['config-sync-status', savedProject],
+      })
+      invalidateProjectPayloads(queryClient, savedProject)
+    },
   )
 
   const toggleIgnoreMethods = (fieldName: string) => {
@@ -151,7 +155,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
         queryKey: ['configs', project],
       })
       // Debounced invalidation to prevent excessive refetching during rapid edits
-      debouncedInvalidateSyncStatus()
+      debouncedInvalidateProject(project)
     },
     onError: (error) => {
       toast.error(`Failed to save config file - ${project}`, {
