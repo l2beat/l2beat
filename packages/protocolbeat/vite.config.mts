@@ -8,8 +8,14 @@ const EDITOR_PACKAGES = [
   '@codemirror/',
   '@lezer/',
   '@marijn/find-cluster-break',
+  '@vscode/l10n',
   'crelt',
+  'jsonc-parser',
   'style-mod',
+  'vscode-json-languageservice',
+  'vscode-languageserver-textdocument',
+  'vscode-languageserver-types',
+  'vscode-uri',
   'w3c-keyname',
 ]
 

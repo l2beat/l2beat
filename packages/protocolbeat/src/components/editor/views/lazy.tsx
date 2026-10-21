@@ -1,6 +1,5 @@
 import { lazy, Suspense } from 'react'
 import { LoadingState } from '../../LoadingState'
-import type { MonacoJsonEditorViewProps } from '../monaco-json/MonacoJsonEditorView'
 import type { DiffViewProps } from './DiffView'
 import type { EditorViewProps } from './EditorView'
 
@@ -9,9 +8,9 @@ import type { EditorViewProps } from './EditorView'
 const LazyEditorView = lazy(() =>
   import('./EditorView').then((module) => ({ default: module.EditorView })),
 )
-const LazyMonacoJsonEditorView = lazy(() =>
-  import('../monaco-json/MonacoJsonEditorView').then((module) => ({
-    default: module.MonacoJsonEditorView,
+const LazyJsonEditorView = lazy(() =>
+  import('./JsonEditorView').then((module) => ({
+    default: module.JsonEditorView,
   })),
 )
 const LazyDiffView = lazy(() =>
@@ -34,10 +33,11 @@ export function DiffView(props: DiffViewProps) {
   )
 }
 
-export function MonacoJsonEditorView(props: MonacoJsonEditorViewProps) {
+// JSON panels load the language service with them, code panels never do.
+export function JsonEditorView(props: EditorViewProps) {
   return (
     <Suspense fallback={<LoadingState />}>
-      <LazyMonacoJsonEditorView {...props} />
+      <LazyJsonEditorView {...props} />
     </Suspense>
   )
 }
