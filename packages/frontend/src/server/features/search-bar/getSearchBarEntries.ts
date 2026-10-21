@@ -39,23 +39,27 @@ export async function getSearchBarEntries(search: string) {
     ? EthereumAddress(trimmed)
     : undefined
 
-  const [projects, tokens] = await Promise.all([
-    ps.getProjects({
-      optional: [
-        'scalingInfo',
-        'ecosystemConfig',
-        'interopConfig',
-        'zkCatalogInfo',
-        'privacyInfo',
-        'defiInfo',
-        'contracts',
-        'permissions',
-        'aliases',
-      ],
-    }),
+  const [tokens, projects] = await Promise.all([
     address
       ? getAbstractTokensByAddress(address)
       : getActiveInteropAbstractTokens(),
+    // Reading projects blocks the event loop, so it waits a turn to let the
+    // token query reach the database first and overlap its round trip.
+    new Promise(setImmediate).then(() =>
+      ps.getProjects({
+        optional: [
+          'scalingInfo',
+          'ecosystemConfig',
+          'interopConfig',
+          'zkCatalogInfo',
+          'privacyInfo',
+          'defiInfo',
+          'contracts',
+          'permissions',
+          'aliases',
+        ],
+      }),
+    ),
   ])
 
   const searchBarEntries = projects.flatMap((p) =>

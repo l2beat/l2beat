@@ -1,4 +1,4 @@
-import { type EthereumAddress, unique } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import {
   findInteropAbstractToken,
@@ -19,18 +19,7 @@ export async function getAbstractTokensByAddress(
     return token ? [token] : []
   }
 
-  const tokenDb = getTokenDb()
-  const deployedTokens = await tokenDb.deployedToken.getByAddress(address)
-  const ids = unique(
-    deployedTokens.flatMap((token) =>
-      token.ignored || token.abstractTokenId === null
-        ? []
-        : [token.abstractTokenId],
-    ),
-  )
-  if (ids.length === 0) return []
-
-  return tokenDb.abstractToken.getByIds(ids)
+  return getTokenDb().deployedToken.getAbstractTokensByAddress(address)
 }
 
 const MOCK_TOKEN_IDS_BY_ADDRESS: Record<string, string | undefined> = {

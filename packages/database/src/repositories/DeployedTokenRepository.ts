@@ -229,13 +229,39 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByAddress(address: string): Promise<DeployedTokenRecord[]> {
+  /** Abstract tokens deployed at `address` on any chain, skipping ignored deployments. */
+  async getAbstractTokensByAddress(
+    address: string,
+  ): Promise<
+    Pick<
+      AbstractTokenRecord,
+      'id' | 'symbol' | 'iconUrl' | 'issuer' | 'category' | 'isPriceUnreliable'
+    >[]
+  > {
     const rows = await this.db
       .selectFrom('DeployedToken')
-      .selectAll()
-      .where('address', '=', address.toLowerCase())
+      .innerJoin(
+        'AbstractToken',
+        'AbstractToken.id',
+        'DeployedToken.abstractTokenId',
+      )
+      .select([
+        'AbstractToken.id',
+        'AbstractToken.symbol',
+        'AbstractToken.iconUrl',
+        'AbstractToken.issuer',
+        'AbstractToken.category',
+        'AbstractToken.isPriceUnreliable',
+      ])
+      .distinct()
+      .where('DeployedToken.address', '=', address.toLowerCase())
+      .where('DeployedToken.ignored', '=', false)
       .execute()
-    return rows.map(toRecord)
+
+    return rows.map((row) => ({
+      ...row,
+      category: row.category as AbstractTokenRecord['category'],
+    }))
   }
 
   async getAll(): Promise<DeployedTokenRecord[]> {
