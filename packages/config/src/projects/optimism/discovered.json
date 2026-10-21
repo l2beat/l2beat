@@ -1,6 +1,6 @@
 {
   "name": "optimism",
-  "timestamp": 1790862344,
+  "timestamp": 1792587967,
   "configHash": "0x153f4acb69ff316b4077d2035cef697e20f14603331f5fc056691f7f3db0f98f",
   "entries": [
     {
@@ -211,7 +211,7 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
-        "totalSupply": "20917970000000000000",
+        "totalSupply": "20335188000000000000",
         "version": "1.5.1"
       },
       "implementationNames": {
@@ -538,13 +538,13 @@
           ]
         ],
         "$upgradeCount": 9,
-        "anchorGame": "eth:0x0000000000000000000000000000000000000000",
+        "anchorGame": "eth:0xeb7D098Ba771f33341F9f7D5f77AB66548dF3d01",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xbd4aeba96e33ef5582e14257fb776b3223ad45934ccd368c2f3084c8b75c1d68",
-          1788842855
+          "0x81914b9b3e649b90dd351469fc1880ebe17fe8153d0a798a729d657d888137df",
+          1791979527
         ],
         "getStartingAnchorRoot": {
           "root": "0xbd4aeba96e33ef5582e14257fb776b3223ad45934ccd368c2f3084c8b75c1d68",
@@ -605,7 +605,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "21d 18h",
+        "timeSinceLastL2beatInteraction": "22d 19h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -749,7 +749,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292881693",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292886507",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1412,11 +1412,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OpFoundationUpgradeSafe",
       "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "type": "Contract",
@@ -1437,7 +1432,7 @@
           "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
           "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5",
-          "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27",
+          "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
           "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
@@ -1449,7 +1444,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 73,
+        "nonce": 74,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1621,7 +1616,7 @@
       "sinceBlock": 16341988,
       "values": {
         "$implementation": "eth:0xE8E847cf573Fc8ed75621660A36AffD18c543d7E",
-        "getNextSequenceId": 135,
+        "getNextSequenceId": 139,
         "initialized": true,
         "safeMode": false
       },
@@ -1629,6 +1624,11 @@
         "eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "WalletSimple",
         "eth:0xE8E847cf573Fc8ed75621660A36AffD18c543d7E": "WalletSimple"
       }
+    },
+    {
+      "address": "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SaferSafes",
@@ -1815,8 +1815,8 @@
         "minimumGasLimitZeroBytes": 21000,
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516982,
-          "prevBlockNum": 26097843
+          "prevBoughtGas": 515958,
+          "prevBlockNum": 26241144
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2070,7 +2070,7 @@
         "game9Args": "0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1dfacc005dcd857b401e4732e6f7837135a22825cfa23b2c62946350f4246f9f9d027e071f0264fd1131b6dbf05eaf22d4e70dc993e8a19dd9f3dcb31620000000000000000000000000000000000000000000000000000000000000000",
         "game9Vm": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
         "game9Weth": "eth:0x1B6DBF05EaF22d4E70dC993e8a19dd9F3dcb3162",
-        "gameCount": 20261,
+        "gameCount": 20741,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
@@ -2312,7 +2312,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "l1CrossDomainMessenger": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292654552",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292655021",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2383,7 +2383,7 @@
         "$upgradeCount": 5,
         "baseFee": 0,
         "baseFeeScalar": 5227,
-        "blobBaseFee": 20754451,
+        "blobBaseFee": 5303886,
         "blobBaseFeeScalar": 1014213,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2392,7 +2392,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 363514542,
+        "l1BaseFee": 97014248,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2662,10 +2662,10 @@
           ]
         ],
         "$upgradeCount": 4,
-        "basefee": 363514542,
+        "basefee": 97014248,
         "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 20754451,
+        "blobBaseFee": 5303886,
         "blobBaseFeeScalar": 1014213,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "oeth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2675,17 +2675,17 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xac038302118fd79b6cb8606a99b8d5ae4b787b7dca5062a7d14e6e8f026bcc71",
+        "hash": "0xb89642b7e443ef2423a5a534e824d83054f8bc725e67b3f21c7eebac51801039",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 26097844,
+        "number": 26241156,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "proxyAdmin": "oeth:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "sequenceNumber": 4,
-        "timestamp": 1790862251,
+        "sequenceNumber": 1,
+        "timestamp": 1792587887,
         "version": "1.9.0"
       },
       "implementationNames": {
@@ -3057,7 +3057,7 @@
         "name": "Optimism",
         "owner": "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
         "symbol": "OP",
-        "totalSupply": "4294963292249109527607120871"
+        "totalSupply": "4294963292247571203495787843"
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
@@ -5197,8 +5197,8 @@
     "opstack/SuperPermissionedDisputeGame": "0xa146247ae93d5a2d8d731791462cda682c3558bd36eceef57df055c8d7cfdfd9",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 26097851, "optimism": 157631783 },
-  "permissionsConfigHash": "0x4949791230e1c3a95c2be1b0ba6cf8c889e2bbad4f138e400f0978c1c30504c0",
+  "usedBlockNumbers": { "ethereum": 26241162, "optimism": 158494595 },
+  "permissionsConfigHash": "0x85d38ad400937b08f022700662aeacf94794140932e98779845bf6ca494ee6ff",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [

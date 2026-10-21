@@ -1,15 +1,16 @@
-Generated with discovered.json: 0xf94d10a693bd2dba65fdf342062a2ec8d19177c9
+Generated with discovered.json: 0xf71f280e2edf8d5a2eb8ba712b817e6d10fcec9b
 
-# Diff at Tue, 20 Oct 2026 10:08:06 GMT:
+# Diff at Wed, 21 Oct 2026 13:50:55 GMT:
 
 - id: 1f060ee8
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1791965773
-- current timestamp: 1792490806
+- comparing to: main@39da84c441e4ad2ce4105a231c0bc2276f1ddd51 block: 1791965773
+- current timestamp: 1792587967
 
 ## Description
 
 SystemConfig `minBaseFee` 13000000 → 2200000, set by the Soneium Multisig.
+OpFoundationUpgradeSafe: Member rotated.
 
 ## Watched changes
 
@@ -19,6 +20,15 @@ SystemConfig `minBaseFee` 13000000 → 2200000, set by the Soneium Multisig.
       values.minBaseFee:
 -        13000000
 +        2200000
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
++        "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104"
     }
 ```
 

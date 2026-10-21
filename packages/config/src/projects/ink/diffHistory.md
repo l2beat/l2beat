@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xd7e563d8199910646a1abd9fc8a906d2b5228066
+
+# Diff at Wed, 21 Oct 2026 13:48:52 GMT:
+
+- id: e063daa7
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@39da84c441e4ad2ce4105a231c0bc2276f1ddd51 block: 1790862352
+- current timestamp: 1792587967
+
+## Description
+
+OpFoundationUpgradeSafe: Member rotated.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
++        "eth:0xa564C83958f7F9fA5a255a540EF5e49445873104"
+    }
+```
+
 Generated with discovered.json: 0x1a466b6f5f061a045a4ea3aeedad14c7ba7f1a73
 
 # Diff at Tue, 20 Oct 2026 12:39:59 GMT:
