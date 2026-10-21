@@ -173,6 +173,6 @@ function mockFlatSources() {
 function configReader() {
   return mockObject<ConfigReader>({
     getProjectPath: () => PROJECT_PATH,
-    readDiscovery: () => DISCOVERY,
+    readDiscoveryWithReferences: () => [DISCOVERY],
   })
 }

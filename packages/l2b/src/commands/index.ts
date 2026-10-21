@@ -41,6 +41,7 @@ import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 import { UI } from './UI'
 import { Why } from './Why'
+import { Xref } from './Xref'
 import { ZkGovProposal } from './ZkGovProposal'
 
 export function getSubcommands() {
@@ -89,6 +90,7 @@ export function getSubcommands() {
     TVL,
     UI,
     Why,
+    Xref,
     ZkGovProposal,
   ]
 }

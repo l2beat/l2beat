@@ -54,7 +54,7 @@ describe(getCodePaths.name, () => {
 
     const configReader = mockObject<ConfigReader>({
       getProjectPath: () => PROJECT_PATH,
-      readDiscovery: () => DISCOVERY,
+      readDiscoveryWithReferences: () => [DISCOVERY],
     })
 
     const result = getCodePaths(configReader, PROJECT, ADDRESS)
