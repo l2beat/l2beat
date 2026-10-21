@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1792495058,
+  "timestamp": 1791966035,
   "configHash": "0xcd2868593114f093ce696e5aa906798f0ad7945aca92f3fedaba545e3d3a0445",
   "entries": [
     {
@@ -16,6 +16,9 @@
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
       "critical": { "sinceTimestamp": 1742960663 },
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
       "values": {
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
@@ -23,7 +26,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620539",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620537",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -58,6 +61,9 @@
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
       "critical": { "sinceTimestamp": 1742960663 },
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
       "values": {
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
@@ -93,6 +99,9 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
       "critical": { "sinceTimestamp": 1742960663 },
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
       "values": {
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
@@ -119,6 +128,9 @@
       "proxyType": "EIP1967 proxy",
       "description": "Administration contract for other contract proxies.",
       "critical": { "sinceTimestamp": 1742960663 },
+      "deployerAddress": "celo:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1587571205,
+      "sinceBlock": 0,
       "values": {
         "$admin": "celo:0x4200000000000000000000000000000000000018",
         "$implementation": "celo:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
@@ -325,7 +337,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621623",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621606",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1214,13 +1226,13 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x4cc2E2049497b8cc6D827F310d8b2abFCDea8cA5",
+        "anchorGame": "eth:0x02F0eE00643Cab4656C40D9Ac53395b260f957d4",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "disputeGameFinalityDelaySeconds_fmt": "3d 12h",
         "getAnchorRoot": [
-          "0x5a5ca77e0c4486176fddc055756a5ef92e3f5d1746442da8b2238d58641764d9",
-          79987107
+          "0xcc4c7b7e032e68e0e5d3906e2cb4f0bdeb8e57cc6814a79f34c9af461440177c",
+          79457906
         ],
         "initVersion": 1,
         "paused": false,
@@ -1798,8 +1810,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516982,
-          "prevBlockNum": 26231569
+          "prevBoughtGas": 463628,
+          "prevBlockNum": 26187491
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2037,7 +2049,7 @@
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
         "FALLBACK_TIMEOUT_fmt": "14d",
-        "getLastProposalTimestamp": 1792494179,
+        "getLastProposalTimestamp": 1791965015,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
         "proposers": [
@@ -2116,7 +2128,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF",
-        "gameCount": 41161,
+        "gameCount": 40867,
         "gameImpls": [
           "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F",
           "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9",
@@ -3643,7 +3655,7 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225",
     "tokens/CELO": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82"
   },
-  "usedBlockNumbers": { "celo": 80594206, "ethereum": 26233439 },
+  "usedBlockNumbers": { "celo": 80065277, "ethereum": 26189504 },
   "permissionsConfigHash": "0x5ec0f0aa6d8ed9ff39878c6af4bb08624eb41c10f2c51f0d69b9c7f40a9b17b8",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"
