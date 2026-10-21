@@ -4,10 +4,6 @@ import { cn } from '~/utils/cn'
 import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import { CustomLink } from './link/CustomLink'
 
-/**
- * About L2BEAT and its resources; the side nav keeps to the sections, so for
- * some of these pages this is the only way in.
- */
 const FOOTER_LINKS = [
   { title: 'About Us', href: '/about-us' },
   { title: 'Publications', href: '/publications' },
