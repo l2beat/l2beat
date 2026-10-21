@@ -182,6 +182,21 @@ function SidebarGroup({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+function SidebarGroupLabel({
+  className,
+  ...props
+}: React.ComponentProps<'span'>) {
+  return (
+    <span
+      className={cn(
+        'pl-1.5 font-medium text-label-value-13 text-secondary',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
 function SidebarGroupItem({
   className,
   ...props
@@ -302,6 +317,7 @@ export {
   SidebarGroupLink,
   SidebarGroupSmallLink,
   SidebarGroupItem,
+  SidebarGroupLabel,
   SidebarGroupSub,
   SidebarGroupSubButton,
   SidebarGroupSubLink,

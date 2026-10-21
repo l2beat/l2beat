@@ -8,6 +8,7 @@ import type { ProjectVersionLinks } from '~/server/features/projects/getProjectV
 import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
 import { SearchBarButton } from '../search-bar/SearchBarButton'
+import { PinProjectButton } from '../your-projects/PinProjectButton'
 import { ProjectVersionSwitcher } from './ProjectVersionSwitcher'
 import { PROJECT_SECTIONS } from './projectSections'
 
@@ -58,8 +59,7 @@ export function ProjectHeader({
         )}
         <div
           className={cn(
-            'flex w-full flex-wrap gap-x-4 gap-y-3 max-md:flex-col md:items-center',
-            (!!ongoingAnomaly || !!recentUpdatesCount) && 'max-md:mb-4',
+            'flex w-full flex-wrap gap-x-4 gap-y-3 max-md:mb-4 max-md:flex-col md:items-center',
             // The version chip already ends the title in a pill
             versions && 'gap-x-2',
           )}
@@ -94,6 +94,7 @@ export function ProjectHeader({
             </div>
           </h1>
           <div className="flex flex-wrap gap-1.5 md:items-center">
+            <PinProjectButton name={project.name} iconUrl={project.icon} />
             {!!ongoingAnomaly && (
               <a
                 href={livenessSectionHref}
