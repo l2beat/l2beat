@@ -1,6 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  type KeyboardEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { Link, useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
@@ -20,6 +27,7 @@ import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
 import { UsageBadge } from '../usage/UsageBadge'
+import { getAdjacentAddress, type ListDirection } from './getAdjacentAddress'
 
 export function ListPanel() {
   const { project } = useParams()
@@ -34,7 +42,11 @@ export function ListPanel() {
     return <ErrorState />
   }
   return (
-    <div className="h-full w-full overflow-x-hidden">
+    <div
+      tabIndex={0}
+      onKeyDown={selectWithArrows}
+      className="h-full w-full overflow-x-hidden outline-hidden focus-visible:ring-1 focus-visible:ring-autumn-300 focus-visible:ring-inset"
+    >
       <ol>
         {response.data.entries.map((chain, i) => (
           <ListItemChain
@@ -47,6 +59,38 @@ export function ListPanel() {
       </ol>
     </div>
   )
+}
+
+function selectWithArrows(event: KeyboardEvent<HTMLElement>) {
+  const direction = toListDirection(event)
+  if (direction === undefined) {
+    return
+  }
+  event.preventDefault()
+  const elements = [
+    ...event.currentTarget.querySelectorAll<HTMLElement>('[data-address]'),
+  ]
+  const addresses = elements.map((element) => element.dataset.address ?? '')
+  const { selected, select } = usePanelStore.getState()
+  const target = getAdjacentAddress(addresses, selected, direction)
+  if (target === undefined) {
+    return
+  }
+  select([target])
+  elements[addresses.indexOf(target)]?.scrollIntoView({ block: 'nearest' })
+}
+
+function toListDirection(event: KeyboardEvent): ListDirection | undefined {
+  if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
+    return undefined
+  }
+  if (event.key === 'ArrowDown') {
+    return 'next'
+  }
+  if (event.key === 'ArrowUp') {
+    return 'previous'
+  }
+  return undefined
 }
 
 function ListItemChain(props: {
@@ -212,6 +256,7 @@ const AddressEntry = memo(function AddressEntry({
 
   return (
     <li
+      data-address={entry.address}
       className={clsx(
         'flex min-h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
         isSelected && 'bg-autumn-300 text-black',
