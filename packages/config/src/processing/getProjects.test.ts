@@ -530,6 +530,32 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    // A re-review diffs the client from the pinned commit, so every cited line must come from it.
+    it('every adversary source into the reference client pins its commit', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const client = privacyInfo.referenceClient
+        if (!client) continue
+        if (!/^[0-9a-f]{40}$/.test(client.commit)) {
+          problems.push(`${project.id}: commit is not a full hash`)
+        }
+        const pinned = ['blob', 'tree'].map(
+          (kind) => `${client.repository}/${kind}/${client.commit}/`,
+        )
+        const cells = Object.entries(privacyInfo.adversaries?.cells ?? {})
+        for (const [adversaryId, cell] of cells) {
+          for (const source of cell.sources ?? []) {
+            if (!('url' in source)) continue
+            if (!source.url.startsWith(`${client.repository}/`)) continue
+            if (!pinned.some((prefix) => source.url.startsWith(prefix))) {
+              problems.push(`${project.id} ${adversaryId}: ${source.url}`)
+            }
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     // The tooltip shows the short description alone, so a second sentence would read as cut off.
     it('every adversary short description is one sentence', () => {
       const problems: string[] = []

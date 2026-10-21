@@ -1,0 +1,217 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AccessRouter",
+  "critical": true,
+  "category": "core",
+  "description": "Role registry the Privacy Pools v2 core contracts check. No role has a delay.",
+  "fields": {
+    "accessControl": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x7281a06530430c928fbd948f9c020be986527f437101783d53aeb9ba7cc0d064": "OPS_ADMIN_ROLE",
+          "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3": "UPGRADER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+          "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE",
+          "0x44d1edca1a8c82068d362f32692edfb8d350106d36d0fc25bc46d65fa2546cfb": "ENTRYPOINT_MANAGER_ROLE",
+          "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9": "DEPOSITOR_ROLE",
+          "0x67bf1f13d02b19255ab652c6b587de65b84296a60f6aee2d0db7817882a1270f": "POSTMAN_ROLE"
+        }
+      }
+    },
+    "defaultAdmins": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x7281a06530430c928fbd948f9c020be986527f437101783d53aeb9ba7cc0d064": "OPS_ADMIN_ROLE",
+          "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3": "UPGRADER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+          "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE",
+          "0x44d1edca1a8c82068d362f32692edfb8d350106d36d0fc25bc46d65fa2546cfb": "ENTRYPOINT_MANAGER_ROLE",
+          "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9": "DEPOSITOR_ROLE",
+          "0x67bf1f13d02b19255ab652c6b587de65b84296a60f6aee2d0db7817882a1270f": "POSTMAN_ROLE"
+        },
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the ops admin, upgrader, unpauser and depositor roles."
+        }
+      ]
+    },
+    "opsAdmins": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x7281a06530430c928fbd948f9c020be986527f437101783d53aeb9ba7cc0d064": "OPS_ADMIN_ROLE",
+          "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3": "UPGRADER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+          "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE",
+          "0x44d1edca1a8c82068d362f32692edfb8d350106d36d0fc25bc46d65fa2546cfb": "ENTRYPOINT_MANAGER_ROLE",
+          "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9": "DEPOSITOR_ROLE",
+          "0x67bf1f13d02b19255ab652c6b587de65b84296a60f6aee2d0db7817882a1270f": "POSTMAN_ROLE"
+        },
+        "pickRoleMembers": "OPS_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the pauser, entrypoint manager and postman roles."
+        }
+      ]
+    },
+    "upgraders": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x7281a06530430c928fbd948f9c020be986527f437101783d53aeb9ba7cc0d064": "OPS_ADMIN_ROLE",
+          "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3": "UPGRADER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+          "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE",
+          "0x44d1edca1a8c82068d362f32692edfb8d350106d36d0fc25bc46d65fa2546cfb": "ENTRYPOINT_MANAGER_ROLE",
+          "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9": "DEPOSITOR_ROLE",
+          "0x67bf1f13d02b19255ab652c6b587de65b84296a60f6aee2d0db7817882a1270f": "POSTMAN_ROLE"
+        },
+        "pickRoleMembers": "UPGRADER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "upgrade the PoolVault, Entrypoint, Keystore and ASPRegistry, and replace the vault's verifiers, registries and tree limits."
+        }
+      ]
+    },
+    "pausers": {
+      "severity": "MEDIUM",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x7281a06530430c928fbd948f9c020be986527f437101783d53aeb9ba7cc0d064": "OPS_ADMIN_ROLE",
+          "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3": "UPGRADER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+          "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE",
+          "0x44d1edca1a8c82068d362f32692edfb8d350106d36d0fc25bc46d65fa2546cfb": "ENTRYPOINT_MANAGER_ROLE",
+          "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9": "DEPOSITOR_ROLE",
+          "0x67bf1f13d02b19255ab652c6b587de65b84296a60f6aee2d0db7817882a1270f": "POSTMAN_ROLE"
+        },
+        "pickRoleMembers": "PAUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause deposits and transacts in the PoolVault."
+        }
+      ]
+    },
+    "unpausers": {
+      "severity": "MEDIUM",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x7281a06530430c928fbd948f9c020be986527f437101783d53aeb9ba7cc0d064": "OPS_ADMIN_ROLE",
+          "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3": "UPGRADER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+          "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE",
+          "0x44d1edca1a8c82068d362f32692edfb8d350106d36d0fc25bc46d65fa2546cfb": "ENTRYPOINT_MANAGER_ROLE",
+          "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9": "DEPOSITOR_ROLE",
+          "0x67bf1f13d02b19255ab652c6b587de65b84296a60f6aee2d0db7817882a1270f": "POSTMAN_ROLE"
+        },
+        "pickRoleMembers": "UNPAUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "unpause the PoolVault."
+        }
+      ]
+    },
+    "entrypointManagers": {
+      "severity": "MEDIUM",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x7281a06530430c928fbd948f9c020be986527f437101783d53aeb9ba7cc0d064": "OPS_ADMIN_ROLE",
+          "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3": "UPGRADER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+          "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE",
+          "0x44d1edca1a8c82068d362f32692edfb8d350106d36d0fc25bc46d65fa2546cfb": "ENTRYPOINT_MANAGER_ROLE",
+          "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9": "DEPOSITOR_ROLE",
+          "0x67bf1f13d02b19255ab652c6b587de65b84296a60f6aee2d0db7817882a1270f": "POSTMAN_ROLE"
+        },
+        "pickRoleMembers": "ENTRYPOINT_MANAGER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "enable or disable assets, set minimum deposits, vetting fees and relayer fee caps, and sweep fees held by the Entrypoint."
+        }
+      ]
+    },
+    "depositors": {
+      "severity": "MEDIUM",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x7281a06530430c928fbd948f9c020be986527f437101783d53aeb9ba7cc0d064": "OPS_ADMIN_ROLE",
+          "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3": "UPGRADER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+          "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE",
+          "0x44d1edca1a8c82068d362f32692edfb8d350106d36d0fc25bc46d65fa2546cfb": "ENTRYPOINT_MANAGER_ROLE",
+          "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9": "DEPOSITOR_ROLE",
+          "0x67bf1f13d02b19255ab652c6b587de65b84296a60f6aee2d0db7817882a1270f": "POSTMAN_ROLE"
+        },
+        "pickRoleMembers": "DEPOSITOR_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "deposit into the PoolVault on behalf of users."
+        }
+      ]
+    },
+    "postmen": {
+      "severity": "MEDIUM",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x7281a06530430c928fbd948f9c020be986527f437101783d53aeb9ba7cc0d064": "OPS_ADMIN_ROLE",
+          "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3": "UPGRADER_ROLE",
+          "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+          "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE",
+          "0x44d1edca1a8c82068d362f32692edfb8d350106d36d0fc25bc46d65fa2546cfb": "ENTRYPOINT_MANAGER_ROLE",
+          "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9": "DEPOSITOR_ROLE",
+          "0x67bf1f13d02b19255ab652c6b587de65b84296a60f6aee2d0db7817882a1270f": "POSTMAN_ROLE"
+        },
+        "pickRoleMembers": "POSTMAN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "publish the approved-label root every private spend must match."
+        }
+      ]
+    }
+  }
+}

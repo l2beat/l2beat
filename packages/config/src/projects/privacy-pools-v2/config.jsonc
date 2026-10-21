@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "privacy-pools-v2",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x01a8Fa4dbb60187aD8d3c3d08E7Fb8C14198A461",
+    "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8",
+    "eth:0xe76E793d776c1e207aD7a7fa7C57d27420d85110",
+    "eth:0x13a0b86bac3e0C29bd64fED7BCD2EE84f371f41C",
+    "eth:0x77613D670BB9fD48A9898D0eac8ebf21B566F960"
+  ],
+  "names": {
+    "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8": "RelaySwaps",
+    "eth:0xe76E793d776c1e207aD7a7fa7C57d27420d85110": "PPRouterUSDC",
+    "eth:0x13a0b86bac3e0C29bd64fED7BCD2EE84f371f41C": "PPRouterUSDT",
+    "eth:0x77613D670BB9fD48A9898D0eac8ebf21B566F960": "PPRouterETH",
+    "eth:0xC246aFb23482fF9596E9cee5f1f678eFe0EB1ad6": "ppUSDC",
+    "eth:0xA4cF419558Ef36CC6FfB666195684dC963910426": "ppUSDT",
+    "eth:0x66051920D25af4E3596A8a46309F4D045F9D83B7": "ppETH",
+    "eth:0x9Ea986BcDF6784D85B518b15bEEE1E65b585817B": "PPYieldTokenZapUSDC",
+    "eth:0xDC3D922df81FC7B7f58229431ED91acB0482f3A5": "PPYieldTokenZapUSDT",
+    "eth:0x33c1eEf370bBb447414156CFc4fDABD434776EAf": "PPYieldTokenZapETH"
+  },
+  "overrides": {
+    "eth:0xd0395c08DD8eA7671a7A65bDca8E473e8E8260a8": {
+      "description": "Withdrawal processor that swaps the withdrawn asset through an approved aggregator router, with the swap calldata bound into the proof. The deployed build does not match the published source."
+    }
+  }
+}

@@ -1083,6 +1083,12 @@ export interface ProjectPrivacyInfo {
    * mixing kinds within one project is not representable.
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
+  /**
+   * The released open-source client the adversary ratings assume, at the
+   * commit they were reviewed against. Absent when the client is closed.
+   * `l2b client-drift` lists what changed upstream since.
+   */
+  referenceClient?: ProjectPrivacyReferenceClient
   /** The deployed mechanism. Decides the promised field, not the grade. */
   category: PrivacyCategory
   anonymitySet?:
@@ -1135,6 +1141,14 @@ export type PrivacyAnonymitySetRegistrationSource = {
   extractor: 'umbraStealthKeyChanged'
 }
 
+export interface ProjectPrivacyReferenceClient {
+  name: string
+  /** GitHub repository, e.g. https://github.com/owner/repo */
+  repository: string
+  /** Full commit hash. Adversary sources into the repository pin it. */
+  commit: string
+}
+
 export type ProjectPrivacyRelayerTracking =
   | {
       type: 'onchainEvents'
@@ -1149,7 +1163,16 @@ export type ProjectPrivacyOnchainRelayerSource = {
 } & PrivacyRelayerExtractorConfig
 
 export type PrivacyRelayerExtractorConfig =
-  | { extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal' }
+  | {
+      extractor:
+        | 'privacyPoolsWithdrawalRelayed'
+        /** Privacy Pools v2: the fee recipient of a paid relayed withdrawal, batch, yield exit or swap. */
+        | 'privacyPoolsV2Relayed'
+        | 'privacyPoolsV2RelayedBatch'
+        | 'privacyPoolsV2RouterWithdrawal'
+        | 'privacyPoolsV2SwapExecuted'
+        | 'tornadoCashWithdrawal'
+    }
   | {
       extractor: 'zkMoneyWithdrawalRelayer'
       params: ZkMoneyWithdrawalRelayerParams
@@ -1472,6 +1495,7 @@ export type PrivacyAnonymitySetDepositSource = {
     extractor:
       | 'fixedAmount'
       | 'privacyPoolsValue'
+      | 'privacyPoolsV2Value'
       | 'railgunShield'
       | 'strk20Deposit'
       | 'zkMoneyDeposit'
@@ -1511,6 +1535,19 @@ export type PrivacyFlowExtractorConfig =
   | {
       extractor: 'privacyPoolsValue'
       params: Record<string, never>
+    }
+  | {
+      /**
+       * Privacy Pools v2 PoolVault events Deposited, Transacted and Ragequit,
+       * which all index the asset and carry its amount. Only logs of
+       * `tokenAddress` count, so one multi-asset vault serves one bucket per
+       * asset. A relayed private transfer pays its fee as a Transacted
+       * payout, which the flow indexer drops after reading the transaction.
+       */
+      extractor: 'privacyPoolsV2Value'
+      params: {
+        tokenAddress: EthereumAddress
+      }
     }
   | {
       extractor: 'railgunShield'
