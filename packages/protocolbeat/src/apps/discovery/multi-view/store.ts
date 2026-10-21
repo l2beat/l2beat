@@ -13,6 +13,3 @@ export function addPanel(): void {
   const next = nextAvailableKey(state.tree, PANEL_IDS.filter(isAllowedPanel))
   if (next) state.ensureLeaf(next)
 }
-
-export type { PanelId } from './config'
-export { PANEL_IDS } from './config'

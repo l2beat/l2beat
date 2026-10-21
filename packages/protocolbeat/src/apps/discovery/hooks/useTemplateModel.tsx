@@ -4,7 +4,6 @@ import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { writeTemplateFile } from '../../../api/api'
 import { useDebouncedCallback } from '../../../utils/debounce'
-import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from '../models/ContractConfigModel'
 import type { FieldConfigModel } from '../models/FieldConfigModel'
@@ -152,7 +151,7 @@ export function useTemplateModel({ templateId, files }: Props) {
     const stringifiedModel = model.toString()
     const toSave = model.hasComments()
       ? stringifiedModel
-      : formatJson(JSON.parse(removeJSONTrailingCommas(stringifiedModel)))
+      : formatJson(JSON.parse(stringifiedModel))
     saveMutation.mutate(toSave)
   }
 

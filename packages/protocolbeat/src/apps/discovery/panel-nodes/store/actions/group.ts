@@ -190,7 +190,7 @@ export function makeGroupNode(
   }
 }
 
-export function collectIds(node: Node): string[] {
+function collectIds(node: Node): string[] {
   return unique([node.id, ...node.subnodes.flatMap((n) => collectIds(n))])
 }
 

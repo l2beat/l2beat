@@ -7,7 +7,7 @@ import { topLevelByDescendant } from './subnodes'
 import { processConnection } from './updateNodePositions'
 
 const CONTAINER_PADDING = 24
-export const GROUP_HEADER_HEIGHT = 26
+const GROUP_HEADER_HEIGHT = 26
 
 export interface GroupContainer {
   readonly id: string

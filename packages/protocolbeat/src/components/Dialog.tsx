@@ -46,10 +46,7 @@ function DialogDescription({
   )
 }
 
-export function DialogOverlay({
-  children,
-  ...props
-}: RadixDialog.DialogOverlayProps) {
+function DialogOverlay({ children, ...props }: RadixDialog.DialogOverlayProps) {
   return (
     <RadixDialog.Portal>
       <RadixDialog.Overlay
