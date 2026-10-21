@@ -5,7 +5,6 @@ import type {
 } from '@l2beat/discovery'
 import { type ChainSpecificAddress, formatJson } from '@l2beat/shared-pure'
 import { assign, parse, stringify } from 'comment-json'
-import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
 import { ContractConfigModel } from './ContractConfigModel'
 import { clone } from './cloneWithComments'
 import { hasCommentsRecursive } from './hasComments'
@@ -55,7 +54,7 @@ export class ConfigModel {
     if (this.hasComments()) {
       return text
     }
-    return formatJson(JSON.parse(removeJSONTrailingCommas(text)))
+    return formatJson(JSON.parse(text))
   }
 
   diff(other: ConfigModel) {
