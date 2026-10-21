@@ -8,6 +8,7 @@ import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingComma
 import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from '../models/ContractConfigModel'
 import type { FieldConfigModel } from '../models/FieldConfigModel'
+import { invalidateProjectPayloads } from './projectQuery'
 
 type Props = {
   templateId?: string
@@ -31,7 +32,7 @@ export function useTemplateModel({ templateId, files }: Props) {
 
   const debouncedInvalidateProject = useDebouncedCallback(() => {
     queryClient.invalidateQueries({ queryKey: ['config-sync-status'] })
-    queryClient.invalidateQueries({ queryKey: ['projects'] })
+    invalidateProjectPayloads(queryClient)
   })
 
   const toggleIgnoreMethods = (fieldName: string) => {
