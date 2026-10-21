@@ -3,6 +3,7 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
 import { SearchBarButton } from '../search-bar/SearchBarButton'
+import { PinProjectButton } from '../your-projects/PinProjectButton'
 
 interface Project {
   name: string
@@ -58,6 +59,7 @@ export function ProjectHeader({
           </div>
         </h1>
         <div className="flex flex-col gap-2 max-md:w-full md:flex-row md:items-center">
+          <PinProjectButton name={project.name} iconUrl={project.icon} />
           {!!ongoingAnomaly && (
             <a
               href={livenessSectionHref}
