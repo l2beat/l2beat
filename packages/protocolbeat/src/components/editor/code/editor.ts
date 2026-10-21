@@ -75,8 +75,8 @@ export class Editor {
   private readonly base: Extension = this.baseExtensions()
   private readonly plugins: EditorPluginStore<EditorView>
   private readonly readOnly = new Compartment()
-  // Each file keeps its own state, with its undo history and folds, while
-  // this editor lives.
+  // Each editable file keeps its own state, with its undo history, while this
+  // editor lives. Read-only files have nothing the view state cache misses.
   private readonly fileStates = new Map<string, EditorState>()
   private activeFileKey: string | undefined
   private readonly changeListeners = new Set<EditorContentCallback>()
@@ -174,6 +174,14 @@ export class Editor {
     findNext(this.view)
   }
 
+  revealAtTop(offset: number) {
+    assert(offset <= this.view.state.doc.length, 'Offset past the end')
+    this.view.dispatch({
+      selection: EditorSelection.cursor(offset),
+      effects: EditorView.scrollIntoView(offset, { y: 'start' }),
+    })
+  }
+
   dispose() {
     if (this.disposed) {
       return
@@ -194,10 +202,12 @@ export class Editor {
     this.view.setState(existing ?? this.createState(file))
     this.activeFileKey = key
     const cached = viewStateCache.get(key)
-    if (cached === undefined) {
-      this.view.dispatch({
-        effects: EditorView.scrollIntoView(0, { y: 'start' }),
-      })
+    // The cached positions only make sense for the text they were taken on.
+    if (
+      cached === undefined ||
+      cached.docLength !== this.view.state.doc.length
+    ) {
+      this.revealAtTop(file.initialOffset ?? 0)
       return
     }
     if (existing === undefined) {
@@ -211,7 +221,9 @@ export class Editor {
     if (this.activeFileKey === undefined) {
       return
     }
-    this.fileStates.set(this.activeFileKey, this.view.state)
+    if (!this.view.state.readOnly) {
+      this.fileStates.set(this.activeFileKey, this.view.state)
+    }
     viewStateCache.set(this.activeFileKey, captureViewState(this.view))
   }
 
@@ -299,11 +311,7 @@ function captureViewState(view: EditorView): FileViewState {
   }
 }
 
-// The cached positions only make sense for the text they were taken on.
 function restoreViewState(view: EditorView, cached: FileViewState) {
-  if (cached.docLength !== view.state.doc.length) {
-    return
-  }
   view.dispatch({
     selection: EditorSelection.fromJSON(cached.selection),
     effects: [

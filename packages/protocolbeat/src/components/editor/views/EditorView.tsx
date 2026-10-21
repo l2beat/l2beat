@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { CodeEditorComponent } from '../code/CodeEditorComponent'
 import type { EditorCallbacks } from '../code/editor'
 import { useCodeSettings } from '../code/hooks/useCodeSettings'
@@ -18,6 +18,7 @@ export type EditorViewProps = {
     index?: number
   }
   disableTabs?: boolean
+  tabActions?: ReactNode
   features?: {
     lineSelection: boolean
     rangeHighlight: boolean
@@ -29,7 +30,19 @@ export type EditorViewProps = {
 
 export function EditorView(props: EditorViewProps) {
   const { features = { lineSelection: false, rangeHighlight: true } } = props
-  const [activeFileIndex, setActiveFileIndex] = useState(0)
+  const [activeFileIndex, setActiveFileIndex] = useState(
+    () => pickFileIndex(props) ?? 0,
+  )
+  // A new file list picks its tab while rendering, so the editor never opens
+  // the file at the previous index on the way.
+  const [shownFiles, setShownFiles] = useState(props.files)
+  if (shownFiles !== props.files) {
+    setShownFiles(props.files)
+    const index = pickFileIndex(props)
+    if (index !== undefined) {
+      setActiveFileIndex(index)
+    }
+  }
 
   const editor = useCodeStore((store) => store.editors[props.editorId])
   const { setDirtyFile, getIsDirtyFile } = useCodeStore()
@@ -89,22 +102,6 @@ export function EditorView(props: EditorViewProps) {
   }, [editor, props.files, activeFileIndex])
 
   useEffect(() => {
-    if (
-      props.files.length > 0 &&
-      props.initialFileIndex !== undefined &&
-      props.range?.index === undefined &&
-      props.range?.data === undefined
-    ) {
-      setActiveFileIndex(props.initialFileIndex)
-    }
-  }, [
-    props.files,
-    props.initialFileIndex,
-    props.range?.index,
-    props.range?.data,
-  ])
-
-  useEffect(() => {
     props.onActiveFileChange?.(props.files[activeFileIndex])
   }, [props.onActiveFileChange, props.files, activeFileIndex])
 
@@ -139,6 +136,7 @@ export function EditorView(props: EditorViewProps) {
             isActive: index === activeFileIndex,
             onClick: () => setActiveFileIndex(index),
           }))}
+          actions={props.tabActions}
         />
       )}
       <CodeEditorComponent
@@ -148,4 +146,10 @@ export function EditorView(props: EditorViewProps) {
       />
     </div>
   )
+}
+
+function pickFileIndex(props: EditorViewProps): number | undefined {
+  return props.range?.data !== undefined
+    ? props.range.index
+    : props.initialFileIndex
 }

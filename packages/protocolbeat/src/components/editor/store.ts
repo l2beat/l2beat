@@ -13,6 +13,8 @@ export type EditorFile = {
   content: string
   readOnly: boolean
   language?: EditorSupportedLanguage
+  // Shown at the top when the file opens for the first time.
+  initialOffset?: number
 }
 
 interface CodeState {
