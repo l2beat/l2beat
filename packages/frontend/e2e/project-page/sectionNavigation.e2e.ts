@@ -20,6 +20,10 @@ for (const viewport of viewports) {
     const page = await context.newPage()
     await page.goto(`${PAGE}#permissions`, { waitUntil: 'networkidle' })
     await page.waitForTimeout(1500)
+    // The page scrolls smoothly, so on a slow runner the jump to the fragment
+    // can still be on its way.
+    await expect.poll(() => sectionTop(page, 'permissions')).toBeLessThan(100)
+    await waitForScrollToSettle(page)
     expect(await sectionTop(page, 'permissions')).toBeLessThan(100)
     expect(await sectionTop(page, 'permissions')).toBeGreaterThanOrEqual(0)
     await context.close()
