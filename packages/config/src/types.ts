@@ -1166,7 +1166,8 @@ export type PrivacyRelayerExtractorConfig =
   | {
       extractor:
         | 'privacyPoolsWithdrawalRelayed'
-        /** Privacy Pools v2: the fee recipient of a paid relayed withdrawal, batch, yield exit or swap. */
+        // Privacy Pools v2: the fee recipient of a paid relayed withdrawal,
+        // batch, yield exit or swap.
         | 'privacyPoolsV2Relayed'
         | 'privacyPoolsV2RelayedBatch'
         | 'privacyPoolsV2RouterWithdrawal'

@@ -19,6 +19,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type {
   BaseProject,
+  PrivacyRelayerExtractorConfig,
   ProjectPrivacyOnchainRelayerSource,
   ProjectPrivacyToken,
 } from '../../types'
@@ -41,9 +42,7 @@ const RELAY_SWAPS = discovery.getContract('RelaySwaps')
 const ROUTERS = ['PPRouterUSDC', 'PPRouterUSDT', 'PPRouterETH'].map((name) =>
   discovery.getContract(name),
 )
-const SHARE_TOKENS = ['ppUSDC', 'ppUSDT', 'ppETH'].map((name) =>
-  discovery.getContract(name),
-)
+const SHARE_TOKENS = ['ppUSDC', 'ppUSDT', 'ppETH']
 
 assert(
   POOL_VAULT.sinceTimestamp !== undefined,
@@ -51,14 +50,15 @@ assert(
 )
 const SINCE_TIMESTAMP = UnixTime(POOL_VAULT.sinceTimestamp)
 
-const yieldFeeBps = SHARE_TOKENS.map((token) =>
-  discovery.getContractValue<number>(token.name ?? '', 'feeBps'),
-)
+const yieldFeeBps = discovery.getContractValue<number>('ppUSDC', 'feeBps')
 assert(
-  yieldFeeBps.every((fee) => fee === yieldFeeBps[0]),
+  SHARE_TOKENS.every(
+    (name) =>
+      discovery.getContractValue<number>(name, 'feeBps') === yieldFeeBps,
+  ),
   'Share tokens must charge the same yield fee',
 )
-const yieldFee = formatBasisPoints(yieldFeeBps[0] ?? 0)
+const yieldFee = formatBasisPoints(yieldFeeBps)
 const maxYieldFee = formatBasisPoints(
   discovery.getContractValue<number>('ppUSDC', 'MAX_FEE_BPS'),
 )
@@ -69,7 +69,9 @@ const rootLiveness = formatSeconds(
 const ETH = EthereumAddress('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
 const POOL_ASSETS = [
   ETH,
-  ...SHARE_TOKENS.map((token) => ChainSpecificAddress.address(token.address)),
+  ...SHARE_TOKENS.map((name) =>
+    ChainSpecificAddress.address(discovery.getContract(name).address),
+  ),
 ]
 
 // Every verifier the vault routes proofs to, replaced together on 2026-10-20
@@ -266,11 +268,10 @@ export const privacyPoolsV2: BaseProject = {
 
 function relayerSource(
   contract: { address: ChainSpecificAddress; sinceTimestamp?: number },
-  extractor:
-    | 'privacyPoolsV2Relayed'
-    | 'privacyPoolsV2RelayedBatch'
-    | 'privacyPoolsV2RouterWithdrawal'
-    | 'privacyPoolsV2SwapExecuted',
+  extractor: Exclude<
+    PrivacyRelayerExtractorConfig,
+    { params: unknown }
+  >['extractor'],
 ): ProjectPrivacyOnchainRelayerSource {
   assert(
     contract.sinceTimestamp !== undefined,

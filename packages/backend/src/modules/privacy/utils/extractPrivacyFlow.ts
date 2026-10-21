@@ -98,22 +98,24 @@ export function extractPrivacyFlow<T extends EvmPrivacyFlowExtractorConfig>(
  * Flows whose classification needs the transaction behind the log. Every
  * other extractor reads the log alone.
  */
-export async function extractPrivacyFlowWithContext<
-  T extends EvmPrivacyFlowExtractorConfig,
->(
-  source: T,
+export async function extractPrivacyFlowWithContext(
+  source: EvmPrivacyFlowExtractorConfig,
   log: Log,
   context: PrivacyRpcContext,
 ): Promise<PrivacyFlowExtractResult | undefined> {
   const result = extractPrivacyFlow(source, log)
-  if (
-    result !== undefined &&
-    source.extractor === 'privacyPoolsV2Value' &&
-    (await isPrivacyPoolsV2RelayedTransfer(log, context))
-  ) {
+  if (result === undefined) {
     return undefined
   }
-  return result
+
+  switch (source.extractor) {
+    case 'privacyPoolsV2Value':
+      return (await isPrivacyPoolsV2RelayedTransfer(log, context))
+        ? undefined
+        : result
+    default:
+      return result
+  }
 }
 
 // The vault serves every asset, so a bucket keeps only its own asset's logs.

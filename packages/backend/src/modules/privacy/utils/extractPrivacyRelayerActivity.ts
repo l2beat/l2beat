@@ -56,28 +56,25 @@ const privacyPoolsWithdrawalRelayed: RelayerExtractorDefinition = {
   },
 }
 
+const extractPrivacyPoolsV2Relay: RelayerExtractorDefinition['extract'] = (
+  log,
+) => {
+  const parsedLog = privacyPoolsV2RelayInterface.parseLog(log)
+  return toPaidRelayerActivity(
+    parsedLog.args._fee,
+    String(parsedLog.args._feeRecipient),
+    String(parsedLog.args._recipient),
+  )
+}
+
 const privacyPoolsV2Relayed: RelayerExtractorDefinition = {
   event: privacyPoolsV2RelayInterface.getEventTopic('Relayed'),
-  extract: (log) => {
-    const parsedLog = privacyPoolsV2RelayInterface.parseLog(log)
-    return toPaidRelayerActivity(
-      String(parsedLog.args._feeRecipient),
-      String(parsedLog.args._recipient),
-      parsedLog.args._fee,
-    )
-  },
+  extract: extractPrivacyPoolsV2Relay,
 }
 
 const privacyPoolsV2RelayedBatch: RelayerExtractorDefinition = {
   event: privacyPoolsV2RelayInterface.getEventTopic('RelayedBatch'),
-  extract: (log) => {
-    const parsedLog = privacyPoolsV2RelayInterface.parseLog(log)
-    return toPaidRelayerActivity(
-      String(parsedLog.args._feeRecipient),
-      String(parsedLog.args._recipient),
-      parsedLog.args._fee,
-    )
-  },
+  extract: extractPrivacyPoolsV2Relay,
 }
 
 const privacyPoolsV2RouterWithdrawal: RelayerExtractorDefinition = {
@@ -85,23 +82,22 @@ const privacyPoolsV2RouterWithdrawal: RelayerExtractorDefinition = {
   extract: (log) => {
     const parsedLog = privacyPoolsV2RouterInterface.parseLog(log)
     return toPaidRelayerActivity(
+      parsedLog.args._feeShares,
       String(parsedLog.args._feeRecipient),
       String(parsedLog.args._recipient),
-      parsedLog.args._feeShares,
     )
   },
 }
 
-// A swap has no recipient in the event, so only a zero fee recipient is
-// dropped.
+// The swap event names no recipient, so a paid fee to a non-zero fee
+// recipient is all that identifies a relayer.
 const privacyPoolsV2SwapExecuted: RelayerExtractorDefinition = {
   event: privacyPoolsV2SwapsInterface.getEventTopic('Executed'),
   extract: (log) => {
     const parsedLog = privacyPoolsV2SwapsInterface.parseLog(log)
     return toPaidRelayerActivity(
-      String(parsedLog.args.feeRecipient),
-      EthereumAddress.ZERO.toString(),
       parsedLog.args.feeAmount,
+      String(parsedLog.args.feeRecipient),
     )
   },
 }
@@ -154,14 +150,13 @@ export function extractPrivacyRelayerActivity(
 
 function toRelayerActivity(
   relayer: string,
-  recipient: string,
+  recipient?: string,
 ): Promise<PrivacyRelayerActivityExtractResult | undefined> {
   const relayerAddress = EthereumAddress(relayer)
-  const recipientAddress = EthereumAddress(recipient)
 
   if (
     relayerAddress === EthereumAddress.ZERO ||
-    relayerAddress === recipientAddress
+    (recipient !== undefined && relayerAddress === EthereumAddress(recipient))
   ) {
     return Promise.resolve(undefined)
   }
@@ -170,9 +165,9 @@ function toRelayerActivity(
 }
 
 function toPaidRelayerActivity(
-  relayer: string,
-  recipient: string,
   fee: BigNumber,
+  relayer: string,
+  recipient?: string,
 ): Promise<PrivacyRelayerActivityExtractResult | undefined> {
   if (fee.isZero()) {
     return Promise.resolve(undefined)
