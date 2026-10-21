@@ -6,8 +6,6 @@ import {
   CropAttestationRepository,
 } from './CropAttestationRepository'
 
-const ATTESTER = '0x19BEC50A4e61B0e1540C37cEB3F62f56AAfb74DB'
-
 describeDatabase(CropAttestationRepository.name, (db) => {
   const repository = db.cropAttestation
 
@@ -15,42 +13,57 @@ describeDatabase(CropAttestationRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  it('stores one attestation per attester and replaces it', async () => {
-    await repository.upsert(attestation(1, ['aztecnetwork']))
-    await repository.upsert(attestation(2, ['aztecnetwork', 'umbra']))
+  it('stores one attestation per source and replaces it', async () => {
+    await repository.upsert(attestation('aaaaaaaaaaaa', 1, ['aztecnetwork']))
+    await repository.upsert(
+      attestation('aaaaaaaaaaaa', 2, ['aztecnetwork', 'umbra']),
+    )
 
-    expect(await repository.find(11155111, ATTESTER)).toEqual(
-      attestation(2, ['aztecnetwork', 'umbra']),
+    expect(await repository.findCurrent()).toEqual(
+      attestation('aaaaaaaaaaaa', 2, ['aztecnetwork', 'umbra']),
     )
   })
 
-  it('keeps attesters and chains apart, matching addresses in any case', async () => {
-    await repository.upsert(attestation(1, ['umbra']))
-    await repository.upsert({ ...attestation(5, ['safe']), chainId: 1 })
+  it('finds the most recently written source', async () => {
+    await repository.upsert(attestation('bbbbbbbbbbbb', 5, ['safe']))
+    await repository.upsert(attestation('aaaaaaaaaaaa', 6, ['umbra']))
 
-    expect(
-      (await repository.find(11155111, ATTESTER.toUpperCase()))?.revision,
-    ).toEqual(1)
-    expect((await repository.find(1, ATTESTER))?.revision).toEqual(5)
-    expect(await repository.find(11155111, `0x${'1'.repeat(40)}`)).toEqual(
-      undefined,
-    )
+    expect((await repository.findCurrent())?.configId).toEqual('aaaaaaaaaaaa')
   })
 
-  it('deletes the attestation of one attester', async () => {
-    await repository.upsert(attestation(1, ['umbra']))
-    expect(await repository.delete(11155111, ATTESTER)).toEqual(1)
-    expect(await repository.find(11155111, ATTESTER)).toEqual(undefined)
+  it('finds nothing when empty', async () => {
+    expect(await repository.findCurrent()).toEqual(undefined)
+  })
+
+  it('deletes the attestation of one source', async () => {
+    await repository.upsert(attestation('aaaaaaaaaaaa', 1, ['umbra']))
+    expect(await repository.delete('aaaaaaaaaaaa')).toEqual(1)
+    expect(await repository.findCurrent()).toEqual(undefined)
+  })
+
+  it('deletes the attestations of every other source', async () => {
+    await repository.upsert(attestation('aaaaaaaaaaaa', 6, ['umbra']))
+    await repository.upsert(attestation('bbbbbbbbbbbb', 5, ['safe']))
+
+    expect(await repository.deleteAllExcept('bbbbbbbbbbbb')).toEqual(1)
+    expect((await repository.findCurrent())?.configId).toEqual('bbbbbbbbbbbb')
   })
 })
 
 function attestation(
+  configId: string,
   revision: number,
   projectIds: string[],
 ): CropAttestationRecord {
   return {
-    chainId: 11155111,
-    attester: ATTESTER.toLowerCase(),
+    configId,
+    network: 'ethereum',
+    chainId: 1,
+    eas: '0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587',
+    explorer: 'https://easscan.org',
+    schemaUid: `0x${'be'.repeat(32)}`,
+    schema: 'string[] projectIds,uint64 reviewedAt,uint32 revision',
+    attester: '0xa34C25578519beaa7A5F24e38BBa89A34594e4ee',
     uid: `0x${revision.toString().padStart(64, '0')}`,
     revision,
     reviewedAt: UnixTime(1792022400),
