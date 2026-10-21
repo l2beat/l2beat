@@ -42,7 +42,7 @@ const INITIAL_DESIGN: PoolDesign = {
 
 export function PoolLensFigure({ data }: { data: FigureData }) {
   return (
-    <MethodologyFigure caption="A made-up pool, running live. Each deposit arrives in its sender's colour and is sealed in an identical envelope; colours and lines show what this adversary can link back to a sender. Pick an adversary, then change the part of the pool's design it depends on: its verdict follows from what the pool then shows.">
+    <MethodologyFigure>
       <RosetteTooltipContextProvider>
         <PoolLens data={data} />
       </RosetteTooltipContextProvider>
