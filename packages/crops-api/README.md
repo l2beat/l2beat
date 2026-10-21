@@ -1,24 +1,32 @@
 # @l2beat/crops-api
 
 Static site generator for the CROPS API served from
-[crops.l2beat.com](https://crops.l2beat.com). Every JSON file is generated from
-`@l2beat/config` at build time and served as-is from Cloudflare Workers static
-assets, so there is no server code and no runtime dependency.
+[crops.l2beat.com](https://crops.l2beat.com). Every JSON file is generated at
+build time from `@l2beat/config` and the attester's current attestation, read
+from EAS on Ethereum, and served as-is from Cloudflare Workers static assets, so
+there is no server code and no runtime dependency.
 
 ## Local development
 
 ```sh
 pnpm build:dependencies  # builds @l2beat/config and its sqlite database
+export CROPS_ATTESTATIONS_RPC_URL=...  # an Ethereum mainnet RPC
 pnpm generate            # writes the site to ./out
 pnpm dev                 # generate + serve ./out with wrangler on localhost
 ```
+
+Generation reads the attestation from the chain, so it fails without
+`CROPS_ATTESTATIONS_RPC_URL` rather than publish an API that claims nothing is
+attested.
 
 ## Deployment
 
 `.github/workflows/deploy-crops-api.yml` deploys production on every push to
 `main` that changes this package or anything it depends on (decided by Turbo,
-not a path filter). Run it manually with the `environment` input to deploy
-`staging` or `production`, and `force` to skip the change check.
+not a path filter). The backend also dispatches it, with `force`, until the
+live API serves the current attestation, which changes without a commit. Run it
+manually with the `environment` input to deploy `staging` or `production`, and
+`force` to skip the change check.
 
 | Environment | Worker              | Hostname                   | Wrangler command                   |
 | ----------- | ------------------- | -------------------------- | ---------------------------------- |
@@ -31,7 +39,8 @@ zone's routes on every deploy, and the deploy token deliberately has no zone
 rights. A custom domain survives every later deploy of the same Worker.
 
 GitHub only offers manual dispatch for workflows that already exist on `main`.
-Until then, deploy staging from a laptop with the two variables below exported.
+Until then, deploy staging from a laptop with the two variables below and
+`CROPS_ATTESTATIONS_RPC_URL` exported.
 
 ### One-time human setup
 
@@ -43,9 +52,11 @@ a person has to do this once:
    the `l2beat.com` zone. That is enough to upload the site. It cannot touch
    DNS, certificates, routes or other Workers products.
 2. Copy the account id from the Workers & Pages overview page.
-3. Add the GitHub repository secrets `CLOUDFLARE_API_TOKEN` and
-   `CLOUDFLARE_ACCOUNT_ID`.
+3. Add the GitHub repository secrets `CLOUDFLARE_API_TOKEN`,
+   `CLOUDFLARE_ACCOUNT_ID` and `CROPS_ATTESTATIONS_RPC_URL` (an Ethereum
+   mainnet RPC).
 4. Deploy staging once so the Worker exists:
+   `CROPS_ATTESTATIONS_RPC_URL=... pnpm generate`, then
    `CLOUDFLARE_API_TOKEN=... CLOUDFLARE_ACCOUNT_ID=... pnpm wrangler deploy --env staging`.
 5. In the dashboard open Workers & Pages → `crops-api-staging` → Settings →
    Domains & Routes → Add → Custom domain, enter `crops-staging.l2beat.com`.
