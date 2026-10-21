@@ -37,7 +37,9 @@ export function NewProjectPage() {
         useCustomAddresses ? maxAddresses : undefined,
       )
       setDevMode(false)
-      await discover(title)
+      if (!(await discover(title))) {
+        throw new Error('Discovery failed')
+      }
       await queryClient.invalidateQueries({ queryKey: ['projects'] })
     },
     onSuccess: () => {
