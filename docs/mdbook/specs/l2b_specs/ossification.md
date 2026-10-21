@@ -67,13 +67,9 @@ the contracts that upgrade or govern them.
   multisigs with custom code.
 - **Tokens:** critical only when the project governs the token and it is
   the voting power of a binding upgrade path or the L2 gas token.
-- **Escrows:** critical only when the project governs and manages both the
-  escrow and its L2 counterpart. Any multisig or EOA of the project team
-  counts as the project. Escrows controlled by external token owners are left
-  out. TVS labels do not decide the perimeter. TVS calls an escrow canonical
-  also when the asset owner governs it, and such an escrow stays out.
-  `ESCROW.CANONICAL_ADD_TA` and `source: 'external'` can mark escrows on
-  either side.
+- **Escrows:** critical when they are [canonical](./canonical_bridge.md)
+  **and** nobody but the core governance can act on the escrow and its
+  counterpart on the chain (meaning no issuer permissions).
 
 Mark a contract with `critical` in a discovery template or in a
 `config.jsonc` override. An override beats a template and stays valid when

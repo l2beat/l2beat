@@ -11,7 +11,13 @@ export function getInlineDiff(diff: Diff, left: string, right: string): string {
     const [lStart, lEnd] = change.left
     const [rStart, rEnd] = change.right
 
-    result.push(...leftLines.slice(lastCommonIndex, lStart).map((l) => ` ${l}`))
+    // A side without lines starts on the line before the change.
+    const firstChangedIndex = lEnd > 0 ? lStart - 1 : lStart
+    result.push(
+      ...leftLines
+        .slice(lastCommonIndex, firstChangedIndex)
+        .map((l) => ` ${l}`),
+    )
 
     if (lEnd > 0) {
       result.push(...leftLines.slice(lStart - 1, lEnd).map((l) => `-${l}`))

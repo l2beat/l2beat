@@ -1,3 +1,198 @@
+Generated with discovered.json: 0x4413d16306c002be027788dcb946d314d157ee13
+
+# Diff at Tue, 20 Oct 2026 12:40:01 GMT:
+
+- id: a36faca7
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1788792011
+- current timestamp: 1788792011
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788792011 (main branch discovery), not current.
+
+```diff
+    contract L2SurplusFee (arb-nova:0x509386DbF5C0BE6fd68Df97A05fdB375136c32De) [orbitstack/layer2/L2SurplusFee] {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      values.recipientsData.0.recipients.0:
+-        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++++ severity: MEDIUM
+      values.executors.0:
+-        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+    }
+```
+
+```diff
+    contract L2BaseFee (arb-nova:0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f) [orbitstack/layer2/L2SurplusFee] {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      values.recipientsData.0.recipients.0:
+-        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","role":"admin","via":[{"address":"arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257","role":"admin","via":[{"address":"arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD","role":"admin","via":[{"address":"arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","role":".executors"}
+    }
+```
+
+Generated with discovered.json: 0xa9784a22b2a253f2aa6aca6f897cdf5b9735b3e3
+
+# Diff at Tue, 20 Oct 2026 10:30:56 GMT:
+
+- id: cc22e917
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bea09ad019b915aab11cbc66c4845cbfca1ee6fd block: 1788792011
+- current timestamp: 1788792011
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788792011 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) [orbitstack/layer2/L2GatewayRouter] {
+    +++ description: Router managing token <–> gateway mapping on L2.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "arb-nova:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
++        "eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2WethGateway (arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) [orbitstack/layer2/L2WethGateway] {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "arb-nova:0xE4E2121b479017955Be0b175305B35f312330BaE"
++        "eth:0xE4E2121b479017955Be0b175305B35f312330BaE"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2ARBGateway (arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4) [orbitstack/layer2/L2CustomGateway] {
+    +++ description: Counterpart to the L1CustomGateway. Mints and burns custom ERC20 tokens on L2 for deposits and withdrawals through the L1CustomGateway escrow.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "arb-nova:0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
++        "eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) [orbitstack/layer2/L2ERC20Gateway] {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "arb-nova:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
++        "eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"eth"}}]
+    }
+```
+
+```diff
+    contract CustomGateway (eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f) [orbitstack/CustomGateway] {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      values.counterpartGateway:
+-        "eth:0xbf544970E6BD77b21C6492C281AB60d0770451F4"
++        "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb-nova"}}]
+    }
+```
+
+```diff
+    contract ERC20Gateway (eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf) [orbitstack/ERC20Gateway] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      values.counterpartGateway:
+-        "eth:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
++        "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb-nova"}}]
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
++++ severity: HIGH
+      values.counterpartGateway:
+-        "eth:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
++        "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb-nova"}}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (eth:0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731) [orbitstack/OneStepProver0]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (eth:0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf) [orbitstack/OneStepProverHostIo]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (eth:0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921) [orbitstack/OneStepProverMath]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b) [orbitstack/OneStepProverMemory]
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
 Generated with discovered.json: 0xa23d94be57e6c911be05e1d174ca6d2a51b16796
 
 # Diff at Fri, 16 Oct 2026 09:37:48 GMT:

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router'
 import { getFlatSource } from '../../api/api'
 import { ErrorState } from '../../components/ErrorState'
-import { EditorView } from '../../components/editor/views/EditorView'
+import { EditorView } from '../../components/editor/views/lazy'
 import { LoadingState } from '../../components/LoadingState'
 import { Title } from '../../components/Title'
 

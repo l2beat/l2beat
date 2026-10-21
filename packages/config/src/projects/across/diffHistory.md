@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xd5e149eb45f3b8eec92a07b2a1f7709f34dd2cc0
+
+# Diff at Tue, 20 Oct 2026 10:25:37 GMT:
+
+- id: a54d415c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1792144273
+- current timestamp: 1792144273
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792144273 (main branch discovery), not current.
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.CrossChainContracts.OP Mainnet:
+-        "eth:0x6f26Bf09B1C792e3228e5467807a900A503c0281"
++        "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281"
+    }
+```
+
+```diff
+    contract OP_SpokePool (oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      values.withdrawalRecipient:
+-        "oeth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+    }
+```
+
 Generated with discovered.json: 0xf9a11413d3972a9078dd5fbc3f18ceaf3c321676
 
 # Diff at Fri, 16 Oct 2026 09:52:47 GMT:

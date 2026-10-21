@@ -4,7 +4,7 @@ import type { ApiAddressType } from '../../../../api/types'
 import { ADDRESS_ICON_COMPONENTS } from '../../../../components/AddressIcon'
 import { IconInitial } from '../../../../icons/IconInitial'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
-import type { Node } from '../store/State'
+import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
 import {
   FIELD_HEIGHT,
@@ -33,6 +33,14 @@ const AUTUMN_300: RGBA = [0xba / 255, 0xd8 / 255, 0x0a / 255, 1]
 const AUX_RED: RGBA = [0xfb / 255, 0x4a / 255, 0x35 / 255, 1]
 const AUX_GREEN: RGBA = [0x9d / 255, 0xde / 255, 0x6c / 255, 1]
 const AUX_ORANGE: RGBA = [0xfe / 255, 0x80 / 255, 0x19 / 255, 1]
+
+if (new Uint8Array(new Uint32Array([1]).buffer)[0] !== 1) {
+  throw new Error('Packed connection colors assume a little-endian CPU')
+}
+const TRANSPARENT_PACKED = 0
+const CONNECTION_PACKED = packColor(COFFEE_400)
+const DIMMED_CONNECTION_PACKED = packColor(withAlpha(COFFEE_400, 0.3))
+const GRAYED_CONNECTION_PACKED = packColor(withAlpha(COFFEE_200, 0.1))
 const BLACK: RGBA = [0, 0, 0, 1]
 
 const HEADER_ICON_SIZE = 16
@@ -78,6 +86,8 @@ const PERIMETER_SAMPLES_PER_CORNER = 8
 const QUAD_STRIDE_F = 14 // pos.xy, size.xy, color.rgba, radii.xyzw, border, z
 const TEXT_STRIDE_F = 13 // pos.xy, size.xy, uv.xyzw, color.rgba, z
 const LINE_STRIDE_F = 6 // pos.xy, color.rgba
+const CONNECTION_WIDTH = 2
+const HIGHLIGHTED_CONNECTION_WIDTH = 3
 
 // ============================================================================
 // Types
@@ -100,6 +110,9 @@ interface NodeFlags {
 }
 
 interface DrawData {
+  // Connection geometry depends only on the render graph, so it is rebuilt
+  // when this changes and only recolored when just the selection does.
+  graphNodes: readonly Node[]
   visible: Node[]
   visibleById: Map<string, Node>
   flags: Map<string, NodeFlags>
@@ -652,14 +665,40 @@ interface Buffers {
   fieldText: PassBuffer
   footerText: PassBuffer
   icon: PassBuffer
+  connectionBase: ConnectionBaseBuffer
   connections: PassBuffer
   overlap: PassBuffer
+}
+
+// Positions and colors live in separate buffers so a selection change uploads
+// only the colors.
+interface ConnectionBaseBuffer {
+  positions: WebGLBuffer
+  colors: WebGLBuffer
+  vao: WebGLVertexArrayObject
+}
+
+interface ConnectionSpan {
+  node: Node
+  target: Node
+  field: Field
+  fieldIndex: number
+  isDashed: boolean
+  firstVertex: number
+  vertexCount: number
+}
+
+interface ConnectionGeometry {
+  graphNodes: readonly Node[]
+  spans: ConnectionSpan[]
+  vertexCount: number
 }
 
 // Cached counts: how many instances / vertices each pass should draw. Zero
 // means "skip the draw call". These are filled by `rebuildAll(data)` and
 // stay valid until the data ref changes.
 interface PassCounts {
+  connectionBase: number
   round: number
   headerText: number
   fieldText: number
@@ -685,6 +724,7 @@ class WebGLRenderer {
   // and re-issue the same draw calls.
   private cachedData: DrawData | null = null
   private counts: PassCounts = {
+    connectionBase: 0,
     round: 0,
     headerText: 0,
     fieldText: 0,
@@ -698,6 +738,8 @@ class WebGLRenderer {
   private roundData = new Float32Array(0)
   private textData = new Float32Array(0)
   private lineData = new Float32Array(0)
+  private connectionColors = new Uint32Array(0)
+  private connectionGeometry: ConnectionGeometry | null = null
 
   static async create(
     gl: WebGL2RenderingContext,
@@ -763,6 +805,7 @@ class WebGLRenderer {
     const fieldText = this.createTextPassBuffer(cornerQuad)
     const footerText = this.createTextPassBuffer(cornerQuad)
     const icon = this.createTextPassBuffer(cornerQuad)
+    const connectionBase = this.createConnectionBaseBuffer()
     const connections = this.createLinePassBuffer()
     const overlap = this.createLinePassBuffer()
 
@@ -775,9 +818,25 @@ class WebGLRenderer {
       fieldText,
       footerText,
       icon,
+      connectionBase,
       connections,
       overlap,
     }
+  }
+
+  private createConnectionBaseBuffer(): ConnectionBaseBuffer {
+    const gl = this.gl
+    const positions = mustCreateBuffer(gl)
+    const colors = mustCreateBuffer(gl)
+    const vao = mustCreateVAO(gl)
+    gl.bindVertexArray(vao)
+    gl.bindBuffer(gl.ARRAY_BUFFER, positions)
+    gl.enableVertexAttribArray(0)
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 8, 0)
+    gl.bindBuffer(gl.ARRAY_BUFFER, colors)
+    gl.enableVertexAttribArray(1)
+    gl.vertexAttribPointer(1, 4, gl.UNSIGNED_BYTE, true, 4, 0)
+    return { positions, colors, vao }
   }
 
   private createRoundPassBuffer(cornerQuad: WebGLBuffer): PassBuffer {
@@ -880,6 +939,12 @@ class WebGLRenderer {
     // selected). Overlap borders draw last.
     gl.disable(gl.DEPTH_TEST)
     this.drawLinePass(
+      this.buffers.connectionBase,
+      this.counts.connectionBase,
+      transform,
+      res,
+    )
+    this.drawLinePass(
       this.buffers.connections,
       this.counts.connections,
       transform,
@@ -937,7 +1002,7 @@ class WebGLRenderer {
     )
     this.counts.fieldText = this.buildFieldText(renderNodes)
     this.counts.footerText = this.buildFooterText(renderNodes)
-    this.counts.connections = this.buildConnections(renderNodes, data)
+    this.buildConnections(data)
     this.counts.overlap = this.buildOverlap(renderNodes)
   }
 
@@ -1375,92 +1440,123 @@ class WebGLRenderer {
     return n
   }
 
-  private buildConnections(
-    renderNodes: readonly RenderNode[],
-    data: DrawData,
+  private buildConnections(data: DrawData) {
+    let geometry = this.connectionGeometry
+    if (geometry?.graphNodes !== data.graphNodes) {
+      geometry = this.tessellateConnections(data)
+      this.connectionGeometry = geometry
+    }
+    const highlighted = this.colorConnections(geometry, data)
+    this.counts.connectionBase = geometry.vertexCount
+    this.counts.connections = this.emitConnections(
+      this.buffers.connections.data,
+      highlighted,
+      HIGHLIGHTED_CONNECTION_WIDTH,
+      AUTUMN_300,
+    )
+  }
+
+  private tessellateConnections(data: DrawData): ConnectionGeometry {
+    const spans = liveConnections(data)
+    const vertexCount = this.emitConnections(
+      null,
+      spans,
+      CONNECTION_WIDTH,
+      COFFEE_400,
+    )
+    const positions = new Float32Array(vertexCount * 2)
+    const lines = this.lineData
+    for (let i = 0; i < vertexCount; i++) {
+      positions[i * 2] = lines[i * LINE_STRIDE_F] as number
+      positions[i * 2 + 1] = lines[i * LINE_STRIDE_F + 1] as number
+    }
+    const gl = this.gl
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers.connectionBase.positions)
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW)
+    return { graphNodes: data.graphNodes, spans, vertexCount }
+  }
+
+  // Tessellates the spans into the line scratch buffer, recording where each
+  // one landed, and uploads them unless `target` is null.
+  private emitConnections(
+    target: WebGLBuffer | null,
+    spans: ConnectionSpan[],
+    width: number,
+    color: RGBA,
   ): number {
     let maxVertices = 0
-    for (const { node, flags, visibleFields } of renderNodes) {
-      for (const { field, index } of visibleFields) {
-        if (!isFieldConnectionLive(node, field, data.liveGroupTargets)) continue
-        if (flags.fieldTargetHidden[index]) continue
-        const target = data.visibleById.get(field.target)
-        if (!target) continue
-
-        const from = field.connection.from
-        const to = field.connection.to
-        const c1x = from.x + (from.direction === 'left' ? -50 : 50)
-        const c2x = to.x + (to.direction === 'left' ? -50 : 50)
-        const isDashed =
-          target.addressType === 'EOA' ||
-          target.addressType === 'EOAPermissioned'
-        maxVertices += estimateBezierStrokeVertices(
-          from,
-          to,
-          c1x,
-          c2x,
-          isDashed,
-        )
-      }
+    for (const { field, isDashed } of spans) {
+      const { from, to } = field.connection
+      const c1x = from.x + (from.direction === 'left' ? -50 : 50)
+      const c2x = to.x + (to.direction === 'left' ? -50 : 50)
+      maxVertices += estimateBezierStrokeVertices(from, to, c1x, c2x, isDashed)
     }
     if (maxVertices === 0) return 0
     const buf = this.ensureLine(maxVertices)
-
     let v = 0
-    for (const { node, flags, visibleFields } of renderNodes) {
-      for (const { field, index } of visibleFields) {
-        if (!isFieldConnectionLive(node, field, data.liveGroupTargets)) continue
-        if (flags.fieldTargetHidden[index]) continue
-        const target = data.visibleById.get(field.target)
-        if (!target) continue
-
-        const from = field.connection.from
-        const to = field.connection.to
-        const c1x = from.x + (from.direction === 'left' ? -50 : 50)
-        const c2x = to.x + (to.direction === 'left' ? -50 : 50)
-
-        const isHighlighted =
-          flags.isSelected || flags.fieldHighlighted[index] === 1
-        const isConnDimmed =
-          data.enableDimming && data.anyNodeSelected && !isHighlighted
-        const isGrayed =
-          data.markUnreachableEntries &&
-          !(node.isReachable && target.isReachable)
-        const isDashed =
-          target.addressType === 'EOA' ||
-          target.addressType === 'EOAPermissioned'
-
-        let color: RGBA
-        let width: number
-        if (isHighlighted) {
-          color = AUTUMN_300
-          width = 3
-        } else if (isGrayed) {
-          color = withAlpha(COFFEE_200, 0.1)
-          width = 2
-        } else if (isConnDimmed) {
-          color = withAlpha(COFFEE_400, 0.3)
-          width = 2
-        } else {
-          color = COFFEE_400
-          width = 2
-        }
-
-        v += emitBezierStroke(
-          buf,
-          v,
-          from,
-          to,
-          c1x,
-          c2x,
-          width,
-          color,
-          isDashed,
-        )
-      }
+    for (const span of spans) {
+      const { from, to } = span.field.connection
+      const c1x = from.x + (from.direction === 'left' ? -50 : 50)
+      const c2x = to.x + (to.direction === 'left' ? -50 : 50)
+      span.firstVertex = v
+      span.vertexCount = emitBezierStroke(
+        buf,
+        v,
+        from,
+        to,
+        c1x,
+        c2x,
+        width,
+        color,
+        span.isDashed,
+      )
+      v += span.vertexCount
     }
+    if (target === null) return v
+    return this.upload(target, buf, v, LINE_STRIDE_F)
+  }
 
-    return this.upload(this.buffers.connections.data, buf, v, LINE_STRIDE_F)
+  // Highlighted connections turn transparent here and are drawn again, wider,
+  // on top. Returns them.
+  private colorConnections(
+    geometry: ConnectionGeometry,
+    data: DrawData,
+  ): ConnectionSpan[] {
+    if (this.connectionColors.length < geometry.vertexCount) {
+      this.connectionColors = new Uint32Array(geometry.vertexCount * 2)
+    }
+    const colors = this.connectionColors
+    const highlighted: ConnectionSpan[] = []
+    for (const span of geometry.spans) {
+      const flags = data.flags.get(span.node.id)
+      if (flags === undefined) {
+        throw new Error('Connection from a node without flags')
+      }
+      const isHighlighted =
+        flags.isSelected || flags.fieldHighlighted[span.fieldIndex] === 1
+      let color = TRANSPARENT_PACKED
+      if (isHighlighted) {
+        highlighted.push({ ...span })
+      } else if (
+        data.markUnreachableEntries &&
+        !(span.node.isReachable && span.target.isReachable)
+      ) {
+        color = GRAYED_CONNECTION_PACKED
+      } else if (data.enableDimming && data.anyNodeSelected) {
+        color = DIMMED_CONNECTION_PACKED
+      } else {
+        color = CONNECTION_PACKED
+      }
+      colors.fill(color, span.firstVertex, span.firstVertex + span.vertexCount)
+    }
+    const gl = this.gl
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers.connectionBase.colors)
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      colors.subarray(0, geometry.vertexCount),
+      gl.DYNAMIC_DRAW,
+    )
+    return highlighted
   }
 
   private buildOverlap(renderNodes: readonly RenderNode[]): number {
@@ -1558,7 +1654,7 @@ class WebGLRenderer {
   }
 
   private drawLinePass(
-    pass: PassBuffer,
+    pass: { vao: WebGLVertexArrayObject },
     v: number,
     transform: { offsetX: number; offsetY: number; scale: number },
     res: [number, number],
@@ -1605,6 +1701,9 @@ class WebGLRenderer {
     gl.deleteProgram(this.programs.text)
     gl.deleteProgram(this.programs.line)
     gl.deleteBuffer(this.buffers.cornerQuad)
+    gl.deleteBuffer(this.buffers.connectionBase.positions)
+    gl.deleteBuffer(this.buffers.connectionBase.colors)
+    gl.deleteVertexArray(this.buffers.connectionBase.vao)
     for (const pass of [
       this.buffers.round,
       this.buffers.headerText,
@@ -1665,6 +1764,39 @@ function buildRenderNodes(data: DrawData): RenderNode[] {
     if (rn) rn.z = 0.9 - (i / maxIndex) * 1.8
   }
   return ordered
+}
+
+function liveConnections(data: DrawData): ConnectionSpan[] {
+  const spans: ConnectionSpan[] = []
+  for (const node of data.visible) {
+    const flags = data.flags.get(node.id)
+    if (flags === undefined) continue
+    for (const { field, index } of getVisibleFields(node)) {
+      if (!isFieldConnectionLive(node, field, data.liveGroupTargets)) continue
+      if (flags.fieldTargetHidden[index]) continue
+      const target = data.visibleById.get(field.target)
+      if (!target) continue
+      spans.push({
+        node,
+        target,
+        field,
+        fieldIndex: index,
+        isDashed:
+          target.addressType === 'EOA' ||
+          target.addressType === 'EOAPermissioned',
+        firstVertex: 0,
+        vertexCount: 0,
+      })
+    }
+  }
+  return spans
+}
+
+// Packs a color for a normalized RGBA8 attribute, which reads bytes in memory
+// order: little-endian puts red in the lowest byte.
+function packColor(c: RGBA): number {
+  const [r, g, b, a] = c.map((channel) => Math.round(channel * 255)) as RGBA
+  return (r | (g << 8) | (b << 16) | (a << 24)) >>> 0
 }
 
 // ============================================================================
@@ -2311,6 +2443,7 @@ function buildDrawData(
   }
 
   return {
+    graphNodes: nodes,
     visible,
     visibleById,
     flags,

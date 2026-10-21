@@ -5,7 +5,7 @@ import type {
   EditorSaveCallback,
 } from '../../../../../components/editor/code/editor'
 import { useCodeStore } from '../../../../../components/editor/store'
-import { EditorView } from '../../../../../components/editor/views/EditorView'
+import { JsonEditorView } from '../../../../../components/editor/views/lazy'
 
 type HandlerEditorProps = {
   context: 'config' | 'template'
@@ -40,15 +40,12 @@ export function HandlerEditor({
     return editor?.createUri(file)
   }, [file, editor])
 
-  // monaco schema synchronization
   useEffect(() => {
     if (selectedHandler && editor && uri) {
-      const uriString = uri.toString()
-
       // Upsert schema for this specific handler without overwriting other schemas
       editor.upsertJsonSchema({
-        uri: uriString,
-        fileMatch: [uriString],
+        uri,
+        fileMatch: [uri],
         schema:
           selectedHandler.schema === null ? undefined : selectedHandler.schema,
       })
@@ -56,13 +53,13 @@ export function HandlerEditor({
 
     return () => {
       if (editor && uri) {
-        editor.removeJsonSchema(uri.toString())
+        editor.removeJsonSchema(uri)
       }
     }
   }, [selectedHandler, uri, editor])
 
   return (
-    <EditorView
+    <JsonEditorView
       features={{ lineSelection: false, rangeHighlight: false }}
       editorId={editorKey}
       disableTabs

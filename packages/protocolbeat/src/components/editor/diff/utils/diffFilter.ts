@@ -16,11 +16,11 @@ export type ChangeDecision =
   | { kind: 'drop' }
   | { kind: 'narrow'; original: LineRange; modified: LineRange }
 
-// For each Monaco change we drop or narrow, return the line-range slices
-// that the diff editor must still pad with view zones so unequal line counts
+// For each line change we drop or narrow, return the line-range slices
+// that the diff editor must still pad with gaps so unequal line counts
 // on the two sides don't cause cumulative drift below the change.
-//   drop   → the whole outer mapping (Monaco won't render it any more).
-//   keep   → nothing (Monaco aligns the change itself).
+//   drop   → the whole outer mapping (it won't render as a change any more).
+//   keep   → nothing (the merge view aligns the change itself).
 //   narrow → the lead and trail slices outside the kept narrow region.
 export function alignmentGaps(
   outer: LineRangeMapping,
@@ -212,7 +212,7 @@ function projectRange(
 ): LineRange {
   // All output line numbers are clamped to `fallback`. A multiline token
   // (block comment, multiline string) that straddles the change boundary
-  // would otherwise project to lines outside the original Monaco range.
+  // would otherwise project to lines outside the original line range.
   if (survivors.length === 0) {
     const rawAnchor =
       prefix > 0

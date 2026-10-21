@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import type { JsonSupport } from '../languages/json'
 import { useCodeStore } from '../store'
 import { Editor } from './editor'
 import { LineSelector } from './plugins/lineSelector'
@@ -10,24 +11,25 @@ type CodeEditorComponentProps = {
     lineSelection: boolean
     rangeHighlight: boolean
   }
+  json?: JsonSupport
 }
 
 export function CodeEditorComponent({
   features,
   editorKey,
+  json,
 }: CodeEditorComponentProps) {
-  const monacoEl = useRef<HTMLDivElement>(null)
-  const resizeObserverRef = useRef<ResizeObserver | null>(null)
+  const editorElement = useRef<HTMLDivElement>(null)
   const { setEditor, removeEditor } = useCodeStore()
 
   useEffect(() => {
-    const element = monacoEl.current
+    const element = editorElement.current
 
     if (!element) {
       return
     }
 
-    const editor = new Editor(element)
+    const editor = new Editor(element, json)
 
     if (features.lineSelection) {
       editor.usePlugin(LineSelector)
@@ -39,14 +41,7 @@ export function CodeEditorComponent({
 
     setEditor(editorKey, editor)
 
-    const resizeObserver = new ResizeObserver(() => {
-      editor.resize()
-    })
-    resizeObserver.observe(element)
-    resizeObserverRef.current = resizeObserver
-
     return () => {
-      resizeObserver.disconnect()
       removeEditor(editorKey, editor)
       editor.dispose()
     }
@@ -54,8 +49,8 @@ export function CodeEditorComponent({
 
   return (
     <div
-      className="h-full w-full"
-      ref={monacoEl}
+      className="h-full min-h-0 w-full"
+      ref={editorElement}
       onKeyDown={(event) => event.stopPropagation()}
       onKeyUp={(event) => event.stopPropagation()}
     />

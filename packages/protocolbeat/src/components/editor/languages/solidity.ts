@@ -1,332 +1,273 @@
-import type { languages } from 'monaco-editor/esm/vs/editor/editor.api'
+import {
+  foldService,
+  StreamLanguage,
+  type StringStream,
+} from '@codemirror/language'
+import type { EditorState } from '@codemirror/state'
+import { indentWidth } from '../indentGuides'
+import { keywords, typeNames } from './solidityWords'
 
-export const configuration: languages.LanguageConfiguration = {
-  wordPattern:
-    /(-?\d*\.\d\w*)|0[xX][0-9a-fA-F]+|([a-zA-Z_$][\w$]*)|([^\`\~\!\#\%\^\&\*\(\)\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
-  comments: {
-    lineComment: '//',
-    blockComment: ['/*', '*/'],
-  },
-  brackets: [
-    ['{', '}'],
-    ['[', ']'],
-    ['(', ')'],
-  ],
-  autoClosingPairs: [
-    { open: '{', close: '}' },
-    { open: '[', close: ']' },
-    { open: '(', close: ')' },
-    { open: "'", close: "'", notIn: ['string', 'comment'] },
-    { open: '"', close: '"', notIn: ['string', 'comment'] },
-  ],
-  surroundingPairs: [
-    { open: '{', close: '}' },
-    { open: '[', close: ']' },
-    { open: '(', close: ')' },
-    { open: "'", close: "'" },
-    { open: '"', close: '"' },
-  ],
+interface SolidityState {
+  inBlockComment: boolean
+  inLineComment: boolean
 }
 
-export const keywords = [
-  'if',
-  'else',
-  'for',
-  'while',
-  'do',
-  'continue',
-  'break',
-  'return',
-  'try',
-  'catch',
-  'throw',
+const KEYWORDS = new Set(keywords)
+const TYPE_NAMES = new Set(typeNames)
+const OPERATORS = new Set([
+  '+',
+  '-',
+  '*',
+  '/',
+  '%',
+  '++',
+  '--',
+  '==',
+  '!=',
+  '<',
+  '<=',
+  '>',
+  '>=',
+  '&&',
+  '||',
+  '!',
+  '&',
+  '|',
+  '^',
+  '~',
+  '<<',
+  '>>',
+  '=',
+  ':=',
+  '+=',
+  '-=',
+  '*=',
+  '/=',
+  '%=',
+  '&=',
+  '|=',
+  '^=',
+  '<<=',
+  '>>=',
+  '?',
+  ':',
+  '->',
+])
+const SYMBOL_CHARACTERS = '=><!~?:&|+-*/^%'
+const BRACKET_CHARACTERS = '{}()[]'
 
-  // Contract Structure
-  'contract',
-  'library',
-  'interface',
-  'struct',
-  'enum',
-  'error',
-  'modifier',
-  'event',
-  'constructor',
-
-  // Variable Declarations and Modifiers
-  'constant',
-  'immutable',
-  'storage',
-  'memory',
-  'calldata',
-  'public',
-  'private',
-  'internal',
-  'external',
-  'payable',
-  'pure',
-  'view',
-  'virtual',
-  'override',
-  'abstract',
-  'indexed',
-
-  // Functions and Operators
-  'new',
-  'delete',
-  'emit',
-  'require',
-  'assert',
-  'revert',
-  'selfdestruct',
-  'type',
-  'is',
-
-  // Special Variables and Functions
-  'msg',
-  'tx',
-  'block',
-  'abi',
-  'now',
-  'super',
-  'this',
-
-  // Pragma and Imports
-  'pragma',
-  'import',
-  'using',
-
-  // Yul (inline assembly keywords)
-  'assembly',
-  'let',
-  'function',
-  'leave',
-  'switch',
-  'case',
-  'default',
-]
-
-export const typeNames = [
-  'bool',
-  'address',
-  'string',
-  'bytes',
-  'int',
-  'int8',
-  'int16',
-  'int24',
-  'int32',
-  'int40',
-  'int48',
-  'int56',
-  'int64',
-  'int72',
-  'int80',
-  'int88',
-  'int96',
-  'int104',
-  'int112',
-  'int120',
-  'int128',
-  'int136',
-  'int144',
-  'int152',
-  'int160',
-  'int168',
-  'int176',
-  'int184',
-  'int192',
-  'int200',
-  'int208',
-  'int216',
-  'int224',
-  'int232',
-  'int240',
-  'int248',
-  'int256',
-  'uint',
-  'uint8',
-  'uint16',
-  'uint24',
-  'uint32',
-  'uint40',
-  'uint48',
-  'uint56',
-  'uint64',
-  'uint72',
-  'uint80',
-  'uint88',
-  'uint96',
-  'uint104',
-  'uint112',
-  'uint120',
-  'uint128',
-  'uint136',
-  'uint144',
-  'uint152',
-  'uint160',
-  'uint168',
-  'uint176',
-  'uint184',
-  'uint192',
-  'uint200',
-  'uint208',
-  'uint216',
-  'uint224',
-  'uint232',
-  'uint240',
-  'uint248',
-  'uint256',
-  'fixed',
-  'ufixed',
-  'bytes1',
-  'bytes2',
-  'bytes3',
-  'bytes4',
-  'bytes5',
-  'bytes6',
-  'bytes7',
-  'bytes8',
-  'bytes9',
-  'bytes10',
-  'bytes11',
-  'bytes12',
-  'bytes13',
-  'bytes14',
-  'bytes15',
-  'bytes16',
-  'bytes17',
-  'bytes18',
-  'bytes19',
-  'bytes20',
-  'bytes21',
-  'bytes22',
-  'bytes23',
-  'bytes24',
-  'bytes25',
-  'bytes26',
-  'bytes27',
-  'bytes28',
-  'bytes29',
-  'bytes30',
-  'bytes31',
-  'bytes32',
-]
-
-export const language: languages.IMonarchLanguage = {
-  keywords,
-  typeNames,
-  operators: [
-    // Arithmetic operators
-    '+',
-    '-',
-    '*',
-    '/',
-    '%',
-    '++',
-    '--',
-
-    // Comparison operators
-    '==',
-    '!=',
-    '<',
-    '<=',
-    '>',
-    '>=',
-
-    // Logical operators
-    '&&',
-    '||',
-    '!',
-
-    // Bitwise operators
-    '&',
-    '|',
-    '^',
-    '~',
-    '<<',
-    '>>',
-
-    // Assignment operators
-    '=',
-    ':=',
-    '+=',
-    '-=',
-    '*=',
-    '/=',
-    '%=',
-    '&=',
-    '|=',
-    '^=',
-    '<<=',
-    '>>=',
-
-    // Conditional (ternary) operator
-    '?',
-    ':',
-
-    // Member access operators
-    '.',
-    '->', // `->` used in Solidity's function selector syntax
-  ],
-  symbols: /[=><!~?:&|+\-*\/\^%]+/,
-  escapes:
-    /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
-
-  tokenizer: {
-    root: [
-      // identifiers and keywords
-      [
-        /[a-zA-Z_]\w*/,
-        {
-          cases: {
-            '@keywords': { token: 'keyword.$0' },
-            '@typeNames': { token: 'keyword.typename.$0' },
-            '@default': 'identifier',
-          },
-        },
-      ],
-
-      // whitespace
-      { include: '@whitespace' },
-
-      // Operators
-      [/[{}()\[\]]/, '@brackets'],
-      [/@symbols/, { cases: { '@operators': 'operator', '@default': '' } }],
-      [/;/, 'delimiter.semicolon'],
-
-      // Numbers
-      [/[0-9_]*\.[0-9_]+([eE]\-?\d+)?/, 'number.float'],
-      [/0[xX][0-9a-fA-F_]+/, 'number.hex'],
-      [/[0-9_]+/, 'number'],
-
-      // Strings
-      [/"([^"\\]|\\.)*$/, 'string.invalid'], // non-terminated string
-      [/"/, 'string', '@string'],
-    ],
-
-    string: [
-      [/[^\\"]+/, 'string'],
-      [/"/, 'string', '@pop'],
-    ],
-
-    whitespace: [
-      [/[ \t\r\n]+/, ''],
-      [/\/\//, 'comment', '@commentSingle'],
-      [/\/\*/, 'comment', '@commentMulti'],
-    ],
-
-    commentSingle: [
-      [/\@\w+$/, 'comment.keyword', '@pop'],
-      [/\@\w+/, 'comment.keyword'],
-      [/[^\@]*$/, 'comment', '@pop'],
-      [/[^\@]+/, 'comment'],
-    ],
-
-    commentMulti: [
-      [/\@\w+/, 'comment.keyword'],
-      [/[^\@\/*]+/, 'comment'],
-      ['\\*/', 'comment', '@pop'],
-      [/[\/*]/, 'comment'],
-    ],
+const soliditySyntax = StreamLanguage.define<SolidityState>({
+  name: 'solidity',
+  startState: () => ({ inBlockComment: false, inLineComment: false }),
+  copyState: (state) => ({ ...state }),
+  token: readToken,
+  blankLine: (state) => {
+    state.inLineComment = false
   },
+  languageData: {
+    commentTokens: { line: '//', block: { open: '/*', close: '*/' } },
+    closeBrackets: { brackets: ['(', '[', '{', '"', "'"] },
+  },
+})
+
+export const solidity = [soliditySyntax, foldService.of(foldByIndent)]
+
+// Mirrors the Monarch tokenizer this replaced, quirks included, so code keeps
+// its colors: a run of symbol characters is an operator only when the whole
+// run is one, and only double quotes start a string.
+function readToken(stream: StringStream, state: SolidityState): string | null {
+  if (stream.sol()) {
+    state.inLineComment = false
+  }
+  if (state.inBlockComment) {
+    return readBlockComment(stream, state)
+  }
+  if (state.inLineComment) {
+    return readLineComment(stream)
+  }
+  if (stream.eatSpace()) {
+    return null
+  }
+  const character = stream.peek() as string
+  if (isIdentifierStart(character)) {
+    stream.eatWhile(isWordCharacter)
+    return identifierStyle(stream.current())
+  }
+  if (stream.match('//')) {
+    state.inLineComment = true
+    return 'comment'
+  }
+  if (stream.match('/*')) {
+    state.inBlockComment = true
+    return 'comment'
+  }
+  if (BRACKET_CHARACTERS.includes(character)) {
+    stream.next()
+    return 'bracket'
+  }
+  if (SYMBOL_CHARACTERS.includes(character)) {
+    stream.eatWhile((next) => SYMBOL_CHARACTERS.includes(next))
+    return OPERATORS.has(stream.current()) ? 'operator' : null
+  }
+  if (character === ';') {
+    stream.next()
+    return 'punctuation'
+  }
+  if (readNumber(stream)) {
+    return 'number'
+  }
+  if (character === '"') {
+    readString(stream)
+    return 'string'
+  }
+  stream.next()
+  return null
+}
+
+function identifierStyle(word: string): string | null {
+  if (KEYWORDS.has(word)) {
+    return 'keyword'
+  }
+  if (TYPE_NAMES.has(word)) {
+    return 'typeName'
+  }
+  return null
+}
+
+function readNumber(stream: StringStream): boolean {
+  const start = stream.pos
+  if (readFloat(stream)) {
+    return true
+  }
+  stream.pos = start
+  if (stream.match('0x') || stream.match('0X')) {
+    if (stream.eatWhile(isHexDigitOrUnderscore)) {
+      return true
+    }
+    stream.pos = start
+  }
+  return stream.eatWhile(isDigitOrUnderscore)
+}
+
+function readFloat(stream: StringStream): boolean {
+  stream.eatWhile(isDigitOrUnderscore)
+  if (!stream.eat('.') || !stream.eatWhile(isDigitOrUnderscore)) {
+    return false
+  }
+  const exponentStart = stream.pos
+  if (stream.eat('e') || stream.eat('E')) {
+    stream.eat('-')
+    if (!stream.eatWhile(isDigit)) {
+      stream.pos = exponentStart
+    }
+  }
+  return true
+}
+
+function readString(stream: StringStream) {
+  stream.next()
+  while (!stream.eol()) {
+    const character = stream.next()
+    if (character === '\\') {
+      stream.next()
+    } else if (character === '"') {
+      return
+    }
+  }
+}
+
+function readLineComment(stream: StringStream): string {
+  if (readAnnotation(stream)) {
+    return 'annotation'
+  }
+  stream.next()
+  stream.eatWhile((next) => next !== '@')
+  return 'comment'
+}
+
+function readBlockComment(stream: StringStream, state: SolidityState): string {
+  if (readAnnotation(stream)) {
+    return 'annotation'
+  }
+  while (!stream.eol()) {
+    if (stream.match('*/')) {
+      state.inBlockComment = false
+      return 'comment'
+    }
+    if (stream.peek() === '@') {
+      return 'comment'
+    }
+    stream.next()
+  }
+  return 'comment'
+}
+
+// NatSpec tags like `@notice`.
+function readAnnotation(stream: StringStream): boolean {
+  const start = stream.pos
+  if (stream.eat('@') && stream.eatWhile(isWordCharacter)) {
+    return true
+  }
+  stream.pos = start
+  return false
+}
+
+function isIdentifierStart(character: string): boolean {
+  return isLetter(character) || character === '_'
+}
+
+function isWordCharacter(character: string): boolean {
+  return isLetter(character) || isDigit(character) || character === '_'
+}
+
+function isLetter(character: string): boolean {
+  return (
+    (character >= 'a' && character <= 'z') ||
+    (character >= 'A' && character <= 'Z')
+  )
+}
+
+function isDigit(character: string): boolean {
+  return character >= '0' && character <= '9'
+}
+
+function isDigitOrUnderscore(character: string): boolean {
+  return isDigit(character) || character === '_'
+}
+
+function isHexDigitOrUnderscore(character: string): boolean {
+  return (
+    isDigitOrUnderscore(character) ||
+    (character >= 'a' && character <= 'f') ||
+    (character >= 'A' && character <= 'F')
+  )
+}
+
+// Monaco folded Solidity by indentation, so this does too: a line folds the
+// lines after it that are indented deeper, blank lines included.
+function foldByIndent(
+  state: EditorState,
+  lineStart: number,
+  lineEnd: number,
+): { from: number; to: number } | null {
+  const line = state.doc.lineAt(lineStart)
+  const indent = indentWidth(line.text)
+  if (indent === undefined) {
+    return null
+  }
+  let lastLineNumber = line.number
+  for (let number = line.number + 1; number <= state.doc.lines; number++) {
+    const nextIndent = indentWidth(state.doc.line(number).text)
+    if (nextIndent === undefined) {
+      continue
+    }
+    if (nextIndent <= indent) {
+      break
+    }
+    lastLineNumber = number
+  }
+  if (lastLineNumber === line.number) {
+    return null
+  }
+  return { from: lineEnd, to: state.doc.line(lastLineNumber).to }
 }

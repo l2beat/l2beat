@@ -5,9 +5,10 @@ import { useCodeSettings } from '../code/hooks/useCodeSettings'
 import { LineSelector } from '../code/plugins/lineSelector'
 import { RangeHighlightPlugin } from '../code/plugins/range'
 import { EditorFileTabs } from '../components/EditorFileTabs'
+import type { JsonSupport } from '../languages/json'
 import { type EditorFile, type Range, useCodeStore } from '../store'
 
-type EditorViewProps = {
+export type EditorViewProps = {
   editorId: string
   callbacks?: EditorCallbacks
   files: EditorFile[]
@@ -22,6 +23,7 @@ type EditorViewProps = {
     rangeHighlight: boolean
   }
   onActiveFileChange?: (file: EditorFile | undefined) => void
+  json?: JsonSupport
 }
 
 export function EditorView(props: EditorViewProps) {
@@ -63,7 +65,7 @@ export function EditorView(props: EditorViewProps) {
             if (isNewContentOk) {
               setDirtyFile(props.editorId, activeFile.id, false)
             }
-            return activeFile.content
+            return isNewContentOk ? content : activeFile.content
           })
 
           changeDisposable = editor.onChange((content) => {
@@ -138,7 +140,11 @@ export function EditorView(props: EditorViewProps) {
           }))}
         />
       )}
-      <CodeEditorComponent editorKey={props.editorId} features={features} />
+      <CodeEditorComponent
+        editorKey={props.editorId}
+        features={features}
+        json={props.json}
+      />
     </div>
   )
 }

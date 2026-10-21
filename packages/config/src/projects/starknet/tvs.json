@@ -500,7 +500,7 @@
         "sinceTimestamp": 1657137639
       },
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "custom-canonical",
       "isAssociated": false
     },
     {

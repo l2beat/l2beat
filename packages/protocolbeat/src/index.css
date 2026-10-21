@@ -1,4 +1,3 @@
-@import "./diff-editor.css" layer(base);
 @import "./markdown.css" layer(base);
 @import "tailwindcss";
 

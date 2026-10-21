@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { ErrorState } from '../../../components/ErrorState'
 import type { EditorSaveCallback } from '../../../components/editor/code/editor'
 import type { EditorFile } from '../../../components/editor/store'
-import { EditorView } from '../../../components/editor/views/EditorView'
+import { JsonEditorView } from '../../../components/editor/views/lazy'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { type ConfigModels, useConfigModels } from '../hooks/useConfigModels'
@@ -33,7 +33,7 @@ export function ConfigPanel() {
   }
 
   return (
-    <EditorView
+    <JsonEditorView
       editorId="config-panel"
       files={files}
       callbacks={{ onSave: onSaveCallback }}

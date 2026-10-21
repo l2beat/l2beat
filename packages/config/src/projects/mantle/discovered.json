@@ -1,7 +1,7 @@
 {
   "name": "mantle",
-  "timestamp": 1792494909,
-  "configHash": "0x0f306b0067bd85a7c52ada5f77458b1b8cc81679062b5d76af26254b37245ee1",
+  "timestamp": 1792586696,
+  "configHash": "0x6ca9993b54f955fe6182607825e85ce48c83c40d51bba523ac1c6329bc733630",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -133,10 +133,10 @@
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 102179546,
-        "latestOutputIndex": 22781,
-        "nextBlockNumber": 102181346,
-        "nextOutputIndex": 22782,
+        "latestBlockNumber": 102226346,
+        "latestOutputIndex": 22807,
+        "nextBlockNumber": 102228146,
+        "nextOutputIndex": 22808,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
@@ -520,11 +520,11 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704604",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704609",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "eth:0x4200000000000000000000000000000000000007",
+        "OTHER_MESSENGER": "mantle:0x4200000000000000000000000000000000000007",
         "PORTAL": "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
         "RELAY_CALL_OVERHEAD": 40000,
         "RELAY_CONSTANT_OVERHEAD": 200000,
@@ -539,6 +539,9 @@
         "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120": "Lib_ResolvedDelegateProxy",
         "eth:0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308": "L1CrossDomainMessenger"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "mantle" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -591,10 +594,10 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-        "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "mantle:0x4200000000000000000000000000000000000010",
         "messenger": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "MESSENGER": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
-        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
+        "OTHER_BRIDGE": "mantle:0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
       },
       "fieldMeta": { "paused": { "severity": "MEDIUM" } },
@@ -602,6 +605,9 @@
         "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": "L1ChugSplashProxy",
         "eth:0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f": "L1StandardBridge"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "mantle" } }
+      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -667,8 +673,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 591926,
-          "prevBlockNum": 26233413
+          "prevBoughtGas": 593654,
+          "prevBlockNum": 26239921
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -844,13 +850,13 @@
         "HASH_MESSAGE_BASE_GAS": 800,
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-        "l1CrossDomainMessenger": "mantle:0x676A795fe6E43C17c668de16730c3F690FEB7120",
+        "l1CrossDomainMessenger": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629806",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629809",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "mantle:0x676A795fe6E43C17c668de16730c3F690FEB7120",
+        "OTHER_MESSENGER": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "RELAY_CALL_OVERHEAD": 40000,
         "RELAY_CONSTANT_OVERHEAD": 200000,
         "RELAY_GAS_CHECK_BUFFER": 55000,
@@ -860,7 +866,8 @@
       "implementationNames": {
         "mantle:0x4200000000000000000000000000000000000007": "Proxy",
         "mantle:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": "L2CrossDomainMessenger"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "L2StandardBridge",
@@ -881,16 +888,17 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "L1_MNT_ADDRESS": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-        "l1TokenBridge": "mantle:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+        "l1TokenBridge": "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
         "messenger": "mantle:0x4200000000000000000000000000000000000007",
         "MESSENGER": "mantle:0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "mantle:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+        "OTHER_BRIDGE": "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
         "version": "1.1.0"
       },
       "implementationNames": {
         "mantle:0x4200000000000000000000000000000000000010": "Proxy",
         "mantle:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": "L2StandardBridge"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "L2ToL1MessagePasser",
@@ -913,7 +921,7 @@
         "$upgradeCount": 0,
         "L1_MNT_ADDRESS": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629810",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629813",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -970,16 +978,6 @@
     },
     {
       "address": "mantle:0x63a7E8AbD9A3771aF5ac0bfdef04769C2f9e2916",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "mantle:0x676A795fe6E43C17c668de16730c3F690FEB7120",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "mantle:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1650,8 +1648,8 @@
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x9a1f78fb3786e973f0204ba0c2838e0a89a5abeba36441b67f62257a9fe0d58c"
   },
-  "usedBlockNumbers": { "ethereum": 26233431, "mantle": 102182298 },
-  "permissionsConfigHash": "0x90589a595086a856b3810d0f3fb52555dd438c702ada95cb5baaee32774ab496",
+  "usedBlockNumbers": { "ethereum": 26241056, "mantle": 102228192 },
+  "permissionsConfigHash": "0xd2a275f13393a14154a6c99f6e2b9f162872e129287327fd49cc40f880b08108",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"
   },

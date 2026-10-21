@@ -1,15 +1,15 @@
-Generated with discovered.json: 0xc93997cbdde13e50c0ecfc38b0f6615b71cafbdd
+Generated with discovered.json: 0xdde375efc8c0029fbb0597f635dc76ae2c66e1e5
 
-# Diff at Tue, 20 Oct 2026 11:17:10 GMT:
+# Diff at Wed, 21 Oct 2026 12:46:58 GMT:
 
-- id: 7b811d57
+- id: 34c5dd99
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@1ba3576884d933c7211cbdf7f349e25838d56bb7 block: 1791966035
+- comparing to: main@dc08d98704842a5d838f9a032c606eefa07d4154 block: 1791966035
 - current timestamp: 1792495058
 
 ## Description
 
-L2 predeploys: genesis placeholders for deployer and deployment block dropped again (re-added by #13349). Metadata only.
+L2 predeploys: genesis placeholders for deployer and deployment block dropped again. Metadata only.
 
 ## Config/verification related changes
 
@@ -62,6 +62,101 @@ discovery. Values are for block 1791966035 (main branch discovery), not current.
 -        1587571205
       sinceBlock:
 -        0
+    }
+```
+
+Generated with discovered.json: 0x70c5ae3fda97fec92ad9d04132adc35ab0dbdc43
+
+# Diff at Tue, 20 Oct 2026 12:40:05 GMT:
+
+- id: 63481975
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@be85c00e808a33e3ed3c0a5da0c480a9a9a5bd26 block: 1791966035
+- current timestamp: 1791966035
+
+## Description
+
+Undo the L2 alias of L1 addresses
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966035 (main branch discovery), not current.
+
+```diff
+    contract L2ProxyAdmin (celo:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin] {
+    +++ description: Administration contract for other contract proxies.
++++ severity: MEDIUM
+      values.owner:
+-        "celo:0x51a3a77baF58fef0309452CeaCB09221e556f223"
++        "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112"
+    }
+```
+
+```diff
+    contract CeloProxyAdminOwner (eth:0x4092A77bAF58fef0309452cEaCb09221e556E112) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000007","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000010","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000016","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"celo:0x4200000000000000000000000000000000000018","role":"admin","via":[{"address":"celo:0x4200000000000000000000000000000000000018"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"celo:0x4200000000000000000000000000000000000018","role":".owner"}
+    }
+```
+
+Generated with discovered.json: 0x1ddd4c11e813075853ef1c9302191008ecf66d48
+
+# Diff at Tue, 20 Oct 2026 07:51:28 GMT:
+
+- id: c8f4a626
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8c721560f0ca14f66f76a097eef3c5dac22be9d6 block: 1791966035
+- current timestamp: 1791966035
+
+## Description
+
+Format cross-chain counterpart addresses with the chain they live on
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791966035 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.OTHER_MESSENGER:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "celo:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "eth:0x4200000000000000000000000000000000000007"
++        "celo:0x4200000000000000000000000000000000000007"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"celo"}}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.l2TokenBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "celo:0x4200000000000000000000000000000000000010"
+      values.OTHER_BRIDGE:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "celo:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "eth:0x4200000000000000000000000000000000000010"
++        "celo:0x4200000000000000000000000000000000000010"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"celo"}}]
     }
 ```
 

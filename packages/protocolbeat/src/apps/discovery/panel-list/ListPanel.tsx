@@ -1,7 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import {
+  type KeyboardEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
+import { Link, useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
@@ -20,6 +27,7 @@ import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
 import { UsageBadge } from '../usage/UsageBadge'
+import { getAdjacentAddress, type ListDirection } from './getAdjacentAddress'
 
 export function ListPanel() {
   const { project } = useParams()
@@ -34,19 +42,58 @@ export function ListPanel() {
     return <ErrorState />
   }
   return (
-    <div className="h-full w-full overflow-x-hidden">
-      <ol>
-        {response.data.entries.map((chain, i) => (
-          <ListItemChain
-            key={`${chain.project}-${i}`}
-            entry={chain}
-            first={i === 0}
-            openedProject={project}
-          />
-        ))}
-      </ol>
+    <div className="relative h-full w-full">
+      <div
+        tabIndex={0}
+        onKeyDown={selectWithArrows}
+        className="peer h-full w-full overflow-x-hidden outline-hidden"
+      >
+        <ol>
+          {response.data.entries.map((chain, i) => (
+            <ListItemChain
+              key={`${chain.project}-${i}`}
+              entry={chain}
+              first={i === 0}
+              openedProject={project}
+            />
+          ))}
+        </ol>
+      </div>
+      <div className="pointer-events-none absolute inset-0 z-10 hidden ring-1 ring-autumn-300 ring-inset peer-focus-visible:block" />
     </div>
   )
+}
+
+function selectWithArrows(event: KeyboardEvent<HTMLElement>) {
+  const direction = toListDirection(event)
+  if (direction === undefined) {
+    return
+  }
+  event.preventDefault()
+  const elements = [
+    ...event.currentTarget.querySelectorAll<HTMLElement>('[data-address]'),
+  ]
+  const addresses = elements.map((element) => element.dataset.address ?? '')
+  const { selected, select } = usePanelStore.getState()
+  const target = getAdjacentAddress(addresses, selected, direction)
+  if (target === undefined) {
+    return
+  }
+  select([target])
+  elements[addresses.indexOf(target)]?.scrollIntoView({ block: 'nearest' })
+}
+
+function toListDirection(event: KeyboardEvent): ListDirection | undefined {
+  if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
+    return undefined
+  }
+  if (event.key === 'ArrowDown') {
+    return 'next'
+  }
+  if (event.key === 'ArrowUp') {
+    return 'previous'
+  }
+  return undefined
 }
 
 function ListItemChain(props: {
@@ -55,10 +102,7 @@ function ListItemChain(props: {
   openedProject: string
 }) {
   const [open, setOpen] = useState(true)
-
-  function onFocus() {
-    setOpen(true)
-  }
+  const onFocus = useCallback(() => setOpen(true), [])
 
   return Object.entries(props.entry.blockNumbers).map(
     ([chain, blockNumber]) => (
@@ -75,6 +119,14 @@ function ListItemChain(props: {
             {!open && <IconChevronRight />}
             {`${props.entry.project} on ${chain}`}
           </button>
+          {props.entry.project !== props.openedProject && (
+            <Link
+              to={`/ui/p/${props.entry.project}`}
+              className="mr-2 whitespace-nowrap text-coffee-400 text-xs underline hover:text-coffee-100"
+            >
+              open
+            </Link>
+          )}
           <span className="whitespace-nowrap text-coffee-400 text-xs italic group-hover:text-coffee-200">
             @ {blockNumber}
           </span>
@@ -123,23 +175,29 @@ function ListItemContracts(props: {
   sourceProject: string
 }) {
   const [open, setOpen] = useState(!props.startClosed)
-  const selected = usePanelStore((state) => state.selected)
-
-  const filteredEntries = props.entries.filter(
-    (entry) => entry.chain === props.chain,
+  const sortedEntries = useMemo(
+    () =>
+      props.entries
+        .filter((entry) => entry.chain === props.chain)
+        .sort((a, b) => b.type.localeCompare(a.type)),
+    [props.entries, props.chain],
   )
+  const addresses = useMemo(
+    () => new Set(sortedEntries.map((entry) => entry.address)),
+    [sortedEntries],
+  )
+  const selectedHere = usePanelStore((state) =>
+    state.selected.find((address) => addresses.has(address)),
+  )
+  const { onFocus } = props
   useEffect(() => {
-    const selectedSet = new Set<string>(selected)
-    for (const { address } of filteredEntries) {
-      if (selectedSet.has(address)) {
-        setOpen(true)
-        props.onFocus?.()
-        break
-      }
+    if (selectedHere !== undefined) {
+      setOpen(true)
+      onFocus?.()
     }
-  }, [filteredEntries, selected, props.onFocus])
+  }, [selectedHere, onFocus])
 
-  if (filteredEntries.length === 0) {
+  if (sortedEntries.length === 0) {
     return null
   }
   return (
@@ -164,23 +222,21 @@ function ListItemContracts(props: {
       </button>
       {open && (
         <ol>
-          {filteredEntries
-            .toSorted((a, b) => b.type.localeCompare(a.type))
-            .map((entry) => (
-              <AddressEntry
-                key={entry.address}
-                entry={entry}
-                openedProject={props.openedProject}
-                sourceProject={props.sourceProject}
-              />
-            ))}
+          {sortedEntries.map((entry) => (
+            <AddressEntry
+              key={entry.address}
+              entry={entry}
+              openedProject={props.openedProject}
+              sourceProject={props.sourceProject}
+            />
+          ))}
         </ol>
       )}
     </>
   )
 }
 
-function AddressEntry({
+const AddressEntry = memo(function AddressEntry({
   entry,
   openedProject,
   sourceProject,
@@ -203,6 +259,7 @@ function AddressEntry({
 
   return (
     <li
+      data-address={entry.address}
       className={clsx(
         'flex min-h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
         isSelected && 'bg-autumn-300 text-black',
@@ -233,4 +290,4 @@ function AddressEntry({
       </div>
     </li>
   )
-}
+})
