@@ -95,8 +95,8 @@ export function extractPrivacyFlow<T extends EvmPrivacyFlowExtractorConfig>(
 }
 
 /**
- * Flows whose classification needs the transaction behind the log. Every
- * other extractor reads the log alone.
+ * `extractPrivacyFlow`, minus logs that only their transaction shows are no
+ * flow: a Privacy Pools v2 relayed transfer looks like a withdrawal.
  */
 export async function extractPrivacyFlowWithContext(
   source: EvmPrivacyFlowExtractorConfig,
@@ -104,18 +104,14 @@ export async function extractPrivacyFlowWithContext(
   context: PrivacyRpcContext,
 ): Promise<PrivacyFlowExtractResult | undefined> {
   const result = extractPrivacyFlow(source, log)
-  if (result === undefined) {
+  if (
+    result === undefined ||
+    (source.extractor === 'privacyPoolsV2Value' &&
+      (await isPrivacyPoolsV2RelayedTransfer(log, context)))
+  ) {
     return undefined
   }
-
-  switch (source.extractor) {
-    case 'privacyPoolsV2Value':
-      return (await isPrivacyPoolsV2RelayedTransfer(log, context))
-        ? undefined
-        : result
-    default:
-      return result
-  }
+  return result
 }
 
 // The vault serves every asset, so a bucket keeps only its own asset's logs.

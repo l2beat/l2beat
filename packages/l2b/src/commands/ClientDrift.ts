@@ -3,8 +3,13 @@ import {
   ProjectService,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import chalk from 'chalk'
 import { command, optional, positional, string } from 'cmd-ts'
+import {
+  fetchGithub,
+  getGithubRepository,
+} from '../implementations/common/github'
 
 // Paths whose changes can move a network or insider cell: endpoints,
 // requests, relayers, Tor, telemetry and key handling. A reading order, not
@@ -16,13 +21,16 @@ const NOISE =
 
 const MAX_LISTED = 20
 
-interface Repository {
-  default_branch: string
-}
+const Repository = v.object({ default_branch: v.string() })
 
-interface Comparison {
-  ahead_by: number
-  files?: { filename: string }[]
+const Comparison = v.object({
+  ahead_by: v.number(),
+  files: v.array(v.object({ filename: v.string() })).optional(),
+})
+
+interface ProjectClient {
+  id: string
+  client: ProjectPrivacyReferenceClient
 }
 
 export const ClientDrift = command({
@@ -36,94 +44,83 @@ export const ClientDrift = command({
     }),
   },
   handler: async (args) => {
-    const ps = new ProjectService()
-    const clients: { id: string; client: ProjectPrivacyReferenceClient }[] = []
-    if (args.project) {
-      // `select` would drop a project without privacyInfo, so it would read
-      // as unknown.
-      const project = await ps.getProject({
-        id: ProjectId(args.project),
-        optional: ['privacyInfo'],
-      })
-      if (!project) {
-        console.log(chalk.red(`Unknown project ${args.project}`))
-        process.exitCode = 1
-        return
-      }
-      const client = project.privacyInfo?.referenceClient
-      if (!client) {
-        console.log(`${project.id} has no reference client`)
-        return
-      }
-      clients.push({ id: project.id, client })
-    } else {
-      const projects = await ps.getProjects({ select: ['privacyInfo'] })
-      for (const project of projects) {
-        const client = project.privacyInfo.referenceClient
-        if (client) clients.push({ id: project.id, client })
-      }
-    }
-
+    const clients = await getProjectClients(args.project)
     const headers: Record<string, string> = {
       accept: 'application/vnd.github+json',
     }
     if (process.env.GITHUB_TOKEN) {
       headers.authorization = `Bearer ${process.env.GITHUB_TOKEN}`
     }
-
-    for (const { id, client } of clients) {
-      const repo = getGithubRepository(client.repository)
-      const { default_branch } = await getJson<Repository>(
-        `https://api.github.com/repos/${repo}`,
-        headers,
-      )
-      const comparison = await getJson<Comparison>(
-        `https://api.github.com/repos/${repo}/compare/${client.commit}...${default_branch}`,
-        headers,
-      )
-
-      if (comparison.ahead_by === 0) {
-        console.log(`${id} (${client.name}): up to date`)
-        continue
-      }
-      const files = (comparison.files ?? []).map((file) => file.filename)
-      const readFirst = files.filter(
-        (file) => READ_FIRST.test(file) && !NOISE.test(file),
-      )
-      console.log(
-        `${id} (${client.name}): ${comparison.ahead_by} commit${comparison.ahead_by === 1 ? '' : 's'} ahead on ${default_branch}, ${files.length} files changed, ${readFirst.length} to read first`,
-      )
-      console.log(
-        `  ${client.repository}/compare/${client.commit}...${default_branch}`,
-      )
-      for (const file of readFirst.slice(0, MAX_LISTED)) {
-        console.log(`  - ${file}`)
-      }
-      if (readFirst.length > MAX_LISTED) {
-        console.log(`  - … ${readFirst.length - MAX_LISTED} more`)
-      }
+    for (const projectClient of clients) {
+      await printDrift(projectClient, headers)
     }
   },
 })
 
-/** `owner/repo` of a https://github.com/owner/repo URL. */
-function getGithubRepository(url: string): string {
-  const parsed = URL.parse(url)
-  const segments = parsed?.pathname.split('/').filter((s) => s.length > 0)
-  if (parsed?.hostname !== 'github.com' || segments?.length !== 2) {
-    throw new Error('Reference client repository is not a GitHub repository', {
-      cause: { url },
+async function getProjectClients(
+  projectId: string | undefined,
+): Promise<ProjectClient[]> {
+  const ps = new ProjectService()
+  if (projectId === undefined) {
+    const projects = await ps.getProjects({ select: ['privacyInfo'] })
+    return projects.flatMap((project) => {
+      const client = project.privacyInfo.referenceClient
+      return client ? [{ id: project.id, client }] : []
     })
   }
-  return segments.join('/')
+
+  // `select` would drop a project without privacyInfo, so it would read as
+  // unknown.
+  const project = await ps.getProject({
+    id: ProjectId(projectId),
+    optional: ['privacyInfo'],
+  })
+  if (!project) {
+    console.log(chalk.red(`Unknown project ${projectId}`))
+    process.exitCode = 1
+    return []
+  }
+  const client = project.privacyInfo?.referenceClient
+  if (!client) {
+    console.log(`${project.id} has no reference client`)
+    return []
+  }
+  return [{ id: project.id, client }]
 }
 
-async function getJson<T>(url: string, headers: Record<string, string>) {
-  const response = await fetch(url, { headers })
-  if (!response.ok) {
-    throw new Error('GitHub request failed', {
-      cause: { url, status: response.status },
-    })
+async function printDrift(
+  { id, client }: ProjectClient,
+  headers: Record<string, string>,
+): Promise<void> {
+  const api = `https://api.github.com/repos/${getGithubRepository(client.repository)}`
+  const { default_branch } = Repository.validate(
+    await fetchGithub(api, headers).then((response) => response.json()),
+  )
+  const comparison = Comparison.validate(
+    await fetchGithub(
+      `${api}/compare/${client.commit}...${default_branch}`,
+      headers,
+    ).then((response) => response.json()),
+  )
+
+  if (comparison.ahead_by === 0) {
+    console.log(`${id} (${client.name}): up to date`)
+    return
   }
-  return (await response.json()) as T
+  const files = (comparison.files ?? []).map((file) => file.filename)
+  const readFirst = files.filter(
+    (file) => READ_FIRST.test(file) && !NOISE.test(file),
+  )
+  console.log(
+    `${id} (${client.name}): ${comparison.ahead_by} commit${comparison.ahead_by === 1 ? '' : 's'} ahead on ${default_branch}, ${files.length} files changed, ${readFirst.length} to read first`,
+  )
+  console.log(
+    `  ${client.repository}/compare/${client.commit}...${default_branch}`,
+  )
+  for (const file of readFirst.slice(0, MAX_LISTED)) {
+    console.log(`  - ${file}`)
+  }
+  if (readFirst.length > MAX_LISTED) {
+    console.log(`  - … ${readFirst.length - MAX_LISTED} more`)
+  }
 }

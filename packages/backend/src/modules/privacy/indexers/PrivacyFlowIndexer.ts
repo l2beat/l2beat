@@ -9,7 +9,6 @@ import {
 } from '@l2beat/shared'
 import { assert, type Log, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import chunk from 'lodash/chunk'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
@@ -22,12 +21,9 @@ import type {
 import type { PrivacyFlowIndexerConfig } from '../types'
 import { extractPrivacyFlowWithContext } from '../utils/extractPrivacyFlow'
 import {
+  extractPrivacyLogMatches,
   fetchPrivacyLogMatches,
-  type PrivacyLogMatch,
 } from '../utils/privacyLogIndexerUtils'
-import { ReceiptLogCache } from '../utils/ReceiptLogCache'
-
-const EXTRACTION_BATCH_SIZE = 20
 
 interface PrivacyFlowIndexerDeps
   extends Omit<
@@ -149,47 +145,26 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       blockProvider: this.$.blockProvider,
       logger: this.logger,
     })
-    const rawRecords = await this.extractRawRecords(matches)
+    const rawRecords = await extractPrivacyLogMatches(
+      matches,
+      this.$.rpcClient,
+      async ({ log, timestamp, configuration }, context) => {
+        const result = await extractPrivacyFlowWithContext(
+          configuration.properties,
+          log,
+          context,
+        )
+        if (!result || (result.count === 0 && result.amount === 0n)) {
+          return undefined
+        }
+        return { configuration, log, timestamp, ...result }
+      },
+    )
 
     if (rawRecords.length === 0) return []
 
     const priceLookup = await this.buildPriceLookup(rawRecords)
     return this.buildRecords(rawRecords, priceLookup)
-  }
-
-  private async extractRawRecords(
-    matches: PrivacyLogMatch<PrivacyFlowIndexerConfig>[],
-  ): Promise<RawRecord[]> {
-    const context = {
-      rpc: this.$.rpcClient,
-      receipts: new ReceiptLogCache(this.$.rpcClient),
-    }
-    const rawRecords: RawRecord[] = []
-
-    for (const batch of chunk(matches, EXTRACTION_BATCH_SIZE)) {
-      const extracted = await Promise.all(
-        batch.map(async ({ log, timestamp, configuration }) => {
-          const result = await extractPrivacyFlowWithContext(
-            configuration.properties,
-            log,
-            context,
-          )
-          if (!result || (result.count === 0 && result.amount === 0n)) {
-            return undefined
-          }
-          return {
-            configuration,
-            log,
-            count: result.count,
-            amount: result.amount,
-            timestamp,
-          }
-        }),
-      )
-      rawRecords.push(...extracted.filter((record) => record !== undefined))
-    }
-
-    return rawRecords
   }
 
   private buildRecords(
