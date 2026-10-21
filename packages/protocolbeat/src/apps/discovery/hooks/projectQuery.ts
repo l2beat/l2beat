@@ -13,6 +13,8 @@ function buildProjectQueryOptions(project: string, args: ProjectQueryArgs) {
   return {
     queryKey: ['projects', project, args.maxReachableDepth] as const,
     queryFn: () => getProject(project, args.maxReachableDepth ?? undefined),
+    staleTime: Number.POSITIVE_INFINITY,
+    refetchOnWindowFocus: false,
   }
 }
 
