@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react'
 import { getCode } from '../../../api/api'
 import type { ApiCodeResponse } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
+import { Button } from '../../../components/Button'
 import { ErrorState } from '../../../components/ErrorState'
 import { type EditorFile, useCodeStore } from '../../../components/editor/store'
 import { EditorView } from '../../../components/editor/views/lazy'
@@ -12,7 +13,7 @@ import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectData } from '../hooks/useProjectData'
 import { getDefaultSourceIndex, hasSourceCode } from '../utils/sourceCode'
 import { CarveCopyDialog } from './CarveCopyDialog'
-import { joinDeclarations } from './declarations'
+import { findMainDeclarationOffset, joinDeclarations } from './declarations'
 import { LookupPanel } from './LookupPanel'
 import { RediscoverPrompt } from './RediscoverPrompt'
 import { useGoToDefinition } from './useGoToDefinition'
@@ -38,6 +39,7 @@ export function CodePanel() {
   })
 
   const { getRange, getSourceIndex } = useCodeStore()
+  const editor = useCodeStore((store) => store.editors[EDITOR_ID])
 
   const [activeFile, setActiveFile] = useState<EditorFile | undefined>(
     undefined,
@@ -91,20 +93,12 @@ export function CodePanel() {
   const activeSource = codeResponse.data?.sources.find(
     (source) => source.name === activeFile?.name,
   )
-  const canCarve =
-    activeSource?.declarations.some((segment) => segment.name !== null) ?? false
+  const mainOffset =
+    activeSource && findMainDeclarationOffset(activeSource.declarations)
 
   return (
     <div className="relative flex h-full w-full select-none flex-col">
       {showRediscoverInfo && <RediscoverPrompt />}
-      {activeSource && canCarve && (
-        <div className="absolute top-1 right-3 z-10">
-          <CarveCopyDialog
-            sourceName={activeSource.name}
-            declarations={activeSource.declarations}
-          />
-        </div>
-      )}
       {definition.lookup && (
         <LookupPanel
           lookup={definition.lookup}
@@ -125,6 +119,24 @@ export function CodePanel() {
           goToDefinition: !IS_READONLY,
         }}
         onActiveFileChange={setActiveFile}
+        tabActions={
+          activeSource &&
+          mainOffset !== undefined && (
+            <>
+              <Button
+                variant="solid"
+                size="small"
+                onClick={() => editor?.revealAtTop(mainOffset)}
+              >
+                Main contract
+              </Button>
+              <CarveCopyDialog
+                sourceName={activeSource.name}
+                declarations={activeSource.declarations}
+              />
+            </>
+          )
+        }
       />
     </div>
   )
@@ -176,9 +188,10 @@ function getCodeFiles(
   }
 
   return codeResponse.data.sources.map((source) => ({
-    id: source.name,
+    id: `${selectedAddress}/${source.name}`,
     name: source.name,
     content: joinDeclarations(source.declarations),
+    initialOffset: findMainDeclarationOffset(source.declarations),
     readOnly: true,
     language: 'solidity' as const,
   }))

@@ -1,16 +1,25 @@
 import clsx from 'clsx'
+import type { ReactNode } from 'react'
 import { IconCodeFile } from '../../../icons/IconCodeFile'
 
 type EditorFileTabsProps = {
   files: EditorFileTabProps[]
+  actions?: ReactNode
 }
 
 export function EditorFileTabs(props: EditorFileTabsProps) {
   return (
-    <div className="flex shrink-0 grow gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
-      {props.files.map((file) => (
-        <EditorFileTab key={file.id} {...file} />
-      ))}
+    <div className="flex shrink-0 border-b border-b-coffee-600">
+      <div className="flex min-w-0 grow gap-1 overflow-x-auto px-1 pt-1">
+        {props.files.map((file) => (
+          <EditorFileTab key={file.id} {...file} />
+        ))}
+      </div>
+      {props.actions && (
+        <div className="flex shrink-0 items-center gap-2 px-3">
+          {props.actions}
+        </div>
+      )}
     </div>
   )
 }

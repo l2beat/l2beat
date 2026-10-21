@@ -23,3 +23,18 @@ export function joinSelectedDeclarations(
   }
   return parts.join('\n\n')
 }
+
+// The flattener emits the root contract last, after everything it uses.
+export function findMainDeclarationOffset(
+  declarations: ApiCodeSegment[],
+): number | undefined {
+  let offset = 0
+  let mainOffset: number | undefined
+  for (const declaration of declarations) {
+    if (declaration.name !== null) {
+      mainOffset = offset
+    }
+    offset += declaration.content.length
+  }
+  return mainOffset
+}
